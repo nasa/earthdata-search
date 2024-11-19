@@ -57,6 +57,7 @@ const GranuleResultsItem = forwardRef(({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
+  onMetricsAddGranuleProject,
   onRemoveGranuleFromProjectCollection,
   readableGranuleName
 }, ref) => {
@@ -261,6 +262,11 @@ const GranuleResultsItem = forwardRef(({
                             onAddGranuleToProjectCollection({
                               collectionId,
                               granuleId: id
+                            })
+
+                            onMetricsAddGranuleProject({
+                              type: 'Granule List View',
+                              granuleConceptId: id
                             })
 
                             // Prevent clicks from bubbling up to other granule item events.

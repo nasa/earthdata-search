@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
-import { metricsDataAccess } from '../../middleware/metrics/actions'
+import { metricsDataAccess, metricsAddGranuleProject } from '../../middleware/metrics/actions'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
@@ -26,6 +26,8 @@ export const mapDispatchToProps = (dispatch) => ({
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
   onMetricsDataAccess:
     (data) => dispatch(metricsDataAccess(data)),
+  onMetricsAddGranuleProject:
+    (data) => dispatch(metricsAddGranuleProject(data)),
   onAddGranuleToProjectCollection:
     (data) => dispatch(actions.addGranuleToProjectCollection(data)),
   onRemoveGranuleFromProjectCollection:
@@ -57,6 +59,7 @@ export const GranuleResultsBodyContainer = (props) => {
     onExcludeGranule,
     onFocusedGranuleChange,
     onMetricsDataAccess,
+    onMetricsAddGranuleProject,
     onRemoveGranuleFromProjectCollection,
     panelView,
     portal,
@@ -94,6 +97,7 @@ export const GranuleResultsBodyContainer = (props) => {
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
       onMetricsDataAccess={onMetricsDataAccess}
+      onMetricsAddGranuleProject={onMetricsAddGranuleProject}
       onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
       panelView={panelView}
       portal={portal}

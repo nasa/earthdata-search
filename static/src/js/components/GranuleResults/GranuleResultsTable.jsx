@@ -46,6 +46,7 @@ export const GranuleResultsTable = ({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
+  onMetricsAddGranuleProject,
   onRemoveGranuleFromProjectCollection,
   setVisibleMiddleIndex,
   visibleMiddleIndex
@@ -68,6 +69,7 @@ export const GranuleResultsTable = ({
         onExcludeGranule,
         onFocusedGranuleChange,
         onMetricsDataAccess,
+        onMetricsAddGranuleProject,
         onRemoveGranuleFromProjectCollection
       }
     },

@@ -179,7 +179,7 @@ export const map = (action) => {
 }
 
 /**
-* Pushes an add project event on the dataLayer.
+* Pushes an add collection to project event on the dataLayer.
 * This event is fired when a user adds a collection to their project
 * @param {Object} action - The action.
 */
@@ -192,9 +192,29 @@ export const addCollectionProject = (action) => {
   console.log('🚀 ~ file: events.js:191 ~ payload:', payload)
 
   dataLayer.push({
-    event: 'addProject',
+    event: 'addCollectionToProject',
     addProjectCollectionType: type,
     addProjectCollectionConceptId: collectionConceptId
+  })
+}
+
+/**
+* Pushes an add granule to project event on the dataLayer.
+* This event is fired when a user adds a collection to their project
+* @param {Object} action - The action.
+*/
+export const addGranuleProject = (action) => {
+  const { payload } = action
+  const {
+    type,
+    granuleConceptId
+  } = payload
+  console.log('🚀 ~ file: events.js:191 ~ payload:', payload)
+
+  dataLayer.push({
+    event: 'addGranuleToProject',
+    addProjectGranuleType: type,
+    addProjectCollectionConceptId: granuleConceptId
   })
 }
 

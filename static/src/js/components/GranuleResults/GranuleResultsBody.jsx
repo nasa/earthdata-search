@@ -42,6 +42,7 @@ const GranuleResultsBody = ({
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
+  onMetricsAddGranuleProject,
   onRemoveGranuleFromProjectCollection,
   panelView,
   project
@@ -200,6 +201,7 @@ const GranuleResultsBody = ({
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
+          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           visibleMiddleIndex={visibleMiddleIndex}
@@ -225,6 +227,7 @@ const GranuleResultsBody = ({
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
+          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}

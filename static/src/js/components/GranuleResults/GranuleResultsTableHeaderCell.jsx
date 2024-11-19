@@ -38,6 +38,7 @@ const GranuleResultsTableHeaderCell = (props) => {
     onExcludeGranule,
     onFocusedGranuleChange,
     onMetricsDataAccess,
+    onMetricsAddGranuleProject,
     onRemoveGranuleFromProjectCollection
   } = customProps
 
@@ -82,6 +83,11 @@ const GranuleResultsTableHeaderCell = (props) => {
                       onAddGranuleToProjectCollection({
                         collectionId,
                         granuleId: id
+                      })
+
+                      onMetricsAddGranuleProject({
+                        type: 'Granule Table View',
+                        granuleConceptId: id
                       })
 
                       // Prevent event bubbling up to the granule focus event.

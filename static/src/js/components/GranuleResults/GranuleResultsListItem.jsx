@@ -42,6 +42,7 @@ export const GranuleResultsListItem = memo(({
     onExcludeGranule,
     onFocusedGranuleChange,
     onMetricsDataAccess,
+    onMetricsAddGranuleProject,
     onRemoveGranuleFromProjectCollection,
     readableGranuleName,
     setRowHeight,
@@ -112,6 +113,7 @@ export const GranuleResultsListItem = memo(({
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
+          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
           readableGranuleName={readableGranuleName}
           ref={element}

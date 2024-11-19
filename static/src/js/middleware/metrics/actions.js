@@ -1,5 +1,6 @@
 import {
   METRICS_ADD_COLLECTION_PROJECT,
+  METRICS_ADD_GRANULE_PROJECT,
   METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_CLICK,
   METRICS_DATA_ACCESS,
@@ -15,6 +16,11 @@ import {
 
 export const metricsAddCollectionProject = (payload) => ({
   type: METRICS_ADD_COLLECTION_PROJECT,
+  payload
+})
+
+export const metricsAddGranuleProject = (payload) => ({
+  type: METRICS_ADD_GRANULE_PROJECT,
   payload
 })
 
