@@ -50,6 +50,7 @@ const GranuleResultsActions = ({
   isCollectionInProject,
   location,
   onAddProjectCollection,
+  onMetricsAddCollectionProject,
   onChangePath,
   onRemoveCollectionFromProject,
   projectGranuleCount,
@@ -58,11 +59,19 @@ const GranuleResultsActions = ({
   subscriptions
 }) => {
   const granuleResultsActionsContainer = useRef(null)
-
+  // TODO Add to project here as well
   const addToProjectButton = (
     <Button
       className="granule-results-actions__action granule-results-actions__action--add"
-      onClick={() => onAddProjectCollection(focusedCollectionId)}
+      onClick={
+        () => {
+          onAddProjectCollection(focusedCollectionId)
+          onMetricsAddCollectionProject({
+            type: 'Granule Results View',
+            collectionConceptId: focusedCollectionId
+          })
+        }
+      }
       icon={FaFolderPlus}
       label="Add collection to the current project"
       title="Add collection to the current project"
@@ -247,6 +256,7 @@ GranuleResultsActions.propTypes = {
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   projectGranuleCount: PropTypes.number,
   removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   searchGranuleCount: PropTypes.number,

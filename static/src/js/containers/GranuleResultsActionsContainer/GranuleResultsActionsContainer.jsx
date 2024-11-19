@@ -5,6 +5,8 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
+import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
+
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
@@ -31,7 +33,9 @@ export const mapDispatchToProps = (dispatch) => ({
   onUpdateFocusedCollection:
     (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
   onChangePath:
-    (path) => dispatch(actions.changePath(path))
+    (path) => dispatch(actions.changePath(path)),
+  onMetricsAddCollectionProject:
+    (data) => dispatch(metricsAddCollectionProject(data))
 })
 
 export const mapStateToProps = (state) => ({
@@ -61,6 +65,7 @@ export const GranuleResultsActionsContainer = (props) => {
     location,
     onAddProjectCollection,
     onChangePath,
+    onMetricsAddCollectionProject,
     onRemoveCollectionFromProject,
     onSetActivePanelSection,
     map,
@@ -120,6 +125,7 @@ export const GranuleResultsActionsContainer = (props) => {
       location={location}
       onAddProjectCollection={onAddProjectCollection}
       onChangePath={onChangePath}
+      onMetricsAddCollectionProject={onMetricsAddCollectionProject}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onSetActivePanelSection={onSetActivePanelSection}
       projectCollectionIds={projectCollectionIds}
@@ -152,6 +158,7 @@ GranuleResultsActionsContainer.propTypes = {
   map: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
+  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   project: PropTypes.shape({

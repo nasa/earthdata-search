@@ -19,6 +19,7 @@ const CollectionResultsTableHeaderCell = (props) => {
   const {
     onViewCollectionGranules,
     onAddProjectCollection,
+    onMetricsAddCollectionProject,
     onRemoveCollectionFromProject,
     onViewCollectionDetails
   } = customProps
@@ -62,6 +63,7 @@ const CollectionResultsTableHeaderCell = (props) => {
           {
             !isCollectionInProject
               ? (
+                // TODO this is another spot
                 <Button
                   className="collection-results-table__collection-action collection-results-table__collection-action--add"
                   icon={Plus}
@@ -71,6 +73,11 @@ const CollectionResultsTableHeaderCell = (props) => {
                   onClick={
                     (event) => {
                       onAddProjectCollection(collectionId)
+                      onMetricsAddCollectionProject({
+                        type: 'Collection Table View',
+                        collectionConceptId: collectionId
+                      })
+
                       event.stopPropagation()
                     }
                   }
@@ -105,6 +112,7 @@ CollectionResultsTableHeaderCell.propTypes = {
     customProps: PropTypes.shape({
       onViewCollectionGranules: PropTypes.func,
       onAddProjectCollection: PropTypes.func,
+      onMetricsAddCollectionProject: PropTypes.func.isRequired,
       onRemoveCollectionFromProject: PropTypes.func,
       onViewCollectionDetails: PropTypes.func
     })

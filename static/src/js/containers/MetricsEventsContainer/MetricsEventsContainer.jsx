@@ -24,14 +24,20 @@ export class MetricsEventsContainer extends Component {
   }
 
   metricsClick(event) {
+    console.log('🚀 ~ file: MetricsEventsContainer.jsx:27 ~ MetricsEventsContainer ~ event:', event)
     const { onMetricsClick } = this.props
     const { target } = event
+    console.log('🚀 ~ file: MetricsEventsContainer.jsx:29 ~ MetricsEventsContainer ~ target:', target)
 
     const clickableParent = target.closest('a, button')
+    console.log('🚀 ~ file: MetricsEventsContainer.jsx:32 ~ MetricsEventsContainer ~ clickableParent:', clickableParent)
 
-    if (!clickableParent) return
+    if (!clickableParent) {
+      console.log('no clickable parent found!')
+    }
 
     const title = target.title || target.text
+    console.log('🚀 ~ file: MetricsEventsContainer.jsx:36 ~ MetricsEventsContainer ~ title:', title)
 
     onMetricsClick({
       elementLabel: title

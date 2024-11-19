@@ -40,6 +40,7 @@ export const CollectionResultsTable = ({
   loadMoreItems,
   onAddProjectCollection,
   onRemoveCollectionFromProject,
+  onMetricsAddCollectionProject,
   onViewCollectionDetails,
   onViewCollectionGranules,
   setVisibleMiddleIndex,
@@ -58,6 +59,7 @@ export const CollectionResultsTable = ({
         onViewCollectionGranules,
         onAddProjectCollection,
         onRemoveCollectionFromProject,
+        onMetricsAddCollectionProject,
         onViewCollectionDetails
       }
     },

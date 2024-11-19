@@ -62,6 +62,7 @@ export const CollectionResultsList = ({
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
+  onMetricsAddCollectionProject,
   onViewCollectionGranules,
   setVisibleMiddleIndex,
   visibleMiddleIndex
@@ -138,6 +139,7 @@ export const CollectionResultsList = ({
                         windowWidth: width,
                         collectionsMetadata,
                         onAddProjectCollection,
+                        onMetricsAddCollectionProject,
                         onRemoveCollectionFromProject,
                         onViewCollectionGranules,
                         onViewCollectionDetails,

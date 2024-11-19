@@ -6,6 +6,8 @@ import { withRouter } from 'react-router-dom'
 import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
+import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
+
 import { getProjectCollectionsIds } from '../../selectors/project'
 
 import CollectionResultsBody from '../../components/CollectionResults/CollectionResultsBody'
@@ -29,7 +31,9 @@ export const mapDispatchToProps = (dispatch) => ({
   onViewCollectionDetails:
     (collectionId) => dispatch(actions.viewCollectionDetails(collectionId)),
   onChangeCollectionPageNum:
-    (data) => dispatch(actions.changeCollectionPageNum(data))
+    (data) => dispatch(actions.changeCollectionPageNum(data)),
+  onMetricsAddCollectionProject:
+    (data) => dispatch(metricsAddCollectionProject(data))
 })
 
 export const CollectionResultsBodyContainer = (props) => {
@@ -40,6 +44,7 @@ export const CollectionResultsBodyContainer = (props) => {
     location,
     onAddProjectCollection,
     onChangeCollectionPageNum,
+    onMetricsAddCollectionProject,
     onRemoveCollectionFromProject,
     onViewCollectionDetails,
     onViewCollectionGranules,
@@ -63,6 +68,7 @@ export const CollectionResultsBodyContainer = (props) => {
       loadNextPage={loadNextPage}
       location={location}
       onAddProjectCollection={onAddProjectCollection}
+      onMetricsAddCollectionProject={onMetricsAddCollectionProject}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onViewCollectionDetails={onViewCollectionDetails}
       onViewCollectionGranules={onViewCollectionGranules}
@@ -79,6 +85,7 @@ CollectionResultsBodyContainer.propTypes = {
   collectionsSearch: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
+  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   onChangeCollectionPageNum: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,

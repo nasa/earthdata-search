@@ -42,6 +42,7 @@ import './GranuleResultsItem.scss'
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to focus a granule.
  * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
+ * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
  * @param {Array} props.readableGranuleName - Array of Readable Granule Name strings.
  */
@@ -249,6 +250,7 @@ const GranuleResultsItem = forwardRef(({
                 {
                   !isInProject
                     ? (
+                      // TODO add the granule
                       <Button
                         className="button granule-results-item__button granule-results-item__button--add"
                         label="Add granule"

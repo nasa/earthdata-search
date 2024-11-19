@@ -34,6 +34,7 @@ const CollectionResultsBody = ({
   onAddProjectCollection,
   onRemoveCollectionFromProject,
   onViewCollectionGranules,
+  onMetricsAddCollectionProject,
   onViewCollectionDetails,
   panelView,
   portal
@@ -113,6 +114,7 @@ const CollectionResultsBody = ({
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
           isItemLoaded={isItemLoaded}
+          onMetricsAddCollectionProject={onMetricsAddCollectionProject}
         />
       </CSSTransition>
       <CSSTransition
@@ -127,6 +129,7 @@ const CollectionResultsBody = ({
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
           onAddProjectCollection={onAddProjectCollection}
+          onMetricsAddCollectionProject={onMetricsAddCollectionProject}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onViewCollectionDetails={onViewCollectionDetails}
           onViewCollectionGranules={onViewCollectionGranules}

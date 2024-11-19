@@ -31,12 +31,15 @@ export const CollectionResultsListItem = memo(({
     collectionsMetadata,
     isItemLoaded,
     onAddProjectCollection,
+    onMetricsAddCollectionProject,
     onRemoveCollectionFromProject,
     onViewCollectionDetails,
     onViewCollectionGranules,
     setSize,
     windowWidth
   } = data
+  console.log('🚀 ~ file: CollectionResultsListItem.jsx:41 ~ data:', data)
+  console.log('🚀 ~ file: CollectionResultsListItem.jsx:41 ~ onMetricsAddCollectionProject:', onMetricsAddCollectionProject)
 
   useEffect(() => {
     // Set the height of the item on load
@@ -76,6 +79,7 @@ export const CollectionResultsListItem = memo(({
       <CollectionResultsItem
         collectionMetadata={collectionsMetadata[index]}
         onAddProjectCollection={onAddProjectCollection}
+        onMetricsAddCollectionProject={onMetricsAddCollectionProject}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onViewCollectionDetails={onViewCollectionDetails}
         onViewCollectionGranules={onViewCollectionGranules}
@@ -94,6 +98,7 @@ CollectionResultsListItem.propTypes = {
     ),
     isItemLoaded: PropTypes.func,
     onAddProjectCollection: PropTypes.func,
+    onMetricsAddCollectionProject: PropTypes.func.isRequired,
     onRemoveCollectionFromProject: PropTypes.func,
     onViewCollectionDetails: PropTypes.func,
     onViewCollectionGranules: PropTypes.func,

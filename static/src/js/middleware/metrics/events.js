@@ -136,6 +136,7 @@ export const dataAccess = (action) => {
 export const defaultClick = (action) => {
   const { payload } = action
   const { elementLabel } = payload
+  console.log('🚀 ~ file: events.js:139 ~ elementLabel:', elementLabel)
 
   dataLayer.push({
     event: 'defaultClick',
@@ -174,6 +175,26 @@ export const map = (action) => {
     mapEventCategory: 'button',
     mapEventAction: 'click',
     mapEventLabel: `Map ${eventLabel}`
+  })
+}
+
+/**
+* Pushes an add project event on the dataLayer.
+* This event is fired when a user adds a collection to their project
+* @param {Object} action - The action.
+*/
+export const addCollectionProject = (action) => {
+  const { payload } = action
+  const {
+    type,
+    collectionConceptId
+  } = payload
+  console.log('🚀 ~ file: events.js:191 ~ payload:', payload)
+
+  dataLayer.push({
+    event: 'addProject',
+    addProjectCollectionType: type,
+    addProjectCollectionConceptId: collectionConceptId
   })
 }
 
@@ -225,6 +246,7 @@ export const granuleFilter = (action) => {
     type,
     value
   } = payload
+  console.log('🚀 ~ file: events.js:247 ~ payload:', payload)
 
   dataLayer.push({
     event: 'granuleFilter',

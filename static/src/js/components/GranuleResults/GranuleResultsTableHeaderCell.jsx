@@ -69,6 +69,7 @@ const GranuleResultsTableHeaderCell = (props) => {
           {
             !isInProject
               ? (
+                // TODO add the granule
                 <Button
                   className="button granule-results-table__granule-action granule-results-table__granule-action--add"
                   type="button"
