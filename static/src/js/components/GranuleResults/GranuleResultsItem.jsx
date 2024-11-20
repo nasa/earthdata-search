@@ -349,6 +349,7 @@ GranuleResultsItem.propTypes = {
   isGranuleInProject: PropTypes.func.isRequired,
   location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
+  onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,

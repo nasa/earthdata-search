@@ -214,7 +214,7 @@ export const addGranuleProject = (action) => {
   dataLayer.push({
     event: 'addGranuleToProject',
     addProjectGranuleType: type,
-    addProjectCollectionConceptId: granuleConceptId
+    addProjectGranuleConceptId: granuleConceptId
   })
 }
 

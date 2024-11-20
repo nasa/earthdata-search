@@ -36,8 +36,8 @@ export class MetricsEventsContainer extends Component {
       console.log('no clickable parent found!')
     }
 
+    console.log('🚀 ~ file: MetricsEventsContainer.jsx:40 ~ MetricsEventsContainer ~ target:', target)
     const title = target.title || target.text
-    console.log('🚀 ~ file: MetricsEventsContainer.jsx:36 ~ MetricsEventsContainer ~ title:', title)
 
     onMetricsClick({
       elementLabel: title

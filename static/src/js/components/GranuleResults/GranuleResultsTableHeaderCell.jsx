@@ -70,7 +70,6 @@ const GranuleResultsTableHeaderCell = (props) => {
           {
             !isInProject
               ? (
-                // TODO add the granule
                 <Button
                   className="button granule-results-table__granule-action granule-results-table__granule-action--add"
                   type="button"
@@ -90,6 +89,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                         granuleConceptId: id
                       })
 
+                      // TODO something is failing with `defaultClick`
                       // Prevent event bubbling up to the granule focus event.
                       event.stopPropagation()
                     }
@@ -184,6 +184,7 @@ GranuleResultsTableHeaderCell.propTypes = {
       onExcludeGranule: PropTypes.func,
       onFocusedGranuleChange: PropTypes.func,
       onMetricsDataAccess: PropTypes.func,
+      onMetricsAddGranuleProject: PropTypes.func,
       onRemoveGranuleFromProjectCollection: PropTypes.func
     })
   }).isRequired,

@@ -4,6 +4,8 @@ import * as helpers from '../helpers'
 import {
   virtualPageview,
   dataAccess,
+  addCollectionProject,
+  addGranuleProject,
   browseGranuleImage,
   defaultClick,
   granuleFilter,
@@ -17,6 +19,8 @@ import {
 } from '../events'
 import {
   METRICS_DATA_ACCESS,
+  METRICS_ADD_COLLECTION_PROJECT,
+  METRICS_ADD_GRANULE_PROJECT,
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_GRANULE_FILTER,
@@ -381,6 +385,48 @@ describe('events', () => {
         event: 'spatialSelection',
         spatialSelectionCategory: 'Spatial Selection',
         spatialSelectionEventLabel: 'Some Item'
+      })
+    })
+  })
+
+  describe('add collection to project', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_ADD_COLLECTION_PROJECT,
+        payload: {
+          type: 'Some type',
+          collectionConceptId: 'C100000-EDSC'
+        }
+      }
+
+      addCollectionProject(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'addCollectionToProject',
+        addProjectCollectionType: 'Some type',
+        addProjectCollectionConceptId: 'C100000-EDSC'
+      })
+    })
+  })
+
+  describe('add collection to project', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_ADD_GRANULE_PROJECT,
+        payload: {
+          type: 'Some type',
+          granuleConceptId: 'G100000-EDSC'
+        }
+      }
+
+      addGranuleProject(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'addGranuleToProject',
+        addProjectGranuleType: 'Some type',
+        addProjectGranuleConceptId: 'G100000-EDSC'
       })
     })
   })

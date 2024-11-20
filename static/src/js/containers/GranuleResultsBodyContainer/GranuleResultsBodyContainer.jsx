@@ -120,6 +120,7 @@ GranuleResultsBodyContainer.propTypes = {
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
+  onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
