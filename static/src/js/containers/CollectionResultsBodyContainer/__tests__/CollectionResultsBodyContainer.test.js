@@ -32,6 +32,7 @@ function setup() {
       value: 'location'
     },
     onAddProjectCollection: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onChangeCollectionPageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),

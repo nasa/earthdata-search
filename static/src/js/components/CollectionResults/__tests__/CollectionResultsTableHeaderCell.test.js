@@ -17,6 +17,7 @@ function setup(overrideProps) {
           }
         },
         onViewCollectionGranules: jest.fn(),
+        onMetricsAddCollectionProject: jest.fn(),
         onAddProjectCollection: jest.fn(),
         onRemoveCollectionFromProject: jest.fn(),
         onViewCollectionDetails: jest.fn()

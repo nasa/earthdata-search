@@ -75,6 +75,7 @@ function setup() {
       }
     },
     onAddProjectCollection: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onChangePath: jest.fn(),
