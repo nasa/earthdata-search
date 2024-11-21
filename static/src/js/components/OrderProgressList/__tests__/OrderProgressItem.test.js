@@ -36,7 +36,6 @@ function setup(type, overrideProps) {
   const { retrieval } = orderOrigin
   const { collections } = retrieval
   const { byId } = collections
-  console.log(byId[1])
   const { orders } = byId[1]
 
   const order = orders[0]
