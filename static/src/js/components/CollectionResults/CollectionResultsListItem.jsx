@@ -38,8 +38,6 @@ export const CollectionResultsListItem = memo(({
     setSize,
     windowWidth
   } = data
-  console.log('🚀 ~ file: CollectionResultsListItem.jsx:41 ~ data:', data)
-  console.log('🚀 ~ file: CollectionResultsListItem.jsx:41 ~ onMetricsAddCollectionProject:', onMetricsAddCollectionProject)
 
   useEffect(() => {
     // Set the height of the item on load

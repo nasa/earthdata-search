@@ -62,7 +62,6 @@ const TemporalSelectionDropdown = ({
       isRecurring: existingIsRecurring,
       startDate: existingStartDate
     } = temporal
-    console.log('🚀 ~ file: TemporalSelectionDropdown.jsx:65 ~ temporal:', temporal)
 
     const newTemporal = {
       startDate: existingStartDate,
@@ -181,8 +180,6 @@ const TemporalSelectionDropdown = ({
 
       newStartDate.year(startDateObject.year())
     }
-
-    console.log('🚀 ~ file: TemporalSelectionDropdown.jsx:174 ~ temporal:', temporal)
 
     setTemporal({
       ...temporal,
