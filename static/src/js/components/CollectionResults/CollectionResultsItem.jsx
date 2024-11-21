@@ -421,6 +421,7 @@ CollectionResultsItem.displayName = 'CollectionResultsItem'
 CollectionResultsItem.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
+  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired

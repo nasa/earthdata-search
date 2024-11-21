@@ -30,6 +30,7 @@ function setup(overrideProps) {
       search: '?p=collectionId'
     },
     onAddProjectCollection: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onChangePath: jest.fn(),
@@ -116,6 +117,12 @@ describe('GranuleResultsActions component', () => {
       button.simulate('click')
       expect(props.onAddProjectCollection).toHaveBeenCalledTimes(1)
       expect(props.onAddProjectCollection).toHaveBeenCalledWith('collectionId')
+
+      expect(props.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
+      expect(props.onMetricsAddCollectionProject).toHaveBeenCalledWith({
+        collectionConceptId: 'collectionId',
+        type: 'Granule Results View'
+      })
     })
 
     test('renders the add button under PortalFeatureContainer', () => {

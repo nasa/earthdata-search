@@ -140,6 +140,7 @@ GranuleResultsListItem.propTypes = {
     onExcludeGranule: PropTypes.func,
     onFocusedGranuleChange: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,
+    onMetricsAddGranuleProject: PropTypes.func,
     onRemoveGranuleFromProjectCollection: PropTypes.func,
     readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
     setRowHeight: PropTypes.func,

@@ -26,6 +26,7 @@ jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', (
 })
 
 const setup = (propsOverride) => {
+  const user = userEvent.setup()
   const props = {
     ...collectionListItemProps,
     ...propsOverride
@@ -33,7 +34,8 @@ const setup = (propsOverride) => {
   render(<CollectionResultsItem {...props} />)
 
   return {
-    props
+    props,
+    user
   }
 }
 
@@ -50,8 +52,7 @@ describe('CollectionResultsList component', () => {
   })
 
   test('calls onViewCollectionGranules when clicked', async () => {
-    const user = userEvent.setup()
-    const { props } = setup()
+    const { props, user } = setup()
 
     const { onViewCollectionGranules } = props
     const collectionResultLink = screen.getByTestId('collection-result-item_collectionId1')
@@ -78,9 +79,10 @@ describe('CollectionResultsList component', () => {
     describe('while the image is loading', () => {
       test('renders with the loading state', async () => {
         const retrieveThumbnailResponse = 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
-        retrieveThumbnail.mockResolvedValueOnce(retrieveThumbnailResponse)
 
+        retrieveThumbnail.mockResolvedValueOnce(retrieveThumbnailResponse)
         setup()
+
         const image = screen.getByAltText('Thumbnail for Test Collection')
         expect(image.className).toEqual('collection-results-item__thumb-image collection-results-item__thumb-image--is-loading')
         await waitFor(() => {
@@ -100,9 +102,10 @@ describe('CollectionResultsList component', () => {
     describe('when the image has loaded', () => {
       test('renders with the loaded state', async () => {
         const retrieveThumbnailResponse = 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=='
-        retrieveThumbnail.mockResolvedValueOnce(retrieveThumbnailResponse)
 
+        retrieveThumbnail.mockResolvedValueOnce(retrieveThumbnailResponse)
         setup()
+
         await waitFor(() => {
           const image = screen.getByAltText('Thumbnail for Test Collection')
           expect(image.className).toContain('collection-results-item__thumb-image--is-loaded')
@@ -118,10 +121,10 @@ describe('CollectionResultsList component', () => {
 
   describe('on keypress', () => {
     test('does nothing on non-enter press', async () => {
-      const user = userEvent.setup()
-      const { props } = setup()
+      const { props, user } = setup()
       const { onViewCollectionGranules } = props
       const collectionDetailsButton = screen.getByRole('button', { name: 'View collection details' })
+
       user.type(collectionDetailsButton, '{a}')
 
       await waitFor(() => {
@@ -130,8 +133,7 @@ describe('CollectionResultsList component', () => {
     })
 
     test('calls onViewCollectionGranules on enter press', async () => {
-      const user = userEvent.setup()
-      const { props } = setup()
+      const { props, user } = setup()
       const { onViewCollectionGranules } = props
       const collectionDetailsButton = screen.getByRole('button', { name: 'View collection details' })
 
@@ -294,9 +296,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders a tooltip correctly', async () => {
-          const user = userEvent.setup()
-
-          setup({
+          const { user } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
               hasMapImagery: true
@@ -355,9 +355,7 @@ describe('CollectionResultsList component', () => {
       })
 
       test('renders a tooltip correctly', async () => {
-        const user = userEvent.setup()
-
-        setup({
+        const { user } = setup({
           collectionMetadata: {
             ...collectionListItemProps.collectionMetadata,
             collectionDataType: 'EXPEDITED',
@@ -377,27 +375,27 @@ describe('CollectionResultsList component', () => {
       })
     })
 
-    // TODO what is the best way to test the absence of something like this
     describe('customize', () => {
       test('does not render when no customization flags are true', async () => {
         setup({
           collection: collectionListItemProps.collectionMetadata
         })
 
+        // Ensure that the rendered icons are not meta-icons
         await waitFor(() => {
+          const icons = screen.getAllByTestId('edsc-icon')
+          icons.forEach((icon) => {
+            // https://developer.mozilla.org/en-US/docs/Web/API/SVGAnimatedString/baseVal
+            expect(icon.className.baseVal).not.toBe('edsc-icon meta-icon__icon')
+          })
         })
-
-        // Const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-        // const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-        // expect(featureItem.length).toEqual(0)
       })
     })
   })
 
   describe('view collection details button', () => {
     test('calls onViewCollectionGranules when clicked', async () => {
-      const user = userEvent.setup()
-      const { props } = setup()
+      const { props, user } = setup()
       const { onViewCollectionDetails } = props
 
       user.click(screen.getByRole('button', { name: 'View collection details' }))
@@ -440,8 +438,7 @@ describe('CollectionResultsList component', () => {
         })
 
         test('renders a tooltip correctly', async () => {
-          const user = userEvent.setup()
-          setup({
+          const { user } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
               isCSDA: true
@@ -482,8 +479,7 @@ describe('CollectionResultsList component', () => {
             })
 
             test('renders a tooltip correctly', async () => {
-              const user = userEvent.setup()
-              setup({
+              const { user } = setup({
                 collectionMetadata: {
                   ...collectionListItemProps.collectionMetadata,
                   consortiums: ['CWIC']
@@ -512,8 +508,7 @@ describe('CollectionResultsList component', () => {
             })
 
             test('renders a tooltip correctly', async () => {
-              const user = userEvent.setup()
-              setup({
+              const { user } = setup({
                 collectionMetadata: {
                   ...collectionListItemProps.collectionMetadata,
                   consortiums: ['GEOSS']
@@ -542,8 +537,7 @@ describe('CollectionResultsList component', () => {
             })
 
             test('renders a tooltip correctly', async () => {
-              const user = userEvent.setup()
-              setup({
+              const { user } = setup({
                 collectionMetadata: {
                   ...collectionListItemProps.collectionMetadata,
                   consortiums: ['FEDEO']
@@ -572,8 +566,7 @@ describe('CollectionResultsList component', () => {
             })
 
             test('renders a tooltip correctly', async () => {
-              const user = userEvent.setup()
-              setup({
+              const { user } = setup({
                 collectionMetadata: {
                   ...collectionListItemProps.collectionMetadata,
                   consortiums: ['CEOS']
@@ -606,8 +599,7 @@ describe('CollectionResultsList component', () => {
           })
 
           test('renders a tooltips correctly', async () => {
-            const user = userEvent.setup()
-            setup({
+            const { user } = setup({
               collectionMetadata: {
                 ...collectionListItemProps.collectionMetadata,
                 consortiums: ['CWIC', 'GEOSS']
@@ -638,9 +630,22 @@ describe('CollectionResultsList component', () => {
       })
     })
 
+    test('clicking the button calls onMetricsAddCollectionProject', async () => {
+      const { props, user } = setup()
+      const addProjectButton = screen.getByRole('button', { name: 'Add collection to the current project' })
+      user.click(addProjectButton)
+
+      await waitFor(() => {
+        expect(props.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsAddCollectionProject).toHaveBeenCalledWith({
+          collectionConceptId: 'collectionId1',
+          type: 'Collection List View'
+        })
+      })
+    })
+
     test('clicking the button adds the collection to the project', async () => {
-      const user = userEvent.setup()
-      const { props } = setup()
+      const { props, user } = setup()
       const { onAddProjectCollection } = props
       const addProjectButton = screen.getByRole('button', { name: 'Add collection to the current project' })
       user.click(addProjectButton)
@@ -666,8 +671,7 @@ describe('CollectionResultsList component', () => {
     })
 
     test('clicking the button removes the collection from the project', async () => {
-      const user = userEvent.setup()
-      const { props } = setup({
+      const { props, user } = setup({
         collectionMetadata: {
           ...collectionListItemProps.collectionMetadata,
           isCollectionInProject: true

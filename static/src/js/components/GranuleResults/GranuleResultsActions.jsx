@@ -59,7 +59,6 @@ const GranuleResultsActions = ({
   subscriptions
 }) => {
   const granuleResultsActionsContainer = useRef(null)
-  // TODO Add to project here as well
   const addToProjectButton = (
     <Button
       className="granule-results-actions__action granule-results-actions__action--add"

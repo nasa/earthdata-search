@@ -56,6 +56,8 @@ const CollectionResultsTableHeaderCell = (props) => {
             (event) => {
               onViewCollectionDetails(collectionId)
               event.stopPropagation()
+              // Capture metrics call
+              // document.dispatchEvent('click')
             }
           }
         />
