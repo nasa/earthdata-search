@@ -55,6 +55,9 @@ class Datepicker extends PureComponent {
 
     // Adds the new button container to the DOM
     container.appendChild(buttonContainer)
+
+    // Set up navigation button click handlers
+    this.setupNavigationHandlers(container)
   }
 
   componentDidUpdate(prevProps) {
@@ -80,6 +83,78 @@ class Datepicker extends PureComponent {
       element.selectionStart = caret
       element.selectionEnd = caret
     })
+  }
+
+  setupNavigationHandlers(container) {
+    const prevButton = container.querySelector('.rdtPrev')
+    const nextButton = container.querySelector('.rdtNext')
+
+    if (prevButton) {
+      prevButton.addEventListener('click', () => {
+        // Use setTimeout to let the state update
+        setTimeout(() => this.updateNavigationArrows(), 0)
+      })
+    }
+
+    if (nextButton) {
+      nextButton.addEventListener('click', () => {
+        // Use setTimeout to let the state update
+        setTimeout(() => this.updateNavigationArrows(), 0)
+      })
+    }
+  }
+
+  updateNavigationArrows() {
+    const { viewMode } = this.props
+
+    // Only proceed if viewMode is months
+    if (viewMode !== 'months') return
+
+    // Find the picker container
+    const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
+    if (!container) return
+
+    // Check specifically for the rdtDays container
+    const isDayView = container.querySelector('.rdtDays') !== null
+
+    if (!isDayView) return // Only apply this logic in day view
+
+    // Find navigation buttons
+    const prevButton = container.querySelector('.rdtPrev')
+    const nextButton = container.querySelector('.rdtNext')
+
+    // Get the current month display element
+    const monthDisplay = container.querySelector('.rdtSwitch')
+    if (!monthDisplay) return
+
+    // Parse the current month and year
+    const [monthStr] = monthDisplay.textContent.split(' ')
+    const currentMonth = new Date(`${monthStr} 1, 2000`).getMonth() // Convert month name to number (0-11)
+
+    // Check if navigation would cross year boundary
+    if (prevButton) {
+      if (currentMonth === 0) { // January
+        prevButton.innerHTML = ''
+        prevButton.style.pointerEvents = 'none'
+        prevButton.style.visibility = 'hidden'
+      } else {
+        prevButton.innerHTML = '<span>‹</span>'
+        prevButton.style.pointerEvents = ''
+        prevButton.style.visibility = 'visible'
+      }
+    }
+
+    if (nextButton) {
+      if (currentMonth === 11) { // December
+        nextButton.innerHTML = ''
+        nextButton.style.pointerEvents = 'none'
+        nextButton.style.visibility = 'hidden'
+      } else {
+        nextButton.innerHTML = '<span>›</span>'
+        nextButton.style.pointerEvents = ''
+        nextButton.style.visibility = 'visible'
+      }
+    }
   }
 
   render() {
@@ -138,13 +213,36 @@ class Datepicker extends PureComponent {
           }
         }
         isValidDate={isValidDate}
-        onChange={onChange}
+        onChange={
+          (newValue) => {
+            onChange(newValue)
+            this.updateNavigationArrows()
+          }
+        }
+        onOpen={
+          () => {
+          // Update arrows when calendar opens
+            setTimeout(() => {
+              this.updateNavigationArrows()
+              // Re-setup handlers when calendar opens
+              const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
+              if (container) {
+                this.setupNavigationHandlers(container)
+              }
+            }, 0)
+          }
+        }
         ref={picker}
         strictParsing
         timeFormat={false}
         utc
         value={value}
         viewMode={viewMode}
+        onViewModeChange={
+          () => {
+            this.updateNavigationArrows()
+          }
+        }
       />
     )
   }
