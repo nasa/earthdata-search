@@ -690,6 +690,7 @@
 
   adminGetPreferencesMetrics:
     handler: serverless/src/adminGetPreferencesMetrics/handler.default
+    memorySize: 1024
     timeout: ${env:LAMBDA_TIMEOUT, '30'}
     events:
       - http:
