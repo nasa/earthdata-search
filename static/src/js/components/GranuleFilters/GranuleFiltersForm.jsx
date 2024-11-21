@@ -15,6 +15,7 @@ import { findGridByName } from '../../util/grid'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { pluralize } from '../../util/pluralize'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import SidebarFiltersItem from '../Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../Sidebar/SidebarFiltersList'
@@ -447,17 +448,34 @@ export const GranuleFiltersForm = (props) => {
                     setFieldValue('temporal.isRecurring', isChecked)
                     setFieldTouched('temporal.isRecurring', isChecked)
 
-                    // If recurring is checked and values exist, set the recurringDay values
-                    if (isChecked) {
-                      const newStartDate = moment(temporal.startDate || undefined).utc()
+                    if (isChecked && temporal) {
                       if (temporal.startDate) {
-                        setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
-                      }
+                        const startDate = moment(temporal.startDate).utc()
 
-                      const newEndDate = moment(temporal.endDate || undefined).utc()
-                      if (temporal.endDate) {
-                        // Use the start year to calculate the end day of year. This avoids leap years potentially causing day mismatches
-                        setFieldValue('temporal.recurringDayEnd', newEndDate.year(newStartDate.year()).dayOfYear())
+                        if (temporal.endDate) {
+                          const endDate = moment(temporal.endDate).utc()
+
+                          // Check if start and end years are the same
+                          if (startDate.year() === endDate.year()) {
+                            const {
+                              minimumTemporalDateString,
+                              temporalDateFormatFull
+                            } = getApplicationConfig()
+                            const minDate = moment(
+                              minimumTemporalDateString,
+                              temporalDateFormatFull
+                            )
+                            // Only set start date to minimum year when user selects identicial years for start and end
+                            temporal.startDate = minDate.year()
+                            setFieldValue('temporal.startDate', minDate.toISOString())
+                          }
+
+                          setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
+                          setFieldValue('temporal.recurringDayEnd', endDate.year(startDate.year()).dayOfYear())
+                        } else {
+                          // If no end date, just set start day
+                          setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
+                        }
                       }
                     }
 
