@@ -136,6 +136,7 @@ export const dataAccess = (action) => {
 export const defaultClick = (action) => {
   const { payload } = action
   const { elementLabel } = payload
+
   dataLayer.push({
     event: 'defaultClick',
     defaultClickCategory: 'button',
