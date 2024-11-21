@@ -251,7 +251,6 @@ const GranuleResultsItem = forwardRef(({
                 {
                   !isInProject
                     ? (
-                      // TODO add the granule
                       <Button
                         className="button granule-results-item__button granule-results-item__button--add"
                         label="Add granule"

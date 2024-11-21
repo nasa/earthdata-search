@@ -127,7 +127,6 @@ export const CollectionResultsItem = forwardRef(({
   }
 
   const filteredConsortiums = consortiums.filter((consortium) => consortium !== 'EOSDIS')
-  // TODO this is one spot call metrics default click try to fix it
   const addToProjectButton = (
     <Button
       className="collection-results-item__action collection-results-item__action--add"

@@ -89,7 +89,6 @@ const GranuleResultsTableHeaderCell = (props) => {
                         granuleConceptId: id
                       })
 
-                      // TODO something is failing with `defaultClick`
                       // Prevent event bubbling up to the granule focus event.
                       event.stopPropagation()
                     }

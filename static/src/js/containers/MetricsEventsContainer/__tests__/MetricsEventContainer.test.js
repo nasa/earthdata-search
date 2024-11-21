@@ -71,4 +71,21 @@ describe('MetricsEventsContainer component', () => {
       })
     })
   })
+
+  test('when a title can be found on the elements props', () => {
+    const { enzymeWrapper } = setup()
+
+    const btn = document.createElement('button')
+    btn.name = 'test-title'
+    btn.name = 'test-title'
+
+    enzymeWrapper.instance().metricsClick({
+      target: btn
+    })
+
+    expect(enzymeWrapper.props().onMetricsClick).toHaveBeenCalledTimes(1)
+    expect(enzymeWrapper.props().onMetricsClick).toHaveBeenCalledWith({
+      elementLabel: 'test-title'
+    })
+  })
 })

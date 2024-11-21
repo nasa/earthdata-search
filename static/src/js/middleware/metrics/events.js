@@ -136,8 +136,6 @@ export const dataAccess = (action) => {
 export const defaultClick = (action) => {
   const { payload } = action
   const { elementLabel } = payload
-  console.log('🚀 ~ file: events.js:139 ~ elementLabel:', elementLabel)
-
   dataLayer.push({
     event: 'defaultClick',
     defaultClickCategory: 'button',
@@ -189,8 +187,6 @@ export const addCollectionProject = (action) => {
     type,
     collectionConceptId
   } = payload
-  console.log('🚀 ~ file: events.js:191 ~ payload:', payload)
-
   dataLayer.push({
     event: 'addCollectionToProject',
     addProjectCollectionType: type,
@@ -200,7 +196,7 @@ export const addCollectionProject = (action) => {
 
 /**
 * Pushes an add granule to project event on the dataLayer.
-* This event is fired when a user adds a collection to their project
+* This event is fired when a user adds a granule to their project
 * @param {Object} action - The action.
 */
 export const addGranuleProject = (action) => {
@@ -209,8 +205,6 @@ export const addGranuleProject = (action) => {
     type,
     granuleConceptId
   } = payload
-  console.log('🚀 ~ file: events.js:191 ~ payload:', payload)
-
   dataLayer.push({
     event: 'addGranuleToProject',
     addProjectGranuleType: type,
@@ -266,8 +260,6 @@ export const granuleFilter = (action) => {
     type,
     value
   } = payload
-  console.log('🚀 ~ file: events.js:247 ~ payload:', payload)
-
   dataLayer.push({
     event: 'granuleFilter',
     granuleFilterCategory: 'Granule Filter',
