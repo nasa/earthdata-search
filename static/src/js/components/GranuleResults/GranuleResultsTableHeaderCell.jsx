@@ -37,8 +37,8 @@ const GranuleResultsTableHeaderCell = (props) => {
     onAddGranuleToProjectCollection,
     onExcludeGranule,
     onFocusedGranuleChange,
-    onMetricsDataAccess,
     onMetricsAddGranuleProject,
+    onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection
   } = customProps
 
@@ -182,8 +182,8 @@ GranuleResultsTableHeaderCell.propTypes = {
       onAddGranuleToProjectCollection: PropTypes.func,
       onExcludeGranule: PropTypes.func,
       onFocusedGranuleChange: PropTypes.func,
-      onMetricsDataAccess: PropTypes.func,
       onMetricsAddGranuleProject: PropTypes.func,
+      onMetricsDataAccess: PropTypes.func,
       onRemoveGranuleFromProjectCollection: PropTypes.func
     })
   }).isRequired,

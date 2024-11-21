@@ -63,14 +63,15 @@ innerElementType.propTypes = {
  * @param {Number} props.height - The height of the container provided by AutoSizer.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Boolean} props.isOpenSearch - Flag designating CWIC collections.
- * @param {Function} props.isGranuleInProject - Function to detirmine if the granule is in the project.
- * @param {Function} props.isItemLoaded - Callback to detirmine if a granule has been loaded.
- * @param {Number} props.itemCount - Number of total granule list itmes.
+ * @param {Function} props.isGranuleInProject - Function to determine if the granule is in the project.
+ * @param {Function} props.isItemLoaded - Callback to determine if a granule has been loaded.
+ * @param {Number} props.itemCount - Number of total granule list items.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
  * @param {Object} props.location - Location passed from react router.
  * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
+ * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param { Function } props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
  * @param { Array } props.readableGranuleName - The readableGranuleName filter value.
@@ -241,8 +242,8 @@ export const GranuleResultsListBody = ({
                 onAddGranuleToProjectCollection,
                 onExcludeGranule,
                 onFocusedGranuleChange,
-                onMetricsDataAccess,
                 onMetricsAddGranuleProject,
+                onMetricsDataAccess,
                 onRemoveGranuleFromProjectCollection,
                 readableGranuleName,
                 setRowHeight,
@@ -301,8 +302,8 @@ GranuleResultsListBody.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
   setVisibleMiddleIndex: PropTypes.func,

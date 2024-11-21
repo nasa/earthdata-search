@@ -48,8 +48,8 @@ export const GranuleResultsList = ({
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
-  onMetricsDataAccess,
   onMetricsAddGranuleProject,
+  onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
   readableGranuleName,
   setVisibleMiddleIndex,
@@ -83,8 +83,8 @@ export const GranuleResultsList = ({
             onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
             onExcludeGranule={onExcludeGranule}
             onFocusedGranuleChange={onFocusedGranuleChange}
-            onMetricsDataAccess={onMetricsDataAccess}
             onMetricsAddGranuleProject={onMetricsAddGranuleProject}
+            onMetricsDataAccess={onMetricsDataAccess}
             onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
             readableGranuleName={readableGranuleName}
             setVisibleMiddleIndex={setVisibleMiddleIndex}
@@ -118,8 +118,8 @@ GranuleResultsList.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
   setVisibleMiddleIndex: PropTypes.func,

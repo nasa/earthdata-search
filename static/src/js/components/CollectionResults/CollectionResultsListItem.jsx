@@ -96,7 +96,7 @@ CollectionResultsListItem.propTypes = {
     ),
     isItemLoaded: PropTypes.func,
     onAddProjectCollection: PropTypes.func,
-    onMetricsAddCollectionProject: PropTypes.func.isRequired,
+    onMetricsAddCollectionProject: PropTypes.func,
     onRemoveCollectionFromProject: PropTypes.func,
     onViewCollectionDetails: PropTypes.func,
     onViewCollectionGranules: PropTypes.func,

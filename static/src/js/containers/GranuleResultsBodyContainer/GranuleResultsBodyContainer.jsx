@@ -24,10 +24,10 @@ export const mapDispatchToProps = (dispatch) => ({
     (data) => dispatch(actions.excludeGranule(data)),
   onFocusedGranuleChange:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
+  onMetricsAddGranuleProject:
+      (data) => dispatch(metricsAddGranuleProject(data)),
   onMetricsDataAccess:
     (data) => dispatch(metricsDataAccess(data)),
-  onMetricsAddGranuleProject:
-    (data) => dispatch(metricsAddGranuleProject(data)),
   onAddGranuleToProjectCollection:
     (data) => dispatch(actions.addGranuleToProjectCollection(data)),
   onRemoveGranuleFromProjectCollection:
@@ -58,8 +58,8 @@ export const GranuleResultsBodyContainer = (props) => {
     onChangeGranulePageNum,
     onExcludeGranule,
     onFocusedGranuleChange,
-    onMetricsDataAccess,
     onMetricsAddGranuleProject,
+    onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
     panelView,
     portal,
@@ -120,10 +120,10 @@ GranuleResultsBodyContainer.propTypes = {
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
-  onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,

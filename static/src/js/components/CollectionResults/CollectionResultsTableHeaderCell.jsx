@@ -111,7 +111,7 @@ CollectionResultsTableHeaderCell.propTypes = {
     customProps: PropTypes.shape({
       onViewCollectionGranules: PropTypes.func,
       onAddProjectCollection: PropTypes.func,
-      onMetricsAddCollectionProject: PropTypes.func.isRequired,
+      onMetricsAddCollectionProject: PropTypes.func,
       onRemoveCollectionFromProject: PropTypes.func,
       onViewCollectionDetails: PropTypes.func
     })

@@ -25,16 +25,17 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
 import './GranuleResultsActions.scss'
-
+// TODO doesn't this need to be props.
 /**
  * Renders GranuleResultsActions.
  * @param {String} focusedCollectionId - The collection ID.
  * @param {Number} granuleCount - The granule count.
  * @param {Number} granuleLimit - The granule limit.
- * @param {Boolean} initialLoading - Flag designating the inital loading state.
+ * @param {Boolean} initialLoading - Flag designating the initial loading state.
  * @param {Boolean} isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Object} location - The location from the store.
  * @param {Function} onAddProjectCollection - Callback to add the collection from the project.
+ * @param {Function} onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onRemoveCollectionFromProject - Callback to remove the collection from the project.
  */

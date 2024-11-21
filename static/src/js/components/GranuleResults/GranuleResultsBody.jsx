@@ -25,6 +25,7 @@ import './GranuleResultsBody.scss'
  * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onExcludeGranule - Callback exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback change the focused granule.
+ * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
  * @param {Function} props.panelView - The current panel view.
  */
@@ -41,8 +42,8 @@ const GranuleResultsBody = ({
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
-  onMetricsDataAccess,
   onMetricsAddGranuleProject,
+  onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
   panelView,
   project
@@ -199,9 +200,9 @@ const GranuleResultsBody = ({
           location={location}
           onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onExcludeGranule={onExcludeGranule}
+          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
-          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           visibleMiddleIndex={visibleMiddleIndex}
@@ -226,8 +227,8 @@ const GranuleResultsBody = ({
           loadMoreItems={loadMoreItems}
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
-          onMetricsDataAccess={onMetricsDataAccess}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
+          onMetricsDataAccess={onMetricsDataAccess}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
@@ -308,8 +309,8 @@ GranuleResultsBody.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
   project: PropTypes.shape({

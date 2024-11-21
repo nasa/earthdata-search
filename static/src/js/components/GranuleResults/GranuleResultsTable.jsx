@@ -26,6 +26,7 @@ import './GranuleResultsTable.scss'
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
+ * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
@@ -45,8 +46,8 @@ export const GranuleResultsTable = ({
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
-  onMetricsDataAccess,
   onMetricsAddGranuleProject,
+  onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
   setVisibleMiddleIndex,
   visibleMiddleIndex
@@ -68,8 +69,8 @@ export const GranuleResultsTable = ({
         onAddGranuleToProjectCollection,
         onExcludeGranule,
         onFocusedGranuleChange,
-        onMetricsDataAccess,
         onMetricsAddGranuleProject,
+        onMetricsDataAccess,
         onRemoveGranuleFromProjectCollection
       }
     },
@@ -224,8 +225,8 @@ GranuleResultsTable.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
+  onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number

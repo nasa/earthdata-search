@@ -19,6 +19,7 @@ import './CollectionResultsBody.scss'
  * @param {Array} props.collections - Collections passed from redux store.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
  * @param {Function} props.onAddProjectCollection - Callback to add a collection to a project.
+ * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {Function} props.onRemoveCollectionFromProject - Callback to remove a collection to a project.
  * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
  * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
@@ -32,9 +33,9 @@ const CollectionResultsBody = ({
   loadNextPage,
   location,
   onAddProjectCollection,
+  onMetricsAddCollectionProject,
   onRemoveCollectionFromProject,
   onViewCollectionGranules,
-  onMetricsAddCollectionProject,
   onViewCollectionDetails,
   panelView,
   portal
