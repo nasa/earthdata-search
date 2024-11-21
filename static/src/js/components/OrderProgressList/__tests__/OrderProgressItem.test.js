@@ -1,57 +1,122 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { Badge, ProgressBar } from 'react-bootstrap'
+import { render, screen } from '@testing-library/react'
+
 import { OrderProgressItem } from '../OrderProgressItem'
 
-import { retrievalStatusPropsEsi } from '../../OrderStatus/__tests__/mocks'
+import {
+  retrievalStatusPropsEsi,
+  retrievalStatusPropsSwotOrder,
+  retrievalStatusPropsHarmonyOrder
+} from '../../OrderStatus/__tests__/mocks'
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
-Enzyme.configure({ adapter: new Adapter() })
+function setup(type, overrideProps) {
+  let orderOrigin = null
+  let props = {}
 
-function setup(overrideProps) {
-  const order = retrievalStatusPropsEsi.retrieval.collections.byId[1].orders[0]
+  switch (type) {
+    case 'SWODLR':
+      orderOrigin = retrievalStatusPropsSwotOrder
+      break
+    case 'ESI':
+      orderOrigin = retrievalStatusPropsEsi
+      break
+    case 'Harmony':
+      orderOrigin = retrievalStatusPropsHarmonyOrder
+      break
+    default:
+      orderOrigin = retrievalStatusPropsEsi
+      break
+  }
 
-  const props = {
+  const { retrieval } = orderOrigin
+  const { collections } = retrieval
+  const { byId } = collections
+  console.log(byId[1])
+  const { orders } = byId[1]
+
+  const order = orders[0]
+
+  props = {
     order,
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<OrderProgressItem {...props} />)
+  render(<OrderProgressItem {...props} />)
 
   return {
-    enzymeWrapper,
     props
   }
 }
 
 describe('OrderProgressItem component', () => {
-  test('shows the correct order metadata', () => {
-    const { enzymeWrapper } = setup()
+  describe('Complete Swodlr Order', () => {
+    test('shows the correct order metadata', () => {
+      setup('SWODLR')
 
-    expect(enzymeWrapper.find('.order-progress-item__title').text()).toEqual('Order ID: 5000000333461')
-    expect(enzymeWrapper.find('.order-progress-item__processed').text()).toEqual('81 of 81 granule(s) processed (100%)')
-    expect(enzymeWrapper.find(ProgressBar).prop('now')).toEqual(100)
-    expect(enzymeWrapper.find(Badge).text()).toEqual('Complete')
+      expect(screen.getByRole('heading', {
+        level: 5,
+        name: 'Order ID: e7efe743-f253-43e3-b017-74faa8bdfcf1'
+      })).toBeInTheDocument()
+
+      expect(screen.getByText('Complete')).toBeInTheDocument()
+      expect(screen.getByText('(100%)')).toBeInTheDocument()
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
+    })
+  })
+
+  describe('Complete ESI Order', () => {
+    test('shows the correct order metadata', () => {
+      setup('ESI')
+
+      expect(screen.getByRole('heading', {
+        level: 5,
+        name: 'Order ID: 5000000333461'
+      })).toBeInTheDocument()
+
+      expect(screen.getByText('Complete')).toBeInTheDocument()
+      expect(screen.getByText('81 of 81 granule(s) processed (100%)')).toBeInTheDocument()
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
+    })
+  })
+
+  describe('Complete Harmony Order', () => {
+    test('shows the correct order metadata', () => {
+      setup('Harmony')
+
+      expect(screen.getByRole('heading', {
+        level: 5,
+        name: 'Order ID: 9f6fc038-0966-4a27-8220-2a0c7eff6078'
+      })).toBeInTheDocument()
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
+      expect(screen.getByText('Successful')).toBeInTheDocument()
+      expect(screen.getByText('(100%)')).toBeInTheDocument()
+    })
   })
 
   describe('when order information is not defined', () => {
     test('displays the correct progress', () => {
-      const { enzymeWrapper } = setup({
+      setup('other', {
         order: {
           ...retrievalStatusPropsEsi.retrieval.collections.byId[1].orders[0],
           state: 'creating',
           order_information: {}
         }
       })
-      expect(enzymeWrapper.find('.order-progress-item__title').text()).toEqual('Order ID: 5000000333461')
-      expect(enzymeWrapper.find('.order-progress-item__processed').text()).toEqual('(0%)')
-      expect(enzymeWrapper.find(ProgressBar).prop('now')).toEqual(0)
-      expect(enzymeWrapper.find(Badge).text()).toEqual('Creating')
+
+      expect(screen.getByRole('heading', {
+        level: 5,
+        name: 'Order ID: 5000000333461'
+      })).toBeInTheDocument()
+
+      expect(screen.getByText('(0%)')).toBeInTheDocument()
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0')
+      expect(screen.getByText('Creating')).toBeInTheDocument()
     })
   })
 })

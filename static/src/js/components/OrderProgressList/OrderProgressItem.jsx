@@ -46,6 +46,13 @@ export const OrderProgressItem = ({
     }
   }
 
+  // Grab the order status if it exists and check if it's complete
+  const { status = 'created' } = orderInformation
+
+  if (type === 'SWODLR' && status === 'complete') {
+    totalPercentProcessed = 100
+  }
+
   const badgeClass = classNames(
     'order-progress-item__badge',
     {

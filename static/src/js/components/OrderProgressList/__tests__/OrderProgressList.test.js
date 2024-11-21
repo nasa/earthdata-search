@@ -1,17 +1,13 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, screen } from '@testing-library/react'
 
 import { OrderProgressList } from '../OrderProgressList'
-import { OrderProgressItem } from '../OrderProgressItem'
 
 import { retrievalStatusPropsEsi } from '../../OrderStatus/__tests__/mocks'
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
-
-Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const { orders } = retrievalStatusPropsEsi.retrieval.collections.byId[1]
@@ -20,22 +16,21 @@ function setup() {
     orders
   }
 
-  const enzymeWrapper = shallow(<OrderProgressList {...props} />)
+  render(<OrderProgressList {...props} />)
 
   return {
-    enzymeWrapper,
     props
   }
 }
 
 describe('OrderProgressList component', () => {
-  const { enzymeWrapper } = setup()
-
   test('is displayed', () => {
-    expect(enzymeWrapper).toBeDefined()
+    setup()
+    expect(screen.getByRole('list')).toBeVisible()
   })
 
   test('renders items', () => {
-    expect(enzymeWrapper.find(OrderProgressItem).length).toEqual(2)
+    setup()
+    expect(screen.queryAllByRole('listitem').length).toEqual(2)
   })
 })
