@@ -14,7 +14,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-function setup(type, overrideProps) {
+const setup = (type, overrideProps) => {
   let orderOrigin = null
   let props = {}
 

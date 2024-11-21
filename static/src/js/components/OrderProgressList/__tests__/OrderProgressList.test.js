@@ -9,7 +9,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-function setup() {
+const setup = () => {
   const { orders } = retrievalStatusPropsEsi.retrieval.collections.byId[1]
 
   const props = {
