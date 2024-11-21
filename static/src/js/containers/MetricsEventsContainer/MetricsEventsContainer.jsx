@@ -27,17 +27,16 @@ export class MetricsEventsContainer extends Component {
     console.log('🚀 ~ file: MetricsEventsContainer.jsx:27 ~ MetricsEventsContainer ~ event:', event)
     const { onMetricsClick } = this.props
     const { target } = event
-    console.log('🚀 ~ file: MetricsEventsContainer.jsx:29 ~ MetricsEventsContainer ~ target:', target)
+    console.log('🚀 ~ file: MetricsEventsContainer.jsx:30 ~ MetricsEventsContainer ~ target:', target)
 
     const clickableParent = target.closest('a, button')
-    console.log('🚀 ~ file: MetricsEventsContainer.jsx:32 ~ MetricsEventsContainer ~ clickableParent:', clickableParent)
 
     if (!clickableParent) {
       console.log('no clickable parent found!')
     }
 
-    console.log('🚀 ~ file: MetricsEventsContainer.jsx:40 ~ MetricsEventsContainer ~ target:', target)
-    const title = target.title || target.text
+    const title = target.title || target.text || target.name || target.innerText
+    console.log('🚀 ~ file: MetricsEventsContainer.jsx:39 ~ MetricsEventsContainer ~ title:', title)
 
     onMetricsClick({
       elementLabel: title
