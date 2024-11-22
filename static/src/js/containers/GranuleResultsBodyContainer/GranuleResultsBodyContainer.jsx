@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
-import { metricsDataAccess, metricsAddGranuleProject } from '../../middleware/metrics/actions'
+import { metricsAddGranuleProject, metricsDataAccess } from '../../middleware/metrics/actions'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'

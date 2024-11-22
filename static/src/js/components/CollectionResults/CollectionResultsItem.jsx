@@ -128,6 +128,7 @@ export const CollectionResultsItem = forwardRef(({
   }
 
   const filteredConsortiums = consortiums.filter((consortium) => consortium !== 'EOSDIS')
+
   const addToProjectButton = (
     <Button
       className="collection-results-item__action collection-results-item__action--add"

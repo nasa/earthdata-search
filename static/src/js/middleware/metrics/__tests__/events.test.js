@@ -410,7 +410,7 @@ describe('events', () => {
     })
   })
 
-  describe('add collection to project', () => {
+  describe('add granule to project', () => {
     test('pushes to the dataLayer', () => {
       const action = {
         type: METRICS_ADD_GRANULE_PROJECT,

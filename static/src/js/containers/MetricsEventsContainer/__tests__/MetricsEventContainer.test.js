@@ -76,8 +76,8 @@ describe('MetricsEventsContainer component', () => {
     const { enzymeWrapper } = setup()
 
     const btn = document.createElement('button')
-    btn.name = 'test-title'
-    btn.name = 'test-title'
+    btn.name = 'test-name'
+    btn.innerText = 'test-inner-title'
 
     enzymeWrapper.instance().metricsClick({
       target: btn
@@ -85,7 +85,7 @@ describe('MetricsEventsContainer component', () => {
 
     expect(enzymeWrapper.props().onMetricsClick).toHaveBeenCalledTimes(1)
     expect(enzymeWrapper.props().onMetricsClick).toHaveBeenCalledWith({
-      elementLabel: 'test-title'
+      elementLabel: 'test-name'
     })
   })
 })
