@@ -9,7 +9,7 @@ import {
   GranuleResultsBodyContainer
 } from '../GranuleResultsBodyContainer'
 import GranuleResultsBody from '../../../components/GranuleResults/GranuleResultsBody'
-import * as metricsDataAccess from '../../../middleware/metrics/actions'
+import * as metricsActions from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -76,9 +76,19 @@ describe('mapDispatchToProps', () => {
 
   test('onMetricsDataAccess calls metricsDataAccess', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsDataAccess, 'metricsDataAccess')
+    const spy = jest.spyOn(metricsActions, 'metricsDataAccess')
 
     mapDispatchToProps(dispatch).onMetricsDataAccess({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onMetricsAddGranuleProject calls metricsAddGranuleProject', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsActions, 'metricsAddGranuleProject')
+
+    mapDispatchToProps(dispatch).onMetricsAddGranuleProject({ mock: 'data' })
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith({ mock: 'data' })

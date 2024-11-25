@@ -72,7 +72,7 @@ describe('MetricsEventsContainer component', () => {
     })
   })
 
-  test('when a title can be found on the elements props', () => {
+  test('when a title can be found on other elements props', () => {
     const { enzymeWrapper } = setup()
 
     const btn = document.createElement('button')

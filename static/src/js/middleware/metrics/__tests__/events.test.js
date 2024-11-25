@@ -395,8 +395,8 @@ describe('events', () => {
         type: METRICS_ADD_COLLECTION_PROJECT,
         payload: {
           collectionConceptId: 'C100000-EDSC',
-          page: 'page of origin',
-          view: 'view of origin'
+          page: 'collections',
+          view: 'table'
         }
       }
 
@@ -406,8 +406,8 @@ describe('events', () => {
       expect(dataLayerMock).toHaveBeenCalledWith({
         event: 'addCollectionToProject',
         addProjectCollectionConceptId: 'C100000-EDSC',
-        addProjectCollectionPage: 'page of origin',
-        addProjectCollectionResultsView: 'view of origin'
+        addProjectCollectionPage: 'collections',
+        addProjectCollectionResultsView: 'table'
       })
     })
   })
@@ -419,8 +419,8 @@ describe('events', () => {
         payload: {
           collectionConceptId: 'C100000-EDSC',
           granuleConceptId: 'G100000-EDSC',
-          page: 'page of origin',
-          view: 'view of origin'
+          page: 'granules',
+          view: 'list'
         }
       }
 
@@ -431,8 +431,8 @@ describe('events', () => {
         event: 'addGranuleToProject',
         addProjectCollectionConceptId: 'C100000-EDSC',
         addProjectGranuleConceptId: 'G100000-EDSC',
-        addProjectGranulePage: 'page of origin',
-        addProjectGranuleResultsView: 'view of origin'
+        addProjectGranulePage: 'granules',
+        addProjectGranuleResultsView: 'list'
       })
     })
   })
