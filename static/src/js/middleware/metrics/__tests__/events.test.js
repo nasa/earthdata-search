@@ -15,7 +15,8 @@ import {
   spatialEdit,
   spatialSelection,
   timing,
-  collectionSortChange
+  collectionSortChange,
+  temporalFilter
 } from '../events'
 import {
   METRICS_DATA_ACCESS,
@@ -30,7 +31,8 @@ import {
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_SPATIAL_SELECTION,
-  METRICS_TIMING
+  METRICS_TIMING,
+  METRICS_TEMPORAL_FILTER
 } from '../constants'
 
 const dataLayerMock = global.dataLayer.push
@@ -453,6 +455,28 @@ describe('events', () => {
       expect(dataLayerMock).toHaveBeenCalledWith({
         event: 'granuleFilter',
         granuleFilterCategory: 'Granule Filter',
+        granuleFilterEventAction: 'Some Type',
+        granuleFilterEventValue: 'Some Value'
+      })
+    })
+  })
+
+  describe('temporalFilter', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_TEMPORAL_FILTER,
+        payload: {
+          type: 'Some Type',
+          value: 'Some Value'
+        }
+      }
+
+      temporalFilter(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'temporalFilter',
+        granuleFilterCategory: 'Temporal Filter',
         granuleFilterEventAction: 'Some Type',
         granuleFilterEventValue: 'Some Value'
       })

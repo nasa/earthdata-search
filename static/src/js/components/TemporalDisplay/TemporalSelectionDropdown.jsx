@@ -22,7 +22,8 @@ import './TemporalSelectionDropdown.scss'
 const TemporalSelectionDropdown = ({
   allowRecurring,
   onChangeQuery,
-  temporalSearch
+  temporalSearch,
+  onMetricsTemporalFilter
 }) => {
   const {
     startDate = '',
@@ -77,6 +78,11 @@ const TemporalSelectionDropdown = ({
       newTemporal.recurringDayEnd = `${moment(existingEndDate).utc().year(startYear).dayOfYear()}`
     }
 
+    onMetricsTemporalFilter({
+      type: 'Apply Temporal Filter',
+      value: newTemporal
+    })
+
     onChangeQuery({
       collection: {
         temporal: newTemporal
@@ -100,6 +106,11 @@ const TemporalSelectionDropdown = ({
 
     setOpen(false)
 
+    onMetricsTemporalFilter({
+      type: 'Clear Temporal Filter',
+      value: {}
+    })
+
     onChangeQuery({
       collection: {
         temporal: {}
@@ -113,6 +124,11 @@ const TemporalSelectionDropdown = ({
   const onRecurringToggle = (e) => {
     const { target } = e
     const { checked: isChecked } = target
+
+    onMetricsTemporalFilter({
+      type: 'Set Recurring',
+      value: isChecked
+    })
 
     setTemporal({
       ...temporal,
@@ -181,6 +197,11 @@ const TemporalSelectionDropdown = ({
       newStartDate.year(startDateObject.year())
     }
 
+    onMetricsTemporalFilter({
+      type: 'Set Start Date',
+      value: newStartDate.toISOString()
+    })
+
     setTemporal({
       ...temporal,
       // eslint-disable-next-line no-underscore-dangle
@@ -206,6 +227,11 @@ const TemporalSelectionDropdown = ({
 
       newEndDate.year(endDateObject.year())
     }
+
+    onMetricsTemporalFilter({
+      type: 'Set End Date',
+      value: newEndDate.toISOString()
+    })
 
     setTemporal({
       ...temporal,
@@ -247,6 +273,7 @@ TemporalSelectionDropdown.defaultProps = {
 TemporalSelectionDropdown.propTypes = {
   allowRecurring: PropTypes.bool,
   onChangeQuery: PropTypes.func.isRequired,
+  onMetricsTemporalFilter: PropTypes.func.isRequired,
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,

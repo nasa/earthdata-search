@@ -9,6 +9,7 @@ import {
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_SPATIAL_SELECTION,
+  METRICS_TEMPORAL_FILTER,
   METRICS_TIMELINE,
   METRICS_TIMING,
   METRICS_COLLECTION_SORT_CHANGE
@@ -60,6 +61,11 @@ export const metricsSpatialEdit = (payload) => ({
 
 export const metricsGranuleFilter = (payload) => ({
   type: METRICS_GRANULE_FILTER,
+  payload
+})
+
+export const metricsTemporalFilter = (payload) => ({
+  type: METRICS_TEMPORAL_FILTER,
   payload
 })
 

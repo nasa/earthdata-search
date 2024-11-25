@@ -258,6 +258,25 @@ export const spatialSelection = (action) => {
 }
 
 /**
+* Pushes a temporalFilter event on the dataLayer.
+* @param {Object} action - The action.
+*/
+export const temporalFilter = (action) => {
+  const { payload } = action
+  const {
+    type,
+    value
+  } = payload
+
+  dataLayer.push({
+    event: 'temporalFilter',
+    granuleFilterCategory: 'Temporal Filter',
+    granuleFilterEventAction: type,
+    granuleFilterEventValue: value
+  })
+}
+
+/**
 * Pushes a granuleFilter event on the dataLayer.
 * @param {Object} action - The action.
 */
