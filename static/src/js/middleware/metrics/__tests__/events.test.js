@@ -4,6 +4,8 @@ import * as helpers from '../helpers'
 import {
   virtualPageview,
   dataAccess,
+  addCollectionProject,
+  addGranuleProject,
   browseGranuleImage,
   defaultClick,
   granuleFilter,
@@ -17,6 +19,8 @@ import {
 } from '../events'
 import {
   METRICS_DATA_ACCESS,
+  METRICS_ADD_COLLECTION_PROJECT,
+  METRICS_ADD_GRANULE_PROJECT,
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_GRANULE_FILTER,
@@ -381,6 +385,54 @@ describe('events', () => {
         event: 'spatialSelection',
         spatialSelectionCategory: 'Spatial Selection',
         spatialSelectionEventLabel: 'Some Item'
+      })
+    })
+  })
+
+  describe('add collection to project', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_ADD_COLLECTION_PROJECT,
+        payload: {
+          collectionConceptId: 'C100000-EDSC',
+          page: 'collections',
+          view: 'table'
+        }
+      }
+
+      addCollectionProject(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'addCollectionToProject',
+        addProjectCollectionConceptId: 'C100000-EDSC',
+        addProjectCollectionPage: 'collections',
+        addProjectCollectionResultsView: 'table'
+      })
+    })
+  })
+
+  describe('add granule to project', () => {
+    test('pushes to the dataLayer', () => {
+      const action = {
+        type: METRICS_ADD_GRANULE_PROJECT,
+        payload: {
+          collectionConceptId: 'C100000-EDSC',
+          granuleConceptId: 'G100000-EDSC',
+          page: 'granules',
+          view: 'list'
+        }
+      }
+
+      addGranuleProject(action)
+
+      expect(dataLayerMock).toHaveBeenCalledTimes(1)
+      expect(dataLayerMock).toHaveBeenCalledWith({
+        event: 'addGranuleToProject',
+        addProjectCollectionConceptId: 'C100000-EDSC',
+        addProjectGranuleConceptId: 'G100000-EDSC',
+        addProjectGranulePage: 'granules',
+        addProjectGranuleResultsView: 'list'
       })
     })
   })

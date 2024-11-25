@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
-import { metricsDataAccess } from '../../middleware/metrics/actions'
+import { metricsAddGranuleProject, metricsDataAccess } from '../../middleware/metrics/actions'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
@@ -24,6 +24,8 @@ export const mapDispatchToProps = (dispatch) => ({
     (data) => dispatch(actions.excludeGranule(data)),
   onFocusedGranuleChange:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
+  onMetricsAddGranuleProject:
+      (data) => dispatch(metricsAddGranuleProject(data)),
   onMetricsDataAccess:
     (data) => dispatch(metricsDataAccess(data)),
   onAddGranuleToProjectCollection:
@@ -56,6 +58,7 @@ export const GranuleResultsBodyContainer = (props) => {
     onChangeGranulePageNum,
     onExcludeGranule,
     onFocusedGranuleChange,
+    onMetricsAddGranuleProject,
     onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
     panelView,
@@ -94,6 +97,7 @@ export const GranuleResultsBodyContainer = (props) => {
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
       onMetricsDataAccess={onMetricsDataAccess}
+      onMetricsAddGranuleProject={onMetricsAddGranuleProject}
       onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
       panelView={panelView}
       portal={portal}
@@ -119,6 +123,7 @@ GranuleResultsBodyContainer.propTypes = {
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,

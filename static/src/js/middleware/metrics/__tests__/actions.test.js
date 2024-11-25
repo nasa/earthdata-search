@@ -1,5 +1,7 @@
 import {
   METRICS_BROWSE_GRANULE_IMAGE,
+  METRICS_ADD_COLLECTION_PROJECT,
+  METRICS_ADD_GRANULE_PROJECT,
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
@@ -14,6 +16,8 @@ import {
 
 import {
   metricsDataAccess,
+  metricsAddCollectionProject,
+  metricsAddGranuleProject,
   metricsClick,
   metricsBrowseGranuleImage,
   metricsGranuleFilter,
@@ -41,6 +45,42 @@ describe('actions', () => {
       } = action
 
       expect(type).toEqual(METRICS_DATA_ACCESS)
+      expect(payload).toEqual(data)
+    })
+  })
+
+  describe('metricsAddCollectionProject', () => {
+    test('returns the correct action', () => {
+      const data = {
+        test: 'test payload'
+      }
+
+      const action = metricsAddCollectionProject(data)
+
+      const {
+        type,
+        payload
+      } = action
+
+      expect(type).toEqual(METRICS_ADD_COLLECTION_PROJECT)
+      expect(payload).toEqual(data)
+    })
+  })
+
+  describe('metricsAddGranuleProject', () => {
+    test('returns the correct action', () => {
+      const data = {
+        test: 'test payload'
+      }
+
+      const action = metricsAddGranuleProject(data)
+
+      const {
+        type,
+        payload
+      } = action
+
+      expect(type).toEqual(METRICS_ADD_GRANULE_PROJECT)
       expect(payload).toEqual(data)
     })
   })

@@ -31,7 +31,7 @@ export class MetricsEventsContainer extends Component {
 
     if (!clickableParent) return
 
-    const title = target.title || target.text
+    const title = target.title || target.text || target.name || target.innerText
 
     onMetricsClick({
       elementLabel: title

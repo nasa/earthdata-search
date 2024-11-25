@@ -3,6 +3,9 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
+
+import * as metricsActions from '../../../middleware/metrics/actions'
+
 import {
   mapDispatchToProps,
   mapStateToProps,
@@ -75,6 +78,7 @@ function setup() {
       }
     },
     onAddProjectCollection: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onChangePath: jest.fn(),
@@ -138,6 +142,16 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('path')
+  })
+
+  test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsActions, 'metricsAddCollectionProject')
+
+    mapDispatchToProps(dispatch).onMetricsAddCollectionProject({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
   })
 })
 

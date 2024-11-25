@@ -31,6 +31,7 @@ export const CollectionResultsListItem = memo(({
     collectionsMetadata,
     isItemLoaded,
     onAddProjectCollection,
+    onMetricsAddCollectionProject,
     onRemoveCollectionFromProject,
     onViewCollectionDetails,
     onViewCollectionGranules,
@@ -76,6 +77,7 @@ export const CollectionResultsListItem = memo(({
       <CollectionResultsItem
         collectionMetadata={collectionsMetadata[index]}
         onAddProjectCollection={onAddProjectCollection}
+        onMetricsAddCollectionProject={onMetricsAddCollectionProject}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onViewCollectionDetails={onViewCollectionDetails}
         onViewCollectionGranules={onViewCollectionGranules}
@@ -94,6 +96,7 @@ CollectionResultsListItem.propTypes = {
     ),
     isItemLoaded: PropTypes.func,
     onAddProjectCollection: PropTypes.func,
+    onMetricsAddCollectionProject: PropTypes.func,
     onRemoveCollectionFromProject: PropTypes.func,
     onViewCollectionDetails: PropTypes.func,
     onViewCollectionGranules: PropTypes.func,

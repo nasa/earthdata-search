@@ -60,6 +60,7 @@ function setup(type) {
       onFocusedGranuleChange: jest.fn(),
       onMetricsDataAccess: jest.fn(),
       onRemoveGranuleFromProjectCollection: jest.fn(),
+      onMetricsAddGranuleProject: jest.fn(),
       portal: {},
       itemCount: 2,
       isItemLoaded: jest.fn(),

@@ -178,6 +178,48 @@ export const map = (action) => {
 }
 
 /**
+* Pushes an add collection to project event on the dataLayer.
+* This event is fired when a user adds a collection to their project
+* @param {Object} action - The action.
+*/
+export const addCollectionProject = (action) => {
+  const { payload } = action
+  const {
+    collectionConceptId,
+    view,
+    page
+  } = payload
+  dataLayer.push({
+    event: 'addCollectionToProject',
+    addProjectCollectionConceptId: collectionConceptId,
+    addProjectCollectionResultsView: view,
+    addProjectCollectionPage: page
+  })
+}
+
+/**
+* Pushes an add granule to project event on the dataLayer.
+* This event is fired when a user adds a granule to their project
+* @param {Object} action - The action.
+*/
+export const addGranuleProject = (action) => {
+  const { payload } = action
+  const {
+    collectionConceptId,
+    granuleConceptId,
+    view,
+    page
+  } = payload
+  dataLayer.push({
+    event: 'addGranuleToProject',
+    addProjectCollectionConceptId: collectionConceptId,
+    addProjectGranuleConceptId: granuleConceptId,
+    addProjectGranulePage: page,
+    addProjectGranuleResultsView: view
+  })
+}
+
+/**
 * Pushes a spatialEdit event on the dataLayer.
 * This event is fired when on the leaflet edit control we edit shapes on the map
 * @param {Object} action - The action.
@@ -225,7 +267,6 @@ export const granuleFilter = (action) => {
     type,
     value
   } = payload
-
   dataLayer.push({
     event: 'granuleFilter',
     granuleFilterCategory: 'Granule Filter',

@@ -71,4 +71,21 @@ describe('MetricsEventsContainer component', () => {
       })
     })
   })
+
+  test('when a title prop is not but, can be derived from other element props', () => {
+    const { enzymeWrapper } = setup()
+
+    const btn = document.createElement('button')
+    btn.name = 'test-name'
+    btn.innerText = 'test-inner-title'
+
+    enzymeWrapper.instance().metricsClick({
+      target: btn
+    })
+
+    expect(enzymeWrapper.props().onMetricsClick).toHaveBeenCalledTimes(1)
+    expect(enzymeWrapper.props().onMetricsClick).toHaveBeenCalledWith({
+      elementLabel: 'test-name'
+    })
+  })
 })
