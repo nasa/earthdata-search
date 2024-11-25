@@ -2,9 +2,11 @@ import nock from 'nock'
 
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
+import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
 import * as getJwtToken from '../../util/getJwtToken'
 import * as getS3Client from '../../../../static/src/js/util/getS3Client'
+
 import generateNotebook from '../handler'
 
 const OLD_ENV = process.env
@@ -241,6 +243,62 @@ describe('generateNotebook', () => {
       const [errorMessage] = errors
 
       expect(errorMessage).toEqual('Test error message')
+    })
+  })
+
+  describe('when earthdata environment is UAT', () => {
+    test('should render notebook with UAT URLs', async () => {
+      jest.spyOn(determineEarthdataEnvironment, 'determineEarthdataEnvironment').mockImplementation(() => 'uat')
+
+      nock(/graphql/)
+        .post('/api')
+        .reply(200, {
+          data: {
+            granules: {
+              items: [{
+                conceptId: 'G1234-MOCK',
+                title: 'Mock Granule',
+                collection: {
+                  conceptId: 'C1234-MOCK',
+                  title: 'Mock Collection',
+                  variables: {
+                    items: [{
+                      name: 'Mock Variable'
+                    }]
+                  }
+                }
+              }]
+            }
+          }
+        })
+
+      const event = {
+        body: JSON.stringify({
+          granuleId: 'G1234-MOCK',
+          variableId: 'V1234-MOCK'
+        }),
+        headers: {}
+      }
+
+      await generateNotebook(event)
+
+      expect(mockS3Send).toHaveBeenCalled()
+      const s3PutCall = mockS3Send.mock.calls[0][0]
+      const notebookContent = JSON.parse(s3PutCall.input.Body)
+      expect(notebookContent).toHaveProperty('cells')
+
+      // Find the second markdown cell
+      const markdownCells = notebookContent.cells.filter((cell) => cell.cell_type === 'markdown')
+
+      expect(markdownCells.length).toBeGreaterThan(1)
+      const secondMarkdownCell = markdownCells[0]
+
+      // Check if the second markdown cell contains the correct UAT collection link
+      const hasUatCollectionLink = secondMarkdownCell.source.some(
+        (line) => line.includes('- __Collection__: [Mock Collection](https://search.uat.earthdata.nasa.gov/search/granules?p=C1234-MOCK)')
+      )
+
+      expect(hasUatCollectionLink).toBeTruthy()
     })
   })
 })

@@ -188,7 +188,7 @@ Resources:
         Rules:
           - Id: DeleteObjects
             Status: Enabled
-            ExpirationInDays: ${env:S3_Objects_Expiration_In_Days, '30'}
+            ExpirationInDays: ${env:S3_OBJECTS_EXPIRATION_IN_DAYS, '30'}
   
   GenerateNotebooksBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -217,7 +217,7 @@ Resources:
               - arn:aws:s3:::${self:custom.generateNotebooksBucketName}
             Condition:
               StringEquals:
-                aws:sourceVpc: ${env:Internet_Services_East_VPC, 'default-east-vpc'}
+                aws:sourceVpc: ${env:INTERNET_SERVICE_EAST_VPC, 'default-east-vpc'}
 
 
 Outputs:
