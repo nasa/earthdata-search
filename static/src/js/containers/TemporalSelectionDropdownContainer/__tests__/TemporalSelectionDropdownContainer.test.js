@@ -37,6 +37,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
+
+  test('onMetricsTemporalFilter calls metricsTemporalFilter', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'metricsTemporalFilter')
+
+    mapDispatchToProps(dispatch).onMetricsTemporalFilter({ metric: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ metric: 'data' })
+  })
 })
 
 describe('mapStateToProps', () => {
