@@ -47,29 +47,6 @@ export const retrievalStatusPropsEsi = {
   ]
 }
 
-export const retrievalStatusEsiOrder = {
-  type: 'ESI',
-  order_number: '5000000333461',
-  state: 'complete',
-  order_information: {
-    downloadUrls: {
-      downloadUrl: [
-        'https://n5eil02u.ecs.nsidc.org/esir/5000000333461.html',
-        'https://n5eil02u.ecs.nsidc.org/esir/5000000333461.zip'
-      ]
-    },
-    requestStatus: {
-      status: 'complete',
-      totalNumber: 81,
-      numberProcessed: 81
-    },
-    contactInformation: {
-      contactName: 'NSIDC User Services',
-      contactEmail: 'nsidc@nsidc.org'
-    }
-  }
-}
-
 export const retrievalStatusPropsSwodlrOrder = {
   id: 1,
   type: 'SWODLR',
