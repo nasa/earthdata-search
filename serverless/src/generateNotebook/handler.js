@@ -61,7 +61,7 @@ const generateNotebook = async (event) => {
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const generatedTime = moment().utc().format('MMMM DD, YYYY [at] HH:mm:ss [UTC]')
-  console.log('🚀 ~ generateNotebook ~ formattedDate:', generatedTime)
+
   const jwtToken = getJwtToken(event)
 
   const graphQLHeader = {

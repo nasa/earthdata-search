@@ -89,7 +89,6 @@ dockerRun() {
         -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
         -e "GIBS_JOB_ENABLED=$bamboo_GIBS_JOB_ENABLED" \
         -e "CLOUDFRONT_OAI_ID=$bamboo_CLOUDFRONT_OAI_ID" \
-        -e "Internet_Services_West_VPC=$bamboo_Internet_Services_West_VPC" \
         -e "S3_Objects_Expiration_In_Days=$bamboo_S3_Objects_Expiration_In_Days" \
         -e "LAMBDA_TIMEOUT=$bamboo_LAMBDA_TIMEOUT" \
         -e "LOG_DESTINATION_ARN=$bamboo_LOG_DESTINATION_ARN" \

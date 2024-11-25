@@ -42,7 +42,8 @@ module.exports = {
     // Use the fileTransformer for all the logo.pngs that exist in the portals directory
     '(?<=/portals)(?<=/logo).png':
       '<rootDir>/static/src/js/util/jest/fileTransformer.cjs',
-    '^.+\\.(js|jsx)$': 'babel-jest'
+    '^.+\\.(js|jsx)$': 'babel-jest',
+    '^.+\\.ipynb$': '<rootDir>/static/src/js/util/jest/ipynbTransformer.cjs'
   },
   testEnvironment: 'jsdom',
   transformIgnorePatterns: [`/node_modules/(?!${esModulesToIgnore})`]
