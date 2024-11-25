@@ -25,6 +25,7 @@ import './GranuleResultsBody.scss'
  * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onExcludeGranule - Callback exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback change the focused granule.
+ * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
  * @param {Function} props.panelView - The current panel view.
  */
@@ -41,6 +42,7 @@ const GranuleResultsBody = ({
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
+  onMetricsAddGranuleProject,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
   panelView,
@@ -198,6 +200,7 @@ const GranuleResultsBody = ({
           location={location}
           onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onExcludeGranule={onExcludeGranule}
+          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
           onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
@@ -224,6 +227,7 @@ const GranuleResultsBody = ({
           loadMoreItems={loadMoreItems}
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
+          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onMetricsDataAccess={onMetricsDataAccess}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
@@ -305,6 +309,7 @@ GranuleResultsBody.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,

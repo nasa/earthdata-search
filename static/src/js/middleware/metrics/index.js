@@ -2,6 +2,8 @@ import { LOCATION_CHANGE } from 'connected-react-router'
 
 import {
   collectionSortChange,
+  addCollectionProject,
+  addGranuleProject,
   browseGranuleImage,
   dataAccess,
   defaultClick,
@@ -21,6 +23,8 @@ import {
   METRICS_COLLECTION_SORT_CHANGE,
   METRICS_DATA_ACCESS,
   METRICS_GRANULE_FILTER,
+  METRICS_ADD_COLLECTION_PROJECT,
+  METRICS_ADD_GRANULE_PROJECT,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
@@ -36,6 +40,14 @@ const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
 
   if (action.type === METRICS_DATA_ACCESS) {
     dataAccess(action, getState())
+  }
+
+  if (action.type === METRICS_ADD_COLLECTION_PROJECT) {
+    addCollectionProject(action)
+  }
+
+  if (action.type === METRICS_ADD_GRANULE_PROJECT) {
+    addGranuleProject(action)
   }
 
   if (action.type === METRICS_CLICK) {

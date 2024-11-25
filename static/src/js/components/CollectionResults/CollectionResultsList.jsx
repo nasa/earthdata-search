@@ -48,6 +48,7 @@ innerElementType.propTypes = {
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
  * @param {Function} props.onAddProjectCollection - Callback to add a collection to a project.
+ * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {Function} props.onRemoveCollectionFromProject - Callback to remove a collection to a project.
  * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
  * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
@@ -60,6 +61,7 @@ export const CollectionResultsList = ({
   itemCount,
   loadMoreItems,
   onAddProjectCollection,
+  onMetricsAddCollectionProject,
   onRemoveCollectionFromProject,
   onViewCollectionDetails,
   onViewCollectionGranules,
@@ -138,6 +140,7 @@ export const CollectionResultsList = ({
                         windowWidth: width,
                         collectionsMetadata,
                         onAddProjectCollection,
+                        onMetricsAddCollectionProject,
                         onRemoveCollectionFromProject,
                         onViewCollectionGranules,
                         onViewCollectionDetails,
@@ -184,6 +187,7 @@ CollectionResultsList.propTypes = {
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
+  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,

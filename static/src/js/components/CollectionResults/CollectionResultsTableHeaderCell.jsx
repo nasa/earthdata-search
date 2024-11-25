@@ -19,6 +19,7 @@ const CollectionResultsTableHeaderCell = (props) => {
   const {
     onViewCollectionGranules,
     onAddProjectCollection,
+    onMetricsAddCollectionProject,
     onRemoveCollectionFromProject,
     onViewCollectionDetails
   } = customProps
@@ -71,6 +72,12 @@ const CollectionResultsTableHeaderCell = (props) => {
                   onClick={
                     (event) => {
                       onAddProjectCollection(collectionId)
+                      onMetricsAddCollectionProject({
+                        collectionConceptId: collectionId,
+                        view: 'table',
+                        page: 'collections'
+                      })
+
                       event.stopPropagation()
                     }
                   }
@@ -105,6 +112,7 @@ CollectionResultsTableHeaderCell.propTypes = {
     customProps: PropTypes.shape({
       onViewCollectionGranules: PropTypes.func,
       onAddProjectCollection: PropTypes.func,
+      onMetricsAddCollectionProject: PropTypes.func,
       onRemoveCollectionFromProject: PropTypes.func,
       onViewCollectionDetails: PropTypes.func
     })

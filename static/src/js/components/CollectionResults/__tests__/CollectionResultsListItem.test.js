@@ -36,6 +36,7 @@ const defaultProps = {
     isItemLoaded: jest.fn(() => true),
     loadMoreItems: jest.fn(),
     onAddProjectCollection: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     onViewCollectionGranules: jest.fn(),

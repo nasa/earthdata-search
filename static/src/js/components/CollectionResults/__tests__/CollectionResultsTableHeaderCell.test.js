@@ -17,6 +17,7 @@ function setup(overrideProps) {
           }
         },
         onViewCollectionGranules: jest.fn(),
+        onMetricsAddCollectionProject: jest.fn(),
         onAddProjectCollection: jest.fn(),
         onRemoveCollectionFromProject: jest.fn(),
         onViewCollectionDetails: jest.fn()
@@ -79,6 +80,20 @@ describe('CollectionResultsTableHeaderCell component', () => {
 
     expect(props.column.customProps.onAddProjectCollection).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onAddProjectCollection).toHaveBeenCalledWith('collectionId')
+  })
+
+  test('clicking the add to project button calls onMetricsAddCollectionProject', () => {
+    const { enzymeWrapper, props } = setup()
+
+    const addButton = enzymeWrapper.find('.collection-results-table__collection-action--add')
+    addButton.simulate('click', { stopPropagation: jest.fn() })
+
+    expect(props.column.customProps.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
+    expect(props.column.customProps.onMetricsAddCollectionProject).toHaveBeenCalledWith({
+      collectionConceptId: 'collectionId',
+      page: 'collections',
+      view: 'table'
+    })
   })
 
   test('clicking the remove from project button calls onRemoveCollectionFromProject', () => {

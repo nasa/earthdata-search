@@ -82,6 +82,7 @@ function setup(overrideProps) {
       pathname: '/test'
     },
     onAddProjectCollection: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),

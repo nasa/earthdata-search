@@ -53,6 +53,7 @@ const setup = (type, overrideProps) => {
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
+    onMetricsAddGranuleProject: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     readableGranuleName: [''],
     portal: {
@@ -643,6 +644,22 @@ describe('GranuleResultsItem component', () => {
       expect(props.onAddGranuleToProjectCollection.mock.calls[0]).toEqual([{
         collectionId: 'collectionId',
         granuleId: 'granuleId'
+      }])
+    })
+
+    test('is passed the metrics callback', async () => {
+      const { props, user } = setup('cmr')
+
+      expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
+
+      await user.click(screen.getByLabelText('Add granule'))
+
+      expect(props.onMetricsAddGranuleProject.mock.calls.length).toBe(1)
+      expect(props.onMetricsAddGranuleProject.mock.calls[0]).toEqual([{
+        collectionConceptId: 'collectionId',
+        granuleConceptId: 'granuleId',
+        page: 'granules',
+        view: 'list'
       }])
     })
   })

@@ -9,7 +9,7 @@ import {
   GranuleResultsBodyContainer
 } from '../GranuleResultsBodyContainer'
 import GranuleResultsBody from '../../../components/GranuleResults/GranuleResultsBody'
-import * as metricsDataAccess from '../../../middleware/metrics/actions'
+import * as metricsActions from '../../../middleware/metrics/actions'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -27,6 +27,7 @@ function setup(overrideProps) {
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
+    onMetricsAddGranuleProject: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     panelView: 'list',
     portal: {},
@@ -73,11 +74,21 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('granuleId')
   })
 
-  test('onMetricsDataAccess calls metricsDataAccess', () => {
+  test('onMetricsDataAccess calls metricsActions.metricsDataAccess', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(metricsDataAccess, 'metricsDataAccess')
+    const spy = jest.spyOn(metricsActions, 'metricsDataAccess')
 
     mapDispatchToProps(dispatch).onMetricsDataAccess({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onMetricsAddGranuleProject calls metricsActions.metricsAddGranuleProject', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsActions, 'metricsAddGranuleProject')
+
+    mapDispatchToProps(dispatch).onMetricsAddGranuleProject({ mock: 'data' })
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith({ mock: 'data' })

@@ -25,6 +25,7 @@ function setup(overrideProps) {
     onAddGranuleToProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
+    onMetricsAddGranuleProject: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
     visibleMiddleIndex: 1,

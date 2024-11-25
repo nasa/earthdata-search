@@ -25,6 +25,7 @@ function setup(overrideProps) {
         onExcludeGranule: jest.fn(),
         onFocusedGranuleChange: jest.fn(),
         onMetricsDataAccess: jest.fn(),
+        onMetricsAddGranuleProject: jest.fn(),
         onRemoveGranuleFromProjectCollection: jest.fn()
       }
     },
@@ -123,5 +124,27 @@ describe('GranuleResultsTableHeaderCell component', () => {
 
     expect(button.exists()).toBeTruthy()
     expect(portalFeatureContainer.props().authentication).toBeTruthy()
+  })
+
+  test('clicking the add button under calls onAddGranuleToProjectCollection and onMetricsAddGranuleProject', () => {
+    const { props, enzymeWrapper } = setup(undefined)
+
+    const addGranuleButton = enzymeWrapper
+      .find(PortalFeatureContainer)
+      .find('.granule-results-table__granule-action--add')
+
+    addGranuleButton.props().onClick({
+      stopPropagation: () => {}
+    })
+
+    expect(props.column.customProps.onAddGranuleToProjectCollection).toHaveBeenCalledTimes(1)
+
+    expect(props.column.customProps.onMetricsAddGranuleProject).toHaveBeenCalledTimes(1)
+    expect(props.column.customProps.onMetricsAddGranuleProject).toHaveBeenCalledWith({
+      collectionConceptId: 'collectionId',
+      granuleConceptId: 'one',
+      page: 'granules',
+      view: 'table'
+    })
   })
 })

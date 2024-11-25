@@ -1,4 +1,6 @@
 import {
+  METRICS_ADD_COLLECTION_PROJECT,
+  METRICS_ADD_GRANULE_PROJECT,
   METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_CLICK,
   METRICS_DATA_ACCESS,
@@ -11,6 +13,16 @@ import {
   METRICS_TIMING,
   METRICS_COLLECTION_SORT_CHANGE
 } from './constants'
+
+export const metricsAddCollectionProject = (payload) => ({
+  type: METRICS_ADD_COLLECTION_PROJECT,
+  payload
+})
+
+export const metricsAddGranuleProject = (payload) => ({
+  type: METRICS_ADD_GRANULE_PROJECT,
+  payload
+})
 
 export const metricsDataAccess = (payload) => ({
   type: METRICS_DATA_ACCESS,

@@ -48,6 +48,7 @@ export const GranuleResultsList = ({
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
+  onMetricsAddGranuleProject,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
   readableGranuleName,
@@ -82,6 +83,7 @@ export const GranuleResultsList = ({
             onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
             onExcludeGranule={onExcludeGranule}
             onFocusedGranuleChange={onFocusedGranuleChange}
+            onMetricsAddGranuleProject={onMetricsAddGranuleProject}
             onMetricsDataAccess={onMetricsDataAccess}
             onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
             readableGranuleName={readableGranuleName}
@@ -116,6 +118,7 @@ GranuleResultsList.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,

@@ -41,6 +41,7 @@ export const GranuleResultsListItem = memo(({
     onAddGranuleToProjectCollection,
     onExcludeGranule,
     onFocusedGranuleChange,
+    onMetricsAddGranuleProject,
     onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
     readableGranuleName,
@@ -112,6 +113,7 @@ export const GranuleResultsListItem = memo(({
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
+          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
           readableGranuleName={readableGranuleName}
           ref={element}
@@ -137,6 +139,7 @@ GranuleResultsListItem.propTypes = {
     onAddGranuleToProjectCollection: PropTypes.func,
     onExcludeGranule: PropTypes.func,
     onFocusedGranuleChange: PropTypes.func,
+    onMetricsAddGranuleProject: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,
     onRemoveGranuleFromProjectCollection: PropTypes.func,
     readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,

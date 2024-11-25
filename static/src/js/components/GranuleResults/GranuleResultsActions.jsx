@@ -25,18 +25,19 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
 import './GranuleResultsActions.scss'
-
 /**
  * Renders GranuleResultsActions.
- * @param {String} focusedCollectionId - The collection ID.
- * @param {Number} granuleCount - The granule count.
- * @param {Number} granuleLimit - The granule limit.
- * @param {Boolean} initialLoading - Flag designating the inital loading state.
- * @param {Boolean} isCollectionInProject - Flag designating if the collection is in the project.
- * @param {Object} location - The location from the store.
- * @param {Function} onAddProjectCollection - Callback to add the collection from the project.
- * @param {Function} onChangePath - Callback to change the path.
- * @param {Function} onRemoveCollectionFromProject - Callback to remove the collection from the project.
+ * @param {Object} props - The props passed into the component.
+ * @param {String} props.focusedCollectionId - The collection ID.
+ * @param {Number} props.granuleCount - The granule count.
+ * @param {Number} props.granuleLimit - The granule limit.
+ * @param {Boolean} props.initialLoading - Flag designating the initial loading state.
+ * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
+ * @param {Object} props.location - The location from the store.
+ * @param {Function} props.onAddProjectCollection - Callback to add the collection from the project.
+ * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
+ * @param {Function} props.onChangePath - Callback to change the path.
+ * @param {Function} props.onRemoveCollectionFromProject - Callback to remove the collection from the project.
  */
 const GranuleResultsActions = ({
   authToken,
@@ -50,6 +51,7 @@ const GranuleResultsActions = ({
   isCollectionInProject,
   location,
   onAddProjectCollection,
+  onMetricsAddCollectionProject,
   onChangePath,
   onRemoveCollectionFromProject,
   projectGranuleCount,
@@ -58,11 +60,19 @@ const GranuleResultsActions = ({
   subscriptions
 }) => {
   const granuleResultsActionsContainer = useRef(null)
-
   const addToProjectButton = (
     <Button
       className="granule-results-actions__action granule-results-actions__action--add"
-      onClick={() => onAddProjectCollection(focusedCollectionId)}
+      onClick={
+        () => {
+          onAddProjectCollection(focusedCollectionId)
+          onMetricsAddCollectionProject({
+            collectionConceptId: focusedCollectionId,
+            page: 'granules',
+            view: ''
+          })
+        }
+      }
       icon={FaFolderPlus}
       label="Add collection to the current project"
       title="Add collection to the current project"
@@ -247,6 +257,7 @@ GranuleResultsActions.propTypes = {
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
+  onMetricsAddCollectionProject: PropTypes.func.isRequired,
   projectGranuleCount: PropTypes.number,
   removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   searchGranuleCount: PropTypes.number,
