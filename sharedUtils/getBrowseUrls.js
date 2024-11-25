@@ -1,3 +1,5 @@
+import { isLinkBrowse } from './isLinkBrowse'
+
 /**
  * Pull out browse links from within the granule metadata
  * @param {Array} granules search result for granules that a user has asked to download
@@ -10,9 +12,9 @@ export const getBrowseUrls = (granules) => {
 
     // Find the correct link from the list within the metadata
     return linkMetadata.filter((link) => {
-      const { inherited, rel } = link
+      const { inherited } = link
 
-      return rel.includes('/browse#') && !inherited
+      return isLinkBrowse(link) && !inherited
     })
   }).filter(Boolean)
 
