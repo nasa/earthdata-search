@@ -105,7 +105,7 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
-  test('onMetricsAddCollectionProject calls actions.metricsAddCollectionProject', () => {
+  test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsActions, 'metricsAddCollectionProject')
 

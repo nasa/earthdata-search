@@ -74,7 +74,7 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('granuleId')
   })
 
-  test('onMetricsDataAccess calls metricsDataAccess', () => {
+  test('onMetricsDataAccess calls metricsActions.metricsDataAccess', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsActions, 'metricsDataAccess')
 
@@ -84,7 +84,7 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
-  test('onMetricsAddGranuleProject calls metricsAddGranuleProject', () => {
+  test('onMetricsAddGranuleProject calls metricsActions.metricsAddGranuleProject', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsActions, 'metricsAddGranuleProject')
 
