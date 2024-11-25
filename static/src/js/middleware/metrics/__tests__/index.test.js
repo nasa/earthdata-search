@@ -187,6 +187,34 @@ describe('metrics middleware', () => {
     expect(events.granuleFilter).toHaveBeenCalledWith(action)
   })
 
+  test('calls addCollectionProject event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_ADD_COLLECTION_PROJECT,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.addCollectionProject).toHaveBeenCalledTimes(1)
+    expect(events.addCollectionProject).toHaveBeenCalledWith(action)
+  })
+
+  test('calls addGranuleProject event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_ADD_GRANULE_PROJECT,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.addGranuleProject).toHaveBeenCalledTimes(1)
+    expect(events.addGranuleProject).toHaveBeenCalledWith(action)
+  })
+
   test('calls temporalFilter event', () => {
     const { invoke } = createStore()
 
