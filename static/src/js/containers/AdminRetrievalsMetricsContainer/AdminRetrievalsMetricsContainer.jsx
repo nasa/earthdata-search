@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
+import { metricsTemporalFilter } from '../../middleware/metrics/actions'
 import AdminRetrievalsMetrics from '../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
 
 export const mapStateToProps = (state) => ({
@@ -22,20 +23,23 @@ export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdminRetrievalsMetricsEndDate:
     (endDate) => dispatch(
       actions.updateAdminRetrievalsMetricsEndDate(endDate)
-    )
+    ),
+  onMetricsTemporalFilter: (data) => dispatch(metricsTemporalFilter(data))
 })
 
 export const AdminRetrievalsMetricsContainer = ({
   onFetchAdminRetrievalsMetrics,
   onUpdateAdminRetrievalsMetricsStartDate,
   onUpdateAdminRetrievalsMetricsEndDate,
-  retrievalsMetrics
+  retrievalsMetrics,
+  onMetricsTemporalFilter
 }) => (
   <AdminRetrievalsMetrics
     onFetchAdminRetrievalsMetrics={onFetchAdminRetrievalsMetrics}
     onUpdateAdminRetrievalsMetricsStartDate={onUpdateAdminRetrievalsMetricsStartDate}
     onUpdateAdminRetrievalsMetricsEndDate={onUpdateAdminRetrievalsMetricsEndDate}
     retrievalsMetrics={retrievalsMetrics}
+    onMetricsTemporalFilter={onMetricsTemporalFilter}
   />
 )
 
@@ -47,6 +51,7 @@ AdminRetrievalsMetricsContainer.propTypes = {
   onFetchAdminRetrievalsMetrics: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsMetricsEndDate: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsMetricsStartDate: PropTypes.func.isRequired,
+  onMetricsTemporalFilter: PropTypes.func.isRequired,
   retrievalsMetrics: PropTypes.shape({})
 }
 

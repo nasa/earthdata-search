@@ -270,9 +270,9 @@ export const temporalFilter = (action) => {
 
   dataLayer.push({
     event: 'temporalFilter',
-    granuleFilterCategory: 'Temporal Filter',
-    granuleFilterEventAction: type,
-    granuleFilterEventValue: value
+    temporalFilterCategory: 'Temporal Filter',
+    temporalFilterEventAction: type,
+    temporalFilterEventValue: value
   })
 }
 

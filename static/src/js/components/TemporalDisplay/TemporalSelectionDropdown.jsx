@@ -199,7 +199,7 @@ const TemporalSelectionDropdown = ({
 
     onMetricsTemporalFilter({
       type: 'Set Start Date',
-      value: newStartDate.toISOString()
+      value: newStartDate.isValid() ? newStartDate.toISOString() : newStartDate._i
     })
 
     setTemporal({
@@ -230,7 +230,8 @@ const TemporalSelectionDropdown = ({
 
     onMetricsTemporalFilter({
       type: 'Set End Date',
-      value: newEndDate.toISOString()
+      // eslint-disable-next-line no-underscore-dangle
+      value: newEndDate.isValid() ? newEndDate.toISOString() : newEndDate._i
     })
 
     setTemporal({
