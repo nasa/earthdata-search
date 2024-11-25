@@ -207,7 +207,7 @@ This application runs in a VPC for NASA security purposes, therefore the followi
 - VPC_ID
 - SUBNET_ID_A
 - SUBNET_ID_B
-- Internet_Services_East_VPC
+- INTERNET_SERVICE_EAST_VPC
 
 For production use, this application uses Scatter Swap to obfuscate some IDs -- the library does not require a value be provided but if you'd like to control it you can set the following ENV vars:
 
