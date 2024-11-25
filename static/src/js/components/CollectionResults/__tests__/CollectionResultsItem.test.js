@@ -383,7 +383,7 @@ describe('CollectionResultsList component', () => {
 
         // Ensure that the rendered icons are not meta-icons
         await waitFor(() => {
-          const icons = screen.getAllByTestId('edsc-icon')
+          const icons = screen.getAllByRole('edsc-icon')
           icons.forEach((icon) => {
             // https://developer.mozilla.org/en-US/docs/Web/API/SVGAnimatedString/baseVal
             expect(icon.className.baseVal).not.toBe('edsc-icon meta-icon__icon')

@@ -264,8 +264,11 @@ const GranuleResultsItem = forwardRef(({
                             })
 
                             onMetricsAddGranuleProject({
-                              type: 'Granule List View',
-                              granuleConceptId: id
+                              collectionConceptId: collectionId,
+                              granuleConceptId: id,
+                              page: 'granules',
+                              view: 'list',
+                              collectionId
                             })
 
                             // Prevent clicks from bubbling up to other granule item events.

@@ -73,8 +73,9 @@ const CollectionResultsTableHeaderCell = (props) => {
                     (event) => {
                       onAddProjectCollection(collectionId)
                       onMetricsAddCollectionProject({
-                        type: 'Collection Table View',
-                        collectionConceptId: collectionId
+                        collectionConceptId: collectionId,
+                        view: 'table',
+                        page: 'collections'
                       })
 
                       event.stopPropagation()

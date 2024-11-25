@@ -185,13 +185,15 @@ export const map = (action) => {
 export const addCollectionProject = (action) => {
   const { payload } = action
   const {
-    type,
-    collectionConceptId
+    collectionConceptId,
+    view,
+    page
   } = payload
   dataLayer.push({
     event: 'addCollectionToProject',
-    addProjectCollectionType: type,
-    addProjectCollectionConceptId: collectionConceptId
+    addProjectCollectionConceptId: collectionConceptId,
+    addProjectcollectionView: view,
+    addProjectcollectionPage: page
   })
 }
 
@@ -203,12 +205,16 @@ export const addCollectionProject = (action) => {
 export const addGranuleProject = (action) => {
   const { payload } = action
   const {
-    type,
-    granuleConceptId
+    collectionConceptId,
+    granuleConceptId,
+    view,
+    page
   } = payload
   dataLayer.push({
     event: 'addGranuleToProject',
-    addProjectGranuleType: type,
+    addProjectGranuleResultsView: view,
+    addProjectGranulePage: page,
+    addProjectCollectionConceptId: collectionConceptId,
     addProjectGranuleConceptId: granuleConceptId
   })
 }

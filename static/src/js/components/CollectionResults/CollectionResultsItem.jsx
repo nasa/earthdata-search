@@ -136,8 +136,9 @@ export const CollectionResultsItem = forwardRef(({
         (event) => {
           onAddProjectCollection(collectionId)
           onMetricsAddCollectionProject({
-            type: 'Collection List View',
-            collectionConceptId: collectionId
+            collectionConceptId: collectionId,
+            view: 'list',
+            page: 'collections'
           })
 
           event.stopPropagation()

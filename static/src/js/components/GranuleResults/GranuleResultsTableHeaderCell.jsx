@@ -85,8 +85,11 @@ const GranuleResultsTableHeaderCell = (props) => {
                       })
 
                       onMetricsAddGranuleProject({
-                        type: 'Granule Table View',
-                        granuleConceptId: id
+                        collectionConceptId: collectionId,
+                        granuleConceptId: id,
+                        page: 'granules',
+                        view: 'table',
+                        collectionId
                       })
 
                       // Prevent event bubbling up to the granule focus event.
