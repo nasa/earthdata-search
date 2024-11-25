@@ -32,9 +32,7 @@ describe('OrderProgressItem component', () => {
   describe('Complete Swodlr Order', () => {
     test('shows the correct order metadata', () => {
       setup({
-        order: {
-          ...retrievalStatusPropsSwodlrOrder.retrieval.collections.byId[1].orders[0]
-        }
+        order: retrievalStatusPropsSwodlrOrder
       })
 
       expect(screen.getByRole('heading', {
@@ -50,11 +48,12 @@ describe('OrderProgressItem component', () => {
 
   describe('Complete ESI Order', () => {
     test('shows the correct order metadata', () => {
+      const { orders } = retrievalStatusPropsEsi
+      const esiOrder = orders[0]
+
       setup(
         {
-          order: {
-            ...retrievalStatusPropsEsi.retrieval.collections.byId[1].orders[0]
-          }
+          order: esiOrder
         }
       )
 
@@ -75,9 +74,7 @@ describe('OrderProgressItem component', () => {
     test('shows the correct order metadata', () => {
       setup(
         {
-          order: {
-            ...retrievalStatusPropsHarmonyOrder.retrieval.collections.byId[1].orders[0]
-          }
+          order: retrievalStatusPropsHarmonyOrder
         }
       )
 
@@ -94,9 +91,12 @@ describe('OrderProgressItem component', () => {
 
   describe('when order information is not defined', () => {
     test('displays the correct progress', () => {
+      const { orders } = retrievalStatusPropsEsi
+      const esiOrder = orders[0]
+
       setup({
         order: {
-          ...retrievalStatusPropsEsi.retrieval.collections.byId[1].orders[0],
+          ...esiOrder,
           state: 'creating',
           order_information: {}
         }

@@ -10,7 +10,7 @@ beforeEach(() => {
 })
 
 const setup = () => {
-  const { orders } = retrievalStatusPropsEsi.retrieval.collections.byId[1]
+  const { orders } = retrievalStatusPropsEsi
 
   const props = {
     orders
