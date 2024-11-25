@@ -15,7 +15,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     temporalSearch: {},
-    onChangeQuery: jest.fn()
+    onChangeQuery: jest.fn(),
+    onMetricsTemporalFilter: jest.fn()
   }
 
   const enzymeWrapper = shallow(<TemporalSelectionDropdownContainer {...props} />)
