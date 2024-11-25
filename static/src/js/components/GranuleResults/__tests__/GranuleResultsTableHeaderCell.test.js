@@ -126,7 +126,7 @@ describe('GranuleResultsTableHeaderCell component', () => {
     expect(portalFeatureContainer.props().authentication).toBeTruthy()
   })
 
-  test('clicking the add button under calls `onMetricsAddGranuleProject` and `onAddGranuleToProjectCollection`', () => {
+  test('clicking the add button under calls onAddGranuleToProjectCollection and onMetricsAddGranuleProject', () => {
     const { props, enzymeWrapper } = setup(undefined)
 
     const addGranuleButton = enzymeWrapper

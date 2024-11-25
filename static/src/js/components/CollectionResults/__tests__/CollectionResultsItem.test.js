@@ -381,7 +381,6 @@ describe('CollectionResultsList component', () => {
           collection: collectionListItemProps.collectionMetadata
         })
 
-        // Ensure that the rendered icons are not meta-icons
         await waitFor(() => {
         })
         // Const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
