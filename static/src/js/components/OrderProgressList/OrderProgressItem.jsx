@@ -72,13 +72,14 @@ export const OrderProgressItem = ({
             {orderId || 'Not provided'}
           </h5>
           <Badge
+            role="status"
             className={badgeClass}
           >
             {formatOrderStatus(orderStatus)}
           </Badge>
         </div>
         <div className="order-progress-item__info">
-          <span className="order-progress-item__processed">
+          <span role="status" className="order-progress-item__processed">
             {
               !!(numGranulesProccessed && totalGranulesInOrder) && (
                 `${numGranulesProccessed} of ${totalGranulesInOrder} granule(s) processed `

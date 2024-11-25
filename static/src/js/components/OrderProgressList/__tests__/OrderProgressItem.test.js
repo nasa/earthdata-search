@@ -6,42 +6,18 @@ import { OrderProgressItem } from '../OrderProgressItem'
 
 import {
   retrievalStatusPropsEsi,
-  retrievalStatusPropsSwotOrder,
+  retrievalStatusPropsSwodlrOrder,
   retrievalStatusPropsHarmonyOrder
-} from '../../OrderStatus/__tests__/mocks'
+} from './mocks'
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
-const setup = (type, overrideProps) => {
-  let orderOrigin = null
+const setup = (overrideProps) => {
   let props = {}
 
-  switch (type) {
-    case 'SWODLR':
-      orderOrigin = retrievalStatusPropsSwotOrder
-      break
-    case 'ESI':
-      orderOrigin = retrievalStatusPropsEsi
-      break
-    case 'Harmony':
-      orderOrigin = retrievalStatusPropsHarmonyOrder
-      break
-    default:
-      orderOrigin = retrievalStatusPropsEsi
-      break
-  }
-
-  const { retrieval } = orderOrigin
-  const { collections } = retrieval
-  const { byId } = collections
-  const { orders } = byId[1]
-
-  const order = orders[0]
-
   props = {
-    order,
     ...overrideProps
   }
 
@@ -55,37 +31,55 @@ const setup = (type, overrideProps) => {
 describe('OrderProgressItem component', () => {
   describe('Complete Swodlr Order', () => {
     test('shows the correct order metadata', () => {
-      setup('SWODLR')
+      setup({
+        order: {
+          ...retrievalStatusPropsSwodlrOrder.retrieval.collections.byId[1].orders[0]
+        }
+      })
 
       expect(screen.getByRole('heading', {
         level: 5,
         name: 'Order ID: e7efe743-f253-43e3-b017-74faa8bdfcf1'
       })).toBeInTheDocument()
 
-      expect(screen.getByText('Complete')).toBeInTheDocument()
-      expect(screen.getByText('(100%)')).toBeInTheDocument()
+      expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Complete')
+      expect(screen.queryAllByRole('status')[1]).toHaveTextContent('(100%)')
       expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
     })
   })
 
   describe('Complete ESI Order', () => {
     test('shows the correct order metadata', () => {
-      setup('ESI')
+      setup(
+        {
+          order: {
+            ...retrievalStatusPropsEsi.retrieval.collections.byId[1].orders[0]
+          }
+        }
+      )
 
-      expect(screen.getByRole('heading', {
+      const orderHeading = screen.getByRole('heading', {
         level: 5,
         name: 'Order ID: 5000000333461'
-      })).toBeInTheDocument()
+      })
 
-      expect(screen.getByText('Complete')).toBeInTheDocument()
-      expect(screen.getByText('81 of 81 granule(s) processed (100%)')).toBeInTheDocument()
+      expect(orderHeading).toBeInTheDocument()
+      expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Complete')
+      expect(screen.queryAllByRole('status')[1]).toHaveTextContent('81 of 81 granule(s) processed (100%)')
+
       expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
     })
   })
 
   describe('Complete Harmony Order', () => {
     test('shows the correct order metadata', () => {
-      setup('Harmony')
+      setup(
+        {
+          order: {
+            ...retrievalStatusPropsHarmonyOrder.retrieval.collections.byId[1].orders[0]
+          }
+        }
+      )
 
       expect(screen.getByRole('heading', {
         level: 5,
@@ -93,14 +87,14 @@ describe('OrderProgressItem component', () => {
       })).toBeInTheDocument()
 
       expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '100')
-      expect(screen.getByText('Successful')).toBeInTheDocument()
-      expect(screen.getByText('(100%)')).toBeInTheDocument()
+      expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Successful')
+      expect(screen.queryAllByRole('status')[1]).toHaveTextContent('(100%)')
     })
   })
 
   describe('when order information is not defined', () => {
     test('displays the correct progress', () => {
-      setup('other', {
+      setup({
         order: {
           ...retrievalStatusPropsEsi.retrieval.collections.byId[1].orders[0],
           state: 'creating',
@@ -113,9 +107,9 @@ describe('OrderProgressItem component', () => {
         name: 'Order ID: 5000000333461'
       })).toBeInTheDocument()
 
-      expect(screen.getByText('(0%)')).toBeInTheDocument()
+      expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Creating')
+      expect(screen.queryAllByRole('status')[1]).toHaveTextContent('(0%)')
       expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0')
-      expect(screen.getByText('Creating')).toBeInTheDocument()
     })
   })
 })

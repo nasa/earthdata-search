@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 
 import { OrderProgressList } from '../OrderProgressList'
 
-import { retrievalStatusPropsEsi } from '../../OrderStatus/__tests__/mocks'
+import { retrievalStatusPropsEsi } from './mocks'
 
 beforeEach(() => {
   jest.clearAllMocks()
