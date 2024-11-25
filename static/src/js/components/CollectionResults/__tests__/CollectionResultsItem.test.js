@@ -375,6 +375,7 @@ describe('CollectionResultsList component', () => {
       })
     })
 
+    // TODO Skipping for now fix this when we have edsc-icons no longer utilize test-ids and use `img` as a role
     describe('customize', () => {
       test.skip('does not render when no customization flags are true', async () => {
         setup({
