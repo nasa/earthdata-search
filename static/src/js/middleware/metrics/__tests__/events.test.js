@@ -394,8 +394,9 @@ describe('events', () => {
       const action = {
         type: METRICS_ADD_COLLECTION_PROJECT,
         payload: {
-          type: 'Some type',
-          collectionConceptId: 'C100000-EDSC'
+          collectionConceptId: 'C100000-EDSC',
+          page: 'page of origin',
+          view: 'view of origin'
         }
       }
 
@@ -404,8 +405,9 @@ describe('events', () => {
       expect(dataLayerMock).toHaveBeenCalledTimes(1)
       expect(dataLayerMock).toHaveBeenCalledWith({
         event: 'addCollectionToProject',
-        addProjectCollectionType: 'Some type',
-        addProjectCollectionConceptId: 'C100000-EDSC'
+        addProjectCollectionConceptId: 'C100000-EDSC',
+        addProjectCollectionPage: 'page of origin',
+        addProjectCollectionResultsView: 'view of origin'
       })
     })
   })
@@ -415,8 +417,10 @@ describe('events', () => {
       const action = {
         type: METRICS_ADD_GRANULE_PROJECT,
         payload: {
-          type: 'Some type',
-          granuleConceptId: 'G100000-EDSC'
+          collectionConceptId: 'C100000-EDSC',
+          granuleConceptId: 'G100000-EDSC',
+          page: 'page of origin',
+          view: 'view of origin'
         }
       }
 
@@ -425,8 +429,10 @@ describe('events', () => {
       expect(dataLayerMock).toHaveBeenCalledTimes(1)
       expect(dataLayerMock).toHaveBeenCalledWith({
         event: 'addGranuleToProject',
-        addProjectGranuleType: 'Some type',
-        addProjectGranuleConceptId: 'G100000-EDSC'
+        addProjectCollectionConceptId: 'C100000-EDSC',
+        addProjectGranuleConceptId: 'G100000-EDSC',
+        addProjectGranulePage: 'page of origin',
+        addProjectGranuleResultsView: 'view of origin'
       })
     })
   })

@@ -68,8 +68,8 @@ const GranuleResultsActions = ({
           onAddProjectCollection(focusedCollectionId)
           onMetricsAddCollectionProject({
             collectionConceptId: focusedCollectionId,
-            view: '',
-            page: 'granules'
+            page: 'granules',
+            view: ''
           })
         }
       }

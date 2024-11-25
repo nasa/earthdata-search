@@ -192,8 +192,8 @@ export const addCollectionProject = (action) => {
   dataLayer.push({
     event: 'addCollectionToProject',
     addProjectCollectionConceptId: collectionConceptId,
-    addProjectcollectionView: view,
-    addProjectcollectionPage: page
+    addProjectCollectionResultsView: view,
+    addProjectCollectionPage: page
   })
 }
 
@@ -212,10 +212,10 @@ export const addGranuleProject = (action) => {
   } = payload
   dataLayer.push({
     event: 'addGranuleToProject',
-    addProjectGranuleResultsView: view,
-    addProjectGranulePage: page,
     addProjectCollectionConceptId: collectionConceptId,
-    addProjectGranuleConceptId: granuleConceptId
+    addProjectGranuleConceptId: granuleConceptId,
+    addProjectGranulePage: page,
+    addProjectGranuleResultsView: view
   })
 }
 

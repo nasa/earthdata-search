@@ -37,7 +37,6 @@ export const CustomizableIcons = ({
   hasCombine,
   forAccessMethodRadio
 }) => {
-  // TODO ensure that
   let metaIconClasses = 'collection-results-item__meta-icon collection-results-item__meta-icon--customizable'
   if (forAccessMethodRadio) {
     metaIconClasses += ' meta-icon__accessMethod'
@@ -75,7 +74,6 @@ export const CustomizableIcons = ({
                 hasTemporalSubsetting && (
                   <EDSCIcon
                     className="collection-results-item__icon svg fa-clock-svg"
-                    role="img"
                     title="A white clock icon"
                     icon={FaClock}
                     size="0.675rem"
@@ -86,7 +84,6 @@ export const CustomizableIcons = ({
                 hasVariables && (
                   <EDSCIcon
                     className="collection-results-item__icon svg fa-tags-svg"
-                    role="img"
                     title="A white tags icon"
                     icon={FaTags}
                     size="0.675rem"
@@ -97,7 +94,6 @@ export const CustomizableIcons = ({
                 hasTransforms && (
                   <EDSCIcon
                     className="collection-results-item__icon svg fa-sliders-svg"
-                    role="img"
                     title="A white horizontal sliders icon"
                     icon={Filter}
                     size="0.675rem"
@@ -108,7 +104,6 @@ export const CustomizableIcons = ({
                 hasFormats && (
                   <EDSCIcon
                     className="collection-results-item__icon svg fa-file-svg"
-                    role="img"
                     title="A white file icon"
                     icon={FileGeneric}
                     size="0.675rem"
@@ -119,7 +114,6 @@ export const CustomizableIcons = ({
                 hasCombine && (
                   <EDSCIcon
                     className="collection-results-item__icon svg fa-file-svg"
-                    role="img"
                     title="A white cubes icon"
                     icon={FaCubes}
                     size="0.675rem"

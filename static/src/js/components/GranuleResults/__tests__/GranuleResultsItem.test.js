@@ -656,8 +656,10 @@ describe('GranuleResultsItem component', () => {
 
       expect(props.onMetricsAddGranuleProject.mock.calls.length).toBe(1)
       expect(props.onMetricsAddGranuleProject.mock.calls[0]).toEqual([{
+        collectionConceptId: 'collectionId',
         granuleConceptId: 'granuleId',
-        type: 'Granule List View'
+        page: 'granules',
+        view: 'list'
       }])
     })
   })

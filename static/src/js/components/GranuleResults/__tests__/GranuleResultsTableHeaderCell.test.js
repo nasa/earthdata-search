@@ -141,8 +141,10 @@ describe('GranuleResultsTableHeaderCell component', () => {
 
     expect(props.column.customProps.onMetricsAddGranuleProject).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onMetricsAddGranuleProject).toHaveBeenCalledWith({
+      collectionConceptId: 'collectionId',
       granuleConceptId: 'one',
-      type: 'Granule Table View'
+      page: 'granules',
+      view: 'table'
     })
   })
 })

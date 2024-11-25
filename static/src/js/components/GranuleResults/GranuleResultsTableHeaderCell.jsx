@@ -88,8 +88,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                         collectionConceptId: collectionId,
                         granuleConceptId: id,
                         page: 'granules',
-                        view: 'table',
-                        collectionId
+                        view: 'table'
                       })
 
                       // Prevent event bubbling up to the granule focus event.

@@ -267,8 +267,7 @@ const GranuleResultsItem = forwardRef(({
                               collectionConceptId: collectionId,
                               granuleConceptId: id,
                               page: 'granules',
-                              view: 'list',
-                              collectionId
+                              view: 'list'
                             })
 
                             // Prevent clicks from bubbling up to other granule item events.

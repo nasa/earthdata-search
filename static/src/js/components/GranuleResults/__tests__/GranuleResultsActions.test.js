@@ -121,7 +121,8 @@ describe('GranuleResultsActions component', () => {
       expect(props.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
       expect(props.onMetricsAddCollectionProject).toHaveBeenCalledWith({
         collectionConceptId: 'collectionId',
-        type: 'Granule Results View'
+        page: 'granules',
+        view: ''
       })
     })
 
