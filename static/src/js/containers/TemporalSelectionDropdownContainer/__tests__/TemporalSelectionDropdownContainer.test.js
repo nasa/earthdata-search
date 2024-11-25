@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
+import * as metricActions from '../../../middleware/metrics/actions'
 import {
   mapDispatchToProps,
   mapStateToProps,
@@ -40,7 +41,7 @@ describe('mapDispatchToProps', () => {
 
   test('onMetricsTemporalFilter calls metricsTemporalFilter', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'metricsTemporalFilter')
+    const spy = jest.spyOn(metricActions, 'metricsTemporalFilter')
 
     mapDispatchToProps(dispatch).onMetricsTemporalFilter({ metric: 'data' })
 
