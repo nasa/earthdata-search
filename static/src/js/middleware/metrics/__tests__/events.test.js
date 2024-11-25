@@ -476,9 +476,9 @@ describe('events', () => {
       expect(dataLayerMock).toHaveBeenCalledTimes(1)
       expect(dataLayerMock).toHaveBeenCalledWith({
         event: 'temporalFilter',
-        granuleFilterCategory: 'Temporal Filter',
-        granuleFilterEventAction: 'Some Type',
-        granuleFilterEventValue: 'Some Value'
+        temporalFilterCategory: 'Temporal Filter',
+        temporalFilterEventAction: 'Some Type',
+        temporalFilterEventValue: 'Some Value'
       })
     })
   })
