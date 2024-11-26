@@ -74,6 +74,12 @@ class Datepicker extends PureComponent {
     if (previousViewMode !== viewMode) picker.current.navigate(viewMode)
   }
 
+  componentWillUnmount() {
+    if (this.updateTimeout) {
+      clearTimeout(this.updateTimeout)
+    }
+  }
+
   onInputChange(event) {
     const caret = event.target.selectionStart
     const element = event.target
@@ -86,22 +92,39 @@ class Datepicker extends PureComponent {
   }
 
   setupNavigationHandlers(container) {
-    const prevButton = container.querySelector('.rdtPrev')
-    const nextButton = container.querySelector('.rdtNext')
-
-    if (prevButton) {
-      prevButton.addEventListener('click', () => {
-        // Use setTimeout to let the state update
+    // Monitor clicks on the entire container
+    container.addEventListener('click', (event) => {
+      // Handle month selection
+      if (event.target.classList.contains('rdtMonth')) {
         setTimeout(() => this.updateNavigationArrows(), 0)
-      })
-    }
+      }
 
-    if (nextButton) {
-      nextButton.addEventListener('click', () => {
-        // Use setTimeout to let the state update
+      // Handle navigation arrows
+      if (event.target.classList.contains('rdtPrev')
+          || event.target.parentElement.classList.contains('rdtPrev')
+          || event.target.classList.contains('rdtNext')
+          || event.target.parentElement.classList.contains('rdtNext')) {
         setTimeout(() => this.updateNavigationArrows(), 0)
-      })
-    }
+      }
+
+      // Handle going back to months view
+      if (event.target.classList.contains('rdtSwitch')) {
+        // Reset arrow visibility when going back to months view
+        const prevButton = container.querySelector('.rdtPrev')
+        const nextButton = container.querySelector('.rdtNext')
+        if (prevButton) {
+          prevButton.innerHTML = '<span>‹</span>'
+          prevButton.style.pointerEvents = ''
+          prevButton.style.visibility = 'visible'
+        }
+
+        if (nextButton) {
+          nextButton.innerHTML = '<span>›</span>'
+          nextButton.style.pointerEvents = ''
+          nextButton.style.visibility = 'visible'
+        }
+      }
+    })
   }
 
   updateNavigationArrows() {
@@ -109,28 +132,28 @@ class Datepicker extends PureComponent {
 
     if (viewMode !== 'months') return
 
-    const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
+    const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker')
     if (!container) return
 
     const isDayView = container.querySelector('.rdtDays') !== null
 
     if (!isDayView) return
 
-    // Find navigation buttons
     const prevButton = container.querySelector('.rdtPrev')
     const nextButton = container.querySelector('.rdtNext')
-
-    // Get the current month display element
     const monthDisplay = container.querySelector('.rdtSwitch')
+
     if (!monthDisplay) return
 
-    // Parse the current month and year
+    // Modify month display to remove year
     const [monthStr] = monthDisplay.textContent.split(' ')
-    const currentMonth = new Date(`${monthStr} 1, 2000`).getMonth() // Convert month name to number (0-11)
+    monthDisplay.textContent = monthStr
+
+    const currentMonth = new Date(`${monthStr} 1, 2000`).getMonth()
 
     // Check if navigation would cross year boundary
     if (prevButton) {
-      if (currentMonth === 0) { // January
+      if (currentMonth === 0) {
         prevButton.innerHTML = ''
         prevButton.style.pointerEvents = 'none'
         prevButton.style.visibility = 'hidden'
@@ -142,7 +165,7 @@ class Datepicker extends PureComponent {
     }
 
     if (nextButton) {
-      if (currentMonth === 11) { // December
+      if (currentMonth === 11) {
         nextButton.innerHTML = ''
         nextButton.style.pointerEvents = 'none'
         nextButton.style.visibility = 'hidden'
@@ -213,18 +236,16 @@ class Datepicker extends PureComponent {
         onChange={
           (newValue) => {
             onChange(newValue)
-            this.updateNavigationArrows()
           }
         }
         onOpen={
           () => {
-            // Update arrows when calendar opens
             setTimeout(() => {
-              this.updateNavigationArrows()
-              // Re-setup handlers when calendar opens
-              const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
+            // Set up initial handlers and arrows when calendar opens
+            const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
               if (container) {
                 this.setupNavigationHandlers(container)
+                this.updateNavigationArrows()
               }
             }, 0)
           }
@@ -235,11 +256,6 @@ class Datepicker extends PureComponent {
         utc
         value={value}
         viewMode={viewMode}
-        onViewModeChange={
-          () => {
-            this.updateNavigationArrows()
-          }
-        }
       />
     )
   }
