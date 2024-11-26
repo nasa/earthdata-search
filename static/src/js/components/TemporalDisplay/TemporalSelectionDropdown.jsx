@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
@@ -205,12 +204,14 @@ const TemporalSelectionDropdown = ({
     if (onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: 'Set Start Date',
+        // eslint-disable-next-line no-underscore-dangle
         value: newStartDate.isValid() ? newStartDate.toISOString() : newStartDate._i
       })
     }
 
     setTemporal({
       ...temporal,
+      // eslint-disable-next-line no-underscore-dangle
       startDate: newStartDate.isValid() ? newStartDate.toISOString() : newStartDate._i
     })
   }
@@ -237,12 +238,14 @@ const TemporalSelectionDropdown = ({
     if (onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: 'Set End Date',
+        // eslint-disable-next-line no-underscore-dangle
         value: newEndDate.isValid() ? newEndDate.toISOString() : newEndDate._i
       })
     }
 
     setTemporal({
       ...temporal,
+      // eslint-disable-next-line no-underscore-dangle
       endDate: newEndDate.isValid() ? newEndDate.toISOString() : newEndDate._i
     })
   }

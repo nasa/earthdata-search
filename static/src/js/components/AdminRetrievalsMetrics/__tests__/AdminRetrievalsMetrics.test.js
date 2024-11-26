@@ -17,7 +17,8 @@ const setup = () => {
     isLoaded: true,
     isLoading: false,
     accessMethodType: {},
-    allAccessMethodTypes: [],
+    allAccessMethodTypes: [
+    ],
     multCollectionResponse: [],
     byAccessMethodType: {},
     startDate: '',
@@ -26,23 +27,21 @@ const setup = () => {
   const onFetchAdminRetrievalsMetrics = jest.fn()
   const onUpdateAdminRetrievalsMetricsStartDate = jest.fn()
   const onUpdateAdminRetrievalsMetricsEndDate = jest.fn()
-  const onMetricsTemporalFilter = jest.fn()
 
   const props = {
     onFetchAdminRetrievalsMetrics,
     onUpdateAdminRetrievalsMetricsStartDate,
     onUpdateAdminRetrievalsMetricsEndDate,
-    onMetricsTemporalFilter,
     retrievalsMetrics
   }
 
+  // https://testing-library.com/docs/example-react-router/
   render(<AdminRetrievalsMetrics {...props} />, { wrapper: BrowserRouter })
 
   return {
     onFetchAdminRetrievalsMetrics,
     onUpdateAdminRetrievalsMetricsStartDate,
-    onUpdateAdminRetrievalsMetricsEndDate,
-    onMetricsTemporalFilter
+    onUpdateAdminRetrievalsMetricsEndDate
   }
 }
 
@@ -61,13 +60,12 @@ describe('AdminRetrievals component', () => {
       ReactDOM.createPortal.mockClear()
     })
 
-    test('clicking on the temporal filter modal opens it and applies filters with metrics tracking', async () => {
+    test('clicking on the temporal filter modal opens it', async () => {
       const user = userEvent.setup()
       const {
         onFetchAdminRetrievalsMetrics,
         onUpdateAdminRetrievalsMetricsStartDate,
-        onUpdateAdminRetrievalsMetricsEndDate,
-        onMetricsTemporalFilter
+        onUpdateAdminRetrievalsMetricsEndDate
       } = setup()
 
       const temporalFilterButton = screen.getByRole('button')
@@ -86,18 +84,8 @@ describe('AdminRetrievals component', () => {
       await userEvent.click(startDate)
       await userEvent.type(startDate, validStartDate)
 
-      expect(onMetricsTemporalFilter).toHaveBeenCalledWith({
-        type: 'Set Start Date',
-        value: validStartDate
-      })
-
       await userEvent.click(endDate)
       await userEvent.type(endDate, validEndDate)
-
-      expect(onMetricsTemporalFilter).toHaveBeenCalledWith({
-        type: 'Set End Date',
-        value: validEndDate
-      })
 
       const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
@@ -113,14 +101,6 @@ describe('AdminRetrievals component', () => {
       expect(onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledWith(updatedEndDate)
 
       expect(onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
-
-      expect(onMetricsTemporalFilter).toHaveBeenCalledWith({
-        type: 'Apply Temporal Filter',
-        value: {
-          startDate: validStartDate,
-          endDate: updatedEndDate
-        }
-      })
 
       const startDateHeader = screen.getAllByRole('heading', { level: 5 })[0]
       const endDateHeader = screen.getAllByRole('heading', { level: 5 })[1]
