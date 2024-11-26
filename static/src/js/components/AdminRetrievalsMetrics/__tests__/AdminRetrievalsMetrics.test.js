@@ -9,8 +9,13 @@ import {
 import userEvent from '@testing-library/user-event'
 
 import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
 
 import { AdminRetrievalsMetrics } from '../AdminRetrievalsMetrics'
+
+const mockStore = configureMockStore()
+const store = mockStore({})
 
 const setup = () => {
   const retrievalsMetrics = {
@@ -36,7 +41,13 @@ const setup = () => {
   }
 
   // https://testing-library.com/docs/example-react-router/
-  render(<AdminRetrievalsMetrics {...props} />, { wrapper: BrowserRouter })
+  render(
+    <Provider store={store}>
+      <BrowserRouter>
+        <AdminRetrievalsMetrics {...props} />
+      </BrowserRouter>
+    </Provider>
+  )
 
   return {
     onFetchAdminRetrievalsMetrics,

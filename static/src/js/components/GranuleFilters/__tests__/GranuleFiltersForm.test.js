@@ -7,6 +7,8 @@ import {
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import MockDate from 'mockdate'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
 
 import GranuleFiltersForm from '../GranuleFiltersForm'
 
@@ -17,6 +19,9 @@ jest.mock('formik', () => ({
     </mock-formik>
   ))
 }))
+
+const mockStore = configureMockStore()
+const store = mockStore({})
 
 // TODO: Figure out how to test validation @low
 
@@ -50,7 +55,9 @@ const setup = (overrideProps) => {
   }
 
   render(
-    <GranuleFiltersForm {...props} />
+    <Provider store={store}>
+      <GranuleFiltersForm {...props} />
+    </Provider>
   )
 
   return {
