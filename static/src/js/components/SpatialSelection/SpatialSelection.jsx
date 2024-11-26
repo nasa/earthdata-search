@@ -809,6 +809,7 @@ const SpatialSelection = (props) => {
     })
   }
 
+  // Remove the layerMbr matching the given points from the featureGroupRef.current
   const hideLayerMbr = (points) => {
     if (featureGroupRef.current.removeLayer) {
       drawnLayers.current.forEach((layer) => {

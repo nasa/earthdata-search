@@ -82,9 +82,8 @@ const setup = (overrideProps) => {
 describe('AccessMethod component', () => {
   describe('handleAccessMethodSelection', () => {
     test('updates the selected access method', async () => {
-      const user = userEvent.setup()
       const collectionId = 'collectionId'
-      const { onSelectAccessMethod } = setup({
+      const { onSelectAccessMethod, user } = setup({
         accessMethods: {
           download: {
             isValid: true,
@@ -130,9 +129,8 @@ describe('AccessMethod component', () => {
     })
 
     test('updates the selected access method when type is orderable', async () => {
-      const user = userEvent.setup()
       const collectionId = 'collectionId'
-      const { onSelectAccessMethod } = setup({
+      const { onSelectAccessMethod, user } = setup({
         accessMethods: {
           esi0: {
             isValid: true,
@@ -416,9 +414,8 @@ describe('AccessMethod component', () => {
 
   describe('when the selected access method is opendap', () => {
     test('selecting a output format calls onUpdateAccessMethod', async () => {
-      const user = userEvent.setup()
       const collectionId = 'collectionId'
-      const { onUpdateAccessMethod } = setup({
+      const { onUpdateAccessMethod, user } = setup({
         accessMethods: {
           opendap: {
             isValid: true,
@@ -478,9 +475,8 @@ describe('AccessMethod component', () => {
 
     describe('and multiple harmony methods are available', () => {
       test('each method is listed in the Select menu and has appropriate icons for customization options', async () => {
-        const user = userEvent.setup()
         const collectionId = 'collectionId'
-        setup({
+        const { user } = setup({
           accessMethods: {
             harmony0: {
               name: 'first harmony service',
@@ -625,9 +621,8 @@ describe('AccessMethod component', () => {
       })
 
       test('selecting a output format calls onUpdateAccessMethod', async () => {
-        const user = userEvent.setup()
         const collectionId = 'collectionId'
-        const { onUpdateAccessMethod } = setup({
+        const { onUpdateAccessMethod, user } = setup({
           accessMethods: {
             harmony0: {
               name: 'test name',
@@ -715,9 +710,8 @@ describe('AccessMethod component', () => {
       })
 
       test('selecting a output projection calls onUpdateAccessMethod', async () => {
-        const user = userEvent.setup()
         const collectionId = 'collectionId'
-        const { onUpdateAccessMethod } = setup({
+        const { onUpdateAccessMethod, user } = setup({
           accessMethods: {
             harmony0: {
               name: 'test name',
@@ -1089,10 +1083,9 @@ describe('AccessMethod component', () => {
 
         describe('when the user clicks the checkbox', () => {
           test('sets the checkbox checked', async () => {
-            const user = userEvent.setup()
             const collectionId = 'collectionId'
             // `enableTemporalSubsetting` must be set to false here to prevent `checked` form being true
-            setup({
+            const { user } = setup({
               accessMethods: {
                 harmony0: {
                   name: 'test name',
@@ -1125,8 +1118,8 @@ describe('AccessMethod component', () => {
 
           test('calls onUpdateAccessMethod', async () => {
             const collectionId = 'collectionId'
-            const user = userEvent.setup()
-            const { onUpdateAccessMethod } = setup({
+
+            const { onUpdateAccessMethod, user } = setup({
               accessMethods: {
                 harmony0: {
                   name: 'test name',
@@ -1189,9 +1182,8 @@ describe('AccessMethod component', () => {
 
         describe('when the user checks enableTemporalSubsetting', () => {
           test('sets the checkbox for temporal unchecked', async () => {
-            const user = userEvent.setup()
             const collectionId = 'collectionId'
-            const { onUpdateAccessMethod } = setup({
+            const { onUpdateAccessMethod, user } = setup({
               accessMethods: {
                 harmony0: {
                   name: 'test name',
@@ -1373,9 +1365,8 @@ describe('AccessMethod component', () => {
 
         describe('when the user checks enableSpatialSubsetting', () => {
           test('sets the checkbox for spatial checked', async () => {
-            const user = userEvent.setup()
             const collectionId = 'collectionId'
-            const { onUpdateAccessMethod } = setup({
+            const { onUpdateAccessMethod, user } = setup({
               accessMethods: {
                 harmony0: {
                   name: 'test name',
@@ -1529,11 +1520,14 @@ describe('AccessMethod component', () => {
     describe('when a service name is passed in', () => {
       describe('when the service type is `Harmony`', () => {
         test('edit variables button calls `onSetActivePanel` and `onTogglePanels`', async () => {
-          const user = userEvent.setup()
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
 
-          const { onSetActivePanel, onTogglePanels } = setup({
+          const {
+            onSetActivePanel,
+            onTogglePanels,
+            user
+          } = setup({
             selectedAccessMethod: 'harmony0',
             accessMethods: {
               harmony0: {
@@ -1611,10 +1605,9 @@ describe('AccessMethod component', () => {
         })
 
         test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
-          const user = userEvent.setup()
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
-          const { onUpdateAccessMethod } = setup({
+          const { onUpdateAccessMethod, user } = setup({
             accessMethods: {
               harmony0: {
                 description: 'test description',
