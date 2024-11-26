@@ -6,7 +6,7 @@ import moment from 'moment'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
 
-import DatepickerContainer, { mapDispatchToProps } from '../DatepickerContainer'
+import DatepickerContainer from '../DatepickerContainer'
 
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 
