@@ -77,6 +77,15 @@ export const GranuleFiltersForm = (props) => {
   const temporalDateFormat = getTemporalDateFormat(isRecurring)
 
   const {
+    minimumTemporalDateString,
+    temporalDateFormatFull
+  } = getApplicationConfig()
+  const minDate = moment(
+    minimumTemporalDateString,
+    temporalDateFormatFull
+  )
+
+  const {
     min: cloudCoverMin = '',
     max: cloudCoverMax = ''
   } = cloudCover
@@ -453,26 +462,14 @@ export const GranuleFiltersForm = (props) => {
                         if (temporal.endDate) {
                           const endDate = moment(temporal.endDate).utc()
 
-                          // Check if start and end years are the same
                           if (startDate.year() === endDate.year()) {
-                            const {
-                              minimumTemporalDateString,
-                              temporalDateFormatFull
-                            } = getApplicationConfig()
-                            const minDate = moment(
-                              minimumTemporalDateString,
-                              temporalDateFormatFull
-                            )
-                            // Only set start date to minimum year when user selects identicial years for start and end
-                            temporal.startDate = minDate.year()
-                            setFieldValue('temporal.startDate', minDate.toISOString())
+                            // Preserve original month/day while setting to minimum year
+                            const newStartDate = moment(startDate).year(minDate.year())
+                            setFieldValue('temporal.startDate', newStartDate.toISOString())
                           }
 
                           setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
                           setFieldValue('temporal.recurringDayEnd', endDate.year(startDate.year()).dayOfYear())
-                        } else {
-                          // If no end date, just set start day
-                          setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
                         }
                       }
                     }
@@ -525,11 +522,16 @@ export const GranuleFiltersForm = (props) => {
                     setFieldTouched('temporal.startDate')
 
                     const { temporal: newTemporal } = values
-                    if (newTemporal.isRecurring) {
-                      setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
+                    if (newTemporal.isRecurring && newTemporal.endDate && startDate.isValid()) {
+                      const endDate = moment(newTemporal.endDate).utc()
+
+                      if (startDate.year() === endDate.year()) {
+                        // Only set start year to minimum year, keeping month/day from selected date
+                        startDate.year(minDate.year())
+                        setFieldValue('temporal.startDate', startDate.toISOString())
+                      }
                     }
 
-                    // Only call handleSubmit if `onSubmitStart` was called
                     if (shouldSubmit && (startDate.isValid() || !input)) {
                       handleSubmit()
 
@@ -550,8 +552,14 @@ export const GranuleFiltersForm = (props) => {
                     setFieldTouched('temporal.endDate')
 
                     const { temporal: newTemporal } = values
-                    if (newTemporal.isRecurring) {
-                      setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
+                    if (newTemporal.isRecurring && newTemporal.startDate && endDate.isValid()) {
+                      const startDate = moment(newTemporal.startDate).utc()
+
+                      if (startDate.year() === endDate.year()) {
+                        // Only set start year to minimum year, keeping month/day from startDate
+                        startDate.year(minDate.year())
+                        setFieldValue('temporal.startDate', startDate.toISOString())
+                      }
                     }
 
                     if (shouldSubmit && (endDate.isValid() || !input)) {
