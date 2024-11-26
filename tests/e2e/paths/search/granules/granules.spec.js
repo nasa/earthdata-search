@@ -126,7 +126,7 @@ const testResultsSize = async (page, cmrHits) => {
 
 test.describe('Path /search/granules', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })

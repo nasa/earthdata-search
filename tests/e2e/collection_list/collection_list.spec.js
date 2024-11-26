@@ -6,7 +6,7 @@ import singleCollection from './__mocks__/single_collection.json'
 
 test.describe('Collection List Behavior', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })

@@ -21,7 +21,7 @@ test.describe('When clicking on a granule on the map', () => {
   test.beforeEach(async ({ page, context }) => {
     const conceptId = 'C2208779826-LANCEMODIS'
 
-    setupTests({
+    await setupTests({
       page,
       context
     })

@@ -18,7 +18,7 @@ import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 
 test.describe('Map: Spatial interactions', () => {
   test.beforeEach(async ({ page, context }, testInfo) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })

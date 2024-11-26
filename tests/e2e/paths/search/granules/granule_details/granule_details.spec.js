@@ -13,7 +13,7 @@ import formattedGranuleMetadata from './__mocks__/formattedGranuleMetadata.json'
 
 test.describe('Path /search/granules/granule-details', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })

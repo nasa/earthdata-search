@@ -1,3 +1,8 @@
+import { mbr } from '@edsc/geo-utils'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+
+const { defaultSpatialDecimalSize } = getApplicationConfig()
+
 /**
    * Turns '1,2' into '2,1' for leaflet
    * @param {String} coordinateString A single coordinate representing a point on a map
@@ -49,7 +54,7 @@ export const transformCircleCoordinates = (circleCoordinates) => {
  * @param {Object} spatial Object that holds the different spatial areas.
  * @returns {String} Returns a string formatting the spatial areas into human readable values.
  */
-export const createSpatialDisplay = (spatial) => {
+export const createSpatialDisplay = (spatial, usingMbr = false) => {
   const {
     boundingBox,
     circle,
@@ -65,6 +70,25 @@ export const createSpatialDisplay = (spatial) => {
       const splitStr = transformBoundingBoxCoordinates(selectedShape[0])
 
       return `SW: (${splitStr[0]}) NE: (${splitStr[1]})`
+    }
+
+    if (usingMbr) {
+      const {
+        swLat,
+        swLng,
+        neLat,
+        neLng
+      } = mbr({
+        boundingBox: boundingBox && boundingBox[0],
+        circle: circle && circle[0],
+        line: line && line[0],
+        point: point && point[0],
+        polygon: polygon && polygon[0]
+      }, {
+        precision: defaultSpatialDecimalSize
+      })
+
+      return `SW: (${swLat}, ${swLng}) NE: (${neLat}, ${neLng})`
     }
 
     if (circle) {

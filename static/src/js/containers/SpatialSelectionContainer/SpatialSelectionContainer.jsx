@@ -9,7 +9,9 @@ import actions from '../../actions'
 import { metricsMap, metricsSpatialEdit } from '../../middleware/metrics/actions'
 
 import { isPath } from '../../util/isPath'
+
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+import { getProjectCollections } from '../../selectors/project'
 
 import SpatialSelection from '../../components/SpatialSelection/SpatialSelection'
 
@@ -31,6 +33,7 @@ export const mapStateToProps = (state) => ({
   router: state.router,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
+  projectCollections: getProjectCollections(state),
   shapefile: state.shapefile
 })
 
@@ -45,6 +48,7 @@ export const SpatialSelectionContainer = (props) => {
     onChangeQuery,
     pointSearch,
     polygonSearch,
+    projectCollections,
     router,
     shapefile,
     onToggleDrawingNewLayer,
@@ -73,6 +77,7 @@ export const SpatialSelectionContainer = (props) => {
       onChangeQuery={onChangeQuery}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
+      projectCollections={projectCollections}
       shapefile={shapefile}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
       onMetricsMap={onMetricsMap}
@@ -114,6 +119,7 @@ SpatialSelectionContainer.propTypes = {
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
+  projectCollections: PropTypes.shape({}).isRequired,
   router: PropTypes.shape({
     location: PropTypes.shape({
       pathname: PropTypes.string

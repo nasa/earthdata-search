@@ -18,7 +18,7 @@ const expectWithinMargin = async (actual, expected, margin, step) => {
 
 test.describe('When dontShowTour is set to false', () => {
   test.beforeEach(async ({ page, context }) => {
-    await setupTests({
+    await await setupTests({
       page,
       context,
       dontShowTour: false
@@ -85,7 +85,7 @@ test.describe('When dontShowTour is set to false', () => {
 
 test.describe('When loading the page with dontShowTour preference set to true', () => {
   test.beforeEach(async ({ page, context }) => {
-    await setupTests({
+    await await setupTests({
       page,
       context,
       dontShowTour: true
@@ -110,7 +110,7 @@ test.describe('When loading the page with dontShowTour preference set to true', 
 
 test.describe('When logged in', () => {
   test.beforeEach(async ({ page, context }) => {
-    await setupTests({
+    await await setupTests({
       page,
       context,
       dontShowTour: true
@@ -182,7 +182,7 @@ test.describe('When logged in', () => {
 
 test.describe('When not logged in', () => {
   test.beforeEach(async ({ page, context }) => {
-    await setupTests({
+    await await setupTests({
       page,
       context,
       dontShowTour: true

@@ -13,7 +13,7 @@ import collectionFixture from './__mocks__/authenticated_collections.json'
 
 test.describe('Timeline spec', () => {
   test.beforeEach(async ({ page, context }, testInfo) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })
@@ -23,7 +23,7 @@ test.describe('Timeline spec', () => {
   })
 
   test('should resize the leaflet controls', async ({ page, context }) => {
-    login(context)
+    await login(context)
 
     const authHeaders = getAuthHeaders()
 

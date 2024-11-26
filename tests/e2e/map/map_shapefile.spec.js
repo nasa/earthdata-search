@@ -16,7 +16,7 @@ import { setupTests } from '../../support/setupTests'
 
 test.describe('Map: Shapefile interactions', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })
