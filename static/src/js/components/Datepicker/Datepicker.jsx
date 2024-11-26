@@ -132,7 +132,7 @@ class Datepicker extends PureComponent {
 
     if (viewMode !== 'months') return
 
-    const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker')
+    const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
     if (!container) return
 
     const isDayView = container.querySelector('.rdtDays') !== null
@@ -227,11 +227,7 @@ class Datepicker extends PureComponent {
           }
         }
         isValidDate={isValidDate}
-        onChange={
-          (newValue) => {
-            onChange(newValue)
-          }
-        }
+        onChange={onChange}
         onOpen={
           () => {
             setTimeout(() => {
