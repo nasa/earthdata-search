@@ -33,6 +33,7 @@ export const TemporalSelectionDropdownContainer = (props) => {
       onChangeQuery={onChangeQuery}
       temporalSearch={temporalSearch}
       onMetricsTemporalFilter={onMetricsTemporalFilter}
+      filterType="collection"
     />
   )
 }

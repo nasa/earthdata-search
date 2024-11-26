@@ -32,6 +32,7 @@ const setup = (overrideProps) => {
       isRecurring: false
     },
     onChangeQuery: jest.fn(),
+    onMetricsTemporalFilter: jest.fn(),
     ...overrideProps
   }
 
@@ -292,92 +293,6 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
-  })
-
-  test('onMetricsTemporalFilter is called when setting start date', async () => {
-    const onMetricsTemporalFilterMock = jest.fn()
-    const user = userEvent.setup()
-
-    setup({ onMetricsTemporalFilter: onMetricsTemporalFilterMock })
-
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
-
-    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
-    const startTestObj = '2012-01-01 12:00:00'
-
-    await act(async () => {
-      await user.type(startDateInput, startTestObj)
-    })
-
-    expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
-      type: 'Set Start Date',
-      value: moment.utc(startTestObj).toISOString()
-    })
-  })
-
-  test('onMetricsTemporalFilter is called when setting start date', async () => {
-    const onMetricsTemporalFilterSpy = jest.spyOn(metricsActions, 'metricsTemporalFilter')
-    const user = userEvent.setup()
-
-    setup({ onMetricsTemporalFilter: null })
-
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
-
-    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
-    const startTestObj = '2012-01-01 12:00:00'
-
-    await act(async () => {
-      await user.type(startDateInput, startTestObj)
-    })
-
-    expect(onMetricsTemporalFilterSpy).toHaveBeenCalledTimes(0)
-  })
-
-  test('onMetricsTemporalFilter is called when setting end date', async () => {
-    const onMetricsTemporalFilterMock = jest.fn()
-    const user = userEvent.setup()
-
-    setup({ onMetricsTemporalFilter: onMetricsTemporalFilterMock })
-
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
-
-    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
-    const endTestObj = '2015-01-01 12:00:00'
-
-    await act(async () => {
-      await user.type(endDateInput, endTestObj)
-    })
-
-    expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
-      type: 'Set End Date',
-      value: moment.utc(endTestObj).toISOString()
-    })
-  })
-
-  test('onMetricsTemporalFilter is not called when setting end date and it is null', async () => {
-    const onMetricsTemporalFilterSpy = jest.spyOn(metricsActions, 'metricsTemporalFilter')
-    const user = userEvent.setup()
-
-    setup({ onMetricsTemporalFilter: null })
-
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
-
-    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
-    const endTestObj = '2015-01-01 12:00:00'
-
-    await act(async () => {
-      await user.type(endDateInput, endTestObj)
-    })
-
-    expect(onMetricsTemporalFilterSpy).toHaveBeenCalledTimes(0)
   })
 
   test('onMetricsTemporalFilter is called on Apply', async () => {

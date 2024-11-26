@@ -22,6 +22,7 @@ import DatepickerContainer from '../../containers/DatepickerContainer/Datepicker
  * @param {Boolean} props.allowRecurring - Flag to designate the whether recurring dates are supported
  * @param {String} props.controlId - A unique id
  * @param {String} props.format - A string temporal format
+ * @param {String} props.filterType - A string indicating the temporal filter type
  * @param {Function} props.onChangeRecurring - Callback function to call when recurring range is changed
  * @param {Function} props.onInvalid - Callback function to call when entry is invalid
  * @param {Function} props.onRecurringToggle - Callback function to call when recurring is toggled
@@ -103,6 +104,7 @@ export class TemporalSelection extends Component {
     const {
       allowRecurring,
       controlId,
+      filterType,
       format,
       onChangeRecurring,
       onRecurringToggle,
@@ -163,6 +165,7 @@ export class TemporalSelection extends Component {
                   Start
                 </Form.Label>
                 <DatepickerContainer
+                  filterType={filterType}
                   id={`${controlId}__temporal-form__start-date`}
                   label="Start Date"
                   onSubmit={onSubmitStart}
@@ -183,6 +186,7 @@ export class TemporalSelection extends Component {
                   End
                 </Form.Label>
                 <DatepickerContainer
+                  filterType={filterType}
                   id={`${controlId}__temporal-form__end-date`}
                   label="End Date"
                   onSubmit={onSubmitEnd}
@@ -270,6 +274,7 @@ export class TemporalSelection extends Component {
 
 TemporalSelection.defaultProps = {
   allowRecurring: true,
+  filterType: null,
   format: 'YYYY-MM-DD HH:mm:ss',
   onChangeRecurring: null,
   onInvalid: null,
@@ -282,6 +287,7 @@ TemporalSelection.defaultProps = {
 TemporalSelection.propTypes = {
   allowRecurring: PropTypes.bool,
   controlId: PropTypes.string.isRequired,
+  filterType: PropTypes.string,
   format: PropTypes.string,
   onChangeRecurring: PropTypes.func,
   onInvalid: PropTypes.func,

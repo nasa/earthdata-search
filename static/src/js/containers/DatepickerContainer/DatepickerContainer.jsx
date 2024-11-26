@@ -1,9 +1,15 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import { connect } from 'react-redux'
 
 import isCustomTime from '../../util/datepicker'
 import Datepicker from '../../components/Datepicker/Datepicker'
+import { metricsTemporalFilter } from '../../middleware/metrics/actions'
+
+export const mapDispatchToProps = (dispatch) => ({
+  onMetricsTemporalFilter: (data) => dispatch(metricsTemporalFilter(data))
+})
 
 /**
  * DatepickerContainer component
@@ -24,6 +30,7 @@ import Datepicker from '../../components/Datepicker/Datepicker'
 const DatepickerContainer = ({
   format,
   id,
+  filterType,
   label,
   maxDate,
   minDate,
@@ -32,16 +39,18 @@ const DatepickerContainer = ({
   size,
   type,
   value,
-  viewMode
+  viewMode,
+  onMetricsTemporalFilter
 }) => {
   const pickerRef = useRef()
+  const [valueWhenFocused, setValueWhenFocused] = useState()
 
   /**
   * Set up the onChange event for the datepicker
   * @param {moment|string} newValue - The value passed from the Datetime component
   * @param {boolean} [shouldSubmit] - Should this change result in submitting the temporal value. True for clicking a date, or bluring the field, but false for typing characters in the text field.
   */
-  const onChange = (newValue, shouldSubmit = false) => {
+  const onChange = (newValue, shouldSubmit = false, metricType = 'calendar') => {
     let valueToSet = null
 
     // Check to see if the current date is a moment object, and whether or not it has a
@@ -51,7 +60,15 @@ const DatepickerContainer = ({
     // We do this for the invalid date strings so we can call moment.isValid on any value passed
     // out of the callback.
     if (typeof newValue !== 'string' && moment.isMoment(newValue) && !isCustomTime(newValue)) {
+      const newValueISO = newValue.toISOString()
       if (type === 'start') {
+        if (newValueISO !== value.toString() && filterType === 'collection') {
+          onMetricsTemporalFilter({
+            type: `Set Start Date - ${metricType}`,
+            value: newValueISO
+          })
+        }
+
         valueToSet = newValue.startOf('day')
       }
 
@@ -59,6 +76,13 @@ const DatepickerContainer = ({
         // Using moment.ISO_8601 to determine format of the user input
         const isoDate = moment.utc(newValue.creationData().input, moment.ISO_8601)
         const { format: dateFormat } = isoDate.creationData()
+
+        if (newValueISO !== value.toString() && filterType === 'collection') {
+          onMetricsTemporalFilter({
+            type: `Set End Date - ${metricType}`,
+            value: newValueISO
+          })
+        }
 
         if (dateFormat === 'YYYY') {
           valueToSet = newValue.endOf('year')
@@ -87,9 +111,19 @@ const DatepickerContainer = ({
   const onInputBlur = (event) => {
     const { value: newValue } = event.target
 
-    if (moment.utc(newValue, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).isValid()) {
-      onChange(moment.utc(newValue, format), true)
+    if (newValue === valueWhenFocused) {
+      return
     }
+
+    if (moment.utc(newValue, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).isValid()) {
+      onChange(moment.utc(newValue, format), true, 'typed')
+    }
+  }
+
+  const onInputFocus = (event) => {
+    const { value: newValue } = event.target
+
+    setValueWhenFocused(newValue)
   }
 
   /**
@@ -156,6 +190,7 @@ const DatepickerContainer = ({
       isValidDate={isValidDate}
       label={label}
       onInputBlur={onInputBlur}
+      onInputFocus={onInputFocus}
       onChange={onChange}
       onClearClick={onClearClick}
       onTodayClick={onTodayClick}
@@ -168,6 +203,7 @@ const DatepickerContainer = ({
 }
 
 DatepickerContainer.defaultProps = {
+  filterType: null,
   format: 'YYYY-MM-DD HH:mm:ss',
   label: '',
   maxDate: '',
@@ -180,6 +216,7 @@ DatepickerContainer.defaultProps = {
 }
 
 DatepickerContainer.propTypes = {
+  filterType: PropTypes.string,
   format: PropTypes.string,
   id: PropTypes.string.isRequired,
   label: PropTypes.string,
@@ -190,7 +227,8 @@ DatepickerContainer.propTypes = {
   size: PropTypes.string,
   type: PropTypes.string,
   value: PropTypes.string,
-  viewMode: PropTypes.string
+  viewMode: PropTypes.string,
+  onMetricsTemporalFilter: PropTypes.func.isRequired
 }
 
-export default DatepickerContainer
+export default connect(null, mapDispatchToProps)(DatepickerContainer)

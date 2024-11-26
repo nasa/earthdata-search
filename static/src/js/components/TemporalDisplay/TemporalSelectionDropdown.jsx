@@ -201,14 +201,6 @@ const TemporalSelectionDropdown = ({
       newStartDate.year(startDateObject.year())
     }
 
-    if (onMetricsTemporalFilter) {
-      onMetricsTemporalFilter({
-        type: 'Set Start Date',
-        // eslint-disable-next-line no-underscore-dangle
-        value: newStartDate.isValid() ? newStartDate.toISOString() : newStartDate._i
-      })
-    }
-
     setTemporal({
       ...temporal,
       // eslint-disable-next-line no-underscore-dangle
@@ -235,14 +227,6 @@ const TemporalSelectionDropdown = ({
       newEndDate.year(endDateObject.year())
     }
 
-    if (onMetricsTemporalFilter) {
-      onMetricsTemporalFilter({
-        type: 'Set End Date',
-        // eslint-disable-next-line no-underscore-dangle
-        value: newEndDate.isValid() ? newEndDate.toISOString() : newEndDate._i
-      })
-    }
-
     setTemporal({
       ...temporal,
       // eslint-disable-next-line no-underscore-dangle
@@ -258,6 +242,7 @@ const TemporalSelectionDropdown = ({
           <TemporalSelectionDropdownMenu
             allowRecurring={allowRecurring}
             disabled={disabled}
+            filterType="collection"
             onApplyClick={onApplyClick}
             onChangeQuery={onChangeQuery}
             onChangeRecurring={onChangeRecurring}
