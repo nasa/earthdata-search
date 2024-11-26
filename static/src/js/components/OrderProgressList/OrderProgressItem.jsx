@@ -46,6 +46,13 @@ export const OrderProgressItem = ({
     }
   }
 
+  // Grab the order status if it exists and check if it's complete
+  const { status = 'created' } = orderInformation
+
+  if (type === 'SWODLR' && status === 'complete') {
+    totalPercentProcessed = 100
+  }
+
   const badgeClass = classNames(
     'order-progress-item__badge',
     {
@@ -65,13 +72,14 @@ export const OrderProgressItem = ({
             {orderId || 'Not provided'}
           </h5>
           <Badge
+            role="status"
             className={badgeClass}
           >
             {formatOrderStatus(orderStatus)}
           </Badge>
         </div>
         <div className="order-progress-item__info">
-          <span className="order-progress-item__processed">
+          <span role="status" className="order-progress-item__processed">
             {
               !!(numGranulesProccessed && totalGranulesInOrder) && (
                 `${numGranulesProccessed} of ${totalGranulesInOrder} granule(s) processed `
