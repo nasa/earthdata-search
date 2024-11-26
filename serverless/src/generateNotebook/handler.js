@@ -61,6 +61,7 @@ const generateNotebook = async (event) => {
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const generatedTime = moment().utc().format('MMMM DD, YYYY [at] HH:mm:ss [UTC]')
+  const timestamp = moment().utc().format('YYYY-MM-DDTHH:mm:ss')
 
   const jwtToken = getJwtToken(event)
 
@@ -160,7 +161,7 @@ const generateNotebook = async (event) => {
     const parsedNotebook = JSON.parse(renderedNotebookString)
 
     // Generates notebook key
-    const key = `notebook/rendered_notebook_${granuleId}.ipynb`
+    const key = `notebook/${granuleTitle}-sample-notebook_${timestamp}.ipynb`
 
     // Create a command to put the notebook into S3
     const createCommand = new PutObjectCommand({

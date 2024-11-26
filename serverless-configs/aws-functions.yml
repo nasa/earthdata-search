@@ -60,7 +60,7 @@
       - http:
           method: post
           cors: ${file(./serverless-configs/${self:provider.name}-cors-configuration.yml)}
-          path: generateNotebook
+          path: generate_notebook
           authorizer:
             name: edlOptionalAuthorizer
             type: request
