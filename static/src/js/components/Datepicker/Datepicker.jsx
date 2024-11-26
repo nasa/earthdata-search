@@ -107,17 +107,14 @@ class Datepicker extends PureComponent {
   updateNavigationArrows() {
     const { viewMode } = this.props
 
-    // Only proceed if viewMode is months
     if (viewMode !== 'months') return
 
-    // Find the picker container
     const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
     if (!container) return
 
-    // Check specifically for the rdtDays container
     const isDayView = container.querySelector('.rdtDays') !== null
 
-    if (!isDayView) return // Only apply this logic in day view
+    if (!isDayView) return
 
     // Find navigation buttons
     const prevButton = container.querySelector('.rdtPrev')
@@ -221,7 +218,7 @@ class Datepicker extends PureComponent {
         }
         onOpen={
           () => {
-          // Update arrows when calendar opens
+            // Update arrows when calendar opens
             setTimeout(() => {
               this.updateNavigationArrows()
               // Re-setup handlers when calendar opens
