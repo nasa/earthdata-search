@@ -130,7 +130,7 @@ describe('generateNotebook', () => {
     })
   })
 
-  describe('when bounding field are is provided', () => {
+  describe('when a bounding box is provided', () => {
     test('generates notebook without bounding box field', async () => {
       nock(/graphql/)
         .post('/api')

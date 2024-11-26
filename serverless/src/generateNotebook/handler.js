@@ -184,6 +184,9 @@ const generateNotebook = async (event) => {
     // If the upload was successful, generate a signed URL for the notebook
     // and redirect the user to it
     if (statusCode === 200) {
+      // Logs out uuid/filename
+      console.log(`Successfully created ${key}`)
+
       const getObjectCommand = new GetObjectCommand({
         Bucket: generateNotebooksBucketName,
         Key: key
