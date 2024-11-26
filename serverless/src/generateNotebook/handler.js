@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Handlebars from 'handlebars'
+import { v4 as uuidv4 } from 'uuid'
 
 import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
@@ -61,7 +62,6 @@ const generateNotebook = async (event) => {
   const earthdataEnvironment = determineEarthdataEnvironment(headers)
 
   const generatedTime = moment().utc().format('MMMM DD, YYYY [at] HH:mm:ss [UTC]')
-  const timestamp = moment().utc().format('YYYY-MM-DDTHH:mm:ss')
 
   const jwtToken = getJwtToken(event)
 
@@ -90,6 +90,7 @@ const generateNotebook = async (event) => {
           collection {
             conceptId
             title
+            shortName
             variables(params: $variablesParams) {
               items {
                 name
@@ -125,7 +126,9 @@ const generateNotebook = async (event) => {
     const { items: granulesItems } = granules
     const { collection, title: granuleTitle } = granulesItems[0]
 
-    const { conceptId: collectionId, title: collectionTitle, variables } = collection
+    const {
+      conceptId: collectionId, title: collectionTitle, shortName, variables
+    } = collection
 
     const { items: variableItems } = variables
     const { name: variableName } = variableItems[0]
@@ -161,7 +164,7 @@ const generateNotebook = async (event) => {
     const parsedNotebook = JSON.parse(renderedNotebookString)
 
     // Generates notebook key
-    const key = `notebook/${granuleTitle}-sample-notebook_${timestamp}.ipynb`
+    const key = `notebook/${uuidv4()}/${granuleTitle.slice(0, 100)}_${shortName}_sample-notebook.ipynb`
 
     // Create a command to put the notebook into S3
     const createCommand = new PutObjectCommand({
