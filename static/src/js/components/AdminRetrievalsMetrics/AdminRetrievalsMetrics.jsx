@@ -11,8 +11,7 @@ export const AdminRetrievalsMetrics = ({
   onFetchAdminRetrievalsMetrics,
   onUpdateAdminRetrievalsMetricsStartDate,
   onUpdateAdminRetrievalsMetricsEndDate,
-  retrievalsMetrics,
-  onMetricsTemporalFilter
+  retrievalsMetrics
 }) => {
   const [temporalFilterEndDate, setTemporalFilterEndDate] = useState('')
   const [temporalFilterStartDate, setTemporalFilterStartDate] = useState('')
@@ -77,7 +76,6 @@ export const AdminRetrievalsMetrics = ({
           <TemporalSelectionDropdown
             onChangeQuery={onChangeQuery}
             allowRecurring={false}
-            onMetricsTemporalFilter={onMetricsTemporalFilter}
           />
         </Col>
       </Row>
@@ -100,7 +98,6 @@ AdminRetrievalsMetrics.propTypes = {
   onFetchAdminRetrievalsMetrics: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsMetricsStartDate: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsMetricsEndDate: PropTypes.func.isRequired,
-  onMetricsTemporalFilter: PropTypes.func.isRequired,
   retrievalsMetrics: PropTypes.shape({})
 }
 

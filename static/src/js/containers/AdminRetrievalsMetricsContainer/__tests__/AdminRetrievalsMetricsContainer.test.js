@@ -20,7 +20,6 @@ const setup = () => {
     onFetchAdminRetrievalsMetrics: jest.fn(),
     onUpdateAdminRetrievalsMetricsStartDate: jest.fn(),
     onUpdateAdminRetrievalsMetricsEndDate: jest.fn(),
-    onMetricsTemporalFilter: jest.fn(),
     retrievals: {}
   }
 
@@ -91,7 +90,6 @@ describe('AdminRetrievalsMetricsContainer component', () => {
       onFetchAdminRetrievalsMetrics,
       onUpdateAdminRetrievalsMetricsStartDate,
       onUpdateAdminRetrievalsMetricsEndDate,
-      onMetricsTemporalFilter,
       retrievals
     } = setup()
 
@@ -101,7 +99,6 @@ describe('AdminRetrievalsMetricsContainer component', () => {
         onFetchAdminRetrievalsMetrics,
         onUpdateAdminRetrievalsMetricsStartDate,
         onUpdateAdminRetrievalsMetricsEndDate,
-        onMetricsTemporalFilter,
         retrievalsMetrics: retrievals
       },
       {}

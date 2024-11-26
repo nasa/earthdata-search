@@ -31,15 +31,13 @@ export const AdminRetrievalsMetricsContainer = ({
   onFetchAdminRetrievalsMetrics,
   onUpdateAdminRetrievalsMetricsStartDate,
   onUpdateAdminRetrievalsMetricsEndDate,
-  retrievalsMetrics,
-  onMetricsTemporalFilter
+  retrievalsMetrics
 }) => (
   <AdminRetrievalsMetrics
     onFetchAdminRetrievalsMetrics={onFetchAdminRetrievalsMetrics}
     onUpdateAdminRetrievalsMetricsStartDate={onUpdateAdminRetrievalsMetricsStartDate}
     onUpdateAdminRetrievalsMetricsEndDate={onUpdateAdminRetrievalsMetricsEndDate}
     retrievalsMetrics={retrievalsMetrics}
-    onMetricsTemporalFilter={onMetricsTemporalFilter}
   />
 )
 
@@ -51,7 +49,6 @@ AdminRetrievalsMetricsContainer.propTypes = {
   onFetchAdminRetrievalsMetrics: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsMetricsEndDate: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsMetricsStartDate: PropTypes.func.isRequired,
-  onMetricsTemporalFilter: PropTypes.func.isRequired,
   retrievalsMetrics: PropTypes.shape({})
 }
 

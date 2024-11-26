@@ -79,10 +79,12 @@ const TemporalSelectionDropdown = ({
       newTemporal.recurringDayEnd = `${moment(existingEndDate).utc().year(startYear).dayOfYear()}`
     }
 
-    onMetricsTemporalFilter({
-      type: 'Apply Temporal Filter',
-      value: newTemporal
-    })
+    if (onMetricsTemporalFilter) {
+      onMetricsTemporalFilter({
+        type: 'Apply Temporal Filter',
+        value: newTemporal
+      })
+    }
 
     onChangeQuery({
       collection: {
@@ -106,11 +108,12 @@ const TemporalSelectionDropdown = ({
     })
 
     setOpen(false)
-
-    onMetricsTemporalFilter({
-      type: 'Clear Temporal Filter',
-      value: {}
-    })
+    if (onMetricsTemporalFilter) {
+      onMetricsTemporalFilter({
+        type: 'Clear Temporal Filter',
+        value: {}
+      })
+    }
 
     onChangeQuery({
       collection: {
@@ -125,11 +128,12 @@ const TemporalSelectionDropdown = ({
   const onRecurringToggle = (e) => {
     const { target } = e
     const { checked: isChecked } = target
-
-    onMetricsTemporalFilter({
-      type: 'Set Recurring',
-      value: isChecked
-    })
+    if (onMetricsTemporalFilter) {
+      onMetricsTemporalFilter({
+        type: 'Set Recurring',
+        value: isChecked
+      })
+    }
 
     setTemporal({
       ...temporal,
@@ -198,10 +202,12 @@ const TemporalSelectionDropdown = ({
       newStartDate.year(startDateObject.year())
     }
 
-    onMetricsTemporalFilter({
-      type: 'Set Start Date',
-      value: newStartDate.isValid() ? newStartDate.toISOString() : newStartDate._i
-    })
+    if (onMetricsTemporalFilter) {
+      onMetricsTemporalFilter({
+        type: 'Set Start Date',
+        value: newStartDate.isValid() ? newStartDate.toISOString() : newStartDate._i
+      })
+    }
 
     setTemporal({
       ...temporal,
@@ -228,10 +234,12 @@ const TemporalSelectionDropdown = ({
       newEndDate.year(endDateObject.year())
     }
 
-    onMetricsTemporalFilter({
-      type: 'Set End Date',
-      value: newEndDate.isValid() ? newEndDate.toISOString() : newEndDate._i
-    })
+    if (onMetricsTemporalFilter) {
+      onMetricsTemporalFilter({
+        type: 'Set End Date',
+        value: newEndDate.isValid() ? newEndDate.toISOString() : newEndDate._i
+      })
+    }
 
     setTemporal({
       ...temporal,
@@ -266,13 +274,14 @@ const TemporalSelectionDropdown = ({
 
 TemporalSelectionDropdown.defaultProps = {
   allowRecurring: true,
+  onMetricsTemporalFilter: null,
   temporalSearch: {}
 }
 
 TemporalSelectionDropdown.propTypes = {
   allowRecurring: PropTypes.bool,
   onChangeQuery: PropTypes.func.isRequired,
-  onMetricsTemporalFilter: PropTypes.func.isRequired,
+  onMetricsTemporalFilter: PropTypes.func,
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,
