@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
-import { metricsTemporalFilter } from '../../middleware/metrics/actions'
 import AdminRetrievalsMetrics from '../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
 
 export const mapStateToProps = (state) => ({
@@ -23,8 +22,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdminRetrievalsMetricsEndDate:
     (endDate) => dispatch(
       actions.updateAdminRetrievalsMetricsEndDate(endDate)
-    ),
-  onMetricsTemporalFilter: (data) => dispatch(metricsTemporalFilter(data))
+    )
 })
 
 export const AdminRetrievalsMetricsContainer = ({
