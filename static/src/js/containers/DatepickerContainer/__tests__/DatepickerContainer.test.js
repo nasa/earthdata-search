@@ -3,9 +3,15 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import MockDate from 'mockdate'
 import moment from 'moment'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
 
-import DatepickerContainer from '../DatepickerContainer'
+import DatepickerContainer, { mapDispatchToProps } from '../DatepickerContainer'
+
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
+
+const mockStore = configureMockStore()
+const store = mockStore({})
 
 const setup = (overrideProps) => {
   const user = userEvent.setup()
@@ -18,10 +24,15 @@ const setup = (overrideProps) => {
     minDate: minimumTemporalDateString,
     maxDate: moment.utc().format(temporalDateFormatFull),
     onSubmit: jest.fn(),
+    onMetricsTemporalFilter: jest.fn(),
     ...overrideProps
   }
 
-  render(<DatepickerContainer {...props} />)
+  render(
+    <Provider store={store}>
+      <DatepickerContainer {...props} />
+    </Provider>
+  )
 
   return {
     props,

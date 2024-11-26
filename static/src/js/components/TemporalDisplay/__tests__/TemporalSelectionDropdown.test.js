@@ -7,12 +7,17 @@ import {
   waitFor
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { Provider } from 'react-redux'
+import configureMockStore from 'redux-mock-store'
 
 import moment from 'moment'
 
 import * as metricsActions from '../../../middleware/metrics/actions'
 
 import TemporalSelectionDropdown from '../TemporalSelectionDropdown'
+
+const mockStore = configureMockStore()
+const store = mockStore({})
 
 beforeAll(() => {
   ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
@@ -37,7 +42,9 @@ const setup = (overrideProps) => {
   }
 
   return render(
-    <TemporalSelectionDropdown {...props} />
+    <Provider store={store}>
+      <TemporalSelectionDropdown {...props} />
+    </Provider>
   )
 }
 
@@ -334,40 +341,6 @@ describe('TemporalSelectionDropdown component', () => {
         isRecurring: false
       }
     })
-  })
-
-  test('onMetricsTemporalFilter is not called on Apply if it is null', async () => {
-    const onMetricsTemporalFilterSpy = jest.spyOn(metricsActions, 'metricsTemporalFilter')
-    const onChangeQueryMock = jest.fn()
-    const user = userEvent.setup()
-
-    setup({
-      onMetricsTemporalFilter: null,
-      onChangeQuery: onChangeQueryMock
-    })
-
-    const validStartDate = '2019-03-29 00:00:00'
-    const validEndDate = '2019-03-30 00:00:00'
-
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
-
-    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
-    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
-
-    await act(async () => {
-      await user.type(startDateInput, validStartDate)
-      await user.type(endDateInput, validEndDate)
-    })
-
-    const applyBtn = screen.getByRole('button', { name: 'Apply' })
-
-    await waitFor(async () => {
-      await user.click(applyBtn)
-    })
-
-    expect(onMetricsTemporalFilterSpy).toHaveBeenCalledTimes(0)
   })
 
   test('onMetricsTemporalFilter is called on Clear', async () => {

@@ -15,6 +15,7 @@ export const mapDispatchToProps = (dispatch) => ({
  * DatepickerContainer component
  * @extends Component
  * @param {Object} props - The props passed into the component.
+ * @param {String} props.filterType - A string indicating the datepicker filter context (collection or granule)
  * @param {String} props.format - A string temporal format
  * @param {String} props.id - A unique id
  * @param {String} props.label - A label to provide to the Datepicker
