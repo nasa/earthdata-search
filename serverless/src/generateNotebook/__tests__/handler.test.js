@@ -54,6 +54,7 @@ describe('generateNotebook', () => {
                 collection: {
                   conceptId: 'C1234-MOCK',
                   title: 'Mock Collection',
+                  shortName: 'Mock Short Name',
                   variables: {
                     items: [{
                       name: 'Mock Variable'
@@ -96,6 +97,7 @@ describe('generateNotebook', () => {
                 collection: {
                   conceptId: 'C1234-MOCK',
                   title: 'Mock Collection',
+                  shortName: 'Mock Short Name',
                   variables: {
                     items: [{
                       name: 'Mock Variable'
@@ -141,6 +143,7 @@ describe('generateNotebook', () => {
                 collection: {
                   conceptId: 'C1234-MOCK',
                   title: 'Mock Collection',
+                  shortName: 'Mock Short Name',
                   variables: {
                     items: [{
                       name: 'Mock Variable'
@@ -184,6 +187,7 @@ describe('generateNotebook', () => {
                 collection: {
                   conceptId: 'C1234-MOCK',
                   title: 'Mock Collection',
+                  shortName: 'Mock Short Name',
                   variables: {
                     items: [{
                       name: 'Mock Variable'
@@ -261,6 +265,7 @@ describe('generateNotebook', () => {
                 collection: {
                   conceptId: 'C1234-MOCK',
                   title: 'Mock Collection',
+                  shortName: 'Mock Short Name',
                   variables: {
                     items: [{
                       name: 'Mock Variable'

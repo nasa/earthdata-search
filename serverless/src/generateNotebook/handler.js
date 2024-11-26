@@ -89,8 +89,8 @@ const generateNotebook = async (event) => {
           title
           collection {
             conceptId
-            title
             shortName
+            title
             variables(params: $variablesParams) {
               items {
                 name
@@ -127,7 +127,10 @@ const generateNotebook = async (event) => {
     const { collection, title: granuleTitle } = granulesItems[0]
 
     const {
-      conceptId: collectionId, title: collectionTitle, shortName, variables
+      conceptId: collectionId,
+      shortName,
+      title: collectionTitle,
+      variables
     } = collection
 
     const { items: variableItems } = variables
