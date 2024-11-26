@@ -140,6 +140,12 @@ Resources:
                 Action:
                   - states:*
                 Resource: '*'
+              - Effect: Allow
+                Action:
+                  - "s3:GetBucketLocation"
+                  - "s3:GetObject"
+                  - "s3:PutObject"
+                Resource: '*'
 
   # Redis Cache for browse-scaler/image-resizing
   # The CIDR notation 0.0. 0.0/0 defines an IP block containing all possible IP addresses

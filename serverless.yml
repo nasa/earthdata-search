@@ -10,6 +10,8 @@ provider:
   memorySize: 128
   environment:
     NODE_ENV: ${env:NODE_ENV, 'development'}
+
+    GENERATE_NOTEBOOKS_BUCKET_NAME: ${self:custom.generateNotebooksBucketName}
     # Variables for new Encrypted database
     databaseEndpoint:
       Fn::ImportValue: ${self:provider.stage}-EncryptedDatabaseEndpoint
@@ -46,6 +48,8 @@ provider:
     collectionCapabilitiesLambda: ${self:custom.siteName}-generateCollectionCapabilityTags
 
     NODE_OPTIONS: '--enable-source-maps'
+
+    stage: ${self:provider.stage}
 
     # Redis cache configuration
     cacheHost:
@@ -85,6 +89,7 @@ plugins:
   - serverless-plugin-log-subscription
   - serverless-plugin-ifelse
   - serverless-offline
+  - serverless-s3-local
 
 #
 # Lambda Functions
@@ -115,6 +120,8 @@ custom:
   siteName: earthdata-search-${self:provider.stage}
 
   infrastructureStackName: earthdata-search-infrastructure-${self:provider.stage}
+
+  generateNotebooksBucketName: ${self:custom.siteName}-generate-notebooks
 
   serverlessIfElse:
     # When invoking an offline lambda with `npm run invoke-local` this condition will disable serverless components that need to import or reference cloudformation values
@@ -203,6 +210,7 @@ custom:
   esbuild:
     loader:
       .svg: text
+      .ipynb: json
     external: ['knex', 'pg', 'sharp']
     bundle: true
     minify: ${self:custom.minifyBuild.${self:provider.stage}}
@@ -216,3 +224,7 @@ custom:
   logSubscription:
     enabled: true
     destinationArn: ${env:LOG_DESTINATION_ARN, ''}
+  
+  s3:
+    host: localhost
+    directory: tmp

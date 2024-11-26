@@ -179,6 +179,47 @@ Resources:
       PolicyName: ${self:provider.stage}-S3CloudfrontLogToCloudwatchPolicy
       Roles:
         - Ref: IamRoleCustomResourcesLambdaExecution
+
+  GenerateNotebooksBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.generateNotebooksBucketName}
+      LifecycleConfiguration:
+        Rules:
+          - Id: DeleteObjects
+            Status: Enabled
+            ExpirationInDays: ${env:S3_OBJECTS_EXPIRATION_IN_DAYS, '30'}
+  
+  GenerateNotebooksBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: ${self:custom.generateNotebooksBucketName}
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${env:CLOUDFRONT_OAI_ID, 'default-oai-id'}
+            Action:
+              - s3:GetObject*
+              - s3:ListBucket
+            Resource:
+              - arn:aws:s3:::${self:custom.generateNotebooksBucketName}/*
+              - arn:aws:s3:::${self:custom.generateNotebooksBucketName}
+          - Sid: Internet-Services-East-VPC-Access
+            Effect: Allow
+            Principal: '*'
+            Action:
+              - s3:GetObject*
+              - s3:ListBucket
+            Resource:
+              - arn:aws:s3:::${self:custom.generateNotebooksBucketName}/*
+              - arn:aws:s3:::${self:custom.generateNotebooksBucketName}
+            Condition:
+              StringEquals:
+                aws:sourceVpc: ${env:INTERNET_SERVICE_EAST_VPC, 'default-east-vpc'}
+
+
 Outputs:
   UpdateOrderStatusWorkflow:
     Description: ARN of the order status step function workflow

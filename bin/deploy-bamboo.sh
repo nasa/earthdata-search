@@ -84,10 +84,12 @@ dockerRun() {
         -e "AWS_ACCESS_KEY_ID=$bamboo_AWS_ACCESS_KEY_ID" \
         -e "AWS_SECRET_ACCESS_KEY=$bamboo_AWS_SECRET_ACCESS_KEY" \
         -e "CLOUDFRONT_BUCKET_NAME=$bamboo_CLOUDFRONT_BUCKET_NAME" \
+        -e "CLOUDFRONT_OAI_ID=$bamboo_CLOUDFRONT_OAI_ID" \
         -e "COLORMAP_JOB_ENABLED=$bamboo_COLORMAP_JOB_ENABLED" \
         -e "DB_ALLOCATED_STORAGE=$bamboo_DB_ALLOCATED_STORAGE" \
         -e "DB_INSTANCE_CLASS=$bamboo_DB_INSTANCE_CLASS" \
         -e "GIBS_JOB_ENABLED=$bamboo_GIBS_JOB_ENABLED" \
+        -e "INTERNET_SERVICE_EAST_VPC=$bamboo_INTERNET_SERVICE_EAST_VPC" \
         -e "LAMBDA_TIMEOUT=$bamboo_LAMBDA_TIMEOUT" \
         -e "LOG_DESTINATION_ARN=$bamboo_LOG_DESTINATION_ARN" \
         -e "NODE_ENV=production" \
@@ -95,6 +97,7 @@ dockerRun() {
         -e "OBFUSCATION_SPIN_SHAPEFILES=$bamboo_OBFUSCATION_SPIN_SHAPEFILES" \
         -e "OBFUSCATION_SPIN=$bamboo_OBFUSCATION_SPIN" \
         -e "ORDER_DELAY_SECONDS=$bamboo_ORDER_DELAY_SECONDS" \
+        -e "S3_OBJECTS_EXPIRATION_IN_DAYS=$bamboo_S3_OBJECTS_EXPIRATION_IN_DAYS" \
         -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
         -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
         -e "USE_CACHE=$bamboo_USE_CACHE" \
