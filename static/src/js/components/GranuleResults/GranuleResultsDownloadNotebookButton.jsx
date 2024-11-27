@@ -87,7 +87,14 @@ export const GranuleResultsDownloadNotebookButton = ({
   }
 
   return (
-    <Dropdown onClick={(event) => { event.stopPropagation() }} drop="down">
+    <Dropdown
+      onClick={
+        (event) => {
+          event.stopPropagation()
+        }
+      }
+      drop="down"
+    >
       <Dropdown.Toggle as={CustomDownloadNotebookToggle} id={granuleId} />
       {
         ReactDOM.createPortal(
