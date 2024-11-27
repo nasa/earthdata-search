@@ -16,8 +16,11 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     collectionMetadata: {},
+    collectionQuerySpatial: {},
+    collectionTags: {},
     focusedCollectionId: 'focusedCollection',
     focusedGranuleId: '',
+    generateNotebook: {},
     granuleQuery: { pageNum: 1 },
     granuleSearchResults: {},
     granulesMetadata: {},
@@ -26,6 +29,7 @@ function setup(overrideProps) {
     onChangeGranulePageNum: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
+    onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
@@ -72,6 +76,16 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('granuleId')
+  })
+
+  test('onGenerateNotebook calls actions.excludeGranule', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'excludeGranule')
+
+    mapDispatchToProps(dispatch).onGenerateNotebook({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
   test('onMetricsDataAccess calls metricsActions.metricsDataAccess', () => {
@@ -130,17 +144,24 @@ describe('mapStateToProps', () => {
               granule: {}
             }
           },
+          spatial: {},
           temporal: {}
         }
       },
       portal: {},
-      project: {}
+      project: {},
+      ui: {
+        generateNotebook: {}
+      }
     }
 
     const expectedState = {
       collectionMetadata: {},
+      collectionTags: {},
+      collectionQuerySpatial: {},
       focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
+      generateNotebook: {},
       granuleQuery: {},
       granuleSearchResults: {},
       granulesMetadata: {},

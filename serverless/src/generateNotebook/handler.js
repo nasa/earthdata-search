@@ -48,7 +48,7 @@ const generateNotebook = async (event) => {
 
   let boundingBoxValues
   if (boundingBox) {
-    const [minLon, minLat, maxLon, maxLat] = boundingBox.split(', ')
+    const [minLon, minLat, maxLon, maxLat] = boundingBox.split(',')
     boundingBoxValues = {
       minLon,
       minLat,
@@ -166,14 +166,17 @@ const generateNotebook = async (event) => {
     // Parse the rendered notebook string back into a JSON object
     const parsedNotebook = JSON.parse(renderedNotebookString)
 
+    const fileName = `${granuleTitle.slice(0, 100)}_${shortName}_sample-notebook.ipynb`
+
     // Generates notebook key
-    const key = `notebook/${uuidv4()}/${granuleTitle.slice(0, 100)}_${shortName}_sample-notebook.ipynb`
+    const key = `notebook/${uuidv4()}/${fileName}`
 
     // Create a command to put the notebook into S3
     const createCommand = new PutObjectCommand({
       Bucket: generateNotebooksBucketName,
       Body: JSON.stringify(parsedNotebook),
-      Key: key
+      Key: key,
+      ContentDisposition: `attachment; filename="${fileName}"`
     })
 
     const response = await s3Client.send(createCommand)
@@ -196,7 +199,7 @@ const generateNotebook = async (event) => {
       const signedUrl = await getSignedUrl(s3Client, getObjectCommand)
 
       return {
-        statusCode: 307,
+        statusCode: 303,
         headers: {
           Location: signedUrl
         }

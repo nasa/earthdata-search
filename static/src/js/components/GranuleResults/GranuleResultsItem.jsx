@@ -23,11 +23,13 @@ import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import EDSCImage from '../EDSCImage/EDSCImage'
 import GranuleResultsDataLinksButton from './GranuleResultsDataLinksButton'
+import GranuleResultsDownloadNotebookButton from './GranuleResultsDownloadNotebookButton'
 import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './GranuleResultsItem.scss'
+import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 /**
  * Renders GranuleResultsItem.
@@ -48,7 +50,10 @@ import './GranuleResultsItem.scss'
  */
 const GranuleResultsItem = forwardRef(({
   collectionId,
+  collectionQuerySpatial,
+  collectionTags,
   directDistributionInformation,
+  generateNotebook,
   granule,
   isCollectionInProject,
   isGranuleInProject,
@@ -58,9 +63,11 @@ const GranuleResultsItem = forwardRef(({
   onFocusedGranuleChange,
   onMetricsDataAccess,
   onMetricsAddGranuleProject,
+  onGenerateNotebook,
   onRemoveGranuleFromProjectCollection,
   readableGranuleName
 }, ref) => {
+  const generateNotebookTag = getValueForTag('notebook_generation', collectionTags)
   const { thumbnailSize } = getApplicationConfig()
   const {
     height: thumbnailHeight,
@@ -161,12 +168,6 @@ const GranuleResultsItem = forwardRef(({
     handleClick(event)
   }
 
-  const itemTitle = {
-    title: 'Focus granule on map'
-  }
-
-  if (isFocusedGranule) itemTitle.title = 'Unfocus granule on map'
-
   const isInProject = isGranuleInProject(id)
 
   const granuleResultsItemClasses = classNames([
@@ -192,7 +193,6 @@ const GranuleResultsItem = forwardRef(({
       role="button"
       tabIndex={0}
       // eslint-disable-next-line react/jsx-props-no-spreading
-      {...itemTitle}
     >
       <header
         className="granule-results-item__header"
@@ -253,8 +253,8 @@ const GranuleResultsItem = forwardRef(({
                     ? (
                       <Button
                         className="button granule-results-item__button granule-results-item__button--add"
-                        label="Add granule"
-                        title="Add granule"
+                        tooltip="Add granule to project"
+                        tooltipId={`add-granule-tooltip-${id}`}
                         disabled={isOpenSearch}
                         onClick={
                           (event) => {
@@ -281,8 +281,8 @@ const GranuleResultsItem = forwardRef(({
                     : (
                       <Button
                         className="button granule-results-item__button granule-results-item__button--remove"
-                        label="Remove granule"
-                        title="Remove granule"
+                        tooltip="Remove granule from project"
+                        tooltipId={`remove-granule-tooltip-${id}`}
                         onClick={
                           (event) => {
                             onRemoveGranuleFromProjectCollection({
@@ -303,10 +303,23 @@ const GranuleResultsItem = forwardRef(({
               {
                 onlineAccessFlag && (
                   <GranuleResultsDataLinksButton
+                    id={id}
                     collectionId={collectionId}
                     dataLinks={dataLinks}
                     directDistributionInformation={directDistributionInformation}
                     s3Links={s3Links}
+                    onMetricsDataAccess={onMetricsDataAccess}
+                  />
+                )
+              }
+              {
+                generateNotebookTag && (
+                  <GranuleResultsDownloadNotebookButton
+                    collectionQuerySpatial={collectionQuerySpatial}
+                    granuleId={id}
+                    generateNotebook={generateNotebook}
+                    generateNotebookTag={generateNotebookTag}
+                    onGenerateNotebook={onGenerateNotebook}
                     onMetricsDataAccess={onMetricsDataAccess}
                   />
                 )

@@ -1,0 +1,61 @@
+.granule-results-download-notebook-button {
+  &__dropdown-item {
+    color: $color__carbon--80;
+    font-size: 0.875rem;
+    padding: 0.25rem 1rem;
+    user-select: text;
+    line-height: 1.5rem;
+    vertical-align: middle;
+    cursor: pointer;
+
+    .button__icon {
+      color: rgba($color__spacesuit-white, 0.7);
+    }
+
+    &:hover {
+      color: $color__carbon-black;
+    }
+  }
+
+  &__menu {
+    width: 25rem;
+    padding: 0;
+  }
+
+  &__menu-panel-heading {
+    padding: 0.325rem 1rem;
+    background: $color__spacesuit-white;
+    border-bottom: 1px solid $color__carbon--20;
+    font-weight: 700;
+    font-size: 0.825rem;
+    line-height: 1.5rem;
+    white-space: nowrap;
+  }
+
+  &__menu-panel-label {
+    &--align {
+      position: relative;
+      top: 0.025rem;
+    }
+  }
+
+  &__menu-panel-heading-row {
+    display: flex;
+  }
+
+  &__icon {
+    margin-left: 0.5rem;
+    color: rgba($color__spacesuit-white, 0.8);
+    opacity: 0;
+    transition: all 0.2s ease;
+
+    &--download {
+      position: relative;
+      top: -0.125rem;
+    }
+
+    .granule-results-data-links-button__dropdown-item:hover & {
+      opacity: 1;
+    }
+  }
+}

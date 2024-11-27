@@ -31,7 +31,10 @@ export const GranuleResultsListItem = memo(({
 
   const {
     collectionId,
+    collectionQuerySpatial,
+    collectionTags,
     directDistributionInformation,
+    generateNotebook,
     granules,
     isCollectionInProject,
     isGranuleInProject,
@@ -41,6 +44,7 @@ export const GranuleResultsListItem = memo(({
     onAddGranuleToProjectCollection,
     onExcludeGranule,
     onFocusedGranuleChange,
+    onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
@@ -104,13 +108,17 @@ export const GranuleResultsListItem = memo(({
       <div className="granule-results-list-item__wrapper">
         <GranuleResultsItem
           collectionId={collectionId}
+          collectionQuerySpatial={collectionQuerySpatial}
+          collectionTags={collectionTags}
           directDistributionInformation={directDistributionInformation}
+          generateNotebook={generateNotebook}
           granule={granules[index]}
           isCollectionInProject={isCollectionInProject}
           isGranuleInProject={isGranuleInProject}
           location={location}
           onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onExcludeGranule={onExcludeGranule}
+          onGenerateNotebook={onGenerateNotebook}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
@@ -139,6 +147,7 @@ GranuleResultsListItem.propTypes = {
     onAddGranuleToProjectCollection: PropTypes.func,
     onExcludeGranule: PropTypes.func,
     onFocusedGranuleChange: PropTypes.func,
+    onGenerateNotebook: PropTypes.func,
     onMetricsAddGranuleProject: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,
     onRemoveGranuleFromProjectCollection: PropTypes.func,

@@ -6,3 +6,4 @@ headers:
   - Earthdata-ENV
   - Origin
   - User-Agent
+  - Content-Type

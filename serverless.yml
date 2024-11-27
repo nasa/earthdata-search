@@ -224,7 +224,8 @@ custom:
   logSubscription:
     enabled: true
     destinationArn: ${env:LOG_DESTINATION_ARN, ''}
-  
+
   s3:
     host: localhost
     directory: tmp
+    cors: './s3-cors.xml'

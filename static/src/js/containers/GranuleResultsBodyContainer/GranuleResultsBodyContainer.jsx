@@ -8,10 +8,13 @@ import actions from '../../actions/index'
 
 import { metricsAddGranuleProject, metricsDataAccess } from '../../middleware/metrics/actions'
 
-import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
+import { getCollectionsQuerySpatial, getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
-import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
+import {
+  getFocusedCollectionMetadata,
+  getFocusedCollectionTags
+} from '../../selectors/collectionMetadata'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 
@@ -24,6 +27,8 @@ export const mapDispatchToProps = (dispatch) => ({
     (data) => dispatch(actions.excludeGranule(data)),
   onFocusedGranuleChange:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
+  onGenerateNotebook:
+    (data) => dispatch(actions.generateNotebook(data)),
   onMetricsAddGranuleProject:
       (data) => dispatch(metricsAddGranuleProject(data)),
   onMetricsDataAccess:
@@ -36,8 +41,11 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
+  collectionTags: getFocusedCollectionTags(state),
+  collectionQuerySpatial: getCollectionsQuerySpatial(state),
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
+  generateNotebook: state.ui.generateNotebook,
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
@@ -48,8 +56,11 @@ export const mapStateToProps = (state) => ({
 export const GranuleResultsBodyContainer = (props) => {
   const {
     collectionMetadata,
+    collectionQuerySpatial,
+    collectionTags,
     focusedCollectionId,
     focusedGranuleId,
+    generateNotebook,
     granuleQuery,
     granuleSearchResults,
     granulesMetadata,
@@ -58,6 +69,7 @@ export const GranuleResultsBodyContainer = (props) => {
     onChangeGranulePageNum,
     onExcludeGranule,
     onFocusedGranuleChange,
+    onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
@@ -85,17 +97,21 @@ export const GranuleResultsBodyContainer = (props) => {
   return (
     <GranuleResultsBody
       collectionId={focusedCollectionId}
+      collectionQuerySpatial={collectionQuerySpatial}
+      collectionTags={collectionTags}
       directDistributionInformation={directDistributionInformation}
       focusedGranuleId={focusedGranuleId}
-      granuleQuery={granuleQuery}
+      generateNotebook={generateNotebook}
       granuleSearchResults={granuleSearchResults}
       granulesMetadata={granulesMetadata}
+      granuleQuery={granuleQuery}
       isOpenSearch={isOpenSearch}
       loadNextPage={loadNextPage}
       location={location}
       onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
+      onGenerateNotebook={onGenerateNotebook}
       onMetricsDataAccess={onMetricsDataAccess}
       onMetricsAddGranuleProject={onMetricsAddGranuleProject}
       onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
@@ -111,8 +127,11 @@ GranuleResultsBodyContainer.propTypes = {
     directDistributionInformation: PropTypes.shape({}),
     isOpenSearch: PropTypes.bool
   }).isRequired,
+  collectionQuerySpatial: PropTypes.shape({}).isRequired,
+  collectionTags: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
+  generateNotebook: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({
     pageNum: PropTypes.number
   }).isRequired,
@@ -123,6 +142,7 @@ GranuleResultsBodyContainer.propTypes = {
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,

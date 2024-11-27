@@ -34,9 +34,12 @@ import './GranuleResultsList.scss'
  */
 export const GranuleResultsList = ({
   collectionId,
+  collectionQuerySpatial,
+  collectionTags,
   directDistributionInformation,
   excludedGranuleIds,
   focusedGranuleId,
+  generateNotebook,
   granules,
   isCollectionInProject,
   isOpenSearch,
@@ -46,6 +49,7 @@ export const GranuleResultsList = ({
   loadMoreItems,
   location,
   onAddGranuleToProjectCollection,
+  onGenerateNotebook,
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsAddGranuleProject,
@@ -68,9 +72,12 @@ export const GranuleResultsList = ({
         ({ height, width }) => (
           <GranuleResultsListBody
             collectionId={collectionId}
+            collectionQuerySpatial={collectionQuerySpatial}
+            collectionTags={collectionTags}
             directDistributionInformation={directDistributionInformation}
             excludedGranuleIds={excludedGranuleIds}
             focusedGranuleId={focusedGranuleId}
+            generateNotebook={generateNotebook}
             granules={granules}
             height={height}
             isCollectionInProject={isCollectionInProject}
@@ -83,6 +90,7 @@ export const GranuleResultsList = ({
             onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
             onExcludeGranule={onExcludeGranule}
             onFocusedGranuleChange={onFocusedGranuleChange}
+            onGenerateNotebook={onGenerateNotebook}
             onMetricsAddGranuleProject={onMetricsAddGranuleProject}
             onMetricsDataAccess={onMetricsDataAccess}
             onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
@@ -118,6 +126,7 @@ GranuleResultsList.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,

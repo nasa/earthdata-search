@@ -265,7 +265,8 @@
   }
 
   &__button,
-  .granule-results-data-links-button__button {
+  .granule-results-data-links-button__button,
+  .granule-results-download-notebook-button__button {
     display: flex;
     align-items: center;
     justify-content: center;

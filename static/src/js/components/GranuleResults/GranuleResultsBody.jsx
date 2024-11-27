@@ -31,16 +31,20 @@ import './GranuleResultsBody.scss'
  */
 const GranuleResultsBody = ({
   collectionId,
+  collectionQuerySpatial,
+  collectionTags,
   directDistributionInformation,
   focusedGranuleId,
-  granuleQuery,
+  generateNotebook,
   granuleSearchResults,
   granulesMetadata,
+  granuleQuery,
   isOpenSearch,
   loadNextPage,
   location,
   onAddGranuleToProjectCollection,
   onExcludeGranule,
+  onGenerateNotebook,
   onFocusedGranuleChange,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
@@ -186,10 +190,13 @@ const GranuleResultsBody = ({
       >
         <GranuleResultsList
           collectionId={collectionId}
+          collectionQuerySpatial={collectionQuerySpatial}
+          collectionTags={collectionTags}
           readableGranuleName={readableGranuleName}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
           focusedGranuleId={focusedGranuleId}
+          generateNotebook={generateNotebook}
           granules={granulesList}
           isCollectionInProject={isCollectionInProject}
           isOpenSearch={isOpenSearch}
@@ -200,6 +207,7 @@ const GranuleResultsBody = ({
           location={location}
           onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onExcludeGranule={onExcludeGranule}
+          onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
@@ -309,6 +317,7 @@ GranuleResultsBody.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
