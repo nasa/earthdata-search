@@ -81,9 +81,12 @@ innerElementType.propTypes = {
  */
 export const GranuleResultsListBody = ({
   collectionId,
+  collectionQuerySpatial,
+  collectionTags,
   directDistributionInformation,
   excludedGranuleIds,
   focusedGranuleId,
+  generateNotebook,
   granules,
   height,
   isCollectionInProject,
@@ -96,6 +99,7 @@ export const GranuleResultsListBody = ({
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
+  onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
@@ -229,8 +233,11 @@ export const GranuleResultsListBody = ({
             itemData={
               {
                 collectionId,
+                collectionQuerySpatial,
+                collectionTags,
                 directDistributionInformation,
                 excludedGranuleIds,
+                generateNotebook,
                 getRowHeight,
                 granules,
                 isCollectionInProject,
@@ -242,6 +249,7 @@ export const GranuleResultsListBody = ({
                 onAddGranuleToProjectCollection,
                 onExcludeGranule,
                 onFocusedGranuleChange,
+                onGenerateNotebook,
                 onMetricsAddGranuleProject,
                 onMetricsDataAccess,
                 onRemoveGranuleFromProjectCollection,
@@ -302,6 +310,7 @@ GranuleResultsListBody.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,

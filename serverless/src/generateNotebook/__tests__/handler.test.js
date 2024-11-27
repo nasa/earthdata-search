@@ -1,5 +1,7 @@
 import nock from 'nock'
 
+import { GetObjectCommand, PutObjectCommand } from '@aws-sdk/client-s3'
+
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 
 import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
@@ -13,6 +15,11 @@ const OLD_ENV = process.env
 
 jest.mock('@aws-sdk/s3-request-presigner', () => ({
   getSignedUrl: jest.fn().mockResolvedValue('https://mock-signed-url.com')
+}))
+
+jest.mock('@aws-sdk/client-s3', () => ({
+  ...jest.requireActual('@aws-sdk/client-s3'),
+  PutObjectCommand: jest.fn()
 }))
 
 const mockS3Send = jest.fn()
@@ -41,7 +48,53 @@ afterEach(() => {
 })
 
 describe('generateNotebook', () => {
-  describe('when successfully generates a notebook', () => {
+  describe('when generating a notebook', () => {
+    test('sets the content disposition header', async () => {
+      nock(/graphql/)
+        .post('/api')
+        .reply(200, {
+          data: {
+            granules: {
+              items: [{
+                conceptId: 'G1234-MOCK',
+                title: 'Mock Granule',
+                collection: {
+                  conceptId: 'C1234-MOCK',
+                  title: 'Mock Collection',
+                  shortName: 'Mock Short Name',
+                  variables: {
+                    items: [{
+                      name: 'Mock Variable'
+                    }]
+                  }
+                }
+              }]
+            }
+          }
+        })
+
+      const event = {
+        body: JSON.stringify({
+          boundingBox: '-180, -90, 180, 90',
+          referrerUrl: 'http://example.com',
+          granuleId: 'G1234-MOCK',
+          variableId: 'V1234-MOCK'
+        }),
+        headers: {}
+      }
+
+      const response = await generateNotebook(event)
+
+      console.log('response', response.headers)
+
+      expect(PutObjectCommand).toHaveBeenCalledTimes(1)
+      expect(PutObjectCommand).toHaveBeenCalledWith(expect.objectContaining({
+        ContentDisposition: 'attachment; filename="Mock Granule_Mock Short Name_sample-notebook.ipynp"'
+      }))
+    })
+  })
+
+  describe('when successfully generating a notebook', () => {
     test('returns a signed URL', async () => {
       nock(/graphql/)
         .post('/api')
@@ -78,7 +131,9 @@ describe('generateNotebook', () => {
 
       const response = await generateNotebook(event)
 
-      expect(response.statusCode).toBe(307)
+      console.log('response', response.headers)
+
+      expect(response.statusCode).toBe(303)
       expect(response.headers).toHaveProperty('Location')
       expect(response.headers.Location).toBe('https://mock-signed-url.com')
     })
@@ -175,7 +230,7 @@ describe('generateNotebook', () => {
   })
 
   describe('when JWT token is not present', () => {
-    test('returns a singed URL', async () => {
+    test('returns a signed URL', async () => {
       nock(/graphql/)
         .post('/api')
         .reply(200, {
@@ -211,7 +266,7 @@ describe('generateNotebook', () => {
 
       const response = await generateNotebook(event)
 
-      expect(response.statusCode).toBe(307)
+      expect(response.statusCode).toBe(303)
       expect(response.headers).toHaveProperty('Location')
       expect(response.headers.Location).toBe('https://mock-signed-url.com')
     })

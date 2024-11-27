@@ -32,6 +32,15 @@ export const getCollectionsQuery = (state) => {
   return collection
 }
 
+export const getCollectionsQuerySpatial = createSelector(
+  [getCollectionsQuery],
+  (collectionsQuery) => {
+    const { spatial } = collectionsQuery
+
+    return spatial
+  }
+)
+
 /**
  * Retrieve query information from Redux pertaining to the focused collection id
  */
