@@ -111,6 +111,20 @@ describe('generateNotebook', () => {
   })
 
   test('does not create a file on error', async () => {
+    const setAttributeMock = jest.fn()
+    const clickMock = jest.fn()
+    const removeChildMock = jest.fn()
+
+    const linkMock = {
+      setAttribute: setAttributeMock,
+      click: clickMock,
+      parentNode: {
+        removeChild: removeChildMock
+      }
+    }
+
+    jest.spyOn(document, 'createElement').mockImplementation(() => linkMock)
+
     nock(/localhost/)
       .post(/generate_notebook/)
       .reply(500)
@@ -143,5 +157,17 @@ describe('generateNotebook', () => {
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
+
+    // Check that the link is not created
+    expect(document.createElement).toHaveBeenCalledTimes(0)
+
+    // Check that the download attribute is not set
+    expect(setAttributeMock).toHaveBeenCalledTimes(0)
+
+    // Check that a click is not called to trigger the download
+    expect(clickMock).toHaveBeenCalledTimes(0)
+
+    // Check that a link is not removed
+    expect(removeChildMock).toHaveBeenCalledTimes(0)
   })
 })
