@@ -78,7 +78,7 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('granuleId')
   })
 
-  test('onGenerateNotebook calls actions.excludeGranule', () => {
+  test('onGenerateNotebook calls actions.generateNotebook', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'excludeGranule')
 

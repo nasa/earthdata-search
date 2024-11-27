@@ -14,6 +14,7 @@ import {
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { getSearchWords } from '../../util/getSearchWords'
 
 import murmurhash3 from '../../util/murmurhash3'
@@ -29,7 +30,6 @@ import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownI
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './GranuleResultsItem.scss'
-import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 /**
  * Renders GranuleResultsItem.
@@ -322,7 +322,6 @@ const GranuleResultsItem = forwardRef(({
                     generateNotebook={generateNotebook}
                     generateNotebookTag={generateNotebookTag}
                     onGenerateNotebook={onGenerateNotebook}
-                    onMetricsDataAccess={onMetricsDataAccess}
                   />
                 )
               }

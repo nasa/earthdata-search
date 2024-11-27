@@ -17,8 +17,11 @@ function setup(options = {
 }, overrideProps = {}) {
   const props = {
     collectionId: 'collectionId',
+    collectionQuerySpatial: {},
+    collectionTags: {},
     directDistributionInformation: {},
     focusedGranuleId: '',
+    generateNotebook: {},
     granulesMetadata: {
       one: {
         id: 'two',
