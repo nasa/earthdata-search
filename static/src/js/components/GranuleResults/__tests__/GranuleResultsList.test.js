@@ -58,6 +58,7 @@ function setup(type) {
       onAddGranuleToProjectCollection: jest.fn(),
       onExcludeGranule: jest.fn(),
       onFocusedGranuleChange: jest.fn(),
+      onGenerateNotebook: jest.fn(),
       onMetricsDataAccess: jest.fn(),
       onRemoveGranuleFromProjectCollection: jest.fn(),
       onMetricsAddGranuleProject: jest.fn(),

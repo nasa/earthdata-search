@@ -175,8 +175,7 @@ const generateNotebook = async (event) => {
     const createCommand = new PutObjectCommand({
       Bucket: generateNotebooksBucketName,
       Body: JSON.stringify(parsedNotebook),
-      Key: key,
-      ContentDisposition: `attachment; filename="${fileName}"`
+      Key: key
     })
 
     const response = await s3Client.send(createCommand)
@@ -200,9 +199,7 @@ const generateNotebook = async (event) => {
 
       return {
         statusCode: 200,
-        headers: {
-          ...defaultResponseHeaders
-        },
+        headers: defaultResponseHeaders,
         body: JSON.stringify({
           downloadUrl: signedUrl
         })

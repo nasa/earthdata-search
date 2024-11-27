@@ -1,17 +1,11 @@
 import React, { useRef } from 'react'
 import ReactDOM from 'react-dom'
-import { Dropdown, Tab } from 'react-bootstrap'
+import { Dropdown } from 'react-bootstrap'
 import { PropTypes } from 'prop-types'
-import { Download, CloudFill } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaFileCode } from 'react-icons/fa'
 
 import Button from '../Button/Button'
-import CopyableText from '../CopyableText/CopyableText'
-import EDSCTabs from '../EDSCTabs/EDSCTabs'
-import ExternalLink from '../ExternalLink/ExternalLink'
-
-import { addToast } from '../../util/addToast'
-import { getFilenameFromPath } from '../../util/getFilenameFromPath'
 
 import './GranuleResultsDownloadNotebookButton.scss'
 
@@ -63,8 +57,7 @@ export const GranuleResultsDataLinksButton = ({
   generateNotebook,
   generateNotebookTag,
   granuleId,
-  onGenerateNotebook,
-  onMetricsDataAccess
+  onGenerateNotebook
 }) => {
   const dropdownMenuRef = useRef(null)
   const { variableConceptId: variableId } = generateNotebookTag
@@ -126,8 +119,14 @@ GranuleResultsDataLinksButton.displayName = 'GranuleResultsDataLinksButton'
 
 GranuleResultsDataLinksButton.propTypes = {
   granuleId: PropTypes.string.isRequired,
-  onGenerateNotebook: PropTypes.func.isRequired,
-  onMetricsDataAccess: PropTypes.func.isRequired
+  collectionQuerySpatial: PropTypes.shape({
+    boundingBox: PropTypes.string.isRequired
+  }).isRequired,
+  generateNotebookTag: PropTypes.shape({
+    variableConceptId: PropTypes.string.isRequired
+  }).isRequired,
+  generateNotebook: PropTypes.shape({}).isRequired,
+  onGenerateNotebook: PropTypes.func.isRequired
 }
 
 export default GranuleResultsDataLinksButton

@@ -402,7 +402,7 @@ describe('GranuleResultsItem component', () => {
     setup('cmr')
 
     await waitFor(() => {
-      expect(screen.getByRole('button', { name: 'Add granule' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Add granule to project' })).toBeInTheDocument()
     })
   })
 
@@ -483,7 +483,7 @@ describe('GranuleResultsItem component', () => {
       const { user } = setup('cmr-s3')
 
       await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Download single granule data' }))
+        await user.click(screen.getByRole('button', { name: 'Download granule data' }))
       })
 
       await act(async () => {
@@ -539,7 +539,7 @@ describe('GranuleResultsItem component', () => {
     test('Add granule button is disabled', () => {
       setup('opensearch')
 
-      expect(screen.getByRole('button', { name: 'Add granule' })).toBeDisabled()
+      expect(screen.getByRole('button', { name: 'Add granule to project' })).toBeDisabled()
     })
   })
 
@@ -598,7 +598,7 @@ describe('GranuleResultsItem component', () => {
 
     test('displays the add button', () => {
       setup('cmr')
-      expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
+      expect(screen.getByLabelText('Add granule to project')).toBeInTheDocument()
     })
   })
 
@@ -610,7 +610,7 @@ describe('GranuleResultsItem component', () => {
           isCollectionInProject: true
         })
 
-        expect(screen.getByLabelText('Remove granule')).toBeInTheDocument()
+        expect(screen.getByLabelText('Remove granule from project')).toBeInTheDocument()
 
         const granuleResultsItem = screen.getByRole('button', { name: /Granule title/ })
         expect(granuleResultsItem.className).toContain('granule-results-item--emphisized')
@@ -624,7 +624,7 @@ describe('GranuleResultsItem component', () => {
           isCollectionInProject: true
         })
 
-        expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
+        expect(screen.getByLabelText('Add granule to project')).toBeInTheDocument()
 
         const granuleResultsItem = screen.getByRole('button', { name: /Granule title/ })
         expect(granuleResultsItem.className).toContain('granule-results-item--deemphisized')
@@ -636,9 +636,11 @@ describe('GranuleResultsItem component', () => {
     test('it adds the granule to the project', async () => {
       const { props, user } = setup('cmr')
 
-      expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
+      expect(screen.getByLabelText('Add granule to project')).toBeInTheDocument()
 
-      await user.click(screen.getByLabelText('Add granule'))
+      await act(async () => {
+        await user.click(screen.getByLabelText('Add granule to project'))
+      })
 
       expect(props.onAddGranuleToProjectCollection.mock.calls.length).toBe(1)
       expect(props.onAddGranuleToProjectCollection.mock.calls[0]).toEqual([{
@@ -650,9 +652,11 @@ describe('GranuleResultsItem component', () => {
     test('is passed the metrics callback', async () => {
       const { props, user } = setup('cmr')
 
-      expect(screen.getByLabelText('Add granule')).toBeInTheDocument()
+      expect(screen.getByLabelText('Add granule to project')).toBeInTheDocument()
 
-      await user.click(screen.getByLabelText('Add granule'))
+      await act(async () => {
+        await user.click(screen.getByLabelText('Add granule to project'))
+      })
 
       expect(props.onMetricsAddGranuleProject.mock.calls.length).toBe(1)
       expect(props.onMetricsAddGranuleProject.mock.calls[0]).toEqual([{
@@ -670,9 +674,12 @@ describe('GranuleResultsItem component', () => {
         isGranuleInProject: jest.fn(() => true)
       })
 
-      expect(screen.getByLabelText('Remove granule')).toBeInTheDocument()
+      expect(screen.getByLabelText('Remove granule from project')).toBeInTheDocument()
 
-      await user.click(screen.getByLabelText('Remove granule'))
+      await act(async () => {
+        await user.click(screen.getByLabelText('Remove granule from project'))
+      })
+
       expect(props.onRemoveGranuleFromProjectCollection.mock.calls.length).toBe(1)
       expect(props.onRemoveGranuleFromProjectCollection.mock.calls[0]).toEqual([{
         collectionId: 'collectionId',
@@ -693,7 +700,7 @@ describe('GranuleResultsItem component', () => {
 
       const { href } = dataLink
 
-      const dataLinksButton = await screen.findByRole('button', { name: 'Download single granule data' })
+      const dataLinksButton = await screen.findByRole('button', { name: 'Download granule data' })
 
       expect(dataLinksButton.href).toContain(href)
 
@@ -717,7 +724,7 @@ describe('GranuleResultsItem component', () => {
     test('disables the button', () => {
       setup('cmr-no-download')
 
-      expect(screen.queryAllByLabelText('Download single granule data').length).toEqual(0)
+      expect(screen.queryAllByLabelText('Download granule data').length).toEqual(0)
     })
   })
 

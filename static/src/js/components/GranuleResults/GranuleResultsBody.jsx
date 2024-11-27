@@ -276,8 +276,11 @@ const GranuleResultsBody = ({
 
 GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  collectionQuerySpatial: PropTypes.shape({}).isRequired,
+  collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
+  generateNotebook: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({
     excludedGranuleIds: PropTypes.arrayOf(PropTypes.string),
     readableGranuleName: PropTypes.arrayOf(PropTypes.string)

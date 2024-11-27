@@ -295,9 +295,12 @@ GranuleResultsListBody.defaultProps = {
 
 GranuleResultsListBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  collectionQuerySpatial: PropTypes.shape({}).isRequired,
+  collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
+  generateNotebook: PropTypes.shape({}).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,

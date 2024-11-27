@@ -254,6 +254,7 @@ const GranuleResultsItem = forwardRef(({
                       <Button
                         className="button granule-results-item__button granule-results-item__button--add"
                         tooltip="Add granule to project"
+                        label="Add granule to project"
                         tooltipId={`add-granule-tooltip-${id}`}
                         disabled={isOpenSearch}
                         onClick={
@@ -283,6 +284,7 @@ const GranuleResultsItem = forwardRef(({
                         className="button granule-results-item__button granule-results-item__button--remove"
                         tooltip="Remove granule from project"
                         tooltipId={`remove-granule-tooltip-${id}`}
+                        label="Remove granule from project"
                         onClick={
                           (event) => {
                             onRemoveGranuleFromProjectCollection({
@@ -336,7 +338,10 @@ GranuleResultsItem.displayName = 'GranuleResultsItem'
 
 GranuleResultsItem.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  collectionQuerySpatial: PropTypes.shape({}).isRequired,
+  collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
+  generateNotebook: PropTypes.shape({}).isRequired,
   granule: PropTypes.shape({
     id: PropTypes.string,
     isOpenSearch: PropTypes.bool,
@@ -365,6 +370,7 @@ GranuleResultsItem.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,

@@ -34,16 +34,11 @@ export const generateNotebook = (params) => (dispatch, getState) => {
 
   const response = generateNotebookRequestObject.generateNotebook(params)
     .then((responseObject) => {
-      const { headers, data } = responseObject
+      const { data } = responseObject
 
       const { downloadUrl } = data
 
-      // Create a blob with the text data from the export
-      // const blob = new Blob([JSON.stringify(data)])
-
-      // const url = window.URL.createObjectURL(blob)
-
-      // Create a hyperlink to the blob and give it a filename
+      // Create a hyperlink to the download url
       const link = document.createElement('a')
       link.href = downloadUrl
       link.setAttribute('download', '')
