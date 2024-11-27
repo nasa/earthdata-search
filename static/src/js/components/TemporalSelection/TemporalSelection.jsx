@@ -22,7 +22,7 @@ import DatepickerContainer from '../../containers/DatepickerContainer/Datepicker
  * @param {Boolean} props.allowRecurring - Flag to designate the whether recurring dates are supported
  * @param {String} props.controlId - A unique id
  * @param {String} props.format - A string temporal format
- * @param {String} props.filterType - A string indicating the temporal filter type
+ * @param {String} props.filterType - A string indicating the temporal filter type (collection or granule)
  * @param {Function} props.onChangeRecurring - Callback function to call when recurring range is changed
  * @param {Function} props.onInvalid - Callback function to call when entry is invalid
  * @param {Function} props.onRecurringToggle - Callback function to call when recurring is toggled

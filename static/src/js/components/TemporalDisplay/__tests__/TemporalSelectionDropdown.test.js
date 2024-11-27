@@ -41,6 +41,7 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
+  // Wrapping this in a Redux provider because DatepickerContainer has to be connected to Redux
   return render(
     <Provider store={store}>
       <TemporalSelectionDropdown {...props} />

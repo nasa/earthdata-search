@@ -41,6 +41,7 @@ const setup = () => {
   }
 
   // https://testing-library.com/docs/example-react-router/
+  // Wrapping this in a Redux provider because DatepickerContainer has to be connected to Redux
   render(
     <Provider store={store}>
       <BrowserRouter>

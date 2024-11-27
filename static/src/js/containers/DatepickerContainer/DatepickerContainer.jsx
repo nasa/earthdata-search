@@ -23,12 +23,13 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Function} props.minDate - String representing the minimum date
  * @param {Function} props.onSubmit - Callback function to call when the date is submitted
  * @param {Function} props.shouldValidate - Flag designating whether or not the picker should validate the input
+ * @param {Function} props.onMetricsTemporalFilter - Function for logging to temporalFilter metric data layer
  * @param {String} props.type - String designating the start or end
  * @param {String} props.size - String representing the bootstrap size
  * @param {String} props.value - The value to be used in the input
  * @param {String} props.viewMode - The default view mode for the picker
  */
-const DatepickerContainer = ({
+export const DatepickerContainer = ({
   format,
   id,
   filterType,
@@ -50,6 +51,7 @@ const DatepickerContainer = ({
   * Set up the onChange event for the datepicker
   * @param {moment|string} newValue - The value passed from the Datetime component
   * @param {boolean} [shouldSubmit] - Should this change result in submitting the temporal value. True for clicking a date, or bluring the field, but false for typing characters in the text field.
+  * @param {string} metricType - Flag to indicate whether the onChange was triggered from a user typing or using the calendar
   */
   const onChange = (newValue, shouldSubmit = false, metricType = 'calendar') => {
     let valueToSet = null
@@ -121,6 +123,9 @@ const DatepickerContainer = ({
     }
   }
 
+  /**
+  * Saves current value of the input field when focused
+  */
   const onInputFocus = (event) => {
     const { value: newValue } = event.target
 

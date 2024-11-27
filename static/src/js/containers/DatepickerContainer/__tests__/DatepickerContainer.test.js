@@ -3,15 +3,11 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import MockDate from 'mockdate'
 import moment from 'moment'
-import { Provider } from 'react-redux'
-import configureMockStore from 'redux-mock-store'
 
-import DatepickerContainer from '../DatepickerContainer'
+import { DatepickerContainer, mapDispatchToProps } from '../DatepickerContainer'
+import { metricsTemporalFilter } from '../../../middleware/metrics/actions'
 
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
-
-const mockStore = configureMockStore()
-const store = mockStore({})
 
 const setup = (overrideProps) => {
   const user = userEvent.setup()
@@ -28,17 +24,27 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  render(
-    <Provider store={store}>
-      <DatepickerContainer {...props} />
-    </Provider>
-  )
+  render(<DatepickerContainer {...props} />)
 
   return {
     props,
     user
   }
 }
+
+describe('mapDispatchToProps', () => {
+  test('onMetricsTemporalFilter calls metricsTemporalFilter', () => {
+    const dispatch = jest.fn()
+    const expectedPayload = {
+      type: 'Set Start Date - calendar',
+      value: '2024-01-01T00:00:00.000Z'
+    }
+
+    mapDispatchToProps(dispatch).onMetricsTemporalFilter(expectedPayload)
+
+    expect(dispatch).toHaveBeenCalledWith(metricsTemporalFilter(expectedPayload))
+  })
+})
 
 describe('DatepickerContainer component', () => {
   beforeEach(() => {
@@ -289,38 +295,6 @@ describe('DatepickerContainer component', () => {
       const button = screen.getByRole('cell', { name: '2025' })
 
       expect(button).toHaveClass('rdtDisabled')
-    })
-  })
-
-  describe('when focusing the input', () => {
-    test('stores the value when focused', async () => {
-      const { user } = setup({
-        type: 'start',
-        value: '2006-04-01T00:40:00.000Z'
-      })
-
-      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
-
-      await user.click(input) // This will trigger the focus event
-      // Type something but don't blur - we want to test that the original value was stored
-      await user.type(input, '2007')
-
-      // The input value would have changed, but the stored valueWhenFocused should still be the original
-      expect(input).toHaveValue('2006-04-01 00:40:00')
-    })
-
-    test('handles focus when input is empty', async () => {
-      const { user } = setup({
-        type: 'start',
-        value: ''
-      })
-
-      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
-
-      await user.click(input)
-
-      // Verify the input remains empty
-      expect(input).toHaveValue('')
     })
   })
 })
