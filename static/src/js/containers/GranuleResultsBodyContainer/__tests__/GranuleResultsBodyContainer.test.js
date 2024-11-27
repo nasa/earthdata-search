@@ -47,6 +47,10 @@ function setup(overrideProps) {
   }
 }
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 describe('mapDispatchToProps', () => {
   test('onChangeGranulePageNum calls actions.changeGranulePageNum', () => {
     const dispatch = jest.fn()
@@ -80,7 +84,7 @@ describe('mapDispatchToProps', () => {
 
   test('onGenerateNotebook calls actions.generateNotebook', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'excludeGranule')
+    const spy = jest.spyOn(actions, 'generateNotebook')
 
     mapDispatchToProps(dispatch).onGenerateNotebook({ mock: 'data' })
 
