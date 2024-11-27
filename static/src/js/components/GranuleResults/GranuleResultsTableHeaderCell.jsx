@@ -123,12 +123,13 @@ const GranuleResultsTableHeaderCell = (props) => {
         {
           onlineAccessFlag && (
             <GranuleResultsDataLinksButton
+              buttonVariant="naked"
               collectionId={collectionId}
               directDistributionInformation={directDistributionInformation}
               dataLinks={dataLinks}
+              id={id}
               s3Links={s3Links}
               onMetricsDataAccess={onMetricsDataAccess}
-              buttonVariant="naked"
             />
           )
         }

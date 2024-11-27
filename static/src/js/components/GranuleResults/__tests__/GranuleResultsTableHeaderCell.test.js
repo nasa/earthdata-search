@@ -13,6 +13,8 @@ function setup(overrideProps) {
     column: {
       customProps: {
         collectionId: 'collectionId',
+        collectionQuerySpatial: {},
+        collectionTags: {},
         directDistributionInformation: {},
         location: {},
         isGranuleInProject: jest.fn(),

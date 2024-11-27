@@ -39,9 +39,12 @@ function setup(type) {
   if (type === 'loaded') {
     props = {
       collectionId: 'collectionId',
+      collectionQuerySpatial: {},
+      collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
       focusedGranuleId: '',
+      generateNotebook: {},
       granules: [
         {
           title: '123'

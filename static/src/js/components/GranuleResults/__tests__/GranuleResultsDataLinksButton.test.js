@@ -25,6 +25,7 @@ function setup(overrideProps) {
         href: 'http://linkhref'
       }
     ],
+    id: 'G123456789-TEST',
     s3Links: [],
     onMetricsDataAccess: jest.fn(),
     ...overrideProps
@@ -420,7 +421,7 @@ describe('CustomDataLinksToggle component', () => {
 
     const mockClickCallback = jest.fn()
 
-    shallow(<CustomDataLinksToggle onClick={mockClickCallback} />)
+    shallow(<CustomDataLinksToggle id="G-123456789" onClick={mockClickCallback} />)
       .simulate('click', mockClickEvent)
 
     expect(mockClickEvent.stopPropagation).toHaveBeenCalled()
