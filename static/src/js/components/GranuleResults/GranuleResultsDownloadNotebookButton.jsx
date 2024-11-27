@@ -42,6 +42,7 @@ export const CustomDownloadNotebookToggle = React.forwardRef(({
 })
 
 CustomDownloadNotebookToggle.propTypes = {
+  id: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 }
 
@@ -122,7 +123,7 @@ GranuleResultsDownloadNotebookButton.displayName = 'GranuleResultsDownloadNotebo
 GranuleResultsDownloadNotebookButton.propTypes = {
   granuleId: PropTypes.string.isRequired,
   collectionQuerySpatial: PropTypes.shape({
-    boundingBox: PropTypes.array
+    boundingBox: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   generateNotebookTag: PropTypes.shape({
     variableConceptId: PropTypes.string

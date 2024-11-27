@@ -475,7 +475,7 @@ describe('GENERATE_NOTEBOOK_FINISHED', () => {
       payload: 'G234578901-PROV2'
     }
 
-    const initialState = {
+    const initialStateOverride = {
       ...initialState,
       generateNotebook: {
         'G234578901-PROV2': 'loading'
@@ -487,7 +487,7 @@ describe('GENERATE_NOTEBOOK_FINISHED', () => {
       generateNotebook: {}
     }
 
-    expect(uiReducer(initialState, action)).toEqual(expectedState)
+    expect(uiReducer(initialStateOverride, action)).toEqual(expectedState)
   })
 })
 
