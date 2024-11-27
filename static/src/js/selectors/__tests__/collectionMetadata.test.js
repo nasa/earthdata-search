@@ -1,6 +1,7 @@
 import {
   getFocusedCollectionMetadata,
-  getFocusedCollectionSubscriptions
+  getFocusedCollectionSubscriptions,
+  getFocusedCollectionTags
 } from '../collectionMetadata'
 
 describe('getFocusedCollectionMetadata selector', () => {
@@ -58,5 +59,34 @@ describe('getFocusedCollectionSubscriptions', () => {
         query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
       }
     ])
+  })
+})
+
+describe('getFocusedCollectionTags', () => {
+  test('returns the subscriptions', () => {
+    const state = {
+      focusedCollection: 'C100000-EDSC',
+      metadata: {
+        collections: {
+          'C100000-EDSC': {
+            tags: {
+              'edsc.extra.serverless.test': {
+                data: {
+                  tagKey: 'tagData'
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    expect(getFocusedCollectionTags(state)).toEqual({
+      'edsc.extra.serverless.test': {
+        data: {
+          tagKey: 'tagData'
+        }
+      }
+    })
   })
 })
