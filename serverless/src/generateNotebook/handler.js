@@ -199,10 +199,13 @@ const generateNotebook = async (event) => {
       const signedUrl = await getSignedUrl(s3Client, getObjectCommand)
 
       return {
-        statusCode: 303,
+        statusCode: 200,
         headers: {
-          Location: signedUrl
-        }
+          ...defaultResponseHeaders
+        },
+        body: JSON.stringify({
+          downloadUrl: signedUrl
+        })
       }
     }
 

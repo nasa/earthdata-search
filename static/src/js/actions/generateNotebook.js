@@ -36,23 +36,17 @@ export const generateNotebook = (params) => (dispatch, getState) => {
     .then((responseObject) => {
       const { headers, data } = responseObject
 
-      const contentDisposition = headers['content-disposition']
-
-      let fileName = 'sample-notebook.ipynb'
-
-      const fileNameMatch = contentDisposition.match(/filename="(.+)"/)
-
-      if (fileNameMatch.length === 2) [, fileName] = fileNameMatch
+      const { downloadUrl } = data
 
       // Create a blob with the text data from the export
-      const blob = new Blob([JSON.stringify(data)])
+      // const blob = new Blob([JSON.stringify(data)])
 
-      const url = window.URL.createObjectURL(blob)
+      // const url = window.URL.createObjectURL(blob)
 
       // Create a hyperlink to the blob and give it a filename
       const link = document.createElement('a')
-      link.href = url
-      link.setAttribute('download', fileName)
+      link.href = downloadUrl
+      link.setAttribute('download', '')
 
       // Add the link to the page
       document.body.appendChild(link)

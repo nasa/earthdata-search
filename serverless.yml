@@ -228,4 +228,3 @@ custom:
   s3:
     host: localhost
     directory: tmp
-    cors: './s3-cors.xml'
