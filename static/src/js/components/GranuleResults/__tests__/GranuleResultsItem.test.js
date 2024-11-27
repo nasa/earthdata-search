@@ -293,6 +293,43 @@ const setup = (type, overrideProps) => {
     }
   }
 
+  if (type === 'has-generate-notebook-tag') {
+    props = {
+      ...defaultProps,
+      collectionQuerySpatial: {},
+      collectionTags: {
+        "edsc.extra.serverless.notebook_generation": {
+          data: {
+            variable_concept_id: 'V123456789-TESTPROV'
+          }
+        }
+      },
+      generateNotebook: {},
+      granule: {
+        id: 'granuleId',
+        browseFlag: true,
+        onlineAccessFlag: true,
+        formattedTemporal: [
+          '2019-04-28 00:00:00',
+          '2019-04-29 23:59:59'
+        ],
+        timeStart: '2019-04-28 00:00:00',
+        timeEnd: '2019-04-29 23:59:59',
+        granuleThumbnail: '/fake/path/image.jpg',
+        title: 'Granule title',
+        dataLinks: [
+          {
+            rel: 'http://linkrel/data#',
+            title: 'linktitle',
+            href: 'http://linkhref'
+          }
+        ],
+        s3Links: [],
+      },
+      onGenerateNotebook: jest.fn()
+    }
+  }
+
   if (type === 'is-last') {
     props = {
       ...defaultProps,
@@ -819,4 +856,13 @@ describe('GranuleResultsItem component', () => {
       expect(screen.getByRole('heading', { name: 'End' }).nextSibling.textContent).toEqual('Not Provided')
     })
   })
+
+  describe('when the generate notebook tag is added', () => {
+    test('renders the generate notebook dropdown', async () => {
+      const { props, user } = setup('has-generate-notebook-tag')
+
+      expect(screen.getByRole('button', { name: 'Download sample notebook' })).toBeDefined()
+    })
+  })
 })
+

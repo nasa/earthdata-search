@@ -48,7 +48,7 @@ beforeEach(() => {
 })
 
 describe('GranuleResultsDataLinksButton component', () => {
-  test('renders itself correctly', () => {
+  test.only('renders itself correctly', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.type()).toBe(Button)
