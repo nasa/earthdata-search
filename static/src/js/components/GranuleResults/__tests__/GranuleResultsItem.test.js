@@ -298,7 +298,7 @@ const setup = (type, overrideProps) => {
       ...defaultProps,
       collectionQuerySpatial: {},
       collectionTags: {
-        "edsc.extra.serverless.notebook_generation": {
+        'edsc.extra.serverless.notebook_generation': {
           data: {
             variable_concept_id: 'V123456789-TESTPROV'
           }
@@ -324,7 +324,7 @@ const setup = (type, overrideProps) => {
             href: 'http://linkhref'
           }
         ],
-        s3Links: [],
+        s3Links: []
       },
       onGenerateNotebook: jest.fn()
     }
@@ -859,10 +859,9 @@ describe('GranuleResultsItem component', () => {
 
   describe('when the generate notebook tag is added', () => {
     test('renders the generate notebook dropdown', async () => {
-      const { props, user } = setup('has-generate-notebook-tag')
+      setup('has-generate-notebook-tag')
 
       expect(screen.getByRole('button', { name: 'Download sample notebook' })).toBeDefined()
     })
   })
 })
-
