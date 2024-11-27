@@ -475,12 +475,19 @@ describe('GENERATE_NOTEBOOK_FINISHED', () => {
       payload: 'G234578901-PROV2'
     }
 
+    const initialState = {
+      ...initialState,
+      generateNotebook: {
+        'G234578901-PROV2': 'loading'
+      }
+    }
+
     const expectedState = {
       ...initialState,
       generateNotebook: {}
     }
 
-    expect(uiReducer(undefined, action)).toEqual(expectedState)
+    expect(uiReducer(initialState, action)).toEqual(expectedState)
   })
 })
 

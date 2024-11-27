@@ -204,7 +204,7 @@ export const GranuleResultsDataLinksButton = ({
     }
 
     return (
-      <Dropdown onClick={(event) => { event.stopPropagation() }} drop="right">
+      <Dropdown onClick={(event) => { event.stopPropagation() }} drop="down">
         <Dropdown.Toggle as={CustomDataLinksToggle} id={id} />
         {
           ReactDOM.createPortal(

@@ -11,11 +11,13 @@ import './GranuleResultsDownloadNotebookButton.scss'
 
 /**
  * Renders CustomDownloadNotebookToggle.
- * @param {Object} props - The props passed into the component.
+ * @param {Object} props - The props passed into the component
+ * @param {Function} props.id - The granule id
  * @param {Function} props.onClick - The click callback.null
  */
 // eslint-disable-next-line react/display-name
 export const CustomDownloadNotebookToggle = React.forwardRef(({
+  id,
   onClick
 }, ref) => {
   const handleClick = (event) => {
@@ -31,8 +33,9 @@ export const CustomDownloadNotebookToggle = React.forwardRef(({
       type="button"
       icon={FaFileCode}
       ref={ref}
+      label="Download sample notebook"
       tooltip="Download sample notebook"
-      tooltipId="download-notebook-button"
+      tooltipId={`download-notebook-button-${id}`}
       onClick={handleClick}
     />
   )
@@ -43,16 +46,15 @@ CustomDownloadNotebookToggle.propTypes = {
 }
 
 /**
- * Renders GranuleResultsDataLinksButton.
+ * Renders GranuleResultsDownloadNotebookButton.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.buttonVariant - The button variant.
- * @param {String} props.collectionId - The collection ID.
- * @param {Object} props.directDistributionInformation - The collection direct distribution information.
- * @param {Array} props.dataLinks - An array of data links.
- * @param {Array} props.s3Links - An array of AWS S3 links.
- * @param {Function} props.onMetricsDataAccess - The metrics callback.
+ * @param {String} props.collectionQuerySpatial - The current collection spatial.
+ * @param {String} props.generateNotebook - The state for generating notebooks
+ * @param {Object} props.generateNotebookTag - The contents of the generate_notebook tag
+ * @param {Array} props.granuleId - The granule id
+ * @param {Array} props.onGenerateNotebook - A callback to trigger the notebook generation
  */
-export const GranuleResultsDataLinksButton = ({
+export const GranuleResultsDownloadNotebookButton = ({
   collectionQuerySpatial,
   generateNotebook,
   generateNotebookTag,
@@ -84,8 +86,8 @@ export const GranuleResultsDataLinksButton = ({
   }
 
   return (
-    <Dropdown drop="bottom">
-      <Dropdown.Toggle as={CustomDownloadNotebookToggle} />
+    <Dropdown onClick={(event) => { event.stopPropagation() }} drop="down">
+      <Dropdown.Toggle as={CustomDownloadNotebookToggle} id={granuleId} />
       {
         ReactDOM.createPortal(
           <Dropdown.Menu
@@ -115,18 +117,18 @@ export const GranuleResultsDataLinksButton = ({
   )
 }
 
-GranuleResultsDataLinksButton.displayName = 'GranuleResultsDataLinksButton'
+GranuleResultsDownloadNotebookButton.displayName = 'GranuleResultsDownloadNotebookButton'
 
-GranuleResultsDataLinksButton.propTypes = {
+GranuleResultsDownloadNotebookButton.propTypes = {
   granuleId: PropTypes.string.isRequired,
   collectionQuerySpatial: PropTypes.shape({
-    boundingBox: PropTypes.string.isRequired
+    boundingBox: PropTypes.array
   }).isRequired,
   generateNotebookTag: PropTypes.shape({
-    variableConceptId: PropTypes.string.isRequired
+    variableConceptId: PropTypes.string
   }).isRequired,
   generateNotebook: PropTypes.shape({}).isRequired,
   onGenerateNotebook: PropTypes.func.isRequired
 }
 
-export default GranuleResultsDataLinksButton
+export default GranuleResultsDownloadNotebookButton
