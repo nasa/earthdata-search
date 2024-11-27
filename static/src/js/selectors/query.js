@@ -35,7 +35,7 @@ export const getCollectionsQuery = (state) => {
 export const getCollectionsQuerySpatial = createSelector(
   [getCollectionsQuery],
   (collectionsQuery) => {
-    const { spatial } = collectionsQuery
+    const { spatial = {} } = collectionsQuery
 
     return spatial
   }
