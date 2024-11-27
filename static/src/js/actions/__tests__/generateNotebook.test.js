@@ -42,15 +42,19 @@ describe('onGenerateNotebookFinished', () => {
 
 describe('generateNotebook', () => {
   test('calls lambda to generate a notebook', async () => {
-    const createObjectMock = jest.fn()
-    window.URL.createObjectURL = createObjectMock
-    jest.spyOn(document, 'createElement').mockImplementation(() => ({
-      setAttribute: jest.fn(),
-      click: jest.fn(),
+    const setAttributeMock = jest.fn()
+    const clickMock = jest.fn()
+    const removeChildMock = jest.fn()
+
+    const linkMock = {
+      setAttribute: setAttributeMock,
+      click: clickMock,
       parentNode: {
-        removeChild: jest.fn()
+        removeChild: removeChildMock
       }
-    }))
+    }
+
+    jest.spyOn(document, 'createElement').mockImplementation(() => linkMock)
 
     document.body.appendChild = jest.fn()
 
@@ -58,13 +62,8 @@ describe('generateNotebook', () => {
       .post(/generate_notebook/)
       .reply(
         200,
-        [
-          {
-            mock: 'data'
-          }
-        ],
         {
-          'content-disposition': 'attachment; filename="mock-data.ipynb"'
+          downloadUrl: 'https://www.fakesignedurl.com'
         }
       )
 
@@ -90,7 +89,24 @@ describe('generateNotebook', () => {
         payload: 'G123456789-PROV1'
       })
 
-      expect(createObjectMock).toHaveBeenCalledTimes(1)
+      // Check that the link is created
+      expect(document.createElement).toHaveBeenCalledTimes(1)
+      expect(document.createElement).toHaveBeenCalledWith('a')
+
+      // Check the href is set properly on the link
+      expect(linkMock.href).toEqual('https://www.fakesignedurl.com')
+
+      // Check that the download attribute is set
+      expect(setAttributeMock).toHaveBeenCalledTimes(1)
+      expect(setAttributeMock).toHaveBeenCalledWith('download', '')
+
+      // Check that the click is called to trigger the download
+      expect(clickMock).toHaveBeenCalledTimes(1)
+      expect(clickMock).toHaveBeenCalledWith()
+
+      // Check that the link is removed
+      expect(removeChildMock).toHaveBeenCalledTimes(1)
+      expect(removeChildMock).toHaveBeenCalledWith(linkMock)
     })
   })
 

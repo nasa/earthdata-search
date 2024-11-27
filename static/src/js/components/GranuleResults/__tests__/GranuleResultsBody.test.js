@@ -73,6 +73,7 @@ function setup(options = {
     location: { search: 'value' },
     onAddGranuleToProjectCollection: jest.fn(),
     onExcludeGranule: jest.fn(),
+    onGenerateNotebook: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),

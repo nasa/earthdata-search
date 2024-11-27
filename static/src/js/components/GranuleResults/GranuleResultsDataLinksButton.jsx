@@ -19,7 +19,6 @@ import './GranuleResultsDataLinksButton.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Function} props.onClick - The click callback.null
  */
-// eslint-disable-next-line react/display-name
 export const CustomDataLinksToggle = React.forwardRef(({
   id,
   onClick
@@ -37,6 +36,7 @@ export const CustomDataLinksToggle = React.forwardRef(({
       type="button"
       icon={Download}
       ref={ref}
+      label="Download granule data"
       tooltip="Download granule data"
       tooltipId={`download-granule-tooltip-${id}`}
       onClick={handleClick}
@@ -45,8 +45,11 @@ export const CustomDataLinksToggle = React.forwardRef(({
 })
 
 CustomDataLinksToggle.propTypes = {
+  id: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 }
+
+CustomDataLinksToggle.displayName = 'CustomDataLinksToggle'
 
 /**
  * Renders GranuleResultsDataLinksButton.
@@ -300,7 +303,7 @@ export const GranuleResultsDataLinksButton = ({
           }
         }
         rel="noopener noreferrer"
-        label="Download single granule data"
+        label="Download granule data"
         target="_blank"
       />
     )
@@ -326,6 +329,7 @@ GranuleResultsDataLinksButton.defaultProps = {
 }
 
 GranuleResultsDataLinksButton.propTypes = {
+  id: PropTypes.string.isRequired,
   buttonVariant: PropTypes.string,
   collectionId: PropTypes.string.isRequired,
   directDistributionInformation: PropTypes.shape({

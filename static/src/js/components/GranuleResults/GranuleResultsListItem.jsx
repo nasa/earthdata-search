@@ -137,7 +137,10 @@ GranuleResultsListItem.propTypes = {
   columnIndex: PropTypes.number.isRequired,
   data: PropTypes.shape({
     collectionId: PropTypes.string,
+    collectionQuerySpatial: PropTypes.shape({}).isRequired,
+    collectionTags: PropTypes.shape({}).isRequired,
     directDistributionInformation: PropTypes.shape({}),
+    generateNotebook: PropTypes.shape({}).isRequired,
     granules: PropTypes.arrayOf(PropTypes.shape({})),
     isCollectionInProject: PropTypes.bool,
     isGranuleInProject: PropTypes.func,
