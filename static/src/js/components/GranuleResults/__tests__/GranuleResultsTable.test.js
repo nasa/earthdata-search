@@ -11,8 +11,11 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup(overrideProps) {
   const props = {
     collectionId: 'collectionId',
+    collectionQuerySpatial: {},
+    collectionTags: {},
     directDistributionInformation: {},
     focusedGranuleId: 'one',
+    generateNotebook: {},
     granules: granuleData,
     isItemLoaded: jest.fn(),
     isGranuleInProject: jest.fn(),
@@ -24,6 +27,7 @@ function setup(overrideProps) {
     onExcludeGranule: jest.fn(),
     onAddGranuleToProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
+    onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),

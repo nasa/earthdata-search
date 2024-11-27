@@ -224,9 +224,12 @@ const GranuleResultsBody = ({
       >
         <GranuleResultsTable
           collectionId={collectionId}
+          collectionQuerySpatial={collectionQuerySpatial}
+          collectionTags={collectionTags}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
           focusedGranuleId={focusedGranuleId}
+          generateNotebook={generateNotebook}
           granules={granulesList}
           isOpenSearch={isOpenSearch}
           itemCount={itemCount}
@@ -235,6 +238,7 @@ const GranuleResultsBody = ({
           loadMoreItems={loadMoreItems}
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
+          onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onMetricsDataAccess={onMetricsDataAccess}
           visibleMiddleIndex={visibleMiddleIndex}

@@ -8,7 +8,7 @@ import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/P
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(overrideProps) {
+function setup(overrideProps, columnOverrideProps) {
   const props = {
     column: {
       customProps: {
@@ -16,6 +16,7 @@ function setup(overrideProps) {
         collectionQuerySpatial: {},
         collectionTags: {},
         directDistributionInformation: {},
+        generateNotebook: {},
         location: {},
         isGranuleInProject: jest.fn(),
         portal: {
@@ -26,9 +27,11 @@ function setup(overrideProps) {
         onAddGranuleToProjectCollection: jest.fn(),
         onExcludeGranule: jest.fn(),
         onFocusedGranuleChange: jest.fn(),
+        onGenerateNotebook: jest.fn(),
         onMetricsDataAccess: jest.fn(),
         onMetricsAddGranuleProject: jest.fn(),
-        onRemoveGranuleFromProjectCollection: jest.fn()
+        onRemoveGranuleFromProjectCollection: jest.fn(),
+        ...columnOverrideProps
       }
     },
     cell: {
@@ -147,6 +150,24 @@ describe('GranuleResultsTableHeaderCell component', () => {
       granuleConceptId: 'one',
       page: 'granules',
       view: 'table'
+    })
+  })
+
+  describe('when the generate notebook tag is added', () => {
+    test('renders the generate notebook dropdown', () => {
+      const { enzymeWrapper } = setup({}, {
+        collectionQuerySpatial: {},
+        collectionTags: {
+          'edsc.extra.serverless.notebook_generation': {
+            data: {
+              variable_concept_id: 'V123456789-TESTPROV'
+            }
+          }
+        },
+        generateNotebook: {}
+      })
+
+      expect(enzymeWrapper.find({ 'aria-label': 'Download sample notebook' })).toBeDefined()
     })
   })
 })

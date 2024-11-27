@@ -35,8 +35,11 @@ import './GranuleResultsTable.scss'
 
 export const GranuleResultsTable = ({
   collectionId,
+  collectionQuerySpatial,
+  collectionTags,
   directDistributionInformation,
   focusedGranuleId,
+  generateNotebook,
   granules,
   isGranuleInProject,
   isItemLoaded,
@@ -46,6 +49,7 @@ export const GranuleResultsTable = ({
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
+  onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   onRemoveGranuleFromProjectCollection,
@@ -62,13 +66,17 @@ export const GranuleResultsTable = ({
       customProps: {
         cellClassName: 'granule-results-table__cell--granule',
         collectionId,
+        collectionQuerySpatial,
+        collectionTags,
         directDistributionInformation,
         isGranuleInProject,
+        generateNotebook,
         GranuleResultsTableHeaderCell,
         location,
         onAddGranuleToProjectCollection,
         onExcludeGranule,
         onFocusedGranuleChange,
+        onGenerateNotebook,
         onMetricsAddGranuleProject,
         onMetricsDataAccess,
         onRemoveGranuleFromProjectCollection
@@ -214,8 +222,11 @@ GranuleResultsTable.defaultProps = {
 
 GranuleResultsTable.propTypes = {
   collectionId: PropTypes.string.isRequired,
+  collectionQuerySpatial: PropTypes.shape({}).isRequired,
+  collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
+  generateNotebook: PropTypes.shape({}).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   isItemLoaded: PropTypes.func.isRequired,
@@ -225,6 +236,7 @@ GranuleResultsTable.propTypes = {
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
+  onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
