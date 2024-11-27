@@ -14,6 +14,7 @@ const setup = (overrideProps) => {
   const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
 
   const props = {
+    filterType: 'collection',
     format: 'YYYY-MM-DD HH:mm:ss',
     id: 'test-id',
     label: 'Test Datepicker',
@@ -225,6 +226,11 @@ describe('DatepickerContainer component', () => {
 
         expect(props.onSubmit).toHaveBeenCalledTimes(1)
         expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-05-15 00:00:00', props.format, true), true)
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
+          type: 'Set Start Date - Today',
+          value: '2020-05-15T00:00:00.000Z'
+        })
       })
     })
 
@@ -243,6 +249,11 @@ describe('DatepickerContainer component', () => {
           .toEqual(moment.utc('2020-05-15 00:00:00').endOf('day').format(props.format))
 
         expect(props.onSubmit.mock.calls[0][1]).toEqual(true)
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
+          type: 'Set End Date - Today',
+          value: '2020-05-15T23:59:59.999Z'
+        })
       })
     })
   })

@@ -63,7 +63,11 @@ export const DatepickerContainer = ({
     // We do this for the invalid date strings so we can call moment.isValid on any value passed
     // out of the callback.
     if (typeof newValue !== 'string' && moment.isMoment(newValue) && !isCustomTime(newValue)) {
-      const newValueISO = newValue.toISOString()
+      let newValueISO = ''
+      if (newValue != null) {
+        newValueISO = newValue.toISOString()
+      }
+
       if (type === 'start') {
         if (newValueISO !== value.toString() && filterType === 'collection') {
           onMetricsTemporalFilter({
@@ -155,6 +159,14 @@ export const DatepickerContainer = ({
       valueToSet = today.startOf('day')
     } else if (type === 'end') {
       valueToSet = today.endOf('day')
+    }
+
+    if (filterType === 'collection' && valueToSet != null) {
+      const typeCapitalized = type === 'start' ? 'Start' : 'End'
+      onMetricsTemporalFilter({
+        type: `Set ${typeCapitalized} Date - Today`,
+        value: valueToSet.toISOString()
+      })
     }
 
     onChange(valueToSet ? valueToSet.format(format) : valueToSet, true)
