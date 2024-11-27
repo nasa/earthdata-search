@@ -1,15 +1,19 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import {
+  render,
+  screen,
+  waitFor,
+  createEvent,
+  fireEvent
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import '@testing-library/jest-dom'
 
-import { Dropdown } from 'react-bootstrap'
+import { act } from 'react-dom/test-utils'
 import {
   GranuleResultsDownloadNotebookButton,
   CustomDownloadNotebookToggle
 } from '../GranuleResultsDownloadNotebookButton'
-import Button from '../../Button/Button'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 Object.defineProperty(window, 'location', {
   get() {
@@ -18,6 +22,8 @@ Object.defineProperty(window, 'location', {
 })
 
 function setup(overrideProps) {
+  const user = userEvent.setup()
+
   const props = {
     collectionQuerySpatial: {},
     generateNotebook: {},
@@ -29,11 +35,12 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<GranuleResultsDownloadNotebookButton {...props} />)
+  const { container } = render(<GranuleResultsDownloadNotebookButton {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    container,
+    props,
+    user
   }
 }
 
@@ -51,108 +58,147 @@ afterEach(() => {
 })
 
 describe('GranuleResultsDownloadNotebookButton component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+  describe('when the Generate Notebook button is clicked', () => {
+    describe('when a bounding box is not applied', () => {
+      test('calls onGenerateNotebook without a bounding box', async () => {
+        const { props, user } = setup()
 
-    // Console.log(enzymeWrapper.debug())
+        const dropdownButton = screen.queryByLabelText('Download sample notebook')
 
-    expect(enzymeWrapper.type()).toBe(Dropdown)
-  })
+        await act(async () => {
+          await user.click(dropdownButton)
+        })
 
-  describe('when a bounding box is not applied', () => {
-    describe('when the Generate Notebook button is clicked', () => {
-      test('calls onGenerateNotebook without a bounding box', () => {
-        const { enzymeWrapper, props } = setup()
+        const button = screen.queryByRole('button', { name: 'Download Notebook' })
 
-        const button = enzymeWrapper.find(Button)
+        await user.click(button)
 
-        console.log(button.debug())
-
-        button.simulate('click')
-
-        expect(props.onGenerateNotebook).toHaveBeenCalledWith(
-          {
-            granuleId: 'G123456789-TESTPROV',
-            referrerUrl: 'https://www.test-location.com/?param=value',
-            variableId: 'V-123456789-TESTPROV'
-          }
-        )
+        await waitFor(() => {
+          expect(props.onGenerateNotebook).toHaveBeenCalledWith(
+            {
+              granuleId: 'G123456789-TESTPROV',
+              referrerUrl: 'https://www.test-location.com/?param=value',
+              variableId: 'V-123456789-TESTPROV'
+            }
+          )
+        })
       })
     })
-  })
 
-  describe('when a bounding box is applied', () => {
-    describe('when the Generate Notebook button is clicked', () => {
-      test('calls onGenerateNotebook with a bounding box', () => {
-        const { enzymeWrapper, props } = setup({
+    describe('when a bounding box is applied', () => {
+      test('calls onGenerateNotebook with a bounding box', async () => {
+        const { props, user } = setup({
           collectionQuerySpatial: {
             boundingBox: ['-1,0,1,0']
           }
         })
 
-        const button = enzymeWrapper.find(Button)
+        const dropdownButton = screen.queryByLabelText('Download sample notebook')
 
-        console.log(button.debug())
+        await act(async () => {
+          await user.click(dropdownButton)
+        })
 
-        button.simulate('click')
+        const button = screen.queryByRole('button', { name: 'Download Notebook' })
 
-        expect(props.onGenerateNotebook).toHaveBeenCalledWith(
-          {
-            boundingBox: '-1,0,1,0',
-            granuleId: 'G123456789-TESTPROV',
-            referrerUrl: 'https://www.test-location.com/?param=value',
-            variableId: 'V-123456789-TESTPROV'
-          }
-        )
+        await user.click(button)
+
+        await waitFor(() => {
+          expect(props.onGenerateNotebook).toHaveBeenCalledWith(
+            {
+              boundingBox: '-1,0,1,0',
+              granuleId: 'G123456789-TESTPROV',
+              referrerUrl: 'https://www.test-location.com/?param=value',
+              variableId: 'V-123456789-TESTPROV'
+            }
+          )
+        })
       })
     })
-  })
 
-  describe('when a variable id is not applied', () => {
-    describe('when the Generate Notebook button is clicked', () => {
-      test('calls onGenerateNotebook without a variable id', () => {
-        const { enzymeWrapper, props } = setup({
+    describe('when a variable id is not applied', () => {
+      test('calls onGenerateNotebook without a variable id', async () => {
+        const { props, user } = setup({
           generateNotebookTag: {}
         })
 
-        const button = enzymeWrapper.find(Button)
+        const dropdownButton = screen.queryByLabelText('Download sample notebook')
 
-        button.simulate('click')
+        await act(async () => {
+          await user.click(dropdownButton)
+        })
 
-        expect(props.onGenerateNotebook).toHaveBeenCalledWith(
-          {
-            granuleId: 'G123456789-TESTPROV',
-            referrerUrl: 'https://www.test-location.com/?param=value'
-          }
-        )
+        const button = screen.queryByRole('button', { name: 'Download Notebook' })
+
+        await user.click(button)
+
+        await waitFor(() => {
+          expect(props.onGenerateNotebook).toHaveBeenCalledWith(
+            {
+              granuleId: 'G123456789-TESTPROV',
+              referrerUrl: 'https://www.test-location.com/?param=value'
+            }
+          )
+        })
       })
     })
   })
 
   describe('when a click bubbles up to the dropdown', () => {
-    test('calls stopPropagation', () => {
-      const { enzymeWrapper } = setup()
-
+    test('calls stopPropagation', async () => {
       const stopPropagationMock = jest.fn()
 
-      enzymeWrapper.simulate('click', { stopPropagation: stopPropagationMock })
+      const { container, user } = setup({
+        generateNotebookTag: {}
+      })
 
-      expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+      const dropdownButton = screen.queryByLabelText('Download sample notebook')
+
+      await act(async () => {
+        await user.click(dropdownButton)
+      })
+
+      const panel = container.querySelector('.dropdown')
+
+      // eslint-disable-next-line capitalized-comments
+      // createEvent and fireEvent are used here to enable mocking of stopPropagation
+      const clickEvent = createEvent.click(panel)
+
+      clickEvent.stopPropagation = stopPropagationMock
+
+      fireEvent(panel, clickEvent)
+
+      await waitFor(() => {
+        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })
 
 describe('CustomDownloadNotebookToggle component', () => {
-  test('calls expected event methods on download click', () => {
+  test('calls expected event methods on download click', async () => {
+    const stopPropagationMock = jest.fn()
+    const preventDefaultMock = jest.fn()
+
     const mockClickEvent = {
-      stopPropagation: jest.fn(),
-      preventDefault: jest.fn()
+      stopPropagation: stopPropagationMock,
+      preventDefault: preventDefaultMock
     }
 
     const mockClickCallback = jest.fn()
 
-    shallow(<CustomDownloadNotebookToggle id="G-123456789" onClick={mockClickCallback} />)
-      .simulate('click', mockClickEvent)
+    render(<CustomDownloadNotebookToggle id="G-123456789" onClick={mockClickCallback} />)
+
+    const dropdownButton = screen.queryByLabelText('Download sample notebook')
+
+    // eslint-disable-next-line capitalized-comments
+    // createEvent and fireEvent are used here to enable mocking of stopPropagation
+    const clickEvent = createEvent.click(dropdownButton)
+
+    clickEvent.stopPropagation = stopPropagationMock
+    clickEvent.preventDefault = preventDefaultMock
+
+    fireEvent(dropdownButton, clickEvent)
 
     expect(mockClickEvent.stopPropagation).toHaveBeenCalled()
     expect(mockClickEvent.preventDefault).toHaveBeenCalled()
