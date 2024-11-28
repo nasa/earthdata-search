@@ -57,8 +57,11 @@ innerElementType.propTypes = {
  * Renders GranuleResultsListBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
+ * @param {Object} props.collectionQuerySpatial - The spatial for the collection query
+ * @param {Object} props.collectionTags - The tags for the focused collection
  * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
+ * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Number} props.height - The height of the container provided by AutoSizer.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
@@ -71,6 +74,7 @@ innerElementType.propTypes = {
  * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
+ * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param { Function } props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.

@@ -14,8 +14,11 @@ import './GranuleResultsTable.scss'
  * Renders GranuleResultsTable.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
+ * @param {String} props.collectionId - The focused collection ID.
+ * @param {Object} props.collectionQuerySpatial - The spatial for the collection query
  * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {String} props.focusedGranuleId - The focused granule ID.
+ * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.hasBrowseImagery - Designates if the collection has browse imagery.
  * @param {Function} props.isGranuleInProject - Function to determine if the granule is in the project.
@@ -26,6 +29,7 @@ import './GranuleResultsTable.scss'
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
+ * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
  * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.

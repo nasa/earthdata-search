@@ -58,15 +58,16 @@ CustomDataLinksToggle.displayName = 'CustomDataLinksToggle'
  * @param {String} props.collectionId - The collection ID.
  * @param {Object} props.directDistributionInformation - The collection direct distribution information.
  * @param {Array} props.dataLinks - An array of data links.
+ * @param {String} props.id - The granule id.
  * @param {Array} props.s3Links - An array of AWS S3 links.
  * @param {Function} props.onMetricsDataAccess - The metrics callback.
  */
 export const GranuleResultsDataLinksButton = ({
-  id,
   collectionId,
   buttonVariant,
   dataLinks,
   directDistributionInformation,
+  id,
   s3Links,
   onMetricsDataAccess
 }) => {
