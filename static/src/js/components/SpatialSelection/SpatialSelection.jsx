@@ -39,10 +39,11 @@ const errorColor = '#990000'
 export const colorOptions = {
   color: normalColor,
   dashArray: null,
-  pointerEvents: 'stroke',
+  fill: true,
   fillOpacity: 0,
-  weight: 3,
-  fill: true
+  opacity: 0.5,
+  pointerEvents: 'stroke',
+  weight: 3
 }
 export const errorOptions = {
   color: errorColor,
@@ -111,6 +112,7 @@ const SpatialSelection = (props) => {
     lineSearch: propsLineSearch = [],
     pointSearch: propsPointSearch = [],
     polygonSearch: propsPolygonSearch = [],
+    projectCollections,
     shapefile
   } = props
 
@@ -258,6 +260,32 @@ const SpatialSelection = (props) => {
     return undefined
   }
 
+  // Generate a MBR layer from the given spatial. This MBR gets attached to every drawnLayers object
+  const generateMbrLayer = (spatial) => {
+    const {
+      swLat,
+      swLng,
+      neLat,
+      neLng
+    } = mbr(spatial, { precision: defaultSpatialDecimalSize })
+
+    const sw = new L.LatLng(swLat, swLng)
+    const ne = new L.LatLng(neLat, neLng)
+    const bounds = new L.LatLngBounds(sw, ne)
+
+    const options = {
+      color: '#c0392b',
+      weight: 3,
+      fill: false,
+      dashArray: '2, 10',
+      opacity: 0.8
+    }
+
+    const mbrLayer = new L.Rectangle([bounds], options)
+
+    return mbrLayer
+  }
+
   // Determine the latLngs from the layer and type, then update the component state and the query
   const updateStateAndQuery = (layer, type, isShapefile) => {
     const {
@@ -269,10 +297,13 @@ const SpatialSelection = (props) => {
     // If no points exist (invalid shape type), return without updating state or query
     if (!points) return
 
+    const layerMbr = generateMbrLayer({ [type]: points })
+
     const newDrawnLayer = {
       layer,
       layerType: type,
-      layerPoints: points
+      layerPoints: points,
+      layerMbr
     }
     if (isShapefile) {
       drawnLayers.current = [...drawnLayers.current, newDrawnLayer]
@@ -437,7 +468,7 @@ const SpatialSelection = (props) => {
 
       // Clear any drawnLayers that aren't shapefiles
       drawnLayers.current = drawnLayers.current.filter((drawnLayer) => {
-        const { layer } = drawnLayer
+        const { layer = {} } = drawnLayer
         const { feature = {} } = layer
         const { edscId } = feature
 
@@ -524,10 +555,13 @@ const SpatialSelection = (props) => {
       marker.type = 'marker'
       marker.addTo(featureGroup)
 
+      const layerMbr = generateMbrLayer({ point: layerPoints })
+
       drawnLayers.current = [{
         layer: marker,
         layerPoints,
-        layerType: 'point'
+        layerType: 'point',
+        layerMbr
       }]
 
       setLayer(marker, shouldCenter)
@@ -559,53 +593,16 @@ const SpatialSelection = (props) => {
       rect.type = 'rectangle'
       rect.addTo(featureGroup)
 
+      const layerMbr = generateMbrLayer({ boundingBox: layerPoints })
+
       drawnLayers.current = [{
         layer: rect,
         layerPoints,
-        layerType: 'boundingBox'
+        layerType: 'boundingBox',
+        layerMbr
       }]
 
       setLayer(rect, shouldCenter)
-    }
-  }
-
-  const renderMbr = (drawnPoints) => {
-    if (featureGroupRef.current === null) return
-
-    if (featureGroupRef.current) {
-      const {
-        swLat,
-        swLng,
-        neLat,
-        neLng
-      } = mbr({ polygon: drawnPoints })
-
-      const sw = new L.LatLng(swLat, swLng)
-      const ne = new L.LatLng(neLat, neLng)
-      const bounds = new L.LatLngBounds(sw, ne)
-
-      const options = {
-        color: '#c0392b',
-        weight: 3,
-        fill: false,
-        dashArray: '2, 10',
-        opacity: 0.8
-      }
-      const rect = new L.Rectangle([bounds], options)
-
-      rect.addTo(featureGroupRef.current)
-
-      const foundLayerIndex = drawnLayers.current
-        .findIndex((layer) => layer.layerPoints === drawnPoints)
-
-      drawnLayers.current = [
-        ...drawnLayers.current.slice(0, foundLayerIndex),
-        {
-          ...drawnLayers.current[foundLayerIndex],
-          layerMbr: rect
-        },
-        ...drawnLayers.current.slice(foundLayerIndex + 1)
-      ]
     }
   }
 
@@ -626,10 +623,13 @@ const SpatialSelection = (props) => {
       poly.type = 'polygon'
       poly.addTo(featureGroup)
 
+      const layerMbr = generateMbrLayer({ polygon: layerPoints })
+
       drawnLayers.current = [{
         layer: poly,
         layerPoints,
-        layerType: 'polygon'
+        layerType: 'polygon',
+        layerMbr
       }]
 
       setLayer(poly, shouldCenter)
@@ -658,10 +658,13 @@ const SpatialSelection = (props) => {
       line.type = 'line'
       line.addTo(featureGroup)
 
+      const layerMbr = generateMbrLayer({ line: layerPoints })
+
       drawnLayers.current = [{
         layer: line,
         layerPoints,
-        layerType: 'line'
+        layerType: 'line',
+        layerMbr
       }]
 
       setLayer(line, shouldCenter)
@@ -690,10 +693,13 @@ const SpatialSelection = (props) => {
       circle.type = 'circle'
       circle.addTo(featureGroup)
 
+      const layerMbr = generateMbrLayer({ circle: layerPoints })
+
       drawnLayers.current = [{
         layer: circle,
         layerPoints,
-        layerType: 'circle'
+        layerType: 'circle',
+        layerMbr
       }]
 
       setLayer(circle, shouldCenter)
@@ -788,6 +794,37 @@ const SpatialSelection = (props) => {
     }
   }
 
+  // Add the layerMbr matching the given points to the featureGroupRef.current
+  const showLayerMbr = (points) => {
+    drawnLayers.current.forEach((drawnLayer) => {
+      const { layerMbr, layerPoints } = drawnLayer
+
+      // Check if the drawn layer is the correct layer for the spatial
+      const correctLayer = points === layerPoints
+
+      // If we have the correct layer and the layerMbr isn't already on the map, add it
+      if (correctLayer && layerMbr && !layerMbr._map) {
+        layerMbr.addTo(featureGroupRef.current)
+      }
+    })
+  }
+
+  // Remove the layerMbr matching the given points from the featureGroupRef.current
+  const hideLayerMbr = (points) => {
+    if (featureGroupRef.current.removeLayer) {
+      drawnLayers.current.forEach((layer) => {
+        const { layerMbr, layerPoints } = layer
+
+        // Check if the drawn layer is the correct layer for the spatial
+        const correctLayer = points ? points === layerPoints : true
+
+        if (correctLayer) {
+          featureGroupRef.current.removeLayer(layerMbr)
+        }
+      })
+    }
+  }
+
   useEffect(() => {
     const shouldCenter = false
     renderShape(shouldCenter)
@@ -815,71 +852,78 @@ const SpatialSelection = (props) => {
 
     const newDrawingFound = drawnLayers.current.some((layer) => layer.layerPoints === newDrawing)
 
+    // If no drawing is found, remove all drawn layers and draw the new shape
     if (!newDrawingFound) {
       if (drawnLayers.current.length > 0 && featureGroupRef.current.removeLayer) {
         // Remove all drawn layers
         drawnLayers.current.forEach((drawnLayer) => {
           const { layer, layerMbr } = drawnLayer
-          featureGroupRef.current.removeLayer(layer)
+
+          if (layer) featureGroupRef.current.removeLayer(layer)
           if (layerMbr) featureGroupRef.current.removeLayer(layerMbr)
         })
-
-        // Remove the layerMbr from all drawnLayers
-        drawnLayers.current = drawnLayers.current.map((layer) => ({
-          ...layer,
-          layerMbr: null
-        }))
       }
 
       // Draw the new shape
       renderShape(true)
     }
 
-    const drawnMbrFound = drawnLayers.current.filter((layer) => layer.layerMbr != null)
-
-    // If a polygon is drawn for a CWIC collection, render the MBR to show the user what is being sent
-    // to CWIC as their spatial
+    // If a polygon is drawn for a OpenSearch collection, render the MBR to show the user what is being sent
+    // to OpenSearch as their spatial
     if (!isProjectPage) {
       if (
         (propsPolygonSearch[0] && propsPolygonSearch[0] !== '')
-        && drawnMbrFound.length === 0
         && isOpenSearch
       ) {
-        renderMbr(propsPolygonSearch[0])
-      } else if (drawnMbrFound.length > 0 && !isOpenSearch) {
-        if (featureGroupRef.current.removeLayer) {
-          drawnMbrFound.forEach(
-            (drawnMbr) => featureGroupRef.current.removeLayer(drawnMbr.layerMbr)
-          )
+        showLayerMbr(propsPolygonSearch[0])
+      } else if (!isOpenSearch) {
+        hideLayerMbr()
+      }
+    } else {
+      // If on the project page, and the selectedAccessMethod is harmony and supportsBoundingBoxSubsetting is true and supportsShapefileSubsetting is false and the user has non-bounding box spatial applied, show the MBR
+      Object.keys(projectCollections).forEach((collectionId) => {
+        const { selectedAccessMethod, accessMethods } = projectCollections[collectionId]
 
-          if (drawnLayers.current.length > 0) {
-            // Remove the layerMbr from all drawnLayers
-            drawnLayers.current = drawnLayers.current.map((layer) => ({
-              ...layer,
-              layerMbr: null
-            }))
+        if (selectedAccessMethod && selectedAccessMethod.startsWith('harmony')) {
+          const accessMethod = accessMethods[selectedAccessMethod]
+
+          // Does the selected access method accept bounding box spatial and not shapefile spatial
+          const {
+            supportsBoundingBoxSubsetting,
+            supportsShapefileSubsetting,
+            enableSpatialSubsetting
+          } = accessMethod
+
+          const nonBoundingBoxSpatial = propsCircleSearch[0]
+            || propsLineSearch[0]
+            || propsPointSearch[0]
+            || propsPolygonSearch[0]
+
+          if (
+            enableSpatialSubsetting
+            && supportsBoundingBoxSubsetting
+            && !supportsShapefileSubsetting
+            && !!nonBoundingBoxSpatial
+          ) {
+            showLayerMbr(nonBoundingBoxSpatial)
+          } else {
+            hideLayerMbr(nonBoundingBoxSpatial)
           }
+        } else {
+          hideLayerMbr()
         }
-      }
-    } else if (drawnMbrFound.length > 0) {
-      if (featureGroupRef.current.removeLayer) {
-        drawnMbrFound.forEach((drawnMbr) => featureGroupRef.current.removeLayer(drawnMbr.layerMbr))
-
-        // Remove the layerMbr from all drawnLayers
-        drawnLayers.current = drawnLayers.current.map((layer) => ({
-          ...layer,
-          layerMbr: null
-        }))
-      }
+      })
     }
   }, [
+    drawnLayers.current,
+    isOpenSearch,
+    projectCollections,
     propsAdvancedSearch,
     propsBoundingBoxSearch,
     propsCircleSearch,
     propsLineSearch,
     propsPointSearch,
-    propsPolygonSearch,
-    isOpenSearch
+    propsPolygonSearch
   ])
 
   const draw = useMemo(() => {
@@ -976,6 +1020,13 @@ SpatialSelection.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
   polygonSearch: PropTypes.arrayOf(PropTypes.string),
+  projectCollections: PropTypes.shape({
+    selectedAccessMethod: PropTypes.string,
+    accessMethods: PropTypes.shape({
+      supportsBoundingBoxSubsetting: PropTypes.bool,
+      supportsShapefileSubsetting: PropTypes.bool
+    })
+  }).isRequired,
   shapefile: PropTypes.shape({
     file: PropTypes.shape({}),
     shapefileId: PropTypes.string

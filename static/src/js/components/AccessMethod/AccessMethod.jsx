@@ -76,22 +76,21 @@ const AccessMethod = ({
     supportsConcatenation = false,
     supportsSwodlr = false,
     defaultConcatenation = false,
-    enableTemporalSubsetting: hasEnabledTemporalSubsetting
+    enableTemporalSubsetting: propsEnableTemporalSubsetting = true,
+    enableSpatialSubsetting: propsEnableSpatialSubsetting = true
   } = selectedMethod || {}
 
   const { isRecurring } = temporal
 
-  // EnabledTemporalSubsetting by default
-  let setTemporal = true
-
-  // If enabledTemporalSubsetting is explicitly false, set the initial value to false
-  if (hasEnabledTemporalSubsetting === false) {
-    setTemporal = false
-  }
-
   // Initialize State Variables
-  const [enableTemporalSubsetting, setEnableTemporalSubsetting] = useState(setTemporal)
-  const [enableSpatialSubsetting, setEnableSpatialSubsetting] = useState(false)
+  const [
+    enableTemporalSubsetting,
+    setEnableTemporalSubsetting
+  ] = useState(propsEnableTemporalSubsetting)
+  const [
+    enableSpatialSubsetting,
+    setEnableSpatialSubsetting
+  ] = useState(propsEnableSpatialSubsetting)
   const [enableConcatenateDownload, setEnableConcatenateDownload] = useState(defaultConcatenation)
   const [isHarmony, setIsHarmony] = useState(false)
   const [selectedHarmonyMethodName, setSelectedHarmonyMethodName] = useState('')
@@ -112,6 +111,14 @@ const AccessMethod = ({
   useEffect(() => {
     setEnableConcatenateDownload(defaultConcatenation)
   }, [defaultConcatenation])
+
+  useEffect(() => {
+    setEnableTemporalSubsetting(propsEnableTemporalSubsetting)
+  }, [propsEnableTemporalSubsetting])
+
+  useEffect(() => {
+    setEnableSpatialSubsetting(propsEnableSpatialSubsetting)
+  }, [propsEnableSpatialSubsetting])
 
   useEffect(() => {
     if (addedGranuleIds.length > 0) {
@@ -625,9 +632,33 @@ const AccessMethod = ({
     endDate = ''
   } = temporal
 
+  const hasNonBoundingBoxSpatial = spatial
+    && (spatial.polygon || spatial.point || spatial.line || spatial.circle)
+
+  let harmonyMbrWarning
+  if (
+    enableSpatialSubsetting
+    && supportsBoundingBoxSubsetting
+    && !supportsShapefileSubsetting
+    && hasNonBoundingBoxSpatial
+  ) {
+    let spatialType = ''
+    if (spatial.polygon) {
+      spatialType = 'polygon'
+    } else if (spatial.point) {
+      spatialType = 'point'
+    } else if (spatial.line) {
+      spatialType = 'line'
+    } else if (spatial.circle) {
+      spatialType = 'circle'
+    }
+
+    harmonyMbrWarning = `Only bounding boxes are supported. If this option is enabled, your ${spatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
+  }
+
   // Get spatial and temporal display values
   const selectedTemporalDisplay = createTemporalDisplay(temporal)
-  const selectedSpatialDisplay = createSpatialDisplay(spatial)
+  const selectedSpatialDisplay = createSpatialDisplay(spatial, !!harmonyMbrWarning)
 
   // Checking to see if the selectedMethod variables exists and has at least one variable
   const hasVariables = selectedMethod.variables
@@ -793,6 +824,7 @@ const AccessMethod = ({
                     heading="Spatial Subsetting"
                     intro="When enabled, spatial subsetting will trim the data to the selected area range."
                     nested
+                    warning={harmonyMbrWarning}
                   >
                     {
                       selectedSpatialDisplay

@@ -40,6 +40,8 @@ const mockEchoForm = jest.fn(() => (
 jest.mock('../EchoForm', () => mockEchoForm)
 
 const setup = (overrideProps) => {
+  const user = userEvent.setup()
+
   const onSelectAccessMethod = jest.fn()
   const onSetActivePanel = jest.fn()
   const onUpdateAccessMethod = jest.fn()
@@ -72,16 +74,16 @@ const setup = (overrideProps) => {
     onSelectAccessMethod,
     onSetActivePanel,
     onUpdateAccessMethod,
-    onTogglePanels
+    onTogglePanels,
+    user
   }
 }
 
 describe('AccessMethod component', () => {
   describe('handleAccessMethodSelection', () => {
     test('updates the selected access method', async () => {
-      const user = userEvent.setup()
       const collectionId = 'collectionId'
-      const { onSelectAccessMethod } = setup({
+      const { onSelectAccessMethod, user } = setup({
         accessMethods: {
           download: {
             isValid: true,
@@ -127,9 +129,8 @@ describe('AccessMethod component', () => {
     })
 
     test('updates the selected access method when type is orderable', async () => {
-      const user = userEvent.setup()
       const collectionId = 'collectionId'
-      const { onSelectAccessMethod } = setup({
+      const { onSelectAccessMethod, user } = setup({
         accessMethods: {
           esi0: {
             isValid: true,
@@ -413,9 +414,8 @@ describe('AccessMethod component', () => {
 
   describe('when the selected access method is opendap', () => {
     test('selecting a output format calls onUpdateAccessMethod', async () => {
-      const user = userEvent.setup()
       const collectionId = 'collectionId'
-      const { onUpdateAccessMethod } = setup({
+      const { onUpdateAccessMethod, user } = setup({
         accessMethods: {
           opendap: {
             isValid: true,
@@ -475,9 +475,8 @@ describe('AccessMethod component', () => {
 
     describe('and multiple harmony methods are available', () => {
       test('each method is listed in the Select menu and has appropriate icons for customization options', async () => {
-        const user = userEvent.setup()
         const collectionId = 'collectionId'
-        setup({
+        const { user } = setup({
           accessMethods: {
             harmony0: {
               name: 'first harmony service',
@@ -622,9 +621,8 @@ describe('AccessMethod component', () => {
       })
 
       test('selecting a output format calls onUpdateAccessMethod', async () => {
-        const user = userEvent.setup()
         const collectionId = 'collectionId'
-        const { onUpdateAccessMethod } = setup({
+        const { onUpdateAccessMethod, user } = setup({
           accessMethods: {
             harmony0: {
               name: 'test name',
@@ -712,9 +710,8 @@ describe('AccessMethod component', () => {
       })
 
       test('selecting a output projection calls onUpdateAccessMethod', async () => {
-        const user = userEvent.setup()
         const collectionId = 'collectionId'
-        const { onUpdateAccessMethod } = setup({
+        const { onUpdateAccessMethod, user } = setup({
           accessMethods: {
             harmony0: {
               name: 'test name',
@@ -866,7 +863,8 @@ describe('AccessMethod component', () => {
                 description: 'test description',
                 isValid: true,
                 type: 'Harmony',
-                supportsTemporalSubsetting: true
+                supportsTemporalSubsetting: true,
+                enableTemporalSubsetting: true
               }
             },
             metadata: {
@@ -893,7 +891,8 @@ describe('AccessMethod component', () => {
                   description: 'test description',
                   isValid: true,
                   type: 'Harmony',
-                  supportsTemporalSubsetting: true
+                  supportsTemporalSubsetting: true,
+                  enableTemporalSubsetting: true
                 }
               },
               metadata: {
@@ -919,7 +918,8 @@ describe('AccessMethod component', () => {
                     description: 'test description',
                     isValid: true,
                     type: 'Harmony',
-                    supportsTemporalSubsetting: true
+                    supportsTemporalSubsetting: true,
+                    enableTemporalSubsetting: true
                   }
                 },
                 metadata: {
@@ -1083,10 +1083,9 @@ describe('AccessMethod component', () => {
 
         describe('when the user clicks the checkbox', () => {
           test('sets the checkbox checked', async () => {
-            const user = userEvent.setup()
             const collectionId = 'collectionId'
             // `enableTemporalSubsetting` must be set to false here to prevent `checked` form being true
-            setup({
+            const { user } = setup({
               accessMethods: {
                 harmony0: {
                   name: 'test name',
@@ -1119,8 +1118,8 @@ describe('AccessMethod component', () => {
 
           test('calls onUpdateAccessMethod', async () => {
             const collectionId = 'collectionId'
-            const user = userEvent.setup()
-            const { onUpdateAccessMethod } = setup({
+
+            const { onUpdateAccessMethod, user } = setup({
               accessMethods: {
                 harmony0: {
                   name: 'test name',
@@ -1181,156 +1180,10 @@ describe('AccessMethod component', () => {
           expect(screen.getByRole('checkbox').checked).toEqual(false)
         })
 
-        describe('when enableSpatialSubsetting is set to false', () => {
-          test('sets the checkbox unchecked for boundingBox', () => {
-            setup({
-              accessMethods: {
-                harmony0: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony0',
-              spatial: {
-                boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
-              }
-            })
-
-            expect(screen.getByRole('checkbox').checked).toEqual(false)
-          })
-
-          test('no area selected shows up when not passing in a spatial value', () => {
-            setup({
-              accessMethods: {
-                harmony0: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony0',
-              spatial: {}
-            })
-
-            expect(screen.getByText('No spatial area selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
-          })
-
-          test('sets the checkbox unchecked for circle', () => {
-            setup({
-              accessMethods: {
-                harmony0: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony0',
-              spatial: {
-                circle: ['64.125,7.8161,983270-18.28125']
-              }
-            })
-
-            expect(screen.getByRole('checkbox').checked).toEqual(false)
-          })
-
-          test('sets the checkbox unchecked for point', () => {
-            setup({
-              accessMethods: {
-                harmony0: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony0',
-              spatial: {
-                point: ['82.6875,-18.61541']
-              }
-            })
-
-            expect(screen.getByRole('checkbox').checked).toEqual(false)
-          })
-
-          test('sets the checkbox unchecked for line', () => {
-            setup({
-              accessMethods: {
-                harmony0: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony0',
-              spatial: {
-                line: ['82.6875,-18.61541,83.1231, -16.11311']
-              }
-            })
-
-            expect(screen.getByRole('checkbox').checked).toEqual(false)
-          })
-
-          test('sets the checkbox unchecked for shapefile', () => {
-            setup({
-              accessMethods: {
-                harmony0: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsShapefileSubsetting: true,
-                  supportsBoundingBoxSubsetting: false,
-                  enableSpatialSubsetting: false
-                }
-              },
-              metadata: {
-                conceptId: 'collectionId'
-              },
-              selectedAccessMethod: 'harmony0',
-              spatial: {
-                polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
-              }
-            })
-
-            expect(screen.getByRole('checkbox').checked).toEqual(false)
-          })
-        })
-
-        describe('when the user clicks the checkbox', () => {
+        describe('when the user checks enableTemporalSubsetting', () => {
           test('sets the checkbox for temporal unchecked', async () => {
-            const user = userEvent.setup()
             const collectionId = 'collectionId'
-            setup({
+            const { onUpdateAccessMethod, user } = setup({
               accessMethods: {
                 harmony0: {
                   name: 'test name',
@@ -1338,7 +1191,7 @@ describe('AccessMethod component', () => {
                   isValid: true,
                   type: 'Harmony',
                   supportsTemporalSubsetting: true,
-                  enableTemporalSubsetting: true
+                  enableTemporalSubsetting: false
                 }
               },
               metadata: {
@@ -1353,69 +1206,311 @@ describe('AccessMethod component', () => {
             })
 
             const checkbox = screen.getByRole('checkbox')
-            expect(checkbox.checked).toEqual(true)
+            expect(checkbox.checked).toEqual(false)
             await user.click(checkbox)
-            expect(screen.getByRole('checkbox').checked).toEqual(false)
-          })
+            expect(screen.getByRole('checkbox').checked).toEqual(true)
 
-          test('sets the checkbox for spatial checked', async () => {
-            const user = userEvent.setup()
-            const collectionId = 'collectionId'
-            setup({
-              accessMethods: {
-                harmony0: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsBoundingBoxSubsetting: true,
-                  enableSpatialSubsetting: false
-                }
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony0',
-              spatial: {
-                boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
-              }
-            })
-
-            const checkbox = screen.getByRole('checkbox')
-            await user.click(checkbox)
-            expect(checkbox.checked).toEqual(true)
-          })
-
-          test('calls onUpdateAccessMethod', async () => {
-            const user = userEvent.setup()
-            const collectionId = 'collectionId'
-            const { onUpdateAccessMethod } = setup({
-              accessMethods: {
-                harmony0: {
-                  name: 'test name',
-                  description: 'test description',
-                  isValid: true,
-                  type: 'Harmony',
-                  supportsTemporalSubsetting: true,
-                  enableTemporalSubsetting: true
-                }
-              },
-              metadata: {
-                conceptId: collectionId
-              },
-              selectedAccessMethod: 'harmony0',
-              temporal: {
-                startDate: '2008-06-27T00:00:00.979Z',
-                endDate: '2021-08-01T23:59:59.048Z',
-                isRecurring: false
-              }
-            })
-            const checkbox = screen.getByRole('checkbox')
-            await user.click(checkbox)
             expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
             expect(onUpdateAccessMethod).toHaveBeenCalledWith({
               collectionId: 'collectionId',
-              method: { harmony0: { enableTemporalSubsetting: false } }
+              method: { harmony0: { enableTemporalSubsetting: true } }
+            })
+          })
+        })
+      })
+
+      describe('when enableSpatialSubsetting is set to false', () => {
+        test('sets the checkbox unchecked for boundingBox', () => {
+          setup({
+            accessMethods: {
+              harmony0: {
+                name: 'test name',
+                description: 'test description',
+                isValid: true,
+                type: 'Harmony',
+                supportsBoundingBoxSubsetting: true,
+                enableSpatialSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            spatial: {
+              boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+            }
+          })
+
+          expect(screen.getByRole('checkbox').checked).toEqual(false)
+        })
+
+        test('no area selected shows up when not passing in a spatial value', () => {
+          setup({
+            accessMethods: {
+              harmony0: {
+                name: 'test name',
+                description: 'test description',
+                isValid: true,
+                type: 'Harmony',
+                supportsBoundingBoxSubsetting: true,
+                enableSpatialSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            spatial: {}
+          })
+
+          expect(screen.getByText('No spatial area selected. Make a spatial selection to enable spatial subsetting.')).toBeInTheDocument()
+        })
+
+        test('sets the checkbox unchecked for circle', () => {
+          setup({
+            accessMethods: {
+              harmony0: {
+                name: 'test name',
+                description: 'test description',
+                isValid: true,
+                type: 'Harmony',
+                supportsBoundingBoxSubsetting: true,
+                enableSpatialSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            spatial: {
+              circle: ['64.125,7.8161,983270-18.28125']
+            }
+          })
+
+          expect(screen.getByRole('checkbox').checked).toEqual(false)
+        })
+
+        test('sets the checkbox unchecked for point', () => {
+          setup({
+            accessMethods: {
+              harmony0: {
+                name: 'test name',
+                description: 'test description',
+                isValid: true,
+                type: 'Harmony',
+                supportsBoundingBoxSubsetting: true,
+                enableSpatialSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            spatial: {
+              point: ['82.6875,-18.61541']
+            }
+          })
+
+          expect(screen.getByRole('checkbox').checked).toEqual(false)
+        })
+
+        test('sets the checkbox unchecked for line', () => {
+          setup({
+            accessMethods: {
+              harmony0: {
+                name: 'test name',
+                description: 'test description',
+                isValid: true,
+                type: 'Harmony',
+                supportsBoundingBoxSubsetting: true,
+                enableSpatialSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            spatial: {
+              line: ['82.6875,-18.61541,83.1231, -16.11311']
+            }
+          })
+
+          expect(screen.getByRole('checkbox').checked).toEqual(false)
+        })
+
+        test('sets the checkbox unchecked for shapefile', () => {
+          setup({
+            accessMethods: {
+              harmony0: {
+                name: 'test name',
+                description: 'test description',
+                isValid: true,
+                type: 'Harmony',
+                supportsShapefileSubsetting: true,
+                supportsBoundingBoxSubsetting: false,
+                enableSpatialSubsetting: false
+              }
+            },
+            metadata: {
+              conceptId: 'collectionId'
+            },
+            selectedAccessMethod: 'harmony0',
+            spatial: {
+              polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
+            }
+          })
+
+          expect(screen.getByRole('checkbox').checked).toEqual(false)
+        })
+
+        describe('when the user checks enableSpatialSubsetting', () => {
+          test('sets the checkbox for spatial checked', async () => {
+            const collectionId = 'collectionId'
+            const { onUpdateAccessMethod, user } = setup({
+              accessMethods: {
+                harmony0: {
+                  name: 'test name',
+                  description: 'test description',
+                  isValid: true,
+                  type: 'Harmony',
+                  supportsBoundingBoxSubsetting: true,
+                  enableSpatialSubsetting: false
+                }
+              },
+              metadata: {
+                conceptId: collectionId
+              },
+              selectedAccessMethod: 'harmony0',
+              spatial: {
+                boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
+              }
+            })
+
+            const checkbox = screen.getByRole('checkbox')
+            expect(checkbox.checked).toEqual(false)
+            await user.click(checkbox)
+            expect(checkbox.checked).toEqual(true)
+
+            expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+            expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+              collectionId: 'collectionId',
+              method: { harmony0: { enableSpatialSubsetting: true } }
+            })
+          })
+
+          describe('when the user provided point spatial and the harmony service does not support shapefile subsetting', () => {
+            test('displays a warning and a bounding box Selected Area', async () => {
+              const { user } = setup({
+                accessMethods: {
+                  harmony0: {
+                    name: 'test name',
+                    description: 'test description',
+                    isValid: true,
+                    type: 'Harmony',
+                    supportsBoundingBoxSubsetting: true,
+                    enableSpatialSubsetting: false
+                  }
+                },
+                metadata: {
+                  conceptId: 'collectionId'
+                },
+                selectedAccessMethod: 'harmony0',
+                spatial: {
+                  point: ['82.6875,-18.61541']
+                }
+              })
+
+              const checkbox = screen.getByRole('checkbox')
+              await user.click(checkbox)
+
+              expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your point will be automatically converted into the bounding box shown above and outlined on the map.')
+            })
+          })
+
+          describe('when the user provided circle spatial and the harmony service does not support shapefile subsetting', () => {
+            test('displays a warning and a bounding box Selected Area', async () => {
+              const { user } = setup({
+                accessMethods: {
+                  harmony0: {
+                    name: 'test name',
+                    description: 'test description',
+                    isValid: true,
+                    type: 'Harmony',
+                    supportsBoundingBoxSubsetting: true,
+                    enableSpatialSubsetting: false
+                  }
+                },
+                metadata: {
+                  conceptId: 'collectionId'
+                },
+                selectedAccessMethod: 'harmony0',
+                spatial: {
+                  circle: ['64.125,7.8161,983270-18.28125']
+                }
+              })
+
+              const checkbox = screen.getByRole('checkbox')
+              await user.click(checkbox)
+
+              expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your circle will be automatically converted into the bounding box shown above and outlined on the map.')
+            })
+          })
+
+          describe('when the user provided line spatial and the harmony service does not support shapefile subsetting', () => {
+            test('displays a warning and a bounding box Selected Area', async () => {
+              const { user } = setup({
+                accessMethods: {
+                  harmony0: {
+                    name: 'test name',
+                    description: 'test description',
+                    isValid: true,
+                    type: 'Harmony',
+                    supportsBoundingBoxSubsetting: true,
+                    enableSpatialSubsetting: false
+                  }
+                },
+                metadata: {
+                  conceptId: 'collectionId'
+                },
+                selectedAccessMethod: 'harmony0',
+                spatial: {
+                  line: ['82.6875,-18.61541,83.1231, -16.11311']
+                }
+              })
+
+              const checkbox = screen.getByRole('checkbox')
+              await user.click(checkbox)
+
+              expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your line will be automatically converted into the bounding box shown above and outlined on the map.')
+            })
+          })
+
+          describe('when the user provided polygon spatial and the harmony service does not support shapefile subsetting', () => {
+            test('displays a warning and a bounding box Selected Area', async () => {
+              const { user } = setup({
+                accessMethods: {
+                  harmony0: {
+                    name: 'test name',
+                    description: 'test description',
+                    isValid: true,
+                    type: 'Harmony',
+                    supportsBoundingBoxSubsetting: true,
+                    enableSpatialSubsetting: false
+                  }
+                },
+                metadata: {
+                  conceptId: 'collectionId'
+                },
+                selectedAccessMethod: 'harmony0',
+                spatial: {
+                  polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
+                }
+              })
+
+              const checkbox = screen.getByRole('checkbox')
+              await user.click(checkbox)
+
+              expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your polygon will be automatically converted into the bounding box shown above and outlined on the map.')
             })
           })
         })
@@ -1425,11 +1520,14 @@ describe('AccessMethod component', () => {
     describe('when a service name is passed in', () => {
       describe('when the service type is `Harmony`', () => {
         test('edit variables button calls `onSetActivePanel` and `onTogglePanels`', async () => {
-          const user = userEvent.setup()
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
 
-          const { onSetActivePanel, onTogglePanels } = setup({
+          const {
+            onSetActivePanel,
+            onTogglePanels,
+            user
+          } = setup({
             selectedAccessMethod: 'harmony0',
             accessMethods: {
               harmony0: {
@@ -1507,10 +1605,9 @@ describe('AccessMethod component', () => {
         })
 
         test('when the `Combine Data` option is clicked, the enableConcatenateDownload changes', async () => {
-          const user = userEvent.setup()
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
-          const { onUpdateAccessMethod } = setup({
+          const { onUpdateAccessMethod, user } = setup({
             accessMethods: {
               harmony0: {
                 description: 'test description',

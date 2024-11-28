@@ -210,7 +210,7 @@ const testCollectionGibsProjections = async (page, projections) => {
 
 test.describe('Path /search/granules/collection-details', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })

@@ -82,7 +82,7 @@ const testResultsSize = async (page, cmrHits) => {
 
 test.describe('Path /search', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })

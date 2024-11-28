@@ -263,6 +263,7 @@ export class ShapefileLayerExtended extends L.Layer {
 
     const children = jsonLayer.getLayers()
 
+    // If the shapefile only has one feature, select it
     if (children.length === 1) {
       const { feature } = children[0]
       const { edscId } = feature
@@ -271,9 +272,10 @@ export class ShapefileLayerExtended extends L.Layer {
       onUpdateShapefile({ selectedFeatures: [edscId] })
 
       this.setConstraint(children[0])
+    } else {
+      // Else, select layers found in `selectedFeatures`
+      layersToSelect.forEach((layer) => this.setConstraint(layer))
     }
-
-    layersToSelect.forEach((layer) => this.setConstraint(layer))
 
     const fileHash = forge.md.md5.create()
     fileHash.update(JSON.stringify(response))

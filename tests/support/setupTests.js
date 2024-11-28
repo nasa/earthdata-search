@@ -19,6 +19,10 @@ export const setupTests = async ({ page, context, dontShowTour = true }) => {
   // Prevent loading of images and map tiles to speed up tests
   await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
   await page.route('**/scale/**', (route) => route.abort())
-}
 
-export default setupTests
+  // Mock requests to the status app
+  await page.route(/status\.earthdata\.nasa\.gov/, (route) => route.fulfill({
+    status: 200,
+    json: '{"success":true,"notifications":[]}'
+  }))
+}

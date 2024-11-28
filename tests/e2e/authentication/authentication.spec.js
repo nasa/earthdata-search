@@ -13,7 +13,7 @@ const expectedCollectionCount = 6
 
 test.describe('Authentication', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })

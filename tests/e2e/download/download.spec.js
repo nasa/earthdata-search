@@ -12,12 +12,12 @@ import { getAuthHeaders } from '../../support/getAuthHeaders'
 
 test.describe('Download spec', () => {
   test('get to the download page', async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })
 
-    login(context)
+    await login(context)
 
     const authHeaders = getAuthHeaders()
 

@@ -16,7 +16,7 @@ import commonHeaders from './__mocks__/common_collections.headers.json'
 
 test.describe('Map: Control interactions', () => {
   test.beforeEach(async ({ page, context }, testInfo) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })

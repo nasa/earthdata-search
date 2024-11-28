@@ -1,0 +1,2420 @@
+{
+  "data": {
+    "collections": {
+      "items": [
+        {
+          "abstract": "Nitrogen dioxide Level 2 files provide trace gas information at TEMPO’s native spatial resolution, ~10 km^2 at the center of the Field of Regard (FOR), for individual granules. Each granule covers the entire North-South TEMPO FOR but only a portion of the East-West FOR. The files are provided in netCDF4 format, and contain information on tropospheric, stratospheric and total nitrogen dioxide vertical columns, ancillary data used in air mass factor and stratospheric/tropospheric separation calculations, and retrieval quality flags. The retrieval uses a three-step approach: (1) spectral fitting of slant columns, (2) air mass factor calculation and derivation of vertical columns, and (3) stratospheric/tropospheric separation.",
+          "archiveAndDistributionInformation": {
+            "fileDistributionInformation": [
+              {
+                "format": "NetCDF-4",
+                "totalCollectionFileSize": 750,
+                "totalCollectionFileSizeUnit": "MB"
+              }
+            ]
+          },
+          "associatedDois": null,
+          "boxes": null,
+          "cloudHosted": true,
+          "conceptId": "C2930725014-LARC_CLOUD",
+          "coordinateSystem": "CARTESIAN",
+          "dataCenter": "LARC_CLOUD",
+          "dataCenters": [
+            {
+              "roles": ["ARCHIVER"],
+              "shortName": "NASA/LARC/SD/ASDC",
+              "longName": "Atmospheric Science Data Center, Science Directorate, Langley Research Center, NASA",
+              "contactInformation": {
+                "relatedUrls": [
+                  {
+                    "description": "Data Center URL",
+                    "urlContentType": "DataCenterURL",
+                    "type": "HOME PAGE",
+                    "url": "https://asdc.larc.nasa.gov/"
+                  }
+                ]
+              },
+              "contactPersons": [
+                {
+                  "roles": ["Data Center Contact"],
+                  "firstName": "ASDC",
+                  "lastName": "USER SERVICES",
+                  "contactInformation": {
+                    "contactMechanisms": [
+                      {
+                        "type": "Email",
+                        "value": "support-asdc@earthdata.nasa.gov"
+                      }
+                    ],
+                    "addresses": [
+                      {
+                        "country": "United States",
+                        "streetAddresses": [
+                          "NASA Langley Atmospheric Science Data Center",
+                          "User and Data Services",
+                          "NASA Langley Research Center"
+                        ],
+                        "city": "Hampton",
+                        "postalCode": "23681-2199"
+                      }
+                    ],
+                    "relatedUrls": [
+                      {
+                        "description": "Data Center URL",
+                        "urlContentType": "DataContactURL",
+                        "type": "HOME PAGE",
+                        "url": "https://asdc.larc.nasa.gov/"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "dataQualitySummaries": {
+            "count": 1,
+            "items": [
+              {
+                "id": "b8898eea-123b-4ff5-ad74-24ac4d8d854f",
+                "summary": "<p>These Tropospheric Emissions: Monitoring of Pollution (TEMPO) V03 data products are processed using the TEMPO Science Data Processing Center (SDPC) software that is operational as of May 2024. These products should be considered as beta products per the Beta Product Maturity level defined in the <a href=\"https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf\" target=\"_blank\">TEMPO validation plan</a>. The products are not optimized for operational use and anomalies may exist. The maturity level of data products will be updated once a more careful validation and assessment determines that a product is at a higher maturity level.&nbsp;</p>\r\n<p>These beta TEMPO products should not be used in publications or presentations, and users should refrain from making conclusive public statements regarding science and applications of the TEMPO data products until the products are designated to be at the provisional validation status according to the validation plan.&nbsp;\r\n  </p>\r\n<p>Users may consult the <a href=\"https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.0.pdf\" target=\"_blank\">User Guide</a> for descriptions of the data products in the V03 release, recommendations for best use, and associated known issues. The TEMPO Algorithm Theoretical Basis Document (ATBD) is still being finalized. For access to the Version 1.0 ATBD, please contact the ASDC at <a href=\"mailto:larc-dl-asdc-tempo@mail.nasa.gov\" target=\"_blank\">larc-dl-asdc-tempo@mail.nasa.gov</a>.&nbsp;&nbsp;\r\n  </p>\r\n<p>For inquiries about the V03 TEMPO data release, please contact <a href=\"mailto:larc-dl-asdc-tempo@mail.nasa.gov\" target=\"_blank\">larc-dl-asdc-tempo@mail.nasa.gov</a> or post/view questions on the  <a href=\"https://forum.earthdata.nasa.gov/viewforum.php?f=7&tagMatch=all&Projects=154&keywords=&\" target=\"_blank\">Earthdata Forum</a>.&nbsp;\r\n</p>"
+              }
+            ]
+          },
+          "directDistributionInformation": {
+            "region": "us-west-2",
+            "s3BucketAndObjectPrefixNames": [
+              "asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03"
+            ],
+            "s3CredentialsApiEndpoint": "https://data.asdc.earthdata.nasa.gov/s3credentials",
+            "s3CredentialsApiDocumentationUrl": "https://data.asdc.earthdata.nasa.gov/s3credentialsREADME"
+          },
+          "doi": {
+            "doi": "10.5067/IS-40e/TEMPO/NO2_L2.003",
+            "authority": "https://doi.org"
+          },
+          "duplicateCollections": {
+            "count": 0,
+            "items": []
+          },
+          "hasGranules": true,
+          "lines": null,
+          "points": null,
+          "polygons": [["10 -170 10 -10 80 -10 80 -170 10 -170"]],
+          "relatedCollections": {
+            "count": 0,
+            "items": []
+          },
+          "relatedUrls": [
+            {
+              "description": "TEMPO project page",
+              "urlContentType": "CollectionURL",
+              "type": "PROJECT HOME PAGE",
+              "url": "http://tempo.si.edu"
+            },
+            {
+              "description": "DOI data set landing page for TEMPO_NO2_L2_V03",
+              "urlContentType": "CollectionURL",
+              "type": "DATA SET LANDING PAGE",
+              "url": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+            },
+            {
+              "description": "Mission Logo",
+              "urlContentType": "VisualizationURL",
+              "type": "GET RELATED VISUALIZATION",
+              "subtype": "WORLDVIEW",
+              "url": "https://asdc.larc.nasa.gov/static/images/project_logos/tempo.png"
+            },
+            {
+              "description": "How to cite ASDC data",
+              "urlContentType": "PublicationURL",
+              "type": "VIEW RELATED INFORMATION",
+              "subtype": "DATA CITATION POLICY",
+              "url": "https://asdc.larc.nasa.gov/citing-data"
+            },
+            {
+              "description": "Earthdata Search for TEMPO_NO2_L2_V03 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)",
+              "urlContentType": "DistributionURL",
+              "type": "GET DATA",
+              "subtype": "Earthdata Search",
+              "url": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+            },
+            {
+              "description": "ASDC Data and Information for TEMPO",
+              "urlContentType": "PublicationURL",
+              "type": "VIEW RELATED INFORMATION",
+              "subtype": "GENERAL DOCUMENTATION",
+              "url": "https://asdc.larc.nasa.gov/project/TEMPO"
+            },
+            {
+              "description": "Tropospheric Emissions: Monitoring Pollution (TEMPO) Project Trace Gas and Cloud Level 2 and 3 Data Products: User Guide",
+              "urlContentType": "PublicationURL",
+              "type": "VIEW RELATED INFORMATION",
+              "subtype": "USER'S GUIDE",
+              "url": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+            },
+            {
+              "description": "Level 2 Science Data Product Validation Plan",
+              "urlContentType": "PublicationURL",
+              "type": "VIEW RELATED INFORMATION",
+              "subtype": "SCIENCE DATA PRODUCT VALIDATION",
+              "url": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+            }
+          ],
+          "scienceKeywords": [
+            {
+              "category": "EARTH SCIENCE",
+              "topic": "ATMOSPHERE",
+              "term": "ATMOSPHERIC CHEMISTRY",
+              "variableLevel1": "NITROGEN COMPOUNDS",
+              "variableLevel2": "NITROGEN DIOXIDE"
+            },
+            {
+              "category": "EARTH SCIENCE",
+              "topic": "ATMOSPHERE",
+              "term": "AIR QUALITY",
+              "variableLevel1": "NITROGEN OXIDES"
+            }
+          ],
+          "shortName": "TEMPO_NO2_L2",
+          "spatialExtent": {
+            "spatialCoverageType": "HORIZONTAL",
+            "horizontalSpatialDomain": {
+              "geometry": {
+                "coordinateSystem": "CARTESIAN",
+                "gpolygons": [
+                  {
+                    "boundary": {
+                      "points": [
+                        {
+                          "longitude": -170,
+                          "latitude": 10
+                        },
+                        {
+                          "longitude": -10,
+                          "latitude": 10
+                        },
+                        {
+                          "longitude": -10,
+                          "latitude": 80
+                        },
+                        {
+                          "longitude": -170,
+                          "latitude": 80
+                        },
+                        {
+                          "longitude": -170,
+                          "latitude": 10
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            },
+            "granuleSpatialRepresentation": "CARTESIAN"
+          },
+          "tags": {
+            "edsc.extra.serverless.collection_capabilities": {
+              "data": {
+                "cloud_cover": false,
+                "day_night_flag": false,
+                "granule_online_access_flag": true,
+                "orbit_calculated_spatial_domains": false,
+                "updated_at": "2024-07-02T19:06:17.787Z"
+              }
+            },
+            "edsc.extra.serverless.gibs": {
+              "data": [
+                {
+                  "antarctic": false,
+                  "group": "overlays",
+                  "product": "TEMPO_L2_NO2_Vertical_Column_Stratosphere_Granule",
+                  "antarctic_resolution": null,
+                  "updated_at": "2024-11-19T12:45:23.149Z",
+                  "arctic": false,
+                  "title": "Nitrogen Dioxide (L2, Vertical Column Stratosphere, Subdaily) (BETA)",
+                  "source": "TEMPO",
+                  "match": {
+                    "time_start": ">=2024-05-13T10:41:03Z",
+                    "day_night_flag": "unspecified"
+                  },
+                  "geographic": true,
+                  "arctic_resolution": null,
+                  "format": "png",
+                  "geographic_resolution": "1km"
+                },
+                {
+                  "antarctic": false,
+                  "group": "overlays",
+                  "product": "TEMPO_L2_NO2_Vertical_Column_Troposphere_Granule",
+                  "antarctic_resolution": null,
+                  "updated_at": "2024-11-19T12:45:23.149Z",
+                  "arctic": false,
+                  "title": "Nitrogen Dioxide (L2, Vertical Column Troposphere, Subdaily) (BETA)",
+                  "source": "TEMPO",
+                  "match": {
+                    "time_start": ">=2024-05-13T10:41:03Z",
+                    "day_night_flag": "unspecified"
+                  },
+                  "geographic": true,
+                  "arctic_resolution": null,
+                  "format": "png",
+                  "geographic_resolution": "1km"
+                }
+              ]
+            }
+          },
+          "temporalExtents": [
+            {
+              "endsAtPresentFlag": true,
+              "rangeDateTimes": [
+                {
+                  "beginningDateTime": "2023-08-01T00:00:00Z"
+                }
+              ]
+            }
+          ],
+          "tilingIdentificationSystems": null,
+          "title": "TEMPO NO2 tropospheric and stratospheric columns V03 (BETA)",
+          "versionId": "V03",
+          "services": {
+            "count": 2,
+            "items": [
+              {
+                "conceptId": "S2874702816-XYZ_PROV",
+                "description": "Hyrax provides direct access to subsetting of NASA data using Python or your favorite analysis tool.",
+                "longName": "Opendap Hyrax data server",
+                "name": "OPeNDAP",
+                "type": "NOT PROVIDED",
+                "url": {
+                  "description": "This is the URL to the Hyrax server's landing page",
+                  "urlValue": "https://opendap.earthdata.nasa.gov"
+                },
+                "serviceOptions": {
+                  "subset": {
+                    "variableSubset": {
+                      "allowMultipleValues": true
+                    }
+                  }
+                },
+                "supportedOutputProjections": null,
+                "supportedReformattings": null,
+                "maxItemsPerOrder": null,
+                "orderOptions": {
+                  "count": 0,
+                  "items": []
+                },
+                "variables": {
+                  "count": 0,
+                  "items": []
+                }
+              },
+              {
+                "conceptId": "S2940253910-LARC_CLOUD",
+                "description": "Chained Service of the L2ss, Batchee, STITCHEE, and PODAAC CONCISE services: L2ss is the PODAAC L2 subsetter, performing subsetting on level-2 data granules; Batchee groups together filenames so that further operations (such as concatenation) can be performed separately on each group of files; STITCHEE concatenates netCDF data along an existing dimension; and PODAAC CONCISE concatenates netCDF data along a newly created dimension.",
+                "longName": "Subsetter And Multi-dimensional Batched Aggregation in Harmony (SAMBAH)",
+                "name": "SAMBAH",
+                "type": "Harmony",
+                "url": {
+                  "urlValue": "https://harmony.earthdata.nasa.gov"
+                },
+                "serviceOptions": {
+                  "aggregation": {
+                    "concatenate": {
+                      "concatenateDefault": true
+                    }
+                  },
+                  "subset": {
+                    "spatialSubset": {
+                      "boundingBox": {
+                        "allowMultipleValues": false
+                      }
+                    },
+                    "temporalSubset": {
+                      "allowMultipleValues": false
+                    },
+                    "variableSubset": {
+                      "allowMultipleValues": true
+                    }
+                  }
+                },
+                "supportedOutputProjections": null,
+                "supportedReformattings": null,
+                "maxItemsPerOrder": null,
+                "orderOptions": {
+                  "count": 0,
+                  "items": []
+                },
+                "variables": {
+                  "count": 0,
+                  "items": []
+                }
+              }
+            ]
+          },
+          "granules": {
+            "count": 49276,
+            "items": [
+              {
+                "browseFlag": false,
+                "conceptId": "G3059535368-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T151249Z_S001G01.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T151249Z_S001G01.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T151249Z_S001G01.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T151249Z_S001G01.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T151249Z_S001G01.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T151249Z_S001G01.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T151249Z_S001G01.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059535388-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T151902Z_S001G02.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T151902Z_S001G02.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T151902Z_S001G02.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T151902Z_S001G02.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T151902Z_S001G02.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T151902Z_S001G02.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T151902Z_S001G02.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059535219-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T152515Z_S001G03.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T152515Z_S001G03.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T152515Z_S001G03.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T152515Z_S001G03.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T152515Z_S001G03.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T152515Z_S001G03.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T152515Z_S001G03.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059535470-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T153128Z_S001G04.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T153128Z_S001G04.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T153128Z_S001G04.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T153128Z_S001G04.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T153128Z_S001G04.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T153128Z_S001G04.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T153128Z_S001G04.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059535418-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T153741Z_S001G05.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T153741Z_S001G05.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T153741Z_S001G05.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T153741Z_S001G05.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T153741Z_S001G05.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T153741Z_S001G05.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T153741Z_S001G05.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059535242-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T154354Z_S001G06.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T154354Z_S001G06.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T154354Z_S001G06.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T154354Z_S001G06.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T154354Z_S001G06.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T154354Z_S001G06.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T154354Z_S001G06.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059534732-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T155007Z_S001G07.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T155007Z_S001G07.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T155007Z_S001G07.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T155007Z_S001G07.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T155007Z_S001G07.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T155007Z_S001G07.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T155007Z_S001G07.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059535161-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T155620Z_S001G08.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T155620Z_S001G08.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T155620Z_S001G08.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T155620Z_S001G08.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T155620Z_S001G08.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T155620Z_S001G08.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T155620Z_S001G08.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059534966-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T160233Z_S001G09.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T160233Z_S001G09.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T160233Z_S001G09.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T160233Z_S001G09.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T160233Z_S001G09.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T160233Z_S001G09.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T160233Z_S001G09.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059535282-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T160846Z_S001G10.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T160846Z_S001G10.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T160846Z_S001G10.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T160846Z_S001G10.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T160846Z_S001G10.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T160846Z_S001G10.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T160846Z_S001G10.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059792384-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T161520Z_S002G01.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T161520Z_S002G01.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T161520Z_S002G01.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T161520Z_S002G01.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T161520Z_S002G01.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T161520Z_S002G01.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T161520Z_S002G01.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059792333-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T162133Z_S002G02.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T162133Z_S002G02.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T162133Z_S002G02.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T162133Z_S002G02.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T162133Z_S002G02.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T162133Z_S002G02.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T162133Z_S002G02.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059792181-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T162746Z_S002G03.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T162746Z_S002G03.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T162746Z_S002G03.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T162746Z_S002G03.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T162746Z_S002G03.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T162746Z_S002G03.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T162746Z_S002G03.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059792246-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T163359Z_S002G04.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T163359Z_S002G04.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T163359Z_S002G04.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T163359Z_S002G04.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T163359Z_S002G04.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T163359Z_S002G04.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T163359Z_S002G04.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059792266-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T164012Z_S002G05.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T164012Z_S002G05.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T164012Z_S002G05.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T164012Z_S002G05.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T164012Z_S002G05.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T164012Z_S002G05.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T164012Z_S002G05.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059792305-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T164625Z_S002G06.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T164625Z_S002G06.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T164625Z_S002G06.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T164625Z_S002G06.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T164625Z_S002G06.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T164625Z_S002G06.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T164625Z_S002G06.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059757166-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T165238Z_S002G07.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T165238Z_S002G07.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T165238Z_S002G07.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T165238Z_S002G07.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T165238Z_S002G07.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T165238Z_S002G07.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T165238Z_S002G07.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059757721-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T165851Z_S002G08.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T165851Z_S002G08.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T165851Z_S002G08.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T165851Z_S002G08.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T165851Z_S002G08.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T165851Z_S002G08.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T165851Z_S002G08.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059757885-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T170504Z_S002G09.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T170504Z_S002G09.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T170504Z_S002G09.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T170504Z_S002G09.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T170504Z_S002G09.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T170504Z_S002G09.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T170504Z_S002G09.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              },
+              {
+                "browseFlag": false,
+                "conceptId": "G3059757410-LARC_CLOUD",
+                "onlineAccessFlag": true,
+                "links": [
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T171117Z_S002G10.nc",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T171117Z_S002G10.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "Download TEMPO_NO2_L2_V03_20230802T171117Z_S002G10.nc.met",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T171117Z_S002G10.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T171117Z_S002G10.nc"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "This link provides direct download access via S3 to the granule",
+                    "hreflang": "en-US",
+                    "href": "s3://asdc-prod-protected/TEMPO/TEMPO_NO2_L2_V03/2023.08.02/TEMPO_NO2_L2_V03_20230802T171117Z_S002G10.nc.met"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "title": "api endpoint to retrieve temporary credentials valid for same-region direct s3 access",
+                    "hreflang": "en-US",
+                    "href": "https://data.asdc.earthdata.nasa.gov/s3credentials"
+                  },
+                  {
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+                    "title": "OPeNDAP request URL",
+                    "hreflang": "en-US",
+                    "href": "https://opendap.earthdata.nasa.gov/collections/C2930725014-LARC_CLOUD/granules/TEMPO_NO2_L2_V03_20230802T171117Z_S002G10.nc"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "http://tempo.si.edu"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+                    "hreflang": "en-US",
+                    "href": "https://doi.org/10.5067/IS-40e/TEMPO/NO2_L2.003"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/citing-data"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+                    "hreflang": "en-US",
+                    "href": "https://search.earthdata.nasa.gov/search/granules?p=C2930725014-LARC_CLOUD"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/project/TEMPO"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.1.pdf"
+                  },
+                  {
+                    "inherited": true,
+                    "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+                    "hreflang": "en-US",
+                    "href": "https://tempo.si.edu/documents/SAO-DRD-11_TEMPO%20Science%20Validation_Plan_Baseline.pdf"
+                  }
+                ]
+              }
+            ]
+          },
+          "subscriptions": {
+            "count": 0,
+            "items": []
+          },
+          "tools": {
+            "count": 0,
+            "items": []
+          },
+          "variables": {
+            "count": 38,
+            "cursor": "eyJ1bW0iOiJbXCJ4dHJhY2tcIixcIkxBUkNfQ0xPVURcIixcInh0cmFja1wiLFwiTEFSQ19DTE9VRFwiXSJ9",
+            "items": [
+              {
+                "conceptId": "V3004801291-LARC_CLOUD",
+                "definition": "geolocation/latitude",
+                "instanceInformation": null,
+                "longName": "pixel center latitude",
+                "name": "geolocation/latitude",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_latitude",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801306-LARC_CLOUD",
+                "definition": "geolocation/latitude_bounds",
+                "instanceInformation": null,
+                "longName": "pixel corner latitude",
+                "name": "geolocation/latitude_bounds",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_latitude_bounds",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801311-LARC_CLOUD",
+                "definition": "geolocation/longitude",
+                "instanceInformation": null,
+                "longName": "pixel center longitude",
+                "name": "geolocation/longitude",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_longitude",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801320-LARC_CLOUD",
+                "definition": "geolocation/longitude_bounds",
+                "instanceInformation": null,
+                "longName": "pixel corner longitude",
+                "name": "geolocation/longitude_bounds",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_longitude_bounds",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801356-LARC_CLOUD",
+                "definition": "geolocation/relative_azimuth_angle",
+                "instanceInformation": null,
+                "longName": "relative azimuth angle at pixel center",
+                "name": "geolocation/relative_azimuth_angle",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_relative_azimuth_angle",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801333-LARC_CLOUD",
+                "definition": "geolocation/solar_azimuth_angle",
+                "instanceInformation": null,
+                "longName": "solar azimuth angle at pixel center",
+                "name": "geolocation/solar_azimuth_angle",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_solar_azimuth_angle",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801328-LARC_CLOUD",
+                "definition": "geolocation/solar_zenith_angle",
+                "instanceInformation": null,
+                "longName": "solar zenith angle at pixel center",
+                "name": "geolocation/solar_zenith_angle",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_solar_zenith_angle",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801261-LARC_CLOUD",
+                "definition": "geolocation/time",
+                "instanceInformation": null,
+                "longName": "radiance exposure start time",
+                "name": "geolocation/time",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_time",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801350-LARC_CLOUD",
+                "definition": "geolocation/viewing_azimuth_angle",
+                "instanceInformation": null,
+                "longName": "viewing azimuth angle at pixel center",
+                "name": "geolocation/viewing_azimuth_angle",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_viewing_azimuth_angle",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801341-LARC_CLOUD",
+                "definition": "geolocation/viewing_zenith_angle",
+                "instanceInformation": null,
+                "longName": "viewing zenith angle at pixel center",
+                "name": "geolocation/viewing_zenith_angle",
+                "nativeId": "C2930725014-LARC_CLOUD-geolocation_viewing_zenith_angle",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801153-LARC_CLOUD",
+                "definition": "mirror_step",
+                "instanceInformation": null,
+                "longName": "scan mirror position index",
+                "name": "mirror_step",
+                "nativeId": "C2930725014-LARC_CLOUD-mirror_step",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801169-LARC_CLOUD",
+                "definition": "product/main_data_quality_flag",
+                "instanceInformation": null,
+                "longName": "main data quality flag",
+                "name": "product/main_data_quality_flag",
+                "nativeId": "C2930725014-LARC_CLOUD-product_main_data_quality_flag",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801207-LARC_CLOUD",
+                "definition": "product/vertical_column_stratosphere",
+                "instanceInformation": null,
+                "longName": "stratosphere nitrogen dioxide vertical column",
+                "name": "product/vertical_column_stratosphere",
+                "nativeId": "C2930725014-LARC_CLOUD-product_vertical_column_stratosphere",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801189-LARC_CLOUD",
+                "definition": "product/vertical_column_troposphere",
+                "instanceInformation": null,
+                "longName": "troposphere nitrogen dioxide vertical column",
+                "name": "product/vertical_column_troposphere",
+                "nativeId": "C2930725014-LARC_CLOUD-product_vertical_column_troposphere",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801235-LARC_CLOUD",
+                "definition": "product/vertical_column_troposphere_uncertainty",
+                "instanceInformation": null,
+                "longName": "troposphere nitrogen dioxide vertical column uncertainty",
+                "name": "product/vertical_column_troposphere_uncertainty",
+                "nativeId": "C2930725014-LARC_CLOUD-product_vertical_column_troposphere_uncertainty",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801678-LARC_CLOUD",
+                "definition": "qa_statistics/fit_convergence_flag",
+                "instanceInformation": null,
+                "longName": "radiance fit convergence flag",
+                "name": "qa_statistics/fit_convergence_flag",
+                "nativeId": "C2930725014-LARC_CLOUD-qa_statistics_fit_convergence_flag",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801656-LARC_CLOUD",
+                "definition": "qa_statistics/fit_rms_residual",
+                "instanceInformation": null,
+                "longName": "radiance fit RMS residual",
+                "name": "qa_statistics/fit_rms_residual",
+                "nativeId": "C2930725014-LARC_CLOUD-qa_statistics_fit_rms_residual",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801500-LARC_CLOUD",
+                "definition": "support_data/albedo",
+                "instanceInformation": null,
+                "longName": "surface albedo",
+                "name": "support_data/albedo",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_albedo",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801565-LARC_CLOUD",
+                "definition": "support_data/amf_cloud_fraction",
+                "instanceInformation": null,
+                "longName": "cloud fraction",
+                "name": "support_data/amf_cloud_fraction",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_amf_cloud_fraction",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801582-LARC_CLOUD",
+                "definition": "support_data/amf_cloud_pressure",
+                "instanceInformation": null,
+                "longName": "cloud pressure",
+                "name": "support_data/amf_cloud_pressure",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_amf_cloud_pressure",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801540-LARC_CLOUD",
+                "definition": "support_data/amf_diagnostic_flag",
+                "instanceInformation": null,
+                "longName": "nitrogen dioxide air mass factor diagnostic flag",
+                "name": "support_data/amf_diagnostic_flag",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_amf_diagnostic_flag",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801630-LARC_CLOUD",
+                "definition": "support_data/amf_stratosphere",
+                "instanceInformation": null,
+                "longName": "nitrogen dioxide stratospheric air mass factor",
+                "name": "support_data/amf_stratosphere",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_amf_stratosphere",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801523-LARC_CLOUD",
+                "definition": "support_data/amf_total",
+                "instanceInformation": null,
+                "longName": "nitrogen dioxide air mass factor",
+                "name": "support_data/amf_total",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_amf_total",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801591-LARC_CLOUD",
+                "definition": "support_data/amf_troposphere",
+                "instanceInformation": null,
+                "longName": "nitrogen dioxide tropospheric air mass factor",
+                "name": "support_data/amf_troposphere",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_amf_troposphere",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801556-LARC_CLOUD",
+                "definition": "support_data/eff_cloud_fraction",
+                "instanceInformation": null,
+                "longName": "effective cloud fraction",
+                "name": "support_data/eff_cloud_fraction",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_eff_cloud_fraction",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801385-LARC_CLOUD",
+                "definition": "support_data/fitted_slant_column",
+                "instanceInformation": null,
+                "longName": "nitrogen dioxide fitted slant column",
+                "name": "support_data/fitted_slant_column",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_fitted_slant_column",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801394-LARC_CLOUD",
+                "definition": "support_data/fitted_slant_column_uncertainty",
+                "instanceInformation": null,
+                "longName": "nitrogen dioxide fitted slant column uncertainty",
+                "name": "support_data/fitted_slant_column_uncertainty",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_fitted_slant_column_uncertainty",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801490-LARC_CLOUD",
+                "definition": "support_data/gas_profile",
+                "instanceInformation": null,
+                "longName": "vertical profile of nitrogen dioxide partial column",
+                "name": "support_data/gas_profile",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_gas_profile",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801446-LARC_CLOUD",
+                "definition": "support_data/ground_pixel_quality_flag",
+                "instanceInformation": null,
+                "longName": "ground pixel quality flag",
+                "name": "support_data/ground_pixel_quality_flag",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_ground_pixel_quality_flag",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801480-LARC_CLOUD",
+                "definition": "support_data/scattering_weights",
+                "instanceInformation": null,
+                "longName": "scattering weights",
+                "name": "support_data/scattering_weights",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_scattering_weights",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801411-LARC_CLOUD",
+                "definition": "support_data/snow_ice_fraction",
+                "instanceInformation": null,
+                "longName": "fraction of pixel area covered by snow and/or ice",
+                "name": "support_data/snow_ice_fraction",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_snow_ice_fraction",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801460-LARC_CLOUD",
+                "definition": "support_data/surface_pressure",
+                "instanceInformation": null,
+                "longName": "surface pressure",
+                "name": "support_data/surface_pressure",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_surface_pressure",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801514-LARC_CLOUD",
+                "definition": "support_data/temperature_profile",
+                "instanceInformation": null,
+                "longName": "air temperature",
+                "name": "support_data/temperature_profile",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_temperature_profile",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801427-LARC_CLOUD",
+                "definition": "support_data/terrain_height",
+                "instanceInformation": null,
+                "longName": "terrain height",
+                "name": "support_data/terrain_height",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_terrain_height",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801473-LARC_CLOUD",
+                "definition": "support_data/tropopause_pressure",
+                "instanceInformation": null,
+                "longName": "tropopause pressure",
+                "name": "support_data/tropopause_pressure",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_tropopause_pressure",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801363-LARC_CLOUD",
+                "definition": "support_data/vertical_column_total",
+                "instanceInformation": null,
+                "longName": "nitrogen dioxide vertical column",
+                "name": "support_data/vertical_column_total",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_vertical_column_total",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801372-LARC_CLOUD",
+                "definition": "support_data/vertical_column_total_uncertainty",
+                "instanceInformation": null,
+                "longName": "nitrogen dioxide vertical column uncertainty",
+                "name": "support_data/vertical_column_total_uncertainty",
+                "nativeId": "C2930725014-LARC_CLOUD-support_data_vertical_column_total_uncertainty",
+                "scienceKeywords": null
+              },
+              {
+                "conceptId": "V3004801136-LARC_CLOUD",
+                "definition": "xtrack",
+                "instanceInformation": null,
+                "longName": "pixel index along slit",
+                "name": "xtrack",
+                "nativeId": "C2930725014-LARC_CLOUD-xtrack",
+                "scienceKeywords": null
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

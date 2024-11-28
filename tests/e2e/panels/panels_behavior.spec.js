@@ -14,7 +14,7 @@ const dragPanelToX = async (page, x) => {
 
 test.describe('Panel Behavior', () => {
   test.beforeEach(async ({ page, context }) => {
-    setupTests({
+    await setupTests({
       page,
       context
     })
