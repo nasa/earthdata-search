@@ -17,14 +17,19 @@ import './GranuleResultsBody.scss'
  * Renders GranuleResultsBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The focused collection ID.
+ * @param {Object} props.collectionQuerySpatial - The spatial for the collection query
+ * @param {Object} props.collectionTags - The tags for the focused collection
  * @param {Object} props.directDistributionInformation - The collection direct distribution information.
  * @param {String} props.focusedGranuleId - The focused granule ID.
+ * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
  * @param {Object} props.granuleSearchResults - Granules passed from redux store.
+ * @param {Object} props.granuleQuery - The granule query.
  * @param {Object} props.isOpenSearch - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
  * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onExcludeGranule - Callback exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback change the focused granule.
+ * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
  * @param {Function} props.panelView - The current panel view.

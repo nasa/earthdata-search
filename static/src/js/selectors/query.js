@@ -32,6 +32,10 @@ export const getCollectionsQuery = (state) => {
   return collection
 }
 
+/**
+ * Retrieve current collection spatial information from Redux
+ * @param {Object} state Current state of Redux
+ */
 export const getCollectionsQuerySpatial = createSelector(
   [getCollectionsQuery],
   (collectionsQuery) => {
