@@ -90,7 +90,8 @@ class Datepicker extends PureComponent {
       picker,
       size,
       value,
-      onInputBlur
+      onInputBlur,
+      onInputFocus
     } = this.props
     const { format, id, viewMode } = this.props
     const conditionalInputProps = {}
@@ -128,6 +129,7 @@ class Datepicker extends PureComponent {
               picker.current._closeCalendar()
             },
             onBlur: onInputBlur,
+            onFocus: onInputFocus,
             onKeyDown,
             ...conditionalInputProps
           }
@@ -150,7 +152,8 @@ Datepicker.defaultProps = {
   label: '',
   size: '',
   value: '',
-  viewMode: 'years'
+  viewMode: 'years',
+  onInputFocus: null
 }
 
 Datepicker.propTypes = {
@@ -159,6 +162,7 @@ Datepicker.propTypes = {
   id: PropTypes.string.isRequired,
   isValidDate: PropTypes.func.isRequired,
   onInputBlur: PropTypes.func.isRequired,
+  onInputFocus: PropTypes.func,
   onChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,
