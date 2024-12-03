@@ -81,7 +81,7 @@ const TemporalSelectionDropdown = ({
     if (onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: 'Apply Temporal Filter',
-        value: newTemporal
+        value: JSON.stringify(newTemporal)
       })
     }
 
@@ -185,19 +185,19 @@ const TemporalSelectionDropdown = ({
   /**
    * Set the startDate prop
    * @param {moment} newStartDate - The moment object representing the startDate
+   * @param {moment} shouldCallMetrics - Flag to determine if we want to submit metrics
+   * @param {moment} metricType - Type of metric for temporal filter
    */
-  const setStartDate = (newStartDate, shouldSubmit, metricType) => {
+  const setStartDate = (newStartDate, shouldCallMetrics, metricType) => {
     const {
       isRecurring: existingIsRecurring,
       startDate: existingStartDate
     } = temporal
 
-    // TODO: Manually changing a day and unfocusing is submitted as a calendar metricType
-    // if there is no custom time set.
-    if (shouldSubmit && onMetricsTemporalFilter) {
+    if (shouldCallMetrics && onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: `Set Start Date - ${metricType}`,
-        value: newStartDate
+        value: newStartDate.toISOString()
       })
     }
 
@@ -220,19 +220,19 @@ const TemporalSelectionDropdown = ({
   /**
    * Set the endDate prop
    * @param {moment} newEndDate - The moment object representing the endDate
+   * @param {moment} shouldCallMetrics - Flag to determine if we want to submit metrics
+   * @param {moment} metricType - Type of metric for temporal filter
    */
-  const setEndDate = (newEndDate, shouldSubmit, metricType) => {
+  const setEndDate = (newEndDate, shouldCallMetrics, metricType) => {
     const {
       endDate: existingEndDate,
       isRecurring: existingIsRecurring
     } = temporal
 
-    // TODO: Manually changing a day and unfocusing is submitted as a calendar metricType
-    // if there is no custom time set.
-    if (shouldSubmit && onMetricsTemporalFilter) {
+    if (shouldCallMetrics && onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: `Set End Date - ${metricType}`,
-        value: newEndDate
+        value: newEndDate.toISOString()
       })
     }
 
