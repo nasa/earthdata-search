@@ -288,6 +288,7 @@ TemporalSelection.defaultProps = {
   onInvalid: null,
   onRecurringToggle: null,
   onValid: null,
+  setFieldValue: null,
   size: '',
   validate: true
 }
@@ -302,7 +303,7 @@ TemporalSelection.propTypes = {
   onRecurringToggle: PropTypes.func,
   onSubmitEnd: PropTypes.func.isRequired,
   onSubmitStart: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func,
   onValid: PropTypes.func,
   size: PropTypes.string,
   temporal: PropTypes.shape({
