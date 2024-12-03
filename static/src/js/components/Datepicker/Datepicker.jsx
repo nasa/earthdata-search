@@ -4,6 +4,23 @@ import Datetime from 'react-datetime'
 
 import './Datepicker.scss'
 
+/**
+ * Component representing the Datepicker. Used to make some of the customizations
+ * that should be passed down to the react-datetime component
+ * @extends PureComponent
+ * @param {Object} props - The props passed into the component.
+ * @param {String} props.id - A unique id
+ * @param {String} props.format - A string temporal format
+ * @param {Function} props.isValidDate - Callback function to determine if a date is valid
+ * @param {Function} props.onBlur - Callback function to call when the field is blurred
+ * @param {Function} props.onChange - Callback function to call when the field is changed
+ * @param {Function} props.onClearClick - Callback function to call when the clear button is clicked
+ * @param {Function} props.onTodayClick - Callback function to call when the today button is clicked
+ * @param {Node} props.picker - A ref for the datepicker
+ * @param {String} props.size - String representing the bootstrap size
+ * @param {String} props.value - The value to be used in the input
+ * @param {String} props.viewMode - The default view mode for the picker
+ */
 class Datepicker extends PureComponent {
   constructor(props) {
     super(props)
@@ -13,11 +30,11 @@ class Datepicker extends PureComponent {
   componentDidMount() {
     const { onTodayClick, onClearClick } = this.props
 
-    // Use containerRef instead of findDOMNode
+    // Add a custom set of "Today" and "Clear" buttons and insert them into the picker
     const container = this.containerRef.current?.querySelector('.rdtPicker')
     if (!container) return
 
-    // Add custom buttons
+    // Container to hold custom buttons
     const buttonContainer = document.createElement('div')
     buttonContainer.classList.add('datetime__buttons')
     container.appendChild(buttonContainer)
@@ -45,9 +62,11 @@ class Datepicker extends PureComponent {
     this.setupNavigationHandlers(container)
   }
 
-  componentDidUpdate() {
-    const { viewMode: previousViewMode, viewMode, picker } = this.props
-    if (previousViewMode !== viewMode) {
+  componentDidUpdate(prevProps) {
+    const { viewMode, picker } = this.props
+
+    // If the viewMode has changed, navigate to the new viewMode
+    if (prevProps.viewMode !== viewMode) {
       picker.current.navigate(viewMode)
     }
   }
@@ -176,6 +195,8 @@ class Datepicker extends PureComponent {
       viewMode
     } = this.props
 
+    // React-datetime does not clear out the input field when a empty string is received. When
+    // the value is an empty string, the value is manually set on the input via `inputProps`.
     const conditionalInputProps = !value ? { value: '' } : {}
 
     const onKeyDown = (event) => {
