@@ -19,6 +19,7 @@ const setup = (overrideProps) => {
   const onTodayClick = jest.fn()
 
   const props = {
+    filterType: 'collection',
     id: 'test-id',
     label: 'Date Time',
     isValidDate: jest.fn(),

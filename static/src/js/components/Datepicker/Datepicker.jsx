@@ -84,6 +84,7 @@ class Datepicker extends PureComponent {
 
   render() {
     const {
+      filterType,
       isValidDate,
       label,
       onChange,
@@ -126,7 +127,9 @@ class Datepicker extends PureComponent {
               this.onInputChange(event)
               // eslint-disable-next-line no-underscore-dangle
               picker.current._closeCalendar()
-              onChange(event.target.value, false, 'Typed')
+              if (filterType === 'collection') {
+                onChange(event.target.value, false, 'Typed')
+              }
             },
             onBlur: onInputBlur,
             onFocus: onInputFocus,
@@ -157,6 +160,7 @@ Datepicker.defaultProps = {
 }
 
 Datepicker.propTypes = {
+  filterType: PropTypes.string.isRequired,
   format: PropTypes.string,
   label: PropTypes.string,
   id: PropTypes.string.isRequired,

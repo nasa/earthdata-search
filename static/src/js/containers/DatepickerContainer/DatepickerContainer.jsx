@@ -9,6 +9,7 @@ import Datepicker from '../../components/Datepicker/Datepicker'
  * DatepickerContainer component
  * @extends Component
  * @param {Object} props - The props passed into the component.
+ * @param {String} props.filterType - A string indicating if the filter is for collections or granules
  * @param {String} props.format - A string temporal format
  * @param {String} props.id - A unique id
  * @param {String} props.label - A label to provide to the Datepicker
@@ -22,6 +23,7 @@ import Datepicker from '../../components/Datepicker/Datepicker'
  * @param {String} props.viewMode - The default view mode for the picker
  */
 export const DatepickerContainer = ({
+  filterType,
   format,
   id,
   label,
@@ -168,6 +170,7 @@ export const DatepickerContainer = ({
   return (
     <Datepicker
       id={id}
+      filterType={filterType}
       format={format}
       isValidDate={isValidDate}
       label={label}
@@ -197,6 +200,7 @@ DatepickerContainer.defaultProps = {
 }
 
 DatepickerContainer.propTypes = {
+  filterType: PropTypes.string.isRequired,
   format: PropTypes.string,
   id: PropTypes.string.isRequired,
   label: PropTypes.string,

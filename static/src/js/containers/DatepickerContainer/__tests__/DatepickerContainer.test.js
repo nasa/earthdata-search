@@ -32,6 +32,7 @@ const setup = (overrideProps, renderForTyping = false) => {
   const user = userEvent.setup()
   const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
   const props = {
+    filterType: 'collection',
     format: 'YYYY-MM-DD HH:mm:ss',
     id: 'test-id',
     label: 'Test Datepicker',
