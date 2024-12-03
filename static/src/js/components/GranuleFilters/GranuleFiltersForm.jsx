@@ -469,6 +469,7 @@ export const GranuleFiltersForm = (props) => {
                           }
 
                           setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
+                          // Use the start year to calculate the end day of year. This avoids leap years potentially causing day mismatches
                           setFieldValue('temporal.recurringDayEnd', endDate.year(startDate.year()).dayOfYear())
                         }
                       }
@@ -526,7 +527,7 @@ export const GranuleFiltersForm = (props) => {
                       const endDate = moment(newTemporal.endDate).utc()
 
                       if (startDate.year() === endDate.year()) {
-                        // Only set start year to minimum year, keeping month/day from selected date
+                        // Preserve original month/day while setting to minimum year
                         startDate.year(minDate.year())
                         setFieldValue('temporal.startDate', startDate.toISOString())
                       }
@@ -557,7 +558,7 @@ export const GranuleFiltersForm = (props) => {
                       const startDate = moment(newTemporal.startDate).utc()
 
                       if (startDate.year() === endDate.year()) {
-                        // Only set start year to minimum year, keeping month/day from startDate
+                        // Preserve original month/day while setting to minimum year
                         startDate.year(minDate.year())
                         setFieldValue('temporal.startDate', startDate.toISOString())
                       }
