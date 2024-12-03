@@ -186,11 +186,20 @@ const TemporalSelectionDropdown = ({
    * Set the startDate prop
    * @param {moment} newStartDate - The moment object representing the startDate
    */
-  const setStartDate = (newStartDate) => {
+  const setStartDate = (newStartDate, shouldSubmit, metricType) => {
     const {
       isRecurring: existingIsRecurring,
       startDate: existingStartDate
     } = temporal
+
+    // TODO: Manually changing a day and unfocusing is submitted as a calendar metricType
+    // if there is no custom time set.
+    if (shouldSubmit && onMetricsTemporalFilter) {
+      onMetricsTemporalFilter({
+        type: `Set Start Date - ${metricType}`,
+        value: newStartDate
+      })
+    }
 
     if (existingIsRecurring) {
       const applicationConfig = getApplicationConfig()
@@ -212,11 +221,20 @@ const TemporalSelectionDropdown = ({
    * Set the endDate prop
    * @param {moment} newEndDate - The moment object representing the endDate
    */
-  const setEndDate = (newEndDate) => {
+  const setEndDate = (newEndDate, shouldSubmit, metricType) => {
     const {
       endDate: existingEndDate,
       isRecurring: existingIsRecurring
     } = temporal
+
+    // TODO: Manually changing a day and unfocusing is submitted as a calendar metricType
+    // if there is no custom time set.
+    if (shouldSubmit && onMetricsTemporalFilter) {
+      onMetricsTemporalFilter({
+        type: `Set End Date - ${metricType}`,
+        value: newEndDate
+      })
+    }
 
     if (existingIsRecurring) {
       const applicationConfig = getApplicationConfig()
@@ -242,7 +260,6 @@ const TemporalSelectionDropdown = ({
           <TemporalSelectionDropdownMenu
             allowRecurring={allowRecurring}
             disabled={disabled}
-            filterType="collection"
             onApplyClick={onApplyClick}
             onChangeQuery={onChangeQuery}
             onChangeRecurring={onChangeRecurring}

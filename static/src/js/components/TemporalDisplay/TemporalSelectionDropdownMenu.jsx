@@ -15,7 +15,6 @@ import './TemporalSelectionDropdownMenu.scss'
 const TemporalSelectionDropdownMenu = ({
   allowRecurring,
   disabled,
-  filterType,
   onApplyClick,
   onClearClick,
   onChangeQuery,
@@ -59,7 +58,6 @@ const TemporalSelectionDropdownMenu = ({
         controlId="temporal-selection-dropdown"
         temporal={temporal}
         format={temporalDateFormat}
-        filterType={filterType}
         onRecurringToggle={onRecurringToggle}
         onChangeRecurring={onChangeRecurring}
         onChangeQuery={onChangeQuery}
@@ -93,13 +91,11 @@ const TemporalSelectionDropdownMenu = ({
 }
 
 TemporalSelectionDropdownMenu.defaultProps = {
-  allowRecurring: true,
-  filterType: null
+  allowRecurring: true
 }
 
 TemporalSelectionDropdownMenu.propTypes = {
   disabled: PropTypes.bool.isRequired,
-  filterType: PropTypes.string,
   onApplyClick: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,

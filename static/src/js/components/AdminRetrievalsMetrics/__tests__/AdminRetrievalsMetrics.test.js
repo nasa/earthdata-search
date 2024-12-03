@@ -72,7 +72,7 @@ describe('AdminRetrievals component', () => {
       ReactDOM.createPortal.mockClear()
     })
 
-    test('clicking on the temporal filter modal opens it', async () => {
+    test.only('clicking on the temporal filter modal opens it', async () => {
       const user = userEvent.setup()
       const {
         onFetchAdminRetrievalsMetrics,

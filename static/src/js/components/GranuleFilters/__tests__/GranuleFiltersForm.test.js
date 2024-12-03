@@ -348,10 +348,10 @@ describe('GranuleFiltersForm component', () => {
           const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
           await user.type(startDateTextField, '2019')
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(4)
+          expect(setFieldTouched).toHaveBeenCalledTimes(8)
           expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(4)
+          expect(setFieldValue).toHaveBeenCalledTimes(8)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2')
           expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '0')
           expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1')
@@ -459,10 +459,10 @@ describe('GranuleFiltersForm component', () => {
           const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
           await user.type(endDateTextField, '2020')
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(4)
+          expect(setFieldTouched).toHaveBeenCalledTimes(8)
           expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(4)
+          expect(setFieldValue).toHaveBeenCalledTimes(8)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
           expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
           expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
@@ -1331,10 +1331,10 @@ describe('GranuleFiltersForm component', () => {
         const endDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
         await user.type(endDateTextField, '2019')
 
-        expect(setFieldTouched).toHaveBeenCalledTimes(4)
+        expect(setFieldTouched).toHaveBeenCalledTimes(8)
         expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
 
-        expect(setFieldValue).toHaveBeenCalledTimes(4)
+        expect(setFieldValue).toHaveBeenCalledTimes(8)
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2')
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '0')
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '1')
@@ -1466,10 +1466,10 @@ describe('GranuleFiltersForm component', () => {
         const endDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
         await user.type(endDateTextField, '2020')
 
-        expect(setFieldTouched).toHaveBeenCalledTimes(4)
+        expect(setFieldTouched).toHaveBeenCalledTimes(8)
         expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
 
-        expect(setFieldValue).toHaveBeenCalledTimes(4)
+        expect(setFieldValue).toHaveBeenCalledTimes(8)
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
         expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')

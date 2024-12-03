@@ -124,9 +124,9 @@ class Datepicker extends PureComponent {
             'aria-label': label,
             onChange: (event) => {
               this.onInputChange(event)
-
               // eslint-disable-next-line no-underscore-dangle
               picker.current._closeCalendar()
+              onChange(event.target.value, false, 'Typed')
             },
             onBlur: onInputBlur,
             onFocus: onInputFocus,
