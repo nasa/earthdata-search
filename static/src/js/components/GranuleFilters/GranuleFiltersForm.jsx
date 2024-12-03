@@ -532,6 +532,7 @@ export const GranuleFiltersForm = (props) => {
                       }
                     }
 
+                    // Only call handleSubmit if `onSubmitStart` was called
                     if (shouldSubmit && (startDate.isValid() || !input)) {
                       handleSubmit()
 
