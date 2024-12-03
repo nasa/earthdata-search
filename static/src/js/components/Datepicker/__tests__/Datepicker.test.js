@@ -216,4 +216,115 @@ describe('Datepicker component', () => {
       expect(navigateSpy).toHaveBeenCalledWith('month')
     })
   })
+
+  describe('when handling navigation arrows and month display', () => {
+    describe('in years viewMode', () => {
+      test('renders initial year range view correctly', async () => {
+        const { user } = setup({ viewMode: 'years' })
+
+        // Open the calendar
+        const input = screen.getByRole('textbox', { name: 'Date Time' })
+        await user.click(input)
+
+        // Verify year range header and navigation
+        const yearHeader = screen.getByRole('columnheader', { name: '2020-2029' })
+        expect(yearHeader).toBeInTheDocument()
+
+        const prevNav = screen.getByRole('columnheader', { name: '‹' })
+        const nextNav = screen.getByRole('columnheader', { name: '›' })
+        expect(prevNav).toBeVisible()
+        expect(nextNav).toBeVisible()
+      })
+
+      test('allows normal navigation between year ranges', async () => {
+        const { user } = setup({ viewMode: 'years' })
+
+        // Open the calendar
+        const input = screen.getByRole('textbox', { name: 'Date Time' })
+        await user.click(input)
+
+        const prevNav = screen.getByRole('columnheader', { name: '‹' })
+        await user.click(prevNav)
+
+        const prevDecadeHeader = screen.getByRole('columnheader', { name: '2010-2019' })
+        expect(prevDecadeHeader).toBeInTheDocument()
+
+        const nextNav = screen.getByRole('columnheader', { name: '›' })
+        await user.click(nextNav)
+
+        const currentDecadeHeader = screen.getByRole('columnheader', { name: '2020-2029' })
+        expect(currentDecadeHeader).toBeInTheDocument()
+      })
+    })
+
+    describe('in months viewMode', () => {
+      test('displays month selection without year and handles navigation visibility', async () => {
+        const { user } = setup({
+          viewMode: 'months',
+          value: '06-01 00:00:00',
+          format: 'MM-DD HH:mm:ss',
+          shouldValidate: false,
+          isValidDate: jest.fn().mockReturnValue(true)
+        })
+
+        // Open the calendar
+        const input = screen.getByRole('textbox', { name: 'Date Time' })
+        await user.click(input)
+
+        // Initial month selection view should have year and navigation
+        const [prevNav, monthSwitch, nextNav] = screen.getAllByRole('columnheader')
+        expect(monthSwitch).toHaveTextContent('2024')
+        expect(prevNav).toBeVisible()
+        expect(nextNav).toBeVisible()
+
+        // Verify June is selected
+        const juneCell = screen.getByRole('cell', { name: 'Jun' })
+        expect(juneCell).toHaveClass('rdtMonth', 'rdtActive')
+
+        // Click June to enter days view
+        await user.click(juneCell)
+
+        // Get fresh references after entering days view
+        const [currentPrevNav, currentMonthSwitch, currentNextNav] = screen.getAllByRole('columnheader')
+
+        // June state in days view
+        expect(currentMonthSwitch).toHaveTextContent('June')
+        expect(currentMonthSwitch).not.toHaveTextContent('2024')
+        expect(currentPrevNav).toBeVisible()
+        expect(currentNextNav).toBeVisible()
+
+        // Navigate to January using prev nav
+        await user.click(currentPrevNav) // May
+        await user.click(currentPrevNav) // April
+        await user.click(currentPrevNav) // March
+        await user.click(currentPrevNav) // February
+        await user.click(currentPrevNav) // January
+
+        // January state in days view
+        expect(currentMonthSwitch).toHaveTextContent('January')
+        expect(currentMonthSwitch).not.toHaveTextContent('2024')
+        expect(currentPrevNav).not.toBeVisible() // Hidden in January
+        expect(currentNextNav).toBeVisible()
+
+        // Navigate to December using next nav
+        await user.click(currentNextNav) // February
+        await user.click(currentNextNav) // March
+        await user.click(currentNextNav) // April
+        await user.click(currentNextNav) // May
+        await user.click(currentNextNav) // June
+        await user.click(currentNextNav) // July
+        await user.click(currentNextNav) // August
+        await user.click(currentNextNav) // September
+        await user.click(currentNextNav) // October
+        await user.click(currentNextNav) // November
+        await user.click(currentNextNav) // December
+
+        // December state in days view
+        expect(currentMonthSwitch).toHaveTextContent('December')
+        expect(currentMonthSwitch).not.toHaveTextContent('2024')
+        expect(currentPrevNav).toBeVisible()
+        expect(currentNextNav).not.toBeVisible() // Hidden in December
+      })
+    })
+  })
 })
