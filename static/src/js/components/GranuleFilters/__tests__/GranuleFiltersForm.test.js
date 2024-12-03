@@ -1638,7 +1638,7 @@ describe('GranuleFiltersForm component', () => {
       // Verify start date was NOT adjusted since years are different
       expect(setFieldValue).not.toHaveBeenCalledWith(
         'temporal.startDate',
-        expect.stringContaining('1970')
+        expect.stringContaining('1960')
       )
     })
   })

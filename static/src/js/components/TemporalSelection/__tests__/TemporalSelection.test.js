@@ -149,10 +149,9 @@ describe('TemporalSelection component', () => {
     expect(props.onSubmitEnd).toBeCalledTimes(1)
   })
 
-  test('calls setFieldValue on onChange and onChangeRecurring only on onChangeComplete for the year range slider', () => {
+  test('onChangeRecurring is only called when input is complete on InputRange', () => {
     const { enzymeWrapper, props } = setup()
 
-    // Set up component with required props for showing the slider
     enzymeWrapper.setProps({
       temporal: {
         startDate: '2019-01-01T00:00:00.000Z',
@@ -164,10 +163,8 @@ describe('TemporalSelection component', () => {
       onChangeRecurring: props.onChangeRecurring
     })
 
-    // Find the InputRange component
     const inputRange = enzymeWrapper.find('InputRange')
 
-    // Simulate onChange
     inputRange.prop('onChange')({
       min: 2018,
       max: 2021
@@ -188,7 +185,6 @@ describe('TemporalSelection component', () => {
     // Verify onChangeRecurring was not called during onChange
     expect(props.onChangeRecurring).not.toHaveBeenCalled()
 
-    // Simulate onChangeComplete
     inputRange.prop('onChangeComplete')({
       min: 2018,
       max: 2021
