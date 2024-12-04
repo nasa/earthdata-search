@@ -28,7 +28,10 @@ class Datepicker extends PureComponent {
   }
 
   componentDidMount() {
-    const { onTodayClick, onClearClick } = this.props
+    const {
+      onTodayClick,
+      onClearClick
+    } = this.props
 
     // Add a custom set of "Today" and "Clear" buttons and insert them into the picker
     const container = this.containerRef.current?.querySelector('.rdtPicker')
@@ -63,17 +66,14 @@ class Datepicker extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    const { viewMode, picker } = this.props
+    const {
+      viewMode,
+      picker
+    } = this.props
 
     // If the viewMode has changed, navigate to the new viewMode
     if (prevProps.viewMode !== viewMode) {
       picker.current.navigate(viewMode)
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.updateTimeout) {
-      clearTimeout(this.updateTimeout)
     }
   }
 
