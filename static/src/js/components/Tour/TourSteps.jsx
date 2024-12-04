@@ -642,7 +642,7 @@ const TourSteps = ({
               <ExternalLink
                 href="https://www.earthdata.nasa.gov/learn/earthdata-search"
               >
-                Earthdata Search wiki
+                Earthdata Search
               </ExternalLink>
             </li>
           </ul>

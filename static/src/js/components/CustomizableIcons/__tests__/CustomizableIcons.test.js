@@ -27,7 +27,7 @@ describe('CustomizableIcons component', () => {
     // Ensure the when not using the `forAccessMethodRadio` use `metaIconClasses`
     const metaIcon = screen.getByText('Customize')
     const metaIconWrapper = metaIcon.parentElement
-    expect(metaIconWrapper.className).toEqual('meta-icon collection-results-item__meta-icon collection-results-item__meta-icon--customizable')
+    expect(metaIconWrapper).toHaveClass('meta-icon customizable-icons__meta-icon')
 
     // Ensure that each of the icons rendered
     expect(screen.getByTitle('A white globe icon')).toBeInTheDocument()
@@ -45,7 +45,7 @@ describe('CustomizableIcons component', () => {
       // Ensure the when using the `forAccessMethodRadio` adds the `meta-icon__accessMethod` to classname
       const metaIcon = screen.getByText('Customize')
       const metaIconWrapper = metaIcon.parentElement
-      expect(metaIconWrapper.className).toEqual('meta-icon collection-results-item__meta-icon collection-results-item__meta-icon--customizable meta-icon__accessMethod')
+      expect(metaIconWrapper).toHaveClass('meta-icon customizable-icons__meta-icon customizable-icons__meta-icon__accessMethod')
     })
   })
 
@@ -59,7 +59,7 @@ describe('CustomizableIcons component', () => {
       // Ensure the when not using the `forAccessMethodRadio` use `metaIconClasses`
       const metaIcon = screen.getByText('Customize')
       const metaIconWrapper = metaIcon.parentElement
-      expect(metaIconWrapper.className).toEqual('meta-icon collection-results-item__meta-icon collection-results-item__meta-icon--customizable')
+      expect(metaIconWrapper).toHaveClass('meta-icon customizable-icons__meta-icon')
 
       // Ensure that each of the icons that are supposed to render do
       expect(screen.getByTitle('A white globe icon')).toBeInTheDocument()

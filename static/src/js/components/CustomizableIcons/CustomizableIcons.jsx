@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import {
   Settings,
@@ -16,6 +17,8 @@ import {
 
 import MetaIcon from '../MetaIcon/MetaIcon'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
+import './CustomizableIcons.scss'
 
 /**
  * Renders icons indicating customization options for access methods.
@@ -37,10 +40,12 @@ export const CustomizableIcons = ({
   hasCombine,
   forAccessMethodRadio
 }) => {
-  let metaIconClasses = 'collection-results-item__meta-icon collection-results-item__meta-icon--customizable'
-  if (forAccessMethodRadio) {
-    metaIconClasses += ' meta-icon__accessMethod'
-  }
+  const metaIconClasses = classNames([
+    'customizable-icons__meta-icon',
+    {
+      'customizable-icons__meta-icon__accessMethod': forAccessMethodRadio
+    }
+  ])
 
   return (
     (
@@ -56,14 +61,14 @@ export const CustomizableIcons = ({
         id="feature-icon-list-view__customize"
         icon={Settings}
         label="Customize"
-        tooltipClassName="collection-results-item__tooltip text-align-left"
+        tooltipClassName="customizable-icons__tooltip text-align-left"
         metadata={
           (
             <>
               {
                 hasSpatialSubsetting && (
                   <EDSCIcon
-                    className="collection-results-item__icon svg fa-globe-svg"
+                    className="customizable-icons__icon svg fa-globe-svg"
                     title="A white globe icon"
                     icon={FaGlobe}
                     size="0.675rem"
@@ -73,7 +78,7 @@ export const CustomizableIcons = ({
               {
                 hasTemporalSubsetting && (
                   <EDSCIcon
-                    className="collection-results-item__icon svg fa-clock-svg"
+                    className="customizable-icons__icon svg fa-clock-svg"
                     title="A white clock icon"
                     icon={FaClock}
                     size="0.675rem"
@@ -83,7 +88,7 @@ export const CustomizableIcons = ({
               {
                 hasVariables && (
                   <EDSCIcon
-                    className="collection-results-item__icon svg fa-tags-svg"
+                    className="customizable-icons__icon svg fa-tags-svg"
                     title="A white tags icon"
                     icon={FaTags}
                     size="0.675rem"
@@ -93,7 +98,7 @@ export const CustomizableIcons = ({
               {
                 hasTransforms && (
                   <EDSCIcon
-                    className="collection-results-item__icon svg fa-sliders-svg"
+                    className="customizable-icons__icon svg fa-sliders-svg"
                     title="A white horizontal sliders icon"
                     icon={Filter}
                     size="0.675rem"
@@ -103,7 +108,7 @@ export const CustomizableIcons = ({
               {
                 hasFormats && (
                   <EDSCIcon
-                    className="collection-results-item__icon svg fa-file-svg"
+                    className="customizable-icons__icon svg fa-file-svg"
                     title="A white file icon"
                     icon={FileGeneric}
                     size="0.675rem"
@@ -113,7 +118,7 @@ export const CustomizableIcons = ({
               {
                 hasCombine && (
                   <EDSCIcon
-                    className="collection-results-item__icon svg fa-file-svg"
+                    className="customizable-icons__icon svg fa-file-svg"
                     title="A white cubes icon"
                     icon={FaCubes}
                     size="0.675rem"
@@ -129,12 +134,12 @@ export const CustomizableIcons = ({
               <div>
                 Supports customization:
               </div>
-              <ul className="collection-results-item__tooltip-feature-list">
+              <ul className="customizable-icons__tooltip-feature-list">
                 {
                   hasSpatialSubsetting && (
                     <li>
                       <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
+                        className="customizable-icons__tooltip-feature-icon"
                         title="A white globe icon"
                         size="0.725rem"
                         icon={FaGlobe}
@@ -147,7 +152,7 @@ export const CustomizableIcons = ({
                   hasTemporalSubsetting && (
                     <li>
                       <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
+                        className="customizable-icons__tooltip-feature-icon"
                         title="A white clock icon"
                         size="0.725rem"
                         icon={FaClock}
@@ -160,7 +165,7 @@ export const CustomizableIcons = ({
                   hasVariables && (
                     <li>
                       <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
+                        className="customizable-icons__tooltip-feature-icon"
                         title="A white tags icon"
                         size="0.725rem"
                         icon={FaTags}
@@ -173,7 +178,7 @@ export const CustomizableIcons = ({
                   hasTransforms && (
                     <li>
                       <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
+                        className="customizable-icons__tooltip-feature-icon"
                         title="A white horizontal sliders icon"
                         size="0.725rem"
                         icon={Filter}
@@ -186,7 +191,7 @@ export const CustomizableIcons = ({
                   hasFormats && (
                     <li>
                       <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
+                        className="customizable-icons__tooltip-feature-icon"
                         title="A white file icon"
                         size="0.725rem"
                         icon={FileGeneric}
@@ -199,7 +204,7 @@ export const CustomizableIcons = ({
                   hasCombine && (
                     <li>
                       <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
+                        className="customizable-icons__tooltip-feature-icon"
                         title="A white boxes icon"
                         size="0.725rem"
                         icon={FaCubes}
