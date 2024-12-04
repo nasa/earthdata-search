@@ -9,6 +9,7 @@ import {
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
+import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
@@ -16,6 +17,45 @@ import * as metricsActions from '../../../middleware/metrics/actions'
 
 import TemporalSelectionDropdown from '../TemporalSelectionDropdown'
 import TemporalSelectionDropdownMenu from '../TemporalSelectionDropdownMenu'
+
+const MockTemporalMenu = ({ setStartDate, setEndDate }) => {
+  const newStartDate = moment.utc('2020-06-15')
+  const newEndDate = moment.utc('2020-08-30')
+
+  return (
+    <div>
+      <button
+        onClick={() => setStartDate(newStartDate, true, 'Typed')}
+        type="button"
+      >
+        Set Start Date With Metrics
+      </button>
+      <button
+        onClick={() => setStartDate(newStartDate, false, 'Typed')}
+        type="button"
+      >
+        Set Start Date Without Metrics
+      </button>
+      <button
+        onClick={() => setEndDate(newEndDate, true, 'Typed')}
+        type="button"
+      >
+        Set End Date With Metrics
+      </button>
+      <button
+        onClick={() => setEndDate(newEndDate, false, 'Typed')}
+        type="button"
+      >
+        Set End Date Without Metrics
+      </button>
+    </div>
+  )
+}
+
+MockTemporalMenu.propTypes = {
+  setStartDate: PropTypes.func.isRequired,
+  setEndDate: PropTypes.func.isRequired
+}
 
 jest.mock('../TemporalSelectionDropdownMenu')
 
@@ -431,58 +471,7 @@ describe('TemporalSelectionDropdown component', () => {
 
   describe('setStartDate', () => {
     beforeEach(() => {
-      TemporalSelectionDropdownMenu.mockImplementation(
-        ({ setStartDate, setEndDate }) => {
-          const newStartDate = moment.utc('2020-06-15')
-          const newEndDate = moment.utc('2020-08-30')
-
-          return (
-            <div>
-              <button
-                onClick={
-                  () => {
-                    setStartDate(newStartDate, true, 'Typed')
-                  }
-                }
-                type="button"
-              >
-                Set Start Date With Metrics
-              </button>
-              <button
-                onClick={
-                  () => {
-                    setStartDate(newStartDate, false, 'Typed')
-                  }
-                }
-                type="button"
-              >
-                Set Start Date Without Metrics
-              </button>
-              <button
-                onClick={
-                  () => {
-                    setEndDate(newEndDate, true, 'Typed')
-                  }
-                }
-                type="button"
-              >
-                Set End Date With Metrics
-              </button>
-              <button
-                onClick={
-                  () => {
-                    setEndDate(newEndDate, false, 'Typed')
-                  }
-                }
-                type="button"
-              >
-                Set End Date Without Metrics
-              </button>
-            </div>
-          )
-        }
-
-      )
+      TemporalSelectionDropdownMenu.mockImplementation(MockTemporalMenu)
     })
 
     describe('when metrics should be submitted', () => {
@@ -530,58 +519,7 @@ describe('TemporalSelectionDropdown component', () => {
 
   describe('setEndDate', () => {
     beforeEach(() => {
-      TemporalSelectionDropdownMenu.mockImplementation(
-        ({ setStartDate, setEndDate }) => {
-          const newStartDate = moment.utc('2020-06-15')
-          const newEndDate = moment.utc('2020-08-30')
-
-          return (
-            <div>
-              <button
-                onClick={
-                  () => {
-                    setStartDate(newStartDate, true, 'Typed')
-                  }
-                }
-                type="button"
-              >
-                Set Start Date With Metrics
-              </button>
-              <button
-                onClick={
-                  () => {
-                    setStartDate(newStartDate, false, 'Typed')
-                  }
-                }
-                type="button"
-              >
-                Set Start Date Without Metrics
-              </button>
-              <button
-                onClick={
-                  () => {
-                    setEndDate(newEndDate, true, 'Typed')
-                  }
-                }
-                type="button"
-              >
-                Set End Date With Metrics
-              </button>
-              <button
-                onClick={
-                  () => {
-                    setEndDate(newEndDate, false, 'Typed')
-                  }
-                }
-                type="button"
-              >
-                Set End Date Without Metrics
-              </button>
-            </div>
-          )
-        }
-
-      )
+      TemporalSelectionDropdownMenu.mockImplementation(MockTemporalMenu)
     })
 
     describe('when metrics should be submitted', () => {
