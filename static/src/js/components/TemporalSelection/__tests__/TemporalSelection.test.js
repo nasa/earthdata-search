@@ -192,6 +192,7 @@ describe('TemporalSelection component', () => {
 
     // Verify onChangeRecurring was called only once with the new range
     expect(props.onChangeRecurring).toHaveBeenCalledTimes(1)
+    expect(props.setFieldValue).toHaveBeenCalledTimes(2)
     expect(props.onChangeRecurring).toHaveBeenCalledWith({
       min: 2018,
       max: 2021
