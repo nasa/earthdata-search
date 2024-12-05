@@ -120,7 +120,7 @@ describe('DatepickerContainer component', () => {
     })
   })
 
-  describe('when user focuses and unfocses input box without changing the value', () => {
+  describe('when user focuses and unfocuses input box without changing the value', () => {
     test('doesn\'t call onSubmit', async () => {
       const { props } = setup(
         {
