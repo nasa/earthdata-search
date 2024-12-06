@@ -1,0 +1,65 @@
+{
+  "edsc": {
+    "features": {
+      "advancedSearch": true,
+      "authentication": true,
+      "featureFacets": [
+        { }
+      ]
+    },
+    "footer": {
+      "attributionText": "NASA Official: Stephen Berrick",
+      "displayVersion": true,
+      "primaryLinks": [ ],
+      "secondaryLinks": [ ]
+    },
+    "pageTitle": "Earthdata Search",
+    "portalBrowser": false,
+    "title": {
+      "primary": "Earthdata Search"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": true,
+      "showOnlyGranulesCheckbox": true,
+      "showTophat": true
+    },
+    "portalId": "edsc"
+  },
+  "idn": {
+    "moreInfoUrl": "https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/",
+    "pageTitle": "IDN",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "IDN",
+      "secondary": "CEOS International Directory Network"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    },
+    "portalId": "idn"
+  },
+  "soos": {
+    "moreInfoUrl": "http://www.soos.aq",
+    "pageTitle": "Southern Ocean Observing System",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "query": {
+      "hasGranulesOrCwic": null,
+      "tagKey": [ ]
+    },
+    "title": {
+      "primary": "SOOS",
+      "secondary": "Southern Ocean Observing System"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    },
+    "portalId": "soos"
+  }
+}
