@@ -19,6 +19,7 @@ const setup = (overrideProps) => {
   const onTodayClick = jest.fn()
 
   const props = {
+    filterType: 'collection',
     id: 'test-id',
     label: 'Date Time',
     isValidDate: jest.fn(),
@@ -117,7 +118,7 @@ describe('Datepicker component', () => {
       expect(closeCalendarSpy).toHaveBeenCalledTimes(1)
       expect(closeCalendarSpy).toHaveBeenCalledWith()
 
-      expect(props.onChange).toHaveBeenCalledTimes(1)
+      expect(props.onChange).toHaveBeenCalledTimes(2)
       expect(props.onChange).toHaveBeenCalledWith('1')
     })
   })
@@ -159,7 +160,7 @@ describe('Datepicker component', () => {
       await user.type(datePickerInput, 'a')
       await datePickerInput.blur()
 
-      expect(props.onChange).toHaveBeenCalledTimes(1)
+      expect(props.onChange).toHaveBeenCalledTimes(2)
       expect(props.onChange).toHaveBeenCalledWith('a')
 
       expect(props.onInputBlur).toHaveBeenCalledTimes(1)

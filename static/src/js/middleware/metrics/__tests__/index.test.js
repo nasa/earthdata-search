@@ -12,6 +12,7 @@ import {
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_SPATIAL_SELECTION,
+  METRICS_TEMPORAL_FILTER,
   METRICS_TIMELINE,
   METRICS_TIMING
 } from '../constants'
@@ -30,6 +31,7 @@ jest.mock('../events', () => ({
   relatedCollection: jest.fn(),
   spatialEdit: jest.fn(),
   spatialSelection: jest.fn(),
+  temporalFilter: jest.fn(),
   timeline: jest.fn(),
   timing: jest.fn(),
   virtualPageview: jest.fn()
@@ -211,6 +213,20 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(events.addGranuleProject).toHaveBeenCalledTimes(1)
     expect(events.addGranuleProject).toHaveBeenCalledWith(action)
+  })
+
+  test('calls temporalFilter event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_TEMPORAL_FILTER,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.temporalFilter).toHaveBeenCalledTimes(1)
+    expect(events.temporalFilter).toHaveBeenCalledWith(action)
   })
 
   test('calls timing event', () => {

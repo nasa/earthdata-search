@@ -12,6 +12,7 @@ import {
   relatedCollection,
   spatialEdit,
   spatialSelection,
+  temporalFilter,
   timeline,
   timing,
   virtualPageview
@@ -29,6 +30,7 @@ import {
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_SPATIAL_SELECTION,
+  METRICS_TEMPORAL_FILTER,
   METRICS_TIMELINE,
   METRICS_TIMING
 } from './constants'
@@ -64,6 +66,10 @@ const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
 
   if (action.type === METRICS_GRANULE_FILTER) {
     granuleFilter(action)
+  }
+
+  if (action.type === METRICS_TEMPORAL_FILTER) {
+    temporalFilter(action)
   }
 
   if (action.type === METRICS_BROWSE_GRANULE_IMAGE) {

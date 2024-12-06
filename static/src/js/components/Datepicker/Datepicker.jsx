@@ -84,13 +84,15 @@ class Datepicker extends PureComponent {
 
   render() {
     const {
+      filterType,
       isValidDate,
       label,
       onChange,
       picker,
       size,
       value,
-      onInputBlur
+      onInputBlur,
+      onInputFocus
     } = this.props
     const { format, id, viewMode } = this.props
     const conditionalInputProps = {}
@@ -123,11 +125,14 @@ class Datepicker extends PureComponent {
             'aria-label': label,
             onChange: (event) => {
               this.onInputChange(event)
-
               // eslint-disable-next-line no-underscore-dangle
               picker.current._closeCalendar()
+              if (filterType === 'collection') {
+                onChange(event.target.value, false, 'Typed')
+              }
             },
             onBlur: onInputBlur,
+            onFocus: onInputFocus,
             onKeyDown,
             ...conditionalInputProps
           }
@@ -150,15 +155,18 @@ Datepicker.defaultProps = {
   label: '',
   size: '',
   value: '',
-  viewMode: 'years'
+  viewMode: 'years',
+  onInputFocus: null
 }
 
 Datepicker.propTypes = {
+  filterType: PropTypes.string.isRequired,
   format: PropTypes.string,
   label: PropTypes.string,
   id: PropTypes.string.isRequired,
   isValidDate: PropTypes.func.isRequired,
   onInputBlur: PropTypes.func.isRequired,
+  onInputFocus: PropTypes.func,
   onChange: PropTypes.func.isRequired,
   onClearClick: PropTypes.func.isRequired,
   onTodayClick: PropTypes.func.isRequired,

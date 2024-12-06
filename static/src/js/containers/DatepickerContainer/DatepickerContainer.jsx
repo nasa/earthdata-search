@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
@@ -9,6 +9,7 @@ import Datepicker from '../../components/Datepicker/Datepicker'
  * DatepickerContainer component
  * @extends Component
  * @param {Object} props - The props passed into the component.
+ * @param {String} props.filterType - A string indicating if the filter is for collections or granules
  * @param {String} props.format - A string temporal format
  * @param {String} props.id - A unique id
  * @param {String} props.label - A label to provide to the Datepicker
@@ -21,7 +22,8 @@ import Datepicker from '../../components/Datepicker/Datepicker'
  * @param {String} props.value - The value to be used in the input
  * @param {String} props.viewMode - The default view mode for the picker
  */
-const DatepickerContainer = ({
+export const DatepickerContainer = ({
+  filterType,
   format,
   id,
   label,
@@ -35,13 +37,15 @@ const DatepickerContainer = ({
   viewMode
 }) => {
   const pickerRef = useRef()
+  const [valueWhenFocused, setValueWhenFocused] = useState()
 
   /**
   * Set up the onChange event for the datepicker
   * @param {moment|string} newValue - The value passed from the Datetime component
   * @param {boolean} [shouldSubmit] - Should this change result in submitting the temporal value. True for clicking a date, or bluring the field, but false for typing characters in the text field.
+  * @param {string} metricType - Flag to indicate whether the onChange was triggered from a user typing or using the calendar
   */
-  const onChange = (newValue, shouldSubmit = false) => {
+  const onChange = (newValue, shouldSubmit = false, metricType = 'Calendar') => {
     let valueToSet = null
 
     // Check to see if the current date is a moment object, and whether or not it has a
@@ -71,14 +75,15 @@ const DatepickerContainer = ({
 
       // If the onChange was called with a moment object, we want to force shouldSubmit to be true.
       // This happens when a date is clicked in the picker to complete the selection.
-      onSubmit(valueToSet, true)
+
+      onSubmit(valueToSet, true, metricType)
 
       return
     }
 
     valueToSet = moment.utc(newValue, format, true)
 
-    onSubmit(valueToSet, shouldSubmit)
+    onSubmit(valueToSet, shouldSubmit, metricType)
   }
 
   /**
@@ -87,9 +92,22 @@ const DatepickerContainer = ({
   const onInputBlur = (event) => {
     const { value: newValue } = event.target
 
-    if (moment.utc(newValue, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).isValid()) {
-      onChange(moment.utc(newValue, format), true)
+    if (newValue === valueWhenFocused) {
+      return
     }
+
+    if (moment.utc(newValue, [moment.ISO_8601, 'YYYY-MM-DDTHH:mm:ss.SSSZ'], true).isValid()) {
+      onChange(moment.utc(newValue, format), true, 'Typed')
+    }
+  }
+
+  /**
+  * Saves current value of the input field when focused
+  */
+  const onInputFocus = (event) => {
+    const { value: newValue } = event.target
+
+    setValueWhenFocused(newValue)
   }
 
   /**
@@ -98,7 +116,7 @@ const DatepickerContainer = ({
   const onClearClick = () => {
     // Reset the time to a default value to override any previous custom time entry
     onChange(moment().utc().startOf('day').format(format), false)
-    onChange('', true)
+    onChange('', true, 'Clear')
 
     // eslint-disable-next-line no-underscore-dangle
     if (pickerRef.current?._closeCalendar) pickerRef.current._closeCalendar()
@@ -117,7 +135,7 @@ const DatepickerContainer = ({
       valueToSet = today.endOf('day')
     }
 
-    onChange(valueToSet ? valueToSet.format(format) : valueToSet, true)
+    onChange(valueToSet ? valueToSet.format(format) : valueToSet, true, 'Today')
 
     // eslint-disable-next-line no-underscore-dangle
     if (pickerRef.current?._closeCalendar) pickerRef.current._closeCalendar()
@@ -152,10 +170,12 @@ const DatepickerContainer = ({
   return (
     <Datepicker
       id={id}
+      filterType={filterType}
       format={format}
       isValidDate={isValidDate}
       label={label}
       onInputBlur={onInputBlur}
+      onInputFocus={onInputFocus}
       onChange={onChange}
       onClearClick={onClearClick}
       onTodayClick={onTodayClick}
@@ -180,6 +200,7 @@ DatepickerContainer.defaultProps = {
 }
 
 DatepickerContainer.propTypes = {
+  filterType: PropTypes.string.isRequired,
   format: PropTypes.string,
   id: PropTypes.string.isRequired,
   label: PropTypes.string,

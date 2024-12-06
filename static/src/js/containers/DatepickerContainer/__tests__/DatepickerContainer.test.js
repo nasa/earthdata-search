@@ -1,17 +1,38 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import MockDate from 'mockdate'
 import moment from 'moment'
+import PropTypes from 'prop-types'
 
-import DatepickerContainer from '../DatepickerContainer'
+import { DatepickerContainer } from '../DatepickerContainer'
+
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 
-const setup = (overrideProps) => {
+const TestComponent = (props) => {
+  const { onSubmit } = props
+  const [value, setValue] = useState('')
+
+  const saveValue = (momentObj) => {
+    setValue(moment.isMoment(momentObj) ? momentObj.creationData().input : momentObj)
+  }
+
+  onSubmit.mockImplementation((momentObj, shouldSubmit) => {
+    saveValue(momentObj, shouldSubmit)
+  })
+
+  return <DatepickerContainer {...props} value={value} />
+}
+
+TestComponent.propTypes = {
+  onSubmit: PropTypes.func.isRequired
+}
+
+const setup = (overrideProps, renderForTyping = false) => {
   const user = userEvent.setup()
   const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
-
   const props = {
+    filterType: 'collection',
     format: 'YYYY-MM-DD HH:mm:ss',
     id: 'test-id',
     label: 'Test Datepicker',
@@ -21,7 +42,11 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  render(<DatepickerContainer {...props} />)
+  if (renderForTyping) {
+    render(<TestComponent {...props} />)
+  } else {
+    render(<DatepickerContainer {...props} />)
+  }
 
   return {
     props,
@@ -56,125 +81,161 @@ describe('DatepickerContainer component', () => {
   describe('when typing in the text field', () => {
     describe('when type is start', () => {
       test('calls onSubmit as entered', async () => {
-        const { props } = setup(
+        const { props, user } = setup(
           {
             type: 'start',
-            value: '2006-04-01T00:00:00.000Z'
-          }
+            value: ''
+          },
+          true
         )
 
         const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
         await input.focus()
+        await user.type(input, '2006-04-01 00:00:00')
         await input.blur()
 
-        expect(props.onSubmit).toHaveBeenCalledTimes(1)
-        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:00:00', props.format), true)
+        expect(props.onSubmit).toHaveBeenCalledTimes(39)
+        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:00:00', props.format), true, 'Typed')
       })
 
       test('returns unchanged datetime when date is not a \'startOf\' day', async () => {
-        const { props } = setup(
+        const { props, user } = setup(
           {
             type: 'start',
-            value: '2006-04-01T00:40:00.000Z'
-          }
+            value: ''
+          },
+          true
         )
 
         const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
         await input.focus()
+        await user.type(input, '2006-04-01 00:40:00')
         await input.blur()
 
-        expect(props.onSubmit).toHaveBeenCalledTimes(1)
-        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:40:00', props.format), true)
+        expect(props.onSubmit).toHaveBeenCalledTimes(39)
+        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:40:00', props.format), true, 'Typed')
       })
+    })
+  })
+
+  describe('when user focuses and unfocuses input box without changing the value', () => {
+    test('doesn\'t call onSubmit', async () => {
+      const { props } = setup(
+        {
+          type: 'end',
+          value: '2020'
+        },
+        true
+      )
+
+      const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
+
+      await input.focus()
+      await input.blur()
+
+      expect(props.onSubmit).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('when type is end', () => {
     test('returns the `endOf` the day when the date entered is a `startOf` day', async () => {
-      const { props } = setup(
+      const { props, user } = setup(
         {
           type: 'end',
-          value: '2006-04-01T00:00:00.000Z'
-        }
+          value: ''
+        },
+        true
       )
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
       await input.focus()
+      await user.type(input, '2006-04-01 00:00:00')
       await input.blur()
 
-      expect(props.onSubmit).toHaveBeenCalledTimes(1)
-      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:00:00', props.format).endOf('day'), true)
+      expect(props.onSubmit).toHaveBeenCalledTimes(39)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:00:00', props.format).endOf('day'), true, 'Typed')
     })
 
     test('returns unchanged datetime when date is not a `startOf` day', async () => {
-      const { props } = setup(
+      const { props, user } = setup(
         {
           type: 'end',
-          value: '2006-04-01T00:40:00.000Z'
-        }
+          value: ''
+        },
+        true
       )
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
       await input.focus()
+      await user.type(input, '2006-04-01 00:40:00')
       await input.blur()
 
-      expect(props.onSubmit).toHaveBeenCalledTimes(1)
-      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:40:00', props.format), true)
+      expect(props.onSubmit).toHaveBeenCalledTimes(39)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:40:00', props.format), true, 'Typed')
     })
 
     test('returns autocompleted YYYY', async () => {
-      const { props } = setup(
+      const { props, user } = setup(
         {
           type: 'end',
-          value: '2020'
-        }
+          value: ''
+        },
+        true
       )
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
       await input.focus()
+      await user.type(input, '2020')
       await input.blur()
 
-      expect(props.onSubmit).toHaveBeenCalledTimes(1)
-      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020', props.format).endOf('year'), true)
+      // OnSubmit is called each time the user types a character, as well as when blur is called
+      expect(props.onSubmit).toHaveBeenCalledTimes(9)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020', props.format).endOf('year'), true, 'Typed')
     })
 
     test('returns autocompleted YYYY-MM', async () => {
-      const { props } = setup(
+      const { props, user } = setup(
         {
           type: 'end',
-          value: '2020-06'
-        }
+          value: ''
+        },
+        true
       )
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
       await input.focus()
+      await user.type(input, '2020-06')
       await input.blur()
 
-      expect(props.onSubmit).toHaveBeenCalledTimes(1)
-      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-06', props.format).endOf('month'), true)
+      // OnSubmit is called each time the user types a character, as well as when blur is called
+      expect(props.onSubmit).toHaveBeenCalledTimes(15)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-06', props.format).endOf('month'), true, 'Typed')
     })
 
     test('returns autocompleted YYYY-MM-DD', async () => {
-      const { props } = setup(
+      const { props, user } = setup(
         {
           type: 'end',
-          value: '2020-06-15'
-        }
+          value: ''
+        },
+        true
       )
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
       await input.focus()
+      await user.type(input, '2020-06-15')
       await input.blur()
 
-      expect(props.onSubmit).toHaveBeenCalledTimes(1)
-      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-06-15', props.format).endOf('day'), true)
+      // OnSubmit is called each time the user types a character, as well as when blur is called
+      expect(props.onSubmit).toHaveBeenCalledTimes(21)
+      expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-06-15', props.format).endOf('day'), true, 'Typed')
     })
   })
 
@@ -207,7 +268,7 @@ describe('DatepickerContainer component', () => {
         await user.click(button)
 
         expect(props.onSubmit).toHaveBeenCalledTimes(1)
-        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-05-15 00:00:00', props.format, true), true)
+        expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2020-05-15 00:00:00', props.format, true), true, 'Today')
       })
     })
 

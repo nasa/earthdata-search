@@ -3,6 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
+import * as metricActions from '../../../middleware/metrics/actions'
 import {
   mapDispatchToProps,
   mapStateToProps,
@@ -15,7 +16,8 @@ Enzyme.configure({ adapter: new Adapter() })
 function setup() {
   const props = {
     temporalSearch: {},
-    onChangeQuery: jest.fn()
+    onChangeQuery: jest.fn(),
+    onMetricsTemporalFilter: jest.fn()
   }
 
   const enzymeWrapper = shallow(<TemporalSelectionDropdownContainer {...props} />)
@@ -35,6 +37,16 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
+  test('onMetricsTemporalFilter calls metricsTemporalFilter', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricActions, 'metricsTemporalFilter')
+
+    mapDispatchToProps(dispatch).onMetricsTemporalFilter({ metric: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ metric: 'data' })
   })
 })
 
