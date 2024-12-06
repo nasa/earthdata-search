@@ -37,7 +37,8 @@
   ],
   // Use AirBnb settings as a base
   "extends": [
-    "@edsc"
+    "@edsc",
+    "plugin:testing-library/react"
   ],
   // Define version settings
   "settings": {
@@ -45,5 +46,6 @@
       "pragma": "React",
       "version": "16.12.0"
     }
-  }
+  },
+  "plugins": ["testing-library"]
 }
