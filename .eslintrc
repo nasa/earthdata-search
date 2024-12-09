@@ -5,6 +5,11 @@
     "node": true,
     "jest": true
   },
+  // Use AirBnb settings as a base
+  "extends": [
+    "@edsc",
+    "plugin:testing-library/react"
+  ],
   "rules": {
     // Allowing cyclic dependencies
     "import/no-cycle": "off",
@@ -34,33 +39,24 @@
         "import/prefer-default-export": 0
       }
     },
-    // {
-    //   "files": [
-    //     "tests/**/*.js",
-    //     "**/serverless/**/*"
-    //   ],
-    //   "rules": {
-    //     "testing-library/no-await-sync-events": "off",
-    //     "testing-library/no-await-sync-query": "off",
-    //     "testing-library/prefer-screen-queries": "off",
-    //     "testing-library/render-result-naming-convention": "off",
-    //     "testing-library/no-render-in-setup": "off",
-    //     "testing-library/no-wait-for-multiple-assertions": "off",
-    //     "testing-library/no-node-access": "off",
-    //     "testing-library/prefer-presence-queries": "off",
-    //     "testing-library/prefer-query-by-disappearance": "off"
-    //   }
-    // }
-    // {
-    //   "files": ["**/__tests__/**/*", "**/*.test.jsx"],
-    //   "excludedFiles": ["**/tests/e2e/**/*", "**/serverless/**/*"],
-    //   "extends": ["plugin:testing-library/react"]
-    // }
-  ],
-  // Use AirBnb settings as a base
-  "extends": [
-    "@edsc",
-    "plugin:testing-library/react"
+    {
+      "files": [
+        "tests/**/*spec.js",
+        "serverless/**/*"
+      ],
+      "rules": {
+        "testing-library/no-await-sync-events": "off",
+        "testing-library/no-await-sync-query": "off",
+        "testing-library/no-await-sync-queries": "off",
+        "testing-library/prefer-screen-queries": "off",
+        "testing-library/render-result-naming-convention": "off",
+        "testing-library/no-render-in-setup": "off",
+        "testing-library/no-wait-for-multiple-assertions": "off",
+        "testing-library/no-node-access": "off",
+        "testing-library/prefer-presence-queries": "off",
+        "testing-library/prefer-query-by-disappearance": "off"
+      }
+    }
   ],
   // Define version settings
   "settings": {
