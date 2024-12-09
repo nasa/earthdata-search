@@ -33,7 +33,29 @@
       "rules": {
         "import/prefer-default-export": 0
       }
-    }
+    },
+    // {
+    //   "files": [
+    //     "tests/**/*.js",
+    //     "**/serverless/**/*"
+    //   ],
+    //   "rules": {
+    //     "testing-library/no-await-sync-events": "off",
+    //     "testing-library/no-await-sync-query": "off",
+    //     "testing-library/prefer-screen-queries": "off",
+    //     "testing-library/render-result-naming-convention": "off",
+    //     "testing-library/no-render-in-setup": "off",
+    //     "testing-library/no-wait-for-multiple-assertions": "off",
+    //     "testing-library/no-node-access": "off",
+    //     "testing-library/prefer-presence-queries": "off",
+    //     "testing-library/prefer-query-by-disappearance": "off"
+    //   }
+    // }
+    // {
+    //   "files": ["**/__tests__/**/*", "**/*.test.jsx"],
+    //   "excludedFiles": ["**/tests/e2e/**/*", "**/serverless/**/*"],
+    //   "extends": ["plugin:testing-library/react"]
+    // }
   ],
   // Use AirBnb settings as a base
   "extends": [

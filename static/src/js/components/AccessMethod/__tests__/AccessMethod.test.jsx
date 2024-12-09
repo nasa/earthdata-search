@@ -1,7 +1,6 @@
 import React from 'react'
 
 import {
-  getByRole,
   render,
   screen,
   waitFor
@@ -347,7 +346,7 @@ describe('AccessMethod component', () => {
       expect(screen.getByTestId('access-method-echoform-spinner')).toBeInTheDocument()
 
       // Wait for the lazy loaded component to load with the mocked implementation
-      await waitFor(() => expect(screen.getByText('mock echo-form')).toBeInTheDocument())
+      expect(await screen.findByText('mock echo-form')).toBeInTheDocument()
     })
 
     test('renders an echoform', async () => {
@@ -470,7 +469,7 @@ describe('AccessMethod component', () => {
       })
 
       const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
-      expect(getByRole(harmonyTypeInput, 'radio').checked).toEqual(true)
+      expect(screen.getByRole(harmonyTypeInput, 'radio').checked).toEqual(true)
     })
 
     describe('and multiple harmony methods are available', () => {
@@ -540,7 +539,7 @@ describe('AccessMethod component', () => {
           }
         })
 
-        waitFor(() => {
+        await waitFor(() => {
           expect(screen.getByText('second harmony service')).toBeInTheDocument()
         })
       })
@@ -616,8 +615,9 @@ describe('AccessMethod component', () => {
 
         await waitFor(() => {
           expect(screen.getByText('Choose from output format options like GeoTIFF, NETCDF, and other file types.')).toBeInTheDocument()
-          expect(screen.queryByTestId('access-methods__output-format-options')).toBeInTheDocument()
         })
+
+        expect(screen.getByTestId('access-methods__output-format-options')).toBeInTheDocument()
       })
 
       test('selecting a output format calls onUpdateAccessMethod', async () => {

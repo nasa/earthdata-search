@@ -224,12 +224,13 @@ describe('App component', () => {
 
   test('sets the correct meta description', async () => {
     setup()
+    let metaElement
     await waitFor(() => {
-      const metaElement = document.querySelector('meta[name="description"]')
-
-      expect(metaElement).toBeInTheDocument()
-      expect(metaElement).toHaveAttribute('content', 'Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
+      metaElement = document.querySelector('meta[name="description"]')
     })
+
+    expect(metaElement).toBeInTheDocument()
+    expect(metaElement).toHaveAttribute('content', 'Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
   })
 
   test('sets the correct meta og:type', async () => {
