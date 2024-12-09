@@ -9,9 +9,7 @@
   letter-spacing: 0.01em;
 
   &__accessMethod {
-    position: absolute;
-    top: $spacer*0.75;
-    right: $spacer*0.25
+    margin-left: auto;
   }
 
   &__icon {
