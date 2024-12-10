@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  within
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import MockDate from 'mockdate'
@@ -546,9 +542,8 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
-
-        expect(within(dayNightSideBarItem).getByRole('combobox')).toHaveValue('')
+        const dayNightSelection = screen.getByTestId('granule-filters__day-night-flag')
+        expect(dayNightSelection).toHaveValue('')
       })
 
       test('displays selected item', async () => {
@@ -566,9 +561,8 @@ describe('GranuleFiltersForm component', () => {
           }
         })
 
-        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
-
-        expect(within(dayNightSideBarItem).getByRole('combobox')).toHaveValue('NIGHT')
+        const dayNightSelection = screen.getByTestId('granule-filters__day-night-flag')
+        expect(dayNightSelection).toHaveValue('NIGHT')
       })
 
       test('calls handleChange on change', async () => {
@@ -585,8 +579,8 @@ describe('GranuleFiltersForm component', () => {
             dayNightFlag: 'NIGHT'
           }
         })
-        const dayNightSideBarItem = screen.getByText('Day/Night').parentElement.parentElement
-        const dayNightSelection = within(dayNightSideBarItem).getByRole('combobox')
+
+        const dayNightSelection = screen.getByTestId('granule-filters__day-night-flag')
 
         await user.selectOptions(dayNightSelection, 'Day')
         await user.selectOptions(dayNightSelection, 'Both')
@@ -789,9 +783,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
-          const minOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Minimum' })
-
+          const minOrbitNumber = screen.getByTestId('granule-filters__orbit-number-min')
           expect(minOrbitNumber).toHaveValue('')
         })
 
@@ -807,10 +799,8 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
-          const minOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Maximum' })
-
-          await user.type(minOrbitNumber, '9')
+          const maxOrbitNumber = screen.getByTestId('granule-filters__orbit-number-max')
+          await user.type(maxOrbitNumber, '9')
 
           expect(handleChange).toHaveBeenCalledTimes(1)
           expect(handleChange).toHaveBeenCalledWith(
@@ -834,14 +824,11 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
-          const minOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Minimum' })
-
+          const minOrbitNumber = screen.getByTestId('granule-filters__orbit-number-min')
           await user.type(minOrbitNumber, '9')
-          await user.tab(minOrbitNumber)
+          await user.tab()
 
           expect(handleSubmit).toHaveBeenCalledTimes(1)
-
           expect(handleSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
@@ -876,10 +863,8 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
-          const orbitNumberMaximum = within(orbitNumberSection).getByRole('textbox', { name: 'Maximum' })
-
-          expect(orbitNumberMaximum).toHaveValue('')
+          const maxOrbitNumber = screen.getByTestId('granule-filters__orbit-number-max')
+          expect(maxOrbitNumber).toHaveValue('')
         })
 
         test('calls handleChange on change', async () => {
@@ -894,9 +879,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
-          const maxOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Maximum' })
-
+          const maxOrbitNumber = screen.getByTestId('granule-filters__orbit-number-max')
           await user.type(maxOrbitNumber, '9')
 
           expect(handleChange).toHaveBeenCalledTimes(1)
@@ -921,16 +904,11 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const orbitNumberSection = screen.getByText('Orbit Number').parentElement.parentElement
-          const maxOrbitNumber = within(orbitNumberSection).getByRole('textbox', { name: 'Maximum' })
-
+          const maxOrbitNumber = screen.getByTestId('granule-filters__orbit-number-max')
           await user.type(maxOrbitNumber, '9')
-
-          // Submit the form call
-          await user.tab(maxOrbitNumber)
+          await user.tab()
 
           expect(handleSubmit).toHaveBeenCalledTimes(1)
-
           expect(handleSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
@@ -966,9 +944,8 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
-          const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Minimum' })
 
+          const minEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-min')
           expect(minEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(0)
         })
@@ -984,11 +961,10 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
-          const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Minimum' })
 
+          const minEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-min')
           await user.type(minEquatorCrossingLongitude, '1')
-          await user.tab(minEquatorCrossingLongitude)
+          await user.tab()
 
           expect(handleChange).toHaveBeenCalledTimes(1)
           expect(handleChange).toHaveBeenCalledWith(
@@ -1012,14 +988,11 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
-          const minEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Minimum' })
-
+          const minEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-min')
           await user.type(minEquatorCrossingLongitude, '1')
-          await user.tab(minEquatorCrossingLongitude)
+          await user.tab()
 
           expect(handleSubmit).toHaveBeenCalledTimes(1)
-
           expect(handleSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
@@ -1053,9 +1026,8 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
-          const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Maximum' })
 
+          const maxEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-max')
           expect(maxEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(0)
         })
@@ -1071,11 +1043,10 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
-          const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Maximum' })
 
+          const maxEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-max')
           await user.type(maxEquatorCrossingLongitude, '1')
-          await user.tab(maxEquatorCrossingLongitude)
+          await user.tab()
 
           expect(maxEquatorCrossingLongitude).toHaveValue('')
           expect(handleChange).toHaveBeenCalledTimes(1)
@@ -1099,14 +1070,12 @@ describe('GranuleFiltersForm component', () => {
               }
             }
           })
-          const equatorialCrossingLatitudeSection = screen.getByText('Equatorial Crossing Longitude').parentElement.parentElement
-          const maxEquatorCrossingLongitude = within(equatorialCrossingLatitudeSection).getByRole('textbox', { name: 'Maximum' })
 
+          const maxEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-max')
           await user.type(maxEquatorCrossingLongitude, '1')
-          await user.tab(maxEquatorCrossingLongitude)
+          await user.tab()
 
           expect(handleSubmit).toHaveBeenCalledTimes(1)
-
           expect(handleSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'

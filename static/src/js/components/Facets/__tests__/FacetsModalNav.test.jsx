@@ -45,7 +45,7 @@ describe('FacetsModalNav component', () => {
     test('when rendering an empty list', () => {
       render(<FacetsModalNav activeLetters={[]} modalInnerRef={modalInnerRefMock} />)
 
-      expect(screen.queryByText('Jump:')).toBeInTheDocument()
+      expect(screen.getByText('Jump:')).toBeInTheDocument()
       expect(screen.queryAllByRole('link').length).toEqual(0)
     })
 

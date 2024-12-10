@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import ProjectHeader from '../ProjectHeader'
 
@@ -31,11 +30,9 @@ const setup = (overrideProps) => {
     onUpdateProjectName: jest.fn(),
     ...overrideProps
   }
-  act(() => {
-    render(
-      <ProjectHeader {...props} />
-    )
-  })
+  render(
+    <ProjectHeader {...props} />
+  )
 }
 
 describe('ProjectHeader component', () => {
@@ -73,11 +70,13 @@ describe('ProjectHeader component', () => {
         }
       }
       setup(overrideProps)
-      const skeletons = screen.queryAllByTestId('project-header__skeleton')
-      const skeleton = screen.getByTestId('project-header__skeleton')
 
-      expect(skeletons.length).toEqual(1)
-      expect(skeleton.querySelectorAll('div').length).toEqual(4) // Top-level skeleton__inner div + 3 children divs
+      // Check for the skeleton container
+      expect(screen.getByTestId('project-header__skeleton')).toBeInTheDocument()
+
+      // Check for all skeleton items
+      const skeletonItems = screen.getAllByTestId('skeleton-item')
+      expect(skeletonItems).toHaveLength(3) // Updated to match the actual number of skeleton items
     })
   })
 
@@ -404,14 +403,14 @@ describe('ProjectHeader component', () => {
       const user = userEvent.setup()
       await user.click(screen.getByRole('textbox'))
 
-      expect(screen.queryByTestId('submit_button')).toBeInTheDocument()
+      expect(screen.getByTestId('submit_button')).toBeInTheDocument()
       expect(screen.queryByTestId('edit_button')).not.toBeInTheDocument()
     })
 
     test('when the state is not editing the edit button is visible', async () => {
       setup()
       expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('edit_button')).toBeInTheDocument()
+      expect(screen.getByTestId('edit_button')).toBeInTheDocument()
     })
 
     test('focusing on project name and pressing enter enables editing', async () => {
@@ -423,7 +422,7 @@ describe('ProjectHeader component', () => {
       screen.getByTestId('project-header__span').focus()
       await user.keyboard('{Enter}')
 
-      expect(screen.queryByTestId('submit_button')).toBeInTheDocument()
+      expect(screen.getByTestId('submit_button')).toBeInTheDocument()
       expect(screen.queryByTestId('edit_button')).not.toBeInTheDocument()
     })
 
@@ -437,7 +436,7 @@ describe('ProjectHeader component', () => {
       await user.keyboard('{a}')
 
       expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('edit_button')).toBeInTheDocument()
+      expect(screen.getByTestId('edit_button')).toBeInTheDocument()
     })
 
     test('clicking on the project name enables editing', async () => {
@@ -445,18 +444,18 @@ describe('ProjectHeader component', () => {
       const user = userEvent.setup()
 
       expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('edit_button')).toBeInTheDocument()
+      expect(screen.getByTestId('edit_button')).toBeInTheDocument()
 
       await user.click(screen.getByRole('button', { name: /test project/i }))
 
       expect(screen.getByRole('button', { name: /test project/i })).toHaveClass('project-header__text-wrap')
-      expect(screen.queryByTestId('submit_button')).toBeInTheDocument()
+      expect(screen.getByTestId('submit_button')).toBeInTheDocument()
       expect(screen.queryByTestId('edit_button')).not.toBeInTheDocument()
 
       await user.keyboard('{Enter}')
 
       expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('edit_button')).toBeInTheDocument()
+      expect(screen.getByTestId('edit_button')).toBeInTheDocument()
     })
 
     test('editing the text field changes the project name', async () => {
@@ -493,8 +492,8 @@ describe('ProjectHeader component', () => {
       }
       setup(overrideProps)
       const user = userEvent.setup()
-      await user.click(screen.queryByTestId('edit_button'))
-      await user.click(screen.queryByTestId('submit_button'))
+      await user.click(screen.getByTestId('edit_button'))
+      await user.click(screen.getByTestId('submit_button'))
 
       expect(overrideProps.onUpdateProjectName).toBeCalledTimes(1)
       expect(overrideProps.onUpdateProjectName).toBeCalledWith('test project')
@@ -506,7 +505,7 @@ describe('ProjectHeader component', () => {
       }
       setup(overrideProps)
       const user = userEvent.setup()
-      await user.click(screen.queryByTestId('edit_button'))
+      await user.click(screen.getByTestId('edit_button'))
       await user.keyboard('{Enter}')
 
       expect(overrideProps.onUpdateProjectName).toBeCalledTimes(1)

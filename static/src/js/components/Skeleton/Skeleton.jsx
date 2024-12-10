@@ -40,6 +40,7 @@ export const Skeleton = ({
         <div
           key={key}
           className={`skeleton__item skeleton__item-${i}`}
+          data-testid={styles['data-testid']}
           style={
             {
               top: styles.top,

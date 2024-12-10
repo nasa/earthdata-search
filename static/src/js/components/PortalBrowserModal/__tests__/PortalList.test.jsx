@@ -3,18 +3,16 @@ import {
   fireEvent,
   render,
   screen,
-  waitFor
+  waitFor,
+  within
 } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 import { Router } from 'react-router'
 import { Provider } from 'react-redux'
 import { createMemoryHistory } from 'history'
 
 import { PortalList } from '../PortalList'
-
 import configureStore from '../../../store/configureStore'
-
 import actions from '../../../actions'
 
 jest.mock('../../../../../../portals/above/images/logo.png', () => ('above_logo_path'))
@@ -33,15 +31,13 @@ const setup = () => {
     initialEntries: ['/search']
   })
 
-  act(() => {
-    render(
-      <Provider store={store}>
-        <Router history={history} location={props.location}>
-          <PortalList {...props} />
-        </Router>
-      </Provider>
-    )
-  })
+  render(
+    <Provider store={store}>
+      <Router history={history} location={props.location}>
+        <PortalList {...props} />
+      </Router>
+    </Provider>
+  )
 
   return {
     history,
@@ -55,8 +51,10 @@ describe('PortalList component', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('portal-title-above')).toHaveTextContent('ABoVE (Arctic-Boreal Vulnerability Experiment)')
-      expect(screen.getByTestId('portal-link-above').querySelector('a')).toHaveAttribute('href', 'https://above.nasa.gov/')
     })
+
+    const withinLink = within(screen.getByTestId('portal-link-above'))
+    expect(withinLink.getByRole('link')).toHaveAttribute('href', 'https://above.nasa.gov/')
   })
 
   test('does not render a portal that is excluded from the browser', async () => {
@@ -64,8 +62,9 @@ describe('PortalList component', () => {
 
     await waitFor(() => {
       expect(screen.queryByTestId('portal-title-example')).toBeNull()
-      expect(screen.queryByTestId('portal-link-example')).toBeNull()
     })
+
+    expect(screen.queryByTestId('portal-link-example')).toBeNull()
   })
 
   test('clicking on the portal opens the portal', async () => {
@@ -92,7 +91,8 @@ describe('PortalList component', () => {
     const user = await userEvent.setup()
     const { history, props } = setup()
 
-    const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
+    const withinLink = within(screen.getByTestId('portal-link-above'))
+    const moreInfoLink = withinLink.getByRole('link')
 
     await waitFor(async () => {
       await user.click(moreInfoLink)
@@ -100,15 +100,16 @@ describe('PortalList component', () => {
       expect(history.location).toEqual(expect.objectContaining({
         pathname: '/search'
       }))
-
-      expect(props.onModalClose).toHaveBeenCalledTimes(0)
     })
+
+    expect(props.onModalClose).toHaveBeenCalledTimes(0)
   })
 
   test('displays a title attribute for the `More Info` link', async () => {
     setup()
 
-    const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
+    const withinLink = within(screen.getByTestId('portal-link-above'))
+    const moreInfoLink = withinLink.getByRole('link')
 
     await waitFor(() => {
       expect(moreInfoLink).toHaveAttribute('title', 'Find more information about ABoVE (Arctic-Boreal Vulnerability Experiment)')
@@ -118,7 +119,8 @@ describe('PortalList component', () => {
   test('Clicking the `More Info` link opens a new window', async () => {
     setup()
 
-    const moreInfoLink = screen.getByTestId('portal-link-above').querySelector('a')
+    const withinLink = within(screen.getByTestId('portal-link-above'))
+    const moreInfoLink = withinLink.getByRole('link')
 
     await waitFor(() => {
       expect(moreInfoLink).toHaveAttribute('target', '_blank')
@@ -149,26 +151,28 @@ describe('PortalList component', () => {
     test('does not display a spinner', async () => {
       setup()
 
+      let thumbnail
       await waitFor(() => {
-        const thumbnail = screen.getByTestId('portal-thumbnail')
-
-        fireEvent.load(thumbnail)
-
-        const spinner = screen.queryByTestId('portal-thumbnail-spinner')
-        expect(spinner).not.toBeInTheDocument()
+        thumbnail = screen.getByTestId('portal-thumbnail')
       })
+
+      fireEvent.load(thumbnail)
+
+      const spinner = screen.queryByTestId('portal-thumbnail-spinner')
+      expect(spinner).not.toBeInTheDocument()
     })
 
     test('displays an image', async () => {
       setup()
 
+      let thumbnail
       await waitFor(() => {
-        const thumbnail = screen.getByTestId('portal-thumbnail')
-
-        fireEvent.load(thumbnail)
-
-        expect(thumbnail.classList).toContain('portal-list__thumbnail--is-loaded')
+        thumbnail = screen.getByTestId('portal-thumbnail')
       })
+
+      fireEvent.load(thumbnail)
+
+      expect(thumbnail.classList).toContain('portal-list__thumbnail--is-loaded')
     })
   })
 })

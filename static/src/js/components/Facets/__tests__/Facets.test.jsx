@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  waitFor,
-  getByText,
-  getAllByText,
-  getAllByRole
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
 
@@ -214,10 +207,9 @@ function setup(overrideProps = {}) {
     ...overrideProps
   }
 
-  const renderContainer = (renderProps) => render(<Facets {...renderProps} />)
+  render(<Facets {...props} />)
 
   return {
-    renderContainer,
     props,
     onChangeCmrFacet,
     onChangeFeatureFacet,
@@ -227,7 +219,7 @@ function setup(overrideProps = {}) {
 
 describe('Facets Features Map Imagery component', () => {
   test('only renders enabled feature FacetsGroup', async () => {
-    const { renderContainer, props } = setup({
+    setup({
       portal: {
         features: {
           featureFacets: {
@@ -239,20 +231,18 @@ describe('Facets Features Map Imagery component', () => {
       }
     })
 
-    const { container } = renderContainer(props)
-
     const user = userEvent.setup()
 
-    const featuresContainer = getAllByText(container, 'Features')
-    expect(featuresContainer).toHaveLength(1)
-    expect(featuresContainer.at(0)).toBeInTheDocument()
-    expect(getByText(container, 'Map Imagery')).toBeInTheDocument()
+    const featuresElements = screen.getAllByText('Features')
+    expect(featuresElements).toHaveLength(1)
+    expect(featuresElements[0]).toBeInTheDocument()
+    expect(screen.getByText('Map Imagery')).toBeInTheDocument()
     await user.click(screen.getAllByRole('checkbox', { checked: false }).at(0))
     expect(screen.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
   })
 
   test('only renders enabled feature FacetsGroup', async () => {
-    const { renderContainer, props } = setup({
+    setup({
       portal: {
         features: {
           featureFacets: {
@@ -264,24 +254,22 @@ describe('Facets Features Map Imagery component', () => {
       }
     })
 
-    const { container } = renderContainer(props)
-
     const user = userEvent.setup()
 
-    const featuresContainer = getAllByText(container, 'Features')
-    expect(featuresContainer).toHaveLength(1)
-    expect(featuresContainer.at(0)).toBeInTheDocument()
+    const featuresElements = screen.getAllByText('Features')
+    expect(featuresElements).toHaveLength(1)
+    expect(featuresElements[0]).toBeInTheDocument()
     expect(screen.getByText('Map Imagery')).toBeInTheDocument()
-    const customizableComp = screen.getByText('Customizable')
-    expect(customizableComp).toBeInTheDocument()
-    expect(customizableComp.children).toHaveLength(1)
-    await waitFor(async () => {
-      await user.hover(customizableComp.children[0])
-    })
+
+    const customizableElement = screen.getByText('Customizable')
+    expect(customizableElement).toBeInTheDocument()
+
+    const tooltipTrigger = screen.getByRole('button', { name: /info/i })
+    await user.hover(tooltipTrigger)
 
     const tooltip = screen.getByRole('tooltip')
     expect(tooltip).toBeInTheDocument()
-    expect(getByText(tooltip, 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)')).toBeInTheDocument()
+    expect(screen.getByText('Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)')).toBeInTheDocument()
   })
 
   test('checkboxes get checked correctly in the feature FacetsGroup', async () => {
@@ -325,237 +313,192 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders keywords FacetsGroup and checks the opening and closing of the dropdown', async () => {
-    const { renderContainer, props } = setup()
-
-    const { container } = renderContainer(props)
-
-    const testIndex = 0
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
+    setup()
+    const facetGroupText = 'Keywords'
 
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
     await user.click(facetButton)
-    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    const childTitle = props.facetsById[facetGroupText].children[0].title
-    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
-    expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
 
-    // Clicking again and making sure the facet items go away
+    const checkboxes = screen.getAllByRole('checkbox')
+    const childTitle = checkboxes[0].getAttribute('name')
+
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
+    expect(screen.getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-    expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
+    expect(screen.queryAllByRole('checkbox', { name: childTitle })).toHaveLength(0)
   })
 
   test('renders platforms FacetsGroup', async () => {
-    const { renderContainer, props } = setup()
-
-    const { container } = renderContainer(props)
-
-    const testIndex = 1
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
-
+    setup()
+    const facetGroupText = 'Platforms'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
     await user.click(facetButton)
-    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    const childTitle = props.facetsById[facetGroupText].children[0].title
-    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
-    expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
 
-    // Clicking again and making sure the facet items go away
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+
+    const checkboxes = screen.getAllByRole('checkbox')
+    const childTitle = checkboxes[0].getAttribute('name')
+
+    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
+    expect(screen.getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-    expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
+    expect(screen.queryAllByRole('checkbox', { name: childTitle })).toHaveLength(0)
   })
 
   test('renders instruments FacetsGroup', async () => {
-    const { renderContainer, props } = setup()
-
-    const { container } = renderContainer(props)
-
-    const testIndex = 2
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
-
+    setup()
+    const facetGroupText = 'Instruments'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
     await user.click(facetButton)
-    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    const childTitle = props.facetsById[facetGroupText].children[0].title
-    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
-    expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
 
-    // Clicking again and making sure the facet items go away
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+
+    const checkboxes = screen.getAllByRole('checkbox')
+    const childTitle = checkboxes[0].getAttribute('name')
+
+    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
+    expect(screen.getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-    expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
+    expect(screen.queryAllByRole('checkbox', { name: childTitle })).toHaveLength(0)
   })
 
   test('renders organizations FacetsGroup', async () => {
-    const { renderContainer, props } = setup()
-
-    const { container } = renderContainer(props)
-
-    const testIndex = 3
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
-
+    setup()
+    const facetGroupText = 'Organizations'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
     await user.click(facetButton)
-    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    const childTitle = props.facetsById[facetGroupText].children[0].title
-    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
-    expect(getAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(1)
 
-    // Clicking again and making sure the facet items go away
+    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+
+    const checkboxes = screen.getAllByRole('checkbox')
+    const childTitle = checkboxes[0].getAttribute('name')
+
+    expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
+    expect(screen.getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-    expect(screen.queryAllByRole(container, 'checkbox', { name: childTitle })).toHaveLength(0)
+    expect(screen.queryAllByRole('checkbox', { name: childTitle })).toHaveLength(0)
   })
 
   test('renders projects FacetsGroup', async () => {
-    const { renderContainer, props } = setup()
+    setup()
 
-    const { container } = renderContainer(props)
-
-    const testIndex = 4
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
-
+    const facetGroupText = 'Projects'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
+
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // Clicking again and making sure the facet items go away
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
   test('renders processing levels FacetsGroup', async () => {
-    const { renderContainer, props } = setup()
+    setup()
 
-    const { container } = renderContainer(props)
-
-    const testIndex = 5
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
-
+    const facetGroupText = 'Processing Levels'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
+
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // Clicking again and making sure the facet items go away
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
   test('renders data format FacetsGroup', async () => {
-    const { renderContainer, props } = setup()
+    setup()
 
-    const { container } = renderContainer(props)
-
-    const testIndex = 6
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
-
+    const facetGroupText = 'Data Format'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
+
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // Clicking again and making sure the facet items go away
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
   test('renders tiling system FacetsGroup', async () => {
-    const { renderContainer, props } = setup()
+    setup()
 
-    const { container } = renderContainer(props)
-
-    const testIndex = 7
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
-
+    const facetGroupText = 'Tiling System'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
+
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // Clicking again and making sure the facet items go away
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
 
   test('renders horizontal data resolution FacetsGroup', async () => {
-    const { renderContainer, props } = setup()
+    setup()
 
-    const { container } = renderContainer(props)
-
-    const testIndex = 8
-
-    const facetGroupText = Object.keys(props.facetsById)[testIndex]
-
+    const facetGroupText = 'Horizontal Data Resolution'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
-
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    // Clicking on the dropdown to show the different facet items
-    const facetButton = getAllByRole(container, 'button').at(testIndex + 1)
+
+    const facetButton = screen.getByRole('button', { name: facetGroupText })
+
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
-    // Clicking again and making sure the facet items go away
+
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
   })
@@ -585,19 +528,15 @@ describe('Facets Features Map Imagery component', () => {
 
   test('cmrFacetHandler calls changeCmrFacet', async () => {
     const mock = jest.spyOn(facetUtils, 'changeCmrFacet').mockImplementationOnce(() => jest.fn())
-
-    const { renderContainer, props, onChangeCmrFacet } = setup()
-
-    const { container } = renderContainer(props)
+    const { onChangeCmrFacet } = setup()
 
     const user = userEvent.setup()
 
-    await user.click(getAllByRole(container, 'button').at(1))
+    await user.click(screen.getByRole('button', { name: 'Keywords' }))
 
     const facetGroup = screen.getByRole('checkbox', { name: 'Mock Keyword Facet' })
-
     await user.click(facetGroup)
-    // TODO we should fix any expect.anything() and not use a container if we can help it
+
     expect(mock).toBeCalledWith(
       expect.anything(),
       {
@@ -616,7 +555,6 @@ describe('Facets Features Map Imagery component', () => {
 
   test('onTriggerViewAllFacets calls triggerViewAllFacets', async () => {
     const children = []
-
     for (let count = 1; count <= 50; count += 1) {
       children.push({
         applied: false,
@@ -630,7 +568,7 @@ describe('Facets Features Map Imagery component', () => {
       })
     }
 
-    const { renderContainer, props, onTriggerViewAllFacets } = setup({
+    const { onTriggerViewAllFacets } = setup({
       facetsById: {
         Projects: {
           applied: false,
@@ -643,20 +581,17 @@ describe('Facets Features Map Imagery component', () => {
       }
     })
 
-    const { container } = renderContainer(props)
-
     const user = userEvent.setup()
 
     expect(screen.queryByRole('button', { name: /View All/i })).toBeNull()
 
-    await user.click(getAllByRole(container, 'button').at(5))
+    await user.click(screen.getByRole('button', { name: 'Projects' }))
 
-    expect(screen.getByRole('button', { name: /View All/i })).toBeInTheDocument()
+    const viewAllButton = screen.getByRole('button', { name: /View All/i })
+    expect(viewAllButton).toBeInTheDocument()
 
-    await user.click(screen.getByRole('button', { name: /View All/i }))
+    await user.click(viewAllButton)
 
-    expect(onTriggerViewAllFacets).toBeCalledWith(
-      'Projects'
-    )
+    expect(onTriggerViewAllFacets).toBeCalledWith('Projects')
   })
 })

@@ -1,10 +1,6 @@
 import React from 'react'
 
-import {
-  act,
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
 
@@ -83,9 +79,7 @@ const setup = (overrides) => {
     onToggleRelatedUrlsModal,
     ...overrideProps
   }
-  act(() => {
-    render(<CollectionDetailsBody {...props} />)
-  })
+  render(<CollectionDetailsBody {...props} />)
 
   return {
     onToggleRelatedUrlsModal
@@ -101,7 +95,7 @@ describe('CollectionDetailsBody component', () => {
         }
       })
 
-      expect(screen.queryAllByTestId('collection-details-body__skeleton')).not.toBeNull()
+      expect(screen.getAllByTestId('collection-details-body__skeleton')).not.toBeNull()
     })
   })
 

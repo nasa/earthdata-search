@@ -3,7 +3,8 @@ import React from 'react'
 import {
   render,
   screen,
-  waitFor
+  waitFor,
+  within
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -469,7 +470,10 @@ describe('AccessMethod component', () => {
       })
 
       const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
-      expect(screen.getByRole(harmonyTypeInput, 'radio').checked).toEqual(true)
+
+      // Get the radio input within the label
+      const radioInput = within(harmonyTypeInput).getByRole('radio')
+      expect(radioInput.checked).toBe(true)
     })
 
     describe('and multiple harmony methods are available', () => {
@@ -649,14 +653,15 @@ describe('AccessMethod component', () => {
 
         await waitFor(() => {
           expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-          expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-            collectionId: 'collectionId',
-            method: {
-              harmony0: {
-                selectedOutputFormat: 'application/x-netcdf4'
-              }
+        })
+
+        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+          collectionId: 'collectionId',
+          method: {
+            harmony0: {
+              selectedOutputFormat: 'application/x-netcdf4'
             }
-          })
+          }
         })
       })
     })
@@ -705,8 +710,9 @@ describe('AccessMethod component', () => {
 
         await waitFor(() => {
           expect(screen.getByText('Choose a desired output projection from supported EPSG Codes.')).toBeInTheDocument()
-          expect(screen.queryByTestId('access-methods__output-projection-options')).toBeInTheDocument()
         })
+
+        expect(screen.getByTestId('access-methods__output-projection-options')).toBeInTheDocument()
       })
 
       test('selecting a output projection calls onUpdateAccessMethod', async () => {
@@ -735,15 +741,16 @@ describe('AccessMethod component', () => {
 
         await waitFor(() => {
           expect(screen.getByRole('option', { name: 'EPSG:4326' }).selected).toBe(true)
-          expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-          expect(onUpdateAccessMethod).toHaveBeenCalledWith({
-            collectionId: 'collectionId',
-            method: {
-              harmony0: {
-                selectedOutputProjection: 'EPSG:4326'
-              }
+        })
+
+        expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+        expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+          collectionId: 'collectionId',
+          method: {
+            harmony0: {
+              selectedOutputProjection: 'EPSG:4326'
             }
-          })
+          }
         })
       })
     })

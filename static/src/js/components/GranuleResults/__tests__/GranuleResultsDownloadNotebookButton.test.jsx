@@ -4,7 +4,8 @@ import {
   screen,
   waitFor,
   createEvent,
-  fireEvent
+  fireEvent,
+  within
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
@@ -35,27 +36,13 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const { container } = render(<GranuleResultsDownloadNotebookButton {...props} />)
+  render(<GranuleResultsDownloadNotebookButton {...props} />)
 
   return {
-    container,
     props,
     user
   }
 }
-
-beforeEach(() => {
-  jest.clearAllMocks()
-
-  const rootNode = document.createElement('div')
-  rootNode.id = 'root'
-  document.body.appendChild(rootNode)
-})
-
-afterEach(() => {
-  const rootNode = document.getElementById('root')
-  document.body.removeChild(rootNode)
-})
 
 describe('GranuleResultsDownloadNotebookButton component', () => {
   describe('when the Generate Notebook button is clicked', () => {
@@ -63,24 +50,23 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
       test('calls onGenerateNotebook without a bounding box', async () => {
         const { props, user } = setup()
 
-        const dropdownButton = screen.queryByLabelText('Download sample notebook')
+        const dropdownButton = screen.getByLabelText('Download sample notebook')
 
         await act(async () => {
           await user.click(dropdownButton)
         })
 
-        const button = screen.queryByRole('button', { name: 'Download Notebook' })
+        const dropdownMenu = screen.getByTestId('dropdown-menu')
+        const downloadButton = within(dropdownMenu).getByRole('button', { name: 'Download Notebook' })
 
-        await user.click(button)
+        await user.click(downloadButton)
 
         await waitFor(() => {
-          expect(props.onGenerateNotebook).toHaveBeenCalledWith(
-            {
-              granuleId: 'G123456789-TESTPROV',
-              referrerUrl: 'https://www.test-location.com/?param=value',
-              variableId: 'V-123456789-TESTPROV'
-            }
-          )
+          expect(props.onGenerateNotebook).toHaveBeenCalledWith({
+            granuleId: 'G123456789-TESTPROV',
+            referrerUrl: 'https://www.test-location.com/?param=value',
+            variableId: 'V-123456789-TESTPROV'
+          })
         })
       })
     })
@@ -93,25 +79,24 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
           }
         })
 
-        const dropdownButton = screen.queryByLabelText('Download sample notebook')
+        const dropdownButton = screen.getByLabelText('Download sample notebook')
 
         await act(async () => {
           await user.click(dropdownButton)
         })
 
-        const button = screen.queryByRole('button', { name: 'Download Notebook' })
+        const dropdownMenu = screen.getByTestId('dropdown-menu')
+        const downloadButton = within(dropdownMenu).getByRole('button', { name: 'Download Notebook' })
 
-        await user.click(button)
+        await user.click(downloadButton)
 
         await waitFor(() => {
-          expect(props.onGenerateNotebook).toHaveBeenCalledWith(
-            {
-              boundingBox: '-1,0,1,0',
-              granuleId: 'G123456789-TESTPROV',
-              referrerUrl: 'https://www.test-location.com/?param=value',
-              variableId: 'V-123456789-TESTPROV'
-            }
-          )
+          expect(props.onGenerateNotebook).toHaveBeenCalledWith({
+            boundingBox: '-1,0,1,0',
+            granuleId: 'G123456789-TESTPROV',
+            referrerUrl: 'https://www.test-location.com/?param=value',
+            variableId: 'V-123456789-TESTPROV'
+          })
         })
       })
     })
@@ -122,55 +107,50 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
           generateNotebookTag: {}
         })
 
-        const dropdownButton = screen.queryByLabelText('Download sample notebook')
+        const dropdownButton = screen.getByLabelText('Download sample notebook')
 
         await act(async () => {
           await user.click(dropdownButton)
         })
 
-        const button = screen.queryByRole('button', { name: 'Download Notebook' })
+        const dropdownMenu = screen.getByTestId('dropdown-menu')
+        const downloadButton = within(dropdownMenu).getByRole('button', { name: 'Download Notebook' })
 
-        await user.click(button)
+        await user.click(downloadButton)
 
         await waitFor(() => {
-          expect(props.onGenerateNotebook).toHaveBeenCalledWith(
-            {
-              granuleId: 'G123456789-TESTPROV',
-              referrerUrl: 'https://www.test-location.com/?param=value'
-            }
-          )
+          expect(props.onGenerateNotebook).toHaveBeenCalledWith({
+            granuleId: 'G123456789-TESTPROV',
+            referrerUrl: 'https://www.test-location.com/?param=value'
+          })
         })
       })
     })
   })
 
-  describe('when a click bubbles up to the dropdown', () => {
+  describe('when clicking the dropdown', () => {
     test('calls stopPropagation', async () => {
       const stopPropagationMock = jest.fn()
 
-      const { container, user } = setup({
+      const { user } = setup({
         generateNotebookTag: {}
       })
 
-      const dropdownButton = screen.queryByLabelText('Download sample notebook')
+      const dropdownButton = screen.getByLabelText('Download sample notebook')
 
       await act(async () => {
         await user.click(dropdownButton)
       })
 
-      const panel = container.querySelector('.dropdown')
-
+      const dropdownMenu = screen.getByTestId('dropdown-menu')
       // eslint-disable-next-line capitalized-comments
       // createEvent and fireEvent are used here to enable mocking of stopPropagation
-      const clickEvent = createEvent.click(panel)
-
+      const clickEvent = createEvent.click(dropdownMenu)
       clickEvent.stopPropagation = stopPropagationMock
 
-      fireEvent(panel, clickEvent)
+      fireEvent(dropdownMenu, clickEvent)
 
-      await waitFor(() => {
-        expect(stopPropagationMock).toHaveBeenCalledTimes(1)
-      })
+      expect(stopPropagationMock).toHaveBeenCalledTimes(1)
     })
   })
 })
@@ -189,7 +169,7 @@ describe('CustomDownloadNotebookToggle component', () => {
 
     render(<CustomDownloadNotebookToggle id="G-123456789" onClick={mockClickCallback} />)
 
-    const dropdownButton = screen.queryByLabelText('Download sample notebook')
+    const dropdownButton = screen.getByLabelText('Download sample notebook')
 
     // eslint-disable-next-line capitalized-comments
     // createEvent and fireEvent are used here to enable mocking of stopPropagation

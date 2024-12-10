@@ -3,6 +3,13 @@ import { render } from '@testing-library/react'
 
 import actions from '../../../actions'
 
+import {
+  PortalBrowserModalContainer,
+  mapDispatchToProps,
+  mapStateToProps
+} from '../PortalBrowserModalContainer'
+import { PortalBrowserModal } from '../../../components/PortalBrowserModal/PortalBrowserModal'
+
 jest.mock('../../../components/PortalBrowserModal/PortalBrowserModal', () => ({
   PortalBrowserModal: jest.fn(({ children }) => (
     <mock-PortalBrowserModal data-testid="PortalBrowserModal">
@@ -10,13 +17,6 @@ jest.mock('../../../components/PortalBrowserModal/PortalBrowserModal', () => ({
     </mock-PortalBrowserModal>
   ))
 }))
-
-import {
-  PortalBrowserModalContainer,
-  mapDispatchToProps,
-  mapStateToProps
-} from '../PortalBrowserModalContainer'
-import { PortalBrowserModal } from '../../../components/PortalBrowserModal/PortalBrowserModal'
 
 describe('mapDispatchToProps', () => {
   test('onTogglePortalBrowserModal calls actions.togglePortalBrowserModal', () => {

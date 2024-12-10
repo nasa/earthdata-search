@@ -1,3 +1,5 @@
+/* eslint-disable testing-library/no-node-access */
+/* eslint-disable testing-library/no-container */
 import React from 'react'
 import {
   fireEvent,
@@ -126,9 +128,10 @@ describe('EDSCImage component', () => {
         await waitFor(() => {
           const image = screen.queryByAltText('Test alt text')
           expect(image).toBeInTheDocument()
-          expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(true)
-          expect(spinner).not.toBeInTheDocument()
         })
+
+        expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(true)
+        expect(spinner).not.toBeInTheDocument()
       })
     })
 
@@ -146,13 +149,16 @@ describe('EDSCImage component', () => {
           />
         )
 
+        let image
+        let spinner
         await waitFor(() => {
-          const image = screen.queryByAltText('Test alt text')
-          const spinner = screen.queryByTestId('edsc-image-spinner')
+          image = screen.queryByAltText('Test alt text')
+          spinner = screen.queryByTestId('edsc-image-spinner')
           expect(image).toBeInTheDocument()
-          expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(true)
-          expect(spinner).not.toBeInTheDocument()
         })
+
+        expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(true)
+        expect(spinner).not.toBeInTheDocument()
       })
     })
   })

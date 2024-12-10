@@ -52,6 +52,6 @@ describe('Bannner component', () => {
       message: undefined
     })
 
-    expect(await screen.queryByText('message')).not.toBeInTheDocument()
+    expect(screen.queryByText('message')).not.toBeInTheDocument()
   })
 })

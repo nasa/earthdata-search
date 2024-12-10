@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import nock from 'nock'
 import { v4 as uuidv4 } from 'uuid'
 import LoggerRequest from '../../../util/request/loggerRequest'
@@ -19,13 +18,11 @@ const ErroredComponent = () => {
 }
 
 const setup = (props) => {
-  act(() => {
-    render(
-      <ErrorBoundary {...props}>
-        <ErroredComponent />
-      </ErrorBoundary>
-    )
-  })
+  render(
+    <ErrorBoundary {...props}>
+      <ErroredComponent />
+    </ErrorBoundary>
+  )
 }
 
 describe('ErrorBoundary component', () => {

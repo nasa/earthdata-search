@@ -110,15 +110,16 @@ describe('ChunkedOrderModal component', () => {
 
     await waitFor(() => {
       expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
-      expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
-        children: 'Refine your search',
-        to: {
-          pathname: '/search',
-          search: '?p=!C100005-EDSC&pg[1][v]=t'
-        },
-        updatePath: true
-      }), {})
     })
+
+    expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
+      children: 'Refine your search',
+      to: {
+        pathname: '/search',
+        search: '?p=!C100005-EDSC&pg[1][v]=t'
+      },
+      updatePath: true
+    }), {})
   })
 
   describe('access methods email notice', () => {

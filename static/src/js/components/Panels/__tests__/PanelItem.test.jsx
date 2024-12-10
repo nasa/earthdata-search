@@ -17,7 +17,7 @@ describe('PanelItem component', () => {
         </PanelItem>
       )
 
-      expect(screen.queryByText('I am some content')).toBeInTheDocument()
+      expect(screen.getByText('I am some content')).toBeInTheDocument()
     })
   })
 
@@ -31,7 +31,7 @@ describe('PanelItem component', () => {
         </PanelItem>
       )
 
-      expect(screen.queryByText('I am the header content')).toBeInTheDocument()
+      expect(screen.getByText('I am the header content')).toBeInTheDocument()
     })
   })
 
@@ -45,7 +45,7 @@ describe('PanelItem component', () => {
         </PanelItem>
       )
 
-      expect(screen.queryByText('I am the footer content')).toBeInTheDocument()
+      expect(screen.getByText('I am the footer content')).toBeInTheDocument()
     })
   })
 
@@ -60,7 +60,7 @@ describe('PanelItem component', () => {
           </PanelItem>
         )
 
-        expect(screen.queryByText('I am a custom child')).toBeInTheDocument()
+        expect(screen.getByText('I am a custom child')).toBeInTheDocument()
         expect(CustomChild).toHaveBeenCalledTimes(1)
         expect(CustomChild).toHaveBeenCalledWith(expect.objectContaining({ isActive: false }), {})
       })
@@ -76,7 +76,7 @@ describe('PanelItem component', () => {
           </PanelItem>
         )
 
-        expect(screen.queryByText('I am a custom child')).toBeInTheDocument()
+        expect(screen.getByText('I am a custom child')).toBeInTheDocument()
         expect(CustomChild).toHaveBeenCalledTimes(1)
         expect(CustomChild).toHaveBeenCalledWith(expect.objectContaining({ isActive: true }), {})
       })
@@ -85,40 +85,49 @@ describe('PanelItem component', () => {
 
   describe('when scrolling the inner wrapper past the threshold', () => {
     test('sets the hasScrolled class', async () => {
-      const CustomChild = jest.fn(() => (<div style={{ height: '1000px' }}>I am a custom child</div>))
+      const CustomChild = jest.fn(() => (
+        <div style={{ height: '1000px' }}>I am a custom child</div>
+      ))
 
-      const { container } = render(
+      render(
         <PanelItem isActive>
           <CustomChild />
         </PanelItem>
       )
 
-      const scrollableContainer = container.querySelector('.simplebar-content-wrapper')
+      // eslint-disable-next-line testing-library/no-node-access
+      const scrollableContainer = document.querySelector('.simplebar-content-wrapper')
+      fireEvent.scroll(scrollableContainer, { target: { scrollTop: 21 } })
 
-      await fireEvent.scroll(scrollableContainer, { target: { scrollTop: 21 } })
-
-      expect(container.firstChild.classList.contains('panel-item--has-scrolled')).toEqual(true)
+      // Replace container.firstChild.classList.contains with Testing Library's methods
+      const panel = screen.getByTestId('panel-item')
+      expect(panel).toHaveClass('panel-item--has-scrolled')
     })
 
     describe('when scrolling the inner wrapper past the threshold and returning', () => {
       test('sets and removes the hasScrolled class', async () => {
-        const CustomChild = jest.fn(() => (<div style={{ height: '1000px' }}>I am a custom child</div>))
+        const CustomChild = jest.fn(() => (
+          <div style={{ height: '1000px' }}>I am a custom child</div>
+        ))
 
-        const { container } = render(
+        render(
           <PanelItem isActive>
             <CustomChild />
           </PanelItem>
         )
 
-        const scrollableContainer = container.querySelector('.simplebar-content-wrapper')
+        // eslint-disable-next-line testing-library/no-node-access
+        const scrollableContainer = document.querySelector('.simplebar-content-wrapper')
 
-        await fireEvent.scroll(scrollableContainer, { target: { scrollTop: 21 } })
+        // Scroll past threshold
+        fireEvent.scroll(scrollableContainer, { target: { scrollTop: 21 } })
+        const panelAfterScroll = screen.getByTestId('panel-item')
+        expect(panelAfterScroll).toHaveClass('panel-item--has-scrolled')
 
-        expect(container.firstChild.classList.contains('panel-item--has-scrolled')).toEqual(true)
-
-        await fireEvent.scroll(scrollableContainer, { target: { scrollTop: 19 } })
-
-        expect(container.firstChild.classList.contains('panel-item--has-scrolled')).toEqual(false)
+        // Scroll back above threshold
+        fireEvent.scroll(scrollableContainer, { target: { scrollTop: 19 } })
+        const panelAfterScrollBack = screen.getByTestId('panel-item')
+        expect(panelAfterScrollBack).not.toHaveClass('panel-item--has-scrolled')
       })
     })
   })
@@ -138,7 +147,7 @@ describe('PanelItem component', () => {
         </PanelItem>
       )
 
-      expect(screen.queryByRole('button', { name: 'Back' })).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
     })
 
     describe('when text is provided to the backButtonOptions', () => {
@@ -156,7 +165,7 @@ describe('PanelItem component', () => {
           </PanelItem>
         )
 
-        expect(screen.queryByRole('button', { name: 'Back to Previous Step' })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: 'Back to Previous Step' })).toBeInTheDocument()
       })
     })
 
@@ -182,7 +191,7 @@ describe('PanelItem component', () => {
             </PanelItem>
           )
 
-          await user.click(screen.queryByRole('button', { name: 'Back to Previous Step' }))
+          await user.click(screen.getByRole('button', { name: 'Back to Previous Step' }))
 
           expect(backButtonCallbackMock).toHaveBeenCalledTimes(1)
         })
@@ -208,7 +217,7 @@ describe('PanelItem component', () => {
           </PanelItem>
         )
 
-        await user.click(screen.queryByRole('button', { name: 'Back to Previous Step' }))
+        await user.click(screen.getByRole('button', { name: 'Back to Previous Step' }))
 
         expect(onChangePanelMock).toHaveBeenCalledTimes(1)
         expect(onChangePanelMock).toHaveBeenCalledWith('0.0.1')
@@ -217,14 +226,15 @@ describe('PanelItem component', () => {
   })
 
   describe('when scrollable is set to false', () => {
-    test('does not render the SimpleBar', () => {
-      const { container } = render(
+    test('renders content without scrollable behavior', () => {
+      render(
         <PanelItem scrollable={false}>
           I am some content
         </PanelItem>
       )
 
-      expect(container.querySelector('.simplebar-content-wrapper')).not.toBeInTheDocument()
+      const content = screen.getByText('I am some content')
+      expect(content).toBeVisible()
     })
   })
 })

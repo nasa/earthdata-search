@@ -1,5 +1,6 @@
 import React from 'react'
 import nock from 'nock'
+import { Helmet } from 'react-helmet'
 
 import {
   render,
@@ -224,82 +225,65 @@ describe('App component', () => {
 
   test('sets the correct meta description', async () => {
     setup()
-    let metaElement
-    await waitFor(() => {
-      metaElement = document.querySelector('meta[name="description"]')
-    })
-
-    expect(metaElement).toBeInTheDocument()
-    expect(metaElement).toHaveAttribute('content', 'Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
+    const helmet = Helmet.peek()
+    const description = helmet.metaTags.find((tag) => tag.name === 'description')
+    expect(description).toBeDefined()
+    expect(description.content).toBe('Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
   })
 
   test('sets the correct meta og:type', async () => {
     setup()
-    await waitFor(() => {
-      const metaElement = document.querySelector('meta[property="og:type"]')
-
-      expect(metaElement).toBeInTheDocument()
-      expect(metaElement).toHaveAttribute('content', 'website')
-    })
+    const helmet = Helmet.peek()
+    const ogType = helmet.metaTags.find((tag) => tag.property === 'og:type')
+    expect(ogType).toBeDefined()
+    expect(ogType.content).toBe('website')
   })
 
   test('sets the correct meta og:title', async () => {
     setup()
-    await waitFor(() => {
-      const metaElement = document.querySelector('meta[property="og:title"]')
-
-      expect(metaElement).toBeInTheDocument()
-      expect(metaElement).toHaveAttribute('content', 'Earthdata Search')
-    })
+    const helmet = Helmet.peek()
+    const ogTitle = helmet.metaTags.find((tag) => tag.property === 'og:title')
+    expect(ogTitle).toBeDefined()
+    expect(ogTitle.content).toBe('Earthdata Search')
   })
 
   test('sets the correct meta og:description', async () => {
     setup()
-    await waitFor(() => {
-      const metaElement = document.querySelector('meta[property="og:description"]')
-
-      expect(metaElement).toBeInTheDocument()
-      expect(metaElement).toHaveAttribute('content', 'Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
-    })
+    const helmet = Helmet.peek()
+    const ogDescription = helmet.metaTags.find((tag) => tag.property === 'og:description')
+    expect(ogDescription).toBeDefined()
+    expect(ogDescription.content).toBe('Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
   })
 
   test('sets the correct meta og:url', async () => {
     setup()
-    await waitFor(() => {
-      const metaElement = document.querySelector('meta[property="og:url"]')
-
-      expect(metaElement).toBeInTheDocument()
-      expect(metaElement).toHaveAttribute('content', 'https://search.earthdata.nasa.gov/search')
-    })
+    const helmet = Helmet.peek()
+    const ogUrl = helmet.metaTags.find((tag) => tag.property === 'og:url')
+    expect(ogUrl).toBeDefined()
+    expect(ogUrl.content).toBe('https://search.earthdata.nasa.gov/search')
   })
 
   test('sets the correct meta og:image', async () => {
     setup()
-    await waitFor(() => {
-      const metaElement = document.querySelector('meta[property="og:image"]')
-
-      expect(metaElement).toHaveAttribute('content', 'test-file-stub')
-    })
+    const helmet = Helmet.peek()
+    const ogImage = helmet.metaTags.find((tag) => tag.property === 'og:image')
+    expect(ogImage.content).toBe('test-file-stub')
   })
 
   test('sets the correct meta theme-color', async () => {
     setup()
-    await waitFor(() => {
-      const metaElement = document.querySelector('meta[name="theme-color"]')
-
-      expect(metaElement).toBeInTheDocument()
-      expect(metaElement).toHaveAttribute('content', '#191a1b')
-    })
+    const helmet = Helmet.peek()
+    const themeColor = helmet.metaTags.find((tag) => tag.name === 'theme-color')
+    expect(themeColor).toBeDefined()
+    expect(themeColor.content).toBe('#191a1b')
   })
 
   test('sets the correct meta canonical url', async () => {
     setup()
-    await waitFor(() => {
-      const metaElement = document.querySelector('link[rel="canonical"]')
-
-      expect(metaElement).toBeInTheDocument()
-      expect(metaElement).toHaveAttribute('href', 'https://search.earthdata.nasa.gov/search')
-    })
+    const helmet = Helmet.peek()
+    const canonical = helmet.linkTags.find((tag) => tag.rel === 'canonical')
+    expect(canonical).toBeDefined()
+    expect(canonical.href).toBe('https://search.earthdata.nasa.gov/search')
   })
 
   // https://stackoverflow.com/questions/66667827/react-testing-library-to-cover-the-lazy-load/66690463

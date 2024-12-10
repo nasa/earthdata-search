@@ -41,8 +41,10 @@
     },
     {
       "files": [
-        "tests/**/*spec.js",
-        "serverless/**/*"
+        "tests/**/*.js",
+        "serverless/**/*",
+        "static/src/js/components/**/[^_]*/*.jsx",
+        "static/src/js/**/*.js"
       ],
       "rules": {
         "testing-library/no-await-sync-events": "off",

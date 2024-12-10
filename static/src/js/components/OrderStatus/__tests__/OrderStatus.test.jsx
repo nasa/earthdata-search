@@ -7,15 +7,11 @@ import {
   within
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-
+import { Helmet } from 'react-helmet'
 import { StaticRouter } from 'react-router'
-
 import { retrievalStatusProps } from './mocks'
-
 import { OrderStatus } from '../OrderStatus'
-
 import configureStore from '../../../store/configureStore'
-
 import * as config from '../../../../../../sharedUtils/config'
 
 const store = configureStore()
@@ -46,7 +42,7 @@ const setup = () => {
 describe('OrderStatus component', () => {
   test('renders itself correctly', () => {
     setup()
-    expect(screen.getByText('Download Status'))
+    expect(screen.getByText('Download Status')).toBeInTheDocument()
   })
 
   test('renders the correct Helmet meta information', async () => {
@@ -54,14 +50,19 @@ describe('OrderStatus component', () => {
 
     await waitFor(() => expect(document.title).toEqual('Download Status'))
 
-    const metaTitleElement = document.querySelector('meta[name="title"]')
-    const robotsMetaElement = document.querySelector('meta[name="robots"]')
-    expect(metaTitleElement.content).toEqual('Download Status')
-    expect(robotsMetaElement.content).toEqual('noindex, nofollow')
+    const helmet = Helmet.peek()
 
-    const linkTag = document.querySelector('link')
-    expect(linkTag.href).toEqual('https://search.earthdata.nasa.gov/downloads')
-    expect(linkTag.rel).toEqual('canonical')
+    const title = helmet.metaTags.find((tag) => tag.name === 'title')
+    expect(title).toBeDefined()
+    expect(title.content).toBe('Download Status')
+
+    const robots = helmet.metaTags.find((tag) => tag.name === 'robots')
+    expect(robots).toBeDefined()
+    expect(robots.content).toBe('noindex, nofollow')
+
+    const canonicalLink = helmet.linkTags.find((tag) => tag.rel === 'canonical')
+    expect(canonicalLink).toBeDefined()
+    expect(canonicalLink.href).toBe('https://search.earthdata.nasa.gov/downloads')
   })
 
   test('calls onFetchRetrieval when mounted', () => {
@@ -137,10 +138,8 @@ describe('OrderStatus component', () => {
       const relatedCollectionsHeading = screen.getByRole('heading', { name: 'You might also be interested in...' })
       expect(relatedCollectionsHeading).toBeInTheDocument()
       const listElements = screen.getAllByRole('list')
-      // Several other list elements on DOM get the related collections list
       const relatedColList = listElements[3]
 
-      // Get list-items for each individual related collections
       const relatedCollections = within(relatedColList).getAllByRole('listitem')
 
       expect(relatedCollections.length).toEqual(3)
@@ -160,8 +159,9 @@ describe('OrderStatus component', () => {
 
       await waitFor(() => {
         expect(onChangePath).toHaveBeenCalledTimes(1)
-        expect(onChangePath).toHaveBeenCalledWith('/search?test=source_link')
       })
+
+      expect(onChangePath).toHaveBeenCalledWith('/search?test=source_link')
     })
   })
 })

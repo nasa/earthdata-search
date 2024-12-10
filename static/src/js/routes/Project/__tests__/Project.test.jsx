@@ -9,6 +9,7 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
+import { Helmet } from 'react-helmet'
 
 import { MemoryRouter } from 'react-router-dom'
 import * as AppConfig from '../../../../../../sharedUtils/config'
@@ -185,10 +186,11 @@ describe('Project component', () => {
 
       await waitFor(() => {
         expect(document.title).toEqual('Test Project')
-        expect(screen.getByTestId('mocked-overrideTemporalModalContainer')).toBeInTheDocument()
-        expect(screen.getByTestId('mocked-sidebarContainer')).toBeInTheDocument()
-        expect(screen.getByTestId('mocked-mapContainer')).toBeInTheDocument()
       })
+
+      expect(screen.getByTestId('mocked-overrideTemporalModalContainer')).toBeInTheDocument()
+      expect(screen.getByTestId('mocked-sidebarContainer')).toBeInTheDocument()
+      expect(screen.getByTestId('mocked-mapContainer')).toBeInTheDocument()
     })
   })
 
@@ -325,23 +327,15 @@ describe('Project component', () => {
 
       setup()
 
+      let helmet
       await waitFor(() => {
-        // Document title
-        expect(document.title).toEqual('Test Project')
-
-        // Document meta elements
-        const metaTitleElement = document.querySelector('[name="title"]')
-
-        expect(metaTitleElement).toHaveAttribute('content', 'Test Project')
-
-        const metaBotsElement = document.querySelector('[name="robots"]')
-
-        expect(metaBotsElement).toHaveAttribute('content', 'noindex, nofollow')
-
-        const metaLinkElement = document.querySelector('link[rel="canonical"]')
-
-        expect(metaLinkElement).toHaveAttribute('href', 'https://search.earthdata.nasa.gov')
+        helmet = Helmet.peek()
       })
+
+      expect(helmet.title).toBe('Test Project')
+      expect(helmet.metaTags.find((tag) => tag.name === 'title').content).toBe('Test Project')
+      expect(helmet.metaTags.find((tag) => tag.name === 'robots').content).toBe('noindex, nofollow')
+      expect(helmet.linkTags.find((tag) => tag.rel === 'canonical').href).toContain('https://search.earthdata.nasa.gov')
     })
   })
 })

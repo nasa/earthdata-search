@@ -9,17 +9,6 @@ import userEvent from '@testing-library/user-event'
 import { Dropdown } from 'react-bootstrap'
 import { MoreActionsDropdown } from '../MoreActionsDropdown'
 
-beforeEach(() => {
-  const rootNode = document.createElement('div')
-  rootNode.id = 'root'
-  document.body.appendChild(rootNode)
-})
-
-afterEach(() => {
-  const rootNode = document.getElementById('root')
-  document.body.removeChild(rootNode)
-})
-
 const setup = (overrideProps) => {
   const user = userEvent.setup()
   const props = {

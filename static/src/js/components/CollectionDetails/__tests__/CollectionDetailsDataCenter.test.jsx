@@ -1,17 +1,11 @@
 import React from 'react'
 
-import {
-  act,
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 
 import CollectionDetailsDataCenter from '../CollectionDetailsDataCenter'
 
 const setup = (props) => {
-  act(() => {
-    render(<CollectionDetailsDataCenter {...props} />)
-  })
+  render(<CollectionDetailsDataCenter {...props} />)
 
   return {
     props

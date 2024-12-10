@@ -1,21 +1,18 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import * as tinyCookie from 'tiny-cookie'
+
+import actions from '../../../actions'
+import { AuthTokenContainer, mapDispatchToProps } from '../AuthTokenContainer'
 
 jest.mock('tiny-cookie', () => ({
   get: jest.fn()
 }))
 
-import actions from '../../../actions'
-import { AuthTokenContainer, mapDispatchToProps } from '../AuthTokenContainer'
-
 const setup = (props) => {
-  act(() => {
-    render(
-      <AuthTokenContainer {...props} />
-    )
-  })
+  render(
+    <AuthTokenContainer {...props} />
+  )
 }
 
 beforeEach(() => {

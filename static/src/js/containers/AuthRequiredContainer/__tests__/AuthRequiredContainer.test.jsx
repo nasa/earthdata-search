@@ -1,16 +1,15 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import * as tinyCookie from 'tiny-cookie'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+
+import { AuthRequiredContainer, mapStateToProps } from '../AuthRequiredContainer'
 
 jest.mock('tiny-cookie', () => ({
   get: jest.fn(),
   set: jest.fn(),
   remove: jest.fn()
 }))
-
-import { AuthRequiredContainer, mapStateToProps } from '../AuthRequiredContainer'
 
 const setup = (overrideProps) => {
   const props = {
@@ -19,11 +18,9 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  act(() => {
-    render(
-      <AuthRequiredContainer {...props} />
-    )
-  })
+  render(
+    <AuthRequiredContainer {...props} />
+  )
 }
 
 beforeEach(() => {

@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  act,
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import RelatedUrlsModal from '../RelatedUrlsModal'
@@ -131,9 +127,7 @@ const setup = (overrides) => {
     onToggleRelatedUrlsModal,
     ...overrideProps
   }
-  act(() => {
-    render(<RelatedUrlsModal {...props} />)
-  })
+  render(<RelatedUrlsModal {...props} />)
 
   return {
     onToggleRelatedUrlsModal

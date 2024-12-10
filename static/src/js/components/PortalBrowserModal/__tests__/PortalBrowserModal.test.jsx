@@ -2,6 +2,9 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
+import { PortalBrowserModal } from '../PortalBrowserModal'
+import { PortalList } from '../PortalList'
+
 jest.mock('../PortalList', () => ({
   PortalList: jest.fn(({ children }) => (
     <mock-PortalList data-testid="PortalList">
@@ -9,9 +12,6 @@ jest.mock('../PortalList', () => ({
     </mock-PortalList>
   ))
 }))
-
-import { PortalBrowserModal } from '../PortalBrowserModal'
-import { PortalList } from '../PortalList'
 
 describe('PortalBrowserModal component', () => {
   test('renders a PortalList component', () => {

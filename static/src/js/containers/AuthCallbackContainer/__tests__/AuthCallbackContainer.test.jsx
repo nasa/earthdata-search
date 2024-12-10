@@ -1,11 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import * as tinyCookie from 'tiny-cookie'
-
-jest.mock('tiny-cookie', () => ({
-  set: jest.fn()
-}))
 
 import {
   AuthCallbackContainer,
@@ -13,6 +8,10 @@ import {
   mapStateToProps
 } from '../AuthCallbackContainer'
 import actions from '../../../actions'
+
+jest.mock('tiny-cookie', () => ({
+  set: jest.fn()
+}))
 
 const setup = (overrideProps) => {
   const props = {
@@ -23,11 +22,9 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  act(() => {
-    render(
-      <AuthCallbackContainer {...props} />
-    )
-  })
+  render(
+    <AuthCallbackContainer {...props} />
+  )
 
   return {
     props

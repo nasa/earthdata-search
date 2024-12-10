@@ -1,5 +1,4 @@
 import React from 'react'
-import { act } from 'react-dom/test-utils'
 import {
   render,
   screen,
@@ -26,9 +25,7 @@ afterEach(() => {
 describe('usePortalLogo', () => {
   describe('when a portal is not provided', () => {
     test('does not generate a src', async () => {
-      act(() => {
-        render(<TestComponent />)
-      })
+      render(<TestComponent />)
 
       await waitFor(() => {
         expect(screen.getByTestId('test-component').textContent).toEqual('')
@@ -39,9 +36,7 @@ describe('usePortalLogo', () => {
   describe('when a portal is provided', () => {
     describe('when the portal does not exist', () => {
       test('does not generate a src', async () => {
-        act(() => {
-          render(<TestComponent portalId="invalid" />)
-        })
+        render(<TestComponent portalId="invalid" />)
 
         await waitFor(() => {
           expect(screen.getByTestId('test-component').textContent).toEqual('')
@@ -51,9 +46,7 @@ describe('usePortalLogo', () => {
 
     describe('when the portalId does not exist', () => {
       test('does not generate a src', async () => {
-        act(() => {
-          render(<TestComponent portalId="test" />)
-        })
+        render(<TestComponent portalId="test" />)
 
         await waitFor(() => {
           expect(screen.getByTestId('test-component').textContent).toEqual('')
@@ -63,9 +56,7 @@ describe('usePortalLogo', () => {
 
     describe('when the portal exists', () => {
       test('adds the correct src', async () => {
-        act(() => {
-          render(<TestComponent portalId="soos" />)
-        })
+        render(<TestComponent portalId="soos" />)
 
         await waitFor(() => {
           expect(screen.getByTestId('test-component').textContent).toEqual('soos_logo_path')
@@ -76,26 +67,19 @@ describe('usePortalLogo', () => {
     describe('when the portal exists and has already been cached', () => {
       test('adds the correct src', async () => {
         // TODO Figure out if we can mock/spy on the import to see how many times its called
-        let rerender
-        act(() => {
-          ({ rerender } = render(<TestComponent portalId="soos" />))
-        })
+        const { rerender } = render(<TestComponent portalId="soos" />)
 
         await waitFor(() => {
           expect(screen.getByTestId('test-component').textContent).toEqual('soos_logo_path')
         })
 
-        act(() => {
-          rerender(<TestComponent portalId="podaac" />)
-        })
+        rerender(<TestComponent portalId="podaac" />)
 
         await waitFor(() => {
           expect(screen.getByTestId('test-component').textContent).toEqual('podaac_logo_path')
         })
 
-        act(() => {
-          rerender(<TestComponent portalId="soos" />)
-        })
+        rerender(<TestComponent portalId="soos" />)
 
         await waitFor(() => {
           expect(screen.getByTestId('test-component').textContent).toEqual('soos_logo_path')

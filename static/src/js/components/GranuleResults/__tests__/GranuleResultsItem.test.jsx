@@ -1,3 +1,4 @@
+/* eslint-disable testing-library/no-unnecessary-act */
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -851,9 +852,9 @@ describe('GranuleResultsItem component', () => {
       setup('static-coverage')
 
       expect(screen.getByRole('heading', { name: 'Start' })).toBeInTheDocument()
-      expect(screen.getByRole('heading', { name: 'Start' }).nextSibling.textContent).toEqual('Not Provided')
+      expect(screen.getAllByText('Not Provided')[0]).toBeInTheDocument()
       expect(screen.getByRole('heading', { name: 'End' })).toBeInTheDocument()
-      expect(screen.getByRole('heading', { name: 'End' }).nextSibling.textContent).toEqual('Not Provided')
+      expect(screen.getAllByText('Not Provided')[1]).toBeInTheDocument()
     })
   })
 

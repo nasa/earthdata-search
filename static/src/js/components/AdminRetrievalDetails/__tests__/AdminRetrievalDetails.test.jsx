@@ -2,8 +2,7 @@ import React from 'react'
 import {
   render,
   screen,
-  getByRole,
-  getAllByRole
+  within
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
@@ -132,10 +131,13 @@ describe('AdminRetrievalDetails component', () => {
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(9)).toHaveTextContent('2023-07-18T17:54:22.000Z')
       expect(screen.getAllByTestId('admin-retrieval-details__orders-table').length).toEqual(1)
       expect(screen.getAllByTestId('admin-retrieval-details__order-row').length).toEqual(2)
-      expect(getAllByRole(screen.getAllByTestId('admin-retrieval-details__order-row').at(0), 'cell').at(1)).toHaveTextContent('5')
-      expect(getAllByRole(screen.getAllByTestId('admin-retrieval-details__order-row').at(0), 'cell').at(2)).toHaveTextContent('40058')
-      expect(getAllByRole(screen.getAllByTestId('admin-retrieval-details__order-row').at(0), 'cell').at(3)).toHaveTextContent('ECHO ORDERS')
-      expect(getAllByRole(screen.getAllByTestId('admin-retrieval-details__order-row').at(0), 'cell').at(4)).toHaveTextContent('creating')
+      const rows = screen.getAllByTestId('admin-retrieval-details__order-row')
+      const firstRowCells = within(rows[0]).getAllByRole('cell')
+
+      expect(firstRowCells[1]).toHaveTextContent('5')
+      expect(firstRowCells[2]).toHaveTextContent('40058')
+      expect(firstRowCells[3]).toHaveTextContent('ECHO ORDERS')
+      expect(firstRowCells[4]).toHaveTextContent('creating')
     })
 
     test('clicking on the Requeue button calls onRequeueOrder', async () => {
@@ -168,8 +170,8 @@ describe('AdminRetrievalDetails component', () => {
         }
       })
 
-      const { container } = renderContainer(props)
-      await user.click(getByRole(container, 'button', { value: { text: /Requeue/ } }))
+      renderContainer(props)
+      await user.click(screen.getByRole('button', { name: /Requeue/ }))
 
       expect(props.onRequeueOrder).toHaveBeenCalledTimes(1)
       expect(props.onRequeueOrder).toHaveBeenCalledWith(5)

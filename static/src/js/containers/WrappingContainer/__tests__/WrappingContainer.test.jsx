@@ -30,13 +30,14 @@ beforeEach(() => {
 describe('WrappingContainer component', () => {
   test('renders container and the children', async () => {
     setup()
-    expect(screen.getByTestId('test-child').parentElement.className).toEqual('wrapping-container')
+
+    expect(screen.getByTestId('parent-container')).toHaveClass('wrapping-container')
   })
 
   describe('when in a route that does not include the map', () => {
     test('does not render classname on saved projects', async () => {
       setup(['/contact-info'])
-      expect(screen.getByTestId('test-child').parentElement.className).toEqual('wrapping-container')
+      expect(screen.getByTestId('parent-container')).toHaveClass('wrapping-container')
     })
   })
 
@@ -45,7 +46,7 @@ describe('WrappingContainer component', () => {
       test('does not include map classname on saved projects', async () => {
         setup(['/projects'])
 
-        expect(screen.getByTestId('test-child').parentElement.className).toEqual('wrapping-container')
+        expect(screen.getByTestId('parent-container')).toHaveClass('wrapping-container')
       })
 
       test('includes map classname on project page', async () => {
@@ -56,7 +57,8 @@ describe('WrappingContainer component', () => {
 
         setup(mockLocation)
 
-        expect(screen.getByTestId('test-child').parentElement.className).toEqual('wrapping-container wrapping-container--map-page')
+        expect(screen.getByTestId('parent-container'))
+          .toHaveClass('wrapping-container', 'wrapping-container--map-page')
       })
     })
 
@@ -64,7 +66,8 @@ describe('WrappingContainer component', () => {
       test('includes map classname on search route', async () => {
         setup(['/search'])
 
-        expect(screen.getByTestId('test-child').parentElement.className).toEqual('wrapping-container wrapping-container--map-page')
+        expect(screen.getByTestId('parent-container'))
+          .toHaveClass('wrapping-container', 'wrapping-container--map-page')
       })
     })
   })

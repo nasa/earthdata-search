@@ -1,6 +1,11 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
+import Panels from '../Panels'
+import { PanelSection } from '../PanelSection'
+import { PanelGroup } from '../PanelGroup'
+import { PanelItem } from '../PanelItem'
+
 jest.mock('../PanelSection', () => ({
   PanelSection: jest.fn(({ children }) => (
     <mock-PanelSection data-testid="PanelSection">
@@ -24,11 +29,6 @@ jest.mock('../PanelItem', () => ({
     </mock-PanelItem>
   ))
 }))
-
-import Panels from '../Panels'
-import { PanelSection } from '../PanelSection'
-import { PanelGroup } from '../PanelGroup'
-import { PanelItem } from '../PanelItem'
 
 const setup = (renderMethod, overrideProps = {}) => {
   const props = {

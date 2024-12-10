@@ -60,8 +60,9 @@ describe('CollectionResultsList component', () => {
 
     await waitFor(() => {
       expect(onViewCollectionGranules).toHaveBeenCalledWith('collectionId1')
-      expect(onViewCollectionGranules).toHaveBeenCalledTimes(1)
     })
+
+    expect(onViewCollectionGranules).toHaveBeenCalledTimes(1)
   })
 
   test('renders the add button under PortalFeatureContainer', async () => {
@@ -160,10 +161,11 @@ describe('CollectionResultsList component', () => {
 
     await waitFor(() => {
       expect(image.src).toEqual(retrieveThumbnailResponse)
-      expect(image.alt).toEqual('Thumbnail for Test Collection')
-      expect(image.height).toEqual(85)
-      expect(image.width).toEqual(85)
     })
+
+    expect(image.alt).toEqual('Thumbnail for Test Collection')
+    expect(image.height).toEqual(85)
+    expect(image.width).toEqual(85)
   })
 
   test('renders thumbnail correctly with default image', async () => {
@@ -178,10 +180,11 @@ describe('CollectionResultsList component', () => {
     const image = screen.getByRole('img', { name: 'Thumbnail for Test Collection' })
     await waitFor(() => {
       expect(image.src).toEqual('http://testing-page/default-image')
-      expect(image.alt).toEqual('Thumbnail for Test Collection')
-      expect(image.height).toEqual(85)
-      expect(image.width).toEqual(85)
     })
+
+    expect(image.alt).toEqual('Thumbnail for Test Collection')
+    expect(image.height).toEqual(85)
+    expect(image.width).toEqual(85)
   })
 
   test('renders title correctly', async () => {
@@ -592,8 +595,9 @@ describe('CollectionResultsList component', () => {
 
             await waitFor(() => {
               expect(screen.getByText('CWIC')).toBeInTheDocument()
-              expect(screen.getByText('GEOSS')).toBeInTheDocument()
             })
+
+            expect(screen.getByText('GEOSS')).toBeInTheDocument()
           })
 
           test('renders a tooltips correctly', async () => {
@@ -635,11 +639,12 @@ describe('CollectionResultsList component', () => {
 
       await waitFor(() => {
         expect(props.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
-        expect(props.onMetricsAddCollectionProject).toHaveBeenCalledWith({
-          collectionConceptId: 'collectionId1',
-          view: 'list',
-          page: 'collections'
-        })
+      })
+
+      expect(props.onMetricsAddCollectionProject).toHaveBeenCalledWith({
+        collectionConceptId: 'collectionId1',
+        view: 'list',
+        page: 'collections'
       })
     })
 

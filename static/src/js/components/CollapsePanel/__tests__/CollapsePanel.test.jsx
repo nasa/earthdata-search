@@ -28,8 +28,8 @@ const setup = () => {
 
 describe('CollapsePanel component', () => {
   test('renders itself correctly', () => {
-    const { container } = setup()
-    expect(container.firstChild).toHaveClass('collapse-panel test-wrap-class')
+    setup()
+    expect(screen.getByTestId('collapse-panel')).toHaveClass('collapse-panel test-wrap-class')
   })
 
   test('renders it children correctly', () => {

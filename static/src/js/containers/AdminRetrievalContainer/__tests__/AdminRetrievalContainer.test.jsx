@@ -1,12 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 
-jest.mock('../../../components/AdminRetrieval/AdminRetrieval', () => jest.fn(({ children }) => (
-  <mock-AdminRetrieval data-testid="AdminRetrieval">
-    {children}
-  </mock-AdminRetrieval>
-)))
-
 import actions from '../../../actions'
 import AdminRetrieval from '../../../components/AdminRetrieval/AdminRetrieval'
 import {
@@ -14,6 +8,12 @@ import {
   mapDispatchToProps,
   mapStateToProps
 } from '../AdminRetrievalContainer'
+
+jest.mock('../../../components/AdminRetrieval/AdminRetrieval', () => jest.fn(({ children }) => (
+  <mock-AdminRetrieval data-testid="AdminRetrieval">
+    {children}
+  </mock-AdminRetrieval>
+)))
 
 describe('mapDispatchToProps', () => {
   test('onFetchAdminRetrieval calls actions.fetchAdminRetrieval', () => {

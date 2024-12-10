@@ -1,6 +1,5 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import nock from 'nock'
 import { v4 as uuidv4 } from 'uuid'
 import LoggerRequest from '../../../util/request/loggerRequest'
@@ -15,11 +14,9 @@ beforeEach(() => {
 })
 
 const setup = (props) => {
-  act(() => {
-    render(
-      <NotFound {...props} />
-    )
-  })
+  render(
+    <NotFound {...props} />
+  )
 }
 
 describe('NotFound component', () => {

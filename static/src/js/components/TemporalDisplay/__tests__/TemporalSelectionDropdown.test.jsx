@@ -100,19 +100,19 @@ describe('TemporalSelectionDropdown component', () => {
   test('on load should be closed on initial render', () => {
     setup()
 
-    expect(screen.queryByRole('button')).toBeInTheDocument()
+    expect(screen.getByRole('button')).toBeInTheDocument()
     expect(screen.queryByLabelText('Start')).not.toBeInTheDocument()
   })
 
   test('when clicked toggles the state of show ', async () => {
-    const user = userEvent.setup()
+    const { click } = userEvent.setup()
     setup({})
 
     const btn = screen.getByRole('button', { name: 'Open temporal filters' })
     expect(btn).toBeInTheDocument()
 
     await waitFor(async () => {
-      await user.click(btn)
+      await click(btn)
     })
 
     const startLabel = screen.getByText(/Start/i)
@@ -121,12 +121,12 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the start date correctly when an valid date is passed', async () => {
-    const user = userEvent.setup()
+    const { click, type } = userEvent.setup()
 
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -135,7 +135,7 @@ describe('TemporalSelectionDropdown component', () => {
     const startTestObj = '2012-01-01 12:00:00'
 
     await act(async () => {
-      await user.type(startDateInput, startTestObj)
+      await type(startDateInput, startTestObj)
     })
 
     expect(window.console.warn).toHaveBeenCalledTimes(19)
@@ -145,12 +145,12 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the end date correctly when an valid date is passed', async () => {
-    const user = userEvent.setup()
+    const { click, type } = userEvent.setup()
 
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -159,7 +159,7 @@ describe('TemporalSelectionDropdown component', () => {
     const endTestObj = '2015-01-01 12:00:00'
 
     await act(async () => {
-      await user.type(endDateInput, endTestObj)
+      await type(endDateInput, endTestObj)
     })
 
     expect(window.console.warn).toHaveBeenCalledTimes(18)
@@ -169,12 +169,12 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the state correctly with an invalid start date', async () => {
-    const user = userEvent.setup()
+    const { clear, click, type } = userEvent.setup()
 
     setup()
 
     await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -185,7 +185,7 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = moment.utc('2012-01-02 12:00:00').format('YYYY-MM-DD HH:mm:ss')
 
     await act(async () => {
-      await user.type(startDateInput, invalidDate)
+      await type(startDateInput, invalidDate)
     })
 
     expect(window.console.warn).toHaveBeenCalledTimes(21)
@@ -193,9 +193,9 @@ describe('TemporalSelectionDropdown component', () => {
     expect(screen.getByText(/Invalid start date/i)).toBeInTheDocument()
 
     await act(async () => {
-      await user.clear(startDateInput)
-      await user.type(startDateInput, validStartDate)
-      await user.type(endDateInput, validEndDate)
+      await clear(startDateInput)
+      await type(startDateInput, validStartDate)
+      await type(endDateInput, validEndDate)
     })
 
     expect(startDateInput).toHaveValue(validStartDate)
@@ -204,7 +204,7 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('clears the values onClearClick and converts full utc datetime format to expected format', async () => {
     const onChangeQueryMock = jest.fn()
-    const user = userEvent.setup()
+    const { click } = userEvent.setup()
 
     const validStartDate = '2019-03-29T00:00:00.000Z'
     const validEndDate = '2019-03-30T00:00:00.000Z'
@@ -218,7 +218,7 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     await waitFor(async () => {
-      await user.click(screen.getAllByRole('button', { name: 'Open temporal filters' }).at(0))
+      await click(screen.getAllByRole('button', { name: 'Open temporal filters' }).at(0))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -229,11 +229,11 @@ describe('TemporalSelectionDropdown component', () => {
 
     const clearBtn = screen.getAllByRole('button', { name: 'Clear' }).at(2)
     await waitFor(async () => {
-      await user.click(clearBtn)
+      await click(clearBtn)
     })
 
     await waitFor(async () => {
-      await user.click(await screen.getByRole('button', { name: 'Open temporal filters' }))
+      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const updatedStartDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -247,7 +247,7 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('applies the values onApplyClick', async () => {
     const onChangeQueryMock = jest.fn()
-    const user = userEvent.setup()
+    const { click, type } = userEvent.setup()
 
     setup({
       onChangeQuery: onChangeQueryMock
@@ -260,17 +260,17 @@ describe('TemporalSelectionDropdown component', () => {
     const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
     await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
     await act(async () => {
-      await user.type(startDateInput, validStartDate)
-      await user.type(endDateInput, validEndDate)
+      await type(startDateInput, validStartDate)
+      await type(endDateInput, validEndDate)
 
-      await user.click(startDateInput)
+      await click(startDateInput)
     })
 
     expect(window.console.warn).toHaveBeenCalledTimes(36)
@@ -281,7 +281,7 @@ describe('TemporalSelectionDropdown component', () => {
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
     await waitFor(async () => {
-      await user.click(applyBtn)
+      await click(applyBtn)
     })
 
     expect(onChangeQueryMock).toHaveBeenCalledWith({
@@ -299,7 +299,7 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('applies the values for leap years onApplyClick', async () => {
     const onChangeQueryMock = jest.fn()
-    const user = userEvent.setup()
+    const { click } = userEvent.setup()
 
     setup({
       onChangeQuery: onChangeQueryMock
@@ -309,31 +309,31 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2024-06-15 23:59:59'
 
     await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startField = await screen.findByRole('textbox', { name: 'Start Date' })
     const endField = await screen.findByRole('textbox', { name: 'End Date' })
 
     // Select the start date
-    await user.click(startField)
-    await user.click((await screen.findAllByText('2021')).at(0))
-    await user.click(await screen.findByText('Jun'))
-    await user.click(await screen.findByText('15'))
+    await click(startField)
+    await click((await screen.findAllByText('2021')).at(0))
+    await click(await screen.findByText('Jun'))
+    await click(await screen.findByText('15'))
     expect(startField).toHaveValue(validStartDate)
 
     // Select the end date
-    await user.click(endField)
-    await user.click((await screen.findAllByText('2024')).at(0))
-    await user.click(await screen.findByText('Jun'))
-    await user.click((await screen.findAllByText('15')).at(1))
+    await click(endField)
+    await click((await screen.findAllByText('2024')).at(0))
+    await click(await screen.findByText('Jun'))
+    await click((await screen.findAllByText('15')).at(1))
     expect(endField).toHaveValue(validEndDate)
 
     // Select Recurring
-    await user.click(screen.getByLabelText('Recurring?'))
+    await click(screen.getByLabelText('Recurring?'))
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
-    await user.click(applyBtn)
+    await click(applyBtn)
 
     expect(onChangeQueryMock).toHaveBeenCalledWith({
       collection: {

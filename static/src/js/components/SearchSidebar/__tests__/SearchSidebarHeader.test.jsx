@@ -6,6 +6,15 @@ import {
   waitFor
 } from '@testing-library/react'
 
+import SearchSidebarHeader from '../SearchSidebarHeader'
+import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
+
+// eslint-disable-next-line import/no-unresolved
+import availablePortals from '../../../../../../portals/availablePortals.json'
+
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+
 jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => jest.fn(({ children }) => (
   <mock-SearchFormContainer data-testid="SearchFormContainer">
     {children}
@@ -20,14 +29,6 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 
 jest.mock('../../../../../../portals/idn/images/logo.png', () => ('idn_logo_path'))
 jest.mock('../../../../../../portals/soos/images/logo.png', () => ('soos_logo_path'))
-
-import SearchSidebarHeader from '../SearchSidebarHeader'
-import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
-import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
-
-import availablePortals from './availablePortalsMock.json'
-
-import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 function setup(overrideProps) {
   const props = {
@@ -71,17 +72,18 @@ describe('SearchSidebarHeader component', () => {
 
       await waitFor(() => {
         expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
-        expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
-          children: 'Leave Portal',
-          newPortal: {},
-          title: 'Leave Portal',
-          to: {
-            pathname: '/search',
-            search: '?portal=idn'
-          },
-          updatePath: true
-        }), {})
       })
+
+      expect(PortalLinkContainer).toHaveBeenCalledWith(expect.objectContaining({
+        children: 'Leave Portal',
+        newPortal: {},
+        title: 'Leave Portal',
+        to: {
+          pathname: '/search',
+          search: '?portal=idn'
+        },
+        updatePath: true
+      }), {})
     })
 
     test('renders the portal logo and removes the spinner', async () => {
@@ -93,17 +95,19 @@ describe('SearchSidebarHeader component', () => {
         }
       })
 
+      let image
+
       await waitFor(() => {
-        const image = screen.getByTestId('portal-logo')
+        image = screen.getByTestId('portal-logo')
         expect(image).toBeDefined()
-
-        fireEvent.load(image)
-
-        expect(screen.queryByTestId('portal-logo-spinner')).not.toBeInTheDocument()
-
-        expect(screen.getByTestId('portal-logo')).toHaveAttribute('src', 'soos_logo_path')
-        expect(screen.getByTestId('portal-logo')).toHaveClass('search-sidebar-header__thumbnail--is-loaded')
       })
+
+      fireEvent.load(image)
+
+      expect(screen.queryByTestId('portal-logo-spinner')).not.toBeInTheDocument()
+
+      expect(screen.getByTestId('portal-logo')).toHaveAttribute('src', 'soos_logo_path')
+      expect(screen.getByTestId('portal-logo')).toHaveClass('search-sidebar-header__thumbnail--is-loaded')
     })
 
     test('renders the portal logo with a moreInfoUrl', async () => {

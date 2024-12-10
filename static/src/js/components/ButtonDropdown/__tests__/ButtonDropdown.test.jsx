@@ -4,7 +4,6 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
 import userEvent from '@testing-library/user-event'
 
 import ButtonDropdown from '../ButtonDropdown'
@@ -17,11 +16,9 @@ const setup = () => {
     className: 'some-test-classname'
   }
 
-  act(() => {
-    render(
-      <ButtonDropdown {...props}>Button Text</ButtonDropdown>
-    )
-  })
+  render(
+    <ButtonDropdown {...props}>Button Text</ButtonDropdown>
+  )
 }
 
 describe('ButtonDropdown component', () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { act, render } from '@testing-library/react'
+import { render } from '@testing-library/react'
 
 import { MapContainer } from 'react-leaflet'
 
@@ -37,9 +37,7 @@ const setup = (overrides) => {
     },
     ...overrideProps
   }
-  act(() => {
-    render(<CollectionDetailsMinimap {...props} />)
-  })
+  render(<CollectionDetailsMinimap {...props} />)
 }
 
 describe('CollectionDetailsBody component', () => {
