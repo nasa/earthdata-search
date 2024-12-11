@@ -158,6 +158,9 @@ const TourSteps = ({
               Skip for now
             </Button>
           </div>
+          <p className="search-tour__footnote">
+            The tour steps can be navigated using the arrow keys.
+          </p>
         </div>
       ),
       disableBeacon: true,

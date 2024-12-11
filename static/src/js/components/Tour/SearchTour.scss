@@ -48,6 +48,17 @@
     align-items: center;
   }
 
+  &__footnote {
+    font-size: 0.775rem;
+    font-style: italic;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &__tour-toggle {
     display: flex;
     align-items: center;
