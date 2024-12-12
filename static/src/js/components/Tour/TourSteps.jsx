@@ -7,6 +7,11 @@ import {
   FaQuestion
 } from 'react-icons/fa'
 import PropTypes from 'prop-types'
+import {
+  ArrowFilledLeft,
+  ArrowFilledRight
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import ExternalLink from '../ExternalLink/ExternalLink'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Button from '../Button/Button'
@@ -159,7 +164,9 @@ const TourSteps = ({
             </Button>
           </div>
           <p className="search-tour__footnote">
-            The tour steps can be navigated using the arrow keys.
+            The tour steps can be navigated using the arrow keys
+            <EDSCIcon icon={ArrowFilledLeft} />
+            <EDSCIcon icon={ArrowFilledRight} />
           </p>
         </div>
       ),

@@ -53,20 +53,6 @@ const SearchTour = () => {
       }
     }
 
-    // Step 8 refers to the '+' and 'info' buttons which are only visible when
-    // a collection is hovered. This adds and cleans up the class to make them
-    // visible for this step.
-    if (stepIndex === 8) {
-      const firstItem = document.querySelector('.collection-results-item__link')
-      if (firstItem) {
-        firstItem.classList.add('collection-results-item__link--active')
-
-        return () => {
-          firstItem.classList.remove('collection-results-item__link--active')
-        }
-      }
-    }
-
     // On the step where we highlight the map, we are creating an element
     // to overlay the visible portion of the map and highlighting that
     // element with the tour spotlight
