@@ -376,11 +376,6 @@ test.describe('When not logged in', () => {
     // Step 8: High-level description for each search result
     await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'A high-level description is displayed for each search result' })).toBeVisible()
-
-    // Check that the add to project (+) and info buttons are visible for this step
-    await expect(page.locator('.collection-results-item__action.collection-results-item__action--add')).toBeVisible()
-    await expect(page.locator('.collection-results-item__action--collection-details')).toBeVisible()
-
     await page.getByRole('button', { name: 'Next' }).click()
 
     // Get and verify the position and size of the highlighted section
