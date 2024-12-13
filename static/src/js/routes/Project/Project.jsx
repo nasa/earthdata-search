@@ -62,8 +62,8 @@ export const Project = (props) => {
     return (
       <>
         <Helmet>
-          <title>{name || 'Untitled Project'}</title>
-          <meta data-testid="meta-title" name="title" content={name || 'Untitled Project'} />
+          <title>Saved Projects</title>
+          <meta data-testid="meta-title" name="title" content="Saved Projects" />
           <meta data-testid="meta-robots" name="robots" content="noindex, nofollow" />
           <link data-testid="canonical-link" rel="canonical" href={`${edscHost}`} />
         </Helmet>

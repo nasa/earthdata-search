@@ -471,7 +471,6 @@ describe('AccessMethod component', () => {
 
       const harmonyTypeInput = screen.getByTestId('collectionId_access-method__harmony_type')
 
-      // Get the radio input within the label
       const radioInput = within(harmonyTypeInput).getByRole('radio')
       expect(radioInput.checked).toBe(true)
     })
