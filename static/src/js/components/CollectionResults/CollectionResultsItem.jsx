@@ -27,8 +27,8 @@ import { pluralize } from '../../util/pluralize'
 import { retrieveThumbnail } from '../../util/retrieveThumbnail'
 
 import Button from '../Button/Button'
-import CustomizableIcons from '../CustomizableIcons/CustomizableIcons'
-import AvailableCustomizationsTooltipIcons from '../CustomizableIcons/AvailableCustomizationsTooltipIcons'
+import AvailableCustomizationsIcons from '../AvailableCustomizationsIcons/AvailableCustomizationsIcons'
+import AvailableCustomizationsTooltipIcons from '../AvailableCustomizationsIcons/AvailableCustomizationsTooltipIcons'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import MetaIcon from '../MetaIcon/MetaIcon'
 import Spinner from '../Spinner/Spinner'
@@ -174,7 +174,7 @@ export const CollectionResultsItem = forwardRef(({
   )
 
   const availableCustomizationsIcons = (
-    <CustomizableIcons
+    <AvailableCustomizationsIcons
       hasSpatialSubsetting={hasSpatialSubsetting}
       hasVariables={hasVariables}
       hasTransforms={hasTransforms}

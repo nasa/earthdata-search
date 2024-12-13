@@ -8,8 +8,8 @@ import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import ExternalLink from '../../ExternalLink/ExternalLink'
-import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
-import AvailableCustomizationsTooltipIcons from '../../CustomizableIcons/AvailableCustomizationsTooltipIcons'
+import AvailableCustomizationsIcons from '../../AvailableCustomizationsIcons/AvailableCustomizationsIcons'
+import AvailableCustomizationsTooltipIcons from '../../AvailableCustomizationsIcons/AvailableCustomizationsTooltipIcons'
 import MetaIcon from '../../MetaIcon/MetaIcon'
 
 import './AccessMethodRadio.scss'
@@ -56,7 +56,7 @@ export const AccessMethodRadio = ({
   } = customizationOptions || {}
 
   const availableCustomizationsIcons = (
-    <CustomizableIcons
+    <AvailableCustomizationsIcons
       hasSpatialSubsetting={hasSpatialSubsetting}
       hasVariables={hasVariables}
       hasTransforms={hasTransforms}
