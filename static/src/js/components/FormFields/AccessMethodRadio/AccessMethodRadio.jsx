@@ -9,6 +9,7 @@ import { FaQuestionCircle } from 'react-icons/fa'
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import ExternalLink from '../../ExternalLink/ExternalLink'
 import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
+import AvailableCustomizationsTooltipIcons from '../../CustomizableIcons/AvailableCustomizationsTooltipIcons'
 import MetaIcon from '../../MetaIcon/MetaIcon'
 
 import './AccessMethodRadio.scss'
@@ -65,6 +66,17 @@ export const AccessMethodRadio = ({
     />
   )
 
+  const customComponentsToolTips = (
+    <AvailableCustomizationsTooltipIcons
+      hasSpatialSubsetting={hasSpatialSubsetting}
+      hasVariables={hasVariables}
+      hasTransforms={hasTransforms}
+      hasFormats={hasFormats}
+      hasTemporalSubsetting={hasTemporalSubsetting}
+      hasCombine={hasCombine}
+    />
+  )
+
   return (
     <label
       className={labelClassName}
@@ -103,6 +115,7 @@ export const AccessMethodRadio = ({
                   icon={Settings}
                   label="Customize"
                   tooltipClassName="collection-results-item__tooltip text-align-left"
+                  tooltipContent={customComponentsToolTips}
                   metadata={availableCustomizationsIcons}
                 />
               )

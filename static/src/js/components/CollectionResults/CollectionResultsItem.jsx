@@ -28,7 +28,7 @@ import { retrieveThumbnail } from '../../util/retrieveThumbnail'
 
 import Button from '../Button/Button'
 import CustomizableIcons from '../CustomizableIcons/CustomizableIcons'
-import AvailableCustomizationsToolTipIcons from '../CustomizableIcons/AvailableCustomizationsToolTipIcons'
+import AvailableCustomizationsTooltipIcons from '../CustomizableIcons/AvailableCustomizationsTooltipIcons'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import MetaIcon from '../MetaIcon/MetaIcon'
 import Spinner from '../Spinner/Spinner'
@@ -185,14 +185,13 @@ export const CollectionResultsItem = forwardRef(({
   )
 
   const customComponentsToolTips = (
-    <AvailableCustomizationsToolTipIcons
+    <AvailableCustomizationsTooltipIcons
       hasSpatialSubsetting={hasSpatialSubsetting}
       hasVariables={hasVariables}
       hasTransforms={hasTransforms}
       hasFormats={hasFormats}
       hasTemporalSubsetting={hasTemporalSubsetting}
       hasCombine={hasCombine}
-      forAccessMethodRadio={false}
     />
   )
 
