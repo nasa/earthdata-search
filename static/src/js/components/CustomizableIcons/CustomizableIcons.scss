@@ -1,33 +1,6 @@
 .customizable-icons {
   border-bottom: 1px solid $border-color;
 
-  &__meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.25rem;
-    margin-bottom: 0.25rem;
-  }
-
-  &__meta-item {
-    display: flex;
-    align-items: center;
-    margin-right: 0.5rem;
-    flex-shrink: 0;
-    font-size: 0.825rem;
-    font-weight: 500;
-    color: $color__carbon--70;
-    letter-spacing: 0.01em;
-  }
-
-  &__meta-icon {
-    color: $color__nasa-blue;
-    font-size: 0.75rem;
-    margin-right: 0;
-    &:hover {
-      color: $color__nasa-blue--shade;
-    }
-  }
-
   &__icon {
     margin-right: 0.25rem;
     position: relative;
@@ -38,6 +11,8 @@
     }
   }
 
+
+  // TODO these get removed or moved over
   &__tooltip {
     font-size: 0.75rem;
   }

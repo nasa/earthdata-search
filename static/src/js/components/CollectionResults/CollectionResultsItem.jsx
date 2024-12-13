@@ -8,9 +8,10 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import {
-  Plus,
+  CloudFill,
   Minus,
-  CloudFill
+  Plus,
+  Settings
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import {
@@ -27,6 +28,7 @@ import { retrieveThumbnail } from '../../util/retrieveThumbnail'
 
 import Button from '../Button/Button'
 import CustomizableIcons from '../CustomizableIcons/CustomizableIcons'
+import AvailableCustomizationsToolTipIcons from '../CustomizableIcons/AvailableCustomizationsToolTipIcons'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import MetaIcon from '../MetaIcon/MetaIcon'
 import Spinner from '../Spinner/Spinner'
@@ -171,6 +173,36 @@ export const CollectionResultsItem = forwardRef(({
     />
   )
 
+  const availableCustomizationsIcons = (
+    <CustomizableIcons
+      hasSpatialSubsetting={hasSpatialSubsetting}
+      hasVariables={hasVariables}
+      hasTransforms={hasTransforms}
+      hasFormats={hasFormats}
+      hasTemporalSubsetting={hasTemporalSubsetting}
+      hasCombine={hasCombine}
+    />
+  )
+
+  const customComponentsToolTips = (
+    <AvailableCustomizationsToolTipIcons
+      hasSpatialSubsetting={hasSpatialSubsetting}
+      hasVariables={hasVariables}
+      hasTransforms={hasTransforms}
+      hasFormats={hasFormats}
+      hasTemporalSubsetting={hasTemporalSubsetting}
+      hasCombine={hasCombine}
+      forAccessMethodRadio={false}
+    />
+  )
+
+  const supportsDataCustomizations = hasSpatialSubsetting
+    || hasVariables
+    || hasTransforms
+    || hasFormats
+    || hasTemporalSubsetting
+    || hasCombine
+
   const component = (
     <div
       className="collection-results-item"
@@ -233,15 +265,18 @@ export const CollectionResultsItem = forwardRef(({
                     />
                   )
                 }
-                <CustomizableIcons
-                  hasSpatialSubsetting={hasSpatialSubsetting}
-                  hasVariables={hasVariables}
-                  hasTransforms={hasTransforms}
-                  hasFormats={hasFormats}
-                  hasTemporalSubsetting={hasTemporalSubsetting}
-                  hasCombine={hasCombine}
-                  forAccessMethodRadio={false}
-                />
+                {
+                  supportsDataCustomizations && (
+                    <MetaIcon
+                      id="feature-icon-list-view__customize"
+                      icon={Settings}
+                      label="Customize"
+                      tooltipClassName="collection-results-item__tooltip text-align-left"
+                      tooltipContent={customComponentsToolTips}
+                      metadata={availableCustomizationsIcons}
+                    />
+                  )
+                }
                 {
                   cloudHosted && (
                     <MetaIcon

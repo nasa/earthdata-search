@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 
 import { OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { Check, Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import ExternalLink from '../../ExternalLink/ExternalLink'
 import CustomizableIcons from '../../CustomizableIcons/CustomizableIcons'
+import MetaIcon from '../../MetaIcon/MetaIcon'
 
 import './AccessMethodRadio.scss'
 
@@ -53,6 +54,17 @@ export const AccessMethodRadio = ({
     hasCombine = false
   } = customizationOptions || {}
 
+  const availableCustomizationsIcons = (
+    <CustomizableIcons
+      hasSpatialSubsetting={hasSpatialSubsetting}
+      hasVariables={hasVariables}
+      hasTransforms={hasTransforms}
+      hasFormats={hasFormats}
+      hasTemporalSubsetting={hasTemporalSubsetting}
+      hasCombine={hasCombine}
+    />
+  )
+
   return (
     <label
       className={labelClassName}
@@ -86,14 +98,12 @@ export const AccessMethodRadio = ({
             </span>
             {
               customizationOptions && (
-                <CustomizableIcons
-                  hasSpatialSubsetting={hasSpatialSubsetting}
-                  hasVariables={hasVariables}
-                  hasTransforms={hasTransforms}
-                  hasFormats={hasFormats}
-                  hasTemporalSubsetting={hasTemporalSubsetting}
-                  hasCombine={hasCombine}
-                  forAccessMethodRadio
+                <MetaIcon
+                  id="feature-icon-list-view__customize"
+                  icon={Settings}
+                  label="Customize"
+                  tooltipClassName="collection-results-item__tooltip text-align-left"
+                  metadata={availableCustomizationsIcons}
                 />
               )
             }

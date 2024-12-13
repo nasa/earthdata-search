@@ -145,16 +145,7 @@
     color: $color__carbon--70;
     letter-spacing: 0.01em;
   }
-
-  &__meta-icon {
-    color: $color__nasa-blue;
-    font-size: 0.75rem;
-
-    &:hover {
-      color: $color__nasa-blue--shade;
-    }
-  }
-
+  // TODO I don't think these meta label or detail are being used
   &__meta-label {
     display: none;
     margin-left: 0.25rem;
