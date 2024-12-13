@@ -31,8 +31,7 @@ export const CustomizableIcons = ({
   hasTransforms,
   hasFormats,
   hasTemporalSubsetting,
-  hasCombine,
-  iconClassname
+  hasCombine
 }) => (
   hasSpatialSubsetting
       || hasVariables
