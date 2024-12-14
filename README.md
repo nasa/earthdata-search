@@ -147,7 +147,7 @@ The local development environment for the static assets can be started by execut
 
 This will run the React application at [http://localhost:8080](http://localhost:8080) -- please see `Serverless Framework` below for enabling the 'server' side functionality.
 
-### Serverless Framework Locally
+### Serverless Framework
 
 The [serverless framework](https://serverless.com/framework/docs/providers/aws/) offers many plugins which allow for local development utilizing many of the services AWS offers. For the most part we only need API Gateway and Lambda for this application but there are plugins for many more services (a list of known exceptions will be maintained below).
 
