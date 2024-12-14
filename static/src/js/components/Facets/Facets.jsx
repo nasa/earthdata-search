@@ -47,7 +47,6 @@ const Facets = (props) => {
     featuresFacet.children.push({
       applied: featureFacets.availableInEarthdataCloud,
       title: 'Available in Earthdata Cloud',
-      description: 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)',
       type: 'feature'
     })
   }
@@ -65,7 +64,6 @@ const Facets = (props) => {
     featuresFacet.children.push({
       applied: featureFacets.mapImagery,
       title: 'Map Imagery',
-      description: 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)',
       type: 'feature'
     })
   }

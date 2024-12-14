@@ -38,7 +38,7 @@ describe('AvailableCustomizationsTooltipIcons component', () => {
     expect(iconListItemsCount).toEqual(6)
   })
 
-  describe('when some of the dat customizations are not supported', () => {
+  describe('when some of the the customizations are not supported', () => {
     test('those icons do not render', () => {
       setup({
         hasVariables: false,
