@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
 
-import AvailableCustomizationsIcons from '../AvailableCustomizationsIcons'
+import AvailableCustomizationsTooltipIcons from '../AvailableCustomizationsTooltipIcons'
 
 const setup = (overrideProps) => {
   const props = {
@@ -11,26 +11,31 @@ const setup = (overrideProps) => {
     hasFormats: true,
     hasTemporalSubsetting: true,
     hasCombine: true,
-    forAccessMethodRadio: false,
     ...overrideProps
   }
 
   return render(
-    <AvailableCustomizationsIcons {...props} />
+    <AvailableCustomizationsTooltipIcons {...props} />
   )
 }
 
-describe('AvailableCustomizationsIcons component', () => {
+describe('AvailableCustomizationsTooltipIcons component', () => {
   test('on load should contain all of the custom icons for the customizable options', () => {
     setup()
 
     // Ensure that each of the icons rendered
-    expect(screen.getByTitle('A white globe icon')).toBeInTheDocument()
     expect(screen.getByTitle('A white clock icon')).toBeInTheDocument()
     expect(screen.getByTitle('A white tags icon')).toBeInTheDocument()
     expect(screen.getByTitle('A white horizontal sliders icon')).toBeInTheDocument()
     expect(screen.getByTitle('A white file icon')).toBeInTheDocument()
     expect(screen.getByTitle('A white cubes icon')).toBeInTheDocument()
+  })
+
+  test('ensure Tool-Tip content are list items', () => {
+    setup()
+    const iconListItemsCount = screen.getAllByRole('listitem').length
+    // Ensure that each of the icons rendered
+    expect(iconListItemsCount).toEqual(6)
   })
 
   describe('when some of the dat customizations are not supported', () => {

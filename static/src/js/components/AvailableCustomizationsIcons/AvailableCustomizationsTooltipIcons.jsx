@@ -21,7 +21,6 @@ import './AvailableCustomizationsTooltipIcons.scss'
  * @param {boolean} hasFormats
  * @param {boolean} hasTemporalSubsetting
  * @param {boolean} hasCombine
- * @param {boolean} forAccessMethodRadio - indicates usage for AccessMethodRadio
  */
 export const availableCustomizationsTooltipIcons = ({
   hasSpatialSubsetting,
@@ -48,7 +47,7 @@ export const availableCustomizationsTooltipIcons = ({
           <li>
             <EDSCIcon
               className="available-customizations-tooltip-icons__tooltip-feature-icon"
-              title="A white icon"
+              title="A white globe icon"
               size="0.725rem"
               icon={FaGlobe}
             />
@@ -113,7 +112,7 @@ export const availableCustomizationsTooltipIcons = ({
           <li>
             <EDSCIcon
               className="available-customizations-tooltip-icons__tooltip-feature-icon"
-              title="A white boxes icon"
+              title="A white cubes icon"
               size="0.725rem"
               icon={FaCubes}
             />
