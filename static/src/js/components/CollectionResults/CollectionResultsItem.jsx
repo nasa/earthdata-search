@@ -184,7 +184,7 @@ export const CollectionResultsItem = forwardRef(({
     />
   )
 
-  const customComponentsToolTips = (
+  const availableCustomizationsTooltipIcons = (
     <AvailableCustomizationsTooltipIcons
       hasSpatialSubsetting={hasSpatialSubsetting}
       hasVariables={hasVariables}
@@ -271,7 +271,7 @@ export const CollectionResultsItem = forwardRef(({
                       icon={Settings}
                       label="Customize"
                       tooltipClassName="collection-results-item__tooltip text-align-left"
-                      tooltipContent={customComponentsToolTips}
+                      tooltipContent={availableCustomizationsTooltipIcons}
                       metadata={availableCustomizationsIcons}
                     />
                   )
