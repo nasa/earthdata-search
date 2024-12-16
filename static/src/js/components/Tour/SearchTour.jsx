@@ -70,7 +70,7 @@ const SearchTour = () => {
 
       overlayDiv = document.createElement('div')
       overlayDiv.style.width = `${widthDelta}px`
-      overlayDiv.classList.add('target-overlay')
+      overlayDiv.classList.add('search-tour__target-overlay')
 
       if (panelEl) {
         panelEl.appendChild(overlayDiv)
