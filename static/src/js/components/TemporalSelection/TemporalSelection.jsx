@@ -111,7 +111,7 @@ export class TemporalSelection extends Component {
       onRecurringToggle,
       onSubmitEnd,
       onSubmitStart,
-      setFieldValue,
+      setTemporal,
       size,
       temporal,
       validate
@@ -266,8 +266,8 @@ export class TemporalSelection extends Component {
                 }
                 onChange={
                   (value) => {
-                    setFieldValue('temporal.startDate', moment(temporal.startDate).year(value.min).toISOString())
-                    setFieldValue('temporal.endDate', moment(temporal.endDate).year(value.max).toISOString())
+                    setTemporal('temporal.startDate', moment(temporal.startDate).year(value.min).toISOString())
+                    setTemporal('temporal.endDate', moment(temporal.endDate).year(value.max).toISOString())
                   }
                 }
                 onChangeComplete={(value) => onChangeRecurring(value)}
@@ -288,7 +288,6 @@ TemporalSelection.defaultProps = {
   onInvalid: null,
   onRecurringToggle: null,
   onValid: null,
-  setFieldValue: null,
   size: '',
   validate: true
 }
@@ -303,7 +302,7 @@ TemporalSelection.propTypes = {
   onRecurringToggle: PropTypes.func,
   onSubmitEnd: PropTypes.func.isRequired,
   onSubmitStart: PropTypes.func.isRequired,
-  setFieldValue: PropTypes.func,
+  setTemporal: PropTypes.func.isRequired,
   onValid: PropTypes.func,
   size: PropTypes.string,
   temporal: PropTypes.shape({
