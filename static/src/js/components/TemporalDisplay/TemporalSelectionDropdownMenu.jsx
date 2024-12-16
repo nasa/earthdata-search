@@ -24,6 +24,7 @@ const TemporalSelectionDropdownMenu = ({
   onValid,
   setEndDate,
   setStartDate,
+  setTemporal,
   temporal
 }) => {
   const classes = {
@@ -64,6 +65,7 @@ const TemporalSelectionDropdownMenu = ({
         onChangeQuery={onChangeQuery}
         onSubmitStart={setStartDate}
         onSubmitEnd={setEndDate}
+        setTemporal={setTemporal}
         onValid={onValid}
         onInvalid={onInvalid}
       />
@@ -107,8 +109,7 @@ TemporalSelectionDropdownMenu.propTypes = {
   onRecurringToggle: PropTypes.func.isRequired,
   onValid: PropTypes.func.isRequired,
   setEndDate: PropTypes.func.isRequired,
-  setStartDate: PropTypes.func.isRequired,
-  temporal: PropTypes.shape({}).isRequired
+  setStartDate: PropTypes.func.isRequired
 }
 
 export default TemporalSelectionDropdownMenu

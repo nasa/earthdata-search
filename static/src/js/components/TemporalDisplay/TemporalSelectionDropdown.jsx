@@ -136,7 +136,6 @@ const TemporalSelectionDropdown = ({
 
     try {
       if (isChecked) {
-        // Toggle ON logic
         const {
           startDate: existingStartDate,
           endDate: existingEndDate
@@ -315,6 +314,23 @@ const TemporalSelectionDropdown = ({
             onValid={onValid}
             setEndDate={setEndDate}
             setStartDate={setStartDate}
+            setTemporal={
+              (path, value) => {
+                // If the path uses dot notation (e.g., 'temporal.startDate'), extract just the property name
+                const fieldName = path.includes('.') ? path.split('.')[1] : path
+
+                // If we're setting the whole temporal object, use it directly
+                if (path === 'temporal') {
+                  setTemporal(value)
+                } else {
+                  // Otherwise, update just the specific field while preserving other values
+                  setTemporal({
+                    ...temporal,
+                    [fieldName]: value
+                  })
+                }
+              }
+            }
             temporal={temporal}
           />
         )

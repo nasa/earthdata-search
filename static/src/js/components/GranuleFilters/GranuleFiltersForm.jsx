@@ -447,7 +447,7 @@ export const GranuleFiltersForm = (props) => {
                 format={temporalDateFormat}
                 temporal={temporal}
                 validate={false}
-                setFieldValue={setFieldValue}
+                setTemporal={setFieldValue}
                 onRecurringToggle={
                   (event) => {
                     const isChecked = event.target.checked
@@ -877,7 +877,7 @@ export const GranuleFiltersForm = (props) => {
                             size="sm"
                             format={temporalDateFormat}
                             temporal={equatorCrossingDate}
-                            setFieldValue={setFieldValue}
+                            setTemporal={setFieldValue}
                             validate={false}
                             onSubmitStart={
                               (startDate, shouldSubmit) => {
