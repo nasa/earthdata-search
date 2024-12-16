@@ -66,7 +66,7 @@ export const AccessMethodRadio = ({
     />
   )
 
-  const customComponentsToolTips = (
+  const availableCustomizationsTooltipIcons = (
     <AvailableCustomizationsTooltipIcons
       hasSpatialSubsetting={hasSpatialSubsetting}
       hasVariables={hasVariables}
@@ -114,8 +114,8 @@ export const AccessMethodRadio = ({
                   id="feature-icon-list-view__customize"
                   icon={Settings}
                   label="Customize"
-                  tooltipClassName="collection-results-item__tooltip text-align-left"
-                  tooltipContent={customComponentsToolTips}
+                  tooltipClassName="text-align-left"
+                  tooltipContent={availableCustomizationsTooltipIcons}
                   metadata={availableCustomizationsIcons}
                 />
               )
