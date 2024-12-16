@@ -535,4 +535,134 @@ describe('TemporalSelectionDropdown component', () => {
       })
     })
   })
+
+  test('when toggling recurring on with same year dates, sets start year to minimum year', async () => {
+    const onChangeQueryMock = jest.fn()
+    const user = userEvent.setup()
+
+    setup({
+      onChangeQuery: onChangeQueryMock,
+      temporalSearch: {
+        startDate: '2024-03-29T00:00:00.000Z',
+        endDate: '2024-03-30T00:00:00.000Z',
+        isRecurring: false
+      }
+    })
+
+    await waitFor(async () => {
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+    })
+
+    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+    expect(startDateInput).toHaveValue('2024-03-29 00:00:00')
+    expect(endDateInput).toHaveValue('2024-03-30 00:00:00')
+
+    await user.click(screen.getByLabelText('Recurring?'))
+
+    expect(startDateInput).toHaveValue('03-29 00:00:00')
+    expect(endDateInput).toHaveValue('03-30 00:00:00')
+
+    const applyBtn = screen.getByRole('button', { name: 'Apply' })
+    await user.click(applyBtn)
+
+    expect(onChangeQueryMock).toHaveBeenCalledWith({
+      collection: {
+        temporal: {
+          isRecurring: true,
+          startDate: '1960-03-29T00:00:00.000Z',
+          endDate: '2024-03-30T00:00:00.000Z',
+          recurringDayStart: '89',
+          recurringDayEnd: '90'
+        }
+      }
+    })
+  })
+
+  test('when toggling recurring on with different year dates, preserves original years', async () => {
+    const onChangeQueryMock = jest.fn()
+    const user = userEvent.setup()
+
+    setup({
+      onChangeQuery: onChangeQueryMock,
+      temporalSearch: {
+        startDate: '2022-03-29T00:00:00.000Z',
+        endDate: '2024-03-30T00:00:00.000Z',
+        isRecurring: false
+      }
+    })
+
+    await waitFor(async () => {
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+    })
+
+    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+    expect(startDateInput).toHaveValue('2022-03-29 00:00:00')
+    expect(endDateInput).toHaveValue('2024-03-30 00:00:00')
+
+    await user.click(screen.getByLabelText('Recurring?'))
+
+    expect(startDateInput).toHaveValue('03-29 00:00:00')
+    expect(endDateInput).toHaveValue('03-30 00:00:00')
+
+    const applyBtn = screen.getByRole('button', { name: 'Apply' })
+    await user.click(applyBtn)
+
+    expect(onChangeQueryMock).toHaveBeenCalledWith({
+      collection: {
+        temporal: {
+          isRecurring: true,
+          startDate: expect.stringMatching(/^2022-03-29/),
+          endDate: expect.stringMatching(/^2024-03-30/),
+          recurringDayStart: '88',
+          recurringDayEnd: '89'
+        }
+      }
+    })
+  })
+
+  test('when toggling recurring off, preserves current years', async () => {
+    const onChangeQueryMock = jest.fn()
+    const user = userEvent.setup()
+
+    setup({
+      onChangeQuery: onChangeQueryMock,
+      temporalSearch: {
+        startDate: '1960-03-29T00:00:00.000Z',
+        endDate: '2024-03-30T00:00:00.000Z',
+        isRecurring: true
+      }
+    })
+
+    await waitFor(async () => {
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+    })
+
+    const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+    const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+    expect(startDateInput).toHaveValue('03-29 00:00:00')
+    expect(endDateInput).toHaveValue('03-30 00:00:00')
+
+    await user.click(screen.getByLabelText('Recurring?'))
+
+    expect(startDateInput).toHaveValue('1960-03-29 00:00:00')
+    expect(endDateInput).toHaveValue('2024-03-30 00:00:00')
+
+    const applyBtn = screen.getByRole('button', { name: 'Apply' })
+    await user.click(applyBtn)
+
+    expect(onChangeQueryMock).toHaveBeenCalledWith({
+      collection: {
+        temporal: {
+          isRecurring: false,
+          startDate: expect.stringMatching(/^1960-03-29/),
+          endDate: expect.stringMatching(/^2024-03-30/)
+        }
+      }
+    })
+  })
 })
