@@ -447,7 +447,12 @@ export const GranuleFiltersForm = (props) => {
                 format={temporalDateFormat}
                 temporal={temporal}
                 validate={false}
-                setTemporal={setFieldValue}
+                onSliderChange={
+                  (value) => {
+                    setFieldValue('temporal.startDate', moment(temporal.startDate).year(value.min).toISOString())
+                    setFieldValue('temporal.endDate', moment(temporal.endDate).year(value.max).toISOString())
+                  }
+                }
                 onRecurringToggle={
                   (event) => {
                     const isChecked = event.target.checked
@@ -877,7 +882,12 @@ export const GranuleFiltersForm = (props) => {
                             size="sm"
                             format={temporalDateFormat}
                             temporal={equatorCrossingDate}
-                            setTemporal={setFieldValue}
+                            onSliderChange={
+                              (value) => {
+                                setFieldValue('temporal.startDate', moment(temporal.startDate).year(value.min).toISOString())
+                                setFieldValue('temporal.endDate', moment(temporal.endDate).year(value.max).toISOString())
+                              }
+                            }
                             validate={false}
                             onSubmitStart={
                               (startDate, shouldSubmit) => {

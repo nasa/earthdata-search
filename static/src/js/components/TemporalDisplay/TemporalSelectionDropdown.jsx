@@ -311,26 +311,19 @@ const TemporalSelectionDropdown = ({
             onClearClick={onClearClick}
             onInvalid={onInvalid}
             onRecurringToggle={onRecurringToggle}
+            onSliderChange={
+              (value) => {
+                const { min, max } = value
+                setTemporal({
+                  ...temporal,
+                  startDate: moment(temporal.startDate).year(min).toISOString(),
+                  endDate: moment(temporal.endDate).year(max).toISOString()
+                })
+              }
+            }
             onValid={onValid}
             setEndDate={setEndDate}
             setStartDate={setStartDate}
-            setTemporal={
-              (path, value) => {
-                // If the path uses dot notation (e.g., 'temporal.startDate'), extract just the property name
-                const fieldName = path.includes('.') ? path.split('.')[1] : path
-
-                // If we're setting the whole temporal object, use it directly
-                if (path === 'temporal') {
-                  setTemporal(value)
-                } else {
-                  // Otherwise, update just the specific field while preserving other values
-                  setTemporal({
-                    ...temporal,
-                    [fieldName]: value
-                  })
-                }
-              }
-            }
             temporal={temporal}
           />
         )
