@@ -195,7 +195,6 @@ const TourSteps = ({
               <EDSCIcon
                 className="align-middle"
                 icon={ArrowFilledLeft}
-                size={8}
                 aria-label="Left arrow key"
               />
             </kbd>
@@ -205,7 +204,6 @@ const TourSteps = ({
                 className="align-middle"
                 icon={ArrowFilledRight}
                 aria-label="Right arrow key"
-                size={8}
               />
             </kbd>
             on your keyboard to navigate the tour.
