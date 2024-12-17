@@ -438,6 +438,8 @@ const TourSteps = ({
           </p>
           <div className="search-tour__info-box">
             <p>
+              <strong>Tip:</strong>
+              {' '}
               All keyboard shortcuts can be displayed by pressing the
               {' '}
               <kbd>?</kbd>
