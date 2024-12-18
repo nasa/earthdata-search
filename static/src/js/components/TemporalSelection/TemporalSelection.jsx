@@ -29,6 +29,7 @@ import DatepickerContainer from '../../containers/DatepickerContainer/Datepicker
  * @param {Function} props.onSubmitEnd - Callback function to call when a submission ends
  * @param {Function} props.onSubmitStart - Callback function to call when a submission starts
  * @param {Function} props.onValid - Callback function to call when the entry is valid
+ * @param {Function} props.onSliderChange - Callback function when year range slider is moved
  * @param {String} props.size - String representing the bootstrap size
  * @param {Object} props.temporal - Object configuring the temporal information
  * @param {Boolean} props.validate - Flag to designate the whether or not entry should be validated
@@ -110,6 +111,7 @@ export class TemporalSelection extends Component {
       onRecurringToggle,
       onSubmitEnd,
       onSubmitStart,
+      onSliderChange,
       size,
       temporal,
       validate
@@ -262,7 +264,8 @@ export class TemporalSelection extends Component {
                     max: moment(temporal.endDate || undefined).year()
                   }
                 }
-                onChange={(value) => onChangeRecurring(value)}
+                onChange={onSliderChange}
+                onChangeComplete={(value) => onChangeRecurring && onChangeRecurring(value)}
               />
             </Form.Group>
           )
@@ -279,6 +282,7 @@ TemporalSelection.defaultProps = {
   onChangeRecurring: null,
   onInvalid: null,
   onRecurringToggle: null,
+  onSliderChange: null,
   onValid: null,
   size: '',
   validate: true
@@ -294,6 +298,7 @@ TemporalSelection.propTypes = {
   onRecurringToggle: PropTypes.func,
   onSubmitEnd: PropTypes.func.isRequired,
   onSubmitStart: PropTypes.func.isRequired,
+  onSliderChange: PropTypes.func,
   onValid: PropTypes.func,
   size: PropTypes.string,
   temporal: PropTypes.shape({

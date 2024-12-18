@@ -134,10 +134,55 @@ const TemporalSelectionDropdown = ({
       })
     }
 
-    setTemporal({
-      ...temporal,
-      isRecurring: isChecked
-    })
+    try {
+      if (isChecked) {
+        const {
+          startDate: existingStartDate,
+          endDate: existingEndDate
+        } = temporal
+
+        if (existingStartDate && existingEndDate) {
+          const startYear = moment(existingStartDate).utc().year()
+          const endYear = moment(existingEndDate).utc().year()
+
+          if (startYear === endYear) {
+            const {
+              minimumTemporalDateString,
+              temporalDateFormatFull
+            } = getApplicationConfig()
+
+            const minDate = moment(
+              minimumTemporalDateString,
+              temporalDateFormatFull
+            )
+
+            const newStartDate = moment(existingStartDate)
+              .utc()
+              .year(minDate.year())
+              .toISOString()
+
+            setTemporal({
+              ...temporal,
+              isRecurring: isChecked,
+              startDate: newStartDate,
+              endDate: existingEndDate
+            })
+
+            return
+          }
+        }
+      }
+
+      setTemporal({
+        ...temporal,
+        isRecurring: isChecked
+      })
+    } catch (error) {
+      setTemporal({
+        ...temporal,
+        isRecurring: isChecked
+      })
+    }
   }
 
   /**
@@ -266,6 +311,16 @@ const TemporalSelectionDropdown = ({
             onClearClick={onClearClick}
             onInvalid={onInvalid}
             onRecurringToggle={onRecurringToggle}
+            onSliderChange={
+              (value) => {
+                const { min, max } = value
+                setTemporal({
+                  ...temporal,
+                  startDate: moment(temporal.startDate).year(min).toISOString(),
+                  endDate: moment(temporal.endDate).year(max).toISOString()
+                })
+              }
+            }
             onValid={onValid}
             setEndDate={setEndDate}
             setStartDate={setStartDate}
