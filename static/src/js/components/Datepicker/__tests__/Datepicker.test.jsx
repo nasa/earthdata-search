@@ -315,7 +315,7 @@ describe('Datepicker component', () => {
           expect(currentNextNav).toBeVisible()
         })
 
-        // Navigate to December using next nav
+        // Navigate from February to December
         await user.click(currentNextNav) // February
         await user.click(currentNextNav) // March
         await user.click(currentNextNav) // April
