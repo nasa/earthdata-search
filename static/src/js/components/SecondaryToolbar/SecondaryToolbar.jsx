@@ -432,7 +432,10 @@ class SecondaryToolbar extends Component {
     return (
       secondaryToolbarEnabled
       && (
-        <nav className={secondaryToolbarClassnames}>
+        <nav
+          className={secondaryToolbarClassnames}
+          data-testid="secondary-toolbar"
+        >
           {isPath(location.pathname, ['/projects']) && backToSearchLink}
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>
