@@ -29,7 +29,7 @@ import DatepickerContainer from '../../containers/DatepickerContainer/Datepicker
  * @param {Function} props.onSubmitEnd - Callback function to call when a submission ends
  * @param {Function} props.onSubmitStart - Callback function to call when a submission starts
  * @param {Function} props.onValid - Callback function to call when the entry is valid
- * @param {Function} props.setFieldValue - Callback function provided by Formik.
+ * @param {Function} props.onSliderChange - Callback function when year range slider is moved
  * @param {String} props.size - String representing the bootstrap size
  * @param {Object} props.temporal - Object configuring the temporal information
  * @param {Boolean} props.validate - Flag to designate the whether or not entry should be validated
