@@ -23,7 +23,7 @@ function setup() {
     onSubmitEnd: jest.fn(),
     onInvalid: jest.fn(),
     onValid: jest.fn(),
-    setFieldValue: jest.fn(),
+    onSliderChange: jest.fn(),
     viewMode: 'years'
   }
 
@@ -158,7 +158,7 @@ describe('TemporalSelection component', () => {
         endDate: '2020-01-01T00:00:00.000Z',
         isRecurring: true
       },
-      setFieldValue: props.setFieldValue,
+      onSliderChange: props.onSliderChange,
       allowRecurring: true,
       onChangeRecurring: props.onChangeRecurring
     })
@@ -170,16 +170,13 @@ describe('TemporalSelection component', () => {
       max: 2021
     })
 
-    // Verify setFieldValue was called for both dates
-    expect(props.setFieldValue).toHaveBeenCalledTimes(2)
-    expect(props.setFieldValue).toHaveBeenCalledWith(
-      'temporal.startDate',
-      moment('2019-01-01T00:00:00.000Z').year(2018).toISOString()
-    )
-
-    expect(props.setFieldValue).toHaveBeenCalledWith(
-      'temporal.endDate',
-      moment('2020-01-01T00:00:00.000Z').year(2021).toISOString()
+    // Verify onSliderChange was called for both dates
+    expect(props.onSliderChange).toHaveBeenCalledTimes(1)
+    expect(props.onSliderChange).toHaveBeenCalledWith(
+      {
+        max: 2021,
+        min: 2018
+      }
     )
 
     // Verify onChangeRecurring was not called during onChange
@@ -192,7 +189,7 @@ describe('TemporalSelection component', () => {
 
     // Verify onChangeRecurring was called only once with the new range
     expect(props.onChangeRecurring).toHaveBeenCalledTimes(1)
-    expect(props.setFieldValue).toHaveBeenCalledTimes(2)
+    expect(props.onSliderChange).toHaveBeenCalledTimes(1)
     expect(props.onChangeRecurring).toHaveBeenCalledWith({
       min: 2018,
       max: 2021
