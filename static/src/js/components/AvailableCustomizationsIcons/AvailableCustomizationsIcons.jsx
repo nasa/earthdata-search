@@ -23,7 +23,7 @@ import './AvailableCustomizationsIcons.scss'
  * @param {boolean} hasTemporalSubsetting
  * @param {boolean} hasCombine
  */
-export const AvailableCustomizationIcons = ({
+export const AvailableCustomizationsIcons = ({
   hasSpatialSubsetting,
   hasVariables,
   hasTransforms,
@@ -42,7 +42,7 @@ export const AvailableCustomizationIcons = ({
     {
       hasSpatialSubsetting && (
         <EDSCIcon
-          className="available-customization-icons__icon"
+          className="available-customizations-icons__icon"
           title="A white globe icon"
           icon={FaGlobe}
           size="0.675rem"
@@ -52,7 +52,7 @@ export const AvailableCustomizationIcons = ({
     {
       hasTemporalSubsetting && (
         <EDSCIcon
-          className="available-customization-icons__icon"
+          className="available-customizations-icons__icon"
           title="A white clock icon"
           icon={FaClock}
           size="0.675rem"
@@ -62,7 +62,7 @@ export const AvailableCustomizationIcons = ({
     {
       hasVariables && (
         <EDSCIcon
-          className="available-customization-icons__icon"
+          className="available-customizations-icons__icon"
           title="A white tags icon"
           icon={FaTags}
           size="0.675rem"
@@ -72,7 +72,7 @@ export const AvailableCustomizationIcons = ({
     {
       hasTransforms && (
         <EDSCIcon
-          className="available-customization-icons__icon"
+          className="available-customizations-icons__icon"
           title="A white horizontal sliders icon"
           icon={Filter}
           size="0.675rem"
@@ -82,7 +82,7 @@ export const AvailableCustomizationIcons = ({
     {
       hasFormats && (
         <EDSCIcon
-          className="available-customization-icons__icon"
+          className="available-customizations-icons__icon"
           title="A white file icon"
           icon={FileGeneric}
           size="0.675rem"
@@ -92,7 +92,7 @@ export const AvailableCustomizationIcons = ({
     {
       hasCombine && (
         <EDSCIcon
-          className="available-customization-icons__icon"
+          className="available-customizations-icons__icon"
           title="A white cubes icon"
           icon={FaCubes}
           size="0.675rem"
@@ -102,7 +102,7 @@ export const AvailableCustomizationIcons = ({
   </>
 )
 
-AvailableCustomizationIcons.defaultProps = {
+AvailableCustomizationsIcons.defaultProps = {
   hasSpatialSubsetting: false,
   hasVariables: false,
   hasTransforms: false,
@@ -111,7 +111,7 @@ AvailableCustomizationIcons.defaultProps = {
   hasCombine: false
 }
 
-AvailableCustomizationIcons.propTypes = {
+AvailableCustomizationsIcons.propTypes = {
   hasSpatialSubsetting: PropTypes.bool,
   hasVariables: PropTypes.bool,
   hasTransforms: PropTypes.bool,
@@ -120,4 +120,4 @@ AvailableCustomizationIcons.propTypes = {
   hasCombine: PropTypes.bool
 }
 
-export default AvailableCustomizationIcons
+export default AvailableCustomizationsIcons
