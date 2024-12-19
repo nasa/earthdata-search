@@ -44,8 +44,6 @@
     font-size: 0.775rem;
     margin-bottom: 1.25rem;
     text-align: left;
-    display: flex;
-    align-items: center;
   }
 
   &__footnote {
@@ -283,7 +281,7 @@
   
   &__text-icon {
     display: inline-block;
-    vertical-align: center;
+    vertical-align: middle;
     margin-top: -0.125rem;
     height: 0.85rem;
     width: 0.85rem;
