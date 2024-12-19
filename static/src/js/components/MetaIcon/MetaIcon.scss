@@ -8,12 +8,6 @@
   color: $color__carbon--80;
   letter-spacing: 0.01em;
 
-  &__accessMethod {
-    position: absolute;
-    top: $spacer*0.75;
-    right: $spacer*0.25
-  }
-
   &__icon {
     color: $color__carbon--50;
     font-size: 0.75rem;
@@ -23,7 +17,7 @@
     }
   }
 
-  &__metadata{
+  &__metadata {
     margin-left: 0.25rem;
     padding: 0.075rem 0.5rem;
     border-radius: 1rem;
@@ -31,10 +25,5 @@
     color: $color__carbon--80;
     font-size: 0.625rem;
     font-weight: 700;
-
-    .meta-icon:hover & {
-      background-color: $color__carbon--20;
-      color: $color__carbon--90;
-    }
   }
 }

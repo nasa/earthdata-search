@@ -146,35 +146,6 @@
     letter-spacing: 0.01em;
   }
 
-  &__meta-icon {
-    color: $color__nasa-blue;
-    font-size: 0.75rem;
-
-    &:hover {
-      color: $color__nasa-blue--shade;
-    }
-  }
-
-  &__meta-label {
-    display: none;
-    margin-left: 0.25rem;
-  }
-
-  &__meta-detail {
-    margin-left: 0.25rem;
-    padding: 0.075rem 0.5rem;
-    border-radius: 1rem;
-    background-color: $color__carbon--20;
-    color: $color__carbon--60;
-    font-size: 0.625rem;
-    font-weight: 700;
-
-    .collection-results-item__meta-item:hover & {
-      background-color: $color__carbon--30;
-      color: $color__carbon--90;
-    }
-  }
-
   &__desc {
     display: -webkit-box;
     -webkit-line-clamp: 4;
@@ -335,19 +306,6 @@
         max-width: 14rem;
       }
     }
-  }
-
-  &__tooltip-feature-list {
-    width: auto;
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
-    text-align: center;
-  }
-
-  &__tooltip-feature-icon {
-    margin-right: 0.325rem;
-    color: $color__carbon--30;
   }
 
   &__popover {
