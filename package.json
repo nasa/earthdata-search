@@ -101,7 +101,7 @@
     "@babel/runtime": "^7.17.9",
     "@edsc/earthdata-react-icons": "^0.0.2",
     "@edsc/echoforms": "^1.1.17",
-    "@edsc/eslint-config": "^0.0.6",
+    "@edsc/eslint-config": "^0.0.8",
     "@edsc/geo-utils": "^1.0.5",
     "@edsc/smart-handoffs": "^1.0.5",
     "@edsc/timeline": "^1.1.7",
