@@ -191,19 +191,19 @@ const TourSteps = ({
             <strong>Tip:</strong>
             {' '}
             Use
-            <kbd className="mx-1 align-bottom">
+            <kbd className="mx-1 align-baseline">
               <EDSCIcon
-                className="align-middle"
                 icon={ArrowFilledLeft}
                 aria-label="Left arrow key"
+                size="10"
               />
             </kbd>
             and
-            <kbd className="mx-1 align-bottom">
+            <kbd className="mx-1 align-baseline">
               <EDSCIcon
-                className="align-middle"
                 icon={ArrowFilledRight}
                 aria-label="Right arrow key"
+                size="10"
               />
             </kbd>
             on your keyboard to navigate the tour.
