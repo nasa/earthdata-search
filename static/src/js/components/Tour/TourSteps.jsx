@@ -597,6 +597,7 @@ const TourSteps = ({
               className="search-tour__text-icon"
               icon={FaQuestion}
               aria-label="Start Search Tour"
+              size="10"
             />
           </p>
           <div className="search-tour__footer">
