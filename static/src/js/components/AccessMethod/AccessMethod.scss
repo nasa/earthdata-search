@@ -55,7 +55,7 @@
   margin-left: $spacer;
 
   &:hover {
-    background-color: $color__carbon--10;
+    background-color: $color__carbon--5;
   }
 }
 
@@ -91,17 +91,19 @@
 }
 
 .harmony-select-item {
-  line-height: 1;
   display: flex;
   align-items: center;
   height: auto;
   position: relative;
   user-select: none;
-}
 
-.harmony-select-item[data-highlighted] {
-  outline: none;
-  background-color: $color__carbon--10;
+  &:hover {
+    background-color: $color__carbon--5;
+
+    .meta-icon__metadata {
+      background-color: $color__carbon--20;
+    }
+  }
 }
 
 .harmony-scroll-area-root {

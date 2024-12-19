@@ -1,0 +1,13 @@
+.available-customizations-icons {
+  border-bottom: 1px solid $border-color;
+
+  &__icon {
+    margin-right: 0.25rem;
+    position: relative;
+    top: -0.05rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
