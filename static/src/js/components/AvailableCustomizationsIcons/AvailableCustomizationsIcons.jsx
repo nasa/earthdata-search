@@ -23,7 +23,7 @@ import './AvailableCustomizationsIcons.scss'
  * @param {boolean} hasTemporalSubsetting
  * @param {boolean} hasCombine
  */
-export const AvailableCustomizationsTooltipIcons = ({
+export const AvailableCustomizationIcons = ({
   hasSpatialSubsetting,
   hasVariables,
   hasTransforms,
@@ -102,7 +102,7 @@ export const AvailableCustomizationsTooltipIcons = ({
   </>
 )
 
-AvailableCustomizationsTooltipIcons.defaultProps = {
+AvailableCustomizationIcons.defaultProps = {
   hasSpatialSubsetting: false,
   hasVariables: false,
   hasTransforms: false,
@@ -111,7 +111,7 @@ AvailableCustomizationsTooltipIcons.defaultProps = {
   hasCombine: false
 }
 
-AvailableCustomizationsTooltipIcons.propTypes = {
+AvailableCustomizationIcons.propTypes = {
   hasSpatialSubsetting: PropTypes.bool,
   hasVariables: PropTypes.bool,
   hasTransforms: PropTypes.bool,
@@ -120,4 +120,4 @@ AvailableCustomizationsTooltipIcons.propTypes = {
   hasCombine: PropTypes.bool
 }
 
-export default AvailableCustomizationsTooltipIcons
+export default AvailableCustomizationIcons
