@@ -99,7 +99,6 @@ describe('PanelItem component', () => {
       const scrollableContainer = document.querySelector('.simplebar-content-wrapper')
       fireEvent.scroll(scrollableContainer, { target: { scrollTop: 21 } })
 
-      // Replace container.firstChild.classList.contains with Testing Library's methods
       const panel = screen.getByTestId('panel-item')
       expect(panel).toHaveClass('panel-item--has-scrolled')
     })

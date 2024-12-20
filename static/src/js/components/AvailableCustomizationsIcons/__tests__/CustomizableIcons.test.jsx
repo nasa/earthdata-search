@@ -24,6 +24,7 @@ describe('AvailableCustomizationsIcons component', () => {
   test('on load should contain all of the custom icons for the customizable options', () => {
     setup()
 
+    // Ensure that when not using the `forAccessMethodRadio`, use `metaIconClasses`
     const metaIconContainer = screen.getByTestId('meta-icon')
     expect(metaIconContainer).toHaveClass(
       'meta-icon',
@@ -61,6 +62,7 @@ describe('AvailableCustomizationsIcons component', () => {
         hasCombine: false
       })
 
+      // Ensure that when not using the `forAccessMethodRadio` use `metaIconClasses`
       const metaIconContainer = screen.getByTestId('meta-icon')
       expect(metaIconContainer).toHaveClass(
         'meta-icon',
