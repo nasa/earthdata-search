@@ -1,5 +1,10 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import {
+  act,
+  render,
+  screen,
+  within
+} from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
 
@@ -264,8 +269,11 @@ describe('Facets Features Map Imagery component', () => {
     const customizableElement = screen.getByText('Customizable')
     expect(customizableElement).toBeInTheDocument()
 
-    const tooltipTrigger = screen.getByRole('button', { name: /info/i })
-    await user.hover(tooltipTrigger)
+    const tooltipTrigger = screen.getByTestId('facet_item-customizable-info')
+
+    await act(async () => {
+      await user.hover(tooltipTrigger)
+    })
 
     const tooltip = screen.getByRole('tooltip')
     expect(tooltip).toBeInTheDocument()
@@ -273,7 +281,7 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('checkboxes get checked correctly in the feature FacetsGroup', async () => {
-    const { renderContainer, props } = setup({
+    setup({
       portal: {
         features: {
           featureFacets: {
@@ -285,8 +293,6 @@ describe('Facets Features Map Imagery component', () => {
       }
     })
 
-    renderContainer(props)
-
     const user = userEvent.setup()
 
     expect(screen.getAllByRole('checkbox', { checked: false })).toHaveLength(2)
@@ -296,7 +302,7 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('does not render features FacetsGroup if all feature facets are disabled', () => {
-    const { renderContainer, props } = setup({
+    setup({
       portal: {
         features: {
           featureFacets: {
@@ -307,7 +313,6 @@ describe('Facets Features Map Imagery component', () => {
       }
     })
 
-    renderContainer(props)
     const featuresGroup = screen.queryByText('Features')
     expect(featuresGroup).toBeNull()
   })
@@ -315,25 +320,26 @@ describe('Facets Features Map Imagery component', () => {
   test('renders keywords FacetsGroup and checks the opening and closing of the dropdown', async () => {
     setup()
     const facetGroupText = 'Keywords'
-
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
+    const facetButton = screen.getByRole('button', { name: /keywords/i })
     await user.click(facetButton)
 
-    const checkboxes = screen.getAllByRole('checkbox')
-    const childTitle = checkboxes[0].getAttribute('name')
+    // Get the keywords section and find checkboxes within it
+    const keywordsSection = screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)
+    expect(keywordsSection).toBeInTheDocument()
 
-    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    const checkboxes = within(keywordsSection).getAllByRole('checkbox')
+    const childTitle = checkboxes[0].getAttribute('name')
     expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
-    expect(screen.getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
+    expect(within(keywordsSection).getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
 
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-    expect(screen.queryAllByRole('checkbox', { name: childTitle })).toHaveLength(0)
+    expect(screen.queryByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeNull()
   })
 
   test('renders platforms FacetsGroup', async () => {
@@ -344,20 +350,20 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
+    const facetButton = screen.getByRole('button', { name: /platforms/i })
     await user.click(facetButton)
 
-    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    const platformsSection = screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)
+    expect(platformsSection).toBeInTheDocument()
 
-    const checkboxes = screen.getAllByRole('checkbox')
+    const checkboxes = within(platformsSection).getAllByRole('checkbox')
     const childTitle = checkboxes[0].getAttribute('name')
-
     expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
-    expect(screen.getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
+    expect(within(platformsSection).getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
 
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-    expect(screen.queryAllByRole('checkbox', { name: childTitle })).toHaveLength(0)
+    expect(screen.queryByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeNull()
   })
 
   test('renders instruments FacetsGroup', async () => {
@@ -368,20 +374,20 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
+    const facetButton = screen.getByRole('button', { name: /instruments/i })
     await user.click(facetButton)
 
-    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    const instrumentsSection = screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)
+    expect(instrumentsSection).toBeInTheDocument()
 
-    const checkboxes = screen.getAllByRole('checkbox')
+    const checkboxes = within(instrumentsSection).getAllByRole('checkbox')
     const childTitle = checkboxes[0].getAttribute('name')
-
     expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
-    expect(screen.getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
+    expect(within(instrumentsSection).getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
 
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-    expect(screen.queryAllByRole('checkbox', { name: childTitle })).toHaveLength(0)
+    expect(screen.queryByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeNull()
   })
 
   test('renders organizations FacetsGroup', async () => {
@@ -392,20 +398,20 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
     const user = userEvent.setup()
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
+    const facetButton = screen.getByRole('button', { name: /organizations/i })
     await user.click(facetButton)
 
-    expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
+    const organizationsSection = screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)
+    expect(organizationsSection).toBeInTheDocument()
 
-    const checkboxes = screen.getAllByRole('checkbox')
+    const checkboxes = within(organizationsSection).getAllByRole('checkbox')
     const childTitle = checkboxes[0].getAttribute('name')
-
     expect(screen.getByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeInTheDocument()
-    expect(screen.getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
+    expect(within(organizationsSection).getAllByRole('checkbox', { name: childTitle })).toHaveLength(1)
 
     await user.click(facetButton)
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-    expect(screen.queryAllByRole('checkbox', { name: childTitle })).toHaveLength(0)
+    expect(screen.queryByTestId(`facet_item-${kebabCase(childTitle)}`)).toBeNull()
   })
 
   test('renders projects FacetsGroup', async () => {
@@ -418,7 +424,7 @@ describe('Facets Features Map Imagery component', () => {
 
     const user = userEvent.setup()
 
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
+    const facetButton = screen.getByRole('button', { name: /projects/i })
 
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
@@ -437,7 +443,7 @@ describe('Facets Features Map Imagery component', () => {
 
     const user = userEvent.setup()
 
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
+    const facetButton = screen.getByRole('button', { name: /processing levels/i })
 
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
@@ -456,7 +462,7 @@ describe('Facets Features Map Imagery component', () => {
 
     const user = userEvent.setup()
 
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
+    const facetButton = screen.getByRole('button', { name: /data format/i })
 
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
@@ -475,8 +481,7 @@ describe('Facets Features Map Imagery component', () => {
 
     const user = userEvent.setup()
 
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
-
+    const facetButton = screen.getByRole('button', { name: /tiling system/i })
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
 
@@ -494,7 +499,8 @@ describe('Facets Features Map Imagery component', () => {
 
     const user = userEvent.setup()
 
-    const facetButton = screen.getByRole('button', { name: facetGroupText })
+    const facetButton = screen.getByRole('button', { name: 'Horizontal Data Resolution Open' })
+    expect(facetButton).toHaveAttribute('title', 'Horizontal Data Resolution')
 
     await user.click(facetButton)
     expect(screen.getByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeInTheDocument()
@@ -505,15 +511,11 @@ describe('Facets Features Map Imagery component', () => {
 
   test('featureFacetHandler calls changeFeatureFacet', async () => {
     const mock = jest.spyOn(facetUtils, 'changeFeatureFacet').mockImplementationOnce(() => jest.fn())
-
-    const { renderContainer, props, onChangeFeatureFacet } = setup()
-
-    renderContainer(props)
+    const { onChangeFeatureFacet } = setup()
 
     const user = userEvent.setup()
 
     const facetGroup = screen.getByRole('checkbox', { name: 'Customizable' })
-
     await user.click(facetGroup)
 
     expect(mock).toBeCalledWith(
@@ -532,7 +534,8 @@ describe('Facets Features Map Imagery component', () => {
 
     const user = userEvent.setup()
 
-    await user.click(screen.getByRole('button', { name: 'Keywords' }))
+    // Look for button by its label attribute
+    await user.click(screen.getByRole('button', { name: /Keywords/i }))
 
     const facetGroup = screen.getByRole('checkbox', { name: 'Mock Keyword Facet' })
     await user.click(facetGroup)
@@ -585,13 +588,15 @@ describe('Facets Features Map Imagery component', () => {
 
     expect(screen.queryByRole('button', { name: /View All/i })).toBeNull()
 
-    await user.click(screen.getByRole('button', { name: 'Projects' }))
+    const projectsButton = screen.getByRole('button', { name: /Projects/i })
+    await user.click(projectsButton)
+    expect(projectsButton).toBeInTheDocument()
 
-    const viewAllButton = screen.getByRole('button', { name: /View All/i })
+    const viewAllButton = await screen.findByRole('button', { name: /view all/i })
     expect(viewAllButton).toBeInTheDocument()
+    expect(viewAllButton).toHaveClass('facets-group__view-all')
 
     await user.click(viewAllButton)
-
     expect(onTriggerViewAllFacets).toBeCalledWith('Projects')
   })
 })
