@@ -63,9 +63,9 @@ export const Project = (props) => {
       <>
         <Helmet>
           <title>Saved Projects</title>
-          <meta name="title" content="Saved Projects" />
-          <meta name="robots" content="noindex, nofollow" />
-          <link rel="canonical" href={`${edscHost}/projects`} />
+          <meta data-testid="meta-title" name="title" content="Saved Projects" />
+          <meta data-testid="meta-robots" name="robots" content="noindex, nofollow" />
+          <link data-testid="canonical-link" rel="canonical" href={`${edscHost}`} />
         </Helmet>
         <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
           <div className="route-wrapper__content">

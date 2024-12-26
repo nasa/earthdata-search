@@ -37,7 +37,7 @@ export const CustomizableIcons = ({
   hasCombine,
   forAccessMethodRadio
 }) => {
-  let metaIconClasses = 'collection-results-item__meta-icon collection-results-item__meta-icon--customizable'
+  let metaIconClasses = 'meta-icon collection-results-item__meta-icon collection-results-item__meta-icon--customizable'
   if (forAccessMethodRadio) {
     metaIconClasses += ' meta-icon__accessMethod'
   }
@@ -51,168 +51,174 @@ export const CustomizableIcons = ({
       || hasTemporalSubsetting
       || hasCombine
     ) && (
-      <MetaIcon
+      <span
         className={metaIconClasses}
-        id="feature-icon-list-view__customize"
-        icon={Settings}
-        label="Customize"
-        tooltipClassName="collection-results-item__tooltip text-align-left"
-        metadata={
-          (
-            <>
-              {
-                hasSpatialSubsetting && (
-                  <EDSCIcon
-                    className="collection-results-item__icon svg fa-globe-svg"
-                    title="A white globe icon"
-                    icon={FaGlobe}
-                    size="0.675rem"
-                  />
-                )
-              }
-              {
-                hasTemporalSubsetting && (
-                  <EDSCIcon
-                    className="collection-results-item__icon svg fa-clock-svg"
-                    title="A white clock icon"
-                    icon={FaClock}
-                    size="0.675rem"
-                  />
-                )
-              }
-              {
-                hasVariables && (
-                  <EDSCIcon
-                    className="collection-results-item__icon svg fa-tags-svg"
-                    title="A white tags icon"
-                    icon={FaTags}
-                    size="0.675rem"
-                  />
-                )
-              }
-              {
-                hasTransforms && (
-                  <EDSCIcon
-                    className="collection-results-item__icon svg fa-sliders-svg"
-                    title="A white horizontal sliders icon"
-                    icon={Filter}
-                    size="0.675rem"
-                  />
-                )
-              }
-              {
-                hasFormats && (
-                  <EDSCIcon
-                    className="collection-results-item__icon svg fa-file-svg"
-                    title="A white file icon"
-                    icon={FileGeneric}
-                    size="0.675rem"
-                  />
-                )
-              }
-              {
-                hasCombine && (
-                  <EDSCIcon
-                    className="collection-results-item__icon svg fa-file-svg"
-                    title="A white cubes icon"
-                    icon={FaCubes}
-                    size="0.675rem"
-                  />
-                )
-              }
-            </>
-          )
-        }
-        tooltipContent={
-          (
-            <>
-              <div>
-                Supports customization:
-              </div>
-              <ul className="collection-results-item__tooltip-feature-list">
+        data-testid="meta-icon"
+      >
+        <MetaIcon
+          className={metaIconClasses}
+          id="feature-icon-list-view__customize"
+          icon={Settings}
+          label="Customize"
+          tooltipClassName="collection-results-item__tooltip text-align-left"
+          metadata={
+            (
+              <>
                 {
                   hasSpatialSubsetting && (
-                    <li>
-                      <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
-                        title="A white globe icon"
-                        size="0.725rem"
-                        icon={FaGlobe}
-                      />
-                      Spatial subset
-                    </li>
+                    <EDSCIcon
+                      className="collection-results-item__icon svg fa-globe-svg"
+                      title="A white globe icon"
+                      icon={FaGlobe}
+                      size="0.675rem"
+                    />
                   )
                 }
                 {
                   hasTemporalSubsetting && (
-                    <li>
-                      <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
-                        title="A white clock icon"
-                        size="0.725rem"
-                        icon={FaClock}
-                      />
-                      Temporal subset
-                    </li>
+                    <EDSCIcon
+                      className="collection-results-item__icon svg fa-clock-svg"
+                      title="A white clock icon"
+                      icon={FaClock}
+                      size="0.675rem"
+                    />
                   )
                 }
                 {
                   hasVariables && (
-                    <li>
-                      <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
-                        title="A white tags icon"
-                        size="0.725rem"
-                        icon={FaTags}
-                      />
-                      Variable subset
-                    </li>
+                    <EDSCIcon
+                      className="collection-results-item__icon svg fa-tags-svg"
+                      title="A white tags icon"
+                      icon={FaTags}
+                      size="0.675rem"
+                    />
                   )
                 }
                 {
                   hasTransforms && (
-                    <li>
-                      <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
-                        title="A white horizontal sliders icon"
-                        size="0.725rem"
-                        icon={Filter}
-                      />
-                      Transform
-                    </li>
+                    <EDSCIcon
+                      className="collection-results-item__icon svg fa-sliders-svg"
+                      title="A white horizontal sliders icon"
+                      icon={Filter}
+                      size="0.675rem"
+                    />
                   )
                 }
                 {
                   hasFormats && (
-                    <li>
-                      <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
-                        title="A white file icon"
-                        size="0.725rem"
-                        icon={FileGeneric}
-                      />
-                      Reformat
-                    </li>
+                    <EDSCIcon
+                      className="collection-results-item__icon svg fa-file-svg"
+                      title="A white file icon"
+                      icon={FileGeneric}
+                      size="0.675rem"
+                    />
                   )
                 }
                 {
                   hasCombine && (
-                    <li>
-                      <EDSCIcon
-                        className="collection-results-item__tooltip-feature-icon"
-                        title="A white boxes icon"
-                        size="0.725rem"
-                        icon={FaCubes}
-                      />
-                      Combine
-                    </li>
+                    <EDSCIcon
+                      className="collection-results-item__icon svg fa-file-svg"
+                      title="A white cubes icon"
+                      icon={FaCubes}
+                      size="0.675rem"
+                    />
                   )
                 }
-              </ul>
-            </>
-          )
-        }
-      />
+              </>
+            )
+          }
+          tooltipContent={
+            (
+              <>
+                <div>
+                  Supports customization:
+                </div>
+                <ul className="collection-results-item__tooltip-feature-list">
+                  {
+                    hasSpatialSubsetting && (
+                      <li>
+                        <EDSCIcon
+                          className="collection-results-item__tooltip-feature-icon"
+                          title="A white globe icon"
+                          size="0.725rem"
+                          icon={FaGlobe}
+                        />
+                        Spatial subset
+                      </li>
+                    )
+                  }
+                  {
+                    hasTemporalSubsetting && (
+                      <li>
+                        <EDSCIcon
+                          className="collection-results-item__tooltip-feature-icon"
+                          title="A white clock icon"
+                          size="0.725rem"
+                          icon={FaClock}
+                        />
+                        Temporal subset
+                      </li>
+                    )
+                  }
+                  {
+                    hasVariables && (
+                      <li>
+                        <EDSCIcon
+                          className="collection-results-item__tooltip-feature-icon"
+                          title="A white tags icon"
+                          size="0.725rem"
+                          icon={FaTags}
+                        />
+                        Variable subset
+                      </li>
+                    )
+                  }
+                  {
+                    hasTransforms && (
+                      <li>
+                        <EDSCIcon
+                          className="collection-results-item__tooltip-feature-icon"
+                          title="A white horizontal sliders icon"
+                          size="0.725rem"
+                          icon={Filter}
+                        />
+                        Transform
+                      </li>
+                    )
+                  }
+                  {
+                    hasFormats && (
+                      <li>
+                        <EDSCIcon
+                          className="collection-results-item__tooltip-feature-icon"
+                          title="A white file icon"
+                          size="0.725rem"
+                          icon={FileGeneric}
+                        />
+                        Reformat
+                      </li>
+                    )
+                  }
+                  {
+                    hasCombine && (
+                      <li>
+                        <EDSCIcon
+                          className="collection-results-item__tooltip-feature-icon"
+                          title="A white boxes icon"
+                          size="0.725rem"
+                          icon={FaCubes}
+                        />
+                        Combine
+                      </li>
+                    )
+                  }
+                </ul>
+              </>
+            )
+          }
+
+        />
+      </span>
     )
   )
 }

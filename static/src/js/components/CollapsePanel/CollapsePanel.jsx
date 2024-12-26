@@ -47,7 +47,7 @@ export class CollapsePanel extends Component {
     const openCloseLabel = open ? 'Close Panel' : 'Open Panel'
 
     return (
-      <div className={classNames}>
+      <div className={classNames} data-testid="collapse-panel">
         <button
           className={buttonClassNames}
           type="button"

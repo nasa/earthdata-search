@@ -51,7 +51,8 @@ export const projectHeader = [
     top: 6,
     height: 12,
     width: 80,
-    radius: 2
+    radius: 2,
+    'data-testid': 'skeleton-item'
   },
   {
     shape: 'rectangle',
@@ -59,7 +60,8 @@ export const projectHeader = [
     top: 6,
     height: 12,
     width: 50,
-    radius: 2
+    radius: 2,
+    'data-testid': 'skeleton-item'
   },
   {
     shape: 'rectangle',
@@ -67,6 +69,7 @@ export const projectHeader = [
     top: 6,
     height: 12,
     width: 55,
-    radius: 2
+    radius: 2,
+    'data-testid': 'skeleton-item'
   }
 ]
