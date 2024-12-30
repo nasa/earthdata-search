@@ -55,7 +55,7 @@ To ensure that you're using the correct version of Node it is recommended that y
 
     nvm use
 
-##### Serverless Framework
+##### Running Serverless Framework locally
 
 Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) for managing AWS resources. In order to fully run and manage the application you'll need to install it:
 

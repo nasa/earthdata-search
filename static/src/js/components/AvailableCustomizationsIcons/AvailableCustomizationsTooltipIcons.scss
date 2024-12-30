@@ -1,0 +1,14 @@
+.available-customizations-tooltip-icons {
+  &__tooltip-feature-list {
+    width: auto;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+    text-align: center;
+  }
+
+  &__tooltip-feature-icon {
+    margin-right: 0.325rem;
+    color: $color__carbon--30;
+  }
+}

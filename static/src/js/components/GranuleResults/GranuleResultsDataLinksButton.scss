@@ -9,7 +9,7 @@
     cursor: pointer;
 
     .button__icon {
-      color: rgba($color__spacesuit-white, 0.7);
+      color: $color__carbon--50;
     }
 
     &:hover {
@@ -59,7 +59,7 @@
 
   &__icon {
     margin-left: 0.5rem;
-    color: rgba($color__spacesuit-white, 0.8);
+    color: $color__carbon--50;
     opacity: 0;
     transition: all 0.2s ease;
 
