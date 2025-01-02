@@ -19,6 +19,11 @@
     .button__contents {
       line-height: 1.25rem;
     }
+
+    .dropdown-item {
+      text-align: left;
+      justify-content: flex-start;
+    }
   }
 
   &__button {
