@@ -8,10 +8,11 @@ import {
 
 import {
   FaCrop,
-  FaMapMarker,
   FaCircle,
   FaFile
 } from 'react-icons/fa'
+
+import { Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { eventEmitter } from '../../events/events'
 
@@ -90,29 +91,22 @@ const SpatialSelectionDropdown = (props) => {
         <Dropdown.Item
           className="spatial-selection-dropdown__button"
           as={Button}
-          icon="edsc-icon-poly-open edsc-icon-fw"
+          icon="edsc-icon-poly edsc-icon-fw"
           onClick={() => onItemClick('polygon')}
           label="Select Polygon"
+          aria-label="Select Polygon"
         >
           <span>Polygon</span>
         </Dropdown.Item>
         <Dropdown.Item
           className="spatial-selection-dropdown__button"
           as={Button}
-          icon="edsc-icon-rect-open edsc-icon-fw"
+          icon="edsc-icon-rect edsc-icon-fw"
           onClick={() => onItemClick('rectangle')}
           label="Select Rectangle"
+          aria-label="Select Rectangle"
         >
           <span>Rectangle</span>
-        </Dropdown.Item>
-        <Dropdown.Item
-          className="spatial-selection-dropdown__button"
-          as={Button}
-          icon={FaMapMarker}
-          onClick={() => onItemClick('point')}
-          label="Select Point"
-        >
-          <span>Point</span>
         </Dropdown.Item>
         <Dropdown.Item
           className="spatial-selection-dropdown__button"
@@ -120,8 +114,19 @@ const SpatialSelectionDropdown = (props) => {
           icon={FaCircle}
           onClick={() => onItemClick('circle')}
           label="Select Circle"
+          aria-label="Select Circle"
         >
           <span>Circle</span>
+        </Dropdown.Item>
+        <Dropdown.Item
+          className="spatial-selection-dropdown__button"
+          as={Button}
+          icon={Map}
+          onClick={() => onItemClick('point')}
+          label="Select Point"
+          aria-label="Select Point"
+        >
+          <span>Point</span>
         </Dropdown.Item>
         <Dropdown.Item
           className="spatial-selection-dropdown__button"
@@ -129,6 +134,7 @@ const SpatialSelectionDropdown = (props) => {
           icon={FaFile}
           onClick={() => onItemClick('file')}
           label="Select Shapefile"
+          aria-label="Select Shapefile"
           disabled={disableShapefileSearch}
         >
           {
