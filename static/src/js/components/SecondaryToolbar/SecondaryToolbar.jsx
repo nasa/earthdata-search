@@ -251,7 +251,12 @@ class SecondaryToolbar extends Component {
 
     const loginLink = (
       <Button
-        className={classNames({ 'focus-light': isMapOverlay })}
+        className={
+          classNames(
+            'secondary-toolbar__login-button',
+            { 'focus-light': isMapOverlay }
+          )
+        }
         bootstrapVariant="light"
         href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
         tooltip="Log In with Earthdata Login"
@@ -410,6 +415,7 @@ class SecondaryToolbar extends Component {
               <Dropdown.Toggle
                 className={classNames(['secondary-toolbar__start-tour-button', { 'focus-light': isMapOverlay }])}
                 as={Button}
+                aria-label="Start Search Tour"
                 icon={FaQuestion}
                 iconSize="0.825rem"
                 onClick={setRunTour}

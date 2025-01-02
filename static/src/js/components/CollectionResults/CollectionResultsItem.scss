@@ -163,18 +163,6 @@
     display: flex;
     flex-shrink: 0;
     flex-grow: 0;
-
-    @media (hover: hover) {
-      visibility: hidden;
-      width: 0;
-
-      .collection-results-item__link:hover &,
-      .collection-results-item__link:focus &,
-      .collection-results-item__link--active & {
-        visibility: visible;
-        width: auto;
-      }
-    }
   }
 
   &__action {
