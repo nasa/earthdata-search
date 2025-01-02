@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
 import { FaEraser } from 'react-icons/fa'
-import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { Filter, Search } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import AdvancedSearchDisplayContainer
   from '../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
 import SpatialDisplayContainer
@@ -331,10 +332,10 @@ class SearchForm extends Component {
           </form>
           <Button
             bootstrapVariant="inline-block"
-            className="search-form__button search-form__button--clear"
-            label="Clear search"
-            onClick={this.onSearchClear}
-            icon={FaEraser}
+            className="search-form__button search-form__button--search"
+            label="Search"
+            onClick={this.onFormSubmit}
+            icon={Search}
             iconSize="0.825rem"
           />
         </div>

@@ -92,13 +92,34 @@ describe('SearchForm component', () => {
     expect(enzymeWrapper.state().keywordSearch).toEqual('new value')
   })
 
-  test('should call onClearFilters when the Clear Button is clicked', () => {
-    const { enzymeWrapper, props } = setup()
-    const button = enzymeWrapper.find('.search-form__button--clear')
+  describe('form submission', () => {
+    test('prevents default form submission', () => {
+      const { enzymeWrapper } = setup()
+      const mockEvent = { preventDefault: jest.fn() }
 
-    button.simulate('click')
+      const instance = enzymeWrapper.instance()
+      instance.onFormSubmit(mockEvent)
 
-    expect(props.onClearFilters.mock.calls.length).toBe(1)
+      expect(mockEvent.preventDefault).toHaveBeenCalled()
+    })
+
+    test('triggers query change when keyword search differs from props', () => {
+      const { enzymeWrapper, props } = setup()
+      const mockEvent = { preventDefault: jest.fn() }
+
+      enzymeWrapper.setState({ keywordSearch: 'New search value' })
+
+      const instance = enzymeWrapper.instance()
+      instance.onFormSubmit(mockEvent)
+
+      expect(props.onCancelAutocomplete).toHaveBeenCalled()
+      expect(props.onChangeFocusedCollection).toHaveBeenCalledWith('')
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
+        collection: {
+          keyword: 'New search value'
+        }
+      })
+    })
   })
 
   test('componentWillReceiveProps sets the state', () => {
