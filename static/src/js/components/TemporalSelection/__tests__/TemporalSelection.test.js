@@ -23,6 +23,7 @@ function setup() {
     onSubmitEnd: jest.fn(),
     onInvalid: jest.fn(),
     onValid: jest.fn(),
+    onSliderChange: jest.fn(),
     viewMode: 'years'
   }
 
@@ -146,5 +147,52 @@ describe('TemporalSelection component', () => {
 
     enzymeWrapper.find(DatepickerContainer).at(1).props().onSubmit(testObj)
     expect(props.onSubmitEnd).toBeCalledTimes(1)
+  })
+
+  test('onChangeRecurring is only called when input is complete on InputRange', () => {
+    const { enzymeWrapper, props } = setup()
+
+    enzymeWrapper.setProps({
+      temporal: {
+        startDate: '2019-01-01T00:00:00.000Z',
+        endDate: '2020-01-01T00:00:00.000Z',
+        isRecurring: true
+      },
+      onSliderChange: props.onSliderChange,
+      allowRecurring: true,
+      onChangeRecurring: props.onChangeRecurring
+    })
+
+    const inputRange = enzymeWrapper.find('InputRange')
+
+    inputRange.prop('onChange')({
+      min: 2018,
+      max: 2021
+    })
+
+    // Verify onSliderChange was called for both dates
+    expect(props.onSliderChange).toHaveBeenCalledTimes(1)
+    expect(props.onSliderChange).toHaveBeenCalledWith(
+      {
+        max: 2021,
+        min: 2018
+      }
+    )
+
+    // Verify onChangeRecurring was not called during onChange
+    expect(props.onChangeRecurring).not.toHaveBeenCalled()
+
+    inputRange.prop('onChangeComplete')({
+      min: 2018,
+      max: 2021
+    })
+
+    // Verify onChangeRecurring was called only once with the new range
+    expect(props.onChangeRecurring).toHaveBeenCalledTimes(1)
+    expect(props.onSliderChange).toHaveBeenCalledTimes(1)
+    expect(props.onChangeRecurring).toHaveBeenCalledWith({
+      min: 2018,
+      max: 2021
+    })
   })
 })
