@@ -93,8 +93,6 @@ const SpatialSelectionDropdown = (props) => {
           as={Button}
           icon="edsc-icon-poly edsc-icon-fw"
           onClick={() => onItemClick('polygon')}
-          label="Select Polygon"
-          aria-label="Select Polygon"
         >
           <span>Polygon</span>
         </Dropdown.Item>
@@ -103,8 +101,6 @@ const SpatialSelectionDropdown = (props) => {
           as={Button}
           icon="edsc-icon-rect edsc-icon-fw"
           onClick={() => onItemClick('rectangle')}
-          label="Select Rectangle"
-          aria-label="Select Rectangle"
         >
           <span>Rectangle</span>
         </Dropdown.Item>
@@ -113,8 +109,6 @@ const SpatialSelectionDropdown = (props) => {
           as={Button}
           icon={FaCircle}
           onClick={() => onItemClick('circle')}
-          label="Select Circle"
-          aria-label="Select Circle"
         >
           <span>Circle</span>
         </Dropdown.Item>
@@ -123,8 +117,6 @@ const SpatialSelectionDropdown = (props) => {
           as={Button}
           icon={Map}
           onClick={() => onItemClick('point')}
-          label="Select Point"
-          aria-label="Select Point"
         >
           <span>Point</span>
         </Dropdown.Item>
@@ -133,8 +125,6 @@ const SpatialSelectionDropdown = (props) => {
           as={Button}
           icon={FaFile}
           onClick={() => onItemClick('file')}
-          label="Select Shapefile"
-          aria-label="Select Shapefile"
           disabled={disableShapefileSearch}
         >
           {

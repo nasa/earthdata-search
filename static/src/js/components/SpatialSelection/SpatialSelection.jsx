@@ -536,13 +536,13 @@ const SpatialSelection = (props) => {
       const buttons = drawToolbar.querySelectorAll('.leaflet-draw-draw-circle, .leaflet-draw-draw-polygon, .leaflet-draw-draw-rectangle, .leaflet-draw-draw-marker')
       buttons.forEach((button) => {
         if (button.classList.contains('leaflet-draw-draw-circle')) {
-          button.setAttribute('aria-label', 'Search by spatial circle')
+          button.setAttribute('aria-label', 'Draw by a spatial circle')
         } else if (button.classList.contains('leaflet-draw-draw-polygon')) {
-          button.setAttribute('aria-label', 'Search by spatial polygon')
+          button.setAttribute('aria-label', 'Draw by a spatial polygon')
         } else if (button.classList.contains('leaflet-draw-draw-rectangle')) {
-          button.setAttribute('aria-label', 'Search by spatial rectangle')
+          button.setAttribute('aria-label', 'Draw by a spatial rectangle')
         } else if (button.classList.contains('leaflet-draw-draw-marker')) {
-          button.setAttribute('aria-label', 'Search by spatial coordinate')
+          button.setAttribute('aria-label', 'Draw by a spatial coordinate')
         }
       })
     }
