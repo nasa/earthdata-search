@@ -6,6 +6,7 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
+import MockDate from 'mockdate'
 import userEvent from '@testing-library/user-event'
 import { Provider } from 'react-redux'
 import configureMockStore from 'redux-mock-store'
@@ -667,6 +668,178 @@ describe('TemporalSelectionDropdown component', () => {
             endDate: '2024-03-30T00:00:00.000Z',
             recurringDayStart: '89',
             recurringDayEnd: '90'
+          }
+        }
+      })
+    })
+  })
+
+  describe('TemporalSelectionDropdown when dates aren\'t set', () => {
+    beforeAll(() => {
+      MockDate.set('2024-02-01T06:00:00.000Z')
+    })
+
+    afterAll(() => {
+      MockDate.reset()
+    })
+
+    test('handles recurring toggle with only start date set', async () => {
+      const onChangeQueryMock = jest.fn()
+      const user = userEvent.setup()
+
+      setup({
+        onChangeQuery: onChangeQueryMock,
+        temporalSearch: {
+          startDate: '2024-01-01T00:00:00.000Z',
+          endDate: '',
+          isRecurring: false
+        }
+      })
+
+      await act(async () => {
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      })
+
+      const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+      const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+      expect(startDateInput).toHaveValue('2024-01-01 00:00:00')
+      expect(endDateInput).toHaveValue('')
+      expect(screen.queryByText('Year Range:')).not.toBeInTheDocument()
+
+      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+      await act(async () => {
+        await user.click(recurringCheckbox)
+        await waitFor(() => {
+          expect(recurringCheckbox).toBeChecked()
+        })
+      })
+
+      expect(startDateInput).toHaveValue('01-01 05:00:00')
+      expect(endDateInput).toHaveValue('02-01 06:00:00')
+      expect(screen.getByText('Year Range:')).toBeInTheDocument()
+      expect(screen.getByText('1960 - 2024')).toBeInTheDocument()
+
+      await act(async () => {
+        await user.click(screen.getByRole('button', { name: 'Apply' }))
+      })
+
+      expect(onChangeQueryMock).toHaveBeenCalledWith({
+        collection: {
+          temporal: {
+            isRecurring: true,
+            startDate: '1960-01-01T05:00:00.000Z',
+            endDate: '2024-02-01T06:00:00.000Z',
+            recurringDayStart: '1',
+            recurringDayEnd: '32'
+          }
+        }
+      })
+    })
+
+    test('handles recurring toggle with unset dates', async () => {
+      const onChangeQueryMock = jest.fn()
+      const user = userEvent.setup()
+
+      setup({
+        onChangeQuery: onChangeQueryMock,
+        temporalSearch: {
+          startDate: '',
+          endDate: '',
+          isRecurring: false
+        }
+      })
+
+      await act(async () => {
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      })
+
+      const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+      const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+      expect(startDateInput).toHaveValue('')
+      expect(endDateInput).toHaveValue('')
+      expect(screen.queryByText('Year Range:')).not.toBeInTheDocument()
+
+      const recurringCheckbox = screen.getByRole('checkbox', { checked: false })
+      await act(async () => {
+        await user.click(recurringCheckbox)
+        await waitFor(() => {
+          expect(recurringCheckbox).toBeChecked()
+        })
+      })
+
+      expect(startDateInput).toHaveValue('01-01 05:00:00')
+      expect(endDateInput).toHaveValue('02-01 06:00:00')
+      expect(screen.getByText('Year Range:')).toBeInTheDocument()
+      expect(screen.getByText('1960 - 2024')).toBeInTheDocument()
+
+      await act(async () => {
+        await user.click(screen.getByRole('button', { name: 'Apply' }))
+      })
+
+      expect(onChangeQueryMock).toHaveBeenCalledWith({
+        collection: {
+          temporal: {
+            isRecurring: true,
+            startDate: '1960-01-01T05:00:00.000Z',
+            endDate: '2024-02-01T06:00:00.000Z',
+            recurringDayStart: '1',
+            recurringDayEnd: '32'
+          }
+        }
+      })
+    })
+
+    test('handles recurring toggle with only end date set', async () => {
+      const onChangeQueryMock = jest.fn()
+      const user = userEvent.setup()
+
+      setup({
+        onChangeQuery: onChangeQueryMock,
+        temporalSearch: {
+          startDate: '',
+          endDate: '2020-01-25T00:00:00.000Z',
+          isRecurring: false
+        }
+      })
+
+      await act(async () => {
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      })
+
+      const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+      const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+      expect(startDateInput).toHaveValue('')
+      expect(endDateInput).toHaveValue('2020-01-25 00:00:00')
+      expect(screen.queryByText('Year Range:')).not.toBeInTheDocument()
+
+      const recurringCheckbox = screen.getByRole('checkbox', { checked: false })
+      await act(async () => {
+        await user.click(recurringCheckbox)
+        await waitFor(() => {
+          expect(recurringCheckbox).toBeChecked()
+        })
+      })
+
+      expect(startDateInput).toHaveValue('01-01 05:00:00')
+      expect(endDateInput).toHaveValue('01-25 00:00:00')
+      expect(screen.getByText('Year Range:')).toBeInTheDocument()
+      expect(screen.getByText('1960 - 2020')).toBeInTheDocument()
+
+      await act(async () => {
+        await user.click(screen.getByRole('button', { name: 'Apply' }))
+      })
+
+      expect(onChangeQueryMock).toHaveBeenCalledWith({
+        collection: {
+          temporal: {
+            isRecurring: true,
+            startDate: '1960-01-01T05:00:00.000Z',
+            endDate: '2020-01-25T00:00:00.000Z',
+            recurringDayStart: '1',
+            recurringDayEnd: '25'
           }
         }
       })

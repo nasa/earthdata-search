@@ -140,37 +140,49 @@ const TemporalSelectionDropdown = ({
           startDate: existingStartDate,
           endDate: existingEndDate
         } = temporal
+        const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
+        const minDate = moment(minimumTemporalDateString, temporalDateFormatFull)
 
+        // When both dates exist and are in the same year, adjust start to min year
         if (existingStartDate && existingEndDate) {
           const startYear = moment(existingStartDate).utc().year()
           const endYear = moment(existingEndDate).utc().year()
-
           if (startYear === endYear) {
-            const {
-              minimumTemporalDateString,
-              temporalDateFormatFull
-            } = getApplicationConfig()
-
-            const minDate = moment(
-              minimumTemporalDateString,
-              temporalDateFormatFull
-            )
-
-            const newStartDate = moment(existingStartDate)
-              .utc()
-              .year(minDate.year())
-              .toISOString()
-
             setTemporal({
               ...temporal,
               isRecurring: isChecked,
-              startDate: newStartDate,
+              startDate: moment(existingStartDate).utc().year(minDate.year()).toISOString(),
               endDate: existingEndDate
             })
 
             return
           }
         }
+
+        // When only start date exists and is in current year, use full range
+        if (existingStartDate && !existingEndDate) {
+          const startYear = moment(existingStartDate).utc().year()
+          const currentYear = moment().utc().year()
+          if (startYear === currentYear) {
+            setTemporal({
+              ...temporal,
+              isRecurring: isChecked,
+              startDate: minDate.startOf('year').toISOString(),
+              endDate: moment().utc().toISOString()
+            })
+
+            return
+          }
+        }
+
+        setTemporal({
+          ...temporal,
+          isRecurring: isChecked,
+          startDate: existingStartDate || minDate.startOf('year').toISOString(),
+          endDate: existingEndDate || moment().utc().toISOString()
+        })
+
+        return
       }
 
       setTemporal({
