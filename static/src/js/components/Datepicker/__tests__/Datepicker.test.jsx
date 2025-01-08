@@ -6,6 +6,7 @@ import {
   screen,
   waitFor
 } from '@testing-library/react'
+import MockDate from 'mockdate'
 
 import userEvent from '@testing-library/user-event'
 
@@ -51,6 +52,14 @@ const setup = (overrideProps) => {
 }
 
 describe('Datepicker component', () => {
+  beforeEach(() => {
+    MockDate.set('2024-01-01T01:00:00.000Z')
+  })
+
+  afterEach(() => {
+    MockDate.reset()
+  })
+
   describe('on render', () => {
     test('creates the custom buttons', () => {
       setup()
