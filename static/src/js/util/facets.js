@@ -32,6 +32,7 @@ export const countSelectedFacets = (groupToCheck, startingValue = 0) => {
  */
 export const getNormalizedFirstLetter = (title) => {
   if (!title?.[0]) return null
+
   const firstLetter = title[0].toUpperCase()
 
   return isNumber(firstLetter) ? '#' : firstLetter
