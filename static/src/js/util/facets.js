@@ -1,7 +1,7 @@
 import qs from 'qs'
 import { camelCase } from 'lodash-es'
-import { isNumber } from './isNumber'
 import { queryParamsFromUrlString } from './url/url'
+import { isNumber } from './isNumber'
 import { alphabet, createEmptyAlphabeticListObj } from './alphabetic-list'
 
 /**
@@ -26,18 +26,31 @@ export const countSelectedFacets = (groupToCheck, startingValue = 0) => {
 }
 
 /**
+ * Returns normalized first letter of given facet title.
+ * @param {string} title - facet title.
+ * @return {string} first letter of facet, or if number detected returns #.
+ */
+export const getNormalizedFirstLetter = (title) => {
+  if (!title?.[0]) return null
+
+  const firstLetter = title[0].toUpperCase()
+
+  return isNumber(firstLetter) ? '#' : firstLetter
+}
+
+/**
  * Returns an array unique entries for the first letter of each facet's title. If the first letter
  * is a number, it will return '#'. This function does not count any children facets.
- * @param {object} groupToCheck - An object representing the facet to be checked.
+ * @param {object} facets - An object representing the facet response.
  * @return {array} An array of the starting letters.
  */
 export const getStartingLetters = (facets) => {
-  const firstLetters = []
-  facets.forEach((facet) => {
-    let firstLetter = facet.title[0].toUpperCase()
-    if (isNumber(firstLetter)) firstLetter = '#'
-    if (!firstLetters.includes(firstLetter)) firstLetters.push(firstLetter)
-  })
+  const firstLetters = facets.reduce((letters, facet) => {
+    const letter = getNormalizedFirstLetter(facet?.title)
+    if (!letter) return letters
+
+    return letters.includes(letter) ? letters : [...letters, letter]
+  }, [])
 
   return firstLetters
 }
@@ -208,8 +221,6 @@ export const buildOrganizedFacets = (facets, options) => {
   let facetsToLift = []
   let facetsToSort = []
 
-  // Populate the arrays based on the applied property if liftSelectedFacets is set,
-  // otherwise put all facets on facetsToSort
   if (options.liftSelectedFacets) {
     facetsToLift = facets.filter((facet) => facet.applied)
     facetsToSort = facets.filter((facet) => !facet.applied)
@@ -218,25 +229,22 @@ export const buildOrganizedFacets = (facets, options) => {
   }
 
   let current = '#'
-
-  // Set alphabetizedList to an object where each property is an array for a given letter
   const alphabetizedList = createEmptyAlphabeticListObj()
 
-  // Sort remaining 'non-lifted' facets into their respective arrays based on the first letter
   facetsToSort.forEach((facet) => {
-    const firstLetter = facet.title[0].toUpperCase()
-    const firstisNumber = isNumber(firstLetter)
+    const firstLetter = getNormalizedFirstLetter(facet.title)
+    // Skip facets without a valid first letter
+    if (!firstLetter) return
 
-    // If the first letter is not the current letter, set the current letter to the first letter of
-    // the selected letters facet. This relies on CMR returning the facets in alpabetical order
+    // If the letter is not the current letter, update current
     if (firstLetter !== current) {
-      current = firstisNumber ? '#' : alphabet[alphabet.indexOf(facet.title[0])]
+      current = firstLetter
     }
 
-    // If the first letter matches the current letter, push it onto the list. We also need to account
-    // for the first letter being a number, in which case it's added to the '#' list
-    if (firstLetter === current || (current === '#' && firstisNumber)) {
-      alphabetizedList[current].push(facet)
+    // Add to appropriate list if it matches current letter or is a number
+    // Only add if the letter exists in our alphabet (should always be true due to getNormalizedFirstLetter)
+    if (alphabet.includes(firstLetter) && (firstLetter === current || (current === '#' && firstLetter === '#'))) {
+      alphabetizedList[firstLetter].push(facet)
     }
   })
 
