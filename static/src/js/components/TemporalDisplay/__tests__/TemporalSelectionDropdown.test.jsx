@@ -765,7 +765,7 @@ describe('TemporalSelectionDropdown component', () => {
         })
       })
 
-      expect(startDateInput).toHaveValue('01-01 05:00:00')
+      expect(startDateInput).toHaveValue('01-01 00:00:00')
       expect(endDateInput).toHaveValue('02-01 06:00:00')
       expect(screen.getByText('Year Range:')).toBeInTheDocument()
       expect(screen.getByText('1960 - 2024')).toBeInTheDocument()
@@ -778,7 +778,7 @@ describe('TemporalSelectionDropdown component', () => {
         collection: {
           temporal: {
             isRecurring: true,
-            startDate: '1960-01-01T05:00:00.000Z',
+            startDate: '1960-01-01T00:00:00.000Z',
             endDate: '2024-02-01T06:00:00.000Z',
             recurringDayStart: '1',
             recurringDayEnd: '32'
@@ -794,6 +794,7 @@ describe('TemporalSelectionDropdown component', () => {
       const onChangeQueryMock = jest.fn()
       const user = userEvent.setup()
 
+      console.log('HERE0')
       setup({
         onChangeQuery: onChangeQueryMock,
         temporalSearch: {
@@ -822,7 +823,7 @@ describe('TemporalSelectionDropdown component', () => {
         })
       })
 
-      expect(startDateInput).toHaveValue('01-01 05:00:00')
+      expect(startDateInput).toHaveValue('01-01 00:00:00')
       expect(endDateInput).toHaveValue('01-25 00:00:00')
       expect(screen.getByText('Year Range:')).toBeInTheDocument()
       expect(screen.getByText('1960 - 2020')).toBeInTheDocument()
@@ -835,7 +836,7 @@ describe('TemporalSelectionDropdown component', () => {
         collection: {
           temporal: {
             isRecurring: true,
-            startDate: '1960-01-01T05:00:00.000Z',
+            startDate: '1960-01-01T00:00:00.000Z',
             endDate: '2020-01-25T00:00:00.000Z',
             recurringDayStart: '1',
             recurringDayEnd: '25'

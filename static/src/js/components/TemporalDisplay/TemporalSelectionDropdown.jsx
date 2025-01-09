@@ -178,8 +178,8 @@ const TemporalSelectionDropdown = ({
         setTemporal({
           ...temporal,
           isRecurring: isChecked,
-          startDate: existingStartDate || minDate.startOf('year').toISOString(),
-          endDate: existingEndDate || moment().utc().toISOString()
+          startDate: existingStartDate || minDate.utc().startOf('year').toISOString(),
+          endDate: existingEndDate || moment.utc().toISOString()
         })
 
         return
