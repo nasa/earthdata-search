@@ -1,4 +1,3 @@
-/* eslint-disable testing-library/no-unnecessary-act */
 import React from 'react'
 import ReactDOM from 'react-dom'
 
@@ -590,11 +589,13 @@ describe('GranuleResultsItem component', () => {
       test('it removes the granule from results', async () => {
         const { props, user } = setup('cmr')
 
+        // eslint-disable-next-line testing-library/no-unnecessary-act
         await act(async () => {
           const moreActions = screen.getByRole('button', { name: 'More actions' })
           await user.click(moreActions)
         })
 
+        // eslint-disable-next-line testing-library/no-unnecessary-act
         await act(async () => {
           await userEvent.click(screen.getByRole('button', { name: 'Filter granule' }), { pointerEventsCheck: 0 })
         })
@@ -611,11 +612,13 @@ describe('GranuleResultsItem component', () => {
       test('it excludes the granule from results with a hashed granule id', async () => {
         const { props, user } = setup('opensearch')
 
+        // eslint-disable-next-line testing-library/no-unnecessary-act
         await act(async () => {
           const moreActions = screen.getByRole('button', { name: 'More actions' })
           await user.click(moreActions)
         })
 
+        // eslint-disable-next-line testing-library/no-unnecessary-act
         await act(async () => {
           await userEvent.click(screen.getByRole('button', { name: 'Filter granule' }), { pointerEventsCheck: 0 })
         })
@@ -833,11 +836,13 @@ describe('GranuleResultsItem component', () => {
     test('calls handleClickGranuleDetails on click', async () => {
       const { props, user } = setup('cmr')
 
+      // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(async () => {
         const moreActions = screen.getByRole('button', { name: 'More actions' })
         await user.click(moreActions)
       })
 
+      // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(async () => {
         await userEvent.click(screen.getByRole('button', { name: 'View details' }), { pointerEventsCheck: 0 })
       })
