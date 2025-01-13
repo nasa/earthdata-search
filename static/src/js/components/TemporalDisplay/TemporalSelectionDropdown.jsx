@@ -161,13 +161,13 @@ const TemporalSelectionDropdown = ({
 
         // When only start date exists and is in current year, use full range
         if (existingStartDate && !existingEndDate) {
-          const startYear = moment(existingStartDate).utc().year()
+          const startYear = moment.utc(existingStartDate).year()
           const currentYear = moment().utc().year()
           if (startYear === currentYear) {
             setTemporal({
               ...temporal,
               isRecurring: isChecked,
-              startDate: minDate.startOf('year').toISOString(),
+              startDate: moment(existingStartDate).utc().year(minDate.year()).toISOString(),
               endDate: moment().utc().toISOString()
             })
 
