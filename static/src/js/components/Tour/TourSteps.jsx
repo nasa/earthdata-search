@@ -432,7 +432,7 @@ const TourSteps = ({
             or dragging the bar above. The panel can be hidden or shown by clicking the
             handle or using the
             {' '}
-            <kbd className="mx-1 align-baseline">]</kbd>
+            <kbd className="search-tour__kbd mx-1 align-baseline">]</kbd>
             {' '}
             key.
           </p>
