@@ -170,6 +170,7 @@ export const buildCollectionSearchParams = (params) => {
     standardProduct,
     tagKey,
     temporalString,
+    toolConceptId,
     viewAllFacets,
     viewAllFacetsCategory
   } = params
@@ -265,6 +266,7 @@ export const buildCollectionSearchParams = (params) => {
     standardProduct,
     tagKey,
     temporal: temporalString,
+    toolConceptId,
     twoDCoordinateSystemName: facetsToSend.two_d_coordinate_system_name,
     facetsSize: viewAllFacetsCategory
       ? { [categoryNameToCMRParam(viewAllFacetsCategory)]: 10000 }
