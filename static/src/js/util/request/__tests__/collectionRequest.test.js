@@ -77,6 +77,7 @@ describe('CollectionRequest#permittedCmrKeys', () => {
       'standard_product',
       'tag_key',
       'temporal',
+      'tool_concept_id',
       'two_d_coordinate_system_name'
     ])
   })
@@ -111,6 +112,7 @@ describe('CollectionRequest#nonIndexedKeys', () => {
       'sort_key',
       'spatial_keyword',
       'tag_key',
+      'tool_concept_id',
       'two_d_coordinate_system_name'
     ])
   })
