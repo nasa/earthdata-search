@@ -11,6 +11,7 @@ import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { removeSpatialFromAccessMethod } from '../util/removeSpatialFromAccessMethod'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getQueueUrl, QUEUE_NAMES } from '../util/getQueueUrl'
 
 // AWS SQS adapter
 let sqs
@@ -142,16 +143,16 @@ const submitRetrieval = async (event, context) => {
         if (type === 'ESI') {
           // Submits to Catalog Rest and is often referred to as a
           // service order -- this is presenting in EDSC as the 'Customize' access method
-          queueUrl = process.env.catalogRestQueueUrl
+          queueUrl = getQueueUrl(QUEUE_NAMES.CatalogRestOrderQueue)
         } else if (type === 'ECHO ORDERS') {
           // Submits to cmr-ordering and is often referred to as an
           // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
-          queueUrl = process.env.cmrOrderingOrderQueueUrl
+          queueUrl = getQueueUrl(QUEUE_NAMES.CmrOrderingOrderQueue)
         } else if (type === 'Harmony') {
           // Submits to Harmony
-          queueUrl = process.env.harmonyQueueUrl
+          queueUrl = getQueueUrl(QUEUE_NAMES.HarmonyOrderQueue)
         } else if (type === 'SWODLR') {
-          queueUrl = process.env.swodlrQueueUrl
+          queueUrl = getQueueUrl(QUEUE_NAMES.SwodlrOrderQueue)
         }
 
         // Initialize the array we'll send to sqs
@@ -166,7 +167,7 @@ const submitRetrieval = async (event, context) => {
           // sqs entry by ORDER_DELAY_SECONDS value for each page. i.e. page 1
           // will not wait, page 2 will wait ORDER_DELAY_SECONDS, page 3 will wait
           // ORDER_DELAY_SECONDS times 2, etc.
-          const delay = (pageNum - 1) * parseInt(process.env.orderDelaySeconds, 10)
+          const delay = (pageNum - 1) * parseInt(process.env.ORDER_DELAY_SECONDS, 10)
 
           try {
             const newOrderRecord = await retrievalDbTransaction('retrieval_orders')
@@ -192,7 +193,7 @@ const submitRetrieval = async (event, context) => {
             parseError(error)
           }
 
-          if (!process.env.IS_OFFLINE) {
+          if (process.env.SKIP_SQS !== 'true') {
             // MessageBatch only accepts batch sizes of 10 messages, so we'll
             // chunk potentially larger request into acceptable chunks
             if (pageNum % 10 === 0 || pageNum === orderPayloads.length) {

@@ -11,7 +11,7 @@ const decodeId = (event) => {
   const { queryStringParameters } = event
   const {
     obfuscated_id: obfuscatedId,
-    spin = process.env.obfuscationSpin
+    spin = process.env.OBFUSCATION_SPIN
   } = queryStringParameters
 
   return {

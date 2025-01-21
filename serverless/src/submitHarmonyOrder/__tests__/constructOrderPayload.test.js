@@ -13,7 +13,7 @@ describe('constructOrderPayload', () => {
   beforeEach(() => {
     process.env = { ...OLD_ENV }
     delete process.env.NODE_ENV
-    process.env.obfuscationSpin = 1234
+    process.env.OBFUSCATION_SPIN = 1234
 
     jest.spyOn(getConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'https://cmr.earthdata.nasa.gov'

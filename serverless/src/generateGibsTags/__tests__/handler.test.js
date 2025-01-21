@@ -47,7 +47,7 @@ afterEach(() => {
 
 describe('generateGibsTags', () => {
   test('correctly generates and queues tag data including custom products', async () => {
-    process.env.tagQueueUrl = 'http://example.com/tagQueue'
+    process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
     nock(/worldview/)
       .get(/wv\.json/)
@@ -219,7 +219,7 @@ describe('generateGibsTags', () => {
   })
 
   test('correctly generates and queues tag data when no collections are to be tagged', async () => {
-    process.env.tagQueueUrl = 'http://example.com/tagQueue'
+    process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
     jest.spyOn(getSupportedGibsLayers, 'getSupportedGibsLayers').mockReturnValue({})
 

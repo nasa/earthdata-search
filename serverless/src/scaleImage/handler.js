@@ -51,7 +51,7 @@ const scaleImage = async (event) => {
       height,
       width
     }
-    const useCache = process.env.useCache === 'true'
+    const useCache = process.env.USE_IMAGE_CACHE === 'true'
 
     // Optional imageSrc that gets passed when a granule image from one of many is specified
     const cacheKey = generateCacheKey(conceptId, conceptType, imageSrc, dimensions)

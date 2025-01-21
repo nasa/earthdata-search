@@ -36,7 +36,7 @@ describe('scaleImage', () => {
     delete process.env.NODE_ENV
 
     process.env.cmrRootUrl = 'http://example.com'
-    process.env.useCache = 'true'
+    process.env.USE_IMAGE_CACHE = 'true'
   })
 
   afterEach(() => {

@@ -13,6 +13,7 @@ import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { readCmrResults } from '../util/cmr/readCmrResults'
 import { tagName } from '../../../sharedUtils/tags'
+import { getQueueUrl, QUEUE_NAMES } from '../util/getQueueUrl'
 
 // AWS SQS Adapter
 let sqs
@@ -112,7 +113,7 @@ const generateCollectionCapabilityTags = async (input) => {
     console.log(`Submitting ${associationPayload.length} tags to SQS for tagging`)
 
     await sqs.send(new SendMessageCommand({
-      QueueUrl: process.env.tagQueueUrl,
+      QueueUrl: getQueueUrl(QUEUE_NAMES.TagProcessingQueue),
       MessageBody: JSON.stringify({
         tagName: tagName('collection_capabilities'),
         action: 'ADD',

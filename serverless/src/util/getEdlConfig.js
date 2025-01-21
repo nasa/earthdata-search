@@ -27,7 +27,7 @@ export const getEdlConfig = async (earthdataEnvironment) => {
       secretsManagerClient = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
-    if (process.env.IS_OFFLINE) {
+    if (process.env.NODE_ENV === 'development') {
       const { clientId, password } = getSecretEarthdataConfig(earthdataEnvironment)
 
       return {

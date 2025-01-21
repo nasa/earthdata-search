@@ -7,7 +7,7 @@ export const getLambdaConfig = () => {
     apiVersion: '2015-03-31'
   }
 
-  if (process.env.IS_OFFLINE) {
+  if (process.env.NODE_ENV === 'development') {
     // The endpoint should point to the serverless offline host:port
     return {
       ...productionConfig,

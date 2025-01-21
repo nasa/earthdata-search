@@ -60,7 +60,7 @@ afterEach(() => {
 
 describe('requeueOrder', () => {
   test('correctly requeues an ESI order', async () => {
-    process.env.catalogRestQueueUrl = 'http://example.com/echoQueue'
+    process.env.CATALOG_REST_QUEUE_URL = 'http://example.com/echoQueue'
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
@@ -99,7 +99,7 @@ describe('requeueOrder', () => {
   })
 
   test('correctly requeues an ECHO ORDERS order', async () => {
-    process.env.cmrOrderingOrderQueueUrl = 'http://example.com/echoQueue'
+    process.env.CMR_ORDERING_ORDER_QUEUE_URL = 'http://example.com/echoQueue'
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
@@ -138,7 +138,7 @@ describe('requeueOrder', () => {
   })
 
   test('correctly requeues a Harmony order', async () => {
-    process.env.harmonyQueueUrl = 'http://example.com/echoQueue'
+    process.env.HARMONY_QUEUE_URL = 'http://example.com/echoQueue'
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {

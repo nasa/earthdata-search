@@ -10,9 +10,9 @@ describe('getCacheConnection', () => {
 
     delete process.env.NODE_ENV
 
-    process.env.cacheHost = 'example.com'
-    process.env.cachePort = '1234'
-    process.env.IS_OFFLINE = false
+    process.env.CACHE_HOST = 'example.com'
+    process.env.CACHE_PORT = '1234'
+    process.env.NODE_ENV = 'test'
   })
 
   afterEach(() => {

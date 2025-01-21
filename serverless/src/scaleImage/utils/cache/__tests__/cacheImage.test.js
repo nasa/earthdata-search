@@ -35,7 +35,7 @@ describe('cacheImage', () => {
 
   describe('when a valid value is provided', () => {
     test('successfully caches the image', async () => {
-      process.env.cacheKeyExpireSeconds = 84000
+      process.env.CACHE_KEY_EXPIRE_SECONDS = 84000
 
       const setMock = jest.spyOn(redis.RedisClient.prototype, 'set').mockImplementation(() => jest.fn())
 
@@ -46,7 +46,7 @@ describe('cacheImage', () => {
     })
 
     test('successfully caches the image', async () => {
-      process.env.cacheKeyExpireSeconds = 84000
+      process.env.CACHE_KEY_EXPIRE_SECONDS = 84000
 
       jest.spyOn(redis.RedisClient.prototype, 'set').mockImplementation(() => {
         throw new Error('Exception calling `set`')

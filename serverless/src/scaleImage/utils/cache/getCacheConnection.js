@@ -11,10 +11,10 @@ export const getCacheConnection = () => {
     return cacheClient
   }
 
-  let host = process.env.cacheHost
-  let port = process.env.cachePort
+  let host = process.env.CACHE_HOST
+  let port = process.env.CACHE_PORT
 
-  if (process.env.IS_OFFLINE === 'true') {
+  if (process.env.NODE_ENV === 'development') {
     host = 'localhost'
     port = '6379'
   }

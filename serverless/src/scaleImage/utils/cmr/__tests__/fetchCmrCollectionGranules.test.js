@@ -10,7 +10,7 @@ describe('fetchCmrCollectionGranules', () => {
 
   beforeEach(() => {
     process.env = { ...OLD_ENV }
-    process.env.IS_OFFLINE = false
+    process.env.NODE_ENV = 'test'
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://example.com' }))
     jest.spyOn(getSystemToken, 'getSystemToken').mockImplementation(() => 'mocked-system-token')
