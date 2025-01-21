@@ -16,7 +16,7 @@ describe('obfuscateId', () => {
   })
 
   test('obfuscates the id correctly', () => {
-    process.env.obfuscationSpin = 1234
+    process.env.OBFUSCATION_SPIN = 1234
 
     const response = obfuscateId(25)
 
@@ -24,7 +24,7 @@ describe('obfuscateId', () => {
   })
 
   test('obfuscates the id correctly', () => {
-    process.env.obfuscationSpin = 5678
+    process.env.OBFUSCATION_SPIN = 5678
 
     const response = obfuscateId(25)
 

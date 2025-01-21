@@ -6,6 +6,7 @@ import { createJwtToken } from '../util/createJwtToken'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
 import { getEdlConfig } from '../util/getEdlConfig'
+import { getQueueUrl, QUEUE_NAMES } from '../util/getQueueUrl'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getUsernameFromToken } from '../util/getUsernameFromToken'
 import { parseError } from '../../../sharedUtils/parseError'
@@ -101,9 +102,9 @@ const edlCallback = async (event, context) => {
     // Create a JWT token from the EDL response
     jwtToken = createJwtToken(userRow, earthdataEnvironment)
 
-    if (!process.env.IS_OFFLINE) {
+    if (process.env.SKIP_SQS !== 'true') {
       const sqsCommand = new SendMessageCommand({
-        QueueUrl: process.env.userDataQueueUrl,
+        QueueUrl: getQueueUrl(QUEUE_NAMES.UserDataQueue),
         MessageBody: JSON.stringify({
           environment: earthdataEnvironment,
           userId: userRow.id,

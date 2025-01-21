@@ -10,8 +10,8 @@ describe('getCacheConnection', () => {
 
     delete process.env.NODE_ENV
 
-    process.env.cacheHost = 'example.com'
-    process.env.cachePort = '1234'
+    process.env.CACHE_HOST = 'example.com'
+    process.env.CACHE_PORT = '1234'
   })
 
   afterEach(() => {
@@ -21,7 +21,7 @@ describe('getCacheConnection', () => {
   describe('when cache client is already set', () => {
     describe('when running locally', () => {
       test('uses locally defined values', async () => {
-        process.env.IS_OFFLINE = 'true'
+        process.env.NODE_ENV = 'development'
 
         const client = redis.createClient()
 

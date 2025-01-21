@@ -36,7 +36,7 @@ describe('getDbCredentials', () => {
   })
 
   test('fetches urs credentials from secrets manager', async () => {
-    process.env.configSecretId = 'test-DbPasswordSecret'
+    process.env.CONFIG_SECRET_ID = 'test-DbPasswordSecret'
 
     jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 

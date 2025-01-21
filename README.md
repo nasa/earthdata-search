@@ -1,6 +1,5 @@
 # [Earthdata Search](https://search.earthdata.nasa.gov)
 
-[![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
 ![Build Status](https://github.com/nasa/earthdata-search/workflows/CI/badge.svg?branch=main)
 [![codecov](https://codecov.io/gh/nasa/earthdata-search/branch/main/graph/badge.svg?token=kIkZQ0NrqK)](https://codecov.io/gh/nasa/earthdata-search)
 [![Known Vulnerabilities](https://snyk.io/test/github/nasa/earthdata-search/badge.svg)](https://snyk.io/test/github/nasa/earthdata-search)
@@ -8,7 +7,7 @@
 ## About
 
 Earthdata Search is a web application developed by [NASA](http://nasa.gov) [EOSDIS](https://earthdata.nasa.gov) to enable data discovery, search, comparison, visualization, and access across EOSDIS' Earth Science data holdings.
-It builds upon several public-facing services provided by EOSDIS, including the [Common Metadata Repository (CMR)](https://cmr.earthdata.nasa.gov/search/) for data discovery and access, EOSDIS [User Registration System (URS)](https://urs.earthdata.nasa.gov) authentication, the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization, and a number of OPeNDAP services hosted by data providers.
+It builds upon several public-facing services provided by EOSDIS, including the [Common Metadata Repository (CMR)](https://cmr.earthdata.nasa.gov/search/) for data discovery and access, EOSDIS [Earthdata Login (EDL)](https://urs.earthdata.nasa.gov) authentication, the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization, and a number of OPeNDAP services hosted by data providers.
 
 ## License
 
@@ -24,42 +23,25 @@ It builds upon several public-facing services provided by EOSDIS, including the 
 
 ## Application Installation and Usage
 
-The Earthdata Search application uses Node v18 and Vite 5 to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
+The Earthdata Search application uses NodeJS and Vite to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
 
 - S3
   - We highly recommend using CloudFront in front of S3.
 - SQS
+- Step Functions
 - API Gateway
 - Lambda
 - Cloudwatch (Events)
 
 ### Prerequisites
 
-##### Node
+#### NodeJS
 
-Earthdata Search runs on Node.js, in order to run the application you'll need to [install it](https://nodejs.org/en/download/).
+We recommend using [Node Version Manager](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) (NVM) to manage your NodeJS install. Use the shell integration to [automatically switch Node versions](https://github.com/nvm-sh/nvm?tab=readme-ov-file#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file).
 
-**Recommended:** Use Homebrew
-
-    brew install node
-
-##### NPM
-
-npm is a separate project from Node.js, and tends to update more frequently. As a result, even if you’ve just downloaded Node.js (and therefore npm), you’ll probably need to update your npm. Luckily, npm knows how to update itself! To update your npm, type this into your terminal:
-
-    npm install -g npm@latest
-
-##### NVM
-
-To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly. Using nvm we can switch node versions to the one utilized by Earthdata Search. From the top-level directory:
+NVM will automatically install the correct node version defined in `.nvmrc`
 
     nvm use
-
-##### Running Serverless Framework locally
-
-Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) for managing AWS resources. In order to fully run and manage the application you'll need to install it:
-
-    npm install -g serverless@latest
 
 ##### PostgreSQL
 
@@ -80,6 +62,30 @@ Start the PostgreSQL server:
 If you decide to install via Homebrew you'll need to create the default user.
 
     createuser -s postgres
+
+##### Docker
+
+In order to simulate S3 locally we use [Minio](https://min.io/docs/minio/container/index.html) within a docker container.
+
+##### Docker, Optional
+
+In order to simulate SQS locally we use [ElasticMQ](https://github.com/softwaremill/elasticmq) within a docker container.
+
+##### Redis, Optional
+
+To use an image cache you need to have Redis installed.
+
+**Recommended:** Use Homebrew
+
+    brew install redis
+
+Optionally you can run Redis in a Docker container with
+
+    npm run start:cache
+
+To stop the Redis Docker container
+
+    npm run stop:cache
 
 ### Initial Setup
 
@@ -117,17 +123,38 @@ Ensure that you have a database created:
 
 To run the migrations locally:
 
-    DATABASE_URL=postgresql://USERNAME:PASSWORD@localhost:5432/edsc_dev npm run migrate up
-
-Optionally, we can run the migration locally and not within a deployed Lambda. When deployed our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
-
-    serverless invoke local --function migrateDatabase
+    npm run invoke-local migrateDatabase
 
 ###### Creating a new database migration
 
 To create a new database migration use this command to ensure the migration follow the same timestamp name scheme.
 
     npm run migrate create name-of-migration
+
+### Run the Application Locally
+
+The local development environment for the static assets can be started by executing the command below in the project root directory:
+
+    npm start
+
+This will start everything you need to run Earthdata Search locally.
+
+- React application: [http://localhost:8080](http://localhost:8080)
+- Mock API Gateway: [http://localhost:3001](http://localhost:3001)
+- Watch for code changes to the `serverless` directory
+- ElasticMQ container for SQS Queues.
+- Mock SQS service to trigger lambdas on SQS messages.
+- Mock S3 service for generating notebooks.
+
+#### Optional Services
+
+By default we don't run SQS or an image cache locally. In order to run the application with those services you need to include the follow environment variables when you start the application
+
+    USE_IMAGE_CACHE=true SKIP_SQS=false npm start
+
+Or run
+
+    npm run start:optionals
 
 ### Building the Application
 
@@ -139,49 +166,11 @@ This production build can be run locally with any number of http-server solution
 
     npx http-server static/dist
 
-### Run the Application Locally
-
-The local development environment for the static assets can be started by executing the command below in the project root directory:
-
-    npm run start
-
-This will run the React application at [http://localhost:8080](http://localhost:8080) -- please see `Serverless Framework` below for enabling the 'server' side functionality.
-
-### Serverless Framework
-
-The [serverless framework](https://serverless.com/framework/docs/providers/aws/) offers many plugins which allow for local development utilizing many of the services AWS offers. For the most part we only need API Gateway and Lambda for this application but there are plugins for many more services (a list of known exceptions will be maintained below).
-
-##### Exceptions
-
-- SQS
-
- While there is an sqs-offline plugin for serverless it still requires an actual queue be running, we may investigate this in the future but for now sqs functionality isn't available while developing locally which means the following pieces of functionality will not operate locally:
-
-- Generating Colormaps
-
-- Scale images
-
-Scaling thumbnail images utilizes a redis cache in the deployed environment. To utilize this cache locally you'll need to install Redis on the dev machine. The easiest way to do this would be by running it in a docker container using the command `npm run start:cache`. You can also use a visualizer such as `RedisInsight` to more easily inspect the cache. You will also need to set the environment variable `USE_CACHE` locally to `true` with `export USE_CACHE=true` or add the environment variable to your shell script. To stop the docker container use the `npm run stop:cache` command.
-
-#### Running API Gateway and Lambda Locally
-
-Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
-
-    npm run offline
-
-This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
-
-Additionally, this ties in with `esbuild` which will ensure that your lambdas are re-built when changes are detected.
-
 ### Invoking lambdas locally
 
 To invoke lambdas locally we must create a stringified JSON file with the order information to the specific lambda we are trying to run the structure of the events will differ between the lambda. Typically this will include data from your local database instance which is used in the event information.
 
-    npm run invoke-local -- --function <name-of-lambda-function> --path ./event.json
-
-You may need to also set the `IS_OFFLINE` environment variable when invoking the lambda locally
-
-    export IS_OFFLINE=true
+    npm run invoke-local <name-of-lambda-function> ./path/to/event.json
 
 ### Run the Automated [Jest](https://jestjs.io/) tests
 
@@ -189,10 +178,16 @@ Once the project is built, you must ensure that the automated unit tests pass:
 
     npm run test
 
-To get coverage on modules run
+To run Jest in `watch` mode
+
+    npm run test:watch
+
+To only get coverage on files tested run
+
     npm run test:watch-lite
 
-test coverage will be updated in the coverage directory to see breakdown use
+Test coverage will be updated in the coverage directory to see breakdown use
+
     open coverage/lcov-report/index.html
 
 ### Deployment
@@ -201,6 +196,7 @@ When the time comes to deploy the application, first ensure that you have the re
 
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
+- STAGE_NAME
 
 This application runs in a VPC for NASA security purposes, therefore the following values are expected when a deployment occurs:
 
@@ -216,4 +212,6 @@ For production use, this application uses Scatter Swap to obfuscate some IDs -- 
 
 To deploy the full application use the following:
 
-    NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
+    bin/deploy_bamboo.sh
+
+Note: In that script all the env variables are prefixed with `bamboo_` to match our deployments.

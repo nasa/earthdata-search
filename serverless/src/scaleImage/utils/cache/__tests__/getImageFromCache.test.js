@@ -19,7 +19,7 @@ afterEach(() => {
 
 describe('getImageFromCache', () => {
   test('returns null when key is not found in the cache', async () => {
-    process.env.cacheKeyExpireSeconds = 84000
+    process.env.CACHE_KEY_EXPIRE_SECONDS = 84000
 
     const imageFromCache = await getImageFromCache('test-image-contents')
 
@@ -27,7 +27,7 @@ describe('getImageFromCache', () => {
   })
 
   test('returns stored value when key is found in the cache', async () => {
-    process.env.cacheKeyExpireSeconds = 84000
+    process.env.CACHE_KEY_EXPIRE_SECONDS = 84000
 
     // Set an entry in the cache to test cache hit
     await cacheImage('empty-200-200', 'test-image-contents')

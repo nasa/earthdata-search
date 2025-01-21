@@ -15,7 +15,7 @@ export const getDbConnection = async () => {
 
     const pool = {}
 
-    if (process.env.IS_OFFLINE) {
+    if (process.env.NODE_ENV === 'development') {
       // When running locally set the pool min to 0 to avoid idle connections
       pool.min = 0
     }
