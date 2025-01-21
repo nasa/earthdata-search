@@ -14,7 +14,7 @@ describe('fetchCmrConcept', () => {
     process.env.cmrRootUrl = 'http://example.com'
     process.env.cmrHost = 'http://example.com'
 
-    process.env.IS_OFFLINE = false
+    process.env.NODE_ENV = 'test'
 
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
       cmrHost: 'http://example.com'

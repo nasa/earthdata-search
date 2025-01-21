@@ -13,7 +13,7 @@ import { getJwtToken } from '../util/getJwtToken'
 import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 
-import { getS3Client } from '../../../static/src/js/util/getS3Client'
+import { getS3Client } from '../util/getS3Client'
 
 import notebookTemplate from './notebookTemplate.ipynb'
 

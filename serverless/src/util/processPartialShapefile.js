@@ -23,7 +23,7 @@ export const processPartialShapefile = async (
   // Deobfuscate the provided shapefile id
   const deobfuscatedShapefileId = deobfuscateId(
     shapefileId,
-    process.env.obfuscationSpinShapefiles
+    process.env.OBFUSCATION_SPIN_SHAPEFILES
   )
 
   const shapefileRecord = await dbConnection('shapefiles')

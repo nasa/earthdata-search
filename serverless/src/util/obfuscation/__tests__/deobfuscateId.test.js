@@ -16,7 +16,7 @@ describe('deobfuscateId', () => {
   })
 
   test('obfuscates the id correctly', () => {
-    process.env.obfuscationSpin = 1234
+    process.env.OBFUSCATION_SPIN = 1234
 
     const response = deobfuscateId('2034167584')
 
@@ -24,7 +24,7 @@ describe('deobfuscateId', () => {
   })
 
   test('obfuscates the id correctly', () => {
-    process.env.obfuscationSpin = 5678
+    process.env.OBFUSCATION_SPIN = 5678
 
     const response = deobfuscateId('8541648723')
 

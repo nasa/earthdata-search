@@ -16,7 +16,7 @@ export const getUrsSystemCredentials = async (earthdataEnvironment) => {
       secretsManagerClient = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
-    if (process.env.IS_OFFLINE) {
+    if (process.env.NODE_ENV === 'development') {
       const {
         cmrSystemUsername,
         cmrSystemPassword

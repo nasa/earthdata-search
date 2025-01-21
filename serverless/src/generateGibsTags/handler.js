@@ -10,6 +10,7 @@ import { getSupportedGibsLayers } from './getSupportedGibsLayers'
 import { getSystemToken } from '../util/urs/getSystemToken'
 import { parseError } from '../../../sharedUtils/parseError'
 import { tagName } from '../../../sharedUtils/tags'
+import { getQueueUrl, QUEUE_NAMES } from '../util/getQueueUrl'
 
 // AWS SQS adapter
 let sqs
@@ -116,7 +117,7 @@ const generateGibsTags = async (event, context) => {
     const { [conceptId]: tagData } = conceptIdLayers
 
     await sqs.send(new SendMessageCommand({
-      QueueUrl: process.env.tagQueueUrl,
+      QueueUrl: getQueueUrl(QUEUE_NAMES.TagProcessingQueue),
       MessageBody: JSON.stringify({
         tagName: tagName('gibs'),
         action: 'ADD',
@@ -134,7 +135,7 @@ const generateGibsTags = async (event, context) => {
     // If conceptIdLayers contains values we want to ensure we delete tags
     // from only the collections that arent within it
     await sqs.send(new SendMessageCommand({
-      QueueUrl: process.env.tagQueueUrl,
+      QueueUrl: getQueueUrl(QUEUE_NAMES.TagProcessingQueue),
       MessageBody: JSON.stringify({
         tagName: tagName('gibs'),
         action: 'REMOVE',
@@ -159,7 +160,7 @@ const generateGibsTags = async (event, context) => {
   } else {
     // If no collections were found to match the gibs criteria, we'll just delete all the tags.
     await sqs.send(new SendMessageCommand({
-      QueueUrl: process.env.tagQueueUrl,
+      QueueUrl: getQueueUrl(QUEUE_NAMES.TagProcessingQueue),
       MessageBody: JSON.stringify({
         tagName: tagName('gibs'),
         action: 'REMOVE',

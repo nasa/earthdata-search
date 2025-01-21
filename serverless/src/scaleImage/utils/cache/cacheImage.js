@@ -6,7 +6,7 @@ import { getCacheConnection } from './getCacheConnection'
  * @param {Buffer<Image>} image the value in the cache as a buffer
  */
 export const cacheImage = async (key, image) => {
-  const { cacheKeyExpireSeconds } = process.env
+  const { CACHE_KEY_EXPIRE_SECONDS } = process.env
 
   // Ignore empty cache attempts
   if (image) {
@@ -20,7 +20,7 @@ export const cacheImage = async (key, image) => {
      * KEEPTTL -- Retain the time to live associated with the key.
      */
     try {
-      await cacheConnection.set(key, image, 'EX', cacheKeyExpireSeconds)
+      await cacheConnection.set(key, image, 'EX', CACHE_KEY_EXPIRE_SECONDS)
 
       console.log(`Successfully cached ${key}`)
     } catch (error) {

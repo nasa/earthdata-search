@@ -14,7 +14,7 @@ export const fetchCmrCollectionGranules = async (collectionConceptId, earthdataE
   const retrieveSystemToken = earthdataEnvironment === deployedEnvironment()
 
   // Do not retrieve system token if offline or using the `ee` params to query other CMR envs
-  if (!process.env.IS_OFFLINE && retrieveSystemToken) {
+  if (process.env.NODE_ENV !== 'development' && retrieveSystemToken) {
     const cmrToken = await getSystemToken()
     headers.Authorization = `${cmrToken}`
   }

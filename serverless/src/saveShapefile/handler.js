@@ -67,7 +67,7 @@ const saveShapefile = async (event, context) => {
         body: JSON.stringify({
           shapefile_id: obfuscateId(
             existingShapefileRecord.id,
-            process.env.obfuscationSpinShapefiles
+            process.env.OBFUSCATION_SPIN_SHAPEFILES
           )
         })
       }
@@ -83,7 +83,7 @@ const saveShapefile = async (event, context) => {
       statusCode: 200,
       headers: defaultResponseHeaders,
       body: JSON.stringify({
-        shapefile_id: obfuscateId(newShapefileRecord[0].id, process.env.obfuscationSpinShapefiles)
+        shapefile_id: obfuscateId(newShapefileRecord[0].id, process.env.OBFUSCATION_SPIN_SHAPEFILES)
       })
     }
   } catch (error) {

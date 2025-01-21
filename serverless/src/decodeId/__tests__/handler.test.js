@@ -18,7 +18,7 @@ afterEach(() => {
 
 describe('decodeId', () => {
   test('correctly returns a json response', () => {
-    process.env.obfuscationSpin = 1000
+    process.env.OBFUSCATION_SPIN = 1000
 
     const response = decodeId({
       queryStringParameters: {
