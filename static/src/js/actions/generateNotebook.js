@@ -32,7 +32,7 @@ export const generateNotebook = (params) => (dispatch, getState) => {
 
   const generateNotebookRequestObject = new GenerateNotebookRequest(authToken, earthdataEnvironment)
 
-  const response = generateNotebookRequestObject.generateNotebook(params)
+  const response = generateNotebookRequestObject.generateNotebook(JSON.stringify(params))
     .then((responseObject) => {
       const { data } = responseObject
 

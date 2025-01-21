@@ -5,6 +5,7 @@ import { XMLParser } from 'fast-xml-parser'
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { parseError } from '../../../sharedUtils/parseError'
+import { getQueueUrl, QUEUE_NAMES } from '../util/getQueueUrl'
 
 const xmlParser = new XMLParser({
   ignoreAttributes: false,
@@ -71,7 +72,7 @@ export const getProjectionCapabilities = async (projection) => {
 
           console.log('sending message', JSON.stringify(knownColorMap))
           const sendMessageCommand = new SendMessageCommand({
-            QueueUrl: process.env.colorMapQueueUrl,
+            QueueUrl: getQueueUrl(QUEUE_NAMES.ColorMapQueue),
             MessageBody: JSON.stringify(knownColorMap)
           })
 

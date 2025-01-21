@@ -45,7 +45,7 @@ describe('generateCollectionCapabilityTags', () => {
   describe('when no input is provided', () => {
     test('requests page 1 of cmr collections to tag', async () => {
       // Set the necessary ENV variables to ensure all values are tested
-      process.env.tagQueueUrl = 'http://example.com/tagQueue'
+      process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
       jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
         id: 'G100000-EDSC'
@@ -97,7 +97,7 @@ describe('generateCollectionCapabilityTags', () => {
   describe('when a page number is provided', () => {
     test('requests page 4 of cmr collections to tag', async () => {
       // Set the necessary ENV variables to ensure all values are tested
-      process.env.tagQueueUrl = 'http://example.com/tagQueue'
+      process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
       jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
         id: 'G100000-EDSC'
@@ -149,7 +149,7 @@ describe('generateCollectionCapabilityTags', () => {
   describe('when a concept id is provided', () => {
     test('requests collections to tag by concept id', async () => {
       // Set the necessary ENV variables to ensure all values are tested
-      process.env.tagQueueUrl = 'http://example.com/tagQueue'
+      process.env.TAG_QUEUE_URL = 'http://example.com/tagQueue'
 
       jest.spyOn(getPageOfGranules, 'getPageOfGranules').mockImplementationOnce(() => ([{
         id: 'G100000-EDSC'

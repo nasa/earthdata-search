@@ -24,3 +24,5 @@ playwright-coverage
 /playwright-report/
 /playwright/.cache/
 portals/availablePortals.json
+
+elasticmq.conf

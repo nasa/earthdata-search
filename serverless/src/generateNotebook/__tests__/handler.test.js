@@ -5,7 +5,7 @@ import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as determineEarthdataEnvironment from '../../util/determineEarthdataEnvironment'
 import * as getAccessTokenFromJwtToken from '../../util/urs/getAccessTokenFromJwtToken'
 import * as getJwtToken from '../../util/getJwtToken'
-import * as getS3Client from '../../../../static/src/js/util/getS3Client'
+import * as getS3Client from '../../util/getS3Client'
 
 import generateNotebook from '../handler'
 

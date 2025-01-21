@@ -50,7 +50,7 @@ beforeEach(() => {
   // Manage resetting ENV variables
   // TODO: This is causing problems with mocking knex but is noted as important for managing process.env
   // jest.resetModules()
-  process.env.orderDelaySeconds = 30
+  process.env.ORDER_DELAY_SECONDS = 30
   process.env = { ...OLD_ENV }
   delete process.env.NODE_ENV
 })
@@ -125,7 +125,7 @@ describe('submitRetrieval', () => {
   })
 
   test('correctly submits an order and queues order messages', async () => {
-    process.env.catalogRestQueueUrl = 'http://example.com/echoQueue'
+    process.env.CATALOG_REST_QUEUE_URL = 'http://example.com/echoQueue'
 
     const retrievalCollectionRecord = {
       id: 2,
