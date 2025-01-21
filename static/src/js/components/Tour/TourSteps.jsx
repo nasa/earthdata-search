@@ -7,6 +7,11 @@ import {
   FaQuestion
 } from 'react-icons/fa'
 import PropTypes from 'prop-types'
+import {
+  ArrowFilledLeft,
+  ArrowFilledRight
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import ExternalLink from '../ExternalLink/ExternalLink'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Button from '../Button/Button'
@@ -30,7 +35,7 @@ const TourButtons = ({
           checked={isChecked}
           onChange={handleCheckboxChange}
         />
-        <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
+        <label htmlFor="dontShowAgain" className="search-tour__checkbox-label">
           Don&apos;t show again
         </label>
       </div>
@@ -64,7 +69,7 @@ TourButtons.propTypes = {
 }
 
 const StepCounter = ({ currentStep, totalSteps }) => (
-  <p className="step-counter-text">
+  <p className="search-tour__step-counter-text">
     {currentStep}
     {' '}
     OF
@@ -113,7 +118,11 @@ const TourSteps = ({
           <p className="search-tour__note">
             If you want to skip the tour for now, it is always available by clicking
             {' '}
-            <EDSCIcon className="text-icon" icon={FaQuestion} />
+            <EDSCIcon
+              className="search-tour__text-icon"
+              icon={FaQuestion}
+              aria-label="Start Search Tour"
+            />
             {' '}
             at the top of the page.
           </p>
@@ -125,13 +134,13 @@ const TourSteps = ({
               checked={isChecked}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
+            <label htmlFor="dontShowAgain" className="search-tour__checkbox-label">
               Don&apos;t show the tour next time I visit Earthdata Search
             </label>
           </div>
-          <div className="search-tour__buttons intro">
+          <div className="search-tour__intro-buttons">
             <Button
-              className="button-tour-start"
+              className="search-tour__button-tour-start"
               type="button"
               bootstrapVariant="primary"
               bootstrapSize="lg"
@@ -177,6 +186,27 @@ const TourSteps = ({
           <p className="search-tour__content">
             Available filters include keyword search, spatial and temporal bounds,
             and advanced search options.
+          </p>
+          <p className="search-tour__hotkey-info align-middle">
+            <strong>Tip:</strong>
+            {' '}
+            Use
+            <kbd className="mx-1 align-baseline">
+              <EDSCIcon
+                icon={ArrowFilledLeft}
+                aria-label="Left arrow key"
+                size="10"
+              />
+            </kbd>
+            and
+            <kbd className="mx-1 align-baseline">
+              <EDSCIcon
+                icon={ArrowFilledRight}
+                aria-label="Right arrow key"
+                size="10"
+              />
+            </kbd>
+            on your keyboard to navigate the tour.
           </p>
           <TourButtons
             stepIndex={stepIndex}
@@ -354,7 +384,11 @@ const TourSteps = ({
             the right data, including a summary, temporal range, and information about
             capabilities. To view more information about a collection, click the
             {' '}
-            <EDSCIcon className="text-icon" icon={FaInfoCircle} />
+            <EDSCIcon
+              className="search-tour__text-icon"
+              icon={FaInfoCircle}
+              aria-label="View collection details"
+            />
             {' '}
             icon.
           </p>
@@ -362,7 +396,11 @@ const TourSteps = ({
             Add granules to a project and customize options before accessing the data.
             To add a collection to your project, click the
             {' '}
-            <EDSCIcon className="text-icon" icon={FaPlus} />
+            <EDSCIcon
+              className="search-tour__text-icon"
+              icon={FaPlus}
+              aria-label="Add collection to the current project"
+            />
             {' '}
             icon.
             To add individual granules to a project, click on a search result to view and
@@ -394,12 +432,14 @@ const TourSteps = ({
             or dragging the bar above. The panel can be hidden or shown by clicking the
             handle or using the
             {' '}
-            <kbd>]</kbd>
+            <kbd className="search-tour__kbd mx-1 align-baseline">]</kbd>
             {' '}
             key.
           </p>
           <div className="search-tour__info-box">
             <p>
+              <strong>Tip:</strong>
+              {' '}
               All keyboard shortcuts can be displayed by pressing the
               {' '}
               <kbd>?</kbd>
@@ -420,7 +460,7 @@ const TourSteps = ({
       styles: commonStyles
     },
     {
-      target: '.target-overlay',
+      target: '.search-tour__target-overlay',
       content: (
         <div className="search-tour__content-wrapper">
           <StepCounter currentStep={stepIndex} totalSteps={TOTAL_STEPS} />
@@ -477,7 +517,11 @@ const TourSteps = ({
           <p className="search-tour__content">
             Click
             {' '}
-            <EDSCIcon className="text-icon" icon={FaSave} />
+            <EDSCIcon
+              className="search-tour__text-icon"
+              icon={FaSave}
+              aria-label="Save Project"
+            />
             {' '}
             to save a project using your current search criteria.
           </p>
@@ -518,7 +562,7 @@ const TourSteps = ({
 
   const loggedOutStep = [
     {
-      target: '.search',
+      target: '.secondary-toolbar__login-button',
       content: (
         <div className="search-tour__content-wrapper">
           <StepCounter currentStep={stepIndex} totalSteps={TOTAL_STEPS} />
@@ -534,10 +578,9 @@ const TourSteps = ({
           />
         </div>
       ),
-      placement: 'center',
+      placement: 'right',
       hideFooter: true,
-      styles: commonStyles,
-      disableBeacon: true
+      styles: commonStyles
     }
   ]
 
@@ -550,7 +593,12 @@ const TourSteps = ({
           <p className="search-tour__content">
             You can replay this tour anytime by clicking
             {' '}
-            <EDSCIcon className="text-icon" icon={FaQuestion} />
+            <EDSCIcon
+              className="search-tour__text-icon"
+              icon={FaQuestion}
+              aria-label="Start Search Tour"
+              size="10"
+            />
           </p>
           <div className="search-tour__footer">
             <div className="search-tour__footer-content">
@@ -562,8 +610,8 @@ const TourSteps = ({
                   checked={isChecked}
                   onChange={handleCheckboxChange}
                 />
-                <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
-                  Don&apos;t show again
+                <label htmlFor="dontShowAgain" className="search-tour__checkbox-label">
+                  Don&apos;t show tour again
                 </label>
               </div>
               <div className="search-tour__buttons">
@@ -576,7 +624,7 @@ const TourSteps = ({
                   Previous
                 </Button>
                 <Button
-                  className="button-tour-finish"
+                  className="search-tour__button-tour-finish"
                   type="button"
                   bootstrapVariant="primary"
                   bootstrapSize="sm"
@@ -613,7 +661,12 @@ const TourSteps = ({
               <div className="search-tour__webinar-thumbnail-wrapper">
                 <div className="search-tour__webinar-thumbnail-overlay">
                   <div className="search-tour__webinar-thumbnail-icon-bg">
-                    <EDSCIcon className="search-tour__webinar-thumbnail-icon" size="18px" icon={FaPlay} />
+                    <EDSCIcon
+                      className="search-tour__webinar-thumbnail-icon"
+                      size="18px"
+                      icon={FaPlay}
+                      aria-label="Play Webinar Video"
+                    />
                   </div>
                 </div>
                 <img
@@ -638,7 +691,7 @@ const TourSteps = ({
             Find more information here:
           </p>
           <ul className="search-tour__earthdata-list">
-            <li>
+            <li className="search-tour__list">
               <ExternalLink
                 href="https://www.earthdata.nasa.gov/learn/earthdata-search"
               >
@@ -654,7 +707,7 @@ const TourSteps = ({
               checked={isChecked}
               onChange={handleCheckboxChange}
             />
-            <label htmlFor="dontShowAgain" className="search-tour__checkbox__label">
+            <label htmlFor="dontShowAgain" className="search-tour__checkbox-label">
               Don&apos;t show the tour next time I visit Earthdata Search
             </label>
           </div>
