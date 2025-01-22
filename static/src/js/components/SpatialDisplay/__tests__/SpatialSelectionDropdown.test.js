@@ -40,11 +40,11 @@ describe('SpatialSelectionDropdown component', () => {
       await user.click(dropdownSelectionButton)
     })
 
-    expect(screen.getByRole('button', { name: 'Select Polygon' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Select Rectangle' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Select Point' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Select Circle' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Select Shapefile' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Polygon' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Rectangle' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Point' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Circle' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'File (KML, KMZ, ESRI, …)' })).toBeInTheDocument()
   })
 
   test('clicking the polygon dropdown emits an event and tracks metric', async () => {
@@ -59,7 +59,7 @@ describe('SpatialSelectionDropdown component', () => {
       await user.click(dropdownSelectionButton)
     })
 
-    await user.click(screen.getByRole('button', { name: 'Select Polygon' }))
+    await user.click(screen.getByRole('button', { name: 'Polygon' }))
 
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawStart', { type: 'polygon' })
@@ -80,7 +80,7 @@ describe('SpatialSelectionDropdown component', () => {
       await user.click(dropdownSelectionButton)
     })
 
-    await user.click(screen.getByRole('button', { name: 'Select Rectangle' }))
+    await user.click(screen.getByRole('button', { name: 'Rectangle' }))
 
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawStart', { type: 'rectangle' })
@@ -101,7 +101,7 @@ describe('SpatialSelectionDropdown component', () => {
       await user.click(dropdownSelectionButton)
     })
 
-    await user.click(screen.getByRole('button', { name: 'Select Point' }))
+    await user.click(screen.getByRole('button', { name: 'Point' }))
 
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawStart', { type: 'marker' })
@@ -122,7 +122,7 @@ describe('SpatialSelectionDropdown component', () => {
       await user.click(dropdownSelectionButton)
     })
 
-    await user.click(screen.getByRole('button', { name: 'Select Circle' }))
+    await user.click(screen.getByRole('button', { name: 'Circle' }))
 
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawStart', { type: 'circle' })
@@ -141,7 +141,7 @@ describe('SpatialSelectionDropdown component', () => {
       await user.click(dropdownSelectionButton)
     })
 
-    await user.click(screen.getByRole('button', { name: 'Select Shapefile' }))
+    await user.click(screen.getByRole('button', { name: 'File (KML, KMZ, ESRI, …)' }))
 
     expect(onToggleShapefileUploadModal).toHaveBeenCalledTimes(1)
     expect(onToggleShapefileUploadModal).toHaveBeenCalledWith(true)
@@ -166,7 +166,7 @@ describe('SpatialSelectionDropdown component', () => {
         await user.click(dropdownSelectionButton)
       })
 
-      const shapeFileSelectionButton = screen.getByRole('button', { name: 'Select Shapefile' })
+      const shapeFileSelectionButton = screen.getByRole('button', { name: 'File (KML, KMZ, ESRI, …)' })
       await user.click(shapeFileSelectionButton)
 
       expect(shapeFileSelectionButton).toBeDisabled()
