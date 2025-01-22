@@ -539,7 +539,7 @@ const SpatialSelection = (props) => {
           button.setAttribute('aria-label', 'Draw a spatial circle on the map to select a spatial extent')
         } else if (button.classList.contains('leaflet-draw-draw-polygon')) {
           button.setAttribute('aria-label', 'Draw a spatial polygon on the map to select a spatial extent')
-        } else if (button.classList.contains('leaflet-draw-draw-rectangle on the map to select a spatial extent')) {
+        } else if (button.classList.contains('leaflet-draw-draw-rectangle')) {
           button.setAttribute('aria-label', 'Draw a spatial rectangle on the map to select a spatial extent')
         } else if (button.classList.contains('leaflet-draw-draw-marker')) {
           button.setAttribute('aria-label', 'Draw a spatial coordinate on the map to select a spatial extent')
