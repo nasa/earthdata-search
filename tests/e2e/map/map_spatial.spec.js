@@ -90,7 +90,7 @@ test.describe('Map: Spatial interactions', () => {
         await page.goto('/')
 
         // Select the point spatial type
-        await page.getByRole('link', { name: 'Draw a spatial coordinate on the map to select a spatial extent' }).click()
+        await page.getByRole('link', { name: 'Draw a coordinate on the map to select a spatial extent' }).click()
 
         // Add the point to the map
         await page.mouse.click(1000, 500)
@@ -173,7 +173,7 @@ test.describe('Map: Spatial interactions', () => {
         await page.goto('/')
 
         // Select the point spatial type
-        await page.getByRole('link', { name: 'Draw a spatial coordinate on the map to select a spatial extent' }).click()
+        await page.getByRole('link', { name: 'Draw a coordinate on the map to select a spatial extent' }).click()
 
         // Add the point to the map
         await page.mouse.click(1000, 500)
@@ -274,7 +274,7 @@ test.describe('Map: Spatial interactions', () => {
         await page.goto('/')
 
         // Select the circle spatial type
-        await page.getByRole('link', { name: 'Draw a spatial circle on the map to select a spatial extent' }).click()
+        await page.getByRole('link', { name: 'Draw a circle on the map to select a spatial extent' }).click()
 
         // Add the point to the map
         await page.mouse.move(1000, 500)
@@ -364,7 +364,7 @@ test.describe('Map: Spatial interactions', () => {
         await page.goto('/')
 
         // Select the circle spatial type
-        await page.getByRole('link', { name: 'Draw a spatial circle on the map to select a spatial extent' }).click()
+        await page.getByRole('link', { name: 'Draw a circle on the map to select a spatial extent' }).click()
 
         // Add the point to the map
         await page.mouse.move(1000, 500)
