@@ -4,8 +4,7 @@ import {
   screen,
   waitFor,
   createEvent,
-  fireEvent,
-  within
+  fireEvent
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
@@ -56,8 +55,7 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
           await user.click(dropdownButton)
         })
 
-        const dropdownMenu = screen.getByTestId('dropdown-menu')
-        const downloadButton = within(dropdownMenu).getByRole('button', { name: 'Download Notebook' })
+        const downloadButton = screen.getByRole('button', { name: 'Download Notebook' })
 
         await user.click(downloadButton)
 
@@ -85,8 +83,7 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
           await user.click(dropdownButton)
         })
 
-        const dropdownMenu = screen.getByTestId('dropdown-menu')
-        const downloadButton = within(dropdownMenu).getByRole('button', { name: 'Download Notebook' })
+        const downloadButton = screen.getByRole('button', { name: 'Download Notebook' })
 
         await user.click(downloadButton)
 
@@ -113,8 +110,7 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
           await user.click(dropdownButton)
         })
 
-        const dropdownMenu = screen.getByTestId('dropdown-menu')
-        const downloadButton = within(dropdownMenu).getByRole('button', { name: 'Download Notebook' })
+        const downloadButton = screen.getByRole('button', { name: 'Download Notebook' })
 
         await user.click(downloadButton)
 
@@ -142,13 +138,12 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
         await user.click(dropdownButton)
       })
 
-      const dropdownMenu = screen.getByTestId('dropdown-menu')
       // eslint-disable-next-line capitalized-comments
       // createEvent and fireEvent are used here to enable mocking of stopPropagation
-      const clickEvent = createEvent.click(dropdownMenu)
+      const clickEvent = createEvent.click(dropdownButton)
       clickEvent.stopPropagation = stopPropagationMock
 
-      fireEvent(dropdownMenu, clickEvent)
+      fireEvent(dropdownButton, clickEvent)
 
       expect(stopPropagationMock).toHaveBeenCalledTimes(1)
     })

@@ -870,15 +870,12 @@ describe('GranuleResultsFocusedMeta component', () => {
               await user.click(modalPrev)
             })
 
-            let images
-            let pagination
+            const images = within(modal).queryAllByTestId('mock-edsc-image')
             await waitFor(() => {
-              images = within(modal).queryAllByTestId('mock-edsc-image')
-              pagination = within(modal).queryByText('2/2')
-
               expect(images.length).toEqual(2)
             })
 
+            const pagination = within(modal).queryByText('2/2')
             expect(images[1]).toHaveClass('granule-results-focused-meta__full--is-active')
             expect(pagination).toBeInTheDocument()
           })

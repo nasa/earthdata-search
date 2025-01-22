@@ -63,6 +63,7 @@ const mockStore = configureMockStore()
 const store = mockStore({})
 
 const setup = (overrideProps) => {
+  const user = userEvent.setup()
   const props = {
     temporalSearch: {
       endDate: '',
@@ -75,11 +76,13 @@ const setup = (overrideProps) => {
   }
 
   // Wrapping this in a Redux provider because DatepickerContainer has to be connected to Redux
-  return render(
+  render(
     <Provider store={store}>
       <TemporalSelectionDropdown {...props} />
     </Provider>
   )
+
+  return { user }
 }
 
 beforeAll(() => {
@@ -105,14 +108,13 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('when clicked toggles the state of show ', async () => {
-    const { click } = userEvent.setup()
-    setup({})
+    const { user } = setup({})
 
     const btn = screen.getByRole('button', { name: 'Open temporal filters' })
     expect(btn).toBeInTheDocument()
 
     await waitFor(async () => {
-      await click(btn)
+      await user.click(btn)
     })
 
     const startLabel = screen.getByText(/Start/i)
@@ -121,12 +123,10 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the start date correctly when an valid date is passed', async () => {
-    const { click, type } = userEvent.setup()
-
-    setup()
+    const { user } = setup({})
 
     await waitFor(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -135,7 +135,7 @@ describe('TemporalSelectionDropdown component', () => {
     const startTestObj = '2012-01-01 12:00:00'
 
     await act(async () => {
-      await type(startDateInput, startTestObj)
+      await user.type(startDateInput, startTestObj)
     })
 
     expect(window.console.warn).toHaveBeenCalledTimes(19)
@@ -145,12 +145,10 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the end date correctly when an valid date is passed', async () => {
-    const { click, type } = userEvent.setup()
-
-    setup()
+    const { user } = setup({})
 
     await waitFor(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -159,7 +157,7 @@ describe('TemporalSelectionDropdown component', () => {
     const endTestObj = '2015-01-01 12:00:00'
 
     await act(async () => {
-      await type(endDateInput, endTestObj)
+      await user.type(endDateInput, endTestObj)
     })
 
     expect(window.console.warn).toHaveBeenCalledTimes(18)
@@ -169,12 +167,10 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the state correctly with an invalid start date', async () => {
-    const { clear, click, type } = userEvent.setup()
-
-    setup()
+    const { user } = setup({})
 
     await waitFor(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -185,7 +181,7 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = moment.utc('2012-01-02 12:00:00').format('YYYY-MM-DD HH:mm:ss')
 
     await act(async () => {
-      await type(startDateInput, invalidDate)
+      await user.type(startDateInput, invalidDate)
     })
 
     expect(window.console.warn).toHaveBeenCalledTimes(21)
@@ -193,9 +189,9 @@ describe('TemporalSelectionDropdown component', () => {
     expect(screen.getByText(/Invalid start date/i)).toBeInTheDocument()
 
     await act(async () => {
-      await clear(startDateInput)
-      await type(startDateInput, validStartDate)
-      await type(endDateInput, validEndDate)
+      await user.clear(startDateInput)
+      await user.type(startDateInput, validStartDate)
+      await user.type(endDateInput, validEndDate)
     })
 
     expect(startDateInput).toHaveValue(validStartDate)
@@ -204,12 +200,9 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('clears the values onClearClick and converts full utc datetime format to expected format', async () => {
     const onChangeQueryMock = jest.fn()
-    const { click } = userEvent.setup()
-
     const validStartDate = '2019-03-29T00:00:00.000Z'
     const validEndDate = '2019-03-30T00:00:00.000Z'
-
-    setup({
+    const { user } = setup({
       onChangeQuery: onChangeQueryMock,
       temporalSearch: {
         endDate: validEndDate,
@@ -218,7 +211,7 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     await waitFor(async () => {
-      await click(screen.getAllByRole('button', { name: 'Open temporal filters' }).at(0))
+      await user.click(screen.getAllByRole('button', { name: 'Open temporal filters' }).at(0))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -229,11 +222,11 @@ describe('TemporalSelectionDropdown component', () => {
 
     const clearBtn = screen.getAllByRole('button', { name: 'Clear' }).at(2)
     await waitFor(async () => {
-      await click(clearBtn)
+      await user.click(clearBtn)
     })
 
     await waitFor(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const updatedStartDateInput = screen.getByRole('textbox', { name: 'Start Date' })
@@ -247,9 +240,7 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('applies the values onApplyClick', async () => {
     const onChangeQueryMock = jest.fn()
-    const { click, type } = userEvent.setup()
-
-    setup({
+    const { user } = setup({
       onChangeQuery: onChangeQueryMock
     })
 
@@ -260,17 +251,17 @@ describe('TemporalSelectionDropdown component', () => {
     const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
     await act(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
     await act(async () => {
-      await type(startDateInput, validStartDate)
-      await type(endDateInput, validEndDate)
+      await user.type(startDateInput, validStartDate)
+      await user.type(endDateInput, validEndDate)
 
-      await click(startDateInput)
+      await user.click(startDateInput)
     })
 
     expect(window.console.warn).toHaveBeenCalledTimes(36)
@@ -281,7 +272,7 @@ describe('TemporalSelectionDropdown component', () => {
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
     await waitFor(async () => {
-      await click(applyBtn)
+      await user.click(applyBtn)
     })
 
     expect(onChangeQueryMock).toHaveBeenCalledWith({
@@ -297,11 +288,9 @@ describe('TemporalSelectionDropdown component', () => {
     expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
   })
 
-  test('applies the values for leap years onApplyClick', async () => {
+  test('applies the values for leap years onApplyUser.click', async () => {
     const onChangeQueryMock = jest.fn()
-    const { click } = userEvent.setup()
-
-    setup({
+    const { user } = setup({
       onChangeQuery: onChangeQueryMock
     })
 
@@ -309,31 +298,31 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2024-06-15 23:59:59'
 
     await act(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startField = await screen.findByRole('textbox', { name: 'Start Date' })
     const endField = await screen.findByRole('textbox', { name: 'End Date' })
 
     // Select the start date
-    await click(startField)
-    await click((await screen.findAllByText('2021')).at(0))
-    await click(await screen.findByText('Jun'))
-    await click(await screen.findByText('15'))
+    await user.click(startField)
+    await user.click((await screen.findAllByText('2021')).at(0))
+    await user.click(await screen.findByText('Jun'))
+    await user.click(await screen.findByText('15'))
     expect(startField).toHaveValue(validStartDate)
 
     // Select the end date
-    await click(endField)
-    await click((await screen.findAllByText('2024')).at(0))
-    await click(await screen.findByText('Jun'))
-    await click((await screen.findAllByText('15')).at(1))
+    await user.click(endField)
+    await user.click((await screen.findAllByText('2024')).at(0))
+    await user.click(await screen.findByText('Jun'))
+    await user.click((await screen.findAllByText('15')).at(1))
     expect(endField).toHaveValue(validEndDate)
 
     // Select Recurring
-    await click(screen.getByLabelText('Recurring?'))
+    await user.click(screen.getByLabelText('Recurring?'))
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
-    await click(applyBtn)
+    await user.click(applyBtn)
 
     expect(onChangeQueryMock).toHaveBeenCalledWith({
       collection: {
@@ -353,9 +342,7 @@ describe('TemporalSelectionDropdown component', () => {
   test('onMetricsTemporalFilter is called on Apply', async () => {
     const onMetricsTemporalFilterMock = jest.fn()
     const onChangeQueryMock = jest.fn()
-    const { click, type } = userEvent.setup()
-
-    setup({
+    const { user } = setup({
       onMetricsTemporalFilter: onMetricsTemporalFilterMock,
       onChangeQuery: onChangeQueryMock
     })
@@ -364,21 +351,21 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2019-03-30 00:00:00'
 
     await act(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
     await act(async () => {
-      await type(startDateInput, validStartDate)
-      await type(endDateInput, validEndDate)
+      await user.type(startDateInput, validStartDate)
+      await user.type(endDateInput, validEndDate)
     })
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
     await waitFor(async () => {
-      await click(applyBtn)
+      await user.click(applyBtn)
     })
 
     expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
@@ -389,17 +376,15 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('onMetricsTemporalFilter is called on Clear', async () => {
     const onMetricsTemporalFilterMock = jest.fn()
-    const { click } = userEvent.setup()
-
-    setup({ onMetricsTemporalFilter: onMetricsTemporalFilterMock })
+    const { user } = setup({ onMetricsTemporalFilter: onMetricsTemporalFilterMock })
 
     await waitFor(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const clearBtn = screen.getAllByRole('button', { name: 'Clear' }).at(2)
     await waitFor(async () => {
-      await click(clearBtn)
+      await user.click(clearBtn)
     })
 
     expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(1)
@@ -411,17 +396,15 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('onMetricsTemporalFilter is not called on Clear if is null', async () => {
     const onMetricsTemporalFilterSpy = jest.spyOn(metricsActions, 'metricsTemporalFilter')
-    const { click } = userEvent.setup()
-
-    setup({ onMetricsTemporalFilter: null })
+    const { user } = setup({ onMetricsTemporalFilter: null })
 
     await waitFor(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const clearBtn = screen.getAllByRole('button', { name: 'Clear' }).at(2)
     await waitFor(async () => {
-      await click(clearBtn)
+      await user.click(clearBtn)
     })
 
     expect(onMetricsTemporalFilterSpy).toHaveBeenCalledTimes(0)
@@ -429,18 +412,16 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('onMetricsTemporalFilter is called when toggling recurring', async () => {
     const onMetricsTemporalFilterMock = jest.fn()
-    const { click } = userEvent.setup()
-
-    setup({ onMetricsTemporalFilter: onMetricsTemporalFilterMock })
+    const { user } = setup({ onMetricsTemporalFilter: onMetricsTemporalFilterMock })
 
     await waitFor(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const recurringCheckbox = screen.getByLabelText('Recurring?')
 
     await waitFor(async () => {
-      await click(recurringCheckbox)
+      await user.click(recurringCheckbox)
     })
 
     expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(1)
@@ -452,18 +433,16 @@ describe('TemporalSelectionDropdown component', () => {
 
   test('onMetricsTemporalFilter is not called when it is null and recurring is toggled', async () => {
     const onMetricsTemporalFilterSpy = jest.spyOn(metricsActions, 'metricsTemporalFilter')
-    const { click } = userEvent.setup()
-
-    setup({ onMetricsTemporalFilter: null })
+    const { user } = setup({ onMetricsTemporalFilter: null })
 
     await waitFor(async () => {
-      await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
     const recurringCheckbox = screen.getByLabelText('Recurring?')
 
     await waitFor(async () => {
-      await click(recurringCheckbox)
+      await user.click(recurringCheckbox)
     })
 
     expect(onMetricsTemporalFilterSpy).toHaveBeenCalledTimes(0)
@@ -477,17 +456,15 @@ describe('TemporalSelectionDropdown component', () => {
     describe('when metrics should be submitted', () => {
       test('calls onMetricsTemporalFilter', async () => {
         const onMetricsTemporalFilterMock = jest.fn()
-        const { click } = userEvent.setup()
-
-        setup({
+        const { user } = setup({
           onMetricsTemporalFilter: onMetricsTemporalFilterMock
         })
 
         await waitFor(async () => {
-          await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
         })
 
-        await click(screen.getByRole('button', { name: 'Set Start Date With Metrics' }))
+        await user.click(screen.getByRole('button', { name: 'Set Start Date With Metrics' }))
 
         expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(1)
         expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
@@ -500,17 +477,15 @@ describe('TemporalSelectionDropdown component', () => {
     describe('when metrics should not be submitted', () => {
       test('does not call onMetricsTemporalFilter', async () => {
         const onMetricsTemporalFilterMock = jest.fn()
-        const { click } = userEvent.setup()
-
-        setup({
+        const { user } = setup({
           onMetricsTemporalFilter: onMetricsTemporalFilterMock
         })
 
         await waitFor(async () => {
-          await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
         })
 
-        await click(screen.getByRole('button', { name: 'Set Start Date Without Metrics' }))
+        await user.click(screen.getByRole('button', { name: 'Set Start Date Without Metrics' }))
 
         expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(0)
       })
@@ -525,17 +500,15 @@ describe('TemporalSelectionDropdown component', () => {
     describe('when metrics should be submitted', () => {
       test('calls onMetricsTemporalFilter', async () => {
         const onMetricsTemporalFilterMock = jest.fn()
-        const { click } = userEvent.setup()
-
-        setup({
+        const { user } = setup({
           onMetricsTemporalFilter: onMetricsTemporalFilterMock
         })
 
         await waitFor(async () => {
-          await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
         })
 
-        await click(screen.getByRole('button', { name: 'Set End Date With Metrics' }))
+        await user.click(screen.getByRole('button', { name: 'Set End Date With Metrics' }))
 
         expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(1)
         expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
@@ -548,17 +521,15 @@ describe('TemporalSelectionDropdown component', () => {
     describe('when metrics should not be submitted', () => {
       test('does not call onMetricsTemporalFilter', async () => {
         const onMetricsTemporalFilterMock = jest.fn()
-        const { click } = userEvent.setup()
-
-        setup({
+        const { user } = setup({
           onMetricsTemporalFilter: onMetricsTemporalFilterMock
         })
 
         await waitFor(async () => {
-          await click(screen.getByRole('button', { name: 'Open temporal filters' }))
+          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
         })
 
-        await click(screen.getByRole('button', { name: 'Set End Date Without Metrics' }))
+        await user.click(screen.getByRole('button', { name: 'Set End Date Without Metrics' }))
 
         expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(0)
       })

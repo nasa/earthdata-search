@@ -38,6 +38,8 @@
         "import/prefer-default-export": 0
       }
     },
+    // These rules are an attempt to prevent testing library linting on non testing library test files and source files.
+    // It works by assuming any test file we actually want to lint with these rules will be named with extention jsx.
     {
       "files": [
         "tests/**/*.js",

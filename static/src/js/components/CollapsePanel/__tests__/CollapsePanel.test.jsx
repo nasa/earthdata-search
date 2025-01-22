@@ -16,13 +16,11 @@ const setup = () => {
     panelClassName: 'test-panel-class'
   }
 
-  const { container } = render(<CollapsePanel {...props} />)
+  render(<CollapsePanel {...props} />)
 
   return {
-    container,
     props,
     user
-
   }
 }
 

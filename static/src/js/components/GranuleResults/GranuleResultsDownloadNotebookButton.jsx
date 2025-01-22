@@ -103,7 +103,6 @@ export const GranuleResultsDownloadNotebookButton = ({
           <Dropdown.Menu
             ref={dropdownMenuRef}
             className="granule-results-download-notebook-button__menu"
-            data-testid="dropdown-menu"
             aria-labelledby="notebook-menu-heading"
           >
             <h3

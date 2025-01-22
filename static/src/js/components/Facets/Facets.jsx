@@ -55,7 +55,6 @@ const Facets = (props) => {
     featuresFacet.children.push({
       applied: featureFacets.customizable,
       title: 'Customizable',
-      'data-testid': 'customizable-info',
       description: 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)',
       type: 'feature'
     })

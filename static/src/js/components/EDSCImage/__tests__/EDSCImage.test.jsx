@@ -1,5 +1,3 @@
-/* eslint-disable testing-library/no-node-access */
-/* eslint-disable testing-library/no-container */
 import React from 'react'
 import {
   fireEvent,
@@ -28,6 +26,7 @@ describe('EDSCImage component', () => {
       const spinner = screen.queryByTestId('edsc-image-spinner')
 
       expect(image).toBeInTheDocument()
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
       expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(false)
       expect(spinner).toBeInTheDocument()
     })
@@ -51,6 +50,7 @@ describe('EDSCImage component', () => {
       const spinner = screen.queryByTestId('edsc-image-spinner')
 
       expect(image).toBeInTheDocument()
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
       expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(false)
       expect(spinner).not.toBeInTheDocument()
     })
@@ -75,6 +75,7 @@ describe('EDSCImage component', () => {
       fireEvent.load(image)
 
       expect(image).toBeInTheDocument()
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
       expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(true)
       expect(spinner).not.toBeInTheDocument()
     })
@@ -99,6 +100,7 @@ describe('EDSCImage component', () => {
       fireEvent.error(image)
 
       expect(image).not.toBeInTheDocument()
+      // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
       expect(container.firstChild.classList.contains('edsc-image--is-errored')).toEqual(true)
       expect(spinner).not.toBeInTheDocument()
     })
@@ -121,6 +123,7 @@ describe('EDSCImage component', () => {
 
         const spinner = screen.queryByTestId('edsc-image-spinner')
 
+        // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
         expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(false)
         expect(spinner).toBeInTheDocument()
 
@@ -130,6 +133,7 @@ describe('EDSCImage component', () => {
           expect(image).toBeInTheDocument()
         })
 
+        // eslint-disable-next-line testing-library/no-node-access, testing-library/no-container
         expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(true)
         expect(spinner).not.toBeInTheDocument()
       })
@@ -157,6 +161,7 @@ describe('EDSCImage component', () => {
           expect(image).toBeInTheDocument()
         })
 
+        // eslint-disable-next-line testing-library/no-container, testing-library/no-node-access
         expect(container.firstChild.classList.contains('edsc-image--is-loaded')).toEqual(true)
         expect(spinner).not.toBeInTheDocument()
       })

@@ -135,7 +135,6 @@ export class PanelItem extends Component {
       if (scrollable) {
         return (
           <SimpleBar
-            data-testid="simplebar-content-wrapper"
             role="region"
             aria-label="scrollable content"
             className="panel-item__content"

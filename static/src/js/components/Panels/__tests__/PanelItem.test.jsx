@@ -95,8 +95,8 @@ describe('PanelItem component', () => {
         </PanelItem>
       )
 
-      // eslint-disable-next-line testing-library/no-node-access
-      const scrollableContainer = document.querySelector('.simplebar-content-wrapper')
+      const scrollableContainer = screen.getAllByRole('region', { name: 'scrollable content' })
+        .find((el) => el.classList.contains('simplebar-content-wrapper'))
       fireEvent.scroll(scrollableContainer, { target: { scrollTop: 21 } })
 
       const panel = screen.getByTestId('panel-item')
@@ -115,9 +115,8 @@ describe('PanelItem component', () => {
           </PanelItem>
         )
 
-        // eslint-disable-next-line testing-library/no-node-access
-        const scrollableContainer = document.querySelector('.simplebar-content-wrapper')
-
+        const scrollableContainer = screen.getAllByRole('region', { name: 'scrollable content' })
+          .find((el) => el.classList.contains('simplebar-content-wrapper'))
         // Scroll past threshold
         fireEvent.scroll(scrollableContainer, { target: { scrollTop: 21 } })
         const panelAfterScroll = screen.getByTestId('panel-item')
