@@ -118,7 +118,12 @@ class FacetsItem extends Component {
                   )
                 }
               >
-                <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
+                <EDSCIcon
+                  icon={FaQuestionCircle}
+                  size="0.625rem"
+                  variant="more-info"
+                  data-testid={`facet_item-${kebabCase(facet.title)}-info`}
+                />
               </OverlayTrigger>
             )
             }

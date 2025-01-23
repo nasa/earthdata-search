@@ -163,16 +163,17 @@ export const CollectionDetailsBody = ({
     return (
       <div className="collection-details-body">
         <div className="collection-details-body__content">
-          <Skeleton
-            shapes={collectionDetailsSkeleton}
-            containerStyle={
-              {
-                height: '400px',
-                width: '100%',
-                dataTestId: 'collection-details-body__skeleton'
+          <div data-testid="collection-details-body__skeleton">
+            <Skeleton
+              shapes={collectionDetailsSkeleton}
+              containerStyle={
+                {
+                  height: '400px',
+                  width: '100%'
+                }
               }
-            }
-          />
+            />
+          </div>
         </div>
       </div>
     )

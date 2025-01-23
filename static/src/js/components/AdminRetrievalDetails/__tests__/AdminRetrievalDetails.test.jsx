@@ -1,0 +1,180 @@
+import React from 'react'
+import {
+  render,
+  screen,
+  within
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
+import { AdminRetrievalDetails } from '../AdminRetrievalDetails'
+
+function setup(overrideProps) {
+  const props = {
+    retrieval: {
+      username: 'edsc-test',
+      obfuscated_id: '06347346'
+    },
+    onRequeueOrder: jest.fn(),
+    ...overrideProps
+  }
+
+  const renderContainer = (renderProps) => render(<AdminRetrievalDetails {...renderProps} />)
+
+  return {
+    renderContainer,
+    props
+  }
+}
+
+describe('AdminRetrievalDetails component', () => {
+  test('should render the site AdminRetrievalDetails', () => {
+    const { renderContainer, props } = setup()
+
+    renderContainer(props)
+
+    expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(0)).toHaveTextContent('edsc-test')
+    expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(1)).toHaveTextContent('06347346')
+  })
+
+  describe('with collections', () => {
+    test('should render collections', () => {
+      const { renderContainer, props } = setup({
+        retrieval: {
+          username: 'edsc-test',
+          jsondata: {
+            portal_id: 'testPortal',
+            source: '?mock-source'
+          },
+          obfuscated_id: '06347346',
+          collections: [{
+            id: 1,
+            collection_id: 'C10000005',
+            data_center: 'EDSC',
+            granule_count: 35,
+            access_method: {
+              type: 'download'
+            },
+            created_at: '2023-07-18T17:53:49.000Z',
+            updated_at: '2023-07-18T17:54:22.000Z',
+            orders: []
+          }]
+        }
+      })
+
+      renderContainer(props)
+
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(0)).toHaveTextContent('edsc-test')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(1)).toHaveTextContent('06347346')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(2)).toHaveTextContent('/portal/testPortal/search?mock-source')
+      expect(screen.getAllByTestId('admin-retrieval-details__collections').length).toEqual(1)
+
+      expect(screen.getAllByTestId('admin-retrieval-details__collection-heading').at(0)).toHaveTextContent('C10000005')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(3)).toHaveTextContent('1')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(4)).toHaveTextContent('download')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(5)).toHaveTextContent('EDSC')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(6)).toHaveTextContent('0')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(7)).toHaveTextContent('35')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(8)).toHaveTextContent('2023-07-18T17:53:49.000Z')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(9)).toHaveTextContent('2023-07-18T17:54:22.000Z')
+    })
+  })
+
+  describe('with orders', () => {
+    test('should render collections and the orders table', () => {
+      const { renderContainer, props } = setup({
+        retrieval: {
+          username: 'edsc-test',
+          jsondata: {
+            source: '?mock-source'
+          },
+          obfuscated_id: '06347346',
+          collections: [{
+            id: 1,
+            collection_id: 'C10000005',
+            data_center: 'EDSC',
+            granule_count: 35,
+            access_method: {
+              type: 'download'
+            },
+            created_at: '2023-07-18T17:53:49.000Z',
+            updated_at: '2023-07-18T17:54:22.000Z',
+            orders: [{
+              id: 5,
+              order_information: {},
+              order_number: '40058',
+              state: 'creating',
+              type: 'ECHO ORDERS'
+            }, {
+              id: 6,
+              order_information: {},
+              order_number: '4005',
+              state: 'creating',
+              type: 'ECHO ORDERS'
+            }]
+          }]
+        }
+      })
+      renderContainer(props)
+
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(0)).toHaveTextContent('edsc-test')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(1)).toHaveTextContent('06347346')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(2)).toHaveTextContent('/search?mock-source')
+
+      expect(screen.getAllByTestId('admin-retrieval-details__collections').length).toEqual(1)
+      expect(screen.getAllByTestId('admin-retrieval-details__collection-heading')[0]).toHaveTextContent('C10000005')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(3)).toHaveTextContent('1')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(4)).toHaveTextContent('download')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(5)).toHaveTextContent('EDSC')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(6)).toHaveTextContent('2')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(7)).toHaveTextContent('35')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(8)).toHaveTextContent('2023-07-18T17:53:49.000Z')
+      expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(9)).toHaveTextContent('2023-07-18T17:54:22.000Z')
+      expect(screen.getAllByTestId('admin-retrieval-details__orders-table').length).toEqual(1)
+      expect(screen.getAllByTestId('admin-retrieval-details__order-row').length).toEqual(2)
+      const rows = screen.getAllByTestId('admin-retrieval-details__order-row')
+      const firstRowCells = within(rows[0]).getAllByRole('cell')
+
+      expect(firstRowCells[1]).toHaveTextContent('5')
+      expect(firstRowCells[2]).toHaveTextContent('40058')
+      expect(firstRowCells[3]).toHaveTextContent('ECHO ORDERS')
+      expect(firstRowCells[4]).toHaveTextContent('creating')
+    })
+
+    test('clicking on the Requeue button calls onRequeueOrder', async () => {
+      const user = userEvent.setup()
+      const { renderContainer, props } = setup({
+        retrieval: {
+          username: 'edsc-test',
+          jsondata: {
+            source: '?mock-source'
+          },
+          obfuscated_id: '06347346',
+          collections: [{
+            id: 1,
+            collection_id: 'C10000005',
+            data_center: 'EDSC',
+            granule_count: 35,
+            access_method: {
+              type: 'download'
+            },
+            created_at: '2023-07-18T17:53:49.000Z',
+            updated_at: '2023-07-18T17:54:22.000Z',
+            orders: [{
+              id: 5,
+              order_information: {},
+              order_number: '40058',
+              state: 'creating',
+              type: 'ECHO ORDERS'
+            }]
+          }]
+        }
+      })
+
+      renderContainer(props)
+      await user.click(screen.getByRole('button', { name: /Requeue/ }))
+
+      expect(props.onRequeueOrder).toHaveBeenCalledTimes(1)
+      expect(props.onRequeueOrder).toHaveBeenCalledWith(5)
+    })
+  })
+})

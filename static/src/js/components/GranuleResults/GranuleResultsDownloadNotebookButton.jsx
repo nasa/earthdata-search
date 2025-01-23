@@ -86,6 +86,8 @@ export const GranuleResultsDownloadNotebookButton = ({
     }
   }
 
+  const rootElement = document.getElementById('#root') || document.body
+
   return (
     <Dropdown
       onClick={
@@ -101,8 +103,14 @@ export const GranuleResultsDownloadNotebookButton = ({
           <Dropdown.Menu
             ref={dropdownMenuRef}
             className="granule-results-download-notebook-button__menu"
+            aria-labelledby="notebook-menu-heading"
           >
-            <h3 className="granule-results-download-notebook-button__menu-panel-heading mb-0">Download Sample Notebook</h3>
+            <h3
+              id="notebook-menu-heading"
+              className="granule-results-download-notebook-button__menu-panel-heading mb-0"
+            >
+              Download Sample Notebook
+            </h3>
             <div className="p-3">
               <p>
                 Download a sample Jupyter Notebook to learn how to access and analyze
@@ -118,7 +126,7 @@ export const GranuleResultsDownloadNotebookButton = ({
               </Button>
             </div>
           </Dropdown.Menu>,
-          document.querySelector('#root')
+          rootElement
         )
       }
     </Dropdown>

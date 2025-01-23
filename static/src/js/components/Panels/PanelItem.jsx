@@ -135,6 +135,8 @@ export class PanelItem extends Component {
       if (scrollable) {
         return (
           <SimpleBar
+            role="region"
+            aria-label="scrollable content"
             className="panel-item__content"
             scrollableNodeProps={
               {
@@ -157,6 +159,7 @@ export class PanelItem extends Component {
 
     return (
       <div
+        data-testid="panel-item"
         className={className}
         ref={
           (panelItem) => {
