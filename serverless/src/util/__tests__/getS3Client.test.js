@@ -22,14 +22,14 @@ describe('getS3Client', () => {
 
       const credentials = await result.config.credentials()
       expect(credentials).toEqual({
-        accessKeyId: '12345678',
-        secretAccessKey: '12345678'
+        accessKeyId: 'S3RVER',
+        secretAccessKey: 'S3RVER'
       })
 
       const endpoint = await result.config.endpoint()
       expect(endpoint).toEqual({
         hostname: 'localhost',
-        port: 9000,
+        port: 4569,
         protocol: 'http:',
         path: '/',
         query: undefined
