@@ -63,13 +63,9 @@ If you decide to install via Homebrew you'll need to create the default user.
 
     createuser -s postgres
 
-##### Docker
-
-In order to simulate S3 locally we use [Minio](https://min.io/docs/minio/container/index.html) within a docker container.
-
 ##### Docker, Optional
 
-In order to simulate SQS locally we use [ElasticMQ](https://github.com/softwaremill/elasticmq) within a docker container.
+Docker is used to simulate SQS locally using [ElasticMQ](https://github.com/softwaremill/elasticmq).
 
 ##### Redis, Optional
 

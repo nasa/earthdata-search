@@ -7,11 +7,11 @@ export const getS3Client = () => {
   const config = {}
 
   if (process.env.NODE_ENV === 'development') {
-    config.endpoint = 'http://localhost:9000'
+    config.endpoint = 'http://localhost:4569'
     config.forcePathStyle = true
     config.credentials = {
-      accessKeyId: '12345678',
-      secretAccessKey: '12345678'
+      accessKeyId: 'S3RVER',
+      secretAccessKey: 'S3RVER'
     }
   }
 

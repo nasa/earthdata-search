@@ -17,7 +17,7 @@ const loadEvent = (filepath) => {
   }
 }
 
-// Invoke the gicen Lambda function
+// Invoke the given Lambda function
 const invokeLambda = async (name, payload = {}) => {
   const handlerPath = `../serverless/dist/${name}/handler.js`
   const { default: handler } = (await import(handlerPath)).default

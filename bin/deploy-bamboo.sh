@@ -72,7 +72,7 @@ cat <<EOF > Dockerfile
 FROM node:18.19-bullseye
 COPY . /build
 WORKDIR /build
-RUN npm ci --omit=dev --loglevel verbose
+RUN npm ci --omit=dev
 RUN npm run build
 EOF
 

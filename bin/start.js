@@ -12,7 +12,6 @@ if (!fs.existsSync('./cdk/earthdata-search/cdk.out/earthdata-search-dev.template
 let sqsCommands = []
 
 const setupSqs = process.env.SKIP_SQS !== 'true'
-console.log('🚀 ~ file: start.js:15 ~ process.env.SKIP_SQS:', process.env.SKIP_SQS)
 if (setupSqs) {
   sqsCommands = [{
     command: 'npm run start:elasticmq',
