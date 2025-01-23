@@ -167,6 +167,7 @@ export class StepFunctions extends Construct {
               StringEquals: 'in_progress',
               Next: 'WaitForRetry'
             }],
+            Default: 'OrderFailed'
           },
           WaitForRetry: {
             Type: 'Wait',
@@ -192,7 +193,7 @@ export class StepFunctions extends Construct {
       ...defaultLambdaConfig,
       environment: {
         ...defaultLambdaConfig.environment,
-        updateOrderStatusStateMachineArn: updateOrderStatusStateMachine.stateMachineArn
+        UPDATE_ORDER_STATUS_STATE_MACHINE_ARN: updateOrderStatusStateMachine.stateMachineArn
       },
       entry: '../../serverless/src/submitCatalogRestOrder/handler.js',
       functionName: 'submitCatalogRestOrder',
@@ -212,7 +213,7 @@ export class StepFunctions extends Construct {
       ...defaultLambdaConfig,
       environment: {
         ...defaultLambdaConfig.environment,
-        updateOrderStatusStateMachineArn: updateOrderStatusStateMachine.stateMachineArn
+        UPDATE_ORDER_STATUS_STATE_MACHINE_ARN: updateOrderStatusStateMachine.stateMachineArn
       },
       entry: '../../serverless/src/submitCmrOrderingOrder/handler.js',
       functionName: 'submitCmrOrderingOrder',
@@ -231,7 +232,7 @@ export class StepFunctions extends Construct {
       ...defaultLambdaConfig,
       environment: {
         ...defaultLambdaConfig.environment,
-        updateOrderStatusStateMachineArn: updateOrderStatusStateMachine.stateMachineArn
+        UPDATE_ORDER_STATUS_STATE_MACHINE_ARN: updateOrderStatusStateMachine.stateMachineArn
       },
       entry: '../../serverless/src/submitHarmonyOrder/handler.js',
       functionName: 'submitHarmonyOrder',
@@ -251,7 +252,7 @@ export class StepFunctions extends Construct {
       ...defaultLambdaConfig,
       environment: {
         ...defaultLambdaConfig.environment,
-        updateOrderStatusStateMachineArn: updateOrderStatusStateMachine.stateMachineArn
+        UPDATE_ORDER_STATUS_STATE_MACHINE_ARN: updateOrderStatusStateMachine.stateMachineArn
       },
       entry: '../../serverless/src/submitSwodlrOrder/handler.js',
       functionName: 'submitSwodlrOrder',

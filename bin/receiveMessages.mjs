@@ -47,8 +47,12 @@ const receiveMessages = async ({
 
         const { default: handler } = (await import(handlerPath)).default
 
-        console.log(`Calling Lambda: ${lambdaFunctionName}`)
-        await handler(sqsMessage, {})
+        try {
+          console.log(`Calling Lambda: ${lambdaFunctionName}`)
+          await handler(sqsMessage, {})
+        } catch (error) {
+          console.log(`Error calling Lambda: ${lambdaFunctionName}`, error)
+        }
 
         // Delete the message after processing
         const deleteParams = {
