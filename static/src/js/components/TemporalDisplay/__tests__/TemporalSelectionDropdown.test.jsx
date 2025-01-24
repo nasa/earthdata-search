@@ -591,11 +591,9 @@ describe('TemporalSelectionDropdown component', () => {
       const recurringCheckbox = screen.getByRole('checkbox', { checked: true })
 
       // Uncheck it
-      await act(async () => {
-        await user.click(recurringCheckbox)
-        await waitFor(() => {
-          expect(recurringCheckbox).not.toBeChecked()
-        })
+      await user.click(recurringCheckbox)
+      await waitFor(() => {
+        expect(recurringCheckbox).not.toBeChecked()
       })
 
       // Apply non-recurring state
@@ -642,11 +640,9 @@ describe('TemporalSelectionDropdown component', () => {
 
       // Toggle recurring on
       const recurringCheckbox = screen.getByRole('checkbox', { checked: false })
-      await act(async () => {
-        await user.click(recurringCheckbox)
-        await waitFor(() => {
-          expect(recurringCheckbox).toBeChecked()
-        })
+      await user.click(recurringCheckbox)
+      await waitFor(() => {
+        expect(recurringCheckbox).toBeChecked()
       })
 
       // In recurring mode, dates should show without year and use minimum year
@@ -701,15 +697,13 @@ describe('TemporalSelectionDropdown component', () => {
       expect(screen.queryByText('Year Range:')).not.toBeInTheDocument()
 
       const recurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
-      await act(async () => {
-        await user.click(recurringCheckbox)
-        await waitFor(() => {
-          expect(recurringCheckbox).toBeChecked()
-        })
+      await user.click(recurringCheckbox)
+      await waitFor(() => {
+        expect(recurringCheckbox).toBeChecked()
       })
 
       expect(startDateInput).toHaveValue('01-01 00:00:00')
-      expect(endDateInput).toHaveValue('02-01 06:00:00')
+      expect(endDateInput).toHaveValue('')
       expect(screen.getByText('Year Range:')).toBeInTheDocument()
       expect(screen.getByText('1960 - 2024')).toBeInTheDocument()
 
@@ -758,15 +752,13 @@ describe('TemporalSelectionDropdown component', () => {
       expect(screen.queryByText('Year Range:')).not.toBeInTheDocument()
 
       const recurringCheckbox = screen.getByRole('checkbox', { checked: false })
-      await act(async () => {
-        await user.click(recurringCheckbox)
-        await waitFor(() => {
-          expect(recurringCheckbox).toBeChecked()
-        })
+      await user.click(recurringCheckbox)
+      await waitFor(() => {
+        expect(recurringCheckbox).toBeChecked()
       })
 
-      expect(startDateInput).toHaveValue('01-01 00:00:00')
-      expect(endDateInput).toHaveValue('02-01 06:00:00')
+      expect(startDateInput).toHaveValue('')
+      expect(endDateInput).toHaveValue('')
       expect(screen.getByText('Year Range:')).toBeInTheDocument()
       expect(screen.getByText('1960 - 2024')).toBeInTheDocument()
 
@@ -815,14 +807,12 @@ describe('TemporalSelectionDropdown component', () => {
       expect(screen.queryByText('Year Range:')).not.toBeInTheDocument()
 
       const recurringCheckbox = screen.getByRole('checkbox', { checked: false })
-      await act(async () => {
-        await user.click(recurringCheckbox)
-        await waitFor(() => {
-          expect(recurringCheckbox).toBeChecked()
-        })
+      await user.click(recurringCheckbox)
+      await waitFor(() => {
+        expect(recurringCheckbox).toBeChecked()
       })
 
-      expect(startDateInput).toHaveValue('01-01 00:00:00')
+      expect(startDateInput).toHaveValue('')
       expect(endDateInput).toHaveValue('01-25 00:00:00')
       expect(screen.getByText('Year Range:')).toBeInTheDocument()
       expect(screen.getByText('1960 - 2020')).toBeInTheDocument()

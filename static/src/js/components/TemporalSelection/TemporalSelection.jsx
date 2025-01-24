@@ -114,7 +114,9 @@ export class TemporalSelection extends Component {
       onSliderChange,
       size,
       temporal,
-      validate
+      validate,
+      displayStartDate,
+      displayEndDate
     } = this.props
 
     let { isRecurring } = temporal
@@ -174,7 +176,7 @@ export class TemporalSelection extends Component {
                   type="start"
                   size={size}
                   format={format}
-                  value={temporal.startDate}
+                  value={displayStartDate}
                   minDate={minimumTemporalDateString}
                   maxDate={moment().utc().toISOString()}
                   shouldValidate={!isRecurring}
@@ -195,7 +197,7 @@ export class TemporalSelection extends Component {
                   type="end"
                   size={size}
                   format={format}
-                  value={temporal.endDate}
+                  value={displayEndDate}
                   minDate={minimumTemporalDateString}
                   maxDate={moment().utc().toISOString()}
                   shouldValidate={!isRecurring}
@@ -285,7 +287,9 @@ TemporalSelection.defaultProps = {
   onSliderChange: null,
   onValid: null,
   size: '',
-  validate: true
+  validate: true,
+  displayStartDate: '',
+  displayEndDate: ''
 }
 
 TemporalSelection.propTypes = {
@@ -306,7 +310,9 @@ TemporalSelection.propTypes = {
     isRecurring: PropTypes.bool,
     startDate: PropTypes.string
   }).isRequired,
-  validate: PropTypes.bool
+  validate: PropTypes.bool,
+  displayEndDate: PropTypes.string,
+  displayStartDate: PropTypes.string
 }
 
 export default TemporalSelection

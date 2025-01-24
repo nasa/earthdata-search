@@ -39,10 +39,8 @@ describe('TemporalSelection component', () => {
   test('when passed a start date renders DatePickerContainer component correctly', () => {
     const { enzymeWrapper } = setup()
     enzymeWrapper.setProps({
-      temporal: {
-        startDate: '2019-03-30T00:00:00.000Z',
-        endDate: ''
-      }
+      displayStartDate: '2019-03-30T00:00:00.000Z',
+      displayEndDate: ''
     })
 
     expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('type')).toBe('start')
@@ -54,10 +52,8 @@ describe('TemporalSelection component', () => {
   test('when passed a end date renders DatePickerContainer component correctly', () => {
     const { enzymeWrapper } = setup()
     enzymeWrapper.setProps({
-      temporal: {
-        startDate: '',
-        endDate: '2019-03-30T00:00:00.000Z'
-      }
+      displayStartDate: '',
+      displayEndDate: '2019-03-30T00:00:00.000Z'
     })
 
     expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('type')).toBe('start')
@@ -69,10 +65,8 @@ describe('TemporalSelection component', () => {
   test('when passed a both start and end dates renders DatePickerContainer components correctly', () => {
     const { enzymeWrapper } = setup()
     enzymeWrapper.setProps({
-      temporal: {
-        endDate: '2019-03-30T00:00:00.000Z',
-        startDate: '2019-03-29T00:00:00.000Z'
-      }
+      displayEndDate: '2019-03-30T00:00:00.000Z',
+      displayStartDate: '2019-03-29T00:00:00.000Z'
     })
 
     expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('type')).toBe('start')
@@ -84,10 +78,8 @@ describe('TemporalSelection component', () => {
   test('when passed a start date after the end date renders DatePickerContainer components correctly', () => {
     const { enzymeWrapper } = setup()
     enzymeWrapper.setProps({
-      temporal: {
-        endDate: '2019-03-29T00:00:00.000Z',
-        startDate: '2019-03-30T00:00:00.000Z'
-      }
+      displayEndDate: '2019-03-29T00:00:00.000Z',
+      displayStartDate: '2019-03-30T00:00:00.000Z'
     })
 
     expect(enzymeWrapper.find(DatepickerContainer).at(0).prop('type')).toBe('start')

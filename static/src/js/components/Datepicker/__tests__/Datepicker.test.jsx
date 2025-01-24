@@ -304,10 +304,11 @@ describe('Datepicker component', () => {
         // June state in days view
         await waitFor(() => {
           expect(currentMonthSwitch).toHaveTextContent('June')
-          expect(currentMonthSwitch).not.toHaveTextContent('2024')
-          expect(currentPrevNav).toBeVisible()
-          expect(currentNextNav).toBeVisible()
         })
+
+        expect(currentMonthSwitch).not.toHaveTextContent('2024')
+        expect(currentPrevNav).toBeVisible()
+        expect(currentNextNav).toBeVisible()
 
         // Navigate to January using prev nav
         await user.click(currentPrevNav) // May
@@ -319,10 +320,14 @@ describe('Datepicker component', () => {
         // January state in days view
         await waitFor(() => {
           expect(currentMonthSwitch).toHaveTextContent('January')
-          expect(currentMonthSwitch).not.toHaveTextContent('2024')
-          expect(currentPrevNav).not.toBeVisible() // Hidden in January
-          expect(currentNextNav).toBeVisible()
         })
+
+        await waitFor(() => {
+          expect(currentMonthSwitch).not.toHaveTextContent('2024')
+        })
+
+        expect(currentPrevNav).not.toBeVisible() // Hidden in January
+        expect(currentNextNav).toBeVisible()
 
         // Navigate from February to December
         await user.click(currentNextNav) // February
@@ -340,10 +345,14 @@ describe('Datepicker component', () => {
         // December state in days view
         await waitFor(() => {
           expect(currentMonthSwitch).toHaveTextContent('December')
-          expect(currentMonthSwitch).not.toHaveTextContent('2024')
-          expect(currentPrevNav).toBeVisible()
-          expect(currentNextNav).not.toBeVisible() // Hidden in December
         })
+
+        await waitFor(() => {
+          expect(currentMonthSwitch).not.toHaveTextContent('2024')
+        })
+
+        expect(currentPrevNav).toBeVisible()
+        expect(currentNextNav).not.toBeVisible() // Hidden in December
       })
     })
   })

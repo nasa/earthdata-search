@@ -25,7 +25,9 @@ const TemporalSelectionDropdownMenu = ({
   onValid,
   setEndDate,
   setStartDate,
-  temporal
+  temporal,
+  displayStartDate,
+  displayEndDate
 }) => {
   const classes = {
     btnApply: classNames(
@@ -68,6 +70,8 @@ const TemporalSelectionDropdownMenu = ({
         onSliderChange={onSliderChange}
         onValid={onValid}
         onInvalid={onInvalid}
+        displayStartDate={displayStartDate}
+        displayEndDate={displayEndDate}
       />
       <div className="temporal-selection-dropdown-menu__actions">
         <Button
@@ -95,16 +99,20 @@ const TemporalSelectionDropdownMenu = ({
 
 TemporalSelectionDropdownMenu.defaultProps = {
   allowRecurring: true,
-  filterType: null
+  filterType: null,
+  displayStartDate: '',
+  displayEndDate: ''
 }
 
 TemporalSelectionDropdownMenu.propTypes = {
   disabled: PropTypes.bool.isRequired,
+  displayEndDate: PropTypes.string,
+  displayStartDate: PropTypes.string,
   filterType: PropTypes.string,
   onApplyClick: PropTypes.func.isRequired,
-  onClearClick: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeRecurring: PropTypes.func.isRequired,
+  onClearClick: PropTypes.func.isRequired,
   onInvalid: PropTypes.func.isRequired,
   onRecurringToggle: PropTypes.func.isRequired,
   onSliderChange: PropTypes.func.isRequired,

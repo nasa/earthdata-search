@@ -42,9 +42,18 @@ const TemporalSelectionDropdown = ({
     recurringDayEnd,
     isRecurring
   })
+  const [datesSelected, setDatesSelected] = useState({
+    start: false,
+    end: false
+  })
 
   useEffect(() => {
     setTemporal(temporalSearch)
+
+    setDatesSelected({
+      start: !!temporalSearch.startDate,
+      end: !!temporalSearch.endDate
+    })
   }, [temporalSearch])
 
   /**
@@ -98,6 +107,11 @@ const TemporalSelectionDropdown = ({
    * Clears the current temporal values internally and within the Redux store
    */
   const onClearClick = () => {
+    setDatesSelected({
+      start: false,
+      end: false
+    })
+
     setTemporal({
       startDate: '',
       endDate: '',
@@ -251,6 +265,11 @@ const TemporalSelectionDropdown = ({
       startDate: existingStartDate
     } = temporal
 
+    setDatesSelected((prev) => ({
+      ...prev,
+      start: true
+    }))
+
     if (shouldCallMetrics && onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: `Set Start Date - ${metricType}`,
@@ -285,6 +304,11 @@ const TemporalSelectionDropdown = ({
       endDate: existingEndDate,
       isRecurring: existingIsRecurring
     } = temporal
+
+    setDatesSelected((prev) => ({
+      ...prev,
+      end: true
+    }))
 
     if (shouldCallMetrics && onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
@@ -337,6 +361,8 @@ const TemporalSelectionDropdown = ({
             setEndDate={setEndDate}
             setStartDate={setStartDate}
             temporal={temporal}
+            displayStartDate={datesSelected.start ? temporal.startDate : ''}
+            displayEndDate={datesSelected.end ? temporal.endDate : ''}
           />
         )
       }
