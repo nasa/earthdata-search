@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
 import {
@@ -70,6 +70,11 @@ export const GranuleFiltersForm = (props) => {
     tilingSystem = '',
     temporal = {}
   } = values
+
+  const [datesSelected, setDatesSelected] = useState({
+    start: false,
+    end: false
+  })
 
   const { isRecurring } = temporal
 
@@ -446,6 +451,8 @@ export const GranuleFiltersForm = (props) => {
                 size="sm"
                 format={temporalDateFormat}
                 temporal={temporal}
+                displayStartDate={datesSelected.start ? temporal.startDate : ''}
+                displayEndDate={datesSelected.end ? temporal.endDate : ''}
                 validate={false}
                 onSliderChange={
                   (value) => {
@@ -527,6 +534,11 @@ export const GranuleFiltersForm = (props) => {
                     setFieldValue('temporal.startDate', value)
                     setFieldTouched('temporal.startDate')
 
+                    setDatesSelected((prev) => ({
+                      ...prev,
+                      start: true
+                    }))
+
                     const { temporal: newTemporal } = values
                     if (newTemporal.isRecurring && newTemporal.endDate && startDate.isValid()) {
                       const endDate = moment(newTemporal.endDate).utc()
@@ -557,6 +569,11 @@ export const GranuleFiltersForm = (props) => {
 
                     setFieldValue('temporal.endDate', value)
                     setFieldTouched('temporal.endDate')
+
+                    setDatesSelected((prev) => ({
+                      ...prev,
+                      end: true
+                    }))
 
                     const { temporal: newTemporal } = values
                     if (newTemporal.isRecurring && newTemporal.startDate && endDate.isValid()) {
@@ -882,6 +899,8 @@ export const GranuleFiltersForm = (props) => {
                             size="sm"
                             format={temporalDateFormat}
                             temporal={equatorCrossingDate}
+                            displayStartDate={equatorCrossingDate.startDate}
+                            displayEndDate={equatorCrossingDate.endDate}
                             onSliderChange={
                               (value) => {
                                 setFieldValue('temporal.startDate', moment(temporal.startDate).year(value.min).toISOString())
