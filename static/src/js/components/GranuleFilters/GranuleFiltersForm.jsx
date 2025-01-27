@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
 import {
@@ -70,11 +70,6 @@ export const GranuleFiltersForm = (props) => {
     tilingSystem = '',
     temporal = {}
   } = values
-
-  const [datesSelected, setDatesSelected] = useState({
-    start: false,
-    end: false
-  })
 
   const { isRecurring } = temporal
 
@@ -451,8 +446,8 @@ export const GranuleFiltersForm = (props) => {
                 size="sm"
                 format={temporalDateFormat}
                 temporal={temporal}
-                displayStartDate={datesSelected.start ? temporal.startDate : ''}
-                displayEndDate={datesSelected.end ? temporal.endDate : ''}
+                displayStartDate={temporal.startDate}
+                displayEndDate={temporal.endDate}
                 validate={false}
                 onSliderChange={
                   (value) => {
@@ -528,18 +523,20 @@ export const GranuleFiltersForm = (props) => {
                 }
                 onSubmitStart={
                   (startDate, shouldSubmit) => {
+                    const { temporal: newTemporal } = values
+                    if (newTemporal.isRecurring) {
+                      const existingStartDate = moment(values.temporal.startDate)
+                      if (existingStartDate.isValid()) {
+                        const existingStartDateYear = existingStartDate.year()
+                        startDate.year(existingStartDateYear)
+                      }
+                    }
+
                     const { input } = startDate.creationData()
                     const value = startDate.isValid() ? startDate.toISOString() : input
-
                     setFieldValue('temporal.startDate', value)
                     setFieldTouched('temporal.startDate')
 
-                    setDatesSelected((prev) => ({
-                      ...prev,
-                      start: true
-                    }))
-
-                    const { temporal: newTemporal } = values
                     if (newTemporal.isRecurring && newTemporal.endDate && startDate.isValid()) {
                       const endDate = moment(newTemporal.endDate).utc()
 
@@ -569,11 +566,6 @@ export const GranuleFiltersForm = (props) => {
 
                     setFieldValue('temporal.endDate', value)
                     setFieldTouched('temporal.endDate')
-
-                    setDatesSelected((prev) => ({
-                      ...prev,
-                      end: true
-                    }))
 
                     const { temporal: newTemporal } = values
                     if (newTemporal.isRecurring && newTemporal.startDate && endDate.isValid()) {
