@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Datetime from 'react-datetime'
 
@@ -23,6 +22,11 @@ import './Datepicker.scss'
  * @param {String} props.viewMode - The default view mode for the picker
  */
 class Datepicker extends PureComponent {
+  constructor(props) {
+    super(props)
+    this.containerRef = React.createRef()
+  }
+
   componentDidMount() {
     const {
       onTodayClick,
@@ -30,7 +34,8 @@ class Datepicker extends PureComponent {
     } = this.props
 
     // Add a custom set of "Today" and "Clear" buttons and insert them into the picker
-    const container = ReactDOM.findDOMNode(this).querySelector('.rdtPicker') // eslint-disable-line
+    const container = this.containerRef.current?.querySelector('.rdtPicker')
+    if (!container) return
 
     // Container to hold custom buttons
     const buttonContainer = document.createElement('div')
@@ -55,23 +60,24 @@ class Datepicker extends PureComponent {
 
     // Adds the new button container to the DOM
     container.appendChild(buttonContainer)
+
+    // Set up navigation button click handlers
+    this.setupNavigationHandlers(container)
   }
 
   componentDidUpdate(prevProps) {
-    const {
-      viewMode: previousViewMode
-    } = prevProps
-
     const {
       viewMode,
       picker
     } = this.props
 
     // If the viewMode has changed, navigate to the new viewMode
-    if (previousViewMode !== viewMode) picker.current.navigate(viewMode)
+    if (prevProps.viewMode !== viewMode) {
+      picker.current.navigate(viewMode)
+    }
   }
 
-  onInputChange(event) {
+  onInputChange = (event) => {
     const caret = event.target.selectionStart
     const element = event.target
 
@@ -80,6 +86,97 @@ class Datepicker extends PureComponent {
       element.selectionStart = caret
       element.selectionEnd = caret
     })
+  }
+
+  setupNavigationHandlers = (container) => {
+    container.addEventListener('click', (event) => {
+      // Handle month selection
+      if (event.target.classList.contains('rdtMonth')) {
+        requestAnimationFrame(() => this.updateNavigationArrows())
+      }
+
+      // Handle navigation arrows
+      if (event.target.classList.contains('rdtPrev')
+          || event.target.parentElement.classList.contains('rdtPrev')
+          || event.target.classList.contains('rdtNext')
+          || event.target.parentElement.classList.contains('rdtNext')) {
+        requestAnimationFrame(() => this.updateNavigationArrows())
+      }
+
+      // Handle going back to months view
+      if (event.target.classList.contains('rdtSwitch')) {
+        // Reset arrow visibility when going back to months view
+        const prevButton = container.querySelector('.rdtPrev')
+        const nextButton = container.querySelector('.rdtNext')
+        if (prevButton) {
+          prevButton.innerHTML = '<span>‹</span>'
+          prevButton.style.pointerEvents = ''
+          prevButton.style.visibility = 'visible'
+        }
+
+        if (nextButton) {
+          nextButton.innerHTML = '<span>›</span>'
+          nextButton.style.pointerEvents = ''
+          nextButton.style.visibility = 'visible'
+        }
+      }
+    })
+  }
+
+  setupCalendar = () => {
+    const container = this.containerRef.current?.querySelector('.rdtPicker')
+    if (container) {
+      this.setupNavigationHandlers(container)
+      this.updateNavigationArrows()
+    }
+  }
+
+  updateNavigationArrows = () => {
+    const { viewMode } = this.props
+    if (viewMode !== 'months') return
+
+    const container = this.containerRef.current?.querySelector('.rdtPicker')
+    if (!container) return
+
+    const isDayView = container.querySelector('.rdtDays') !== null
+    if (!isDayView) return
+
+    const prevButton = container.querySelector('.rdtPrev')
+    const nextButton = container.querySelector('.rdtNext')
+    const monthDisplay = container.querySelector('.rdtSwitch')
+
+    if (!monthDisplay) return
+
+    // Modify month display to remove year
+    const [monthStr] = monthDisplay.textContent.split(' ')
+    monthDisplay.textContent = monthStr
+
+    const currentMonth = new Date(`${monthStr} 1, 2000`).getMonth()
+
+    // Check if navigation would cross year boundary
+    if (prevButton) {
+      if (currentMonth === 0) {
+        prevButton.innerHTML = ''
+        prevButton.style.pointerEvents = 'none'
+        prevButton.style.visibility = 'hidden'
+      } else {
+        prevButton.innerHTML = '<span>‹</span>'
+        prevButton.style.pointerEvents = ''
+        prevButton.style.visibility = 'visible'
+      }
+    }
+
+    if (nextButton) {
+      if (currentMonth === 11) {
+        nextButton.innerHTML = ''
+        nextButton.style.pointerEvents = 'none'
+        nextButton.style.visibility = 'hidden'
+      } else {
+        nextButton.innerHTML = '<span>›</span>'
+        nextButton.style.pointerEvents = ''
+        nextButton.style.visibility = 'visible'
+      }
+    }
   }
 
   render() {
@@ -92,16 +189,15 @@ class Datepicker extends PureComponent {
       size,
       value,
       onInputBlur,
-      onInputFocus
+      onInputFocus,
+      format,
+      id,
+      viewMode
     } = this.props
-    const { format, id, viewMode } = this.props
-    const conditionalInputProps = {}
 
     // React-datetime does not clear out the input field when a empty string is received. When
     // the value is an empty string, the value is manually set on the input via `inputProps`.
-    if (!value) {
-      conditionalInputProps.value = ''
-    }
+    const conditionalInputProps = !value ? { value: '' } : {}
 
     const onKeyDown = (event) => {
       // If the user presses `Enter`, the field should behave the same as bluring the input
@@ -109,43 +205,51 @@ class Datepicker extends PureComponent {
     }
 
     return (
-      <Datetime
-        className="datetime"
-        closeOnClickOutside
-        closeOnSelect
-        closeOnTab
-        dateFormat={format}
-        initialViewMode={viewMode}
-        inputProps={
-          {
-            id,
-            placeholder: format,
-            autoComplete: 'off',
-            className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
-            'aria-label': label,
-            onChange: (event) => {
-              this.onInputChange(event)
-              // eslint-disable-next-line no-underscore-dangle
-              picker.current._closeCalendar()
-              if (filterType === 'collection') {
-                onChange(event.target.value, false, 'Typed')
-              }
-            },
-            onBlur: onInputBlur,
-            onFocus: onInputFocus,
-            onKeyDown,
-            ...conditionalInputProps
+      <div ref={this.containerRef}>
+        <Datetime
+          className="datetime"
+          closeOnClickOutside
+          closeOnSelect
+          closeOnTab
+          dateFormat={format}
+          initialViewMode={viewMode}
+          inputProps={
+            {
+              id,
+              placeholder: format,
+              autoComplete: 'off',
+              className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
+              'aria-label': label,
+              onChange: (event) => {
+                this.onInputChange(event)
+                // eslint-disable-next-line no-underscore-dangle
+                picker.current._closeCalendar()
+                if (filterType === 'collection') {
+                  onChange(event.target.value, false, 'Typed')
+                }
+              },
+              onBlur: onInputBlur,
+              onFocus: onInputFocus,
+
+              onKeyDown,
+              ...conditionalInputProps
+            }
           }
-        }
-        isValidDate={isValidDate}
-        onChange={onChange}
-        ref={picker}
-        strictParsing
-        timeFormat={false}
-        utc
-        value={value}
-        viewMode={viewMode}
-      />
+          isValidDate={isValidDate}
+          onChange={onChange}
+          onOpen={
+            () => {
+              requestAnimationFrame(() => this.setupCalendar())
+            }
+          }
+          ref={picker}
+          strictParsing
+          timeFormat={false}
+          utc
+          value={value}
+          viewMode={viewMode}
+        />
+      </div>
     )
   }
 }

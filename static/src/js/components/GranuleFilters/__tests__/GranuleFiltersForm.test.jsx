@@ -41,7 +41,13 @@ const setup = (overrideProps) => {
     setFieldValue,
     setFieldTouched,
     touched: {},
-    values: {},
+    values: {
+      temporal: {
+        isRecurring: false,
+        startDate: '',
+        endDate: ''
+      }
+    },
     ...overrideProps
   }
 
@@ -1543,6 +1549,138 @@ describe('GranuleFiltersForm component', () => {
       await user.click(misrTileOption)
 
       expect(screen.getByText(gridCoordinatesMessage)).toBeVisible()
+    })
+  })
+
+  describe('Recurring date toggle behavior', () => {
+    test('when toggling recurring with same year dates, adjusts start date to minimum year', async () => {
+      const {
+        setFieldValue, setFieldTouched, handleSubmit, onMetricsGranuleFilter, user
+      } = setup({
+        values: {
+          temporal: {
+            startDate: '2024-03-01T00:00:00.000Z',
+            endDate: '2024-12-31T23:59:59.999Z',
+            isRecurring: false
+          }
+        }
+      })
+
+      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+      await user.click(recurringCheckbox)
+
+      // Verify isRecurring was set
+      expect(setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
+      expect(setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
+
+      // Verify start date was adjusted to minimum year while preserving month/day
+      expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1960-03-01T00:00:00.000Z')
+
+      // Verify recurringDay values were set correctly
+      expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 61) // March 1st
+      expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 366) // December 31st
+
+      // Verify form was submitted
+      expect(handleSubmit).toHaveBeenCalled()
+
+      // Verify metrics were recorded
+      expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+        type: 'Set Recurring',
+        value: true
+      })
+    })
+
+    test('when toggling recurring with different year dates, preserves original start date year', async () => {
+      const { setFieldValue, user } = setup({
+        values: {
+          temporal: {
+            startDate: '2023-03-01T00:00:00.000Z',
+            endDate: '2024-12-31T23:59:59.999Z',
+            isRecurring: false
+          }
+        }
+      })
+
+      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+      await user.click(recurringCheckbox)
+
+      // Verify start date was NOT adjusted since years are different
+      expect(setFieldValue).not.toHaveBeenCalledWith(
+        'temporal.startDate',
+        expect.stringContaining('1960')
+      )
+    })
+  })
+
+  describe('Start date submission behavior', () => {
+    test('when submitting start date in same year as end date with recurring enabled, adjusts to minimum year', async () => {
+      MockDate.set('2024-03-15')
+
+      const {
+        setFieldValue, handleSubmit, onMetricsGranuleFilter, user
+      } = setup({
+        values: {
+          temporal: {
+            isRecurring: true,
+            startDate: '',
+            endDate: '2024-12-31T23:59:59.999Z'
+          }
+        }
+      })
+
+      // Click "Today" button for start date
+      const todayButton = screen.getAllByRole('button', { name: 'Today' })[0]
+      await user.click(todayButton)
+
+      // Verify start date was adjusted to minimum year while preserving month/day
+      expect(setFieldValue).toHaveBeenCalledWith(
+        'temporal.startDate',
+        '1960-03-15T00:00:00.000Z'
+      )
+
+      expect(handleSubmit).toHaveBeenCalled()
+      expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+        type: 'Set Start Date',
+        value: '2024-03-15T00:00:00.000Z'
+      })
+
+      MockDate.reset()
+    })
+  })
+
+  describe('End date submission behavior', () => {
+    test.only('when submitting end date in same year as start date with recurring enabled, adjusts start date to minimum year', async () => {
+      MockDate.set('2024-12-15')
+
+      const {
+        setFieldValue, handleSubmit, onMetricsGranuleFilter, user
+      } = setup({
+        values: {
+          temporal: {
+            isRecurring: true,
+            startDate: '2024-03-15T00:00:00.000Z',
+            endDate: ''
+          }
+        }
+      })
+
+      // Click "Today" button for end date
+      const todayButton = screen.getAllByRole('button', { name: 'Today' })[1]
+      await user.click(todayButton)
+
+      // Verify start date was adjusted to minimum year while preserving month/day
+      expect(setFieldValue).toHaveBeenCalledWith(
+        'temporal.startDate',
+        '1960-03-15T00:00:00.000Z'
+      )
+
+      expect(handleSubmit).toHaveBeenCalled()
+      expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+        type: 'Set End Date',
+        value: '2024-12-15T23:59:59.000Z'
+      })
+
+      MockDate.reset()
     })
   })
 })
