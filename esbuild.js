@@ -12,12 +12,13 @@ build({
     '.svg': 'text'
   },
   external: [
-    'sqlite3',
-    'mysql',
-    'tedious',
     'better-sqlite3',
-    'oracledb',
+    'mysql',
     'mysql2',
-    'pg-query-stream'
+    'oracledb',
+    'pg-native',
+    'pg-query-stream',
+    'sqlite3',
+    'tedious'
   ]
 }).catch(() => process.exit(1))

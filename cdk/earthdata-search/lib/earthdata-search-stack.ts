@@ -113,15 +113,15 @@ export class EarthdataSearchStack extends cdk.Stack {
       bundling: {
         externalModules: [
           '@aws-sdk/*',
+          'better-sqlite3',
+          'mysql',
+          'mysql2',
+          'oracledb',
+          'pg-native',
+          'pg-query-stream',
           'sharp',
           'sqlite3',
-          'mysql',
-          'tedious',
-          'better-sqlite3',
-          'oracledb',
-          'mysql2',
-          'pg-query-stream',
-
+          'tedious'
         ],
         loader: {
           '.svg': 'text',
