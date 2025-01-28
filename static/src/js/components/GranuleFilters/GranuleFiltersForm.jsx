@@ -524,8 +524,13 @@ export const GranuleFiltersForm = (props) => {
                 onSubmitStart={
                   (startDate, shouldSubmit) => {
                     const { temporal: newTemporal } = values
+
+                    // If the recurring toggle is toggled on, the format of the date drops the year, when
+                    // converted into a moment object, this will erroneously set the year to the current year.
+                    // To avoid this, we check if the temporal is recurring and set the year to the existing year in
+                    // state.
                     if (newTemporal.isRecurring) {
-                      const existingStartDate = moment(values.temporal.startDate)
+                      const existingStartDate = moment(newTemporal.startDate)
                       if (existingStartDate.isValid()) {
                         const existingStartDateYear = existingStartDate.year()
                         startDate.year(existingStartDateYear)
@@ -561,13 +566,24 @@ export const GranuleFiltersForm = (props) => {
                 }
                 onSubmitEnd={
                   (endDate, shouldSubmit) => {
+                    const { temporal: newTemporal } = values
+
+                    // Like with start date, if the recurring toggle is toggled on, the format of the date drops the year.
+                    // To avoid this, we check if the temporal is recurring and set the year to the existing year in state.
+                    if (newTemporal.isRecurring) {
+                      const existingEndDate = moment(newTemporal.endDate)
+                      if (existingEndDate.isValid()) {
+                        const existingEndDateYear = existingEndDate.year()
+                        endDate.year(existingEndDateYear)
+                      }
+                    }
+
                     const { input } = endDate.creationData()
                     const value = endDate.isValid() ? endDate.toISOString() : input
 
                     setFieldValue('temporal.endDate', value)
                     setFieldTouched('temporal.endDate')
 
-                    const { temporal: newTemporal } = values
                     if (newTemporal.isRecurring && newTemporal.startDate && endDate.isValid()) {
                       const startDate = moment(newTemporal.startDate).utc()
 
