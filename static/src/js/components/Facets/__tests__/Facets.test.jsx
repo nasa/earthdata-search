@@ -223,7 +223,7 @@ function setup(overrideProps = {}) {
 }
 
 describe('Facets Features Map Imagery component', () => {
-  test('only renders enabled feature FacetsGroup', async () => {
+  test('allows toggling Map Imagery checkbox', async () => {
     setup({
       portal: {
         features: {
@@ -246,7 +246,7 @@ describe('Facets Features Map Imagery component', () => {
     expect(screen.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
   })
 
-  test('only renders enabled feature FacetsGroup', async () => {
+  test('renders feature facets with tooltips and icons', async () => {
     setup({
       portal: {
         features: {
@@ -260,6 +260,14 @@ describe('Facets Features Map Imagery component', () => {
     })
 
     const user = userEvent.setup()
+
+    // Check for Map Imagery icon
+    const mapImageryIcon = screen.getByTestId('facet_item-map-imagery-icon')
+    expect(mapImageryIcon).toBeInTheDocument()
+
+    // Check for Cloud icon
+    const cloudIcon = screen.queryByTestId('facet_item-available-in-earthdata-cloud-icon')
+    expect(cloudIcon).not.toBeInTheDocument()
 
     const featuresElements = screen.getAllByText('Features')
     expect(featuresElements).toHaveLength(1)

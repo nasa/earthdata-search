@@ -104,6 +104,15 @@ class FacetsItem extends Component {
             onChange={this.onFacetChange.bind(this, changeHandlerArgs)}
           />
           <span className="facets-item__title">
+            {
+              facet.icon && (
+                <EDSCIcon
+                  className="facets-item__icon"
+                  icon={facet.icon}
+                  data-testid={`facet_item-${kebabCase(facet.title)}-icon`}
+                />
+              )
+            }
             {facet.title}
             {
               facet.description
@@ -149,7 +158,8 @@ FacetsItem.propTypes = {
     children: PropTypes.arrayOf(PropTypes.shape({})),
     count: PropTypes.number,
     title: PropTypes.string,
-    description: PropTypes.string
+    description: PropTypes.string,
+    icon: PropTypes.elementType
   }).isRequired,
   facetCategory: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
