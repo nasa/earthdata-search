@@ -3,6 +3,7 @@ import {
   act,
   render,
   screen,
+  waitFor,
   within
 } from '@testing-library/react'
 
@@ -262,11 +263,15 @@ describe('Facets Features Map Imagery component', () => {
     const user = userEvent.setup()
 
     // Check for Map Imagery icon
-    const mapImageryIcon = screen.getByTestId('facet_item-map-imagery-icon')
+    const mapImageryIcon = screen.getByLabelText('a map')
     expect(mapImageryIcon).toBeInTheDocument()
 
+    // Check for Customizable icon
+    const customizableIcon = screen.getByLabelText('a gear')
+    expect(customizableIcon).toBeInTheDocument()
+
     // Check for Cloud icon
-    const cloudIcon = screen.queryByTestId('facet_item-available-in-earthdata-cloud-icon')
+    const cloudIcon = screen.queryByLabelText('a cloud')
     expect(cloudIcon).not.toBeInTheDocument()
 
     const featuresElements = screen.getAllByText('Features')

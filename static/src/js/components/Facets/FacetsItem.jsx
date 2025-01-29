@@ -105,12 +105,12 @@ class FacetsItem extends Component {
           />
           <span className="facets-item__title">
             {
-              facet.icon && (
+              facet.iconProps && (
                 <EDSCIcon
                   className="facets-item__icon"
-                  icon={facet.icon}
+                  icon={facet.iconProps.icon}
                   variant="facet"
-                  data-testid={`facet_item-${kebabCase(facet.title)}-icon`}
+                  label={facet.iconProps.label || facet.title}
                 />
               )
             }
@@ -160,7 +160,10 @@ FacetsItem.propTypes = {
     count: PropTypes.number,
     title: PropTypes.string,
     description: PropTypes.string,
-    icon: PropTypes.elementType
+    iconProps: PropTypes.shape({
+      icon: PropTypes.elementType,
+      label: PropTypes.string
+    })
   }).isRequired,
   facetCategory: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
