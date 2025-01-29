@@ -109,6 +109,7 @@ class FacetsItem extends Component {
                 <EDSCIcon
                   className="facets-item__icon"
                   icon={facet.icon}
+                  variant="facet"
                   data-testid={`facet_item-${kebabCase(facet.title)}-icon`}
                 />
               )
