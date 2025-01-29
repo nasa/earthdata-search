@@ -263,15 +263,15 @@ describe('Facets Features Map Imagery component', () => {
     const user = userEvent.setup()
 
     // Check for Map Imagery icon
-    const mapImageryIcon = screen.getByLabelText('a map')
+    const mapImageryIcon = screen.getByLabelText('a map icon')
     expect(mapImageryIcon).toBeInTheDocument()
 
     // Check for Customizable icon
-    const customizableIcon = screen.getByLabelText('a gear')
+    const customizableIcon = screen.getByLabelText('a gear icon')
     expect(customizableIcon).toBeInTheDocument()
 
     // Check for Cloud icon
-    const cloudIcon = screen.queryByLabelText('a cloud')
+    const cloudIcon = screen.queryByLabelText('a cloud icon')
     expect(cloudIcon).not.toBeInTheDocument()
 
     const featuresElements = screen.getAllByText('Features')

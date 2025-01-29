@@ -51,7 +51,7 @@ const Facets = (props) => {
       title: 'Available in Earthdata Cloud',
       iconProps: {
         icon: CloudFill,
-        label: 'a cloud'
+        label: 'a cloud icon'
       },
       type: 'feature'
     })
@@ -63,7 +63,7 @@ const Facets = (props) => {
       title: 'Customizable',
       iconProps: {
         icon: Settings,
-        label: 'a gear'
+        label: 'a gear icon'
       },
       description: 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)',
       type: 'feature'
@@ -75,7 +75,7 @@ const Facets = (props) => {
       applied: featureFacets.mapImagery,
       iconProps: {
         icon: FaMap,
-        label: 'a map'
+        label: 'a map icon'
       },
       title: 'Map Imagery',
       type: 'feature'
