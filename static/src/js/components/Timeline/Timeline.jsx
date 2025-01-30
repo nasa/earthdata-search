@@ -11,7 +11,7 @@ import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa'
 import Button from '../Button/Button'
 
 import { getColorByIndex } from '../../util/colors'
-import { timelineIntervals } from '../../util/timeline'
+import { timelineIntervals, calculateTimelineParams } from '../../util/timeline'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import getObjectKeyByValue from '../../util/object'
 
@@ -34,15 +34,80 @@ export const Timeline = ({
   timeline
 }) => {
   const { query } = timeline
-  const { center: propsCenter } = query
-  const [center, setCenter] = useState(propsCenter || new Date().getTime())
 
+  const currentDate = new Date().getTime()
+  const topLevelKeys = Object.keys(collectionMetadata)
+  const collectionConceptId = topLevelKeys[0]
+  const { center: propsCenter } = query
   const isProjectPage = pathname.indexOf('projects') > -1
+  const [isMetadataLoaded, setIsMetadataLoaded] = useState(false)
+  const [isInitialSetup, setIsInitialSetup] = useState(true)
+  const [zoomLevel, setZoomLevel] = useState(5)
+  const [center, setCenter] = useState(propsCenter || currentDate)
+
+  // Refs for tracking the timer container and the previous height so we can trigger a resize event
   const containerRef = useRef()
   const previousHeight = useRef(0)
 
+  // Clear interval and center on unmount
+  useEffect(() => () => {
+    onChangeTimelineQuery({
+      center: undefined,
+      interval: undefined
+    })
+  }, [onChangeTimelineQuery])
+
+  useEffect(() => {
+    const checkMetadataLoaded = () => {
+      if (!collectionMetadata) return
+      if (isMetadataLoaded) return
+
+      if (isProjectPage) {
+        // Check if all project collections have metadata
+        const hasAllMetadata = projectCollectionsIds.every((conceptId) => {
+          const metadata = collectionMetadata[conceptId]
+
+          return metadata?.timeStart
+        })
+        setIsMetadataLoaded(hasAllMetadata)
+      } else {
+        // Check if single collection has metadata
+        const metadata = collectionMetadata[collectionConceptId]
+        setIsMetadataLoaded(!!metadata?.timeStart)
+      }
+    }
+
+    checkMetadataLoaded()
+  }, [collectionMetadata, isProjectPage, projectCollectionsIds, collectionConceptId])
+
+  useEffect(() => {
+    if (!isInitialSetup) return
+
+    // If we have metadata, calculate the appropriate zoom and center
+    if (isMetadataLoaded) {
+      const { initialCenter: newCenter, zoomLevel: numericZoom } = calculateTimelineParams({
+        propsCenter,
+        collectionMetadata,
+        collectionConceptId,
+        isProjectPage,
+        projectCollectionsIds,
+        currentDate
+      })
+
+      setCenter(newCenter)
+      setZoomLevel(numericZoom)
+      setIsInitialSetup(false)
+      onChangeTimelineQuery({
+        ...timeline.query,
+        center: newCenter,
+        interval: getObjectKeyByValue(timelineIntervals, numericZoom.toString())
+      })
+    }
+  }, [isMetadataLoaded, isInitialSetup])
+
   useEffect(() => {
     if (containerRef.current) {
+      // TODO this might be what causes that console error
       const { height: elementHeight } = containerRef.current.getBoundingClientRect()
 
       // If the current height of the element is different than the previous render,
@@ -68,7 +133,6 @@ export const Timeline = ({
       end: focusedEnd,
       start: focusedStart
     } = newQuery
-
     if (
       showOverrideModal
       && temporalStart
@@ -105,15 +169,6 @@ export const Timeline = ({
     }
   }, [isOpen, isProjectPage])
 
-  // Sets up event listener for keyup event
-  useEffect(() => {
-    window.addEventListener('keyup', onWindowKeyup)
-
-    return () => {
-      window.removeEventListener('keyup', onWindowKeyup)
-    }
-  }, [])
-
   // Metrics methods
   const handleArrowKeyPan = () => onMetricsTimeline('Left/Right Arrow Pan')
   const handleButtonPan = () => onMetricsTimeline('Button Pan')
@@ -133,6 +188,7 @@ export const Timeline = ({
     timelineStart
   }) => {
     if (!timelineEnd && !timelineStart) return
+    if (!isMetadataLoaded) return
 
     const endDate = new Date(timelineEnd)
     const startDate = new Date(timelineStart)
@@ -143,8 +199,6 @@ export const Timeline = ({
       interval: getObjectKeyByValue(timelineIntervals, zoom.toString()),
       startDate: startDate.toISOString()
     }
-
-    // TODO moving the timeline is causing a new timeline request - should only call if the timelineRange is changed
 
     onChangeTimelineQuery(newQuery)
     setCenter(newCenter)
@@ -261,7 +315,6 @@ export const Timeline = ({
         dataValue.intervals = values.map((value) => {
           const [start, end] = value
 
-          // TODO: Change the format of the intervals to an object at some point
           return [start * 1000, end * 1000]
         })
 
@@ -269,7 +322,7 @@ export const Timeline = ({
       })
     }
 
-    // Ensure we render the Timeline on the focused collection view, even if it has not been added to the project
+    // Ensure we render the Timeline on the granules page, even if it has not been added to the project
     if (!isProjectPage) {
       Object.keys(intervals).forEach((conceptId, index) => {
         if (!collectionMetadata[conceptId]) return
@@ -316,6 +369,7 @@ export const Timeline = ({
   const setupTemporal = ({ endDate, startDate }) => {
     if (!endDate && !startDate) return {}
 
+    // Initialize earliest and latest dates
     let end = new Date().getTime()
     let start = new Date(earliestStart).getTime()
 
@@ -326,15 +380,6 @@ export const Timeline = ({
       end,
       start
     }
-  }
-
-  /**
-   * Converts the zoom level in the timeline query into a format used by the timeline
-   */
-  const setupZoom = ({ query: timelineQuery }) => {
-    const { interval = 'month' } = timelineQuery
-
-    return parseInt(timelineIntervals[interval], 10)
   }
 
   const hideTimeline = !(isOpen || isProjectPage)
@@ -378,25 +423,29 @@ export const Timeline = ({
             />
           )
         }
-        <EDSCTimeline
-          center={center}
-          data={setupData(timeline)}
-          focusedInterval={setupFocused(timeline)}
-          maxZoom={5}
-          minZoom={1}
-          temporalRange={setupTemporal(temporalSearch)}
-          zoom={setupZoom(timeline)}
-          onArrowKeyPan={handleArrowKeyPan}
-          onButtonPan={handleButtonPan}
-          onButtonZoom={handleButtonZoom}
-          onDragPan={handleDragPan}
-          onFocusedIntervalClick={handleFocusedClick}
-          onFocusedSet={handleFocusedSet}
-          onScrollPan={handleScrollPan}
-          onScrollZoom={handleScrollZoom}
-          onTemporalSet={handleTemporalSet}
-          onTimelineMoveEnd={handleTimelineMoveEnd}
-        />
+        {
+          isMetadataLoaded && !isInitialSetup && (
+            <EDSCTimeline
+              center={center}
+              data={setupData(timeline)}
+              focusedInterval={setupFocused(timeline)}
+              maxZoom={5}
+              minZoom={1}
+              temporalRange={setupTemporal(temporalSearch)}
+              zoom={zoomLevel}
+              onArrowKeyPan={handleArrowKeyPan}
+              onButtonPan={handleButtonPan}
+              onButtonZoom={handleButtonZoom}
+              onDragPan={handleDragPan}
+              onFocusedIntervalClick={handleFocusedClick}
+              onFocusedSet={handleFocusedSet}
+              onScrollPan={handleScrollPan}
+              onScrollZoom={handleScrollZoom}
+              onTemporalSet={handleTemporalSet}
+              onTimelineMoveEnd={handleTimelineMoveEnd}
+            />
+          )
+        }
       </div>
     </section>
   )
