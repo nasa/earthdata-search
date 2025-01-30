@@ -424,7 +424,7 @@ describe('handleFocusedSet', () => {
     }])
   })
 
-  test('calls onToggleOverrideTemporalModal when setting focuse and temporal already exists', () => {
+  test('calls onToggleOverrideTemporalModal when setting focus and temporal already exists', () => {
     const { enzymeWrapper, props } = setup({
       pathname: '/projects',
       showOverrideModal: true,
