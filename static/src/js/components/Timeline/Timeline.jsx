@@ -11,7 +11,12 @@ import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa'
 import Button from '../Button/Button'
 
 import { getColorByIndex } from '../../util/colors'
-import { timelineIntervals } from '../../util/timeline'
+import {
+  timelineIntervals,
+  timelineMidpoint,
+  zoomLevelDifference,
+  getTimelineProjectCenter
+} from '../../util/timeline'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import getObjectKeyByValue from '../../util/object'
 
@@ -34,16 +39,56 @@ export const Timeline = ({
   timeline
 }) => {
   const { query } = timeline
-  const { center: propsCenter } = query
-  const [center, setCenter] = useState(propsCenter || new Date().getTime())
 
+  const currentDate = new Date().getTime()
+  const topLevelKeys = Object.keys(collectionMetadata)
+  const collectionConceptId = topLevelKeys[0]
+  const { center: propsCenter } = query
+
+  const collectionTimeStart = collectionMetadata[collectionConceptId].timeStart
+  let collectionTimeEnd = collectionMetadata[collectionConceptId].timeEnd
+  const [center, setCenter] = useState(propsCenter || currentDate)
+
+  const setupZoom = ({ query: timelineQuery }) => {
+    // Set zoom level to the minimum zoom containing the granules
+    // TODO: this is causing an issue where the timeline is rendering black
+    // TODO: refreshing it works because its adding in values to timeline query
+    const defaultZoom = zoomLevelDifference(collectionTimeStart, collectionTimeEnd)
+
+    const { interval = defaultZoom } = timelineQuery
+
+    return parseInt(timelineIntervals[interval], 10)
+  }
+
+  // TODO it may be needed to have the zoom level be controlled by state
+  // Const defaultZoomValue = zoomLevelDifference(collectionTimeStart, collectionTimeEnd)
+  // const [zoomLevelPassed, setZoomLevelPassed] = useState(parseInt(timelineIntervals['hour'], 10))
   const isProjectPage = pathname.indexOf('projects') > -1
   const containerRef = useRef()
   const previousHeight = useRef(0)
+  // TODO on mount we should do these things
+
+  useEffect(() => {
+    const collectionTemporalRange = collectionMetadata[collectionConceptId].temporal
+    if (!collectionTimeEnd) {
+      collectionTimeEnd = currentDate
+    }
+
+    if (collectionTimeStart && collectionTimeEnd) {
+      const newCenterPointTime = timelineMidpoint(collectionTimeStart, collectionTimeEnd)
+      // TODO double check this type
+      console.log('🚀 ~ file: Timeline.jsx:88 ~ newCenterPointTime:', newCenterPointTime)
+      setCenter(newCenterPointTime)
+      console.log('center after its been updated', center)
+      // SetZoomLevelPassed(setupZoom(timeline))
+    }
+  }, [])
 
   useEffect(() => {
     if (containerRef.current) {
+      // TODO this might be what causes that console error
       const { height: elementHeight } = containerRef.current.getBoundingClientRect()
+      console.log('🚀 ~ file: Timeline.jsx:74 ~ elementHeight:', elementHeight)
 
       // If the current height of the element is different than the previous render,
       // dispatch a resize event to set the size of the leaflet tools
@@ -68,7 +113,6 @@ export const Timeline = ({
       end: focusedEnd,
       start: focusedStart
     } = newQuery
-
     if (
       showOverrideModal
       && temporalStart
@@ -105,14 +149,46 @@ export const Timeline = ({
     }
   }, [isOpen, isProjectPage])
 
-  // Sets up event listener for keyup event
   useEffect(() => {
-    window.addEventListener('keyup', onWindowKeyup)
+    const colstartPoints = []
+    const colEndPoints = []
+    if (isProjectPage) {
+      // TODO note remove me contains at most three collections
+      projectCollectionsIds.forEach((conceptId) => {
+        const metadata = collectionMetadata[conceptId] || {}
+        console.log('🚀 ~ file: Timeline.jsx:171 ~ metadata:', metadata)
+        console.log('🚀 ~ file: Timeline.jsx:171 ~ metadata:', metadata)
+        if (!metadata.timeStart) {
+          return
+        }
 
-    return () => {
-      window.removeEventListener('keyup', onWindowKeyup)
+        const collectionTimeStartProject = collectionMetadata[conceptId].timeStart
+        const collectionTimeEndProject = collectionMetadata[conceptId].timeEnd
+        if (!collectionTimeEndProject) {
+          colstartPoints.push(currentDate)
+        } else {
+          const normalizedEndDate = new Date(collectionTimeEndProject)
+          const millisecondsEndDate = normalizedEndDate.getTime()
+          console.log('🚀 ~ file: Timeline.jsx:186 ~ millisecondsEndDate:', millisecondsEndDate)
+          colEndPoints.push(millisecondsEndDate)
+        }
+
+        if (!collectionTimeStartProject) return
+        const normalizedStartDate = new Date(collectionTimeStartProject)
+        const millisecondsStartDate = normalizedStartDate.getTime()
+        console.log('🚀 ~ file: Timeline.jsx:193 ~ millisecondsStartDate:', millisecondsStartDate)
+        colstartPoints.push(millisecondsStartDate)
+      })
+
+      console.log('🚀 ~ file: Timeline.jsx:192 ~ colEndPoints:', colEndPoints)
+      const earliestColDate = Math.min(...colstartPoints)
+      const latestColDate = Math.max(...colEndPoints)
+
+      const newCenterForProject = getTimelineProjectCenter(earliestColDate, latestColDate)
+      setCenter(newCenterForProject)
+      console.log('Setting the values for the new center', newCenterForProject)
     }
-  }, [])
+  }, [collectionMetadata])
 
   // Metrics methods
   const handleArrowKeyPan = () => onMetricsTimeline('Left/Right Arrow Pan')
@@ -145,7 +221,6 @@ export const Timeline = ({
     }
 
     // TODO moving the timeline is causing a new timeline request - should only call if the timelineRange is changed
-
     onChangeTimelineQuery(newQuery)
     setCenter(newCenter)
   }
@@ -170,6 +245,7 @@ export const Timeline = ({
         }
       }
 
+      // TODO so this gets created I guess
       onChangeQuery({
         collection: {
           temporal: {
@@ -242,6 +318,7 @@ export const Timeline = ({
    * Converts redux timeline data (from CMR) into data usable by the timeline
    */
   const setupData = ({ intervals }) => {
+    console.log('🚀 ~ file: Timeline.jsx:288 ~ interval:', intervals)
     const data = []
 
     // Render the Collection Timelines in the same order they were added
@@ -252,6 +329,15 @@ export const Timeline = ({
         const values = intervals[conceptId]
         const metadata = collectionMetadata[conceptId] || {}
 
+        // Const collectionTimeStartProject = collectionMetadata[conceptId].timeStart
+        // const collectionTimeEndProject = collectionMetadata[conceptId].timeEnd
+        // if (!collectionTimeEndProject) {
+        //   colstartPoints.push(currentDate)
+        // }
+
+        // colstartPoints.push(collectionTimeStartProject)
+        // colEndPoints.push(collectionTimeEndProject)
+
         const dataValue = {}
         dataValue.id = conceptId
         dataValue.color = getColorByIndex(index)
@@ -260,6 +346,10 @@ export const Timeline = ({
 
         dataValue.intervals = values.map((value) => {
           const [start, end] = value
+          console.log('🚀 ~ file: Timeline.jsx:312 ~ end:', end)
+          console.log('🚀 ~ file: Timeline.jsx:312 ~ start:', start)
+
+          // Push these to arrs so we can use them to calculate the center
 
           // TODO: Change the format of the intervals to an object at some point
           return [start * 1000, end * 1000]
@@ -267,9 +357,14 @@ export const Timeline = ({
 
         data.push(dataValue)
       })
+
+      // Const newCenterForProject = calculateTimelineProjectCenter(Math.min(colstartPoints), Math.max(colEndPoints))
+      // setCenter(newCenterForProject)
+      // Set the new center for the timeline based on the temporal extent of collections in project
+      // TODO calculate the center of the timeline based on the project data
     }
 
-    // Ensure we render the Timeline on the focused collection view, even if it has not been added to the project
+    // Ensure we render the Timeline on the granules page, even if it has not been added to the project
     if (!isProjectPage) {
       Object.keys(intervals).forEach((conceptId, index) => {
         if (!collectionMetadata[conceptId]) return
@@ -316,6 +411,7 @@ export const Timeline = ({
   const setupTemporal = ({ endDate, startDate }) => {
     if (!endDate && !startDate) return {}
 
+    // Initialize earliest and latest dates
     let end = new Date().getTime()
     let start = new Date(earliestStart).getTime()
 
@@ -326,15 +422,6 @@ export const Timeline = ({
       end,
       start
     }
-  }
-
-  /**
-   * Converts the zoom level in the timeline query into a format used by the timeline
-   */
-  const setupZoom = ({ query: timelineQuery }) => {
-    const { interval = 'month' } = timelineQuery
-
-    return parseInt(timelineIntervals[interval], 10)
   }
 
   const hideTimeline = !(isOpen || isProjectPage)
