@@ -31,8 +31,6 @@ import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
-// Import CollectionDetailsBodyContainer
-  // from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import GranuleDetailsBodyContainer
   from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import GranuleResultsBodyContainer
@@ -588,7 +586,7 @@ class SearchPanels extends PureComponent {
       >
         <PanelItem scrollable={false}>
           <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-            <CollectionDetailsBodyContainer />
+            <CollectionDetailsBodyContainer isActive />
           </Suspense>
         </PanelItem>
       </PanelGroup>

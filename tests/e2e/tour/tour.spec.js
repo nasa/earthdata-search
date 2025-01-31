@@ -347,9 +347,9 @@ test.describe('When not logged in', () => {
 
     expectWithinMargin(spotlightRect, {
       left: -10,
-      top: 185,
-      width: 329,
-      height: 697
+      top: 189,
+      width: 338,
+      height: 742
     }, 10, 6)
 
     // Step 7: Refine Search by Category
