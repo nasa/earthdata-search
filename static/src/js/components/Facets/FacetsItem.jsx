@@ -111,6 +111,7 @@ class FacetsItem extends Component {
                   icon={facet.iconProps.icon}
                   variant="facet"
                   label={facet.iconProps.label || facet.title}
+                  ariaLabel={facet.iconProps.ariaLabel}
                 />
               )
             }
@@ -164,7 +165,8 @@ FacetsItem.propTypes = {
     description: PropTypes.string,
     iconProps: PropTypes.shape({
       icon: PropTypes.elementType,
-      label: PropTypes.string
+      label: PropTypes.string,
+      ariaLabel: PropTypes.string
     })
   }).isRequired,
   facetCategory: PropTypes.string.isRequired,

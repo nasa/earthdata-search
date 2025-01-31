@@ -20,7 +20,7 @@ export const EDSCIcon = ({
   size,
   title,
   variant,
-  label,
+  ariaLabel,
   ...props
 }) => {
   if (!icon) return null
@@ -99,7 +99,7 @@ export const EDSCIcon = ({
         className={iconClassNames}
         title={title}
         size={size}
-        aria-label={label}
+        aria-label={ariaLabel}
         data-testid="edsc-icon"
         {...props}
       />
@@ -116,7 +116,7 @@ EDSCIcon.defaultProps = {
   size: '1rem',
   title: null,
   variant: null,
-  label: null
+  ariaLabel: null
 }
 
 EDSCIcon.propTypes = {
@@ -127,7 +127,7 @@ EDSCIcon.propTypes = {
   size: PropTypes.string,
   title: PropTypes.string,
   variant: PropTypes.string,
-  label: PropTypes.string
+  ariaLabel: PropTypes.string
 }
 
 export default EDSCIcon
