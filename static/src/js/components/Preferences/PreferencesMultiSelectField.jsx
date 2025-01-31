@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { startCase } from 'lodash-es'
-
-import { Form } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form'
 
 import './PreferencesMultiSelectField.scss'
 

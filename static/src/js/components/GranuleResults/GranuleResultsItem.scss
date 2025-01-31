@@ -1,17 +1,20 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .granule-results-item {
   position: relative;
   width: 100%;
-  background: $color__spacesuit-white;
-  border: 1px solid $color__carbon--10;
-  border-radius: $border-radius;
-  box-shadow: $shadow__default;
+  background: utils.$color__spacesuit-white;
+  border: 1px solid utils.$color__carbon--10;
+  border-radius: bootstrap.$border-radius;
+  box-shadow: utils.$shadow__default;
   overflow: visible;
   transition: all 0.2s ease;
 
   &--emphisized {
-    border: 1px solid $color__carbon--30;
-    background: rgba($color__spacesuit-white, 0.90);
-    box-shadow: 0 0 0.5rem 0.125rem rgba($color__carbon--90, 0.1);
+    border: 1px solid utils.$color__carbon--30;
+    background: rgba(utils.$color__spacesuit-white, 0.90);
+    box-shadow: 0 0 0.5rem 0.125rem rgba(utils.$color__carbon--90, 0.1);
   }
 
   &:focus {
@@ -29,7 +32,7 @@
       left: -2px;
       height: calc(100% + 4px);
       width: calc(100% + 4px);
-      border: 2px solid rgba($color__active-green, 0.5);
+      border: 2px solid rgba(utils.$color__active-green, 0.5);
       border-radius: 0.325rem;
     }
   }
@@ -48,7 +51,7 @@
   }
 
   &--active {
-    border: 1px solid $color__active-green;
+    border: 1px solid utils.$color__active-green;
 
     &:after {
       content: "";
@@ -57,7 +60,7 @@
       left: -2px;
       height: calc(100% + 4px);
       width: calc(100% + 4px);
-      border: 4px solid $color__active-green;
+      border: 4px solid utils.$color__active-green;
       border-radius: 0.325rem;
     }
   }
@@ -88,37 +91,37 @@
   }
 
   &__title {
-    padding: calc($spacer / 2);
+    padding: calc(bootstrap.$spacer / 2);
     margin: 0;
     font-size: 0.825rem;
     font-weight: 400;
     line-height: 1.4em;
     word-wrap: break-word;
     line-break: anywhere;
-    color: darken($color__carbon--50, 15);
+    color: darken(utils.$color__carbon--50, 15);
 
     .granule-results-item--selected & {
-      color: $color__carbon--90;
+      color: utils.$color__carbon--90;
     }
 
     .granule-results-item--deemphisized & {
-      color: $color__carbon--40;
+      color: utils.$color__carbon--40;
     }
 
     .granule-results-item--emphisized & {
-      color: $color__carbon--90;
+      color: utils.$color__carbon--90;
     }
   }
 
   &__highlighted-title {
     font-weight: 500;
-    color: $color__carbon--90;
-    background-color: rgba($color__active-green, 0.325);
+    color: utils.$color__carbon--90;
+    background-color: rgba(utils.$color__active-green, 0.325);
     padding: 0 0.125rem;
   }
 
   &__more-actions-dropdown {
-    padding: calc($spacer / 2);
+    padding: calc(bootstrap.$spacer / 2);
     padding-left: 0;
     align-items: flex-start;
 
@@ -144,7 +147,7 @@
     padding: 0.25rem;
     height: 5rem;
     width: 5rem;
-    background-color: $color__carbon--90;
+    background-color: utils.$color__carbon--90;
     overflow: hidden;
     font-size: 0.5rem;
     border-bottom-left-radius: 0.25rem;
@@ -169,7 +172,7 @@
     flex-grow: 0;
     flex-direction: column;
     justify-content: space-between;
-    padding: calc($spacer / 4) calc($spacer / 2) calc($spacer / 4) calc($spacer / 2);
+    padding: calc(bootstrap.$spacer / 4) calc(bootstrap.$spacer / 2) calc(bootstrap.$spacer / 4) calc(bootstrap.$spacer / 2);
 
     .panels--sm & {
       flex-direction: row;
@@ -194,59 +197,59 @@
       padding: 0;
       display: inline-block;
       font-size: 0.675rem;
-      color: $color__carbon--80;
-      color: rgba($color__carbon--90, 0.75);
+      color: utils.$color__carbon--80;
+      color: rgba(utils.$color__carbon--90, 0.75);
 
       .granule-results-item--deemphisized & {
-        color: $color__carbon--50;
-        color: rgba($color__carbon--90, 0.6);
+        color: utils.$color__carbon--50;
+        color: rgba(utils.$color__carbon--90, 0.6);
       }
     }
 
     &--start {
-      background-color: rgba($color__active-green, 0.05);
+      background-color: rgba(utils.$color__active-green, 0.05);
 
       h5 {
-        color: $color__active-green;
+        color: utils.$color__active-green;
       }
     }
 
     &--end {
-      background: rgba($color__nasa-red--shade, 0.05);
+      background: rgba(utils.$color__nasa-red--shade, 0.05);
 
       h5 {
-        color: $color__nasa-red--shade;
+        color: utils.$color__nasa-red--shade;
       }
     }
 
     &--start {
-      background-color: rgba($color__active-green, 0.05);
+      background-color: rgba(utils.$color__active-green, 0.05);
 
       .granule-results-item--deemphisized & {
-        background-color: rgba($color__active-green, 0.025);
+        background-color: rgba(utils.$color__active-green, 0.025);
       }
 
       h5 {
-        color: $color__active-green;
+        color: utils.$color__active-green;
 
         .granule-results-item--deemphisized & {
-          color: rgba($color__active-green, 0.75)
+          color: rgba(utils.$color__active-green, 0.75)
         }
       }
     }
 
     &--end {
-      background: rgba($color__nasa-red--shade, 0.05);
+      background: rgba(utils.$color__nasa-red--shade, 0.05);
 
       .granule-results-item--deemphisized & {
-        background-color: rgba($color__nasa-red--shade, 0.025);
+        background-color: rgba(utils.$color__nasa-red--shade, 0.025);
       }
 
       h5 {
-        color: $color__nasa-red--shade;
+        color: utils.$color__nasa-red--shade;
 
         .granule-results-item--deemphisized & {
-          color: rgba($color__nasa-red--shade, 0.75)
+          color: rgba(utils.$color__nasa-red--shade, 0.75)
         }
       }
     }
@@ -255,9 +258,9 @@
   &__buttons {
     display: flex;
     width: auto;
-    background: $color__carbon--5;
-    border-top: 1px solid $color__carbon--20;
-    border-radius: 0 0 $border-radius $border-radius;
+    background: utils.$color__carbon--5;
+    border-top: 1px solid utils.$color__carbon--20;
+    border-radius: 0 0 bootstrap.$border-radius bootstrap.$border-radius;
 
     .granule-results-item--has-thumbnail & {
       border-bottom-left-radius: 0;
@@ -274,10 +277,10 @@
     z-index: 0;
     width: 2.25rem;
     height: 2.25rem;
-    background: $color__carbon--5;
-    color: $color__carbon--40;
+    background: utils.$color__carbon--5;
+    color: utils.$color__carbon--40;
     text-align: center;
-    border: 1px solid $color__carbon--20;
+    border: 1px solid utils.$color__carbon--20;
     border-left: 0;
     border-top: 0;
     border-radius: 0;
@@ -285,8 +288,8 @@
     vertical-align: middle;
 
     &:hover {
-      color: $color__carbon--50;
-      border: 1px solid lighten($color__carbon--30, 10%);
+      color: utils.$color__carbon--50;
+      border: 1px solid lighten(utils.$color__carbon--30, 10%);
       border-bottom: none;
       border-top: 0;
       border-left: 0;
@@ -301,22 +304,22 @@
     }
 
     &:first-child {
-      border-radius: 0 0 0 $border-radius;
+      border-radius: 0 0 0 bootstrap.$border-radius;
     }
 
     &--add {
-      color: $color__active-green;
+      color: utils.$color__active-green;
 
       &:hover {
-        color: $color__active-green;
+        color: utils.$color__active-green;
       }
     }
 
     &--remove {
-      color: $color__nasa-red;
+      color: utils.$color__nasa-red;
 
       &:hover {
-        color: $color__nasa-red--shade;
+        color: utils.$color__nasa-red--shade;
       }
     }
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { startCase } from 'lodash-es'
 
-import { Table } from 'react-bootstrap'
+import Table from 'react-bootstrap/Table'
 
 import Spinner from '../Spinner/Spinner'
 

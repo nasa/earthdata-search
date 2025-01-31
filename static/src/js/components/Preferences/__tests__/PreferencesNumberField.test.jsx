@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { FormControl } from 'react-bootstrap'
+import FormControl from 'react-bootstrap/FormControl'
 
 import PreferencesNumberField from '../PreferencesNumberField'
 

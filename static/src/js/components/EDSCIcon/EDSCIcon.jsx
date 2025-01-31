@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { IconContext } from 'react-icons'
 
@@ -15,7 +15,7 @@ import './EDSCIcon.scss'
  * @param {String} variant - Optional string that determines the icon's wrapper element and styling.
  * @param {Object} ariaLabel - Optional string used as the `aria-label` attribute
  */
-export const EDSCIcon = ({
+export const EDSCIcon = forwardRef(({
   icon,
   className,
   children,
@@ -25,7 +25,7 @@ export const EDSCIcon = ({
   variant,
   ariaLabel,
   ...props
-}) => {
+}, ref) => {
   if (!icon) return null
 
   let iconClassNames = 'edsc-icon'
@@ -38,6 +38,7 @@ export const EDSCIcon = ({
 
     return (
       <i
+        ref={ref}
         className={iconClassNames}
         title={title}
         data-testid="edsc-icon-simple"
@@ -54,6 +55,7 @@ export const EDSCIcon = ({
     return (
       <IconContext.Provider
         value={context}
+        ref={ref}
       >
         <Icon
           className={iconClassNames}
@@ -70,7 +72,10 @@ export const EDSCIcon = ({
 
   if (variant === 'details') {
     return (
-      <div className="access-method-radio__icons-rightside">
+      <div
+        ref={ref}
+        className="access-method-radio__icons-rightside"
+      >
         <Icon
           className={iconClassNames}
           title={title}
@@ -86,7 +91,10 @@ export const EDSCIcon = ({
 
   if (variant === 'details-span') {
     return (
-      <span className="pl-2">
+      <span
+        ref={ref}
+        className="pl-2"
+      >
         <Icon
           className={iconClassNames}
           title={title}
@@ -101,7 +109,7 @@ export const EDSCIcon = ({
   }
 
   return (
-    <>
+    <span ref={ref}>
       <Icon
         className={iconClassNames}
         title={title}
@@ -111,9 +119,11 @@ export const EDSCIcon = ({
         {...props}
       />
       {children}
-    </>
+    </span>
   )
-}
+})
+
+EDSCIcon.displayName = 'Button'
 
 EDSCIcon.defaultProps = {
   icon: null,

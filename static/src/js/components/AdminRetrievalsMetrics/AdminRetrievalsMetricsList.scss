@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .admin-retrievals-metrics-list {
   &__table-body {
     overflow-y: auto;
@@ -8,7 +10,7 @@
     overflow-y: auto;
 
     &:hover {
-      background-color: $color__carbon--20 !important;
+      background-color: utils.$color__carbon--20 !important;
     }
   }
 }

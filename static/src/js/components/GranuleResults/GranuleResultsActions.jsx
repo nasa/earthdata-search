@@ -10,7 +10,7 @@ import { IoShare } from 'react-icons/io5'
 
 import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import { Dropdown } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 import { commafy } from '../../util/commafy'
 import { locationPropType } from '../../util/propTypes/location'

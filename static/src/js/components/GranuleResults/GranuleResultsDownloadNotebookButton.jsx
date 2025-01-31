@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import ReactDOM from 'react-dom'
-import { Dropdown } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
 import { PropTypes } from 'prop-types'
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaFileCode } from 'react-icons/fa'

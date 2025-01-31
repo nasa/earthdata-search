@@ -10,11 +10,9 @@ import {
   Switch,
   withRouter
 } from 'react-router-dom'
-import {
-  Form,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap'
+import Form from 'react-bootstrap/Form'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import {
   FaSitemap,

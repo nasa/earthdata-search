@@ -169,7 +169,7 @@ describe('SpatialSelectionDropdown component', () => {
       const shapeFileSelectionButton = screen.getByRole('button', { name: 'File (KML, KMZ, ESRI, …)' })
       await user.click(shapeFileSelectionButton)
 
-      expect(shapeFileSelectionButton).toBeDisabled()
+      expect(shapeFileSelectionButton).toHaveClass('disabled')
       expect(onToggleShapefileUploadModal).toHaveBeenCalledTimes(0)
       expect(onMetricsSpatialSelection).toHaveBeenCalledTimes(0)
     })

@@ -1,17 +1,20 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .related-urls-modal {
   &__group {
-    margin-bottom: $spacer*1.5;
+    margin-bottom: bootstrap.$spacer*1.5;
   }
 
   &__group-title {
-    padding-bottom: calc($spacer / 2);
+    padding-bottom: calc(bootstrap.$spacer / 2);
     font-size: 1rem;
-    border-bottom: 1px solid $color__carbon--20;
+    border-bottom: 1px solid utils.$color__carbon--20;
   }
 
   &__url {
     margin: 0;
-    margin-bottom: calc($spacer / 2);
+    margin-bottom: calc(bootstrap.$spacer / 2);
     padding: 0;
     list-style: none;
   }

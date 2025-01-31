@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .autocomplete-suggestion {
   &__suggestions-primary {
     display: flex;
@@ -9,7 +11,7 @@
     flex-grow: 0;
     flex-shrink: 0;
     font-size: 0.675rem;
-    color: $color__carbon--80;
+    color: utils.$color__carbon--80;
   }
 
   &__suggestions-value {
@@ -21,12 +23,12 @@
     flex-shrink: 1;
     padding-left: 1em;
     font-size: 0.675rem;
-    color: $color__carbon--60;
+    color: utils.$color__carbon--60;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: clip;
     position: relative;
-    background-color: $color__spacesuit-white;
+    background-color: utils.$color__spacesuit-white;
     transition: all 0.1s ease-in-out;
 
     &:before {
@@ -62,7 +64,7 @@
 
     .fa {
       font-size: 0.25rem;
-      color: $color__carbon--60;
+      color: utils.$color__carbon--60;
     }
   }
 }

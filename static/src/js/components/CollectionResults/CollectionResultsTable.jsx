@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  Badge,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap'
+import Badge from 'react-bootstrap/Badge'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
+
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
@@ -136,7 +135,7 @@ export const CollectionResultsTable = ({
           }
         >
           <span>
-            <span className="mr-1">Earthdata Cloud</span>
+            <span className="me-1">Earthdata Cloud</span>
             <EDSCIcon icon={AlertInformation} size="0.8rem" />
           </span>
         </OverlayTrigger>
@@ -166,7 +165,7 @@ export const CollectionResultsTable = ({
           }
         >
           <span>
-            <span className="mr-1">Map Imagery</span>
+            <span className="me-1">Map Imagery</span>
             <EDSCIcon icon={AlertInformation} size="0.8rem" />
           </span>
         </OverlayTrigger>
@@ -198,7 +197,7 @@ export const CollectionResultsTable = ({
           }
         >
           <span>
-            <span className="mr-1">Near Real Time</span>
+            <span className="me-1">Near Real Time</span>
             <EDSCIcon icon={AlertInformation} size="0.8rem" />
           </span>
         </OverlayTrigger>
@@ -213,7 +212,7 @@ export const CollectionResultsTable = ({
             {
               value
                 ? (
-                  <Badge variant="light">{nrtLabel}</Badge>
+                  <Badge text="bg-light">{nrtLabel}</Badge>
                 )
                 : '-'
             }

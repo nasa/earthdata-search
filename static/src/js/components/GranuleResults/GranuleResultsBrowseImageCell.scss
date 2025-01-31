@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .granule-results-browse-image-cell {
   display: flex;
   align-items: center;
@@ -8,11 +10,11 @@
   width: 60px;
   overflow: hidden;
   font-size: 0.5rem;
-  border-bottom: 1px solid $color__carbon--20;
+  border-bottom: 1px solid utils.$color__carbon--20;
 
   &--image {
-    background-color: $color__carbon--90;
-    border-bottom: 1px solid $color__carbon--70;
+    background-color: utils.$color__carbon--90;
+    border-bottom: 1px solid utils.$color__carbon--70;
   }
 
   &__thumb {

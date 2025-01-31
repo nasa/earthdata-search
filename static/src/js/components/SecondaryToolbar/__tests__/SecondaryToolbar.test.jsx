@@ -201,7 +201,9 @@ describe('SecondaryToolbar component', () => {
       const projectNameField = screen.getByPlaceholderText('Untitled Project')
       expect(projectNameField).toBeInTheDocument()
 
-      await user.type(projectNameField, 'test project name')
+      await act(async () => {
+        await user.type(projectNameField, 'test project name')
+      })
 
       const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
       const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
@@ -228,12 +230,16 @@ describe('SecondaryToolbar component', () => {
       const projectNameField = screen.getByPlaceholderText('Untitled Project')
       expect(projectNameField).toBeInTheDocument()
 
-      await user.type(projectNameField, 'test project name')
+      await act(async () => {
+        await user.type(projectNameField, 'test project name')
+      })
 
       const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
       const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
 
-      await user.type(projectNameField, '{space}')
+      await act(async () => {
+        await user.type(projectNameField, '{space}')
+      })
 
       expect(preventDefaultSpy).toHaveBeenCalledTimes(0)
       expect(stopPropagationSpy).toHaveBeenCalledTimes(0)
@@ -314,7 +320,9 @@ describe('SecondaryToolbar component', () => {
       const projectNameField = screen.getByPlaceholderText('Untitled Project')
       expect(projectNameField).toBeInTheDocument()
 
-      await user.type(projectNameField, 'test project name')
+      await act(async () => {
+        await user.type(projectNameField, 'test project name')
+      })
 
       const saveProjectNameButton = screen.getByRole('button', { name: 'Save project name' })
       await act(async () => {

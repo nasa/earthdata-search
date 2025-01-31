@@ -20,7 +20,6 @@ import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils
 import WithProviders from './providers/WithProviders/WithProviders'
 
 // Routes
-import Project from './routes/Project/Project'
 import Search from './routes/Search/Search'
 
 // Components and Containers
@@ -69,6 +68,7 @@ const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
 const EdscMapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
+const Project = lazy(() => import('./routes/Project/Project'))
 const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 
 // Create the root App component
@@ -202,7 +202,9 @@ class App extends Component {
                         render={
                           () => (
                             <AuthRequiredContainer>
-                              <Project />
+                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                                <Project />
+                              </Suspense>
                             </AuthRequiredContainer>
                           )
                         }

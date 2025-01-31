@@ -1,3 +1,5 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+
 .split-badge {
   /* If the .split-badge__inner is empty, we want to use the normal padding. Otherwise,
   the height of the .split-badge__inner will provide the padding */
@@ -11,7 +13,7 @@
     margin-left: 0.5rem;
     padding: 0.3125rem 0.5rem;
     background-color: rgba(0,0,0,0.4);
-    border-top-right-radius: $border-radius;
-    border-bottom-right-radius: $border-radius;
+    border-top-right-radius: bootstrap.$border-radius;
+    border-bottom-right-radius: bootstrap.$border-radius;
   }
 }

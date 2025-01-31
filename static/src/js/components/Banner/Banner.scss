@@ -1,9 +1,12 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .banner {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: $spacer * .825 2rem;
+  padding: bootstrap.$spacer * .825 2rem;
   overflow: hidden;
   transition: top 0.2s ease-in-out;
   z-index: 1;
@@ -13,8 +16,8 @@
   }
 
   &--error {
-    background-color: $color__nasa-red--shade;
-    color: $color__spacesuit-white;
+    background-color: utils.$color__nasa-red--shade;
+    color: utils.$color__spacesuit-white;
 
     .banner__title {
       font-weight: 500;
@@ -26,12 +29,12 @@
     }
 
     .banner__close {
-      color: $color__spacesuit-white;
+      color: utils.$color__spacesuit-white;
       transition: color 0.15s ease-in-out;
       display: flex;
 
       &:hover {
-        color: $color__spacesuit-white;
+        color: utils.$color__spacesuit-white;
       }
     }
   }
@@ -47,12 +50,12 @@
   }
 
   &__title {
-    color: $color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 0;
-    margin-right: calc($spacer / 2);
+    margin-right: calc(bootstrap.$spacer / 2);
     padding: 0;
     font-size: 0.925rem;
     line-height: 1rem;
@@ -60,7 +63,7 @@
   }
 
   &__message {
-    color: $color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
     font-size: 0.925rem;
     font-weight: 200;
     margin: 0;
@@ -73,11 +76,11 @@
     top: 50%;
     top: calc(50% + 1px);
     right: 0.75rem;
-    color: $color__carbon--70;
+    color: utils.$color__carbon--70;
     transform: translateY(-50%);
 
     &:hover {
-     color: $color__carbon--60;
+     color: utils.$color__carbon--60;
     }
 
     &:focus {

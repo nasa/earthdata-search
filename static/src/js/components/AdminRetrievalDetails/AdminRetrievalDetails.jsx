@@ -2,12 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import {
-  Table,
-  Row,
-  Col,
-  Alert
-} from 'react-bootstrap'
+import Alert from 'react-bootstrap/Alert'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
+import Table from 'react-bootstrap/Table'
 
 import { commafy } from '../../util/commafy'
 

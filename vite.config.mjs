@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
-import rollupNodePolyFill from 'rollup-plugin-polyfill-node'
 import { resolve } from 'path'
 import istanbul from 'vite-plugin-istanbul'
 
@@ -45,7 +44,13 @@ export default defineConfig({
       showTophat
     }),
     react(),
-    nodePolyfills(),
+    nodePolyfills({
+      globals: {
+        process: true,
+        Buffer: true,
+        crypto: true
+      }
+    }),
     istanbul({
       include: 'static/src/*',
       exclude: ['node_modules', 'test/'],
@@ -58,7 +63,8 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "static/src/css/vendor/bootstrap/vars"; @import "static/src/css/utils/utils";'
+        api: 'modern',
+        silenceDeprecations: ['mixed-decls', 'color-functions', 'global-builtin', 'import']
       }
     }
   },
@@ -66,16 +72,12 @@ export default defineConfig({
     alias: {
       '~bootstrap': resolve(__dirname, 'node_modules/bootstrap'),
       '~Fonts': resolve(__dirname, 'static/src/assets/fonts'),
-      '~Images': resolve(__dirname, 'static/src/assets/images')
+      '~Images': resolve(__dirname, 'static/src/assets/images'),
+      lodash: 'lodash-es'
     }
   },
   build: {
-    outDir: 'static/dist',
-    rollupOptions: {
-      plugins: [
-        rollupNodePolyFill()
-      ]
-    }
+    outDir: 'static/dist'
   },
   // TODO: vitest is currently blocked by enzyme removal ticket EDSC-4201
   test: {

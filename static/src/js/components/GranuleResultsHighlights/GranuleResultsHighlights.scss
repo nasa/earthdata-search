@@ -1,10 +1,12 @@
+@use '../../../css/utils';
+
 .granule-results-highlights {
   &__count {
     padding: 0.25rem 0.75rem;
-    color: $color__carbon--70;
+    color: utils.$color__carbon--70;
     font-size: 0.75rem;
-    background-color: $color__carbon--5;
-    border-bottom: 1px solid $color__carbon--20;
+    background-color: utils.$color__carbon--5;
+    border-bottom: 1px solid utils.$color__carbon--20;
   }
 
   &__list {
@@ -14,8 +16,8 @@
   }
 
   &__item {
-    border-bottom: 1px solid $color__carbon--20;
-    color: $color__carbon--70;
+    border-bottom: 1px solid utils.$color__carbon--20;
+    color: utils.$color__carbon--70;
   }
 
   &__item-header {
@@ -35,22 +37,22 @@
     align-items: center;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: $color__carbon--70;
-    background-color: rgba($color__active-green, 0.05);
+    color: utils.$color__carbon--70;
+    background-color: rgba(utils.$color__active-green, 0.05);
 
     &--start {
-      background-color: rgba($color__active-green, 0.05);
+      background-color: rgba(utils.$color__active-green, 0.05);
 
       h5 {
-        color: $color__active-green;
+        color: utils.$color__active-green;
       }
     }
 
     &--end {
-      background: rgba($color__nasa-red--shade, 0.05);
+      background: rgba(utils.$color__nasa-red--shade, 0.05);
 
       h5 {
-        color: $color__nasa-red--shade;
+        color: utils.$color__nasa-red--shade;
       }
     }
   }
@@ -60,7 +62,7 @@
     font-size: 0.725rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
   }
 
   &__temporal-value {

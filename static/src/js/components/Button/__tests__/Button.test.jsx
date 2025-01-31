@@ -75,7 +75,7 @@ describe('Button component', () => {
     const { enzymeWrapper } = setup('icon')
 
     expect(enzymeWrapper.find('button').text()).toEqual('Button Text')
-    expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual(FaGlobe)
+    expect(enzymeWrapper.find('FaGlobe').length).toBe(1)
   })
 
   test('should render self with an edsc-icon', () => {

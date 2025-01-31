@@ -41,9 +41,13 @@ export const CollectionDetailsBodyContainer = ({
   />
 )
 
+CollectionDetailsBodyContainer.defaultProps = {
+  isActive: false
+}
+
 CollectionDetailsBodyContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
-  isActive: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
   location: PropTypes.shape({}).isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,

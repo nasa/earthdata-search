@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import ReactDOM from 'react-dom'
-import { Dropdown, Tab } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
+import Tab from 'react-bootstrap/Tab'
 import { PropTypes } from 'prop-types'
 import { Download, CloudFill } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
@@ -216,7 +217,7 @@ export const GranuleResultsDataLinksButton = ({
               {
                 s3Links.length > 0 && dataLinks.length > 0
                   ? (
-                    <EDSCTabs padding={false}>
+                    <EDSCTabs padding={false} fill>
                       <Tab
                         className="granule-results-data-links-button__menu-panel"
                         title={

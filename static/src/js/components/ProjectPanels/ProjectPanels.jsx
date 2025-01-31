@@ -6,7 +6,7 @@ import { Settings, CheckCircled } from '@edsc/earthdata-react-icons/horizon-desi
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { FaMap, FaQuestionCircle } from 'react-icons/fa'
 
-import { Col } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
 
 import Button from '../Button/Button'
 import Panels from '../Panels/Panels'

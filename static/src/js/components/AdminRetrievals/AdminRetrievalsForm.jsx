@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
 
-import { Form, InputGroup } from 'react-bootstrap'
 import Button from '../Button/Button'
 
 export class AdminRetrievalsForm extends Component {
@@ -40,28 +41,28 @@ export class AdminRetrievalsForm extends Component {
     return (
       <Form onSubmit={this.onFormSubmit}>
         <InputGroup>
-          <Form.Label column sm="auto">
+          <Form.Label
+            column
+            sm="auto"
+            className="me-3"
+          >
             Find Retrieval
           </Form.Label>
-          <InputGroup.Prepend>
-            <Form.Control
-              name="retrievalId"
-              placeholder="Obfuscated Retrieval ID"
-              value={retrievalId}
-              onChange={this.onChange}
-              onBlur={this.onBlur}
-            />
-          </InputGroup.Prepend>
-          <InputGroup.Append>
-            <Button
-              type="button"
-              bootstrapVariant="primary"
-              label="Go"
-              onClick={this.onFormSubmit}
-            >
-              Go
-            </Button>
-          </InputGroup.Append>
+          <Form.Control
+            name="retrievalId"
+            placeholder="Obfuscated Retrieval ID"
+            value={retrievalId}
+            onChange={this.onChange}
+            onBlur={this.onBlur}
+          />
+          <Button
+            type="button"
+            bootstrapVariant="primary"
+            label="Go"
+            onClick={this.onFormSubmit}
+          >
+            Go
+          </Button>
         </InputGroup>
       </Form>
     )

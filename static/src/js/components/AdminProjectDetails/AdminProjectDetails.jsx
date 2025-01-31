@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { isEmpty } from 'lodash-es'
 import { parse } from 'qs'
-import { Row, Col } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 import './AdminProjectDetails.scss'
 

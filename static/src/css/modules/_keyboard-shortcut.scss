@@ -1,3 +1,5 @@
+@use '../utils/variables';
+
 .keyboard-shortcut {
   position: relative;
   top: -0.0625em;
@@ -10,9 +12,9 @@
   margin-left: 0.75em;
   font-size: 0.825em;
   font-weight: 700;
-  color: $color__spacesuit-white;
+  color: variables.$color__spacesuit-white;
   border-radius: 0.125rem;
-  border: 1px solid $color__carbon--50;
-  background-color: $color__carbon--60;
+  border: 1px solid variables.$color__carbon--50;
+  background-color: variables.$color__carbon--60;
   overflow: hidden;
 }

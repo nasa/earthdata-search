@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { ProgressBar } from 'react-bootstrap'
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 import { BrowseLinksPanel } from '../BrowseLinksPanel'
 import { TextWindowActions } from '../../../TextWindowActions/TextWindowActions'

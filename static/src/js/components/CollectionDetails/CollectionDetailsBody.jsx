@@ -2,11 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { uniq } from 'lodash-es'
 
-import {
-  Badge,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap'
+import Badge from 'react-bootstrap/Badge'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
@@ -99,6 +97,7 @@ const buildDoiLink = (doiLink, doiText) => {
     <SplitBadge
       primary="DOI"
       secondary={doiText}
+      variant="info"
     />
   )
 
@@ -261,8 +260,21 @@ export const CollectionDetailsBody = ({
           <div className="row collection-details-body__row">
             <div className="col col-12">
               <div className="collection-details-body__tags">
-                <Badge className="collection-details-header__short-name mr-2" variant="light" data-testid="collection-details-header__short-name">{shortName}</Badge>
-                <Badge className="collection-details-header__version-id mr-2" variant="info" data-testid="collection-details-header__version-id">{`Version ${versionId}`}</Badge>
+                <Badge
+                  className="collection-details-header__short-name me-2"
+                  bg="light"
+                  text="bg-light"
+                  data-testid="collection-details-header__short-name"
+                >
+                  {shortName}
+                </Badge>
+                <Badge
+                  className="collection-details-header__version-id me-2"
+                  bg="info"
+                  data-testid="collection-details-header__version-id"
+                >
+                  {`Version ${versionId}`}
+                </Badge>
                 {doiText && buildDoiLink(doiLink, doiText)}
               </div>
               {

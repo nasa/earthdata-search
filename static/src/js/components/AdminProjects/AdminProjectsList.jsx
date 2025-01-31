@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
-import { Table } from 'react-bootstrap'
+import Table from 'react-bootstrap/Table'
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'

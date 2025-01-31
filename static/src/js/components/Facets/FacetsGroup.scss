@@ -1,6 +1,8 @@
+@use '../../../css/utils';
+
 .facets-group {
   display: block;
-  color: $color__spacesuit-white;
+  color: utils.$color__spacesuit-white;
 
   &__heading {
     margin: 0;
@@ -32,8 +34,8 @@
     top: 0.01rem;
     margin-left: 0.5rem;
     padding: 0.0625rem 0.5rem;
-    background-color: $color__nasa-blue;
-    color: $color__spacesuit-white;
+    background-color: utils.$color__nasa-blue;
+    color: utils.$color__spacesuit-white;
     font-size: 0.725rem;
     font-weight: 400;
     border-radius: 1rem;
@@ -51,7 +53,7 @@
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      background: $color__carbon--5;
+      background: utils.$color__carbon--5;
     }
 
     &:focus {
@@ -60,14 +62,14 @@
     }
 
     &:disabled {
-      background-color: $color__spacesuit-white;
+      background-color: utils.$color__spacesuit-white;
       cursor: not-allowed;
     }
   }
 
   &__action {
     align-self: flex-end;
-    color: $color__carbon--30;
+    color: utils.$color__carbon--30;
 
     .facets-group__button:disabled & {
       display: none;
@@ -77,13 +79,13 @@
   &__header {
     display: flex;
     padding: 0.2rem 0.5rem 0.325rem 0.7rem;
-    background-color: $color__spacesuit-white;
-    color:$color__spacesuit-white;
+    background-color: utils.$color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
   }
 
   &__meta {
     font-size: 0.8rem;
-    color: $color__carbon--80;
+    color: utils.$color__carbon--80;
     font-weight: 500;
   }
 
@@ -92,13 +94,13 @@
     padding: 0;
     font-size: 0.8rem;
     font-weight: 500;
-    color: $color__carbon-black;
+    color: utils.$color__carbon-black;
     background: none;
     outline: none;
     border: 0;
 
     &:hover {
-      color: $color__carbon-black;
+      color: utils.$color__carbon-black;
     }
 
     &:focus {
@@ -111,7 +113,7 @@
     align-items: center;
     justify-content: center;
     margin-left: 0.5rem;
-    color: $color__carbon--40;
+    color: utils.$color__carbon--40;
 
     svg {
       transform: translateY(-0.125rem)

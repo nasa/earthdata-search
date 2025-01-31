@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Form,
-  Table,
-  OverlayTrigger,
-  Popover
-} from 'react-bootstrap'
+import Form from 'react-bootstrap/Form'
+import Table from 'react-bootstrap/Table'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Popover from 'react-bootstrap/Popover'
 import TimeAgo from 'react-timeago'
 import { parse } from 'qs'
 import { XCircled, Share } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
@@ -139,10 +137,10 @@ export class SavedProjects extends Component {
                                       id={`popover-basic-${id}`}
                                       className="saved-projects__share-popover"
                                     >
-                                      <Popover.Title>
+                                      <Popover.Header>
                                         Share Project
-                                      </Popover.Title>
-                                      <Popover.Content>
+                                      </Popover.Header>
+                                      <Popover.Body>
                                         <p>
                                           Share your project by copying the URL
                                           below and sending it to others.
@@ -156,7 +154,7 @@ export class SavedProjects extends Component {
                                             />
                                           </Form.Group>
                                         </Form>
-                                      </Popover.Content>
+                                      </Popover.Body>
                                     </Popover>
                                   )
                                 }

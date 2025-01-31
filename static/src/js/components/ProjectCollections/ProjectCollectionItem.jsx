@@ -134,7 +134,10 @@ const ProjectCollectionItem = ({
                   {title}
                 </h3>
               </Button>
-              <MoreActionsDropdown handoffLinks={handoffLinks} alignRight>
+              <MoreActionsDropdown
+                handoffLinks={handoffLinks}
+                align="end"
+              >
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-remove"
                   icon={XCircled}

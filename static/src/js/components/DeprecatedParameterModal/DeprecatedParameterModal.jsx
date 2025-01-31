@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import arrayToSentence from 'array-to-sentence'
-import { Alert } from 'react-bootstrap'
+import Alert from 'react-bootstrap/Alert'
 
 import pluralize from '../../util/pluralize'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'

@@ -5,8 +5,8 @@ import {
   screen
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import Dropdown from 'react-bootstrap/Dropdown'
 
-import { Dropdown } from 'react-bootstrap'
 import { MoreActionsDropdown } from '../MoreActionsDropdown'
 
 const setup = (overrideProps) => {

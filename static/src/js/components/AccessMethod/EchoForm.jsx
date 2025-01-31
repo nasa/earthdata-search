@@ -6,6 +6,7 @@ import { isEqual } from 'lodash-es'
 import { mbr } from '@edsc/geo-utils'
 
 import './EchoForm.scss'
+import '@edsc/echoforms/dist/styles.css'
 
 export const EchoForm = ({
   collectionId,

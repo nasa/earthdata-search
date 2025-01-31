@@ -1,5 +1,5 @@
 import 'pg'
-import forge from 'node-forge'
+import SparkMD5 from 'spark-md5'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
@@ -35,12 +35,11 @@ const saveShapefile = async (event, context) => {
   // Retrive a connection to the database
   const dbConnection = await getDbConnection()
 
-  const fileHash = forge.md.md5.create()
-  fileHash.update(JSON.stringify(file))
+  const fileHash = SparkMD5.hash(JSON.stringify(file))
 
   try {
     const shapefileSearchOptions = {
-      file_hash: fileHash.digest().toHex()
+      file_hash: fileHash
     }
     const shapefileInsertOptions = {
       ...shapefileSearchOptions,

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 import { AdminPage } from '../AdminPage/AdminPage'
 import { AdminRetrievalsMetricsList } from './AdminRetrievalsMetricsList'

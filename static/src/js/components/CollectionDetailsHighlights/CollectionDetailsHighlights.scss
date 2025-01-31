@@ -1,8 +1,11 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .collection-details-highlights {
   &__body {
     padding-top: 0.5rem;
     padding-bottom: 0.25rem;
-    border-bottom: 1px solid $color__carbon--20;
+    border-bottom: 1px solid utils.$color__carbon--20;
   }
 
   &__item-header {
@@ -14,7 +17,7 @@
     font-size: 0.825rem;
     font-weight: 700;
     letter-spacing: 0.005rem;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
     word-break: break-all;
   }
 
@@ -30,7 +33,7 @@
     align-items: center;
     justify-content: space-between;
     font-size: 0.825rem;
-    color: $color__carbon--70;
+    color: utils.$color__carbon--70;
 
     &--desc {
       display: -webkit-box;
@@ -53,7 +56,7 @@
     vertical-align: baseline;
 
     &:last-child {
-      padding-top: calc($spacer / 8);
+      padding-top: calc(bootstrap.$spacer / 8);
     }
 
     .button {

@@ -1,10 +1,8 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import {
-  Dropdown,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import {
   FaCrop,

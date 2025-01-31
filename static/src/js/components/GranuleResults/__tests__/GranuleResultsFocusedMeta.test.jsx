@@ -390,7 +390,9 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           const popoverListItem = within(popoverList).queryByText('test-3.jpg')
 
-          await user.click(popoverListItem)
+          await act(async () => {
+            await user.click(popoverListItem)
+          })
 
           const pagination = screen.queryByText('3/3')
           const images = screen.queryAllByTestId('mock-edsc-image')
@@ -580,7 +582,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const modal = await screen.findByTestId('granule-results-focused-meta-modal')
-            const modalCloseButton = within(modal).getByRole('button', { name: 'Close EDSCModal' })
+            const modalCloseButton = within(modal).getByRole('button', { name: 'Close' })
 
             await act(async () => {
               await user.click(modalCloseButton)
@@ -737,7 +739,9 @@ describe('GranuleResultsFocusedMeta component', () => {
             const popoverList = screen.queryByTestId('granule-results-focused-meta-modal-popover-list')
             const popoverListItem = within(popoverList).queryByText('test-3.jpg')
 
-            await user.click(popoverListItem)
+            await act(async () => {
+              await user.click(popoverListItem)
+            })
 
             const pagination = within(modal).queryByText('3/3')
             const images = within(modal).queryAllByTestId('mock-edsc-image')

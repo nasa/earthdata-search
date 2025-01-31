@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Alert } from 'react-bootstrap'
+import Alert from 'react-bootstrap/Alert'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 

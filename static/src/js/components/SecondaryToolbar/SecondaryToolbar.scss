@@ -1,8 +1,11 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .secondary-toolbar {
   display: flex;
   padding: 0.625rem;
   justify-content: flex-end;
-  border-bottom: 1px solid $color__carbon--20;
+  border-bottom: 1px solid utils.$color__carbon--20;
 
   &--map-overlay {
     z-index: 2;
@@ -12,7 +15,7 @@
     border-bottom: 0;
   }
 
-  @include media-breakpoint-up(md) {
+  @include bootstrap.media-breakpoint-up(md) {
     margin-left: auto;
   }
 
@@ -28,12 +31,12 @@
     .dropdown > .dropdown-toggle {
       box-shadow: none;
       border-radius: 0.25rem;
-      border: 2px solid rgba($color__carbon--80, 0.3);
+      border: 2px solid rgba(utils.$color__carbon--80, 0.3);
       background-clip: padding-box;
 
       &:hover,
       &:focus {
-        border: 2px solid rgba($color__carbon--80, 0.3);
+        border: 2px solid rgba(utils.$color__carbon--80, 0.3);
       }
     }
 
@@ -44,7 +47,7 @@
     .show > .btn-light.dropdown-toggle:focus,
     .show > .btn-light.dropdown-toggle:active,
     .btn-light:not(:disabled):not(.disabled):active:focus {
-      border: 2px solid rgba($color__carbon--80, 0.3);
+      border: 2px solid rgba(utils.$color__carbon--80, 0.3);
     }
   }
 
@@ -66,7 +69,7 @@
     margin-right: 0.5rem;
 
     .dropdown-menu {
-      padding: calc($spacer / 2);
+      padding: calc(bootstrap.$spacer / 2);
     }
   }
 
