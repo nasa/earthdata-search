@@ -1,8 +1,4 @@
-import React, {
-  lazy,
-  PureComponent,
-  Suspense
-} from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import { isEqual } from 'lodash-es'
@@ -29,6 +25,7 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
+import CollectionDetailsBodyContainer from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
 import GranuleDetailsBodyContainer
@@ -52,9 +49,6 @@ import PanelSection from '../Panels/PanelSection'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './SearchPanels.scss'
-import Spinner from '../Spinner/Spinner'
-
-const CollectionDetailsBodyContainer = lazy(() => import('../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'))
 
 /**
  * Renders SearchPanels.
@@ -176,6 +170,7 @@ class SearchPanels extends PureComponent {
       onToggleAboutCwicModal,
       preferences
     } = this.props
+    console.log('🚀 ~ file: SearchPanels.jsx:179 ~ SearchPanels ~ render ~ match:', match)
 
     const loggedIn = isLoggedIn(authToken)
 
@@ -585,9 +580,7 @@ class SearchPanels extends PureComponent {
         onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
-          <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
-            <CollectionDetailsBodyContainer isActive />
-          </Suspense>
+          <CollectionDetailsBodyContainer />
         </PanelItem>
       </PanelGroup>
     )
