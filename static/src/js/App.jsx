@@ -67,7 +67,6 @@ const Admin = lazy(() => import('./routes/Admin/Admin'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
-const EdscMapContainer = lazy(() => import('./containers/MapContainer/MapContainer'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
 const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
 
@@ -216,9 +215,6 @@ class App extends Component {
                             <>
                               <SearchTour />
                               <Search />
-                              <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--white spinner--small" />}>
-                                <EdscMapContainer />
-                              </Suspense>
                             </>
                           )
                         }

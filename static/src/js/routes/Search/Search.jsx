@@ -29,6 +29,7 @@ import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
+import MapLayoutContainer from '../../containers/MapLayoutContainer/MapLayoutContainer'
 import PortalBrowserModalContainer
   from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
@@ -42,6 +43,7 @@ import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
+import Spinner from '../../components/Spinner/Spinner'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 import actions from '../../actions'
@@ -49,6 +51,7 @@ import advancedSearchFields from '../../data/advancedSearchFields'
 import Button from '../../components/Button/Button'
 
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
+const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const GranuleResultsHighlightsContainer = lazy(() => import('../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'))
 const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFiltersContainer/GranuleFiltersContainer'))
 
@@ -134,7 +137,7 @@ export const Search = ({
     </SidebarSection>
   )
 
-  return (
+  const searchComponent = (
     <div className="route-wrapper route-wrapper--search search">
       <SidebarContainer
         headerChildren={(
@@ -253,6 +256,24 @@ export const Search = ({
         </PortalFeatureContainer>
       </div>
     </div>
+  )
+
+  return (
+    <MapLayoutContainer>
+      {searchComponent}
+      <Suspense
+        fallback={
+          (
+            <Spinner
+              type="dots"
+              className="root__spinner spinner spinner--dots spinner--white spinner--small"
+            />
+          )
+        }
+      >
+        <EdscMapContainer />
+      </Suspense>
+    </MapLayoutContainer>
   )
 }
 
