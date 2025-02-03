@@ -5,12 +5,12 @@ import { isPath } from '../../util/isPath'
 import { locationPropType } from '../../util/propTypes/location'
 import Sidebar from '../../components/Sidebar/Sidebar'
 
-export const SidebarContainer = ({
+export const SidebarContainer = React.forwardRef(({
   children,
   location,
   panels,
   headerChildren
-}) => {
+}, ref) => {
   const sidebarVisible = isPath(location.pathname, [
     '/search',
     '/search/granules',
@@ -23,6 +23,7 @@ export const SidebarContainer = ({
 
   return (
     <Sidebar
+      ref={ref}
       panels={panels}
       visible={sidebarVisible}
       headerChildren={headerChildren}
@@ -30,7 +31,7 @@ export const SidebarContainer = ({
       {children}
     </Sidebar>
   )
-}
+})
 
 SidebarContainer.defaultProps = {
   panels: null,

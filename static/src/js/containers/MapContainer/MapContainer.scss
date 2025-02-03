@@ -1,5 +1,6 @@
 .map {
   position: absolute;
+  left: var(--map-offset, 0);
   bottom: 0;
   top: 0;
   right: 0;

@@ -242,6 +242,20 @@ export class Panels extends PureComponent {
 
     event.preventDefault()
     event.stopPropagation()
+
+    // Get the main panel's (project-collections) width
+    const mainPanelEl = document.querySelector('.project-collections')
+    const mainPanelWidth = mainPanelEl ? mainPanelEl.clientWidth : 0
+
+    // Determine the collapsible panel width:
+    // When open, use this.width; when collapsed, assume a width of 0
+    const collapsiblePanelWidth = !show ? this.width : 0
+
+    // Calculate the total offset to be applied to the map
+    const totalOffset = mainPanelWidth + collapsiblePanelWidth
+
+    // Update the CSS variable so the map shifts accordingly
+    document.documentElement.style.setProperty('--map-offset', `${totalOffset}px`)
   }
 
   onMouseDown(event) {
@@ -446,6 +460,17 @@ export class Panels extends PureComponent {
   updatePanelWidth(width) {
     this.width = width
     this.container.style.width = `${width}px`
+
+    // Get the width of the main panel (project-collections)
+    const mainPanelEl = document.querySelector('.project-collections')
+    const mainPanelWidth = mainPanelEl ? mainPanelEl.clientWidth : 0
+
+    // Calculate the total offset: main panel + collapsible panel
+    const totalOffset = mainPanelWidth + width
+
+    // Update the CSS variable used by the map
+    document.documentElement.style.setProperty('--map-offset', `${totalOffset}px`)
+
     this.updateResponsiveClassNames()
   }
 
