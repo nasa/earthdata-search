@@ -170,7 +170,6 @@ class SearchPanels extends PureComponent {
       onToggleAboutCwicModal,
       preferences
     } = this.props
-    console.log('🚀 ~ file: SearchPanels.jsx:179 ~ SearchPanels ~ render ~ match:', match)
 
     const loggedIn = isLoggedIn(authToken)
 

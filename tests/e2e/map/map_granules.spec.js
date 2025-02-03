@@ -37,10 +37,11 @@ import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/time
 import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json'
 
 test.describe('Map: Granule interactions', () => {
-  test.beforeEach(async ({ page, context }, testInfo) => {
+  test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
-      page,
-      context
+      browserName,
+      context,
+      page
     })
 
     await page.route('**/search/granules/timeline', (route) => {
@@ -48,9 +49,6 @@ test.describe('Map: Granule interactions', () => {
         body: JSON.stringify([])
       })
     })
-
-    // eslint-disable-next-line no-param-reassign
-    testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${testInfo.project.name}/${name}`
   })
 
   test.describe('When viewing granule results', () => {

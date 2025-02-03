@@ -12,14 +12,11 @@ import accessMethods from './__mocks__/access_methods.json'
 import collectionFixture from './__mocks__/authenticated_collections.json'
 
 test.describe('Timeline spec', () => {
-  test.beforeEach(async ({ page, context }, testInfo) => {
+  test.beforeEach(async ({ page, context }) => {
     await setupTests({
       page,
       context
     })
-
-    // eslint-disable-next-line no-param-reassign
-    testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${name}`
   })
 
   test('should resize the leaflet controls', async ({ page, context }) => {
