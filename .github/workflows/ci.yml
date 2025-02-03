@@ -127,6 +127,13 @@ jobs:
           test-results/
         retention-days: 30
 
+  tests-passed:
+    needs: ['jest', 'playwright']
+    runs-on: ubuntu-latest
+    steps:
+    - name: All Tests Have Passed
+      run: 'echo true'
+
   deploy:
     if: success() && github.ref == 'refs/heads/main' # only run on main success
     needs: [jest, playwright] # only run after jest and playwright jobs complete
