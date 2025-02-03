@@ -1,37 +1,35 @@
-import React, {
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+// MapLayoutContainer.jsx
+import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-const MapLayoutContainer = ({ children }) => {
-  const [mapOffset, setMapOffset] = useState(0)
-  const searchPanelRef = useRef(null)
+const MapLayoutContainer = ({ children, panelsRef, routeType }) => {
+  const containerRef = useRef(null)
 
   useEffect(() => {
     const updateMapOffset = () => {
-      if (searchPanelRef.current) {
+      if (containerRef.current) {
         const sidebarEl = document.querySelector('.sidebar')
         const panelEl = document.querySelector('.panels')
         const panelsSection = document.querySelector('.panels')
 
         let totalOffset = 0
 
-        // Only add panel width if panels are open
+        // Add sidebar width if available
         if (sidebarEl) totalOffset += sidebarEl.getBoundingClientRect().width
+        // Add panels width if panels are open
         if (panelEl && panelsSection?.classList.contains('panels--is-open')) {
           totalOffset += panelEl.getBoundingClientRect().width
         }
 
-        setMapOffset(totalOffset)
+        // Update the CSS variable on the container
+        containerRef.current.style.setProperty('--map-offset', `${totalOffset}px`)
       }
     }
 
     // Initial calculation
     updateMapOffset()
 
-    // Create mutation observer to watch for class changes on panels
+    // Observe DOM mutations and resize events
     const mutationObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.attributeName === 'class') {
@@ -40,7 +38,6 @@ const MapLayoutContainer = ({ children }) => {
       })
     })
 
-    // Watch both body (for drag state) and panels section (for open/closed state)
     mutationObserver.observe(document.body, {
       attributes: true,
       attributeFilter: ['class']
@@ -54,17 +51,12 @@ const MapLayoutContainer = ({ children }) => {
       })
     }
 
-    // Set up resize observer to handle panel size changes
     const resizeObserver = new ResizeObserver(updateMapOffset)
-
-    // Observe both sidebar and panels for size changes
     const sidebarEl = document.querySelector('.sidebar')
     const panelEl = document.querySelector('.panels')
-
     if (sidebarEl) resizeObserver.observe(sidebarEl)
     if (panelEl) resizeObserver.observe(panelEl)
 
-    // Handle window resize events
     window.addEventListener('resize', updateMapOffset)
 
     return () => {
@@ -74,35 +66,57 @@ const MapLayoutContainer = ({ children }) => {
     }
   }, [])
 
-  // Split children into Search and Map components
-  const [searchPanel, mapComponent] = React.Children.toArray(children)
+  // Convert children to an array for processing
+  const childrenArray = React.Children.toArray(children)
+
+  // Process children to clone the SidebarContainer with the panelsRef.
+  const processedChildren = childrenArray.map((child) => {
+    // Ensure the child is a valid React element
+    if (React.isValidElement(child)) {
+      // If this element itself is the SidebarContainer, clone it with the ref
+      if (child.type.displayName === 'SidebarContainer') {
+        return React.cloneElement(child, { ref: panelsRef })
+      }
+
+      // Otherwise, if the element has children, process them recursively
+      if (child.props && child.props.children) {
+        const updatedChild = React.cloneElement(child, {
+          children: React.Children.map(child.props.children, (subChild) => {
+            if (React.isValidElement(subChild) && subChild.type.displayName === 'SidebarContainer') {
+              return React.cloneElement(subChild, { ref: panelsRef })
+            }
+
+            return subChild
+          })
+        })
+
+        return updatedChild
+      }
+    }
+
+    return child
+  })
+
+  const [sidePanel, mapComponent] = processedChildren
 
   return (
-    <div className="relative w-full h-full">
-      <div ref={searchPanelRef}>
-        {searchPanel}
-      </div>
-      <div
-        style={
-          {
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            left: `${mapOffset}px`,
-            right: 0,
-            overflow: 'hidden',
-            transition: 'left 0.1s ease-out'
-          }
-        }
-      >
-        {mapComponent}
-      </div>
+    <div className="relative w-full h-full" ref={containerRef}>
+      {sidePanel}
+      {mapComponent}
     </div>
   )
 }
 
 MapLayoutContainer.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  // PanelsRef is a ref that will be attached to the sidebar component
+  panelsRef: PropTypes.oneOfType([
+    PropTypes.func,
+    // eslint-disable-next-line react/forbid-prop-types
+    PropTypes.shape({ current: PropTypes.any })
+  ]).isRequired,
+  // RouteType can be 'search' or 'project' (if you need to change behavior based on the route)
+  routeType: PropTypes.oneOf(['search', 'project']).isRequired
 }
 
 export default MapLayoutContainer

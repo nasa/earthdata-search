@@ -1,10 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-
 import { isPath } from '../../util/isPath'
 import { locationPropType } from '../../util/propTypes/location'
-
 import Sidebar from '../../components/Sidebar/Sidebar'
 
 export const SidebarContainer = ({
@@ -45,5 +43,7 @@ SidebarContainer.propTypes = {
   panels: PropTypes.node,
   headerChildren: PropTypes.node
 }
+
+SidebarContainer.displayName = 'SidebarContainer'
 
 export default withRouter(SidebarContainer)

@@ -1,5 +1,6 @@
 import React, {
   useState,
+  useRef,
   lazy,
   Suspense
 } from 'react'
@@ -15,29 +16,23 @@ import {
   OverlayTrigger,
   Tooltip
 } from 'react-bootstrap'
-
 import {
   FaSitemap,
   FaQuestionCircle,
   FaFilter,
   FaMap
 } from 'react-icons/fa'
-
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
-import AdvancedSearchModalContainer
-  from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
+import AdvancedSearchModalContainer from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
 import MapLayoutContainer from '../../containers/MapLayoutContainer/MapLayoutContainer'
-import PortalBrowserModalContainer
-  from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
+import PortalBrowserModalContainer from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import RelatedUrlsModalContainer
-  from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
+import RelatedUrlsModalContainer from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
-import SearchSidebarHeaderContainer
-  from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
+import SearchSidebarHeaderContainer from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 
 import SidebarSection from '../../components/Sidebar/SidebarSection'
@@ -86,6 +81,8 @@ export const Search = ({
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
+  // Create a ref for the sidebar panels
+  const SearchPanelsRef = useRef(null)
 
   const {
     hasGranulesOrCwic = false,
@@ -259,7 +256,7 @@ export const Search = ({
   )
 
   return (
-    <MapLayoutContainer>
+    <MapLayoutContainer panelsRef={SearchPanelsRef} routeType="search">
       {searchComponent}
       <Suspense
         fallback={
