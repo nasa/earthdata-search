@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
-const MapLayoutContainer = ({ children, panelsRef, routeType }) => {
+const MapLayoutContainer = ({ children, panelsRef }) => {
   const containerRef = useRef(null)
 
   useEffect(() => {
@@ -23,6 +23,9 @@ const MapLayoutContainer = ({ children, panelsRef, routeType }) => {
 
         // Update the CSS variable on the container
         containerRef.current.style.setProperty('--map-offset', `${totalOffset}px`)
+
+        // Dispatch the event
+        window.dispatchEvent(new CustomEvent('mapOffsetChanged'))
       }
     }
 
@@ -114,9 +117,7 @@ MapLayoutContainer.propTypes = {
     PropTypes.func,
     // eslint-disable-next-line react/forbid-prop-types
     PropTypes.shape({ current: PropTypes.any })
-  ]).isRequired,
-  // RouteType can be 'search' or 'project' (if you need to change behavior based on the route)
-  routeType: PropTypes.oneOf(['search', 'project']).isRequired
+  ]).isRequired
 }
 
 export default MapLayoutContainer

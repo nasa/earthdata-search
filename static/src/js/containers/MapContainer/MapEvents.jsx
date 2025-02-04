@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useMap, useMapEvents } from 'react-leaflet'
 
@@ -24,6 +24,19 @@ const MapEvents = (props) => {
       layersControl.appendChild(attributionElement)
     }
   })
+
+  useEffect(() => {
+    // Handle map offset changes
+    const handleMapOffsetChange = () => {
+      map.invalidateSize()
+    }
+
+    window.addEventListener('mapOffsetChanged', handleMapOffsetChange)
+
+    return () => {
+      window.removeEventListener('mapOffsetChanged', handleMapOffsetChange)
+    }
+  }, [map])
 
   const handleOverlayChange = (event) => {
     const enabled = event.type === 'overlayadd'

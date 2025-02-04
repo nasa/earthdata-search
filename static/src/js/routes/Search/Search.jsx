@@ -256,7 +256,7 @@ export const Search = ({
   )
 
   return (
-    <MapLayoutContainer panelsRef={SearchPanelsRef} routeType="search">
+    <MapLayoutContainer panelsRef={SearchPanelsRef}>
       {searchComponent}
       <Suspense
         fallback={

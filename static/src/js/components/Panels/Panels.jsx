@@ -254,6 +254,8 @@ export class Panels extends PureComponent {
     // Calculate the total offset to be applied to the map
     const totalOffset = mainPanelWidth + collapsiblePanelWidth
 
+    this.updateMapOffset(totalOffset)
+
     // Update the CSS variable so the map shifts accordingly
     document.documentElement.style.setProperty('--map-offset', `${totalOffset}px`)
   }
@@ -442,6 +444,14 @@ export class Panels extends PureComponent {
     }
   }
 
+  updateMapOffset(totalOffset) {
+    // First update the CSS variable
+    document.documentElement.style.setProperty('--map-offset', `${totalOffset}px`)
+
+    // Then dispatch the event
+    window.dispatchEvent(new CustomEvent('mapOffsetChanged'))
+  }
+
   disableHandleClickEvent() {
     this.handleClickIsValid = false
   }
@@ -471,6 +481,7 @@ export class Panels extends PureComponent {
     // Update the CSS variable used by the map
     document.documentElement.style.setProperty('--map-offset', `${totalOffset}px`)
 
+    this.updateMapOffset(totalOffset)
     this.updateResponsiveClassNames()
   }
 
