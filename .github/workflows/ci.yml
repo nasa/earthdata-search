@@ -136,7 +136,7 @@ jobs:
 
   deploy:
     if: success() && github.ref == 'refs/heads/main' # only run on main success
-    needs: [jest, playwright] # only run after jest and playwright jobs complete
+    needs: [tests-passed] # only run after all test jobs complete
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
