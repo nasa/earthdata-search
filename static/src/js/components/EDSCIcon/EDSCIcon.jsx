@@ -41,6 +41,7 @@ export const EDSCIcon = ({
         className={iconClassNames}
         title={title}
         data-testid="edsc-icon-simple"
+        aria-label={ariaLabel}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
