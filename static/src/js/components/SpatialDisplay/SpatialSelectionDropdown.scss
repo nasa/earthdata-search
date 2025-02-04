@@ -11,6 +11,7 @@
   &__menu {
     margin-top: -0.5rem;
     box-shadow: utils.$shadow__panel;
+    min-width: 12rem;
 
     .button__icon {
       width: 1rem;
