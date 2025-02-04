@@ -86,6 +86,8 @@ class FacetsItem extends Component {
       `facets-item--level-${level}`
     )
 
+    const { iconProps } = facet
+
     return (
       <li className={className}>
         <label
@@ -105,13 +107,12 @@ class FacetsItem extends Component {
           />
           <div className="facets-item__title-container">
             {
-              facet.iconProps && (
+              iconProps.icon && (
                 <EDSCIcon
                   className="facets-item__icon"
-                  icon={facet.iconProps.icon}
+                  icon={iconProps.icon}
                   variant="facet"
-                  label={facet.iconProps.label || facet.title}
-                  ariaLabel={facet.iconProps.ariaLabel}
+                  ariaLabel={iconProps.ariaLabel}
                 />
               )
             }
@@ -135,6 +136,7 @@ class FacetsItem extends Component {
                     icon={FaQuestionCircle}
                     size="0.625rem"
                     variant="more-info"
+                    ariaLabel="A question mark icon indicating there is more information"
                     data-testid={`facet_item-${kebabCase(facet.title)}-info`}
                   />
                 </OverlayTrigger>
@@ -165,7 +167,6 @@ FacetsItem.propTypes = {
     description: PropTypes.string,
     iconProps: PropTypes.shape({
       icon: PropTypes.elementType,
-      label: PropTypes.string,
       ariaLabel: PropTypes.string
     })
   }).isRequired,

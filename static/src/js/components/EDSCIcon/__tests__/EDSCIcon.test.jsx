@@ -33,12 +33,22 @@ describe('EDSCIcon component', () => {
   })
 
   describe('when a variant is supplied', () => {
-    test('should add the class name', async () => {
+    test('should add the variant', async () => {
       render(<EDSCIcon variant="test-variant" icon={FaQuestionCircle} />)
 
       const icon = await screen.findByTestId('edsc-icon')
 
       expect(icon.classList.contains('edsc-icon--test-variant')).toBeTruthy()
+    })
+  })
+
+  describe('when an aria-label is supplied', () => {
+    test('should add the aria-label', async () => {
+      render(<EDSCIcon ariaLabel="test-aria-label" icon={FaQuestionCircle} />)
+
+      const icon = await screen.findByTestId('edsc-icon')
+
+      expect(icon.getAttribute('aria-label')).toEqual('test-aria-label')
     })
   })
 
