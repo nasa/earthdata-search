@@ -1,3 +1,12 @@
+/**
+ * This script will invoke a lambda function locally with a given payload. This
+ * can be useful for calling the `migrateDatabase` function, or calling a fetch order
+ * lambda outside of a step function. But it will work for any lambda function.
+ *
+ * Usage:
+ * npm run invoke-local <lambdaName> <eventPath>
+ */
+
 import fs from 'fs'
 
 // Get the payload from command line arguments

@@ -1,3 +1,12 @@
+/**
+ * This file polls the SQS queues and triggers the correct Lambda functions.
+ *
+ * The `getQueuesFromTemplate` function is used to get the queues from the CDK template.
+ *
+ * After triggering the Lambda function, the message is deleted from the queue.
+ * There is no dead letter queue functionality with this script.
+ */
+
 import {
   SQSClient,
   ReceiveMessageCommand,

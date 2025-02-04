@@ -1,3 +1,10 @@
+/**
+ * This esbuild config will bundle all the lambda functions in the serverless/src directory
+ * and output them to the serverless/dist directory.
+ *
+ * This is currently only used for the local development environment.
+ */
+
 const { build } = require('esbuild')
 
 build({

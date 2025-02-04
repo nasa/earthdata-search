@@ -1,3 +1,14 @@
+/**
+ * This script generates an elasticmq.conf file based on the CDK template provided.
+ *
+ * In the future if we add more queues this should allow us the run SQS locally without needing to
+ * do any configurations outside of the CDK projects.
+ *
+ * This does not implement dead letter queues.
+ * It will only apply the visibilityTimeout property to the queues. If more properties are needed
+ * in the future, they can be added.
+ */
+
 import fs from 'fs'
 
 import { getQueuesFromTemplate } from './getQueuesFromTemplate.mjs'

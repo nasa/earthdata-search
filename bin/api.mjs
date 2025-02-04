@@ -1,3 +1,15 @@
+/**
+ * This script creates a Fastify server that proxies requests to Lambda functions.
+ *
+ * It will use `getApiResources` to get the API Gateway resources and associated Lambda functions.
+ * Then it will create routes for each of the resources and call the associated Lambda function.
+ *
+ * If the lambda function has an authorizer, it will call the authorizer before calling the Lambda function.
+ * If the authorizer fails, it will return a 401 Unauthorized response. It the authorizer succeeds, it will add the authorizer response to the request context.
+ *
+ * If the Lambda function returns a base64 encoded response, it will return the response as a buffer. This is necessary for the scale image lambda.
+ */
+
 import Fastify from 'fastify'
 import cors from '@fastify/cors'
 

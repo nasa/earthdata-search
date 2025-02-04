@@ -1,3 +1,14 @@
+/**
+ * This file parses a CDK template and extracts the SQS queues and their associated Lambda functions.
+ * It will navigate into nested stacks to find the resources if necessary.
+ *
+ * It returns the queue URLs and the associated Lambda functions for the `generateQueueConfig`
+ * and `receiveMessages` scripts.
+ *
+ * In the future if we add more queues this should allow us the run SQS locally without needing to
+ * do any configurations outside of the CDK projects.
+ */
+
 import fs from 'fs'
 import path from 'path'
 
