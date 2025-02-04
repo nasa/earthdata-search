@@ -44,13 +44,7 @@ export default defineConfig({
       showTophat
     }),
     react(),
-    nodePolyfills({
-      globals: {
-        process: true,
-        Buffer: true,
-        crypto: true
-      }
-    }),
+    nodePolyfills(),
     istanbul({
       include: 'static/src/*',
       exclude: ['node_modules', 'test/'],

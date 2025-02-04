@@ -9,7 +9,7 @@ import './EDSCTabs.scss'
  * Renders EDSCTabs.
  * @param {Node} children - Must be valid children for the react-bootstrap Tabs component.
  * @param {String} className - An optional classname.
- * @param {Boolean} fill - Adds/disables padding in the tabs.
+ * @param {Boolean} fill - Fills the tabs to the width of the container.
  * @param {Boolean} padding - Adds/disables padding in the tabs.
  */
 export const EDSCTabs = ({

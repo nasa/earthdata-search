@@ -170,9 +170,7 @@ export const AccessMethodRadio = ({
                 )
               }
             >
-              <span>
-                <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
-              </span>
+              <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
             </OverlayTrigger>
           )
         }
