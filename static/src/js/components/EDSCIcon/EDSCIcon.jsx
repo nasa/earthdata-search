@@ -12,7 +12,7 @@ import './EDSCIcon.scss'
  * @param {Object} context - Optional object to pass to `react-icons/IconContext.Provider`
  * @param {String} title - Optional string used as the `title` attribute
  * @param {String} size - Optional string used as the `size` attribute
- * @param {String} variant - Optional string that determines the icon's wrapper element and styling. 
+ * @param {String} variant - Optional string that determines the icon's wrapper element and styling.
  * @param {Object} ariaLabel - Optional string used as the `aria-label` attribute
  */
 export const EDSCIcon = ({
