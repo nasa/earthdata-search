@@ -73,7 +73,6 @@
     "babel-jest": "^28.1.0",
     "babel-plugin-istanbul": "^6.1.1",
     "concurrently": "^9.1.2",
-    "cookies": "^0.7.3",
     "enzyme": "^3.11.0",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
@@ -97,9 +96,7 @@
     "redis-mock": "^0.56.3",
     "redux-mock-store": "^1.5.4",
     "s3rver": "^3.7.1",
-    "snyk": "^1.913.0",
-    "start-server-and-test": "^2.0.0",
-    "three": "^0.127.0"
+    "start-server-and-test": "^2.0.0"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.352.0",
@@ -205,7 +202,6 @@
     "regenerator-runtime": "^0.13.9",
     "reselect": "^4.1.5",
     "resize-observer-polyfill": "^1.5.1",
-    "resolve-url-loader": "^5.0.0",
     "sanitize-html": "^2.7.0",
     "sass": "^1.83.4",
     "scatter-swap": "^0.1.0",
@@ -214,10 +210,7 @@
     "simplebar": "^6.2.0",
     "simplebar-react": "^3.2.0",
     "snakecase-keys": "^2.1.0",
-    "style-resources-loader": "^1.5.0",
     "tiny-cookie": "^2.5.1",
-    "url": "^0.11.0",
-    "url-template": "^2.0.8",
     "uuid": "^8.3.2",
     "vite": "^5.4.14",
     "vite-plugin-ejs": "^1.7.0",
