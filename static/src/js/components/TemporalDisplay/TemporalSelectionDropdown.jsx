@@ -352,8 +352,8 @@ const TemporalSelectionDropdown = ({
                 const { min, max } = value
                 setTemporal({
                   ...temporal,
-                  startDate: moment(temporal.startDate).year(min).toISOString(),
-                  endDate: moment(temporal.endDate).year(max).toISOString()
+                  startDate: moment(temporal.startDate).utc().year(min).toISOString(),
+                  endDate: moment(temporal.endDate).utc().year(max).toISOString()
                 })
               }
             }
