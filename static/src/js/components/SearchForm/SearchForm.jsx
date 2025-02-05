@@ -344,7 +344,7 @@ class SearchForm extends Component {
             <SpatialSelectionDropdownContainer />
             <PortalFeatureContainer advancedSearch>
               <Button
-                bootstrapVariant="inline-block"
+                bootstrapVariant="light"
                 className="search-form__button search-form__button--dark search-form__button--advanced-search"
                 label="Advanced search"
                 onClick={this.onToggleAdvancedSearch}

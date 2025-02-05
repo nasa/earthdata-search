@@ -77,7 +77,7 @@ const SpatialSelectionDropdown = (props) => {
       className="spatial-selection-dropdown"
     >
       <Dropdown.Toggle
-        variant="inline-block"
+        variant="light"
         id="spatial-selection-dropdown"
         aria-label="spatial-selection-dropdown"
         data-testid="spatial-selection-dropdown"
