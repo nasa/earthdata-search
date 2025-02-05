@@ -46,6 +46,12 @@
     }
   }
 
+  &__title-container {
+    display: flex;
+    align-items: center;
+    flex: 1;
+  }
+
   &__title {
     display: inline-block;
     text-overflow: ellipsis;

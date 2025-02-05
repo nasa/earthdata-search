@@ -11,6 +11,9 @@ import './EDSCIcon.scss'
  * @param {String} className - An optional classname.
  * @param {Object} context - Optional object to pass to `react-icons/IconContext.Provider`
  * @param {String} title - Optional string used as the `title` attribute
+ * @param {String} size - Optional string used as the `size` attribute
+ * @param {String} variant - Optional string that determines the icon's wrapper element and styling.
+ * @param {Object} ariaLabel - Optional string used as the `aria-label` attribute
  */
 export const EDSCIcon = ({
   icon,
@@ -20,6 +23,7 @@ export const EDSCIcon = ({
   size,
   title,
   variant,
+  ariaLabel,
   ...props
 }) => {
   if (!icon) return null
@@ -37,6 +41,7 @@ export const EDSCIcon = ({
         className={iconClassNames}
         title={title}
         data-testid="edsc-icon-simple"
+        aria-label={ariaLabel}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
@@ -55,6 +60,7 @@ export const EDSCIcon = ({
           title={title}
           size={size}
           data-testid="edsc-icon"
+          aria-label={ariaLabel}
           {...props}
         />
         {children}
@@ -70,6 +76,7 @@ export const EDSCIcon = ({
           title={title}
           size={size}
           data-testid="edsc-icon-details"
+          aria-label={ariaLabel}
           {...props}
         />
         {children}
@@ -84,6 +91,7 @@ export const EDSCIcon = ({
           className={iconClassNames}
           title={title}
           size={size}
+          aria-label={ariaLabel}
           data-testid="edsc-icon-details"
           {...props}
         />
@@ -98,6 +106,7 @@ export const EDSCIcon = ({
         className={iconClassNames}
         title={title}
         size={size}
+        aria-label={ariaLabel}
         data-testid="edsc-icon"
         {...props}
       />
@@ -113,7 +122,8 @@ EDSCIcon.defaultProps = {
   context: null,
   size: '1rem',
   title: null,
-  variant: null
+  variant: null,
+  ariaLabel: null
 }
 
 EDSCIcon.propTypes = {
@@ -123,7 +133,8 @@ EDSCIcon.propTypes = {
   context: PropTypes.shape({}),
   size: PropTypes.string,
   title: PropTypes.string,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  ariaLabel: PropTypes.string
 }
 
 export default EDSCIcon

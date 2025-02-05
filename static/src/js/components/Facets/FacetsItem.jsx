@@ -86,6 +86,8 @@ class FacetsItem extends Component {
       `facets-item--level-${level}`
     )
 
+    const { iconProps } = facet
+
     return (
       <li className={className}>
         <label
@@ -103,31 +105,44 @@ class FacetsItem extends Component {
             checked={applied}
             onChange={this.onFacetChange.bind(this, changeHandlerArgs)}
           />
-          <span className="facets-item__title">
-            {facet.title}
+          <div className="facets-item__title-container">
+            {
+              iconProps?.icon && (
+                <EDSCIcon
+                  className="facets-item__icon"
+                  icon={iconProps.icon}
+                  variant="facet"
+                  ariaLabel={iconProps.ariaLabel}
+                />
+              )
+            }
+            <span className="facets-item__title">
+              {facet.title}
+            </span>
             {
               facet.description
-            && (
-              <OverlayTrigger
-                placement="top"
-                overlay={
-                  (
-                    <Tooltip style={{ width: '20rem' }}>
-                      {facet.description}
-                    </Tooltip>
-                  )
-                }
-              >
-                <EDSCIcon
-                  icon={FaQuestionCircle}
-                  size="0.625rem"
-                  variant="more-info"
-                  data-testid={`facet_item-${kebabCase(facet.title)}-info`}
-                />
-              </OverlayTrigger>
-            )
+              && (
+                <OverlayTrigger
+                  placement="top"
+                  overlay={
+                    (
+                      <Tooltip style={{ width: '20rem' }}>
+                        {facet.description}
+                      </Tooltip>
+                    )
+                  }
+                >
+                  <EDSCIcon
+                    icon={FaQuestionCircle}
+                    size="0.625rem"
+                    variant="more-info"
+                    ariaLabel="A question mark icon indicating there is more information"
+                    data-testid={`facet_item-${kebabCase(facet.title)}-info`}
+                  />
+                </OverlayTrigger>
+              )
             }
-          </span>
+          </div>
           { (!applied || !children) && <span className="facets-item__total">{facet.count}</span> }
         </label>
         { children && <ul className="facets-list">{children}</ul> }
@@ -149,7 +164,11 @@ FacetsItem.propTypes = {
     children: PropTypes.arrayOf(PropTypes.shape({})),
     count: PropTypes.number,
     title: PropTypes.string,
-    description: PropTypes.string
+    description: PropTypes.string,
+    iconProps: PropTypes.shape({
+      icon: PropTypes.elementType,
+      ariaLabel: PropTypes.string
+    })
   }).isRequired,
   facetCategory: PropTypes.string.isRequired,
   level: PropTypes.number.isRequired,
