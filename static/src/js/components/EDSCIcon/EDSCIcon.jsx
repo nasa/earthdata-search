@@ -109,7 +109,10 @@ export const EDSCIcon = forwardRef(({
   }
 
   return (
-    <span ref={ref}>
+    <span
+      ref={ref}
+      className="d-inline-flex"
+    >
       <Icon
         className={iconClassNames}
         title={title}
