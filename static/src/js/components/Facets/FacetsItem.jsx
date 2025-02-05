@@ -107,7 +107,7 @@ class FacetsItem extends Component {
           />
           <div className="facets-item__title-container">
             {
-              iconProps.icon && (
+              iconProps?.icon && (
                 <EDSCIcon
                   className="facets-item__icon"
                   icon={iconProps.icon}
