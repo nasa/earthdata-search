@@ -134,6 +134,8 @@ export class TemporalSelection extends Component {
     const minimumTemporalDate = moment(minimumTemporalDateString, temporalDateFormatFull)
 
     let sliderStartDate = moment(temporal.startDate).utc()
+    const sliderEndDate = moment(temporal.endDate || undefined).utc()
+
     if (!sliderStartDate.isValid()) {
       sliderStartDate = moment()
       sliderStartDate.set({
@@ -253,7 +255,7 @@ export class TemporalSelection extends Component {
               <span className="temporal-selection__range-label">
                 {sliderStartDate.year()}
                 {' - '}
-                {moment(temporal.endDate || undefined).year()}
+                {sliderEndDate.year()}
               </span>
 
               <InputRange
@@ -263,7 +265,7 @@ export class TemporalSelection extends Component {
                 value={
                   {
                     min: sliderStartDate.year(),
-                    max: moment(temporal.endDate || undefined).year()
+                    max: sliderEndDate.year()
                   }
                 }
                 onChange={onSliderChange}
