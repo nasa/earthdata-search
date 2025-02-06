@@ -1,6 +1,8 @@
+@use '../../../css/utils';
+
 .granule-results-download-notebook-button {
   &__dropdown-item {
-    color: $color__carbon--80;
+    color: utils.$color__carbon--80;
     font-size: 0.875rem;
     padding: 0.25rem 1rem;
     user-select: text;
@@ -9,11 +11,11 @@
     cursor: pointer;
 
     .button__icon {
-      color: rgba($color__spacesuit-white, 0.7);
+      color: rgba(utils.$color__spacesuit-white, 0.7);
     }
 
     &:hover {
-      color: $color__carbon-black;
+      color: utils.$color__carbon-black;
     }
   }
 
@@ -24,8 +26,8 @@
 
   &__menu-panel-heading {
     padding: 0.325rem 1rem;
-    background: $color__spacesuit-white;
-    border-bottom: 1px solid $color__carbon--20;
+    background: utils.$color__spacesuit-white;
+    border-bottom: 1px solid utils.$color__carbon--20;
     font-weight: 700;
     font-size: 0.825rem;
     line-height: 1.5rem;
@@ -45,7 +47,7 @@
 
   &__icon {
     margin-left: 0.5rem;
-    color: rgba($color__spacesuit-white, 0.8);
+    color: rgba(utils.$color__spacesuit-white, 0.8);
     opacity: 0;
     transition: all 0.2s ease;
 

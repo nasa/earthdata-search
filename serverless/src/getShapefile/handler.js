@@ -22,7 +22,7 @@ const getShapefile = async (event, context) => {
 
   const decodedShapefileId = deobfuscateId(
     providedShapefileId,
-    process.env.obfuscationSpinShapefiles
+    process.env.OBFUSCATION_SPIN_SHAPEFILES
   )
 
   // Retrive a connection to the database

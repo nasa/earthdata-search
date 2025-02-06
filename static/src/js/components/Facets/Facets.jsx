@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { camelCase } from 'lodash-es'
 
+import { FaMap } from 'react-icons/fa'
+import { CloudFill, Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { changeFeatureFacet, changeCmrFacet } from '../../util/facets'
 
 import FacetsGroup from './FacetsGroup'
@@ -47,6 +49,10 @@ const Facets = (props) => {
     featuresFacet.children.push({
       applied: featureFacets.availableInEarthdataCloud,
       title: 'Available in Earthdata Cloud',
+      iconProps: {
+        icon: CloudFill,
+        ariaLabel: 'A cloud icon'
+      },
       type: 'feature'
     })
   }
@@ -55,6 +61,10 @@ const Facets = (props) => {
     featuresFacet.children.push({
       applied: featureFacets.customizable,
       title: 'Customizable',
+      iconProps: {
+        icon: Settings,
+        ariaLabel: 'A gear icon'
+      },
       description: 'Include only collections that support customization (temporal, spatial, or variable subsetting, reformatting, etc.)',
       type: 'feature'
     })
@@ -63,6 +73,10 @@ const Facets = (props) => {
   if (showMapImagery) {
     featuresFacet.children.push({
       applied: featureFacets.mapImagery,
+      iconProps: {
+        icon: FaMap,
+        ariaLabel: 'A map icon'
+      },
       title: 'Map Imagery',
       type: 'feature'
     })

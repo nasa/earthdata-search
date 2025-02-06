@@ -466,8 +466,8 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 
-      // Use regex here to account for small differences between browsers and flakiness with the tests on CI
-      await expect(page.locator('.collection-details-minimap .leaflet-interactive')).toHaveAttribute('d', /M0 180L360 180L360 0L0/)
+      // 1 Rectangle should be drawn on the mini map
+      await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
     })
   })
 })

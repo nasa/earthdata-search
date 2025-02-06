@@ -1,0 +1,14 @@
+{
+  "restartable": "rs",
+  "ignore": [
+    ".git",
+    "node_modules/**/node_modules",
+    "static",
+    "*.test.*"
+  ],
+  "watch": [
+    "*.config.json",
+    "serverless/dist"
+  ],
+  "delay": 2000
+}

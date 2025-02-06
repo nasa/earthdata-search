@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Accordion,
-  Card,
-  Form,
-  Container,
-  Row,
-  Table,
-  OverlayTrigger,
-  Tooltip,
-  Col
-} from 'react-bootstrap'
+import Accordion from 'react-bootstrap/Accordion'
+import Card from 'react-bootstrap/Card'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Form from 'react-bootstrap/Form'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Row from 'react-bootstrap/Row'
+import Table from 'react-bootstrap/Table'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import { FaQuestionCircle } from 'react-icons/fa'
 
@@ -135,7 +133,7 @@ const SwodlrForm = ({
       nested
     >
       <Container className="p-0" fluid>
-        <Row as={Form.Group}>
+        <Row className="mb-2">
           <Form.Label className="d-flex align-items-center" column sm="5">
             Granule Extent
             <OverlayTrigger
@@ -180,7 +178,7 @@ const SwodlrForm = ({
             />
           </Col>
         </Row>
-        <Row as={Form.Group}>
+        <Row className="mb-2">
           <Form.Label className="d-flex align-items-center" column sm="5">
             Sampling Grid Type
             <OverlayTrigger
@@ -225,7 +223,7 @@ const SwodlrForm = ({
             />
           </Col>
         </Row>
-        <Row as={Form.Group}>
+        <Row className="mb-2">
           <Form.Label className="d-flex align-items-center" column sm="5">
             Raster Resolution
             <OverlayTrigger
@@ -242,9 +240,8 @@ const SwodlrForm = ({
             </OverlayTrigger>
           </Form.Label>
           <Col className="d-flex align-items-center" sm="7">
-            <Form.Control
-              className="col col-5 mr-2"
-              as="select"
+            <Form.Select
+              className="me-2"
               onChange={handleRasterResolutionUpdate}
               aria-label="rasterResolutionSelection"
               value={rasterResolution}
@@ -263,7 +260,7 @@ const SwodlrForm = ({
                     </option>
                   ))
               }
-            </Form.Control>
+            </Form.Select>
             {rasterResolutionUnit}
           </Col>
         </Row>

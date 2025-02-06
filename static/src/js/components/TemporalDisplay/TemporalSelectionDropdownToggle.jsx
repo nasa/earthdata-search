@@ -7,7 +7,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 const TemporalSelectionDropdownToggle = ({ onToggleClick }) => (
   <Dropdown.Toggle
-    variant="inline-block"
+    variant="light"
     id="temporal-selection-dropdown"
     aria-label="Open temporal filters"
     className="search-form__button search-form__button--dark"

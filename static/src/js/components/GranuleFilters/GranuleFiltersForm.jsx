@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
-import {
-  Col,
-  Form,
-  OverlayTrigger,
-  Tooltip,
-  Row
-} from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Row from 'react-bootstrap/Row'
+import Tooltip from 'react-bootstrap/Tooltip'
+
 import { FaQuestionCircle } from 'react-icons/fa'
 import moment from 'moment'
 
@@ -15,6 +14,7 @@ import { findGridByName } from '../../util/grid'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { pluralize } from '../../util/pluralize'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import SidebarFiltersItem from '../Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../Sidebar/SidebarFiltersList'
@@ -26,6 +26,7 @@ import './GranuleFiltersForm.scss'
 
 /**
  * Renders GranuleFiltersForm.
+ * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionMetadata - The focused collections metadata.
  * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Object} props.excludedGranuleIds - The list of excluded granules.
@@ -34,12 +35,8 @@ import './GranuleFiltersForm.scss'
  * @param {Function} props.handleSubmit - Callback function passed from the container.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
- * @param {Object} props - The props passed into the component.
- * @param {Object} props.collectionMetadata - The focused collection metadata.
  * @param {Object} props.onMetricsGranuleFilter - Callback function passed from actions.
  * @param {Object} props.onUndoExcludeGranule - Callback function passed from actions.
- * @param {Function} props.setFieldTouched - Callback function provided by Formik.
- * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
  */
@@ -77,6 +74,15 @@ export const GranuleFiltersForm = (props) => {
 
   // For recurring dates we don't show the year, it's displayed on the slider
   const temporalDateFormat = getTemporalDateFormat(isRecurring)
+
+  const {
+    minimumTemporalDateString,
+    temporalDateFormatFull
+  } = getApplicationConfig()
+  const minDate = moment(
+    minimumTemporalDateString,
+    temporalDateFormatFull
+  )
 
   const {
     min: cloudCoverMin = '',
@@ -322,7 +328,13 @@ export const GranuleFiltersForm = (props) => {
                       )
                     }
                   >
-                    <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" aria-label="A question mark in a circle" role="img" />
+                    <EDSCIcon
+                      aria-label="A question mark in a circle"
+                      icon={FaQuestionCircle}
+                      role="img"
+                      size="0.625rem"
+                      variant="more-info"
+                    />
                   </OverlayTrigger>
                   <Form.Control
                     name="readableGranuleName"
@@ -439,7 +451,17 @@ export const GranuleFiltersForm = (props) => {
                 size="sm"
                 format={temporalDateFormat}
                 temporal={temporal}
+                displayStartDate={temporal.startDate}
+                displayEndDate={temporal.endDate}
                 validate={false}
+                onSliderChange={
+                  (value) => {
+                    const startDate = temporal.startDate ? moment(temporal.startDate) : moment()
+                    const endDate = temporal.endDate ? moment(temporal.endDate) : moment()
+                    setFieldValue('temporal.startDate', startDate.year(value.min).toISOString())
+                    setFieldValue('temporal.endDate', endDate.year(value.max).toISOString())
+                  }
+                }
                 onRecurringToggle={
                   (event) => {
                     const isChecked = event.target.checked
@@ -447,17 +469,23 @@ export const GranuleFiltersForm = (props) => {
                     setFieldValue('temporal.isRecurring', isChecked)
                     setFieldTouched('temporal.isRecurring', isChecked)
 
-                    // If recurring is checked and values exist, set the recurringDay values
-                    if (isChecked) {
-                      const newStartDate = moment(temporal.startDate || undefined).utc()
+                    if (isChecked && temporal) {
                       if (temporal.startDate) {
-                        setFieldValue('temporal.recurringDayStart', newStartDate.dayOfYear())
-                      }
+                        const startDate = moment(temporal.startDate).utc()
 
-                      const newEndDate = moment(temporal.endDate || undefined).utc()
-                      if (temporal.endDate) {
-                        // Use the start year to calculate the end day of year. This avoids leap years potentially causing day mismatches
-                        setFieldValue('temporal.recurringDayEnd', newEndDate.year(newStartDate.year()).dayOfYear())
+                        if (temporal.endDate) {
+                          const endDate = moment(temporal.endDate).utc()
+
+                          if (startDate.year() === endDate.year()) {
+                            // Preserve original month/day while setting to minimum year
+                            const newStartDate = moment(startDate).year(minDate.year())
+                            setFieldValue('temporal.startDate', newStartDate.toISOString())
+                          }
+
+                          setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
+                          // Use the start year to calculate the end day of year. This avoids leap years potentially causing day mismatches
+                          setFieldValue('temporal.recurringDayEnd', endDate.year(startDate.year()).dayOfYear())
+                        }
                       }
                     }
 
@@ -502,18 +530,35 @@ export const GranuleFiltersForm = (props) => {
                 }
                 onSubmitStart={
                   (startDate, shouldSubmit) => {
+                    const { temporal: newTemporal } = values
+
+                    // If the recurring toggle is toggled on, the format of the date drops the year, when
+                    // converted into a moment object, this will erroneously set the year to the current year.
+                    // To avoid this, we check if the temporal is recurring and set the year to the existing year in
+                    // state.
+                    if (newTemporal.isRecurring) {
+                      const existingStartDate = moment(newTemporal.startDate)
+                      if (existingStartDate.isValid()) {
+                        const existingStartDateYear = existingStartDate.year()
+                        startDate.year(existingStartDateYear)
+                      }
+                    }
+
                     const { input } = startDate.creationData()
                     const value = startDate.isValid() ? startDate.toISOString() : input
-
                     setFieldValue('temporal.startDate', value)
                     setFieldTouched('temporal.startDate')
 
-                    const { temporal: newTemporal } = values
-                    if (newTemporal.isRecurring) {
-                      setFieldValue('temporal.recurringDayStart', startDate.dayOfYear())
+                    if (newTemporal.isRecurring && newTemporal.endDate && startDate.isValid()) {
+                      const endDate = moment(newTemporal.endDate).utc()
+
+                      if (startDate.year() === endDate.year()) {
+                        // Preserve original month/day while setting to minimum year
+                        startDate.year(minDate.year())
+                        setFieldValue('temporal.startDate', startDate.toISOString())
+                      }
                     }
 
-                    // Only call handleSubmit if `onSubmitStart` was called
                     if (shouldSubmit && (startDate.isValid() || !input)) {
                       handleSubmit()
 
@@ -527,15 +572,32 @@ export const GranuleFiltersForm = (props) => {
                 }
                 onSubmitEnd={
                   (endDate, shouldSubmit) => {
+                    const { temporal: newTemporal } = values
+
+                    // Like with start date, if the recurring toggle is toggled on, the format of the date drops the year.
+                    // To avoid this, we check if the temporal is recurring and set the year to the existing year in state.
+                    if (newTemporal.isRecurring) {
+                      const existingEndDate = moment(newTemporal.endDate)
+                      if (existingEndDate.isValid()) {
+                        const existingEndDateYear = existingEndDate.year()
+                        endDate.year(existingEndDateYear)
+                      }
+                    }
+
                     const { input } = endDate.creationData()
                     const value = endDate.isValid() ? endDate.toISOString() : input
 
                     setFieldValue('temporal.endDate', value)
                     setFieldTouched('temporal.endDate')
 
-                    const { temporal: newTemporal } = values
-                    if (newTemporal.isRecurring) {
-                      setFieldValue('temporal.recurringDayEnd', endDate.dayOfYear())
+                    if (newTemporal.isRecurring && newTemporal.startDate && endDate.isValid()) {
+                      const startDate = moment(newTemporal.startDate).utc()
+
+                      if (startDate.year() === endDate.year()) {
+                        // Preserve original month/day while setting to minimum year
+                        startDate.year(minDate.year())
+                        setFieldValue('temporal.startDate', startDate.toISOString())
+                      }
                     }
 
                     if (shouldSubmit && (endDate.isValid() || !input)) {
@@ -631,7 +693,7 @@ export const GranuleFiltersForm = (props) => {
                     <Form.Group
                       as={Row}
                       controlId="granule-filters__cloud-cover-min"
-                      noGutters
+                      nogutters="true"
                     >
                       <Form.Label column sm={5}>
                         Minimum
@@ -660,7 +722,7 @@ export const GranuleFiltersForm = (props) => {
                     <Form.Group
                       as={Row}
                       controlId="granule-filters__cloud-cover-max"
-                      noGutters
+                      nogutters="true"
                     >
                       <Form.Label column sm={5}>
                         Maximum
@@ -699,7 +761,7 @@ export const GranuleFiltersForm = (props) => {
                         className="mb-1"
                         as={Row}
                         controlId="granule-filters__orbit-number-min"
-                        noGutters
+                        nogutters="true"
                       >
                         <Form.Label column="sm">
                           Minimum
@@ -730,7 +792,7 @@ export const GranuleFiltersForm = (props) => {
                         as={Row}
                         controlId="granule-filters__orbit-number-max"
                         size="sm"
-                        noGutters
+                        nogutters="true"
                       >
                         <Form.Label column="sm" sm={5}>
                           Maximum
@@ -766,7 +828,7 @@ export const GranuleFiltersForm = (props) => {
                         className="mb-1"
                         as={Row}
                         controlId="granule-filters__equatorial-crossing-longitude-min"
-                        noGutters
+                        nogutters="true"
                       >
                         <Form.Label column="sm" sm={5}>
                           Minimum
@@ -799,7 +861,7 @@ export const GranuleFiltersForm = (props) => {
                       <Form.Group
                         as={Row}
                         controlId="granule-filters__equatorial-crossing-longitude-max"
-                        noGutters
+                        nogutters="true"
                       >
                         <Form.Label column="sm" sm={5}>
                           Maximum
@@ -851,6 +913,8 @@ export const GranuleFiltersForm = (props) => {
                             size="sm"
                             format={temporalDateFormat}
                             temporal={equatorCrossingDate}
+                            displayStartDate={equatorCrossingDate.startDate}
+                            displayEndDate={equatorCrossingDate.endDate}
                             validate={false}
                             onSubmitStart={
                               (startDate, shouldSubmit) => {

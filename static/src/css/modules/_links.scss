@@ -1,5 +1,8 @@
+@use '../utils/variables';
+@use '../vendor/bootstrap/configuration' as bootstrap;
+
 .link, a {
-  color: $color__carbon-black;
+  color: variables.$color__carbon-black;
   text-underline-offset: 0.25rem;
   text-decoration: underline dashed;
   text-decoration-thickness: 1px;
@@ -16,25 +19,25 @@
   }
 
   &:disabled {
-    color: $color__nasa-blue--tint;
+    color: variables.$color__nasa-blue--tint;
   }
 
   &--light {
-    color: $color__spacesuit-white;
+    color: variables.$color__spacesuit-white;
 
     &:hover {
-      color: $color__spacesuit-white;
+      color: variables.$color__spacesuit-white;
     }
   }
 
   &--separated {
     &:before {
       display: inline-block;
-      margin-left: calc($spacer / 2);
-      padding-left: calc($spacer / 2);
+      margin-left: calc(bootstrap.$spacer / 2);
+      padding-left: calc(bootstrap.$spacer / 2);
       content: '|';
       color: transparent;
-      border-left: 1px solid $color__carbon--30;
+      border-left: 1px solid variables.$color__carbon--30;
     }
 
     &:first-child:before {
@@ -52,7 +55,7 @@
 
       &:after {
         border-bottom: 1px solid currentColor;
-        color: $color__carbon--40;
+        color: variables.$color__carbon--40;
       }
     }
   }

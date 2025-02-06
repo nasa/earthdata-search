@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .search-tour {
   &__heading {
     font-size: 1.5rem;
@@ -7,12 +10,12 @@
   }
 
   &__welcome {
-    color: $color__nasa-blue;
+    color: utils.$color__nasa-blue;
     font-size: 0.75rem;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 0.125rem;
-    font-family: $font-family-monospace;
+    font-family: bootstrap.$font-family-monospace;
   }
 
   &__subheading {
@@ -31,7 +34,7 @@
 
   &__earthdata-list {
     list-style: none;
-    color: $color__carbon-black;
+    color: utils.$color__carbon-black;
     padding: 0;
     margin: 0;
   }
@@ -86,7 +89,7 @@
     position: relative;
     bottom: 0;
   }
-  
+
   &__checkbox {
     height: 1.1875rem;
     width: 1.1875rem;
@@ -98,11 +101,11 @@
     top: 0.225rem;
     font-size: 0.75rem;
     margin-left: 0.5rem;
-    color: $color__carbon-black;
+    color: utils.$color__carbon-black;
   }
 
   &__hotkey-info {
-    background-color: $color__carbon--5;
+    background-color: utils.$color__carbon--5;
     padding: 1rem 1rem 0.5rem;
     margin-bottom: 0.9375rem;
     border-radius: 0.25rem;
@@ -126,7 +129,7 @@
   }
 
   &__info-box {
-    background-color: $color__carbon--5;
+    background-color: utils.$color__carbon--5;
     padding: 1rem 1rem 0.0625rem;
     margin-bottom: 0.9375rem;
     border-radius: 0.25rem;
@@ -134,18 +137,18 @@
     text-align: left;
 
     &__link {
-      color: $color__carbon-black;
+      color: utils.$color__carbon-black;
       text-decoration: underline;
       font-weight: bold;
     }
   }
 
   &__webinar-link {
-    background-color: $color__carbon--5;
+    background-color: utils.$color__carbon--5;
     margin-bottom: 1.25rem;
     border-radius: 0.25rem;
     text-decoration: none;
-    color: $color__carbon-black;
+    color: utils.$color__carbon-black;
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -153,7 +156,7 @@
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      background-color: $color__carbon--10;
+      background-color: utils.$color__carbon--10;
       text-decoration: none;
     }
   }
@@ -175,7 +178,7 @@
     align-items: center;
     justify-content: center;
     inset: 0;
-    background-color: rgba($color__carbon-black, 0.25);
+    background-color: rgba(utils.$color__carbon-black, 0.25);
   }
 
   &__webinar-thumbnail-icon-bg {
@@ -185,13 +188,13 @@
     height: 3rem;
     width: 3rem;
     border-radius: 50%;
-    background-color: rgba($color__nasa-red--shade, 0.875);
+    background-color: rgba(utils.$color__nasa-red--shade, 0.875);
     transition: all 0.2s ease-in-out;
     transform: scale(1);
 
     .search-tour__webinar-link:hover &,
     .search-tour__webinar-link:focus-visible & {
-      background-color: rgba($color__nasa-red--shade, 1);
+      background-color: rgba(utils.$color__nasa-red--shade, 1);
       transform: scale(1.05);
     }
   }
@@ -200,7 +203,7 @@
     position: relative;
     z-index: 0;
     display: block;
-    color: $color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
     font-size: 1rem;
   }
 
@@ -258,7 +261,7 @@
 
   &__tooltip {
     width: 25rem;
-    background-color: $color__spacesuit-white;
+    background-color: utils.$color__spacesuit-white;
     border-radius: 0.625rem;
     font-size: 1rem;
     text-align: center;
@@ -271,14 +274,14 @@
   }
 
   &__step-counter-text {
-    font-family: $font-family-monospace;
+    font-family: bootstrap.$font-family-monospace;
     letter-spacing: 0.125rem;
     font-size: 0.75rem;
     margin-bottom: 0.9375rem;
-    color: $color__carbon--40;
+    color: utils.$color__carbon--40;
     text-align: left;
   }
-  
+
   &__text-icon {
     display: inline-block;
     vertical-align: middle;
@@ -286,18 +289,18 @@
     height: 0.85rem;
     width: 0.85rem;
   }
-  
+
   &__kbd {
     display: inline-block;
     vertical-align: middle;
     font-size: 0.75rem;
     padding: 0.125rem 0.3875rem;
   }
-  
+
   &__button-tour-finish {
     min-width: 5.625rem;
   }
-  
+
   &__target-overlay {
     position: absolute;
     top: 0;

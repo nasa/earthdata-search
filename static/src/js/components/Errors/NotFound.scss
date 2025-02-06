@@ -1,9 +1,11 @@
+@use '../../../css/utils';
+
 .not-found {
   &__link {
-    color: $color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
 
     &:hover {
-      color: $color__spacesuit-white;
+      color: utils.$color__spacesuit-white;
     }
   }
 }

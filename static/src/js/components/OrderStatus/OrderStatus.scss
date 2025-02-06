@@ -1,12 +1,15 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .order-status {
   &__links {
-    margin-top: $spacer;
+    margin-top: bootstrap.$spacer;
     padding: 0;
     list-style: none;
   }
 
   &__links-item {
-    margin-bottom: $spacer;
+    margin-bottom: bootstrap.$spacer;
 
     &:last-child {
       margin: 0;
@@ -29,9 +32,9 @@
 
   .well__footer {
     margin-top: 1rem;
-    background-color: $color__carbon--5;
-    color: $color__carbon--60;
-    border-radius: $border-radius;
+    background-color: utils.$color__carbon--5;
+    color: utils.$color__carbon--60;
+    border-radius: bootstrap.$border-radius;
   }
 
   &__footer-link-list {
@@ -41,7 +44,7 @@
   }
 
   &__footer-link-item {
-    margin-bottom: calc($spacer / 4);
+    margin-bottom: calc(bootstrap.$spacer / 4);
 
     &:last-child {
       margin-bottom: 0;
@@ -49,15 +52,15 @@
   }
 
   &__footer-link-icon {
-    margin-right: calc($spacer / 4);
+    margin-right: calc(bootstrap.$spacer / 4);
   }
 
   &__footer-link {
-    color: $color__carbon--60;
+    color: utils.$color__carbon--60;
 
     &:hover,
     &:active {
-      color: $color__carbon--60;
+      color: utils.$color__carbon--60;
     }
   }
 }

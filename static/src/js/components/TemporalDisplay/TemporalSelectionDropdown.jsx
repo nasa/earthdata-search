@@ -42,9 +42,18 @@ const TemporalSelectionDropdown = ({
     recurringDayEnd,
     isRecurring
   })
+  const [datesSelected, setDatesSelected] = useState({
+    start: false,
+    end: false
+  })
 
   useEffect(() => {
     setTemporal(temporalSearch)
+
+    setDatesSelected({
+      start: !!temporalSearch.startDate,
+      end: !!temporalSearch.endDate
+    })
   }, [temporalSearch])
 
   /**
@@ -98,6 +107,11 @@ const TemporalSelectionDropdown = ({
    * Clears the current temporal values internally and within the Redux store
    */
   const onClearClick = () => {
+    setDatesSelected({
+      start: false,
+      end: false
+    })
+
     setTemporal({
       startDate: '',
       endDate: '',
@@ -134,10 +148,67 @@ const TemporalSelectionDropdown = ({
       })
     }
 
-    setTemporal({
-      ...temporal,
-      isRecurring: isChecked
-    })
+    try {
+      if (isChecked) {
+        const {
+          startDate: existingStartDate,
+          endDate: existingEndDate
+        } = temporal
+        const { minimumTemporalDateString, temporalDateFormatFull } = getApplicationConfig()
+        const minDate = moment(minimumTemporalDateString, temporalDateFormatFull)
+
+        // When both dates exist and are in the same year, adjust start to min year
+        if (existingStartDate && existingEndDate) {
+          const startYear = moment(existingStartDate).utc().year()
+          const endYear = moment(existingEndDate).utc().year()
+          if (startYear === endYear) {
+            setTemporal({
+              ...temporal,
+              isRecurring: isChecked,
+              startDate: moment(existingStartDate).utc().year(minDate.year()).toISOString(),
+              endDate: existingEndDate
+            })
+
+            return
+          }
+        }
+
+        // When only start date exists and is in current year, use full range
+        if (existingStartDate && !existingEndDate) {
+          const startYear = moment.utc(existingStartDate).year()
+          const currentYear = moment().utc().year()
+          if (startYear === currentYear) {
+            setTemporal({
+              ...temporal,
+              isRecurring: isChecked,
+              startDate: moment(existingStartDate).utc().year(minDate.year()).toISOString(),
+              endDate: moment().utc().toISOString()
+            })
+
+            return
+          }
+        }
+
+        setTemporal({
+          ...temporal,
+          isRecurring: isChecked,
+          startDate: existingStartDate || minDate.utc().startOf('year').toISOString(),
+          endDate: existingEndDate || moment.utc().toISOString()
+        })
+
+        return
+      }
+
+      setTemporal({
+        ...temporal,
+        isRecurring: isChecked
+      })
+    } catch (error) {
+      setTemporal({
+        ...temporal,
+        isRecurring: isChecked
+      })
+    }
   }
 
   /**
@@ -194,6 +265,11 @@ const TemporalSelectionDropdown = ({
       startDate: existingStartDate
     } = temporal
 
+    setDatesSelected((prev) => ({
+      ...prev,
+      start: true
+    }))
+
     if (shouldCallMetrics && onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
         type: `Set Start Date - ${metricType}`,
@@ -228,6 +304,11 @@ const TemporalSelectionDropdown = ({
       endDate: existingEndDate,
       isRecurring: existingIsRecurring
     } = temporal
+
+    setDatesSelected((prev) => ({
+      ...prev,
+      end: true
+    }))
 
     if (shouldCallMetrics && onMetricsTemporalFilter) {
       onMetricsTemporalFilter({
@@ -266,10 +347,22 @@ const TemporalSelectionDropdown = ({
             onClearClick={onClearClick}
             onInvalid={onInvalid}
             onRecurringToggle={onRecurringToggle}
+            onSliderChange={
+              (value) => {
+                const { min, max } = value
+                setTemporal({
+                  ...temporal,
+                  startDate: moment(temporal.startDate).utc().year(min).toISOString(),
+                  endDate: moment(temporal.endDate).utc().year(max).toISOString()
+                })
+              }
+            }
             onValid={onValid}
             setEndDate={setEndDate}
             setStartDate={setStartDate}
             temporal={temporal}
+            displayStartDate={datesSelected.start ? temporal.startDate : ''}
+            displayEndDate={datesSelected.end ? temporal.endDate : ''}
           />
         )
       }

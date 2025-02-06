@@ -1,13 +1,15 @@
+@use '../../../css/utils';
+
 .filter-stack {
   height: 0;
   width: 0;
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: $color__spacesuit-white;
-  border-top: 1px solid $color__carbon--20;
-  border-bottom: 1px solid $color__carbon--20;
-  color: $color__carbon--90;
+  background-color: utils.$color__spacesuit-white;
+  border-top: 1px solid utils.$color__carbon--20;
+  border-bottom: 1px solid utils.$color__carbon--20;
+  color: utils.$color__carbon--90;
   visibility: hidden;
 
   &--is-open {

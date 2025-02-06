@@ -1,8 +1,8 @@
 import React, { PureComponent, Children } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
-
-import { Overlay, Tooltip } from 'react-bootstrap'
+import Overlay from 'react-bootstrap/Overlay'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import { PanelSection } from './PanelSection'
 import { PanelGroup } from './PanelGroup'

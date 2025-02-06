@@ -1,10 +1,13 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .order-dropdown-item {
   &:not(:last-child) {
-    margin-bottom: calc($spacer / 2);
+    margin-bottom: calc(bootstrap.$spacer / 2);
   }
 
   &__title {
-    margin-bottom: calc($spacer / 4);
+    margin-bottom: calc(bootstrap.$spacer / 4);
     font-size: 0.75rem;
     font-weight: 700;
 
@@ -24,7 +27,7 @@
     line-height: 1.15em;
 
     &:not(:last-child) {
-      margin-bottom: calc($spacer / 4);
+      margin-bottom: calc(bootstrap.$spacer / 4);
     }
   }
 

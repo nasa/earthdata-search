@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import PropTypes from 'prop-types'
 import { IconContext } from 'react-icons'
 
@@ -11,8 +11,11 @@ import './EDSCIcon.scss'
  * @param {String} className - An optional classname.
  * @param {Object} context - Optional object to pass to `react-icons/IconContext.Provider`
  * @param {String} title - Optional string used as the `title` attribute
+ * @param {String} size - Optional string used as the `size` attribute
+ * @param {String} variant - Optional string that determines the icon's wrapper element and styling.
+ * @param {Object} ariaLabel - Optional string used as the `aria-label` attribute
  */
-export const EDSCIcon = ({
+export const EDSCIcon = forwardRef(({
   icon,
   className,
   children,
@@ -20,8 +23,9 @@ export const EDSCIcon = ({
   size,
   title,
   variant,
+  ariaLabel,
   ...props
-}) => {
+}, ref) => {
   if (!icon) return null
 
   let iconClassNames = 'edsc-icon'
@@ -34,9 +38,11 @@ export const EDSCIcon = ({
 
     return (
       <i
+        ref={ref}
         className={iconClassNames}
         title={title}
         data-testid="edsc-icon-simple"
+        aria-label={ariaLabel}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
@@ -49,12 +55,14 @@ export const EDSCIcon = ({
     return (
       <IconContext.Provider
         value={context}
+        ref={ref}
       >
         <Icon
           className={iconClassNames}
           title={title}
           size={size}
           data-testid="edsc-icon"
+          aria-label={ariaLabel}
           {...props}
         />
         {children}
@@ -64,12 +72,16 @@ export const EDSCIcon = ({
 
   if (variant === 'details') {
     return (
-      <div className="access-method-radio__icons-rightside">
+      <div
+        ref={ref}
+        className="access-method-radio__icons-rightside"
+      >
         <Icon
           className={iconClassNames}
           title={title}
           size={size}
           data-testid="edsc-icon-details"
+          aria-label={ariaLabel}
           {...props}
         />
         {children}
@@ -79,11 +91,15 @@ export const EDSCIcon = ({
 
   if (variant === 'details-span') {
     return (
-      <span className="pl-2">
+      <span
+        ref={ref}
+        className="pl-2"
+      >
         <Icon
           className={iconClassNames}
           title={title}
           size={size}
+          aria-label={ariaLabel}
           data-testid="edsc-icon-details"
           {...props}
         />
@@ -93,18 +109,24 @@ export const EDSCIcon = ({
   }
 
   return (
-    <>
+    <span
+      ref={ref}
+      className="d-inline-flex"
+    >
       <Icon
         className={iconClassNames}
         title={title}
         size={size}
+        aria-label={ariaLabel}
         data-testid="edsc-icon"
         {...props}
       />
       {children}
-    </>
+    </span>
   )
-}
+})
+
+EDSCIcon.displayName = 'Button'
 
 EDSCIcon.defaultProps = {
   icon: null,
@@ -113,7 +135,8 @@ EDSCIcon.defaultProps = {
   context: null,
   size: '1rem',
   title: null,
-  variant: null
+  variant: null,
+  ariaLabel: null
 }
 
 EDSCIcon.propTypes = {
@@ -123,7 +146,8 @@ EDSCIcon.propTypes = {
   context: PropTypes.shape({}),
   size: PropTypes.string,
   title: PropTypes.string,
-  variant: PropTypes.string
+  variant: PropTypes.string,
+  ariaLabel: PropTypes.string
 }
 
 export default EDSCIcon

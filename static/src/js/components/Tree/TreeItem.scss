@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .tree-item {
   position: relative;
   margin-left: 1.5rem;
@@ -32,7 +35,7 @@
         width: 3px;
         height: calc(100% - 1.25rem);
         min-height: 0.5rem;;
-        background: $color__spacesuit-white;
+        background: utils.$color__spacesuit-white;
       }
     }
 
@@ -51,7 +54,7 @@
     top: 0.75rem;
     left: -1.125rem;
     width: 0.75rem;
-    border-bottom: 1px solid $gray-400;
+    border-bottom: 1px solid bootstrap.$gray-400;
   }
 
   &--is-parent {
@@ -61,7 +64,7 @@
       top: 1.5rem;
       left: 0.3rem;
       height: calc(100% - 1.925rem);
-      border-left: 1px solid $gray-400;
+      border-left: 1px solid bootstrap.$gray-400;
     }
   }
 
@@ -70,7 +73,7 @@
   }
 
   &--is-not-relevant {
-    color: $gray-600;
+    color: bootstrap.$gray-600;
   }
 
   &__parent-button {
@@ -97,12 +100,12 @@
     padding: 0;
 
     svg {
-      fill: $color__carbon--30;
+      fill: utils.$color__carbon--30;
     }
 
     &:hover {
       svg {
-        fill: $color__carbon--40;
+        fill: utils.$color__carbon--40;
       }
     }
   }
@@ -147,7 +150,7 @@
 
   &__label-long-name  {
     margin-top: 0.125rem;
-    color: $color__carbon--40;
+    color: utils.$color__carbon--40;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

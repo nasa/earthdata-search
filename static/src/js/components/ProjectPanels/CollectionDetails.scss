@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .collection-details {
   height: 100%;
   display: flex;
@@ -7,9 +9,9 @@
     display: block;
     margin: 0 -1rem;
     padding: 0.25rem 2rem;
-    color: $color__carbon--70;
+    color: utils.$color__carbon--70;
     font-size: 0.75rem;
-    border-bottom: 1px solid $color__carbon--20;
+    border-bottom: 1px solid utils.$color__carbon--20;
   }
 
   &__list-wrapper {
@@ -53,8 +55,8 @@
 
     &:hover,
     &:focus {
-      background-color: darken($color__carbon--10, 1);
-      border: 2px solid rgba($color__active-green, 0.5);
+      background-color: darken(utils.$color__carbon--10, 1);
+      border: 2px solid rgba(utils.$color__active-green, 0.5);
       border-left: 0;
       border-right: 0;
       outline: 0;
@@ -62,31 +64,31 @@
 
       .collection-details__item:first-child &,
       .collection-details__item:last-child & {
-        border: 2px solid rgba($color__active-green, 0.5);
+        border: 2px solid rgba(utils.$color__active-green, 0.5);
         border-left: 0;
         border-right: 0;
       }
     }
 
     .collection-details__item:nth-of-type(even) & {
-      background-color: darken($color__carbon--10, 1);
+      background-color: darken(utils.$color__carbon--10, 1);
     }
 
     .collection-details__item:last-child & {
-      border-bottom: 1px solid $color__carbon--20;
+      border-bottom: 1px solid utils.$color__carbon--20;
     }
 
     .collection-details__item--focused & {
-      background-color: darken($color__carbon--10, 1);
-      border: 2px solid $color__active-green;
-      border-bottom: 2px solid $color__active-green;
+      background-color: darken(utils.$color__carbon--10, 1);
+      border: 2px solid utils.$color__active-green;
+      border-bottom: 2px solid utils.$color__active-green;
       border-left: 0;
       border-right: 0;
       z-index: 1;
 
       &:focus {
-        border: 2px solid $color__active-green;
-        border-bottom: 2px solid $color__active-green;
+        border: 2px solid utils.$color__active-green;
+        border-bottom: 2px solid utils.$color__active-green;
         border-left: 0;
         border-right: 0;
       }
@@ -96,7 +98,7 @@
   &__item-title {
     word-break: break-all;
     line-height: 1.5;
-    color: $color__carbon--80;
+    color: utils.$color__carbon--80;
 
     .panels--sm & {
       min-width: 23rem;
@@ -114,17 +116,17 @@
   }
 
   &__item-action {
-    color: $color__carbon--40;
+    color: utils.$color__carbon--40;
 
     &:hover {
-      color: $color__carbon--50;
+      color: utils.$color__carbon--50;
     }
 
     &--remove {
-      color: $color__nasa-red;
+      color: utils.$color__nasa-red;
 
       &:hover {
-        color: $color__nasa-red--shade;
+        color: utils.$color__nasa-red--shade;
       }
     }
   }

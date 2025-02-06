@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
-import { Dropdown } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
 import classNames from 'classnames'
 import { snakeCase } from 'lodash-es'
 

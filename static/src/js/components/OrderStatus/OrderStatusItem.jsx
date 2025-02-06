@@ -1,7 +1,8 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { Col, Tab } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Tab from 'react-bootstrap/Tab'
 import { upperFirst } from 'lodash-es'
 import {
   ArrowChevronUp,

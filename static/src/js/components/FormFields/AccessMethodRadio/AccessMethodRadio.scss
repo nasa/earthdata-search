@@ -1,3 +1,6 @@
+@use '../../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../../css/utils';
+
 .access-method-radio {
   position: relative;
   display: flex;
@@ -5,17 +8,17 @@
   justify-content: flex-start;
   flex-flow: row;
   width: 100%;
-  border: 1px solid $color__carbon--20;
+  border: 1px solid utils.$color__carbon--20;
   border-radius: 0.125rem;
   vertical-align: middle;
   transition: all 0.2s ease-in-out;
-  color: $color__carbon--70;
+  color: utils.$color__carbon--70;
 
   &--is-selected {
-    box-shadow: 0 0.125rem 0.25rem 0.125rem rgba($color__carbon-black, 0.1);
-    border: 1px solid darken($color__carbon--5, 10);
-    background-color: $color__carbon--5;
-    color: $color__carbon--80;
+    box-shadow: 0 0.125rem 0.25rem 0.125rem rgba(utils.$color__carbon-black, 0.1);
+    border: 1px solid darken(utils.$color__carbon--5, 10);
+    background-color: utils.$color__carbon--5;
+    color: utils.$color__carbon--80;
   }
 
   &--is-harmony {
@@ -32,7 +35,7 @@
 
   &__radio {
     display: flex;
-    margin-left: $spacer;
+    margin-left: bootstrap.$spacer;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
@@ -40,14 +43,14 @@
     height: 1rem;
     width: 1rem;
     border-radius: 100%;
-    border: 1px solid $color__carbon--30;
-    background-color: $color__spacesuit-white;
+    border: 1px solid utils.$color__carbon--30;
+    background-color: utils.$color__spacesuit-white;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
 
     .access-method-radio--is-selected & {
-      border: 1px solid $color__nasa-blue--shade;
-      background-color: $color__nasa-blue;
+      border: 1px solid utils.$color__nasa-blue--shade;
+      background-color: utils.$color__nasa-blue;
     }
   }
 
@@ -56,7 +59,7 @@
   }
 
   &__radio-icon {
-    color: $color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
     width: 0.625rem;
     height: 0.625rem;
   }
@@ -68,10 +71,10 @@
     flex-wrap: nowrap;
     flex-grow: 1;
     flex-shrink: 1;
-    margin-top: 0.8125*$spacer;
-    margin-bottom: 0.875*$spacer;
-    margin-right: $spacer;
-    margin-left: $spacer;
+    margin-top: 0.8125*bootstrap.$spacer;
+    margin-bottom: 0.875*bootstrap.$spacer;
+    margin-right: bootstrap.$spacer;
+    margin-left: bootstrap.$spacer;
     overflow: hidden;
   }
 
@@ -93,8 +96,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: $color__carbon--20;
-    color: $color__carbon--90;
+    background: utils.$color__carbon--20;
+    color: utils.$color__carbon--90;
     border-radius: 1rem;
     font-size: 0.625rem;
     font-weight: 700;
@@ -119,11 +122,11 @@
     margin: 0;
     padding: 0;
     font-weight: 700;
-    color: $color__carbon--70;
+    color: utils.$color__carbon--70;
     font-size: 0.875rem;
 
     .access-method-radio--is-selected & {
-      color: $color__carbon--80;
+      color: utils.$color__carbon--80;
     }
   }
 
@@ -132,7 +135,7 @@
     margin: 0;
     padding: 0;
     margin-left: 0.5rem;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
     font-size: 0.825rem;
   }
 
@@ -153,10 +156,10 @@
   }
 
   &__external-link {
-    color: $color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
 
     &:hover {
-      color: $color__nasa-blue;
+      color: utils.$color__nasa-blue;
     }
   }
 

@@ -2,7 +2,8 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Route, Switch } from 'react-router-dom'
 import { isEqual } from 'lodash-es'
-import { Badge, Col } from 'react-bootstrap'
+import Badge from 'react-bootstrap/Badge'
+import Col from 'react-bootstrap/Col'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
@@ -24,10 +25,9 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
+import CollectionDetailsBodyContainer from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import CollectionResultsBodyContainer
   from '../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer'
-import CollectionDetailsBodyContainer
-  from '../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import GranuleDetailsBodyContainer
   from '../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import GranuleResultsBodyContainer
@@ -508,7 +508,7 @@ class SearchPanels extends PureComponent {
           collectionIsCSDA && (
             <Badge className="panel-group-header__heading-badge badge--purple">
               <EDSCIcon
-                className="collection-results-item__badge-icon collection-results-item__badge-icon--csda d-inline-block mr-1"
+                className="collection-results-item__badge-icon collection-results-item__badge-icon--csda d-inline-block me-1"
                 icon={FaLock}
                 size="0.55rem"
               />

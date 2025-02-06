@@ -69,41 +69,43 @@ class FacetsGroup extends Component {
     return (
       <li className="facets-group" key={title} data-testid={`facet_group-${kebabCase(title)}`}>
         <h3 className="facets-group__heading">
-          <button
-            className="btn btn-block facets-group__button"
-            type="button"
-            label={buttonTitleText}
-            title={buttonTitleText}
-            onClick={this.onToggle}
-            disabled={facet.children.length === 0}
-          >
-            <div className="facets-group__heading-primary">
-              <span className="facets-group__title">
-                {title}
-              </span>
-              {
-                totalSelected > 0 && (
-                  <span className="facets-group__selected-count">
-                    {`${totalSelected} Selected`}
-                  </span>
-                )
-              }
-            </div>
-            <div className="facets-group__action">
-              {
-                !isOpen
-                  ? (
-                    <EDSCIcon icon={ArrowChevronDown}>
-                      <span className="visually-hidden">Open</span>
-                    </EDSCIcon>
-                  ) : (
-                    <EDSCIcon icon={ArrowChevronUp}>
-                      <span className="visually-hidden">Close</span>
-                    </EDSCIcon>
+          <div className="d-grid gap-2">
+            <button
+              className="btn btn-light facets-group__button"
+              type="button"
+              label={buttonTitleText}
+              title={buttonTitleText}
+              onClick={this.onToggle}
+              disabled={facet.children.length === 0}
+            >
+              <div className="facets-group__heading-primary">
+                <span className="facets-group__title">
+                  {title}
+                </span>
+                {
+                  totalSelected > 0 && (
+                    <span className="facets-group__selected-count">
+                      {`${totalSelected} Selected`}
+                    </span>
                   )
-              }
-            </div>
-          </button>
+                }
+              </div>
+              <div className="facets-group__action">
+                {
+                  !isOpen
+                    ? (
+                      <EDSCIcon icon={ArrowChevronDown}>
+                        <span className="visually-hidden">Open</span>
+                      </EDSCIcon>
+                    ) : (
+                      <EDSCIcon icon={ArrowChevronUp}>
+                        <span className="visually-hidden">Close</span>
+                      </EDSCIcon>
+                    )
+                }
+              </div>
+            </button>
+          </div>
         </h3>
         {
           isOpen && (

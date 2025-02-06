@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Col,
-  Dropdown,
-  Form,
-  FormControl,
-  InputGroup
-} from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Dropdown from 'react-bootstrap/Dropdown'
+import Form from 'react-bootstrap/Form'
+import FormControl from 'react-bootstrap/FormControl'
+import InputGroup from 'react-bootstrap/InputGroup'
+import Row from 'react-bootstrap/Row'
 import { LinkContainer } from 'react-router-bootstrap'
 import { parse } from 'qs'
 import classNames from 'classnames'
@@ -354,7 +353,7 @@ class SecondaryToolbar extends Component {
         show={projectDropdownOpen}
         className={classNames(['secondary-toolbar__project-name-dropdown', { 'focus-light': isMapOverlay }])}
         onToggle={this.onToggleProjectDropdown}
-        alignRight
+        align="end"
       >
         <Dropdown.Toggle
           className="secondary-toolbar__project-dropdown-toggle focus-light"
@@ -372,8 +371,8 @@ class SecondaryToolbar extends Component {
           </span>
         </Dropdown.Toggle>
         <Dropdown.Menu>
-          <Form inline className="flex-nowrap secondary-toolbar__project-name-form">
-            <Form.Row>
+          <Form className="flex-nowrap secondary-toolbar__project-name-form">
+            <Row>
               <Col>
                 <InputGroup>
                   <FormControl
@@ -384,19 +383,17 @@ class SecondaryToolbar extends Component {
                     onChange={this.onInputChange}
                     onKeyPress={this.handleKeypress}
                   />
-                  <InputGroup.Append>
-                    <Button
-                      className="secondary-toolbar__button secondary-toolbar__button--submit"
-                      bootstrapVariant="primary"
-                      label="Save project name"
-                      onClick={this.handleNameSubmit}
-                    >
-                      Save
-                    </Button>
-                  </InputGroup.Append>
+                  <Button
+                    className="secondary-toolbar__button secondary-toolbar__button--submit"
+                    bootstrapVariant="primary"
+                    label="Save project name"
+                    onClick={this.handleNameSubmit}
+                  >
+                    Save
+                  </Button>
                 </InputGroup>
               </Col>
-            </Form.Row>
+            </Row>
           </Form>
         </Dropdown.Menu>
       </Dropdown>
@@ -407,7 +404,7 @@ class SecondaryToolbar extends Component {
         show={projectDropdownOpen}
         className="secondary-toolbar__start-tour-name-dropdown focus-light"
         onToggle={this.onToggleProjectDropdown}
-        alignRight
+        align="end"
       >
         <TourContext.Consumer>
           {
@@ -438,7 +435,10 @@ class SecondaryToolbar extends Component {
     return (
       secondaryToolbarEnabled
       && (
-        <nav className={secondaryToolbarClassnames}>
+        <nav
+          className={secondaryToolbarClassnames}
+          data-testid="secondary-toolbar"
+        >
           {isPath(location.pathname, ['/projects']) && backToSearchLink}
           {isDownloadPathWithId(location.pathname) && backToProjectLink}
           <PortalFeatureContainer authentication>

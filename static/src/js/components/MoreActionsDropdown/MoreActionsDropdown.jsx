@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
-import { Dropdown } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
 import classNames from 'classnames'
 import MoreActionsToggle from '../CustomToggle/MoreActionsToggle'
 
@@ -43,6 +43,8 @@ export const MoreActionsDropdown = ({
     }
   )
 
+  const rootElement = document.getElementById('root') || document.body
+
   return (
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
     <div
@@ -59,7 +61,7 @@ export const MoreActionsDropdown = ({
           ReactDOM.createPortal(
             <Dropdown.Menu
               className={dropdownMenuClasses}
-              alignRight={alignRight}
+              align={alignRight ? 'end' : null}
             >
               {children}
               {
@@ -81,7 +83,7 @@ export const MoreActionsDropdown = ({
                 )
               }
             </Dropdown.Menu>,
-            document.getElementById('root')
+            rootElement
           )
         }
       </Dropdown>

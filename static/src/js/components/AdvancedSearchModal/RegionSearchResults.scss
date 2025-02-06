@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .region-search-results {
   position: relative;
   flex-grow: 1;
@@ -26,10 +29,10 @@
     font-weight: 400;
 
     &--error {
-      color: $color__nasa-red;
+      color: utils.$color__nasa-red;
 
       .region-search-results__status-link {
-        color: $color__nasa-red--shade;
+        color: utils.$color__nasa-red--shade;
       }
     }
   }
@@ -39,31 +42,31 @@
   }
 
   &__selected-region-id {
-    margin-right: calc($spacer / 2);
+    margin-right: calc(bootstrap.$spacer / 2);
     font-weight: 700;
   }
 
   &__selected-region-name {
-    margin-right: calc($spacer / 2);
+    margin-right: calc(bootstrap.$spacer / 2);
     font-style: italic;
-    color: $color__carbon--40;
+    color: utils.$color__carbon--40;
     font-size: 0.875rem;
   }
 
   &__back-button {
     margin-bottom: 1rem;
     font-size: 0.925rem;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
   }
 
   &__list-meta {
-    color: $color__carbon--80;
+    color: utils.$color__carbon--80;
     font-size: 0.925rem;
     font-weight: 700;
   }
 
   &__list-intro {
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
     font-size: 0.925rem;
   }
 
@@ -78,16 +81,16 @@
   &__item {
     display: block;
     width: 100%;
-    padding: calc($spacer / 4) $spacer;
+    padding: calc(bootstrap.$spacer / 4) bootstrap.$spacer;
     text-align: left;
 
     &:nth-of-type(odd) {
-      background-color: $color__carbon--10;
+      background-color: utils.$color__carbon--10;
     }
 
     &:hover {
       cursor: pointer;
-      background-color: $color__carbon--20;
+      background-color: utils.$color__carbon--20;
     }
   }
 }

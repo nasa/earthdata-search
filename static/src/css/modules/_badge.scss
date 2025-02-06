@@ -1,10 +1,12 @@
-.badge {
+@use '../utils/variables';
+
+.bg {
   &--purple {
-    color: $color__spacesuit-white;
-    background-color: $color__international-orange;
+    color: variables.$color__spacesuit-white;
+    background-color: variables.$color__international-orange;
   }
 }
 
-.badge-info {
-  background-color: $color__nasa-blue;
+.bg-info {
+  background-color: variables.$color__nasa-blue;
 }

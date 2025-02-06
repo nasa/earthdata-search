@@ -1,16 +1,18 @@
+@use '../../../css/utils';
+
 .facets-list {
   margin: 0;
   padding: 0;
   list-style: none;
-  background-color: $color__carbon--5;
+  background-color: utils.$color__carbon--5;
   box-shadow:
-    inset 0px 10px 15px -20px $color__carbon--5,
-    inset 0px -10px 15px -20px $color__carbon--5;
+    inset 0px 10px 15px -20px utils.$color__carbon--5,
+    inset 0px -10px 15px -20px utils.$color__carbon--5;
 
   &--light {
     .facets-item__label {
       &:hover {
-        background-color: $color__carbon--5;
+        background-color: utils.$color__carbon--5;
       }
     }
   }

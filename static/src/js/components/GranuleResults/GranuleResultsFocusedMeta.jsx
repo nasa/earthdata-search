@@ -10,12 +10,10 @@ import {
   List
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import {
-  ListGroup,
-  OverlayTrigger,
-  Popover,
-  Tooltip
-} from 'react-bootstrap'
+import ListGroup from 'react-bootstrap/ListGroup'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Popover from 'react-bootstrap/Popover'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { isLinkBrowse } from '../../../../../sharedUtils/isLinkBrowse'

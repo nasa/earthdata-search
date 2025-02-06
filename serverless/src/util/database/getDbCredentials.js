@@ -15,7 +15,7 @@ export const getDbCredentials = async () => {
       secretsManagerClient = new SecretsManagerClient(getSecretsManagerConfig())
     }
 
-    if (process.env.IS_OFFLINE) {
+    if (process.env.NODE_ENV === 'development') {
       const { dbUsername, dbPassword } = getSecretEnvironmentConfig('development')
 
       return {
@@ -26,7 +26,7 @@ export const getDbCredentials = async () => {
 
     // If not running in development mode fetch secrets from AWS
     const params = {
-      SecretId: process.env.configSecretId
+      SecretId: process.env.CONFIG_SECRET_ID
     }
 
     const command = new GetSecretValueCommand(params)

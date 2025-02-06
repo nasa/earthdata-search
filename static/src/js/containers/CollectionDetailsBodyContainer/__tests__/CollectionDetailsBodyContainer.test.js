@@ -8,7 +8,6 @@ import {
   mapDispatchToProps,
   mapStateToProps
 } from '../CollectionDetailsBodyContainer'
-import CollectionDetailsBody from '../../../components/CollectionDetails/CollectionDetailsBody'
 
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
@@ -72,10 +71,11 @@ describe('CollectionDetailsBodyContainer component', () => {
   test('passes its props and renders a single CollectionDetailsBody component', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find(CollectionDetailsBody).length).toBe(1)
-    expect(enzymeWrapper.find(CollectionDetailsBody).props().collectionMetadata).toEqual({ test: 'metadata' })
-    expect(enzymeWrapper.find(CollectionDetailsBody).props().isActive).toEqual(true)
+    // CollectionDetailsBody is lazy loaded, and shows up under that element
+    expect(enzymeWrapper.find('lazy').length).toBe(1)
+    expect(enzymeWrapper.find('lazy').props().collectionMetadata).toEqual({ test: 'metadata' })
+    expect(enzymeWrapper.find('lazy').props().isActive).toEqual(true)
 
-    expect(typeof enzymeWrapper.find(CollectionDetailsBody).props().onToggleRelatedUrlsModal).toEqual('function')
+    expect(typeof enzymeWrapper.find('lazy').props().onToggleRelatedUrlsModal).toEqual('function')
   })
 })

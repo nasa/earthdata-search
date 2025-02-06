@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .edsc-modal-overlay {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,7 @@
   right: 0;
   bottom: 0;
   padding: 1rem;
-  background-color: $color__spacesuit-white;
+  background-color: utils.$color__spacesuit-white;
   z-index: 1;
   overflow: scroll;
 

@@ -17,10 +17,11 @@ import polygonBody from './__mocks__/polygon_collections.body.json'
 import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 
 test.describe('Map: Spatial interactions', () => {
-  test.beforeEach(async ({ page, context }, testInfo) => {
+  test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
-      page,
-      context
+      browserName,
+      context,
+      page
     })
 
     await page.route('**/search/granules/timeline', (route) => {
@@ -28,9 +29,6 @@ test.describe('Map: Spatial interactions', () => {
         body: JSON.stringify([])
       })
     })
-
-    // eslint-disable-next-line no-param-reassign
-    testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${testInfo.project.name}/${name}`
   })
 
   test.describe('When drawing point spatial', () => {
@@ -54,7 +52,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the point spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Point' }).click()
+        await page.getByRole('button', { name: 'Point' }).click()
 
         // Add the point to the map
         await page.mouse.click(1000, 500)
@@ -90,7 +88,7 @@ test.describe('Map: Spatial interactions', () => {
         await page.goto('/')
 
         // Select the point spatial type
-        await page.getByRole('link', { name: 'Search by spatial coordinate' }).click()
+        await page.getByRole('link', { name: 'Draw a coordinate on the map to select a spatial extent' }).click()
 
         // Add the point to the map
         await page.mouse.click(1000, 500)
@@ -127,7 +125,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the point spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Point' }).click()
+        await page.getByRole('button', { name: 'Point' }).click()
 
         // Enter the spatial point
         await page.getByTestId('spatial-display_point').focus()
@@ -173,7 +171,7 @@ test.describe('Map: Spatial interactions', () => {
         await page.goto('/')
 
         // Select the point spatial type
-        await page.getByRole('link', { name: 'Search by spatial coordinate' }).click()
+        await page.getByRole('link', { name: 'Draw a coordinate on the map to select a spatial extent' }).click()
 
         // Add the point to the map
         await page.mouse.click(1000, 500)
@@ -234,7 +232,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the circle spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Circle' }).click()
+        await page.getByRole('button', { name: 'Circle' }).click()
 
         // Add the circle to the map
         await page.mouse.move(1000, 500)
@@ -274,7 +272,7 @@ test.describe('Map: Spatial interactions', () => {
         await page.goto('/')
 
         // Select the circle spatial type
-        await page.getByRole('link', { name: 'Search by spatial circle' }).click()
+        await page.getByRole('link', { name: 'Draw a circle on the map to select a spatial extent' }).click()
 
         // Add the point to the map
         await page.mouse.move(1000, 500)
@@ -315,7 +313,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the circle spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Circle' }).click()
+        await page.getByRole('button', { name: 'Circle' }).click()
 
         // Enter the circle values
         await page.getByTestId('spatial-display_circle-center').focus()
@@ -364,7 +362,7 @@ test.describe('Map: Spatial interactions', () => {
         await page.goto('/')
 
         // Select the circle spatial type
-        await page.getByRole('link', { name: 'Search by spatial circle' }).click()
+        await page.getByRole('link', { name: 'Draw a circle on the map to select a spatial extent' }).click()
 
         // Add the point to the map
         await page.mouse.move(1000, 500)
@@ -431,7 +429,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the bounding box spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Rectangle' }).click()
+        await page.getByRole('button', { name: 'Rectangle' }).click()
 
         // Add the bounding box to the map
         await page.mouse.click(1000, 500)
@@ -510,7 +508,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the bounding box spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Rectangle' }).click()
+        await page.getByRole('button', { name: 'Rectangle' }).click()
 
         // Enter the bounding box values
         await page.getByTestId('spatial-display_southwest-point').focus()
@@ -562,7 +560,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the bounding box spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Rectangle' }).click()
+        await page.getByRole('button', { name: 'Rectangle' }).click()
 
         // Add the bounding box to the map
         await page.mouse.click(1000, 500)
@@ -627,7 +625,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the polygon spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Polygon' }).click()
+        await page.getByRole('button', { name: 'Polygon' }).click()
 
         // Add the polygon to the map
         await page.mouse.click(1000, 500)
@@ -741,7 +739,7 @@ test.describe('Map: Spatial interactions', () => {
 
         // Select the polygon spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-        await page.getByRole('button', { name: 'Select Polygon' }).click()
+        await page.getByRole('button', { name: 'Polygon' }).click()
 
         // Add the polygon to the map
         await page.mouse.click(1000, 500)

@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .spatial-display {
   padding: 10px 15px;
   background: rgb(17, 17, 17);
@@ -19,44 +22,44 @@
     margin: 0;
 
     &--system {
-      margin-left: calc($spacer / 4);
+      margin-left: calc(bootstrap.$spacer / 4);
     }
 
     &:not(:last-child) {
-      margin-bottom: calc($spacer / 2);
+      margin-bottom: calc(bootstrap.$spacer / 2);
     }
   }
 
   &__form-label {
     flex-grow: 0;
-    padding: 0 calc($spacer / 4);
+    padding: 0 calc(bootstrap.$spacer / 4);
     font-weight: 700;
     font-size: 0.75rem;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
   }
 
   &__text-primary {
     max-width: 19rem;
-    margin-left: calc($spacer / 4);
+    margin-left: calc(bootstrap.$spacer / 4);
     text-overflow: ellipsis;
     overflow: hidden;
     font-style: italic;
   }
 
   &__text-secondary {
-    margin-left: calc($spacer / 2);
-    color: $color__carbon--40;
+    margin-left: calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--40;
     font-size: 0.75rem;
   }
 
   &__loading {
-    margin-left: 0.75*$spacer;
-    color: $color__carbon--40;
+    margin-left: 0.75*bootstrap.$spacer;
+    color: utils.$color__carbon--40;
     font-size: 0.75rem;
   }
 
   &__loading-icon {
-    margin-right: calc($spacer / 4);
+    margin-right: calc(bootstrap.$spacer / 4);
     opacity: 0.7;
   }
 }
