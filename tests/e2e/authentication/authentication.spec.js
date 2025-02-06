@@ -18,6 +18,13 @@ test.describe('Authentication', () => {
       context
     })
 
+    await page.setViewportSize({
+      width: 1400,
+      // At the default height of 900, the results here are flaky returning 6 or 7 items.
+      // Shorten the window height to ensure we always get 6 items.
+      height: 850
+    })
+
     await page.route(/collections$/, async (route) => {
       await route.fulfill({
         json: collectionFixture.body,
