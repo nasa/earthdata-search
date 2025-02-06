@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 import { Check, Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
 
@@ -34,6 +34,9 @@ export const AccessMethodRadio = ({
     'access-method-radio',
     {
       'access-method-radio--is-selected': checked
+    },
+    {
+      'mb-2': !isHarmony
     },
     {
       'access-method-radio--is-harmony': isHarmony

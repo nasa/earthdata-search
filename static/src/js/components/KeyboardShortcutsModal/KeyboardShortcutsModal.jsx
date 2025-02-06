@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Container,
-  Row,
-  Col
-} from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
 
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 

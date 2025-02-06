@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .timeline {
   position: relative;
   z-index: 3;
@@ -11,28 +13,28 @@
   }
 
   &__toggle-button {
-    color: $color__carbon--30;
+    color: utils.$color__carbon--30;
 
     &:hover,
     &:active {
-      color: $color__carbon--5
+      color: utils.$color__carbon--5
     }
 
     &--open {
       position: absolute;
       bottom: 0;
       z-index: 3;
-      background-color: $color__carbon--90;
+      background-color: utils.$color__carbon--90;
       font-size: 0.825rem;
       border-radius: 0;
       border-top-right-radius: 0.25rem;
     }
 
     &--close {
-      border-right: 1px solid $color__carbon--70;
+      border-right: 1px solid utils.$color__carbon--70;
       padding: 0.125rem;
-      background-color: $color__carbon--90;
-      border-top: 1px solid $color__carbon--80;
+      background-color: utils.$color__carbon--90;
+      border-top: 1px solid utils.$color__carbon--80;
     }
   }
 }

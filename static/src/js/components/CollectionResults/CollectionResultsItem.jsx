@@ -4,7 +4,8 @@ import React, {
   useState
 } from 'react'
 import PropTypes from 'prop-types'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import {
@@ -358,7 +359,7 @@ export const CollectionResultsItem = forwardRef(({
                         <li className="collection-results-item__attribution-list-item">
                           <span className="collection-results-item__list-text collection-results-item__list-text--tooltip link">
                             <EDSCIcon
-                              className="collection-results-item__icon collection-results-item__icon--csda d-inline-block mr-1"
+                              className="collection-results-item__icon collection-results-item__icon--csda d-inline-block me-1"
                               icon={FaLock}
                               size="0.55rem"
                             />

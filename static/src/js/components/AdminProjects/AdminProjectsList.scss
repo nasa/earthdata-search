@@ -1,9 +1,11 @@
+@use '../../../css/utils';
+
 .admin-projects-list {
   &__interactive {
     cursor: pointer;
 
     &:hover {
-      background-color: $color__carbon--20 !important;
+      background-color: utils.$color__carbon--20 !important;
     }
   }
 
@@ -30,9 +32,9 @@
     display: inline-block;
 
     .rc-pagination-item-active {
-      background-color: $color__nasa-blue;
-      border-color: $color__nasa-blue--shade;
-      color: $color__spacesuit-white;
+      background-color: utils.$color__nasa-blue;
+      border-color: utils.$color__nasa-blue--shade;
+      color: utils.$color__spacesuit-white;
     }
 
     .rc-pagination-jump-next,
@@ -49,39 +51,39 @@
     .rc-pagination-next,
     .rc-pagination-prev {
       border-color: transparent;
-      color: $color__carbon--50;
+      color: utils.$color__carbon--50;
 
       &.rc-pagination-disabled {
-        color: $color__carbon--20;
+        color: utils.$color__carbon--20;
       }
 
       &:hover {
-        color: $color__carbon--90;
+        color: utils.$color__carbon--90;
 
         &.rc-pagination-disabled {
-          color: $color__carbon--20;
+          color: utils.$color__carbon--20;
         }
       }
     }
 
     .rc-pagination-item {
       &:hover {
-        border-color: $color__carbon--30;
-        background-color: $color__carbon--20;
-        color: $color__carbon--50;
+        border-color: utils.$color__carbon--30;
+        background-color: utils.$color__carbon--20;
+        color: utils.$color__carbon--50;
 
         &.rc-pagination-item-active {
-          background-color: $color__nasa-blue--shade;
-          border-color: $color__nasa-blue--shade;
-          color: $color__spacesuit-white;
+          background-color: utils.$color__nasa-blue--shade;
+          border-color: utils.$color__nasa-blue--shade;
+          color: utils.$color__spacesuit-white;
 
           a {
-            color: $color__spacesuit-white
+            color: utils.$color__spacesuit-white
           }
         }
 
         a {
-          color: $color__carbon--50;
+          color: utils.$color__carbon--50;
         }
       }
     }

@@ -1,7 +1,8 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Tabs, Tab } from 'react-bootstrap'
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
 
 import { granuleResultsBodyProps } from './mocks'
 

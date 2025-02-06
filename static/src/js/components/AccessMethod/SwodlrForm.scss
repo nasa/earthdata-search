@@ -1,5 +1,7 @@
-.swodlr-form {
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
 
+.swodlr-form {
   &__advanced-options-item {
     flex-grow: 0;
     flex-shrink: 0;
@@ -8,21 +10,21 @@
 
     .collapse-panel__button {
       width: 100%;
-      padding: $spacer;
+      padding: bootstrap.$spacer;
       border: 0;
-      border-top: 1px solid $color__carbon--20;
+      border-top: 1px solid utils.$color__carbon--20;
       background: none;
       outline: none;
       text-align: left;
       padding: 0.825rem;
 
       &:hover {
-        color: $color__carbon--50;
+        color: utils.$color__carbon--50;
       }
     }
 
     .collapse-panel__panel {
-      border-top: 1px solid $color__carbon--20;
+      border-top: 1px solid utils.$color__carbon--20;
     }
   }
 

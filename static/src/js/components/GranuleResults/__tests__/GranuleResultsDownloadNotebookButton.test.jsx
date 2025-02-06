@@ -57,7 +57,9 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
 
         const downloadButton = screen.getByRole('button', { name: 'Download Notebook' })
 
-        await user.click(downloadButton)
+        await act(async () => {
+          await user.click(downloadButton)
+        })
 
         await waitFor(() => {
           expect(props.onGenerateNotebook).toHaveBeenCalledWith({
@@ -85,7 +87,9 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
 
         const downloadButton = screen.getByRole('button', { name: 'Download Notebook' })
 
-        await user.click(downloadButton)
+        await act(async () => {
+          await user.click(downloadButton)
+        })
 
         await waitFor(() => {
           expect(props.onGenerateNotebook).toHaveBeenCalledWith({
@@ -112,7 +116,9 @@ describe('GranuleResultsDownloadNotebookButton component', () => {
 
         const downloadButton = screen.getByRole('button', { name: 'Download Notebook' })
 
-        await user.click(downloadButton)
+        await act(async () => {
+          await user.click(downloadButton)
+        })
 
         await waitFor(() => {
           expect(props.onGenerateNotebook).toHaveBeenCalledWith({

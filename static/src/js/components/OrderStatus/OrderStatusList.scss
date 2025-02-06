@@ -1,5 +1,7 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+
 .order-status-list {
-  margin-bottom: $spacer*2;
+  margin-bottom: bootstrap.$spacer*2;
 
   &__list {
     position: relative;

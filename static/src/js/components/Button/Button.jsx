@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import {
-  Button as Btn,
-  Badge,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap'
+import Btn from 'react-bootstrap/Button'
+import Badge from 'react-bootstrap/Badge'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import Spinner from '../Spinner/Spinner'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -78,7 +76,7 @@ export const Button = React.forwardRef(({
     rel = 'noopener nofollow'
   }
 
-  let asEl
+  let asEl = as
   if (as === 'button' && href) {
     asEl = undefined
   }
@@ -137,7 +135,7 @@ export const Button = React.forwardRef(({
         badge && (
           <Badge
             className={badgeClasses}
-            variant={badgeVariant === null ? 'secondary' : badgeVariant}
+            bg={badgeVariant === null ? 'secondary' : badgeVariant}
           >
             {badge}
           </Badge>

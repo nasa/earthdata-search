@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { kebabCase, uniqueId } from 'lodash-es'
 import classNames from 'classnames'
-
-import { Tooltip, OverlayTrigger } from 'react-bootstrap'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 import { FaQuestionCircle } from 'react-icons/fa'
+
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import { generateFacetArgs } from '../../util/facets'

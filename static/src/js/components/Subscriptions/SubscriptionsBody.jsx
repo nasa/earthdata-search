@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { isEmpty, isEqual } from 'lodash-es'
 import { Plus, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-
-import { Form } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form'
 import snakecaseKeys from 'snakecase-keys'
 
 import {
@@ -106,7 +105,7 @@ export const SubscriptionsBody = ({
               <Form>
                 <div className="subscriptions-body__query-primary">
                   <h4 className="subscriptions-body__query-primary-heading h6">Create a new subscription</h4>
-                  <Form.Group className="subscriptions-body__form-group subscriptions-body__form-group--coords">
+                  <Form.Group className="subscriptions-body__form-group subscriptions-body__form-group--coords mb-3">
                     <Form.Label className="mb-1">
                       Name
                     </Form.Label>

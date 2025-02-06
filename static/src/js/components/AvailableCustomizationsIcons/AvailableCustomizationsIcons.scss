@@ -1,5 +1,7 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+
 .available-customizations-icons {
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid bootstrap.$border-color;
 
   &__icon {
     margin-right: 0.25rem;

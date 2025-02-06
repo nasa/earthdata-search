@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .variable-tree-panel {
   &__tree-switcher {
     display: flex;
@@ -15,22 +18,22 @@
 
   &__tree-switcher-button {
     margin-right: 0.5rem;
-    color: $color__carbon--50;
-    background-color: $color__carbon--10;
+    color: utils.$color__carbon--50;
+    background-color: utils.$color__carbon--10;
 
     &:hover,
     &:focus {
-      background-color: $color__carbon--20;
+      background-color: utils.$color__carbon--20;
     }
 
     &--is-active {
-      background-color: $color__carbon--20;
-      color: $color__carbon--70;
+      background-color: utils.$color__carbon--20;
+      color: utils.$color__carbon--70;
 
       &:hover,
       &:focus {
-        background-color: $color__carbon--20;
-        color: $color__carbon--70;
+        background-color: utils.$color__carbon--20;
+        color: utils.$color__carbon--70;
       }
     }
   }
@@ -49,22 +52,22 @@
     position: relative;
     display: flex;
     &:nth-child(odd) {
-      background-color: $color__carbon--10;
+      background-color: utils.$color__carbon--10;
     }
   }
 
   &__selected-count {
     position: absolute;
     top: 50%;
-    right: $spacer;
+    right: bootstrap.$spacer;
     padding: 0 0.5rem;
-    background-color: $color__nasa-blue--shade;
+    background-color: utils.$color__nasa-blue--shade;
     font-size: 0.75rem;
-    color: $color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
     transform: translateY(-50%);
     border-radius: 0.75rem;
     .variable-tree-panel__button:hover {
-      background-color: darken($color__nasa-blue--shade, 50%);
+      background-color: darken(utils.$color__nasa-blue--shade, 50%);
     }
   }
 }

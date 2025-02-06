@@ -3,18 +3,17 @@ import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import moment from 'moment'
 import InputRange from 'react-input-range'
-import 'react-input-range/lib/css/index.css'
 
-import {
-  Alert,
-  Col,
-  Form,
-  Row
-} from 'react-bootstrap'
+import Alert from 'react-bootstrap/Alert'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
+
+import DatepickerContainer from '../../containers/DatepickerContainer/DatepickerContainer'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import './TemporalSelection.scss'
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import DatepickerContainer from '../../containers/DatepickerContainer/DatepickerContainer'
+import 'react-input-range/lib/css/index.css'
 
 /**
  * Renders TemporalSelection component

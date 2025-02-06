@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .project-panels {
   &__footer {
     display: flex;
@@ -5,32 +8,32 @@
     justify-content: flex-end;
     align-items: center;
     vertical-align: middle;
-    padding: calc($spacer / 2) $spacer;
+    padding: calc(bootstrap.$spacer / 2) bootstrap.$spacer;
   }
 
   &__action {
-    margin-left: calc($spacer / 2);
+    margin-left: calc(bootstrap.$spacer / 2);
   }
 
   &__collection-status {
     display: inline-block;
-    margin-right: calc($spacer / 2);
+    margin-right: calc(bootstrap.$spacer / 2);
     font-size: 1.125rem;
     vertical-align: middle;
 
     &--valid {
-      color: $color__active-green;
+      color: utils.$color__active-green;
     }
 
     &--invalid {
-      color: $color__nasa-red;
+      color: utils.$color__nasa-red;
     }
   }
 
   &__collection-count {
     display: inline-block;
-    margin-right: calc($spacer / 2);
-    color: $color__carbon--40;
+    margin-right: calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--40;
     vertical-align: middle;
   }
 }

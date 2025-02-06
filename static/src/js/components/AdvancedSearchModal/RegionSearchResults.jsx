@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Col, Row } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 import classNames from 'classnames'
 
 import { ArrowChevronLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'

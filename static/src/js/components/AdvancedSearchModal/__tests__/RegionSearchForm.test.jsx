@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Form } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form'
 
 import Button from '../../Button/Button'
 import EDSCAlert from '../../EDSCAlert/EDSCAlert'
@@ -51,13 +51,13 @@ describe('RegionSearchForm component', () => {
     test('renders the regionType select', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find(Form.Control).at(0).prop('name')).toEqual('endpoint')
+      expect(enzymeWrapper.find(Form.Select).at(0).prop('name')).toEqual('endpoint')
     })
 
     test('renders the searchValue input', () => {
       const { enzymeWrapper } = setup()
 
-      expect(enzymeWrapper.find(Form.Control).at(1).prop('name')).toEqual('keyword')
+      expect(enzymeWrapper.find(Form.Control).at(0).prop('name')).toEqual('keyword')
     })
 
     test('renders the exactMatch input', () => {

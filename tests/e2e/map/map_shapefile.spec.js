@@ -3,6 +3,8 @@ import { test, expect } from 'playwright-test-coverage'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
+import uploadShapefile from '../../support/uploadShapefile'
+import { setupTests } from '../../support/setupTests'
 
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
@@ -11,14 +13,13 @@ import simpleShapefileBody from './__mocks__/simple_shapefile_collections.body.j
 import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_collections.body.json'
 import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.json'
 import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
-import uploadShapefile from '../../support/uploadShapefile'
-import { setupTests } from '../../support/setupTests'
 
 test.describe('Map: Shapefile interactions', () => {
-  test.beforeEach(async ({ page, context }) => {
+  test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
-      page,
-      context
+      browserName,
+      context,
+      page
     })
 
     await page.route('**/search/granules/timeline', (route) => {

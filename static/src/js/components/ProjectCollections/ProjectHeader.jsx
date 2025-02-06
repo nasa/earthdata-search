@@ -5,7 +5,8 @@ import React, {
   useState
 } from 'react'
 import { PropTypes } from 'prop-types'
-import { OverlayTrigger, Tooltip } from 'react-bootstrap'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 import abbreviate from 'number-abbreviate'
 import classNames from 'classnames'
 import { FaEdit } from 'react-icons/fa'

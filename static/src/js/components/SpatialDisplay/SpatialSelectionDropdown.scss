@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .spatial-selection-dropdown {
   display: flex;
 
@@ -7,13 +10,14 @@
 
   &__menu {
     margin-top: -0.5rem;
-    box-shadow: $shadow__panel;
+    box-shadow: utils.$shadow__panel;
+    min-width: 12rem;
 
     .button__icon {
       width: 1rem;
       text-align: center;
       flex-shrink: 0;
-      color: $color__carbon--60;
+      color: utils.$color__carbon--60;
     }
 
     .button__contents {
@@ -38,12 +42,12 @@
   }
 
   &__small {
-    margin-left: calc($spacer / 4);
+    margin-left: calc(bootstrap.$spacer / 4);
     font-size: 0.75rem;
-    color: $color__carbon--60;
+    color: utils.$color__carbon--60;
 
     .dropdown-item:hover & {
-      color: $color__carbon--70;
+      color: utils.$color__carbon--70;
     }
 
     .dropdown-item:disabled & {

@@ -302,11 +302,11 @@ describe('Datepicker component', () => {
             || header.className.includes('rdtNext'))
 
         // June state in days view
+        expect(currentMonthSwitch).toHaveTextContent('June')
         await waitFor(() => {
-          expect(currentMonthSwitch).toHaveTextContent('June')
+          expect(currentMonthSwitch).not.toHaveTextContent('2024')
         })
 
-        expect(currentMonthSwitch).not.toHaveTextContent('2024')
         expect(currentPrevNav).toBeVisible()
         expect(currentNextNav).toBeVisible()
 

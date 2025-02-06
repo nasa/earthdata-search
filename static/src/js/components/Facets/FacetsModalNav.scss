@@ -1,13 +1,16 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .facets-modal-nav {
   display: flex;
   flex-grow: 0;
   flex-shrink: 0;
-  padding: $spacer;
-  border-bottom: 1px solid $color__carbon--10;
+  padding: bootstrap.$spacer;
+  border-bottom: 1px solid utils.$color__carbon--10;
 
   &__heading {
-    margin-right: calc($spacer / 2);
-    color: $color__carbon--40;
+    margin-right: calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--40;
   }
 
   &__list {
@@ -22,11 +25,11 @@
     font-weight: 700;
 
     &:active {
-      color: $color__nasa-blue--tint;
+      color: utils.$color__nasa-blue--tint;
     }
 
     &--inactive {
-      color: $color__carbon--40;
+      color: utils.$color__carbon--40;
     }
   }
 }

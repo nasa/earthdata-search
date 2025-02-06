@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Table from 'react-bootstrap/Table'
 
-import { Table } from 'react-bootstrap'
 import './AdminRetrievalsMetricsList.scss'
 
 export const AdminRetrievalsMetricsList = ({

@@ -5,12 +5,10 @@ import { isEqual } from 'lodash-es'
 
 import { FaCrop } from 'react-icons/fa'
 
-import {
-  Col,
-  Form,
-  Row,
-  Spinner
-} from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
+import Spinner from 'react-bootstrap/Spinner'
 
 import { eventEmitter } from '../../events/events'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -422,7 +420,7 @@ const SpatialDisplay = ({
   } else if (((currentPointSearch && currentPointSearch.length) && !drawingNewLayer) || drawingNewLayer === 'marker' || manuallyEnteringVal === 'marker') {
     entry = (
       <SpatialDisplayEntry>
-        <Form.Row className="spatial-display__form-row">
+        <Row className="spatial-display__form-row">
           <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
             <Form.Label
               className="spatial-display__form-label"
@@ -449,7 +447,7 @@ const SpatialDisplay = ({
               />
             </Col>
           </Form.Group>
-        </Form.Row>
+        </Row>
       </SpatialDisplayEntry>
     )
 
@@ -465,7 +463,7 @@ const SpatialDisplay = ({
   } else if (((currentBoundingBoxSearch && currentBoundingBoxSearch.length) && (currentBoundingBoxSearch[0] || currentBoundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle' || manuallyEnteringVal === 'rectangle') {
     entry = (
       <SpatialDisplayEntry>
-        <Form.Row className="spatial-display__form-row">
+        <Row className="spatial-display__form-row">
           <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
             <Form.Label
               className="spatial-display__form-label"
@@ -516,7 +514,7 @@ const SpatialDisplay = ({
               />
             </Col>
           </Form.Group>
-        </Form.Row>
+        </Row>
       </SpatialDisplayEntry>
     )
 
@@ -533,7 +531,7 @@ const SpatialDisplay = ({
   } else if (((currentCircleSearch && currentCircleSearch.length) && (currentCircleSearch[0] || currentCircleSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'circle' || manuallyEnteringVal === 'circle') {
     entry = (
       <SpatialDisplayEntry>
-        <Form.Row className="spatial-display__form-row">
+        <Row className="spatial-display__form-row">
           <Form.Group as={Row} className="spatial-display__form-group spatial-display__form-group--coords">
             <Form.Label
               className="spatial-display__form-label"
@@ -584,7 +582,7 @@ const SpatialDisplay = ({
               />
             </Col>
           </Form.Group>
-        </Form.Row>
+        </Row>
       </SpatialDisplayEntry>
     )
 

@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .deprecated-parameter-modal {
     .modal-content {
         overflow: hidden;
@@ -5,7 +7,7 @@
 
     .edsc-modal__header {
         height: 14rem;
-        background: $color__nasa-blue url('../../../assets/images/browser.svg');
+        background: utils.$color__nasa-blue url('../../../assets/images/browser.svg');
         background-repeat: no-repeat;
         background-position: bottom center;
         align-items: center;
@@ -16,7 +18,7 @@
     .edsc-modal__title {
         display: block;
         margin-bottom: 2rem;
-        color: $color__spacesuit-white;
+        color: utils.$color__spacesuit-white;
         font-size: 1.5rem;
     }
 
@@ -24,7 +26,7 @@
         position: absolute;
         right: 1rem;
         top: 1rem;
-        color: rgb($color__spacesuit-white, 0.75);
+        color: rgb(utils.$color__spacesuit-white, 0.75);
         text-shadow: none;
         opacity: 1;
     }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Badge, Card } from 'react-bootstrap'
+import Badge from 'react-bootstrap/Badge'
+import Card from 'react-bootstrap/Card'
 
 import './CollectionDetailsDataCenter.scss'
 
@@ -31,7 +31,7 @@ export const CollectionDetailsDataCenter = ({ dataCenter, item }) => (
             return (
               <Badge
                 key={key}
-                variant="primary"
+                bg="info"
                 className="collection-details-data-center__badge"
                 data-testid="collection-details-data-center__role"
               >

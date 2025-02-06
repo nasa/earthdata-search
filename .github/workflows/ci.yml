@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          node-version: ['lts/hydrogen']
+          node-version: ['lts/jod']
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
         matrix:
-          node-version: ['lts/hydrogen']
+          node-version: ['lts/jod']
           shard: [1/3, 2/3, 3/3]
     steps:
     - name: Checkout code
@@ -80,7 +80,7 @@ jobs:
     strategy:
         fail-fast: false
         matrix:
-          node-version: ['lts/hydrogen']
+          node-version: ['lts/jod']
           shard: [1/3, 2/3, 3/3]
     steps:
     - name: Checkout code
@@ -127,9 +127,16 @@ jobs:
           test-results/
         retention-days: 30
 
+  tests-passed:
+    needs: ['jest', 'playwright']
+    runs-on: ubuntu-latest
+    steps:
+    - name: All Tests Have Passed
+      run: 'echo true'
+
   deploy:
     if: success() && github.ref == 'refs/heads/main' # only run on main success
-    needs: [jest, playwright] # only run after jest and playwright jobs complete
+    needs: [tests-passed] # only run after all test jobs complete
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code

@@ -17,10 +17,11 @@ import polygonBody from './__mocks__/polygon_collections.body.json'
 import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 
 test.describe('Map: Spatial interactions', () => {
-  test.beforeEach(async ({ page, context }, testInfo) => {
+  test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
-      page,
-      context
+      browserName,
+      context,
+      page
     })
 
     await page.route('**/search/granules/timeline', (route) => {
@@ -28,9 +29,6 @@ test.describe('Map: Spatial interactions', () => {
         body: JSON.stringify([])
       })
     })
-
-    // eslint-disable-next-line no-param-reassign
-    testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${testInfo.project.name}/${name}`
   })
 
   test.describe('When drawing point spatial', () => {

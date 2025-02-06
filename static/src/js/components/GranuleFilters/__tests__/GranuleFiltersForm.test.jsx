@@ -491,6 +491,7 @@ describe('GranuleFiltersForm component', () => {
 
           expect(setFieldValue).toHaveBeenCalledTimes(4)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1960-08-13T00:00:00.000Z')
           expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 225)
           expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 226)
 

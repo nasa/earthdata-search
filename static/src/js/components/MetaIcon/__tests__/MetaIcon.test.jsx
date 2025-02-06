@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { FaCocktail } from 'react-icons/fa'
-import { OverlayTrigger } from 'react-bootstrap'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import MetaIcon from '../MetaIcon'

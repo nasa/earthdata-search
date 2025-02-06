@@ -1,10 +1,13 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .well {
   width: 100%;
   overflow: hidden;
-  color: $color__carbon--80;
+  color: utils.$color__carbon--80;
 
   &__main {
-    padding: $spacer*1.5;
+    padding: bootstrap.$spacer*1.5;
   }
 
   &__heading {
@@ -21,10 +24,10 @@
   }
 
   &__section {
-    margin-bottom: $spacer*1.5;
+    margin-bottom: bootstrap.$spacer*1.5;
   }
 
   &__footer {
-    padding: $spacer*1.5;
+    padding: bootstrap.$spacer*1.5;
   }
 }

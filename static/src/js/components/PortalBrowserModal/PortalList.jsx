@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import { sortBy } from 'lodash-es'
-import { Row, Col } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Row from 'react-bootstrap/Row'
 
 import { locationPropType } from '../../util/propTypes/location'
 import { usePortalLogo } from '../../hooks/usePortalLogo'

@@ -1,8 +1,11 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .granule-results-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc($spacer / 2) $spacer;
+  padding: calc(bootstrap.$spacer / 2) bootstrap.$spacer;
 
   .panels--sm & {
     flex-direction: row;
@@ -12,7 +15,7 @@
     font-size: 0.575rem;
     padding: 0.25rem 0.35rem;
     font-weight: 400;
-    text-shadow: 0 0 3px rgba($color__carbon-black, 0.4);
+    text-shadow: 0 0 3px rgba(utils.$color__carbon-black, 0.4);
 
     .btn & {
       position: relative;
@@ -52,7 +55,7 @@
     margin-right: 0.5rem;
     line-height: 2;
     font-weight: 700;
-    color: $color__carbon--70;
+    color: utils.$color__carbon--70;
   }
 
   &__primary-actions {
@@ -74,21 +77,21 @@
   &__action {
     display: flex;
     align-items: center;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
     margin-right: 1rem;
     padding: 0;
 
     &:hover,
     &:active {
-      color: $color__carbon--60;
+      color: utils.$color__carbon--60;
     }
 
     .granule-results-actions__explore-button {
-      color: $color__carbon--50;
+      color: utils.$color__carbon--50;
 
       &:hover,
       &:active {
-        color: $color__carbon--60;
+        color: utils.$color__carbon--60;
       }
 
       &.dropdown-toggle:after {
@@ -122,7 +125,7 @@
 
     &--subscriptions {
       .badge {
-        background-color: $color__international-orange;
+        background-color: utils.$color__international-orange;
       }
     }
 
@@ -133,11 +136,11 @@
     }
 
     &--remove {
-      color: $color__nasa-red;
+      color: utils.$color__nasa-red;
 
       &:hover,
       &:active {
-        color: $color__nasa-red--shade;
+        color: utils.$color__nasa-red--shade;
       }
     }
   }

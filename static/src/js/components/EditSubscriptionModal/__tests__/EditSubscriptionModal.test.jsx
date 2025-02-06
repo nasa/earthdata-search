@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { mount, shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Form } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form'
 
 import EditSubscriptionModal from '../EditSubscriptionModal'
 import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'

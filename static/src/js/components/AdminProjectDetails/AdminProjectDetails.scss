@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .admin-project-details {
   &__metadata-display {
     width: 100%;
@@ -17,12 +19,12 @@
     display: block;
     font-size: 0.75rem;
     font-style: italic;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
   }
 
   &__metadata-display-content {
     font-size: 1rem;
-    color: $color__carbon--70;
+    color: utils.$color__carbon--70;
     word-break: break-all;
 
     &__json {

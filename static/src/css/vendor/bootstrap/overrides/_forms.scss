@@ -1,8 +1,10 @@
+@use '../../../utils';
+
 .form-control {
-  border: 1px solid $color__carbon--30;
+  border: 1px solid utils.$color__carbon--30;
 
   &:focus {
-    border: 1px solid $color__carbon--40;
+    border: 1px solid utils.$color__carbon--40;
   }
 }
 
@@ -27,23 +29,23 @@
 .dropdown-dark,
 .dropdown-menu-dark {
   .form-control {
-    background-color: $color__carbon--60;
-    color: $color__spacesuit-white;
-    border: 1px solid $color__carbon--60;
+    background-color: utils.$color__carbon--60;
+    color: utils.$color__spacesuit-white;
+    border: 1px solid utils.$color__carbon--60;
 
     &::placeholder,
     &::placeholder-shown {
-      color: $color__carbon--60;
+      color: utils.$color__carbon--60;
     }
 
     &:focus {
-      color: $color__spacesuit-white;
-      background-color: $color__carbon--60;
-      border: 1px solid $color__carbon--90;
+      color: utils.$color__spacesuit-white;
+      background-color: utils.$color__carbon--60;
+      border: 1px solid utils.$color__carbon--90;
 
       &::placeholder,
       &::placeholder-shown {
-        color: $color__carbon--60;
+        color: utils.$color__carbon--60;
       }
     }
   }
