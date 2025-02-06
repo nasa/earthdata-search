@@ -1,8 +1,10 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+
 .order-progress-list {
   list-style: none;
   overflow: hidden;
   overflow-y: scroll;
   margin: 0;
-  margin-top: $spacer;
+  margin-top: bootstrap.$spacer;
   padding: 0;
 }

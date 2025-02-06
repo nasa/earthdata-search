@@ -61,15 +61,19 @@ cat <<EOF > .dockerignore
 .DS_Store
 .git
 .github
-.serverless
+.esbuild
+.nyc_output
 .webpack
 coverage
+test-results
+playwright-coverage
+playwright-report
 dist
 tmp
 EOF
 
 cat <<EOF > Dockerfile
-FROM node:18.19-bullseye
+FROM node:22
 COPY . /build
 WORKDIR /build
 RUN npm ci --omit=dev

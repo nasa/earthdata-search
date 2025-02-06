@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .collection-details-cloud-access-direct-distribution-information {
   &__info {
     > dt {
@@ -25,7 +28,7 @@
       vertical-align: baseline;
 
       &:last-child {
-        padding-top:   calc($spacer / 8);
+        padding-top: calc(bootstrap.$spacer / 8);
       }
 
       .button {

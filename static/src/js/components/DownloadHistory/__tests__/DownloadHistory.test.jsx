@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Table } from 'react-bootstrap'
+import Table from 'react-bootstrap/Table'
 import Helmet from 'react-helmet'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'

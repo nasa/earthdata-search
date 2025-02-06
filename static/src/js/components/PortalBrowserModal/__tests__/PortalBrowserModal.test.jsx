@@ -48,7 +48,7 @@ describe('PortalBrowserModal component', () => {
       />
     )
 
-    const closeModalButton = screen.getByRole('button', { name: 'Close EDSCModal' })
+    const closeModalButton = screen.getByRole('button', { name: 'Close' })
     await user.click(closeModalButton)
 
     expect(onTogglePortalBrowserModal).toHaveBeenCalledTimes(1)

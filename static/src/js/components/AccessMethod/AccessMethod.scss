@@ -1,19 +1,22 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .access-method {
   &__radio-tooltip.fa {
-    margin-left: calc($spacer / 4);
+    margin-left: calc(bootstrap.$spacer / 4);
     font-size: 0.875rem;
-    color: $color__carbon--40;
+    color: utils.$color__carbon--40;
   }
 
   &__section-intro,
   p.access-method__section-intro {
-    margin-bottom: calc($spacer / 2)
+    margin-bottom: calc(bootstrap.$spacer / 2)
   }
 
   &__section-status {
     font-weight: 700;
     font-style: italic;
-    color: $color__carbon--60;
+    color: utils.$color__carbon--60;
   }
 
   &__echoform-loading {
@@ -30,32 +33,32 @@
   }
 
   &__documentation-icon {
-    margin-right:   calc($spacer / 3);
-    margin-bottom: calc($spacer / 4);
+    margin-right:   calc(bootstrap.$spacer / 3);
+    margin-bottom: calc(bootstrap.$spacer / 4);
   }
 
   &__external-link-icon {
-    margin-left:   calc($spacer / 3);
-    margin-bottom:   calc($spacer / 3);
+    margin-left:   calc(bootstrap.$spacer / 3);
+    margin-bottom:   calc(bootstrap.$spacer / 3);
   }
 }
 
 .harmony-select-trigger {
   position: relative;
   width: 24.5rem;
-  border-radius: $border-radius;
-  border: 1px solid $color__carbon--20;
-  padding-left: $spacer;
-  padding-right: $spacer*2;
+  border-radius: bootstrap.$border-radius;
+  border: 1px solid utils.$color__carbon--20;
+  padding-left: bootstrap.$spacer;
+  padding-right: bootstrap.$spacer*2;
   font-size: 0.81rem;
   line-height: 1;
   height: 2.1rem;
-  background-color: $color__spacesuit-white;
-  margin-bottom: calc($spacer / 2);
-  margin-left: $spacer;
+  background-color: utils.$color__spacesuit-white;
+  margin-bottom: calc(bootstrap.$spacer / 2);
+  margin-left: bootstrap.$spacer;
 
   &:hover {
-    background-color: $color__carbon--5;
+    background-color: utils.$color__carbon--5;
   }
 }
 
@@ -78,9 +81,9 @@
 
 .harmony-select-content {
   overflow: hidden;
-  background-color: $color__spacesuit-white;
-  border-radius: $border-radius;
-  box-shadow: 0rem 0.7rem 2rem -0.5rem rgba($color__carbon--80, 0.4);
+  background-color: utils.$color__spacesuit-white;
+  border-radius: bootstrap.$border-radius;
+  box-shadow: 0rem 0.7rem 2rem -0.5rem rgba(utils.$color__carbon--80, 0.4);
   z-index: 100;
   width: 27.125rem;
 }
@@ -98,10 +101,10 @@
   user-select: none;
 
   &:hover {
-    background-color: $color__carbon--5;
+    background-color: utils.$color__carbon--5;
 
     .meta-icon__metadata {
-      background-color: $color__carbon--20;
+      background-color: utils.$color__carbon--20;
     }
   }
 }
@@ -124,8 +127,8 @@
 }
 
 .harmony-scroll-area-thumb {
-  background: $color__carbon--30;
-  border-radius: $border-radius;
+  background: utils.$color__carbon--30;
+  border-radius: bootstrap.$border-radius;
   position: relative;
   flex: 1;
 }

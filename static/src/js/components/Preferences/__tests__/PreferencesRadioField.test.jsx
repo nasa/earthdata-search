@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { FormCheck } from 'react-bootstrap'
+import FormCheck from 'react-bootstrap/FormCheck'
 
 import PreferencesRadioField from '../PreferencesRadioField'
 

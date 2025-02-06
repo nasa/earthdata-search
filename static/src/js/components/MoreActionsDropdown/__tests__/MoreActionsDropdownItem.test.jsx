@@ -1,10 +1,9 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Dropdown } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
 
 import { MoreActionsDropdownItem } from '../MoreActionsDropdownItem'
-import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -41,7 +40,7 @@ describe('MoreActionsDropdownItem component', () => {
   test('adds an icon', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('EDSCIcon').type()).toBe(EDSCIcon)
+    expect(enzymeWrapper.find('.more-actions-dropdown-item__icon').props().icon).toBe('FaGlobal')
   })
 
   test('displays the text', () => {

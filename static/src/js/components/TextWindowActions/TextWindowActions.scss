@@ -1,9 +1,12 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .text-window-actions {
   position: relative;
-  background-color: $color__carbon--5;
-  border: 1px solid $color__carbon--10;
-  padding: $spacer;
-  padding-top: 3*$spacer;
+  background-color: utils.$color__carbon--5;
+  border: 1px solid utils.$color__carbon--10;
+  padding: bootstrap.$spacer;
+  padding-top: 3*bootstrap.$spacer;
   overflow: hidden;
 
   &__actions {
@@ -13,9 +16,9 @@
     top: 0;
     right: 0;
     width: 100%;
-    padding: calc($spacer / 2);
-    border-bottom: 1px solid $color__carbon--20;
-    background-color: $color__carbon--10;
+    padding: calc(bootstrap.$spacer / 2);
+    border-bottom: 1px solid utils.$color__carbon--20;
+    background-color: utils.$color__carbon--10;
     z-index: 1;
   }
 
@@ -30,22 +33,22 @@
     right: 0;
     bottom: 0;
     display: flex;
-    padding: $spacer;
-    padding-top: $spacer*3.5;
+    padding: bootstrap.$spacer;
+    padding-top: bootstrap.$spacer*3.5;
     overflow-y: scroll;
   }
 
   &__modal-body {
-    padding: $spacer;
-    padding-top: $spacer*3.5;
+    padding: bootstrap.$spacer;
+    padding-top: bootstrap.$spacer*3.5;
 
     &--no-actions {
-      padding-top: $spacer*1.5;
+      padding-top: bootstrap.$spacer*1.5;
     }
   }
 
   &__modal-container {
-    background: $color__nasa-red;
+    background: utils.$color__nasa-red;
     height: 4rem;
     width: 4rem;
     border-radius: 4em;
@@ -54,7 +57,7 @@
 
   &__modal-icon {
     margin-top: .85rem;
-    color: $color__spacesuit-white;
+    color: utils.$color__spacesuit-white;
   }
 
   &__modal-blurb {

@@ -2,8 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { kebabCase } from 'lodash-es'
-
-import { Badge, ProgressBar } from 'react-bootstrap'
+import Badge from 'react-bootstrap/Badge'
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 

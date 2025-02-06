@@ -1,7 +1,8 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Tabs } from 'react-bootstrap'
+import Tabs from 'react-bootstrap/Tabs'
+
 import EDSCTabs from '../EDSCTabs'
 
 Enzyme.configure({ adapter: new Adapter() })

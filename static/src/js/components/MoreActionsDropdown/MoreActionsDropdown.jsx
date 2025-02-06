@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { PropTypes } from 'prop-types'
-import { Dropdown } from 'react-bootstrap'
+import Dropdown from 'react-bootstrap/Dropdown'
 import classNames from 'classnames'
 import MoreActionsToggle from '../CustomToggle/MoreActionsToggle'
 
@@ -61,7 +61,7 @@ export const MoreActionsDropdown = ({
           ReactDOM.createPortal(
             <Dropdown.Menu
               className={dropdownMenuClasses}
-              alignRight={alignRight}
+              align={alignRight ? 'end' : null}
             >
               {children}
               {

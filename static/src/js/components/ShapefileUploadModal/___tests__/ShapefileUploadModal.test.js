@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Modal } from 'react-bootstrap'
+import Modal from 'react-bootstrap/Modal'
 import * as EventEmitter from '../../../events/events'
 import ShapefileUploadModal from '../ShapefileUploadModal'
 

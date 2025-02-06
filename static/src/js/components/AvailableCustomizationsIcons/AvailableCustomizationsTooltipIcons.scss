@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .available-customizations-tooltip-icons {
   &__tooltip-feature-list {
     width: auto;
@@ -9,6 +11,6 @@
 
   &__tooltip-feature-icon {
     margin-right: 0.325rem;
-    color: $color__carbon--30;
+    color: utils.$color__carbon--30;
   }
 }

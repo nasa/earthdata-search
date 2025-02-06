@@ -5,7 +5,8 @@ import React, {
   Suspense
 } from 'react'
 import PropTypes from 'prop-types'
-import { Alert, Form } from 'react-bootstrap'
+import Alert from 'react-bootstrap/Alert'
+import Form from 'react-bootstrap/Form'
 import * as Select from '@radix-ui/react-select'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 
@@ -918,7 +919,7 @@ const AccessMethod = ({
                   >
                     <select
                       id="input__output-format"
-                      className="form-control form-control-sm"
+                      className="form-select form-select-sm"
                       onChange={handleOutputFormatSelection}
                       value={selectedOutputFormat}
                       data-testid="access-methods__output-format-options"
@@ -942,7 +943,7 @@ const AccessMethod = ({
                   >
                     <select
                       id="input__output-projection"
-                      className="form-control form-control-sm"
+                      className="form-select form-select-sm"
                       onChange={handleOutputProjectionSelection}
                       value={selectedOutputProjection}
                       data-testid="access-methods__output-projection-options"

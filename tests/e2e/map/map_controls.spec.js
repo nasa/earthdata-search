@@ -15,10 +15,11 @@ import commonHeaders from './__mocks__/common_collections.headers.json'
 // from the store are being displayed correctly.
 
 test.describe('Map: Control interactions', () => {
-  test.beforeEach(async ({ page, context }, testInfo) => {
+  test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
-      page,
-      context
+      browserName,
+      context,
+      page
     })
 
     await page.route('**/search/granules/timeline', (route) => {
@@ -26,9 +27,6 @@ test.describe('Map: Control interactions', () => {
         body: JSON.stringify([])
       })
     })
-
-    // eslint-disable-next-line no-param-reassign
-    testInfo.snapshotPath = (name) => `${testInfo.file}-snapshots/${testInfo.project.name}/${name}`
   })
 
   test.describe('When moving the map', () => {

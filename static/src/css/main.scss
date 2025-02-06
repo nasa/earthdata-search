@@ -1,16 +1,17 @@
 /*
  * Vendor styles
 */
-@import 'vendor/bootstrap/bootstrap';
-@import 'vendor/datepicker';
-@import 'vendor/leaflet';
-@import 'vendor/simplebar';
+
+@use 'vendor/datepicker';
+@use 'vendor/leaflet';
+@use 'vendor/simplebar';
+@use 'vendor/bootstrap';
 
 /*
  * Application styles
 */
-@import 'utils/utils';
-@import 'base';
-@import 'helpers';
-@import 'layout';
-@import 'modules/modules';
+
+@forward 'base';
+@forward 'helpers';
+@forward 'layout';
+@forward 'modules';

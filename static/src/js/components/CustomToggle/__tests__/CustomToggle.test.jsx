@@ -59,12 +59,12 @@ describe('CustomToggle component', () => {
   test('should render self with an icon', () => {
     const { enzymeWrapper } = setup('icon')
 
-    expect(enzymeWrapper.find('EDSCIcon').props().icon).toEqual(FaGlobe)
+    expect(enzymeWrapper.find('.custom-toggle__icon').props().icon).toEqual(FaGlobe)
   })
 
   test('should render self without an icon', () => {
     const { enzymeWrapper } = setup('no-icon')
 
-    expect(enzymeWrapper.find('EDSCIcon').length).toEqual(0)
+    expect(enzymeWrapper.find('.custom-toggle__icon').length).toEqual(0)
   })
 })

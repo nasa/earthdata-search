@@ -9,8 +9,7 @@ import {
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { FaSave } from 'react-icons/fa'
-
-import { Alert } from 'react-bootstrap'
+import Alert from 'react-bootstrap/Alert'
 
 import { constructDownloadableFile } from '../../util/files/constructDownloadableFile'
 

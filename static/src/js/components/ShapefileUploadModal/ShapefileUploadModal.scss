@@ -1,26 +1,29 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .shapefile-modal {
   &__upload-link {
     font-weight: 700;
   }
 
   &__hint {
-    color: $color__carbon--60;
+    color: utils.$color__carbon--60;
     font-size: 0.825rem;
   }
 
   &__hint-label {
-    margin-right: calc($spacer / 4);
+    margin-right: calc(bootstrap.$spacer / 4);
     font-weight: 700;
   }
 
   &__actions {
     display: flex;
     justify-content: flex-start;
-    margin-top: $spacer*2;
+    margin-top: bootstrap.$spacer*2;
   }
 
   &__action {
-    margin-right: calc($spacer / 2);
+    margin-right: calc(bootstrap.$spacer / 2);
   }
 
   .modal-content {
@@ -34,14 +37,14 @@
       left: 0;
       bottom: 0;
       right: 0;
-      margin: calc($spacer / 4);
-      border: 2px dashed $color__carbon--30;
-      border-radius: $border-radius-sm;
+      margin: calc(bootstrap.$spacer / 4);
+      border: 2px dashed utils.$color__carbon--30;
+      border-radius: bootstrap.$border-radius-sm;
       z-index: 0;
       transition: all 0.2s ease-in-out;
 
       .is-dragging & {
-        border: 2px dashed $color__carbon--40;
+        border: 2px dashed utils.$color__carbon--40;
       }
     }
   }

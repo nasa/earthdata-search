@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { mount } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { Modal } from 'react-bootstrap'
+import Modal from 'react-bootstrap/Modal'
 
 import EDSCModal from '../../EDSCModal/EDSCModal'
 import KeyboardShortcutsModal from '../KeyboardShortcutsModal'

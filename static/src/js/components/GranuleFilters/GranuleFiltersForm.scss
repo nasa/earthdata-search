@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .granule-filters-form {
   &__item {
     display: flex;
@@ -5,19 +8,19 @@
   }
 
   &__item-button {
-    margin-left: calc($spacer / 2);
+    margin-left: calc(bootstrap.$spacer / 2);
     padding: 0.075rem 0.425rem;
-    background-color: $color__nasa-blue--shade;
-    border-color: $color__nasa-blue--shade;
+    background-color: utils.$color__nasa-blue--shade;
+    border-color: utils.$color__nasa-blue--shade;
 
     &:hover {
-      background-color: darken($color__nasa-blue--shade, 5);
-      border-color: darken($color__nasa-blue--shade, 5);
+      background-color: darken(utils.$color__nasa-blue--shade, 5);
+      border-color: darken(utils.$color__nasa-blue--shade, 5);
     }
   }
 
   ::placeholder {
-    color: $color__carbon--30;
+    color: utils.$color__carbon--30;
     opacity: 1;
   }
 
@@ -25,9 +28,9 @@
     font-size: 0.775rem;
     margin-bottom: 0;
   }
-  
+
   &__readable-granule-name-tooltip-title {
-    color: $color__carbon--30;
+    color: utils.$color__carbon--30;
     font-size: 0.825rem;
   }
 

@@ -1,6 +1,8 @@
+@use '../../../css/utils';
+
 .granule-results-data-links-button {
   &__dropdown-item {
-    color: $color__carbon--80;
+    color: utils.$color__carbon--80;
     font-size: 0.875rem;
     padding: 0.25rem 1rem;
     user-select: text;
@@ -9,11 +11,11 @@
     cursor: pointer;
 
     .button__icon {
-      color: $color__carbon--50;
+      color: utils.$color__carbon--50;
     }
 
     &:hover {
-      color: $color__carbon-black;
+      color: utils.$color__carbon-black;
     }
   }
 
@@ -38,9 +40,9 @@
     top: 0;
     left: 0;
     padding: 0.325rem 1rem;
-    background: $color__carbon--10;
-    border-bottom: 1px solid $color__carbon--20;
-    color: $color__carbon--60;
+    background: utils.$color__carbon--10;
+    border-bottom: 1px solid utils.$color__carbon--20;
+    color: utils.$color__carbon--60;
     font-size: 0.825rem;
     line-height: 1.5rem;
     white-space: nowrap;
@@ -59,7 +61,7 @@
 
   &__icon {
     margin-left: 0.5rem;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
     opacity: 0;
     transition: all 0.2s ease;
 
@@ -79,7 +81,7 @@
     display: flex;
     align-items: center;
     margin-left: 0.25rem;
-    color: $color__carbon--70;
+    color: utils.$color__carbon--70;
     font-weight: 700;
     align-items: center;
     user-select: text;
@@ -93,7 +95,7 @@
       position: relative;
       margin-left: 0.25rem;
       font-size: 0.825rem;
-      color: $color__carbon--50;
+      color: utils.$color__carbon--50;
       opacity: 0;
       transition: opacity 0.1s ease-in-out;
 
@@ -117,12 +119,12 @@
   }
 
   &__tab-icon {
-    color: $color__carbon--30;
+    color: utils.$color__carbon--30;
     margin-right: 0.325rem;
     transition: color 0.1s ease-in-out;
 
     .nav-item.active & {
-      color: $color__carbon--50;
+      color: utils.$color__carbon--50;
     }
   }
 }

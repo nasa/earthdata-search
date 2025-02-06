@@ -1,7 +1,7 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { Alert } from 'react-bootstrap'
+import Alert from 'react-bootstrap/Alert'
 import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCAlert from '../EDSCAlert'
@@ -66,7 +66,7 @@ describe('EDSCAlert component', () => {
     })
 
     test('should render the icon', () => {
-      expect(enzymeWrapper.find('EDSCIcon').length).toEqual(1)
+      expect(enzymeWrapper.find('.edsc-alert__icon').length).toEqual(1)
     })
   })
 })

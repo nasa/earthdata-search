@@ -81,10 +81,11 @@ const testResultsSize = async (page, cmrHits) => {
 }
 
 test.describe('Path /search', () => {
-  test.beforeEach(async ({ page, context }) => {
+  test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
-      page,
-      context
+      browserName,
+      context,
+      page
     })
   })
 

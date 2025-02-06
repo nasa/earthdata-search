@@ -1,11 +1,15 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .download-history {
   &__spinner {
     margin: 0 auto;
   }
 
   &__button {
-    margin: 0 calc($spacer / 2);
-    color: $color__carbon--30;
+    display: inline-flex;
+    margin: 0 calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--30;
 
     &--share {
       i {
@@ -15,7 +19,7 @@
     }
 
     &:hover {
-      color: $color__carbon--60;
+      color: utils.$color__carbon--60;
     }
   }
 }
@@ -35,9 +39,7 @@
   }
 
   &__actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
   }
 
 }

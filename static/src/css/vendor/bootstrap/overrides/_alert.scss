@@ -1,7 +1,13 @@
+@use '../../../utils';
+
 .alert {
   border: 0;
 
   &-light {
-    background-color: $color__carbon--10;
+    background-color: utils.$color__carbon--10;
+  }
+
+  &-secondary {
+    background-color: utils.$color__carbon--10;
   }
 }

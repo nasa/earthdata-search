@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { ProgressBar } from 'react-bootstrap'
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 import { pluralize } from '../../../util/pluralize'
 import { commafy } from '../../../util/commafy'

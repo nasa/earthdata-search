@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .map {
   position: absolute;
   left: 0;
@@ -8,11 +10,11 @@
   align-items: center;
   justify-content: center;
   flex-basis: auto;
-  background: $color__spacesuit-white;
-  color: $color__carbon--20;
+  background: utils.$color__spacesuit-white;
+  color: utils.$color__carbon--20;
   font-weight: bold;
   z-index: 0;
-  background: $color__carbon-black;
+  background: utils.$color__carbon-black;
 
   .is-panels-dragging & {
     pointer-events: none;

@@ -32,7 +32,7 @@ describe('FilterStackItem component', () => {
   test('renders an icon', () => {
     const { enzymeWrapper } = setup()
 
-    expect(enzymeWrapper.find('EDSCIcon').hasClass('filter-stack-item__icon')).toBe(true)
+    expect(enzymeWrapper.find('.filter-stack-item__icon').length).toBe(1)
   })
 
   test('renders a title', () => {

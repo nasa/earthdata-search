@@ -1,3 +1,5 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+
 .shapefile-dropzone {
   display: none;
   z-index: 5000;
@@ -14,6 +16,6 @@
 
   /* Hides the default text inside the dropzone container */
   .dz-default {
-    @include invisible(hidden)
+    @include bootstrap.visually-hidden();
   }
 }

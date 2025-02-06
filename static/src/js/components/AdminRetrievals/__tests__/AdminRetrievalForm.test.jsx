@@ -1,8 +1,8 @@
 import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import Form from 'react-bootstrap/Form'
 
-import { Form } from 'react-bootstrap'
 import { AdminRetrievalsForm } from '../AdminRetrievalsForm'
 
 Enzyme.configure({ adapter: new Adapter() })

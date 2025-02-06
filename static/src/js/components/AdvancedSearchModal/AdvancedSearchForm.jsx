@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Form as FormikForm } from 'formik'
-import {
-  Col,
-  Form,
-  Row
-} from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
 import RegionSearch from './RegionSearch'
 
 import './AdvancedSearchForm.scss'

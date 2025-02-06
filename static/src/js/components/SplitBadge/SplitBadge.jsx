@@ -1,7 +1,7 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
-import { Badge } from 'react-bootstrap'
+import Badge from 'react-bootstrap/Badge'
 
 import './SplitBadge.scss'
 
@@ -20,7 +20,10 @@ const SplitBadge = ({
   )
 
   return (
-    <Badge className={classes} variant={variant}>
+    <Badge
+      className={classes}
+      bg={variant}
+    >
       <span className="split-badge__primary">
         {primary}
       </span>

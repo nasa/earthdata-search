@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import {
-  Col,
-  Form,
-  Row
-} from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
 import { isEmpty } from 'lodash-es'
 import { FaQuestionCircle } from 'react-icons/fa'
 
@@ -113,13 +111,13 @@ export class RegionSearchForm extends Component {
               <Row>
                 <Col sm="6">
                   <Form.Group
+                    className="mb-3"
                     as={Row}
                     controlId="endpoint"
                   >
                     <Col>
-                      <Form.Control
+                      <Form.Select
                         name="endpoint"
-                        as="select"
                         onChange={handleChange}
                         value={endpoint}
                       >
@@ -136,10 +134,11 @@ export class RegionSearchForm extends Component {
                             </option>
                           ))
                         }
-                      </Form.Control>
+                      </Form.Select>
                     </Col>
                   </Form.Group>
                   <Form.Group
+                    className="mb-3"
                     as={Row}
                     controlId="keyword"
                   >

@@ -1,15 +1,18 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .radio {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding: calc($spacer / 2) $spacer;
+  padding: calc(bootstrap.$spacer / 2) bootstrap.$spacer;
   width: 100%;
-  border: 1px solid $color__carbon--20;
+  border: 1px solid utils.$color__carbon--20;
   border-radius: 0.125rem;
   vertical-align: middle;
 
   &--is-selected {
-    background-color: $color__carbon--10;
+    background-color: utils.$color__carbon--10;
   }
 
   &__input {
@@ -19,13 +22,13 @@
 
   &__content {
     display: inline-block;
-    margin-left: calc($spacer / 2);
+    margin-left: calc(bootstrap.$spacer / 2);
     font-weight: 700;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
     vertical-align: middle;
 
     .radio--is-selected & {
-      color: $color__carbon--60;
+      color: utils.$color__carbon--60;
     }
   }
 }

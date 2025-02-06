@@ -1,9 +1,11 @@
+@use '../../../css/utils';
+
 .subscriptions-list-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid $color__carbon--20;
+  border-bottom: 1px solid utils.$color__carbon--20;
 
   &__primary {
     flex-shrink: 1;
@@ -23,7 +25,7 @@
   &__meta {
     display: block;
     font-size: 0.75rem;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

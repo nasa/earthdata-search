@@ -1,3 +1,6 @@
+@use 'vendor/bootstrap/configuration' as bootstrap;
+@use 'utils/variables';
+
 .route-wrapper {
   position: relative;
   margin: 0;
@@ -8,16 +11,16 @@
   height: 100%;
   overflow: hidden;
   align-items: flex-end;
-  background-color: $color__carbon--5;
-  background-image: linear-gradient($color__carbon--5, #f5f5f5);
+  background-color: variables.$color__carbon--5;
+  background-image: linear-gradient(variables.$color__carbon--5, #f5f5f5);
 
   &__header {
-    background-color: $color__carbon--80;
-    color: $color__carbon--40;
-    border-bottom: 1px solid $color__carbon--70;
+    background-color: variables.$color__carbon--80;
+    color: variables.$color__carbon--40;
+    border-bottom: 1px solid variables.$color__carbon--70;
 
     .route-wrapper--light & {
-      border-bottom: 1px solid $color__carbon--20;
+      border-bottom: 1px solid variables.$color__carbon--20;
     }
   }
 
@@ -29,7 +32,7 @@
     height: auto;
     padding: 0.625rem;
 
-    @include media-breakpoint-up(md) {
+    @include bootstrap.media-breakpoint-up(md) {
       flex-wrap: nowrap;
       justify-content: space-between;
     }
@@ -53,22 +56,22 @@
     }
 
     &--dark {
-      background: $color__carbon-black;
+      background: variables.$color__carbon-black;
     }
 
   }
 
   &__content-nav {
-    padding: calc($spacer / 2) $spacer;
-    color: $color__spacesuit-white;
+    padding: calc(bootstrap.$spacer / 2) bootstrap.$spacer;
+    color: variables.$color__spacesuit-white;
   }
 
   &__content-nav-link {
-    color: $color__spacesuit-white;
+    color: variables.$color__spacesuit-white;
 
     &:hover,
     &:active {
-      color: $color__carbon--10;
+      color: variables.$color__carbon--10;
     }
   }
 
@@ -81,17 +84,17 @@
   }
 
   &--light {
-    background: $color__spacesuit-white;
+    background: variables.$color__spacesuit-white;
   }
 
   &--dark {
-    background: $color__carbon-black;
+    background: variables.$color__carbon-black;
   }
 
   &__page-heading {
     padding-bottom: 1rem;
     margin-bottom: 3rem;
     font-weight: 700;
-    border-bottom: 1px solid $color__carbon--20;
+    border-bottom: 1px solid variables.$color__carbon--20;
   }
 }

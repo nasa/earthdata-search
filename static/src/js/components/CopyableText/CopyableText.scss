@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .copyable-text {
   display: block;
 
@@ -10,7 +12,7 @@
     position: relative;
     margin-left: 0.25rem;
     font-size: 0.825rem;
-    color: $color__carbon--50;
+    color: utils.$color__carbon--50;
     opacity: 0;
     transition: opacity 0.1s ease-in-out;
 

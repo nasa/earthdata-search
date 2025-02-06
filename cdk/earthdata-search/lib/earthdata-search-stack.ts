@@ -31,7 +31,7 @@ const {
   STAGE_NAME = 'dev',
   USE_IMAGE_CACHE = 'false',
 } = process.env;
-const runtime = lambda.Runtime.NODEJS_18_X;
+const runtime = lambda.Runtime.NODEJS_22_X;
 
 
 /**

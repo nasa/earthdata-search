@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Table } from 'react-bootstrap'
+import Table from 'react-bootstrap/Table'
 import TimeAgo from 'react-timeago'
 import { XCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { Helmet } from 'react-helmet'

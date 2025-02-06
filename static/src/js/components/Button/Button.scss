@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .button {
   display: flex;
   align-items: center;
@@ -54,7 +57,7 @@
     }
 
     .button--icon-right & {
-      margin-left: calc($spacer / 2);
+      margin-left: calc(bootstrap.$spacer / 2);
       margin-right: 0;
     }
 
@@ -66,7 +69,7 @@
       display: inline;
       vertical-align: bottom;
       line-height: 1em;
-      margin-right: calc($spacer / 4);
+      margin-right: calc(bootstrap.$spacer / 4);
     }
 
     .button--svg & {
@@ -75,8 +78,8 @@
   }
 
   &__badge {
-    margin-left: calc($spacer / 3);
-    background-color: rgba($color__carbon-black, 0.5);
+    margin-left: calc(bootstrap.$spacer / 3);
+    background-color: rgba(utils.$color__carbon-black, 0.5);
     border-radius: 1em;
     vertical-align: middle;
   }

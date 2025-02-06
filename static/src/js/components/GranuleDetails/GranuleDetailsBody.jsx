@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Tabs, Tab } from 'react-bootstrap'
+import Tab from 'react-bootstrap/Tab'
+import Tabs from 'react-bootstrap/Tabs'
 
 import GranuleDetailsInfo from './GranuleDetailsInfo'
 import GranuleDetailsMetadata from './GranuleDetailsMetadata'

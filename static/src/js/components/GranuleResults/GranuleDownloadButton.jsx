@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { parse } from 'qs'
-import { Tooltip, OverlayTrigger } from 'react-bootstrap'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 

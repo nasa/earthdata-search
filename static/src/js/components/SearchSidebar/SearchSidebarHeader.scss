@@ -1,18 +1,20 @@
+@use '../../../css/utils';
+
 .search-sidebar-header {
   &__link-wrapper {
     opacity: 0;
     position: relative;
     height: 2rem;
-    background-color: $color__spacesuit-white;
-    border-bottom: 1px solid $color__carbon--20;
-    border-right: 1px solid $color__carbon--20;
+    background-color: utils.$color__spacesuit-white;
+    border-bottom: 1px solid utils.$color__carbon--20;
+    border-right: 1px solid utils.$color__carbon--20;
     pointer-events: none;
     transition: all 0.2s ease-in-out;
 
     &--is-active {
       opacity: 1;
       pointer-events: initial;
-      background-color: $color__spacesuit-white;
+      background-color: utils.$color__spacesuit-white;
     }
   }
 
@@ -20,8 +22,8 @@
     display: flex;
     padding: 0.5rem 0.75rem;
     padding-right: 0.5rem;
-    background: darken($color__carbon--10, 5);
-    color: $color__carbon--80;
+    background: darken(utils.$color__carbon--10, 5);
+    color: utils.$color__carbon--80;
   }
 
   &__thumbnail-container {
@@ -34,13 +36,13 @@
     height: 2.1875rem;
     width: 2.1875rem;
     padding: 0.2rem;
-    background-color: $color__spacesuit-white;
-    border: 1px solid $color__carbon--20;
+    background-color: utils.$color__spacesuit-white;
+    border: 1px solid utils.$color__carbon--20;
     border-radius: 0.25rem;
 
     &:hover,
     &:focus {
-      border: 1px solid $color__nasa-blue;
+      border: 1px solid utils.$color__nasa-blue;
 
       .search-sidebar-header__thumbnail-icon-wrapper {
         opacity: 1;
@@ -59,7 +61,7 @@
     justify-content: center;
     height: 16px;
     width: 16px;
-    background-color: rgba($color__carbon-black, 0.5);
+    background-color: rgba(utils.$color__carbon-black, 0.5);
     border-top-left-radius: 4px;
     visibility: hidden;
     opacity: 0;
@@ -70,8 +72,8 @@
     display: block;
     height: 0.625rem;
     width: 0.625rem;
-    color: $color__carbon--10;
-    text-shadow: 0 0 4px rgba($color__carbon-black, 0.5);
+    color: utils.$color__carbon--10;
+    text-shadow: 0 0 4px rgba(utils.$color__carbon-black, 0.5);
     font-size: 0.625rem;
   }
 
@@ -104,7 +106,7 @@
   &__portal-tooltip-icon {
     margin-left: 0.25rem;
     font-size: 0.625rem;
-    color: $color__carbon--40;
+    color: utils.$color__carbon--40;
   }
 
   &__primary {
@@ -132,10 +134,10 @@
 
   &__button {
     font-size: 0.75rem;
-    color: $color__carbon-black;
+    color: utils.$color__carbon-black;
 
     &:hover {
-      color: $color__carbon-black;
+      color: utils.$color__carbon-black;
     }
   }
 }

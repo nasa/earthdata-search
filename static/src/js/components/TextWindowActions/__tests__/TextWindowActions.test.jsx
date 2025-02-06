@@ -208,7 +208,7 @@ describe('TextWindowActions component', () => {
       test('renders the save button', () => {
         const { enzymeWrapper } = setup({}, true)
 
-        const eddButton = enzymeWrapper.find('.text-window-actions__action--edd').filter(Button)
+        const eddButton = enzymeWrapper.find('button.text-window-actions__action--edd')
         eddButton.simulate('click')
 
         const eddModal = enzymeWrapper.find(EDSCModalContainer).at(1)
