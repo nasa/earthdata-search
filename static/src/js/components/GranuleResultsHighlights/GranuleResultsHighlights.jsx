@@ -130,7 +130,7 @@ export const GranuleResultsHighlights = ({
               }
             }
           >
-            <EDSCIcon icon={FaMap} />
+            <EDSCIcon icon={FaMap} inlineFlex={false} />
             {' View Granules'}
           </PortalLinkContainer>
         </div>

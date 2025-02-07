@@ -26,7 +26,7 @@ describe('EDSCIcon component', () => {
     test('should add the class name', async () => {
       render(<EDSCIcon className="test-class" icon={FaQuestionCircle} />)
 
-      const icon = await screen.findByTestId('edsc-icon')
+      const icon = await screen.findByTestId('edsc-icon-wrapper')
 
       expect(icon.classList.contains('test-class')).toBeTruthy()
     })
@@ -36,7 +36,7 @@ describe('EDSCIcon component', () => {
     test('should add the variant', async () => {
       render(<EDSCIcon variant="test-variant" icon={FaQuestionCircle} />)
 
-      const icon = await screen.findByTestId('edsc-icon')
+      const icon = await screen.findByTestId('edsc-icon-wrapper')
 
       expect(icon.classList.contains('edsc-icon--test-variant')).toBeTruthy()
     })
@@ -46,9 +46,7 @@ describe('EDSCIcon component', () => {
     test('should add the aria-label', async () => {
       render(<EDSCIcon ariaLabel="test-aria-label" icon={FaQuestionCircle} />)
 
-      const icon = await screen.findByTestId('edsc-icon')
-
-      expect(icon.getAttribute('aria-label')).toEqual('test-aria-label')
+      expect(await screen.findByLabelText('test-aria-label')).toBeInTheDocument()
     })
   })
 

@@ -21,11 +21,12 @@
 
   &__metadata {
     margin-left: 0.25rem;
-    padding: 0.075rem 0.5rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 1rem;
     background-color: utils.$color__carbon--10;
     color: utils.$color__carbon--80;
     font-size: 0.625rem;
     font-weight: 700;
+    display: flex;
   }
 }

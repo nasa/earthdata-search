@@ -50,6 +50,7 @@ export const AvailableCustomizationsTooltipIcons = ({
               title="A white globe icon"
               size="0.725rem"
               icon={FaGlobe}
+              inlineFlex={false}
             />
             Spatial subset
           </li>
@@ -63,6 +64,7 @@ export const AvailableCustomizationsTooltipIcons = ({
               title="A white clock icon"
               size="0.725rem"
               icon={FaClock}
+              inlineFlex={false}
             />
             Temporal subset
           </li>
@@ -76,6 +78,7 @@ export const AvailableCustomizationsTooltipIcons = ({
               title="A white tags icon"
               size="0.725rem"
               icon={FaTags}
+              inlineFlex={false}
             />
             Variable subset
           </li>
@@ -89,6 +92,7 @@ export const AvailableCustomizationsTooltipIcons = ({
               title="A white horizontal sliders icon"
               size="0.725rem"
               icon={Filter}
+              inlineFlex={false}
             />
             Transform
           </li>
@@ -102,6 +106,7 @@ export const AvailableCustomizationsTooltipIcons = ({
               title="A white file icon"
               size="0.725rem"
               icon={FileGeneric}
+              inlineFlex={false}
             />
             Reformat
           </li>
@@ -115,6 +120,7 @@ export const AvailableCustomizationsTooltipIcons = ({
               title="A white cubes icon"
               size="0.725rem"
               icon={FaCubes}
+              inlineFlex={false}
             />
             Combine
           </li>
