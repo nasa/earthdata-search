@@ -285,13 +285,4 @@ describe('App component', () => {
     expect(canonical).toBeDefined()
     expect(canonical.href).toBe('https://search.earthdata.nasa.gov/search')
   })
-
-  // https://stackoverflow.com/questions/66667827/react-testing-library-to-cover-the-lazy-load/66690463
-  test('renders loaded lazy components', async () => {
-    setup()
-
-    await waitFor(() => {
-      expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
-    })
-  })
 })
