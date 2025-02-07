@@ -59,6 +59,7 @@ cat <<EOF > .dockerignore
 **/node_modules
 **/cdk.out
 .DS_Store
+.env
 .git
 .github
 .esbuild
@@ -77,7 +78,7 @@ FROM node:22
 COPY . /build
 WORKDIR /build
 RUN npm ci --omit=dev
-RUN npm run build
+RUN NODE_ENV=production npm run build
 EOF
 
 dockerTag=edsc-$bamboo_STAGE_NAME
