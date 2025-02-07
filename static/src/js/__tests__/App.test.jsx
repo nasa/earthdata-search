@@ -2,11 +2,7 @@ import React from 'react'
 import nock from 'nock'
 import { Helmet } from 'react-helmet'
 
-import {
-  render,
-  waitFor,
-  screen
-} from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 
 import * as AppConfig from '../../../../sharedUtils/config'
 import App from '../App'

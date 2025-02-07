@@ -26,7 +26,6 @@ const MapEvents = (props) => {
   })
 
   useEffect(() => {
-    // Handle map offset changes
     const handleMapOffsetChange = () => {
       map.invalidateSize()
     }
