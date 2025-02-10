@@ -305,8 +305,8 @@ const uiReducer = (state = initialState, action = {}) => {
     }
 
     case RESTORE_FROM_URL: {
-      const { payload } = action
-      const { deprecatedUrlParams } = payload
+      const { payload = {} } = action
+      const { deprecatedUrlParams = [] } = payload
       const { deprecatedParameterModal } = state
 
       if (deprecatedUrlParams.length === 0) return initialState

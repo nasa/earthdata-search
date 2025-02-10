@@ -81,6 +81,11 @@ export const updateStore = ({
       shapefile,
       timeline
     }))
+  } else {
+    // We always need to load the portal config
+    await dispatch(restoreFromUrl({
+      portal
+    }))
   }
 }
 
