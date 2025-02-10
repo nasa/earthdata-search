@@ -536,10 +536,7 @@ describe('Panels component', () => {
     })
 
     afterEach(() => {
-      // Clean up after each test
-      if (mainPanelEl && mainPanelEl.parentNode) {
-        document.body.removeChild(mainPanelEl)
-      }
+      mainPanelEl?.remove()
     })
 
     test('correctly updates panel width and map offset', () => {
@@ -622,9 +619,7 @@ describe('Panels component', () => {
       render(<TestWrapper />)
 
       // Remove the main panel element to test the fallback
-      if (mainPanelEl && mainPanelEl.parentNode) {
-        document.body.removeChild(mainPanelEl)
-      }
+      mainPanelEl?.remove()
 
       // Spy on the updateMapOffset method
       const dispatchSpy = jest.spyOn(window, 'dispatchEvent')
