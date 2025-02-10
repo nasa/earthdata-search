@@ -56,7 +56,6 @@ const setup = (overrideProps) => {
     orders: [{
       type: 'download'
     }],
-    type: 'download', // TODO Remove?
     ...overrideProps
   }
 
