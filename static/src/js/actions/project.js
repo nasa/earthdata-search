@@ -366,7 +366,6 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         limit: maxCmrPageSize
       }
     })
-    console.log('🚀 ~ file: project.js:367 ~ response:', response)
 
     const payload = []
 
