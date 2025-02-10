@@ -31,6 +31,12 @@ export const DownloadScriptPanel = ({
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.sh`
 
+  const downloadScript = generateDownloadScript(
+    downloadLinks,
+    retrievalCollection,
+    earthdataEnvironment
+  )
+
   return downloadLinks.length > 0
     ? (
       <>
@@ -58,26 +64,14 @@ export const DownloadScriptPanel = ({
         </div>
         <TextWindowActions
           id={`script-${retrievalId}`}
-          fileContents={
-            generateDownloadScript(
-              downloadLinks,
-              retrievalCollection,
-              earthdataEnvironment
-            )
-          }
+          fileContents={downloadScript}
           fileName={downloadFileName}
-          clipboardContents={
-            generateDownloadScript(
-              downloadLinks,
-              retrievalCollection,
-              earthdataEnvironment
-            )
-          }
+          clipboardContents={downloadScript}
           modalTitle="Download Script"
           disableEdd
         >
-          <pre className="download-links-panel__pre">
-            {generateDownloadScript(downloadLinks, retrievalCollection, earthdataEnvironment)}
+          <pre role="code" className="download-links-panel__pre">
+            {downloadScript}
           </pre>
         </TextWindowActions>
       </>

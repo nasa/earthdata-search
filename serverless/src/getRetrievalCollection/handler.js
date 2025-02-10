@@ -51,6 +51,7 @@ const getRetrievalCollection = async (event, context) => {
         'retrieval_orders.order_information',
         'retrieval_orders.state',
         'retrieval_orders.error',
+        'retrieval_orders.updated_at',
         'users.urs_id'
       )
       .leftJoin('retrieval_orders', { 'retrieval_collections.id': 'retrieval_orders.retrieval_collection_id' })
@@ -74,6 +75,7 @@ const getRetrievalCollection = async (event, context) => {
         granule_params: granuleParams,
         granule_count: granuleCount,
         retrieval_order_id: retrievalOrderId, // Used to check whether or not orders exist based on the left join
+        updated_at: updatedAt,
         urs_id: ursId
       } = retrievalCollectionObject
 
@@ -113,6 +115,7 @@ const getRetrievalCollection = async (event, context) => {
           granule_params: granuleParams,
           granule_count: granuleCount,
           orders,
+          updated_at: updatedAt,
           urs_id: ursId
         })
       }

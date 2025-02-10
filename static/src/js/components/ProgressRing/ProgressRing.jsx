@@ -10,7 +10,7 @@ import './ProgressRing.scss'
  * @param {Number} strokeWidth - The stroke width.
  * @param {Number} width - The prop passed into the component.
  */
-export const ProgressRing = ({
+const ProgressRing = ({
   className,
   progress,
   strokeWidth,
