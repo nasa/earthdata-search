@@ -518,4 +518,135 @@ describe('Panels component', () => {
       dispatchSpy.mockRestore()
     })
   })
+
+  describe('updatePanelWidth', () => {
+    let mainPanelEl
+    let panelsRef
+
+    beforeEach(() => {
+      // Create and setup the main panel element
+      mainPanelEl = document.createElement('div')
+      mainPanelEl.className = 'project-collections'
+      Object.defineProperty(mainPanelEl, 'clientWidth', {
+        configurable: true,
+        value: 500
+      })
+
+      document.body.appendChild(mainPanelEl)
+    })
+
+    afterEach(() => {
+      // Clean up after each test
+      if (mainPanelEl && mainPanelEl.parentNode) {
+        document.body.removeChild(mainPanelEl)
+      }
+    })
+
+    test('correctly updates panel width and map offset', () => {
+      // Create a ref to capture the Panels component instance
+      let panelsInstance
+      const TestWrapper = () => {
+        panelsRef = (ref) => {
+          panelsInstance = ref
+        }
+
+        return (
+          <Panels
+            ref={panelsRef}
+            show
+            activePanel="0.0.0"
+            draggable
+          >
+            <PanelSection>
+              <PanelGroup>
+                <PanelItem>Content</PanelItem>
+              </PanelGroup>
+            </PanelSection>
+          </Panels>
+        )
+      }
+
+      render(<TestWrapper />)
+
+      // Spy on the updateMapOffset method
+      const dispatchSpy = jest.spyOn(window, 'dispatchEvent')
+
+      // Call updatePanelWidth with a new width
+      const newWidth = 800
+      panelsInstance.updatePanelWidth(newWidth)
+
+      // Check if the panel width was updated correctly
+      expect(screen.getByTestId('panels-section')).toHaveStyle(`width: ${newWidth}px`)
+
+      // Check if the map offset was calculated and set correctly
+      const expectedOffset = 500 + newWidth // MainPanelWidth + newWidth
+      expect(document.documentElement.style.getPropertyValue('--map-offset'))
+        .toBe(`${expectedOffset}px`)
+
+      // Verify that the custom event was dispatched
+      expect(dispatchSpy).toHaveBeenCalledWith(
+        expect.any(CustomEvent)
+      )
+
+      // Verify the event details
+      const dispatchedEvent = dispatchSpy.mock.calls[0][0]
+      expect(dispatchedEvent.type).toBe('mapOffsetChanged')
+
+      dispatchSpy.mockRestore()
+    })
+
+    test('handles missing main panel element', () => {
+      // Create a ref to capture the Panels component instance
+      let panelsInstance
+      const TestWrapper = () => {
+        panelsRef = (ref) => {
+          panelsInstance = ref
+        }
+
+        return (
+          <Panels
+            ref={panelsRef}
+            show
+            activePanel="0.0.0"
+            draggable
+          >
+            <PanelSection>
+              <PanelGroup>
+                <PanelItem>Content</PanelItem>
+              </PanelGroup>
+            </PanelSection>
+          </Panels>
+        )
+      }
+
+      render(<TestWrapper />)
+
+      // Remove the main panel element to test the fallback
+      if (mainPanelEl && mainPanelEl.parentNode) {
+        document.body.removeChild(mainPanelEl)
+      }
+
+      // Spy on the updateMapOffset method
+      const dispatchSpy = jest.spyOn(window, 'dispatchEvent')
+
+      // Call updatePanelWidth with a new width
+      const newWidth = 800
+      panelsInstance.updatePanelWidth(newWidth)
+
+      // Check if the panel width was updated correctly
+      expect(screen.getByTestId('panels-section')).toHaveStyle(`width: ${newWidth}px`)
+
+      // Check if the map offset was calculated correctly with 0 for mainPanelWidth
+      const expectedOffset = newWidth // 0 + newWidth
+      expect(document.documentElement.style.getPropertyValue('--map-offset'))
+        .toBe(`${expectedOffset}px`)
+
+      // Verify that the custom event was still dispatched
+      expect(dispatchSpy).toHaveBeenCalledWith(
+        expect.any(CustomEvent)
+      )
+
+      dispatchSpy.mockRestore()
+    })
+  })
 })
