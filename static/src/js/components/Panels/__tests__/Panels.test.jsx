@@ -1,5 +1,9 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import {
+  render,
+  screen,
+  fireEvent
+} from '@testing-library/react'
 
 import Panels from '../Panels'
 import { PanelSection } from '../PanelSection'
@@ -466,6 +470,52 @@ describe('Panels component', () => {
       setup(rerender, { show: false })
 
       expect(screen.getByTestId('panels-section')).not.toHaveClass('panels--is-open')
+    })
+  })
+
+  describe('Panels handle click map offset update', () => {
+    let mainPanelEl
+
+    beforeEach(() => {
+      mainPanelEl = document.createElement('div')
+      mainPanelEl.className = 'project-collections'
+      Object.defineProperty(mainPanelEl, 'clientWidth', {
+        configurable: true,
+        value: 500
+      })
+
+      document.body.appendChild(mainPanelEl)
+    })
+
+    afterEach(() => {
+      document.body.removeChild(mainPanelEl)
+    })
+
+    test('clicking handle when panel is open sets map offset correctly (panel closes)', () => {
+      setup(render, { show: true })
+
+      const dispatchSpy = jest.spyOn(window, 'dispatchEvent')
+
+      const handle = screen.getByTestId('panels__handle')
+      fireEvent.click(handle)
+
+      expect(document.documentElement.style.getPropertyValue('--map-offset')).toBe('500px')
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.any(CustomEvent))
+
+      dispatchSpy.mockRestore()
+    })
+
+    test('clicking handle when panel is closed sets map offset correctly (panel opens)', () => {
+      setup(render, { show: false })
+
+      const dispatchSpy = jest.spyOn(window, 'dispatchEvent')
+      const handle = screen.getByTestId('panels__handle')
+      fireEvent.click(handle)
+
+      expect(document.documentElement.style.getPropertyValue('--map-offset')).toBe('1100px')
+      expect(dispatchSpy).toHaveBeenCalledWith(expect.any(CustomEvent))
+
+      dispatchSpy.mockRestore()
     })
   })
 })

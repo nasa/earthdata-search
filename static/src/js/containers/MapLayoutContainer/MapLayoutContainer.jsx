@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import './MapLayoutContainer.scss'
 
 const MapLayoutContainer = ({ children, panelsRef }) => {
   const containerRef = useRef(null)
@@ -93,7 +94,7 @@ const MapLayoutContainer = ({ children, panelsRef }) => {
   const [sidePanel, mapComponent] = processedChildren
 
   return (
-    <div className="relative w-full h-full" ref={containerRef}>
+    <div className="map-layout-container" ref={containerRef}>
       {sidePanel}
       {mapComponent}
     </div>
