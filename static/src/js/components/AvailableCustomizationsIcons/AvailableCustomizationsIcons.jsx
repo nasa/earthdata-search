@@ -46,6 +46,7 @@ export const AvailableCustomizationsIcons = ({
           title="A white globe icon"
           icon={FaGlobe}
           size="0.675rem"
+          inlineFlex={false}
         />
       )
     }
@@ -56,6 +57,7 @@ export const AvailableCustomizationsIcons = ({
           title="A white clock icon"
           icon={FaClock}
           size="0.675rem"
+          inlineFlex={false}
         />
       )
     }
@@ -66,6 +68,7 @@ export const AvailableCustomizationsIcons = ({
           title="A white tags icon"
           icon={FaTags}
           size="0.675rem"
+          inlineFlex={false}
         />
       )
     }
@@ -76,6 +79,7 @@ export const AvailableCustomizationsIcons = ({
           title="A white horizontal sliders icon"
           icon={Filter}
           size="0.675rem"
+          inlineFlex={false}
         />
       )
     }
@@ -86,6 +90,7 @@ export const AvailableCustomizationsIcons = ({
           title="A white file icon"
           icon={FileGeneric}
           size="0.675rem"
+          inlineFlex={false}
         />
       )
     }
@@ -96,6 +101,7 @@ export const AvailableCustomizationsIcons = ({
           title="A white cubes icon"
           icon={FaCubes}
           size="0.675rem"
+          inlineFlex={false}
         />
       )
     }
