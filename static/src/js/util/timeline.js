@@ -23,16 +23,12 @@ export const timelineIntervals = {
  */
 export const timelineMidpoint = (startDate, endDate) => {
   const date1 = new Date(startDate)
-  console.log('🚀 ~ file: timeline.js:22 ~ date1:', date1)
   const date2 = new Date(endDate)
-  console.log('🚀 ~ file: timeline.js:24 ~ date2:', date2)
 
   const milliseconds1 = date1.getTime()
-  console.log('🚀 ~ file: timeline.js:27 ~ milliseconds1:', milliseconds1)
   const milliseconds2 = date2.getTime()
   // Calculate the midpoint in milliseconds
   const midpointMilliseconds = (milliseconds1 + milliseconds2) / 2
-  console.log('🚀 ~ file: timeline.js:31 ~ midpointMilliseconds:', midpointMilliseconds)
 
   // Create a new date object from the midpoint milliseconds
   const midpointDate = new Date(midpointMilliseconds)
@@ -44,8 +40,6 @@ export const timelineMidpoint = (startDate, endDate) => {
 // TODO find the earliest and latest time in a project take their average for the center
 
 export const getTimelineProjectCenter = (temporalStart, temporalEnd) => {
-  console.log('🚀 ~ file: timeline.js:47 ~ temporalEnd:', temporalEnd)
-  console.log('🚀 ~ file: timeline.js:47 ~ temporalStart:', temporalStart)
   const startDate = new Date(temporalStart)
   const endDate = new Date(temporalEnd)
 
@@ -84,8 +78,6 @@ export const intervalDurationMappings = {
 }
 
 export const zoomLevelDifference = (startDate, endDate) => {
-  console.log('🚀 ~ file: timeline.js:85 ~ endDate:', endDate)
-  console.log('🚀 ~ file: timeline.js:85 ~ startDate:', startDate)
   let date2
   if (!endDate) {
     date2 = new Date().getTime()
@@ -94,8 +86,6 @@ export const zoomLevelDifference = (startDate, endDate) => {
   }
 
   const date1 = new Date(startDate)
-  console.log('🚀 ~ file: timeline.js:22 ~ date1:', date1)
-  console.log('🚀 ~ file: timeline.js:24 ~ date2:', date2)
 
   const intervalDuration = intervalToDuration({
     start: date1,
@@ -109,7 +99,6 @@ export const zoomLevelDifference = (startDate, endDate) => {
     ...intervalDurationMappings,
     ...intervalDuration
   }
-  console.log('🚀 ~ file: timeline.js:108 ~ diff:', diff)
 
   // Determine the minimal time range to hold the data collection extent
   if (diff.years < 1) {
