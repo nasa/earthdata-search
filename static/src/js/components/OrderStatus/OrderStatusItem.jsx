@@ -88,6 +88,8 @@ const buildEddLink = ({
   return link
 }
 
+let intervalId = null
+
 /**
  * Renders OrderStatusItem.
  * @param {Object} params - The props passed into the component.
@@ -114,7 +116,6 @@ export const OrderStatusItem = ({
   onToggleAboutCSDAModal
 }) => {
   const [opened, setOpened] = useState(defaultOpen)
-  const [intervalId, setIntervalId] = useState(null)
 
   const shouldRefresh = () => {
     const {
@@ -127,44 +128,27 @@ export const OrderStatusItem = ({
     // If the order is in a terminal state stop asking for order status
     if (['complete', 'failed', 'canceled'].includes(orderStatus)) {
       clearInterval(intervalId)
+      intervalId = null
     } else {
       onFetchRetrievalCollection(id)
     }
   }
 
-  // Handles fetching the retrieval collection to get the order info
+  // Clear the intervalId when unmounting. (this is only the `return` function in the useEffect)
+  useEffect(() => () => {
+    clearInterval(intervalId)
+  }, [])
+
+  // Handles fetching the granule browse links
   useEffect(() => {
     const { access_method: accessMethod } = collection
     const { type: accessMethodType } = accessMethod
 
-    // TODO: Add a second value and refresh at different intervals for the different types of orders
-    const { orderStatusRefreshTime } = getApplicationConfig()
-
+    // If the access method is download or opendap, fetch the granule browse links
     if (collection && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
-      const { id } = collection
-
-      if (id) {
-        // Fetch the retrieval collection before waiting for the interval
-        onFetchRetrievalCollection(id)
-
-        // Start refreshing the retrieval collection
-        const interval = setInterval(() => {
-          shouldRefresh()
-        }, orderStatusRefreshTime)
-
-        setIntervalId(interval)
-      }
-
-      // Fetch the granule browse links regardless of accessMethodType
-      // download & opendap browse links return with the granule links, every other access method needs
+      // `download` & `opendap` browse links return with the granule links, every other access method needs
       // to fetch them here
       onFetchRetrievalCollectionGranuleBrowseLinks(collection)
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId)
-      }
     }
   }, [])
 
@@ -201,6 +185,41 @@ export const OrderStatusItem = ({
     updated_at: updatedAt
   } = collection
 
+  const orderStatus = aggregatedOrderStatus(orders)
+  const stateFromOrderStatus = getStateFromOrderStatus(orderStatus)
+
+  // Handles fetching the retrieval collection to get the order info
+  useEffect(() => {
+    const { type: accessMethodType } = accessMethod
+
+    const { orderStatusRefreshTime, orderStatusRefreshTimeCreating } = getApplicationConfig()
+
+    let refreshInterval = orderStatusRefreshTime
+
+    // If the order is still `creating`, refresh in a faster interval
+    // const orderStatus = aggregatedOrderStatus(orders)
+    if (orderStatus === 'creating') {
+      refreshInterval = orderStatusRefreshTimeCreating
+    }
+
+    if (id && !intervalId && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
+      // Fetch the retrieval collection before waiting for the interval
+      onFetchRetrievalCollection(id)
+
+      // Start refreshing the retrieval collection
+      intervalId = setInterval(() => {
+        shouldRefresh()
+      }, refreshInterval)
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+        intervalId = null
+      }
+    }
+  }, [orderStatus])
+
   // If the collection is not loaded, return null
   if (!isLoaded) return null
 
@@ -216,9 +235,6 @@ export const OrderStatusItem = ({
     title,
     isCSDA: collectionIsCSDA
   } = collectionMetadata
-
-  const orderStatus = aggregatedOrderStatus(orders)
-  const stateFromOrderStatus = getStateFromOrderStatus(orderStatus)
 
   // Download and Opendap do not have a status, so hasStatus will be set to false
   const hasStatus = !['download', 'opendap'].includes(accessMethodType.toLowerCase())

@@ -83,7 +83,7 @@ describe('OrderStatusItem', () => {
       jest.useFakeTimers({ legacyFakeTimers: true })
     })
 
-    describe('when the status is not done', () => {
+    describe('when the status is creating', () => {
       test('calls onFetchRetrievalCollection after a delay', async () => {
         const { props } = setup({
           collection: {
@@ -100,6 +100,41 @@ describe('OrderStatusItem', () => {
             granule_count: 100,
             orders: [{
               state: 'creating',
+              order_information: {}
+            }],
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
+          }
+        })
+
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
+
+        // Calls onFetchRetrievalCollection after 5s
+        jest.advanceTimersByTime(5000)
+
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(2)
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
+      })
+    })
+
+    describe('when the status is in progress', () => {
+      test('calls onFetchRetrievalCollection after a delay', async () => {
+        const { props } = setup({
+          collection: {
+            id: 1,
+            collection_id: 'TEST_COLLECTION_111',
+            retrieval_id: '54',
+            collection_metadata: {
+              id: 'TEST_COLLECTION_111',
+              title: 'Test Dataset ID'
+            },
+            access_method: {
+              type: 'Harmony'
+            },
+            granule_count: 100,
+            orders: [{
+              state: 'initialized',
               order_information: {}
             }],
             isLoaded: true,
@@ -220,7 +255,6 @@ describe('OrderStatusItem', () => {
       // Minimized Header values
 
       // Progress ring is 100%
-      // 2 calls because the useEffect triggers a rerender
       expect(ProgressRing).toHaveBeenCalledTimes(1)
       expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
         progress: 100
@@ -241,7 +275,6 @@ describe('OrderStatusItem', () => {
       await user.click(button)
 
       // Progress ring is 100%
-      // 3 calls because expanding the body triggered a new render
       expect(ProgressRing).toHaveBeenCalledTimes(2)
       expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
         progress: 100
@@ -374,7 +407,6 @@ describe('OrderStatusItem', () => {
       // Minimized Header values
 
       // Progress ring is 100%
-      // 2 calls because the useEffect triggers a rerender
       expect(ProgressRing).toHaveBeenCalledTimes(1)
       expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
         progress: 100
@@ -395,7 +427,6 @@ describe('OrderStatusItem', () => {
       await user.click(button)
 
       // Progress ring is 100%
-      // 3 calls because expanding the body triggered a new render
       expect(ProgressRing).toHaveBeenCalledTimes(2)
       expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
         progress: 100
@@ -459,7 +490,6 @@ describe('OrderStatusItem', () => {
       // Minimized Header values
 
       // Progress ring is 100%
-      // 2 calls because the useEffect triggers a rerender
       expect(ProgressRing).toHaveBeenCalledTimes(1)
       expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
         progress: 100
@@ -480,7 +510,6 @@ describe('OrderStatusItem', () => {
       await user.click(button)
 
       // Progress ring is 100%
-      // 3 calls because expanding the body triggered a new render
       expect(ProgressRing).toHaveBeenCalledTimes(2)
       expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
         progress: 100
@@ -538,8 +567,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -559,8 +587,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -620,8 +647,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -641,8 +667,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -727,8 +752,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 90%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 90
         }), {})
@@ -748,8 +772,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 90%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 90
         }), {})
@@ -841,8 +864,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 100%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -862,8 +884,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 100%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -949,8 +970,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 100%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -970,8 +990,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 100%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -1060,8 +1079,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 100%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -1081,8 +1099,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 100%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -1144,8 +1161,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1165,8 +1181,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1213,8 +1228,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1234,8 +1248,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1303,8 +1316,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1324,8 +1336,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1393,8 +1404,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 100%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -1414,8 +1424,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 100%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -1488,8 +1497,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 100%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -1509,8 +1517,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 100%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -1559,8 +1566,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1580,8 +1586,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1664,8 +1669,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1685,8 +1689,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -1792,8 +1795,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 90%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 90
         }), {})
@@ -1813,8 +1815,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 90%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 90
         }), {})
@@ -1923,8 +1924,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 100%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -1944,8 +1944,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 100%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -2054,8 +2053,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 100%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -2075,8 +2073,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 100%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -2159,8 +2156,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 100%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -2180,8 +2176,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 100%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -2264,8 +2259,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2285,8 +2279,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2354,8 +2347,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2375,8 +2367,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2436,8 +2427,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2457,8 +2447,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2533,8 +2522,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2554,8 +2542,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2629,8 +2616,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -2650,8 +2636,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 100
         }), {})
@@ -2720,8 +2705,7 @@ describe('OrderStatusItem', () => {
         // Minimized Header values
 
         // Progress ring is 0%
-        // 2 calls because the useEffect triggers a rerender
-        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})
@@ -2741,8 +2725,7 @@ describe('OrderStatusItem', () => {
         await user.click(button)
 
         // Progress ring is 0%
-        // 3 calls because expanding the body triggered a new render
-        expect(ProgressRing).toHaveBeenCalledTimes(3)
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
         expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
           progress: 0
         }), {})

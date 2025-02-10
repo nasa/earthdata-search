@@ -25,6 +25,8 @@ config="`jq '.application.disableSwodlr = $newValue' --arg newValue $bamboo_DISA
 config="`jq '.application.macOSEddDownloadSize = $newValue' --arg newValue $bamboo_MACOS_EDD_DOWNLOAD_SIZE <<< $config`"
 config="`jq '.application.windowsEddDownloadSize = $newValue' --arg newValue $bamboo_WINDOWS_EDD_DOWNLOAD_SIZE <<< $config`"
 config="`jq '.application.linuxEddDownloadSize = $newValue' --arg newValue $bamboo_LINUX_EDD_DOWNLOAD_SIZE <<< $config`"
+config="`jq '.application.orderStatusRefreshTime = $newValue' --arg newValue $bamboo_ORDER_STATUS_REFRESH_TIME <<< $config`"
+config="`jq '.application.orderStatusRefreshTimeCreating = $newValue' --arg newValue $bamboo_ORDER_STATUS_REFRESH_TIME_CREATING <<< $config`"
 config="`jq '.application.collectionSearchResultsSortKey = $newValue' --arg newValue $bamboo_COLLECTION_SEARCH_RESULTS_SORT_KEY <<< $config`"
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
