@@ -1,5 +1,10 @@
+import * as getClientId from '../../../../../../sharedUtils/getClientId'
 import * as aggregatedOrderStatus from '../../../../../../sharedUtils/orderStatus'
 import buildEddLink from '../buildEddLink'
+
+jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
+  client: 'eed-edsc-dev-serverless-client'
+}))
 
 describe('buildEddLink', () => {
   describe('when the order is Harmony and is still running or has no files', () => {
