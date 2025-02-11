@@ -19,20 +19,24 @@ export interface EarthdataSearchStackProps extends cdk.StackProps {
 const logGroupSuffix = ''
 
 const {
-  COLORMAP_JOB_ENABLED,
+  CACHE_KEY_EXPIRE_SECONDS = '84000',
   CLOUDFRONT_BUCKET_NAME = 'local-bucket',
+  CLOUDFRONT_OAI_ID = 'local-oai',
+  COLORMAP_JOB_ENABLED,
+  GIBS_JOB_ENABLED,
   LOG_DESTINATION_ARN = 'local-arn',
   NODE_ENV = 'development',
   OBFUSCATION_SPIN = '',
   OBFUSCATION_SPIN_SHAPEFILES = '',
   ORDER_DELAY_SECONDS = '1',
-  GIBS_JOB_ENABLED,
-  CACHE_KEY_EXPIRE_SECONDS = '84000',
+  S3_OBJECTS_EXPIRATION_IN_DAYS = '30',
   STAGE_NAME = 'dev',
+  SUBNET_ID_A = 'local-subnet-a',
+  SUBNET_ID_B = 'local-subnet-b',
   USE_IMAGE_CACHE = 'false',
+  VPC_ID = 'local-vpc'
 } = process.env;
 const runtime = lambda.Runtime.NODEJS_22_X;
-
 
 /**
  * The AWS CloudFormation template for this Serverless application
@@ -54,10 +58,10 @@ export class EarthdataSearchStack extends cdk.Stack {
     const vpc = ec2.Vpc.fromVpcAttributes(this, 'Vpc', {
       availabilityZones: ['us-east-1a', 'us-east-1b'],
       privateSubnetIds: [
-        process.env.SUBNET_ID_A!,
-        process.env.SUBNET_ID_B!
+        SUBNET_ID_A,
+        SUBNET_ID_B
       ],
-      vpcId: process.env.VPC_ID!
+      vpcId: VPC_ID
     });
 
     const apiNestedStack = new cdk.NestedStack(this, 'ApiNestedStack')
@@ -149,16 +153,19 @@ export class EarthdataSearchStack extends cdk.Stack {
     })
 
     new Functions(this, 'Functions', {
-      apiScope: apiNestedStack,
       apiGatewayDeployment,
       apiGatewayRestApi,
+      apiScope: apiNestedStack,
       authorizers,
       cloudfrontBucketName: CLOUDFRONT_BUCKET_NAME,
+      cloudfrontOaiId: CLOUDFRONT_OAI_ID,
       colormapJobEnabled: COLORMAP_JOB_ENABLED === 'true',
       defaultLambdaConfig,
       gibsJobEnabled: GIBS_JOB_ENABLED === 'true',
       queues,
-      stageName: STAGE_NAME
+      s3ObjectsExpirationInDays: parseInt(S3_OBJECTS_EXPIRATION_IN_DAYS, 10),
+      stageName: STAGE_NAME,
+      vpcId: VPC_ID
     })
 
     new StepFunctions(this, 'StepFunctions', {
