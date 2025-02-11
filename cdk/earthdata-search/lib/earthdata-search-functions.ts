@@ -3,6 +3,7 @@ import * as cdk from 'aws-cdk-lib';
 import * as events from 'aws-cdk-lib/aws-events';
 import * as eventsTargets from "aws-cdk-lib/aws-events-targets";
 import * as lambda from 'aws-cdk-lib/aws-lambda'
+import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as sqs from 'aws-cdk-lib/aws-sqs';
 import { Construct } from 'constructs';
 
@@ -27,6 +28,8 @@ export interface FunctionsProps {
   };
   /** The cloudfrontBucketName */
   cloudfrontBucketName: string;
+  /** The Cloudfront OAI ID */
+  cloudfrontOaiId: string;
   /** Colormap generation job enabled */
   colormapJobEnabled: boolean;
   /** Default Lambda config options */
@@ -50,8 +53,12 @@ export interface FunctionsProps {
     /** The SQS queue for processing user data */
     userDataQueue: sqs.IQueue;
   };
+  /** The number of days to retain objects in S3 */
+  s3ObjectsExpirationInDays: number;
   /** The stage name (dev/sit/etc) */
   stageName: string;
+  /** The VPC ID */
+  vpcId: string;
 }
 
 export class Functions extends Construct {
@@ -59,16 +66,19 @@ export class Functions extends Construct {
     super(scope, id);
 
     const {
-      apiScope,
       apiGatewayDeployment,
       apiGatewayRestApi,
+      apiScope,
       authorizers,
       cloudfrontBucketName,
+      cloudfrontOaiId,
       colormapJobEnabled,
       defaultLambdaConfig,
       gibsJobEnabled,
       queues,
-      stageName
+      s3ObjectsExpirationInDays,
+      stageName,
+      vpcId
     } = props
 
     const functionNamePrefix = scope.stackName
@@ -653,6 +663,58 @@ export class Functions extends Construct {
       functionName: 'generateNotebook',
       functionNamePrefix,
     });
+
+    // S3 bucket for the Generate Notebooks service
+    const generateNotebookBucket = new s3.Bucket(generateNotebookNestedStack, 'GenerateNotebooksBucket', {
+      bucketName: defaultLambdaConfig.environment.GENERATE_NOTEBOOKS_BUCKET_NAME,
+      lifecycleRules: [
+        {
+          expiration: cdk.Duration.days(s3ObjectsExpirationInDays),
+          id: 'DeleteObjects'
+        }
+      ]
+    })
+
+    new s3.CfnBucketPolicy(generateNotebookNestedStack, 'GenerateNotebooksBucketPolicy', {
+      bucket: generateNotebookBucket.bucketName,
+      policyDocument: {
+        Statement: [
+          {
+            Action: [
+              's3:GetObject*',
+              's3:ListBucket'
+            ],
+            Effect: 'Allow',
+            Principal: {
+              AWS: `arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity ${cloudfrontOaiId}`
+            },
+            Resource: [
+              `${generateNotebookBucket.bucketArn}/*`,
+              generateNotebookBucket.bucketArn
+            ]
+          },
+          {
+            Sid: 'Internet-Services-East-VPC-Access',
+            Action: [
+              's3:GetObject*',
+              's3:ListBucket'
+            ],
+            Effect: 'Allow',
+            Principal: '*',
+            Resource: [
+              `${generateNotebookBucket.bucketArn}/*`,
+              generateNotebookBucket.bucketArn
+            ],
+            Condition: {
+              StringEquals: {
+                'aws:sourceVpc': vpcId
+              }
+            }
+          }
+        ],
+        Version: '2012-10-17'
+      }
+    })
 
     /**
      * Get Color Map
