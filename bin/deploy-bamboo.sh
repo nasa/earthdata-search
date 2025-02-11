@@ -59,6 +59,7 @@ cat <<EOF > .dockerignore
 **/node_modules
 **/cdk.out
 .DS_Store
+.env
 .git
 .github
 .esbuild
@@ -77,7 +78,7 @@ FROM node:22
 COPY . /build
 WORKDIR /build
 RUN npm ci --omit=dev
-RUN npm run build
+RUN NODE_ENV=production npm run build
 EOF
 
 dockerTag=edsc-$bamboo_STAGE_NAME
@@ -108,7 +109,7 @@ dockerRun() {
     -e "STAGE_NAME=$bamboo_STAGE_NAME" \
     -e "SUBNET_ID_A=$bamboo_SUBNET_ID_A" \
     -e "SUBNET_ID_B=$bamboo_SUBNET_ID_B" \
-    -e "USE_CACHE=$bamboo_USE_CACHE" \
+    -e "USE_IMAGE_CACHE=$bamboo_USE_IMAGE_CACHE" \
     -e "VPC_ID=$bamboo_VPC_ID" \
     $dockerTag "$@"
 }
