@@ -16,6 +16,18 @@ import pointBodyEdited from './__mocks__/point_collections_edited.body.json'
 import polygonBody from './__mocks__/polygon_collections.body.json'
 import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 
+const collapsePanel = async (page) => {
+  await page.getByTestId('panels__handle').click()
+  await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
+  await page.waitForTimeout(250)
+}
+
+const expandPanel = async (page) => {
+  await page.getByTestId('panels__handle').click()
+  await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
+  await page.waitForTimeout(250)
+}
+
 test.describe('Map: Spatial interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
@@ -50,9 +62,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the point spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -67,9 +77,7 @@ test.describe('Map: Spatial interactions', () => {
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-7\.\d+,42\.\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -98,9 +106,7 @@ test.describe('Map: Spatial interactions', () => {
         // Select the point spatial type
         await page.getByRole('link', { name: 'Draw a coordinate on the map to select a spatial extent' }).click()
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Add the point to the map
         await page.mouse.click(1160, 500)
@@ -111,9 +117,7 @@ test.describe('Map: Spatial interactions', () => {
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-7\.\d+,42\.\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -186,9 +190,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the point spatial type
         await page.getByRole('link', { name: 'Draw a coordinate on the map to select a spatial extent' }).click()
@@ -202,17 +204,13 @@ test.describe('Map: Spatial interactions', () => {
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-7\.\d+,42\.\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Edit the point
         await page.getByRole('link', { name: 'Edit Layers' }).click()
@@ -232,9 +230,7 @@ test.describe('Map: Spatial interactions', () => {
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-24\.\d+,42\.\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -262,9 +258,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the circle spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -283,9 +277,7 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-7\.\d+,42\.\d+/)
         await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/156\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -311,9 +303,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the circle spatial type
         await page.getByRole('link', { name: 'Draw a circle on the map to select a spatial extent' }).click()
@@ -331,9 +321,7 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-7\.\d+,42\.\d+/)
         await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/156\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -359,9 +347,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the circle spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -381,9 +367,7 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('4.5297,42.1875')
         await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue('156444')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -417,9 +401,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the circle spatial type
         await page.getByRole('link', { name: 'Draw a circle on the map to select a spatial extent' }).click()
@@ -437,17 +419,13 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-7\.\d+,42\.\d+/)
         await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/156\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Edit the circle
         await page.getByRole('link', { name: 'Edit Layers' }).click()
@@ -468,9 +446,7 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-14\.\d+,42\.\d+/)
         await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/156\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -499,9 +475,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the bounding box spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -518,9 +492,7 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-21\.\d+,42\.\d+/)
         await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-7\.\d+,56\.\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -547,9 +519,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the bounding box spatial type
         await page.locator('.leaflet-draw-draw-rectangle').click()
@@ -565,9 +535,7 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-21\.\d+,42\.\d+/)
         await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-7\.\d+,56\.\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -646,9 +614,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the bounding box spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -665,17 +631,13 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-21\.\d+,42\.\d+/)
         await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-7\.\d+,56\.\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Edit the bounding box
         await page.getByRole('link', { name: 'Edit Layers' }).click()
@@ -696,9 +658,7 @@ test.describe('Map: Spatial interactions', () => {
         await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-21\.\d+,42\.\d+/)
         await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/6\.\d+,56\.\d+/)
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -727,9 +687,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the polygon spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -784,9 +742,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the polygon spatial type
         await page.locator('.leaflet-draw-draw-polygon').click()
@@ -815,9 +771,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
@@ -853,9 +807,7 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Select the polygon spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -884,17 +836,13 @@ test.describe('Map: Spatial interactions', () => {
 
         await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await collapsePanel(page)
 
         // Edit the polygon
         await page.getByRole('link', { name: 'Edit Layers' }).click()
@@ -914,9 +862,7 @@ test.describe('Map: Spatial interactions', () => {
         // Populates the spatial display field
         await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
 
-        await page.getByTestId('panels__handle').click()
-        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
-        await page.waitForTimeout(1000)
+        await expandPanel(page)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
