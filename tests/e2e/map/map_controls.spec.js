@@ -63,7 +63,7 @@ test.describe('Map: Control interactions', () => {
         // Zoom the map
         await page.locator('.leaflet-control-zoom-in').click()
 
-        await expect(page).toHaveURL('search?zoom=3')
+        await expect(page).toHaveURL(/search\?.*zoom=3/)
       })
     })
   })

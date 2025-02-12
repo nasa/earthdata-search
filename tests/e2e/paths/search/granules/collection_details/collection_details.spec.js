@@ -466,6 +466,10 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 
+      await page.getByTestId('panels__handle').click()
+      await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
+      await page.waitForTimeout(250)
+
       // 1 Rectangle should be drawn on the mini map
       await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
     })
