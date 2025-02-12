@@ -207,7 +207,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('radio', { name: 'Corrected Reflectance (True Color)' }).click()
 
-        await expect(page).toHaveURL('base=trueColor')
+        await expect(page).toHaveURL('search?base=trueColor')
 
         await expect(
           page
@@ -238,7 +238,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('radio', { name: 'Land / Water Map' }).click()
 
-        await expect(page).toHaveURL('base=landWaterMap')
+        await expect(page).toHaveURL('search?base=landWaterMap')
 
         await expect(
           page
@@ -270,7 +270,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('checkbox', { name: 'Borders and Roads' }).click()
 
-        await expect(page).toHaveURL('overlays=referenceFeatures')
+        await expect(page).toHaveURL('search?overlays=referenceFeatures')
 
         await expect(
           page
@@ -302,7 +302,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('checkbox', { name: 'Coastlines' }).click()
 
-        await expect(page).toHaveURL('overlays=coastlines')
+        await expect(page).toHaveURL('search?overlays=coastlines')
 
         await expect(
           page
@@ -334,7 +334,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('checkbox', { name: 'Place Labels' }).click()
 
-        await expect(page).toHaveURL('overlays=referenceLabels')
+        await expect(page).toHaveURL('search?overlays=referenceLabels')
 
         await expect(
           page
