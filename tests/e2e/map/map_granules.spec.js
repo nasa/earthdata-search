@@ -203,7 +203,7 @@ test.describe('Map: Granule interactions', () => {
             await page.locator('.map').click({
               force: true,
               position: {
-                x: 1100,
+                x: 200,
                 y: 720
               }
             })
