@@ -55,6 +55,9 @@ test.describe('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
+
         // Upload the shapefile
         await uploadShapefile(page, 'simple.geojson')
 
@@ -106,6 +109,9 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         await page.goto('/')
+
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
 
         // Upload the shapefile
         await uploadShapefile(page, 'multiple_shapes.geojson')
@@ -167,6 +173,9 @@ test.describe('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
+
         // Upload the shapefile
         await uploadShapefile(page, 'multiple_shapes.geojson')
 
@@ -227,6 +236,9 @@ test.describe('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
+
         // Upload the shapefile
         await uploadShapefile(page, 'multiple_shapes.geojson')
 
@@ -286,6 +298,9 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         await page.goto('/')
+
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
 
         // Upload the shapefile
         await uploadShapefile(page, 'multiple_shapes.geojson')
@@ -348,6 +363,9 @@ test.describe('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
+
         // Upload the shapefile
         await uploadShapefile(page, 'too_many_points.geojson')
 
@@ -391,6 +409,9 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         await page.goto('/')
+
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
 
         // Upload the shapefile
         await uploadShapefile(page, 'arctic.geojson')
@@ -443,6 +464,9 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         await page.goto('/')
+
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
 
         // Upload the shapefile
         await uploadShapefile(page, 'antarctic.geojson')
