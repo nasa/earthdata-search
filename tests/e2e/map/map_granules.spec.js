@@ -104,6 +104,9 @@ test.describe('Map: Granule interactions', () => {
 
       test.describe('When hovering over a granule', () => {
         test('highlights the granule in the granule results list', async ({ page }) => {
+          await page.getByTestId('panels__handle').click()
+          await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
+
           await page.locator('g path.leaflet-interactive').hover({
             force: true,
             position: {
@@ -129,6 +132,9 @@ test.describe('Map: Granule interactions', () => {
             })
           })
 
+          await page.getByTestId('panels__handle').click()
+          await expect(page.getByTestId('panels-section')).toHaveClass(/panels--is-minimized/)
+
           await page.locator('g path.leaflet-interactive').click({
             force: true,
             position: {
@@ -136,11 +142,18 @@ test.describe('Map: Granule interactions', () => {
               y: 20
             }
           })
+
+          // Wait for any animations to complete
+          await page.waitForTimeout(1000)
         })
 
         test('shows the granule and a label on the map and updates the url', async ({ page }) => {
           await expect(await page.locator('g path').all()).toHaveLength(5)
           await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+
+          // Now expand panel to check URL
+          await page.getByTestId('panels__handle').click()
+          await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
 
           // Updates the URL with the selected granule
           await expect(page).toHaveURL(/\/search\/granules.*g=G2061166811-ASF/)
@@ -148,6 +161,8 @@ test.describe('Map: Granule interactions', () => {
 
         test.describe('when returning to the collections results list', () => {
           test('removes the granule label from the map', async ({ page }) => {
+            await page.getByTestId('panels__handle').click()
+            await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-minimized/)
             await page.getByTestId('panel-group_granule-results')
               .getByTestId('breadcrumb-button')
               .click()
@@ -291,6 +306,9 @@ test.describe('Map: Granule interactions', () => {
         await expect(
           page.getByTestId('filter-stack__spatial').locator('.filter-stack-item__error')
         ).toHaveText('This collection does not support polygon search. Your polygon has been converted to a bounding box.')
+
+        await page.getByTestId('panels__handle').click()
+        await expect(page.getByTestId('panels-section')).not.toHaveClass(/panels--is-collapsed/)
 
         await expect(await page.locator('g path').first()).toBeVisible()
         await expect(await page.locator('g path').all()).toHaveLength(2)
