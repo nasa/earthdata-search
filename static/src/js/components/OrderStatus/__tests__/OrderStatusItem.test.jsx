@@ -217,7 +217,7 @@ describe('OrderStatusItem', () => {
   })
 
   describe('when the access method is download', () => {
-    test('renders correct status classname', async () => {
+    test('renders the correct order status', async () => {
       const { user } = setup({
         collection: {
           id: 1,
@@ -366,7 +366,7 @@ describe('OrderStatusItem', () => {
   })
 
   describe('when the collection has browse imagery', () => {
-    test('renders correct status classname', async () => {
+    test('renders the correct order status', async () => {
       const { user } = setup({
         collection: {
           id: 1,
@@ -453,7 +453,7 @@ describe('OrderStatusItem', () => {
   })
 
   describe('when the access method is OPeNDAP', () => {
-    test('renders correct status classname', async () => {
+    test('renders the correct order status', async () => {
       const { user } = setup({
         collection: {
           id: 1,

@@ -1,3 +1,5 @@
+import { STATUS_MESSAGES } from '../../constants/orderStatusMessages'
+
 /**
  * @typedef {Object} OrderStatusInfoAndProgress
  * @property {Array} browseUrls List of browse URLs
@@ -70,28 +72,28 @@ const getOrderInfoAndProgress = ({
   if (isDownload) {
     ({ percentDone: percentDoneDownloadLinks } = granuleLinks)
     progressPercentage = 100
-    orderInfo = 'Download your data directly from the links below, or use the provided download script.'
+    orderInfo = STATUS_MESSAGES.DOWNLOAD.COMPLETE
   }
 
   if (isOpendap) {
     progressPercentage = 100
-    orderInfo = 'Download your data directly from the links below, or use the provided download script.'
+    orderInfo = STATUS_MESSAGES.OPENDAP.COMPLETE
   }
 
   if (isEchoOrders) {
     if (stateFromOrderStatus === 'creating' || stateFromOrderStatus === 'in_progress') {
       progressPercentage = 0
-      orderInfo = 'Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.'
+      orderInfo = STATUS_MESSAGES.ECHO_ORDERS.IN_PROGRESS
     }
 
     if (stateFromOrderStatus === 'complete') {
       progressPercentage = 100
-      orderInfo = 'The data provider has completed processing your order. You should have received an email with information regarding how to access your data from the data provider.'
+      orderInfo = STATUS_MESSAGES.ECHO_ORDERS.COMPLETE
     }
 
     if (stateFromOrderStatus === 'failed') {
       progressPercentage = 100
-      orderInfo = 'The data provider is reporting the order has failed processing.'
+      orderInfo = STATUS_MESSAGES.ECHO_ORDERS.FAILED
     }
   }
 
@@ -99,20 +101,20 @@ const getOrderInfoAndProgress = ({
     if (stateFromOrderStatus === 'creating') {
       progressPercentage = 0
 
-      orderInfo = 'Your orders are pending generation. This may take some time.'
+      orderInfo = STATUS_MESSAGES.SWODLR.CREATING
     }
 
     if (stateFromOrderStatus === 'in_progress') {
-      orderInfo = 'Your orders are currently being generated. Once generation is finished, links will be displayed below and sent to the email you\'ve provided.'
+      orderInfo = STATUS_MESSAGES.SWODLR.IN_PROGRESS
     }
 
     if (stateFromOrderStatus === 'complete') {
-      orderInfo = 'Your orders have been generated and are available for download.'
+      orderInfo = STATUS_MESSAGES.SWODLR.COMPLETE
     }
 
     if (stateFromOrderStatus === 'failed') {
       progressPercentage = 0
-      orderInfo = 'The order has failed.'
+      orderInfo = STATUS_MESSAGES.SWODLR.FAILED
     }
 
     let totalNumber = 0
@@ -157,25 +159,25 @@ const getOrderInfoAndProgress = ({
     if (stateFromOrderStatus === 'creating') {
       progressPercentage = 0
 
-      orderInfo = 'Your orders are pending processing. This may take some time.'
+      orderInfo = STATUS_MESSAGES.ESI.CREATING
     }
 
     if (stateFromOrderStatus === 'in_progress') {
-      orderInfo = 'Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.'
+      orderInfo = STATUS_MESSAGES.ESI.IN_PROGRESS
     }
 
     if (stateFromOrderStatus === 'complete') {
-      orderInfo = 'Your orders are done processing and are available for download.'
+      orderInfo = STATUS_MESSAGES.ESI.COMPLETE
     }
 
     if (stateFromOrderStatus === 'failed') {
       progressPercentage = 0
-      orderInfo = 'The order has failed processing.'
+      orderInfo = STATUS_MESSAGES.ESI.FAILED
     }
 
     if (stateFromOrderStatus === 'canceled') {
       progressPercentage = 0
-      orderInfo = 'The order has been canceled.'
+      orderInfo = STATUS_MESSAGES.ESI.CANCELED
     }
 
     if (isEsi) {

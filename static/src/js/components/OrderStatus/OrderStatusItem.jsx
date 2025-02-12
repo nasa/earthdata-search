@@ -52,7 +52,6 @@ let intervalId = null
  * @param {Function} params.onFetchRetrievalCollectionGranuleBrowseLinks - Callback function to fetch browse links for a retrieval collection.
  * @param {Function} params.onFetchRetrievalCollectionGranuleLinks - Callback function to fetch download links for a retrieval collection.
 */
-// export class OrderStatusItem extends PureComponent {
 export const OrderStatusItem = ({
   authToken,
   collection,
@@ -144,7 +143,6 @@ export const OrderStatusItem = ({
     let refreshInterval = orderStatusRefreshTime
 
     // If the order is still `creating`, refresh in a faster interval
-    // const orderStatus = aggregatedOrderStatus(orders)
     if (orderStatus === 'creating') {
       refreshInterval = orderStatusRefreshTimeCreating
     }
