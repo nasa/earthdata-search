@@ -276,29 +276,31 @@ describe('CollectionResultsList component', () => {
     })
 
     describe('map imagery', () => {
-      test('does not render when hasMapImagery not set', async () => {
-        setup()
-
-        await waitFor(() => {
-          expect(screen.queryByText('Map Imagery')).not.toBeInTheDocument()
-        })
-      })
-
-      describe('renders correctly when set', () => {
-        test('renders the badge correctly', async () => {
-          setup({
+      describe('when map imagery is not available', () => {
+        test('renders the badge correctly and tooltip correctly', async () => {
+          const { user } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
-              hasMapImagery: true
+              hasMapImagery: false
             }
           })
 
-          await waitFor(() => {
-            expect(screen.getByText('Map Imagery')).toBeInTheDocument()
-          })
-        })
+          const icon = await screen.findByText('No map imagery')
 
-        test('renders a tooltip correctly', async () => {
+          await waitFor(() => {
+            expect(icon).toBeInTheDocument()
+          })
+
+          await waitFor(async () => {
+            await user.hover(icon)
+          })
+
+          expect(screen.getByText('No map visualization support')).toBeInTheDocument()
+        })
+      })
+
+      describe('when map imagery is available', () => {
+        test('renders the badge correctly and tooltip correctly', async () => {
           const { user } = setup({
             collectionMetadata: {
               ...collectionListItemProps.collectionMetadata,
@@ -306,10 +308,17 @@ describe('CollectionResultsList component', () => {
             }
           })
 
-          user.hover(screen.getByText('Map Imagery'))
+          const icon = await screen.findByText('Map Imagery')
+
           await waitFor(() => {
-            expect(screen.getByText('Supports advanced map visualizations using the GIBS tile service')).toBeInTheDocument()
+            expect(icon).toBeInTheDocument()
           })
+
+          await waitFor(async () => {
+            await user.hover(icon)
+          })
+
+          expect(screen.getByText('Supports advanced map visualizations using the GIBS tile service')).toBeInTheDocument()
         })
       })
     })
@@ -319,7 +328,7 @@ describe('CollectionResultsList component', () => {
         setup()
 
         await waitFor(() => {
-          expect(screen.queryByText('Map Imagery')).not.toBeInTheDocument()
+          expect(screen.queryByText('Near Real Time')).not.toBeInTheDocument()
         })
       })
 
@@ -378,18 +387,99 @@ describe('CollectionResultsList component', () => {
       })
     })
 
-    // TODO Skipping for now fix this when we have edsc-icons no longer utilize test-ids and use `img` as a role
-    describe('customize', () => {
-      test.skip('does not render when no customization flags are true', async () => {
-        setup({
-          collection: collectionListItemProps.collectionMetadata
+    describe('customizations', () => {
+      describe('when customizations are not available', () => {
+        test('renders the badge correctly and tooltip correctly', async () => {
+          const { user } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata,
+              hasVariables: true
+            }
+          })
+
+          const icon = await screen.findByText('Customize')
+
+          await waitFor(() => {
+            expect(icon).toBeInTheDocument()
+          })
+
+          await waitFor(async () => {
+            await user.hover(icon)
+          })
+
+          expect(screen.getByText('Supports customization:')).toBeInTheDocument()
+          expect(screen.getByText('Variable subset')).toBeInTheDocument()
+        })
+      })
+
+      describe('when customizations are available', () => {
+        test('renders the badge correctly and tooltip correctly', async () => {
+          const { user } = setup({
+            collectionMetadata: {
+              ...collectionListItemProps.collectionMetadata
+            }
+          })
+
+          const icon = await screen.findByText('No customizations')
+
+          await waitFor(() => {
+            expect(icon).toBeInTheDocument()
+          })
+
+          await waitFor(async () => {
+            await user.hover(icon)
+          })
+
+          expect(screen.getByText('No customization support')).toBeInTheDocument()
+        })
+      })
+    })
+  })
+
+  describe('cloud hosted', () => {
+    describe('when the collection is not hosted in the cloud', () => {
+      test('renders the badge correctly and tooltip correctly', async () => {
+        const { user } = setup({
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            cloudHosted: false
+          }
         })
 
+        const icon = await screen.findByText('Not hosted in Earthdata Cloud')
+
         await waitFor(() => {
+          expect(icon).toBeInTheDocument()
         })
-        // Const metaContainer = enzymeWrapper.find('.collection-results-item__meta')
-        // const featureItem = metaContainer.find('#feature-icon-list-view__customize')
-        // expect(featureItem.length).toEqual(0)
+
+        await waitFor(async () => {
+          await user.hover(icon)
+        })
+
+        expect(screen.getByText('Dataset is not available in the Earthdata Cloud')).toBeInTheDocument()
+      })
+    })
+
+    describe('when the collection is hosted in the cloud', () => {
+      test('renders the badge correctly and tooltip correctly', async () => {
+        const { user } = setup({
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            cloudHosted: true
+          }
+        })
+
+        const icon = await screen.findByText('Earthdata Cloud')
+
+        await waitFor(() => {
+          expect(icon).toBeInTheDocument()
+        })
+
+        await waitFor(async () => {
+          await user.hover(icon)
+        })
+
+        expect(screen.getByText('Dataset is available in the Earthdata Cloud')).toBeInTheDocument()
       })
     })
   })

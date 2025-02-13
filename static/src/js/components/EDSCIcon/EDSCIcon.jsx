@@ -46,6 +46,7 @@ export const EDSCIcon = forwardRef(({
         title={title}
         data-testid="edsc-icon-simple"
         aria-label={ariaLabel}
+        role="graphics-symbol"
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
@@ -66,6 +67,7 @@ export const EDSCIcon = forwardRef(({
           size={size}
           data-testid="edsc-icon"
           aria-label={ariaLabel}
+          role="graphics-symbol"
           {...props}
         />
         {children}
@@ -85,6 +87,7 @@ export const EDSCIcon = forwardRef(({
           size={size}
           data-testid="edsc-icon-details"
           aria-label={ariaLabel}
+          role="graphics-symbol"
           {...props}
         />
         {children}
@@ -104,6 +107,7 @@ export const EDSCIcon = forwardRef(({
           size={size}
           aria-label={ariaLabel}
           data-testid="edsc-icon-details"
+          role="graphics-symbol"
           {...props}
         />
         {children}
@@ -122,6 +126,7 @@ export const EDSCIcon = forwardRef(({
         size={size}
         aria-label={ariaLabel}
         data-testid="edsc-icon"
+        role="graphics-symbol"
         {...props}
       />
       {children}

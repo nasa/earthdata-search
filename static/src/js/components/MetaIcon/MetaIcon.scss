@@ -11,12 +11,20 @@
   letter-spacing: 0.01em;
 
   &__icon {
+    grid-area: 1 / 1 / 2 / 2;
     color: utils.$color__carbon--50;
     font-size: 0.75rem;
 
     .meta-icon:hover & {
       color: utils.$color__carbon--60;
     }
+  }
+
+  &__icon-wrapper {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    place-items: center;
   }
 
   &__metadata {
