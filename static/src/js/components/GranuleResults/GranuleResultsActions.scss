@@ -179,11 +179,6 @@
       align-items: center;
       justify-content: center;
     }
-
-    &:disabled {
-      background-color: utils.$color__carbon--60;
-      color: utils.$color__spacesuit-white;
-    }
   }
 
   &__project-pill-icon {

@@ -39,7 +39,7 @@ export const GranuleDownloadButton = (props) => {
   if (tooManyGranules) {
     return (
       <OverlayTrigger
-        placement="bottom"
+        placement="top"
         overlay={
           (
             <Tooltip
@@ -62,7 +62,7 @@ export const GranuleDownloadButton = (props) => {
             className="granule-results-actions__download-all-button"
             dataTestId="granule-results-actions__download-all-button"
             badge={badge}
-            bootstrapVariant="secondary"
+            bootstrapVariant="primary"
             icon={Download}
             variant="full"
             label={buttonText}
