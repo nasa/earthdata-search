@@ -26,5 +26,3 @@ playwright-coverage
 portals/availablePortals.json
 
 elasticmq.conf
-
-*bundle-size*
