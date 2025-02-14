@@ -25,6 +25,7 @@ export class Panels extends PureComponent {
     this.handleClickDelay = 500 // Time in ms to delay a click event on the handle
     this.handleClickCancelTimeout = undefined // Tracks the click event setTimeout id
     this.handleTooltipCancelTimeout = undefined // Tracks the tooltip hover event setTimeout id
+    this.mapOffsetTimeout = null // Timeout for debouncing mapOffsetChanged event
     this.keyboardShortcuts = {
       togglePanel: ']'
     }
@@ -63,12 +64,14 @@ export class Panels extends PureComponent {
     this.onUpdate = this.onUpdate.bind(this)
     this.disableHandleClickEvent = this.disableHandleClickEvent.bind(this)
     this.enableHandleClickEvent = this.enableHandleClickEvent.bind(this)
+    this.updateMapOffset = this.updateMapOffset.bind(this)
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize, { capture: true })
     window.addEventListener('keyup', this.onWindowKeyUp, { capture: true })
     this.browserHistoryUnlisten = history.listen(this.onWindowResize)
+    this.updateMapOffset()
 
     const maxWidth = this.calculateMaxWidth()
 
@@ -111,6 +114,10 @@ export class Panels extends PureComponent {
       this.updateShowState(propsShow)
     }
 
+    if (show !== prevShow) {
+      this.updateMapOffset()
+    }
+
     // Apply or remove the body is-panels-will-minimize class
     if ((show !== prevShow) || (prevWillMinimize !== willMinimize)) {
       // Only add the class if willMinimize is set AND the panel is showing
@@ -138,6 +145,7 @@ export class Panels extends PureComponent {
     document.removeEventListener('mousemove', this.onMouseMove)
     document.removeEventListener('mouseup', this.onMouseUp)
     if (this.browserHistoryUnlisten) this.browserHistoryUnlisten()
+    if (this.mapOffsetTimeout) clearTimeout(this.mapOffsetTimeout)
   }
 
   onWindowResize() {
@@ -218,10 +226,8 @@ export class Panels extends PureComponent {
     } = event
 
     // Any keypress other than the enter or spacebar keys is not considered a click.
-    if (type === 'keydown') {
-      if ((key !== 'Enter') && (key !== ' ')) {
-        return
-      }
+    if (type === 'keydown' && key !== 'Enter' && key !== ' ') {
+      return
     }
 
     // Make sure this is actually a click, and not a drag of the handle.
@@ -231,6 +237,8 @@ export class Panels extends PureComponent {
         willMinimize: show,
         dragging: false,
         handleToolipVisible: false
+      }, () => {
+        this.updateMapOffset()
       })
     } else {
       this.setState({
@@ -242,22 +250,6 @@ export class Panels extends PureComponent {
 
     event.preventDefault()
     event.stopPropagation()
-
-    // Get the main panel's (project-collections) width
-    const mainPanelEl = document.querySelector('.project-collections')
-    const mainPanelWidth = mainPanelEl ? mainPanelEl.clientWidth : 0
-
-    // Determine the collapsible panel width:
-    // When open, use this.width; when collapsed, assume a width of 0
-    const collapsiblePanelWidth = !show ? this.width : 0
-
-    // Calculate the total offset to be applied to the map
-    const totalOffset = mainPanelWidth + collapsiblePanelWidth
-
-    this.updateMapOffset(totalOffset)
-
-    // Update the CSS variable so the map shifts accordingly
-    document.documentElement.style.setProperty('--map-offset', `${totalOffset}px`)
   }
 
   onMouseDown(event) {
@@ -408,7 +400,7 @@ export class Panels extends PureComponent {
       const distanceDragged = clientX - clickStartX
       const newWidth = distanceDragged + clickStartWidth
 
-      // Close the panel if its current with is smaller than the minWidth minus the threshold
+      // Close the panel if its current width is smaller than the minWidth minus the threshold
       const panelShouldClose = (newWidth < (minWidth - this.minimizeThreshold))
 
       if (panelShouldClose) {
@@ -444,12 +436,36 @@ export class Panels extends PureComponent {
     }
   }
 
-  updateMapOffset(totalOffset) {
-    // First update the CSS variable
-    document.documentElement.style.setProperty('--map-offset', `${totalOffset}px`)
+  updateMapOffset() {
+    const sidebarEl = document.querySelector('.sidebar')
+    const mapEl = document.querySelector('.map')
+    let totalOffset = 0
 
-    // Then dispatch the event
-    window.dispatchEvent(new CustomEvent('mapOffsetChanged'))
+    // Add sidebar width if it exists
+    if (sidebarEl) {
+      totalOffset += sidebarEl.getBoundingClientRect().width
+    }
+
+    // Add panels width if panels are open
+    const { show } = this.state
+    if (show) {
+      totalOffset += this.width
+    }
+
+    if (mapEl) {
+      mapEl.style.width = `calc(100% - ${totalOffset}px)`
+    }
+
+    // Clear any existing timeout
+    if (this.mapOffsetTimeout) {
+      clearTimeout(this.mapOffsetTimeout)
+    }
+
+    // Set new timeout to dispatch the event
+    this.mapOffsetTimeout = setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('mapOffsetChanged'))
+      this.mapOffsetTimeout = null
+    }, 50)
   }
 
   disableHandleClickEvent() {
@@ -471,17 +487,7 @@ export class Panels extends PureComponent {
     this.width = width
     this.container.style.width = `${width}px`
 
-    // Get the width of the main panel (project-collections)
-    const mainPanelEl = document.querySelector('.project-collections')
-    const mainPanelWidth = mainPanelEl ? mainPanelEl.clientWidth : 0
-
-    // Calculate the total offset: main panel + collapsible panel
-    const totalOffset = mainPanelWidth + width
-
-    // Update the CSS variable used by the map
-    document.documentElement.style.setProperty('--map-offset', `${totalOffset}px`)
-
-    this.updateMapOffset(totalOffset)
+    this.updateMapOffset()
     this.updateResponsiveClassNames()
   }
 

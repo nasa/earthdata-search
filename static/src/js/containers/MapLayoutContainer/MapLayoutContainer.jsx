@@ -1,69 +1,9 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
 import './MapLayoutContainer.scss'
 
 const MapLayoutContainer = ({ children, panelsRef }) => {
   const containerRef = useRef(null)
-
-  useEffect(() => {
-    const updateMapOffset = () => {
-      if (containerRef.current) {
-        const sidebarEl = document.querySelector('.sidebar')
-        const panelEl = document.querySelector('.panels')
-        const panelsSection = document.querySelector('.panels')
-
-        let totalOffset = 0
-
-        if (sidebarEl) totalOffset += sidebarEl.getBoundingClientRect().width
-
-        // Add panels width if panels are open
-        if (panelEl && panelsSection?.classList.contains('panels--is-open')) {
-          totalOffset += panelEl.getBoundingClientRect().width
-        }
-
-        containerRef.current.style.setProperty('--map-offset', `${totalOffset}px`)
-        window.dispatchEvent(new CustomEvent('mapOffsetChanged'))
-      }
-    }
-
-    updateMapOffset()
-
-    // Observe DOM mutations and resize events
-    const mutationObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          updateMapOffset()
-        }
-      })
-    })
-
-    mutationObserver.observe(document.body, {
-      attributes: true,
-      attributeFilter: ['class']
-    })
-
-    const panelsSection = document.querySelector('.panels')
-    if (panelsSection) {
-      mutationObserver.observe(panelsSection, {
-        attributes: true,
-        attributeFilter: ['class']
-      })
-    }
-
-    const resizeObserver = new ResizeObserver(updateMapOffset)
-    const sidebarEl = document.querySelector('.sidebar')
-    const panelEl = document.querySelector('.panels')
-    if (sidebarEl) resizeObserver.observe(sidebarEl)
-    if (panelEl) resizeObserver.observe(panelEl)
-
-    window.addEventListener('resize', updateMapOffset)
-
-    return () => {
-      mutationObserver.disconnect()
-      resizeObserver.disconnect()
-      window.removeEventListener('resize', updateMapOffset)
-    }
-  }, [])
 
   const childrenArray = React.Children.toArray(children)
 
