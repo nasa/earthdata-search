@@ -6,6 +6,9 @@ const branchPath = 'branch-build-output.txt'
 const templatePath = '.github/bundle-size-comment-template.md'
 const outputPath = 'bundle-size-comment.md'
 
+const goodStyle = 'color: #116329; background-color: #dafbe1;'
+const badStyle = 'color: #82071e; background-color: #ffebe9;'
+
 const parseFile = (filePath, prefix) => {
   // Read the file
   const fileContent = fs.readFileSync(filePath, 'utf8')
@@ -82,7 +85,9 @@ const branchBundleSize = parseFile(branchPath, 'branch')
 
 const values = {
   ...mainBundleSize,
-  ...branchBundleSize
+  ...branchBundleSize,
+  goodStyle,
+  badStyle
 }
 
 values.diff = {

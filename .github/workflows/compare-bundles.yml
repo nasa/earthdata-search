@@ -35,7 +35,9 @@ jobs:
     - name: Prepare create overrideStatic.config.json
       run: npm run jest:prepare-ci
     - name: Run build
-      run: npm run build > main-build-output.txt
+      run: npm run build > build-output.txt
+    - name: Remove colors from output
+      run: sed -e "s/\x1B[^m]*m//g" build-output.txt main-build-output.txt
     - uses: actions/upload-artifact@v4
       with:
         name: mainBuildOutput
@@ -70,7 +72,9 @@ jobs:
     - name: Prepare create overrideStatic.config.json
       run: npm run jest:prepare-ci
     - name: Run build
-      run: npm run build > branch-build-output.txt
+      run: npm run build > build-output.txt
+    - name: Remove colors from output
+      run: sed -e "s/\x1B[^m]*m//g" build-output.txt branch-build-output.txt
     - uses: actions/upload-artifact@v4
       with:
         name: branchBuildOutput

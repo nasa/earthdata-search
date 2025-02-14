@@ -1,16 +1,5 @@
 ## Bundle Size Comparison
 
-<style>
-  .good {
-    color: #116329;
-    background-color: #dafbe1;
-  }
-  .bad {
-    color: #82071e;
-    background-color: #ffebe9;
-  }
-</style>
-
 <table>
   <thead>
     <tr>
@@ -21,43 +10,43 @@
     </tr>
   </thead>
 <tbody>
-  <tr class="{{#if diff.totalSize includeZero=false}}bad{{else if diff.totalSize includeZero=true}}{{else}}good{{/if}}">
+  <tr style="{{#if diff.totalSize includeZero=false}}{{badStyle}}{{else if diff.totalSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>Total</td>
     <td>{{main.totalSize}} kB</td>
     <td>{{branch.totalSize}} kB</td>
     <td>{{diff.totalSize}}</td>
   </tr>
-  <tr class="{{#if diff.indexJsSize includeZero=false}}bad{{else if diff.indexJsSize includeZero=true}}{{else}}good{{/if}}">
+  <tr style="{{#if diff.indexJsSize includeZero=false}}{{badStyle}}{{else if diff.indexJsSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>index.js</td>
     <td>{{main.indexJsSize}} kB</td>
     <td>{{branch.indexJsSize}} kB</td>
     <td>{{diff.indexJsSize}}</td>
   </tr>
-  <tr class="{{#if diff.indexJsGzipSize includeZero=false}}bad{{else if diff.indexJsGzipSize includeZero=true}}{{else}}good{{/if}}">
+  <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>index.js (gzip)</td>
     <td>{{main.indexJsGzipSize}} kB</td>
     <td>{{branch.indexJsGzipSize}} kB</td>
     <td>{{diff.indexJsGzipSize}}</td>
   </tr>
-  <tr class="{{#if diff.indexJsGzipSize includeZero=false}}bad{{else if diff.indexJsGzipSize includeZero=true}}{{else}}good{{/if}}">
+  <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>index.css</td>
     <td>{{main.indexCssSize}} kB</td>
     <td>{{branch.indexCssSize}} kB</td>
     <td>{{diff.indexCssSize}}</td>
   </tr>
-  <tr class="{{#if diff.indexJsGzipSize includeZero=false}}bad{{else if diff.indexJsGzipSize includeZero=true}}{{else}}good{{/if}}">
+  <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>index.css (gzip)</td>
     <td>{{main.indexCssGzipSize}} kB</td>
     <td>{{branch.indexCssGzipSize}} kB</td>
     <td>{{diff.indexCssGzipSize}}</td>
   </tr>
-  <tr class="{{#if diff.indexJsGzipSize includeZero=false}}bad{{else if diff.indexJsGzipSize includeZero=true}}{{else}}good{{/if}}">
+  <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>Number of files</td>
     <td>{{main.numFiles}}</td>
     <td>{{branch.numFiles}}</td>
     <td>{{diff.numFiles}}</td>
   </tr>
-  <tr class="{{#if diff.indexJsGzipSize includeZero=false}}bad{{else if diff.indexJsGzipSize includeZero=true}}{{else}}good{{/if}}">
+  <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>Build Time</td>
     <td>{{main.buildTime}}</td>
     <td>{{branch.buildTime}}</td>
