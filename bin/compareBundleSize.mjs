@@ -3,7 +3,7 @@ import Handlebars from 'handlebars'
 
 const mainPath = 'main-build-output.txt'
 const branchPath = 'branch-build-output.txt'
-const templatePath = 'tmp/bundle-size-comment-template.md'
+const templatePath = '.github/bundle-size-comment-template.md'
 const outputPath = 'bundle-size-comment.md'
 
 const parseFile = (filePath, prefix) => {
