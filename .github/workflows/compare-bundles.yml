@@ -107,7 +107,7 @@ jobs:
       with:
         name: branchBuildOutput
     - name: Compare bundle size
-      run: node bin/compareBundleSize.js
+      run: node bin/compareBundleSize.mjs
 
     # Leave or update comment on the PR
     - name: Find Comment
