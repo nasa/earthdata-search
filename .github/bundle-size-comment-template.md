@@ -68,9 +68,9 @@ The full bundle is smaller than main by {{diff.totalSize}} kB. :tada:
 {{/if}}
 
 {{#if diff.indexJsSize includeZero=false}}
-The index.js is larger than main by {{diff.indexJsSize}}. :exclamation:
+The index.js is larger than main by {{diff.indexJsSize}} kB. :exclamation:
 {{else}}
-The index.js is smaller than main by {{diff.indexJsSize}}. :tada:
+The index.js is smaller than main by {{diff.indexJsSize}} kB. :tada:
 {{/if}}
 
 Run `npx vite-bundle-visualizer` to review the bundle in more detail.
