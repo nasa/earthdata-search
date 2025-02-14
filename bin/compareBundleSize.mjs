@@ -91,13 +91,13 @@ const values = {
 }
 
 values.diff = {
-  indexJsSize: values.branch.indexJsSize - values.main.indexJsSize,
-  indexJsGzipSize: values.branch.indexJsGzipSize - values.main.indexJsGzipSize,
-  indexCssSize: values.branch.indexCssSize - values.main.indexCssSize,
-  indexCssGzipSize: values.branch.indexCssGzipSize - values.main.indexCssGzipSize,
-  totalSize: values.branch.totalSize - values.main.totalSize,
-  buildTime: values.branch.buildTime - values.main.buildTime,
-  numFiles: values.branch.numFiles - values.main.numFiles
+  indexJsSize: parseFloat((values.branch.indexJsSize - values.main.indexJsSize).toFixed(2)),
+  indexJsGzipSize: parseFloat((values.branch.indexJsGzipSize - values.main.indexJsGzipSize).toFixed(2)),
+  indexCssSize: parseFloat((values.branch.indexCssSize - values.main.indexCssSize).toFixed(2)),
+  indexCssGzipSize: parseFloat((values.branch.indexCssGzipSize - values.main.indexCssGzipSize).toFixed(2)),
+  totalSize: parseFloat((values.branch.totalSize - values.main.totalSize).toFixed(2)),
+  buildTime: parseFloat((values.branch.buildTime - values.main.buildTime).toFixed(2)),
+  numFiles: parseFloat((values.branch.numFiles - values.main.numFiles).toFixed(2))
 }
 
 // Read handlebars template file

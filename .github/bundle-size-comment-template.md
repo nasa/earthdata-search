@@ -14,31 +14,31 @@
     <td>Total</td>
     <td>{{main.totalSize}} kB</td>
     <td>{{branch.totalSize}} kB</td>
-    <td>{{diff.totalSize}}</td>
+    <td>{{diff.totalSize}} kB</td>
   </tr>
   <tr style="{{#if diff.indexJsSize includeZero=false}}{{badStyle}}{{else if diff.indexJsSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>index.js</td>
     <td>{{main.indexJsSize}} kB</td>
     <td>{{branch.indexJsSize}} kB</td>
-    <td>{{diff.indexJsSize}}</td>
+    <td>{{diff.indexJsSize}} kB</td>
   </tr>
   <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>index.js (gzip)</td>
     <td>{{main.indexJsGzipSize}} kB</td>
     <td>{{branch.indexJsGzipSize}} kB</td>
-    <td>{{diff.indexJsGzipSize}}</td>
+    <td>{{diff.indexJsGzipSize}} kB</td>
   </tr>
   <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>index.css</td>
     <td>{{main.indexCssSize}} kB</td>
     <td>{{branch.indexCssSize}} kB</td>
-    <td>{{diff.indexCssSize}}</td>
+    <td>{{diff.indexCssSize}} kB</td>
   </tr>
   <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>index.css (gzip)</td>
     <td>{{main.indexCssGzipSize}} kB</td>
     <td>{{branch.indexCssGzipSize}} kB</td>
-    <td>{{diff.indexCssGzipSize}}</td>
+    <td>{{diff.indexCssGzipSize}} kB</td>
   </tr>
   <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>Number of files</td>
@@ -48,9 +48,9 @@
   </tr>
   <tr style="{{#if diff.indexJsGzipSize includeZero=false}}{{badStyle}}{{else if diff.indexJsGzipSize includeZero=true}}{{else}}{{goodStyle}}{{/if}}">
     <td>Build Time</td>
-    <td>{{main.buildTime}}</td>
-    <td>{{branch.buildTime}}</td>
-    <td>{{diff.buildTime}}</td>
+    <td>{{main.buildTime}} s</td>
+    <td>{{branch.buildTime}} s</td>
+    <td>{{diff.buildTime}} s</td>
   </tr>
 </tbody>
 
