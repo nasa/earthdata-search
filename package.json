@@ -54,7 +54,8 @@
     "postplaywright": "npx nyc report --reporter=json --reporter=lcov --reporter=clover --report-dir=playwright-coverage",
     "deploy-infrastructure": "cd cdk/earthdata-search-infrastructure && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
     "deploy-application": "cd cdk/earthdata-search && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
-    "deploy-static": "cd cdk/earthdata-search-static && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never"
+    "deploy-static": "cd cdk/earthdata-search-static && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
+    "bundle-size": "NODE_OPTIONS=--max-old-space-size=8192 vite-bundle-visualizer --sourcemap -t raw-data -o bundle-size.json"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.7",
@@ -96,7 +97,8 @@
     "redis-mock": "^0.56.3",
     "redux-mock-store": "^1.5.4",
     "s3rver": "^3.7.1",
-    "start-server-and-test": "^2.0.0"
+    "start-server-and-test": "^2.0.0",
+    "vite-bundle-visualizer": "^1.2.1"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.352.0",
