@@ -4,7 +4,7 @@
   <thead>
     <tr>
       <th>File</th>
-      <th>Bain</th>
+      <th>Main</th>
       <th>Branch</th>
       <th>Diff</th>
     </tr>
