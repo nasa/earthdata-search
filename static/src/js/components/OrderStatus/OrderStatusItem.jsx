@@ -301,7 +301,7 @@ export const OrderStatusItem = ({
                         progress={progressPercentage}
                       />
                       <div className="order-status-item__progress-meta">
-                        <div>
+                        <div className="d-flex align-items-center">
                           <span
                             className="order-status-item__status"
                             aria-label="Order Status"
@@ -330,12 +330,12 @@ export const OrderStatusItem = ({
                           )
                         }
                         <span
-                          className="order-status-item__orders-processed"
+                          className="order-status-item__last-updated"
                           aria-label="Order Last Updated Time"
                         >
-                          Last Updated:
+                          Updated:
                           {' '}
-                          {moment(updatedAt).format('MM-DD HH:mm')}
+                          {moment(updatedAt).format('MM-DD-YYYY hh:mm:ss a')}
                         </span>
                       </div>
                     </div>
@@ -346,7 +346,7 @@ export const OrderStatusItem = ({
                       className="order-status-item__meta-body order-status-item__meta-body--access-method"
                       aria-label="Access Method Type"
                     >
-                      {upperFirst(accessMethodType)}
+                      <span className="order-status-item__status">{upperFirst(accessMethodType)}</span>
                     </div>
                   </div>
                   <div className="order-status-item__meta">
@@ -355,19 +355,19 @@ export const OrderStatusItem = ({
                       className="order-status-item__meta-body order-status-item__meta-body--granules"
                       aria-label="Granule Count"
                     >
-                      {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+                      <span className="order-status-item__status">{`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}</span>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div>
                 {
                   orderInfo && (
-                    <div className="order-status-item__meta-row">
-                      <div
-                        className="order-status-item__order-info"
-                        aria-label="Order Information"
-                      >
-                        {orderInfo}
-                      </div>
+                    <div
+                      className="order-status-item__order-info"
+                      aria-label="Order Information"
+                    >
+                      {orderInfo}
                     </div>
                   )
                 }

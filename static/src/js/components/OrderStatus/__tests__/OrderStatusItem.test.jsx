@@ -282,7 +282,7 @@ describe('OrderStatusItem', () => {
       // Status is 'Complete'
       expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
       expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
-      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
       // Access method is Download
       expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Download')
@@ -434,7 +434,7 @@ describe('OrderStatusItem', () => {
       // Status is 'Complete'
       expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
       expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
-      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
       // Access method is Download
       expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Download')
@@ -517,7 +517,7 @@ describe('OrderStatusItem', () => {
       // Status is 'Complete'
       expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
       expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
-      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
       // Access method is OPeNDAP
       expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('OPeNDAP')
@@ -596,7 +596,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Creating')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ESI
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
@@ -676,7 +676,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ESI
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
@@ -781,7 +781,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ESI
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
@@ -893,7 +893,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Complete')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ESI
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
@@ -999,7 +999,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Failed')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ESI
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
@@ -1108,7 +1108,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Failed')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ESI
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
@@ -1188,7 +1188,7 @@ describe('OrderStatusItem', () => {
         // Status is 'Creating'
         expect(screen.getByLabelText('Order Status')).toHaveTextContent('Creating')
         expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
-        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ECHO ORDERS
         expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
@@ -1255,7 +1255,7 @@ describe('OrderStatusItem', () => {
         // Status is 'In progress'
         expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
         expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
-        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ECHO ORDERS
         expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
@@ -1343,7 +1343,7 @@ describe('OrderStatusItem', () => {
         // Status is 'In progress'
         expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
         expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
-        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ECHO ORDERS
         expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
@@ -1431,7 +1431,7 @@ describe('OrderStatusItem', () => {
         // Status is 'Complete'
         expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
         expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
-        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ECHO ORDERS
         expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
@@ -1524,7 +1524,7 @@ describe('OrderStatusItem', () => {
         // Status is 'Failed'
         expect(screen.getByLabelText('Order Status')).toHaveTextContent('Failed')
         expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
-        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is ECHO ORDERS
         expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
@@ -1595,7 +1595,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Creating')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is Harmony
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
@@ -1698,7 +1698,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is Harmony
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
@@ -1824,7 +1824,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('90%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is Harmony
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
@@ -1953,7 +1953,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Complete')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is Harmony
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
@@ -2082,7 +2082,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Complete')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is Harmony
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
@@ -2185,7 +2185,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Failed')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is Harmony
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
@@ -2288,7 +2288,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Canceled')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is Harmony
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
@@ -2376,7 +2376,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Creating')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is SWODLR
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
@@ -2456,7 +2456,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is SWODLR
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
@@ -2551,7 +2551,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is SWODLR
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
@@ -2645,7 +2645,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Complete')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is SWODLR
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
@@ -2734,7 +2734,7 @@ describe('OrderStatusItem', () => {
         expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Failed')
         expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
         expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
-        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Last Updated: 01-23 21:34')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
         // Access method is SWODLR
         expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
