@@ -132,5 +132,5 @@ jobs:
       uses: peter-evans/create-or-update-comment@v4
       with:
         comment-id: ${{ steps.find-comment.outputs.comment-id }}
-        body-path: bundle-size-comment.txt
+        body-path: bundle-size-comment.md
         edit-mode: replace
