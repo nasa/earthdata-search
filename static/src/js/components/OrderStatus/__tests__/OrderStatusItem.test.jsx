@@ -1,35 +1,34 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import {
+  render,
+  screen,
+  within
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import { retrievalStatusProps } from './mocks'
 
 import { OrderStatusItem } from '../OrderStatusItem'
 
-import { ProgressRing } from '../../ProgressRing/ProgressRing'
+import ProgressRing from '../../ProgressRing/ProgressRing'
+import OrderProgressList from '../../OrderProgressList/OrderProgressList'
 
-import * as getClientId from '../../../../../../sharedUtils/getClientId'
+import { STATUS_MESSAGES } from '../../../constants/orderStatusMessages'
 
-const shouldRefreshCopy = OrderStatusItem.prototype.shouldRefresh
+jest.mock('../../ProgressRing/ProgressRing', () => jest.fn(() => (
+  <mock-ProgressRing data-testid="mocked-ProgressRing" />
+)))
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.useFakeTimers({ legacyFakeTimers: true })
-  jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({
-    client: 'eed-default-test-serverless-client'
-  }))
-})
+jest.mock('../../OrderProgressList/OrderProgressList', () => jest.fn(() => (
+  <mock-OrderProgressList data-testid="mocked-OrderProgressList" />
+)))
 
-afterEach(() => {
-  jest.useRealTimers()
-})
+const queryCommandSupportedMock = jest.fn(() => true)
+global.document.queryCommandSupported = queryCommandSupportedMock
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps, mockRefresh) {
+const setup = (overrideProps) => {
+  const user = userEvent.setup()
   const shouldRefreshMock = jest.fn()
-
-  OrderStatusItem.prototype.shouldRefresh = mockRefresh ? shouldRefreshMock : shouldRefreshCopy
 
   const props = {
     authToken: 'mock-token',
@@ -57,224 +56,169 @@ function setup(overrideProps, mockRefresh) {
     orders: [{
       type: 'download'
     }],
-    type: 'download',
     ...overrideProps
   }
-  const enzymeWrapper = shallow(<OrderStatusItem {...props} />)
+
+  render(<OrderStatusItem {...props} />)
 
   return {
-    enzymeWrapper,
     props,
-    shouldRefreshMock
+    shouldRefreshMock,
+    user
   }
 }
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+afterEach(() => {
+  jest.useRealTimers()
+})
+
 describe('OrderStatusItem', () => {
-  describe('Auto-refresh', () => {
-    describe('when mounted', () => {
-      test('should start a timer', () => {
-        const { enzymeWrapper, props, shouldRefreshMock } = setup(
-          {
-            type: 'echo_orders',
-            collection: {
-              id: 1,
-              collection_id: 'TEST_COLLECTION_111',
-              retrieval_id: '54',
-              collection_metadata: {
-                id: 'TEST_COLLECTION_111',
-                dataset_id: 'Test Dataset ID'
-              },
-              access_method: {
-                type: 'ECHO ORDERS'
-              },
-              orders: [{
-                id: 1,
-                state: 'processing',
-                order_information: {
-                  requestStatus: {
-                    status: 'processing'
-                  }
-                }
-              }],
-              isLoaded: true
-            }
-          },
-          true
-        )
-
-        jest.spyOn(global, 'setInterval')
-
-        const { intervalId } = enzymeWrapper.instance()
-
-        expect(intervalId).toBeDefined()
-        expect(setInterval).toHaveBeenCalledTimes(1)
-        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
-        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
-        expect(shouldRefreshMock).toHaveBeenCalledTimes(0)
-
-        shouldRefreshMock.mockRestore()
-      })
-
-      describe('when the order status is not complete or failed', () => {
-        test('should try to refresh', () => {
-          const { props } = setup({
-            type: 'echo_orders',
-            collection: {
-              id: 111,
-              collection_metadata: {
-                id: 'TEST_COLLECTION_111',
-                dataset_id: 'Test Dataset ID'
-              },
-              access_method: {
-                type: 'ECHO ORDERS'
-              },
-              orders: [{
-                state: 'processing',
-                order_information: {
-                  requestStatus: {
-                    status: 'processing'
-                  }
-                }
-              }],
-              isLoaded: true
-            }
-          })
-
-          jest.advanceTimersByTime(60000)
-          expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(2)
-        })
-      })
-
-      describe('when the order status is complete', () => {
-        test('should not try to refresh', () => {
-          const { props } = setup({
-            type: 'echo_orders',
-            collection: {
-              id: 111,
-              collection_metadata: {
-                id: 'TEST_COLLECTION_111',
-                dataset_id: 'Test Dataset ID'
-              },
-              access_method: {
-                type: 'ECHO ORDERS'
-              },
-              orders: [{
-                state: 'complete',
-                order_information: {
-                  requestStatus: {
-                    status: 'complete'
-                  }
-                }
-              }],
-              isLoaded: true
-            }
-          })
-
-          jest.advanceTimersByTime(60000)
-          expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
-        })
-      })
-
-      describe('when the order status is failed', () => {
-        test('should not try to refresh', () => {
-          const { props } = setup({
-            type: 'echo_orders',
-            collection: {
-              id: 111,
-              collection_metadata: {
-                id: 'TEST_COLLECTION_111',
-                dataset_id: 'Test Dataset ID'
-              },
-              access_method: {
-                type: 'ECHO ORDERS'
-              },
-              orders: [{
-                state: 'failed',
-                order_information: {
-                  requestStatus: {
-                    status: 'failed'
-                  }
-                }
-              }],
-              isLoaded: true
-            }
-          })
-
-          jest.advanceTimersByTime(60000)
-          expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
-        })
-      })
-
-      describe('when the order status is canceled', () => {
-        test('should not try to refresh', () => {
-          const { props } = setup({
-            type: 'harmony',
-            collection: {
-              id: 111,
-              collection_metadata: {
-                id: 'TEST_COLLECTION_111',
-                dataset_id: 'Test Dataset ID'
-              },
-              access_method: {
-                type: 'HARMONY'
-              },
-              orders: [{
-                state: 'canceled',
-                order_information: {}
-              }],
-              isLoaded: true
-            }
-          })
-
-          jest.advanceTimersByTime(60000)
-          expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
-        })
-      })
+  describe('refreshing status', () => {
+    beforeEach(() => {
+      jest.useFakeTimers({ legacyFakeTimers: true })
     })
 
-    describe('when unmounted', () => {
-      test('should clear the timer', () => {
-        const { enzymeWrapper } = setup({
-          type: 'echo_orders',
+    describe('when the status is creating', () => {
+      test('calls onFetchRetrievalCollection after a delay', async () => {
+        const { props } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
             retrieval_id: '54',
             collection_metadata: {
               id: 'TEST_COLLECTION_111',
-              dataset_id: 'Test Dataset ID'
+              title: 'Test Dataset ID'
             },
             access_method: {
-              type: 'ECHO ORDERS'
+              type: 'Harmony'
             },
+            granule_count: 100,
             orders: [{
-              state: 'processing',
-              order_information: {
-                requestStatus: {
-                  status: 'processing'
-                }
-              }
+              state: 'creating',
+              order_information: {}
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        const { intervalId } = enzymeWrapper.instance()
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
 
-        expect(intervalId).toBeDefined()
+        // Calls onFetchRetrievalCollection after 5s
+        jest.advanceTimersByTime(5000)
 
-        enzymeWrapper.unmount()
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(2)
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
+      })
+    })
 
-        expect(clearInterval).toHaveBeenCalledTimes(1)
-        expect(clearInterval).toHaveBeenCalledWith(intervalId)
+    describe('when the status is in progress', () => {
+      test('calls onFetchRetrievalCollection after a delay', async () => {
+        const { props } = setup({
+          collection: {
+            id: 1,
+            collection_id: 'TEST_COLLECTION_111',
+            retrieval_id: '54',
+            collection_metadata: {
+              id: 'TEST_COLLECTION_111',
+              title: 'Test Dataset ID'
+            },
+            access_method: {
+              type: 'Harmony'
+            },
+            granule_count: 100,
+            orders: [{
+              state: 'initialized',
+              order_information: {}
+            }],
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
+          }
+        })
+
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
+
+        // Calls onFetchRetrievalCollection after 60s
+        jest.advanceTimersByTime(60000)
+
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(2)
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledWith(1)
+      })
+    })
+
+    describe('when the status is done', () => {
+      test('does not call onFetchRetrievalCollection after a delay', async () => {
+        const { props } = setup({
+          collection: {
+            id: 1,
+            collection_id: 'TEST_COLLECTION_111',
+            retrieval_id: '54',
+            collection_metadata: {
+              id: 'TEST_COLLECTION_111',
+              title: 'Test Dataset ID'
+            },
+            access_method: {
+              type: 'Harmony'
+            },
+            granule_count: 100,
+            orders: [{
+              state: 'complete',
+              order_information: {}
+            }],
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
+          }
+        })
+
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
+
+        // Calls onFetchRetrievalCollection after 60s
+        jest.advanceTimersByTime(60000)
+
+        expect(props.onFetchRetrievalCollection).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('when the download files list is incomplete', () => {
+      test('calls onFetchRetrievalCollectionGranuleLinks', async () => {
+        const { props } = setup({
+          collection: {
+            id: 1,
+            collection_id: 'TEST_COLLECTION_111',
+            retrieval_id: '54',
+            collection_metadata: {
+              id: 'TEST_COLLECTION_111',
+              title: 'Test Dataset ID'
+            },
+            access_method: {
+              type: 'Download'
+            },
+            granule_count: 100,
+            orders: [{
+              state: 'complete',
+              order_information: {}
+            }],
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
+          }
+        })
+
+        // Calls onFetchRetrievalCollectionGranuleLinks because the links have not been loaded
+        expect(props.onFetchRetrievalCollectionGranuleLinks).toHaveBeenCalledTimes(1)
+        expect(props.onFetchRetrievalCollectionGranuleLinks).toHaveBeenCalledWith(props.collection)
       })
     })
   })
 
-  describe('download', () => {
-    test('renders correct status classname', () => {
-      const { enzymeWrapper } = setup({
-        type: 'download',
+  describe('when the access method is download', () => {
+    test('renders the correct order status', async () => {
+      const { user } = setup({
         collection: {
           id: 1,
           collection_id: 'TEST_COLLECTION_111',
@@ -289,76 +233,141 @@ describe('OrderStatusItem', () => {
           access_method: {
             type: 'download'
           },
-          granule_count: 100,
+          granule_count: 2,
           orders: [],
-          isLoaded: true
+          isLoaded: true,
+          updated_at: '2025-01-24T02:34:33.340Z'
         },
         granuleDownload: {
           1: {
             percentDone: '50',
-            links: []
+            links: {
+              download: [
+                'http://example.com'
+              ]
+            }
           },
           isLoading: true
         }
       })
 
-      // Download orders are defaulted to complete
-      expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
+      // Minimized Header values
 
-      expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-      expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+      // Progress ring is 100%
+      expect(ProgressRing).toHaveBeenCalledTimes(1)
+      expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+        progress: 100
+      }), {})
 
-      const header = enzymeWrapper.find('.order-status-item__header')
-      expect(header.find(ProgressRing).props().progress).toEqual(100)
-      expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-      expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Download')
+      // Status is 'Complete'
+      expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+      expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
 
-      let body = enzymeWrapper.find('.order-status-item__body')
-      expect(body.length).toBe(0)
+      // Access method is Download
+      expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Download')
+
+      // Granules is 2
+      expect(screen.getByLabelText('Granule Count')).toHaveTextContent('2 Granules')
 
       // Expand the body
-      enzymeWrapper.find('.order-status-item__button').simulate('click')
+      const button = screen.getByRole('button', { name: 'Show details' })
+      await user.click(button)
 
-      expect(header.find(ProgressRing).props().progress).toEqual(100)
-      expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-      expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Download')
+      // Progress ring is 100%
+      expect(ProgressRing).toHaveBeenCalledTimes(2)
+      expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+        progress: 100
+      }), {})
 
-      body = enzymeWrapper.find('.order-status-item__body')
-      expect(body.find(ProgressRing).props().progress).toEqual(100)
-      expect(body.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+      // Status is 'Complete'
+      expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+      expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-      expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
-      expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Download')
-      expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+      // Access method is Download
+      expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Download')
 
-      expect(body.find('.order-status-item__order-info').text()).toEqual('Download your data directly from the links below, or use the provided download script.')
-      expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+      // Granules is 2
+      expect(screen.getByLabelText('Granule Count')).toHaveTextContent('2 Granules')
 
-      const tabs = body.find('EDSCTabs')
-      expect(tabs.children().length).toEqual(2)
+      expect(screen.getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.DOWNLOAD.COMPLETE)
 
-      const linksTab = tabs.childAt(0)
-      expect(linksTab.props().title).toEqual('Download Files')
-      expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
-      expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
-      expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
+      expect(screen.getByRole('link', { name: 'http://example.com' })).toHaveAttribute('href', 'http://example.com')
 
-      const scriptTab = tabs.childAt(1)
-      expect(scriptTab.props().title).toEqual('Download Script')
-      expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
+      // Click on the Download Script tab
+      const downloadScriptTab = screen.getByRole('tab', { name: 'Download Script' })
+      await user.click(downloadScriptTab)
+
+      // The download script contains the link
+      expect(screen.getByRole('code')).toHaveTextContent('http://example.com')
+    })
+
+    describe('when the collection is CSDA', () => {
+      test('renders the CSDA information', async () => {
+        const { user } = setup({
+          collection: {
+            id: 1,
+            collection_id: 'TEST_COLLECTION_111',
+            retrieval_id: '54',
+            collection_metadata: {
+              id: 'TEST_COLLECTION_111',
+              title: 'Test Dataset ID',
+              isCSDA: true
+            },
+            access_method: {
+              type: 'download'
+            },
+            granule_count: 100,
+            orders: [],
+            isLoaded: true
+          }
+        })
+
+        // Expand the body
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
+
+        expect(screen.getByLabelText('CSDA Note')).toHaveTextContent('This collection is made available through the NASA Commercial Smallsat Data Acquisition (CSDA) Program for NASA funded researchers. Access to the data will require additional authentication. More Details')
+      })
+
+      describe('when clicking on More Details', () => {
+        test('more details triggers modal on click', async () => {
+          const { props, user } = setup({
+            collection: {
+              id: 1,
+              collection_id: 'TEST_COLLECTION_111',
+              retrieval_id: '54',
+              collection_metadata: {
+                id: 'TEST_COLLECTION_111',
+                title: 'Test Dataset ID',
+                isCSDA: true
+              },
+              access_method: {
+                type: 'download'
+              },
+              granule_count: 100,
+              orders: [],
+              isLoaded: true
+            }
+          })
+
+          // Expand the body
+          const button = screen.getByRole('button', { name: 'Show details' })
+          await user.click(button)
+
+          const moreDetails = screen.getByRole('button', { name: 'More details' })
+          await user.click(moreDetails)
+
+          expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
+          expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
+        })
+      })
     })
   })
 
-  describe('browse imagery', () => {
-    test('renders correct status classname', () => {
-      const { enzymeWrapper } = setup({
-        type: 'download',
+  describe('when the collection has browse imagery', () => {
+    test('renders the correct order status', async () => {
+      const { user } = setup({
         collection: {
           id: 1,
           collection_id: 'TEST_COLLECTION_111',
@@ -378,9 +387,10 @@ describe('OrderStatusItem', () => {
           access_method: {
             type: 'download'
           },
-          granule_count: 100,
+          granule_count: 2,
           orders: [],
-          isLoaded: true
+          isLoaded: true,
+          updated_at: '2025-01-24T02:34:33.340Z'
         },
         granuleDownload: {
           1: {
@@ -393,138 +403,58 @@ describe('OrderStatusItem', () => {
         }
       })
 
-      // Download orders are defaulted to complete
-      expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
+      // Minimized Header values
 
-      expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-      expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+      // Progress ring is 100%
+      expect(ProgressRing).toHaveBeenCalledTimes(1)
+      expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+        progress: 100
+      }), {})
 
-      const header = enzymeWrapper.find('.order-status-item__header')
-      expect(header.find(ProgressRing).props().progress).toEqual(100)
-      expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-      expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Download')
+      // Status is 'Complete'
+      expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+      expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
 
-      let body = enzymeWrapper.find('.order-status-item__body')
-      expect(body.length).toBe(0)
+      // Access method is Download
+      expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Download')
+
+      // Granules is 2
+      expect(screen.getByLabelText('Granule Count')).toHaveTextContent('2 Granules')
 
       // Expand the body
-      enzymeWrapper.find('.order-status-item__button').simulate('click')
+      const button = screen.getByRole('button', { name: 'Show details' })
+      await user.click(button)
 
-      expect(header.find(ProgressRing).props().progress).toEqual(100)
-      expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-      expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Download')
+      // Progress ring is 100%
+      expect(ProgressRing).toHaveBeenCalledTimes(2)
+      expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+        progress: 100
+      }), {})
 
-      body = enzymeWrapper.find('.order-status-item__body')
-      expect(body.find(ProgressRing).props().progress).toEqual(100)
-      expect(body.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+      // Status is 'Complete'
+      expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+      expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-      expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
-      expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Download')
-      expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+      // Access method is Download
+      expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Download')
 
-      expect(body.find('.order-status-item__order-info').text()).toEqual('Download your data directly from the links below, or use the provided download script.')
-      expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+      // Granules is 2
+      expect(screen.getByLabelText('Granule Count')).toHaveTextContent('2 Granules')
 
-      const tabs = body.find('EDSCTabs')
-      expect(tabs.children().length).toEqual(3)
+      expect(screen.getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.DOWNLOAD.COMPLETE)
 
-      const linksTab = tabs.childAt(0)
-      expect(linksTab.props().title).toEqual('Download Files')
-      expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(linksTab.childAt(0).props().percentDoneDownloadLinks).toEqual('50')
-      expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
-      expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
+      // Click on the Browse Imagery tab
+      const browseImageryTab = screen.getByRole('tab', { name: 'Browse Imagery' })
+      await user.click(browseImageryTab)
 
-      const scriptTab = tabs.childAt(1)
-      expect(scriptTab.props().title).toEqual('Download Script')
-      expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(scriptTab.childAt(0).props().downloadLinks).toEqual([])
-
-      const browseTab = tabs.childAt(2)
-      expect(browseTab.props().title).toEqual('Browse Imagery')
-      expect(browseTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(browseTab.childAt(0).props().browseUrls).toEqual(['http://example.com'])
-      expect(browseTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Dbrowse%26ee%3Dprod&downloadId=shortName_versionId&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
+      expect(screen.getByRole('link', { name: 'http://example.com' })).toHaveAttribute('href', 'http://example.com')
     })
   })
 
-  describe('CSDA', () => {
-    test('renders the CSDA information', () => {
-      const { enzymeWrapper } = setup({
-        type: 'download',
-        collection: {
-          id: 1,
-          collection_id: 'TEST_COLLECTION_111',
-          retrieval_id: '54',
-          collection_metadata: {
-            id: 'TEST_COLLECTION_111',
-            title: 'Test Dataset ID',
-            isCSDA: true
-          },
-          access_method: {
-            type: 'download'
-          },
-          granule_count: 100,
-          orders: [],
-          isLoaded: true
-        }
-      })
-
-      enzymeWrapper.find('.order-status-item__button').simulate('click')
-
-      const body = enzymeWrapper.find('.order-status-item__body')
-      const tabs = body.find('EDSCTabs')
-      expect(tabs.children().length).toEqual(2)
-
-      const linksTab = tabs.childAt(0)
-      expect(linksTab.props().title).toEqual('Download Files')
-      expect(linksTab.childAt(0).props().collectionIsCSDA).toEqual(true)
-
-      const message = enzymeWrapper.find('.order-status-item__note')
-      expect(message.text()).toContain('This collection is made available through the NASA Commercial Smallsat Data Acquisition (CSDA) Program')
-    })
-
-    test('more details triggers modal on click', () => {
-      const { enzymeWrapper, props } = setup({
-        type: 'download',
-        collection: {
-          id: 1,
-          collection_id: 'TEST_COLLECTION_111',
-          retrieval_id: '54',
-          collection_metadata: {
-            id: 'TEST_COLLECTION_111',
-            title: 'Test Dataset ID',
-            isCSDA: true
-          },
-          access_method: {
-            type: 'download'
-          },
-          granule_count: 100,
-          orders: [],
-          isLoaded: true
-        }
-      })
-
-      enzymeWrapper.find('.order-status-item__button').simulate('click')
-
-      const message = enzymeWrapper.find('.order-status-item__note')
-      const moreDetailsButton = message.find('.order-status-item__header-message-link')
-
-      moreDetailsButton.simulate('click')
-
-      expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
-      expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
-    })
-  })
-
-  describe('OPeNDAP', () => {
-    test('renders correct status classname', () => {
-      const { enzymeWrapper } = setup({
-        type: 'OPeNDAP',
+  describe('when the access method is OPeNDAP', () => {
+    test('renders the correct order status', async () => {
+      const { user } = setup({
         collection: {
           id: 1,
           collection_id: 'TEST_COLLECTION_111',
@@ -541,7 +471,8 @@ describe('OrderStatusItem', () => {
           },
           granule_count: 100,
           orders: [],
-          isLoaded: true
+          isLoaded: true,
+          updated_at: '2025-01-24T02:34:33.340Z'
         },
         granuleDownload: {
           1: {
@@ -555,63 +486,62 @@ describe('OrderStatusItem', () => {
         }
       })
 
-      // OPeNDAP orders are defaulted to complete
-      expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
+      // Minimized Header values
 
-      expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-      expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+      // Progress ring is 100%
+      expect(ProgressRing).toHaveBeenCalledTimes(1)
+      expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+        progress: 100
+      }), {})
 
-      const header = enzymeWrapper.find('.order-status-item__header')
-      expect(header.find(ProgressRing).props().progress).toEqual(100)
-      expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-      expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('OPeNDAP')
+      // Status is 'Complete'
+      expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+      expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
 
-      let body = enzymeWrapper.find('.order-status-item__body')
-      expect(body.length).toBe(0)
+      // Access method is OPeNDAP
+      expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('OPeNDAP')
+
+      // Granules is 100
+      expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
       // Expand the body
-      enzymeWrapper.find('.order-status-item__button').simulate('click')
+      const button = screen.getByRole('button', { name: 'Show details' })
+      await user.click(button)
 
-      expect(header.find(ProgressRing).props().progress).toEqual(100)
-      expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-      expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('OPeNDAP')
+      // Progress ring is 100%
+      expect(ProgressRing).toHaveBeenCalledTimes(2)
+      expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+        progress: 100
+      }), {})
 
-      body = enzymeWrapper.find('.order-status-item__body')
-      expect(body.find(ProgressRing).props().progress).toEqual(100)
-      expect(body.find('.order-status-item__status').text()).toEqual('Complete')
-      expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+      // Status is 'Complete'
+      expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+      expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+      expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-      expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
-      expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('OPeNDAP')
-      expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+      // Access method is OPeNDAP
+      expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('OPeNDAP')
 
-      expect(body.find('.order-status-item__order-info').text()).toEqual('Download your data directly from the links below, or use the provided download script.')
-      expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+      // Granules is 100
+      expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-      const tabs = body.find('EDSCTabs')
-      expect(tabs.children().length).toEqual(2)
+      expect(screen.getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.OPENDAP.COMPLETE)
 
-      const linksTab = tabs.childAt(0)
-      expect(linksTab.props().title).toEqual('Download Files')
-      expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(linksTab.childAt(0).props().downloadLinks).toEqual(['http://example.com'])
-      expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=shortName_versionId&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
-      expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
+      expect(screen.getByRole('link', { name: 'http://example.com' })).toHaveAttribute('href', 'http://example.com')
 
-      const scriptTab = tabs.childAt(1)
-      expect(scriptTab.props().title).toEqual('Download Script')
-      expect(scriptTab.childAt(0).props().granuleCount).toEqual(100)
-      expect(scriptTab.childAt(0).props().downloadLinks).toEqual(['http://example.com'])
+      // Click on the Download Script tab
+      const downloadScriptTab = screen.getByRole('tab', { name: 'Download Script' })
+      await user.click(downloadScriptTab)
+
+      // The download script contains the link
+      expect(screen.getByRole('code')).toHaveTextContent('http://example.com')
     })
   })
 
-  describe('ESI', () => {
+  describe('when the access method is ESI', () => {
     describe('when the order created', () => {
-      test('renders creating state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders creating state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -628,62 +558,70 @@ describe('OrderStatusItem', () => {
               state: 'creating',
               order_information: {}
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Creating'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Creating')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is ESI
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ESI')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'Creating'
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Creating')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ESI')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ESI
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are pending processing. This may take some time.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.CREATING)
 
-        const linksTab = tabs.childAt(0)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
 
-        const statusTab = tabs.childAt(1)
-        expect(statusTab.props().title).toEqual('Order Status')
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is submitted', () => {
-      test('renders in progress state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders in progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -700,61 +638,70 @@ describe('OrderStatusItem', () => {
               state: 'initialized',
               order_information: {}
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'In progress'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is ESI
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ESI')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'In progress', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ESI')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ESI
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.IN_PROGRESS)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const statusTab = tabs.childAt(1)
-        expect(statusTab.props().title).toEqual('Order Status')
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is in progress', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -796,61 +743,70 @@ describe('OrderStatusItem', () => {
                 }
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(90)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(90%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 90%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 90
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'In progress'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is ESI
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ESI')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(90)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(90%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 90%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 90
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(90)
-        expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(90%)')
+        // Status is 'In progress', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ESI')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ESI
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.IN_PROGRESS)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const statusTab = tabs.childAt(1)
-        expect(statusTab.props().title).toEqual('Order Status')
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is in complete', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -899,66 +855,70 @@ describe('OrderStatusItem', () => {
                 }
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Complete'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+
+        // Access method is ESI
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ESI')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Complete', 1/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ESI')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ESI
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are done processing and are available for download.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.COMPLETE)
 
-        const linksTab = tabs.childAt(0)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('Retrieved 2 files for 100 granulesDownload FilesExpandhttps://e4ftl01.cr.usgs.gov/ops/esir/50250.htmlhttps://e4ftl01.cr.usgs.gov/ops/esir/50250.zip')
 
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
-          'https://e4ftl01.cr.usgs.gov/ops/esir/50250.html',
-          'https://e4ftl01.cr.usgs.gov/ops/esir/50250.zip'
-        ])
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
 
-        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
-
-        const statusTab = tabs.childAt(1)
-        expect(statusTab.props().title).toEqual('Order Status')
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order failed', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1001,59 +961,68 @@ describe('OrderStatusItem', () => {
                 }
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(true)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Failed'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is ESI
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ESI')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Failed', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ESI')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ESI
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed processing.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:188291813:InternalError - -1:Cancelled (Timeout).')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.FAILED)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const statusTab = tabs.childAt(1)
-        expect(statusTab.props().title).toEqual('Order Status')
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
 
-      test('renders an updated progress state when messages is an array', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders an updated progress state when messages is an array', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1101,63 +1070,72 @@ describe('OrderStatusItem', () => {
                 }
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(true)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Failed'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+
+        // Access method is ESI
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ESI')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ESI')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Failed', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ESI')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ESI
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('ESI')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed processing.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:188291813:InternalError - -1:Cancelled (Timeout).')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.FAILED)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
-        expect(linksTab.childAt(0).props().showTextWindowActions).toEqual(false)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const statusTab = tabs.childAt(1)
-        expect(statusTab.props().title).toEqual('Order Status')
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
   })
 
-  describe('ECHO ORDERS', () => {
+  describe('when the access method is ECHO ORDERS', () => {
     describe('when the order created', () => {
-      test('renders creating state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders creating state', async () => {
+        const { user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1174,52 +1152,57 @@ describe('OrderStatusItem', () => {
               state: 'creating',
               order_information: {}
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Creating'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Creating')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'Creating'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Creating')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(0)
+        expect(screen.getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ECHO_ORDERS.IN_PROGRESS)
       })
     })
 
     describe('when the order is submitted', () => {
-      test('renders in progress state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders in progress state', async () => {
+        const { user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1236,52 +1219,57 @@ describe('OrderStatusItem', () => {
               state: 'initialized',
               order_information: {}
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'In progress'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'In progress'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(0)
+        expect(screen.getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ECHO_ORDERS.IN_PROGRESS)
       })
     })
 
     describe('when the order is in progress', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders an updated progress state', async () => {
+        const { user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1319,52 +1307,57 @@ describe('OrderStatusItem', () => {
                 user_region: 'USA'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'In progress'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'In progress'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(0)
+        expect(screen.getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ECHO_ORDERS.IN_PROGRESS)
       })
     })
 
     describe('when the order is in complete', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders an updated progress state', async () => {
+        const { user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1402,52 +1395,57 @@ describe('OrderStatusItem', () => {
                 user_region: 'USA'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Complete'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Complete'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The data provider has completed processing your order. You should have received an email with information regarding how to access your data from the data provider.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(0)
+        expect(screen.getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ECHO_ORDERS.COMPLETE)
       })
     })
 
     describe('when the order failed', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper } = setup({
-          type: 'esi',
+      test('renders an updated progress state', async () => {
+        const { user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1490,54 +1488,59 @@ describe('OrderStatusItem', () => {
                 }
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(true)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Failed'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('ECHO ORDERS')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Failed'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+        expect(screen.getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').length).toEqual(0)
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('ECHO ORDERS')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is ECHO ORDERS
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('ECHO ORDERS')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The data provider is reporting the order has failed processing.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(0)
+        expect(screen.getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ECHO_ORDERS.FAILED)
       })
     })
   })
 
-  describe('Harmony', () => {
+  describe('when the access method is Harmony', () => {
     describe('when the order created', () => {
-      test('renders creating state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+      test('renders creating state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1554,65 +1557,76 @@ describe('OrderStatusItem', () => {
               state: 'creating',
               order_information: {}
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Creating'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Creating')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is Harmony
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'Creating', 0/1 orders complete, last updated)
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Creating')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is Harmony
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are pending processing. This may take some time.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.CREATING)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
+        // Click on the STAC Links tab
+        const stacLinksTag = screen.getByRole('tab', { name: 'STAC Links' })
+        await user.click(stacLinksTag)
 
-        const orderStatusTab = tabs.childAt(2)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        expect(screen.getByLabelText('STAC Links')).toHaveTextContent('STAC links will become available once the order has finished processing.')
+
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is submitted', () => {
-      test('renders in progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+      test('renders in progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1646,65 +1660,76 @@ describe('OrderStatusItem', () => {
                 updatedAt: '2020-09-10T13:50:22.372Z'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'In progress'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is Harmony
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'In progress', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is Harmony
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.IN_PROGRESS)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
+        // Click on the STAC Links tab
+        const stacLinksTag = screen.getByRole('tab', { name: 'STAC Links' })
+        await user.click(stacLinksTag)
 
-        const orderStatusTab = tabs.childAt(2)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        expect(screen.getByLabelText('STAC Links')).toHaveTextContent('STAC links will become available once the order has finished processing.')
+
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is in progress', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1761,72 +1786,76 @@ describe('OrderStatusItem', () => {
                 updatedAt: '2020-09-10T13:50:22.372Z'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(90)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(90%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 90%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 90
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'In progress'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('90%')
+
+        // Access method is Harmony
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(90)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(90%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 90%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 90
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(90)
-        expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(90%)')
+        // Status is 'In progress', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('90%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is Harmony
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.IN_PROGRESS)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
-        ])
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('Retrieved 1 file for 100 granulesDownload FilesCopySaveExpandhttps://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.pnghttps://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png')
 
-        expect(linksTab.childAt(0).props().eddLink).toEqual(null)
-        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(true)
+        // Click on the STAC Links tab
+        const stacLinksTag = screen.getByRole('tab', { name: 'STAC Links' })
+        await user.click(stacLinksTag)
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/'
-        ])
+        expect(screen.getByLabelText('STAC Links')).toHaveTextContent('Retrieving STAC links for 100 granules...CopySaveExpandhttps://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/')
 
-        const orderStatusTab = tabs.childAt(2)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is in complete', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -1886,73 +1915,76 @@ describe('OrderStatusItem', () => {
                 updatedAt: '2020-09-10T13:50:22.372Z'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Complete'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+
+        // Access method is Harmony
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Complete', 1/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is Harmony
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are done processing and are available for download.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:CMR query identified 51 granules.')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.COMPLETE)
 
-        const linksTab = tabs.childAt(0)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('Retrieved 1 file for 100 granulesDownload FilesCopySaveExpandhttps://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.pnghttps://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png')
 
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
-        ])
+        // Click on the STAC Links tab
+        const stacLinksTag = screen.getByRole('tab', { name: 'STAC Links' })
+        await user.click(stacLinksTag)
 
-        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
-        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
+        expect(screen.getByLabelText('STAC Links')).toHaveTextContent('Retrieved 1 STAC links for 100 granulesCopySaveExpandhttps://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/')
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/'
-        ])
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
 
-        const orderStatusTab = tabs.childAt(2)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is completed_with_errors', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2012,76 +2044,76 @@ describe('OrderStatusItem', () => {
                 updatedAt: '2020-09-10T13:50:22.372Z'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Status is 'Complete'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
 
-        let body = enzymeWrapper.find('.order-status-item__body')
+        // Access method is Harmony
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
 
-        expect(body.length).toBe(0)
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Complete', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is Harmony
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are done processing and are available for download.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:The job has completed with errors. See the errors field for more details')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.COMPLETE)
 
-        expect(tabs.children().length).toEqual(3)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('Retrieved 1 file for 100 granulesDownload FilesCopySaveExpandhttps://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.pnghttps://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png')
 
-        const linksTab = tabs.childAt(0)
+        // Click on the STAC Links tab
+        const stacLinksTag = screen.getByRole('tab', { name: 'STAC Links' })
+        await user.click(stacLinksTag)
 
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/service-results/harmony-uat-staging/public/harmony/gdal/a75ebeba-978e-4e68-9131-e36710fb800e/006_04_00feff_asia_west_regridded.png'
-        ])
+        expect(screen.getByLabelText('STAC Links')).toHaveTextContent('Retrieved 1 STAC links for 100 granulesCopySaveExpandhttps://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/')
 
-        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3D42%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=testDataset_1&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
-        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([
-          'https://harmony.uat.earthdata.nasa.gov/stac/e116eeb5-f05e-4e5b-bc97-251dd6e1c66e/'
-        ])
-
-        const orderStatusTab = tabs.childAt(2)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order failed', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2115,65 +2147,76 @@ describe('OrderStatusItem', () => {
                 updatedAt: '2020-09-10T13:50:22.372Z'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(true)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Failed'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+
+        // Access method is Harmony
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 100%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Failed', 1/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is Harmony
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed processing.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:Variable subsetting failed with error: HTTP Error 400: Bad Request.')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.FAILED)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
+        // Click on the STAC Links tab
+        const stacLinksTag = screen.getByRole('tab', { name: 'STAC Links' })
+        await user.click(stacLinksTag)
 
-        const orderStatusTab = tabs.childAt(2)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        expect(screen.getByLabelText('STAC Links')).toHaveTextContent('STAC links will become available once the order has finished processing.')
+
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is canceled', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'harmony',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2207,67 +2250,78 @@ describe('OrderStatusItem', () => {
                 updatedAt: '2020-09-10T13:50:22.372Z'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--canceled')).toEqual(true)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Canceled')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Canceled'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Canceled')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is Harmony
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
+
+        // Granules is 100
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Canceled')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('Harmony')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('Canceled')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'Canceled', 1/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Canceled')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('Harmony')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('100 Granules')
+        // Access method is Harmony
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('Harmony')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has been canceled.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:Canceled by user.')
+        // Granules is 100
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('100 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(3)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.ESI.CANCELED)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const stacLinksTab = tabs.childAt(1)
-        expect(stacLinksTab.childAt(0).props().granuleCount).toEqual(100)
-        expect(stacLinksTab.childAt(0).props().stacLinks).toEqual([])
+        // Click on the STAC Links tab
+        const stacLinksTag = screen.getByRole('tab', { name: 'STAC Links' })
+        await user.click(stacLinksTag)
 
-        const orderStatusTab = tabs.childAt(2)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        expect(screen.getByLabelText('STAC Links')).toHaveTextContent('STAC links will become available once the order has finished processing.')
+
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
   })
 
-  describe('Swodlr', () => {
-    describe('when the order created', () => {
-      test('renders creating state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'SWODLR',
+  describe('when the access method is SWODLR', () => {
+    describe('when the order is created', () => {
+      test('renders creating state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2284,61 +2338,70 @@ describe('OrderStatusItem', () => {
               state: 'creating',
               order_information: {}
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Creating', 0/1 orders complete, last updated
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Creating')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is SWODLR
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
+
+        // Granules is 10
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('10 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('Creating')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'Creating', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Creating')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('10 Granules')
+        // Access method is SWODLR
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are pending generation. This may take some time.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 10
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('10 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.SWODLR.CREATING)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(10)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const orderStatusTab = tabs.childAt(1)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is submitted', () => {
-      test('renders in progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'SWODLR',
+      test('renders in progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2355,61 +2418,70 @@ describe('OrderStatusItem', () => {
               state: 'generating',
               order_information: {}
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'In progress', 0/1 orders complete, last updated
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is SWODLR
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
+
+        // Granules is 10
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('10 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'In progress', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('10 Granules')
+        // Access method is SWODLR
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are currently being generated. Once generation is finished, links will be displayed below and sent to the email you\'ve provided.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 10
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('10 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.SWODLR.IN_PROGRESS)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(10)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const orderStatusTab = tabs.childAt(1)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is in progress', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'SWODLR',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2441,65 +2513,70 @@ describe('OrderStatusItem', () => {
                 error: 'Variable subsetting failed with error: HTTP Error 400: Bad Request.'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'In progress', 0/1 orders complete, last updated
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is SWODLR
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
+
+        // Granules is 10
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('10 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('In progress')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'In progress', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('In progress')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('10 Granules')
+        // Access method is SWODLR
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders are currently being generated. Once generation is finished, links will be displayed below and sent to the email you\'ve provided.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 10
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('10 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.SWODLR.IN_PROGRESS)
 
-        const linksTab = tabs.childAt(0)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(10)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
 
-        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
-        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
-
-        const orderStatusTab = tabs.childAt(1)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order is in complete', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'SWODLR',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2530,67 +2607,70 @@ describe('OrderStatusItem', () => {
                 updatedAt: '2020-09-10T13:50:22.372Z'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(true)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(false)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Complete'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+
+        // Access method is SWODLR
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
+
+        // Granules is 1
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('1 Granule')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(100)
-        expect(header.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(100%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 100
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(100)
-        expect(body.find('.order-status-item__status').text()).toEqual('Complete')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(100%)')
+        // Status is 'Complete', 1/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('100%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('1/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('1/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('1 Granule')
+        // Access method is SWODLR
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('Your orders have been generated and are available for download.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('')
+        // Granules is 1
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('1 Granule')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.SWODLR.COMPLETE)
 
-        const linksTab = tabs.childAt(0)
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('Retrieved 1 file for 1 granuleDownload FilesCopySaveExpandhttps://archive.swot.podaac.earthdata.nasa.gov/podaac-swot-ops-swodlr-protected/L2_HR_Raster/714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc/1718399955/SWOT_L2_HR_Raster_1000m_UTM11Q_N_x_x_x_007_121_100F_20231127T173107_20231127T173121_DIC0_01.nchttps://archive.swot.podaac.earthdata.nasa.gov/podaac-swot-ops-swodlr-protected/L2_HR_Raster/714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc/1718399955/SWOT_L2_HR_Raster_1000m_UTM11Q_N_x_x_x_007_121_100F_20231127T173107_20231127T173121_DIC0_01.nc')
 
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(1)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([
-          'https://archive.swot.podaac.earthdata.nasa.gov/podaac-swot-ops-swodlr-protected/L2_HR_Raster/714cbd4d-2733-4ba0-85ac-b42a4aa4a1dc/1718399955/SWOT_L2_HR_Raster_1000m_UTM11Q_N_x_x_x_007_121_100F_20231127T173107_20231127T173121_DIC0_01.nc'
-        ])
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
 
-        expect(linksTab.childAt(0).props().eddLink).toEqual('earthdata-download://startDownload?getLinks=http%3A%2F%2Flocalhost%3A3000%2Fgranule_links%3Fid%3Dundefined%26flattenLinks%3Dtrue%26linkTypes%3Ddata%26ee%3Dprod&downloadId=undefined&clientId=eed-default-test-serverless-client&token=Bearer mock-token&authUrl=http%3A%2F%2Flocalhost%3A3000%2Flogin%3Fee%3Dprod%26eddRedirect%3Dearthdata-download%253A%252F%252FauthCallback&eulaRedirectUrl=http%3A%2F%2Flocalhost%3A8080%2Fauth_callback%3FeddRedirect%3Dearthdata-download%253A%252F%252FeulaCallback')
-        expect(linksTab.childAt(0).props().disableEddInProgress).toEqual(false)
-
-        const orderStatusTab = tabs.childAt(1)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
 
     describe('when the order failed', () => {
-      test('renders an updated progress state', () => {
-        const { enzymeWrapper, props } = setup({
-          type: 'SWODLR',
+      test('renders an updated progress state', async () => {
+        const { props, user } = setup({
           collection: {
             id: 1,
             collection_id: 'TEST_COLLECTION_111',
@@ -2616,54 +2696,64 @@ describe('OrderStatusItem', () => {
                 updatedAt: '2020-09-10T13:50:22.372Z'
               }
             }],
-            isLoaded: true
+            isLoaded: true,
+            updated_at: '2025-01-24T02:34:33.340Z'
           }
         })
 
-        expect(enzymeWrapper.hasClass('order-status-item--complete')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--in_progress')).toEqual(false)
-        expect(enzymeWrapper.hasClass('order-status-item--failed')).toEqual(true)
+        // Minimized Header values
 
-        const header = enzymeWrapper.find('.order-status-item__header')
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(1)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        let body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.length).toBe(0)
+        // Status is 'Failed'
+        expect(screen.getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(screen.getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+
+        // Access method is SWODLR
+        expect(screen.getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
+
+        // Granules is 10
+        expect(screen.getByLabelText('Granule Count')).toHaveTextContent('10 Granules')
 
         // Expand the body
-        enzymeWrapper.find('.order-status-item__button').simulate('click')
+        const button = screen.getByRole('button', { name: 'Show details' })
+        await user.click(button)
 
-        expect(header.find(ProgressRing).props().progress).toEqual(0)
-        expect(header.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(header.find('.order-status-item__percentage').text()).toEqual('(0%)')
-        expect(header.find('.order-status-item__meta-column--access-method').text()).toEqual('SWODLR')
+        // Progress ring is 0%
+        expect(ProgressRing).toHaveBeenCalledTimes(2)
+        expect(ProgressRing).toHaveBeenCalledWith(expect.objectContaining({
+          progress: 0
+        }), {})
 
-        body = enzymeWrapper.find('.order-status-item__body')
-        expect(body.find(ProgressRing).props().progress).toEqual(0)
-        expect(body.find('.order-status-item__status').text()).toEqual('Failed')
-        expect(body.find('.order-status-item__percentage').text()).toEqual('(0%)')
+        // Status is 'Failed', 0/1 orders complete, last updated
+        const orderStatusItemHeader = screen.getByTestId('order-status-item__body-header')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Status')).toHaveTextContent('Failed')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Progress Percentage')).toHaveTextContent('0%')
+        expect(within(orderStatusItemHeader).getByLabelText('Orders Processed Count')).toHaveTextContent('0/1 orders complete')
+        expect(within(orderStatusItemHeader).getByLabelText('Order Last Updated Time')).toHaveTextContent('Updated: 01-23-2025 09:34:33 pm')
 
-        expect(body.find('.order-status-item__orders-processed').text()).toEqual('0/1 orders complete')
-        expect(body.find('.order-status-item__meta-body--access-method').text()).toEqual('SWODLR')
-        expect(body.find('.order-status-item__meta-body--granules').text()).toEqual('10 Granules')
+        // Access method is SWODLR
+        expect(within(orderStatusItemHeader).getByLabelText('Access Method Type')).toHaveTextContent('SWODLR')
 
-        expect(body.find('.order-status-item__order-info').text()).toEqual('The order has failed.')
-        expect(body.find('.order-status-item__additional-info').text()).toEqual('Service has responded with message:SDS job failed - please contact support')
+        // Granules is 10
+        expect(within(orderStatusItemHeader).getByLabelText('Granule Count')).toHaveTextContent('10 Granules')
 
-        const tabs = body.find('EDSCTabs')
-        expect(tabs.children().length).toEqual(2)
+        expect(within(orderStatusItemHeader).getByLabelText('Order Information')).toHaveTextContent(STATUS_MESSAGES.SWODLR.FAILED)
 
-        const linksTab = tabs.childAt(0)
-        expect(linksTab.props().title).toEqual('Download Files')
-        expect(linksTab.childAt(0).props().granuleCount).toEqual(10)
-        expect(linksTab.childAt(0).props().downloadLinks).toEqual([])
+        expect(screen.getByLabelText('Download Files')).toHaveTextContent('The download files will become available once the order has finished processing.')
 
-        const orderStatusTab = tabs.childAt(1)
-        expect(orderStatusTab.props().title).toEqual('Order Status')
-        expect(orderStatusTab.childAt(0).props().orders).toEqual(props.collection.orders)
+        // Click on the Order Status tab
+        const orderStatusTab = screen.getByRole('tab', { name: 'Order Status' })
+        await user.click(orderStatusTab)
+
+        expect(OrderProgressList).toHaveBeenCalledTimes(1)
+        expect(OrderProgressList).toHaveBeenCalledWith(expect.objectContaining({
+          orders: props.collection.orders
+        }), {})
       })
     })
   })

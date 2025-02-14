@@ -12,6 +12,8 @@ export interface StepFunctionsProps {
   defaultLambdaConfig: application.NodeJsFunctionProps;
   /** Optional: Used to rename log groups during the migration to CDK */
   logGroupSuffix: string;
+  /** The time in milliseconds to wait between checking the status of an order */
+  orderStatusRefreshTime: number;
   /** The Role for the step function */
   role: cdk.aws_iam.IRole;
   /** The stage name (dev/sit/etc) */
@@ -42,6 +44,7 @@ export class StepFunctions extends Construct {
     const {
       defaultLambdaConfig,
       logGroupSuffix,
+      orderStatusRefreshTime,
       role,
       stageName,
       queues,
@@ -171,7 +174,7 @@ export class StepFunctions extends Construct {
           },
           WaitForRetry: {
             Type: 'Wait',
-            Seconds: 60,
+            Seconds: orderStatusRefreshTime / 1000,
             Next: 'DetermineOrderType'
           },
           OrderComplete: {

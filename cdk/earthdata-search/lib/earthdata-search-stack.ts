@@ -29,6 +29,7 @@ const {
   OBFUSCATION_SPIN = '',
   OBFUSCATION_SPIN_SHAPEFILES = '',
   ORDER_DELAY_SECONDS = '1',
+  ORDER_STATUS_REFRESH_TIME = '60000',
   S3_OBJECTS_EXPIRATION_IN_DAYS = '30',
   STAGE_NAME = 'dev',
   SUBNET_ID_A = 'local-subnet-a',
@@ -169,11 +170,12 @@ export class EarthdataSearchStack extends cdk.Stack {
     })
 
     new StepFunctions(this, 'StepFunctions', {
+      defaultLambdaConfig,
       logGroupSuffix,
-      role: lambdaRole,
-      stageName: STAGE_NAME,
+      orderStatusRefreshTime: parseInt(ORDER_STATUS_REFRESH_TIME, 10),
       queues,
-      defaultLambdaConfig
+      role: lambdaRole,
+      stageName: STAGE_NAME
     })
 
     // Outputs

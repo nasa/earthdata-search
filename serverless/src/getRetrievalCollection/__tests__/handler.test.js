@@ -57,6 +57,7 @@ describe('getRetrievalCollection', () => {
         order_number: null,
         order_information: null,
         state: null,
+        updated_at: '2019-08-25T12:58:14.390Z',
         urs_id: 'test_user'
       }])
     })
@@ -84,6 +85,7 @@ describe('getRetrievalCollection', () => {
       granule_params: {},
       granule_count: 100,
       orders: [],
+      updated_at: '2019-08-25T12:58:14.390Z',
       urs_id: 'test_user'
     }))
 

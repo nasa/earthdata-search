@@ -16,7 +16,6 @@ $item-height: 3rem;
   }
 
   &--is-opened {
-    box-shadow: 0 0 0.75rem -0.125rem rgba(utils.$color__carbon-black, 0.15);
     z-index: 1;
   }
 
@@ -24,7 +23,8 @@ $item-height: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 bootstrap.$spacer;
+    padding: 0;
+    padding-left: bootstrap.$spacer;
   }
 
   &__heading {
@@ -36,7 +36,8 @@ $item-height: 3rem;
     margin: 0;
     padding: 0;
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 1rem;
+    letter-spacing: -0.015rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -52,7 +53,6 @@ $item-height: 3rem;
     justify-content: center;
     padding: 0.5*bootstrap.$spacer;
     width: 15%;
-    font-size: 0.775rem;
     color: utils.$color__carbon--60;
 
     &--progress {
@@ -61,8 +61,15 @@ $item-height: 3rem;
   }
 
   &__meta-row {
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    gap: 1rem;
     flex-direction: row;
+
+    @include bootstrap.media-breakpoint-up(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   &__meta {
@@ -74,22 +81,23 @@ $item-height: 3rem;
     margin-bottom: bootstrap.$spacer;
     width: auto;
     font-size: 0.875rem;
-    color: utils.$color__carbon--60;
   }
 
   &__meta-heading {
-    margin-bottom: 0.125*bootstrap.$spacer;
-    font-size: 0.875rem;
-    color: utils.$color__carbon--70;
+    margin-bottom: 0.25*bootstrap.$spacer;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    font-family: bootstrap.$font-family-monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
   }
 
   &__meta-body {
-    margin-top: 2px;
+    margin-top: 0.25rem;
 
     &--progress {
       display: flex;
-      align-items: center;
-      margin-top: 0rem;
+      align-items: flex-start;
     }
   }
 
@@ -98,21 +106,18 @@ $item-height: 3rem;
     flex-direction: column;
   }
 
-  &__body-header {
-    padding-top: 0;
-  }
-
   &__body-header-primary {
     display: flex;
     flex-direction: column;
-    padding: bootstrap.$spacer;
-    padding-bottom: 0.875rem;
-    padding-top: 0;
+    padding: bootstrap.$spacer*0.5 bootstrap.$spacer;
+    padding-top: bootstrap.$spacer*0.5;
   }
 
   &__progress-ring {
     margin-right: calc(bootstrap.$spacer / 4);
     height: 23px;
+    position: relative;
+    top: -0.075rem;
 
     .progress-ring__circle-back {
       animation: pulse 1s alternate infinite;
@@ -165,23 +170,31 @@ $item-height: 3rem;
   }
 
   &__status {
-    line-height: 1rem;
+    font-weight: 700;
+    font-size: 0.925rem;
+    letter-spacing: -0.015rem;
   }
 
   &__percentage {
     display: inline-block;
     margin-left: calc(bootstrap.$spacer / 4);
-    font-weight: 300;
+    font-weight: 500;
     font-size: 0.725rem;
     line-height: 1rem;
     color: utils.$color__carbon--60;
   }
 
-  &__orders-processed {
-    display: inline-block;
-    font-size: 0.725rem;
+  &__orders-processed,
+  &__last-updated {
+    margin-top: 0.325rem;
     line-height: 1rem;
-    font-weight: 300;
+  }
+
+  &__last-updated {
+    margin-top: 0.5rem;
+    font-style: italic;
+    font-size: 0.825rem;
+    margin-top: 0.5rem;
     color: utils.$color__carbon--60;
   }
 
@@ -191,7 +204,8 @@ $item-height: 3rem;
   }
 
   &__order-info {
-    font-size: 0.875rem;
+    padding: bootstrap.$spacer;
+    padding-top: 0;
   }
 
   &__note {

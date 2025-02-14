@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import Col from 'react-bootstrap/Col'
@@ -9,9 +9,9 @@ import {
   ArrowChevronDown
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
+import moment from 'moment'
 
-import { getClientId } from '../../../../../sharedUtils/getClientId'
-import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import {
   getStateFromOrderStatus,
   aggregatedOrderStatus,
@@ -28,105 +28,44 @@ import DownloadFilesPanel from './OrderStatusItem/DownloadFilesPanel'
 import S3LinksPanel from './OrderStatusItem/S3LinksPanel'
 import DownloadScriptPanel from './OrderStatusItem/DownloadScriptPanel'
 import BrowseLinksPanel from './OrderStatusItem/BrowseLinksPanel'
+import getOrderInfoAndProgress from './getOrderInfoAndProgress'
+import buildEddLink from './buildEddLink'
 
 import ProgressRing from '../ProgressRing/ProgressRing'
 
 import './OrderStatusItem.scss'
 
+const { orderStatusRefreshTime, orderStatusRefreshTimeCreating } = getApplicationConfig()
+
+let intervalId = null
+
 /**
  * Renders OrderStatusItem.
- * @param {Object} arg0 - The props passed into the component.
- * @param {Boolean} arg0.defaultOpen - Sets the item open on initial render.
- * @param {String} arg0.earthdataEnvironment - The earthdata environment.
- * @param {Object} arg0.granuleDownload - granuleDownload state.
- * @param {Object} arg0.collection - The collection state.
- * @param {Object} arg0.match - match parameter from React Router.
- * @param {Function} arg0.onChangePath - Callback function to change the current path.
- * @param {Function} arg0.onFetchRetrievalCollection - Callback function to fetch a retrieval.
- * @param {Function} arg0.onFetchRetrievalCollectionGranuleLinks - Callback function to fetch a links for a retrieval collection.
+ * @param {Object} params - The props passed into the component.
+ * @param {Boolean} params.defaultOpen - Sets the item open on initial render.
+ * @param {String} params.earthdataEnvironment - The earthdata environment.
+ * @param {Object} params.granuleDownload - granuleDownload state.
+ * @param {Object} params.collection - The collection state.
+ * @param {Object} params.match - match parameter from React Router.
+ * @param {Function} params.onChangePath - Callback function to change the current path.
+ * @param {Function} params.onFetchRetrievalCollection - Callback function to fetch a retrieval.
+ * @param {Function} params.onFetchRetrievalCollectionGranuleBrowseLinks - Callback function to fetch browse links for a retrieval collection.
+ * @param {Function} params.onFetchRetrievalCollectionGranuleLinks - Callback function to fetch download links for a retrieval collection.
 */
-export class OrderStatusItem extends PureComponent {
-  constructor(props) {
-    super(props)
+export const OrderStatusItem = ({
+  authToken,
+  collection,
+  defaultOpen,
+  earthdataEnvironment,
+  granuleDownload,
+  onFetchRetrievalCollection,
+  onFetchRetrievalCollectionGranuleBrowseLinks,
+  onFetchRetrievalCollectionGranuleLinks,
+  onToggleAboutCSDAModal
+}) => {
+  const [opened, setOpened] = useState(defaultOpen)
 
-    const {
-      defaultOpen
-    } = props
-
-    this.state = {
-      opened: defaultOpen || false
-    }
-
-    this.onOpenClick = this.onOpenClick.bind(this)
-  }
-
-  componentDidMount() {
-    const {
-      granuleDownload,
-      onFetchRetrievalCollection,
-      onFetchRetrievalCollectionGranuleLinks,
-      onFetchRetrievalCollectionGranuleBrowseLinks,
-      collection
-    } = this.props
-
-    const { access_method: accessMethod } = collection
-    const { type: accessMethodType } = accessMethod
-
-    // TODO: Add a second value and refresh at different intervals for the different types of orders
-    const { orderStatusRefreshTime } = getApplicationConfig()
-
-    if (collection && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
-      const { id } = collection
-
-      if (id) {
-        // Fetch the retrieval collection before waiting for the interval
-        onFetchRetrievalCollection(id)
-
-        // Start refreshing the retrieval collection
-        this.intervalId = setInterval(() => {
-          this.shouldRefresh()
-        }, orderStatusRefreshTime)
-      }
-
-      // Fetch the granule browse links regardless of accessMethodType
-      // download & opendap browse links return with the granule links, every other access method needs
-      // to fetch them here
-      onFetchRetrievalCollectionGranuleBrowseLinks(collection)
-    }
-
-    if (collection && ['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
-      const { id } = collection
-
-      const {
-        [id]: granuleLinks = [],
-        isLoading: granuleLinksIsLoading
-      } = granuleDownload
-
-      if (granuleLinks.length === 0 && !granuleLinksIsLoading) {
-        onFetchRetrievalCollectionGranuleLinks(collection)
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId)
-    }
-  }
-
-  onOpenClick() {
-    const { opened } = this.state
-    this.setState({
-      opened: !opened
-    })
-  }
-
-  shouldRefresh() {
-    const {
-      collection,
-      onFetchRetrievalCollection
-    } = this.props
-
+  const shouldRefresh = () => {
     const {
       id,
       orders = []
@@ -136,691 +75,505 @@ export class OrderStatusItem extends PureComponent {
 
     // If the order is in a terminal state stop asking for order status
     if (['complete', 'failed', 'canceled'].includes(orderStatus)) {
-      clearInterval(this.intervalId)
+      clearInterval(intervalId)
+      intervalId = null
     } else {
       onFetchRetrievalCollection(id)
     }
   }
 
-  buildEddLink(linkType, downloadUrls) {
-    const {
-      authToken,
-      collection,
-      earthdataEnvironment
-    } = this.props
+  // Clear the intervalId when unmounting. (this is only the `return` function in the useEffect)
+  useEffect(() => () => {
+    clearInterval(intervalId)
+  }, [])
 
-    const {
-      collection_metadata: collectionMetadata,
-      orders = [],
-      retrieval_collection_id: retrievalCollectionId
-    } = collection
-
-    const orderStatus = aggregatedOrderStatus(orders)
-
-    const [firstOrder = {}] = orders
-    const {
-      type = ''
-    } = firstOrder
-
-    // If the order is Harmony and is still running or has no files, don't show the EDD link
-    const isDone = !['creating', 'in progress'].includes(orderStatus)
-    const notDoneOrEmpty = !isDone || downloadUrls.length === 0
-    if (type.toLowerCase() === 'harmony' && notDoneOrEmpty) {
-      return null
-    }
-
-    const {
-      conceptId,
-      shortName,
-      versionId
-    } = collectionMetadata
-
-    let downloadId = conceptId
-    if (shortName) downloadId = `${shortName}_${versionId}`
-
-    // Build the `getLinks` URL to tell EDD where to find the download links
-    const { apiHost, edscHost } = getEnvironmentConfig()
-    const getLinksUrl = `${apiHost}/granule_links?id=${retrievalCollectionId}&flattenLinks=true&linkTypes=${linkType}&ee=${earthdataEnvironment}`
-
-    // Build the authUrl to tell EDD how to authenticate the user
-    const authReturnUrl = 'earthdata-download://authCallback'
-    const authUrl = `${apiHost}/login?ee=${earthdataEnvironment}&eddRedirect=${encodeURIComponent(authReturnUrl)}`
-
-    // Build the eulaRedirectUrl to tell EDD how to get back after the user accepts a EULA
-    const eulaCallback = 'earthdata-download://eulaCallback'
-    const eulaRedirectUrl = `${edscHost}/auth_callback?eddRedirect=${encodeURIComponent(eulaCallback)}`
-
-    const link = `earthdata-download://startDownload?getLinks=${encodeURIComponent(getLinksUrl)}&downloadId=${downloadId}&clientId=${getClientId().client}&token=Bearer ${authToken}&authUrl=${encodeURIComponent(authUrl)}&eulaRedirectUrl=${encodeURIComponent(eulaRedirectUrl)}`
-
-    return link
-  }
-
-  render() {
-    const {
-      opened
-    } = this.state
-
-    const {
-      collection,
-      earthdataEnvironment,
-      granuleDownload,
-      onToggleAboutCSDAModal
-    } = this.props
-
-    const {
-      access_method: accessMethod,
-      collection_metadata: collectionMetadata,
-      granule_count: granuleCount,
-      orders = [],
-      id,
-      isLoaded,
-      retrieval_id: retrievalId,
-      retrieval_collection_id: retrievalCollectionId
-    } = collection
-
+  // Handles fetching the granule browse links
+  useEffect(() => {
+    const { access_method: accessMethod } = collection
     const { type: accessMethodType } = accessMethod
 
-    const {
-      [id]: granuleLinks = [],
-      isLoading: granuleLinksIsLoading
-    } = granuleDownload
+    // If the access method is download or opendap, fetch the granule browse links
+    if (collection && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
+      // `download` & `opendap` browse links return with the granule links, every other access method needs
+      // to fetch them here
+      onFetchRetrievalCollectionGranuleBrowseLinks(collection)
+    }
+  }, [])
 
-    if (isLoaded) {
+  // Handles fetching the granule links for download and opendap access methods
+  useEffect(() => {
+    const { access_method: accessMethod } = collection
+    const { type: accessMethodType } = accessMethod
+
+    // If the access method is download or opendap, fetch the granule links
+    if (collection && ['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
+      const { id } = collection
+
       const {
-        directDistributionInformation = {},
-        title,
-        isCSDA: collectionIsCSDA
-      } = collectionMetadata
+        [id]: granuleLinks = [],
+        isLoading: granuleLinksIsLoading
+      } = granuleDownload
 
-      const orderStatus = aggregatedOrderStatus(orders)
-      const stateFromOrderStatus = getStateFromOrderStatus(orderStatus)
-
-      // Download and Opendap do not have a status, so hasStatus will be set to false
-      const hasStatus = !['download', 'opendap'].includes(accessMethodType.toLowerCase())
-
-      const className = classNames(
-        'order-status-item',
-        {
-          'order-status-item--is-opened': opened,
-          'order-status-item--complete': !hasStatus || (hasStatus && stateFromOrderStatus === 'complete'),
-          'order-status-item--in_progress': hasStatus && stateFromOrderStatus === 'in_progress',
-          'order-status-item--failed': hasStatus && stateFromOrderStatus === 'failed',
-          'order-status-item--canceled': hasStatus && stateFromOrderStatus === 'canceled'
-        }
-      )
-
-      const typeToLower = accessMethodType.toLowerCase()
-      const isDownload = typeToLower === 'download'
-      const isOpendap = typeToLower === 'opendap'
-      const isHarmony = typeToLower === 'harmony'
-      const isEchoOrders = typeToLower === 'echo orders'
-      const isEsi = typeToLower === 'esi'
-      const isSwodlr = typeToLower === 'swodlr'
-
-      const messages = []
-      let messageIsError = false
-      let orderInfo = null
-
-      let browseUrls = []
-      let downloadUrls = []
-      let s3Urls = []
-      let totalOrders = 0
-      let totalCompleteOrders = 0
-      let percentDoneDownloadLinks
-      let progressPercentage = 0
-      let contactName = null
-      let contactEmail = null
-      let stacLinksIsLoading = false
-      let stacLinks = []
-
-      const { links: granuleDownloadLinks = {} } = granuleLinks
-      const {
-        browse: browseLinks = [],
-        download: downloadLinks = [],
-        s3: s3Links = []
-      } = granuleDownloadLinks
-      if (browseLinks.length > 0) browseUrls = [...browseLinks]
-      if (downloadLinks.length > 0) downloadUrls = [...downloadLinks]
-      if (s3Links.length > 0) s3Urls = [...s3Links]
-
-      if (isDownload) {
-        progressPercentage = 100
-        orderInfo = 'Download your data directly from the links below, or use the provided download script.';
-
-        ({ percentDone: percentDoneDownloadLinks } = granuleLinks)
+      // If the links have not been fetched and are not currently loading, fetch them
+      if (granuleLinks.length === 0 && !granuleLinksIsLoading) {
+        onFetchRetrievalCollectionGranuleLinks(collection)
       }
+    }
+  }, [granuleDownload])
 
-      if (isOpendap) {
-        progressPercentage = 100
-        orderInfo = 'Download your data directly from the links below, or use the provided download script.'
-      }
+  const {
+    access_method: accessMethod,
+    collection_metadata: collectionMetadata,
+    granule_count: granuleCount,
+    orders = [],
+    id,
+    isLoaded,
+    retrieval_id: retrievalId,
+    retrieval_collection_id: retrievalCollectionId,
+    updated_at: updatedAt
+  } = collection
 
-      if (isEchoOrders) {
-        if (stateFromOrderStatus === 'creating' || stateFromOrderStatus === 'in_progress') {
-          progressPercentage = 0
-          orderInfo = 'Your order has been created and sent to the data provider. You will receive an email when your order is processed and ready to download.'
-        }
+  const orderStatus = aggregatedOrderStatus(orders)
+  const stateFromOrderStatus = getStateFromOrderStatus(orderStatus)
 
-        if (stateFromOrderStatus === 'complete') {
-          progressPercentage = 100
-          orderInfo = 'The data provider has completed processing your order. You should have received an email with information regarding how to access your data from the data provider.'
-        }
+  // Handles fetching the retrieval collection to get the order info
+  useEffect(() => {
+    const { type: accessMethodType } = accessMethod
 
-        if (stateFromOrderStatus === 'failed') {
-          progressPercentage = 100
-          orderInfo = 'The data provider is reporting the order has failed processing.'
-        }
-      }
+    let refreshInterval = orderStatusRefreshTime
 
-      if (isSwodlr) {
-        if (stateFromOrderStatus === 'creating') {
-          progressPercentage = 0
-
-          orderInfo = 'Your orders are pending generation. This may take some time.'
-        }
-
-        if (stateFromOrderStatus === 'in_progress') {
-          orderInfo = 'Your orders are currently being generated. Once generation is finished, links will be displayed below and sent to the email you\'ve provided.'
-        }
-
-        if (stateFromOrderStatus === 'complete') {
-          orderInfo = 'Your orders have been generated and are available for download.'
-        }
-
-        if (stateFromOrderStatus === 'failed') {
-          progressPercentage = 0
-          orderInfo = 'The order has failed.'
-        }
-
-        let totalNumber = 0
-        let totalProcessed = 0
-
-        orders.forEach((order) => {
-          const {
-            error,
-            state,
-            order_information: orderInformation = {}
-          } = order
-
-          const { reason, granules = [] } = orderInformation
-
-          totalNumber += 1
-          totalOrders += 1
-
-          if (state === 'complete') {
-            granules.forEach((granule) => {
-              const { uri } = granule
-              downloadUrls.push(uri)
-              totalCompleteOrders += 1
-            })
-
-            totalProcessed += 1
-          } else if (state === 'failed') {
-            progressPercentage = 100
-            if (error) {
-              messages.push(error)
-            } else if (reason) {
-              messages.push(reason)
-            }
-
-            messageIsError = messageIsError || true
-          }
-        })
-
-        progressPercentage = Math.floor((totalProcessed / totalNumber) * 100)
-      }
-
-      if (isEsi || isHarmony) {
-        if (stateFromOrderStatus === 'creating') {
-          progressPercentage = 0
-
-          orderInfo = 'Your orders are pending processing. This may take some time.'
-        }
-
-        if (stateFromOrderStatus === 'in_progress') {
-          orderInfo = 'Your orders are currently processing. Once processing is finished, links will be displayed below and sent to the email you\'ve provided.'
-        }
-
-        if (stateFromOrderStatus === 'complete') {
-          orderInfo = 'Your orders are done processing and are available for download.'
-        }
-
-        if (stateFromOrderStatus === 'failed') {
-          progressPercentage = 0
-          orderInfo = 'The order has failed processing.'
-        }
-
-        if (stateFromOrderStatus === 'canceled') {
-          progressPercentage = 0
-          orderInfo = 'The order has been canceled.'
-        }
-
-        if (isEsi) {
-          let totalNumber = 0
-          let totalProcessed = 0
-
-          if (orders.length) {
-            const { order_information: orderInformation } = orders[0]
-            const { contactInformation = {} } = orderInformation;
-            ({ contactName, contactEmail } = contactInformation)
-          }
-
-          orders.forEach((order) => {
-            const {
-              error,
-              order_information: orderInformation = {}
-            } = order
-
-            if (error) messages.push(error)
-
-            const {
-              downloadUrls: currentDownloadUrlsObject = {},
-              processInfo = {},
-              requestStatus = {}
-            } = orderInformation
-
-            // Display the message field from processInfo if it exists
-            const { message } = processInfo
-
-            // Wrap the message in an array, then flatten the array to ensure both string and array messages are the same
-            // Only display the first message provided
-            if (message) messages.push([message].flat()[0])
-
-            const { downloadUrl: currentDownloadUrls = [] } = currentDownloadUrlsObject
-
-            const {
-              status: currentStatus,
-              numberProcessed: currentNumberProcessed = 0,
-              totalNumber: currentTotalNumber = 0
-            } = requestStatus
-
-            if (currentStatus === 'complete' || currentStatus === 'failed') {
-              totalCompleteOrders += 1
-            }
-
-            // The XML Parser seems to add an extra, empty string to the end of download urls -- filter falsey data
-            downloadUrls.push(...currentDownloadUrls.filter(Boolean))
-            totalNumber += currentTotalNumber
-            totalProcessed += currentNumberProcessed
-            totalOrders += 1
-          })
-
-          const currentPercentProcessed = Math.floor((totalProcessed / totalNumber) * 100)
-
-          if (currentPercentProcessed) {
-            progressPercentage = Math.floor((totalProcessed / totalNumber) * 100)
-          }
-        }
-
-        if (isHarmony) {
-          let totalProgress = 0
-
-          const harmonyCompletedSuccessfullyStates = ['successful', 'complete_with_errors']
-
-          orders.forEach((order) => {
-            const { order_information: orderInformation } = order
-
-            const {
-              progress = 0,
-              links = [],
-              status,
-              message: harmonyMessage,
-              jobId = false
-            } = orderInformation
-
-            if (harmonyCompletedSuccessfullyStates.includes(status) || status === 'failed' || status === 'canceled') {
-              totalCompleteOrders += 1
-            }
-
-            if (harmonyCompletedSuccessfullyStates.includes(status) && !jobId) {
-              messages.push(harmonyMessage)
-            }
-
-            if (status === 'failed' && harmonyMessage) {
-              messages.push(harmonyMessage)
-              messageIsError = messageIsError || true
-            }
-
-            if (status === 'canceled' && harmonyMessage) {
-              messages.push(harmonyMessage)
-            }
-
-            downloadUrls.push(...links
-              .filter(({ rel }) => rel === 'data')
-              .map(({ href }) => href))
-
-            if (status === 'failed') {
-              // If the order failed, Harmony will tell us its something less
-              // than 100% complete, overwrite that here to consider this order complete
-              totalProgress += 100
-            } else {
-              totalProgress += progress
-            }
-
-            totalOrders += 1
-          })
-
-          const currentPercentProcessed = Math.floor((totalProgress / totalOrders) * 100)
-
-          if (currentPercentProcessed) {
-            progressPercentage = Math.floor((totalProgress / (totalOrders * 100)) * 100)
-          }
-
-          // Look at each order and pull the STAC catalog link
-          if (orders.length) {
-            stacLinks = orders.map((order) => {
-              const { order_information: orderInformation = {} } = order
-              const { links = [] } = orderInformation
-
-              const stacLink = links.find(({ rel }) => rel === 'stac-catalog-json')
-
-              if (stacLink) {
-                const { href = '' } = stacLink
-
-                return href
-              }
-
-              return false
-            }).filter(Boolean)
-          }
-
-          // If all orders are complete, all STAC links have finished loading
-          stacLinksIsLoading = orders.length !== totalCompleteOrders
-        }
-      }
-
-      return (
-        <li className={className}>
-          <header className="order-status-item__header">
-            <h4 className="order-status-item__heading" title={title}>{title}</h4>
-            {
-              !opened && (
-                <>
-                  <span className="order-status-item__meta-column order-status-item__meta-column--progress">
-                    <ProgressRing
-                      className="order-status-item__progress-ring"
-                      width={22}
-                      strokeWidth={3}
-                      progress={progressPercentage}
-                    />
-                    <span className="order-status-item__status">
-                      {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
-                    </span>
-                    {
-                      (progressPercentage != null && progressPercentage >= 0) && (
-                        <span className="order-status-item__percentage">
-                          {`(${progressPercentage}%)`}
-                        </span>
-                      )
-                    }
-                  </span>
-                  <span className="order-status-item__meta-column order-status-item__meta-column--access-method">
-                    {upperFirst(accessMethodType)}
-                  </span>
-                  <span className="order-status-item__meta-column order-status-item__meta-column--granules">
-                    {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
-                  </span>
-                </>
-              )
-            }
-            <Button
-              className="order-status-item__button"
-              type="icon"
-              icon={opened ? ArrowChevronUp : ArrowChevronDown}
-              label={opened ? 'Close details' : 'Show details'}
-              title={opened ? 'Close details' : 'Show details'}
-              onClick={this.onOpenClick}
-            />
-          </header>
-          {
-            opened && (
-              <div className="order-status-item__body">
-                <div className="order-status-item__body-header">
-                  <div className="order-status-item__body-header-primary">
-                    <div className="order-status-item__meta-row">
-                      <div className="order-status-item__meta">
-                        <h4 className="order-status-item__meta-heading">Status</h4>
-                        <div className="order-status-item__meta-body order-status-item__meta-body--progress">
-                          <ProgressRing
-                            className="order-status-item__progress-ring"
-                            width={22}
-                            strokeWidth={3}
-                            progress={progressPercentage}
-                          />
-                          <div className="order-status-item__progress-meta">
-                            <div>
-                              <span className="order-status-item__status">
-                                {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
-                              </span>
-                              {
-                                (progressPercentage != null && progressPercentage >= 0) && (
-                                  <span className="order-status-item__percentage">
-                                    {`(${progressPercentage}%)`}
-                                  </span>
-                                )
-                              }
-                            </div>
-                            {
-                              totalOrders > 0 && (
-                                <span className="order-status-item__orders-processed">
-                                  {`${totalCompleteOrders}/${totalOrders} orders complete`}
-                                </span>
-                              )
-                            }
-                          </div>
-                        </div>
-                      </div>
-                      <div className="order-status-item__meta">
-                        <h4 className="order-status-item__meta-heading">Access Method</h4>
-                        <div className="order-status-item__meta-body order-status-item__meta-body--access-method">
-                          {upperFirst(accessMethodType)}
-                        </div>
-                      </div>
-                      <div className="order-status-item__meta">
-                        <h4 className="order-status-item__meta-heading">Granules</h4>
-                        <div className="order-status-item__meta-body order-status-item__meta-body--granules">
-                          {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
-                        </div>
-                      </div>
-                    </div>
-                    {
-                      orderInfo && (
-                        <div className="order-status-item__meta-row">
-                          <div className="order-status-item__order-info">
-                            {orderInfo}
-                          </div>
-                        </div>
-                      )
-                    }
-                  </div>
-                  {
-                    collectionIsCSDA && (
-                      <Col className="order-status-item__note mb-3">
-                        {'This collection is made available through the '}
-                        <span className="order-status-item__note-emph order-status-item__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
-                        {' for NASA funded researchers. Access to the data will require additional authentication. '}
-                        <Button
-                          className="order-status-item__header-message-link"
-                          dataTestId="order-status-item__csda-modal-button"
-                          onClick={() => onToggleAboutCSDAModal(true)}
-                          variant="link"
-                          bootstrapVariant="link"
-                          icon={FaQuestionCircle}
-                          label="More details"
-                        >
-                          More Details
-                        </Button>
-                      </Col>
-                    )
-                  }
-                  <div className="order-status-item__additional-info">
-                    {
-                      messages.length > 0 && (
-                        <div className={`order-status-item__message${messageIsError ? ' order-status-item__message--is-error' : ''}`}>
-                          <h3 className="order-status-item__message-heading">Service has responded with message:</h3>
-                          <ul className="order-status-item__message-body">
-                            {
-                              messages.map((message, i) => {
-                                const key = `message-${i}`
-
-                                return (
-                                  <li key={key}>{message}</li>
-                                )
-                              })
-                            }
-                          </ul>
-                        </div>
-                      )
-                    }
-                  </div>
-                </div>
-                <EDSCTabs className="order-status-item__tabs">
-                  {
-                    (
-                      isDownload
-                      || isOpendap
-                      || isEsi
-                      || isHarmony
-                      || isSwodlr
-                    ) && (
-                      <Tab
-                        className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
-                        title="Download Files"
-                        eventKey="download-files"
-                      >
-                        <DownloadFilesPanel
-                          accessMethodType={accessMethodType}
-                          collectionIsCSDA={collectionIsCSDA}
-                          disableEddInProgress={accessMethodType.toLowerCase() === 'harmony' && progressPercentage < 100}
-                          downloadLinks={downloadUrls}
-                          eddLink={this.buildEddLink('data', downloadUrls)}
-                          granuleCount={granuleCount}
-                          granuleLinksIsLoading={granuleLinksIsLoading}
-                          percentDoneDownloadLinks={percentDoneDownloadLinks}
-                          retrievalCollectionId={retrievalCollectionId}
-                          retrievalId={retrievalId}
-                          showTextWindowActions={!isEsi}
-                        />
-                      </Tab>
-                    )
-                  }
-                  {
-                    ((
-                      isDownload
-                      || isOpendap
-                      || isEsi
-                    ) && s3Urls.length > 0) && (
-                      <Tab
-                        className={s3Urls.length > 0 ? '' : 'order-status-item__tab-status'}
-                        title="AWS S3 Access"
-                        eventKey="aws-s3-access"
-                      >
-                        <S3LinksPanel
-                          accessMethodType={accessMethodType}
-                          s3Links={s3Urls}
-                          directDistributionInformation={directDistributionInformation}
-                          retrievalId={retrievalId}
-                          granuleCount={granuleCount}
-                          granuleLinksIsLoading={granuleLinksIsLoading}
-                          showTextWindowActions={!isEsi}
-                        />
-                      </Tab>
-                    )
-                  }
-                  {
-                    isHarmony && (
-                      <Tab
-                        className={stacLinks.length > 0 ? '' : 'order-status-item__tab-status'}
-                        title="STAC Links"
-                        eventKey="stac-links"
-                      >
-                        <STACJsonPanel
-                          accessMethodType={accessMethodType}
-                          stacLinks={stacLinks}
-                          retrievalId={retrievalId}
-                          granuleCount={granuleCount}
-                          stacLinksIsLoading={stacLinksIsLoading}
-                        />
-                      </Tab>
-                    )
-                  }
-                  {
-                    (isDownload || isOpendap) && (
-                      <Tab
-                        className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
-                        title="Download Script"
-                        eventKey="download-script"
-                      >
-                        <DownloadScriptPanel
-                          accessMethodType={accessMethodType}
-                          earthdataEnvironment={earthdataEnvironment}
-                          downloadLinks={downloadUrls}
-                          retrievalCollection={collection}
-                          retrievalId={retrievalId}
-                          granuleCount={granuleCount}
-                          granuleLinksIsLoading={granuleLinksIsLoading}
-                        />
-                      </Tab>
-                    )
-                  }
-                  {
-                    browseLinks.length > 0 && (
-                      <Tab
-                        title="Browse Imagery"
-                        eventKey="browse-imagery"
-                      >
-                        <BrowseLinksPanel
-                          accessMethodType={accessMethodType}
-                          earthdataEnvironment={earthdataEnvironment}
-                          browseUrls={browseUrls}
-                          retrievalCollection={collection}
-                          eddLink={this.buildEddLink('browse')}
-                          retrievalId={retrievalId}
-                          granuleCount={granuleCount}
-                          granuleLinksIsLoading={granuleLinksIsLoading}
-                        />
-                      </Tab>
-                    )
-                  }
-                  {
-                    ((isEsi || isHarmony || isSwodlr) && orders.length > 0) && (
-                      <Tab
-                        title="Order Status"
-                        eventKey="order-status"
-                      >
-                        {
-                          orders.length > 1 && (
-                            <div className="order-status-item__tab-intro">
-                              { /* eslint-disable-next-line max-len */ }
-                              Due to the number of granules included in the request, it has been split into multiple orders. The data for each order will become available as they are processed.
-                            </div>
-                          )
-                        }
-                        {
-                          (contactName && contactEmail) && (
-                            <p className="order-status-item-body__contact">
-                              {`For assistance, please contact ${contactName} at `}
-                              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                            </p>
-                          )
-                        }
-                        <OrderProgressList
-                          orders={orders}
-                        />
-                      </Tab>
-                    )
-                  }
-                </EDSCTabs>
-              </div>
-            )
-          }
-        </li>
-      )
+    // If the order is still `creating`, refresh in a faster interval
+    if (orderStatus === 'creating') {
+      refreshInterval = orderStatusRefreshTimeCreating
     }
 
-    // TODO: Render a loading state
-    return null
-  }
+    if (id && !intervalId && !['download', 'opendap'].includes(accessMethodType.toLowerCase())) {
+      // Fetch the retrieval collection before waiting for the interval
+      onFetchRetrievalCollection(id)
+
+      // Start refreshing the retrieval collection
+      intervalId = setInterval(() => {
+        shouldRefresh()
+      }, refreshInterval)
+    }
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId)
+        intervalId = null
+      }
+    }
+  }, [orderStatus])
+
+  // If the collection is not loaded, return null
+  if (!isLoaded) return null
+
+  const { type: accessMethodType } = accessMethod
+
+  const {
+    [id]: granuleLinks = [],
+    isLoading: granuleLinksIsLoading
+  } = granuleDownload
+
+  const {
+    directDistributionInformation = {},
+    title,
+    isCSDA: collectionIsCSDA
+  } = collectionMetadata
+
+  // Download and Opendap do not have a status, so hasStatus will be set to false
+  const hasStatus = !['download', 'opendap'].includes(accessMethodType.toLowerCase())
+
+  const className = classNames(
+    'order-status-item',
+    {
+      'order-status-item--is-opened': opened,
+      'order-status-item--complete': !hasStatus || (hasStatus && stateFromOrderStatus === 'complete'),
+      'order-status-item--in_progress': hasStatus && stateFromOrderStatus === 'in_progress',
+      'order-status-item--failed': hasStatus && stateFromOrderStatus === 'failed',
+      'order-status-item--canceled': hasStatus && stateFromOrderStatus === 'canceled'
+    }
+  )
+
+  const typeToLower = accessMethodType.toLowerCase()
+  const isDownload = typeToLower === 'download'
+  const isOpendap = typeToLower === 'opendap'
+  const isHarmony = typeToLower === 'harmony'
+  const isEchoOrders = typeToLower === 'echo orders'
+  const isEsi = typeToLower === 'esi'
+  const isSwodlr = typeToLower === 'swodlr'
+
+  const {
+    browseUrls,
+    contactEmail,
+    contactName,
+    downloadUrls,
+    messageIsError,
+    messages,
+    orderInfo,
+    percentDoneDownloadLinks,
+    progressPercentage,
+    s3Urls,
+    stacLinks,
+    stacLinksIsLoading,
+    totalCompleteOrders,
+    totalOrders
+  } = getOrderInfoAndProgress({
+    granuleLinks,
+    isDownload,
+    isEchoOrders,
+    isEsi,
+    isHarmony,
+    isOpendap,
+    isSwodlr,
+    orders,
+    stateFromOrderStatus
+  })
+
+  return (
+    <li className={className}>
+      <header className="order-status-item__header">
+        <h4 className="order-status-item__heading" title={title}>{title}</h4>
+        {
+          !opened && (
+            <>
+              <span className="order-status-item__meta-column order-status-item__meta-column--progress">
+                <ProgressRing
+                  className="order-status-item__progress-ring"
+                  width={22}
+                  strokeWidth={3}
+                  progress={progressPercentage}
+                />
+                <span
+                  className="order-status-item__status"
+                  aria-label="Order Status"
+                >
+                  {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
+                </span>
+                {
+                  (progressPercentage != null && progressPercentage >= 0) && (
+                    <span
+                      className="order-status-item__percentage"
+                      aria-label="Order Progress Percentage"
+                    >
+                      {`(${progressPercentage}%)`}
+                    </span>
+                  )
+                }
+              </span>
+              <span
+                className="order-status-item__meta-column order-status-item__meta-column--access-method"
+                aria-label="Access Method Type"
+              >
+                {upperFirst(accessMethodType)}
+              </span>
+              <span
+                className="order-status-item__meta-column order-status-item__meta-column--granules"
+                aria-label="Granule Count"
+              >
+                {`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}
+              </span>
+            </>
+          )
+        }
+        <Button
+          className="order-status-item__button"
+          type="icon"
+          icon={opened ? ArrowChevronUp : ArrowChevronDown}
+          label={opened ? 'Close details' : 'Show details'}
+          title={opened ? 'Close details' : 'Show details'}
+          onClick={() => setOpened(!opened)}
+        />
+      </header>
+      {
+        opened && (
+          <div className="order-status-item__body">
+            <div className="order-status-item__body-header" data-testid="order-status-item__body-header">
+              <div className="order-status-item__body-header-primary">
+                <div className="order-status-item__meta-row">
+                  <div className="order-status-item__meta">
+                    <h4 className="order-status-item__meta-heading">Status</h4>
+                    <div className="order-status-item__meta-body order-status-item__meta-body--progress">
+                      <ProgressRing
+                        className="order-status-item__progress-ring"
+                        width={22}
+                        strokeWidth={3}
+                        progress={progressPercentage}
+                      />
+                      <div className="order-status-item__progress-meta">
+                        <div className="d-flex align-items-center">
+                          <span
+                            className="order-status-item__status"
+                            aria-label="Order Status"
+                          >
+                            {!hasStatus ? 'Complete' : formatOrderStatus(orderStatus)}
+                          </span>
+                          {
+                            (progressPercentage != null && progressPercentage >= 0) && (
+                              <span
+                                className="order-status-item__percentage"
+                                aria-label="Order Progress Percentage"
+                              >
+                                {`(${progressPercentage}%)`}
+                              </span>
+                            )
+                          }
+                        </div>
+                        {
+                          totalOrders > 0 && (
+                            <span
+                              className="order-status-item__orders-processed"
+                              aria-label="Orders Processed Count"
+                            >
+                              {`${totalCompleteOrders}/${totalOrders} orders complete`}
+                            </span>
+                          )
+                        }
+                        <span
+                          className="order-status-item__last-updated"
+                          aria-label="Order Last Updated Time"
+                        >
+                          Updated:
+                          {' '}
+                          {moment(updatedAt).format('MM-DD-YYYY hh:mm:ss a')}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="order-status-item__meta">
+                    <h4 className="order-status-item__meta-heading">Access Method</h4>
+                    <div
+                      className="order-status-item__meta-body order-status-item__meta-body--access-method"
+                      aria-label="Access Method Type"
+                    >
+                      <span className="order-status-item__status">{upperFirst(accessMethodType)}</span>
+                    </div>
+                  </div>
+                  <div className="order-status-item__meta">
+                    <h4 className="order-status-item__meta-heading">Granules</h4>
+                    <div
+                      className="order-status-item__meta-body order-status-item__meta-body--granules"
+                      aria-label="Granule Count"
+                    >
+                      <span className="order-status-item__status">{`${commafy(granuleCount)} ${pluralize('Granule', granuleCount)}`}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                {
+                  orderInfo && (
+                    <div
+                      className="order-status-item__order-info"
+                      aria-label="Order Information"
+                    >
+                      {orderInfo}
+                    </div>
+                  )
+                }
+              </div>
+              {
+                collectionIsCSDA && (
+                  <Col
+                    className="order-status-item__note mb-3"
+                    aria-label="CSDA Note"
+                  >
+                    {'This collection is made available through the '}
+                    <span className="order-status-item__note-emph order-status-item__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
+                    {' for NASA funded researchers. Access to the data will require additional authentication. '}
+                    <Button
+                      className="order-status-item__header-message-link"
+                      dataTestId="order-status-item__csda-modal-button"
+                      onClick={() => onToggleAboutCSDAModal(true)}
+                      variant="link"
+                      bootstrapVariant="link"
+                      icon={FaQuestionCircle}
+                      label="More details"
+                    >
+                      More Details
+                    </Button>
+                  </Col>
+                )
+              }
+              <div className="order-status-item__additional-info">
+                {
+                  messages.length > 0 && (
+                    <div className={`order-status-item__message${messageIsError ? ' order-status-item__message--is-error' : ''}`}>
+                      <h3 className="order-status-item__message-heading">Service has responded with message:</h3>
+                      <ul className="order-status-item__message-body">
+                        {
+                          messages.map((message, i) => {
+                            const key = `message-${i}`
+
+                            return (
+                              <li key={key}>{message}</li>
+                            )
+                          })
+                        }
+                      </ul>
+                    </div>
+                  )
+                }
+              </div>
+            </div>
+            <EDSCTabs className="order-status-item__tabs">
+              {
+                (
+                  isDownload
+                    || isOpendap
+                    || isEsi
+                    || isHarmony
+                    || isSwodlr
+                ) && (
+                  <Tab
+                    className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
+                    title="Download Files"
+                    eventKey="download-files"
+                  >
+                    <DownloadFilesPanel
+                      accessMethodType={accessMethodType}
+                      collectionIsCSDA={collectionIsCSDA}
+                      disableEddInProgress={accessMethodType.toLowerCase() === 'harmony' && progressPercentage < 100}
+                      downloadLinks={downloadUrls}
+                      eddLink={
+                        buildEddLink({
+                          authToken,
+                          collection,
+                          downloadUrls,
+                          earthdataEnvironment,
+                          linkType: 'data'
+                        })
+                      }
+                      granuleCount={granuleCount}
+                      granuleLinksIsLoading={granuleLinksIsLoading}
+                      percentDoneDownloadLinks={percentDoneDownloadLinks}
+                      retrievalCollectionId={retrievalCollectionId}
+                      retrievalId={retrievalId}
+                      showTextWindowActions={!isEsi}
+                    />
+                  </Tab>
+                )
+              }
+              {
+                ((
+                  isDownload
+                    || isOpendap
+                    || isEsi
+                ) && s3Urls.length > 0) && (
+                  <Tab
+                    className={s3Urls.length > 0 ? '' : 'order-status-item__tab-status'}
+                    title="AWS S3 Access"
+                    eventKey="aws-s3-access"
+                  >
+                    <S3LinksPanel
+                      accessMethodType={accessMethodType}
+                      s3Links={s3Urls}
+                      directDistributionInformation={directDistributionInformation}
+                      retrievalId={retrievalId}
+                      granuleCount={granuleCount}
+                      granuleLinksIsLoading={granuleLinksIsLoading}
+                      showTextWindowActions={!isEsi}
+                    />
+                  </Tab>
+                )
+              }
+              {
+                isHarmony && (
+                  <Tab
+                    className={stacLinks.length > 0 ? '' : 'order-status-item__tab-status'}
+                    title="STAC Links"
+                    eventKey="stac-links"
+                  >
+                    <STACJsonPanel
+                      accessMethodType={accessMethodType}
+                      stacLinks={stacLinks}
+                      retrievalId={retrievalId}
+                      granuleCount={granuleCount}
+                      stacLinksIsLoading={stacLinksIsLoading}
+                    />
+                  </Tab>
+                )
+              }
+              {
+                (isDownload || isOpendap) && (
+                  <Tab
+                    className={downloadUrls.length > 0 ? '' : 'order-status-item__tab-status'}
+                    title="Download Script"
+                    eventKey="download-script"
+                  >
+                    <DownloadScriptPanel
+                      accessMethodType={accessMethodType}
+                      earthdataEnvironment={earthdataEnvironment}
+                      downloadLinks={downloadUrls}
+                      retrievalCollection={collection}
+                      retrievalId={retrievalId}
+                      granuleCount={granuleCount}
+                      granuleLinksIsLoading={granuleLinksIsLoading}
+                    />
+                  </Tab>
+                )
+              }
+              {
+                browseUrls.length > 0 && (
+                  <Tab
+                    title="Browse Imagery"
+                    eventKey="browse-imagery"
+                  >
+                    <BrowseLinksPanel
+                      accessMethodType={accessMethodType}
+                      earthdataEnvironment={earthdataEnvironment}
+                      browseUrls={browseUrls}
+                      retrievalCollection={collection}
+                      eddLink={
+                        buildEddLink({
+                          authToken,
+                          collection,
+                          downloadUrls,
+                          earthdataEnvironment,
+                          linkType: 'browse'
+                        })
+                      }
+                      retrievalId={retrievalId}
+                      granuleCount={granuleCount}
+                      granuleLinksIsLoading={granuleLinksIsLoading}
+                    />
+                  </Tab>
+                )
+              }
+              {
+                ((isEsi || isHarmony || isSwodlr) && orders.length > 0) && (
+                  <Tab
+                    title="Order Status"
+                    eventKey="order-status"
+                  >
+                    {
+                      orders.length > 1 && (
+                        <div className="order-status-item__tab-intro">
+                          { /* eslint-disable-next-line max-len */ }
+                          Due to the number of granules included in the request, it has been split into multiple orders. The data for each order will become available as they are processed.
+                        </div>
+                      )
+                    }
+                    {
+                      (contactName && contactEmail) && (
+                        <p className="order-status-item-body__contact">
+                          {`For assistance, please contact ${contactName} at `}
+                          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                        </p>
+                      )
+                    }
+                    <OrderProgressList
+                      orders={orders}
+                    />
+                  </Tab>
+                )
+              }
+            </EDSCTabs>
+          </div>
+        )
+      }
+    </li>
+  )
 }
 
 OrderStatusItem.defaultProps = {
@@ -847,7 +600,8 @@ OrderStatusItem.propTypes = {
     isLoaded: PropTypes.bool,
     orders: PropTypes.arrayOf(PropTypes.shape({})),
     retrieval_id: PropTypes.string,
-    retrieval_collection_id: PropTypes.string
+    retrieval_collection_id: PropTypes.string,
+    updated_at: PropTypes.string
   }).isRequired,
   defaultOpen: PropTypes.bool,
   earthdataEnvironment: PropTypes.string.isRequired,

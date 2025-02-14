@@ -15,6 +15,8 @@ const eventPath = process.argv[3]
 
 // Load the event from the file
 const loadEvent = (filepath) => {
+  if (!filepath) return {}
+
   try {
     const event = JSON.parse(fs.readFileSync(filepath, 'utf8'))
 

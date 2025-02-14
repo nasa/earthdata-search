@@ -210,9 +210,9 @@ const queryReducer = (state = initialState, action = {}) => {
     }
 
     case RESTORE_FROM_URL: {
-      const { query } = action.payload
+      const { query = {} } = action.payload
 
-      const { collection, collectionSortPreference } = query
+      const { collection = {}, collectionSortPreference } = query
 
       const initialCollectionQueryWithPreferences = { ...initialState.collection }
       if (collectionSortPreference !== 'default') {
