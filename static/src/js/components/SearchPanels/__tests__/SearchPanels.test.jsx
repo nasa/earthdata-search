@@ -584,7 +584,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[1].props
 
-        expect(messageProps.className).toEqual('search-panels__note')
+        expect(messageProps.className).toEqual('search-panels__note ms-3')
         expect(shallow(messageProps.children[1]).text()).toContain('NASA Commercial Smallsat Data Acquisition (CSDA) Program')
       })
 
@@ -644,7 +644,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
 
-        expect(messageProps.className).toEqual('search-panels__note')
+        expect(messageProps.className).toEqual('search-panels__note ms-3')
         expect(shallow(messageProps.children[1]).text()).toContain('Int\'l / Interagency Data')
       })
 
@@ -700,7 +700,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
 
-        expect(messageProps.className).toEqual('search-panels__note')
+        expect(messageProps.className).toEqual('search-panels__note ms-3')
         expect(shallow(messageProps.children[1]).text()).toContain('Int\'l / Interagency Data')
       })
 
@@ -733,7 +733,7 @@ describe('SearchPanels component', () => {
         const granuleResultsPanelProps = granuleResultsPanel.props()
         const messageProps = granuleResultsPanelProps.headerMessage.props.children[0].props
 
-        expect(messageProps.className).toEqual('search-panels__note')
+        expect(messageProps.className).toEqual('search-panels__note ms-3')
         expect(shallow(messageProps.children[1]).text()).toContain('Int\'l / Interagency Data')
       })
 

@@ -17,7 +17,8 @@
 
     &:hover,
     &:active {
-      color: utils.$color__carbon--5
+      color: utils.$color__carbon--5;
+      background-color: utils.$color__carbon--90;
     }
 
     &--open {

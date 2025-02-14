@@ -6,6 +6,9 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 import MetaIcon from '../MetaIcon'
+import NotAvailableIcon from '../../NotAvailableIcon/NotAvailableIcon'
+
+jest.mock('../../NotAvailableIcon/NotAvailableIcon', () => jest.fn(() => <div />))
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -116,6 +119,16 @@ describe('MetaIcon component', () => {
       })
 
       expect(enzymeWrapper.find('.meta-icon__metadata').text()).toEqual('test-metadata')
+    })
+  })
+
+  describe('when notAvailable is provided', () => {
+    test('should show the notAvailableIcon', () => {
+      const { enzymeWrapper } = setup({
+        notAvailable: true
+      })
+
+      expect(enzymeWrapper.find(NotAvailableIcon).length).toEqual(1)
     })
   })
 })

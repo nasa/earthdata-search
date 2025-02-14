@@ -254,14 +254,27 @@ export const CollectionResultsItem = forwardRef(({
                   )
                 }
                 {
-                  hasMapImagery && (
+                  cloudHosted && (
                     <MetaIcon
-                      id="feature-icon-list-view__map-imagery"
-                      icon={FaMap}
-                      iconProps={{ size: '0.975rem' }}
-                      label="Map Imagery"
+                      id="feature-icon-list-view__earthdata-cloud"
+                      icon={CloudFill}
+                      iconProps={{ size: '1rem' }}
+                      label="Earthdata Cloud"
                       tooltipClassName="collection-results-item__tooltip"
-                      tooltipContent="Supports advanced map visualizations using the GIBS tile service"
+                      tooltipContent="Dataset is available in the Earthdata Cloud"
+                    />
+                  )
+                }
+                {
+                  !cloudHosted && (
+                    <MetaIcon
+                      id="feature-icon-list-view__earthdata-cloud"
+                      icon={CloudFill}
+                      iconProps={{ size: '1rem' }}
+                      label="Not hosted in Earthdata Cloud"
+                      notAvailable
+                      tooltipClassName="collection-results-item__tooltip"
+                      tooltipContent="Dataset is not available in the Earthdata Cloud"
                     />
                   )
                 }
@@ -278,15 +291,39 @@ export const CollectionResultsItem = forwardRef(({
                   )
                 }
                 {
-                  cloudHosted && (
+                  !supportsDataCustomizations && (
                     <MetaIcon
-                      id="feature-icon-list-view__earthdata-cloud"
-                      icon={CloudFill}
-                      iconProps={{ size: '1rem' }}
-                      label="Earthdata Cloud"
-                      metadata="Earthdata Cloud"
+                      id="feature-icon-list-view__customize"
+                      icon={Settings}
+                      label="No customizations"
+                      notAvailable
+                      tooltipClassName="collection-results-item__tooltip text-align-left"
+                      tooltipContent="No customization support"
+                    />
+                  )
+                }
+                {
+                  hasMapImagery && (
+                    <MetaIcon
+                      id="feature-icon-list-view__map-imagery"
+                      icon={FaMap}
+                      iconProps={{ size: '0.975rem' }}
+                      label="Map Imagery"
                       tooltipClassName="collection-results-item__tooltip"
-                      tooltipContent="Dataset is available in the Earthdata Cloud"
+                      tooltipContent="Supports advanced map visualizations using the GIBS tile service"
+                    />
+                  )
+                }
+                {
+                  !hasMapImagery && (
+                    <MetaIcon
+                      id="feature-icon-list-view__map-imagery"
+                      icon={FaMap}
+                      iconProps={{ size: '0.975rem' }}
+                      label="No map imagery"
+                      notAvailable
+                      tooltipClassName="collection-results-item__tooltip"
+                      tooltipContent="No map visualization support"
                     />
                   )
                 }

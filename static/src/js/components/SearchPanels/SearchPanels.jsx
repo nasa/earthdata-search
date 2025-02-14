@@ -434,7 +434,7 @@ class SearchPanels extends PureComponent {
 
     if (isInternationalInteragency) {
       consortiumInfo = (
-        <Col className="search-panels__note">
+        <Col className="search-panels__note ms-3">
           {'This is '}
           <span className="search-panels__note-emph search-panels__note-emph--opensearch">Int&apos;l / Interagency Data</span>
           {' data. Searches will be performed by external services which may vary in performance and available features. '}
@@ -467,7 +467,7 @@ class SearchPanels extends PureComponent {
               {consortiumInfo}
               {
                 collectionIsCSDA && (
-                  <Col className="search-panels__note">
+                  <Col className="search-panels__note ms-3">
                     {'This collection is made available through the '}
                     <span className="search-panels__note-emph search-panels__note-emph--csda">NASA Commercial Smallsat Data Acquisition (CSDA) Program</span>
                     {' for NASA funded researchers. Access to the data will require additional authentication. '}

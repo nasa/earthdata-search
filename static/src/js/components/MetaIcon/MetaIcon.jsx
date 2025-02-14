@@ -4,6 +4,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import NotAvailableIcon from '../NotAvailableIcon/NotAvailableIcon'
 
 import './MetaIcon.scss'
 
@@ -15,6 +16,7 @@ import './MetaIcon.scss'
  * @param {String} props.id - A unique element id.
  * @param {String|Element} props.label - Text or element to be used as the screen reader text label.
  * @param {String|Element} props.metadata - Text or element to be shown in the metadata pill.
+ * @param {Boolean} props.notAvailable - A boolean to show the not available icon.
  * @param {String} props.placement - A string to set the tooltip placement.
  * @param {String} props.tooltipClassName - A custom class name for tooltip.
  * @param {String|Element} props.tooltipContent - Text or element to be displayed in the tooltip.
@@ -26,18 +28,26 @@ export const MetaIcon = ({
   id,
   label,
   metadata,
+  notAvailable,
   placement,
   tooltipClassName,
   tooltipContent
 }) => {
   const component = (
     <span className={`meta-icon ${className}`}>
-      <EDSCIcon
-        className="meta-icon__icon"
-        size="1rem"
-        icon={icon}
-        {...iconProps}
-      />
+      <span className="meta-icon__icon-wrapper">
+        <EDSCIcon
+          className="meta-icon__icon"
+          size="1rem"
+          icon={icon}
+          {...iconProps}
+        />
+        {
+          notAvailable && (
+            <NotAvailableIcon size="1rem" />
+          )
+        }
+      </span>
       {
         label && (
           <span className="meta-icon__label visually-hidden">
@@ -84,6 +94,7 @@ MetaIcon.defaultProps = {
   className: '',
   iconProps: {},
   metadata: '',
+  notAvailable: false,
   placement: 'top',
   tooltipClassName: '',
   tooltipContent: null
@@ -109,6 +120,7 @@ MetaIcon.propTypes = {
     PropTypes.node,
     PropTypes.string
   ]),
+  notAvailable: PropTypes.bool,
   placement: PropTypes.string,
   tooltipClassName: PropTypes.string,
   tooltipContent: PropTypes.oneOfType([
