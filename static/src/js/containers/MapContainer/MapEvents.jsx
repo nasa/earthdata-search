@@ -1,4 +1,4 @@
-import { useLayoutEffect } from 'react'
+import { useLayoutEffect, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useMap, useMapEvents } from 'react-leaflet'
 
@@ -24,6 +24,23 @@ const MapEvents = (props) => {
       layersControl.appendChild(attributionElement)
     }
   })
+
+  // When we collapse the collections/granules panel and the map resizes,
+  // the leaflet viewport does not resize, resulting in the right side of
+  // the map to unrendered because leaflet believes this portion of the map
+  // to still be outside what the user can see. invalidateSize() resets the
+  // viewport, and corrects it so the map renders properly.
+  useEffect(() => {
+    const handleMapOffsetChange = () => {
+      map.invalidateSize()
+    }
+
+    window.addEventListener('mapOffsetChanged', handleMapOffsetChange)
+
+    return () => {
+      window.removeEventListener('mapOffsetChanged', handleMapOffsetChange)
+    }
+  }, [map])
 
   const handleOverlayChange = (event) => {
     const enabled = event.type === 'overlayadd'

@@ -5,19 +5,19 @@ import SimpleBar from 'simplebar-react'
 
 import './Sidebar.scss'
 
-const Sidebar = ({
+const Sidebar = React.forwardRef(({
   children,
   panels,
   visible,
   headerChildren
-}) => {
+}, ref) => {
   const className = classNames({
     sidebar: true,
     'sidebar--hidden': !visible
   })
 
   return (
-    <section className={className}>
+    <section className={className} ref={ref}>
       <div className="sidebar__inner">
         { headerChildren }
         <SimpleBar
@@ -34,7 +34,7 @@ const Sidebar = ({
       {panels && panels}
     </section>
   )
-}
+})
 
 Sidebar.defaultProps = {
   panels: null,
@@ -47,5 +47,7 @@ Sidebar.propTypes = {
   visible: PropTypes.bool.isRequired,
   headerChildren: PropTypes.node
 }
+
+Sidebar.displayName = 'Sidebar'
 
 export default Sidebar

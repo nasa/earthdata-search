@@ -112,6 +112,7 @@ test.describe('Map: Granule interactions', () => {
             }
           })
 
+          await page.waitForTimeout(5000)
           await expect(page.getByRole('button', { name: /S1A_IW_SLC__1SDV_20210531T153052_20210531T153122_038133_04802B_C09D/ })).toHaveClass(/granule-results-item--active/)
         })
       })
@@ -136,6 +137,9 @@ test.describe('Map: Granule interactions', () => {
               y: 20
             }
           })
+
+          // Wait for any animations to complete
+          await page.waitForTimeout(1000)
         })
 
         test('shows the granule and a label on the map and updates the url', async ({ page }) => {
@@ -188,7 +192,7 @@ test.describe('Map: Granule interactions', () => {
             await page.locator('.map').click({
               force: true,
               position: {
-                x: 1100,
+                x: 1200,
                 y: 720
               }
             })

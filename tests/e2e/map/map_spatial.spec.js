@@ -50,6 +50,8 @@ test.describe('Map: Spatial interactions', () => {
 
         await page.goto('/')
 
+        await page.waitForTimeout(3000)
+
         // Select the point spatial type
         await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
         await page.getByRole('button', { name: 'Point' }).click()
