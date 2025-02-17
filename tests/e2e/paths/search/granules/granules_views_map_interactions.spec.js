@@ -15,7 +15,7 @@ import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
 import cmrGranulesHeaders from './__mocks__/cmr_granules/granules.headers.json'
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 
-const granuleName = 'VJ102IMG_NRT.A2024299.1442.021.2024299184450.nc'
+const granuleName = 'VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc'
 
 test.describe('When clicking on a granule on the map', () => {
   test.beforeEach(async ({ page, context }) => {
@@ -81,8 +81,8 @@ test.describe('When clicking on a granule on the map', () => {
       await page.locator('.map').click({
         force: true,
         position: {
-          x: 25,
-          y: 25
+          x: 1200,
+          y: 150
         }
       })
     })
@@ -130,8 +130,8 @@ test.describe('When clicking on a granule on the map', () => {
       await page.locator('.map').click({
         force: true,
         position: {
-          x: 25,
-          y: 25
+          x: 1200,
+          y: 150
         }
       })
     })
