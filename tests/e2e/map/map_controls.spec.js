@@ -40,6 +40,8 @@ test.describe('Map: Control interactions', () => {
 
         await page.goto('/')
 
+        await page.waitForTimeout(500)
+
         // Drag the map
         await page.mouse.move(1000, 500)
         await page.mouse.down()
