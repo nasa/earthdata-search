@@ -25,6 +25,11 @@ const MapEvents = (props) => {
     }
   })
 
+  // When we collapse the collections/granules panel and the map resizes,
+  // the leaflet viewport does not resize, resulting in the right side of
+  // the map to unrendered because leaflet believes this portion of the map
+  // to still be outside what the user can see. invalidateSize() resets the
+  // viewport, and corrects it so the map renders properly.
   useEffect(() => {
     const handleMapOffsetChange = () => {
       map.invalidateSize()
