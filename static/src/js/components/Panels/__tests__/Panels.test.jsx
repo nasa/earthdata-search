@@ -92,6 +92,12 @@ const setup = (renderMethod, overrideProps = {}) => {
 }
 
 beforeEach(() => {
+  global.ResizeObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn()
+  }))
+
   jest.clearAllMocks()
 })
 
