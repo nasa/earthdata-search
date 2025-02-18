@@ -61,13 +61,13 @@
   ```
 </details>
 
-{{#if diff.totalSize includeZero=false}}
+{{#if diff.totalSize > 0 includeZero=false}}
 The full bundle is larger than main by {{diff.totalSize}} kB. :exclamation:
 {{else}}
 The full bundle is smaller than main by {{diff.totalSize}} kB. :tada:
 {{/if}}
 
-{{#if diff.indexJsSize includeZero=false}}
+{{#if diff.indexJsSize > 0 includeZero=false}}
 The index.js is larger than main by {{diff.indexJsSize}} kB. :exclamation:
 {{else}}
 The index.js is smaller than main by {{diff.indexJsSize}} kB. :tada:
