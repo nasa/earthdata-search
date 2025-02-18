@@ -42,7 +42,7 @@ describe('#panBoundsToCenter', () => {
       expect(mockMapFitBounds).toHaveBeenCalled()
       expect(mockMapFitBounds).toHaveBeenCalledWith(mockValidBounds, {
         animate: false,
-        padding: [200, 200]
+        padding: [100, 100]
       })
     })
 
