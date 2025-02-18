@@ -71,7 +71,17 @@ export class Panels extends PureComponent {
     window.addEventListener('resize', this.onWindowResize, { capture: true })
     window.addEventListener('keyup', this.onWindowKeyUp, { capture: true })
     this.browserHistoryUnlisten = history.listen(this.onWindowResize)
-    this.updateMapOffset()
+
+    if (this.container) {
+      this.resizeObserver = new ResizeObserver(() => {
+        this.updateMapOffset()
+        if (this.map) {
+          this.map.invalidateSize()
+        }
+      })
+
+      this.resizeObserver.observe(this.container)
+    }
 
     const maxWidth = this.calculateMaxWidth()
 
@@ -146,6 +156,9 @@ export class Panels extends PureComponent {
     document.removeEventListener('mouseup', this.onMouseUp)
     if (this.browserHistoryUnlisten) this.browserHistoryUnlisten()
     if (this.mapOffsetTimeout) clearTimeout(this.mapOffsetTimeout)
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect()
+    }
   }
 
   onWindowResize() {
@@ -226,8 +239,10 @@ export class Panels extends PureComponent {
     } = event
 
     // Any keypress other than the enter or spacebar keys is not considered a click.
-    if (type === 'keydown' && key !== 'Enter' && key !== ' ') {
-      return
+    if (type === 'keydown') {
+      if ((key !== 'Enter') && (key !== ' ')) {
+        return
+      }
     }
 
     // Make sure this is actually a click, and not a drag of the handle.
