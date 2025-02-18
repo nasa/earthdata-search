@@ -100,6 +100,15 @@ values.diff = {
   numFiles: parseFloat((values.branch.numFiles - values.main.numFiles).toFixed(2))
 }
 
+// Handlebars helpers
+values.diff.isJsBigger = values.diff.indexJsSize > 0
+values.diff.isJsGzipBigger = values.diff.indexJsGzipSize > 0
+values.diff.isCssBigger = values.diff.indexCssSize > 0
+values.diff.isCssGzipBigger = values.diff.indexCssGzipSize > 0
+values.diff.isTotalBigger = values.diff.totalSize > 0
+values.diff.isBuildTimeBigger = values.diff.buildTime > 0
+values.diff.isNumFilesBigger = values.diff.numFiles > 0
+
 // Read handlebars template file
 const source = fs.readFileSync(templatePath, 'utf8')
 const template = Handlebars.compile(source)

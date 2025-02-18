@@ -5,6 +5,8 @@ import * as tinyCookie from 'tiny-cookie'
 import actions from '../../../actions'
 import { AuthTokenContainer, mapDispatchToProps } from '../AuthTokenContainer'
 
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+
 jest.mock('tiny-cookie', () => ({
   get: jest.fn()
 }))
@@ -69,6 +71,10 @@ describe('AuthTokenContainer component', () => {
       return ''
     })
 
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
+      disableDatabaseComponents: 'false'
+    }))
+
     const props = {
       children: 'children',
       onSetContactInfoFromJwt: jest.fn(),
@@ -78,13 +84,42 @@ describe('AuthTokenContainer component', () => {
     }
     setup(props)
 
-    expect(props.onUpdateAuthToken).toHaveBeenCalled()
-    expect(props.onUpdateAuthToken.mock.calls[0]).toEqual(['token'])
-    expect(props.onSetContactInfoFromJwt).toHaveBeenCalled()
-    expect(props.onSetContactInfoFromJwt.mock.calls[0]).toEqual(['token'])
-    expect(props.onSetPreferencesFromJwt).toHaveBeenCalled()
-    expect(props.onSetPreferencesFromJwt.mock.calls[0]).toEqual(['token'])
-    expect(props.onSetUserFromJwt).toHaveBeenCalled()
-    expect(props.onSetUserFromJwt.mock.calls[0]).toEqual(['token'])
+    expect(props.onUpdateAuthToken).toHaveBeenCalledTimes(1)
+    expect(props.onUpdateAuthToken).toHaveBeenCalledWith('token')
+
+    expect(props.onSetContactInfoFromJwt).toHaveBeenCalledTimes(1)
+    expect(props.onSetContactInfoFromJwt).toHaveBeenCalledWith('token')
+
+    expect(props.onSetPreferencesFromJwt).toHaveBeenCalledTimes(1)
+    expect(props.onSetPreferencesFromJwt).toHaveBeenCalledWith('token')
+
+    expect(props.onSetUserFromJwt).toHaveBeenCalledTimes(1)
+    expect(props.onSetUserFromJwt).toHaveBeenCalledWith('token')
+  })
+
+  describe('when disableDatabaseComponents is true', () => {
+    test('should call onUpdateAuthToken with an empty string', () => {
+      jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
+        if (param === 'authToken') return 'token'
+
+        return ''
+      })
+
+      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+        disableDatabaseComponents: 'true'
+      }))
+
+      const props = {
+        children: 'children',
+        onSetContactInfoFromJwt: jest.fn(),
+        onSetPreferencesFromJwt: jest.fn(),
+        onSetUserFromJwt: jest.fn(),
+        onUpdateAuthToken: jest.fn()
+      }
+      setup(props)
+
+      expect(props.onUpdateAuthToken).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateAuthToken).toHaveBeenCalledWith('')
+    })
   })
 })

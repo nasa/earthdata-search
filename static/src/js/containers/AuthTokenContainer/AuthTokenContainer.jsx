@@ -5,6 +5,8 @@ import { connect } from 'react-redux'
 
 import actions from '../../actions/index'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
 export const mapDispatchToProps = (dispatch) => ({
   onSetContactInfoFromJwt:
     (token) => dispatch(actions.setContactInfoFromJwt(token)),
@@ -23,7 +25,17 @@ export const AuthTokenContainer = ({
   onSetUserFromJwt,
   onUpdateAuthToken
 }) => {
+  const { disableDatabaseComponents } = getApplicationConfig()
+
   useEffect(() => {
+    if (disableDatabaseComponents === 'true') {
+      // If we have set `disableDatabaseComponents` to true, we need to clear the authToken
+      // This will ensure that the user does not send requests to our API (which uses the database)
+      onUpdateAuthToken('')
+
+      return
+    }
+
     const jwtToken = get('authToken')
 
     onSetPreferencesFromJwt(jwtToken)
