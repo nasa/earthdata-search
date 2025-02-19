@@ -239,10 +239,8 @@ export class Panels extends PureComponent {
     } = event
 
     // Any keypress other than the enter or spacebar keys is not considered a click.
-    if (type === 'keydown') {
-      if ((key !== 'Enter') && (key !== ' ')) {
-        return
-      }
+    if (type === 'keydown' && key !== 'Enter' && key !== ' ') {
+      return
     }
 
     // Make sure this is actually a click, and not a drag of the handle.

@@ -290,6 +290,9 @@ test.describe('Map: Granule interactions', () => {
       })
 
       test('displays a hint about using a bounding box instead of polygon and an MBR on the map', async ({ page }) => {
+        const conceptId = 'C1972468359-SCIOPS'
+        await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&zoom=1`)
+
         await expect(page.getByText('Showing 20 of 42,706 matching granules')).toBeVisible()
 
         await expect(
