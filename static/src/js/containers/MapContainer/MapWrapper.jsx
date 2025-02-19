@@ -122,16 +122,16 @@ const MapWrapper = ({
       >
         <LayersControl.BaseLayer
           checked={base.blueMarble}
-          name="Blue Marble"
+          name="ESRI World Imagery"
         >
           <LayerBuilder
             projection={projection}
-            product="BlueMarble_ShadedRelief_Bathymetry"
+            product="World_Imagery"
             resolution="500m"
             format="jpeg"
           />
         </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer
+        {/* <LayersControl.BaseLayer
           checked={base.trueColor}
           name="Corrected Reflectance (True Color)"
         >
@@ -142,8 +142,8 @@ const MapWrapper = ({
             format="jpeg"
             time
           />
-        </LayersControl.BaseLayer>
-        <LayersControl.BaseLayer
+        </LayersControl.BaseLayer> */}
+        {/* <LayersControl.BaseLayer
           checked={base.landWaterMap}
           name="Land / Water Map *"
         >
@@ -153,19 +153,18 @@ const MapWrapper = ({
             resolution="250m"
             format="png"
           />
-        </LayersControl.BaseLayer>
+        </LayersControl.BaseLayer> */}
         <LayersControl.Overlay
           checked={overlays.referenceFeatures}
           name="Borders and Roads *"
         >
           <LayerBuilder
             projection={projection}
-            product="Reference_Features_15m"
-            resolution="15.625m"
+            product="World_Boundaries_and_Places"
             format="png"
           />
         </LayersControl.Overlay>
-        <LayersControl.Overlay
+        {/* <LayersControl.Overlay
           checked={overlays.coastlines}
           name="Coastlines"
         >
@@ -175,8 +174,8 @@ const MapWrapper = ({
             resolution="15.625m"
             format="png"
           />
-        </LayersControl.Overlay>
-        <LayersControl.Overlay
+        </LayersControl.Overlay> */}
+        {/* <LayersControl.Overlay
           checked={overlays.referenceLabels}
           name="Place Labels *"
         >
@@ -186,7 +185,7 @@ const MapWrapper = ({
             resolution="15.625m"
             format="png"
           />
-        </LayersControl.Overlay>
+        </LayersControl.Overlay> */}
       </LayersControl>
       <ZoomHome
         projection={projection}

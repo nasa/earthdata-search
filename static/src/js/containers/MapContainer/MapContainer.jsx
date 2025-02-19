@@ -169,7 +169,8 @@ export const MapContainer = (props) => {
     setMap(mapWithDefaults)
   }, [mapProps])
 
-  const maxZoom = projection === projections.geographic ? 7 : 4
+  // TODO 13 seems to be the limit before you get errors about loading infinite tiles
+  const maxZoom = projection === projections.geographic ? 13 : 4
 
   let nonExcludedGranules
   if (focusedCollectionId && granuleSearchResults) {

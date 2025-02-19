@@ -84,7 +84,7 @@ class ZoomExtended extends Control.Zoom {
       _zoom: currentZoom
     } = map
     const {
-      maxZoom = 7,
+      maxZoom = 10,
       minZoom = 0
     } = mapOptions
 
@@ -100,7 +100,7 @@ class ZoomExtended extends Control.Zoom {
     zoomInButton.title = maxZoomReached ? 'Maximum zoom level reached' : zoomInTitle
     zoomOutButton.title = minZoomReached ? 'Minimum zoom level reached' : zoomOutTitle
 
-    // Disable click events on the the zoom buttons if neccesary.
+    // Disable click events on the the zoom buttons if necessary.
     disableClickEvent(zoomInButton, currentZoom === maxZoom)
     disableClickEvent(zoomOutButton, currentZoom === minZoom)
   }
