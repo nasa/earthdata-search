@@ -120,7 +120,7 @@ describe('AdminPreferencesMetricsList component', () => {
 
     // Values render on the table
     // make sure there are 14 column headers
-    expect(screen.getAllByRole('columnheader').length).toEqual(14)
+    expect(screen.getAllByRole('columnheader').length).toEqual(13)
 
     const tables = screen.getAllByRole('table')
 

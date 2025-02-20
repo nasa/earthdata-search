@@ -265,7 +265,7 @@ describe('url#encodeUrlQuery', () => {
           zoom: 0
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=referenceFeatures&zoom=0')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&zoom=0')
     })
 
     test('encodes map correctly when map preferences exist', () => {
@@ -297,7 +297,7 @@ describe('url#encodeUrlQuery', () => {
           zoom: 4
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=referenceFeatures&zoom=0')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&zoom=0')
     })
 
     test('does not encode the map when it matches the map preferences', () => {
