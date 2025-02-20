@@ -1,9 +1,4 @@
-import {
-  intervalToDuration,
-  differenceInYears,
-  differenceInMonths,
-  differenceInDays
-} from 'date-fns'
+import { intervalToDuration } from 'date-fns'
 import getObjectKeyByValue from './object'
 
 /**
@@ -20,6 +15,9 @@ export const timelineIntervals = {
 
 /**
  * Return the minimum timeline interval that can encompass the collection data
+ * @param {String} startDate - The start date
+ * @param {String} endDate - The end date
+ * @returns {String} - The minimum interval
  */
 export const timelineMidpoint = (startDate, endDate) => {
   const date1 = new Date(startDate)
@@ -37,29 +35,6 @@ export const timelineMidpoint = (startDate, endDate) => {
   return midpointDatereturn
 }
 
-// TODO find the earliest and latest time in a project take their average for the center
-
-export const getTimelineProjectCenter = (temporalStart, temporalEnd) => {
-  const startDate = new Date(temporalStart)
-  const endDate = new Date(temporalEnd)
-
-  const timeStart = startDate.getTime()
-  const timeEnd = endDate.getTime()
-
-  const midpointMilliseconds = (timeStart + timeEnd) / 2
-  const midpointDate = new Date(midpointMilliseconds)
-
-  return midpointDate
-}
-
-export const isOngoingCollection = (temporal) => {
-  if (temporal.includes('ongoing')) {
-    return true
-  }
-
-  return false
-}
-
 export const timelineZoomEnums = {
   decade: 'decade',
   year: 'year',
@@ -72,11 +47,15 @@ export const intervalDurationMappings = {
   years: 0,
   months: 0,
   days: 0,
-  hours: 0,
-  minutes: 0,
-  seconds: 0
+  hours: 0
 }
 
+/**
+ * Determine the zoom level for the timeline based on the difference between the start and end dates
+ * @param {String} startDate - The start date
+ * @param {String} endDate - The end date
+ * @returns {String} - The zoom level
+ */
 export const zoomLevelDifference = (startDate, endDate) => {
   let date2
   if (!endDate) {
@@ -92,9 +71,6 @@ export const zoomLevelDifference = (startDate, endDate) => {
     end: date2
   })
 
-  // TODO date-fns claims it is using Date time objs but, for some reason these
-  // first have to be converted to milliseconds
-  // Merge the template to maintain 0 time differences
   const diff = {
     ...intervalDurationMappings,
     ...intervalDuration
@@ -190,5 +166,70 @@ export const prepareTimelineParams = (state) => {
     point,
     polygon,
     startDate
+  }
+}
+
+/**
+ * Calculate the zoom level and initial center for the timeline based on collection metadata
+ * @param {Object} collectionMetadata - The metadata for the collections
+ * @param {String} collectionConceptId - The concept id of the collection
+ * @param {Boolean} isProjectPage - Whether or not the page is a project page
+ * @param {Array} projectCollectionsIds - The concept ids of the collections in the project
+ * @param {Date} currentDate - The current date
+ * @returns {Object} - Object containing zoomLevel and initialCenter
+ */
+export const calculateTimelineParams = ({
+  isProjectPage,
+  projectCollectionsIds,
+  collectionMetadata,
+  collectionConceptId,
+  currentDate
+}) => {
+
+  console.log('calculateTimelineParams',{ 
+    isProjectPage,
+    projectCollectionsIds,
+    collectionMetadata,
+    collectionConceptId,
+    currentDate
+  })
+
+  let timeStart
+  let timeEnd
+
+  if (isProjectPage && projectCollectionsIds.length > 0) {
+    const startDates = []
+    const endDates = []
+
+    projectCollectionsIds.forEach((conceptId) => {
+      const metadata = collectionMetadata[conceptId]
+      if (!metadata?.timeStart) return
+
+      startDates.push(new Date(metadata.timeStart).getTime())
+      endDates.push(metadata.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate)
+    })
+
+    if (startDates.length && endDates.length) {
+      timeStart = Math.min(...startDates)
+      timeEnd = Math.max(...endDates)
+    }
+  } else {
+    const metadata = collectionMetadata[collectionConceptId]
+    if (metadata?.timeStart) {
+      timeStart = new Date(metadata.timeStart).getTime()
+      timeEnd = metadata.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate
+    }
+  }
+
+  let calculatedInterval
+  if (timeStart && timeEnd) {
+    calculatedInterval = zoomLevelDifference(timeStart, timeEnd)
+  }
+
+  return {
+    zoomLevel: parseInt(timelineIntervals[calculatedInterval], 10) ?? 2,
+    initialCenter: timeStart && timeEnd
+      ? timelineMidpoint(timeStart, timeEnd)
+      : currentDate
   }
 }

@@ -7,80 +7,17 @@ import PropTypes from 'prop-types'
 import EDSCTimeline from '@edsc/timeline'
 import classNames from 'classnames'
 import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa'
-import moment from 'moment'
 
 import Button from '../Button/Button'
 
 import { getColorByIndex } from '../../util/colors'
-import {
-  timelineIntervals,
-  timelineMidpoint,
-  zoomLevelDifference,
-  getTimelineProjectCenter
-} from '../../util/timeline'
+import { timelineIntervals, calculateTimelineParams } from '../../util/timeline'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import getObjectKeyByValue from '../../util/object'
 
 import './Timeline.scss'
 
 const earliestStart = '1960-01-01'
-
-const calculateInitialCenter = ({
-  propsCenter,
-  collectionMetadata,
-  collectionConceptId,
-  isProjectPage,
-  projectCollectionsIds,
-  currentDate
-}) => {
-  console.log('🚀 ~ collectionMetadata:', collectionMetadata)
-  // If we have a center from props, use that
-  if (propsCenter) return propsCenter
-
-  // For project page, calculate center based on all collections
-  if (isProjectPage && projectCollectionsIds.length > 0) {
-    console.log('HERE')
-    const colStartPoints = []
-    const colEndPoints = []
-
-    console.log('🚀 ~ projectCollectionsIds.forEach ~ projectCollectionsIds:', projectCollectionsIds)
-    projectCollectionsIds.forEach((conceptId) => {
-      const metadata = collectionMetadata[conceptId]
-      console.log('🚀 ~ projectCollectionsIds.forEach ~ metadata:', metadata)
-      if (!metadata?.timeStart) return
-
-      const start = new Date(metadata.timeStart).getTime()
-      console.log('🚀 ~ projectCollectionsIds.forEach ~ start:', start)
-      const end = metadata.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate
-      console.log('🚀 ~ projectCollectionsIds.forEach ~ end:', end)
-
-      colStartPoints.push(start)
-      colEndPoints.push(end)
-    })
-
-    if (colStartPoints.length && colEndPoints.length) {
-      const earliestColDate = Math.min(...colStartPoints)
-      const latestColDate = Math.max(...colEndPoints)
-
-      return getTimelineProjectCenter(earliestColDate, latestColDate).getTime()
-    }
-  }
-
-  // For single collection page
-  const metadata = collectionMetadata[collectionConceptId]
-  if (metadata?.timeStart) {
-    console.log('HERE2')
-    const collectionTimeStart = metadata.timeStart
-    const collectionTimeEnd = metadata.timeEnd || currentDate
-
-    console.log('timelineMidpoint(collectionTimeStart, collectionTimeEnd)', moment(timelineMidpoint(collectionTimeStart, collectionTimeEnd)).utc().toISOString())
-
-    return timelineMidpoint(collectionTimeStart, collectionTimeEnd)
-  }
-
-  // Fallback to current date if no other options
-  return currentDate
-}
 
 export const Timeline = ({
   collectionMetadata,
@@ -103,77 +40,69 @@ export const Timeline = ({
   const collectionConceptId = topLevelKeys[0]
   const { center: propsCenter } = query
   const isProjectPage = pathname.indexOf('projects') > -1
-
-  const [center, setCenter] = useState(() => {
-    const initialCenter = calculateInitialCenter({
-      propsCenter,
-      collectionMetadata,
-      collectionConceptId,
-      isProjectPage,
-      projectCollectionsIds,
-      currentDate
-    })
-
-    // Update timeline query with initial center if needed
-    if (initialCenter !== propsCenter) {
-      onChangeTimelineQuery({
-        ...query,
-        center: initialCenter
-      })
-    }
-
-    return initialCenter
-  })
-
-  useEffect(() => () => {
-    onChangeTimelineQuery({
-      center: undefined,
-      interval: undefined,
-      start: undefined,
-      end: undefined
-    })
-  }, [onChangeTimelineQuery])
-
-  const setupZoom = ({ query: timelineQuery }) => {
-    const metadata = collectionMetadata[collectionConceptId]
-    if (!metadata?.timeStart) return 2 // Default to day view (2)
-
-    const { timeStart } = metadata
-    const timeEnd = metadata.timeEnd || currentDate
-
-    // Calculate default zoom level
-    const calculatedInterval = zoomLevelDifference(timeStart, timeEnd)
-    console.log('Raw calculated interval:', calculatedInterval)
-
-    // Map the interval string to its numeric value
-    let numericZoom
-    if (timelineQuery.interval) {
-      // If we have an interval in the query, use that
-      numericZoom = parseInt(timelineIntervals[timelineQuery.interval], 10)
-    } else {
-      // Otherwise map our calculated interval to a numeric zoom
-      const mappings = {
-        minute: 0,
-        hour: 1,
-        day: 2,
-        month: 3,
-        year: 4,
-        decade: 5
-      }
-      numericZoom = mappings[calculatedInterval] ?? 5 // Default to day view if mapping fails
-    }
-
-    console.log('Final numeric zoom:', numericZoom)
-
-    return numericZoom
-  }
+  const [isMetadataLoaded, setIsMetadataLoaded] = useState(false)
+  const [zoomLevel, setZoomLevel] = useState(5)
+  const [center, setCenter] = useState(currentDate)
 
   const containerRef = useRef()
   const previousHeight = useRef(0)
 
+  // Clear interval and center on unmount
+  useEffect(() => () => {
+    onChangeTimelineQuery({
+      center: undefined,
+      interval: undefined
+    })
+  }, [onChangeTimelineQuery])
+
+  // This useEffect tracks when the metadata has been loaded for the collections
   useEffect(() => {
-    console.log('center', moment(center).utc().toISOString())
-  }, [center])
+    const checkMetadataLoaded = () => {
+      if (!collectionMetadata) return
+      if (isMetadataLoaded) return
+
+      if (isProjectPage) {
+        // Check if all project collections have metadata
+        const hasAllMetadata = projectCollectionsIds.every((conceptId) => {
+          const metadata = collectionMetadata[conceptId]
+
+          return metadata?.timeStart
+        })
+        setIsMetadataLoaded(hasAllMetadata)
+      } else {
+        // Check if single collection has metadata
+        const metadata = collectionMetadata[collectionConceptId]
+        setIsMetadataLoaded(!!metadata?.timeStart)
+      }
+    }
+
+    checkMetadataLoaded()
+  }, [collectionMetadata, isProjectPage, projectCollectionsIds, collectionConceptId])
+
+  // This useEffect calculates the initial zoom level and center for the timeline based on the collection metadata
+  useEffect(() => {
+    // If we have metadata, calculate the appropriate zoom and center
+    if (isMetadataLoaded) {
+      const { initialCenter: newCenter, zoomLevel: numericZoom } = calculateTimelineParams({
+        propsCenter,
+        collectionMetadata,
+        collectionConceptId,
+        isProjectPage,
+        projectCollectionsIds,
+        currentDate
+      })
+
+      setCenter(newCenter)
+      setZoomLevel(numericZoom)
+      onChangeTimelineQuery({
+        ...timeline.query,
+        center: newCenter,
+        interval: getObjectKeyByValue(timelineIntervals, numericZoom.toString())
+      })
+    }
+  }, [isMetadataLoaded, imeline.query])
+
+
 
   useEffect(() => {
     if (containerRef.current) {
@@ -238,40 +167,6 @@ export const Timeline = ({
       window.removeEventListener('keyup', onWindowKeyup)
     }
   }, [isOpen, isProjectPage])
-
-  useEffect(() => {
-    const colstartPoints = []
-    const colEndPoints = []
-    if (isProjectPage) {
-      projectCollectionsIds.forEach((conceptId) => {
-        const metadata = collectionMetadata[conceptId] || {}
-        if (!metadata.timeStart) {
-          return
-        }
-
-        const collectionTimeStartProject = collectionMetadata[conceptId].timeStart
-        const collectionTimeEndProject = collectionMetadata[conceptId].timeEnd
-        if (!collectionTimeEndProject) {
-          colstartPoints.push(currentDate)
-        } else {
-          const normalizedEndDate = new Date(collectionTimeEndProject)
-          const millisecondsEndDate = normalizedEndDate.getTime()
-          colEndPoints.push(millisecondsEndDate)
-        }
-
-        if (!collectionTimeStartProject) return
-        const normalizedStartDate = new Date(collectionTimeStartProject)
-        const millisecondsStartDate = normalizedStartDate.getTime()
-        colstartPoints.push(millisecondsStartDate)
-      })
-
-      const earliestColDate = Math.min(...colstartPoints)
-      const latestColDate = Math.max(...colEndPoints)
-
-      const newCenterForProject = getTimelineProjectCenter(earliestColDate, latestColDate)
-      setCenter(newCenterForProject)
-    }
-  }, [collectionMetadata])
 
   // Metrics methods
   const handleArrowKeyPan = () => onMetricsTimeline('Left/Right Arrow Pan')
@@ -409,15 +304,6 @@ export const Timeline = ({
         const values = intervals[conceptId]
         const metadata = collectionMetadata[conceptId] || {}
 
-        // Const collectionTimeStartProject = collectionMetadata[conceptId].timeStart
-        // const collectionTimeEndProject = collectionMetadata[conceptId].timeEnd
-        // if (!collectionTimeEndProject) {
-        //   colstartPoints.push(currentDate)
-        // }
-
-        // colstartPoints.push(collectionTimeStartProject)
-        // colEndPoints.push(collectionTimeEndProject)
-
         const dataValue = {}
         dataValue.id = conceptId
         dataValue.color = getColorByIndex(index)
@@ -427,9 +313,6 @@ export const Timeline = ({
         dataValue.intervals = values.map((value) => {
           const [start, end] = value
 
-          // Push these to arrs so we can use them to calculate the center
-
-          // TODO: Change the format of the intervals to an object at some point
           return [start * 1000, end * 1000]
         })
 
@@ -545,7 +428,7 @@ export const Timeline = ({
           maxZoom={5}
           minZoom={1}
           temporalRange={setupTemporal(temporalSearch)}
-          zoom={setupZoom(timeline)}
+          zoom={zoomLevel}
           onArrowKeyPan={handleArrowKeyPan}
           onButtonPan={handleButtonPan}
           onButtonZoom={handleButtonZoom}
