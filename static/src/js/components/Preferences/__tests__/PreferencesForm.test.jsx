@@ -70,8 +70,7 @@ describe('PreferencesForm component', () => {
             latitude: 39,
             longitude: -95,
             overlayLayers: [
-              'referenceFeatures',
-              'referenceLabels'
+              'referenceFeatures'
             ],
             projection: 'epsg4326'
           }
@@ -93,8 +92,7 @@ describe('PreferencesForm component', () => {
         latitude: 39,
         longitude: -95,
         overlayLayers: [
-          'referenceFeatures',
-          'referenceLabels'
+          'referenceFeatures'
         ],
         projection: 'epsg4326'
       }

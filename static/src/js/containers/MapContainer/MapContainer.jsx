@@ -304,8 +304,7 @@ MapContainer.propTypes = {
     }),
     overlays: PropTypes.shape({
       coastlines: PropTypes.bool,
-      referenceFeatures: PropTypes.bool,
-      referenceLabels: PropTypes.bool
+      referenceFeatures: PropTypes.bool
     })
   }),
   mapPreferences: PropTypes.shape({

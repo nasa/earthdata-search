@@ -98,8 +98,7 @@ describe('SET_ADMIN_PREFERENCES_METRICS', () => {
           ['epsg4326', '100% (2)']
         ],
         overlayLayers: [
-          ['referenceFeatures', '100% (2)'],
-          ['referenceLabels', '100% (2)']
+          ['referenceFeatures', '100% (2)']
         ],
         baseLayer: [
           ['blueMarble', '100% (2)']
@@ -144,8 +143,7 @@ describe('SET_ADMIN_PREFERENCES_METRICS', () => {
           ['epsg4326', '100% (2)']
         ],
         overlayLayers: [
-          ['referenceFeatures', '100% (2)'],
-          ['referenceLabels', '100% (2)']
+          ['referenceFeatures', '100% (2)']
         ],
         baseLayer: [
           ['blueMarble', '100% (2)']

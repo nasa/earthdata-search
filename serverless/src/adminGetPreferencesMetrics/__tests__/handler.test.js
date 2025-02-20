@@ -41,7 +41,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: 'start_date',
@@ -58,7 +58,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -115,8 +115,7 @@ describe('adminGetPreferencesMetrics', () => {
             ['epsg4326', '100% (2)']
           ],
           overlayLayers: [
-            ['referenceFeatures', '100% (2)'],
-            ['referenceLabels', '100% (2)']
+            ['referenceFeatures', '100% (2)']
           ],
           baseLayer: [
             ['blueMarble', '100% (2)']
@@ -140,7 +139,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: 'start_date',
@@ -157,7 +156,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -233,8 +232,7 @@ describe('adminGetPreferencesMetrics', () => {
           ],
           overlayLayers: [
             ['referenceFeatures', '50.0% (2)'],
-            ['referenceLabels', '50.0% (2)'],
-            ['not set (referenceFeatures & referenceLabels)', '50.0% (2)']
+            ['not set (referenceFeatures)', '50.0% (2)']
           ],
           baseLayer: [
             ['blueMarble', '50.0% (2)'],
@@ -259,7 +257,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: 'start_date',
@@ -276,7 +274,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -293,7 +291,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -310,7 +308,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -327,7 +325,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -344,7 +342,7 @@ describe('adminGetPreferencesMetrics', () => {
                 baseLayer: 'blueMarble',
                 longitude: 0,
                 projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                overlayLayers: ['referenceFeatures']
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -424,8 +422,7 @@ describe('adminGetPreferencesMetrics', () => {
           ],
           overlayLayers: [
             ['referenceFeatures', '75.0% (6)'],
-            ['referenceLabels', '75.0% (6)'],
-            ['not set (referenceFeatures & referenceLabels)', '25.0% (2)']
+            ['not set (referenceFeatures)', '25.0% (2)']
           ],
           baseLayer: [
             ['blueMarble', '75.0% (6)'],

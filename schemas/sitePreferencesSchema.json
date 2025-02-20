@@ -166,18 +166,16 @@
         "overlayLayers": {
           "type": "array",
           "title": "Overlay Layers",
-          "default": ["referenceFeatures", "referenceLabels"],
+          "default": ["referenceFeatures"],
           "items": {
             "type": "string",
             "enum": [
               "referenceFeatures",
-              "coastlines",
-              "referenceLabels"
+              "coastlines"
             ],
             "enumNames": [
               "Borders and Roads",
-              "Coastlines",
-              "Place Labels"
+              "Coastlines"
             ]
           },
           "uniqueItems": true

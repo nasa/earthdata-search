@@ -11,8 +11,7 @@ const initialState = {
   longitude: 0,
   overlays: {
     referenceFeatures: true,
-    coastlines: false,
-    referenceLabels: true
+    coastlines: false
   },
   projection: projections.geographic,
   zoom: 2

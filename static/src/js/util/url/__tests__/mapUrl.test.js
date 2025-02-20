@@ -128,8 +128,7 @@ describe('decodes overlays correctly', () => {
         longitude: undefined,
         overlays: {
           coastlines: true,
-          referenceFeatures: true,
-          referenceLabels: false
+          referenceFeatures: true
         },
         projection: undefined,
         zoom: undefined
@@ -147,8 +146,7 @@ describe('decodes overlays correctly', () => {
         longitude: undefined,
         overlays: {
           coastlines: false,
-          referenceFeatures: false,
-          referenceLabels: false
+          referenceFeatures: false
         },
         projection: undefined,
         zoom: undefined
@@ -237,8 +235,7 @@ describe('url#encodeUrlQuery', () => {
         longitude: 0,
         overlays: {
           referenceFeatures: true,
-          coastlines: false,
-          referenceLabels: true
+          coastlines: false
         },
         projection: projections.geographic,
         zoom: 2
@@ -263,8 +260,7 @@ describe('url#encodeUrlQuery', () => {
           longitude: 15,
           overlays: {
             referenceFeatures: true,
-            coastlines: false,
-            referenceLabels: false
+            coastlines: false
           },
           zoom: 0
         }
@@ -286,8 +282,7 @@ describe('url#encodeUrlQuery', () => {
           longitude: 15,
           overlays: {
             referenceFeatures: true,
-            coastlines: false,
-            referenceLabels: false
+            coastlines: false
           },
           zoom: 0
         },
@@ -296,8 +291,7 @@ describe('url#encodeUrlQuery', () => {
           latitude: 39,
           longitude: -95,
           overlayLayers: [
-            'referenceFeatures',
-            'referenceLabels'
+            'referenceFeatures'
           ],
           projection: 'epsg4326',
           zoom: 4
@@ -320,8 +314,7 @@ describe('url#encodeUrlQuery', () => {
           longitude: -95,
           overlays: {
             referenceFeatures: true,
-            coastlines: false,
-            referenceLabels: false
+            coastlines: false
           },
           zoom: 4
         },

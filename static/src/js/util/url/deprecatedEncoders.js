@@ -40,8 +40,7 @@ export const decodeDeprecatedMapParam = (param) => {
   if (overlaysFromMParam) {
     decodedOverlaysFromMParam = {
       referenceFeatures: overlaysFromMParam.split(',').indexOf('0') !== -1,
-      coastlines: overlaysFromMParam.split(',').indexOf('1') !== -1,
-      referenceLabels: overlaysFromMParam.split(',').indexOf('2') !== -1
+      coastlines: overlaysFromMParam.split(',').indexOf('1') !== -1
     }
   }
 

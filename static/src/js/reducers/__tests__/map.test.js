@@ -12,8 +12,7 @@ const initialState = {
   longitude: 0,
   overlays: {
     referenceFeatures: true,
-    coastlines: false,
-    referenceLabels: true
+    coastlines: false
   },
   projection: projections.geographic,
   zoom: 2
@@ -39,8 +38,7 @@ describe('UPDATE_MAP', () => {
       longitude: 0,
       overlays: {
         referenceFeatures: true,
-        coastlines: false,
-        referenceLabels: true
+        coastlines: false
       },
       projection: projections.geographic,
       zoom: 2
@@ -68,8 +66,7 @@ describe('RESTORE_FROM_URL', () => {
       longitude: 0,
       overlays: {
         referenceFeatures: true,
-        coastlines: false,
-        referenceLabels: true
+        coastlines: false
       },
       projection: projections.geographic,
       zoom: 2

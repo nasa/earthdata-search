@@ -15,8 +15,7 @@ describe('util#createJwtToken', () => {
           longitude: -95,
           projection: 'epsg4326',
           overlayLayers: [
-            'referenceFeatures',
-            'referenceLabels'
+            'referenceFeatures'
           ]
         },
         panelState: 'default',
@@ -44,8 +43,7 @@ describe('util#createJwtToken', () => {
           longitude: -95,
           projection: 'epsg4326',
           overlayLayers: [
-            'referenceFeatures',
-            'referenceLabels'
+            'referenceFeatures'
           ]
         },
         panelState: 'default',

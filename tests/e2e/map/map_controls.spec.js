@@ -314,37 +314,5 @@ test.describe('Map: Control interactions', () => {
         ).toHaveAttribute('src', /Coastlines/)
       })
     })
-
-    test.describe('When changing the Place Labels overlay layer', () => {
-      test('updates the URL with the new map  parameter and updates the src of tile images', async ({ page }) => {
-        await interceptUnauthenticatedCollections({
-          page,
-          body: commonBody,
-          headers: commonHeaders
-        })
-
-        // Visit with no overlays loaded
-        await page.goto('/search?overlays=false')
-
-        // Add the overlay layer
-        await page.getByRole('button', {
-          name: 'Layers',
-          exact: true
-        }).hover({ force: true })
-
-        await page.getByRole('checkbox', { name: 'Place Labels' }).click()
-
-        await expect(page).toHaveURL('search?overlays=referenceLabels')
-
-        await expect(
-          page
-            .locator('.leaflet-tile-pane')
-            .locator('.leaflet-layer')
-            .last()
-            .locator('img.leaflet-tile')
-            .first()
-        ).toHaveAttribute('src', /Reference_Labels/)
-      })
-    })
   })
 })

@@ -109,11 +109,10 @@ describe('AdminPreferencesMetricsList component', () => {
             ['epsg4326', '100% (4)'] // // Column Header 11
           ],
           overlayLayers: [
-            ['referenceFeatures', '100% (4)'], // Column Header 12
-            ['referenceLabels', '100% (4)'] // Column Header 13
+            ['referenceFeatures', '100% (4)'] // Column Header 12
           ],
           baseLayer: [
-            ['blueMarble', '100% (4)'] // Column Header 14
+            ['blueMarble', '100% (4)'] // Column Header 13
           ]
         }
       }
@@ -160,9 +159,6 @@ describe('AdminPreferencesMetricsList component', () => {
 
     expect(within(tables[9]).getByRole('columnheader', { name: 'referenceFeatures' })).toBeInTheDocument()
     expect(within(tables[9]).getAllByRole('cell', { name: '100% (4)' })[0]).toBeInTheDocument()
-
-    expect(within(tables[9]).getByRole('columnheader', { name: 'referenceLabels' })).toBeInTheDocument()
-    expect(within(tables[9]).getAllByRole('cell', { name: '100% (4)' })[1]).toBeInTheDocument()
 
     expect(within(tables[10]).getByRole('columnheader', { name: 'blueMarble' })).toBeInTheDocument()
     expect(within(tables[10]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()

@@ -44,7 +44,6 @@ export const encodeMap = (map, mapPreferences) => {
   const encodedOverlays = []
   if (overlays?.referenceFeatures) encodedOverlays.push('referenceFeatures')
   if (overlays?.coastlines) encodedOverlays.push('coastlines')
-  if (overlays?.referenceLabels) encodedOverlays.push('referenceLabels')
 
   const encodedObj = {
     base: encodedBase,
@@ -60,7 +59,7 @@ export const encodeMap = (map, mapPreferences) => {
     base: 'blueMarble',
     lat: 0,
     long: 0,
-    overlays: 'referenceFeatures,referenceLabels',
+    overlays: 'referenceFeatures',
     projection: 'EPSG:4326',
     zoom: 2
   }
@@ -86,7 +85,6 @@ export const encodeMap = (map, mapPreferences) => {
     const encodedOverlaysPreference = []
     if (overlayLayers.indexOf('referenceFeatures') > -1) encodedOverlaysPreference.push('referenceFeatures')
     if (overlayLayers.indexOf('coastlines') > -1) encodedOverlaysPreference.push('coastlines')
-    if (overlayLayers.indexOf('referenceLabels') > -1) encodedOverlaysPreference.push('referenceLabels')
 
     defaultValues = {
       base: encodedBasePreference,
@@ -173,8 +171,7 @@ export const decodeMap = (params) => {
   if (overlaysParam) {
     decodedOverlays = {
       referenceFeatures: overlaysParam.split(',').indexOf('referenceFeatures') !== -1,
-      coastlines: overlaysParam.split(',').indexOf('coastlines') !== -1,
-      referenceLabels: overlaysParam.split(',').indexOf('referenceLabels') !== -1
+      coastlines: overlaysParam.split(',').indexOf('coastlines') !== -1
     }
   }
 

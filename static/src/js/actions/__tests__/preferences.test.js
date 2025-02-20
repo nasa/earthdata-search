@@ -62,8 +62,7 @@ describe('setPreferencesFromJwt', () => {
         longitude: -95,
         projection: 'epsg4326',
         overlayLayers: [
-          'referenceFeatures',
-          'referenceLabels'
+          'referenceFeatures'
         ]
       },
       panelState: 'default',
@@ -99,8 +98,7 @@ describe('setPreferencesFromJwt', () => {
         longitude: -95,
         projection: 'epsg4326',
         overlayLayers: [
-          'referenceFeatures',
-          'referenceLabels'
+          'referenceFeatures'
         ]
       },
       panelState: 'default',
@@ -128,8 +126,7 @@ describe('setPreferencesFromJwt', () => {
         latitude: 39,
         longitude: -95,
         overlays: {
-          referenceFeatures: true,
-          referenceLabels: true
+          referenceFeatures: true
         },
         projection: 'epsg4326',
         zoom: 4

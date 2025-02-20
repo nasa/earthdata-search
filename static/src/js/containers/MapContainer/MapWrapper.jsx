@@ -176,17 +176,6 @@ const MapWrapper = ({
             format="png"
           />
         </LayersControl.Overlay>
-        <LayersControl.Overlay
-          checked={overlays.referenceLabels}
-          name="Place Labels *"
-        >
-          <LayerBuilder
-            projection={projection}
-            product="Reference_Labels_15m"
-            resolution="15.625m"
-            format="png"
-          />
-        </LayersControl.Overlay>
       </LayersControl>
       <ZoomHome
         projection={projection}
@@ -286,8 +275,7 @@ MapWrapper.propTypes = {
     }),
     overlays: PropTypes.shape({
       coastlines: PropTypes.bool,
-      referenceFeatures: PropTypes.bool,
-      referenceLabels: PropTypes.bool
+      referenceFeatures: PropTypes.bool
     })
   }),
   mapProps: PropTypes.shape({}).isRequired,
@@ -304,8 +292,7 @@ MapWrapper.propTypes = {
   onUpdateShapefile: PropTypes.func.isRequired,
   overlays: PropTypes.shape({
     coastlines: PropTypes.bool,
-    referenceFeatures: PropTypes.bool,
-    referenceLabels: PropTypes.bool
+    referenceFeatures: PropTypes.bool
   }).isRequired,
   project: PropTypes.shape({}).isRequired,
   projection: PropTypes.string.isRequired,

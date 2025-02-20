@@ -13,8 +13,7 @@ const initialState = {
       longitude: 0,
       projection: 'epsg4326',
       overlayLayers: [
-        'referenceFeatures',
-        'referenceLabels'
+        'referenceFeatures'
       ]
     }
   },

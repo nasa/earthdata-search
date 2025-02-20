@@ -34,9 +34,6 @@ const MapEvents = (props) => {
       case 'Coastlines':
         overlays.coastlines = enabled
         break
-      case 'Place Labels *':
-        overlays.referenceLabels = enabled
-        break
       default:
         break
     }

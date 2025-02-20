@@ -20,8 +20,7 @@ describe('url#decodeUrlParams', () => {
       longitude: 0,
       overlays: {
         referenceFeatures: true,
-        coastlines: false,
-        referenceLabels: true
+        coastlines: false
       },
       projection: projections.arctic,
       zoom: 2
