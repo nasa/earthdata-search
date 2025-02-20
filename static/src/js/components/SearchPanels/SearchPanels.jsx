@@ -68,17 +68,19 @@ class SearchPanels extends PureComponent {
 
     const {
       collectionListView,
-      granuleListView
+      granuleListView,
+      collectionSort
     } = preferences
-
     this.state = {
       collectionPanelView: this.defaultPanelStateFromProps(collectionListView),
-      granulePanelView: this.defaultPanelStateFromProps(granuleListView)
+      granulePanelView: this.defaultPanelStateFromProps(granuleListView),
+      collectionSortKey: this.defaultSortKeyStateFromProps(collectionSort)
     }
 
     this.onPanelClose = this.onPanelClose.bind(this)
     this.onChangePanel = this.onChangePanel.bind(this)
     this.onChangeCollectionsPanelView = this.onChangeCollectionsPanelView.bind(this)
+    this.onChangeCollectionSortKey = this.onChangeCollectionSortKey.bind(this)
     this.onChangeGranulePanelView = this.onChangeGranulePanelView.bind(this)
     this.updatePanelViewState = this.updatePanelViewState.bind(this)
 
@@ -93,9 +95,9 @@ class SearchPanels extends PureComponent {
     if (!isEqual(preferences, prevPreferences)) {
       const {
         collectionListView,
-        granuleListView
+        granuleListView,
+        collectionSort
       } = preferences
-
       const collectionPanelView = this.defaultPanelStateFromProps(collectionListView)
       const granulePanelView = this.defaultPanelStateFromProps(granuleListView)
 
@@ -103,6 +105,9 @@ class SearchPanels extends PureComponent {
         collectionPanelView,
         granulePanelView
       })
+
+      const collectionSortKey = this.defaultSortKeyStateFromProps(collectionSort)
+      this.onChangeCollectionSortKey(collectionSortKey)
     }
   }
 
@@ -120,6 +125,12 @@ class SearchPanels extends PureComponent {
   onChangeCollectionsPanelView(view) {
     this.setState({
       collectionPanelView: view
+    })
+  }
+
+  onChangeCollectionSortKey(passedSortKey) {
+    this.setState({
+      collectionSortKey: passedSortKey
     })
   }
 
@@ -141,6 +152,22 @@ class SearchPanels extends PureComponent {
 
     // Default value
     return 'list'
+  }
+
+  /**
+   * Determine the value of the panel view state based on user preferences
+   * @param {String} value The value stored in the preferences object
+   */
+  defaultSortKeyStateFromProps(preferenceSortKey) {
+    // If the preference isn't explicitly set to table
+    if (preferenceSortKey) {
+      const normalizedSorKey = preferenceSortKey === 'default' ? [collectionSortKeys.usageDescending] : [preferenceSortKey]
+
+      return normalizedSorKey
+    }
+
+    // Default value
+    return collectionSortKeys.scoreDescending
   }
 
   updatePanelViewState(state) {
@@ -171,6 +198,12 @@ class SearchPanels extends PureComponent {
       preferences
     } = this.props
 
+    const {
+      collectionPanelView,
+      collectionSortKey: collectionPreferencesSortKey,
+      granulePanelView
+    } = this.state
+
     const loggedIn = isLoggedIn(authToken)
 
     const {
@@ -180,11 +213,10 @@ class SearchPanels extends PureComponent {
 
     const {
       pageNum: collectionsPageNum = 1,
-      sortKey: collectionsSortKey = collectionSortKeys.scoreDescending
+      sortKey: collectionsQuerySortKey = collectionSortKeys.scoreDescending
     } = collectionQuery
-
-    const [activeCollectionsSortKey = collectionSortKeys.scoreDescending] = collectionsSortKey
-
+    const collectionSortKey = collectionPreferencesSortKey || collectionsQuerySortKey
+    const [activeCollectionsSortKey = collectionSortKeys.endDateDescending] = collectionSortKey
     const {
       allIds: collectionAllIds,
       hits: collectionHits = 0,
@@ -213,18 +245,24 @@ class SearchPanels extends PureComponent {
       collectionQuery,
       map
     })
+
+    const setCollectionSort = (value) => {
+      const sortKey = [value]
+      onChangeQuery({
+        collection: {
+          sortKey
+        }
+      })
+
+      onMetricsCollectionSortChange({ value })
+    }
+
     const {
       allIds: allGranuleIds = [],
       hits: granuleHits = '0',
       isLoading: granulesIsLoading,
       isLoaded: granulesIsLoaded
     } = granuleSearchResults
-
-    const {
-      collectionPanelView,
-      granulePanelView
-    } = this.state
-
     const granuleResultsHeaderMetaPrimaryText = `Showing ${commafy(allGranuleIds.length)} of ${commafy(
       granuleHits
     )} matching ${pluralize('granule', granuleHits)}`
@@ -281,17 +319,6 @@ class SearchPanels extends PureComponent {
         onClick: () => setGranulesActiveView('table')
       }
     ]
-
-    const setCollectionSort = (value) => {
-      const sortKey = [value]
-      onChangeQuery({
-        collection: {
-          sortKey
-        }
-      })
-
-      onMetricsCollectionSortChange({ value })
-    }
 
     const collectionsSortsArray = [
       {
@@ -918,6 +945,7 @@ SearchPanels.propTypes = {
   preferences: PropTypes.shape({
     collectionListView: PropTypes.node,
     granuleListView: PropTypes.node,
+    collectionSort: PropTypes.string,
     panelState: PropTypes.string
   }).isRequired
 }
