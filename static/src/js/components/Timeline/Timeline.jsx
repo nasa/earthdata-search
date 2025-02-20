@@ -100,7 +100,7 @@ export const Timeline = ({
         interval: getObjectKeyByValue(timelineIntervals, numericZoom.toString())
       })
     }
-  }, [isMetadataLoaded, imeline.query])
+  }, [isMetadataLoaded, timeline.query])
 
 
 
