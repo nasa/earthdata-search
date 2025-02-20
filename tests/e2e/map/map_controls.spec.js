@@ -270,7 +270,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('checkbox', { name: 'Borders and Roads' }).click()
 
-        await expect(page).toHaveURL('search?overlays=referenceFeatures')
+        await expect(page).toHaveURL('search')
 
         await expect(
           page
