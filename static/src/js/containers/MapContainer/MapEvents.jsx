@@ -1,6 +1,11 @@
-import { useLayoutEffect } from 'react'
+import React, {
+  useState,
+  useCallback,
+  useLayoutEffect
+} from 'react'
 import PropTypes from 'prop-types'
 import { useMap, useMapEvents } from 'react-leaflet'
+import { Overlay, Tooltip } from 'react-bootstrap'
 
 const MapEvents = (props) => {
   const map = useMap()
@@ -10,9 +15,44 @@ const MapEvents = (props) => {
     onMetricsMap
   } = props
 
+  const [showTooltip, setShowTooltip] = useState(false)
+  const [tooltipTarget, setTooltipTarget] = useState(null)
+
+  const handleMouseOver = useCallback((event) => {
+    setShowTooltip(true)
+    setTooltipTarget(event.currentTarget)
+  }, [])
+
+  const handleMouseOut = useCallback(() => {
+    setShowTooltip(false)
+    setTooltipTarget(null)
+  }, [])
+
   useLayoutEffect(() => {
     // eslint-disable-next-line no-underscore-dangle
     const controlContainer = map._controlContainer
+    if (!controlContainer) return
+
+    const overlaysContainer = controlContainer.querySelector('.leaflet-control-layers-overlays')
+    if (overlaysContainer) {
+      const overlayControls = overlaysContainer.querySelectorAll('label')
+      overlayControls.forEach((control) => {
+        if (control.textContent.includes('Place Labels')) {
+          const checkbox = control.querySelector('input')
+          if (checkbox) {
+            checkbox.disabled = true
+
+            const { style } = control
+            style.opacity = '0.5'
+            style.cursor = 'not-allowed'
+
+            control.addEventListener('mouseover', handleMouseOver)
+            control.addEventListener('mouseout', handleMouseOut)
+          }
+        }
+      })
+    }
+
     const layersControl = controlContainer.querySelector('.leaflet-control-layers-list')
     const layersControlElement = controlContainer.querySelector('.leaflet-control-layers-attribution')
 
@@ -75,7 +115,17 @@ const MapEvents = (props) => {
     overlayremove: handleOverlayChange
   })
 
-  return null
+  return (
+    <Overlay target={tooltipTarget} show={showTooltip} placement="left">
+      {
+        (tooltipProps) => (
+          <Tooltip id="disabled-tooltip" {...tooltipProps}>
+            This layer is currently disabled.
+          </Tooltip>
+        )
+      }
+    </Overlay>
+  )
 }
 
 MapEvents.defaultProps = {
