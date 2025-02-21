@@ -186,7 +186,7 @@ export const calculateTimelineParams = ({
   currentDate
 }) => {
 
-  console.log('calculateTimelineParams',{ 
+  console.log('calculateTimelineParams', {
     isProjectPage,
     projectCollectionsIds,
     collectionMetadata,

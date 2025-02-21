@@ -115,7 +115,7 @@
     "@edsc/echoforms": "^1.1.18",
     "@edsc/geo-utils": "^1.0.6",
     "@edsc/smart-handoffs": "^1.0.6",
-    "@edsc/timeline": "^1.1.8",
+    "@edsc/timeline": "file://../edsc-timeline/edsc-timeline-1.1.9.tgz",
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-select": "2.0.0",
     "@react-leaflet/core": "^2.1.0",

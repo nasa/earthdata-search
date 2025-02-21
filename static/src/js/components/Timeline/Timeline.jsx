@@ -41,9 +41,16 @@ export const Timeline = ({
   const { center: propsCenter } = query
   const isProjectPage = pathname.indexOf('projects') > -1
   const [isMetadataLoaded, setIsMetadataLoaded] = useState(false)
+  const [isInitialSetup, setIsInitialSetup] = useState(true)
   const [zoomLevel, setZoomLevel] = useState(5)
-  const [center, setCenter] = useState(currentDate)
+  const [center, setCenter] = useState(propsCenter || currentDate)
 
+  const setCenterWithLog = (newCenter, logStr) => {
+    console.log(logStr, newCenter)
+    setCenter(newCenter)
+  }
+
+  // Refs for tracking the timer container and the previous height so we can trigger a resize event
   const containerRef = useRef()
   const previousHeight = useRef(0)
 
@@ -55,7 +62,6 @@ export const Timeline = ({
     })
   }, [onChangeTimelineQuery])
 
-  // This useEffect tracks when the metadata has been loaded for the collections
   useEffect(() => {
     const checkMetadataLoaded = () => {
       if (!collectionMetadata) return
@@ -79,8 +85,9 @@ export const Timeline = ({
     checkMetadataLoaded()
   }, [collectionMetadata, isProjectPage, projectCollectionsIds, collectionConceptId])
 
-  // This useEffect calculates the initial zoom level and center for the timeline based on the collection metadata
   useEffect(() => {
+    if (!isInitialSetup) return
+
     // If we have metadata, calculate the appropriate zoom and center
     if (isMetadataLoaded) {
       const { initialCenter: newCenter, zoomLevel: numericZoom } = calculateTimelineParams({
@@ -92,17 +99,16 @@ export const Timeline = ({
         currentDate
       })
 
-      setCenter(newCenter)
+      setCenterWithLog(newCenter, 'Initial center:')
       setZoomLevel(numericZoom)
+      setIsInitialSetup(false)
       onChangeTimelineQuery({
         ...timeline.query,
         center: newCenter,
         interval: getObjectKeyByValue(timelineIntervals, numericZoom.toString())
       })
     }
-  }, [isMetadataLoaded, timeline.query])
-
-
+  }, [isMetadataLoaded, isInitialSetup])
 
   useEffect(() => {
     if (containerRef.current) {
@@ -186,7 +192,9 @@ export const Timeline = ({
     zoom,
     timelineStart
   }) => {
+    console.log('handleTimelineMoveEnd: ', newCenter, timelineEnd, zoom, timelineStart)
     if (!timelineEnd && !timelineStart) return
+    if (!isMetadataLoaded) return
 
     const endDate = new Date(timelineEnd)
     const startDate = new Date(timelineStart)
@@ -199,7 +207,7 @@ export const Timeline = ({
     }
 
     onChangeTimelineQuery(newQuery)
-    setCenter(newCenter)
+    setCenterWithLog(newCenter, 'handleTimelineMoveEnd center:')
   }
 
   /**
@@ -388,6 +396,9 @@ export const Timeline = ({
       'timeline--is-hidden': hideTimeline
     }
   ])
+
+  console.log('Pre return center:', center)
+  console.log('Pre return zoomLevel:', zoomLevel)
 
   return (
     <section ref={containerRef} className={timelineClasses}>
