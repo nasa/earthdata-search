@@ -1,5 +1,6 @@
 import React, {
   useState,
+  useRef,
   lazy,
   Suspense
 } from 'react'
@@ -13,33 +14,29 @@ import {
 import Form from 'react-bootstrap/Form'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-
 import {
   FaSitemap,
   FaQuestionCircle,
   FaFilter,
   FaMap
 } from 'react-icons/fa'
-
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
-import AdvancedSearchModalContainer
-  from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
+import AdvancedSearchModalContainer from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
-import PortalBrowserModalContainer
-  from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
+import MapLayoutContainer from '../../containers/MapLayoutContainer/MapLayoutContainer'
+import PortalBrowserModalContainer from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import RelatedUrlsModalContainer
-  from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
+import RelatedUrlsModalContainer from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
-import SearchSidebarHeaderContainer
-  from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
+import SearchSidebarHeaderContainer from '../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
+import Spinner from '../../components/Spinner/Spinner'
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 import actions from '../../actions'
@@ -47,6 +44,7 @@ import advancedSearchFields from '../../data/advancedSearchFields'
 import Button from '../../components/Button/Button'
 
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
+const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const GranuleResultsHighlightsContainer = lazy(() => import('../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'))
 const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFiltersContainer/GranuleFiltersContainer'))
 
@@ -81,6 +79,8 @@ export const Search = ({
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
+  // Create a ref for the sidebar panels
+  const SearchPanelsRef = useRef(null)
 
   const {
     hasGranulesOrCwic = false,
@@ -132,7 +132,7 @@ export const Search = ({
     </SidebarSection>
   )
 
-  return (
+  const searchComponent = (
     <div className="route-wrapper route-wrapper--search search">
       <SidebarContainer
         headerChildren={(
@@ -251,6 +251,24 @@ export const Search = ({
         </PortalFeatureContainer>
       </div>
     </div>
+  )
+
+  return (
+    <MapLayoutContainer panelsRef={SearchPanelsRef}>
+      {searchComponent}
+      <Suspense
+        fallback={
+          (
+            <Spinner
+              type="dots"
+              className="root__spinner spinner spinner--dots spinner--white spinner--small"
+            />
+          )
+        }
+      >
+        <EdscMapContainer />
+      </Suspense>
+    </MapLayoutContainer>
   )
 }
 

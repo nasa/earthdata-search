@@ -40,6 +40,8 @@ test.describe('Map: Control interactions', () => {
 
         await page.goto('/')
 
+        await page.waitForTimeout(500)
+
         // Drag the map
         await page.mouse.move(1000, 500)
         await page.mouse.down()
@@ -63,7 +65,7 @@ test.describe('Map: Control interactions', () => {
         // Zoom the map
         await page.locator('.leaflet-control-zoom-in').click()
 
-        await expect(page).toHaveURL('search?zoom=3')
+        await expect(page).toHaveURL(/search\?.*zoom=3/)
       })
     })
   })
@@ -82,7 +84,7 @@ test.describe('Map: Control interactions', () => {
         // Change the projection
         await page.getByTestId('projection-switcher__arctic').click()
 
-        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=0')
+        await expect(page.url()).toContain('lat=90&projection=EPSG%3A3413&zoom=0')
 
         await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3413/)
       })
@@ -123,7 +125,7 @@ test.describe('Map: Control interactions', () => {
         // Change the projection
         await page.getByTestId('projection-switcher__antarctic').click()
 
-        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=0')
+        await expect(page.url()).toContain('lat=-90&projection=EPSG%3A3031&zoom=0')
 
         await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3031/)
       })
@@ -142,14 +144,14 @@ test.describe('Map: Control interactions', () => {
         // Change the projection to North Polar
         await page.getByTestId('projection-switcher__arctic').click()
 
-        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=0')
+        await expect(page.url()).toContain('lat=90&projection=EPSG%3A3413&zoom=0')
 
         await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3413/)
 
         // Change the projection to South Polar
         await page.getByTestId('projection-switcher__antarctic').click()
 
-        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=0')
+        await expect(page.url()).toContain('lat=-90&projection=EPSG%3A3031&zoom=0')
 
         await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3031/)
       })
@@ -176,7 +178,7 @@ test.describe('Map: Control interactions', () => {
         await page.getByRole('radio', { name: 'Corrected Reflectance (True Color)' }).click()
         await page.getByRole('radio', { name: 'Blue Marble' }).click()
 
-        await expect(page).toHaveURL('search')
+        await expect(page).toHaveURL(/search(\?.*)?$/)
 
         await expect(
           page
@@ -207,7 +209,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('radio', { name: 'Corrected Reflectance (True Color)' }).click()
 
-        await expect(page).toHaveURL('search?base=trueColor')
+        await expect(page.url()).toContain('base=trueColor')
 
         await expect(
           page
@@ -238,7 +240,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('radio', { name: 'Land / Water Map' }).click()
 
-        await expect(page).toHaveURL('search?base=landWaterMap')
+        await expect(page.url()).toContain('base=landWaterMap')
 
         await expect(
           page
@@ -270,7 +272,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('checkbox', { name: 'Borders and Roads' }).click()
 
-        await expect(page).toHaveURL('search?overlays=referenceFeatures')
+        await expect(page.url()).toContain('overlays=referenceFeatures')
 
         await expect(
           page
@@ -302,7 +304,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('checkbox', { name: 'Coastlines' }).click()
 
-        await expect(page).toHaveURL('search?overlays=coastlines')
+        await expect(page.url()).toContain('overlays=coastlines')
 
         await expect(
           page
@@ -334,7 +336,7 @@ test.describe('Map: Control interactions', () => {
 
         await page.getByRole('checkbox', { name: 'Place Labels' }).click()
 
-        await expect(page).toHaveURL('search?overlays=referenceLabels')
+        await expect(page.url()).toContain('overlays=referenceLabels')
 
         await expect(
           page

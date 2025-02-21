@@ -21,6 +21,12 @@ import PanelGroup from '../../Panels/PanelGroup'
 import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 
+global.ResizeObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn()
+}))
+
 // Mock react-leaflet because it causes errors
 jest.mock('react-leaflet', () => ({
   createLayerComponent: jest.fn().mockImplementation(() => {})

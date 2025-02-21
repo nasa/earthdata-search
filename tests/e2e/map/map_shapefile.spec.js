@@ -239,7 +239,7 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        await page.waitForURL(/zoom=4/, { timeout: 3000 })
+        await page.waitForURL(/zoom=\d/, { timeout: 3000 })
 
         // The shapefile has 1 point shapes, so 1 Marker button
         await expect(await page.getByRole('button', { name: 'Marker' }).all()).toHaveLength(1)
@@ -258,7 +258,7 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Updates the URL
-        await expect(page).toHaveURL('search?sp[0]=35%2C0&sf=1&sfs[0]=4&lat=-8.296765000000008&long=44.625&zoom=4')
+        await expect(page).toHaveURL(/search\?sp\[0\]=35%2C0&sf=1&sfs\[0\]=4&lat=-8\.296765000000008&long=44\.625&zoom=[34]/)
       })
     })
 

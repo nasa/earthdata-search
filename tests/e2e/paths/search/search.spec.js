@@ -298,6 +298,8 @@ test.describe('Path /search', () => {
 
         await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
 
+        await page.getByTestId('panels__handle').click()
+
         // Test leaflet has drawn the shape
         await expect(await page.locator('g path').first()).toBeVisible()
         await expect(await page.locator('g path').all()).toHaveLength(1)
@@ -337,6 +339,8 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('2.22154,62.18209')
         await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue('100000')
 
+        await page.getByTestId('panels__handle').click()
+
         // Test leaflet has drawn the shape
         await expect(await page.locator('g path').first()).toBeVisible()
         await expect(await page.locator('g path').all()).toHaveLength(1)
@@ -375,6 +379,8 @@ test.describe('Path /search', () => {
 
         await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue('0.99949,5.02679')
         await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue('26.17555,32.8678')
+
+        await page.getByTestId('panels__handle').click()
 
         // Test leaflet has drawn the shape
         await expect(await page.locator('g path').first()).toBeVisible()
@@ -450,6 +456,8 @@ test.describe('Path /search', () => {
 
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
+
+        await page.getByTestId('panels__handle').click()
 
         // Test leaflet has drawn the shape
         await expect(await page.locator('g path').first()).toBeVisible()
