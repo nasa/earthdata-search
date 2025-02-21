@@ -177,7 +177,7 @@ const MapWrapper = ({
           />
         </LayersControl.Overlay>
         <LayersControl.Overlay
-          checked={overlays.referenceLabels}
+          checked={false}
           name="Place Labels *"
         >
           <LayerBuilder
