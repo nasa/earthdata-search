@@ -3,13 +3,11 @@ import { render, fireEvent } from '@testing-library/react'
 import { useMap } from 'react-leaflet'
 import MapEvents from '../MapEvents'
 
-// Mock react-leaflet like in your existing tests
 jest.mock('react-leaflet', () => ({
   useMap: jest.fn(),
   useMapEvents: jest.fn()
 }))
 
-// Mock react-bootstrap since we're using Overlay and Tooltip
 jest.mock('react-bootstrap', () => ({
   Overlay: ({ children, show, target }) => (show && target ? children({ placement: 'left' }) : null),
   // eslint-disable-next-line react/prop-types
@@ -26,10 +24,8 @@ describe('MapEvents', () => {
   let mockMap
 
   beforeEach(() => {
-    // Reset all mocks
     jest.clearAllMocks()
 
-    // Create mock DOM structure
     mockMap = {
       _controlContainer: document.createElement('div'),
       getCenter: jest.fn().mockReturnValue({
