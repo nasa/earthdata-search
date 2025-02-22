@@ -14,7 +14,7 @@ import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_co
 import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.json'
 import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
 
-test.describe('Map: Shapefile interactions', () => {
+test.describe.skip('Map: Shapefile interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
       browserName,

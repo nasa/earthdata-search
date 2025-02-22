@@ -25,7 +25,8 @@ export const setupTests = async ({
   }, dontShowTour.toString())
 
   // Prevent loading of images and map tiles to speed up tests
-  await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
+  await page.route('**/*.{png,jpg,jpeg,pbf}', (route) => route.abort())
+  await page.route('**/arcgis/**', (route) => route.abort())
   await page.route('**/scale/**', (route) => route.abort())
 
   // Mock requests to the status app
