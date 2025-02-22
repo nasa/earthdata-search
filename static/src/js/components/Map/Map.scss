@@ -1,0 +1,44 @@
+@use '../../../css/utils';
+
+.edsc-map-zoom,
+.edsc-map-scale-imperial,
+.edsc-map-scale-metric {
+  position: absolute;
+  z-index: 10;
+  right: 0.5rem;
+  color: utils.$color__spacesuit-white;
+  background-color: utils.$color__carbon--70;
+  text-shadow: utils.$shadow__panel-dark;
+}
+
+.edsc-map-scale-imperial {
+  bottom: 30px;
+  border-top: 2px solid utils.$color__spacesuit-white;
+  border-left: 2px solid utils.$color__spacesuit-white;
+}
+
+.edsc-map-scale-metric {
+  bottom: 53px;
+  border-bottom: 2px solid utils.$color__spacesuit-white;
+  border-left: 2px solid utils.$color__spacesuit-white;
+}
+
+.edsc-map-zoom {
+  bottom: 92px;
+}
+
+.ol-attribution {
+  font-family: Avenir Next W00, Helvetica Neue, Helvetica, Arial, sans-serif;
+  color: #323232;
+  background-color: #ffffff;
+  font-size: 12px;
+}
+
+.ol-control {
+  button {
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: none;
+    border: none;
+  }
+}
