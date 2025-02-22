@@ -11,9 +11,26 @@ import history from '../../util/history'
 import { getPanelSizeMap } from '../../util/getPanelSizeMap'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
+import PanelWidthContext from '../../contexts/PanelWidthContext'
+
 import './Panels.scss'
 
+// Returns the width of the sidebar
+const getSidebarWidth = () => {
+  const sidebar = document.querySelector('.sidebar')
+  if (sidebar) {
+    const width = sidebar.offsetWidth
+
+    return width
+  }
+
+  return 0
+}
+
 export class Panels extends PureComponent {
+  // eslint-disable-next-line react/static-property-placement
+  static contextType = PanelWidthContext
+
   constructor(props) {
     super(props)
     this.width = 600 // The default width the panel is displayed when open
@@ -77,6 +94,10 @@ export class Panels extends PureComponent {
     })
 
     this.updateResponsiveClassNames()
+
+    // When the component mounts call setPanelsWidth to set the initial width
+    const { setPanelsWidth } = this.context
+    setPanelsWidth(this.width + getSidebarWidth())
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -172,6 +193,13 @@ export class Panels extends PureComponent {
         show: !show,
         willMinimize: show
       })
+
+      // Update the panels width to the new total width
+      const currentWidth = this.width
+      const panelWidth = show ? 0 : currentWidth
+
+      const { setPanelsWidth } = this.context
+      setPanelsWidth(getSidebarWidth() + panelWidth)
     }
 
     triggerKeyboardShortcut({
@@ -211,6 +239,7 @@ export class Panels extends PureComponent {
   }
 
   onPanelHandleClickOrKeypress(event) {
+    const { setPanelsWidth } = this.context
     const { show } = this.state
     const {
       type,
@@ -232,6 +261,12 @@ export class Panels extends PureComponent {
         dragging: false,
         handleToolipVisible: false
       })
+
+      // Update the panels width to the new total width
+      const currentWidth = this.width
+      const panelWidth = show ? 0 : currentWidth
+
+      setPanelsWidth(getSidebarWidth() + panelWidth)
     } else {
       this.setState({
         handleToolipVisible: false
@@ -372,6 +407,7 @@ export class Panels extends PureComponent {
     } = this.props
 
     const {
+      maxWidth,
       minWidth
     } = this.state
 
@@ -380,6 +416,8 @@ export class Panels extends PureComponent {
       clickStartX,
       clickStartWidth
     } = this
+
+    const { setPanelsWidth } = this.context
 
     // Only change the state when the user finishes a drag. Click events
     // will fire this function, but they should not fire the dragend events.
@@ -394,6 +432,12 @@ export class Panels extends PureComponent {
 
       // Close the panel if its current with is smaller than the minWidth minus the threshold
       const panelShouldClose = (newWidth < (minWidth - this.minimizeThreshold))
+
+      // Set the panelsWidth to the sidebar width plus the newWidth if it fallens between the min and max widths.
+      // This ensures the panel width is correct if they overdrag the panel but don't collapse it, or overdrag
+      // the panel past their browser to the right.
+      const finalPanelWidth = Math.min(Math.max(minWidth, newWidth), maxWidth)
+      setPanelsWidth(getSidebarWidth() + (panelShouldClose ? 0 : finalPanelWidth))
 
       if (panelShouldClose) {
         this.setState({
