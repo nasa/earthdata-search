@@ -63,12 +63,12 @@ describe('MapEvents', () => {
       await user.hover(placeLabelsControl)
     })
 
-    expect(queryByText('This layer is currently disabled.')).toBeInTheDocument()
+    expect(queryByText('The place labels layer is temporarily unavailable for maintenance. We expect it to be restored by April and appreciate your patience!')).toBeInTheDocument()
 
     await act(async () => {
       await user.unhover(placeLabelsControl)
     })
 
-    expect(queryByText('This layer is currently disabled.')).not.toBeInTheDocument()
+    expect(queryByText('The place labels layer is temporarily unavailable for maintenance. We expect it to be restored by April and appreciate your patience!')).not.toBeInTheDocument()
   })
 })
