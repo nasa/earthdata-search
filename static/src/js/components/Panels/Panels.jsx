@@ -433,7 +433,7 @@ export class Panels extends PureComponent {
       // Close the panel if its current with is smaller than the minWidth minus the threshold
       const panelShouldClose = (newWidth < (minWidth - this.minimizeThreshold))
 
-      // Set the panelsWidth to the sidebar width plus the newWidth if it fallens between the min and max widths.
+      // Set the panelsWidth to the sidebar width plus the newWidth if it falls between the min and max widths.
       // This ensures the panel width is correct if they overdrag the panel but don't collapse it, or overdrag
       // the panel past their browser to the right.
       const finalPanelWidth = Math.min(Math.max(minWidth, newWidth), maxWidth)

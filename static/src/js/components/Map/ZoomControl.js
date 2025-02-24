@@ -44,22 +44,25 @@ class ZoomControl extends Zoom {
     )
 
     const { element } = this
-    const { firstChild, lastChild } = element
+    const {
+      firstChild: zoomInElement,
+      lastChild: zoomOutElement
+    } = element
 
     // Replace the plus character with an icon
     ReactDOM.render(
       PlusIcon,
-      firstChild
+      zoomInElement
     )
 
     // Replace the minus character with an icon
     ReactDOM.render(
       MinusIcon,
-      lastChild
+      zoomOutElement
     )
 
     // Add the home button to the control bewteen the plus and minus buttons
-    element.insertBefore(homeElement, lastChild)
+    element.insertBefore(homeElement, zoomOutElement)
   }
 
   /**

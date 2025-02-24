@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 const PanelWidthContextProvider = ({ children }) => {
-  const [panelsWidth, setPanelsWidth] = useState(500)
+  // This value will get replaced immediately, so it's safe to start at 0
+  const [panelsWidth, setPanelsWidth] = useState(0)
 
   const providerValue = useMemo(
     () => ({
