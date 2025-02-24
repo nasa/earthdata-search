@@ -33,21 +33,23 @@ const MapEvents = (props) => {
     const controlContainer = map._controlContainer
 
     const overlaysContainer = controlContainer.querySelector('.leaflet-control-layers-overlays')
+    let placeLabelsControls = []
+
     if (overlaysContainer) {
       const overlayControls = overlaysContainer.querySelectorAll('label')
-      overlayControls.forEach((control) => {
-        if (control.textContent.includes('Place Labels')) {
-          const checkbox = control.querySelector('input')
-          if (checkbox) {
-            checkbox.disabled = true
+      placeLabelsControls = Array.from(overlayControls).filter((control) => control.textContent.includes('Place Labels'))
 
-            const { style } = control
-            style.opacity = '0.5'
-            style.cursor = 'not-allowed'
+      placeLabelsControls.forEach((control) => {
+        const checkbox = control.querySelector('input')
+        if (checkbox) {
+          checkbox.disabled = true
 
-            control.addEventListener('mouseover', handleMouseOver)
-            control.addEventListener('mouseout', handleMouseOut)
-          }
+          const { style } = control
+          style.opacity = '0.5'
+          style.cursor = 'not-allowed'
+
+          control.addEventListener('mouseover', handleMouseOver)
+          control.addEventListener('mouseout', handleMouseOut)
         }
       })
     }
@@ -65,15 +67,10 @@ const MapEvents = (props) => {
 
     // Return cleanup function to remove event listeners when component unmounts
     return () => {
-      if (overlaysContainer) {
-        const overlayControls = overlaysContainer.querySelectorAll('label')
-        overlayControls.forEach((control) => {
-          if (control.textContent.includes('Place Labels')) {
-            control.removeEventListener('mouseover', handleMouseOver)
-            control.removeEventListener('mouseout', handleMouseOut)
-          }
-        })
-      }
+      placeLabelsControls.forEach((control) => {
+        control.removeEventListener('mouseover', handleMouseOver)
+        control.removeEventListener('mouseout', handleMouseOut)
+      })
     }
   })
 
