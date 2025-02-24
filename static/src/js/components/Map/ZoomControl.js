@@ -1,3 +1,6 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 import Zoom from 'ol/control/Zoom'
 import EventType from 'ol/events/EventType'
 
@@ -6,16 +9,21 @@ import EventType from 'ol/events/EventType'
  */
 class ZoomControl extends Zoom {
   constructor(options) {
-    console.log('🚀 ~ ZoomControl.js:6 ~ ZoomControl ~ constructor ~ options:', options)
     super(options)
 
     this.options = options
+    const {
+      homeLocation,
+      PlusIcon,
+      MinusIcon,
+      HomeIcon
+    } = options
 
     // `homeLocation` is an object with the following properties:
     // - center: The center of the map to zoom to
     // - zoom: The zoom level to zoom to
     // - rotation: The rotation of the map to zoom to
-    this.homeLocation = options.homeLocation
+    this.homeLocation = homeLocation
 
     // Create the home button
     const homeElement = document.createElement('button')
@@ -24,9 +32,10 @@ class ZoomControl extends Zoom {
     homeElement.title = 'Zoom Home'
 
     // Create the icon to show on the button
-    const homeIcon = document.createElement('i')
-    homeIcon.className = 'fa fa-home'
-    homeElement.appendChild(homeIcon)
+    ReactDOM.render(
+      HomeIcon,
+      homeElement
+    )
 
     // Add the click event to the home button
     homeElement.addEventListener(
@@ -39,16 +48,16 @@ class ZoomControl extends Zoom {
     const { firstChild, lastChild } = element
 
     // Replace the plus character with an icon
-    const plusIcon = document.createElement('i')
-    // TODO use HDS Icon
-    plusIcon.className = 'fa fa-plus'
-    firstChild.replaceChildren(plusIcon)
+    ReactDOM.render(
+      PlusIcon,
+      firstChild
+    )
 
     // Replace the minus character with an icon
-    const minusIcon = document.createElement('i')
-    // TODO use HDS Icon
-    minusIcon.className = 'fa fa-minus'
-    lastChild.replaceChildren(minusIcon)
+    ReactDOM.render(
+      MinusIcon,
+      lastChild
+    )
 
     // Add the home button to the control bewteen the plus and minus buttons
     element.insertBefore(homeElement, lastChild)
