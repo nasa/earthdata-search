@@ -33,17 +33,11 @@ const worldImageryLayer = worldImagery({
   projectionCode: projections.geographic
 })
 
-// Build the placeLabels layers for each projection
-const placeLabelsLayers = {}
-const promises = Object.keys(crsProjections).map(async (projectionCode) => {
-  const layer = await labelsLayer({
-    attributions: esriAttribution,
-    projectionCode
-  })
-
-  placeLabelsLayers[projectionCode] = layer
+// Build the placeLabels layer
+const placeLabelsLayer = await labelsLayer({
+  attributions: esriAttribution,
+  projectionCode: projections.geographic
 })
-await Promise.all(promises)
 
 // Create a view for the map. This will change when the padding needs to be updated
 const createView = ({
@@ -129,7 +123,7 @@ const Map = ({
       ],
       layers: [
         worldImageryLayer,
-        placeLabelsLayers[projections.geographic]
+        placeLabelsLayer
       ],
       target: mapElRef.current,
       view: createView({

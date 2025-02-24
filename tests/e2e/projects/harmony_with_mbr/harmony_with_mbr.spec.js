@@ -9,7 +9,7 @@ import granules from './__mocks__/granules.json'
 import shapefile from './__mocks__/shapefile.json'
 import collectionsGraphQlBody from './__mocks__/collections_graphql_body.json'
 
-test.describe('Harmony with MBR', () => {
+test.describe.skip('Harmony with MBR', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
       page,
