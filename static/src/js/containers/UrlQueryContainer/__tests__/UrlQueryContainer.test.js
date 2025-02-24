@@ -9,6 +9,7 @@ import {
   UrlQueryContainer
 } from '../UrlQueryContainer'
 import * as encodeUrlQuery from '../../../util/url/url'
+import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -118,6 +119,7 @@ describe('mapStateToProps', () => {
           hasGranulesOrCwic: false,
           keyword: '',
           overrideTemporal: {},
+          sortKey: [collectionSortKeys.usageDescending],
           spatial: {
             boundingBox: [],
             circle: [],
@@ -179,6 +181,7 @@ describe('mapStateToProps', () => {
           hasGranulesOrCwic: false,
           keyword: '',
           overrideTemporal: {},
+          sortKey: ['-usage_score'],
           spatial: {
             boundingBox: [],
             circle: [],
@@ -193,6 +196,130 @@ describe('mapStateToProps', () => {
       scienceKeywordFacets: [],
       selectedFeatures: [],
       shapefileId: '',
+      sortOrder: null,
+      tagKey: '',
+      temporalSearch: {},
+      twoDCoordinateSystemNameFacets: [],
+      timelineQuery: {}
+    }
+
+    expect(mapStateToProps(store)).toEqual(expectedState)
+  })
+
+  test('returns the correct state when using collectionSortKeys.endDateDescending', () => {
+    const store = {
+      advancedSearch: {},
+      autocomplete: {
+        selected: []
+      },
+      earthdataEnvironment: 'prod',
+      facetsParams: {
+        cmr: {
+          granule_data_format_h: [],
+          horizontal_data_resolution_range: [],
+          instrument_h: [],
+          data_center_h: [],
+          platforms_h: [],
+          processing_level_id_h: [],
+          project_h: [],
+          science_keywords_h: [],
+          two_d_coordinate_system_name: []
+        },
+        feature: {}
+      },
+      focusedCollection: 'collectionId',
+      focusedGranule: 'granuleIdId',
+      map: {},
+      metadata: {
+        collections: {}
+      },
+      portal: {
+        portalId: 'edsc'
+      },
+      project: {},
+      query: {
+        collection: {
+          hasGranulesOrCwic: false,
+          keyword: '',
+          overrideTemporal: {},
+          sortKey: [collectionSortKeys.endDateDescending],
+          spatial: {
+            boundingBox: [],
+            circle: [],
+            line: [],
+            point: [],
+            polygon: []
+          },
+          tagKey: '',
+          temporal: {}
+        }
+      },
+      router: {
+        location: {
+          pathname: ''
+        }
+      },
+      shapefile: {
+        selectedFeatures: [],
+        shapefileId: ''
+      },
+      timeline: {
+        query: {}
+      }
+    }
+
+    const expectedState = {
+      advancedSearch: {},
+      autocompleteSelected: [],
+      boundingBoxSearch: [],
+      circleSearch: [],
+      collectionsMetadata: {},
+      earthdataEnvironment: 'prod',
+      featureFacets: {},
+      focusedCollection: 'collectionId',
+      focusedGranule: 'granuleIdId',
+      granuleDataFormatFacets: [],
+      hasGranulesOrCwic: false,
+      horizontalDataResolutionRangeFacets: [],
+      instrumentFacets: [],
+      keywordSearch: '',
+      lineSearch: [],
+      location: {
+        pathname: ''
+      },
+      map: {},
+      mapPreferences: {},
+      organizationFacets: [],
+      overrideTemporalSearch: {},
+      pathname: '',
+      platformFacets: [],
+      pointSearch: [],
+      polygonSearch: [],
+      portalId: 'edsc',
+      processingLevelFacets: [],
+      project: {},
+      projectFacets: [],
+      query: {
+        collection: {
+          hasGranulesOrCwic: false,
+          keyword: '',
+          overrideTemporal: {},
+          sortKey: [collectionSortKeys.endDateDescending],
+          spatial: {
+            boundingBox: [],
+            circle: [],
+            line: [],
+            point: [],
+            polygon: []
+          },
+          tagKey: '',
+          temporal: {}
+        }
+      },
+      scienceKeywordFacets: [],
+      selectedFeatures: [],
+      shapefileId: '',
+      sortOrder: collectionSortKeys.endDateDescending,
       tagKey: '',
       temporalSearch: {},
       twoDCoordinateSystemNameFacets: [],
