@@ -120,7 +120,7 @@ const MapEvents = (props) => {
       {
         (tooltipProps) => (
           <Tooltip id="disabled-tooltip" {...tooltipProps}>
-            The place labels layer is temporarily unavailable for maintenance.
+            The Place Labels layer is temporarily unavailable for maintenance.
             We expect it to be restored by April and appreciate your patience!
           </Tooltip>
         )
