@@ -1,5 +1,6 @@
 import React from 'react'
-import { render, fireEvent } from '@testing-library/react'
+import { render, act } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { useMap } from 'react-leaflet'
 import MapEvents from '../MapEvents'
 
@@ -51,16 +52,23 @@ describe('MapEvents', () => {
     useMap.mockReturnValue(mockMap)
   })
 
-  test('tooltip renders only when moused over', () => {
+  test('tooltip renders only when moused over', async () => {
+    const user = userEvent.setup()
     const { queryByText } = render(<MapEvents {...defaultProps} />)
 
     // eslint-disable-next-line no-underscore-dangle
     const placeLabelsControl = mockMap._controlContainer.querySelector('label')
 
-    fireEvent.mouseOver(placeLabelsControl)
+    await act(async () => {
+      await user.hover(placeLabelsControl)
+    })
+
     expect(queryByText('This layer is currently disabled.')).toBeInTheDocument()
 
-    fireEvent.mouseOut(placeLabelsControl)
+    await act(async () => {
+      await user.unhover(placeLabelsControl)
+    })
+
     expect(queryByText('This layer is currently disabled.')).not.toBeInTheDocument()
   })
 })
