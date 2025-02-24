@@ -31,7 +31,6 @@ const MapEvents = (props) => {
   useLayoutEffect(() => {
     // eslint-disable-next-line no-underscore-dangle
     const controlContainer = map._controlContainer
-    if (!controlContainer) return
 
     const overlaysContainer = controlContainer.querySelector('.leaflet-control-layers-overlays')
     if (overlaysContainer) {
@@ -62,6 +61,19 @@ const MapEvents = (props) => {
       attributionElement.classList.add('leaflet-control-layers-attribution')
       attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       layersControl.appendChild(attributionElement)
+    }
+
+    // Return cleanup function to remove event listeners when component unmounts
+    return () => {
+      if (overlaysContainer) {
+        const overlayControls = overlaysContainer.querySelectorAll('label')
+        overlayControls.forEach((control) => {
+          if (control.textContent.includes('Place Labels')) {
+            control.removeEventListener('mouseover', handleMouseOver)
+            control.removeEventListener('mouseout', handleMouseOut)
+          }
+        })
+      }
     }
   })
 
