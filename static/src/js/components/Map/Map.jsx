@@ -11,10 +11,10 @@ import ScaleLine from 'ol/control/ScaleLine'
 import Attribution from 'ol/control/Attribution'
 import { transform } from 'ol/proj'
 
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import { Plus, Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaHome } from 'react-icons/fa'
 
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ZoomControl from './ZoomControl'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
