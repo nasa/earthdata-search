@@ -10,6 +10,7 @@ import {
 } from '../UrlQueryContainer'
 import * as encodeUrlQuery from '../../../util/url/url'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -83,6 +84,12 @@ describe('mapDispatchToProps', () => {
 })
 
 describe('mapStateToProps', () => {
+  beforeEach(() => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+    }))
+  })
+
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
