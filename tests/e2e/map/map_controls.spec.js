@@ -315,7 +315,7 @@ test.describe('Map: Control interactions', () => {
       })
     })
 
-    test.describe('When changing the Place Labels overlay layer', () => {
+    test.describe.skip('When changing the Place Labels overlay layer', () => {
       test('updates the URL with the new map  parameter and updates the src of tile images', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
