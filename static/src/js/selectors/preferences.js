@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect'
-import { collectionSortKeys } from '../constants/collectionSortKeys'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+
+const { collectionSearchResultsSortKey } = getApplicationConfig()
 
 /**
  * Retrieve all preferences from Redux
@@ -61,5 +63,5 @@ export const getNondefaultCollectionSortKey = (state) => {
   const { collection } = query
   const { sortKey } = collection
 
-  return sortKey[0] !== collectionSortKeys.usageDescending ? sortKey[0] : null
+  return sortKey[0] !== collectionSearchResultsSortKey ? sortKey[0] : null
 }
