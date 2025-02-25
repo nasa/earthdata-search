@@ -5,6 +5,7 @@ import {
   getNondefaultCollectionSortKey
 } from '../preferences'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
+import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
 describe('getMapPreferences selector', () => {
   test('returns the map preferences', () => {
@@ -80,6 +81,12 @@ describe('getGranuleSortPreference selector', () => {
 })
 
 describe('getNondefaultCollectionSortKey', () => {
+  beforeEach(() => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+    }))
+  })
+
   test('returns null when the sortKey is the default value of collectionSortKeys.usageDescending', () => {
     const state = {
       query: {
