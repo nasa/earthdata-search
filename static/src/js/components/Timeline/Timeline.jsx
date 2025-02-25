@@ -81,16 +81,19 @@ export const Timeline = ({
   }, [collectionMetadata, isProjectPage, projectCollectionsIds, collectionConceptId])
 
   useEffect(() => {
-    if (!isInitialSetup) return
+    if (!isInitialSetup) {
+      // This resize event moves the leaflet controls above the EDSCTimeline component after it is rendered intially.
+      window.dispatchEvent(new Event('resize'))
+      return
+    }
 
     // If we have metadata, calculate the appropriate zoom and center
     if (isMetadataLoaded) {
       const { initialCenter: newCenter, zoomLevel: numericZoom } = calculateTimelineParams({
-        propsCenter,
-        collectionMetadata,
-        collectionConceptId,
         isProjectPage,
         projectCollectionsIds,
+        collectionMetadata,
+        collectionConceptId,
         currentDate
       })
 

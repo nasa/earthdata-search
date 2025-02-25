@@ -13,28 +13,6 @@ export const timelineIntervals = {
   decade: '5'
 }
 
-/**
- * Return the minimum timeline interval that can encompass the collection data
- * @param {String} startDate - The start date
- * @param {String} endDate - The end date
- * @returns {String} - The minimum interval
- */
-export const timelineMidpoint = (startDate, endDate) => {
-  const date1 = new Date(startDate)
-  const date2 = new Date(endDate)
-
-  const milliseconds1 = date1.getTime()
-  const milliseconds2 = date2.getTime()
-  // Calculate the midpoint in milliseconds
-  const midpointMilliseconds = (milliseconds1 + milliseconds2) / 2
-
-  // Create a new date object from the midpoint milliseconds
-  const midpointDate = new Date(midpointMilliseconds)
-  const midpointDatereturn = midpointDate.getTime()
-
-  return midpointDatereturn
-}
-
 export const timelineZoomEnums = {
   decade: 'decade',
   year: 'year',
@@ -57,18 +35,12 @@ export const intervalDurationMappings = {
  * @returns {String} - The zoom level
  */
 export const zoomLevelDifference = (startDate, endDate) => {
-  let date2
-  if (!endDate) {
-    date2 = new Date().getTime()
-  } else {
-    date2 = new Date(endDate)
-  }
-
-  const date1 = new Date(startDate)
+  const endDateInterval = endDate ? new Date(endDate) : new Date()
+  const startDateInterval = new Date(startDate)
 
   const intervalDuration = intervalToDuration({
-    start: date1,
-    end: date2
+    start: startDateInterval,
+    end: endDateInterval
   })
 
   const diff = {
@@ -76,24 +48,12 @@ export const zoomLevelDifference = (startDate, endDate) => {
     ...intervalDuration
   }
 
-  // Determine the minimal time range to hold the data collection extent
-  if (diff.years < 1) {
-    if (diff.months < 1) {
-      if (diff.days < 1) {
-        return timelineZoomEnums.hour
-      }
+  if (diff.years >= 10) return timelineZoomEnums.decade
+  if (diff.years >= 1) return timelineZoomEnums.year
+  if (diff.months >= 1) return timelineZoomEnums.month
+  if (diff.days >= 1) return timelineZoomEnums.day
 
-      return timelineZoomEnums.day
-    }
-
-    return timelineZoomEnums.month
-  }
-
-  if (diff.years < 10) {
-    return timelineZoomEnums.year
-  }
-
-  return timelineZoomEnums.decade
+  return timelineZoomEnums.hour
 }
 
 /**
@@ -194,10 +154,8 @@ export const calculateTimelineParams = ({
 
     projectCollectionsIds.forEach((conceptId) => {
       const metadata = collectionMetadata[conceptId]
-      if (!metadata?.timeStart) return
-
-      startDates.push(new Date(metadata.timeStart).getTime())
-      endDates.push(metadata.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate)
+      startDates.push(metadata?.timeStart ? new Date(metadata.timeStart).getTime() : currentDate - (24 * 60 * 60 * 1000))
+      endDates.push(metadata?.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate)
     })
 
     if (startDates.length && endDates.length) {
@@ -206,10 +164,8 @@ export const calculateTimelineParams = ({
     }
   } else {
     const metadata = collectionMetadata[collectionConceptId]
-    if (metadata?.timeStart) {
-      timeStart = new Date(metadata.timeStart).getTime()
-      timeEnd = metadata.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate
-    }
+    timeStart = metadata?.timeStart ? new Date(metadata.timeStart).getTime() : currentDate - (24 * 60 * 60 * 1000)
+    timeEnd = metadata?.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate
   }
 
   let calculatedInterval
@@ -218,9 +174,9 @@ export const calculateTimelineParams = ({
   }
 
   return {
-    zoomLevel: parseInt(timelineIntervals[calculatedInterval], 10) ?? 2,
+    zoomLevel: parseInt(timelineIntervals[calculatedInterval], 10) ?? 5,
     initialCenter: timeStart && timeEnd
-      ? timelineMidpoint(timeStart, timeEnd)
+      ? (timeStart + timeEnd) / 2
       : currentDate
   }
 }
