@@ -49,10 +49,10 @@ export const updateStore = ({
   const { location } = router
   const { pathname } = location
   const { collection } = query
-  const { sortOrder } = collection
+  const { collectionSortKey } = collection
 
   // Use sortOrder if defined
-  const collectionSortPreference = sortOrder || getCollectionSortPreference(state)
+  const collectionSortPreference = collectionSortKey || getCollectionSortPreference(state)
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (

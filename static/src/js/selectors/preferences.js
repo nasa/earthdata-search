@@ -57,11 +57,12 @@ export const getGranuleSortPreference = createSelector(
  * @param {Object} state Current state of Redux
  */
 export const getNondefaultCollectionSortKey = (state) => {
-  const { collectionSearchResultsSortKey } = getApplicationConfig()
+  const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
 
   const { query } = state
   const { collection } = query
   const { sortKey } = collection
+  const [collectionSortKey] = sortKey
 
-  return sortKey[0] !== collectionSearchResultsSortKey ? sortKey[0] : null
+  return collectionSortKey !== defaultSortKey ? collectionSortKey : null
 }
