@@ -38,6 +38,10 @@
       width: 100%;
     }
 
+    .leaflet-control {
+      z-index: 1;
+    }
+
     .leaflet-control.leaflet-control-zoom {
       margin-bottom: 55px;
 
@@ -77,6 +81,7 @@
       bottom: 0;
       right: 0px;
       position: absolute;
+      z-index: 5;
     }
 
     // Reduce the font size on the scale elements
