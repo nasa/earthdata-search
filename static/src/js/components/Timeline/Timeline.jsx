@@ -84,6 +84,7 @@ export const Timeline = ({
     if (!isInitialSetup) {
       // This resize event moves the leaflet controls above the EDSCTimeline component after it is rendered intially.
       window.dispatchEvent(new Event('resize'))
+
       return
     }
 
@@ -110,7 +111,6 @@ export const Timeline = ({
 
   useEffect(() => {
     if (containerRef.current) {
-      // TODO this might be what causes that console error
       const { height: elementHeight } = containerRef.current.getBoundingClientRect()
 
       // If the current height of the element is different than the previous render,
@@ -171,6 +171,15 @@ export const Timeline = ({
       window.removeEventListener('keyup', onWindowKeyup)
     }
   }, [isOpen, isProjectPage])
+
+  // Sets up event listener for keyup event
+  useEffect(() => {
+    window.addEventListener('keyup', onWindowKeyup)
+
+    return () => {
+      window.removeEventListener('keyup', onWindowKeyup)
+    }
+  }, [])
 
   // Metrics methods
   const handleArrowKeyPan = () => onMetricsTimeline('Left/Right Arrow Pan')
@@ -325,7 +334,7 @@ export const Timeline = ({
       })
     }
 
-    // Ensure we render the Timeline on the granules page, even if it has not been added to the project
+    // Ensure we render the Timeline on the focused collection view, even if it has not been added to the project
     if (!isProjectPage) {
       Object.keys(intervals).forEach((conceptId, index) => {
         if (!collectionMetadata[conceptId]) return
