@@ -100,7 +100,7 @@ describe('updateStore', () => {
           pageNum: 1,
           spatial: {},
           temporal: {},
-          sortOrder: [collectionSortKeys.scoreDescending]
+          collectionSortKey: [collectionSortKeys.scoreDescending]
         }
       },
       shapefile: {}
