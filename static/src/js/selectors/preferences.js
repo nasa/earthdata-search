@@ -1,8 +1,6 @@
 import { createSelector } from 'reselect'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
-const { collectionSearchResultsSortKey } = getApplicationConfig()
-
 /**
  * Retrieve all preferences from Redux
  * @param {Object} state Current state of Redux
@@ -59,6 +57,8 @@ export const getGranuleSortPreference = createSelector(
  * @param {Object} state Current state of Redux
  */
 export const getNondefaultCollectionSortKey = (state) => {
+  const { collectionSearchResultsSortKey } = getApplicationConfig()
+
   const { query } = state
   const { collection } = query
   const { sortKey } = collection
