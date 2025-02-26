@@ -23,8 +23,13 @@ proj4.defs(
 register(proj4)
 
 const epsg4326 = get('EPSG:4326')
+epsg4326.setExtent([-180, -90, 180, 90])
+
 const epsg3413 = get('EPSG:3413')
+epsg3413.setExtent([-4194304, -4194304, 4194304, 4194304])
+
 const epsg3031 = get('EPSG:3031')
+epsg3031.setExtent([-4194304, -4194304, 4194304, 4194304])
 
 export const crsProjections = {
   epsg4326,
@@ -36,25 +41,22 @@ export const projectionConfigs = {
   epsg4326: {
     center: [0, 0],
     enableRotation: false,
-    extent: [-250, -90, 250, 90],
     maxZoom: 21,
-    minZoom: 0,
+    minZoom: 1,
     zoom: 2
   },
   epsg3413: {
     center: [0, 90],
     enableRotation: true,
-    extent: [-4194304, -4194304, 4194304, 4194304],
-    maxZoom: 7,
-    minZoom: 2,
+    maxZoom: 12,
+    minZoom: 0,
     zoom: 2
   },
   epsg3031: {
     center: [0, -90],
     enableRotation: true,
-    extent: [-4194304, -4194304, 4194304, 4194304],
-    maxZoom: 7,
-    minZoom: 2,
+    maxZoom: 12,
+    minZoom: 0,
     zoom: 2
   }
 }

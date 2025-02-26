@@ -1,6 +1,7 @@
 @use '../../../css/utils';
 
 .edsc-map-zoom,
+.edsc-map-projection-switcher,
 .edsc-map-scale-imperial,
 .edsc-map-scale-metric {
   position: absolute;
@@ -27,6 +28,32 @@
   bottom: 92px;
 }
 
+.edsc-map-projection-switcher {
+  bottom: 200px;
+
+  &__button {
+    background-image: url('~Images/projection-sprite.png');
+    background-size: 90px 30px;
+    background-repeat: no-repeat;
+
+    &--arctic {
+      background-position: -57px -1px;
+    }
+
+    &--geo {
+      background-position: -29px -1px;
+    }
+
+    &--antarctic {
+      background-position: -1px -1px;
+    }
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      background-image: url('~Images/projection-sprite@2x.png');
+    }
+  }
+}
+
 .ol-attribution {
   font-family: Avenir Next W00, Helvetica Neue, Helvetica, Arial, sans-serif;
   color: #323232;
@@ -36,8 +63,8 @@
 
 .ol-control {
   button {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: 1.75rem;
+    height: 1.75rem;
     background-color: none;
     border: none;
   }

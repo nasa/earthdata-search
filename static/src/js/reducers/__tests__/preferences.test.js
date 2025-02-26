@@ -15,7 +15,8 @@ const initialState = {
       overlayLayers: [
         'referenceFeatures',
         'referenceLabels'
-      ]
+      ],
+      rotation: 0
     }
   },
   isSubmitting: false,

@@ -1,3 +1,4 @@
+import camelcaseKeys from 'camelcase-keys'
 import {
   ADD_ACCESS_METHODS,
   ADD_COLLECTION_TO_PROJECT,
@@ -32,6 +33,7 @@ const initialState = {
 export const initialGranuleState = {
   addedGranuleIds: [],
   allIds: [],
+  byId: {},
   hits: 0,
   isErrored: false,
   isLoaded: false,
@@ -44,14 +46,19 @@ export const initialGranuleState = {
 
 const processResults = (results) => {
   const allIds = []
+  const byId = {}
 
   results.forEach((result) => {
     const { id } = result
 
     allIds.push(id)
+    byId[id] = camelcaseKeys(result)
   })
 
-  return allIds
+  return {
+    allIds,
+    byId
+  }
 }
 
 const projectReducer = (state = initialState, action = {}) => {
@@ -221,7 +228,10 @@ const projectReducer = (state = initialState, action = {}) => {
         results
       } = action.payload
 
-      const newIds = processResults(results)
+      const {
+        allIds: newAllIds,
+        byId: newById
+      } = processResults(results)
 
       const { collections: projectCollections = {} } = state
       const {
@@ -237,7 +247,7 @@ const projectReducer = (state = initialState, action = {}) => {
 
       const { [collectionId]: projectCollection = {} } = projectCollectionsById
       const { granules: projectCollectionGranules } = projectCollection
-      const { allIds = [] } = projectCollectionGranules
+      const { allIds = [], byId = {} } = projectCollectionGranules
 
       return {
         ...state,
@@ -251,8 +261,12 @@ const projectReducer = (state = initialState, action = {}) => {
                 ...projectCollectionGranules,
                 allIds: [
                   ...allIds,
-                  ...newIds
-                ]
+                  ...newAllIds
+                ],
+                byId: {
+                  ...byId,
+                  ...newById
+                }
               }
             }
           }
@@ -270,7 +284,10 @@ const projectReducer = (state = initialState, action = {}) => {
         singleGranuleSize
       } = action.payload
 
-      const allIds = processResults(results)
+      const {
+        allIds,
+        byId
+      } = processResults(results)
 
       const { collections: projectCollections = {} } = state
       const {
@@ -298,6 +315,7 @@ const projectReducer = (state = initialState, action = {}) => {
               granules: {
                 ...projectCollectionGranules,
                 allIds,
+                byId,
                 hits,
                 isOpenSearch,
                 totalSize,

@@ -16,6 +16,7 @@ const initialState = {
     referenceLabels: true
   },
   projection: projections.geographic,
+  rotation: 0,
   zoom: 2
 }
 
@@ -43,6 +44,7 @@ describe('UPDATE_MAP', () => {
         referenceLabels: true
       },
       projection: projections.geographic,
+      rotation: 0,
       zoom: 2
     }
     const action = {
@@ -72,6 +74,7 @@ describe('RESTORE_FROM_URL', () => {
         referenceLabels: true
       },
       projection: projections.geographic,
+      rotation: 0,
       zoom: 2
     }
 

@@ -30,10 +30,11 @@ import { getMapPreferences } from '../../selectors/preferences'
 import { isPath } from '../../util/isPath'
 import { locationPropType } from '../../util/propTypes/location'
 import projections from '../../util/map/projections'
+import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
-import '../../util/map/sphericalPolygon'
+// import '../../util/map/sphericalPolygon'
 
-import 'leaflet/dist/leaflet.css'
+// import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 
 // import MapWrapper from './MapWrapper'
@@ -119,6 +120,7 @@ export const MapContainer = (props) => {
     longitude,
     overlays,
     projection: propsProjection,
+    rotation,
     zoom: zoomProps
   } = map
 
@@ -206,34 +208,24 @@ export const MapContainer = (props) => {
     })
   }
 
-  const handleProjectionSwitching = useCallback((newProjection) => {
+  const handleProjectionSwitching = useCallback((newProjectionCode) => {
     const {
       onChangeMap: callbackOnChangeMap,
       onMetricsMap: callbackOnMetricsMap
     } = props
 
     const Projection = Object.keys(projections).find(((key) => (
-      projections[key] === newProjection
+      projections[key] === newProjectionCode
     )))
 
-    let newLatitude = 0
-    const newLongitude = 0
-    let newZoom = 2
-
-    if (newProjection === projections.arctic) {
-      newLatitude = 90
-      newZoom = 0
-    }
-
-    if (newProjection === projections.antarctic) {
-      newLatitude = -90
-      newZoom = 0
-    }
+    const projectionConfig = projectionConfigs[newProjectionCode]
+    const [newLongitude, newLatitude] = projectionConfig.center
+    const newZoom = projectionConfig.zoom
 
     const newMap = {
       latitude: newLatitude,
       longitude: newLongitude,
-      projection: newProjection,
+      projection: newProjectionCode,
       zoom: newZoom
     }
 
@@ -243,7 +235,7 @@ export const MapContainer = (props) => {
     })
 
     setZoom(newZoom)
-    setProjection(newProjection)
+    setProjection(newProjectionCode)
 
     callbackOnMetricsMap(`Set Projection: ${Projection}`)
     callbackOnChangeMap({ ...newMap })
@@ -299,10 +291,10 @@ export const MapContainer = (props) => {
     <Map
       center={center}
       projectionCode={projection}
-      // projectionCode={projections.arctic}
-      // projectionCode={projections.antarctic}
+      rotation={rotation}
       zoom={zoom}
       onChangeMap={onChangeMap}
+      onChangeProjection={handleProjectionSwitching}
     />
   )
 }

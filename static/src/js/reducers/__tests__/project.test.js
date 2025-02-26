@@ -948,7 +948,12 @@ describe('ADD_MORE_PROJECT_GRANULE_RESULTS', () => {
           collectionId: {
             granules: {
               ...initialGranuleState,
-              allIds: ['granuleId1']
+              allIds: ['granuleId1'],
+              byId: {
+                granuleId1: {
+                  id: 'granuleId1'
+                }
+              }
             }
           }
         }
@@ -963,7 +968,15 @@ describe('ADD_MORE_PROJECT_GRANULE_RESULTS', () => {
           collectionId: {
             granules: {
               ...initialGranuleState,
-              allIds: ['granuleId1', 'granuleId2']
+              allIds: ['granuleId1', 'granuleId2'],
+              byId: {
+                granuleId1: {
+                  id: 'granuleId1'
+                },
+                granuleId2: {
+                  id: 'granuleId2'
+                }
+              }
             }
           }
         }
@@ -1015,6 +1028,11 @@ describe('UPDATE_PROJECT_GRANULE_RESULTS', () => {
             granules: {
               ...initialGranuleState,
               allIds: ['granuleId'],
+              byId: {
+                granuleId: {
+                  id: 'granuleId'
+                }
+              },
               isOpenSearch: false,
               hits: 1,
               totalSize: {
