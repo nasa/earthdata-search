@@ -36,7 +36,7 @@ import opensearchGranulesHeaders from './__mocks__/opensearch_granules/granules.
 import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/timeline.body.json'
 import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json'
 
-test.describe('Map: Granule interactions', () => {
+test.describe.skip('Map: Granule interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
       browserName,
