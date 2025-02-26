@@ -57,6 +57,12 @@ export const Timeline = ({
     })
   }, [onChangeTimelineQuery])
 
+  // When pathname is changed, we want redo the initial setup
+  useEffect(() => {
+    setIsMetadataLoaded(false)
+    setIsInitialSetup(true)
+  }, [pathname])
+
   useEffect(() => {
     const checkMetadataLoaded = () => {
       if (!collectionMetadata) return
