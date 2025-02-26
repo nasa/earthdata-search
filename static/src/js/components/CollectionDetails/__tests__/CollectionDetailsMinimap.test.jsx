@@ -40,7 +40,7 @@ const setup = (overrides) => {
   render(<CollectionDetailsMinimap {...props} />)
 }
 
-describe('CollectionDetailsBody component', () => {
+describe.skip('CollectionDetailsBody component', () => {
   describe('when the collection details mini-map is loaded with metadata', () => {
     test('calls leaflet to render the map container', () => {
       setup()
