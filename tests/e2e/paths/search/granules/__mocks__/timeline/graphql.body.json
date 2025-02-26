@@ -398,11 +398,14 @@
           "precisionOfSeconds": 4,
           "rangeDateTimes": [
             {
-              "beginningDateTime": "2002-07-04T00:00:00.000Z"
+              "beginningDateTime": "2015-01-01T00:00:00.000Z",
+              "endingDateTime": "2015-01-15T00:00:00.000Z"
             }
           ]
         }
       ],
+      "timeStart": "2015-01-01T00:00:00.000Z",
+      "timeEnd": "2015-01-15T00:00:00.000Z",
       "tilingIdentificationSystems": [
         {
           "coordinate1": {
