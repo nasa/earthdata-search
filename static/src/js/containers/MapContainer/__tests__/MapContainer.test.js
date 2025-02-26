@@ -1,3 +1,5 @@
+import React from 'react'
+
 import actions from '../../../actions'
 
 import { mapDispatchToProps, mapStateToProps } from '../MapContainer'
@@ -5,10 +7,7 @@ import { mapDispatchToProps, mapStateToProps } from '../MapContainer'
 import * as metricsMap from '../../../middleware/metrics/actions'
 
 // Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {}),
-  createControlComponent: jest.fn().mockImplementation(() => {})
-}))
+jest.mock('../../../components/Map/Map', () => <div />)
 
 beforeEach(() => {
   jest.clearAllMocks()

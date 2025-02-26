@@ -73,6 +73,7 @@ export default defineConfig({
     }
   },
   build: {
+    target: 'esnext',
     outDir: 'static/dist'
   },
   // TODO: vitest is currently blocked by enzyme removal ticket EDSC-4201

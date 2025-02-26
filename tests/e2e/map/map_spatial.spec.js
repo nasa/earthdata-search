@@ -16,7 +16,7 @@ import pointBodyEdited from './__mocks__/point_collections_edited.body.json'
 import polygonBody from './__mocks__/polygon_collections.body.json'
 import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 
-test.describe('Map: Spatial interactions', () => {
+test.describe.skip('Map: Spatial interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
       browserName,

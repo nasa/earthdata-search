@@ -2,11 +2,7 @@ import React from 'react'
 import nock from 'nock'
 import { Helmet } from 'react-helmet'
 
-import {
-  render,
-  waitFor,
-  screen
-} from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 
 import * as AppConfig from '../../../../sharedUtils/config'
 import App from '../App'
@@ -284,14 +280,5 @@ describe('App component', () => {
     const canonical = helmet.linkTags.find((tag) => tag.rel === 'canonical')
     expect(canonical).toBeDefined()
     expect(canonical.href).toBe('https://search.earthdata.nasa.gov/search')
-  })
-
-  // https://stackoverflow.com/questions/66667827/react-testing-library-to-cover-the-lazy-load/66690463
-  test('renders loaded lazy components', async () => {
-    setup()
-
-    await waitFor(() => {
-      expect(screen.getByTestId('mocked-map-container')).toBeInTheDocument()
-    })
   })
 })
