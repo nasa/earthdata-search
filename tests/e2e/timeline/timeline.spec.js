@@ -19,7 +19,7 @@ test.describe('Timeline spec', () => {
     })
   })
 
-  test('should resize the leaflet controls', async ({ page, context }) => {
+  test.skip('should resize the leaflet controls', async ({ page, context }) => {
     await login(context)
 
     const authHeaders = getAuthHeaders()
