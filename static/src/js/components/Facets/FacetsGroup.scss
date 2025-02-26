@@ -12,6 +12,7 @@
   &__title {
     flex-grow: 0;
     flex-shrink: 1;
+    min-width: 0;
     text-overflow: ellipsis;
     overflow: hidden;
   }
@@ -21,6 +22,7 @@
     flex-grow: 1;
     align-items: center;
     justify-content: flex-start;
+    min-width: 0;
     flex-shrink: 1;
     flex-wrap: nowrap;
     text-overflow: ellipsis;
