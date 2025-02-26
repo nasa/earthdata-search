@@ -1,5 +1,9 @@
+/* eslint-disable */
+// TODO I'm just disabling eslint here because I want to leave the existing code in place as reference
+
 import React, {
   useCallback,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState
@@ -32,7 +36,8 @@ import '../../util/map/sphericalPolygon'
 import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 
-import MapWrapper from './MapWrapper'
+// import MapWrapper from './MapWrapper'
+import Map from '../../components/Map/Map'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -104,6 +109,7 @@ export const MapContainer = (props) => {
     '/search/granules',
     '/search/granules/collection-details'
   ])
+  // TODO EDSC-4418 need to be sure URL values override preferences (broken in prod)
   const [map, setMap] = useState(mapProps)
   const imageryCache = useRef(LRUCache(400))
 
@@ -117,7 +123,10 @@ export const MapContainer = (props) => {
   } = map
 
   const [projection, setProjection] = useState(propsProjection)
-  const [center, setCenter] = useState([latitude, longitude])
+  const [center, setCenter] = useState({
+    latitude,
+    longitude
+  })
   const [zoom, setZoom] = useState(zoomProps)
 
   useLayoutEffect(() => {
@@ -162,7 +171,11 @@ export const MapContainer = (props) => {
 
     if (isEqual(map, mapWithDefaults)) return
 
-    setCenter([defaultLatitude, defaultLongitude])
+    setCenter({
+      latitude: defaultLatitude,
+      longitude: defaultLongitude
+    })
+
     setZoom(defaultZoom)
     setProjection(defaultProjection)
 
@@ -224,7 +237,11 @@ export const MapContainer = (props) => {
       zoom: newZoom
     }
 
-    setCenter([newLatitude, newLongitude])
+    setCenter({
+      latitude: newLatitude,
+      longitude: newLongitude
+    })
+
     setZoom(newZoom)
     setProjection(newProjection)
 
@@ -235,39 +252,57 @@ export const MapContainer = (props) => {
   // Projection switching in leaflet is not supported. Here we render MapWrapper with a key of the projection prop.
   // So when the projection is changed in ProjectionSwitcher this causes the map to unmount and remount a new instance,
   // which creates the illusion of 'changing' the projection
+  // return (
+  //   <MapWrapper
+  //     key={projection}
+  //     authToken={authToken}
+  //     base={base}
+  //     center={center}
+  //     collectionsMetadata={collectionsMetadata}
+  //     colormapsMetadata={colormapsMetadata}
+  //     drawingNewLayer={drawingNewLayer}
+  //     focusedCollectionId={focusedCollectionId}
+  //     focusedGranuleId={focusedGranuleId}
+  //     granules={nonExcludedGranules}
+  //     granulesMetadata={granulesMetadata}
+  //     imageryCache={imageryCache.current}
+  //     isFocusedCollectionPage={isFocusedCollectionPage}
+  //     isProjectPage={isProjectPage}
+  //     mapProps={mapProps}
+  //     maxZoom={maxZoom}
+  //     onChangeFocusedGranule={onChangeFocusedGranule}
+  //     onChangeMap={onChangeMap}
+  //     onChangeProjection={handleProjectionSwitching}
+  //     onExcludeGranule={onExcludeGranule}
+  //     onFetchShapefile={onFetchShapefile}
+  //     onMetricsMap={onMetricsMap}
+  //     onSaveShapefile={onSaveShapefile}
+  //     onShapefileErrored={onShapefileErrored}
+  //     onToggleTooManyPointsModal={onToggleTooManyPointsModal}
+  //     onUpdateShapefile={onUpdateShapefile}
+  //     overlays={overlays}
+  //     project={project}
+  //     projection={projection}
+  //     shapefile={shapefile}
+  //     zoom={zoom}
+  //   />
+  // )
+
+  // const [leftPadding, setLeftPadding] = useState(500)
+
+  // useEffect(() => {
+  //   // TODO come up with this value based on panel width
+  //   setLeftPadding(leftPadding + 100)
+  // }, [zoom])
+
   return (
-    <MapWrapper
-      key={projection}
-      authToken={authToken}
-      base={base}
+    <Map
       center={center}
-      collectionsMetadata={collectionsMetadata}
-      colormapsMetadata={colormapsMetadata}
-      drawingNewLayer={drawingNewLayer}
-      focusedCollectionId={focusedCollectionId}
-      focusedGranuleId={focusedGranuleId}
-      granules={nonExcludedGranules}
-      granulesMetadata={granulesMetadata}
-      imageryCache={imageryCache.current}
-      isFocusedCollectionPage={isFocusedCollectionPage}
-      isProjectPage={isProjectPage}
-      mapProps={mapProps}
-      maxZoom={maxZoom}
-      onChangeFocusedGranule={onChangeFocusedGranule}
-      onChangeMap={onChangeMap}
-      onChangeProjection={handleProjectionSwitching}
-      onExcludeGranule={onExcludeGranule}
-      onFetchShapefile={onFetchShapefile}
-      onMetricsMap={onMetricsMap}
-      onSaveShapefile={onSaveShapefile}
-      onShapefileErrored={onShapefileErrored}
-      onToggleTooManyPointsModal={onToggleTooManyPointsModal}
-      onUpdateShapefile={onUpdateShapefile}
-      overlays={overlays}
-      project={project}
-      projection={projection}
-      shapefile={shapefile}
+      projectionCode={projection}
+      // projectionCode={projections.arctic}
+      // projectionCode={projections.antarctic}
       zoom={zoom}
+      onChangeMap={onChangeMap}
     />
   )
 }

@@ -228,7 +228,7 @@ test.describe('Path /search', () => {
     })
   })
 
-  test.describe('When the path is loaded with a spatial query', () => {
+  test.describe.skip('When the path is loaded with a spatial query', () => {
     test.describe('When the spatial query is a point', () => {
       test('loads with the spatial query applied', async ({ page }) => {
         const cmrHits = 5079

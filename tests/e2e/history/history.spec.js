@@ -86,6 +86,12 @@ test.describe('History', () => {
       }
     })
 
+    await page.route(/saved_access_configs/, async (route) => {
+      await route.fulfill({
+        json: {}
+      })
+    })
+
     await login(context)
 
     await page.goto('/')
