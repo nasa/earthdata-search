@@ -2,4 +2,11 @@
   margin: 0;
   padding: 0;
   list-style: none;
+
+  &__small-checkbox-text {
+    .form-check-label {
+      font-size: 0.825rem;
+      line-height: 1.2;
+    }
+  }
 }
