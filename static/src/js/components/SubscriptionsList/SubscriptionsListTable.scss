@@ -13,6 +13,11 @@
 
   &__actions {
     text-align: center;
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   &__name,

@@ -26,6 +26,10 @@
     margin-right: calc(bootstrap.$spacer / 2);
   }
 
+  .btn-close {
+    z-index: 0;
+  }
+
   .modal-content {
     position: relative;
     padding: 0.55rem;
