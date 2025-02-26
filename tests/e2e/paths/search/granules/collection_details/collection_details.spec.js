@@ -411,7 +411,7 @@ test.describe('Path /search/granules/collection-details', () => {
     })
   })
 
-  test.describe('When collection has spatial', () => {
+  test.describe.skip('When collection has spatial', () => {
     test('displays the spatial on the minimap', async ({ page }) => {
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180

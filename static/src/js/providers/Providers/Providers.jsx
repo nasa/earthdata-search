@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import TourContextProvider from '../TourContextProvider/TourContextProvider'
+import PanelWidthContextProvider from '../PanelWidthContextProvider/PanelWidthContextProvider'
 
 /**
  * @typedef {Object} ProvidersProps
@@ -21,7 +22,8 @@ import TourContextProvider from '../TourContextProvider/TourContextProvider'
  */
 const Providers = ({ children }) => {
   const providers = [
-    <TourContextProvider key="provider_tour-context-provider" />
+    <TourContextProvider key="provider_tour-context-provider" />,
+    <PanelWidthContextProvider key="provider_panel-width-context-provider" />
   ]
 
   // Combine the Providers into a single Provider component
