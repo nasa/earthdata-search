@@ -164,8 +164,13 @@ export const calculateTimelineParams = ({
     }
   } else {
     const metadata = collectionMetadata[collectionConceptId]
-    timeStart = metadata?.timeStart ? new Date(metadata.timeStart).getTime() : currentDate - (24 * 60 * 60 * 1000)
-    timeEnd = metadata?.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate
+    timeStart = metadata?.timeStart
+      ? new Date(metadata.timeStart).getTime()
+      : currentDate - (24 * 60 * 60 * 1000)
+
+    timeEnd = metadata?.timeEnd
+      ? new Date(metadata.timeEnd).getTime()
+      : currentDate
   }
 
   let calculatedInterval
@@ -174,7 +179,9 @@ export const calculateTimelineParams = ({
   }
 
   return {
-    zoomLevel: parseInt(timelineIntervals[calculatedInterval], 10) ?? 5,
+    zoomLevel: timelineIntervals[calculatedInterval]
+      ? parseInt(timelineIntervals[calculatedInterval], 10)
+      : 5,
     initialCenter: timeStart && timeEnd
       ? (timeStart + timeEnd) / 2
       : currentDate
