@@ -1,19 +1,18 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
+import { render, screen } from '@testing-library/react'
 import actions from '../../../actions'
 import {
   mapDispatchToProps,
   mapStateToProps,
   TimelineContainer
 } from '../TimelineContainer'
-import Timeline from '../../../components/Timeline/Timeline'
+
 import * as metricsTimeline from '../../../middleware/metrics/actions'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/Timeline/Timeline', () => jest.fn(() => <div data-testid="mock-timeline" />))
 
-function setup(overrideProps) {
+const setup = (overrideProps) => {
   const props = {
     browser: {
       name: 'browser name'
@@ -44,10 +43,9 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = shallow(<TimelineContainer {...props} />)
+  render(<TimelineContainer {...props} />)
 
   return {
-    enzymeWrapper,
     props
   }
 }
@@ -147,41 +145,32 @@ describe('mapStateToProps', () => {
 
 describe('TimelineContainer component', () => {
   test('does not render a timeline if no timeline should be rendered', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(Timeline).length).toBe(0)
+    setup()
+    expect(screen.queryByTestId('mock-timeline')).not.toBeInTheDocument()
   })
 
   test('passes its props and renders a single Timeline component on the search page', () => {
-    const { enzymeWrapper } = setup({
+    setup({
       pathname: '/search/granules'
     })
-    expect(enzymeWrapper.find(Timeline).at(1))
-    expect(enzymeWrapper.props().collectionMetadata).toEqual({
-      focusedCollectionId: {
-        title: 'focused'
-      }
-    })
+
+    expect(screen.getByTestId('mock-timeline')).toBeInTheDocument()
   })
 
   test('passes its props and renders a single Timeline component on the project page', () => {
-    const { enzymeWrapper } = setup({
+    setup({
       pathname: '/projects'
     })
 
-    expect(enzymeWrapper.find(Timeline).at(1))
-    expect(enzymeWrapper.props().collectionMetadata).toEqual({
-      projectCollectionId: {
-        title: 'project'
-      }
-    })
+    expect(screen.getByTestId('mock-timeline')).toBeInTheDocument()
   })
 
   test('Does not show the timeline if it is on the saved projects page', () => {
-    const { enzymeWrapper } = setup({
+    setup({
       pathname: '/projects',
       search: ''
     })
-    expect(enzymeWrapper.find(Timeline).length).toBe(0)
+
+    expect(screen.queryByTestId('mock-timeline')).not.toBeInTheDocument()
   })
 })

@@ -1,3 +1,4 @@
+import { intervalToDuration } from 'date-fns'
 import getObjectKeyByValue from './object'
 
 /**
@@ -10,6 +11,49 @@ export const timelineIntervals = {
   month: '3',
   year: '4',
   decade: '5'
+}
+
+export const timelineZoomEnums = {
+  decade: 'decade',
+  year: 'year',
+  month: 'month',
+  day: 'day',
+  hour: 'hour'
+}
+
+export const intervalDurationMappings = {
+  years: 0,
+  months: 0,
+  days: 0,
+  hours: 0
+}
+
+/**
+ * Determine the zoom level for the timeline based on the difference between the start and end dates
+ * @param {String} startDate - The start date
+ * @param {String} endDate - The end date
+ * @returns {String} - The zoom level
+ */
+export const zoomLevelDifference = (startDate, endDate) => {
+  const endDateInterval = endDate ? new Date(endDate) : new Date()
+  const startDateInterval = new Date(startDate)
+
+  const intervalDuration = intervalToDuration({
+    start: startDateInterval,
+    end: endDateInterval
+  })
+
+  const diff = {
+    ...intervalDurationMappings,
+    ...intervalDuration
+  }
+
+  if (diff.years >= 10) return timelineZoomEnums.decade
+  if (diff.years >= 1) return timelineZoomEnums.year
+  if (diff.months >= 1) return timelineZoomEnums.month
+  if (diff.days >= 1) return timelineZoomEnums.day
+
+  return timelineZoomEnums.hour
 }
 
 /**
@@ -82,5 +126,64 @@ export const prepareTimelineParams = (state) => {
     point,
     polygon,
     startDate
+  }
+}
+
+/**
+ * Calculate the zoom level and initial center for the timeline based on collection metadata
+ * @param {Object} collectionMetadata - The metadata for the collections
+ * @param {String} collectionConceptId - The concept id of the collection
+ * @param {Boolean} isProjectPage - Whether or not the page is a project page
+ * @param {Array} projectCollectionsIds - The concept ids of the collections in the project
+ * @param {Date} currentDate - The current date
+ * @returns {Object} - Object containing zoomLevel and initialCenter
+ */
+export const calculateTimelineParams = ({
+  isProjectPage,
+  projectCollectionsIds,
+  collectionMetadata,
+  collectionConceptId,
+  currentDate
+}) => {
+  let timeStart
+  let timeEnd
+
+  if (isProjectPage && projectCollectionsIds.length > 0) {
+    const startDates = []
+    const endDates = []
+
+    projectCollectionsIds.forEach((conceptId) => {
+      const metadata = collectionMetadata[conceptId]
+      startDates.push(metadata?.timeStart ? new Date(metadata.timeStart).getTime() : currentDate - (24 * 60 * 60 * 1000))
+      endDates.push(metadata?.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate)
+    })
+
+    if (startDates.length && endDates.length) {
+      timeStart = Math.min(...startDates)
+      timeEnd = Math.max(...endDates)
+    }
+  } else {
+    const metadata = collectionMetadata[collectionConceptId]
+    timeStart = metadata?.timeStart
+      ? new Date(metadata.timeStart).getTime()
+      : currentDate - (24 * 60 * 60 * 1000)
+
+    timeEnd = metadata?.timeEnd
+      ? new Date(metadata.timeEnd).getTime()
+      : currentDate
+  }
+
+  let calculatedInterval
+  if (timeStart && timeEnd) {
+    calculatedInterval = zoomLevelDifference(timeStart, timeEnd)
+  }
+
+  return {
+    zoomLevel: timelineIntervals[calculatedInterval]
+      ? parseInt(timelineIntervals[calculatedInterval], 10)
+      : 5,
+    initialCenter: timeStart && timeEnd
+      ? (timeStart + timeEnd) / 2
+      : currentDate
   }
 }
