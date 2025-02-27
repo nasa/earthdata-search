@@ -49,14 +49,6 @@ export const Timeline = ({
   const containerRef = useRef()
   const previousHeight = useRef(0)
 
-  // Clear interval and center on unmount
-  useEffect(() => () => {
-    onChangeTimelineQuery({
-      center: undefined,
-      interval: undefined
-    })
-  }, [onChangeTimelineQuery])
-
   // When pathname is changed, we want redo the initial setup
   useEffect(() => {
     setIsMetadataLoaded(false)
