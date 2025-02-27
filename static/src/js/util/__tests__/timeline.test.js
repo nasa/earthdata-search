@@ -1,7 +1,7 @@
 import { calculateTimelineParams } from '../timeline'
 
 describe('calculateTimelineParams', () => {
-  const currentDate = new Date().getTime()
+  const currentDate = 1740668355337 // Thu Feb 27 2025 14:59:15.337
 
   test('should handle project page with multiple collections', () => {
     const props = {
