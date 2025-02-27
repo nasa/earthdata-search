@@ -26,9 +26,7 @@ function setup(overrideProps) {
     temporalSearch: {},
     timeline: {
       intervals: {},
-      query: {
-        center: 1609495200000
-      }
+      query: {}
     },
     showOverrideModal: false,
     pathname: '/search/granules',
@@ -533,9 +531,12 @@ describe('handle toggleTimeline', () => {
     test('close timeline by pressing t', () => {
       const { props } = setup()
 
+      const timelineSection = screen.getByRole('region', { name: 'Timeline' })
+      expect(timelineSection).not.toHaveClass('timeline--is-hidden')
+
       windowEventMap.keyup({
         key: 't',
-        tagName: 'BODY',
+        tagName: 'body',
         type: 'keyup',
         preventDefault: jest.fn(),
         stopPropagation: jest.fn()
@@ -550,9 +551,12 @@ describe('handle toggleTimeline', () => {
         isOpen: false
       })
 
+      const timelineSection = screen.getByRole('region', { name: 'Timeline' })
+      expect(timelineSection).toHaveClass('timeline--is-hidden')
+
       windowEventMap.keyup({
         key: 't',
-        tagName: 'BODY',
+        tagName: 'body',
         type: 'keyup',
         preventDefault: jest.fn(),
         stopPropagation: jest.fn()
@@ -593,7 +597,7 @@ describe('handle toggleTimeline', () => {
 
       windowEventMap.keyup({
         key: 't',
-        tagName: 'BODY',
+        tagName: 'body',
         type: 'keyup',
         preventDefault: jest.fn(),
         stopPropagation: jest.fn()
@@ -609,7 +613,7 @@ describe('handle toggleTimeline', () => {
 
       windowEventMap.keyup({
         key: 't',
-        tagName: 'BODY',
+        tagName: 'body',
         type: 'keyup',
         preventDefault: jest.fn(),
         stopPropagation: jest.fn()
