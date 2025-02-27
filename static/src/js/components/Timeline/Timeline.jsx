@@ -33,57 +33,41 @@ export const Timeline = ({
   temporalSearch,
   timeline
 }) => {
-  const { query } = timeline
-
   const currentDate = new Date().getTime()
-  const topLevelKeys = Object.keys(collectionMetadata)
-  const collectionConceptId = topLevelKeys[0]
-  const { center: propsCenter } = query
+  const collectionConceptId = Object.keys(collectionMetadata)[0]
   const isProjectPage = pathname.indexOf('projects') > -1
   const [isMetadataLoaded, setIsMetadataLoaded] = useState(false)
   const [isInitialSetup, setIsInitialSetup] = useState(true)
   const [zoomLevel, setZoomLevel] = useState(5)
-  const [center, setCenter] = useState(propsCenter || currentDate)
+  const [center, setCenter] = useState(currentDate)
 
   // Refs for tracking the timer container and the previous height so we can trigger a resize event
   const containerRef = useRef()
   const previousHeight = useRef(0)
 
-  // Clear interval and center on unmount
-  useEffect(() => () => {
-    onChangeTimelineQuery({
-      center: undefined,
-      interval: undefined
-    })
-  }, [onChangeTimelineQuery])
-
-  // When pathname is changed, we want redo the initial setup
+  // When pathname has changed, we want redo the initial setup
   useEffect(() => {
     setIsMetadataLoaded(false)
     setIsInitialSetup(true)
   }, [pathname])
 
   useEffect(() => {
-    const checkMetadataLoaded = () => {
-      if (!collectionMetadata) return
-      if (isMetadataLoaded) return
+    if (!collectionMetadata) return
+    if (isMetadataLoaded) return
 
-      if (isProjectPage) {
-        // Check if all project collections have metadata
-        const hasAllMetadata = projectCollectionsIds.every((conceptId) => {
-          const metadata = collectionMetadata[conceptId]
+    if (isProjectPage) {
+      // Check if all project collections have metadata
+      const hasAllMetadata = projectCollectionsIds.every((conceptId) => {
+        const metadata = collectionMetadata[conceptId]
 
-          return metadata?.timeStart
-        })
-        setIsMetadataLoaded(hasAllMetadata)
-      } else {
-        // Check if single collection has metadata
-        const metadata = collectionMetadata[collectionConceptId]
-        setIsMetadataLoaded(!!metadata?.timeStart)
-      }
+        return metadata?.timeStart
+      })
+      setIsMetadataLoaded(hasAllMetadata)
+    } else {
+      // Check if single collection has metadata
+      const metadata = collectionMetadata[collectionConceptId]
+      setIsMetadataLoaded(!!metadata?.timeStart)
     }
-
-    checkMetadataLoaded()
   }, [collectionMetadata, isProjectPage, projectCollectionsIds, collectionConceptId])
 
   useEffect(() => {
@@ -206,7 +190,6 @@ export const Timeline = ({
     timelineStart
   }) => {
     if (!timelineEnd && !timelineStart) return
-    if (!isMetadataLoaded) return
 
     const endDate = new Date(timelineEnd)
     const startDate = new Date(timelineStart)
@@ -387,7 +370,6 @@ export const Timeline = ({
   const setupTemporal = ({ endDate, startDate }) => {
     if (!endDate && !startDate) return {}
 
-    // Initialize earliest and latest dates
     let end = new Date().getTime()
     let start = new Date(earliestStart).getTime()
 
@@ -410,7 +392,7 @@ export const Timeline = ({
   ])
 
   return (
-    <section ref={containerRef} className={timelineClasses}>
+    <section ref={containerRef} className={timelineClasses} aria-label="Timeline">
       {
         hideTimeline && (
           <Button

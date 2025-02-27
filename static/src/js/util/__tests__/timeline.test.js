@@ -1,7 +1,9 @@
 import { calculateTimelineParams } from '../timeline'
 
 describe('calculateTimelineParams', () => {
-  const currentDate = new Date().getTime()
+  // This util function takes this value as a prop, it doesn't call Date.now() directly
+  // so it's safe to mock it like this
+  const currentDate = 1740668355337 // Thu Feb 27 2025 14:59:15.337
 
   test('should handle project page with multiple collections', () => {
     const props = {
