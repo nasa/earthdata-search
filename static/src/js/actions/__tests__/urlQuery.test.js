@@ -127,7 +127,7 @@ describe('updateStore', () => {
         ...params,
         query: {
           ...params.query,
-          collectionSortPreference: [collectionSortKeys.scoreDescending]
+          collectionSortPreference: 'default'
         }
       },
       type: RESTORE_FROM_URL

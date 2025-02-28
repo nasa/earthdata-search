@@ -50,7 +50,7 @@ export const getGranuleSortPreference = createSelector(
 
 /**
  * Retrieve the collection sort key from Redux
- * If set to the default of usage, return null
+ * If set to the default, return null
  * This function is used for inserting the sortKey
  * into the URL query parameters when a user selects
  * a different collection sorting key.
@@ -62,7 +62,7 @@ export const getNondefaultCollectionSortKey = (state) => {
   const { query } = state
   const { collection } = query
   const { sortKey } = collection
-  const [collectionSortKey] = sortKey
+  const [sortKeyElement] = sortKey
 
-  return collectionSortKey !== defaultSortKey ? collectionSortKey : null
+  return sortKeyElement !== defaultSortKey ? sortKeyElement : null
 }

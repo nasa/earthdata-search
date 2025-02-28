@@ -55,7 +55,7 @@ export const mapStateToProps = (state) => ({
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
   selectedFeatures: state.shapefile.selectedFeatures,
   shapefileId: state.shapefile.shapefileId,
-  collectionSortKey: getNondefaultCollectionSortKey(state),
+  paramCollectionSortKey: getNondefaultCollectionSortKey(state),
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
   twoDCoordinateSystemNameFacets: state.facetsParams.cmr.two_d_coordinate_system_name,
