@@ -15,6 +15,7 @@ const initialState = {
     referenceLabels: true
   },
   projection: projections.geographic,
+  rotation: 0,
   zoom: 2
 }
 
