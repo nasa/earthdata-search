@@ -900,7 +900,9 @@ test.describe('Path /search/granules', () => {
     })
   })
 
-  test.describe('When the path is loaded with timeline parameters', () => {
+  // TODO: We will be adding support back in, in ticket EDSC-4428, for saving and loading timeline url state per collection
+  // when touched by the user(scroll, zoom, etc.)
+  test.describe.skip('When the path is loaded with timeline parameters', () => {
     test('loads with the timeline in the correct position', async ({ page }) => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 317

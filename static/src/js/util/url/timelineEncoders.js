@@ -43,8 +43,8 @@ export const decodeTimeline = (params) => {
   if (!timeline) return undefined
 
   const [center, intervalNum, start, end] = timeline.split('!')
-
-  const interval = getObjectKeyByValue(timelineIntervals, intervalNum)
+  const parsedIntervalNum = parseInt(intervalNum, 10)
+  const interval = getObjectKeyByValue(timelineIntervals, parsedIntervalNum)
   const query = {
     center: parseInt(center, 10) * 1000 || undefined,
     end: parseInt(end, 10) * 1000 || undefined,
