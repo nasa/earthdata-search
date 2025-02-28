@@ -412,7 +412,7 @@ export const Timeline = ({
 
       <div className="timeline__container">
         {
-          !isProjectPage && (
+          !isProjectPage && isMetadataLoaded && !isInitialSetup && (
             <Button
               className="timeline__toggle-button timeline__toggle-button--close"
               type="button"
