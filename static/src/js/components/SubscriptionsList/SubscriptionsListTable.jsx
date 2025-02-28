@@ -93,7 +93,7 @@ export const SubscriptionsListTable = ({
                     {moment.utc(revisionDate).format('YYYY-MM-DD HH:mm:ss')}
                   </td>
                   <td className="subscriptions-list-table__actions">
-                    <div>
+                    <div className="actions-container">
                       <OverlayTrigger
                         placement="top"
                         overlay={
