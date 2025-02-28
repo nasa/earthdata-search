@@ -21,7 +21,7 @@ import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { isLoggedIn } from '../../util/isLoggedIn'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
-import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
@@ -180,10 +180,18 @@ class SearchPanels extends PureComponent {
 
     const {
       pageNum: collectionsPageNum = 1,
-      sortKey: collectionsSortKey = collectionSortKeys.scoreDescending
+      paramCollectionSortKey: urlCollectionsSortKey
     } = collectionQuery
 
-    const [activeCollectionsSortKey = collectionSortKeys.scoreDescending] = collectionsSortKey
+    const { collectionSort: userPrefCollectionSortKey } = preferences
+
+    const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
+
+    // Translate 'default' to proper sort key if needed
+    const userPrefCollSortKey = (userPrefCollectionSortKey !== 'default' ? userPrefCollectionSortKey : defaultSortKey)
+
+    // Use the url parameter sort key if present, else use user preferences sort key, else use the default sort key
+    const activeCollectionsSortKey = urlCollectionsSortKey || userPrefCollSortKey || defaultSortKey
 
     const {
       allIds: collectionAllIds,
@@ -284,9 +292,12 @@ class SearchPanels extends PureComponent {
 
     const setCollectionSort = (value) => {
       const sortKey = [value]
+      const paramCollectionSortKey = value
+      console.log(`setCollectionSort: ${sortKey}`)
       onChangeQuery({
         collection: {
-          sortKey
+          sortKey,
+          paramCollectionSortKey
         }
       })
 
@@ -863,7 +874,8 @@ SearchPanels.propTypes = {
     pageNum: PropTypes.number,
     sortKey: PropTypes.arrayOf(
       PropTypes.string
-    )
+    ),
+    paramCollectionSortKey: PropTypes.string
   }).isRequired,
   collectionsSearch: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),
@@ -916,6 +928,7 @@ SearchPanels.propTypes = {
     pageTitle: PropTypes.string
   }).isRequired,
   preferences: PropTypes.shape({
+    collectionSort: PropTypes.string,
     collectionListView: PropTypes.node,
     granuleListView: PropTypes.node,
     panelState: PropTypes.string
