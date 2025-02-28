@@ -349,7 +349,7 @@ test.describe('When not logged in', () => {
       left: -10,
       top: 189,
       width: 338,
-      height: 742
+      height: 720
     }, 10, 6)
 
     // Step 7: Refine Search by Category

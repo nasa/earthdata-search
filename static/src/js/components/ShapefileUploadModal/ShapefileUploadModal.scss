@@ -42,6 +42,7 @@
       border-radius: bootstrap.$border-radius-sm;
       z-index: 0;
       transition: all 0.2s ease-in-out;
+      pointer-events: none;
 
       .is-dragging & {
         border: 2px dashed utils.$color__carbon--40;

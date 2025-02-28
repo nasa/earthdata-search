@@ -93,7 +93,7 @@ export const SubscriptionsListTable = ({
                     {moment.utc(revisionDate).format('YYYY-MM-DD HH:mm:ss')}
                   </td>
                   <td className="subscriptions-list-table__actions">
-                    <div>
+                    <div className="actions-container">
                       <OverlayTrigger
                         placement="top"
                         overlay={
@@ -113,7 +113,7 @@ export const SubscriptionsListTable = ({
                           )
                         }
                       >
-                        <EDSCIcon icon={AlertInformation} className="subscriptions-list__button" />
+                        <EDSCIcon icon={AlertInformation} className="subscriptions-list__button align-middle" />
                       </OverlayTrigger>
                       <PortalLinkContainer
                         className="subscriptions-list__button subscriptions-list__button--edit"
