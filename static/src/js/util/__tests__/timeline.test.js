@@ -1,4 +1,4 @@
-import { calculateTimelineParams } from '../timeline'
+import { calculateTimelineParams, timelineIntervals } from '../timeline'
 
 describe('calculateTimelineParams', () => {
   // This util function takes this value as a prop, it doesn't call Date.now() directly
@@ -28,7 +28,7 @@ describe('calculateTimelineParams', () => {
     const expectedEnd = new Date(props.collectionMetadata['C100002-EDSC'].timeEnd).getTime()
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: 5,
+      zoomLevel: timelineIntervals.decade,
       initialCenter: (expectedStart + expectedEnd) / 2
     })
   })
@@ -50,7 +50,7 @@ describe('calculateTimelineParams', () => {
     const expectedEnd = new Date(props.collectionMetadata['C100000-EDSC'].timeEnd).getTime()
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: 3,
+      zoomLevel: timelineIntervals.month,
       initialCenter: (expectedStart + expectedEnd) / 2
     })
   })
@@ -71,7 +71,7 @@ describe('calculateTimelineParams', () => {
     const expectedEnd = currentDate
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: 4,
+      zoomLevel: timelineIntervals.year,
       initialCenter: (expectedStart + expectedEnd) / 2
     })
   })
@@ -85,7 +85,7 @@ describe('calculateTimelineParams', () => {
     }
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: 2,
+      zoomLevel: timelineIntervals.day,
       initialCenter: (currentDate + currentDate - (24 * 60 * 60 * 1000)) / 2
     })
   })
@@ -104,7 +104,7 @@ describe('calculateTimelineParams', () => {
     }
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: 2,
+      zoomLevel: timelineIntervals.day,
       initialCenter: (currentDate + currentDate - (24 * 60 * 60 * 1000)) / 2
     })
   })

@@ -5,20 +5,12 @@ import getObjectKeyByValue from './object'
  * Mapping of timeline zoom levels. The Timeline (sometimes) and URL use numbers, CMR uses words
  */
 export const timelineIntervals = {
-  minute: '0',
-  hour: '1',
-  day: '2',
-  month: '3',
-  year: '4',
-  decade: '5'
-}
-
-export const timelineZoomEnums = {
-  decade: 'decade',
-  year: 'year',
-  month: 'month',
-  day: 'day',
-  hour: 'hour'
+  minute: 0,
+  hour: 1,
+  day: 2,
+  month: 3,
+  year: 4,
+  decade: 5
 }
 
 export const intervalDurationMappings = {
@@ -48,12 +40,12 @@ export const zoomLevelDifference = (startDate, endDate) => {
     ...intervalDuration
   }
 
-  if (diff.years >= 10) return timelineZoomEnums.decade
-  if (diff.years >= 1) return timelineZoomEnums.year
-  if (diff.months >= 1) return timelineZoomEnums.month
-  if (diff.days >= 1) return timelineZoomEnums.day
+  if (diff.years >= 10) return 'decade'
+  if (diff.years >= 1) return 'year'
+  if (diff.months >= 1) return 'month'
+  if (diff.days >= 1) return 'day'
 
-  return timelineZoomEnums.hour
+  return 'hour'
 }
 
 /**
@@ -110,8 +102,8 @@ export const prepareTimelineParams = (state) => {
   let { interval } = timelineQuery
   // Use one level lower than current interval when requesting timeline from CMR
   // I.e., request day intervals when viewing the timeline at the month level
-  const index = parseInt(timelineIntervals[interval], 10)
-  interval = getObjectKeyByValue(timelineIntervals, (index - 1).toString())
+  const index = timelineIntervals[interval]
+  interval = getObjectKeyByValue(timelineIntervals, (index - 1))
 
   if (!startDate) {
     return null
@@ -154,8 +146,13 @@ export const calculateTimelineParams = ({
 
     projectCollectionsIds.forEach((conceptId) => {
       const metadata = collectionMetadata[conceptId]
-      startDates.push(metadata?.timeStart ? new Date(metadata.timeStart).getTime() : currentDate - (24 * 60 * 60 * 1000))
-      endDates.push(metadata?.timeEnd ? new Date(metadata.timeEnd).getTime() : currentDate)
+      startDates.push(metadata?.timeStart
+        ? new Date(metadata.timeStart).getTime()
+        : currentDate - (24 * 60 * 60 * 1000))
+
+      endDates.push(metadata?.timeEnd
+        ? new Date(metadata.timeEnd).getTime()
+        : currentDate)
     })
 
     if (startDates.length && endDates.length) {
@@ -180,8 +177,8 @@ export const calculateTimelineParams = ({
 
   return {
     zoomLevel: timelineIntervals[calculatedInterval]
-      ? parseInt(timelineIntervals[calculatedInterval], 10)
-      : 5,
+      ? timelineIntervals[calculatedInterval]
+      : timelineIntervals.decade,
     initialCenter: timeStart && timeEnd
       ? (timeStart + timeEnd) / 2
       : currentDate

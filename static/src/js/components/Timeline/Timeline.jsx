@@ -94,7 +94,7 @@ export const Timeline = ({
       onChangeTimelineQuery({
         ...timeline.query,
         center: newCenter,
-        interval: getObjectKeyByValue(timelineIntervals, numericZoom.toString())
+        interval: getObjectKeyByValue(timelineIntervals, numericZoom)
       })
     }
   }, [isMetadataLoaded, isInitialSetup])
@@ -197,7 +197,7 @@ export const Timeline = ({
     const newQuery = {
       center: newCenter,
       endDate: endDate.toISOString(),
-      interval: getObjectKeyByValue(timelineIntervals, zoom.toString()),
+      interval: getObjectKeyByValue(timelineIntervals, zoom),
       startDate: startDate.toISOString()
     }
 

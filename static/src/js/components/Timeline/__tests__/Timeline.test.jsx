@@ -1,17 +1,21 @@
+// We directly invoke EDSCTimeline callbacks in this test suite rather than using userEvents
+// from testing-library to interact with the EDSCTimeline component. This approach
+// allows us to focus on testing our Timeline component's behavior rather than the
+// underlying third-party EDSCTimeline component functionality.
+
 import React from 'react'
 import {
   render,
   screen,
-  fireEvent,
   act
 } from '@testing-library/react'
 import MockDate from 'mockdate'
 import EDSCTimeline from '@edsc/timeline'
+import userEvent from '@testing-library/user-event'
 import Timeline from '../Timeline'
 
-const windowEventMap = {}
-
 function setup(overrideProps) {
+  const user = userEvent.setup()
   const props = {
     browser: {
       name: 'browser name'
@@ -43,7 +47,8 @@ function setup(overrideProps) {
   render(<Timeline {...props} />)
 
   return {
-    props
+    props,
+    user
   }
 }
 
@@ -52,12 +57,9 @@ jest.mock('@edsc/timeline', () => jest.fn(() => <div data-testid="mock-timeline"
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
-  window.addEventListener = jest.fn((event, cb) => {
-    windowEventMap[event] = cb
-  })
 
-  window.removeEventListener = jest.fn()
-
+  // MockDate is used here to overwrite the js Date object. This allows us to
+  // mock changes needed to test the moment functions
   MockDate.set('2021-01-01T10:00:00.000Z')
 })
 
@@ -68,15 +70,16 @@ afterEach(() => {
 describe('Timeline component', () => {
   test('should render an EDSCTimeline component with the correct props', () => {
     setup()
-    const timelineProps = EDSCTimeline.mock.calls[0][0]
-    expect(timelineProps.center).toEqual(1609416000000)
-    expect(timelineProps.zoom).toEqual(4)
-    expect(timelineProps.minZoom).toEqual(1)
-    expect(timelineProps.maxZoom).toEqual(5)
-    expect(timelineProps.zoom).toEqual(4)
-    expect(timelineProps.data).toEqual([])
-    expect(timelineProps.focusedInterval).toEqual({})
-    expect(timelineProps.temporalRange).toEqual({})
+    expect(EDSCTimeline).toHaveBeenCalledTimes(1)
+    expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
+      center: 1609416000000,
+      zoom: 4,
+      minZoom: 1,
+      maxZoom: 5,
+      data: [],
+      focusedInterval: {},
+      temporalRange: {}
+    }), {})
   })
 
   test('calls onToggleOverrideTemporalModal on page load if spatial and focus both exist', async () => {
@@ -152,13 +155,14 @@ describe('Timeline component', () => {
       }
     })
 
-    const timelineProps = EDSCTimeline.mock.calls[0][0]
-    expect(timelineProps.data).toEqual([{
-      color: '#2ECC71',
-      id: 'collectionId',
-      intervals: [[1525132800000, 1618185600000]],
-      title: 'Test Collection'
-    }])
+    expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
+      data: [{
+        color: '#2ECC71',
+        id: 'collectionId',
+        intervals: [[1525132800000, 1618185600000]],
+        title: 'Test Collection'
+      }]
+    }), {})
   })
 
   test('timeline displays on focused collection even when projectCollectionsIds is empty', () => {
@@ -186,15 +190,16 @@ describe('Timeline component', () => {
       }
     })
 
-    const timelineProps = EDSCTimeline.mock.calls[0][0]
-    expect(timelineProps.data).toEqual([
-      {
-        color: '#2ECC71',
-        id: 'someCollection',
-        intervals: [[1525132800000, 1618185600000]],
-        title: 'Some Collection'
-      }
-    ])
+    expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
+      data: [
+        {
+          color: '#2ECC71',
+          id: 'someCollection',
+          intervals: [[1525132800000, 1618185600000]],
+          title: 'Some Collection'
+        }
+      ]
+    }), {})
   })
 
   test('setup data creates the correct intervals in the correct order for EDSCTimeline', () => {
@@ -248,25 +253,26 @@ describe('Timeline component', () => {
       }
     })
 
-    const timelineProps = EDSCTimeline.mock.calls[0][0]
-    expect(timelineProps.data).toEqual([{
-      color: '#2ECC71',
-      id: 'firstCollection',
-      intervals: [[1525132800000, 1618185600000]],
-      title: '1st Collection'
-    },
-    {
-      color: '#3498DB',
-      id: 'secondCollection',
-      intervals: [[1525132800000, 1618185600000]],
-      title: '2nd Collection'
-    },
-    {
-      color: '#E67E22',
-      id: 'thirdCollection',
-      intervals: [[1525132800000, 1618185600000]],
-      title: '3rd Collection'
-    }])
+    expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
+      data: [{
+        color: '#2ECC71',
+        id: 'firstCollection',
+        intervals: [[1525132800000, 1618185600000]],
+        title: '1st Collection'
+      },
+      {
+        color: '#3498DB',
+        id: 'secondCollection',
+        intervals: [[1525132800000, 1618185600000]],
+        title: '2nd Collection'
+      },
+      {
+        color: '#E67E22',
+        id: 'thirdCollection',
+        intervals: [[1525132800000, 1618185600000]],
+        title: '3rd Collection'
+      }]
+    }), {})
   })
 })
 
@@ -339,6 +345,7 @@ describe('handleTemporalSet', () => {
     const { props } = setup()
 
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onTemporalSet({})
     })
@@ -370,6 +377,7 @@ describe('handleTemporalSet', () => {
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
+
     act(() => {
       timelineProps.onTemporalSet({
         temporalStart,
@@ -388,6 +396,7 @@ describe('handleTemporalSet', () => {
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
+
     act(() => {
       timelineProps.onTemporalSet({
         temporalStart,
@@ -417,6 +426,7 @@ describe('handleTemporalSet', () => {
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
+
     act(() => {
       timelineProps.onTemporalSet({
         temporalStart,
@@ -434,6 +444,7 @@ describe('handleFocusedSet', () => {
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
+
     act(() => {
       timelineProps.onFocusedSet({
         focusedStart,
@@ -452,6 +463,7 @@ describe('handleFocusedSet', () => {
   test('when focus is removed query is updated', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onFocusedSet({})
     })
@@ -475,6 +487,7 @@ describe('handleFocusedSet', () => {
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
+
     act(() => {
       timelineProps.onFocusedSet({
         focusedStart,
@@ -493,6 +506,7 @@ describe('handleFocusedSet', () => {
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
+
     act(() => {
       timelineProps.onFocusedSet({
         focusedStart,
@@ -515,6 +529,7 @@ describe('handleFocusedSet', () => {
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
+
     act(() => {
       timelineProps.onFocusedSet({
         focusedStart,
@@ -528,61 +543,49 @@ describe('handleFocusedSet', () => {
 
 describe('handle toggleTimeline', () => {
   describe('when not on the project page', () => {
-    test('close timeline by pressing t', () => {
-      const { props } = setup()
+    test('close timeline by pressing t', async () => {
+      const { props, user } = setup()
 
       const timelineSection = screen.getByRole('region', { name: 'Timeline' })
       expect(timelineSection).not.toHaveClass('timeline--is-hidden')
 
-      windowEventMap.keyup({
-        key: 't',
-        tagName: 'body',
-        type: 'keyup',
-        preventDefault: jest.fn(),
-        stopPropagation: jest.fn()
-      })
+      await user.keyboard('{t}')
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
       expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
     })
 
-    test('open timeline by pressing t', () => {
-      const { props } = setup({
+    test('open timeline by pressing t', async () => {
+      const { props, user } = setup({
         isOpen: false
       })
 
       const timelineSection = screen.getByRole('region', { name: 'Timeline' })
       expect(timelineSection).toHaveClass('timeline--is-hidden')
 
-      windowEventMap.keyup({
-        key: 't',
-        tagName: 'body',
-        type: 'keyup',
-        preventDefault: jest.fn(),
-        stopPropagation: jest.fn()
-      })
+      await user.keyboard('{t}')
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
       expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
     })
 
-    test('closes the timeline with the close button', () => {
-      const { props } = setup()
+    test('closes the timeline with the close button', async () => {
+      const { props, user } = setup()
 
       const button = screen.getByLabelText('Hide Timeline')
-      fireEvent.click(button)
+      await user.click(button)
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
       expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
     })
 
-    test('opens the timeline with the open button', () => {
-      const { props } = setup({
+    test('opens the timeline with the open button', async () => {
+      const { props, user } = setup({
         isOpen: false
       })
 
       const button = screen.getByLabelText('Show Timeline')
-      fireEvent.click(button)
+      await user.click(button)
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
       expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
@@ -590,34 +593,22 @@ describe('handle toggleTimeline', () => {
   })
 
   describe('when on the project page', () => {
-    test('does not close timeline by pressing t', () => {
-      const { props } = setup({
+    test('does not close timeline by pressing t', async () => {
+      const { props, user } = setup({
         pathname: '/projects'
       })
 
-      windowEventMap.keyup({
-        key: 't',
-        tagName: 'body',
-        type: 'keyup',
-        preventDefault: jest.fn(),
-        stopPropagation: jest.fn()
-      })
+      await user.keyboard('{t}')
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(0)
     })
 
-    test('does not open timeline by pressing t', () => {
-      const { props } = setup({
+    test('does not open timeline by pressing t', async () => {
+      const { props, user } = setup({
         pathname: '/projects'
       })
 
-      windowEventMap.keyup({
-        key: 't',
-        tagName: 'body',
-        type: 'keyup',
-        preventDefault: jest.fn(),
-        stopPropagation: jest.fn()
-      })
+      await user.keyboard('{t}')
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(0)
     })
@@ -637,6 +628,7 @@ describe('Metrics methods', () => {
   test('oArrowKeyPan calls onMetricsTimeline(\'Left/Right Arrow Pan\')', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onArrowKeyPan({})
     })
@@ -648,6 +640,7 @@ describe('Metrics methods', () => {
   test('onButtonPan calls onMetricsTimeline(\'Button Pan\')', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onButtonPan({})
     })
@@ -659,6 +652,7 @@ describe('Metrics methods', () => {
   test('onButtonZoom calls onMetricsTimeline(\'Button Zoom\')', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onButtonZoom({})
     })
@@ -670,6 +664,7 @@ describe('Metrics methods', () => {
   test('onTemporalSet calls onMetricsTimeline(\'Created Temporal\')', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onTemporalSet({})
     })
@@ -681,6 +676,7 @@ describe('Metrics methods', () => {
   test('onDragPan calls onMetricsTimeline(\'Dragging Pan\')', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onDragPan({})
     })
@@ -692,6 +688,7 @@ describe('Metrics methods', () => {
   test('onFocusedIntervalClick calls onMetricsTimeline(\'Click Label\')', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onFocusedIntervalClick({})
     })
@@ -703,6 +700,7 @@ describe('Metrics methods', () => {
   test('onScrollPan calls onMetricsTimeline(\'Scroll Pan\')', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onScrollPan({})
     })
@@ -714,6 +712,7 @@ describe('Metrics methods', () => {
   test('onScrollZoom calls onMetricsTimeline(\'Scroll Zoom\')', () => {
     const { props } = setup()
     const timelineProps = EDSCTimeline.mock.calls[0][0]
+
     act(() => {
       timelineProps.onScrollZoom({})
     })
