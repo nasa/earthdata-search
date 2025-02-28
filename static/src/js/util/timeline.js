@@ -1,4 +1,3 @@
-import { intervalToDuration } from 'date-fns'
 import getObjectKeyByValue from './object'
 
 /**
@@ -13,13 +12,6 @@ export const timelineIntervals = {
   decade: 5
 }
 
-export const intervalDurationMappings = {
-  years: 0,
-  months: 0,
-  days: 0,
-  hours: 0
-}
-
 /**
  * Determine the zoom level for the timeline based on the difference between the start and end dates
  * @param {String} startDate - The start date
@@ -27,23 +19,23 @@ export const intervalDurationMappings = {
  * @returns {String} - The zoom level
  */
 export const zoomLevelDifference = (startDate, endDate) => {
-  const endDateInterval = endDate ? new Date(endDate) : new Date()
-  const startDateInterval = new Date(startDate)
+  const end = endDate ? new Date(endDate) : new Date()
+  const start = new Date(startDate)
 
-  const intervalDuration = intervalToDuration({
-    start: startDateInterval,
-    end: endDateInterval
-  })
+  // Calculate the time difference in milliseconds
+  const diffMs = end - start
 
-  const diff = {
-    ...intervalDurationMappings,
-    ...intervalDuration
-  }
+  // Convert to various time units
+  const msPerHour = 1000 * 60 * 60
+  const msPerDay = msPerHour * 24
+  const msPerMonth = msPerDay * 30.44 // Average month length
+  const msPerYear = msPerDay * 365.25 // Account for leap years
 
-  if (diff.years >= 10) return 'decade'
-  if (diff.years >= 1) return 'year'
-  if (diff.months >= 1) return 'month'
-  if (diff.days >= 1) return 'day'
+  // Check thresholds and return appropriate zoom level
+  if (diffMs >= msPerYear * 10) return 'decade'
+  if (diffMs >= msPerYear) return 'year'
+  if (diffMs >= msPerMonth) return 'month'
+  if (diffMs >= msPerDay) return 'day'
 
   return 'hour'
 }
