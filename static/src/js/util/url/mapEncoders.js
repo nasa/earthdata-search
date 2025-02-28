@@ -31,6 +31,7 @@ export const encodeMap = (map, mapPreferences) => {
     longitude,
     overlays,
     projection,
+    rotation,
     zoom
   } = map
 
@@ -52,6 +53,7 @@ export const encodeMap = (map, mapPreferences) => {
     long: longitude,
     overlays: encodedOverlays.join(','),
     projection: encodedProjection,
+    rotation,
     zoom
   }
 
@@ -62,6 +64,7 @@ export const encodeMap = (map, mapPreferences) => {
     long: 0,
     overlays: 'referenceFeatures,referenceLabels',
     projection: 'EPSG:4326',
+    rotation: 0,
     zoom: 2
   }
 
@@ -71,8 +74,9 @@ export const encodeMap = (map, mapPreferences) => {
       baseLayer,
       latitude: latitudePreference,
       longitude: longitudePreference,
-      projection: mapProjection,
       overlayLayers,
+      projection: mapProjection,
+      rotation: rotationPreference,
       zoom: zoomPreference
     } = mapPreferences
 
@@ -94,6 +98,7 @@ export const encodeMap = (map, mapPreferences) => {
       long: longitudePreference,
       overlays: encodedOverlaysPreference.join(','),
       projection: encodedProjectionPreference,
+      rotation: rotationPreference,
       zoom: zoomPreference
     }
   }
@@ -119,6 +124,7 @@ export const decodeMap = (params) => {
     long: longParam,
     overlays: overlaysParam,
     projection: projectionParam,
+    rotation: rotationParam,
     zoom: zoomParam
   } = params
 
@@ -129,6 +135,7 @@ export const decodeMap = (params) => {
     && !longParam
     && !overlaysParam
     && !projectionParam
+    && !rotationParam
     && !zoomParam
   ) {
     // If no values are defined return an empty object, typically causing the preferences to be used.
@@ -144,11 +151,13 @@ export const decodeMap = (params) => {
   let decodedProjection
   let decodedBase
   let decodedOverlays
+  let decodedRotation
 
   // If a value for lat, long, or zoom is not a valid float, NaN will be returned
   // and a default value will be used
   if (latParam && !Number.isNaN(parseFloat(latParam))) decodedLatitude = parseFloat(latParam)
   if (longParam && !Number.isNaN(parseFloat(longParam))) decodedLongitude = parseFloat(longParam)
+  if (rotationParam && !Number.isNaN(parseFloat(rotationParam))) decodedRotation = parseFloat(rotationParam)
   if (zoomParam && !Number.isNaN(parseFloat(zoomParam))) decodedZoom = parseFloat(zoomParam)
 
   // If a valid projection is used, convert the value to the format the state expects
@@ -185,6 +194,7 @@ export const decodeMap = (params) => {
     longitude: decodedLongitude,
     overlays: decodedOverlays,
     projection: decodedProjection,
+    rotation: decodedRotation,
     zoom: decodedZoom
   }
 }
