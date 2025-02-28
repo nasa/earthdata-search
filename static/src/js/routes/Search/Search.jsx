@@ -219,7 +219,6 @@ export const Search = ({
                             data-testid="input_only-granules"
                             label="Include collections without granules"
                             onChange={(event) => handleCheckboxCheck(event)}
-                            className="sidebar-filters-list__small-checkbox-text"
                           />
                         </PortalFeatureContainer>
                         <PortalFeatureContainer nonEosdisCheckbox>
@@ -229,7 +228,6 @@ export const Search = ({
                             data-testid="input_non-eosdis"
                             label="Include only EOSDIS collections"
                             onChange={(event) => handleCheckboxCheck(event)}
-                            className="sidebar-filters-list__small-checkbox-text"
                           />
                         </PortalFeatureContainer>
                       </Form.Group>

@@ -113,7 +113,7 @@ export const SubscriptionsListTable = ({
                           )
                         }
                       >
-                        <EDSCIcon icon={AlertInformation} className="subscriptions-list__button" />
+                        <EDSCIcon icon={AlertInformation} className="subscriptions-list__button align-middle" />
                       </OverlayTrigger>
                       <PortalLinkContainer
                         className="subscriptions-list__button subscriptions-list__button--edit"

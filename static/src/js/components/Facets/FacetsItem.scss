@@ -52,7 +52,6 @@
     display: flex;
     align-items: center;
     flex: 1;
-    min-width: 0;
     overflow: hidden;
   }
 
@@ -61,8 +60,6 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    min-width: 0;
-    max-width: 100%;
     color: utils.$color__carbon--90;
     font-weight: 400;
     font-size: 0.875rem;
