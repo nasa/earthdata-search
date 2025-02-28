@@ -1,4 +1,39 @@
+import fs from 'fs'
+import path from 'path'
 import { resizeHack } from './resizeHack'
+
+// This function can be used to download an image and save it locall to be mocked.
+// eslint-disable-next-line no-unused-vars
+const saveImage = async (route, page) => {
+  const response = await page.request.fetch(route.request())
+  const buffer = await response.body()
+
+  const url = route.request().url()
+  const filename = url.split('arcgis.com/')[1].replace(/\//g, '_')
+  const imagePath = path.join('./tests/fixtures/images', filename)
+  fs.writeFileSync(imagePath, buffer)
+
+  await route.continue()
+}
+
+// Return the image from disk
+const mockImage = async (route) => {
+  // Load the image from the file system
+  const url = route.request().url()
+  const filename = url.split('arcgis.com/')[1].replace(/\//g, '_')
+  const imagePath = path.join('./tests/fixtures/images', filename)
+
+  try {
+    const image = fs.readFileSync(imagePath)
+
+    return route.fulfill({
+      contentType: 'image/png',
+      body: image
+    })
+  } catch {
+    return route.abort()
+  }
+}
 
 /**
  * Sets up Playwright tests to prevent loading the map and disable the tour by default.
@@ -26,7 +61,14 @@ export const setupTests = async ({
 
   // Prevent loading of images and map tiles to speed up tests
   await page.route('**/*.{png,jpg,jpeg,pbf}', (route) => route.abort())
-  await page.route('**/arcgis/**', (route) => route.abort())
+  await page.route('**/arcgis/**', async (route) => {
+    // Uncomment this call to save images downloaded during a test
+    // await saveImage(route, page)
+
+    // Return the image from disk
+    await mockImage(route)
+  })
+
   await page.route('**/scale/**', (route) => route.abort())
 
   // Mock requests to the status app

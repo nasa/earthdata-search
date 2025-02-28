@@ -3,30 +3,6 @@
 
 #root {
   .map {
-    .projection-switcher {
-      &__button {
-        background-image: url('~Images/projection-sprite.png');
-        background-size: 90px 30px;
-        background-repeat: no-repeat;
-
-        &--arctic {
-          background-position: -57px -1px;
-        }
-
-        &--geo {
-          background-position: -29px -1px;
-        }
-
-        &--antarctic {
-          background-position: -1px -1px;
-        }
-
-        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-          background-image: url('~Images/projection-sprite@2x.png');
-        }
-      }
-    }
-
     .leaflet-bottom.leaflet-right {
       display: flex;
       flex-direction: column;

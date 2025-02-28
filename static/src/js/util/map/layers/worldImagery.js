@@ -24,7 +24,7 @@ const worldImagery = ({
       projection,
       reprojectionErrorThreshold: 2,
       tileGrid: createXYZ({
-        extent: [-180, -90, 180, 90],
+        extent: projection.getExtent(),
         maxResolution: 360 / 512,
         maxZoom: projectionConfigs[projectionCode].maxZoom
       }),
