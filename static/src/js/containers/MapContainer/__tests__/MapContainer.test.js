@@ -8,6 +8,7 @@ import * as metricsMap from '../../../middleware/metrics/actions'
 
 // Mock react-leaflet because it causes errors
 jest.mock('../../../components/Map/Map', () => <div />)
+jest.mock('../../../util/map/crs', () => {})
 
 beforeEach(() => {
   jest.clearAllMocks()

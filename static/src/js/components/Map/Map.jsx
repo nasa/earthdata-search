@@ -10,12 +10,15 @@ import View from 'ol/View'
 import ScaleLine from 'ol/control/ScaleLine'
 import Attribution from 'ol/control/Attribution'
 import { transform } from 'ol/proj'
+import { defaults as defaultInteractions, DragRotate } from 'ol/interaction'
+import { altKeyOnly } from 'ol/events/condition'
 
 import { Plus, Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaHome } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ZoomControl from './ZoomControl'
+import ProjectionSwitcherControl from './ProjectionSwitcherControl'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
@@ -48,20 +51,34 @@ const createView = ({
   center,
   padding,
   projectionCode,
+  rotation,
   zoom
 }) => {
   // Pull default config values from the projectionConfigs
   const projectionConfig = projectionConfigs[projectionCode]
+  const projection = crsProjections[projectionCode]
+
+  // Ensure the center (saved in EPSG:4326) is reprojected to the current projection
+  const { latitude, longitude } = center || projectionConfig.center
+  const reprojectedCenter = transform(
+    [longitude, latitude],
+    crsProjections[projections.geographic],
+    projection
+  )
+
+  // `rotation` is in degrees, but OpenLayers expects it in radians
+  const rotationInRad = rotation * (Math.PI / 180)
 
   const view = new View({
-    center: center || projectionConfig.center,
+    center: reprojectedCenter,
     constrainOnlyCenter: true,
     enableRotation: projectionConfig.enableRotation,
-    extent: projectionConfig.extent,
+    extent: projection.getExtent(),
     maxZoom: projectionConfig.maxZoom,
     minZoom: projectionConfig.minZoom,
     padding,
-    projection: crsProjections[projectionCode],
+    projection,
+    rotation: rotationInRad,
     zoom: zoom || projectionConfig.zoom
   })
 
@@ -99,14 +116,18 @@ const zoomControl = (projectionCode) => new ZoomControl({
  * @param {Object} params
  * @param {Object} params.center Center latitude and longitude of the map
  * @param {String} params.projectionCode Projection code of the map
+ * @param {Number} params.rotation Rotation of the map
  * @param {Number} params.zoom Zoom level of the map
  * @param {Function} params.onChangeMap Function to call when the map is updated
+ * @param {Function} params.onChangeProjection Function to call when the projection is changed
  */
 const Map = ({
   center,
   projectionCode,
+  rotation,
   zoom,
-  onChangeMap
+  onChangeMap,
+  onChangeProjection
 }) => {
   // This is the width of the side panels. We need to know this so we can adjust the padding
   // on the map view when the panels are resized.
@@ -118,25 +139,32 @@ const Map = ({
   const mapRef = useRef()
   const mapElRef = useRef()
 
-  const { latitude, longitude } = center
-
   useEffect(() => {
     const map = new OlMap({
       controls: [
         attribution,
         scaleMetric,
         scaleImperial,
-        zoomControl(projectionCode)
+        zoomControl(projectionCode),
+        new ProjectionSwitcherControl({
+          onChangeProjection
+        })
       ],
+      interactions: defaultInteractions().extend([
+        new DragRotate({
+          condition: altKeyOnly
+        })
+      ]),
       layers: [
         worldImageryLayer,
         placeLabelsLayer
       ],
       target: mapElRef.current,
       view: createView({
-        center: [longitude, latitude],
+        center,
         padding: [0, 0, 0, panelsWidth],
         projectionCode,
+        rotation,
         zoom
       })
     })
@@ -151,22 +179,42 @@ const Map = ({
       // Get the new center of the map
       const newCenter = view.getCenter()
 
-      // Reproject the center to EPSG:4326 so we can store lat/lon in Redux
-      const reprojectedCenter = transform(newCenter, crsProjections[projectionCode], 'EPSG:4326')
-      const [newLongitude, newLatitude] = reprojectedCenter
-
+      let newLongitude = newCenter[0]
+      let newLatitude = newCenter[1]
       const newZoom = view.getZoom()
+      let newRotationInDeg = 0
+
+      // If the new center is 0,0 use the projection's default center
+      if (newCenter[0] === 0 && newCenter[1] === 0) {
+        const projectionConfig = projectionConfigs[projectionCode];
+        [newLongitude, newLatitude] = projectionConfig.center
+      } else {
+        // Reproject the center to EPSG:4326 so we can store lat/lon in Redux
+        const newReprojectedCenter = transform(
+          newCenter,
+          view.getProjection(),
+          crsProjections[projections.geographic]
+        );
+
+        // Const newReprojectedCenter = toLonLat(newCenter, crsProjections[projections.geographic])
+        [newLongitude, newLatitude] = newReprojectedCenter
+      }
+
+      // Convert the rotation from radians to degrees within a range of -180 to 180
+      const newRotationInRad = view.getRotation()
+      newRotationInDeg = (((newRotationInRad * 180) / Math.PI - 180) % 360) + 180
 
       // Update Redux with the new values
       onChangeMap({
         latitude: newLatitude,
         longitude: newLongitude,
+        rotation: newRotationInDeg,
         zoom: newZoom
       })
     })
 
     return () => map.setTarget(null)
-  }, [])
+  }, [projectionCode])
 
   useEffect(() => {
     // When the panelsWidth changes, update the padding on the map view.
@@ -184,26 +232,78 @@ const Map = ({
     // Set the new padding value with the new panelsWidth
     const newPadding = [0, 0, 0, panelsWidth]
 
-    // In order to keep the map from moving when we change the padding we need to adjust
-    // the center longitude of the map. We can calculate the difference in pixels between
-    // the previousPanelsWidth and the panelsWidth and adjust the center longitude by that
-    // difference.
+    // Get the current center longitude and latitude
+    let [currentLongitude, currentLatitude] = view.getCenter()
+    let newCenter = {
+      longitude: currentLongitude,
+      latitude: currentLatitude
+    }
 
-    // Find longitude difference between the previousPanelsWidth and the panelsWidth
+    // In order to keep the map from moving when we change the padding we need to adjust
+    // the center of the map.
+
+    // If the current center is 0,0 then use the projection's default center for calculations
+    if (currentLongitude === 0 && currentLatitude === 0) {
+      const projectionConfig = projectionConfigs[projectionCode];
+      [currentLongitude, currentLatitude] = projectionConfig.center
+
+      newCenter = {
+        longitude: currentLongitude,
+        latitude: currentLatitude
+      }
+    }
+
+    // Adjust the center based on the difference in the panels
+
+    // Find the pixel difference between the previousPanelsWidth and the panelsWidth
     const diffInPixels = panelsWidth - previousPanelsWidth
-    // Find the longitude difference in degrees
+
+    // Find the coordinate difference based on the resolution of the view
     const diff = (view.getResolution() * diffInPixels) / 2
 
-    // Get the current center longitude
-    const [currentLongitude, currentLatitude] = view.getCenter()
-    // Generate the new center longitude
-    const newCenter = [currentLongitude + diff, currentLatitude]
+    // If the difference in pixels is not 0, adjust the center of the map
+    if (diffInPixels !== 0) {
+      if (projectionCode === projections.geographic) {
+        // In the geographic projection adjust the longitude of the center
+
+        // Generate the new center longitude
+        newCenter = {
+          longitude: currentLongitude + diff,
+          latitude: currentLatitude
+        }
+      } else {
+        // In polar projections adjust the x coordinate of the center
+
+        // In the polar projections the coordinates are x,y instead of longitude,latitude
+        const currentX = currentLongitude
+        const currentY = currentLatitude
+
+        // Generate the updated center x coordinate
+        const updatedProjectionCenter = [
+          currentX + diff,
+          currentY
+        ]
+
+        // Convert the updated center back to geographic coordinates
+        const [newLongitude, newLatitude] = transform(
+          updatedProjectionCenter,
+          crsProjections[projectionCode],
+          crsProjections[projections.geographic]
+        )
+
+        newCenter = {
+          longitude: newLongitude,
+          latitude: newLatitude
+        }
+      }
+    }
 
     // Create a new view for the map based on the new center, zoom, and padding
     const newView = createView({
       center: newCenter,
       padding: newPadding,
       projectionCode,
+      rotation,
       zoom
     })
 
@@ -222,8 +322,10 @@ Map.propTypes = {
     longitude: PropTypes.number
   }).isRequired,
   projectionCode: PropTypes.string.isRequired,
+  rotation: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
-  onChangeMap: PropTypes.func.isRequired
+  onChangeMap: PropTypes.func.isRequired,
+  onChangeProjection: PropTypes.func.isRequired
 }
 
 export default Map

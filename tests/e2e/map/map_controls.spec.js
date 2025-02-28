@@ -8,6 +8,13 @@ import { setupTests } from '../../support/setupTests'
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
 
+const screenshotClip = {
+  x: 950,
+  y: 200,
+  width: 400,
+  height: 400
+}
+
 // When testing map values we don't need to test the exact values coming from leaflet. The inconsistencies
 // with testing locally and in GitHub Actions make the tests unusable. By testing that the right type of spatial
 // value is present in the URL and SpatialDisplay, with rounded numbers, we are verifying that we are getting the
@@ -74,9 +81,9 @@ test.describe('Map: Control interactions', () => {
     })
   })
 
-  test.describe.skip('When switching projections', () => {
+  test.describe('When switching projections', () => {
     test.describe('When switching to the North Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -86,16 +93,37 @@ test.describe('Map: Control interactions', () => {
         await page.goto('/')
 
         // Change the projection
-        await page.getByTestId('projection-switcher__arctic').click()
+        await page.getByLabel('North Polar Stereographic').click()
 
-        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=0')
+        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413')
 
-        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3413/)
+        await expect(page).toHaveScreenshot('north_polar_stereographic.png', {
+          clip: screenshotClip
+        })
+      })
+    })
+
+    test.describe('When loading the map with the North Polar Stereographic projection url parameter', () => {
+      test('displays the map with the correct projection', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/search?lat=90&projection=EPSG%3A3413')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
+        await expect(page).toHaveScreenshot('north_polar_stereographic.png', {
+          clip: screenshotClip
+        })
       })
     })
 
     test.describe('When switching to the Geographic projection', () => {
-      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -105,19 +133,40 @@ test.describe('Map: Control interactions', () => {
         await page.goto('/')
 
         // Change the projection
-        await page.getByTestId('projection-switcher__arctic').click()
+        await page.getByLabel('North Polar Stereographic').click()
         // Switch back to Geographic
-        await page.getByTestId('projection-switcher__geo').click()
+        await page.getByLabel('Geographic (Equirectangular)').click()
 
         // Removes the map parameter when it is centered
         await expect(page).toHaveURL('search')
 
-        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg4326/)
+        await expect(page).toHaveScreenshot('geographic.png', {
+          clip: screenshotClip
+        })
+      })
+    })
+
+    test.describe('When loading the page with the Geographic projection url parameter', () => {
+      test('displays the map with the correct projection', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/search')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
+        await expect(page).toHaveScreenshot('geographic.png', {
+          clip: screenshotClip
+        })
       })
     })
 
     test.describe('When switching to the South Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -127,16 +176,37 @@ test.describe('Map: Control interactions', () => {
         await page.goto('/')
 
         // Change the projection
-        await page.getByTestId('projection-switcher__antarctic').click()
+        await page.getByLabel('South Polar Stereographic').click()
 
-        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=0')
+        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031')
 
-        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3031/)
+        await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
+          clip: screenshotClip
+        })
+      })
+    })
+
+    test.describe('When loading the map with the South Polar Stereographic projection url parameter', () => {
+      test('displays the map with the correct projection', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/search?lat=-90&projection=EPSG%3A3031')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
+        await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
+          clip: screenshotClip
+        })
       })
     })
 
     test.describe('When switching from the North Polar Stereographic projection to the South Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -146,18 +216,67 @@ test.describe('Map: Control interactions', () => {
         await page.goto('/')
 
         // Change the projection to North Polar
-        await page.getByTestId('projection-switcher__arctic').click()
+        await page.getByLabel('North Polar Stereographic').click()
 
-        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=0')
-
-        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3413/)
+        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413')
 
         // Change the projection to South Polar
-        await page.getByTestId('projection-switcher__antarctic').click()
+        await page.getByLabel('South Polar Stereographic').click()
 
-        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=0')
+        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031')
 
-        await expect(page.locator('img.leaflet-tile').first()).toHaveAttribute('src', /epsg3031/)
+        await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
+          clip: screenshotClip
+        })
+      })
+    })
+  })
+
+  test.describe('When rotating the map', () => {
+    test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      await interceptUnauthenticatedCollections({
+        page,
+        body: commonBody,
+        headers: commonHeaders
+      })
+
+      await page.goto('/')
+
+      // Change the projection
+      await page.getByLabel('North Polar Stereographic').click()
+
+      // Rotate the map
+      await page.keyboard.down('Alt')
+      await page.mouse.move(1000, 500)
+      await page.mouse.down()
+      await page.mouse.move(1000, 900, { steps: 5 })
+      await page.mouse.up()
+      await page.keyboard.up('Alt')
+
+      await expect(page).toHaveURL(/rotation=32.\d+/)
+
+      await expect(page).toHaveScreenshot('rotation.png', {
+        clip: screenshotClip
+      })
+    })
+
+    test.describe('When loading the map with a rotation url parameter', () => {
+      test('displays the map with the correct rotation', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/search?lat=90&long=-45&projection=EPSG%3A3413&rotation=32.4')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
+        await expect(page).toHaveScreenshot('rotation.png', {
+          clip: screenshotClip,
+          maxDiffPixelRatio: 0.1
+        })
       })
     })
   })
