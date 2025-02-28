@@ -28,6 +28,7 @@ describe('decodes base correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -47,6 +48,7 @@ describe('decodes base correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -64,6 +66,7 @@ describe('decodes latitude correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -79,6 +82,7 @@ describe('decodes latitude correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -96,6 +100,7 @@ describe('decodes longitude correctly', () => {
         longitude: 1,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -111,6 +116,7 @@ describe('decodes longitude correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -132,6 +138,7 @@ describe('decodes overlays correctly', () => {
           referenceLabels: false
         },
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -151,6 +158,7 @@ describe('decodes overlays correctly', () => {
           referenceLabels: false
         },
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -168,6 +176,7 @@ describe('decodes projection correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: 'epsg3031',
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -183,10 +192,45 @@ describe('decodes projection correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
     expect(decodeUrlParams('?projection=test')).toEqual(expectedResult)
+  })
+})
+
+describe('decodes rotation correctly', () => {
+  test('when the result is valid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        rotation: 1,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?rotation=1')).toEqual(expectedResult)
+  })
+
+  test('when the result is invalid', () => {
+    const expectedResult = {
+      ...emptyDecodedResult,
+      map: {
+        base: undefined,
+        latitude: undefined,
+        longitude: undefined,
+        overlays: undefined,
+        projection: undefined,
+        rotation: undefined,
+        zoom: undefined
+      }
+    }
+    expect(decodeUrlParams('?rotation=test')).toEqual(expectedResult)
   })
 })
 
@@ -200,6 +244,7 @@ describe('decodes zoom correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: 1
       }
     }
@@ -215,6 +260,7 @@ describe('decodes zoom correctly', () => {
         longitude: undefined,
         overlays: undefined,
         projection: undefined,
+        rotation: undefined,
         zoom: undefined
       }
     }
@@ -241,6 +287,7 @@ describe('url#encodeUrlQuery', () => {
           referenceLabels: true
         },
         projection: projections.geographic,
+        rotation: 0,
         zoom: 2
       }
     }
@@ -266,6 +313,7 @@ describe('url#encodeUrlQuery', () => {
             coastlines: false,
             referenceLabels: false
           },
+          rotation: 0,
           zoom: 0
         }
       }
@@ -289,6 +337,7 @@ describe('url#encodeUrlQuery', () => {
             coastlines: false,
             referenceLabels: false
           },
+          rotation: 0,
           zoom: 0
         },
         mapPreferences: {
@@ -300,10 +349,11 @@ describe('url#encodeUrlQuery', () => {
             'referenceLabels'
           ],
           projection: 'epsg4326',
+          rotation: 1,
           zoom: 4
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=referenceFeatures&zoom=0')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=referenceFeatures&rotation=0&zoom=0')
     })
 
     test('does not encode the map when it matches the map preferences', () => {
@@ -323,6 +373,7 @@ describe('url#encodeUrlQuery', () => {
             coastlines: false,
             referenceLabels: false
           },
+          rotation: 1,
           zoom: 4
         },
         mapPreferences: {
@@ -333,6 +384,7 @@ describe('url#encodeUrlQuery', () => {
             'referenceFeatures'
           ],
           projection: 'epsg4326',
+          rotation: 1,
           zoom: 4
         }
       }

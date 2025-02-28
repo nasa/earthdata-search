@@ -52,7 +52,8 @@ export class KeyboardShortcutsModal extends Component {
       a: 'Toggle advanced search modal',
       '/': 'Focus on search input field',
       t: 'Toggle timeline',
-      '?': 'Display all keyboard shortcuts'
+      '?': 'Display all keyboard shortcuts',
+      Alt: 'Hold to rotate the map when in a polar projection'
     }
 
     return (
@@ -67,7 +68,7 @@ export class KeyboardShortcutsModal extends Component {
               {
                 Object.entries(keyboardShortcutsList).map((shortcut) => (
                   <Row key={shortcut[0]} className="mb-1">
-                    <Col xs={1}>
+                    <Col xs="auto">
                       <kbd>{shortcut[0]}</kbd>
                     </Col>
                     :
