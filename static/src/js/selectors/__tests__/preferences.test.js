@@ -1,9 +1,11 @@
 import {
   getCollectionSortPreference,
   getGranuleSortPreference,
-  getMapPreferences
+  getMapPreferences,
+  getNondefaultCollectionSortKey
 } from '../preferences'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
+import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
 describe('getMapPreferences selector', () => {
   test('returns the map preferences', () => {
@@ -75,5 +77,37 @@ describe('getGranuleSortPreference selector', () => {
     const state = {}
 
     expect(getGranuleSortPreference(state)).toEqual('default')
+  })
+})
+
+describe('getNondefaultCollectionSortKey', () => {
+  beforeEach(() => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+    }))
+  })
+
+  test('returns null when the sortKey is the default value of collectionSortKeys.usageDescending', () => {
+    const state = {
+      query: {
+        collection: {
+          sortKey: [collectionSortKeys.usageDescending]
+        }
+      }
+    }
+
+    expect(getNondefaultCollectionSortKey(state)).toEqual(null)
+  })
+
+  test('returns the proper collection sortKey when it is not the default of collectionSortKeys.usageDescending', () => {
+    const state = {
+      query: {
+        collection: {
+          sortKey: [collectionSortKeys.startDateAscending]
+        }
+      }
+    }
+
+    expect(getNondefaultCollectionSortKey(state)).toEqual(collectionSortKeys.startDateAscending)
   })
 })
