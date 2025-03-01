@@ -123,6 +123,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         spatialExtent
         tags
         temporalExtents
+        timeStart
+        timeEnd
         tilingIdentificationSystems
         title
         versionId
@@ -230,6 +232,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         subscriptions,
         tags,
         tilingIdentificationSystems,
+        timeEnd,
+        timeStart,
         title,
         tools,
         variables,
@@ -294,6 +298,8 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
         subscriptions,
         tags,
         tilingIdentificationSystems,
+        timeEnd,
+        timeStart,
         title,
         tools,
         variables,
