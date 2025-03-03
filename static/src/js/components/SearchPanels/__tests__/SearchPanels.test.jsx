@@ -154,9 +154,9 @@ describe('SearchPanels component', () => {
 
       expect(collectionResultsPanelProps.activeSort).toBe('')
       expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
-      expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(false)
+      expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(true)
       expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
-      expect(collectionResultsPanelProps.sortsArray[1].isActive).toBe(true)
+      expect(collectionResultsPanelProps.sortsArray[1].isActive).toBe(false)
       expect(collectionResultsPanelProps.sortsArray[2].label).toBe('Start Date')
       expect(collectionResultsPanelProps.sortsArray[2].isActive).toBe(false)
       expect(collectionResultsPanelProps.sortsArray[3].label).toBe('End Date')
