@@ -203,7 +203,7 @@ describe('mapStateToProps', () => {
       scienceKeywordFacets: [],
       selectedFeatures: [],
       shapefileId: '',
-      paramCollectionSortKey: null,
+      paramCollectionSortKey: undefined,
       tagKey: '',
       temporalSearch: {},
       twoDCoordinateSystemNameFacets: [],
@@ -250,6 +250,7 @@ describe('mapStateToProps', () => {
           keyword: '',
           overrideTemporal: {},
           sortKey: [collectionSortKeys.endDateDescending],
+          paramCollectionSortKey: collectionSortKeys.endDateDescending,
           spatial: {
             boundingBox: [],
             circle: [],
@@ -312,6 +313,7 @@ describe('mapStateToProps', () => {
           keyword: '',
           overrideTemporal: {},
           sortKey: [collectionSortKeys.endDateDescending],
+          paramCollectionSortKey: collectionSortKeys.endDateDescending,
           spatial: {
             boundingBox: [],
             circle: [],
