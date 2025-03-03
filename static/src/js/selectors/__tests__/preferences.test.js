@@ -2,7 +2,7 @@ import {
   getCollectionSortPreference,
   getGranuleSortPreference,
   getMapPreferences,
-  getNondefaultCollectionSortKey
+  getCollectionSortKeyParameter
 } from '../preferences'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
@@ -80,14 +80,14 @@ describe('getGranuleSortPreference selector', () => {
   })
 })
 
-describe('getNondefaultCollectionSortKey', () => {
+describe('getCollectionSortKeyParameter', () => {
   beforeEach(() => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       collectionSearchResultsSortKey: collectionSortKeys.usageDescending
     }))
   })
 
-  test('returns null when the sortKey is the default value of collectionSortKeys.usageDescending', () => {
+  test('returns undefined when the sortKey is the default value of collectionSortKeys.usageDescending', () => {
     const state = {
       query: {
         collection: {
@@ -96,18 +96,35 @@ describe('getNondefaultCollectionSortKey', () => {
       }
     }
 
-    expect(getNondefaultCollectionSortKey(state)).toEqual(null)
+    expect(getCollectionSortKeyParameter(state)).toEqual(undefined)
   })
 
   test('returns the proper collection sortKey when it is not the default of collectionSortKeys.usageDescending', () => {
     const state = {
       query: {
         collection: {
-          sortKey: [collectionSortKeys.startDateAscending]
+          paramCollectionSortKey: collectionSortKeys.startDateAscending
         }
       }
     }
 
-    expect(getNondefaultCollectionSortKey(state)).toEqual(collectionSortKeys.startDateAscending)
+    expect(getCollectionSortKeyParameter(state)).toEqual(collectionSortKeys.startDateAscending)
+  })
+
+  test('returns the null when the user preference sort key and the paramCollectionSortKey is the same', () => {
+    const state = {
+      query: {
+        collection: {
+          paramCollectionSortKey: collectionSortKeys.startDateAscending
+        }
+      },
+      preferences: {
+        preferences: {
+          collectionSort: collectionSortKeys.startDateAscending
+        }
+      }
+    }
+
+    expect(getCollectionSortKeyParameter(state)).toEqual(null)
   })
 })

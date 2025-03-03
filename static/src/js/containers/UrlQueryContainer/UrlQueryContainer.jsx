@@ -11,7 +11,7 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import { getMapPreferences, getNondefaultCollectionSortKey } from '../../selectors/preferences'
+import { getMapPreferences, getCollectionSortKeyParameter } from '../../selectors/preferences'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -55,7 +55,7 @@ export const mapStateToProps = (state) => ({
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
   selectedFeatures: state.shapefile.selectedFeatures,
   shapefileId: state.shapefile.shapefileId,
-  paramCollectionSortKey: getNondefaultCollectionSortKey(state),
+  paramCollectionSortKey: getCollectionSortKeyParameter(state),
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
   twoDCoordinateSystemNameFacets: state.facetsParams.cmr.two_d_coordinate_system_name,
