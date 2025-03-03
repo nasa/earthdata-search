@@ -1,9 +1,11 @@
 import {
   getCollectionSortPreference,
   getGranuleSortPreference,
-  getMapPreferences
+  getMapPreferences,
+  getCollectionSortKeyParameter
 } from '../preferences'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
+import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
 describe('getMapPreferences selector', () => {
   test('returns the map preferences', () => {
@@ -75,5 +77,54 @@ describe('getGranuleSortPreference selector', () => {
     const state = {}
 
     expect(getGranuleSortPreference(state)).toEqual('default')
+  })
+})
+
+describe('getCollectionSortKeyParameter', () => {
+  beforeEach(() => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+    }))
+  })
+
+  test('returns undefined when the sortKey is the default value of collectionSortKeys.usageDescending', () => {
+    const state = {
+      query: {
+        collection: {
+          sortKey: [collectionSortKeys.usageDescending]
+        }
+      }
+    }
+
+    expect(getCollectionSortKeyParameter(state)).toEqual(undefined)
+  })
+
+  test('returns the proper collection sortKey when it is not the default of collectionSortKeys.usageDescending', () => {
+    const state = {
+      query: {
+        collection: {
+          paramCollectionSortKey: collectionSortKeys.startDateAscending
+        }
+      }
+    }
+
+    expect(getCollectionSortKeyParameter(state)).toEqual(collectionSortKeys.startDateAscending)
+  })
+
+  test('returns the null when the user preference sort key and the paramCollectionSortKey is the same', () => {
+    const state = {
+      query: {
+        collection: {
+          paramCollectionSortKey: collectionSortKeys.startDateAscending
+        }
+      },
+      preferences: {
+        preferences: {
+          collectionSort: collectionSortKeys.startDateAscending
+        }
+      }
+    }
+
+    expect(getCollectionSortKeyParameter(state)).toEqual(null)
   })
 })
