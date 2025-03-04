@@ -30,12 +30,12 @@ export const mapStateToProps = (state) => ({
   browser: state.browser,
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
+  isOpen: state.ui.timeline.isOpen,
   pathname: state.router.location.pathname,
-  search: state.router.location.search,
   projectCollectionsIds: getProjectCollectionsIds(state),
+  search: state.router.location.search,
   temporalSearch: state.query.collection.temporal,
-  timeline: state.timeline,
-  isOpen: state.ui.timeline.isOpen
+  timeline: state.timeline
 })
 
 export const TimelineContainer = (props) => {
@@ -43,17 +43,17 @@ export const TimelineContainer = (props) => {
     browser,
     collectionsMetadata,
     focusedCollectionId,
-    pathname,
-    projectCollectionsIds,
-    temporalSearch,
-    timeline,
+    isOpen,
     onChangeQuery,
     onChangeTimelineQuery,
-    onToggleOverrideTemporalModal,
     onMetricsTimeline,
+    onToggleOverrideTemporalModal,
     onToggleTimeline,
-    isOpen,
-    search: searchLocation
+    pathname,
+    projectCollectionsIds,
+    search: searchLocation,
+    temporalSearch,
+    timeline
   } = props
 
   // Determine the collectionMetadata the timeline should be displaying
@@ -83,17 +83,17 @@ export const TimelineContainer = (props) => {
     <Timeline
       browser={browser}
       collectionMetadata={collectionMetadata}
+      isOpen={isOpen}
+      onChangeQuery={onChangeQuery}
+      onChangeTimelineQuery={onChangeTimelineQuery}
+      onMetricsTimeline={onMetricsTimeline}
+      onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
+      onToggleTimeline={onToggleTimeline}
       pathname={pathname}
+      projectCollectionsIds={projectCollectionsIds}
       showOverrideModal={isProjectPage}
       temporalSearch={temporalSearch}
       timeline={timeline}
-      onChangeQuery={onChangeQuery}
-      onChangeTimelineQuery={onChangeTimelineQuery}
-      onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
-      onMetricsTimeline={onMetricsTimeline}
-      onToggleTimeline={onToggleTimeline}
-      isOpen={isOpen}
-      projectCollectionsIds={projectCollectionsIds}
     />
   )
 }

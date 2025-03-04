@@ -11,7 +11,7 @@ import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa'
 import Button from '../Button/Button'
 
 import { getColorByIndex } from '../../util/colors'
-import { timelineIntervals } from '../../util/timeline'
+import { timelineIntervals, calculateTimelineParams } from '../../util/timeline'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import getObjectKeyByValue from '../../util/object'
 
@@ -33,13 +33,71 @@ export const Timeline = ({
   temporalSearch,
   timeline
 }) => {
-  const { query } = timeline
-  const { center: propsCenter } = query
-  const [center, setCenter] = useState(propsCenter || new Date().getTime())
-
+  const currentDate = new Date().getTime()
+  const collectionConceptId = Object.keys(collectionMetadata)[0]
   const isProjectPage = pathname.indexOf('projects') > -1
+  const [isMetadataLoaded, setIsMetadataLoaded] = useState(false)
+  const [isInitialSetup, setIsInitialSetup] = useState(true)
+  const [zoomLevel, setZoomLevel] = useState(5)
+  const [center, setCenter] = useState(currentDate)
+
+  // Refs for tracking the timer container and the previous height so we can trigger a resize event
   const containerRef = useRef()
   const previousHeight = useRef(0)
+
+  // When pathname has changed, we want redo the initial setup
+  useEffect(() => {
+    setIsMetadataLoaded(false)
+    setIsInitialSetup(true)
+  }, [pathname])
+
+  useEffect(() => {
+    if (!collectionMetadata) return
+    if (isMetadataLoaded) return
+
+    if (isProjectPage) {
+      // Check if all project collections have metadata
+      const hasAllMetadata = projectCollectionsIds.every((conceptId) => {
+        const metadata = collectionMetadata[conceptId]
+
+        return metadata?.timeStart
+      })
+      setIsMetadataLoaded(hasAllMetadata)
+    } else {
+      // Check if single collection has metadata
+      const metadata = collectionMetadata[collectionConceptId]
+      setIsMetadataLoaded(!!metadata?.timeStart)
+    }
+  }, [collectionMetadata, isProjectPage, projectCollectionsIds, collectionConceptId])
+
+  useEffect(() => {
+    if (!isInitialSetup) {
+      // This resize event moves the leaflet controls above the EDSCTimeline component after it is rendered intially.
+      window.dispatchEvent(new Event('resize'))
+
+      return
+    }
+
+    // If we have metadata, calculate the appropriate zoom and center
+    if (isMetadataLoaded) {
+      const { initialCenter: newCenter, zoomLevel: numericZoom } = calculateTimelineParams({
+        isProjectPage,
+        projectCollectionsIds,
+        collectionMetadata,
+        collectionConceptId,
+        currentDate
+      })
+
+      setCenter(newCenter)
+      setZoomLevel(numericZoom)
+      setIsInitialSetup(false)
+      onChangeTimelineQuery({
+        ...timeline.query,
+        center: newCenter,
+        interval: getObjectKeyByValue(timelineIntervals, numericZoom)
+      })
+    }
+  }, [isMetadataLoaded, isInitialSetup])
 
   useEffect(() => {
     if (containerRef.current) {
@@ -68,7 +126,6 @@ export const Timeline = ({
       end: focusedEnd,
       start: focusedStart
     } = newQuery
-
     if (
       showOverrideModal
       && temporalStart
@@ -140,11 +197,9 @@ export const Timeline = ({
     const newQuery = {
       center: newCenter,
       endDate: endDate.toISOString(),
-      interval: getObjectKeyByValue(timelineIntervals, zoom.toString()),
+      interval: getObjectKeyByValue(timelineIntervals, zoom),
       startDate: startDate.toISOString()
     }
-
-    // TODO moving the timeline is causing a new timeline request - should only call if the timelineRange is changed
 
     onChangeTimelineQuery(newQuery)
     setCenter(newCenter)
@@ -261,7 +316,6 @@ export const Timeline = ({
         dataValue.intervals = values.map((value) => {
           const [start, end] = value
 
-          // TODO: Change the format of the intervals to an object at some point
           return [start * 1000, end * 1000]
         })
 
@@ -328,15 +382,6 @@ export const Timeline = ({
     }
   }
 
-  /**
-   * Converts the zoom level in the timeline query into a format used by the timeline
-   */
-  const setupZoom = ({ query: timelineQuery }) => {
-    const { interval = 'month' } = timelineQuery
-
-    return parseInt(timelineIntervals[interval], 10)
-  }
-
   const hideTimeline = !(isOpen || isProjectPage)
 
   const timelineClasses = classNames([
@@ -347,7 +392,7 @@ export const Timeline = ({
   ])
 
   return (
-    <section ref={containerRef} className={timelineClasses}>
+    <section ref={containerRef} className={timelineClasses} aria-label="Timeline">
       {
         hideTimeline && (
           <Button
@@ -367,7 +412,7 @@ export const Timeline = ({
 
       <div className="timeline__container">
         {
-          !isProjectPage && (
+          !isProjectPage && isMetadataLoaded && !isInitialSetup && (
             <Button
               className="timeline__toggle-button timeline__toggle-button--close"
               type="button"
@@ -378,25 +423,29 @@ export const Timeline = ({
             />
           )
         }
-        <EDSCTimeline
-          center={center}
-          data={setupData(timeline)}
-          focusedInterval={setupFocused(timeline)}
-          maxZoom={5}
-          minZoom={1}
-          temporalRange={setupTemporal(temporalSearch)}
-          zoom={setupZoom(timeline)}
-          onArrowKeyPan={handleArrowKeyPan}
-          onButtonPan={handleButtonPan}
-          onButtonZoom={handleButtonZoom}
-          onDragPan={handleDragPan}
-          onFocusedIntervalClick={handleFocusedClick}
-          onFocusedSet={handleFocusedSet}
-          onScrollPan={handleScrollPan}
-          onScrollZoom={handleScrollZoom}
-          onTemporalSet={handleTemporalSet}
-          onTimelineMoveEnd={handleTimelineMoveEnd}
-        />
+        {
+          isMetadataLoaded && !isInitialSetup && (
+            <EDSCTimeline
+              center={center}
+              data={setupData(timeline)}
+              focusedInterval={setupFocused(timeline)}
+              maxZoom={5}
+              minZoom={1}
+              temporalRange={setupTemporal(temporalSearch)}
+              zoom={zoomLevel}
+              onArrowKeyPan={handleArrowKeyPan}
+              onButtonPan={handleButtonPan}
+              onButtonZoom={handleButtonZoom}
+              onDragPan={handleDragPan}
+              onFocusedIntervalClick={handleFocusedClick}
+              onFocusedSet={handleFocusedSet}
+              onScrollPan={handleScrollPan}
+              onScrollZoom={handleScrollZoom}
+              onTemporalSet={handleTemporalSet}
+              onTimelineMoveEnd={handleTimelineMoveEnd}
+            />
+          )
+        }
       </div>
     </section>
   )

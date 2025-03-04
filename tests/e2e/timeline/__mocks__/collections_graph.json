@@ -410,6 +410,7 @@
                 ]
               }
             ],
+            "timeStart": "2002-07-04T00:45:00.000Z",
             "title": "MODIS/Aqua Aerosol 5-Min L2 Swath 3km",
             "versionId": "6.1",
             "granules": {

@@ -420,6 +420,7 @@
           ]
         }
       ],
+      "timeStart": "2002-07-04T00:00:00.000Z",
       "tilingIdentificationSystems": [
         {
           "coordinate1": {

@@ -267,6 +267,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           tags
           temporalExtents
           tilingIdentificationSystems
+          timeEnd
+          timeStart
           title
           versionId
           services {
@@ -396,6 +398,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         tags,
         tilingIdentificationSystems,
         title,
+        timeStart,
+        timeEnd,
         tools,
         variables,
         versionId
@@ -430,6 +434,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       )
 
       const isOpenSearch = !!getOpenSearchOsddLink(metadata)
+
       payload.push({
         abstract,
         archiveAndDistributionInformation,
@@ -453,6 +458,8 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         tags,
         tilingIdentificationSystems,
         title,
+        timeStart,
+        timeEnd,
         tools,
         variables,
         versionId,
