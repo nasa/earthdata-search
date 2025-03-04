@@ -5,7 +5,6 @@ import thunk from 'redux-thunk'
 import actions from '../index'
 
 import { UPDATE_SAVED_PROJECT, RESTORE_FROM_URL } from '../../constants/actionTypes'
-import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 import * as urlQuery from '../urlQuery'
 
