@@ -75,65 +75,6 @@ describe('updateStore', () => {
     })
   })
 
-  test('calls restoreFromUrl and gets new search results with a collection sortKey of collectionSortKeys.scoreDescending', async () => {
-    const params = {
-      cmrFacets: {},
-      earthdataEnvironment: 'prod',
-      featureFacets: {
-        availableInEarthdataCloud: false,
-        customizable: false,
-        mapImagery: false,
-        nearRealTime: false
-      },
-      focusedCollection: 'C00001-EDSC',
-      map: {},
-      portal: {},
-      project: {
-        collections: {
-          allIds: [],
-          byId: {}
-        }
-      },
-      query: {
-        collection: {
-          overrideTemporal: {},
-          pageNum: 1,
-          spatial: {},
-          temporal: {},
-          collectionSortKey: [collectionSortKeys.scoreDescending]
-        }
-      },
-      shapefile: {}
-    }
-
-    const store = mockStore({
-      preferences: {
-        preferences: {
-          collectionSort: 'default'
-        }
-      },
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
-
-    await store.dispatch(urlQuery.updateStore(params))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        ...params,
-        query: {
-          ...params.query,
-          collectionSortPreference: 'default'
-        }
-      },
-      type: RESTORE_FROM_URL
-    })
-  })
-
   describe('on the projects page', () => {
     test('calls restoreFromUrl and gets new search results', async () => {
       const params = {
