@@ -900,7 +900,9 @@ test.describe('Path /search/granules', () => {
     })
   })
 
-  test.describe('When the path is loaded with timeline parameters', () => {
+  // TODO: We will be adding support back in, in ticket EDSC-4428, for saving and loading timeline url state per collection
+  // when touched by the user(scroll, zoom, etc.)
+  test.describe.skip('When the path is loaded with timeline parameters', () => {
     test('loads with the timeline in the correct position', async ({ page }) => {
       const conceptId = 'C194001210-LPDAAC_ECS'
       const cmrHits = 317
@@ -938,7 +940,7 @@ test.describe('Path /search/granules', () => {
         const body = request.postData()
 
         if (body) {
-          expect(body).toBe('end_date=2015-02-02T00:00:00.000Z&interval=hour&start_date=2014-12-04T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+          expect(body).toBe('end_date=2015-02-07T00:00:00.000Z&interval=hour&start_date=2014-12-09T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
 
         route.fulfill({
@@ -1080,7 +1082,7 @@ test.describe('Path /search/granules', () => {
         const body = request.postData()
 
         if (body) {
-          expect(body).toBe('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
+          expect(body).toBe('end_date=2310-01-01T00:00:00.000Z&interval=year&start_date=1710-01-01T00:00:00.000Z&concept_id[]=C194001210-LPDAAC_ECS')
         }
 
         await route.fulfill({

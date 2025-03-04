@@ -1,22 +1,32 @@
+// We directly invoke EDSCTimeline callbacks in this test suite rather than using userEvents
+// from testing-library to interact with the EDSCTimeline component. This approach
+// allows us to focus on testing our Timeline component's behavior rather than the
+// underlying third-party EDSCTimeline component functionality.
+
 import React from 'react'
-import Enzyme, { mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { act } from 'react-dom/test-utils'
+import {
+  render,
+  screen,
+  act
+} from '@testing-library/react'
 import MockDate from 'mockdate'
 import EDSCTimeline from '@edsc/timeline'
-
+import userEvent from '@testing-library/user-event'
 import Timeline from '../Timeline'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-const windowEventMap = {}
-
 function setup(overrideProps) {
+  const user = userEvent.setup()
   const props = {
     browser: {
       name: 'browser name'
     },
-    collectionMetadata: {},
+    collectionMetadata: {
+      collectionId: {
+        timeStart: '2020-01-01',
+        timeEnd: '2022-01-01',
+        title: 'Test Collection'
+      }
+    },
     temporalSearch: {},
     timeline: {
       intervals: {},
@@ -34,22 +44,19 @@ function setup(overrideProps) {
     ...overrideProps
   }
 
-  const enzymeWrapper = mount(<Timeline {...props} />)
+  render(<Timeline {...props} />)
 
   return {
     props,
-    enzymeWrapper
+    user
   }
 }
+
+jest.mock('@edsc/timeline', () => jest.fn(() => <div data-testid="mock-timeline" />))
 
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
-  window.addEventListener = jest.fn((event, cb) => {
-    windowEventMap[event] = cb
-  })
-
-  window.removeEventListener = jest.fn()
 
   // MockDate is used here to overwrite the js Date object. This allows us to
   // mock changes needed to test the moment functions
@@ -62,19 +69,20 @@ afterEach(() => {
 
 describe('Timeline component', () => {
   test('should render an EDSCTimeline component with the correct props', () => {
-    const { enzymeWrapper } = setup()
-    const timeline = enzymeWrapper.find(EDSCTimeline)
-
-    expect(timeline.props().center).toEqual(1609495200000)
-    expect(timeline.props().minZoom).toEqual(1)
-    expect(timeline.props().maxZoom).toEqual(5)
-    expect(timeline.props().zoom).toEqual(3)
-    expect(timeline.props().data).toEqual([])
-    expect(timeline.props().focusedInterval).toEqual({})
-    expect(timeline.props().temporalRange).toEqual({})
+    setup()
+    expect(EDSCTimeline).toHaveBeenCalledTimes(1)
+    expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
+      center: 1609416000000,
+      zoom: 4,
+      minZoom: 1,
+      maxZoom: 5,
+      data: [],
+      focusedInterval: {},
+      temporalRange: {}
+    }), {})
   })
 
-  test('calls onToggleOverrideTemporalModal on page load if spatial and focus both exist', () => {
+  test('calls onToggleOverrideTemporalModal on page load if spatial and focus both exist', async () => {
     const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true,
@@ -95,7 +103,7 @@ describe('Timeline component', () => {
       }
     })
 
-    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
   })
 
   test('does not call onToggleOverrideTemporalModal on page load if spatial and focus don\'t both exist', () => {
@@ -116,15 +124,16 @@ describe('Timeline component', () => {
       }
     })
 
-    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
   })
 
   test('converts timeline intervals into the correct format for EDSCTimeline', () => {
-    const { enzymeWrapper } = setup({
+    setup({
       pathname: '/search/granules',
       collectionMetadata: {
         collectionId: {
-          title: 'Test Collection'
+          title: 'Test Collection',
+          timeStart: '2017-09-09'
         }
       },
       timeline: {
@@ -146,21 +155,23 @@ describe('Timeline component', () => {
       }
     })
 
-    const timeline = enzymeWrapper.find(EDSCTimeline)
-    expect(timeline.props().data).toEqual([{
-      color: '#2ECC71',
-      id: 'collectionId',
-      intervals: [[1525132800000, 1618185600000]],
-      title: 'Test Collection'
-    }])
+    expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
+      data: [{
+        color: '#2ECC71',
+        id: 'collectionId',
+        intervals: [[1525132800000, 1618185600000]],
+        title: 'Test Collection'
+      }]
+    }), {})
   })
 
   test('timeline displays on focused collection even when projectCollectionsIds is empty', () => {
-    const { enzymeWrapper } = setup({
+    setup({
       pathname: '/search/granules', // Indicating it's not a project page
       collectionMetadata: {
         someCollection: {
-          title: 'Some Collection'
+          title: 'Some Collection',
+          timeStart: '2017-09-09'
         }
       },
       projectCollectionsIds: [], // Empty project collections
@@ -179,29 +190,33 @@ describe('Timeline component', () => {
       }
     })
 
-    const timeline = enzymeWrapper.find(EDSCTimeline)
-    expect(timeline.props().data).toEqual([
-      {
-        color: '#2ECC71',
-        id: 'someCollection',
-        intervals: [[1525132800000, 1618185600000]],
-        title: 'Some Collection'
-      }
-    ])
+    expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
+      data: [
+        {
+          color: '#2ECC71',
+          id: 'someCollection',
+          intervals: [[1525132800000, 1618185600000]],
+          title: 'Some Collection'
+        }
+      ]
+    }), {})
   })
 
   test('setup data creates the correct intervals in the correct order for EDSCTimeline', () => {
-    const { enzymeWrapper } = setup({
+    setup({
       pathname: '/projects',
       collectionMetadata: {
         firstCollection: {
-          title: '1st Collection'
+          title: '1st Collection',
+          timeStart: '2017-09-09'
         },
         secondCollection: {
-          title: '2nd Collection'
+          title: '2nd Collection',
+          timeStart: '2017-09-09'
         },
         thirdCollection: {
-          title: '3rd Collection'
+          title: '3rd Collection',
+          timeStart: '2017-09-09'
         }
       },
       projectCollectionsIds: ['firstCollection', 'secondCollection', 'thirdCollection'],
@@ -238,37 +253,39 @@ describe('Timeline component', () => {
       }
     })
 
-    const timeline = enzymeWrapper.find(EDSCTimeline)
-    expect(timeline.props().data).toEqual([{
-      color: '#2ECC71',
-      id: 'firstCollection',
-      intervals: [[1525132800000, 1618185600000]],
-      title: '1st Collection'
-    },
-    {
-      color: '#3498DB',
-      id: 'secondCollection',
-      intervals: [[1525132800000, 1618185600000]],
-      title: '2nd Collection'
-    },
-    {
-      color: '#E67E22',
-      id: 'thirdCollection',
-      intervals: [[1525132800000, 1618185600000]],
-      title: '3rd Collection'
-    }])
+    expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
+      data: [{
+        color: '#2ECC71',
+        id: 'firstCollection',
+        intervals: [[1525132800000, 1618185600000]],
+        title: '1st Collection'
+      },
+      {
+        color: '#3498DB',
+        id: 'secondCollection',
+        intervals: [[1525132800000, 1618185600000]],
+        title: '2nd Collection'
+      },
+      {
+        color: '#E67E22',
+        id: 'thirdCollection',
+        intervals: [[1525132800000, 1618185600000]],
+        title: '3rd Collection'
+      }]
+    }), {})
   })
 })
 
 describe('handleTimelineMoveEnd', () => {
   test('calls onChangeTimelineQuery with new values', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
 
     const timelineEnd = '1970-01-01T00:00:00.000Z'
     const timelineStart = '1970-01-31T00:00:00.000Z'
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     act(() => {
-      enzymeWrapper.find(EDSCTimeline).invoke('onTimelineMoveEnd')({
+      timelineProps.onTimelineMoveEnd({
         center: 123456789000,
         timelineStart,
         timelineEnd,
@@ -276,53 +293,73 @@ describe('handleTimelineMoveEnd', () => {
       })
     })
 
-    expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
-      center: 123456789000,
-      endDate: timelineEnd,
-      interval: 'day',
-      startDate: timelineStart
-    }])
+    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
+    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(
+      1,
+      {
+        center: 1609416000000,
+        interval: 'year'
+      }
+    )
+
+    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(
+      2,
+      {
+        center: 123456789000,
+        endDate: timelineEnd,
+        interval: 'day',
+        startDate: timelineStart
+      }
+    )
   })
 })
 
 describe('handleTemporalSet', () => {
   test('when temporal is added', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({
-      temporalStart,
-      temporalEnd
+    act(() => {
+      timelineProps.onTemporalSet({
+        temporalStart,
+        temporalEnd
+      })
     })
 
-    expect(props.onChangeQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeQuery.mock.calls[0]).toEqual([{
-      collection: {
-        temporal: {
-          endDate: new Date(temporalEnd).toISOString(),
-          startDate: new Date(temporalStart).toISOString()
+    expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+    expect(props.onChangeQuery).toHaveBeenCalledWith(
+      {
+        collection: {
+          temporal: {
+            endDate: new Date(temporalEnd).toISOString(),
+            startDate: new Date(temporalStart).toISOString()
+          }
         }
       }
-    }])
+    )
   })
 
   test('when temporal is removed', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({})
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    expect(props.onChangeQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeQuery.mock.calls[0]).toEqual([{
+    act(() => {
+      timelineProps.onTemporalSet({})
+    })
+
+    expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+    expect(props.onChangeQuery).toHaveBeenCalledWith({
       collection: {
         temporal: {}
       }
-    }])
+    })
   })
 
   test('calls onToggleOverrideTemporalModal when setting temporal and focus already exists', () => {
-    const { enzymeWrapper, props } = setup({
+    const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true,
       timeline: {
@@ -337,35 +374,41 @@ describe('handleTemporalSet', () => {
         }
       }
     })
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({
-      temporalStart,
-      temporalEnd
+    act(() => {
+      timelineProps.onTemporalSet({
+        temporalStart,
+        temporalEnd
+      })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
   })
 
   test('does not call onToggleOverrideTemporalModal when setting temporal and focus does not exist', () => {
-    const { enzymeWrapper, props } = setup({
+    const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true
     })
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({
-      temporalStart,
-      temporalEnd
+    act(() => {
+      timelineProps.onTemporalSet({
+        temporalStart,
+        temporalEnd
+      })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
   })
 
   test('does not call onToggleOverrideTemporalModal when setting temporal and focus exists on the granules page', () => {
-    const { enzymeWrapper, props } = setup({
+    const { props } = setup({
       pathname: '/search/granules',
       showOverrideModal: false,
       timeline: {
@@ -380,52 +423,60 @@ describe('handleTemporalSet', () => {
         }
       }
     })
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({
-      temporalStart,
-      temporalEnd
+    act(() => {
+      timelineProps.onTemporalSet({
+        temporalStart,
+        temporalEnd
+      })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
   })
 })
 
 describe('handleFocusedSet', () => {
   test('when focus is added query is updated', () => {
-    const { enzymeWrapper, props } = setup()
-
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({
-      focusedStart,
-      focusedEnd
+    act(() => {
+      timelineProps.onFocusedSet({
+        focusedStart,
+        focusedEnd
+      })
     })
 
-    expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
-      center: 1609495200000,
+    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
+    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(2, {
+      center: 1609416000000,
       end: focusedEnd,
       start: focusedStart
-    }])
+    })
   })
 
   test('when focus is removed query is updated', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({})
+    act(() => {
+      timelineProps.onFocusedSet({})
+    })
 
-    expect(props.onChangeTimelineQuery.mock.calls.length).toBe(1)
-    expect(props.onChangeTimelineQuery.mock.calls[0]).toEqual([{
+    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
+    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(2, {
       end: undefined,
       start: undefined
-    }])
+    })
   })
 
-  test('calls onToggleOverrideTemporalModal when setting focuse and temporal already exists', () => {
-    const { enzymeWrapper, props } = setup({
+  test('calls onToggleOverrideTemporalModal when setting focus and temporal already exists', () => {
+    const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true,
       temporalSearch: {
@@ -433,37 +484,41 @@ describe('handleFocusedSet', () => {
         startDate: '2018-12-28T15:56:46.870Z'
       }
     })
-
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({
-      focusedStart,
-      focusedEnd
+    act(() => {
+      timelineProps.onFocusedSet({
+        focusedStart,
+        focusedEnd
+      })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(1)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
   })
 
   test('does not call onToggleOverrideTemporalModal when setting focus and temporal does not exist', () => {
-    const { enzymeWrapper, props } = setup({
+    const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true
     })
-
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({
-      focusedStart,
-      focusedEnd
+    act(() => {
+      timelineProps.onFocusedSet({
+        focusedStart,
+        focusedEnd
+      })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
   })
 
   test('does not call onToggleOverrideTemporalModal when setting focus and temporal exists on the granules page', () => {
-    const { enzymeWrapper, props } = setup({
+    const { props } = setup({
       pathname: '/search/granules',
       showOverrideModal: false,
       temporalSearch: {
@@ -471,83 +526,66 @@ describe('handleFocusedSet', () => {
         startDate: '2018-12-28T15:56:46.870Z'
       }
     })
-
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedSet')({
-      focusedStart,
-      focusedEnd
+    act(() => {
+      timelineProps.onFocusedSet({
+        focusedStart,
+        focusedEnd
+      })
     })
 
-    expect(props.onToggleOverrideTemporalModal).toBeCalledTimes(0)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(0)
   })
 })
 
 describe('handle toggleTimeline', () => {
   describe('when not on the project page', () => {
-    test('close timeline by pressing t', () => {
-      const { props, enzymeWrapper } = setup()
-      const timelineSection = enzymeWrapper.find('section.timeline')
+    test('close timeline by pressing t', async () => {
+      const { props, user } = setup()
 
-      expect(timelineSection.prop('className')).toEqual('timeline')
+      const timelineSection = screen.getByRole('region', { name: 'Timeline' })
+      expect(timelineSection).not.toHaveClass('timeline--is-hidden')
 
-      const preventDefaultMock = jest.fn()
-      const stopPropagationMock = jest.fn()
-
-      windowEventMap.keyup({
-        key: 't',
-        tagName: 'body',
-        type: 'keyup',
-        preventDefault: preventDefaultMock,
-        stopPropagation: stopPropagationMock
-      })
+      await user.keyboard('{t}')
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
       expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
     })
 
-    test('open timeline by pressing t', () => {
-      const { props, enzymeWrapper } = setup({
+    test('open timeline by pressing t', async () => {
+      const { props, user } = setup({
         isOpen: false
       })
-      const timelineSection = enzymeWrapper.find('section.timeline')
 
-      expect(timelineSection.prop('className')).toEqual('timeline timeline--is-hidden')
+      const timelineSection = screen.getByRole('region', { name: 'Timeline' })
+      expect(timelineSection).toHaveClass('timeline--is-hidden')
 
-      const preventDefaultMock = jest.fn()
-      const stopPropagationMock = jest.fn()
-      windowEventMap.keyup({
-        key: 't',
-        tagName: 'body',
-        type: 'keyup',
-        preventDefault: preventDefaultMock,
-        stopPropagation: stopPropagationMock
-      })
+      await user.keyboard('{t}')
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
       expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
     })
 
-    test('closes the timeline with the close button', () => {
-      const { props, enzymeWrapper } = setup()
+    test('closes the timeline with the close button', async () => {
+      const { props, user } = setup()
 
-      const button = enzymeWrapper.find('button.timeline__toggle-button--close')
-
-      button.simulate('click')
+      const button = screen.getByLabelText('Hide Timeline')
+      await user.click(button)
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
       expect(props.onToggleTimeline).toHaveBeenCalledWith(false)
     })
 
-    test('opens the timeline with the open button', () => {
-      const { props, enzymeWrapper } = setup({
+    test('opens the timeline with the open button', async () => {
+      const { props, user } = setup({
         isOpen: false
       })
 
-      const button = enzymeWrapper.find('button.timeline__toggle-button--open')
-
-      button.simulate('click')
+      const button = screen.getByLabelText('Show Timeline')
+      await user.click(button)
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(1)
       expect(props.onToggleTimeline).toHaveBeenCalledWith(true)
@@ -555,129 +593,129 @@ describe('handle toggleTimeline', () => {
   })
 
   describe('when on the project page', () => {
-    test('does not close timeline by pressing t', () => {
-      const { props, enzymeWrapper } = setup({
+    test('does not close timeline by pressing t', async () => {
+      const { props, user } = setup({
         pathname: '/projects'
       })
-      const timelineSection = enzymeWrapper.find('section.timeline')
 
-      expect(timelineSection.prop('className')).toEqual('timeline')
-
-      const preventDefaultMock = jest.fn()
-      const stopPropagationMock = jest.fn()
-
-      windowEventMap.keyup({
-        key: 't',
-        tagName: 'body',
-        type: 'keyup',
-        preventDefault: preventDefaultMock,
-        stopPropagation: stopPropagationMock
-      })
+      await user.keyboard('{t}')
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(0)
     })
 
-    test('does not open timeline by pressing t', () => {
-      const { props, enzymeWrapper } = setup({
+    test('does not open timeline by pressing t', async () => {
+      const { props, user } = setup({
         pathname: '/projects'
       })
-      const timelineSection = enzymeWrapper.find('section.timeline')
 
-      expect(timelineSection.prop('className')).toEqual('timeline')
-
-      const preventDefaultMock = jest.fn()
-      const stopPropagationMock = jest.fn()
-      windowEventMap.keyup({
-        key: 't',
-        tagName: 'body',
-        type: 'keyup',
-        preventDefault: preventDefaultMock,
-        stopPropagation: stopPropagationMock
-      })
+      await user.keyboard('{t}')
 
       expect(props.onToggleTimeline).toHaveBeenCalledTimes(0)
     })
 
     test('does not show the close button', () => {
-      const { enzymeWrapper } = setup({
+      setup({
         pathname: '/projects'
       })
 
-      const button = enzymeWrapper.find('button.timeline__toggle-button--close')
-
-      expect(button.length).toEqual(0)
+      const closeButton = screen.queryByLabelText('Hide Timeline')
+      expect(closeButton).not.toBeInTheDocument()
     })
   })
 })
 
 describe('Metrics methods', () => {
-  test('onArrowKeyPan calls onMetricsTimeline(\'Left/Right Arrow Pan\')', () => {
-    const { enzymeWrapper, props } = setup()
+  test('oArrowKeyPan calls onMetricsTimeline(\'Left/Right Arrow Pan\')', () => {
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onArrowKeyPan')({})
+    act(() => {
+      timelineProps.onArrowKeyPan({})
+    })
 
     expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Left/Right Arrow Pan')
   })
 
   test('onButtonPan calls onMetricsTimeline(\'Button Pan\')', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onButtonPan')({})
+    act(() => {
+      timelineProps.onButtonPan({})
+    })
 
     expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Button Pan')
   })
 
   test('onButtonZoom calls onMetricsTimeline(\'Button Zoom\')', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onButtonZoom')({})
+    act(() => {
+      timelineProps.onButtonZoom({})
+    })
 
     expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Button Zoom')
   })
 
   test('onTemporalSet calls onMetricsTimeline(\'Created Temporal\')', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onTemporalSet')({})
+    act(() => {
+      timelineProps.onTemporalSet({})
+    })
 
     expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Created Temporal')
   })
 
   test('onDragPan calls onMetricsTimeline(\'Dragging Pan\')', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onDragPan')({})
+    act(() => {
+      timelineProps.onDragPan({})
+    })
 
     expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Dragging Pan')
   })
 
   test('onFocusedIntervalClick calls onMetricsTimeline(\'Click Label\')', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onFocusedIntervalClick')({})
+    act(() => {
+      timelineProps.onFocusedIntervalClick({})
+    })
 
     expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Click Label')
   })
 
   test('onScrollPan calls onMetricsTimeline(\'Scroll Pan\')', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onScrollPan')({})
+    act(() => {
+      timelineProps.onScrollPan({})
+    })
 
     expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Scroll Pan')
   })
 
   test('onScrollZoom calls onMetricsTimeline(\'Scroll Zoom\')', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
+    const timelineProps = EDSCTimeline.mock.calls[0][0]
 
-    enzymeWrapper.find(EDSCTimeline).invoke('onScrollZoom')({})
+    act(() => {
+      timelineProps.onScrollZoom({})
+    })
 
     expect(props.onMetricsTimeline).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTimeline).toHaveBeenCalledWith('Scroll Zoom')
