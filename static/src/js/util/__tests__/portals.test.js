@@ -41,7 +41,7 @@ describe('buildConfig', () => {
       },
       footer: {
         displayVersion: true,
-        attributionText: 'NASA Official: Stephen Berrick',
+        attributionText: 'NASA Official: Doug Newman',
         primaryLinks: [{
           title: 'FOIA',
           href: 'http://www.nasa.gov/FOIA/index.html'

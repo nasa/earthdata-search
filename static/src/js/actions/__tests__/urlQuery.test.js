@@ -206,7 +206,7 @@ describe('updateStore', () => {
               }
             },
             footer: {
-              attributionText: 'NASA Official: Stephen Berrick',
+              attributionText: 'NASA Official: Doug Newman',
               displayVersion: true,
               primaryLinks: [
                 {
