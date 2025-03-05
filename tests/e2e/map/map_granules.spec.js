@@ -36,7 +36,7 @@ import opensearchGranulesHeaders from './__mocks__/opensearch_granules/granules.
 import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/timeline.body.json'
 import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json'
 
-test.describe.skip('Map: Granule interactions', () => {
+test.describe('Map: Granule interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
       browserName,
@@ -51,7 +51,7 @@ test.describe.skip('Map: Granule interactions', () => {
     })
   })
 
-  test.describe('When viewing granule results', () => {
+  test.describe.skip('When viewing granule results', () => {
     test.describe('When viewing CMR granules', () => {
       test.beforeEach(async ({ page }) => {
         const conceptId = 'C1214470488-ASF'
@@ -367,10 +367,11 @@ test.describe.skip('Map: Granule interactions', () => {
     })
 
     test('displays the color map on the page', async ({ page }) => {
+      await page.getByTestId('legend').scrollIntoViewIfNeeded()
       await expect(page).toHaveScreenshot('colormap-screenshot.png', {
         clip: {
           x: 1138,
-          y: 263,
+          y: 433,
           width: 252,
           height: 47
         }
@@ -413,7 +414,7 @@ test.describe.skip('Map: Granule interactions', () => {
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
             clip: {
               x: 1138,
-              y: 260,
+              y: 433,
               width: 252,
               height: 47
             }
@@ -427,7 +428,7 @@ test.describe.skip('Map: Granule interactions', () => {
 
     test.describe('when switching the projection', () => {
       test.beforeEach(async ({ page }) => {
-        await page.getByTestId('projection-switcher__arctic').click()
+        await page.getByLabel('North Polar Stereographic').click()
       })
 
       test('does not show the colormap', async ({ page }) => {
@@ -436,7 +437,7 @@ test.describe.skip('Map: Granule interactions', () => {
 
       test.describe('when switching back to the geographic projection', () => {
         test.beforeEach(async ({ page }) => {
-          await page.getByTestId('projection-switcher__geo').click()
+          await page.getByLabel('Geographic (Equirectangular)').click()
         })
 
         test('displays the colormap', async ({ page }) => {
@@ -446,7 +447,7 @@ test.describe.skip('Map: Granule interactions', () => {
     })
   })
 
-  test.describe('when viewing a granule that crosses the antimeridian twice', () => {
+  test.describe.skip('when viewing a granule that crosses the antimeridian twice', () => {
     test.beforeEach(async ({ page }) => {
       const conceptId = 'C1258816710-ASDC_DEV2'
 
