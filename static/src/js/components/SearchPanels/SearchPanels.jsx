@@ -20,8 +20,9 @@ import Helmet from 'react-helmet'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { isLoggedIn } from '../../util/isLoggedIn'
+import { translateDefaultCollectionSortKey } from '../../util/collections'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
-import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
@@ -185,13 +186,11 @@ class SearchPanels extends PureComponent {
 
     const { collectionSort: userPrefCollectionSortKey } = preferences
 
-    const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
-
     // Translate 'default' to proper sort key if needed
-    const userPrefCollSortKey = (userPrefCollectionSortKey !== 'default' ? userPrefCollectionSortKey : defaultSortKey)
+    const userPrefCollSortKey = translateDefaultCollectionSortKey(userPrefCollectionSortKey)
 
-    // Use the url parameter sort key if present, else use user preferences sort key, else use the default sort key
-    const activeCollectionsSortKey = urlCollectionsSortKey || userPrefCollSortKey || defaultSortKey
+    // Use the url parameter sort key if present, else use user preferences sort key
+    const activeCollectionsSortKey = urlCollectionsSortKey || userPrefCollSortKey
 
     const {
       allIds: collectionAllIds,

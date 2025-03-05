@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { translateDefaultCollectionSortKey } from '../util/collections'
 
 /**
  * Retrieve all preferences from Redux
@@ -57,15 +57,12 @@ export const getGranuleSortPreference = createSelector(
  * @param {Object} state Current state of Redux
  */
 export const getCollectionSortKeyParameter = (state) => {
-  const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
-
   const { query } = state
   const { collection } = query
   const { paramCollectionSortKey } = collection
-  const userPrefKey = getCollectionSortPreference(state)
-  const userPrefTranslateDefaultKey = userPrefKey === 'default' ? defaultSortKey : userPrefKey
+  const userPrefSortKey = translateDefaultCollectionSortKey(getCollectionSortPreference(state))
 
-  if (paramCollectionSortKey === userPrefTranslateDefaultKey) {
+  if (paramCollectionSortKey === userPrefSortKey) {
     return null
   }
 
