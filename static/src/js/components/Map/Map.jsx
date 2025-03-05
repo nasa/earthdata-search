@@ -85,7 +85,7 @@ const createView = ({
   return view
 }
 
-// Scale controls and attribution
+// TODO Might want to move these out of this file at some point
 const scaleMetric = new ScaleLine({
   className: 'edsc-map-scale-metric',
   units: 'metric'
@@ -134,6 +134,8 @@ const Map = ({
 }) => {
   // This is the width of the side panels. We need to know this so we can adjust the padding
   // on the map view when the panels are resized.
+  // We adjust the padding so that centering the map on a point will center the point in the
+  // viewable area of the map and not behind a panel.
   const { panelsWidth } = useContext(PanelWidthContext)
 
   // Create a ref for the map and the map dome element
@@ -219,7 +221,32 @@ const Map = ({
     })
 
     return () => map.setTarget(null)
-  }, [projectionCode, isFocusedCollectionPage, colorMap])
+  }, [projectionCode])
+
+  useEffect(() => {
+    // When colorMap or isFocusedCollectionPage changes, remove the existing legend control
+    // and add a new one if necessary.
+    const map = mapRef.current
+    const controls = map.getControls()
+    const legendControl = controls.getArray().find(
+      (control) => control instanceof LegendControl
+    )
+
+    // Always remove existing legend control if present
+    if (legendControl) {
+      controls.remove(legendControl)
+    }
+
+    // Add new legend control only if on focused collection page and colorMap exists
+    if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
+      controls.push(
+        new LegendControl({
+          colorMap,
+          isFocusedCollectionPage
+        })
+      )
+    }
+  }, [isFocusedCollectionPage, colorMap])
 
   useEffect(() => {
     // When the panelsWidth changes, update the padding on the map view.
