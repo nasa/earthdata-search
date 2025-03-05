@@ -4,6 +4,91 @@ import * as getApplicationConfig from '../../../../../sharedUtils/config'
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../../portals/availablePortals.json'
 
+jest.mock('../../../../../portals/availablePortals.json', () => ({
+  edsc: {
+    features: {
+      advancedSearch: true,
+      authentication: true,
+      featureFacets:
+        {
+          showAvailableInEarthdataCloud: true,
+          showCustomizable: true,
+          showMapImagery: true
+        }
+
+    },
+    footer: {
+      attributionText: 'NASA Official: Test Official',
+      displayVersion: true,
+      primaryLinks: [{
+        title: 'FOIA',
+        href: 'http://www.nasa.gov/FOIA/index.html'
+      },
+      {
+        title: 'NASA Privacy Policy',
+        href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html'
+      },
+      {
+        title: 'USA.gov',
+        href: 'http://www.usa.gov'
+      }],
+      secondaryLinks: [{
+        title: 'Earthdata Access: A Section 508 accessible alternative',
+        href: 'https://access.earthdata.nasa.gov/'
+      }]
+    },
+    pageTitle: 'Earthdata Search',
+    portalBrowser: false,
+    title: {
+      primary: 'Earthdata Search'
+    },
+    ui: {
+      showNonEosdisCheckbox: true,
+      showOnlyGranulesCheckbox: true,
+      showTophat: true
+    },
+    portalId: 'edsc'
+  },
+  idn: {
+    moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
+    pageTitle: 'IDN',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'IDN',
+      secondary: 'CEOS International Directory Network'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'idn'
+  },
+  soos: {
+    moreInfoUrl: 'http://www.soos.aq',
+    pageTitle: 'Southern Ocean Observing System',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      tagKey: []
+    },
+    title: {
+      primary: 'SOOS',
+      secondary: 'Southern Ocean Observing System'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'soos'
+  }
+}
+))
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
@@ -41,7 +126,7 @@ describe('buildConfig', () => {
       },
       footer: {
         displayVersion: true,
-        attributionText: 'NASA Official: Doug Newman',
+        attributionText: 'NASA Official: Test Official',
         primaryLinks: [{
           title: 'FOIA',
           href: 'http://www.nasa.gov/FOIA/index.html'
