@@ -4,7 +4,6 @@ import React, {
   useRef
 } from 'react'
 import PropTypes from 'prop-types'
-
 import OlMap from 'ol/Map'
 import View from 'ol/View'
 import ScaleLine from 'ol/control/ScaleLine'
@@ -18,6 +17,7 @@ import { FaHome } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ZoomControl from './ZoomControl'
+import { LegendControl } from '../Legend/LegendControl'
 import ProjectionSwitcherControl from './ProjectionSwitcherControl'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
@@ -85,7 +85,7 @@ const createView = ({
   return view
 }
 
-// TODO Might want to move these out of this file at some point
+// Scale controls and attribution
 const scaleMetric = new ScaleLine({
   className: 'edsc-map-scale-metric',
   units: 'metric'
@@ -118,21 +118,22 @@ const zoomControl = (projectionCode) => new ZoomControl({
  * @param {String} params.projectionCode Projection code of the map
  * @param {Number} params.rotation Rotation of the map
  * @param {Number} params.zoom Zoom level of the map
+ * @param {Object} params.colorMap Color map for the focused collection
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
  */
 const Map = ({
   center,
+  colorMap,
+  isFocusedCollectionPage,
+  onChangeMap,
+  onChangeProjection,
   projectionCode,
   rotation,
-  zoom,
-  onChangeMap,
-  onChangeProjection
+  zoom
 }) => {
   // This is the width of the side panels. We need to know this so we can adjust the padding
   // on the map view when the panels are resized.
-  // We adjust the padding so that centering the map on a point will center the point in the
-  // viewable area of the map and not behind a panel.
   const { panelsWidth } = useContext(PanelWidthContext)
 
   // Create a ref for the map and the map dome element
@@ -148,6 +149,10 @@ const Map = ({
         zoomControl(projectionCode),
         new ProjectionSwitcherControl({
           onChangeProjection
+        }),
+        new LegendControl({
+          colorMap,
+          isFocusedCollectionPage
         })
       ],
       interactions: defaultInteractions().extend([
@@ -214,7 +219,7 @@ const Map = ({
     })
 
     return () => map.setTarget(null)
-  }, [projectionCode])
+  }, [projectionCode, isFocusedCollectionPage, colorMap])
 
   useEffect(() => {
     // When the panelsWidth changes, update the padding on the map view.
@@ -325,7 +330,9 @@ Map.propTypes = {
   rotation: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
   onChangeMap: PropTypes.func.isRequired,
-  onChangeProjection: PropTypes.func.isRequired
+  onChangeProjection: PropTypes.func.isRequired,
+  isFocusedCollectionPage: PropTypes.bool.isRequired,
+  colorMap: PropTypes.shape({}).isRequired
 }
 
 export default Map
