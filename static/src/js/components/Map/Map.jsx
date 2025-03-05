@@ -5,33 +5,47 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 
-import OlMap from 'ol/Map'
-import View from 'ol/View'
-import ScaleLine from 'ol/control/ScaleLine'
-import Attribution from 'ol/control/Attribution'
-import { transform } from 'ol/proj'
-import { defaults as defaultInteractions, DragRotate } from 'ol/interaction'
 import { altKeyOnly } from 'ol/events/condition'
+import { defaults as defaultInteractions, DragRotate } from 'ol/interaction'
+// TODO EDSC-4422: Don't actually need this until EDSC-4422
+// import { Feature } from 'ol'
+import { transform } from 'ol/proj'
+import Attribution from 'ol/control/Attribution'
+import MapEventType from 'ol/MapEventType'
+import OlMap from 'ol/Map'
+// TODO EDSC-4422: Don't actually need this until EDSC-4422
+// import PointerEventType from 'ol/pointer/EventType'
+import RenderEventType from 'ol/render/EventType'
+import ScaleLine from 'ol/control/ScaleLine'
+import VectorLayer from 'ol/layer/Vector'
+import VectorSource from 'ol/source/Vector'
+import View from 'ol/View'
 
-import { Plus, Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaHome } from 'react-icons/fa'
+import { Plus, Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
-import ZoomControl from './ZoomControl'
 import ProjectionSwitcherControl from './ProjectionSwitcherControl'
+import ZoomControl from './ZoomControl'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
-import worldImagery from '../../util/map/layers/worldImagery'
+import { drawGranuleOutlines } from '../../util/map/drawing'
+// TODO EDSC-4422: Don't actually need this until EDSC-4422
+// import { highlightedGranuleStyle } from '../../util/map/styles'
+import drawGranuleBackgrounds from '../../util/map/drawGranuleBackgrounds'
 import labelsLayer from '../../util/map/layers/placeLabels'
 import projections from '../../util/map/projections'
+import worldImagery from '../../util/map/layers/worldImagery'
 
 import 'ol/ol.css'
 import './Map.scss'
 
 // TODO Data attributions
 
+let previousGranulesKey
+let previousProjectionCode
 const esriAttribution = 'Powered by <a href="https://www.esri.com/" target="_blank">ESRI</a>'
 
 // Build the worldImagery layer
@@ -44,6 +58,36 @@ const worldImageryLayer = worldImagery({
 const placeLabelsLayer = await labelsLayer({
   attributions: esriAttribution,
   projectionCode: projections.geographic
+})
+
+// Layer for granule backgrounds
+const granuleBackgroundsSource = new VectorSource({
+  overlaps: true,
+  wrapX: false
+})
+const granuleBackgroundsLayer = new VectorLayer({
+  source: granuleBackgroundsSource,
+  className: 'edsc-granules-vector-layer'
+})
+
+// Layer for granule outlines
+const outlinesSource = new VectorSource({
+  overlaps: true,
+  wrapX: false
+})
+const outlinesLayer = new VectorLayer({
+  source: outlinesSource,
+  className: 'edsc-granules-outlines-layer'
+})
+
+// Layer for granule highlights
+const highlightsSource = new VectorSource({
+  overlaps: true,
+  wrapX: false
+})
+const highlightsLayer = new VectorLayer({
+  source: highlightsSource,
+  className: 'edsc-granules-highlights-layer'
 })
 
 // Create a view for the map. This will change when the padding needs to be updated
@@ -111,10 +155,46 @@ const zoomControl = (projectionCode) => new ZoomControl({
   duration: 250
 })
 
+// TODO EDSC-4422: Don't actually need this until EDSC-4422
+// let highlightedFeature
+// const highlightFeature = (coordinate) => {
+//   // Find the first feature at the coordinate, this will be the top granule
+//   const features = granuleBackgroundsSource.getFeaturesAtCoordinate(coordinate)
+//   // We only want the background feature, because it contains the full granule geometry
+//   // const featureToHighlight = features.find((feature) => feature.get('background'))
+//   const [featureToHighlight] = features
+
+//   // If we haven't found any features and we have a hightlited
+//   if (!featureToHighlight && highlightedFeature) {
+//     highlightsSource.removeFeature(highlightedFeature)
+//   }
+
+//   if (featureToHighlight) {
+//     // If we found a feature to highlight, remove the previous highlight
+//     if (highlightedFeature) {
+//       highlightsSource.removeFeature(highlightedFeature)
+//     }
+
+//     // Create a new feature with the geometry of the feature to highlight
+//     highlightedFeature = new Feature({
+//       geometry: featureToHighlight.getGeometry()
+//     })
+
+//     // Set the style for the highlighted feature
+//     // const style = featureToHighlight.getStyle()
+//     highlightedFeature.setStyle(highlightedGranuleStyle(0))
+
+//     // Add the highlighted feature to the vector source
+//     highlightsSource.addFeature(highlightedFeature)
+//   }
+// }
+
 /**
  * Uses OpenLayers to render a map
  * @param {Object} params
  * @param {Object} params.center Center latitude and longitude of the map
+ * @param {Object} params.granules Granules to render on the map
+ * @param {String} params.granulesKey Key to determine if the granules have changed
  * @param {String} params.projectionCode Projection code of the map
  * @param {Number} params.rotation Rotation of the map
  * @param {Number} params.zoom Zoom level of the map
@@ -123,6 +203,8 @@ const zoomControl = (projectionCode) => new ZoomControl({
  */
 const Map = ({
   center,
+  granules,
+  granulesKey,
   projectionCode,
   rotation,
   zoom,
@@ -157,7 +239,10 @@ const Map = ({
       ]),
       layers: [
         worldImageryLayer,
-        placeLabelsLayer
+        placeLabelsLayer,
+        granuleBackgroundsLayer,
+        outlinesLayer,
+        highlightsLayer
       ],
       target: mapElRef.current,
       view: createView({
@@ -170,7 +255,7 @@ const Map = ({
     })
     mapRef.current = map
 
-    map.on('moveend', (event) => {
+    map.on(MapEventType.MOVEEND, (event) => {
       // When the map is moved we need to call onChangeMap to update Redux
       // with the new values
       const eventMap = event.map
@@ -179,13 +264,12 @@ const Map = ({
       // Get the new center of the map
       const newCenter = view.getCenter()
 
-      let newLongitude = newCenter[0]
-      let newLatitude = newCenter[1]
+      let [newLongitude, newLatitude] = newCenter
       const newZoom = view.getZoom()
       let newRotationInDeg = 0
 
       // If the new center is 0,0 use the projection's default center
-      if (newCenter[0] === 0 && newCenter[1] === 0) {
+      if (newLongitude === 0 && newLatitude === 0) {
         const projectionConfig = projectionConfigs[projectionCode];
         [newLongitude, newLatitude] = projectionConfig.center
       } else {
@@ -196,7 +280,6 @@ const Map = ({
           crsProjections[projections.geographic]
         );
 
-        // Const newReprojectedCenter = toLonLat(newCenter, crsProjections[projections.geographic])
         [newLongitude, newLatitude] = newReprojectedCenter
       }
 
@@ -213,7 +296,18 @@ const Map = ({
       })
     })
 
-    return () => map.setTarget(null)
+    // TODO EDSC-4422: Don't actually need this until EDSC-4422
+    // map.on(PointerEventType.POINTERMOVE, (event) => {
+    //   if (event.dragging) {
+    //     return
+    //   }
+
+    //   highlightFeature(map.getEventCoordinate(event.originalEvent))
+    // })
+
+    return () => {
+      map.setTarget(null)
+    }
   }, [projectionCode])
 
   useEffect(() => {
@@ -311,9 +405,41 @@ const Map = ({
     map.setView(newView)
   }, [panelsWidth])
 
+  // When the granules change, draw the granule backgrounds
+  useEffect(() => {
+    // If the granules haven't changed and the projection hasn't changed, don't redraw the granule backgrounds
+    if (granulesKey === previousGranulesKey && projectionCode === previousProjectionCode) return
+
+    // Update the previous values
+    previousGranulesKey = granulesKey
+    previousProjectionCode = projectionCode
+
+    // Clear the existing granule backgrounds
+    granuleBackgroundsSource.clear()
+
+    // Draw the granule backgrounds
+    drawGranuleBackgrounds(granules, granuleBackgroundsSource, projectionCode)
+  }, [granules, granulesKey, projectionCode])
+
+  // Draw the granule outlines
+  outlinesLayer.on(RenderEventType.POSTRENDER, (event) => {
+    const ctx = event.context
+
+    drawGranuleOutlines({
+      ctx,
+      granuleBackgroundsSource,
+      map: mapRef.current,
+      projectionCode
+    })
+  })
+
   return (
     <div ref={mapElRef} id="map" className="map" />
   )
+}
+
+Map.defaultProps = {
+  granules: []
 }
 
 Map.propTypes = {
@@ -321,6 +447,8 @@ Map.propTypes = {
     latitude: PropTypes.number,
     longitude: PropTypes.number
   }).isRequired,
+  granules: PropTypes.arrayOf(PropTypes.shape({})),
+  granulesKey: PropTypes.string.isRequired,
   projectionCode: PropTypes.string.isRequired,
   rotation: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,

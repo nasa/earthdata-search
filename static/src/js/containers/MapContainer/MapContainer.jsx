@@ -32,13 +32,18 @@ import { locationPropType } from '../../util/propTypes/location'
 import projections from '../../util/map/projections'
 import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
-// import '../../util/map/sphericalPolygon'
 
-// import 'leaflet/dist/leaflet.css'
-import './MapContainer.scss'
-
-// import MapWrapper from './MapWrapper'
 import Map from '../../components/Map/Map'
+import {
+  backgroundPointStyle,
+  backgroundStyle,
+  deemphisizedGranuleStyle,
+  deemphisizedPointStyle,
+  granuleStyle,
+  pointStyle
+} from '../../util/map/styles'
+
+import './MapContainer.scss'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -186,7 +191,7 @@ export const MapContainer = (props) => {
 
   const maxZoom = projection === projections.geographic ? 7 : 4
 
-  let nonExcludedGranules
+  let nonExcludedGranuleIds = []
   if (focusedCollectionId && granuleSearchResults) {
     const { allIds, excludedGranuleIds, isOpenSearch } = granuleSearchResults
     const allGranuleIds = allIds
@@ -202,9 +207,8 @@ export const MapContainer = (props) => {
       granuleIds = difference(allGranuleIds, excludedGranuleIds)
     }
 
-    nonExcludedGranules = { byId: {} }
     granuleIds.forEach((granuleId) => {
-      nonExcludedGranules.byId[granuleId] = granulesMetadata[granuleId]
+      nonExcludedGranuleIds.push(granuleId)
     })
   }
 
@@ -287,11 +291,75 @@ export const MapContainer = (props) => {
   //   setLeftPadding(leftPadding + 100)
   // }, [zoom])
 
+  let allAddedGranuleIds = []
+  let allRemovedGranuleIds = []
+
+  if (focusedCollectionId && focusedCollectionId !== '') {
+    const { [focusedCollectionId]: focusedCollectionIdMetadata = {} } = collectionsMetadata
+
+    const { collections } = project
+    const { byId: projectById } = collections
+    const { [focusedCollectionId]: focusedProjectCollection = {} } = projectById
+
+    const { granules = {} } = focusedProjectCollection
+    const { addedGranuleIds = [], removedGranuleIds = [] } = granules
+
+    allAddedGranuleIds.push(...addedGranuleIds)
+    allRemovedGranuleIds.push(...removedGranuleIds)
+  }
+
+  // Generate a key based on the nonExcludedGranules and the addedGranuleIds and removedGranuleIds
+  // This key will be used to determine if the granules need to be redrawn
+  const granulesKey = Buffer.from(JSON.stringify({
+    nonExcludedGranuleIds,
+    addedGranuleIds: allAddedGranuleIds,
+    removedGranuleIds: allRemovedGranuleIds
+  })).toString('base64')
+
+  const granulesToDraw = []
+  if (nonExcludedGranuleIds) {
+    nonExcludedGranuleIds.forEach((granuleId) => {
+      const granule = granulesMetadata[granuleId]
+
+      let shouldDrawRegularStyle = true
+
+      if (allAddedGranuleIds.length > 0) {
+        shouldDrawRegularStyle = allAddedGranuleIds.includes(granuleId)
+      }
+
+      if (allRemovedGranuleIds.length > 0) {
+        shouldDrawRegularStyle = !allRemovedGranuleIds.includes(granuleId)
+      }
+
+      const { geometry } = granule.spatial
+      const { type } = geometry
+
+      if (type === 'Point') {
+        granule.style = shouldDrawRegularStyle ? pointStyle(0) : deemphisizedPointStyle(0)
+        granule.backgroundStyle = backgroundPointStyle
+      } else {
+        granule.style = shouldDrawRegularStyle ? granuleStyle(0) : deemphisizedGranuleStyle(0)
+        granule.backgroundStyle = backgroundStyle
+      }
+
+      granulesToDraw.push({
+        spatial: granule.spatial,
+        style: granule.style,
+        backgroundStyle: granule.backgroundStyle,
+        id: granule.id
+      })
+    })
+  }
+
   return (
     <Map
       center={center}
       projectionCode={projection}
       rotation={rotation}
+      focusedCollectionId={focusedCollectionId}
+      granules={granulesToDraw}
+      granulesKey={granulesKey}
+      project={project}
       zoom={zoom}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}

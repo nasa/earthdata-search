@@ -1,5 +1,14 @@
 // https://github.com/ai/nanoid/issues/363#issuecomment-1140906651
-const esModulesToIgnore = ['nanoid', 'lodash-es', 'sinon'].join('|')
+const esModulesToIgnore = [
+  'nanoid',
+  'lodash-es',
+  'sinon',
+  'ol',
+  'color-name',
+  'color-parse',
+  'color-rgba',
+  'color-space'
+].join('|')
 
 module.exports = {
   collectCoverage: true,
