@@ -6,7 +6,8 @@ import React, {
   useEffect,
   useLayoutEffect,
   useRef,
-  useState
+  useState,
+  useMemo
 } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -32,12 +33,14 @@ import { locationPropType } from '../../util/propTypes/location'
 import projections from '../../util/map/projections'
 import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
-// import '../../util/map/sphericalPolygon'
+import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
+import { getValueForTag } from '../../../../../sharedUtils/tags'
+// Import '../../util/map/sphericalPolygon'
 
 // import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 
-// import MapWrapper from './MapWrapper'
+// Import MapWrapper from './MapWrapper'
 import Map from '../../components/Map/Map'
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -241,6 +244,23 @@ export const MapContainer = (props) => {
     callbackOnChangeMap({ ...newMap })
   }, [projection])
 
+  const focusedCollectionMetadata = useMemo(() => collectionsMetadata[focusedCollectionId] || {}, [focusedCollectionId, collectionsMetadata])
+
+  const colorMapState = useMemo(() => {
+    const { tags } = focusedCollectionMetadata
+    const [gibsTag] = getValueForTag('gibs', tags) || []
+    let colorMapData = {}
+
+    if (gibsTag && hasGibsLayerForProjection(gibsTag, projection)) {
+      const { product } = gibsTag
+      colorMapData = colormapsMetadata[product] || {}
+    }
+
+    return colorMapData
+  }, [focusedCollectionMetadata, colormapsMetadata, projection])
+
+  const { colorMapData: colorMap } = colorMapState
+
   // Projection switching in leaflet is not supported. Here we render MapWrapper with a key of the projection prop.
   // So when the projection is changed in ProjectionSwitcher this causes the map to unmount and remount a new instance,
   // which creates the illusion of 'changing' the projection
@@ -295,6 +315,8 @@ export const MapContainer = (props) => {
       zoom={zoom}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
+      colorMap={colorMap}
+      isFocusedCollectionPage={isFocusedCollectionPage}
     />
   )
 }
