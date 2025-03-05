@@ -18,28 +18,6 @@
     pointer-events: none;
   }
 
-  &__bar {
-    margin: 0.125rem;
-    display: block;
-    height: 1rem;
-    width: 15rem;
-    border-radius: 0.125rem;
-    opacity: 0;
-    visibility: visible;
-    transition: opacity 0.2s ease;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-
-    &:hover {
-      cursor: crosshair;
-    }
-
-    .legend--is-colormap-rendered & {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
-
   &__labels {
     display: flex;
     justify-content: space-between;

@@ -3,6 +3,14 @@
 .edsc-map-zoom,
 .edsc-map-projection-switcher,
 .edsc-map-scale-imperial,
+.edsc-map-legend {
+  position: absolute;
+  z-index: 1;
+  right: 0.5rem;
+  background-color: transparent;
+  bottom: 310px;
+  line-height: 1.5;
+}
 .edsc-map-scale-metric {
   position: absolute;
   z-index: 10;
@@ -67,5 +75,31 @@
     height: 1.75rem;
     background-color: none;
     border: none;
+  }
+}
+
+.ol-viewport {
+  .legend {
+    &__bar {
+      margin: 0.125rem;
+      display: block;
+      height: 1rem;
+      width: 15rem;
+      border-radius: 0.125rem;
+      opacity: 0;
+      visibility: visible;
+      transition: opacity 0.2s ease;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+  
+      &:hover {
+        cursor: crosshair;
+      }
+    }
+
+    &--is-colormap-rendered .legend__bar {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 }
