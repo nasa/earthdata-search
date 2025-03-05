@@ -26,7 +26,7 @@ class ZoomControl extends Zoom {
 
     // Create the home button
     const homeElement = document.createElement('button')
-    homeElement.className = `${options.className}-out`
+    homeElement.className = `${options.className}-home`
     homeElement.setAttribute('type', 'button')
     homeElement.title = 'Zoom Home'
 
