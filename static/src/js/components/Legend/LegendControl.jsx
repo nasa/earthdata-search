@@ -8,7 +8,7 @@ import Legend from './Legend'
  * @param {Object} options - The options to configure the LegendControl
  * @param {Object} options.colorMap - The colormap data to display in the legend
  * @param {Boolean} options.isFocusedCollectionPage - Whether the current page is a focused collection page
- * @param {HTMLElement} options.target - The target element for the control
+ * @param {HTMLElement|string} [options.target] - The DOM element or element ID where this control should be rendered instead of the default map controls container
  */
 export class LegendControl extends Control {
   constructor(options) {
@@ -22,19 +22,9 @@ export class LegendControl extends Control {
 
     this.colorMap = options.colorMap
     this.isFocusedCollectionPage = options.isFocusedCollectionPage
-    this.render()
-  }
-
-  render() {
-    if (this.isFocusedCollectionPage && this.colorMap && Object.keys(this.colorMap).length > 0) {
-      console.log('rendering legend')
-      ReactDOM.render(
-        <Legend colorMap={this.colorMap} />,
-        this.element
-      )
-    } else {
-      console.log('unmounting legend')
-      ReactDOM.render(null, this.element)
-    }
+    ReactDOM.render(
+      <Legend colorMap={this.colorMap} />,
+      this.element
+    )
   }
 }

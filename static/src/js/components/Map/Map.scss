@@ -3,18 +3,10 @@
 .edsc-map-zoom,
 .edsc-map-projection-switcher,
 .edsc-map-scale-imperial,
-.edsc-map-legend {
-  position: absolute;
-  z-index: 1;
-  right: 0.5rem;
-  background-color: transparent;
-  bottom: 310px;
-  line-height: 1.5;
-}
 .edsc-map-scale-metric {
   position: absolute;
   z-index: 10;
-  right: 0.5rem;
+  right: .75rem;
   color: utils.$color__spacesuit-white;
   background-color: utils.$color__carbon--70;
   text-shadow: utils.$shadow__panel-dark;
@@ -34,6 +26,11 @@
 
 .edsc-map-zoom {
   bottom: 92px;
+}
+
+.edsc-map-legend {
+  right: .75rem;
+  top: 40px;
 }
 
 .edsc-map-projection-switcher {

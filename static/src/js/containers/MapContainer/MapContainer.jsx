@@ -35,12 +35,12 @@ import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
 import { getValueForTag } from '../../../../../sharedUtils/tags'
-// Import '../../util/map/sphericalPolygon'
+// import '../../util/map/sphericalPolygon'
 
 // import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 
-// Import MapWrapper from './MapWrapper'
+// import MapWrapper from './MapWrapper'
 import Map from '../../components/Map/Map'
 
 export const mapDispatchToProps = (dispatch) => ({
