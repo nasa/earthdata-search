@@ -7,6 +7,17 @@ import { withAdvancedSearch } from './withAdvancedSearch'
 import { getCollectionSortPreference } from '../selectors/preferences'
 
 /**
+ * Translate the sortKey to the actual default sort key
+ * if it is set to 'default'
+ * @param {String} sortKey
+ */
+export const translateDefaultCollectionSortKey = (sortKey) => {
+  const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
+
+  return sortKey === 'default' ? defaultSortKey : sortKey
+}
+
+/**
  * Prepare parameters used in getCollections() based on current Redux State
  * @param {Object} state Current Redux State
  * @returns {Object} Parameters used in buildCollectionSearchParams
@@ -38,12 +49,10 @@ export const prepareCollectionParams = (state) => {
     temporal = {}
   } = collectionQuery
 
-  const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
-  const userPrefSortKey = getCollectionSortPreference(state)
+  const userPrefSortKey = translateDefaultCollectionSortKey(getCollectionSortPreference(state))
 
   // Use parameter sort key if present, else use user preferences sort key
-  // and translate 'default' to the actual default sort key
-  const sortKey = [paramCollectionSortKey || (userPrefSortKey !== 'default' ? userPrefSortKey : defaultSortKey)]
+  const sortKey = [paramCollectionSortKey || userPrefSortKey]
 
   const {
     boundingBox,
