@@ -10,17 +10,16 @@ set -eux
 edscPortal="`cat portals/edsc/config.json`"
 
 # Update portal keys for deployment
-# edscPortal="`jq '.footer.attributionText |= sub("NASA Official: [^,]*"; "NASA Official: $newValue")' --arg newValue $bamboo_NASA_ATTRIBUTION_TEXT <<< $edscPortal`"
-edscPortal="`jq '.footer.attributionText = "$newValue"' --arg newValue $bamboo_NASA_ATTRIBUTION_TEXT <<< $edscPortal`"'
+edscPortal="`jq '.footer.attributionText = "$newValue"' --arg newValue $bamboo_NASA_ATTRIBUTION_TEXT <<< $edscPortal`"
 
+# Overwrite edsc portal with new values
 echo $edscPortal > tmp.$$.json && mv tmp.$$.json portals/edsc/config.json
-# jq '.footer.attributionText |= sub("Stephen Berrick"; "John Doe")' portals/edsc/config.json > portals/edsc/config.tmp.json && mv portals/edsc/config.tmp.json portals/edsc/config.json
 echo 'Value of the edsc portal after writting to it'
 echo "$(cat portals/edsc/config.json)" 
 
+
 # Read in static.config.json
 config="`cat static.config.json`"
-
 
 # Update keys for deployment
 config="`jq '.application.version = $newValue' --arg newValue ${RELEASE_VERSION} <<< $config`"
