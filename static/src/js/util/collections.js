@@ -4,6 +4,22 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { tagName } from '../../../../sharedUtils/tags'
 import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 import { withAdvancedSearch } from './withAdvancedSearch'
+import { getCollectionSortPreference } from '../selectors/preferences'
+
+/**
+ * If sortkey is set to 'default' or is undefined then
+ * set it to the default sort key
+ * @param {String} sortKey
+ */
+export const translateDefaultCollectionSortKey = (sortKey) => {
+  const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
+
+  if (sortKey === undefined) {
+    return defaultSortKey
+  }
+
+  return sortKey === 'default' ? defaultSortKey : sortKey
+}
 
 /**
  * Prepare parameters used in getCollections() based on current Redux State
@@ -31,11 +47,16 @@ export const prepareCollectionParams = (state) => {
     onlyEosdisCollections,
     overrideTemporal = {},
     pageNum,
-    sortKey = [],
+    paramCollectionSortKey,
     spatial = {},
     tagKey: selectedTag,
     temporal = {}
   } = collectionQuery
+
+  const userPrefSortKey = translateDefaultCollectionSortKey(getCollectionSortPreference(state))
+
+  // Use parameter sort key if present, else use user preferences sort key
+  const sortKey = [paramCollectionSortKey || userPrefSortKey]
 
   const {
     boundingBox,

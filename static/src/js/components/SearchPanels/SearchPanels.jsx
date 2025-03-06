@@ -20,6 +20,7 @@ import Helmet from 'react-helmet'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { isLoggedIn } from '../../util/isLoggedIn'
+import { translateDefaultCollectionSortKey } from '../../util/collections'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
@@ -180,10 +181,16 @@ class SearchPanels extends PureComponent {
 
     const {
       pageNum: collectionsPageNum = 1,
-      sortKey: collectionsSortKey = collectionSortKeys.scoreDescending
+      paramCollectionSortKey: urlCollectionsSortKey
     } = collectionQuery
 
-    const [activeCollectionsSortKey = collectionSortKeys.scoreDescending] = collectionsSortKey
+    const { collectionSort: userPrefCollectionSortKey } = preferences
+
+    // Translate 'default' to proper sort key if needed
+    const userPrefCollSortKey = translateDefaultCollectionSortKey(userPrefCollectionSortKey)
+
+    // Use the url parameter sort key if present, else use user preferences sort key
+    const activeCollectionsSortKey = urlCollectionsSortKey || userPrefCollSortKey
 
     const {
       allIds: collectionAllIds,
@@ -284,9 +291,12 @@ class SearchPanels extends PureComponent {
 
     const setCollectionSort = (value) => {
       const sortKey = [value]
+      const paramCollectionSortKey = value
+
       onChangeQuery({
         collection: {
-          sortKey
+          sortKey,
+          paramCollectionSortKey
         }
       })
 
@@ -863,7 +873,8 @@ SearchPanels.propTypes = {
     pageNum: PropTypes.number,
     sortKey: PropTypes.arrayOf(
       PropTypes.string
-    )
+    ),
+    paramCollectionSortKey: PropTypes.string
   }).isRequired,
   collectionsSearch: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),
@@ -916,6 +927,7 @@ SearchPanels.propTypes = {
     pageTitle: PropTypes.string
   }).isRequired,
   preferences: PropTypes.shape({
+    collectionSort: PropTypes.string,
     collectionListView: PropTypes.node,
     granuleListView: PropTypes.node,
     panelState: PropTypes.string
