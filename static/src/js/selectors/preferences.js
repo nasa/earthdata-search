@@ -62,6 +62,7 @@ export const getCollectionSortKeyParameter = (state) => {
   const { paramCollectionSortKey } = collection
   const userPrefSortKey = translateDefaultCollectionSortKey(getCollectionSortPreference(state))
 
+  // Do not show url parameter if preference matches the current query
   if (paramCollectionSortKey === userPrefSortKey) {
     return null
   }

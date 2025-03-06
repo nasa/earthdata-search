@@ -7,8 +7,7 @@ import { withAdvancedSearch } from './withAdvancedSearch'
 import { getCollectionSortPreference } from '../selectors/preferences'
 
 /**
- * Translate the sortKey to the actual default sort key
- * if it is set to 'default'. If sortKey is undefined then
+ * If sortkey is set to 'default' or is undefined then
  * set it to the default sort key
  * @param {String} sortKey
  */
