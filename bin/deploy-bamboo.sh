@@ -6,6 +6,12 @@ set -eux
 # Deployment configuration/variables
 ####################################
 
+# Read in edsc portal configuration
+edscPortal="`cat portals/edsc/config.json`"
+
+# Update portal keys for deployment
+edscPortal="`jq '.footer.attributionText = $newValue' --arg newValue $bamboo_NASA_ATTRIBUTION_TEXT <<< $edscPortal`"
+
 # Read in static.config.json
 config="`cat static.config.json`"
 
@@ -27,12 +33,6 @@ config="`jq '.application.orderStatusRefreshTimeCreating = $newValue' --arg newV
 config="`jq '.application.collectionSearchResultsSortKey = $newValue' --arg newValue $bamboo_COLLECTION_SEARCH_RESULTS_SORT_KEY <<< $config`"
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
-
-# Read in edsc portal configuration
-edscPortal="`cat portals/edsc/config.json`"
-
-# Update portal keys for deployment
-edscPortal="`jq '.footer.attributionText = $newValue' --arg newValue $bamboo_NASA_ATTRIBUTION_TEXT <<< $edscPortal`"
 
 # Overwrite static.config.json with new values
 echo $config > tmp.$$.json && mv tmp.$$.json static.config.json
