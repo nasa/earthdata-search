@@ -10,7 +10,7 @@ set -eux
 edscPortal="`cat portals/edsc/config.json`"
 
 # Update portal keys for deployment
-edscPortal="`jq '.footer.attributionText = "$newValue"' --arg newValue $bamboo_NASA_ATTRIBUTION_TEXT <<< $edscPortal`"
+edscPortal="`jq '.footer.attributionText = "$newValue"' --arg newValue "$bamboo_NASA_ATTRIBUTION_TEXT" <<< $edscPortal`"
 
 # Overwrite edsc portal with new values
 echo $edscPortal > tmp.$$.json && mv tmp.$$.json portals/edsc/config.json
