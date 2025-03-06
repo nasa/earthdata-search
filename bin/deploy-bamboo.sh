@@ -8,11 +8,16 @@ set -eux
 
 # Read in edsc portal configuration
 # jq --arg bamboo_NASA_ATTRIBUTION_TEXT "$bamboo_NASA_ATTRIBUTION_TEXT" '.footer.attributionText = $bamboo_NASA_ATTRIBUTION_TEXT' portals/edsc/config.json > portals/edsc/config.tmp.json && mv portals/edsc/config.tmp.json portals/edsc/config.json
+# Read in edsc portal configuration
+edscPortal=$(cat portals/edsc/config.json)
 
 # Update portal keys for deployment
-# edscPortal="`cat portals/edsc/config.json`"
-# edscPortal="`jq '.footer.attributionText = "$newValue"' --arg newValue $bamboo_NASA_ATTRIBUTION_TEXT <<< $edscPortal`"
 edscPortal=$(jq --arg newValue "$bamboo_NASA_ATTRIBUTION_TEXT" '.footer.attributionText = $newValue' <<< "$edscPortal")
+
+# Overwrite edsc portal with new values
+echo "$edscPortal" > portals/edsc/config.json
+
+# edscPortal=$(jq --arg newValue "$bamboo_NASA_ATTRIBUTION_TEXT" '.footer.attributionText = $newValue' <<< "$edscPortal")
 # Overwrite edsc portal with new values
 # echo $edscPortal > tmp.$$.json && mv tmp.$$.json portals/edsc/config.json
 echo 'Value of the edsc portal after writting to it'
