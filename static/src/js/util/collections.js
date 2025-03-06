@@ -8,11 +8,16 @@ import { getCollectionSortPreference } from '../selectors/preferences'
 
 /**
  * Translate the sortKey to the actual default sort key
- * if it is set to 'default'
+ * if it is set to 'default'. If sortKey is undefined then
+ * set it to the default sort key
  * @param {String} sortKey
  */
 export const translateDefaultCollectionSortKey = (sortKey) => {
   const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
+
+  if (sortKey === undefined) {
+    return defaultSortKey
+  }
 
   return sortKey === 'default' ? defaultSortKey : sortKey
 }

@@ -17,6 +17,10 @@ describe('#translateDefaultCollectionSortKey', () => {
     expect(translateDefaultCollectionSortKey('default')).toEqual(collectionSortKeys.usageDescending)
   })
 
+  test('returns default value of collectionSortKeys.usageDescending when sortKey undefined', () => {
+    expect(translateDefaultCollectionSortKey(undefined)).toEqual(collectionSortKeys.usageDescending)
+  })
+
   test('returns the sortKey as is when it is not set to default', () => {
     const { scoreDescending } = collectionSortKeys
     expect(translateDefaultCollectionSortKey(scoreDescending)).toEqual(scoreDescending)
