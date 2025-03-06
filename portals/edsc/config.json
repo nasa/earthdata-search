@@ -26,7 +26,7 @@
       }
     ],
     "secondaryLinks": [
-      {
+       {
         "href": "https://access.earthdata.nasa.gov/",
         "title": "Earthdata Access: A Section 508 accessible alternative"
       }

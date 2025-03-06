@@ -8,6 +8,8 @@ import {
   FaTable,
   FaFileExport
 } from 'react-icons/fa'
+import { upperFirst } from 'lodash-es'
+import { humanizeSortKey } from '../../util/humanizedQueryValueFormatters'
 
 import { headerMetaSkeleton, titleSkeleton } from './skeleton'
 
@@ -57,6 +59,9 @@ export const PanelGroupHeader = ({
   sortsArray,
   viewsArray
 }) => {
+  console.log('🚀 ~ file: PanelGroupHeader.jsx:60 ~ sortsArray:', sortsArray)
+  const sortLabel = `Sort: ${humanizeSortKey(activeSort)}`
+  const viewLabel = `View: ${upperFirst(activeView)}`
   const panelGroupHeaderClasses = classNames([
     'panel-group-header',
     {
@@ -203,11 +208,13 @@ export const PanelGroupHeader = ({
               {
                 moreActionsDropdownItems.map((moreActionsDropdownItem, i) => {
                   const key = JSON.stringify(moreActionsDropdownItem) + i
+                  console.log('🚀 ~ file: PanelGroupHeader.jsx:209 ~ key:', key)
                   const {
                     title = '',
                     icon = '',
                     link = {},
-                    onClick = null
+                    onClick = null,
+                    inProgress
                   } = moreActionsDropdownItem
 
                   const {
@@ -218,7 +225,12 @@ export const PanelGroupHeader = ({
                   const onClickProps = {}
 
                   if (typeof onClick === 'function') {
+                    console.log('clicking the export function')
                     onClickProps.onClick = onClick
+                  }
+
+                  if (inProgress) {
+                    onClickProps.inProgress = inProgress
                   }
 
                   let item = (
@@ -311,9 +323,9 @@ export const PanelGroupHeader = ({
                       <RadioSettingDropdown
                         id={`panel-group-header-dropdown__sort__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
-                        activeSortOrder={activeSort}
+                        activeSort={activeSort}
                         activeIcon={ActiveSortIcon}
-                        label="Sort"
+                        label={sortLabel}
                         settings={sortsArray}
                       />
                     )
@@ -324,7 +336,7 @@ export const PanelGroupHeader = ({
                         id={`panel-group-header-dropdown__view__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
                         activeIcon={ActiveViewIcon}
-                        label="View"
+                        label={viewLabel}
                         settings={viewsArray}
                       />
                     )

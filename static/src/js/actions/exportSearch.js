@@ -19,6 +19,7 @@ export const onExportFinished = (payload) => ({
  * @param {String} format Format for the export (JSON, CSV)
  */
 export const exportSearch = (format) => (dispatch, getState) => {
+  console.log('🚀 ~ file: exportSearch.js:22 ~ format:', format)
   dispatch(onExportStarted(format))
 
   const state = getState()

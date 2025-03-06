@@ -26,6 +26,7 @@ export const RadioSettingDropdownItem = ({
   onClick,
   title
 }) => {
+  console.log('🚀 ~ file: RadioSettingDropdownItem.jsx:29 ~ icon:', icon)
   const radioSettingItemClasses = classNames(
     className,
     'radio-setting-dropdown-item',

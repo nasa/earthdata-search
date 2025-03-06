@@ -23,7 +23,7 @@ import './PanelGroup.scss'
  * @param {Boolean} props.headerMetaPrimaryLoading - A flag designating the header primary loading state
  * @param {String} props.headerMetaPrimaryText - A string designating the header primary loading text
  * @param {Boolean} props.isActive -  A flag to designate the PanelGroup as active. Active PanelGroups are lifted to the highest index
- * @param {Boolean} props.isOpen - A flag to desingate the PanelGroup as open
+ * @param {Boolean} props.isOpen - A flag to designate the PanelGroup as open
  * @param {Array} props.moreActionsDropdownItems - An array of objects used to configure the more actions dropdown items
  * @param {Function} props.onChangePanel - The action to change the panel
  * @param {String} props.panelGroupId - The element to be used as the header
@@ -34,8 +34,8 @@ import './PanelGroup.scss'
 */
 export const PanelGroup = ({
   activePanelId,
-  activeSort,
   activeView,
+  activeSort,
   breadcrumbs,
   children,
   dataTestId,
@@ -57,6 +57,8 @@ export const PanelGroup = ({
   sortsArray,
   viewsArray
 }) => {
+  console.log('🚀 ~ file: PanelGroup.jsx:60 ~ sortsArray:', sortsArray)
+  console.log('🚀 ~ file: PanelGroup.jsx:62 ~ activeSort:', activeSort)
   const renderPanels = (child, index) => {
     if (!child) return null
 
@@ -163,7 +165,7 @@ PanelGroup.propTypes = {
   moreActionsDropdownItems: PropTypes.arrayOf(
     PropTypes.shape({
       title: PropTypes.string.isRequired,
-      icon: PropTypes.func.isRequired,
+      icon: PropTypes.func,
       link: PropTypes.shape({
         pathname: PropTypes.string,
         search: PropTypes.string,

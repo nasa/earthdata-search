@@ -61,6 +61,7 @@ function setup(overrideProps, location = '/search') {
     collectionQuery: {
       pageNum: 1,
       sortKey: [collectionSortKeys.scoreDescending]
+
     },
     collectionsSearch: {
       allIds: ['COLL_ID_1'],
@@ -161,6 +162,31 @@ describe('SearchPanels component', () => {
       expect(collectionResultsPanelProps.sortsArray[2].isActive).toBe(false)
       expect(collectionResultsPanelProps.sortsArray[3].label).toBe('End Date')
       expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(false)
+    })
+
+    describe('when there is a sort key parameter', () => {
+      test('sets the correct view state', () => {
+        const { enzymeWrapper } = setup({
+          collectionQuery: {
+            pageNum: 1,
+            sortKey: [collectionSortKeys.scoreDescending],
+            coll: [collectionSortKeys.scoreDescending]
+          }
+        })
+        const panels = enzymeWrapper.find(Panels)
+        const collectionResultsPanel = panels.find(PanelGroup).at(0)
+        const collectionResultsPanelProps = collectionResultsPanel.props()
+
+        expect(collectionResultsPanelProps.activeSort).toBe('')
+        expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
+        expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(true)
+        expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
+        expect(collectionResultsPanelProps.sortsArray[1].isActive).toBe(false)
+        expect(collectionResultsPanelProps.sortsArray[2].label).toBe('Start Date')
+        expect(collectionResultsPanelProps.sortsArray[2].isActive).toBe(false)
+        expect(collectionResultsPanelProps.sortsArray[3].label).toBe('End Date')
+        expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(false)
+      })
     })
 
     describe('when the collections are loading', () => {
@@ -1187,7 +1213,7 @@ describe('SearchPanels component', () => {
     })
   })
 
-  describe('componentDidUpdate updates the state if the panelView props have changed', () => {
+  test('componentDidUpdate updates the state if the panelView props have changed', () => {
     const { enzymeWrapper, props } = setup()
 
     const newProps = {
@@ -1259,7 +1285,7 @@ describe('SearchPanels component', () => {
 
         const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
           .at(0).find(PanelGroupHeader).props()
-        const { inProgress } = panelGroupHeaderProps.exportsArray[0]
+        const { inProgress } = panelGroupHeaderProps.moreActionsDropdownItems[0]
         expect(inProgress).toEqual(false)
       })
     })
@@ -1275,7 +1301,7 @@ describe('SearchPanels component', () => {
 
         const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
           .at(0).find(PanelGroupHeader).props()
-        const { inProgress } = panelGroupHeaderProps.exportsArray[0]
+        const { inProgress } = panelGroupHeaderProps.moreActionsDropdownItems[0]
         expect(inProgress).toEqual(true)
       })
     })
@@ -1286,7 +1312,7 @@ describe('SearchPanels component', () => {
 
         const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
           .at(0).find(PanelGroupHeader).props()
-        const { inProgress } = panelGroupHeaderProps.exportsArray[1]
+        const { inProgress } = panelGroupHeaderProps.moreActionsDropdownItems[1]
         expect(inProgress).toEqual(false)
       })
     })
@@ -1302,7 +1328,7 @@ describe('SearchPanels component', () => {
 
         const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
           .at(0).find(PanelGroupHeader).props()
-        const { inProgress } = panelGroupHeaderProps.exportsArray[1]
+        const { inProgress } = panelGroupHeaderProps.moreActionsDropdownItems[1]
         expect(inProgress).toEqual(true)
       })
     })

@@ -38,6 +38,7 @@ export const RadioSettingToggle = React.forwardRef(({
     >
       <span className="radio-setting-toggle__label">{label}</span>
     </CustomToggle>
+  // TODO this looks like what is shrinking it
   )
 })
 

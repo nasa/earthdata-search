@@ -15,11 +15,13 @@
     width: 0px;
     height: 0px;
     overflow: hidden;
-    font-size: 0.875rem;
+    // TODO we initially on the design review thought 0.75 but, that looked pretty small
+    font-size: 0.75rem;
+    font-weight: 700;
     color: utils.$color__carbon--80;
     margin-left: calc(bootstrap.$spacer / 4);
     text-indent: -10000px;
-
+    // TODO make the icon show up if this modifier is actitve
     .panels--sm & {
       position: relative;
       top: 0;
@@ -28,6 +30,11 @@
       width: auto;
       height: auto;
       text-indent: 0px;
+
+      
+      // .icon {
+      //   display: none;
+      // }
     }
   }
 }

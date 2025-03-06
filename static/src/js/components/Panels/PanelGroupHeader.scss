@@ -90,6 +90,12 @@
     }
   }
 
+
+  &__heading-meta-text {
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
   &__heading-meta-primary {
     display: flex;
     align-items: center;
@@ -139,6 +145,11 @@
       .radio-setting-dropdown__label {
         display: none;
       }
+      // TODO this we should change
+      .custom-toggle__icon {
+        display: none !important;
+      }
+      
     }
   }
 
@@ -148,7 +159,6 @@
     font-size: 0.825rem;
     color: utils.$color__carbon--90;
   }
-
 
   &__heading-primary {
     display: inline;

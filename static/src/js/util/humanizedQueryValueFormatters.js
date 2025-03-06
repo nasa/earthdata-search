@@ -79,3 +79,23 @@ export const formatFacetHierarchy = (value, order) => value.map(
     return hierarchy
   }
 )
+
+/**
+ * Humanizes the sort key value sent to CMR with a human readable value
+ * @param {String} sortKey - The value for the sort key type sent to CMR
+ * @returns {String} A humanized human readable string to display
+ */
+export const humanizeSortKey = (sortKey) => {
+  console.log('🚀 ~ file: collectionSortKeys.js:9 ~ sortKey:', sortKey)
+  if (!sortKey) return 'Unknown'
+  const startDateMatch = /-?start_date/
+  const endDateMatch = /-ongoing|-?end_date/
+
+  // Sort orders
+  if (sortKey === '-score') return 'Relevance'
+  if (sortKey === '-usage_score') return 'Usage'
+  if (startDateMatch.test(sortKey)) return 'Start Date'
+  if (endDateMatch.test(sortKey)) return 'End Date'
+
+  return sortKey
+}

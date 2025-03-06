@@ -4,6 +4,7 @@ import {
   formatFacetHierarchy,
   formatPoint,
   formatPoints,
+  humanizeSortKey,
   formatTemporal
 } from '../humanizedQueryValueFormatters'
 
@@ -219,6 +220,53 @@ describe(('formatFacetHierarchy'), () => {
           ['term', 'topic'],
           ['term', 'topic', 'variable_level_one']
         ])
+      })
+    })
+
+    describe('humanizeSortKey', () => {
+      test('returns "Relevance" for "-score"', () => {
+        const result = humanizeSortKey('-score')
+        expect(result).toBe('Relevance')
+      })
+
+      test('returns "Usage" for "-usage_score"', () => {
+        const result = humanizeSortKey('-usage_score')
+        expect(result).toBe('Usage')
+      })
+
+      test('returns "Start Date" for "start_date"', () => {
+        const result = humanizeSortKey('start_date')
+        expect(result).toBe('Start Date')
+      })
+
+      test('returns "Start Date" for "-start_date"', () => {
+        const result = humanizeSortKey('-start_date')
+        expect(result).toBe('Start Date')
+      })
+
+      test('returns "End Date" for "end_date"', () => {
+        const result = humanizeSortKey('end_date')
+        expect(result).toBe('End Date')
+      })
+
+      test('returns "End Date" for "-end_date"', () => {
+        const result = humanizeSortKey('-end_date')
+        expect(result).toBe('End Date')
+      })
+
+      test('returns "End Date" for "-ongoing"', () => {
+        const result = humanizeSortKey('-ongoing')
+        expect(result).toBe('End Date')
+      })
+
+      test('returns "Unknown" for undefined', () => {
+        const result = humanizeSortKey(undefined)
+        expect(result).toBe('Unknown')
+      })
+
+      test('returns the original sort key for unknown values', () => {
+        const result = humanizeSortKey('unknown_sort_key')
+        expect(result).toBe('unknown_sort_key')
       })
     })
   })
