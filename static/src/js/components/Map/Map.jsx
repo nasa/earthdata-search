@@ -4,7 +4,6 @@ import React, {
   useRef
 } from 'react'
 import PropTypes from 'prop-types'
-
 import OlMap from 'ol/Map'
 import View from 'ol/View'
 import ScaleLine from 'ol/control/ScaleLine'
@@ -18,6 +17,7 @@ import { FaHome } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ZoomControl from './ZoomControl'
+import { LegendControl } from '../Legend/LegendControl'
 import ProjectionSwitcherControl from './ProjectionSwitcherControl'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
@@ -118,16 +118,19 @@ const zoomControl = (projectionCode) => new ZoomControl({
  * @param {String} params.projectionCode Projection code of the map
  * @param {Number} params.rotation Rotation of the map
  * @param {Number} params.zoom Zoom level of the map
+ * @param {Object} params.colorMap Color map for the focused collection
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
  */
 const Map = ({
   center,
+  colorMap,
+  isFocusedCollectionPage,
+  onChangeMap,
+  onChangeProjection,
   projectionCode,
   rotation,
-  zoom,
-  onChangeMap,
-  onChangeProjection
+  zoom
 }) => {
   // This is the width of the side panels. We need to know this so we can adjust the padding
   // on the map view when the panels are resized.
@@ -148,6 +151,10 @@ const Map = ({
         zoomControl(projectionCode),
         new ProjectionSwitcherControl({
           onChangeProjection
+        }),
+        new LegendControl({
+          colorMap,
+          isFocusedCollectionPage
         })
       ],
       interactions: defaultInteractions().extend([
@@ -215,6 +222,31 @@ const Map = ({
 
     return () => map.setTarget(null)
   }, [projectionCode])
+
+  useEffect(() => {
+    // When colorMap or isFocusedCollectionPage changes, remove the existing legend control
+    // and add a new one if necessary.
+    const map = mapRef.current
+    const controls = map.getControls()
+    const legendControl = controls.getArray().find(
+      (control) => control instanceof LegendControl
+    )
+
+    // Always remove existing legend control if present
+    if (legendControl) {
+      controls.remove(legendControl)
+    }
+
+    // Add new legend control only if on focused collection page and colorMap exists
+    if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
+      controls.push(
+        new LegendControl({
+          colorMap,
+          isFocusedCollectionPage
+        })
+      )
+    }
+  }, [isFocusedCollectionPage, colorMap])
 
   useEffect(() => {
     // When the panelsWidth changes, update the padding on the map view.
@@ -325,7 +357,9 @@ Map.propTypes = {
   rotation: PropTypes.number.isRequired,
   zoom: PropTypes.number.isRequired,
   onChangeMap: PropTypes.func.isRequired,
-  onChangeProjection: PropTypes.func.isRequired
+  onChangeProjection: PropTypes.func.isRequired,
+  isFocusedCollectionPage: PropTypes.bool.isRequired,
+  colorMap: PropTypes.shape({}).isRequired
 }
 
 export default Map
