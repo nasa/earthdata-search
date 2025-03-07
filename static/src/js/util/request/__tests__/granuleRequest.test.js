@@ -157,8 +157,8 @@ describe('GranuleRequest#transformResponse', () => {
               spatial: {
                 type: 'Feature',
                 geometry: {
-                  type: 'Point',
-                  coordinates: [10, 0]
+                  type: 'MultiPoint',
+                  coordinates: [[10, 0]]
                 }
               }
             }

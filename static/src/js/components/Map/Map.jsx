@@ -31,7 +31,7 @@ import ZoomControl from './ZoomControl'
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
-import { drawGranuleOutlines } from '../../util/map/drawing'
+import { drawGranuleOutlines } from '../../util/map/drawGranuleOutlines'
 // TODO EDSC-4422: Don't actually need this until EDSC-4422
 // import { highlightedGranuleStyle } from '../../util/map/styles'
 import drawGranuleBackgrounds from '../../util/map/drawGranuleBackgrounds'
@@ -71,22 +71,22 @@ const granuleBackgroundsLayer = new VectorLayer({
 })
 
 // Layer for granule outlines
-const outlinesSource = new VectorSource({
+const granuleOutlinesSource = new VectorSource({
   overlaps: true,
   wrapX: false
 })
-const outlinesLayer = new VectorLayer({
-  source: outlinesSource,
+const granuleOutlinesLayer = new VectorLayer({
+  source: granuleOutlinesSource,
   className: 'edsc-granules-outlines-layer'
 })
 
 // Layer for granule highlights
-const highlightsSource = new VectorSource({
+const granuleHighlightsSource = new VectorSource({
   overlaps: true,
   wrapX: false
 })
-const highlightsLayer = new VectorLayer({
-  source: highlightsSource,
+const granuleHighlightsLayer = new VectorLayer({
+  source: granuleHighlightsSource,
   className: 'edsc-granules-highlights-layer'
 })
 
@@ -241,8 +241,8 @@ const Map = ({
         worldImageryLayer,
         placeLabelsLayer,
         granuleBackgroundsLayer,
-        outlinesLayer,
-        highlightsLayer
+        granuleOutlinesLayer,
+        granuleHighlightsLayer
       ],
       target: mapElRef.current,
       view: createView({
@@ -422,7 +422,7 @@ const Map = ({
   }, [granules, granulesKey, projectionCode])
 
   // Draw the granule outlines
-  outlinesLayer.on(RenderEventType.POSTRENDER, (event) => {
+  granuleOutlinesLayer.on(RenderEventType.POSTRENDER, (event) => {
     const ctx = event.context
 
     drawGranuleOutlines({

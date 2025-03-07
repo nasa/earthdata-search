@@ -100,6 +100,7 @@ export default class GranuleRequest extends CmrRequest {
 
       // Create a GeoJSON representation of the granule spatial
       updatedGranule.spatial = normalizeGranuleSpatial(granule)
+      console.log('🚀 ~ granuleRequest.js:103 ~ GranuleRequest ~ entry.map ~ updatedGranule:', updatedGranule)
       console.log('🚀 ~ granuleRequest.js:103 ~ GranuleRequest ~ entry.map ~ updatedGranule.spatial:', updatedGranule.spatial)
 
       return updatedGranule

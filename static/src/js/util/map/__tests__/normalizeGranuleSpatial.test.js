@@ -38,6 +38,43 @@ describe('normalizeGranuleSpatial', () => {
       })
     })
 
+    describe('when the granule has multiple boxes', () => {
+      test('returns a geojson multi polygon', () => {
+        const granule = {
+          boxes: ['0 0 10 10', '1 1 11 11']
+        }
+
+        const response = normalizeGranuleSpatial(granule)
+
+        expect(response).toEqual({
+          type: 'Feature',
+          geometry: {
+            type: 'MultiPolygon',
+            coordinates: [
+              [
+                [
+                  [0, 0],
+                  [10, 0],
+                  [10, 10],
+                  [0, 10],
+                  [0, 0]
+                ]
+              ],
+              [
+                [
+                  [1, 1],
+                  [11, 1],
+                  [11, 11],
+                  [1, 11],
+                  [1, 1]
+                ]
+              ]
+            ]
+          }
+        })
+      })
+    })
+
     describe('when the box crosses the antimeridian', () => {
       test('returns a geojson multi polygon', () => {
         const granule = {
@@ -76,7 +113,7 @@ describe('normalizeGranuleSpatial', () => {
   describe('when the granule has a line', () => {
     test('returns a geojson multi line string', () => {
       const granule = {
-        lines: ['0 0 10 10']
+        lines: ['0 5 10 15']
       }
 
       const response = normalizeGranuleSpatial(granule)
@@ -87,11 +124,38 @@ describe('normalizeGranuleSpatial', () => {
           type: 'MultiLineString',
           coordinates: [
             [
-              [0, 0],
-              [10, 10]
+              [5, 0],
+              [15, 10]
             ]
           ]
         }
+      })
+    })
+
+    describe('when the granule has multiple lines', () => {
+      test('returns a geojson multi line string', () => {
+        const granule = {
+          lines: ['0 5 10 15', '1 6 11 16']
+        }
+
+        const response = normalizeGranuleSpatial(granule)
+
+        expect(response).toEqual({
+          type: 'Feature',
+          geometry: {
+            type: 'MultiLineString',
+            coordinates: [
+              [
+                [5, 0],
+                [15, 10]
+              ],
+              [
+                [6, 1],
+                [16, 11]
+              ]
+            ]
+          }
+        })
       })
     })
 
@@ -126,7 +190,7 @@ describe('normalizeGranuleSpatial', () => {
   })
 
   describe('when the granule has a point', () => {
-    test('returns a geojson point', () => {
+    test('returns a geojson multipoint', () => {
       const granule = {
         points: ['0 10']
       }
@@ -136,9 +200,30 @@ describe('normalizeGranuleSpatial', () => {
       expect(response).toEqual({
         type: 'Feature',
         geometry: {
-          type: 'Point',
-          coordinates: [10, 0]
+          type: 'MultiPoint',
+          coordinates: [[10, 0]]
         }
+      })
+    })
+
+    describe('when the granule has multiple points', () => {
+      test('returns a geojson multipoint', () => {
+        const granule = {
+          points: ['0 10', '1 11']
+        }
+
+        const response = normalizeGranuleSpatial(granule)
+
+        expect(response).toEqual({
+          type: 'Feature',
+          geometry: {
+            type: 'MultiPoint',
+            coordinates: [
+              [10, 0],
+              [11, 1]
+            ]
+          }
+        })
       })
     })
   })
@@ -173,6 +258,56 @@ describe('normalizeGranuleSpatial', () => {
             ]
           ]
         }
+      })
+    })
+
+    describe('when the granule has multiple polygons', () => {
+      test('returns a geojson multi polygon', () => {
+        const granule = {
+          polygons: [
+            ['0 0 0 10 10 10 10 0 0 0'],
+            ['0 0 0 5 5 5 5 0 0 0']
+          ]
+        }
+
+        const response = normalizeGranuleSpatial(granule)
+
+        expect(response).toEqual({
+          type: 'Feature',
+          geometry: {
+            type: 'MultiPolygon',
+            coordinates: [
+              [
+                [
+                  [0, 0],
+                  [10.000000000000012, 6.092193914545939e-16],
+                  [10, 0],
+                  [10, 10.000000000000012],
+                  [10, 10],
+                  [7.500144327690457, 10.02806255960527],
+                  [4.999999999999976, 10.037423045910712],
+                  [2.499855672309495, 10.028062559605273],
+                  [-4.929859756268451e-14, 10],
+                  [0, 10],
+                  [1.2184387829091878e-15, -1.2722218725854067e-14]
+                ]
+              ],
+              [
+                [
+                  [0, 0],
+                  [4.999999999999992, 3.0577325527910283e-16],
+                  [5, 0],
+                  [5, 4.999999999999992],
+                  [5, 5],
+                  [2.5000000000000027, 5.004739244608396],
+                  [4.770832022195275e-15, 5.000000000000001],
+                  [0, 5],
+                  [6.115465105582057e-16, 7.951386703658792e-15]
+                ]
+              ]
+            ]
+          }
+        })
       })
     })
 

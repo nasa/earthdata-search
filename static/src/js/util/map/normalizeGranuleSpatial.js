@@ -1,5 +1,6 @@
 import { greatCircleArc } from 'ol/geom/flat/geodesic'
 import { dividePolygon } from '@edsc/geo-utils'
+import { simplify } from '@turf/turf'
 
 import { crsProjections } from './crs'
 
@@ -24,12 +25,12 @@ const interpolatePolygon = (coordinates) => {
 
 // If the line crosses the antimeridian, divide it and return the divided coordinates
 // This needs to split every time the line crosses the antimeridian
-const divideLine = (lines) => {
+const divideLine = (line) => {
   // Iterate over the coordinates and find the antimeridian crossing
   const dividedCoordinates = []
   let currentLine = []
   let previousLng = null
-  const coordinates = lines[0].split(' ')
+  const coordinates = line.split(' ')
 
   for (let i = 0; i < coordinates.length; i += 2) {
     const lng = parseFloat(coordinates[i + 1])
@@ -71,31 +72,34 @@ const normalizeGranuleSpatial = (granule) => {
 
   // If the granule has a box, return a MultiPolygon
   if (boxes) {
-    // `boxes` is an array of strings that looks like this:
-    // ["swLon swLat neLon neLat"]
-    const [swLat, swLon, neLat, neLon] = boxes[0].split(' ').map((coord) => parseFloat(coord))
+    const multiPolygons = []
+    boxes.forEach((box) => {
+      // `boxes` is an array of strings that looks like this:
+      // ["swLon swLat neLon neLat"]
+      const [swLat, swLon, neLat, neLon] = box.split(' ').map((coord) => parseFloat(coord))
 
-    // Create a polygon from the bounding box
-    const polygonCoordinates = [
-      [swLon, swLat],
-      [swLon, neLat],
-      [neLon, neLat],
-      [neLon, swLat],
-      [swLon, swLat]
-    ]
+      // Create a polygon from the bounding box
+      const polygonCoordinates = [
+        [swLon, swLat],
+        [swLon, neLat],
+        [neLon, neLat],
+        [neLon, swLat],
+        [swLon, swLat]
+      ]
 
-    // Divide the polygon to handle antimeridian crossing
-    const { interiors: dividedCoordinates } = dividePolygon(
-      polygonCoordinates.map(([lng, lat]) => ({
-        lng,
-        lat
-      }))
-    )
+      // Divide the polygon to handle antimeridian crossing
+      const { interiors: dividedCoordinates } = dividePolygon(
+        polygonCoordinates.map(([lng, lat]) => ({
+          lng,
+          lat
+        }))
+      )
 
-    // Convert the divided coordinates to GeoJSON MultiPolygon format
-    const multiPolygons = [dividedCoordinates.map(
-      (polygon) => polygon.map(({ lng, lat }) => [lng, lat])
-    )]
+      // Convert the divided coordinates to GeoJSON MultiPolygon format
+      multiPolygons.push(dividedCoordinates.map(
+        (polygon) => polygon.map(({ lng, lat }) => [lng, lat])
+      ))
+    })
 
     // Return the bounding box as GeoJSON MultiPolygon
     return {
@@ -109,84 +113,120 @@ const normalizeGranuleSpatial = (granule) => {
 
   // If the granule has a line, return a GeoJSON MultiLineString
   if (lines) {
-    // `lines` is an array of strings that looks like this:
-    // ["47.2048 -122.4496 47.1738 -122.4015 29.5579 -95.1636 29.5856 -95.1642"]
-    // These points are [lon1, lat1, lon2, lat2, lon3, lat3, lon4, lat4]
-    // We need to convert it to be an array of arrays of coordinates
-    // that looks like this:
-    // [[-122.4496, 47.2048], [-122.4015, 47.1738], [-95.1636, 29.5579], [-95.1642, 29.5856]]
+    const multipleLines = []
+    lines.forEach((line) => {
+      // `lines` is an array of strings that looks like this:
+      // ["47.2048 -122.4496 47.1738 -122.4015 29.5579 -95.1636 29.5856 -95.1642"]
+      // These points are [lon1, lat1, lon2, lat2, lon3, lat3, lon4, lat4]
+      // We need to convert it to be an array of arrays of coordinates
+      // that looks like this:
+      // [[-122.4496, 47.2048], [-122.4015, 47.1738], [-95.1636, 29.5579], [-95.1642, 29.5856]]
 
-    // Divide the line to handle antimeridian crossing
-    const dividedCoordinates = divideLine(lines)
+      // Divide the line to handle antimeridian crossing
+      const dividedCoordinates = divideLine(line)
+
+      multipleLines.push(...dividedCoordinates)
+    })
 
     // Return the line as GeoJSON MultiLineString
-    return {
+    const json = {
       type: 'Feature',
       geometry: {
         type: 'MultiLineString',
-        coordinates: dividedCoordinates.map((line) => line.map(([lng, lat]) => [lng, lat]))
+        coordinates: multipleLines
       }
     }
+
+    // Get the number of points in the line
+    const numPoints = json.geometry.coordinates.reduce((acc, line) => acc + line.length, 0)
+
+    // If the line has more than 2000 points, simplify it to improve rendering permormance on the map
+    if (numPoints > 2000) {
+      return simplify(json, {
+        tolerance: 0.001,
+        highQuality: true
+      })
+    }
+
+    return json
   }
 
-  // If the granule has a point, return a GeoJSON Point
+  // If the granule has a point, return a GeoJSON MultiPoint
   if (points) {
-    // `points` is an array of strings that looks like this:
-    // ["lat lng"]
-    // These points are [lng, lat]
-    // We need to convert it to be an array of coordinates
-    // that looks like this:
-    // [lng, lat]
-    const pointCoordinates = points[0].split(' ').reverse().map((coord) => parseFloat(coord))
+    const multiPoints = []
+    points.forEach((point) => {
+      // `points` is an array of strings that looks like this:
+      // ["lat lng"]
+      // These points are [lng, lat]
+      // We need to convert it to be an array of coordinates
+      // that looks like this:
+      // [lng, lat]
+      const pointCoordinates = point.split(' ').reverse().map((coord) => parseFloat(coord))
 
-    // Return the point as GeoJSON Point
+      multiPoints.push(pointCoordinates)
+    })
+
+    // Return the point as GeoJSON MultiPoint
     return {
       type: 'Feature',
       geometry: {
-        type: 'Point',
-        coordinates: pointCoordinates
+        type: 'MultiPoint',
+        coordinates: multiPoints
       }
     }
   }
 
   // If the granule has a polygon, return a GeoJSON MultiPolygon
   if (polygons) {
-    // `polygons` is an array of an array of coordinates that looks like this:
-    // [ ["0 0 0 1 1 1 1 0 0 0"] ]
-    // We need to convert this into an array of arrays of coordinates
-    // that looks like this:
-    // [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]
-    const coordinates = polygons[0][0].split(' ').reduce((acc, coord, polygonsIndex) => {
-      if (polygonsIndex % 2 === 0) {
-        acc.push([parseFloat(polygons[0][0].split(' ')[polygonsIndex + 1]), parseFloat(coord)])
-      }
+    const multiPolygons = []
+    polygons.forEach((polygon) => {
+      polygon.forEach((shape) => {
+        // `polygons` is an array of an array of coordinates that looks like this:
+        // [ ["0 0 0 1 1 1 1 0 0 0"] ]
+        // We need to convert this into an array of arrays of coordinates
+        // that looks like this:
+        // [[0, 0], [0, 1], [1, 1], [1, 0], [0, 0]]
+        const coordinates = shape.split(' ').reduce((acc, coord, polygonsIndex) => {
+          if (polygonsIndex % 2 === 0) {
+            acc.push([parseFloat(shape.split(' ')[polygonsIndex + 1]), parseFloat(coord)])
+          }
 
-      return acc
-    }, [])
+          return acc
+        }, [])
 
-    // Divide the polygon to handle antimeridian crossing
-    const { interiors: dividedCoordinates } = dividePolygon(coordinates.map(([lng, lat]) => ({
-      lng,
-      lat
-    })))
+        // Divide the polygon to handle antimeridian crossing
+        const { interiors: dividedCoordinates } = dividePolygon(coordinates.map(([lng, lat]) => ({
+          lng,
+          lat
+        })))
 
-    const interpolatedPolygonCoords = []
-    // Interpolate the polygon coordinates so that the polygon follows the curvature of the Earth, and
-    // divide the polygon to handle antimeridian crossing
-    // const interpolatedPolygonCoords = interpolatePolygon(coordinates)
-    dividedCoordinates.forEach((polygon) => {
-      const interpolatedPolygon = interpolatePolygon(polygon)
-      interpolatedPolygonCoords.push(interpolatedPolygon)
+        dividedCoordinates.forEach((p) => {
+          const interpolatedPolygon = interpolatePolygon(p)
+          multiPolygons.push(interpolatedPolygon)
+        })
+      })
     })
 
     // Return the polygons as GeoJSON MultiPolygon (to simplify drawing on the map)
-    return {
+    const json = {
       type: 'Feature',
       geometry: {
         type: 'MultiPolygon',
-        coordinates: interpolatedPolygonCoords
+        coordinates: multiPolygons
       }
     }
+
+    const numPoints = json.geometry.coordinates.reduce((acc, polygon) => acc + polygon[0].length, 0)
+
+    // If the polygon has more than 2000 points, simplify it to improve rendering permormance on the map
+    if (numPoints > 2000) {
+      return simplify(json, {
+        tolerance: 0.001,
+        highQuality: true
+      })
+    }
+
+    return json
   }
 
   return null

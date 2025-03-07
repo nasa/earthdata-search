@@ -7,9 +7,7 @@ import CircleStyle from 'ol/style/Circle'
 
 import { getColorByIndex } from '../colors'
 
-// Background we used with leaflet
-// const backgroundColor = 'rgba(128, 128, 128, .2)'
-const backgroundColor = 'rgba(128, 128, 128, .6)'
+const backgroundColor = 'rgba(128, 128, 128, 0.6)'
 export const pointRadius = 5
 const highlightedFillColor = 'rgba(46, 204, 113, 0.2)'
 

@@ -191,7 +191,7 @@ export const MapContainer = (props) => {
 
   const maxZoom = projection === projections.geographic ? 7 : 4
 
-  let nonExcludedGranuleIds = []
+  let nonExcludedGranules = {}
   if (focusedCollectionId && granuleSearchResults) {
     const { allIds, excludedGranuleIds, isOpenSearch } = granuleSearchResults
     const allGranuleIds = allIds
@@ -208,7 +208,36 @@ export const MapContainer = (props) => {
     }
 
     granuleIds.forEach((granuleId) => {
-      nonExcludedGranuleIds.push(granuleId)
+      nonExcludedGranules[granuleId] = {
+        index: 0
+      }
+    })
+  }
+
+  // If on the project page, get the granules from the projectCollections
+  if (isProjectPage) {
+    const { collections: projectCollections } = project
+    const {
+      allIds: projectIds,
+      byId: projectById
+    } = projectCollections
+
+    projectIds.forEach((collectionId, index) => {
+      const {
+        granules: projectCollectionGranules
+      } = projectById[collectionId]
+
+      if (!projectCollectionGranules) return
+
+      const { allIds = [] } = projectCollectionGranules
+
+      allIds.forEach((granuleId) => {
+        if (granulesMetadata[granuleId]) {
+          nonExcludedGranules[granuleId] = {
+            index
+          }
+        }
+      })
     })
   }
 
@@ -284,19 +313,15 @@ export const MapContainer = (props) => {
   //   />
   // )
 
-  // const [leftPadding, setLeftPadding] = useState(500)
 
-  // useEffect(() => {
-  //   // TODO come up with this value based on panel width
-  //   setLeftPadding(leftPadding + 100)
-  // }, [zoom])
-
+  // Added and removed granule ids for the focused collection are used to apply different
+  // styles to the granules. Granules that are added are drawn with a regular style, while
+  // granules that are removed are drawn with a deemphasized style.
   let allAddedGranuleIds = []
   let allRemovedGranuleIds = []
 
+  // If the focusedCollectionId is set, get the added and removed granule ids
   if (focusedCollectionId && focusedCollectionId !== '') {
-    const { [focusedCollectionId]: focusedCollectionIdMetadata = {} } = collectionsMetadata
-
     const { collections } = project
     const { byId: projectById } = collections
     const { [focusedCollectionId]: focusedProjectCollection = {} } = projectById
@@ -311,16 +336,20 @@ export const MapContainer = (props) => {
   // Generate a key based on the nonExcludedGranules and the addedGranuleIds and removedGranuleIds
   // This key will be used to determine if the granules need to be redrawn
   const granulesKey = Buffer.from(JSON.stringify({
-    nonExcludedGranuleIds,
+    nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
     addedGranuleIds: allAddedGranuleIds,
     removedGranuleIds: allRemovedGranuleIds
   })).toString('base64')
 
+  // Generate the granulesToDraw based on the nonExcludedGranules and the addedGranuleIds and removedGranuleIds
   const granulesToDraw = []
-  if (nonExcludedGranuleIds) {
-    nonExcludedGranuleIds.forEach((granuleId) => {
+  const granuleIds = Object.keys(nonExcludedGranules)
+  if (granuleIds.length > 0) {
+    granuleIds.forEach((granuleId) => {
+      const { index } = nonExcludedGranules[granuleId]
       const granule = granulesMetadata[granuleId]
 
+      // Determine if the granule should be drawn with the regular style or the deemphasized style
       let shouldDrawRegularStyle = true
 
       if (allAddedGranuleIds.length > 0) {
@@ -335,18 +364,17 @@ export const MapContainer = (props) => {
       const { type } = geometry
 
       if (type === 'Point') {
-        granule.style = shouldDrawRegularStyle ? pointStyle(0) : deemphisizedPointStyle(0)
+        granule.style = shouldDrawRegularStyle ? pointStyle(index) : deemphisizedPointStyle(index)
         granule.backgroundStyle = backgroundPointStyle
       } else {
-        granule.style = shouldDrawRegularStyle ? granuleStyle(0) : deemphisizedGranuleStyle(0)
+        granule.style = shouldDrawRegularStyle ? granuleStyle(index) : deemphisizedGranuleStyle(index)
         granule.backgroundStyle = backgroundStyle
       }
 
       granulesToDraw.push({
-        spatial: granule.spatial,
-        style: granule.style,
         backgroundStyle: granule.backgroundStyle,
-        id: granule.id
+        spatial: granule.spatial,
+        style: granule.style
       })
     })
   }
@@ -359,7 +387,6 @@ export const MapContainer = (props) => {
       focusedCollectionId={focusedCollectionId}
       granules={granulesToDraw}
       granulesKey={granulesKey}
-      project={project}
       zoom={zoom}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
