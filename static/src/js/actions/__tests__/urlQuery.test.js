@@ -11,6 +11,274 @@ import * as urlQuery from '../urlQuery'
 const mockStore = configureMockStore([thunk])
 
 jest.mock('../../../../../portals/availablePortals.json', () => ({
+  above: {
+    moreInfoUrl: 'https://above.nasa.gov/',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      project: 'ABoVE'
+    },
+    title: {
+      primary: 'ABoVE',
+      secondary: 'Arctic-Boreal Vulnerability Experiment'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'above'
+  },
+  'ai-ml': {
+    moreInfoUrl: 'https://www.earthdata.nasa.gov/esds/ai-ml',
+    pageTitle: 'Artificial intelligence / Machine Learning Portal',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      tagKey: 'machine.learning'
+    },
+    title: {
+      primary: 'AI/ML',
+      secondary: 'Artificial Intelligence / Machine Learning'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'ai-ml'
+  },
+  airmoss: {
+    moreInfoUrl: 'https://airmoss.ornl.gov',
+    pageTitle: 'AirMOSS',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      project: 'AirMOSS'
+    },
+    title: {
+      primary: 'AirMOSS',
+      secondary: 'Airborne Microwave Observatory of Subcanopy and Subsurface '
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'airmoss'
+  },
+  amd: {
+    moreInfoUrl: 'https://www.scar.org/resources/amd/',
+    pageTitle: 'Antarctic Metadata Directory (AMD)',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      tagKey: [
+        'org.scar.amd'
+      ]
+    },
+    title: {
+      primary: 'AMD',
+      secondary: 'Antarctic Metadata Directory'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'amd'
+  },
+  carve: {
+    moreInfoUrl: 'https://carve.ornl.gov',
+    pageTitle: 'CARVE',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      project: 'CARVE'
+    },
+    title: {
+      primary: 'CARVE',
+      secondary: 'Carbon in Arctic Reservoirs Vulnerability Experiment'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'carve'
+  },
+  casei: {
+    moreInfoUrl: 'https://impact.earthdata.nasa.gov/casei/',
+    pageTitle: 'CASEI',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    title: {
+      primary: 'CASEI',
+      secondary: 'Catalog of Archived Suborbital Earth Science Investigations'
+    },
+    query: {
+      project: [
+        'AAOE',
+        'AASE',
+        'ABLE',
+        'ABoVE',
+        'ACCLIP',
+        'ACEPOL',
+        'ACES',
+        'ACT-America',
+        'ACTIVATE',
+        'Aeolus',
+        'AfriSAR',
+        'AirMOSS',
+        'AMISA',
+        'ARCTAS',
+        'ARESE',
+        'ARISE',
+        'ASCENDS',
+        'ASHOE',
+        'ATom',
+        'ATTREX',
+        'BigFoot',
+        'BOREAS',
+        'BROMEX',
+        'C3',
+        'CALIPSO-NVF',
+        'CalWater',
+        'CAMEX',
+        'CAMP2',
+        'CARAFE',
+        'CARVE',
+        'CASIE',
+        'CC-VEx',
+        'CITE',
+        'CLAMS',
+        'CLASIC07',
+        'COAST',
+        'COMEX',
+        'CORAL',
+        'CPEX-AW',
+        'CPEX-CV',
+        'CPEX',
+        'CR-AVE',
+        'CRYSTAL-FACE',
+        'DC3',
+        'DCOTSS',
+        'Delta-X',
+        'DEVOTE',
+        'DISCOVER-AQ',
+        'ECO-3',
+        'EPOCH',
+        'EXPORTS',
+        'FIFE',
+        'FIRE',
+        'FIREX-AQ',
+        'GCPEx',
+        'GOES-R',
+        'GRIP',
+        'HS3',
+        'HyMeX',
+        'HyspIRI',
+        'ICE-POP',
+        'ICESCAPE',
+        'IFloodS',
+        'IMPACTS',
+        'INTEX-NA',
+        'IPHEx',
+        'KORUS-AQ',
+        'KORUS-OC',
+        'LISTOS',
+        'LMOS',
+        'LPVEx',
+        'MACPEX',
+        'MC3',
+        'MIZOPEX',
+        'MOOSE',
+        'NAAMES',
+        'NAMMA',
+        'OLYMPEX',
+        'OMG',
+        'ORACLES',
+        'OTTER',
+        'OWLETS',
+        'PAC2001',
+        'PEM',
+        'PODEX',
+        'Polar',
+        'POLARIS',
+        'POSIDON',
+        'PROVE',
+        'RADEX',
+        'S-MODE',
+        'SABOR',
+        'SAFARI',
+        'SASSIE',
+        'SCOAPE',
+        'SEAC4',
+        'SNF',
+        'SnowEx',
+        'SPADE',
+        'SPURS',
+        'TARFOX',
+        'TC4',
+        'TCSP',
+        'TEFLUN',
+        'TRACE',
+        'TRACER-AQ',
+        'VIRGAS'
+      ]
+    },
+    portalId: 'casei'
+  },
+  cwic: {
+    moreInfoUrl: 'http://ceos.org/ourwork/workinggroups/wgiss/access/cwic/',
+    pageTitle: 'CWIC',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      consortium: [
+        'EOSDIS',
+        'CWIC'
+      ],
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'CWIC',
+      secondary: 'CEOS WGISS Integrated Catalog'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'cwic'
+  },
+  default: {
+    features: {
+      advancedSearch: false,
+      authentication: false,
+      featureFacets: {
+        showAvailableInEarthdataCloud: false,
+        showCustomizable: false,
+        showMapImagery: false
+      }
+    },
+    footer: {
+      attributionText: '',
+      displayVersion: false,
+      primaryLinks: [],
+      secondaryLinks: []
+    },
+    pageTitle: '',
+    portalBrowser: false,
+    query: {},
+    title: {
+      primary: 'Default'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false,
+      showTophat: false
+    },
+    portalId: 'default'
+  },
   edsc: {
     features: {
       advancedSearch: true,
@@ -24,22 +292,26 @@ jest.mock('../../../../../portals/availablePortals.json', () => ({
     footer: {
       attributionText: 'NASA Official: Test Official',
       displayVersion: true,
-      primaryLinks: [{
-        title: 'FOIA',
-        href: 'http://www.nasa.gov/FOIA/index.html'
-      },
-      {
-        title: 'NASA Privacy Policy',
-        href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html'
-      },
-      {
-        title: 'USA.gov',
-        href: 'http://www.usa.gov'
-      }],
-      secondaryLinks: [{
-        title: 'Earthdata Access: A Section 508 accessible alternative',
-        href: 'https://access.earthdata.nasa.gov/'
-      }]
+      primaryLinks: [
+        {
+          href: 'http://www.nasa.gov/FOIA/index.html',
+          title: 'FOIA'
+        },
+        {
+          href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+          title: 'NASA Privacy Policy'
+        },
+        {
+          href: 'http://www.usa.gov',
+          title: 'USA.gov'
+        }
+      ],
+      secondaryLinks: [
+        {
+          href: 'https://access.earthdata.nasa.gov/',
+          title: 'Earthdata Access: A Section 508 accessible alternative'
+        }
+      ]
     },
     pageTitle: 'Earthdata Search',
     portalBrowser: false,
@@ -52,6 +324,37 @@ jest.mock('../../../../../portals/availablePortals.json', () => ({
       showTophat: true
     },
     portalId: 'edsc'
+  },
+  example: {
+    pageTitle: 'Example',
+    parentConfig: 'edsc',
+    portalBrowser: false,
+    query: {
+      echoCollectionId: 'C203234523-LAADS'
+    },
+    title: {
+      primary: 'Example'
+    },
+    portalId: 'example'
+  },
+  ghrc: {
+    moreInfoUrl: 'https://ghrc.nsstc.nasa.gov/home',
+    pageTitle: 'GHRC',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      dataCenter: 'NASA/MSFC/GHRC',
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'GHRC',
+      secondary: 'Global Hydrometeorology Resource Center'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'ghrc'
   },
   idn: {
     moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
@@ -71,6 +374,158 @@ jest.mock('../../../../../portals/availablePortals.json', () => ({
     },
     portalId: 'idn'
   },
+  obdaac: {
+    features: {
+      advancedSearch: true,
+      featureFacets: {
+        showAvailableInEarthdataCloud: false,
+        showCustomizable: false,
+        showMapImagery: false
+      }
+    },
+    footer: {
+      displayVersion: false,
+      primaryLinks: [
+        {
+          href: 'https://oceancolor.gsfc.nasa.gov/',
+          title: 'Ocean Color'
+        },
+        {
+          href: 'https://oceandata.sci.gsfc.nasa.gov/',
+          title: 'Ocean Data'
+        }
+      ],
+      secondaryLinks: []
+    },
+    moreInfoUrl: 'https://oceancolor.gsfc.nasa.gov/',
+    pageTitle: 'OBDAAC',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      dataCenter: 'NASA/GSFC/SED/ESD/GCDC/OB.DAAC'
+    },
+    title: {
+      primary: 'OBDAAC',
+      secondary: 'Ocean Biology Distributed Active Archive Center'
+    },
+    ui: {
+      showNonEosdisCheckbox: true,
+      showOnlyGranulesCheckbox: true
+    },
+    portalId: 'obdaac'
+  },
+  ornldaac: {
+    moreInfoUrl: 'https://daac.ornl.gov',
+    pageTitle: 'ORNL DAAC',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      dataCenter: 'ORNL_DAAC',
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'ORNL DAAC',
+      secondary: 'Oak Ridge National Laboratory Distributed Active Archive Center'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'ornldaac'
+  },
+  podaac: {
+    moreInfoUrl: 'https://podaac.jpl.nasa.gov',
+    pageTitle: 'PO.DAAC',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      dataCenter: 'NASA/JPL/PODAAC',
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'PO.DAAC',
+      secondary: 'Physical Oceanography Distributed Active Archive Center'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'podaac'
+  },
+  'podaac-cloud': {
+    moreInfoUrl: 'https://podaac.jpl.nasa.gov',
+    pageTitle: 'PO.DAAC Cloud',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      provider: 'POCLOUD'
+    },
+    title: {
+      primary: 'PO.DAAC Cloud',
+      secondary: 'Physical Oceanography Distributed Active Archive Center'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'podaac-cloud'
+  },
+  seabass: {
+    features: {
+      advancedSearch: true,
+      featureFacets: {
+        showAvailableInEarthdataCloud: false,
+        showCustomizable: false,
+        showMapImagery: false
+      }
+    },
+    footer: {
+      displayVersion: false,
+      primaryLinks: [
+        {
+          href: 'https://seabass.gsfc.nasa.gov/',
+          title: 'SeaBASS'
+        }
+      ],
+      secondaryLinks: []
+    },
+    moreInfoUrl: 'https://seabass.gsfc.nasa.gov/',
+    pageTitle: 'SeaBASS',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      dataCenter: 'NASA/GSFC/SED/ESD/GCDC/SeaBASS'
+    },
+    title: {
+      primary: 'SeaBASS',
+      secondary: 'SeaWiFS Bio-optical Archive and Storage System'
+    },
+    ui: {
+      showNonEosdisCheckbox: true,
+      showOnlyGranulesCheckbox: true
+    },
+    portalId: 'seabass'
+  },
+  snwg: {
+    moreInfoUrl: 'https://www.earthdata.nasa.gov/esds/impact/snwg',
+    pageTitle: 'SNWG',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      tagKey: 'org.snwg'
+    },
+    title: {
+      primary: 'SNWG',
+      secondary: 'Satellite Needs Working Group'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'snwg'
+  },
   soos: {
     moreInfoUrl: 'http://www.soos.aq',
     pageTitle: 'Southern Ocean Observing System',
@@ -78,7 +533,9 @@ jest.mock('../../../../../portals/availablePortals.json', () => ({
     portalBrowser: true,
     query: {
       hasGranulesOrCwic: null,
-      tagKey: []
+      tagKey: [
+        'aq.soos'
+      ]
     },
     title: {
       primary: 'SOOS',
@@ -90,25 +547,45 @@ jest.mock('../../../../../portals/availablePortals.json', () => ({
     },
     portalId: 'soos'
   },
-  airmoss: {
-    moreInfoUrl: 'https://airmoss.ornl.gov',
-    pageTitle: 'AirMOSS',
+  standardproducts: {
+    pageTitle: 'Standard Data Products',
     parentConfig: 'edsc',
     portalBrowser: true,
+    moreInfoUrl: 'https://www.earthdata.nasa.gov/learn/earth-observation-data-basics/standard-data-products',
     query: {
       hasGranulesOrCwic: null,
-      project: 'AirMOSS'
+      standardProduct: true
     },
     title: {
-      primary: 'AirMOSS',
-      secondary: 'Airborne Microwave Observatory of Subcanopy and Subsurface '
+      primary: 'Standard Data Products',
+      secondary: 'NASA ESDIS Earth Science Standard Data Products'
     },
     ui: {
       showNonEosdisCheckbox: false,
-      showOnlyGranulesCheckbox: false,
-      showTophat: true
+      showOnlyGranulesCheckbox: false
     },
-    portalId: 'airmoss'
+    portalId: 'standardproducts'
+  },
+  suborbital: {
+    moreInfoUrl: 'https://earthdata.nasa.gov/esds/impact/admg/the-airborne-inventory',
+    pageTitle: 'NASA Sub-Orbital Catalog',
+    parentConfig: 'edsc',
+    portalBrowser: false,
+    query: {
+      hasGranulesOrCwic: null,
+      tagKey: [
+        'gov.nasa.impact.*'
+      ]
+    },
+    title: {
+      primary: 'CASEI',
+      secondary: 'Catalog of Archived Suborbital Earth Science Investigations'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'suborbital'
   }
 }))
 
