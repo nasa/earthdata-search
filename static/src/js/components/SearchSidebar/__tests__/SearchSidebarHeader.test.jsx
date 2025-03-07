@@ -10,7 +10,7 @@ import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
-import availablePortals from './availablePortalsMock.json'
+import availablePortals from '../../../../../../portals/availablePortals.json'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
@@ -28,6 +28,91 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 
 jest.mock('../../../../../../portals/idn/images/logo.png', () => ('idn_logo_path'))
 jest.mock('../../../../../../portals/soos/images/logo.png', () => ('soos_logo_path'))
+
+jest.mock('../../../../../../portals/availablePortals.json', () => ({
+  edsc: {
+    features: {
+      advancedSearch: true,
+      authentication: true,
+      featureFacets:
+        {
+          showAvailableInEarthdataCloud: true,
+          showCustomizable: true,
+          showMapImagery: true
+        }
+
+    },
+    footer: {
+      attributionText: 'NASA Official: Test Official',
+      displayVersion: true,
+      primaryLinks: [{
+        title: 'FOIA',
+        href: 'http://www.nasa.gov/FOIA/index.html'
+      },
+      {
+        title: 'NASA Privacy Policy',
+        href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html'
+      },
+      {
+        title: 'USA.gov',
+        href: 'http://www.usa.gov'
+      }],
+      secondaryLinks: [{
+        title: 'Earthdata Access: A Section 508 accessible alternative',
+        href: 'https://access.earthdata.nasa.gov/'
+      }]
+    },
+    pageTitle: 'Earthdata Search',
+    portalBrowser: false,
+    title: {
+      primary: 'Earthdata Search'
+    },
+    ui: {
+      showNonEosdisCheckbox: true,
+      showOnlyGranulesCheckbox: true,
+      showTophat: true
+    },
+    portalId: 'edsc'
+  },
+  idn: {
+    moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
+    pageTitle: 'IDN',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'IDN',
+      secondary: 'CEOS International Directory Network'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'idn'
+  },
+  soos: {
+    moreInfoUrl: 'http://www.soos.aq',
+    pageTitle: 'Southern Ocean Observing System',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      tagKey: []
+    },
+    title: {
+      primary: 'SOOS',
+      secondary: 'Southern Ocean Observing System'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'soos'
+  }
+}
+))
 
 function setup(overrideProps) {
   const props = {

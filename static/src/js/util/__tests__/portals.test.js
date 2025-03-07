@@ -1,7 +1,6 @@
 import { buildConfig, isDefaultPortal } from '../portals'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
-// eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../../portals/availablePortals.json'
 
 jest.mock('../../../../../portals/availablePortals.json', () => ({
