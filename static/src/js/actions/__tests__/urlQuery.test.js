@@ -30,6 +30,35 @@ jest.mock('../../../../../portals/availablePortals.json', () => ({
     },
     portalId: 'airmoss'
   },
+  default: {
+    features: {
+      advancedSearch: false,
+      authentication: false,
+      featureFacets: {
+        showAvailableInEarthdataCloud: false,
+        showCustomizable: false,
+        showMapImagery: false
+      }
+    },
+    footer: {
+      attributionText: '',
+      displayVersion: false,
+      primaryLinks: [],
+      secondaryLinks: []
+    },
+    pageTitle: '',
+    portalBrowser: false,
+    query: {},
+    title: {
+      primary: 'Default'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false,
+      showTophat: false
+    },
+    portalId: 'default'
+  },
   edsc: {
     features: {
       advancedSearch: true,
