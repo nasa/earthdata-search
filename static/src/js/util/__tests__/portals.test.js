@@ -1,8 +1,91 @@
 import { buildConfig, isDefaultPortal } from '../portals'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
-// eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../../portals/availablePortals.json'
+
+jest.mock('../../../../../portals/availablePortals.json', () => ({
+  edsc: {
+    features: {
+      advancedSearch: true,
+      authentication: true,
+      featureFacets:
+        {
+          showAvailableInEarthdataCloud: true,
+          showCustomizable: true,
+          showMapImagery: true
+        }
+
+    },
+    footer: {
+      attributionText: 'NASA Official: Test Official',
+      displayVersion: true,
+      primaryLinks: [{
+        title: 'FOIA',
+        href: 'http://www.nasa.gov/FOIA/index.html'
+      },
+      {
+        title: 'NASA Privacy Policy',
+        href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html'
+      },
+      {
+        title: 'USA.gov',
+        href: 'http://www.usa.gov'
+      }],
+      secondaryLinks: [{
+        title: 'Earthdata Access: A Section 508 accessible alternative',
+        href: 'https://access.earthdata.nasa.gov/'
+      }]
+    },
+    pageTitle: 'Earthdata Search',
+    portalBrowser: false,
+    title: {
+      primary: 'Earthdata Search'
+    },
+    ui: {
+      showNonEosdisCheckbox: true,
+      showOnlyGranulesCheckbox: true,
+      showTophat: true
+    },
+    portalId: 'edsc'
+  },
+  testPortal: {
+    moreInfoUrl: 'https://test.gov',
+    pageTitle: 'TEST',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'test',
+      secondary: 'test secondary title'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'testPortal'
+  },
+  testPortal2: {
+    moreInfoUrl: 'https://test2.org',
+    pageTitle: 'TEST2',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'testPortal2',
+      secondary: 'test secondary title'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'testPortal2'
+  }
+}
+))
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -27,7 +110,7 @@ describe('isDefaultPortal', () => {
 
 describe('buildConfig', () => {
   test('builds a portal config of portal > edsc portal > default portal', () => {
-    const config = buildConfig(availablePortals.idn)
+    const config = buildConfig(availablePortals.testPortal)
 
     expect(config).toEqual({
       features: {
@@ -41,7 +124,7 @@ describe('buildConfig', () => {
       },
       footer: {
         displayVersion: true,
-        attributionText: 'NASA Official: Stephen Berrick',
+        attributionText: 'NASA Official: Test Official',
         primaryLinks: [{
           title: 'FOIA',
           href: 'http://www.nasa.gov/FOIA/index.html'
@@ -59,14 +142,14 @@ describe('buildConfig', () => {
           href: 'https://access.earthdata.nasa.gov/'
         }]
       },
-      moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
-      pageTitle: 'IDN',
+      moreInfoUrl: 'https://test.gov',
+      pageTitle: 'TEST',
       portalBrowser: true,
-      portalId: 'idn',
+      portalId: 'testPortal',
       query: { hasGranulesOrCwic: null },
       title: {
-        primary: 'IDN',
-        secondary: 'CEOS International Directory Network'
+        primary: 'test',
+        secondary: 'test secondary title'
       },
       ui: {
         showOnlyGranulesCheckbox: false,

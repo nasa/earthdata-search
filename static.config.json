@@ -50,9 +50,6 @@
     "disableEddDownload": "false",
     "disableOrdering": "false",
     "disableSwodlr": "false",
-    "macOSEddDownloadSize":130,
-    "windowsEddDownloadSize":100,
-    "linuxEddDownloadSize":90,
     "disableSiteTour": "false"
   },
   "environment": {

@@ -17,8 +17,9 @@ const {
 } = getApplicationConfig()
 
 const { [defaultPortal]: portalConfig } = availablePortals
-const { ui } = portalConfig
+const { footer, ui } = portalConfig
 const { showTophat } = ui
+const { attributionText } = footer
 
 export default defineConfig({
   server: {
@@ -36,6 +37,7 @@ export default defineConfig({
   plugins: [
     ViteEjsPlugin({
       env,
+      attributionText,
       environment: process.env.NODE_ENV,
       feedbackApp,
       gaPropertyId: analytics.localIdentifier.propertyId,

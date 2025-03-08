@@ -10,6 +10,121 @@ import * as urlQuery from '../urlQuery'
 
 const mockStore = configureMockStore([thunk])
 
+jest.mock('../../../../../portals/availablePortals.json', () => ({
+  default: {
+    features: {
+      advancedSearch: false,
+      authentication: false,
+      featureFacets: {
+        showAvailableInEarthdataCloud: false,
+        showCustomizable: false,
+        showMapImagery: false
+      }
+    },
+    footer: {
+      attributionText: '',
+      displayVersion: false,
+      primaryLinks: [],
+      secondaryLinks: []
+    },
+    pageTitle: '',
+    portalBrowser: false,
+    query: {},
+    title: {
+      primary: 'Default'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false,
+      showTophat: false
+    },
+    portalId: 'default'
+  },
+  edsc: {
+    features: {
+      advancedSearch: true,
+      authentication: true,
+      featureFacets: {
+        showAvailableInEarthdataCloud: true,
+        showCustomizable: true,
+        showMapImagery: true
+      }
+    },
+    footer: {
+      attributionText: 'NASA Official: Test Official',
+      displayVersion: true,
+      primaryLinks: [
+        {
+          href: 'http://www.nasa.gov/FOIA/index.html',
+          title: 'FOIA'
+        },
+        {
+          href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+          title: 'NASA Privacy Policy'
+        },
+        {
+          href: 'http://www.usa.gov',
+          title: 'USA.gov'
+        }
+      ],
+      secondaryLinks: [
+        {
+          href: 'https://access.earthdata.nasa.gov/',
+          title: 'Earthdata Access: A Section 508 accessible alternative'
+        }
+      ]
+    },
+    pageTitle: 'Earthdata Search',
+    portalBrowser: false,
+    title: {
+      primary: 'Earthdata Search'
+    },
+    ui: {
+      showNonEosdisCheckbox: true,
+      showOnlyGranulesCheckbox: true,
+      showTophat: true
+    },
+    portalId: 'edsc'
+  },
+  testPortal: {
+    moreInfoUrl: 'https://test.gov',
+    pageTitle: 'TEST',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      project: 'testProject'
+    },
+    title: {
+      primary: 'test',
+      secondary: 'test secondary title'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'testPortal'
+  },
+  testPortal2: {
+    moreInfoUrl: 'https://test.org',
+    pageTitle: 'TEST',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null
+    },
+    title: {
+      primary: 'testPortal2',
+      secondary: 'test secondary title'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'testPortal2'
+  }
+}))
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.restoreAllMocks()
@@ -139,7 +254,7 @@ describe('updateStore', () => {
 
   describe('when a portal parameter is provided', () => {
     test('loads the included styles', async () => {
-      jest.mock('../../../../../portals/airmoss/styles.scss', () => ({
+      jest.mock('../../../../../portals/testPortal/styles.scss', () => ({
         unuse: jest.fn(),
         use: jest.fn()
       }))
@@ -155,7 +270,7 @@ describe('updateStore', () => {
         },
         focusedCollection: '',
         map: {},
-        portalId: 'airmoss',
+        portalId: 'testPortal',
         project: {},
         query: {
           collection: {
@@ -206,7 +321,7 @@ describe('updateStore', () => {
               }
             },
             footer: {
-              attributionText: 'NASA Official: Stephen Berrick',
+              attributionText: 'NASA Official: Test Official',
               displayVersion: true,
               primaryLinks: [
                 {
@@ -229,18 +344,18 @@ describe('updateStore', () => {
                 }
               ]
             },
-            moreInfoUrl: 'https://airmoss.ornl.gov',
-            pageTitle: 'AirMOSS',
+            moreInfoUrl: 'https://test.gov',
+            pageTitle: 'TEST',
             parentConfig: 'edsc',
             portalBrowser: true,
-            portalId: 'airmoss',
+            portalId: 'testPortal',
             query: {
               hasGranulesOrCwic: null,
-              project: 'AirMOSS'
+              project: 'testProject'
             },
             title: {
-              primary: 'AirMOSS',
-              secondary: 'Airborne Microwave Observatory of Subcanopy and Subsurface '
+              primary: 'test',
+              secondary: 'test secondary title'
             },
             ui: {
               showNonEosdisCheckbox: false,

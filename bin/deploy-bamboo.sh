@@ -6,6 +6,15 @@ set -eux
 # Deployment configuration/variables
 ####################################
 
+# Read in edsc portal configuration
+edscPortal=$(cat portals/edsc/config.json)
+
+# Update key for edsc portal
+edscPortal=$(jq --arg newValue "$bamboo_NASA_ATTRIBUTION_TEXT" '.footer.attributionText = $newValue' <<< "$edscPortal")
+
+# Overwrite edsc portal with new values
+echo "$edscPortal" > portals/edsc/config.json
+
 # Read in static.config.json
 config="`cat static.config.json`"
 
@@ -22,9 +31,6 @@ config="`jq '.application.disableEddDownload = $newValue' --arg newValue $bamboo
 config="`jq '.application.disableOrdering = $newValue' --arg newValue $bamboo_DISABLE_ORDERING <<< $config`"
 config="`jq '.application.disableSiteTour = $newValue' --arg newValue $bamboo_DISABLE_SITE_TOUR <<< $config`"
 config="`jq '.application.disableSwodlr = $newValue' --arg newValue $bamboo_DISABLE_SWODLR <<< $config`"
-config="`jq '.application.macOSEddDownloadSize = $newValue' --arg newValue $bamboo_MACOS_EDD_DOWNLOAD_SIZE <<< $config`"
-config="`jq '.application.windowsEddDownloadSize = $newValue' --arg newValue $bamboo_WINDOWS_EDD_DOWNLOAD_SIZE <<< $config`"
-config="`jq '.application.linuxEddDownloadSize = $newValue' --arg newValue $bamboo_LINUX_EDD_DOWNLOAD_SIZE <<< $config`"
 config="`jq '.application.orderStatusRefreshTime = $newValue' --arg newValue $bamboo_ORDER_STATUS_REFRESH_TIME <<< $config`"
 config="`jq '.application.orderStatusRefreshTimeCreating = $newValue' --arg newValue $bamboo_ORDER_STATUS_REFRESH_TIME_CREATING <<< $config`"
 config="`jq '.application.collectionSearchResultsSortKey = $newValue' --arg newValue $bamboo_COLLECTION_SEARCH_RESULTS_SORT_KEY <<< $config`"
