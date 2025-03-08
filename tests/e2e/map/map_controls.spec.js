@@ -59,7 +59,7 @@ test.describe('Map: Control interactions', () => {
         await page.waitForTimeout(500)
         await page.mouse.up()
 
-        await expect(page).toHaveURL(/lat=21.0\d+/)
+        await expect(page).toHaveURL(/lat=10.5\d+/)
       })
     })
 
@@ -76,7 +76,7 @@ test.describe('Map: Control interactions', () => {
         // Zoom the map
         await page.locator('.edsc-map-zoom-in').click()
 
-        await expect(page).toHaveURL('search?zoom=3')
+        await expect(page).toHaveURL('search?zoom=4')
       })
     })
   })
@@ -95,7 +95,7 @@ test.describe('Map: Control interactions', () => {
         // Change the projection
         await page.getByLabel('North Polar Stereographic').click()
 
-        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413')
+        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=2')
 
         await expect(page).toHaveScreenshot('north_polar_stereographic.png', {
           clip: screenshotClip
@@ -111,7 +111,7 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/search?lat=90&projection=EPSG%3A3413')
+        await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
         // Wait for the map to load
         await page.waitForSelector('.edsc-map-base-layer')
@@ -139,6 +139,9 @@ test.describe('Map: Control interactions', () => {
 
         // Removes the map parameter when it is centered
         await expect(page).toHaveURL('search')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         await expect(page).toHaveScreenshot('geographic.png', {
           clip: screenshotClip
@@ -178,7 +181,7 @@ test.describe('Map: Control interactions', () => {
         // Change the projection
         await page.getByLabel('South Polar Stereographic').click()
 
-        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031')
+        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=2')
 
         await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
           clip: screenshotClip
@@ -194,7 +197,7 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/search?lat=-90&projection=EPSG%3A3031')
+        await page.goto('/search?lat=-90&projection=EPSG%3A3031&zoom=2')
 
         // Wait for the map to load
         await page.waitForSelector('.edsc-map-base-layer')
@@ -218,12 +221,12 @@ test.describe('Map: Control interactions', () => {
         // Change the projection to North Polar
         await page.getByLabel('North Polar Stereographic').click()
 
-        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413')
+        await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=2')
 
         // Change the projection to South Polar
         await page.getByLabel('South Polar Stereographic').click()
 
-        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031')
+        await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=2')
 
         await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
           clip: screenshotClip
@@ -268,7 +271,7 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/search?lat=90&long=-45&projection=EPSG%3A3413&rotation=32.4')
+        await page.goto('/search?lat=90&long=-45&projection=EPSG%3A3413&rotation=32.4&zoom=2')
 
         // Wait for the map to load
         await page.waitForSelector('.edsc-map-base-layer')

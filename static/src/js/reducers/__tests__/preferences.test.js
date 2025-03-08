@@ -7,7 +7,7 @@ const initialState = {
     collectionListView: 'default',
     granuleListView: 'default',
     mapView: {
-      zoom: 2,
+      zoom: 3,
       latitude: 0,
       baseLayer: 'blueMarble',
       longitude: 0,

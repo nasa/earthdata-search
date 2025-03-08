@@ -111,13 +111,63 @@ describe('GranuleRequest#transformResponse', () => {
             time_start: '2000-01-01T00:00:00.000Z',
             thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
             formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }
         ]
       }
     }
 
     expect(result).toEqual(expectedResult)
+  })
+
+  describe('when the granule has spatial data', () => {
+    test('returns the spatial data as geojson', () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
+
+      const request = new GranuleRequest(undefined, 'prod')
+
+      const data = {
+        feed: {
+          id: 'https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C123456-MOCK&page_num=2&page_size=20&sort_key=-start_date',
+          title: 'ECHO granule metadata',
+          updated: '2019-05-21T01:08:02.143Z',
+          entry: [{
+            id: 'granuleId',
+            time_end: '2000-01-31T00:00:00.000Z',
+            time_start: '2000-01-01T00:00:00.000Z',
+            points: ['0 10']
+          }]
+        }
+      }
+
+      const result = request.transformResponse(data)
+
+      const expectedResult = {
+        feed: {
+          entry: [
+            {
+              id: 'granuleId',
+              time_end: '2000-01-31T00:00:00.000Z',
+              time_start: '2000-01-01T00:00:00.000Z',
+              thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
+              formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
+              isOpenSearch: false,
+              points: ['0 10'],
+              spatial: {
+                type: 'Feature',
+                geometry: {
+                  type: 'MultiPoint',
+                  coordinates: [[10, 0]]
+                }
+              }
+            }
+          ]
+        }
+      }
+
+      expect(result).toEqual(expectedResult)
+    })
   })
 
   describe('format granule browse image url', () => {
@@ -151,7 +201,8 @@ describe('GranuleRequest#transformResponse', () => {
               time_start: '2000-01-01T00:00:00.000Z',
               thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
               formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
-              isOpenSearch: false
+              isOpenSearch: false,
+              spatial: null
             }
           ]
         }
@@ -202,7 +253,8 @@ describe('GranuleRequest#transformResponse', () => {
                   rel: '#browse',
                   href: 'https://test.com/browse/image/url.jpg'
                 }
-              ]
+              ],
+              spatial: null
             }
           ]
         }
@@ -269,7 +321,8 @@ describe('GranuleRequest#transformResponse', () => {
                   rel: '#browse',
                   href: 'https://test.com/browse/image/second_url.jpg'
                 }
-              ]
+              ],
+              spatial: null
             }
           ]
         }
@@ -336,7 +389,8 @@ describe('GranuleRequest#transformResponse', () => {
                   rel: '#browse',
                   href: 'https://test.com/browse/image/second_url.jpg'
                 }
-              ]
+              ],
+              spatial: null
             }
           ]
         }

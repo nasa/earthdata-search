@@ -43,7 +43,7 @@ export const projectionConfigs = {
     enableRotation: false,
     maxZoom: 21,
     minZoom: 1,
-    zoom: 2
+    zoom: 3
   },
   epsg3413: {
     center: [0, 90],

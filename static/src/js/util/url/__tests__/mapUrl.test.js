@@ -288,7 +288,7 @@ describe('url#encodeUrlQuery', () => {
         },
         projection: projections.geographic,
         rotation: 0,
-        zoom: 2
+        zoom: 3
       }
     }
 

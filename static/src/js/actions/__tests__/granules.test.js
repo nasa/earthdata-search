@@ -136,7 +136,8 @@ describe('getSearchGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }
         ]
       })
@@ -147,7 +148,8 @@ describe('getSearchGranules', () => {
           collectionId: 'collectionId',
           results: [{
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }],
           isOpenSearch: false,
           hits: 1,
@@ -244,7 +246,8 @@ describe('getSearchGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }
         ]
       })
@@ -255,7 +258,8 @@ describe('getSearchGranules', () => {
           collectionId: 'collectionId',
           results: [{
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }],
           isOpenSearch: false,
           hits: 1,
@@ -634,7 +638,8 @@ describe('getProjectGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }
         ]
       })
@@ -645,7 +650,8 @@ describe('getProjectGranules', () => {
           collectionId: 'C10000000000-EDSC',
           results: [{
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }],
           isOpenSearch: false,
           hits: 1,
@@ -745,7 +751,8 @@ describe('getProjectGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }
         ]
       })
@@ -756,7 +763,8 @@ describe('getProjectGranules', () => {
           collectionId: 'C10000000000-EDSC',
           results: [{
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }],
           isOpenSearch: false,
           hits: 1,
@@ -1036,7 +1044,8 @@ describe('getProjectGranules', () => {
         payload: [
           {
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }
         ]
       })
@@ -1047,7 +1056,8 @@ describe('getProjectGranules', () => {
           collectionId: 'C10000000000-EDSC',
           results: [{
             mockGranuleData: 'goes here',
-            isOpenSearch: false
+            isOpenSearch: false,
+            spatial: null
           }],
           isOpenSearch: false,
           hits: 1,
