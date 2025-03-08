@@ -345,7 +345,7 @@ describe('updateStore', () => {
               ]
             },
             moreInfoUrl: 'https://test.gov',
-            pageTitle: 'test',
+            pageTitle: 'TEST',
             parentConfig: 'edsc',
             portalBrowser: true,
             portalId: 'testPortal',
