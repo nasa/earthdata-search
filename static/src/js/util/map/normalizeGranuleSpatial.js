@@ -4,6 +4,10 @@ import { simplify } from '@turf/turf'
 
 import { crsProjections } from './crs'
 
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+const { simplifyThreshold } = getApplicationConfig()
+
 // This function adds points to the polygon so that the polygon follows the curvature of the Earth
 const interpolatePolygon = (coordinates) => {
   // Interpolate the polygon coordinates so that the polygon follows the curvature of the Earth
@@ -86,19 +90,7 @@ const normalizeGranuleSpatial = (granule) => {
         [neLon, swLat],
         [swLon, swLat]
       ]
-
-      // Divide the polygon to handle antimeridian crossing
-      const { interiors: dividedCoordinates } = dividePolygon(
-        polygonCoordinates.map(([lng, lat]) => ({
-          lng,
-          lat
-        }))
-      )
-
-      // Convert the divided coordinates to GeoJSON MultiPolygon format
-      multiPolygons.push(dividedCoordinates.map(
-        (polygon) => polygon.map(({ lng, lat }) => [lng, lat])
-      ))
+      multiPolygons.push([polygonCoordinates])
     })
 
     // Return the bounding box as GeoJSON MultiPolygon
@@ -140,8 +132,8 @@ const normalizeGranuleSpatial = (granule) => {
     // Get the number of points in the line
     const numPoints = json.geometry.coordinates.reduce((acc, line) => acc + line.length, 0)
 
-    // If the line has more than 2000 points, simplify it to improve rendering permormance on the map
-    if (numPoints > 2000) {
+    // If the line has more than simplifyThreshold points, simplify it to improve rendering permormance on the map
+    if (numPoints > simplifyThreshold) {
       return simplify(json, {
         tolerance: 0.001,
         highQuality: true
@@ -218,8 +210,8 @@ const normalizeGranuleSpatial = (granule) => {
 
     const numPoints = json.geometry.coordinates.reduce((acc, polygon) => acc + polygon[0].length, 0)
 
-    // If the polygon has more than 2000 points, simplify it to improve rendering permormance on the map
-    if (numPoints > 2000) {
+    // If the polygon has more than simplifyThreshold points, simplify it to improve rendering permormance on the map
+    if (numPoints > simplifyThreshold) {
       return simplify(json, {
         tolerance: 0.001,
         highQuality: true

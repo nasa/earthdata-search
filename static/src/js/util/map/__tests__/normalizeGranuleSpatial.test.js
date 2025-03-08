@@ -14,7 +14,7 @@ describe('normalizeGranuleSpatial', () => {
   describe('when the granule has a box', () => {
     test('returns a geojson multi polygon', () => {
       const granule = {
-        boxes: ['0 0 10 10']
+        boxes: ['0 1 10 11']
       }
 
       const response = normalizeGranuleSpatial(granule)
@@ -26,11 +26,11 @@ describe('normalizeGranuleSpatial', () => {
           coordinates: [
             [
               [
-                [0, 0],
-                [10, 0],
-                [10, 10],
-                [0, 10],
-                [0, 0]
+                [1, 0],
+                [1, 10],
+                [11, 10],
+                [11, 0],
+                [1, 0]
               ]
             ]
           ]
@@ -41,7 +41,7 @@ describe('normalizeGranuleSpatial', () => {
     describe('when the granule has multiple boxes', () => {
       test('returns a geojson multi polygon', () => {
         const granule = {
-          boxes: ['0 0 10 10', '1 1 11 11']
+          boxes: ['0 1 10 11', '1 2 11 12']
         }
 
         const response = normalizeGranuleSpatial(granule)
@@ -53,54 +53,20 @@ describe('normalizeGranuleSpatial', () => {
             coordinates: [
               [
                 [
-                  [0, 0],
-                  [10, 0],
-                  [10, 10],
-                  [0, 10],
-                  [0, 0]
+                  [1, 0],
+                  [1, 10],
+                  [11, 10],
+                  [11, 0],
+                  [1, 0]
                 ]
               ],
               [
                 [
-                  [1, 1],
-                  [11, 1],
-                  [11, 11],
-                  [1, 11],
-                  [1, 1]
-                ]
-              ]
-            ]
-          }
-        })
-      })
-    })
-
-    describe('when the box crosses the antimeridian', () => {
-      test('returns a geojson multi polygon', () => {
-        const granule = {
-          boxes: ['0 170 10 -170']
-        }
-
-        const response = normalizeGranuleSpatial(granule)
-
-        expect(response).toEqual({
-          type: 'Feature',
-          geometry: {
-            type: 'MultiPolygon',
-            coordinates: [
-              [
-                [
-                  [180, 10.15108171104812],
-                  [170, 10],
-                  [170, 0],
-                  [170, 0],
-                  [180, 0]
-                ],
-                [
-                  [-180, 0],
-                  [-170, 0],
-                  [-170, 10],
-                  [-180, 10.15108171104812]
+                  [2, 1],
+                  [2, 11],
+                  [12, 11],
+                  [12, 1],
+                  [2, 1]
                 ]
               ]
             ]

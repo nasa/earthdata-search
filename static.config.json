@@ -53,7 +53,8 @@
     "macOSEddDownloadSize":130,
     "windowsEddDownloadSize":100,
     "linuxEddDownloadSize":90,
-    "disableSiteTour": "false"
+    "disableSiteTour": "false",
+    "simplifyThreshold": 2000
   },
   "environment": {
     "test": {
