@@ -11,25 +11,6 @@ import * as urlQuery from '../urlQuery'
 const mockStore = configureMockStore([thunk])
 
 jest.mock('../../../../../portals/availablePortals.json', () => ({
-  airmoss: {
-    moreInfoUrl: 'https://airmoss.ornl.gov',
-    pageTitle: 'AirMOSS',
-    parentConfig: 'edsc',
-    portalBrowser: true,
-    query: {
-      hasGranulesOrCwic: null,
-      project: 'AirMOSS'
-    },
-    title: {
-      primary: 'AirMOSS',
-      secondary: 'Airborne Microwave Observatory of Subcanopy and Subsurface '
-    },
-    ui: {
-      showNonEosdisCheckbox: false,
-      showOnlyGranulesCheckbox: false
-    },
-    portalId: 'airmoss'
-  },
   default: {
     features: {
       advancedSearch: false,
@@ -105,23 +86,42 @@ jest.mock('../../../../../portals/availablePortals.json', () => ({
     },
     portalId: 'edsc'
   },
-  idn: {
-    moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
-    pageTitle: 'IDN',
+  testPortal: {
+    moreInfoUrl: 'https://test.gov',
+    pageTitle: 'TEST',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      project: 'testProject'
+    },
+    title: {
+      primary: 'test',
+      secondary: 'test secondary title'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'testPortal'
+  },
+  testPortal2: {
+    moreInfoUrl: 'https://test.org',
+    pageTitle: 'TEST',
     parentConfig: 'edsc',
     portalBrowser: true,
     query: {
       hasGranulesOrCwic: null
     },
     title: {
-      primary: 'IDN',
-      secondary: 'CEOS International Directory Network'
+      primary: 'testPortal2',
+      secondary: 'test secondary title'
     },
     ui: {
       showNonEosdisCheckbox: false,
       showOnlyGranulesCheckbox: false
     },
-    portalId: 'idn'
+    portalId: 'testPortal2'
   }
 }))
 
@@ -254,7 +254,7 @@ describe('updateStore', () => {
 
   describe('when a portal parameter is provided', () => {
     test('loads the included styles', async () => {
-      jest.mock('../../../../../portals/airmoss/styles.scss', () => ({
+      jest.mock('../../../../../portals/testPortal/styles.scss', () => ({
         unuse: jest.fn(),
         use: jest.fn()
       }))
@@ -270,7 +270,7 @@ describe('updateStore', () => {
         },
         focusedCollection: '',
         map: {},
-        portalId: 'airmoss',
+        portalId: 'testPortal',
         project: {},
         query: {
           collection: {
@@ -344,18 +344,18 @@ describe('updateStore', () => {
                 }
               ]
             },
-            moreInfoUrl: 'https://airmoss.ornl.gov',
-            pageTitle: 'AirMOSS',
+            moreInfoUrl: 'https://test.gov',
+            pageTitle: 'test',
             parentConfig: 'edsc',
             portalBrowser: true,
-            portalId: 'airmoss',
+            portalId: 'testPortal',
             query: {
               hasGranulesOrCwic: null,
-              project: 'AirMOSS'
+              project: 'testProject'
             },
             title: {
-              primary: 'AirMOSS',
-              secondary: 'Airborne Microwave Observatory of Subcanopy and Subsurface '
+              primary: 'test',
+              secondary: 'test secondary title'
             },
             ui: {
               showNonEosdisCheckbox: false,

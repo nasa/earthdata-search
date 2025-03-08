@@ -48,42 +48,41 @@ jest.mock('../../../../../portals/availablePortals.json', () => ({
     },
     portalId: 'edsc'
   },
-  idn: {
-    moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
-    pageTitle: 'IDN',
+  testPortal: {
+    moreInfoUrl: 'https://test.gov',
+    pageTitle: 'TEST',
     parentConfig: 'edsc',
     portalBrowser: true,
     query: {
       hasGranulesOrCwic: null
     },
     title: {
-      primary: 'IDN',
-      secondary: 'CEOS International Directory Network'
+      primary: 'test',
+      secondary: 'test secondary title'
     },
     ui: {
       showNonEosdisCheckbox: false,
       showOnlyGranulesCheckbox: false
     },
-    portalId: 'idn'
+    portalId: 'testPortal'
   },
-  soos: {
-    moreInfoUrl: 'http://www.soos.aq',
-    pageTitle: 'Southern Ocean Observing System',
+  testPortal2: {
+    moreInfoUrl: 'https://test2.org',
+    pageTitle: 'TEST2',
     parentConfig: 'edsc',
     portalBrowser: true,
     query: {
-      hasGranulesOrCwic: null,
-      tagKey: []
+      hasGranulesOrCwic: null
     },
     title: {
-      primary: 'SOOS',
-      secondary: 'Southern Ocean Observing System'
+      primary: 'testPortal2',
+      secondary: 'test secondary title'
     },
     ui: {
       showNonEosdisCheckbox: false,
       showOnlyGranulesCheckbox: false
     },
-    portalId: 'soos'
+    portalId: 'testPortal2'
   }
 }
 ))
@@ -111,7 +110,7 @@ describe('isDefaultPortal', () => {
 
 describe('buildConfig', () => {
   test('builds a portal config of portal > edsc portal > default portal', () => {
-    const config = buildConfig(availablePortals.idn)
+    const config = buildConfig(availablePortals.testPortal)
 
     expect(config).toEqual({
       features: {
@@ -143,14 +142,14 @@ describe('buildConfig', () => {
           href: 'https://access.earthdata.nasa.gov/'
         }]
       },
-      moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
-      pageTitle: 'IDN',
+      moreInfoUrl: 'https://test.gov',
+      pageTitle: 'TEST',
       portalBrowser: true,
-      portalId: 'idn',
+      portalId: 'testPortal',
       query: { hasGranulesOrCwic: null },
       title: {
-        primary: 'IDN',
-        secondary: 'CEOS International Directory Network'
+        primary: 'test',
+        secondary: 'test secondary title'
       },
       ui: {
         showOnlyGranulesCheckbox: false,

@@ -26,8 +26,9 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
   </mock-PortalLinkContainer>
 )))
 
-jest.mock('../../../../../../portals/idn/images/logo.png', () => ('idn_logo_path'))
-jest.mock('../../../../../../portals/soos/images/logo.png', () => ('soos_logo_path'))
+// Use virtual mocks of modules that don't exist anywhere in the system
+jest.mock('../../../../../../portals/testPortal/images/logo.png', () => ('testPortal_logo_path'), { virtual: true })
+jest.mock('../../../../../../portals/testPortal2/images/logo.png', () => ('testPortal2_logo_path'), { virtual: true })
 
 jest.mock('../../../../../../portals/availablePortals.json', () => ({
   edsc: {
@@ -74,42 +75,42 @@ jest.mock('../../../../../../portals/availablePortals.json', () => ({
     },
     portalId: 'edsc'
   },
-  idn: {
-    moreInfoUrl: 'https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/',
-    pageTitle: 'IDN',
+  testPortal: {
+    moreInfoUrl: 'https://test.gov',
+    pageTitle: 'TEST',
+    parentConfig: 'edsc',
+    portalBrowser: true,
+    query: {
+      hasGranulesOrCwic: null,
+      project: 'testProject'
+    },
+    title: {
+      primary: 'test',
+      secondary: 'test secondary title'
+    },
+    ui: {
+      showNonEosdisCheckbox: false,
+      showOnlyGranulesCheckbox: false
+    },
+    portalId: 'testPortal'
+  },
+  testPortal2: {
+    moreInfoUrl: 'https://test2.org',
+    pageTitle: 'TEST2',
     parentConfig: 'edsc',
     portalBrowser: true,
     query: {
       hasGranulesOrCwic: null
     },
     title: {
-      primary: 'IDN',
-      secondary: 'CEOS International Directory Network'
+      primary: 'testPortal2',
+      secondary: 'test secondary title'
     },
     ui: {
       showNonEosdisCheckbox: false,
       showOnlyGranulesCheckbox: false
     },
-    portalId: 'idn'
-  },
-  soos: {
-    moreInfoUrl: 'http://www.soos.aq',
-    pageTitle: 'Southern Ocean Observing System',
-    parentConfig: 'edsc',
-    portalBrowser: true,
-    query: {
-      hasGranulesOrCwic: null,
-      tagKey: []
-    },
-    title: {
-      primary: 'SOOS',
-      secondary: 'Southern Ocean Observing System'
-    },
-    ui: {
-      showNonEosdisCheckbox: false,
-      showOnlyGranulesCheckbox: false
-    },
-    portalId: 'soos'
+    portalId: 'testPortal2'
   }
 }
 ))
@@ -147,10 +148,10 @@ describe('SearchSidebarHeader component', () => {
   describe('when a portal is loaded', () => {
     test('renders the Leave Portal link', async () => {
       setup({
-        portal: availablePortals.idn,
+        portal: availablePortals.testPortal,
         location: {
           pathname: '/search',
-          search: '?portal=idn'
+          search: '?portal=testPortal'
         }
       })
 
@@ -164,7 +165,7 @@ describe('SearchSidebarHeader component', () => {
         title: 'Leave Portal',
         to: {
           pathname: '/search',
-          search: '?portal=idn'
+          search: '?portal=testPortal'
         },
         updatePath: true
       }), {})
@@ -172,10 +173,10 @@ describe('SearchSidebarHeader component', () => {
 
     test('renders the portal logo and removes the spinner', async () => {
       setup({
-        portal: availablePortals.soos,
+        portal: availablePortals.testPortal2,
         location: {
           pathname: '/search',
-          search: '?portal=soos'
+          search: '?portal=testPortal2'
         }
       })
 
@@ -190,21 +191,21 @@ describe('SearchSidebarHeader component', () => {
 
       expect(screen.queryByTestId('portal-logo-spinner')).not.toBeInTheDocument()
 
-      expect(screen.getByTestId('portal-logo')).toHaveAttribute('src', 'soos_logo_path')
+      expect(screen.getByTestId('portal-logo')).toHaveAttribute('src', 'testPortal2_logo_path')
       expect(screen.getByTestId('portal-logo')).toHaveClass('search-sidebar-header__thumbnail--is-loaded')
     })
 
     test('renders the portal logo with a moreInfoUrl', async () => {
       setup({
-        portal: availablePortals.idn,
+        portal: availablePortals.testPortal,
         location: {
           pathname: '/search',
-          search: '?portal=idn'
+          search: '?portal=testPortal'
         }
       })
 
       await waitFor(() => {
-        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://ceos.org/ourwork/workinggroups/wgiss/access/international-directory-network/')
+        expect(screen.getByTestId('portal-logo-link').href).toEqual('https://test.gov/')
       })
     })
   })
