@@ -4,7 +4,6 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { tagName } from '../../../../sharedUtils/tags'
 import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 import { withAdvancedSearch } from './withAdvancedSearch'
-import { getCollectionSortPreference } from '../selectors/preferences'
 
 /**
  * If sortkey is set to 'default' or is undefined then
@@ -33,6 +32,7 @@ export const prepareCollectionParams = (state) => {
     authToken,
     facetsParams = {},
     portal = {},
+    preferences = {},
     query = {
       collection: {}
     },
@@ -53,7 +53,10 @@ export const prepareCollectionParams = (state) => {
     temporal = {}
   } = collectionQuery
 
-  const userPrefSortKey = translateDefaultCollectionSortKey(getCollectionSortPreference(state))
+  const { preferences: preferencesObj = {} } = preferences
+  const { collectionSort = 'default' } = preferencesObj
+
+  const userPrefSortKey = translateDefaultCollectionSortKey(collectionSort)
 
   // Use parameter sort key if present, else use user preferences sort key
   const sortKey = [paramCollectionSortKey || userPrefSortKey]
