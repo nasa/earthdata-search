@@ -63,7 +63,7 @@
         right: 0;
         bottom: 0;
         z-index: 1000;
-        background-color: black;
+        background-color: #000000;
         transition: opacity 0.15s ease-out;
       }
 
@@ -99,6 +99,10 @@
         width: 100%;
         padding: 0px;
         background-color: #191a1b;
+        
+        a {
+          color: #FFFFFF;
+        }
       }
 
       .fallback-page__wrapper {
@@ -112,7 +116,7 @@
         max-width: 700px;
         padding: 1rem;
         text-align: center;
-        color: white;
+        color: #FFFFFF;
         background-color: #121315;
         border-radius: 4px;
         border-radius: 0.25rem;
@@ -134,6 +138,7 @@
         position: absolute;
         bottom: 0;
         width: 100%;
+        color: #FFFFFF;
       }
 
       .lt-ie8 .footer__info--right {
@@ -330,7 +335,7 @@
         </div>
         <div class="footer fallback-page__footer">
             <span class="footer__info footer__info--left">
-                <span class="footer__info-bit footer__info-bit--emph">NASA Official: Stephen Berrick</span>
+                <span class="footer__info-bit footer__info-bit--emph"><%= attributionText %></span>
                 <span class="footer__info-bit"><a class="footer__info-link" aria-label="NASA Freedom of Information Act" href="http://www.nasa.gov/FOIA/index.html">FOIA</a></span>
                 <span class="footer__info-bit"><a class="footer__info-link" aria-label="NASA Privacy Policy" href="http://www.nasa.gov/about/highlights/HP_Privacy.html">NASA Privacy Policy</a></span>
                 <span class="footer__info-bit"><a class="footer__info-link" aria-label="USA Government Information and Services" href="http://www.usa.gov">USA.gov</a></span>
