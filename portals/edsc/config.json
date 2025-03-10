@@ -9,22 +9,28 @@
     }
   },
   "footer": {
-    "attributionText": "",
+    "attributionText": "NASA Official: Test Official",
     "displayVersion": true,
-    "primaryLinks": [{
-      "href": "http://www.nasa.gov/FOIA/index.html",
-      "title": "FOIA"
-    }, {
-      "href": "http://www.nasa.gov/about/highlights/HP_Privacy.html",
-      "title": "NASA Privacy Policy"
-    }, {
-      "href": "http://www.usa.gov",
-      "title": "USA.gov"
-    }],
-    "secondaryLinks": [{
-      "href": "https://access.earthdata.nasa.gov/",
-      "title": "Earthdata Access: A Section 508 accessible alternative"
-    }]
+    "primaryLinks": [
+      {
+        "href": "http://www.nasa.gov/FOIA/index.html",
+        "title": "FOIA"
+      },
+      {
+        "href": "http://www.nasa.gov/about/highlights/HP_Privacy.html",
+        "title": "NASA Privacy Policy"
+      },
+      {
+        "href": "http://www.usa.gov",
+        "title": "USA.gov"
+      }
+    ],
+    "secondaryLinks": [
+      {
+        "href": "https://access.earthdata.nasa.gov/",
+        "title": "Earthdata Access: A Section 508 accessible alternative"
+      }
+    ]
   },
   "pageTitle": "Earthdata Search",
   "portalBrowser": false,

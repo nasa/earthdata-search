@@ -10,6 +10,7 @@ import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
+// References portals/__mocks__/availablePortals.json in test
 import availablePortals from '../../../../../../portals/availablePortals.json'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
@@ -29,91 +30,6 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 // Use virtual mocks of modules that don't exist anywhere in the system
 jest.mock('../../../../../../portals/testPortal/images/logo.png', () => ('testPortal_logo_path'), { virtual: true })
 jest.mock('../../../../../../portals/testPortal2/images/logo.png', () => ('testPortal2_logo_path'), { virtual: true })
-
-jest.mock('../../../../../../portals/availablePortals.json', () => ({
-  edsc: {
-    features: {
-      advancedSearch: true,
-      authentication: true,
-      featureFacets:
-        {
-          showAvailableInEarthdataCloud: true,
-          showCustomizable: true,
-          showMapImagery: true
-        }
-
-    },
-    footer: {
-      attributionText: 'NASA Official: Test Official',
-      displayVersion: true,
-      primaryLinks: [{
-        title: 'FOIA',
-        href: 'http://www.nasa.gov/FOIA/index.html'
-      },
-      {
-        title: 'NASA Privacy Policy',
-        href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html'
-      },
-      {
-        title: 'USA.gov',
-        href: 'http://www.usa.gov'
-      }],
-      secondaryLinks: [{
-        title: 'Earthdata Access: A Section 508 accessible alternative',
-        href: 'https://access.earthdata.nasa.gov/'
-      }]
-    },
-    pageTitle: 'Earthdata Search',
-    portalBrowser: false,
-    title: {
-      primary: 'Earthdata Search'
-    },
-    ui: {
-      showNonEosdisCheckbox: true,
-      showOnlyGranulesCheckbox: true,
-      showTophat: true
-    },
-    portalId: 'edsc'
-  },
-  testPortal: {
-    moreInfoUrl: 'https://test.gov',
-    pageTitle: 'TEST',
-    parentConfig: 'edsc',
-    portalBrowser: true,
-    query: {
-      hasGranulesOrCwic: null,
-      project: 'testProject'
-    },
-    title: {
-      primary: 'test',
-      secondary: 'test secondary title'
-    },
-    ui: {
-      showNonEosdisCheckbox: false,
-      showOnlyGranulesCheckbox: false
-    },
-    portalId: 'testPortal'
-  },
-  testPortal2: {
-    moreInfoUrl: 'https://test2.org',
-    pageTitle: 'TEST2',
-    parentConfig: 'edsc',
-    portalBrowser: true,
-    query: {
-      hasGranulesOrCwic: null
-    },
-    title: {
-      primary: 'testPortal2',
-      secondary: 'test secondary title'
-    },
-    ui: {
-      showNonEosdisCheckbox: false,
-      showOnlyGranulesCheckbox: false
-    },
-    portalId: 'testPortal2'
-  }
-}
-))
 
 function setup(overrideProps) {
   const props = {
