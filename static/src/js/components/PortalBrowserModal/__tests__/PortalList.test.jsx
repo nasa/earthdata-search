@@ -15,7 +15,7 @@ import { PortalList } from '../PortalList'
 import configureStore from '../../../store/configureStore'
 import actions from '../../../actions'
 
-jest.mock('../../../../../../portals/above/images/logo.png', () => ('above_logo_path'))
+jest.mock('../../../../../../portals/testPortal/images/logo.png', () => ('testPortal_logo_path'), { virtual: true })
 
 const store = configureStore()
 
@@ -50,11 +50,11 @@ describe('PortalList component', () => {
     setup()
 
     await waitFor(() => {
-      expect(screen.getByTestId('portal-title-above')).toHaveTextContent('ABoVE (Arctic-Boreal Vulnerability Experiment)')
+      expect(screen.getByTestId('portal-title-testPortal')).toHaveTextContent('test (test secondary title)')
     })
 
-    const withinLink = within(screen.getByTestId('portal-link-above'))
-    expect(withinLink.getByRole('link')).toHaveAttribute('href', 'https://above.nasa.gov/')
+    const withinLink = within(screen.getByTestId('portal-link-testPortal'))
+    expect(withinLink.getByRole('link')).toHaveAttribute('href', 'https://test.gov')
   })
 
   test('does not render a portal that is excluded from the browser', async () => {
@@ -73,14 +73,14 @@ describe('PortalList component', () => {
 
     const { history, props } = setup()
 
-    const portalTitle = screen.queryByTestId('portal-list-item-standardproducts')
+    const portalTitle = screen.queryByTestId('portal-list-item-testPortal')
 
     await waitFor(async () => {
       await user.click(portalTitle)
 
       expect(history.location).toEqual(expect.objectContaining({
         pathname: '/search',
-        search: '?portal=standardproducts'
+        search: '?portal=testPortal'
       }))
     })
 
@@ -91,7 +91,7 @@ describe('PortalList component', () => {
     const user = await userEvent.setup()
     const { history, props } = setup()
 
-    const withinLink = within(screen.getByTestId('portal-link-above'))
+    const withinLink = within(screen.getByTestId('portal-link-testPortal'))
     const moreInfoLink = withinLink.getByRole('link')
 
     await waitFor(async () => {
@@ -108,18 +108,18 @@ describe('PortalList component', () => {
   test('displays a title attribute for the `More Info` link', async () => {
     setup()
 
-    const withinLink = within(screen.getByTestId('portal-link-above'))
+    const withinLink = within(screen.getByTestId('portal-link-testPortal'))
     const moreInfoLink = withinLink.getByRole('link')
 
     await waitFor(() => {
-      expect(moreInfoLink).toHaveAttribute('title', 'Find more information about ABoVE (Arctic-Boreal Vulnerability Experiment)')
+      expect(moreInfoLink).toHaveAttribute('title', 'Find more information about test (test secondary title)')
     })
   })
 
   test('Clicking the `More Info` link opens a new window', async () => {
     setup()
 
-    const withinLink = within(screen.getByTestId('portal-link-above'))
+    const withinLink = within(screen.getByTestId('portal-link-testPortal'))
     const moreInfoLink = withinLink.getByRole('link')
 
     await waitFor(() => {
