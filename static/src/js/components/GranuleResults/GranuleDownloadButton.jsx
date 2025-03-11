@@ -168,7 +168,8 @@ export const GranuleDownloadButton = (props) => {
 GranuleDownloadButton.defaultProps = {
   badge: null,
   granuleCount: 0,
-  granuleLimit: undefined
+  granuleLimit: undefined,
+  tooManyGranules: false
 }
 
 GranuleDownloadButton.propTypes = {
@@ -188,7 +189,7 @@ GranuleDownloadButton.propTypes = {
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired,
-  tooManyGranules: PropTypes.bool.isRequired
+  tooManyGranules: PropTypes.bool
 }
 
 export default GranuleDownloadButton

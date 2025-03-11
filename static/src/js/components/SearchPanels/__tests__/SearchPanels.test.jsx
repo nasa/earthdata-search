@@ -35,6 +35,9 @@ beforeEach(() => {
 
   jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
   jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+  jest.spyOn(AppConfig, 'getApplicationConfig').mockImplementation(() => ({
+    collectionSearchResultsSortKey: collectionSortKeys.scoreDescending
+  }))
 })
 
 delete window.location
@@ -153,7 +156,7 @@ describe('SearchPanels component', () => {
       expect(collectionResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
       expect(collectionResultsPanelProps.viewsArray[1].isActive).toBe(false)
 
-      expect(collectionResultsPanelProps.activeSort).toBe('')
+      expect(collectionResultsPanelProps.activeSort).toBe('-score')
       expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
       expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(true)
       expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
@@ -177,7 +180,7 @@ describe('SearchPanels component', () => {
         const collectionResultsPanel = panels.find(PanelGroup).at(0)
         const collectionResultsPanelProps = collectionResultsPanel.props()
 
-        expect(collectionResultsPanelProps.activeSort).toBe('')
+        expect(collectionResultsPanelProps.activeSort).toBe('-score')
         expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
         expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(true)
         expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
@@ -216,7 +219,23 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.handoffLinks).toStrictEqual([])
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
-        expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[0]).toMatchObject(
+          {
+            inProgress: false,
+            label: 'CSV',
+            onClick: expect.any(Function),
+            title: 'Export CSV'
+          }
+        )
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[1]).toMatchObject({
+          inProgress: false,
+          label: 'JSON',
+          onClick: expect.any(Function),
+          title: 'Export JSON'
+        })
+
         expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('0 Matching Collections')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(true)
@@ -245,7 +264,23 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.handoffLinks).toStrictEqual([])
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
-        expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[0]).toMatchObject(
+          {
+            inProgress: false,
+            label: 'CSV',
+            onClick: expect.any(Function),
+            title: 'Export CSV'
+          }
+        )
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[1]).toMatchObject({
+          inProgress: false,
+          label: 'JSON',
+          onClick: expect.any(Function),
+          title: 'Export JSON'
+        })
+
         expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('1 Matching Collection')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(false)
@@ -281,7 +316,22 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.handoffLinks).toStrictEqual([])
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
-        expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[0]).toMatchObject(
+          {
+            inProgress: false,
+            label: 'CSV',
+            onClick: expect.any(Function),
+            title: 'Export CSV'
+          }
+        )
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[1]).toMatchObject({
+          inProgress: false,
+          label: 'JSON',
+          onClick: expect.any(Function),
+          title: 'Export JSON'
+        })
+
         expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('4 Matching Collections')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(false)
@@ -303,7 +353,7 @@ describe('SearchPanels component', () => {
         const collectionResultsPanel = panels.find(PanelGroup).at(0)
         const collectionResultsPanelProps = collectionResultsPanel.props()
 
-        expect(collectionResultsPanelProps.activeSort).toBe('')
+        expect(collectionResultsPanelProps.activeSort).toBe('start_date')
         expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
         expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(false)
         expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
