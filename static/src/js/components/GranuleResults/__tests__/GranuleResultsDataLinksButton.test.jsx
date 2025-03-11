@@ -102,7 +102,7 @@ describe('GranuleResultsDataLinksButton component', () => {
       expect(enzymeWrapper.type()).toBe(Button)
     })
 
-    test.only('has a tooltip', async () => {
+    test('has a tooltip', async () => {
       const { enzymeWrapper } = setup()
 
       expect(enzymeWrapper.prop('tooltip')).toBe('Download granule data')
