@@ -3,13 +3,18 @@
 .edsc-map-zoom,
 .edsc-map-projection-switcher,
 .edsc-map-scale-imperial,
-.edsc-map-scale-metric {
+.edsc-map-scale-metric,
+.edsc-map-legend {
   position: absolute;
   z-index: 10;
-  right: .75rem;
+  right: 0.75rem;
   color: utils.$color__spacesuit-white;
   background-color: utils.$color__carbon--70;
   text-shadow: utils.$shadow__panel-dark;
+}
+
+.edsc-map-legend {
+  top: 45px;
 }
 
 .edsc-map-scale-imperial {
@@ -26,11 +31,6 @@
 
 .edsc-map-zoom {
   bottom: 92px;
-}
-
-.edsc-map-legend {
-  right: .75rem;
-  top: 40px;
 }
 
 .edsc-map-projection-switcher {
