@@ -244,13 +244,16 @@ export const MapContainer = (props) => {
     callbackOnChangeMap({ ...newMap })
   }, [projection])
 
+  // Get the metadata for the currently focused collection, or an empty object if no collection is focused
   const focusedCollectionMetadata = useMemo(() => collectionsMetadata[focusedCollectionId] || {}, [focusedCollectionId, collectionsMetadata])
 
+  // Get the colormap data for the currently focused collection
   const colorMapState = useMemo(() => {
     const { tags } = focusedCollectionMetadata
     const [gibsTag] = getValueForTag('gibs', tags) || []
     let colorMapData = {}
 
+    // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
     if (gibsTag && hasGibsLayerForProjection(gibsTag, projection)) {
       const { product } = gibsTag
       colorMapData = colormapsMetadata[product] || {}
