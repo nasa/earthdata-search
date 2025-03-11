@@ -370,8 +370,8 @@ test.describe('Map: Granule interactions', () => {
       await page.getByTestId('legend').scrollIntoViewIfNeeded()
       await expect(page).toHaveScreenshot('colormap-screenshot.png', {
         clip: {
-          x: 1138,
-          y: 433,
+          x: 1135,
+          y: 85,
           width: 252,
           height: 47
         }
@@ -413,8 +413,8 @@ test.describe('Map: Granule interactions', () => {
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
             clip: {
-              x: 1138,
-              y: 433,
+              x: 1135,
+              y: 85,
               width: 252,
               height: 47
             }
