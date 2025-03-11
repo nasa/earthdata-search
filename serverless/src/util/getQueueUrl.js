@@ -20,7 +20,7 @@ export const getQueueUrl = (queueName) => {
     case QUEUE_NAMES.CatalogRestOrderQueue:
       return isOffline ? `${localPrefix}CatalogRestOrderQueue` : process.env.CATALOG_REST_QUEUE_URL
     case QUEUE_NAMES.ColorMapQueue:
-      return isOffline ? `${localPrefix}ColorMapQueue` : process.env.COLOR_MAP_QUEUE_URL
+      return isOffline ? `${localPrefix}ColorMapsProcessingQueue` : process.env.COLOR_MAP_QUEUE_URL
     case QUEUE_NAMES.CmrOrderingOrderQueue:
       return isOffline ? `${localPrefix}CmrOrderingOrderQueue` : process.env.CMR_ORDERING_ORDER_QUEUE_URL
     case QUEUE_NAMES.HarmonyOrderQueue:
