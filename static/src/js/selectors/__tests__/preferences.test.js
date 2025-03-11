@@ -87,11 +87,11 @@ describe('getCollectionSortKeyParameter', () => {
     }))
   })
 
-  test('returns undefined when the sortKey is the default value of collectionSortKeys.usageDescending', () => {
+  test('returns undefined when paramCollectionSortKey is not defined', () => {
     const state = {
       query: {
         collection: {
-          sortKey: [collectionSortKeys.usageDescending]
+          paramCollectionSortKey: undefined
         }
       }
     }
@@ -99,11 +99,16 @@ describe('getCollectionSortKeyParameter', () => {
     expect(getCollectionSortKeyParameter(state)).toEqual(undefined)
   })
 
-  test('returns the proper collection sortKey when it is not the default of collectionSortKeys.usageDescending', () => {
+  test('returns the proper collection paramCollectionSortKey when it is not the same as the user preference sort key', () => {
     const state = {
       query: {
         collection: {
           paramCollectionSortKey: collectionSortKeys.startDateAscending
+        }
+      },
+      preferences: {
+        preferences: {
+          collectionSort: collectionSortKeys.usageDescending
         }
       }
     }
