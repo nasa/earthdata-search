@@ -101,6 +101,13 @@ describe('GranuleResultsDataLinksButton component', () => {
 
       expect(enzymeWrapper.type()).toBe(Button)
     })
+
+    test.only('has a tooltip', async () => {
+      const { enzymeWrapper } = setup()
+
+      expect(enzymeWrapper.prop('tooltip')).toBe('Download granule data')
+      expect(enzymeWrapper.prop('tooltipId')).toBe('download-granule-tooltip-G123456789-TEST')
+    })
   })
 
   describe('with multiple granule links', () => {

@@ -306,6 +306,8 @@ export const GranuleResultsDataLinksButton = ({
         }
         rel="noopener noreferrer"
         label="Download granule data"
+        tooltip="Download granule data"
+        tooltipId={`download-granule-tooltip-${id}`}
         target="_blank"
       />
     )
