@@ -364,7 +364,7 @@ const Map = ({
     return () => {
       map.un(MapBrowserEventType.CLICK, handleMapClick)
     }
-  }, [focusedGranuleId])
+  }, [focusedGranuleId, projectionCode])
 
   // Handle the map leave event
   const handleMouseLeave = () => {
