@@ -5,8 +5,8 @@ import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
-import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import { FaMap, FaTable } from 'react-icons/fa'
+import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaMap } from 'react-icons/fa'
 
 import Helmet from 'react-helmet'
 
@@ -150,10 +150,10 @@ describe('SearchPanels component', () => {
 
       expect(collectionResultsPanelProps.activeView).toBe('list')
       expect(collectionResultsPanelProps.viewsArray[0].label).toBe('List')
-      expect(collectionResultsPanelProps.viewsArray[0].icon).toBe(List)
+      expect(collectionResultsPanelProps.viewsArray[0].icon).toBe(undefined)
       expect(collectionResultsPanelProps.viewsArray[0].isActive).toBe(true)
       expect(collectionResultsPanelProps.viewsArray[1].label).toBe('Table')
-      expect(collectionResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
+      expect(collectionResultsPanelProps.viewsArray[1].icon).toBe(undefined)
       expect(collectionResultsPanelProps.viewsArray[1].isActive).toBe(false)
 
       expect(collectionResultsPanelProps.activeSort).toBe('-score')
@@ -474,10 +474,10 @@ describe('SearchPanels component', () => {
 
       expect(granuleResultsPanelProps.activeView).toBe('list')
       expect(granuleResultsPanelProps.viewsArray[0].label).toBe('List')
-      expect(granuleResultsPanelProps.viewsArray[0].icon).toBe(List)
+      expect(granuleResultsPanelProps.viewsArray[0].icon).toBe(undefined)
       expect(granuleResultsPanelProps.viewsArray[0].isActive).toBe(true)
       expect(granuleResultsPanelProps.viewsArray[1].label).toBe('Table')
-      expect(granuleResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
+      expect(granuleResultsPanelProps.viewsArray[1].icon).toBe(undefined)
       expect(granuleResultsPanelProps.viewsArray[1].isActive).toBe(false)
 
       expect(granuleResultsPanelProps.activeSort).toBe('-start_date')
