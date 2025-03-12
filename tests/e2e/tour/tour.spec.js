@@ -4,6 +4,9 @@ import { setupTests } from '../../support/setupTests'
 import { login } from '../../support/login'
 
 import singleCollection from './__mocks__/single_collection.json'
+import graphQlHeaders from './__mocks__/graphql.headers.json'
+import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
+import collectionFixture from './__mocks__/authenticated_collections.json'
 
 const expectWithinMargin = async (actual, expected, margin, step) => {
   Object.keys(expected).forEach((key) => {
@@ -118,10 +121,17 @@ test.describe('When logged in', () => {
 
     await login(context)
 
-    await page.route(/collections.json/, async (route) => {
+    await page.route(/collections$/, async (route) => {
       await route.fulfill({
-        json: singleCollection.body,
-        headers: singleCollection.headers
+        json: collectionFixture.body,
+        headers: collectionFixture.headers
+      })
+    })
+
+    await page.route(/graphql/, async (route) => {
+      await route.fulfill({
+        json: getSubscriptionsGraphQlBody,
+        headers: graphQlHeaders
       })
     })
 

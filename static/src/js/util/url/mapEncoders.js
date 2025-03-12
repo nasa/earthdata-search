@@ -65,7 +65,7 @@ export const encodeMap = (map, mapPreferences) => {
     overlays: 'referenceFeatures,referenceLabels',
     projection: 'EPSG:4326',
     rotation: 0,
-    zoom: 2
+    zoom: 3
   }
 
   // If map preferences exist, encode them to use as the `defaultValues` location
@@ -157,8 +157,10 @@ export const decodeMap = (params) => {
   // and a default value will be used
   if (latParam && !Number.isNaN(parseFloat(latParam))) decodedLatitude = parseFloat(latParam)
   if (longParam && !Number.isNaN(parseFloat(longParam))) decodedLongitude = parseFloat(longParam)
-  if (rotationParam && !Number.isNaN(parseFloat(rotationParam))) decodedRotation = parseFloat(rotationParam)
   if (zoomParam && !Number.isNaN(parseFloat(zoomParam))) decodedZoom = parseFloat(zoomParam)
+  if (rotationParam && !Number.isNaN(parseFloat(rotationParam))) {
+    decodedRotation = parseFloat(rotationParam)
+  }
 
   // If a valid projection is used, convert the value to the format the state expects
   if (projectionParam && validateProjection(projectionParam)) {
