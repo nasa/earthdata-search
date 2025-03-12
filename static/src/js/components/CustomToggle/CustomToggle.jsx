@@ -72,7 +72,6 @@ export const CustomToggle = React.forwardRef(({
       {
         icon && (
           <EDSCIcon
-            id="edsc-icon-test"
             size="1rem"
             icon={icon}
             className="custom-toggle__icon"

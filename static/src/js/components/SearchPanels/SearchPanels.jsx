@@ -181,7 +181,6 @@ class SearchPanels extends PureComponent {
       pageNum: collectionsPageNum = 1,
       paramCollectionSortKey: urlCollectionsSortKey
     } = collectionQuery
-    console.log('🚀 ~ file: SearchPanels.jsx:185 ~ SearchPanels ~ paramCollectionSortKey:', urlCollectionsSortKey)
 
     const { collectionSort: userPrefCollectionSortKey } = preferences
 
@@ -361,7 +360,7 @@ class SearchPanels extends PureComponent {
       {
         title: 'Export JSON',
         label: 'JSON',
-        onClick: () => { onExport('json') },
+        onClick: () => onExport('json'),
         inProgress: jsonExportRunning
       }
     ]
@@ -559,7 +558,6 @@ class SearchPanels extends PureComponent {
     )
 
     // Collection Details Panel
-    // TODO what is this one really doing here?
     panelSection.push(
       <PanelGroup
         key="collection-details-panel"

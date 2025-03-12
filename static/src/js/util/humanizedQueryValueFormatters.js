@@ -86,7 +86,6 @@ export const formatFacetHierarchy = (value, order) => value.map(
  * @returns {String} A humanized human readable string to display
  */
 export const humanizeSortKey = (sortKey) => {
-  console.log('🚀 ~ file: collectionSortKeys.js:9 ~ sortKey:', sortKey)
   if (!sortKey) return 'Unknown'
   const startDateMatch = /-?start_date/
   const endDateMatch = /-ongoing|-?end_date/
