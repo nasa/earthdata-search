@@ -145,11 +145,11 @@
       .radio-setting-dropdown__label {
         display: none;
       }
-      // TODO this we should change
+
+      // TODO when the panel is not too small hide the icon
       .custom-toggle__icon {
         display: none !important;
       }
-      
     }
   }
 

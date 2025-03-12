@@ -20,18 +20,17 @@ import './RadioSettingDropdown.scss'
  * @param {Object} props - The props passed into the component
  * @param {String} props.className - String to use as the classname
  * @param {Node} props.id - A unique id
+ * // TODO add one
  * @param {String} props.label - String to use as the classname
  * @param {Array} props.settings - An array of objects to configure the settings.
  */
 export const RadioSettingDropdown = ({
   id,
   activeIcon,
-  activeSort,
   className,
   label,
   settings
 }) => {
-  console.log('🚀 ~ file: RadioSettingDropdown.jsx:34 ~ activeSort:', activeSort)
   if (!settings.length) return null
 
   const toggleRef = useRef(null)
@@ -193,14 +192,12 @@ export const RadioSettingDropdown = ({
 }
 
 RadioSettingDropdown.defaultProps = {
-  activeSort: null,
   className: null,
   settings: []
 }
 
 RadioSettingDropdown.propTypes = {
   activeIcon: PropTypes.func.isRequired,
-  activeSort: PropTypes.string,
   className: PropTypes.string,
   settings: PropTypes.arrayOf(PropTypes.shape({})),
   id: PropTypes.string.isRequired,

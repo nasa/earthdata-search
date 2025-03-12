@@ -122,7 +122,6 @@ export const EDSCIcon = forwardRef(({
       data-testid="edsc-icon-wrapper"
     >
       <Icon
-        id="edsc-icon"
         title={title}
         size={size}
         aria-label={ariaLabel}

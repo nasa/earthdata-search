@@ -34,8 +34,8 @@ import './PanelGroup.scss'
 */
 export const PanelGroup = ({
   activePanelId,
-  activeView,
   activeSort,
+  activeView,
   breadcrumbs,
   children,
   dataTestId,
@@ -57,8 +57,6 @@ export const PanelGroup = ({
   sortsArray,
   viewsArray
 }) => {
-  console.log('🚀 ~ file: PanelGroup.jsx:60 ~ sortsArray:', sortsArray)
-  console.log('🚀 ~ file: PanelGroup.jsx:62 ~ activeSort:', activeSort)
   const renderPanels = (child, index) => {
     if (!child) return null
 
