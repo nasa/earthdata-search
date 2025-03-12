@@ -15,7 +15,6 @@ export const MoreActionsDropdownItem = ({
   inProgress,
   title
 }) => {
-  console.log('🚀 ~ file: MoreActionsDropdownItem.jsx:18 ~ inProgress:', inProgress)
   const moreActionItemClasses = classNames(
     className,
     'more-actions-dropdown-item'

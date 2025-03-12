@@ -5,12 +5,11 @@ import { isEqual } from 'lodash-es'
 import Badge from 'react-bootstrap/Badge'
 import Col from 'react-bootstrap/Col'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
-import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
   FaLock,
   FaMap,
-  FaQuestionCircle,
-  FaTable
+  FaQuestionCircle
 } from 'react-icons/fa'
 import classNames from 'classnames'
 import Helmet from 'react-helmet'
@@ -275,13 +274,11 @@ class SearchPanels extends PureComponent {
     const granulesViewsArray = [
       {
         label: 'List',
-        icon: List,
         isActive: granulePanelView === 'list',
         onClick: () => setGranulesActiveView('list')
       },
       {
         label: 'Table',
-        icon: FaTable,
         isActive: granulePanelView === 'table',
         onClick: () => setGranulesActiveView('table')
       }
@@ -334,13 +331,11 @@ class SearchPanels extends PureComponent {
     const collectionsViewsArray = [
       {
         label: 'List',
-        icon: List,
         isActive: collectionPanelView === 'list',
         onClick: () => setCollectionsActiveView('list')
       },
       {
         label: 'Table',
-        icon: FaTable,
         isActive: collectionPanelView === 'table',
         onClick: () => setCollectionsActiveView('table')
       }
