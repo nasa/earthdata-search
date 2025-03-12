@@ -152,7 +152,7 @@ test.describe('When clicking on a granule on the map', () => {
       test('the granule remains highlighted and visible', async ({ page }) => {
         // Switch to the table view
         await page.locator('.panel-group--is-active').getByRole('button', { name: /View/ }).hover()
-        await page.getByRole('button', { name: /List/ }).click()
+        await page.getByTestId('panel-group-header-dropdown__view__1__menu').getByText('List').click()
 
         const highlightedCard = await page.getByRole('button', {
           name: granuleName
