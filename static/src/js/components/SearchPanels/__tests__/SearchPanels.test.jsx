@@ -36,7 +36,8 @@ beforeEach(() => {
   jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
   jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
   jest.spyOn(AppConfig, 'getApplicationConfig').mockImplementation(() => ({
-    collectionSearchResultsSortKey: collectionSortKeys.scoreDescending
+    collectionSearchResultsSortKey: collectionSortKeys.scoreDescending,
+    defaultMaxOrderSize: 1000000
   }))
 })
 
