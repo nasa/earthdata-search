@@ -193,12 +193,14 @@ export const RadioSettingDropdown = ({
 }
 
 RadioSettingDropdown.defaultProps = {
+  activeSort: null,
   className: null,
   settings: []
 }
 
 RadioSettingDropdown.propTypes = {
   activeIcon: PropTypes.func.isRequired,
+  activeSort: PropTypes.string,
   className: PropTypes.string,
   settings: PropTypes.arrayOf(PropTypes.shape({})),
   id: PropTypes.string.isRequired,
