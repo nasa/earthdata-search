@@ -17,7 +17,7 @@ const initialState = {
   },
   projection: projections.geographic,
   rotation: 0,
-  zoom: 2
+  zoom: 3
 }
 
 describe('INITIAL_STATE', () => {

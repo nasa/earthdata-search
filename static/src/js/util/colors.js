@@ -1,9 +1,9 @@
 export const colors = {
-  green: '#2ECC71',
-  blue: '#3498DB',
-  orange: '#E67E22',
-  red: '#E74C3C',
-  purple: '#9B59B6'
+  green: 'rgb(46, 204, 113, 1)',
+  blue: 'rgb(52, 152, 219, 1)',
+  orange: 'rgb(230, 126, 34, 1)',
+  red: 'rgb(231, 76, 60, 1)',
+  purple: 'rgb(155, 89, 182, 1)'
 }
 
 export const lightColors = {

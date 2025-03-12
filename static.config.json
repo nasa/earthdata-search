@@ -50,7 +50,8 @@
     "disableEddDownload": "false",
     "disableOrdering": "false",
     "disableSwodlr": "false",
-    "disableSiteTour": "false"
+    "disableSiteTour": "false",
+    "mapPointsSimplifyThreshold": 2000
   },
   "environment": {
     "test": {
