@@ -85,12 +85,12 @@ export const CollectionDetails = ({
                     tabIndex="0"
                     onMouseEnter={
                       () => {
-                        eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: granuleMetadata })
+                        eventEmitter.emit(`map.layer.${collectionId}.highlightGranule`, { granule: granuleMetadata })
                       }
                     }
                     onMouseLeave={
                       () => {
-                        eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
+                        eventEmitter.emit(`map.layer.${collectionId}.highlightGranule`, { granule: null })
                       }
                     }
                     onClick={
@@ -98,12 +98,14 @@ export const CollectionDetails = ({
                         const newGranule = id === focusedGranuleId
                           ? { granule: null }
                           : { granule: granuleMetadata }
-                        eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, newGranule)
+                        eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, newGranule)
+                        onFocusedGranuleChange(id)
                       }
                     }
                     onKeyPress={
                       () => {
-                        eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: granuleMetadata })
+                        eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, { granule: granuleMetadata })
+                        onFocusedGranuleChange(granuleMetadata.id)
                       }
                     }
                   >

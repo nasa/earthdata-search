@@ -23,7 +23,8 @@ export const formatGranulesList = ({
   hoveredGranuleId,
   focusedGranuleId,
   isGranuleInProject,
-  isCollectionInProject
+  isCollectionInProject,
+  onFocusedGranuleChange
 }) => {
   let hasBrowseImagery = false
 
@@ -64,15 +65,16 @@ export const formatGranulesList = ({
     const handleClick = () => {
       let stickyGranule = original
       if (id === focusedGranuleId) stickyGranule = null
-      eventEmitter.emit(`map.layer.${collectionConceptId}.stickygranule`, { granule: stickyGranule })
+      onFocusedGranuleChange(stickyGranule ? stickyGranule.id : '')
+      eventEmitter.emit(`map.layer.${collectionConceptId}.focusGranule`, { granule: stickyGranule })
     }
 
     const handleMouseEnter = () => {
-      eventEmitter.emit(`map.layer.${collectionConceptId}.focusgranule`, { granule: original })
+      eventEmitter.emit(`map.layer.${collectionConceptId}.highlightGranule`, { granule: original })
     }
 
     const handleMouseLeave = () => {
-      eventEmitter.emit(`map.layer.${collectionConceptId}.focusgranule`, { granule: null })
+      eventEmitter.emit(`map.layer.${collectionConceptId}.highlightGranule`, { granule: null })
     }
 
     return {

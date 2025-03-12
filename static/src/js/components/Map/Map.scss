@@ -89,7 +89,7 @@
       transition: opacity 0.2s ease;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-  
+
       &:hover {
         cursor: crosshair;
       }
@@ -98,6 +98,32 @@
     &--is-colormap-rendered .legend__bar {
       visibility: visible;
       opacity: 1;
+    }
+  }
+}
+
+.edsc-map__focused-granule-overlay {
+  &__granule-label {
+    color: utils.$color__spacesuit-white;
+    text-shadow: 1px 1px 1px utils.$color__carbon-black;
+
+    &__remove {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.25rem;
+      width: 1.25rem;
+      margin: 0.5rem auto;
+      border: 0;
+      outline: 0;
+      background-color: rgba(utils.$color__carbon--40, 0.5);
+      color: utils.$color__spacesuit-white;
+      border-radius: 50%;
+
+      &:hover,
+      &:focus {
+        background-color: utils.$color__nasa-red;
+      }
     }
   }
 }

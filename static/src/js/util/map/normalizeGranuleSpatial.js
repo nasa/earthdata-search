@@ -193,6 +193,8 @@ const normalizeGranuleSpatial = (granule) => {
         })))
 
         dividedCoordinates.forEach((p) => {
+          if (p.length < 3) return
+
           const interpolatedPolygon = interpolatePolygon(p)
           multiPolygons.push(interpolatedPolygon)
         })

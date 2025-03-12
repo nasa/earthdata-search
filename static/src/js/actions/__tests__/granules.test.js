@@ -1102,8 +1102,9 @@ describe('excludeGranule', () => {
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual(expectedAction)
 
-    expect(getSearchGranulesMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
+    expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.collectionId.highlightGranule', { granule: null })
   })
 })
 

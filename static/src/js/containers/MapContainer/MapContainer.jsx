@@ -16,7 +16,7 @@ import {
   isEqual,
   merge
 } from 'lodash-es'
-import 'proj4leaflet'
+// import 'proj4leaflet'
 import LRUCache from 'lrucache'
 
 import actions from '../../actions'
@@ -43,6 +43,8 @@ import {
   deemphisizedGranuleStyle,
   deemphisizedPointStyle,
   granuleStyle,
+  highlightedGranuleStyle,
+  highlightedPointStyle,
   pointStyle
 } from '../../util/map/styles'
 
@@ -195,6 +197,15 @@ export const MapContainer = (props) => {
   const maxZoom = projection === projections.geographic ? 7 : 4
 
   let nonExcludedGranules = {}
+  // If the focusedGranuleId is set, add it to the nonExcludedGranules first.
+  // This is so the focused granule is always drawn on top of the other granules
+  if (focusedGranuleId && granulesMetadata[focusedGranuleId]) {
+    nonExcludedGranules[focusedGranuleId] = {
+      collectionId: focusedCollectionId,
+      index: 0
+    }
+  }
+
   if (focusedCollectionId && granuleSearchResults) {
     const { allIds, excludedGranuleIds, isOpenSearch } = granuleSearchResults
     const allGranuleIds = allIds
@@ -212,6 +223,7 @@ export const MapContainer = (props) => {
 
     granuleIds.forEach((granuleId) => {
       nonExcludedGranules[granuleId] = {
+        collectionId: focusedCollectionId,
         index: 0
       }
     })
@@ -237,6 +249,7 @@ export const MapContainer = (props) => {
       allIds.forEach((granuleId) => {
         if (granulesMetadata[granuleId]) {
           nonExcludedGranules[granuleId] = {
+            collectionId,
             index
           }
         }
@@ -370,7 +383,7 @@ export const MapContainer = (props) => {
   const granuleIds = Object.keys(nonExcludedGranules)
   if (granuleIds.length > 0) {
     granuleIds.forEach((granuleId) => {
-      const { index } = nonExcludedGranules[granuleId]
+      const { collectionId, index } = nonExcludedGranules[granuleId]
       const granule = granulesMetadata[granuleId]
 
       // Determine if the granule should be drawn with the regular style or the deemphasized style
@@ -384,21 +397,31 @@ export const MapContainer = (props) => {
         shouldDrawRegularStyle = !allRemovedGranuleIds.includes(granuleId)
       }
 
-      const { geometry } = granule.spatial
+      const {
+        formattedTemporal,
+        spatial = {}
+      } = granule
+      const { geometry = {} } = spatial
       const { type } = geometry
 
       if (type === 'Point') {
-        granule.style = shouldDrawRegularStyle ? pointStyle(index) : deemphisizedPointStyle(index)
         granule.backgroundStyle = backgroundPointStyle
+        granule.granuleStyle = shouldDrawRegularStyle ? pointStyle(index) : deemphisizedPointStyle(index)
+        granule.highlightedStyle = highlightedPointStyle(index)
       } else {
-        granule.style = shouldDrawRegularStyle ? granuleStyle(index) : deemphisizedGranuleStyle(index)
         granule.backgroundStyle = backgroundStyle
+        granule.granuleStyle = shouldDrawRegularStyle ? granuleStyle(index) : deemphisizedGranuleStyle(index)
+        granule.highlightedStyle = highlightedGranuleStyle(index)
       }
 
       granulesToDraw.push({
         backgroundStyle: granule.backgroundStyle,
-        spatial: granule.spatial,
-        style: granule.style
+        collectionId,
+        formattedTemporal,
+        granuleId,
+        granuleStyle: granule.granuleStyle,
+        highlightedStyle: granule.highlightedStyle,
+        spatial: granule.spatial
       })
     })
   }
@@ -406,16 +429,20 @@ export const MapContainer = (props) => {
   return (
     <Map
       center={center}
-      projectionCode={projection}
-      rotation={rotation}
+      colorMap={colorMap}
       focusedCollectionId={focusedCollectionId}
+      focusedGranuleId={focusedGranuleId}
       granules={granulesToDraw}
       granulesKey={granulesKey}
-      zoom={zoom}
+      isFocusedCollectionPage={isFocusedCollectionPage}
+      isProjectPage={isProjectPage}
+      onChangeFocusedGranule={onChangeFocusedGranule}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
-      colorMap={colorMap}
-      isFocusedCollectionPage={isFocusedCollectionPage}
+      onExcludeGranule={onExcludeGranule}
+      projectionCode={projection}
+      rotation={rotation}
+      zoom={zoom}
     />
   )
 }

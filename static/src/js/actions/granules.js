@@ -599,7 +599,7 @@ export const excludeGranule = (data) => (dispatch) => {
   const { collectionId, granuleId } = data
 
   // Unfocus the granule on the map
-  eventEmitter.emit(`map.layer.${collectionId}.focusgranule`, { granule: null })
+  eventEmitter.emit(`map.layer.${collectionId}.highlightGranule`, { granule: null })
 
   dispatch(actions.onExcludeGranule({
     collectionId,

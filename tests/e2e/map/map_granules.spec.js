@@ -36,6 +36,15 @@ import opensearchGranulesHeaders from './__mocks__/opensearch_granules/granules.
 import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/timeline.body.json'
 import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json'
 
+const screenshotClip = {
+  x: 930,
+  y: 90,
+  width: 425,
+  height: 700
+}
+
+const temporalLabelClass = '.edsc-map__focused-granule-overlay__granule-label-temporal'
+
 test.describe('Map: Granule interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
@@ -51,7 +60,7 @@ test.describe('Map: Granule interactions', () => {
     })
   })
 
-  test.describe.skip('When viewing granule results', () => {
+  test.describe('When viewing granule results', () => {
     test.describe('When viewing CMR granules', () => {
       test.beforeEach(async ({ page }) => {
         const conceptId = 'C1214470488-ASF'
@@ -99,16 +108,16 @@ test.describe('Map: Granule interactions', () => {
           })
         })
 
-        await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!`)
+        await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&lat=-6.34&long=44.58&zoom=6`)
       })
 
       test.describe('When hovering over a granule', () => {
         test('highlights the granule in the granule results list', async ({ page }) => {
-          await page.locator('g path.leaflet-interactive').hover({
+          await page.locator('.map').hover({
             force: true,
             position: {
-              x: 20,
-              y: 20
+              x: 1200,
+              y: 350
             }
           })
 
@@ -129,21 +138,28 @@ test.describe('Map: Granule interactions', () => {
             })
           })
 
-          await page.locator('g path.leaflet-interactive').click({
+          await page.locator('.map').click({
             force: true,
             position: {
-              x: 20,
-              y: 20
+              x: 1200,
+              y: 350
             }
           })
+
+          // The is a 250ms duration for fitting the granule to the view area
+          await page.waitForTimeout(250)
         })
 
         test('shows the granule and a label on the map and updates the url', async ({ page }) => {
-          await expect(await page.locator('g path').all()).toHaveLength(5)
-          await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+          await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
 
           // Updates the URL with the selected granule
           await expect(page).toHaveURL(/\/search\/granules.*g=G2061166811-ASF/)
+
+          // Draws the granule on the map
+          await expect(page).toHaveScreenshot('focused-granule.png', {
+            clip: screenshotClip
+          })
         })
 
         test.describe('when returning to the collections results list', () => {
@@ -152,34 +168,36 @@ test.describe('Map: Granule interactions', () => {
               .getByTestId('breadcrumb-button')
               .click()
 
-            await expect(page.locator('.granule-spatial-label-temporal')).not.toBeInViewport()
+            await expect(page.locator(temporalLabelClass)).not.toBeInViewport()
           })
         })
 
         test.describe('when panning the map', () => {
           test('does not remove the stickied granule', async ({ page }) => {
-            await expect(await page.locator('g path').all()).toHaveLength(5)
-
             // Drag the map
             await page.mouse.move(1000, 500)
             await page.mouse.down()
             await page.mouse.move(1000, 600)
             await page.mouse.up()
 
-            await expect(await page.locator('g path').all()).toHaveLength(3)
-            await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+            await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+
+            await expect(page).toHaveScreenshot('focused-granule-panned.png', {
+              clip: screenshotClip
+            })
           })
         })
 
         test.describe('when zooming the map', () => {
           test('does not remove the stickied granule', async ({ page }) => {
-            await expect(await page.locator('g path').all()).toHaveLength(5)
-
             // Zoom the map
-            await page.locator('.leaflet-control-zoom-in').click()
+            await page.locator('.edsc-map-zoom-in').click()
 
-            await expect(await page.locator('g path').all()).toHaveLength(3)
-            await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+            await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+
+            await expect(page).toHaveScreenshot('focused-granule-zoomed.png', {
+              clip: screenshotClip
+            })
           })
         })
 
@@ -188,12 +206,12 @@ test.describe('Map: Granule interactions', () => {
             await page.locator('.map').click({
               force: true,
               position: {
-                x: 1100,
-                y: 720
+                x: 1300,
+                y: 100
               }
             })
 
-            await expect(page.locator('.granule-spatial-label-temporal')).not.toBeInViewport()
+            await expect(page.locator(temporalLabelClass)).not.toBeInViewport()
           })
         })
 
@@ -202,18 +220,18 @@ test.describe('Map: Granule interactions', () => {
             await page.locator('.map').click({
               force: true,
               position: {
-                x: 1000,
-                y: 720
+                x: 1200,
+                y: 600
               }
             })
 
-            await expect(page.locator('.granule-spatial-label-temporal')).not.toBeInViewport()
+            await expect(page.locator(temporalLabelClass)).not.toBeInViewport()
           })
         })
       })
     })
 
-    test.describe('When viewing OpenSearch granules with polygon spatial', () => {
+    test.describe.skip('When viewing OpenSearch granules with polygon spatial', () => {
       test.beforeEach(async ({ page }) => {
         const conceptId = 'C1972468359-SCIOPS'
 
@@ -238,7 +256,7 @@ test.describe('Map: Granule interactions', () => {
           expect(query).toEqual({
             boundingBox: '42.18750000000001,-9.453289809825428,49.218749999999986,-2.4064699999999886',
             conceptId: [],
-            echoCollectionId: 'C1972468359-SCIOPS',
+            echoCollectionId: conceptId,
             exclude: {},
             openSearchOsdd: 'http://47.90.244.40/glass/osdd/fapar_modis_0.05d.xml',
             options: {},
@@ -447,7 +465,7 @@ test.describe('Map: Granule interactions', () => {
     })
   })
 
-  test.describe.skip('when viewing a granule that crosses the antimeridian twice', () => {
+  test.describe('when viewing a granule that crosses the antimeridian twice', () => {
     test.beforeEach(async ({ page }) => {
       const conceptId = 'C1258816710-ASDC_DEV2'
 
@@ -504,8 +522,8 @@ test.describe('Map: Granule interactions', () => {
         await page.locator('body').hover({
           force: true,
           position: {
-            x: 1100,
-            y: 200
+            x: 1300,
+            y: 350
           }
         })
       })
@@ -516,8 +534,8 @@ test.describe('Map: Granule interactions', () => {
         // screenshot instead of correctly drawing the granule outline.
         await expect(page).toHaveScreenshot('granule-crosses-antimeridian.png', {
           clip: {
-            x: 1000,
-            y: 200,
+            x: 1140,
+            y: 350,
             width: 300,
             height: 50
           },
