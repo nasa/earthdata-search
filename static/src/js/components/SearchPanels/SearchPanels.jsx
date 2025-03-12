@@ -422,18 +422,18 @@ class SearchPanels extends PureComponent {
     // Collection Results Panel
     panelSection.push(
       <PanelGroup
-        activeSort={activeCollectionsSortKey}
-        activeView={collectionPanelView}
+        key="collection-results-panel"
         dataTestId="panel-group_collection-results"
-        footer={buildCollectionResultsBodyFooter()}
-        headerLoading={initialCollectionsLoading}
+        primaryHeading={collectionResultsPrimaryHeading}
         headerMetaPrimaryLoading={initialCollectionsLoading}
         headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}
-        key="collection-results-panel"
-        onPanelClose={this.onPanelClose}
-        primaryHeading={collectionResultsPrimaryHeading}
-        sortsArray={collectionsSortsArray}
+        headerLoading={initialCollectionsLoading}
         viewsArray={collectionsViewsArray}
+        activeSort={activeCollectionsSortKey}
+        activeView={collectionPanelView}
+        sortsArray={collectionsSortsArray}
+        footer={buildCollectionResultsBodyFooter()}
+        onPanelClose={this.onPanelClose}
         moreActionsDropdownItems={exportsArray}
       >
         <PanelItem scrollable={false}>

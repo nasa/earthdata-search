@@ -24,9 +24,9 @@ import './RadioSettingDropdown.scss'
  * @param {Array} props.settings - An array of objects to configure the settings.
  */
 export const RadioSettingDropdown = ({
-  id,
   activeIcon,
   className,
+  id,
   label,
   settings
 }) => {
