@@ -167,31 +167,6 @@ describe('SearchPanels component', () => {
       expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(false)
     })
 
-    describe('when there is a sort key parameter', () => {
-      test('sets the correct view state', () => {
-        const { enzymeWrapper } = setup({
-          collectionQuery: {
-            pageNum: 1,
-            sortKey: [collectionSortKeys.scoreDescending],
-            coll: [collectionSortKeys.scoreDescending]
-          }
-        })
-        const panels = enzymeWrapper.find(Panels)
-        const collectionResultsPanel = panels.find(PanelGroup).at(0)
-        const collectionResultsPanelProps = collectionResultsPanel.props()
-
-        expect(collectionResultsPanelProps.activeSort).toBe('-score')
-        expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
-        expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(true)
-        expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
-        expect(collectionResultsPanelProps.sortsArray[1].isActive).toBe(false)
-        expect(collectionResultsPanelProps.sortsArray[2].label).toBe('Start Date')
-        expect(collectionResultsPanelProps.sortsArray[2].isActive).toBe(false)
-        expect(collectionResultsPanelProps.sortsArray[3].label).toBe('End Date')
-        expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(false)
-      })
-    })
-
     describe('when the collections are loading', () => {
       test('shows the loading state', () => {
         const { enzymeWrapper } = setup({

@@ -59,7 +59,6 @@ export const PanelGroupHeader = ({
   sortsArray,
   viewsArray
 }) => {
-  console.log('🚀 ~ file: PanelGroupHeader.jsx:60 ~ sortsArray:', sortsArray)
   const sortLabel = `Sort: ${humanizeSortKey(activeSort)}`
   const viewLabel = `View: ${upperFirst(activeView)}`
   const panelGroupHeaderClasses = classNames([
@@ -208,7 +207,6 @@ export const PanelGroupHeader = ({
               {
                 moreActionsDropdownItems.map((moreActionsDropdownItem, i) => {
                   const key = JSON.stringify(moreActionsDropdownItem) + i
-                  console.log('🚀 ~ file: PanelGroupHeader.jsx:209 ~ key:', key)
                   const {
                     title = '',
                     icon = '',
@@ -225,7 +223,6 @@ export const PanelGroupHeader = ({
                   const onClickProps = {}
 
                   if (typeof onClick === 'function') {
-                    console.log('clicking the export function')
                     onClickProps.onClick = onClick
                   }
 
