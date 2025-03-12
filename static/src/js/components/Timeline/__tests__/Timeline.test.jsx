@@ -157,7 +157,7 @@ describe('Timeline component', () => {
 
     expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
       data: [{
-        color: '#2ECC71',
+        color: 'rgb(46, 204, 113, 1)',
         id: 'collectionId',
         intervals: [[1525132800000, 1618185600000]],
         title: 'Test Collection'
@@ -193,7 +193,7 @@ describe('Timeline component', () => {
     expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
       data: [
         {
-          color: '#2ECC71',
+          color: 'rgb(46, 204, 113, 1)',
           id: 'someCollection',
           intervals: [[1525132800000, 1618185600000]],
           title: 'Some Collection'
@@ -255,19 +255,19 @@ describe('Timeline component', () => {
 
     expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
       data: [{
-        color: '#2ECC71',
+        color: 'rgb(46, 204, 113, 1)',
         id: 'firstCollection',
         intervals: [[1525132800000, 1618185600000]],
         title: '1st Collection'
       },
       {
-        color: '#3498DB',
+        color: 'rgb(52, 152, 219, 1)',
         id: 'secondCollection',
         intervals: [[1525132800000, 1618185600000]],
         title: '2nd Collection'
       },
       {
-        color: '#E67E22',
+        color: 'rgb(230, 126, 34, 1)',
         id: 'thirdCollection',
         intervals: [[1525132800000, 1618185600000]],
         title: '3rd Collection'
