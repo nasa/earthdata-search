@@ -31,16 +31,21 @@
   }
 
   &--separated {
+    position: relative;
+    margin-left: 0.5rem; 
     &:before {
+      position: absolute;
       display: inline-block;
-      margin-left: calc(bootstrap.$spacer / 2);
-      padding-left: calc(bootstrap.$spacer / 2);
       content: '|';
       color: transparent;
+      margin-right:0.5rem;
+      border-bottom:0;
+      left: -0.40rem;
       border-left: 1px solid variables.$color__carbon--30;
     }
 
     &:first-child:before {
+      margin: 0;
       display: none;
     }
   }
