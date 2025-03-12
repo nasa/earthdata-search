@@ -13,6 +13,7 @@ import './Button.scss'
 
 export const Button = React.forwardRef(({
   as,
+  ariaLabel,
   badge,
   badgeVariant,
   bootstrapVariant,
@@ -93,7 +94,7 @@ export const Button = React.forwardRef(({
       title={title || label}
       role="button"
       label={label}
-      aria-label={label}
+      aria-label={ariaLabel || label}
       type={type}
       disabled={disabled || spinner}
       target={target}
@@ -162,6 +163,7 @@ export const Button = React.forwardRef(({
 Button.displayName = 'Button'
 
 Button.defaultProps = {
+  ariaLabel: null,
   as: 'button',
   badge: null,
   badgeVariant: null,
@@ -191,6 +193,7 @@ Button.defaultProps = {
 }
 
 Button.propTypes = {
+  ariaLabel: PropTypes.string,
   as: PropTypes.string,
   badge: PropTypes.oneOfType([
     PropTypes.string,
