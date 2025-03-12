@@ -9,6 +9,8 @@ import { granuleRequestPermittedCmrKeys } from '../../../../../sharedConstants/p
 
 import { getTemporal } from '../../../../../sharedUtils/edscDate'
 
+import normalizeGranuleSpatial from '../map/normalizeGranuleSpatial'
+
 /**
  * Request object for granule specific requests
  */
@@ -95,6 +97,9 @@ export default class GranuleRequest extends CmrRequest {
 
         updatedGranule.browse_url = browseUrl
       }
+
+      // Create a GeoJSON representation of the granule spatial
+      updatedGranule.spatial = normalizeGranuleSpatial(granule)
 
       return updatedGranule
     })
