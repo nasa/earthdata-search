@@ -20,6 +20,7 @@
     color: utils.$color__carbon--80;
     margin-left: calc(bootstrap.$spacer / 4);
     text-indent: -10000px;
+    margin: 0;
 
     .panels--sm & {
       position: relative;

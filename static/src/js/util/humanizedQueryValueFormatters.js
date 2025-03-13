@@ -83,18 +83,30 @@ export const formatFacetHierarchy = (value, order) => value.map(
 /**
  * Humanizes the sort key value sent to CMR with a human readable value
  * @param {String} sortKey - The value for the sort key type sent to CMR
+ * @param {String} sortKey - The array containing all of the sort orders for the concept type
  * @returns {String} A humanized human readable string to display
  */
-export const humanizeSortKey = (sortKey) => {
+export const humanizeSortKey = (sortKey, sortsArray) => {
   if (!sortKey) return 'Unknown'
-  const startDateMatch = /-?start_date/
-  const endDateMatch = /-ongoing|-?end_date/
 
-  // Sort orders
+  // Sort orders (Collections)
   if (sortKey === '-score') return 'Relevance'
   if (sortKey === '-usage_score') return 'Usage'
-  if (startDateMatch.test(sortKey)) return 'Start Date'
-  if (endDateMatch.test(sortKey)) return 'End Date'
+  if (sortKey === '-ongoing') return 'End Date'
+
+  // `start_date` is a sort key for both collections and granules handle displayed value
+  const isCollectionSort = sortsArray.some((sort) => sort.label === 'Relevance')
+
+  if (isCollectionSort && 'start_date') {
+    return 'Start Date'
+  }
+
+  // Sort orders (Granules)
+  if (sortKey === 'start_date') return 'Start Date Oldest'
+  if (sortKey === '-start_date') return 'Start Date Newest'
+
+  if (sortKey === 'end_date') return 'End Date Oldest'
+  if (sortKey === '-end_date') return 'End Date Newest'
 
   return sortKey
 }

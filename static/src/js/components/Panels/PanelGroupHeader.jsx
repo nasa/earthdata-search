@@ -59,7 +59,7 @@ export const PanelGroupHeader = ({
   sortsArray,
   viewsArray
 }) => {
-  const sortLabel = `Sort: ${humanizeSortKey(activeSort)}`
+  const sortLabel = `Sort: ${humanizeSortKey(activeSort, sortsArray)}`
   const viewLabel = `View: ${upperFirst(activeView)}`
   const panelGroupHeaderClasses = classNames([
     'panel-group-header',
