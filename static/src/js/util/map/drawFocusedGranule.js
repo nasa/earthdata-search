@@ -40,7 +40,18 @@ const overlayContent = ({
 }
 
 /**
- *
+ * Draws the focused granule on the map
+ * @param {Object} params
+ * @param {String} params.collectionId The collection ID of the focused granule
+ * @param {Object} params.focusedGranuleSource The OL source for the focused granule
+ * @param {Object} params.granuleBackgroundsSource The OL source for the granule backgrounds
+ * @param {String} params.granuleId The granule ID of the focused granule
+ * @param {Boolean} params.isProjectPage If the focused granule is on the project page
+ * @param {Object} params.map The OL map
+ * @param {Function} params.onChangeFocusedGranule Callback to change the focused granule
+ * @param {Function} params.onExcludeGranule Callback to exclude the granule
+ * @param {Boolean} params.shouldMoveMap If the map should move to fit the focused granule
+ * @param {String} params.timesIconSvg The SVG for the times icon
  */
 const drawFocusedGranule = ({
   collectionId,
@@ -131,24 +142,26 @@ const drawFocusedGranule = ({
   // Add the overlay to the map
   map.addOverlay(focusedGranuleOverlay)
 
-  // Add event listener to the exclude button
-  const excludeButton = element.querySelector('#remove-focused-granule')
-  excludeButton.addEventListener('click', () => {
-    // Remove the overlay
-    map.removeOverlay(focusedGranuleOverlay)
+  if (!isProjectPage) {
+    // Add event listener to the exclude button
+    const excludeButton = element.querySelector('#remove-focused-granule')
+    excludeButton.addEventListener('click', () => {
+      // Remove the overlay
+      map.removeOverlay(focusedGranuleOverlay)
 
-    // Clear the focusedGranuleSource
-    focusedGranuleSource.clear()
+      // Clear the focusedGranuleSource
+      focusedGranuleSource.clear()
 
-    // Clear the focusedGranuleId
-    onChangeFocusedGranule('')
+      // Clear the focusedGranuleId
+      onChangeFocusedGranule('')
 
-    // Call the onExcludeGranule function
-    onExcludeGranule({
-      collectionId,
-      granuleId
+      // Call the onExcludeGranule function
+      onExcludeGranule({
+        collectionId,
+        granuleId
+      })
     })
-  })
+  }
 }
 
 export default drawFocusedGranule

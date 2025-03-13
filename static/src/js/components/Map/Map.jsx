@@ -177,9 +177,11 @@ const zoomControl = (projectionCode) => new ZoomControl({
   duration: 250
 })
 
+// Clear the focused granule source
 const clearFocusedGranuleSource = (map) => {
   focusedGranuleSource.clear()
 
+  // If a focused granule overlay exists, remove it
   const focusedGranuleOverlay = map.getOverlayById('focused-granule-overlay')
   if (focusedGranuleOverlay) map.removeOverlay(focusedGranuleOverlay)
 }
@@ -585,7 +587,6 @@ const Map = ({
     drawGranuleOutlines({
       ctx,
       granuleBackgroundsSource,
-      focusedGranuleSource,
       map: mapRef.current,
       projectionCode
     })
