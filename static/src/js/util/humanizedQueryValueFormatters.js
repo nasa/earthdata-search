@@ -97,7 +97,7 @@ export const humanizeSortKey = (sortKey, sortsArray) => {
   // `start_date` is a sort key for both collections and granules handle displayed value
   const isCollectionSort = sortsArray.some((sort) => sort.label === 'Relevance')
 
-  if (isCollectionSort && 'start_date') {
+  if (isCollectionSort && (sortKey === 'start_date')) {
     return 'Start Date'
   }
 
