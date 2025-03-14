@@ -32,14 +32,14 @@
 
   &--separated {
     position: relative;
-    margin-left: 0.5em;
-      
+    margin-left: 1em;
+    
     &:before {
       position: absolute;
-      display: inline-block;
-      content: '|';
-      color: transparent;
-      left: calc(-0.5 * var(--line-height, 0.5em));
+      content: '';
+      left: -0.5em;
+      transform: translateX(-50%);
+      height: 100%;
       border-left: 1px solid variables.$color__carbon--30;
     }
     
@@ -47,7 +47,6 @@
       margin-left: 0;
       
       &:before {
-        margin: 0;
         display: none;
       }
     }
