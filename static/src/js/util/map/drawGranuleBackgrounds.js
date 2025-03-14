@@ -15,8 +15,12 @@ const drawGranuleBackgrounds = (granulesMetadata, vectorSource, projectionCode) 
   granulesMetadata.forEach((granule) => {
     const {
       backgroundStyle,
-      spatial,
-      style
+      collectionId,
+      formattedTemporal,
+      granuleId,
+      granuleStyle,
+      highlightedStyle,
+      spatial
     } = granule
 
     // If the granule has no spatial, return
@@ -29,9 +33,16 @@ const drawGranuleBackgrounds = (granulesMetadata, vectorSource, projectionCode) 
     }).readFeatures(spatial)
 
     backgroundFeatures.forEach((backgroundFeature) => {
+      // Save the collectionId and granuleId to the properties
+      backgroundFeature.set('collectionId', collectionId)
+      backgroundFeature.set('granuleId', granuleId)
+
       // Set the style for the granule in the properties. This will be read in the postrender event handler
       // to style the outline of the granule correctly.
-      backgroundFeature.set('style', style)
+      backgroundFeature.set('granuleStyle', granuleStyle)
+      backgroundFeature.set('highlightedStyle', highlightedStyle)
+
+      backgroundFeature.set('formattedTemporal', formattedTemporal)
 
       // Set the style for the feature
       backgroundFeature.setStyle(backgroundStyle)
