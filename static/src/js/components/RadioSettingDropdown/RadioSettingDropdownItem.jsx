@@ -35,10 +35,9 @@ export const RadioSettingDropdownItem = ({
     }
   )
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     if (isActive) return
     onClick()
-    event.stopPropagation()
   }
 
   return (
