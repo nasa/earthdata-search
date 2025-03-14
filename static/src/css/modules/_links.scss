@@ -42,10 +42,14 @@
       left: calc(-0.5 * var(--line-height, 0.5em));
       border-left: 1px solid variables.$color__carbon--30;
     }
-
-    &:first-child:before {
-      margin: 0;
-      display: none;
+    
+    &:first-child {
+      margin-left: 0;
+      
+      &:before {
+        margin: 0;
+        display: none;
+      }
     }
   }
 
