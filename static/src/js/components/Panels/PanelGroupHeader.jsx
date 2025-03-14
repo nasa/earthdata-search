@@ -320,7 +320,6 @@ export const PanelGroupHeader = ({
                       <RadioSettingDropdown
                         id={`panel-group-header-dropdown__sort__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
-                        activeSort={activeSort}
                         activeIcon={ActiveSortIcon}
                         label={sortLabel}
                         settings={sortsArray}

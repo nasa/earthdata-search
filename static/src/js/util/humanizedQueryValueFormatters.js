@@ -83,7 +83,7 @@ export const formatFacetHierarchy = (value, order) => value.map(
 /**
  * Humanizes the sort key value sent to CMR with a human readable value
  * @param {String} sortKey - The value for the sort key type sent to CMR
- * @param {String} sortKey - The array containing all of the sort orders for the concept type
+ * @param {String} sortsArray - The array containing all of the sort orders for the concept type
  * @returns {String} A humanized human readable string to display
  */
 export const humanizeSortKey = (sortKey, sortsArray) => {
