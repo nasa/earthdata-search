@@ -247,22 +247,22 @@ describe(('formatFacetHierarchy'), () => {
       // Granules
       test('returns "Start Date Newest " for "-start_date"', () => {
         const result = humanizeSortKey('-start_date', [])
-        expect(result).toBe('Start Date Newest')
+        expect(result).toBe('Start Date (Newest)')
       })
 
       test('returns "Start Date" for "start_date"', () => {
         const result = humanizeSortKey('start_date', [{ label: 'notRelevance' }])
-        expect(result).toBe('Start Date Oldest')
+        expect(result).toBe('Start Date (Oldest)')
       })
 
       test('returns "End Date Oldest" for "end_date"', () => {
         const result = humanizeSortKey('end_date', [])
-        expect(result).toBe('End Date Oldest')
+        expect(result).toBe('End Date (Oldest)')
       })
 
       test('returns "End Date Newest" for "-end_date"', () => {
         const result = humanizeSortKey('-end_date', [])
-        expect(result).toBe('End Date Newest')
+        expect(result).toBe('End Date (Newest)')
       })
 
       test('returns "Unknown" for undefined', () => {

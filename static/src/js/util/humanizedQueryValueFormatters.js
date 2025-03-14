@@ -102,11 +102,11 @@ export const humanizeSortKey = (sortKey, sortsArray) => {
   }
 
   // Sort orders (Granules)
-  if (sortKey === 'start_date') return 'Start Date Oldest'
-  if (sortKey === '-start_date') return 'Start Date Newest'
+  if (sortKey === 'start_date') return 'Start Date (Oldest)'
+  if (sortKey === '-start_date') return 'Start Date (Newest)'
 
-  if (sortKey === 'end_date') return 'End Date Oldest'
-  if (sortKey === '-end_date') return 'End Date Newest'
+  if (sortKey === 'end_date') return 'End Date (Oldest)'
+  if (sortKey === '-end_date') return 'End Date (Newest)'
 
   return sortKey
 }
