@@ -37,6 +37,7 @@
     &:before {
       position: absolute;
       content: '';
+      color: transparent;
       left: -0.5em;
       transform: translate(-50%, 15%);
       height: 100%;
