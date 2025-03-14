@@ -37,7 +37,8 @@ export const CustomDataLinksToggle = React.forwardRef(({
       type="button"
       icon={Download}
       ref={ref}
-      label="Download granule data"
+      ariaLabel="Download granule data"
+      label=""
       tooltip="Download granule data"
       tooltipId={`download-granule-tooltip-${id}`}
       onClick={handleClick}
@@ -305,7 +306,8 @@ export const GranuleResultsDataLinksButton = ({
           }
         }
         rel="noopener noreferrer"
-        label="Download granule data"
+        ariaLabel="Download granule data"
+        label=""
         tooltip="Download granule data"
         tooltipId={`download-granule-tooltip-${id}`}
         target="_blank"
