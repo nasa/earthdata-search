@@ -88,7 +88,7 @@ describe('CollectionDetails component', () => {
       item.simulate('mouseenter')
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        'map.layer.COLL-1.focusgranule',
+        'map.layer.COLL-1.hoverGranule',
         {
           granule: granules[0]
         }
@@ -107,7 +107,7 @@ describe('CollectionDetails component', () => {
       item.simulate('mouseleave')
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        'map.layer.COLL-1.focusgranule',
+        'map.layer.COLL-1.hoverGranule',
         {
           granule: null
         }
@@ -126,7 +126,7 @@ describe('CollectionDetails component', () => {
       item.simulate('click')
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        'map.layer.COLL-1.stickygranule',
+        'map.layer.COLL-1.focusGranule',
         {
           granule: granules[0]
         }
@@ -145,7 +145,7 @@ describe('CollectionDetails component', () => {
       item.simulate('keypress')
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        'map.layer.COLL-1.stickygranule',
+        'map.layer.COLL-1.focusGranule',
         {
           granule: granules[0]
         }

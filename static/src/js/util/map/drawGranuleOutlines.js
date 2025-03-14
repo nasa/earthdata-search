@@ -4,7 +4,7 @@ import { pointRadius } from './styles'
 // Draw a boundary around the full extent for the projection. This allows
 // us to clip the granule outlines to the projection boundary, which is what
 // allows the outlines to 'stack' on top of each other.
-export const drawBoundary = ({
+const drawBoundary = ({
   ctx,
   map,
   projectionCode,
@@ -43,7 +43,7 @@ export const drawBoundary = ({
 }
 
 // Draw the granule outlines
-export const drawOutline = ({
+const drawOutline = ({
   ctx,
   geometry,
   map,
@@ -105,7 +105,7 @@ export const drawOutline = ({
 }
 
 // Draw the granule outlines
-export const drawGranuleOutlines = ({
+const drawGranuleOutlines = ({
   ctx,
   granuleBackgroundsSource,
   map,
@@ -127,17 +127,17 @@ export const drawGranuleOutlines = ({
 
     // Get the style value saved in the feature's properties
     const properties = feature.getProperties()
-    const { style } = properties
+    const { granuleStyle } = properties
 
     // If the feature has no style, return
-    if (!style) return
+    if (!granuleStyle) return
 
-    const stroke = style.getStroke()
+    const stroke = granuleStyle.getStroke()
 
     // If the style has no stroke, use the stroke from the image
     // This happens for granules with point spatial
     if (!stroke) {
-      const image = style.getImage()
+      const image = granuleStyle.getImage()
       ctx.strokeStyle = image.getStroke().getColor()
       ctx.lineWidth = image.getStroke().getWidth()
     } else {
@@ -167,7 +167,6 @@ export const drawGranuleOutlines = ({
 
   // Reset the globalCompositeOperation to the default of 'source-over'
   ctx.globalCompositeOperation = 'source-over'
-
-  // Restore the context
-  ctx.restore()
 }
+
+export default drawGranuleOutlines
