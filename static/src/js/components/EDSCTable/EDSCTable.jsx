@@ -142,7 +142,7 @@ innerElementType.displayName = 'EDSCTableInnerElement'
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
  * @param {Function} props.initialRowStateAccessor - initialRowStateAccessor to be passed to react-table.
  * @param {Function} props.rowClassNamesFromRowState - Callback to determine the classnames of a row based on its state.
- * @param {Function} props.rowTitleFromRowState - Callback to determine the title attribute of a row based on its state.
+ * @param {Function} props.rowLabelFromRowState - Callback to determine the title attribute of a row based on its state.
  * @param {Function} props.onRowClick - Callback for onRowClick.
  * @param {Function} props.onRowMouseEnter - Callback for onRowMouseEnter.
  * @param {Function} props.onRowMouseLeave - Callback for onRowMouseLeave.
@@ -167,7 +167,7 @@ const EDSCTable = ({
   initialRowStateAccessor,
   initialTableState,
   rowClassNamesFromRowState,
-  rowTitleFromRowState,
+  rowLabelFromRowState,
   onRowClick,
   onRowMouseEnter,
   onRowMouseLeave,
@@ -318,12 +318,14 @@ const EDSCTable = ({
       })
 
       let rowClassesFromState = []
-      const rowTitleFromState = {
-        title: undefined
+      const rowLabelFromState = {
+        ariaLabel: undefined
       }
 
       if (rowClassNamesFromRowState) rowClassesFromState = rowClassNamesFromRowState(row.state)
-      if (rowTitleFromRowState) rowTitleFromState.title = rowTitleFromRowState(row.state)
+      if (rowLabelFromRowState) {
+        rowLabelFromState.ariaLabel = rowLabelFromRowState(row.state)
+      }
 
       const { style: rowStyle, ...rowRest } = rowProps
 
@@ -388,7 +390,7 @@ const EDSCTable = ({
             data-testid={rowTestId}
             {...rowEvents}
             {...focusableProps}
-            {...rowTitleFromState}
+            aria-labelledby={rowLabelFromState.ariaLabel}
           >
             {
               row.cells.map((cell) => {
@@ -519,7 +521,7 @@ EDSCTable.defaultProps = {
   onRowMouseLeave: null,
   onRowMouseUp: null,
   rowClassNamesFromRowState: null,
-  rowTitleFromRowState: null,
+  rowLabelFromRowState: null,
   rowTestId: null,
   setVisibleMiddleIndex: null,
   striped: false,
@@ -544,7 +546,7 @@ EDSCTable.propTypes = {
   onRowMouseLeave: PropTypes.func,
   onRowMouseUp: PropTypes.func,
   rowClassNamesFromRowState: PropTypes.func,
-  rowTitleFromRowState: PropTypes.func,
+  rowLabelFromRowState: PropTypes.func,
   rowTestId: PropTypes.string,
   setVisibleMiddleIndex: PropTypes.func,
   striped: PropTypes.bool,

@@ -258,7 +258,7 @@ const GranuleResultsItem = forwardRef(({
                       <Button
                         className="button granule-results-item__button granule-results-item__button--add"
                         tooltip="Add granule to project"
-                        label="Add granule to project"
+                        ariaLabel="Add granule to project"
                         tooltipId={`add-granule-tooltip-${id}`}
                         disabled={isOpenSearch}
                         onClick={
@@ -288,7 +288,7 @@ const GranuleResultsItem = forwardRef(({
                         className="button granule-results-item__button granule-results-item__button--remove"
                         tooltip="Remove granule from project"
                         tooltipId={`remove-granule-tooltip-${id}`}
-                        label="Remove granule from project"
+                        ariaLabel="Remove granule from project"
                         onClick={
                           (event) => {
                             onRemoveGranuleFromProjectCollection({
