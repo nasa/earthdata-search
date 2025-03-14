@@ -82,8 +82,6 @@ const GranuleResultsTableHeaderCell = (props) => {
                   className="button granule-results-table__granule-action granule-results-table__granule-action--add"
                   type="button"
                   ariaLabel="Add granule to project"
-                  // Empty label is needed to prevent row title from popping up during table view
-                  label=""
                   tooltip="Add granule to project"
                   tooltipId={`add-granule-table-tooltip-${id}`}
                   icon={Plus}
@@ -113,8 +111,6 @@ const GranuleResultsTableHeaderCell = (props) => {
                   className="button granule-results-table__granule-action granule-results-table__granule-action--remove"
                   type="button"
                   ariaLabel="Remove granule from project"
-                  // Empty label is needed to prevent row title from popping up during table view
-                  label=""
                   tooltip="Remove granule from project"
                   tooltipId={`remove-granule-table-tooltip-${id}`}
                   icon={Minus}

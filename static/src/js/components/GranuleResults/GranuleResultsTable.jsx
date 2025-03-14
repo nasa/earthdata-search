@@ -153,12 +153,12 @@ export const GranuleResultsTable = ({
     return classNames
   })
 
-  const rowTitleFromRowState = useCallback(({ isFocusedGranule }) => {
-    let rowTitle = 'Focus granule on map'
+  const rowLabelFromRowState = useCallback(({ isFocusedGranule }) => {
+    let rowLabel = 'Focus granule on map'
 
-    if (isFocusedGranule) rowTitle = 'Unfocus granule on map'
+    if (isFocusedGranule) rowLabel = 'Unfocus granule on map'
 
-    return rowTitle
+    return rowLabel
   })
 
   const onRowClick = useCallback((e, row) => {
@@ -210,7 +210,7 @@ export const GranuleResultsTable = ({
         striped
         initialRowStateAccessor={initialRowStateAccessor}
         rowClassNamesFromRowState={rowClassNamesFromRowState}
-        rowTitleFromRowState={rowTitleFromRowState}
+        rowLabelFromRowState={rowLabelFromRowState}
         onRowMouseEnter={onRowMouseEnter}
         onRowMouseLeave={onRowMouseLeave}
         onRowClick={onRowClick}

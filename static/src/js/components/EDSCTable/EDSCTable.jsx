@@ -167,7 +167,7 @@ const EDSCTable = ({
   initialRowStateAccessor,
   initialTableState,
   rowClassNamesFromRowState,
-  rowTitleFromRowState,
+  rowLabelFromRowState,
   onRowClick,
   onRowMouseEnter,
   onRowMouseLeave,
@@ -319,11 +319,11 @@ const EDSCTable = ({
 
       let rowClassesFromState = []
       const rowTitleFromState = {
-        title: undefined
+        ariaLabel: undefined
       }
 
       if (rowClassNamesFromRowState) rowClassesFromState = rowClassNamesFromRowState(row.state)
-      if (rowTitleFromRowState) rowTitleFromState.title = rowTitleFromRowState(row.state)
+      if (rowLabelFromRowState) rowTitleFromState.ariaLabel = rowLabelFromRowState(row.state)
 
       const { style: rowStyle, ...rowRest } = rowProps
 
@@ -388,7 +388,7 @@ const EDSCTable = ({
             data-testid={rowTestId}
             {...rowEvents}
             {...focusableProps}
-            {...rowTitleFromState}
+            aria-label={rowTitleFromState.ariaLabel}
           >
             {
               row.cells.map((cell) => {
@@ -519,7 +519,7 @@ EDSCTable.defaultProps = {
   onRowMouseLeave: null,
   onRowMouseUp: null,
   rowClassNamesFromRowState: null,
-  rowTitleFromRowState: null,
+  rowLabelFromRowState: null,
   rowTestId: null,
   setVisibleMiddleIndex: null,
   striped: false,
@@ -544,7 +544,7 @@ EDSCTable.propTypes = {
   onRowMouseLeave: PropTypes.func,
   onRowMouseUp: PropTypes.func,
   rowClassNamesFromRowState: PropTypes.func,
-  rowTitleFromRowState: PropTypes.func,
+  rowLabelFromRowState: PropTypes.func,
   rowTestId: PropTypes.string,
   setVisibleMiddleIndex: PropTypes.func,
   striped: PropTypes.bool,
