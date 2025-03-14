@@ -38,6 +38,7 @@ export const CustomDataLinksToggle = React.forwardRef(({
       icon={Download}
       ref={ref}
       ariaLabel="Download granule data"
+      // Empty label is needed to prevent row title from popping up during table view
       label=""
       tooltip="Download granule data"
       tooltipId={`download-granule-tooltip-${id}`}
@@ -307,6 +308,7 @@ export const GranuleResultsDataLinksButton = ({
         }
         rel="noopener noreferrer"
         ariaLabel="Download granule data"
+        // Empty label is needed to prevent row title from popping up during table view
         label=""
         tooltip="Download granule data"
         tooltipId={`download-granule-tooltip-${id}`}
