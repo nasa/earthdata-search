@@ -4,6 +4,7 @@ import {
   formatFacetHierarchy,
   formatPoint,
   formatPoints,
+  humanizeSortKey,
   formatTemporal
 } from '../humanizedQueryValueFormatters'
 
@@ -219,6 +220,59 @@ describe(('formatFacetHierarchy'), () => {
           ['term', 'topic'],
           ['term', 'topic', 'variable_level_one']
         ])
+      })
+    })
+
+    describe('humanizeSortKey', () => {
+      test('returns "Relevance" for "-score"', () => {
+        const result = humanizeSortKey('-score', [{ label: 'Relevance' }])
+        expect(result).toBe('Relevance')
+      })
+
+      test('returns "Usage" for "-usage_score"', () => {
+        const result = humanizeSortKey('-usage_score', [{ label: 'Relevance' }])
+        expect(result).toBe('Usage')
+      })
+
+      test('returns "End Date" for "-ongoing"', () => {
+        const result = humanizeSortKey('-ongoing', [{ label: 'Relevance' }])
+        expect(result).toBe('End Date')
+      })
+
+      test('returns "Start Date" for "start_date"', () => {
+        const result = humanizeSortKey('start_date', [{ label: 'Relevance' }])
+        expect(result).toBe('Start Date')
+      })
+
+      // Granules
+      test('returns "Start Date Newest " for "-start_date"', () => {
+        const result = humanizeSortKey('-start_date', [{ label: 'Start Date, Oldest First' }])
+        expect(result).toBe('Start Date (Newest)')
+      })
+
+      test('returns "Start Date" for "start_date"', () => {
+        const result = humanizeSortKey('start_date', [{ label: 'Start Date, Oldest First' }])
+        expect(result).toBe('Start Date (Oldest)')
+      })
+
+      test('returns "End Date Oldest" for "end_date"', () => {
+        const result = humanizeSortKey('end_date', [{ label: 'Start Date, Oldest First' }])
+        expect(result).toBe('End Date (Oldest)')
+      })
+
+      test('returns "End Date Newest" for "-end_date"', () => {
+        const result = humanizeSortKey('-end_date', [{ label: 'Start Date, Oldest First' }])
+        expect(result).toBe('End Date (Newest)')
+      })
+
+      test('returns "Unknown" for undefined', () => {
+        const result = humanizeSortKey(undefined, [])
+        expect(result).toBe('Unknown')
+      })
+
+      test('returns the original sort key for unknown values', () => {
+        const result = humanizeSortKey('unknown_sort_key', [])
+        expect(result).toBe('unknown_sort_key')
       })
     })
   })

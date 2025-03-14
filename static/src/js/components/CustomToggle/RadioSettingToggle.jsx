@@ -32,7 +32,6 @@ export const RadioSettingToggle = React.forwardRef(({
       className={RadioSettingToggleClassNames}
       onClick={onClick}
       ref={ref}
-      title={label}
       icon={activeIcon}
       {...props}
     >

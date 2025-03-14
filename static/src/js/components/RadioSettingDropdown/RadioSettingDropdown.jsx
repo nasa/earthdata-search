@@ -168,12 +168,7 @@ export const RadioSettingDropdown = ({
                     <RadioSettingDropdownItem
                       key={key}
                       title={`${settingLabel}`}
-                      onClick={
-                        (event) => {
-                          onClick()
-                          event.stopPropagation()
-                        }
-                      }
+                      onClick={onClick}
                       icon={icon}
                       isActive={isActive}
                       inProgress={inProgress}

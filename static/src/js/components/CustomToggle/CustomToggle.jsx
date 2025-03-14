@@ -86,6 +86,7 @@ export const CustomToggle = React.forwardRef(({
 CustomToggle.displayName = 'CustomToggle'
 
 CustomToggle.defaultProps = {
+  title: null,
   children: null,
   className: null,
   icon: null,
@@ -103,7 +104,7 @@ CustomToggle.propTypes = {
   icon: PropTypes.func,
   onClick: PropTypes.func,
   openOnHover: PropTypes.bool,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string
 }
 
 export default CustomToggle

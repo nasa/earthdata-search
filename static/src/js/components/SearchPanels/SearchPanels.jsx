@@ -4,16 +4,13 @@ import { Route, Switch } from 'react-router-dom'
 import { isEqual } from 'lodash-es'
 import Badge from 'react-bootstrap/Badge'
 import Col from 'react-bootstrap/Col'
-
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
-import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
+  FaLock,
   FaMap,
-  FaQuestionCircle,
-  FaTable,
-  FaLock
+  FaQuestionCircle
 } from 'react-icons/fa'
-
 import classNames from 'classnames'
 import Helmet from 'react-helmet'
 
@@ -277,13 +274,11 @@ class SearchPanels extends PureComponent {
     const granulesViewsArray = [
       {
         label: 'List',
-        icon: List,
         isActive: granulePanelView === 'list',
         onClick: () => setGranulesActiveView('list')
       },
       {
         label: 'Table',
-        icon: FaTable,
         isActive: granulePanelView === 'table',
         onClick: () => setGranulesActiveView('table')
       }
@@ -336,13 +331,11 @@ class SearchPanels extends PureComponent {
     const collectionsViewsArray = [
       {
         label: 'List',
-        icon: List,
         isActive: collectionPanelView === 'list',
         onClick: () => setCollectionsActiveView('list')
       },
       {
         label: 'Table',
-        icon: FaTable,
         isActive: collectionPanelView === 'table',
         onClick: () => setCollectionsActiveView('table')
       }
@@ -354,11 +347,13 @@ class SearchPanels extends PureComponent {
     } = isExportRunning
     const exportsArray = [
       {
+        title: 'Export CSV',
         label: 'CSV',
         onClick: () => onExport('csv'),
         inProgress: csvExportRunning
       },
       {
+        title: 'Export JSON',
         label: 'JSON',
         onClick: () => onExport('json'),
         inProgress: jsonExportRunning
@@ -419,6 +414,7 @@ class SearchPanels extends PureComponent {
 
     const panelSection = []
 
+    // Collection Results Panel
     panelSection.push(
       <PanelGroup
         key="collection-results-panel"
@@ -427,12 +423,13 @@ class SearchPanels extends PureComponent {
         headerMetaPrimaryLoading={initialCollectionsLoading}
         headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}
         headerLoading={initialCollectionsLoading}
-        exportsArray={exportsArray}
         viewsArray={collectionsViewsArray}
+        activeSort={activeCollectionsSortKey}
         activeView={collectionPanelView}
         sortsArray={collectionsSortsArray}
         footer={buildCollectionResultsBodyFooter()}
         onPanelClose={this.onPanelClose}
+        moreActionsDropdownItems={exportsArray}
       >
         <PanelItem scrollable={false}>
           <CollectionResultsBodyContainer panelView={collectionPanelView} />
@@ -466,6 +463,7 @@ class SearchPanels extends PureComponent {
       )
     }
 
+    // Granule Results Panel
     panelSection.push(
       <PanelGroup
         key="granule-results-panel"
@@ -554,6 +552,7 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    // Collection Details Panel
     panelSection.push(
       <PanelGroup
         key="collection-details-panel"
@@ -594,6 +593,7 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    // Granule Details Panel
     panelSection.push(
       <PanelGroup
         key="granule-details-panel"
@@ -650,6 +650,7 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    // Granule Subscriptions Panel
     panelSection.push(
       <PanelGroup
         key="granule-subscriptions-panel"
@@ -708,6 +709,7 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    // Collection Subscriptions Panel
     panelSection.push(
       <PanelGroup
         key="collection-subscriptions-panel"

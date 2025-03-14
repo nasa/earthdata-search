@@ -5,8 +5,8 @@ import { Provider } from 'react-redux'
 import { StaticRouter } from 'react-router'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
-import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-import { FaMap, FaTable } from 'react-icons/fa'
+import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaMap } from 'react-icons/fa'
 
 import Helmet from 'react-helmet'
 
@@ -35,6 +35,10 @@ beforeEach(() => {
 
   jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
   jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+  jest.spyOn(AppConfig, 'getApplicationConfig').mockImplementation(() => ({
+    collectionSearchResultsSortKey: collectionSortKeys.scoreDescending,
+    defaultMaxOrderSize: 1000000
+  }))
 })
 
 delete window.location
@@ -146,13 +150,13 @@ describe('SearchPanels component', () => {
 
       expect(collectionResultsPanelProps.activeView).toBe('list')
       expect(collectionResultsPanelProps.viewsArray[0].label).toBe('List')
-      expect(collectionResultsPanelProps.viewsArray[0].icon).toBe(List)
+      expect(collectionResultsPanelProps.viewsArray[0].icon).toBe(undefined)
       expect(collectionResultsPanelProps.viewsArray[0].isActive).toBe(true)
       expect(collectionResultsPanelProps.viewsArray[1].label).toBe('Table')
-      expect(collectionResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
+      expect(collectionResultsPanelProps.viewsArray[1].icon).toBe(undefined)
       expect(collectionResultsPanelProps.viewsArray[1].isActive).toBe(false)
 
-      expect(collectionResultsPanelProps.activeSort).toBe('')
+      expect(collectionResultsPanelProps.activeSort).toBe('-score')
       expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
       expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(true)
       expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
@@ -190,7 +194,23 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.handoffLinks).toStrictEqual([])
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
-        expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[0]).toMatchObject(
+          {
+            inProgress: false,
+            label: 'CSV',
+            onClick: expect.any(Function),
+            title: 'Export CSV'
+          }
+        )
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[1]).toMatchObject({
+          inProgress: false,
+          label: 'JSON',
+          onClick: expect.any(Function),
+          title: 'Export JSON'
+        })
+
         expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('0 Matching Collections')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(true)
@@ -219,7 +239,23 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.handoffLinks).toStrictEqual([])
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
-        expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[0]).toMatchObject(
+          {
+            inProgress: false,
+            label: 'CSV',
+            onClick: expect.any(Function),
+            title: 'Export CSV'
+          }
+        )
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[1]).toMatchObject({
+          inProgress: false,
+          label: 'JSON',
+          onClick: expect.any(Function),
+          title: 'Export JSON'
+        })
+
         expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('1 Matching Collection')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(false)
@@ -255,7 +291,22 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.handoffLinks).toStrictEqual([])
         expect(collectionResultsPanelProps.headerMessage).toBe(null)
         expect(collectionResultsPanelProps.headingLink).toBe(null)
-        expect(collectionResultsPanelProps.moreActionsDropdownItems).toStrictEqual([])
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[0]).toMatchObject(
+          {
+            inProgress: false,
+            label: 'CSV',
+            onClick: expect.any(Function),
+            title: 'Export CSV'
+          }
+        )
+
+        expect(collectionResultsPanelProps.moreActionsDropdownItems[1]).toMatchObject({
+          inProgress: false,
+          label: 'JSON',
+          onClick: expect.any(Function),
+          title: 'Export JSON'
+        })
+
         expect(collectionResultsPanelProps.footer).toBe(false)
         expect(collectionResultsPanelProps.primaryHeading).toBe('4 Matching Collections')
         expect(collectionResultsPanelProps.headerMetaPrimaryLoading).toBe(false)
@@ -277,7 +328,7 @@ describe('SearchPanels component', () => {
         const collectionResultsPanel = panels.find(PanelGroup).at(0)
         const collectionResultsPanelProps = collectionResultsPanel.props()
 
-        expect(collectionResultsPanelProps.activeSort).toBe('')
+        expect(collectionResultsPanelProps.activeSort).toBe('start_date')
         expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
         expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(false)
         expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
@@ -423,10 +474,10 @@ describe('SearchPanels component', () => {
 
       expect(granuleResultsPanelProps.activeView).toBe('list')
       expect(granuleResultsPanelProps.viewsArray[0].label).toBe('List')
-      expect(granuleResultsPanelProps.viewsArray[0].icon).toBe(List)
+      expect(granuleResultsPanelProps.viewsArray[0].icon).toBe(undefined)
       expect(granuleResultsPanelProps.viewsArray[0].isActive).toBe(true)
       expect(granuleResultsPanelProps.viewsArray[1].label).toBe('Table')
-      expect(granuleResultsPanelProps.viewsArray[1].icon).toBe(FaTable)
+      expect(granuleResultsPanelProps.viewsArray[1].icon).toBe(undefined)
       expect(granuleResultsPanelProps.viewsArray[1].isActive).toBe(false)
 
       expect(granuleResultsPanelProps.activeSort).toBe('-start_date')
@@ -1187,7 +1238,7 @@ describe('SearchPanels component', () => {
     })
   })
 
-  describe('componentDidUpdate updates the state if the panelView props have changed', () => {
+  test('componentDidUpdate updates the state if the panelView props have changed', () => {
     const { enzymeWrapper, props } = setup()
 
     const newProps = {
@@ -1259,7 +1310,7 @@ describe('SearchPanels component', () => {
 
         const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
           .at(0).find(PanelGroupHeader).props()
-        const { inProgress } = panelGroupHeaderProps.exportsArray[0]
+        const { inProgress } = panelGroupHeaderProps.moreActionsDropdownItems[0]
         expect(inProgress).toEqual(false)
       })
     })
@@ -1275,7 +1326,7 @@ describe('SearchPanels component', () => {
 
         const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
           .at(0).find(PanelGroupHeader).props()
-        const { inProgress } = panelGroupHeaderProps.exportsArray[0]
+        const { inProgress } = panelGroupHeaderProps.moreActionsDropdownItems[0]
         expect(inProgress).toEqual(true)
       })
     })
@@ -1286,7 +1337,7 @@ describe('SearchPanels component', () => {
 
         const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
           .at(0).find(PanelGroupHeader).props()
-        const { inProgress } = panelGroupHeaderProps.exportsArray[1]
+        const { inProgress } = panelGroupHeaderProps.moreActionsDropdownItems[1]
         expect(inProgress).toEqual(false)
       })
     })
@@ -1302,7 +1353,7 @@ describe('SearchPanels component', () => {
 
         const panelGroupHeaderProps = enzymeWrapper.find(PanelGroup)
           .at(0).find(PanelGroupHeader).props()
-        const { inProgress } = panelGroupHeaderProps.exportsArray[1]
+        const { inProgress } = panelGroupHeaderProps.moreActionsDropdownItems[1]
         expect(inProgress).toEqual(true)
       })
     })

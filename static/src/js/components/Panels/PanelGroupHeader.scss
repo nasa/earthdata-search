@@ -90,11 +90,17 @@
     }
   }
 
+  &__heading-meta-text {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    font-weight: 500;
+  }
+
   &__heading-meta-primary {
     display: flex;
     align-items: center;
     height: auto;
-    padding: 0.325rem calc(bootstrap.$spacer / 2) 0.325rem bootstrap.$spacer;
+    padding: 0.625rem 0.5rem 0.625rem  1rem;
     color: utils.$color__carbon--80;
   }
 
@@ -139,6 +145,11 @@
       .radio-setting-dropdown__label {
         display: none;
       }
+
+      // When the panel space is not available hide the icons
+      .custom-toggle__icon {
+        display: none !important;
+      }
     }
   }
 
@@ -148,7 +159,6 @@
     font-size: 0.825rem;
     color: utils.$color__carbon--90;
   }
-
 
   &__heading-primary {
     display: inline;
