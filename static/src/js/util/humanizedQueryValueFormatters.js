@@ -89,24 +89,33 @@ export const formatFacetHierarchy = (value, order) => value.map(
 export const humanizeSortKey = (sortKey, sortsArray) => {
   if (!sortKey) return 'Unknown'
 
-  // Sort orders (Collections)
-  if (sortKey === '-score') return 'Relevance'
-  if (sortKey === '-usage_score') return 'Usage'
-  if (sortKey === '-ongoing') return 'End Date'
-
-  // `start_date` is a sort key for both collections and granules handle displayed value
-  const isCollectionSort = sortsArray.some((sort) => sort.label === 'Relevance')
-
-  if (isCollectionSort && (sortKey === 'start_date')) {
-    return 'Start Date'
+  // Define mapping objects for collection and granule sort keys
+  const collectionSortKeyMap = {
+    '-score': 'Relevance',
+    '-usage_score': 'Usage',
+    '-ongoing': 'End Date',
+    start_date: 'Start Date'
   }
 
-  // Sort orders (Granules)
-  if (sortKey === 'start_date') return 'Start Date (Oldest)'
-  if (sortKey === '-start_date') return 'Start Date (Newest)'
+  const granuleSortKeyMap = {
+    start_date: 'Start Date (Oldest)',
+    '-start_date': 'Start Date (Newest)',
+    end_date: 'End Date (Oldest)',
+    '-end_date': 'End Date (Newest)'
+  }
 
-  if (sortKey === 'end_date') return 'End Date (Oldest)'
-  if (sortKey === '-end_date') return 'End Date (Newest)'
+  // Determine if we're dealing with collection sorts
+  const isCollectionSort = sortsArray && sortsArray.some((sort) => sort.label === 'Relevance')
 
+  // Return from the appropriate map based on context
+  if (isCollectionSort && sortKey in collectionSortKeyMap) {
+    return collectionSortKeyMap[sortKey]
+  }
+
+  if (!isCollectionSort && sortKey in granuleSortKeyMap) {
+    return granuleSortKeyMap[sortKey]
+  }
+
+  // Fallback to the original sort key if not found in maps
   return sortKey
 }

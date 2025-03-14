@@ -225,17 +225,17 @@ describe(('formatFacetHierarchy'), () => {
 
     describe('humanizeSortKey', () => {
       test('returns "Relevance" for "-score"', () => {
-        const result = humanizeSortKey('-score', [])
+        const result = humanizeSortKey('-score', [{ label: 'Relevance' }])
         expect(result).toBe('Relevance')
       })
 
       test('returns "Usage" for "-usage_score"', () => {
-        const result = humanizeSortKey('-usage_score', [])
+        const result = humanizeSortKey('-usage_score', [{ label: 'Relevance' }])
         expect(result).toBe('Usage')
       })
 
       test('returns "End Date" for "-ongoing"', () => {
-        const result = humanizeSortKey('-ongoing')
+        const result = humanizeSortKey('-ongoing', [{ label: 'Relevance' }])
         expect(result).toBe('End Date')
       })
 
@@ -246,22 +246,22 @@ describe(('formatFacetHierarchy'), () => {
 
       // Granules
       test('returns "Start Date Newest " for "-start_date"', () => {
-        const result = humanizeSortKey('-start_date', [])
+        const result = humanizeSortKey('-start_date', [{ label: 'Start Date, Oldest First' }])
         expect(result).toBe('Start Date (Newest)')
       })
 
       test('returns "Start Date" for "start_date"', () => {
-        const result = humanizeSortKey('start_date', [{ label: 'notRelevance' }])
+        const result = humanizeSortKey('start_date', [{ label: 'Start Date, Oldest First' }])
         expect(result).toBe('Start Date (Oldest)')
       })
 
       test('returns "End Date Oldest" for "end_date"', () => {
-        const result = humanizeSortKey('end_date', [])
+        const result = humanizeSortKey('end_date', [{ label: 'Start Date, Oldest First' }])
         expect(result).toBe('End Date (Oldest)')
       })
 
       test('returns "End Date Newest" for "-end_date"', () => {
-        const result = humanizeSortKey('-end_date', [])
+        const result = humanizeSortKey('-end_date', [{ label: 'Start Date, Oldest First' }])
         expect(result).toBe('End Date (Newest)')
       })
 
