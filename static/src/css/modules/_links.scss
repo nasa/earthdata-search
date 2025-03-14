@@ -32,15 +32,14 @@
 
   &--separated {
     position: relative;
-    margin-left: 0.5rem; 
+    margin-left: 0.5em;
+      
     &:before {
       position: absolute;
       display: inline-block;
       content: '|';
       color: transparent;
-      margin-right:0.5rem;
-      border-bottom:0;
-      left: -0.40rem;
+      left: calc(-0.5 * var(--line-height, 0.5em));
       border-left: 1px solid variables.$color__carbon--30;
     }
 
@@ -52,7 +51,7 @@
 
   &--external {
     border-bottom: 1px dashed currentColor;
-    line-height: 1.125em;
+    line-height: 0.75rem;
     text-decoration: none !important;
 
     &:hover {
