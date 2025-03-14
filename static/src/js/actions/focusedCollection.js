@@ -3,7 +3,6 @@ import actions from './index'
 import { UPDATE_FOCUSED_COLLECTION, UPDATE_GRANULE_SUBSCRIPTIONS } from '../constants/actionTypes'
 
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
-import { eventEmitter } from '../events/events'
 import { getValueForTag } from '../../../../sharedUtils/tags'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { getCollectionsQuery } from '../selectors/query'
@@ -429,8 +428,6 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     dispatch(actions.changeFocusedGranule(''))
     // And clear the spatial polygon warning if there is no focused collection
     dispatch(actions.toggleSpatialPolygonWarning(false))
-
-    eventEmitter.emit(`map.layer.${collectionId}.stickygranule`, { granule: null })
 
     const { router } = state
     const { location } = router
