@@ -88,7 +88,7 @@ describe('CollectionDetails component', () => {
       item.simulate('mouseenter')
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        'map.layer.COLL-1.highlightGranule',
+        'map.layer.COLL-1.hoverGranule',
         {
           granule: granules[0]
         }
@@ -107,7 +107,7 @@ describe('CollectionDetails component', () => {
       item.simulate('mouseleave')
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        'map.layer.COLL-1.highlightGranule',
+        'map.layer.COLL-1.hoverGranule',
         {
           granule: null
         }

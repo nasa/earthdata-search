@@ -15,7 +15,7 @@ export const unhighlightFeature = (granuleHighlightsSource) => {
   highlightedGranuleFeature = null
 
   // Fire the event to unhighlight the granule in the granule list
-  eventEmitter.emit(`map.layer.${collectionId}.highlightGranule`, { granule: null })
+  eventEmitter.emit(`map.layer.${collectionId}.hoverGranule`, { granule: null })
 }
 
 // Highlighted granules are shown when a user hovers over the granule in the results list, or
@@ -79,6 +79,6 @@ export const highlightFeature = ({
     granuleHighlightsSource.addFeature(highlightedGranuleFeature)
 
     // Fire the event to highlight the granule in the granule list
-    if (coordinate) eventEmitter.emit(`map.layer.${collectionId}.highlightGranule`, { granule: { id: toHighlightGranuleId } })
+    if (coordinate) eventEmitter.emit(`map.layer.${collectionId}.hoverGranule`, { granule: { id: toHighlightGranuleId } })
   }
 }

@@ -385,7 +385,7 @@ const Map = ({
   }, [mapElRef.current])
 
   // Handle the granule highlight event
-  const handleHighlightGranule = ({ granule }) => {
+  const handleHoverGranule = ({ granule }) => {
     highlightFeature({
       granuleBackgroundsSource,
       granuleHighlightsSource,
@@ -410,14 +410,14 @@ const Map = ({
 
   // Update the event listeners when the focusedCollectionId changes
   useEffect(() => {
-    // Call handleHighlightGranule when the the event is fired
-    eventEmitter.on(`map.layer.${focusedCollectionId}.highlightGranule`, handleHighlightGranule)
+    // Call handleHoverGranule when the the event is fired
+    eventEmitter.on(`map.layer.${focusedCollectionId}.hoverGranule`, handleHoverGranule)
 
     // Call handleFocusGranule when the the event is fired
     eventEmitter.on(`map.layer.${focusedCollectionId}.focusGranule`, handleFocusGranule)
 
     return () => {
-      eventEmitter.off(`map.layer.${focusedCollectionId}.highlightGranule`, handleHighlightGranule)
+      eventEmitter.off(`map.layer.${focusedCollectionId}.hoverGranule`, handleHoverGranule)
       eventEmitter.off(`map.layer.${focusedCollectionId}.focusGranule`, handleFocusGranule)
     }
   }, [focusedCollectionId])

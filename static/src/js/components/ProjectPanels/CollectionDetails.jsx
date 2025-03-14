@@ -85,12 +85,12 @@ export const CollectionDetails = ({
                     tabIndex="0"
                     onMouseEnter={
                       () => {
-                        eventEmitter.emit(`map.layer.${collectionId}.highlightGranule`, { granule: granuleMetadata })
+                        eventEmitter.emit(`map.layer.${collectionId}.hoverGranule`, { granule: granuleMetadata })
                       }
                     }
                     onMouseLeave={
                       () => {
-                        eventEmitter.emit(`map.layer.${collectionId}.highlightGranule`, { granule: null })
+                        eventEmitter.emit(`map.layer.${collectionId}.hoverGranule`, { granule: null })
                       }
                     }
                     onClick={

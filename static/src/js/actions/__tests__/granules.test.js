@@ -1104,7 +1104,7 @@ describe('excludeGranule', () => {
 
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.collectionId.highlightGranule', { granule: null })
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.collectionId.hoverGranule', { granule: null })
   })
 })
 

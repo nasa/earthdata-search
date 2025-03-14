@@ -104,14 +104,14 @@ describe('granule map events', () => {
 
     granule.handleMouseEnter()
 
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.highlightGranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.hoverGranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
 
     jest.clearAllMocks()
 
     granule.handleMouseLeave()
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.highlightGranule', { granule: null })
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.hoverGranule', { granule: null })
   })
 
   test('sets isHoveredGranule for the correct granule', () => {
@@ -134,11 +134,11 @@ describe('granule map events', () => {
 
     granule.handleClick()
 
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.focusGranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.focusGranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
 
-    expect(onFocusedGranuleChange).toBeCalledTimes(1)
-    expect(onFocusedGranuleChange).toBeCalledWith('G1924512983-LANCEMODIS')
+    expect(onFocusedGranuleChange).toHaveBeenCalledTimes(1)
+    expect(onFocusedGranuleChange).toHaveBeenCalledWith('G1924512983-LANCEMODIS')
   })
 
   test('clicking on a focused granule removes that granule as sticky on the map', () => {
@@ -150,11 +150,11 @@ describe('granule map events', () => {
 
     granule.handleClick()
 
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.focusGranule', { granule: null })
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.focusGranule', { granule: null })
 
-    expect(onFocusedGranuleChange).toBeCalledTimes(1)
-    expect(onFocusedGranuleChange).toBeCalledWith('')
+    expect(onFocusedGranuleChange).toHaveBeenCalledTimes(1)
+    expect(onFocusedGranuleChange).toHaveBeenCalledWith('')
   })
 })
 
