@@ -70,6 +70,7 @@ function setup(overrides) {
   const hoveredGranuleId = null
   const isGranuleInProject = jest.fn()
   const isCollectionInProject = false
+  const onFocusedGranuleChange = jest.fn()
 
   const { granulesList } = formatGranulesList({
     granuleIds,
@@ -78,12 +79,14 @@ function setup(overrides) {
     hoveredGranuleId,
     isGranuleInProject,
     isCollectionInProject,
+    onFocusedGranuleChange,
     ...overrides
   })
 
   return {
     granulesList,
-    granulesMetadata
+    granulesMetadata,
+    onFocusedGranuleChange
   }
 }
 
@@ -101,14 +104,14 @@ describe('granule map events', () => {
 
     granule.handleMouseEnter()
 
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.focusgranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.hoverGranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
 
     jest.clearAllMocks()
 
     granule.handleMouseLeave()
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.focusgranule', { granule: null })
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.hoverGranule', { granule: null })
   })
 
   test('sets isHoveredGranule for the correct granule', () => {
@@ -126,26 +129,32 @@ describe('granule map events', () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
     eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
-    const { granulesList, granulesMetadata } = setup()
+    const { granulesList, granulesMetadata, onFocusedGranuleChange } = setup()
     const [granule] = granulesList
 
     granule.handleClick()
 
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.stickygranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.focusGranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
+
+    expect(onFocusedGranuleChange).toHaveBeenCalledTimes(1)
+    expect(onFocusedGranuleChange).toHaveBeenCalledWith('G1924512983-LANCEMODIS')
   })
 
   test('clicking on a focused granule removes that granule as sticky on the map', () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
     eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
-    const { granulesList } = setup({ focusedGranuleId: 'G1924512983-LANCEMODIS' })
+    const { granulesList, onFocusedGranuleChange } = setup({ focusedGranuleId: 'G1924512983-LANCEMODIS' })
     const [granule] = granulesList
 
     granule.handleClick()
 
-    expect(eventEmitterEmitMock).toBeCalledTimes(1)
-    expect(eventEmitterEmitMock).toBeCalledWith('map.layer.C1219248410-LANCEMODIS.stickygranule', { granule: null })
+    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.focusGranule', { granule: null })
+
+    expect(onFocusedGranuleChange).toHaveBeenCalledTimes(1)
+    expect(onFocusedGranuleChange).toHaveBeenCalledWith('')
   })
 })
 

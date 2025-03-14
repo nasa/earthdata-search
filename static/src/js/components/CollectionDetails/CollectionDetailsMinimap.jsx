@@ -3,9 +3,9 @@
 
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import { MapContainer, ImageOverlay } from 'react-leaflet'
+// import { MapContainer, ImageOverlay } from 'react-leaflet'
 
-import CollectionDetailsFeatureGroup from './CollectionDetailsFeatureGroup'
+// import CollectionDetailsFeatureGroup from './CollectionDetailsFeatureGroup'
 
 // import crsProjections from '../../util/map/crs'
 
