@@ -31,17 +31,25 @@
   }
 
   &--separated {
+    position: relative;
+    margin-left: 1em;
+    
     &:before {
-      display: inline-block;
-      margin-left: calc(bootstrap.$spacer / 2);
-      padding-left: calc(bootstrap.$spacer / 2);
-      content: '|';
+      position: absolute;
+      content: '';
       color: transparent;
+      left: -0.5em;
+      transform: translate(-50%, 15%);
+      height: 100%;
       border-left: 1px solid variables.$color__carbon--30;
     }
-
-    &:first-child:before {
-      display: none;
+    
+    &:first-child {
+      margin-left: 0;
+      
+      &:before {
+        display: none;
+      }
     }
   }
 
