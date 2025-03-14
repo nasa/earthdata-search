@@ -38,7 +38,7 @@
       position: absolute;
       content: '';
       left: -0.5em;
-      transform: translateX(-50%);
+      transform: translate(-50%, 15%);
       height: 100%;
       border-left: 1px solid variables.$color__carbon--30;
     }
