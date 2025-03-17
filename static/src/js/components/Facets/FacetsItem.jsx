@@ -9,6 +9,7 @@ import { FaQuestionCircle } from 'react-icons/fa'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import { generateFacetArgs } from '../../util/facets'
+import { commafy } from '../../util/commafy'
 
 import './FacetsItem.scss'
 
@@ -144,7 +145,7 @@ class FacetsItem extends Component {
               )
             }
           </div>
-          { (!applied || !children) && <span className="facets-item__total">{facet.count}</span> }
+          { (!applied || !children) && <span className="facets-item__total">{`${commafy(facet.count)}`}</span> }
         </label>
         { children && <ul className="facets-list">{children}</ul> }
       </li>
