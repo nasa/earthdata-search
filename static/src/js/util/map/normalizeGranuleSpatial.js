@@ -1,4 +1,5 @@
 import { greatCircleArc } from 'ol/geom/flat/geodesic'
+import { distance } from 'ol/coordinate'
 import { dividePolygon } from '@edsc/geo-utils'
 import {
   booleanContains,
@@ -37,6 +38,55 @@ const interpolatePolygon = (coordinates) => {
   interpolatedCoordinates.push([coordinates[0].lng, coordinates[0].lat])
 
   return [interpolatedCoordinates]
+}
+
+// Interpolate the points of a polygon derived from a bounding box
+const interpolateBoxPolygon = (polygon, tolerance, maxDepth) => {
+  const interpolatedPolygon = polygon
+
+  // This is a cartesian interpolation function that adds points between each point in the polygon
+  const interpolate = (coordinates) => {
+    const interpolatedPoints = []
+
+    // Iterate over the coordinates and add the original point and the interpolated points
+    coordinates.forEach((point, index) => {
+      interpolatedPoints.push(point)
+
+      const nextIndex = index + 1 === coordinates.length ? 0 : index + 1
+      const nextPoint = coordinates[nextIndex]
+
+      // Take the average of the two points to get the midpoint
+      const lng = (point[0] + nextPoint[0]) / 2
+      const lat = (point[1] + nextPoint[1]) / 2
+      const newPoint = [lng, lat]
+
+      // Find the distance between the two points
+      const pointDistance = distance(point, newPoint)
+
+      // If the distance between the two points is greater than the tolerance, add the new point
+      if (pointDistance > tolerance) {
+        interpolatedPoints.push(newPoint)
+      }
+    })
+
+    return interpolatedPoints
+  }
+
+  // Interpolate the polygon until it has more points than the threshold
+  for (let i = 0; i < maxDepth; i += 1) {
+    const newInterpolatedPoints = interpolate(interpolatedPolygon)
+
+    // If the new interpolated points are greater than the threshold, break
+    if (newInterpolatedPoints.length > mapPointsSimplifyThreshold) {
+      break
+    }
+
+    // Replace the interpolated polygon with the new interpolated points
+    interpolatedPolygon.splice(0, interpolatedPolygon.length)
+    interpolatedPolygon.push(...newInterpolatedPoints)
+  }
+
+  return [interpolatedPolygon]
 }
 
 // If the line crosses the antimeridian, divide it and return the divided coordinates
@@ -103,7 +153,10 @@ const normalizeGranuleSpatial = (granule) => {
         [swLon, swLat]
       ]
 
-      multiPolygons.push([polygonCoordinates])
+      // Interpolate the polygon to add points between each point
+      const interpolatedPolygon = interpolateBoxPolygon(polygonCoordinates, 2, 6)
+
+      multiPolygons.push(interpolatedPolygon)
     })
 
     // Return the bounding box as GeoJSON MultiPolygon
