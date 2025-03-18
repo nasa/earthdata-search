@@ -74,8 +74,16 @@ const drawGranuleOutlines = ({
   // Get the device pixel ratio for use in scaling the drawing
   const dpr = window.devicePixelRatio || 1
 
+  const viewExtent = map.getView().calculateExtent(map.getSize())
+
+  // Only get the features that intersect the view extent
+  const features = granuleBackgroundsSource.getFeaturesInExtent(viewExtent)
+
+  // Sort features by the index property
+  const sortedFeatures = features.sort((a, b) => a.get('index') - b.get('index'))
+
   // Loop through the features that have been drawn on the granuleBackgroundsLayer
-  granuleBackgroundsSource.forEachFeature((feature) => {
+  sortedFeatures.forEach((feature) => {
     ctx.beginPath()
 
     // Set the globalCompositeOperation to 'destination-over' so new granule outlines

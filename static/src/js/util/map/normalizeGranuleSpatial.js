@@ -4,7 +4,8 @@ import { dividePolygon } from '@edsc/geo-utils'
 import {
   booleanContains,
   polygon as turfPolygon,
-  simplify
+  simplify,
+  booleanClockwise
 } from '@turf/turf'
 
 import { crsProjections } from './crs'
@@ -127,6 +128,26 @@ const divideLine = (line) => {
   return dividedCoordinates
 }
 
+// Return the given polygon as counter-clockwise.
+// Exterior rings of polygons should be counter-clockwise and holes should be clockwise
+const makeCounterClockwise = (polygon) => {
+  if (booleanClockwise(polygon)) {
+    return polygon.reverse()
+  }
+
+  return polygon
+}
+
+// Return the given polygon as clockwise
+// Exterior rings of polygons should be counter-clockwise and holes should be clockwise
+const makeClockwise = (polygon) => {
+  if (!booleanClockwise(polygon)) {
+    return polygon.reverse()
+  }
+
+  return polygon
+}
+
 // Normalize granule spatial (boxes, lines, points, polygons) to polygons for simplified handling on the map
 const normalizeGranuleSpatial = (granule) => {
   const {
@@ -145,13 +166,14 @@ const normalizeGranuleSpatial = (granule) => {
       const [swLat, swLon, neLat, neLon] = box.split(' ').map((coord) => parseFloat(coord))
 
       // Create a polygon from the bounding box
-      const polygonCoordinates = [
+      // TODO make sure this is counter-clockwise
+      const polygonCoordinates = makeCounterClockwise([
         [swLon, swLat],
-        [swLon, neLat],
-        [neLon, neLat],
         [neLon, swLat],
+        [neLon, neLat],
+        [swLon, neLat],
         [swLon, swLat]
-      ]
+      ])
 
       // Interpolate the polygon to add points between each point
       const interpolatedPolygon = interpolateBoxPolygon(polygonCoordinates, 2, 6)
@@ -324,7 +346,7 @@ const normalizeGranuleSpatial = (granule) => {
           // If polygonWithHolesIndex is 0, it is an exterior polygon
           if (polygonWithHolesIndex === 0) {
             // Add each exterior polygon to the list
-            polygonsArray.push(interpolatedPolygon)
+            polygonsArray.push(makeCounterClockwise(interpolatedPolygon))
           } else {
             // If polygonWithHolesIndex is > 0, it is a hole in a polygon, it needs to be added to
             // the correct polygon array
@@ -337,7 +359,7 @@ const normalizeGranuleSpatial = (granule) => {
               const containsHole = booleanContains(exterior, hole)
 
               if (containsHole) {
-                return polygonsItem.concat(interpolatedPolygon)
+                return polygonsItem.concat(makeClockwise(interpolatedPolygon))
               }
 
               return polygonsItem
