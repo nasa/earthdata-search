@@ -39,6 +39,7 @@ import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
 import { highlightFeature, unhighlightFeature } from '../../util/map/interactions/highlightFeature'
+import bordersAndRoadsLayer from '../../util/map/layers/bordersAndRoadsLayer'
 import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgrounds from '../../util/map/drawGranuleBackgrounds'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
@@ -70,6 +71,12 @@ const worldImageryLayer = worldImagery({
 
 // Build the placeLabels layer
 const placeLabelsLayer = await labelsLayer({
+  attributions: esriAttribution,
+  projectionCode: projections.geographic
+})
+
+// Build bordersAndRoadsLayer
+const bordersAndRoads = await bordersAndRoadsLayer({
   attributions: esriAttribution,
   projectionCode: projections.geographic
 })
@@ -166,8 +173,14 @@ const attribution = new Attribution({
   collapsible: false
 })
 
-const handleLayerChange = ({ id, checked, type }) => {
-  console.log(`Layer ${id} changed to ${checked}`)
+const handleLayerChange = ({ id, checked }) => {
+  if (id === 'place-labels') {
+    placeLabelsLayer.setVisible(checked)
+  }
+
+  if (id === 'borders-roads') {
+    bordersAndRoads.setVisible(checked)
+  }
 }
 
 const layerSwitcherControl = (onChangeLayer) => {
@@ -193,11 +206,12 @@ const layerSwitcherControl = (onChangeLayer) => {
       {
         id: 'borders-roads',
         label: 'Borders and Roads *',
-        checked: true
+        checked: false
       },
       {
         id: 'place-labels',
-        label: 'Place Labels *'
+        label: 'Place Labels *',
+        checked: true
       }
     ]
   })
@@ -294,6 +308,7 @@ const Map = ({
       layers: [
         worldImageryLayer,
         placeLabelsLayer,
+        bordersAndRoads,
         granuleBackgroundsLayer,
         granuleOutlinesLayer,
         granuleHighlightsLayer,
@@ -309,6 +324,10 @@ const Map = ({
       })
     })
     mapRef.current = map
+
+    // Defaults, will use user preferences in the future for setting these
+    placeLabelsLayer.setVisible(true)
+    bordersAndRoads.setVisible(false)
 
     const handleMoveEnd = (event) => {
       // When the map is moved we need to call onChangeMap to update Redux
