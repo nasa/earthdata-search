@@ -411,6 +411,7 @@ test.describe('Path /search/granules/collection-details', () => {
     })
   })
 
+  // TODO enable these back in with EDSC-4424
   test.describe.skip('When collection has spatial', () => {
     test('displays the spatial on the minimap', async ({ page }) => {
       const conceptId = 'C1996546500-GHRC_DAAC'

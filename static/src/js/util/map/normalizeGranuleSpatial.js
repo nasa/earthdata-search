@@ -182,6 +182,8 @@ const normalizeGranuleSpatial = (granule) => {
     })
 
     // Return the bounding box as GeoJSON MultiPolygon
+    console.log('🚀 ~ file: normalizeGranuleSpatial.js:103 ~ multiPolygons:', multiPolygons)
+
     return {
       type: 'Feature',
       properties: {},

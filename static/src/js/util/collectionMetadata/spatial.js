@@ -8,8 +8,10 @@ const degrees = (value) => {
   return `${parseFloat(value).toFixed(1)}\xB0`
 }
 
+// TODO why don't we do anything with the horizontal spatial domain
 export const buildSpatial = (json) => {
   const { spatialExtent } = json
+  console.log('🚀 ~ file: spatial.js:13 ~ spatialExtent:', spatialExtent)
 
   if (!spatialExtent) return undefined
 
@@ -18,6 +20,7 @@ export const buildSpatial = (json) => {
   const { horizontalSpatialDomain } = spatialExtent
   if (horizontalSpatialDomain) {
     const { geometry } = horizontalSpatialDomain
+    console.log('🚀 ~ file: spatial.js:23 ~ geometry:', geometry)
 
     if (geometry.points) {
       const points = castArray(geometry.points)
@@ -38,8 +41,10 @@ export const buildSpatial = (json) => {
 
         spatialList.push(`Bounding Rectangle: (${degrees(north)}, ${degrees(west)}, ${degrees(south)}, ${degrees(east)})`)
       })
-    } else if (geometry.gPolygons) {
-      const polygons = castArray(geometry.gPolygons)
+    } else if (geometry.gpolygons) {
+      // TODO this isn't finding polygons because the key is lowercased in the metadata
+      const polygons = castArray(geometry.gpolygons)
+      console.log('🚀 ~ file: spatial.js:46 ~ polygons:', polygons)
       let string = 'Polygon: ('
 
       polygons.forEach((polygon) => {
@@ -54,6 +59,7 @@ export const buildSpatial = (json) => {
         string += ')'
 
         spatialList.push(string)
+        console.log('🚀 ~ file: spatial.js:60 ~ spatialList:', spatialList)
       })
     } else if (geometry.Lines) {
       const lines = castArray(geometry.Lines)

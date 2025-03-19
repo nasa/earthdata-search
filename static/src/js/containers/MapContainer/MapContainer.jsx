@@ -411,6 +411,7 @@ export const MapContainer = (props) => {
       } else {
         granule.backgroundStyle = backgroundStyle
         granule.granuleStyle = shouldDrawRegularStyle ? granuleStyle(index) : deemphisizedGranuleStyle(index)
+        console.log('🚀 ~ file: MapContainer.jsx:415 ~ index:', index)
         granule.highlightedStyle = highlightedGranuleStyle(index)
       }
 

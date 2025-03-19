@@ -1,10 +1,10 @@
 .collection-details-minimap {
-    &.leaflet-container {
+    &.minimap {
       width: 360px;
       height: 180px;
     }
 
-    .leaflet-interactive {
-      cursor: default;
-    }
+    // .leaflet-interactive {
+    //   cursor: default;
+    // }
 }

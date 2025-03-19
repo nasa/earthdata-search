@@ -17,6 +17,7 @@ const drawOutline = ({
       // Get the pixel location of the lat/lng
       const pixel = map.getPixelFromCoordinate([lng, lat])
 
+      console.log('🚀 ~ file: drawGranuleOutlines.js:64 ~ scale:', scale)
       // Draw the circle around the point
       ctx.moveTo((pixel[0] * scale) + (pointRadius * scale), pixel[1] * scale)
       ctx.arc(pixel[0] * scale, pixel[1] * scale, pointRadius * scale, 0, 2 * Math.PI)
@@ -38,6 +39,7 @@ const drawOutline = ({
     allShapes = geometry.getCoordinates()
   }
 
+  console.log('🚀 ~ file: drawGranuleOutlines.js:82 ~ allShapes:', allShapes)
   allShapes.forEach((shape) => {
     shape.forEach((coordinate) => {
       coordinate.forEach(([lng, lat], index) => {
