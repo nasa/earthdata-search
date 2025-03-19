@@ -25,13 +25,15 @@ import { FaHome } from 'react-icons/fa'
 import {
   Close,
   Minus,
-  Plus
+  Plus,
+  FileArchive
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import { LegendControl } from '../Legend/LegendControl'
 import ProjectionSwitcherControl from './ProjectionSwitcherControl'
 import ZoomControl from './ZoomControl'
+import LayerSwitcherControl from './LayerSwitcherControl'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
@@ -164,6 +166,45 @@ const attribution = new Attribution({
   collapsible: false
 })
 
+const handleLayerChange = ({ id, checked, type }) => {
+  console.log(`Layer ${id} changed to ${checked}`)
+}
+
+const layerSwitcherControl = (onChangeLayer) => {
+  // Create with debugging styles
+  const control = new LayerSwitcherControl({
+    className: 'edsc-map-layer-switcher',
+    LayersIcon: <EDSCIcon size="0.75rem" icon={FileArchive} />,
+    onChangeLayer,
+    layerOptions: [
+      {
+        id: 'world-imagery',
+        label: 'World Imagery',
+        checked: true
+      },
+      {
+        id: 'corrected-reflectance',
+        label: 'Corrected Reflectance (True Color)'
+      },
+      {
+        id: 'land-water-map',
+        label: 'Land / Water Map *'
+      },
+      {
+        id: 'borders-roads',
+        label: 'Borders and Roads *',
+        checked: true
+      },
+      {
+        id: 'place-labels',
+        label: 'Place Labels *'
+      }
+    ]
+  })
+
+  return control
+}
+
 const zoomControl = (projectionCode) => new ZoomControl({
   className: 'edsc-map-zoom',
   homeLocation: {
@@ -236,6 +277,7 @@ const Map = ({
         scaleMetric,
         scaleImperial,
         zoomControl(projectionCode),
+        layerSwitcherControl(handleLayerChange),
         new ProjectionSwitcherControl({
           onChangeProjection
         }),
