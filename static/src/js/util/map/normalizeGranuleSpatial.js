@@ -92,7 +92,7 @@ const interpolateBoxPolygon = (polygon, tolerance, maxDepth) => {
 
 // If the line crosses the antimeridian, divide it and return the divided coordinates
 // This needs to split every time the line crosses the antimeridian
-const divideLine = (line) => {
+export const divideLine = (line) => {
   // Iterate over the coordinates and find the antimeridian crossing
   const dividedCoordinates = []
   let currentLine = []
@@ -182,7 +182,6 @@ const normalizeGranuleSpatial = (granule) => {
     })
 
     // Return the bounding box as GeoJSON MultiPolygon
-    console.log('🚀 ~ file: normalizeGranuleSpatial.js:103 ~ multiPolygons:', multiPolygons)
 
     return {
       type: 'Feature',

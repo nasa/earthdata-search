@@ -1,8 +1,9 @@
-// Import { greatCircleArc } from 'ol/geom/flat/geodesic'
-// import { dividePolygon } from '@edsc/geo-utils'
-// import { simplify } from '@turf/turf'
+import { greatCircleArc } from 'ol/geom/flat/geodesic'
+import { dividePolygon } from '@edsc/geo-utils'
+import { simplify } from '@turf/turf'
+import { interpolatePolygon, divideLine } from './normalizeGranuleSpatial'
 
-// import { crsProjections } from './crs'
+// Import { crsProjections } from './crs'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
@@ -123,6 +124,7 @@ const normalizeCollectionSpatial = (collection) => {
     points,
     polygons
   } = collection
+  console.log('🚀 ~ file: normalizeCollectionSpatial.js:127 ~ collection:', collection)
 
   // If the collection has a box, return a MultiPolygon
   if (boxes) {
@@ -140,6 +142,7 @@ const normalizeCollectionSpatial = (collection) => {
 
   //  If the granule has a line, return a GeoJSON MultiLineString
   if (lines) {
+    // Debugger
     console.log('🚀 ~ file: normalizeCollectionSpatial.js:117 ~ lines:', lines)
     const multipleLines = []
     lines.forEach((line) => {
@@ -152,11 +155,15 @@ const normalizeCollectionSpatial = (collection) => {
 
       // Divide the line to handle antimeridian crossing
       // const dividedCoordinates = divideLine(line)
-      multipleLines.push(line)
+      const dividedCoordinates = divideLine(line)
+      multipleLines.push(...dividedCoordinates)
+
       // MultipleLines.push(...dividedCoordinates)
     })
 
+    console.log('🚀 ~ file: normalizeCollectionSpatial.js:157 ~ multipleLines:', multipleLines)
     // Return the line as GeoJSON MultiLineString
+
     const json = {
       type: 'Feature',
       geometry: {
@@ -197,7 +204,7 @@ const normalizeCollectionSpatial = (collection) => {
 
   // If the granule has a polygon, return a GeoJSON MultiPolygon
   if (polygons) {
-    const multiPolygons = []
+    let multiPolygons
     polygons.forEach((polygon) => {
       polygon.forEach((shape) => {
         console.log('🚀 ~ file: normalizeCollectionSpatial.js:187 ~ shape:', shape)
@@ -215,17 +222,31 @@ const normalizeCollectionSpatial = (collection) => {
         }, [])
 
         // Divide the polygon to handle antimeridian crossing
-        // const { interiors: dividedCoordinates } = dividePolygon(coordinates.map(([lng, lat]) => ({
-        //   lng,
-        //   lat
-        // })))
+        const { interiors: dividedCoordinates } = dividePolygon(coordinates.map(([lng, lat]) => ({
+          lng,
+          lat
+        })))
+        console.log('🚀 ~ file: normalizeCollectionSpatial.js:223 ~ dividedCoordinates:', dividedCoordinates)
 
-        // dividedCoordinates.forEach((p) => {
+        // DividedCoordinates.forEach((p) => {
+        //   console.log('🚀 ~ file: normalizeCollectionSpatial.js:226 ~ p:', p)
         //   if (p.length < 3) return
 
         //   const interpolatedPolygon = interpolatePolygon(p)
+        //   console.log('🚀 ~ file: normalizeCollectionSpatial.js:228 ~ interpolatedPolygon:', interpolatedPolygon)
+        //   // MultiPolygons.push(interpolatedPolygon)
         // })
-        multiPolygons.push(coordinates)
+
+        const output = dividedCoordinates.map((pol) => {
+          const normalizedPolygon = pol.map((coordinate) => [coordinate.lng, coordinate.lat])
+          console.log('🚀 ~ file: normalizeCollectionSpatial.js:236 ~ normalizedPolygon:', normalizedPolygon)
+
+          return normalizedPolygon
+        })
+        console.log('🚀 ~ file: normalizeCollectionSpatial.js:240 ~ output:', output)
+
+        console.log('🚀 ~ file: normalizeCollectionSpatial.js:233 ~ coordinates:', coordinates)
+        multiPolygons = output
       })
     })
 

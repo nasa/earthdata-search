@@ -99,7 +99,7 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
       ctx.strokeStyle = canvasHighlightColor
       ctx.fillStyle = canvasHighlightColor
       ctx.lineWidth = 2
-      ctx.globalAlpha = 0.75
+      ctx.globalAlpha = 0.6
       console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:127 ~ collectionAllShapes:', collectionAllShapes)
 
       collectionAllShapes.features.forEach((feature) => {
@@ -121,7 +121,6 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
             if (geoJsonFeatureType === 'MultiPoint') {
               ctx.moveTo(x, y)
               ctx.arc(x, y, pointRadius * scale, 0, 2 * Math.PI)
-
               // Ctx.moveTo((x * scale) + (pointRadius * scale), y * scale)
 
               // ctx.arc(75, 75, 50, 0, Math.PI * 2, true)

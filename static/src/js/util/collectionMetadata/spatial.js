@@ -61,8 +61,8 @@ export const buildSpatial = (json) => {
         spatialList.push(string)
         console.log('🚀 ~ file: spatial.js:60 ~ spatialList:', spatialList)
       })
-    } else if (geometry.Lines) {
-      const lines = castArray(geometry.Lines)
+    } else if (geometry.lines) {
+      const lines = castArray(geometry.lines)
 
       lines.forEach((line) => {
         const latitude1 = line.points[0].latitude
