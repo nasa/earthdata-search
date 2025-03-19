@@ -53,6 +53,7 @@ export const mapDispatchToProps = (dispatch) => ({
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
   onChangeMap:
     (query) => dispatch(actions.changeMap(query)),
+  onChangeQuery: (query) => dispatch(actions.changeQuery(query)),
   onExcludeGranule:
     (data) => dispatch(actions.excludeGranule(data)),
   onFetchShapefile:
@@ -63,6 +64,7 @@ export const mapDispatchToProps = (dispatch) => ({
     (data) => dispatch(actions.shapefileErrored(data)),
   onMetricsMap:
     (type) => dispatch(metricsMap(type)),
+  onToggleDrawingNewLayer: (state) => dispatch(actions.toggleDrawingNewLayer(state)),
   onToggleTooManyPointsModal:
     (state) => dispatch(actions.toggleTooManyPointsModal(state)),
   onUpdateShapefile:
@@ -70,16 +72,23 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
+  advancedSearch: state.advancedSearch,
   authToken: state.authToken,
+  boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  circleSearch: state.query.collection.spatial.circle,
   collectionsMetadata: state.metadata.collections,
   colormapsMetadata: getColormapsMetadata(state),
+  displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
+  lineSearch: state.query.collection.spatial.line,
   map: state.map,
   mapPreferences: getMapPreferences(state),
+  pointSearch: state.query.collection.spatial.point,
+  polygonSearch: state.query.collection.spatial.polygon,
   project: state.project,
   router: state.router,
   shapefile: state.shapefile
@@ -87,28 +96,37 @@ export const mapStateToProps = (state) => ({
 
 export const MapContainer = (props) => {
   const {
+    advancedSearch,
     authToken,
-    map: mapProps,
+    boundingBoxSearch,
+    circleSearch,
     collectionsMetadata,
     colormapsMetadata,
+    displaySpatialPolygonWarning,
     drawingNewLayer,
     focusedCollectionId,
     focusedGranuleId,
     granuleSearchResults,
     granulesMetadata,
+    lineSearch,
+    map: mapProps,
     mapPreferences,
-    project,
-    router,
-    onChangeMap,
-    shapefile,
     onChangeFocusedGranule,
+    onChangeMap,
+    onChangeQuery,
     onExcludeGranule,
     onFetchShapefile,
+    onMetricsMap,
     onSaveShapefile,
     onShapefileErrored,
-    onMetricsMap,
+    onToggleDrawingNewLayer,
     onToggleTooManyPointsModal,
-    onUpdateShapefile
+    onUpdateShapefile,
+    pointSearch,
+    polygonSearch,
+    project,
+    router,
+    shapefile
   } = props
 
   const { location } = router
@@ -460,6 +478,28 @@ export const MapContainer = (props) => {
     })
   }
 
+  // Create the spatial search object to pass to the map
+  const spatialSearch = useMemo(() => ({
+    advancedSearch,
+    boundingBoxSearch,
+    circleSearch,
+    displaySpatialPolygonWarning,
+    drawingNewLayer,
+    lineSearch,
+    pointSearch,
+    polygonSearch
+  }), [
+    advancedSearch,
+    boundingBoxSearch,
+    circleSearch,
+    displaySpatialPolygonWarning,
+    drawingNewLayer,
+    lineSearch,
+    pointSearch,
+    polygonSearch,
+    projection
+  ])
+
   return (
     <Map
       center={center}
@@ -473,9 +513,13 @@ export const MapContainer = (props) => {
       onChangeFocusedGranule={onChangeFocusedGranule}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
+      onChangeQuery={onChangeQuery}
       onExcludeGranule={onExcludeGranule}
+      onMetricsMap={onMetricsMap}
+      onToggleDrawingNewLayer={onToggleDrawingNewLayer}
       projectionCode={projection}
       rotation={rotation}
+      spatialSearch={spatialSearch}
       zoom={zoom}
     />
   )

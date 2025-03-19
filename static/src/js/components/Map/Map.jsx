@@ -6,9 +6,13 @@ import React, {
 import { renderToString } from 'react-dom/server'
 import PropTypes from 'prop-types'
 
-import { altKeyOnly } from 'ol/events/condition'
+import { altKeyOnly, never } from 'ol/events/condition'
 
-import { defaults as defaultInteractions, DragRotate } from 'ol/interaction'
+import {
+  defaults as defaultInteractions,
+  DragRotate,
+  Draw
+} from 'ol/interaction'
 import { transform } from 'ol/proj'
 import { View } from 'ol'
 import Attribution from 'ol/control/Attribution'
@@ -22,11 +26,12 @@ import ScaleLine from 'ol/control/ScaleLine'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 
-import { FaHome } from 'react-icons/fa'
+import { FaCircle, FaHome } from 'react-icons/fa'
 import {
   Close,
   Minus,
-  Plus
+  Plus,
+  Map as MapIcon
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -36,11 +41,18 @@ import MapControls from './MapControls'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
+import spatialTypes from '../../constants/spatialTypes'
+import { mapEventTypes } from '../../constants/eventTypes'
+
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
 import { highlightFeature, unhighlightFeature } from '../../util/map/interactions/highlightFeature'
+import boundingBoxGeometryFunction from '../../util/map/geometryFunctions/boundingBoxGeometryFunction'
+import circleGeometryFunction from '../../util/map/geometryFunctions/circleGeometryFunction'
 import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
+import drawSpatialSearch from '../../util/map/drawSpatialSearch'
+import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
 import onClickMap from '../../util/map/interactions/onClickMap'
 import projections from '../../util/map/projections'
@@ -116,6 +128,16 @@ const focusedGranuleLayer = new VectorLayer({
   zIndex: 4
 })
 
+// Layer for spatial drawing
+const spatialDrawingSource = new VectorSource({
+  wrapX: false
+})
+const spatialDrawingLayer = new VectorLayer({
+  source: spatialDrawingSource,
+  className: 'edsc-spatial-drawing-layer',
+  zIndex: 4
+})
+
 // Layer group for imagery layers
 const granuleImageryLayerGroup = new LayerGroup()
 
@@ -183,17 +205,22 @@ const clearFocusedGranuleSource = (map) => {
  * Uses OpenLayers to render a map
  * @param {Object} params
  * @param {Object} params.center Center latitude and longitude of the map
+ * @param {Object} params.colorMap Color map for the focused collection
  * @param {Object} params.granules Granules to render on the map
  * @param {String} params.granulesKey Key to determine if the granules have changed
  * @param {String} params.focusedCollectionId Collection ID of the focused collection
  * @param {String} params.focusedGranuleId Granule ID of the focused granule
- * @param {String} params.projectionCode Projection code of the map
- * @param {Number} params.rotation Rotation of the map
- * @param {Number} params.zoom Zoom level of the map
- * @param {Object} params.colorMap Color map for the focused collection
+ * @param {Function} params.onChangeFocusedGranule Function to call when the focused granule is changed
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
- * @param {Function} params.onChangeFocusedGranule Function to call when the focused granule is changed
+ * @param {Function} params.onChangeQuery Function to call when the query is changed
+ * @param {Function} params.onExcludeGranule Function to call when a granule is excluded
+ * @param {Function} params.onMetricsMap Function to call when a map metric is triggered
+ * @param {Function} params.onToggleDrawingNewLayer Function to call when a new drawing layer is toggled
+ * @param {String} params.projectionCode Projection code of the map
+ * @param {Number} params.rotation Rotation of the map
+ * @param {Object} params.spatialSearch Spatial search object
+ * @param {Number} params.zoom Zoom level of the map
  */
 const Map = ({
   center,
@@ -207,9 +234,13 @@ const Map = ({
   onChangeFocusedGranule,
   onChangeMap,
   onChangeProjection,
+  onChangeQuery,
   onExcludeGranule,
+  onMetricsMap,
+  onToggleDrawingNewLayer,
   projectionCode,
   rotation,
+  spatialSearch,
   zoom
 }) => {
   // This is the width of the side panels. We need to know this so we can adjust the padding
@@ -245,7 +276,8 @@ const Map = ({
         granuleOutlinesLayer,
         granuleHighlightsLayer,
         focusedGranuleLayer,
-        granuleImageryLayerGroup
+        granuleImageryLayerGroup,
+        spatialDrawingLayer
       ],
       target: mapElRef.current,
       view: createView({
@@ -258,12 +290,76 @@ const Map = ({
     })
     mapRef.current = map
 
+    const handleDrawingStart = (spatialType) => {
+      onToggleDrawingNewLayer(spatialType)
+      spatialDrawingSource.clear()
+
+      let geometryFunction
+      let type = spatialType
+
+      if (spatialType === spatialTypes.BOUNDING_BOX) {
+        // To draw a box use the circle type and a geometry function that creates a polygon
+        // of the box
+        // https://openlayers.org/en/latest/examples/draw-shapes.html
+        type = spatialTypes.CIRCLE
+
+        geometryFunction = boundingBoxGeometryFunction
+      }
+
+      if (spatialType === spatialTypes.CIRCLE && projectionCode === projections.geographic) {
+        // We only need this special geometry function for circles in geographic projection
+        geometryFunction = circleGeometryFunction
+      }
+
+      // Add the drawing interaction to the map
+      const drawingInteraction = new Draw({
+        freehandCondition: never,
+        geometryFunction,
+        stopClick: true,
+        type
+      })
+
+      // This id is used to find the drawing interaction later to remove it
+      drawingInteraction.set('id', 'spatial-drawing-interaction')
+      map.addInteraction(drawingInteraction)
+
+      drawingInteraction.on('drawend', handleDrawEnd.bind(null, {
+        drawingInteraction,
+        map,
+        onChangeQuery,
+        onToggleDrawingNewLayer,
+        projectionCode,
+        spatialType
+      }))
+    }
+
+    // Handles canceling the drawing interaction
+    const handleDrawingCancel = () => {
+      onToggleDrawingNewLayer(false)
+
+      // Find the drawing interaction and remove it
+      map.getInteractions().getArray().forEach((interaction) => {
+        if (interaction.get('id') === 'spatial-drawing-interaction') {
+          map.removeInteraction(interaction)
+          interaction.dispose()
+        }
+      })
+    }
+
+    // Handle the map draw start event from the SpatialSelectionDropdown
+    eventEmitter.on(mapEventTypes.DRAWSTART, handleDrawingStart)
+    eventEmitter.on(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
+
     const mapControls = new MapControls({
+      CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
+      handleDrawingCancel,
+      handleDrawingStart,
       HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
       map,
       MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
       onChangeProjection,
       PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
+      PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
       projectionCode
     })
 
@@ -331,10 +427,32 @@ const Map = ({
     // When the pointer moves, highlight the feature
     map.on(PointerEventType.POINTERMOVE, handlePointerMove)
 
+    // Handle the move map event. This can be called from anywhere in the app and will move the map
+    // to the provided extent.
+    const handleMoveMap = ({ shape }) => {
+      const shapeInProjection = shape.transform(
+        crsProjections[projections.geographic],
+        crsProjections[projectionCode]
+      )
+
+      const extent = shapeInProjection.getExtent()
+
+      map.getView().fit(extent, {
+        duration: 250,
+        padding: [50, 50, 50, 50]
+      })
+    }
+
+    eventEmitter.on(mapEventTypes.MOVEMAP, handleMoveMap)
+
     return () => {
       map.setTarget(null)
       map.un(MapEventType.MOVEEND, handleMoveEnd)
       map.un(PointerEventType.POINTERMOVE, handlePointerMove)
+
+      eventEmitter.off(mapEventTypes.DRAWSTART, handleDrawingStart)
+      eventEmitter.off(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
+      eventEmitter.off(mapEventTypes.MOVEMAP, handleMoveMap)
     }
   }, [projectionCode])
 
@@ -353,6 +471,7 @@ const Map = ({
       map,
       onChangeFocusedGranule,
       onExcludeGranule,
+      onMetricsMap,
       timesIconSvg
     })
   }
@@ -591,6 +710,14 @@ const Map = ({
     }
   }, [granules, granulesKey, projectionCode])
 
+  useEffect(() => {
+    drawSpatialSearch({
+      projectionCode,
+      spatialSearch,
+      vectorSource: spatialDrawingSource
+    })
+  }, [spatialSearch])
+
   // Draw the granule outlines
   granuleOutlinesLayer.on(RenderEventType.POSTRENDER, (event) => {
     const ctx = event.context
@@ -629,9 +756,13 @@ Map.propTypes = {
   onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
   onChangeProjection: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
+  onMetricsMap: PropTypes.func.isRequired,
+  onToggleDrawingNewLayer: PropTypes.func.isRequired,
   projectionCode: PropTypes.string.isRequired,
   rotation: PropTypes.number.isRequired,
+  spatialSearch: PropTypes.shape({}).isRequired,
   zoom: PropTypes.number.isRequired
 }
 

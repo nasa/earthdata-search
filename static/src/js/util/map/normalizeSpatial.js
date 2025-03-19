@@ -23,7 +23,7 @@ const { mapPointsSimplifyThreshold } = getApplicationConfig()
 export const squareMetersToSquareKilometers = (squareMeters) => parseInt(squareMeters / 1000000, 10)
 
 // This function adds points to the polygon so that the polygon follows the curvature of the Earth
-const interpolatePolygon = (coordinates) => {
+export const interpolatePolygon = (coordinates) => {
   const interpolatedCoordinates = []
 
   // Iterate over the coordinates and add the original point and the interpolated points
@@ -50,7 +50,7 @@ const interpolatePolygon = (coordinates) => {
 }
 
 // Interpolate the points of a polygon derived from a bounding box
-const interpolateBoxPolygon = (polygon, tolerance, maxDepth) => {
+export const interpolateBoxPolygon = (polygon, tolerance, maxDepth) => {
   const interpolatedPolygon = polygon
 
   // This is a cartesian interpolation function that adds points between each point in the polygon
@@ -138,7 +138,7 @@ const divideLine = (line) => {
 
 // Return the given polygon as counter-clockwise.
 // Exterior rings of polygons should be counter-clockwise and holes should be clockwise
-const makeCounterClockwise = (polygon) => {
+export const makeCounterClockwise = (polygon) => {
   if (booleanClockwise(polygon)) {
     return polygon.reverse()
   }

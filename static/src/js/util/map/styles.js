@@ -84,3 +84,12 @@ export const highlightedPointStyle = (index) => new Style({
     })
   })
 })
+
+export const mbrStyle = new Style({
+  stroke: new Stroke({
+    color: '#c0392b',
+    width: 3,
+    lineDash: [2, 10],
+    opactiy: 0.8
+  })
+})

@@ -2,11 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withFormik } from 'formik'
+import { splitListOfPoints } from '@edsc/geo-utils'
+import { LineString, Polygon } from 'ol/geom'
 
 import actions from '../../actions'
 import { getValidationSchema } from '../../util/forms'
 
 import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSearchModal'
+
+import { eventEmitter } from '../../events/events'
+import { mapEventTypes } from '../../constants/eventTypes'
 
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
@@ -112,6 +117,35 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
         spatial: {}
       }
     })
+
+    // Move the map to the extent of the new search
+    const { regionSearch = {} } = values
+    const { selectedRegion = {} } = regionSearch
+    const {
+      spatial: regionSpatial,
+      type
+    } = selectedRegion
+    const points = splitListOfPoints(regionSpatial)
+
+    let shape
+    if (type === 'reach') {
+      const lineCoordinates = points.map((point) => {
+        const [lng, lat] = point.split(',')
+
+        return [parseFloat(lng), parseFloat(lat)]
+      })
+      shape = new LineString(lineCoordinates)
+    } else {
+      const polygonCoordinates = points.map((point) => {
+        const [lng, lat] = point.split(',')
+
+        return [parseFloat(lng), parseFloat(lat)]
+      })
+      shape = new Polygon([polygonCoordinates])
+    }
+
+    // Move the map
+    eventEmitter.emit(mapEventTypes.MOVEMAP, { shape })
   }
 })(AdvancedSearchModalContainer)
 

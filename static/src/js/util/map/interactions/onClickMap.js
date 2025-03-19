@@ -13,6 +13,7 @@ const onClickMap = ({
   map,
   onChangeFocusedGranule,
   onExcludeGranule,
+  onMetricsMap,
   timesIconSvg
 }) => {
   // Find the first feature at the coordinate, this will be the top granule
@@ -46,6 +47,9 @@ const onClickMap = ({
 
     return
   }
+
+  // Track the event
+  onMetricsMap('Selected Granule')
 
   // Focus the new granule
   onChangeFocusedGranule(newFocusedGranuleId)

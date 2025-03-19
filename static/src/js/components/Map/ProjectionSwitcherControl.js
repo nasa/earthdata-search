@@ -23,6 +23,8 @@ class ProjectionSwitcherControl extends Control {
     arcticButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--arctic'
     arcticButton.ariaLabel = 'North Polar Stereographic'
     arcticButton.title = 'North Polar Stereographic'
+    arcticButton.setAttribute('data-bs-toggle', 'tooltip')
+    arcticButton.setAttribute('data-bs-placement', 'left')
     arcticButton.addEventListener(
       EventType.CLICK,
       this.changeProjection.bind(this, projections.arctic),
@@ -37,6 +39,8 @@ class ProjectionSwitcherControl extends Control {
     geographicButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--geo'
     geographicButton.ariaLabel = 'Geographic (Equirectangular)'
     geographicButton.title = 'Geographic (Equirectangular)'
+    geographicButton.setAttribute('data-bs-toggle', 'tooltip')
+    geographicButton.setAttribute('data-bs-placement', 'left')
     geographicButton.addEventListener(
       EventType.CLICK,
       this.changeProjection.bind(this, projections.geographic),
@@ -51,6 +55,8 @@ class ProjectionSwitcherControl extends Control {
     antarcticButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--antarctic'
     antarcticButton.ariaLabel = 'South Polar Stereographic'
     antarcticButton.title = 'South Polar Stereographic'
+    antarcticButton.setAttribute('data-bs-toggle', 'tooltip')
+    antarcticButton.setAttribute('data-bs-placement', 'left')
     antarcticButton.addEventListener(
       EventType.CLICK,
       this.changeProjection.bind(this, projections.antarctic),
