@@ -16,8 +16,6 @@ import {
   isEqual,
   merge
 } from 'lodash-es'
-// import 'proj4leaflet'
-import LRUCache from 'lrucache'
 
 import actions from '../../actions'
 import { metricsMap } from '../../middleware/metrics/actions'
@@ -122,7 +120,6 @@ export const MapContainer = (props) => {
   ])
   // TODO EDSC-4418 need to be sure URL values override preferences (broken in prod)
   const [map, setMap] = useState(mapProps)
-  const imageryCache = useRef(LRUCache(400))
 
   const {
     base,
@@ -292,11 +289,11 @@ export const MapContainer = (props) => {
 
   // Get the metadata for the currently focused collection, or an empty object if no collection is focused
   const focusedCollectionMetadata = useMemo(() => collectionsMetadata[focusedCollectionId] || {}, [focusedCollectionId, collectionsMetadata])
+  const { tags } = focusedCollectionMetadata
+  const [gibsTag] = getValueForTag('gibs', tags) || []
 
   // Get the colormap data for the currently focused collection
   const colorMapState = useMemo(() => {
-    const { tags } = focusedCollectionMetadata
-    const [gibsTag] = getValueForTag('gibs', tags) || []
     let colorMapData = {}
 
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
@@ -306,10 +303,39 @@ export const MapContainer = (props) => {
     }
 
     return colorMapData
-  }, [focusedCollectionMetadata, colormapsMetadata, projection])
+  }, [gibsTag, colormapsMetadata, projection])
 
 
   const { colorMapData: colorMap = {} } = colorMapState
+
+  // Get GIBS data to pass to the map within each granule
+  let gibsData = {}
+  if (gibsTag) {
+    const {
+      antarctic_resolution: antarcticResolution,
+      arctic_resolution: arcticResolution,
+      format,
+      geographic_resolution: geographicResolution,
+      layerPeriod,
+      product
+    } = gibsTag
+
+    let resolution
+    if (projection === projections.antarctic) {
+      resolution = antarcticResolution
+    } else if (projection === projections.arctic) {
+      resolution = arcticResolution
+    } else {
+      resolution = geographicResolution
+    }
+
+    gibsData = {
+      format,
+      layerPeriod,
+      product,
+      resolution
+    }
+  }
 
   // Projection switching in leaflet is not supported. Here we render MapWrapper with a key of the projection prop.
   // So when the projection is changed in ProjectionSwitcher this causes the map to unmount and remount a new instance,
@@ -399,7 +425,8 @@ export const MapContainer = (props) => {
 
       const {
         formattedTemporal,
-        spatial = {}
+        spatial = {},
+        timeStart
       } = granule
       const { geometry = {} } = spatial
       const { type } = geometry
@@ -414,10 +441,18 @@ export const MapContainer = (props) => {
         granule.highlightedStyle = highlightedGranuleStyle(index)
       }
 
+      const gibsTime = gibsData.layerPeriod?.toLowerCase() === 'subdaily' ? timeStart : timeStart.substring(0, 10)
       granulesToDraw.push({
+        producerGranuleId: granule.producerGranuleId,
         backgroundStyle: granule.backgroundStyle,
         collectionId,
         formattedTemporal,
+        gibsData: {
+          ...gibsData,
+          opacity: shouldDrawRegularStyle ? 1 : 0.5,
+          time: gibsTime,
+          url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
+        },
         granuleId,
         granuleStyle: granule.granuleStyle,
         highlightedStyle: granule.highlightedStyle,
@@ -432,6 +467,7 @@ export const MapContainer = (props) => {
       colorMap={colorMap}
       focusedCollectionId={focusedCollectionId}
       focusedGranuleId={focusedGranuleId}
+      gibsData={gibsData}
       granules={granulesToDraw}
       granulesKey={granulesKey}
       isFocusedCollectionPage={isFocusedCollectionPage}
