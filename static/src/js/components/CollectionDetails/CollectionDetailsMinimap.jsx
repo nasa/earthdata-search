@@ -20,6 +20,7 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
   // TODO how to get at this cleaner use index 0 make this color better?
   const canvasHighlightColor = getColorByIndex(0)
   const collectionGeoFeatures = normalizeCollectionSpatial(metadata)
+  console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:23 ~ collectionGeoFeatures:', collectionGeoFeatures)
   console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:21 ~ metadata:', metadata)
   const allShapes = {
     type: 'FeatureCollection',
@@ -27,6 +28,7 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
       collectionGeoFeatures
     ]
   }
+  console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:31 ~ allShapes:', allShapes)
   const drawFeatures = (ctx, features, options) => {
     console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:67 ~ features:', features)
     // TODO make sure that the
@@ -60,6 +62,7 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
 
   const canvasRef = useRef(null)
   const [collectionAllShapes] = useState(allShapes)
+  console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:63 ~ collectionAllShapes:', collectionAllShapes)
   const imgSrc = MapThumb
 
   useEffect(() => {
@@ -86,21 +89,26 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
       // drawFeatures(ctx, geojson.features, { fill: false }) // Draw GeoJSON on top of the image
       console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:101 ~ geojson.features,:', collectionAllShapes.features)
 
-      drawFeatures(ctx, collectionAllShapes.features, {
-        stroke: false,
-        alpha: 0.15
-      }) // Draw GeoJSON on top of the image
+      // DrawFeatures(ctx, collectionAllShapes.features, {
+      //   stroke: false,
+      //   alpha: 0.15
+      // }) // Draw GeoJSON on top of the image
 
       const scale = 2
       // Draw GeoJSON on top of the image
       ctx.strokeStyle = canvasHighlightColor
       ctx.fillStyle = canvasHighlightColor
       ctx.lineWidth = 2
-      ctx.globalAlpha = 0.15
+      ctx.globalAlpha = 0.75
+      console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:127 ~ collectionAllShapes:', collectionAllShapes)
+
       collectionAllShapes.features.forEach((feature) => {
         console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:121 ~ feature:', feature)
 
         ctx.beginPath()
+
+        const geoJsonFeatureType = feature.geometry.type
+
         feature.geometry.coordinates[0].forEach((coordinate, index) => {
           console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:105 ~ index:', index)
           const [lon, lat] = coordinate
@@ -108,10 +116,18 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
           const x = (lon + 180) * (width / 360) // Convert longitude to x
           console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:108 ~ x:', x)
           const y = (90 - lat) * (height / 180) // Convert latitude to y
+
           if (index === 0) {
-            // Ctx.moveTo((x * scale) + (pointRadius * scale), y * scale)
-            ctx.moveTo(x, y)
-            // Ctx.arc(75, 75, 50, 0, Math.PI * 2, true)
+            if (geoJsonFeatureType === 'MultiPoint') {
+              ctx.moveTo(x, y)
+              ctx.arc(x, y, pointRadius * scale, 0, 2 * Math.PI)
+
+              // Ctx.moveTo((x * scale) + (pointRadius * scale), y * scale)
+
+              // ctx.arc(75, 75, 50, 0, Math.PI * 2, true)
+            } else {
+              ctx.moveTo(x, y)
+            }
             // Ctx.arc(x * scale, y * scale, pointRadius * scale, 0, 2 * Math.PI)
           } else {
             ctx.lineTo(x, y)

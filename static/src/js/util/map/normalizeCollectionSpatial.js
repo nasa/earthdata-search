@@ -89,6 +89,32 @@ const convertBoxesToGeoJson = (boxes) => {
   }
 }
 
+/**
+ * Converts an array of points boxes into a GeoJSON MultiPolygon
+ * @param {Array} boxes - An array of strings in the format ["swLon swLat neLon neLat"]
+ * @returns {Object} GeoJSON MultiPolygon object
+ */
+const convertPointsToGeoJson = (points) => {
+  const multiPoints = []
+  points.forEach((point) => {
+    // `points` is an array of strings that looks like this:
+    // ["lat lng"]
+    // These points are [lng, lat]
+    // We need to convert it to be an array of coordinates
+    // that looks li\ke this:
+    // [lng, lat]
+    const pointCoordinates = point.split(' ').reverse().map((coord) => parseFloat(coord))
+    console.log('🚀 ~ file: normalizeCollectionSpatial.js:166 ~ pointCoordinates:', pointCoordinates)
+
+    multiPoints.push([pointCoordinates])
+  })
+
+  return {
+    type: 'MultiPoint',
+    coordinates: multiPoints
+  }
+}
+
 // Normalize granule spatial (boxes, lines, points, polygons) to polygons for simplified handling on the map
 const normalizeCollectionSpatial = (collection) => {
   const {
@@ -156,28 +182,17 @@ const normalizeCollectionSpatial = (collection) => {
   // If the collection has a point, return a GeoJSON MultiPoint
   // TODO are points maybe too small?
   if (points) {
-    let multiPoints
-    points.forEach((point) => {
-      // `points` is an array of strings that looks like this:
-      // ["lat lng"]
-      // These points are [lng, lat]
-      // We need to convert it to be an array of coordinates
-      // that looks li\ke this:
-      // [lng, lat]
-      const pointCoordinates = point.split(' ').reverse().map((coord) => parseFloat(coord))
-      console.log('🚀 ~ file: normalizeCollectionSpatial.js:166 ~ pointCoordinates:', pointCoordinates)
-
-      multiPoints = pointCoordinates
-    })
+    const pointsCoordinates = convertPointsToGeoJson(points)
+    console.log('🚀 ~ file: normalizeCollectionSpatial.js:186 ~ pointsCoordinates:', pointsCoordinates)
 
     // Return the point as GeoJSON MultiPoint
-    return {
+    const response = {
       type: 'Feature',
-      geometry: {
-        type: 'MultiPoint',
-        coordinates: [multiPoints]
-      }
+      geometry: pointsCoordinates
     }
+    console.log('🚀 ~ file: normalizeCollectionSpatial.js:193 ~ response:', response)
+
+    return response
   }
 
   // If the granule has a polygon, return a GeoJSON MultiPolygon
