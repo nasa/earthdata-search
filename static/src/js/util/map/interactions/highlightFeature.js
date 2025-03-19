@@ -30,8 +30,13 @@ export const highlightFeature = ({
 
   if (coordinate) {
     // Find the first feature at the coordinate, this will be the top granule
-    const features = granuleBackgroundsSource.getFeaturesAtCoordinate(coordinate);
-    [featureToHighlight] = features
+    const features = granuleBackgroundsSource.getFeaturesAtCoordinate(coordinate)
+
+    // Make sure the features are sorted by index
+    const sortedFeatures = features.sort((a, b) => a.get('index') - b.get('index'));
+
+    // The first feature will be the one that was drawn first
+    [featureToHighlight] = sortedFeatures
   } else if (granuleId) {
     // Find the feature with the granuleId
     const features = granuleBackgroundsSource.getFeatures()

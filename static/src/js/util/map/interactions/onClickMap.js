@@ -17,7 +17,12 @@ const onClickMap = ({
 }) => {
   // Find the first feature at the coordinate, this will be the top granule
   const features = granuleBackgroundsSource.getFeaturesAtCoordinate(coordinate)
-  const [featureToFocus] = features
+
+  // Make sure the features are sorted by index
+  const sortedFeatures = features.sort((a, b) => a.get('index') - b.get('index'))
+
+  // The first feature will be the one that was drawn first
+  const [featureToFocus] = sortedFeatures
 
   // If we haven't found any features, don't focus a granule
   if (!featureToFocus) {

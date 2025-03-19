@@ -1,46 +1,4 @@
-import projections from './projections'
 import { pointRadius } from './styles'
-
-// Draw a boundary around the full extent for the projection. This allows
-// us to clip the granule outlines to the projection boundary, which is what
-// allows the outlines to 'stack' on top of each other.
-const drawBoundary = ({
-  ctx,
-  map,
-  projectionCode,
-  scale
-}) => {
-  let nw
-  let ne
-  let se
-  let sw
-
-  // Get the pixel locations of the corners of the projection
-  if (projectionCode === projections.geographic) {
-    nw = map.getPixelFromCoordinate([-190, 100])
-    ne = map.getPixelFromCoordinate([190, 100])
-    se = map.getPixelFromCoordinate([190, -100])
-    sw = map.getPixelFromCoordinate([-190, -100])
-  } else if (projectionCode === projections.arctic || projectionCode === projections.antarctic) {
-    const polarBounds = 3314693.24
-
-    nw = map.getPixelFromCoordinate([-polarBounds, polarBounds])
-    ne = map.getPixelFromCoordinate([polarBounds, polarBounds])
-    se = map.getPixelFromCoordinate([polarBounds, -polarBounds])
-    sw = map.getPixelFromCoordinate([-polarBounds, -polarBounds])
-  }
-
-  // Draw the boundary on the canvas
-  ctx.moveTo(nw[0] * scale, nw[1] * scale)
-  ctx.lineTo(ne[0] * scale, ne[1] * scale)
-  ctx.lineTo(se[0] * scale, se[1] * scale)
-  ctx.lineTo(sw[0] * scale, sw[1] * scale)
-  ctx.lineTo(nw[0] * scale, nw[1] * scale)
-  ctx.closePath()
-
-  // We don't call ctx.stroke() because we don't want to actually draw the boundary
-  // We just want to use it as a clipping path
-}
 
 // Draw the granule outlines
 const drawOutline = ({
@@ -108,8 +66,7 @@ const drawOutline = ({
 const drawGranuleOutlines = ({
   ctx,
   granuleBackgroundsSource,
-  map,
-  projectionCode
+  map
 }) => {
   // Remove existing drawings on the canvas
   ctx.reset()
@@ -117,8 +74,16 @@ const drawGranuleOutlines = ({
   // Get the device pixel ratio for use in scaling the drawing
   const dpr = window.devicePixelRatio || 1
 
+  const viewExtent = map.getView().calculateExtent(map.getSize())
+
+  // Only get the features that intersect the view extent
+  const features = granuleBackgroundsSource.getFeaturesInExtent(viewExtent)
+
+  // Sort features by the index property
+  const sortedFeatures = features.sort((a, b) => a.get('index') - b.get('index'))
+
   // Loop through the features that have been drawn on the granuleBackgroundsLayer
-  granuleBackgroundsSource.forEachFeature((feature) => {
+  sortedFeatures.forEach((feature) => {
     ctx.beginPath()
 
     // Set the globalCompositeOperation to 'destination-over' so new granule outlines
@@ -153,13 +118,8 @@ const drawGranuleOutlines = ({
       scale: dpr
     })
 
-    // Add path around full earth
-    drawBoundary({
-      ctx,
-      map,
-      projectionCode,
-      scale: dpr
-    })
+    // Add path around full canvas extent to clip the granule outlines
+    ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height)
 
     // Clip
     ctx.clip()
