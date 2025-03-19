@@ -1,10 +1,15 @@
 .collection-details-minimap {
-    &.leaflet-container {
-      width: 360px;
-      height: 180px;
-    }
-
-    .leaflet-interactive {
-      cursor: default;
+    width: 360px;
+    height: 180px;
+    
+    &__minimap {
+        background-image: url('~Images/plate_carree_earth_scaled.png');
+        background-size: cover;
+        background-position: center;
+        
+        // Improve image resolution for higher quality screens
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+          background-image: url('~Images/plate_carree_earth_scaled@2x.png');
+        }
     }
 }

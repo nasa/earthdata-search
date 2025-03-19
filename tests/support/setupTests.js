@@ -83,7 +83,15 @@ export const setupTests = async ({
   }, dontShowTour.toString())
 
   // Prevent loading of images and map tiles to speed up tests
-  await page.route('**/*.{png,jpg,jpeg,pbf}', (route) => route.abort())
+  await page.route('**/*.{png,jpg,jpeg,pbf}', (route) => {
+    // If the request for the image is from localhost, allow it to continue
+    if (route.request().url().includes('localhost')) {
+      route.continue()
+    } else {
+      route.abort()
+    }
+  })
+
   await page.route('**/arcgis/**', async (route) => {
     await handleImage(route, page)
   })

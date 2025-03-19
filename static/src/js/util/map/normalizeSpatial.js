@@ -2,6 +2,7 @@ import { greatCircleArc } from 'ol/geom/flat/geodesic'
 import { distance } from 'ol/coordinate'
 import { dividePolygon } from '@edsc/geo-utils'
 import {
+  area as turfArea,
   booleanContains,
   polygon as turfPolygon,
   simplify,
@@ -13,6 +14,13 @@ import { crsProjections } from './crs'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const { mapPointsSimplifyThreshold } = getApplicationConfig()
+
+/**
+ * Converts square meters to square kilometers
+ * @param {number} squareMeters - The area in square meters
+ * @returns {number} The area in square kilometers
+ */
+export const squareMetersToSquareKilometers = (squareMeters) => parseInt(squareMeters / 1000000, 10)
 
 // This function adds points to the polygon so that the polygon follows the curvature of the Earth
 const interpolatePolygon = (coordinates) => {
@@ -148,14 +156,17 @@ const makeClockwise = (polygon) => {
   return polygon
 }
 
-// Normalize granule spatial (boxes, lines, points, polygons) to polygons for simplified handling on the map
-const normalizeGranuleSpatial = (granule) => {
+// Return the area of the given polygon in square meters
+export const getPolygonArea = (polygon) => turfArea(polygon)
+
+// Normalize spatial metadata (boxes, lines, points, polygons) to polygons for simplified handling on the map
+const normalizeSpatial = (metadata) => {
   const {
     boxes,
     lines,
     points,
     polygons
-  } = granule
+  } = metadata
 
   // If the granule has a box, return a MultiPolygon
   if (boxes) {
@@ -166,7 +177,6 @@ const normalizeGranuleSpatial = (granule) => {
       const [swLat, swLon, neLat, neLon] = box.split(' ').map((coord) => parseFloat(coord))
 
       // Create a polygon from the bounding box
-      // TODO make sure this is counter-clockwise
       const polygonCoordinates = makeCounterClockwise([
         [swLon, swLat],
         [neLon, swLat],
@@ -395,4 +405,4 @@ const normalizeGranuleSpatial = (granule) => {
   return null
 }
 
-export default normalizeGranuleSpatial
+export default normalizeSpatial

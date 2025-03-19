@@ -10,7 +10,6 @@ const degrees = (value) => {
 
 export const buildSpatial = (json) => {
   const { spatialExtent } = json
-
   if (!spatialExtent) return undefined
 
   const spatialList = []
@@ -18,7 +17,6 @@ export const buildSpatial = (json) => {
   const { horizontalSpatialDomain } = spatialExtent
   if (horizontalSpatialDomain) {
     const { geometry } = horizontalSpatialDomain
-
     if (geometry.points) {
       const points = castArray(geometry.points)
 
@@ -38,8 +36,8 @@ export const buildSpatial = (json) => {
 
         spatialList.push(`Bounding Rectangle: (${degrees(north)}, ${degrees(west)}, ${degrees(south)}, ${degrees(east)})`)
       })
-    } else if (geometry.gPolygons) {
-      const polygons = castArray(geometry.gPolygons)
+    } else if (geometry.gpolygons) {
+      const polygons = castArray(geometry.gpolygons)
       let string = 'Polygon: ('
 
       polygons.forEach((polygon) => {
@@ -55,8 +53,8 @@ export const buildSpatial = (json) => {
 
         spatialList.push(string)
       })
-    } else if (geometry.Lines) {
-      const lines = castArray(geometry.Lines)
+    } else if (geometry.lines) {
+      const lines = castArray(geometry.lines)
 
       lines.forEach((line) => {
         const latitude1 = line.points[0].latitude
