@@ -51,7 +51,8 @@
     "disableOrdering": "false",
     "disableSwodlr": "false",
     "disableSiteTour": "false",
-    "mapPointsSimplifyThreshold": 2000
+    "mapPointsSimplifyThreshold": 2000,
+    "placeLabelsStyleUrl": "https://nasa.maps.arcgis.com/sharing/rest/content/items/8a79d68248f4415fb191077549d982e1/resources/styles/root.json?f=pjson"
   },
   "environment": {
     "test": {

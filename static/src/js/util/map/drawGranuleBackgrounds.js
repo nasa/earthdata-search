@@ -12,7 +12,7 @@ import projections from './projections'
 const drawGranuleBackgrounds = (granulesMetadata, vectorSource, projectionCode) => {
   if (!granulesMetadata.length) return
 
-  granulesMetadata.forEach((granule) => {
+  granulesMetadata.forEach((granule, index) => {
     const {
       backgroundStyle,
       collectionId,
@@ -33,6 +33,9 @@ const drawGranuleBackgrounds = (granulesMetadata, vectorSource, projectionCode) 
     }).readFeatures(spatial)
 
     backgroundFeatures.forEach((backgroundFeature) => {
+      // Set the index for the feature. This will be used to sort the features by the order we drew them
+      backgroundFeature.set('index', index)
+
       // Save the collectionId and granuleId to the properties
       backgroundFeature.set('collectionId', collectionId)
       backgroundFeature.set('granuleId', granuleId)
