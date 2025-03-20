@@ -223,6 +223,10 @@ const drawGranuleBackgroundsAndImagery = ({
                 image.crossOrigin = 'anonymous'
                 image.src = src
 
+                // Set the image to the tile
+                // If this is not set here, for some reason the basemap tiles aren't updating when zooming.
+                tile.setImage(image)
+
                 image.onload = () => {
                   // It is possible while the image is loading, it was saved to the cache by another granule
                   // If that is the case, replace the image in the cache with the new image
@@ -231,6 +235,8 @@ const drawGranuleBackgroundsAndImagery = ({
                   }
 
                   // Set the image to the tile
+                  // Set the image here after the image is loaded to ensure the whole granule image
+                  // is drawn correctly
                   tile.setImage(image)
                 }
 
