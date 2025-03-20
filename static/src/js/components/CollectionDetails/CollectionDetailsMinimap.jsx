@@ -14,91 +14,124 @@ import './CollectionDetailsMinimap.scss'
 import MapThumb from '../../../assets/images/plate_carree_earth_scaled@2x.png'
 
 export const CollectionDetailsMinimap = ({ metadata }) => {
+  const collectionGeoFeatures = []
+
+  const getCollectionGeoFeatures = (collectionMetadata) => {
+    const {
+      boxes,
+      lines,
+      points,
+      polygons
+    } = collectionMetadata
+    console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:26 ~ lines:', lines)
+
+    if (boxes) {
+      const boxFeatures = normalizeSpatial({ boxes })
+      collectionGeoFeatures.push(boxFeatures)
+    }
+
+    if (lines) {
+      const linesFeatures = normalizeSpatial({ lines })
+      collectionGeoFeatures.push(linesFeatures)
+    }
+
+    if (points) {
+      const pointsFeatures = normalizeSpatial({ points })
+      collectionGeoFeatures.push(pointsFeatures)
+    }
+
+    if (polygons) {
+      const polygonsFeatures = normalizeSpatial({ polygons })
+      collectionGeoFeatures.push(polygonsFeatures)
+    }
+  }
+
   const canvasHighlightColor = getColorByIndex(0)
-  const collectionGeoFeatures = normalizeSpatial(metadata)
-  console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:23 ~ collectionGeoFeatures:', collectionGeoFeatures)
-  console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:21 ~ metadata:', metadata)
+  // TODO for each spatial object normalize it and draw it
+  // const collectionGeoFeatures = normalizeSpatial(metadata)
+  // Populate all shapes
+  getCollectionGeoFeatures(metadata)
   const allShapes = {
     type: 'FeatureCollection',
-    features: [
-      collectionGeoFeatures
-    ]
+    features: collectionGeoFeatures
+  }
+
+  const drawMultiPolygonFeature = (ctx, feature, options) => {
+    // The shape is a polygon (bounding boxes are converted to polygons)
+    feature.geometry.coordinates.forEach((coordinate) => {
+      coordinate.forEach((points) => {
+        points.forEach(([lng, lat], index) => {
+          const x = (lng + 180) * (options.width / 360) // Convert longitude to x
+          const y = (90 - lat) * (options.height / 180) // Convert latitude to y
+
+          // If it is the first point move the canvas to start drawing over the map
+          if (index === 0) {
+            ctx.moveTo(x, y)
+          } else {
+            ctx.lineTo(x, y)
+          }
+        })
+      })
+
+      ctx.closePath()
+      ctx.stroke()
+      ctx.fill()
+    })
+  }
+
+  const drawMultiPointFeature = (ctx, feature, options) => {
+    feature.geometry.coordinates.forEach(([lng, lat]) => {
+      const x = (lng + 180) * (options.width / 360) // Convert longitude to x
+      const y = (90 - lat) * (options.height / 180) // Convert latitude to y
+
+      ctx.arc(x, y, pointRadius * options.scale, 0, 2 * Math.PI)
+      ctx.closePath()
+      ctx.stroke()
+      ctx.fill()
+    })
+  }
+
+  // TODO try to combine this and polygons
+  const drawMultiLineFeature = (ctx, feature, options) => {
+    feature.geometry.coordinates.forEach((coordinate) => {
+      coordinate.forEach(([lng, lat], index) => {
+        const x = (lng + 180) * (options.width / 360) // Convert longitude to x
+        const y = (90 - lat) * (options.height / 180) // Convert latitude to y
+
+        if (index === 0) {
+          ctx.moveTo(x, y)
+        } else {
+          ctx.lineTo(x, y)
+        }
+      })
+    })
+
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
   }
 
   const drawFeatures = (ctx, allFeatures, options) => {
     allFeatures.features.forEach((feature) => {
-      console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:121 ~ feature:', feature)
+      const geoJsonFeatureType = feature.geometry.type
+      console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:85 ~ geoJsonFeatureType:', geoJsonFeatureType)
 
       ctx.beginPath()
-      const geoJsonFeatureType = feature.geometry.type
+      // TODO draw a marker when the polygon is small
+      if (geoJsonFeatureType === 'MultiPolygon') {
+        drawMultiPolygonFeature(ctx, feature, options)
+      }
 
-      console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:110 ~ geoJsonFeatureType:', geoJsonFeatureType)
-      feature.geometry.coordinates.forEach((coordinate) => {
-        console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:143 ~ coordinate:', coordinate)
-        // Draw points
-        if (geoJsonFeatureType === 'MultiPoint') {
-          const [lng, lat] = coordinate
-          const x = (lng + 180) * (options.width / 360) // Convert longitude to x
-          const y = (90 - lat) * (options.height / 180) // Convert latitude to y
+      if (geoJsonFeatureType === 'MultiPoint') {
+        drawMultiPointFeature(ctx, feature, options)
+      }
 
-          ctx.arc(x, y, pointRadius * options.scale, 0, 2 * Math.PI)
-          ctx.closePath()
-          ctx.stroke()
-          ctx.fill()
-
-          return
-        }
-
-        coordinate.forEach((points, pointsIndex) => {
-          console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:115 ~ points:', points)
-          if (geoJsonFeatureType === 'MultiLineString') {
-            const [lng, lat] = points
-            console.log('🚀 ~ file: foo.jsx:124 ~ lat:', lat)
-            console.log('🚀 ~ file: foo.jsx:124 ~ lng:', lng)
-            const x = (lng + 180) * (options.width / 360) // Convert longitude to x
-            const y = (90 - lat) * (options.height / 180) // Convert latitude to y
-
-            if (pointsIndex === 0) {
-              ctx.moveTo(x, y)
-            } else {
-              ctx.lineTo(x, y)
-            }
-          } else {
-            // The shape is a polygon (bounding boxes are converted to polygons)
-            points.forEach(([lng, lat], index) => {
-              console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:115 ~ lng:', lng)
-              console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:115 ~ lat:', lat)
-              const x = (lng + 180) * (options.width / 360) // Convert longitude to x
-              console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:108 ~ x:', x)
-              const y = (90 - lat) * (options.height / 180) // Convert latitude to y
-
-              // If it is the first point move the canvas to start drawing over the map
-              if (index === 0) {
-                if (geoJsonFeatureType === 'MultiPoint') {
-                  ctx.moveTo(x, y)
-                  ctx.arc(x, y, pointRadius * options.scale, 0, 2 * Math.PI)
-                  // Ctx.moveTo((x * scale) + (pointRadius * scale), y * scale)
-
-                // ctx.arc(75, 75, 50, 0, Math.PI * 2, true)
-                } else {
-                  ctx.moveTo(x, y)
-                  console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:127 ~ y:', y)
-                  console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:127 ~ x:', x)
-                }
-              // Ctx.arc(x * scale, y * scale, pointRadius * scale, 0, 2 * Math.PI)
-              } else {
-                ctx.lineTo(x, y)
-                console.log('else is being called')
-              }
-            })
-          }
-        })
-
-        ctx.closePath()
-        ctx.stroke()
-        ctx.fill()
-      })
+      if (geoJsonFeatureType === 'MultiLineString') {
+        drawMultiLineFeature(ctx, feature, options)
+      }
     })
+
+    return null
   }
 
   const canvasRef = useRef(null)
