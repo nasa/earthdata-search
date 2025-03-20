@@ -153,7 +153,7 @@ const makeClockwise = (polygon) => {
  * @param {Object} geoJson - GeoJSON object with MultiPolygon geometry
  * @returns {Object} An object containing the bounds and a flag indicating if the bounds are small
  */
-const getGeoJsonBoundsAndCheckSize = (geoJson) => {
+export const getGeoJsonBoundsAndCheckSize = (geoJson) => {
   if (!geoJson || geoJson.type !== 'Feature' || geoJson.geometry.type !== 'MultiPolygon') {
     throw new Error('Invalid GeoJSON object')
   }
@@ -163,10 +163,21 @@ const getGeoJsonBoundsAndCheckSize = (geoJson) => {
 
   // Flatten the coordinates to a single array of [lng, lat] pairs
   const allCoordinates = coordinates.flat(3)
+  console.log('🚀 ~ file: normalizeSpatial.js:166 ~ allCoordinates:', allCoordinates)
+
+  const validCoordinates = allCoordinates.filter(coord => Array.isArray(coord) && coord.length === 2)
+
+  if (validCoordinates.length === 0) {
+    throw new Error('No valid coordinates found in the GeoJSON object')
+  }
 
   // Separate latitudes and longitudes
-  const lats = allCoordinates.map((coord) => coord[1]) // Latitude is the second value
-  const lngs = allCoordinates.map((coord) => coord[0]) // Longitude is the first value
+  // const lngs = allCoordinates.map((coord) => coord[0]) // Longitude is the first value
+  // console.log('🚀 ~ file: normalizeSpatial.js:170 ~ lngs:', lngs)
+  // const lats = allCoordinates.map((coord) => coord[1]) // Latitude is the second value
+
+  const lats = validCoordinates.map(coord => coord[1]) // Latitude is the second value
+  const lngs = validCoordinates.map(coord => coord[0]) // Longitude is the first value
 
   // Calculate bounds
   const north = Math.max(...lats)
@@ -460,6 +471,8 @@ const normalizeSpatial = (metadata) => {
         highQuality: true
       })
     }
+
+    console.log('🚀 ~ file: normalizeSpatial.js:466 ~ json:', json)
 
     return json
   }
