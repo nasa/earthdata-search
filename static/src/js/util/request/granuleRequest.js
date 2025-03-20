@@ -9,7 +9,7 @@ import { granuleRequestPermittedCmrKeys } from '../../../../../sharedConstants/p
 
 import { getTemporal } from '../../../../../sharedUtils/edscDate'
 
-import normalizeGranuleSpatial from '../map/normalizeGranuleSpatial'
+import normalizeGranuleSpatial from '../map/normalizeSpatial'
 
 /**
  * Request object for granule specific requests

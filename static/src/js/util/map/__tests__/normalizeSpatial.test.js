@@ -1,4 +1,4 @@
-import normalizeGranuleSpatial from '../normalizeGranuleSpatial'
+import normalizeGranuleSpatial from '../normalizeSpatial'
 
 describe('normalizeGranuleSpatial', () => {
   describe('when the granule has no spatial information', () => {

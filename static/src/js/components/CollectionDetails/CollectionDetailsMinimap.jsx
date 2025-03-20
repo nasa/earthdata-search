@@ -6,7 +6,8 @@ import React, {
 import { PropTypes } from 'prop-types'
 
 import { getColorByIndex } from '../../util/colors'
-import normalizeCollectionSpatial from '../../util/map/normalizeCollectionSpatial'
+// Import normalizeCollectionSpatial from '../../util/map/normalizeCollectionSpatial'
+import normalizeSpatial from '../../util/map/normalizeSpatial'
 import { pointRadius } from '../../util/map/styles'
 // Import CollectionDetailsFeatureGroup from './CollectionDetailsFeatureGroup'
 
@@ -17,9 +18,8 @@ import './CollectionDetailsMinimap.scss'
 import MapThumb from '../../../assets/images/plate_carree_earth_scaled@2x.png'
 
 export const CollectionDetailsMinimap = ({ metadata }) => {
-  // TODO how to get at this cleaner use index 0 make this color better?
   const canvasHighlightColor = getColorByIndex(0)
-  const collectionGeoFeatures = normalizeCollectionSpatial(metadata)
+  const collectionGeoFeatures = normalizeSpatial(metadata)
   console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:23 ~ collectionGeoFeatures:', collectionGeoFeatures)
   console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:21 ~ metadata:', metadata)
   const allShapes = {
@@ -100,43 +100,81 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
       ctx.fillStyle = canvasHighlightColor
       ctx.lineWidth = 2
       ctx.globalAlpha = 0.6
-      console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:127 ~ collectionAllShapes:', collectionAllShapes)
 
       collectionAllShapes.features.forEach((feature) => {
         console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:121 ~ feature:', feature)
 
         ctx.beginPath()
-
         const geoJsonFeatureType = feature.geometry.type
 
-        feature.geometry.coordinates[0].forEach((coordinate, index) => {
-          console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:105 ~ index:', index)
-          const [lon, lat] = coordinate
-          console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:106 ~ lon:', lon)
-          const x = (lon + 180) * (width / 360) // Convert longitude to x
-          console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:108 ~ x:', x)
-          const y = (90 - lat) * (height / 180) // Convert latitude to y
+        console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:110 ~ geoJsonFeatureType:', geoJsonFeatureType)
+        feature.geometry.coordinates.forEach((coordinate) => {
+          console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:143 ~ coordinate:', coordinate)
+          // Draw points
+          if (geoJsonFeatureType === 'MultiPoint') {
+            const [lng, lat] = coordinate
+            const x = (lng + 180) * (width / 360) // Convert longitude to x
+            const y = (90 - lat) * (height / 180) // Convert latitude to y
 
-          if (index === 0) {
-            if (geoJsonFeatureType === 'MultiPoint') {
-              ctx.moveTo(x, y)
-              ctx.arc(x, y, pointRadius * scale, 0, 2 * Math.PI)
-              // Ctx.moveTo((x * scale) + (pointRadius * scale), y * scale)
+            ctx.arc(x, y, pointRadius * scale, 0, 2 * Math.PI)
+            ctx.closePath()
+            ctx.stroke()
+            ctx.fill()
 
-              // ctx.arc(75, 75, 50, 0, Math.PI * 2, true)
-            } else {
-              ctx.moveTo(x, y)
-            }
-            // Ctx.arc(x * scale, y * scale, pointRadius * scale, 0, 2 * Math.PI)
-          } else {
-            ctx.lineTo(x, y)
-            console.log('else is being called')
+            return
           }
-        })
 
-        ctx.closePath()
-        ctx.stroke()
-        ctx.fill()
+          coordinate.forEach((points, pointsIndex) => {
+            console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:115 ~ points:', points)
+            if (geoJsonFeatureType === 'MultiLineString') {
+              const [lng, lat] = points
+              console.log('🚀 ~ file: foo.jsx:124 ~ lat:', lat)
+              console.log('🚀 ~ file: foo.jsx:124 ~ lng:', lng)
+              const x = (lng + 180) * (width / 360) // Convert longitude to x
+              const y = (90 - lat) * (height / 180) // Convert latitude to y
+
+              if (pointsIndex === 0) {
+                ctx.moveTo(x, y)
+              } else {
+                ctx.lineTo(x, y)
+              }
+
+              // Ctx.arc(75, 75, 50, 0, Math.PI * 2, true)
+            } else {
+              // The shape is a polygon (bounding boxes are converted to polygons)
+              points.forEach(([lng, lat], index) => {
+                console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:115 ~ lng:', lng)
+                console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:115 ~ lat:', lat)
+                const x = (lng + 180) * (width / 360) // Convert longitude to x
+                console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:108 ~ x:', x)
+                const y = (90 - lat) * (height / 180) // Convert latitude to y
+
+                // If it is the first point move the canvas to start drawing over the map
+                if (index === 0) {
+                  if (geoJsonFeatureType === 'MultiPoint') {
+                    ctx.moveTo(x, y)
+                    ctx.arc(x, y, pointRadius * scale, 0, 2 * Math.PI)
+                    // Ctx.moveTo((x * scale) + (pointRadius * scale), y * scale)
+
+                  // ctx.arc(75, 75, 50, 0, Math.PI * 2, true)
+                  } else {
+                    ctx.moveTo(x, y)
+                    console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:127 ~ y:', y)
+                    console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:127 ~ x:', x)
+                  }
+                // Ctx.arc(x * scale, y * scale, pointRadius * scale, 0, 2 * Math.PI)
+                } else {
+                  ctx.lineTo(x, y)
+                  console.log('else is being called')
+                }
+              })
+            }
+          })
+
+          ctx.closePath()
+          ctx.stroke()
+          ctx.fill()
+        })
       })
     }
   }, [imgSrc, collectionAllShapes])

@@ -148,14 +148,53 @@ const makeClockwise = (polygon) => {
   return polygon
 }
 
-// Normalize granule spatial (boxes, lines, points, polygons) to polygons for simplified handling on the map
-const normalizeGranuleSpatial = (granule) => {
+/**
+ * Calculates the bounds of a GeoJSON MultiPolygon and checks if the bounds are small
+ * @param {Object} geoJson - GeoJSON object with MultiPolygon geometry
+ * @returns {Object} An object containing the bounds and a flag indicating if the bounds are small
+ */
+const getGeoJsonBoundsAndCheckSize = (geoJson) => {
+  if (!geoJson || geoJson.type !== 'Feature' || geoJson.geometry.type !== 'MultiPolygon') {
+    throw new Error('Invalid GeoJSON object')
+  }
+
+  // Extract coordinates from the MultiPolygon
+  const { coordinates } = geoJson.geometry
+
+  // Flatten the coordinates to a single array of [lng, lat] pairs
+  const allCoordinates = coordinates.flat(3)
+
+  // Separate latitudes and longitudes
+  const lats = allCoordinates.map((coord) => coord[1]) // Latitude is the second value
+  const lngs = allCoordinates.map((coord) => coord[0]) // Longitude is the first value
+
+  // Calculate bounds
+  const north = Math.max(...lats)
+  const south = Math.min(...lats)
+  const east = Math.max(...lngs)
+  const west = Math.min(...lngs)
+
+  // Check if the bounds are small
+  const isSmall = (north - south) < 0.5 && (east - west) < 0.5
+
+  return {
+    north,
+    south,
+    east,
+    west,
+    isSmall
+  }
+}
+
+// Normalize spatial metadata (boxes, lines, points, polygons) to polygons for simplified handling on the map
+const normalizeSpatial = (metadata) => {
   const {
     boxes,
     lines,
     points,
     polygons
-  } = granule
+  } = metadata
+  console.log('🚀 ~ file: normalizeSpatial.js:159 ~ metadata:', metadata)
 
   // If the granule has a box, return a MultiPolygon
   if (boxes) {
@@ -166,7 +205,6 @@ const normalizeGranuleSpatial = (granule) => {
       const [swLat, swLon, neLat, neLon] = box.split(' ').map((coord) => parseFloat(coord))
 
       // Create a polygon from the bounding box
-      // TODO make sure this is counter-clockwise
       const polygonCoordinates = makeCounterClockwise([
         [swLon, swLat],
         [neLon, swLat],
@@ -181,6 +219,7 @@ const normalizeGranuleSpatial = (granule) => {
       multiPolygons.push(interpolatedPolygon)
     })
 
+    console.log('🚀 ~ file: normalizeSpatial.js:182 ~ multiPolygons:', multiPolygons)
     // Return the bounding box as GeoJSON MultiPolygon
 
     return {
@@ -231,6 +270,24 @@ const normalizeGranuleSpatial = (granule) => {
       })
     }
 
+    const testLines = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'MultiLineString',
+        coordinates: [
+          [
+            [5, 0],
+            [15, 10]
+          ],
+          [
+            [6, 1],
+            [16, 11]
+          ]
+        ]
+      }
+    }
+
     return json
   }
 
@@ -248,6 +305,20 @@ const normalizeGranuleSpatial = (granule) => {
 
       multiPoints.push(pointCoordinates)
     })
+
+    console.log('🚀 ~ file: normalizeSpatial.js:250 ~ multiPoints:', multiPoints)
+
+    const testPoints = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'MultiPoint',
+        coordinates: [
+          [10, 0],
+          [11, 1]
+        ]
+      }
+    }
 
     // Return the point as GeoJSON MultiPoint
     return {
@@ -396,4 +467,4 @@ const normalizeGranuleSpatial = (granule) => {
   return null
 }
 
-export default normalizeGranuleSpatial
+export default normalizeSpatial

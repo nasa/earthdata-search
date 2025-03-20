@@ -1,7 +1,7 @@
 import { greatCircleArc } from 'ol/geom/flat/geodesic'
 import { dividePolygon } from '@edsc/geo-utils'
 import { simplify } from '@turf/turf'
-import { interpolatePolygon, divideLine } from './normalizeGranuleSpatial'
+import { interpolatePolygon, divideLine } from './normalizeSpatial'
 
 // Import { crsProjections } from './crs'
 
