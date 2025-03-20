@@ -17,6 +17,7 @@ export const buildSpatial = (json) => {
 
   const spatialList = []
 
+  // TODO investigate why the camel cases don't work for gploygons and lines
   const { horizontalSpatialDomain } = spatialExtent
   if (horizontalSpatialDomain) {
     const { geometry } = horizontalSpatialDomain

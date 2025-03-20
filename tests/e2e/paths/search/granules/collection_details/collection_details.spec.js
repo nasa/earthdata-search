@@ -412,14 +412,14 @@ test.describe('Path /search/granules/collection-details', () => {
   })
 
   // TODO enable these back in with EDSC-4424
-  test.describe.skip('When collection has spatial', () => {
+  test.describe('When collection has spatial', () => {
     test('displays the spatial on the minimap', async ({ page }) => {
       const conceptId = 'C1996546500-GHRC_DAAC'
       const cmrHits = 8180
       const granuleHits = 6338
 
       // The minim-map is coming from `static/src/assets/images/plate_carree_earth_scaled@2x.png` stored locally in the component
-      await page.route('**/*.{/^(?!.*plate_carree_earth_scaled@2x.png$).*.png$/,jpg,jpeg}', (route) => route.abort())
+      // await page.route('**/*.{/^(?!.*plate_carree_earth_scaled@2x.png$).*.png$/,jpg,jpeg}', (route) => route.abort())
 
       await page.route(/collections.json/, async (route) => {
         const query = route.request().postData()
@@ -468,7 +468,21 @@ test.describe('Path /search/granules/collection-details', () => {
       await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 
       // 1 Rectangle should be drawn on the mini map
-      await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
+      // await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
+      // Scroll so that the minimap and spatial label are visible
+      await page.getByText(/Bounding Rectangle:/).scrollIntoViewIfNeeded()
+      // await page.getByTestId('collection-details-minimap').screenshot({ path: 'screenshot.png' })
+      const collectionMiniMap = await page.getByTestId('collection-details-minimap')
+      await expect(collectionMiniMap).toHaveScreenshot('collection-details-minimap-global-bounding-box-screenshot.png')
+
+      // Await expect(page).toHaveScreenshot('collection-minimap-screenshot.png', {
+      //   clip: {
+      //     x: 1135,
+      //     y: 85,
+      //     width: 252,
+      //     height: 47
+      //   }
+      // })
     })
   })
 })

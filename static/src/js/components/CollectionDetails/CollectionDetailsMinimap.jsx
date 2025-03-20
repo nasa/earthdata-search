@@ -11,8 +11,6 @@ import { pointRadius } from '../../util/map/styles'
 
 import './CollectionDetailsMinimap.scss'
 
-import MapThumb from '../../../assets/images/plate_carree_earth_scaled@2x.png'
-
 export const CollectionDetailsMinimap = ({ metadata }) => {
   const collectionGeoFeatures = []
 
@@ -136,8 +134,6 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
 
   const canvasRef = useRef(null)
   const [collectionAllShapes] = useState(allShapes)
-  console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:63 ~ collectionAllShapes:', collectionAllShapes)
-  const imgSrc = MapThumb
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -149,35 +145,32 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
     // Set canvas dimensions
     // TODO size this based on the window size
     const width = 360
-    const height = 200
+    const height = 180
     console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:67 ~ height:', height)
     canvas.width = width
     canvas.height = height
 
     // Load the basemap image
-    const img = new Image()
-    img.src = imgSrc
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, width, height) // Draw the world map as the base layer
 
-      // Draw GeoJSON on top of the image
-      ctx.strokeStyle = canvasHighlightColor
-      ctx.fillStyle = canvasHighlightColor
-      ctx.lineWidth = 2
-      ctx.globalAlpha = 0.6
+    // ctx.drawImage(img, 0, 0, width, height) // Draw the world map as the base layer
 
-      drawFeatures(ctx, collectionAllShapes, {
-        fill: false,
-        scale: 2,
-        width,
-        height
-      }) // Draw GeoJSON on top of the image
-    }
-  }, [imgSrc, collectionAllShapes])
+    // Draw GeoJSON on top of the image
+    ctx.strokeStyle = canvasHighlightColor
+    ctx.fillStyle = canvasHighlightColor
+    ctx.lineWidth = 2
+    ctx.globalAlpha = 0.6
+
+    drawFeatures(ctx, collectionAllShapes, {
+      fill: false,
+      scale: 2,
+      width,
+      height
+    }) // Draw GeoJSON on top of the image
+  })
 
   return (
     <div className="collection-details-minimap">
-      <canvas ref={canvasRef} className="minimap" />
+      <canvas ref={canvasRef} className="collection-details-minimap__minimap" data-testid="collection-details-minimap" />
     </div>
   )
 }
