@@ -120,8 +120,11 @@ const drawGranuleBackgroundsAndImagery = ({
       // If there are multiple granules being drawn, calculate the difference between the union
       // of the previous granules and the current granule geometry
       if (index > 0) {
-        // GranuleDiff = difference(featureCollection([granulesUnion, turfMultiPolygon]))
-        granuleDiff = difference(featureCollection([turfMultiPolygon, granulesUnion]))
+        try {
+          granuleDiff = difference(featureCollection([turfMultiPolygon, granulesUnion]))
+        } catch (error) {
+          console.log('Error calculating difference between granules', error)
+        }
 
         // If granuleDiff is null, that means the current granule is completely contained
         // within the union of previous granules. We don't need to draw the granule imagery
@@ -133,7 +136,14 @@ const drawGranuleBackgroundsAndImagery = ({
         granulesUnion = turfMultiPolygon
       } else {
         // Create a union of all the granule geometries added so far
-        granulesUnion = union(featureCollection([granulesUnion, turfMultiPolygon]))
+        const previousGranulesUnion = granulesUnion
+        try {
+          granulesUnion = union(featureCollection([granulesUnion, turfMultiPolygon]))
+        } catch (error) {
+          console.log('Error calculating union between granules', error)
+
+          granulesUnion = previousGranulesUnion
+        }
       }
 
       // For each granule, add a new layer to the map
