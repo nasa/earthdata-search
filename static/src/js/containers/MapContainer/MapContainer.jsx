@@ -443,7 +443,6 @@ export const MapContainer = (props) => {
 
       const gibsTime = gibsData.layerPeriod?.toLowerCase() === 'subdaily' ? timeStart : timeStart.substring(0, 10)
       granulesToDraw.push({
-        producerGranuleId: granule.producerGranuleId,
         backgroundStyle: granule.backgroundStyle,
         collectionId,
         formattedTemporal,
@@ -467,7 +466,6 @@ export const MapContainer = (props) => {
       colorMap={colorMap}
       focusedCollectionId={focusedCollectionId}
       focusedGranuleId={focusedGranuleId}
-      gibsData={gibsData}
       granules={granulesToDraw}
       granulesKey={granulesKey}
       isFocusedCollectionPage={isFocusedCollectionPage}

@@ -2,6 +2,9 @@ import WMTSTileGrid from 'ol/tilegrid/WMTS'
 
 import projections from './projections'
 
+// For each projection and resolution, returns the number of zoom levels available
+// This data was derived from wv.json. Within that json, `sources.GIBS:geographic.matrixsSets.16km.resolutions`
+// contains the number of zoom levels available for the 16km resolution in the geographic projection (3).
 const resolutionMap = {
   [projections.geographic]: {
     '16km': 3,
@@ -25,6 +28,11 @@ const resolutionMap = {
   }
 }
 
+/**
+ * Returns a WMTSTileGrid for the given projection and resolution
+ * @param {String} projectionCode The projection code for the current map projection
+ * @param {String} resolution The resolution of the imagery to be displayed
+ */
 export const getTileGrid = (projectionCode, resolution) => {
   // Setting the correct resolutions ensures that we don't attempt to load tiles that don't exist
   // for the current projection and zoom level.

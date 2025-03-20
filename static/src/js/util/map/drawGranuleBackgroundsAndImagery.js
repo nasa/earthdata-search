@@ -4,6 +4,7 @@ import { unByKey } from 'ol/Observable'
 import { WMTS } from 'ol/source'
 import GeoJSON from 'ol/format/GeoJSON'
 import LRUCache from 'ol/structs/LRUCache'
+import RenderEventType from 'ol/render/EventType'
 import TileLayer from 'ol/layer/Tile'
 
 import {
@@ -18,7 +19,7 @@ import { getTileGrid } from './getTileGrid'
 import drawOutline from './drawOutline'
 import projections from './projections'
 
-const tileCache = new LRUCache(100)
+const tileLayerCache = new LRUCache(100)
 const imageryCache = new LRUCache(100)
 
 // On the prerender event of the imagery tile layer, clip the imagery to the granule geometry
@@ -48,10 +49,14 @@ const onTileLayerPostrender = (event) => {
 }
 
 /**
- * Draws the outlines of the granules on the map with the `background` style applied
- * @param {Array} granulesMetadata Granule metadata to draw
- * @param {Object} vectorSource OL Vector Source to draw the granules on
- * @param {String} projectionCode Projection Code for the current map projection
+ * Draws the outlines of the granules on the map with the `background` style applied. If gibsData is provided,
+ * it will also draw the granule imagery on the map.
+ * @param {Object} params
+ * @param {Object} params.granuleImageryLayerGroup OL Layer Group to add the granule imagery layers to
+ * @param {Array} params.granulesMetadata Granule metadata to draw
+ * @param {Object} params.map OL Map to draw the granules on
+ * @param {Object} params.vectorSource OL Vector Source to draw the granules on
+ * @param {String} params.projectionCode Projection Code for the current map projection
  */
 const drawGranuleBackgroundsAndImagery = ({
   granuleImageryLayerGroup,
@@ -111,7 +116,17 @@ const drawGranuleBackgroundsAndImagery = ({
       // If the granule has no GIBS data, return without drawing imagery
       if (!gibsData) return
 
-      // Get the difference between the union and the current granule geometry
+      // There are a few things we need to keep in mind when drawing the granule imagery:
+      // 1. The granule imagery is served by GIBS in tiles, but we only show the imagery that is contained
+      //    within the granule's geometry. The do this we clip the imagery to the granule geometry.
+      // 2. If there are multiple granules being drawn, we calculate the union of all the previously drawn
+      //    granules. We then calculate the difference between that union and the current granule geometry.
+      //    This is so we can clip the imagery to only the visible portion the current granule geometry.
+      //    This ensures that if the granule has transparent areas, the transparent portions should show
+      //    the base layer, and not a granule that might be drawn below.
+      // 3. If the current granule is completely contained within the union of previous granules, we don't
+      //    need to draw the granule imagery.
+
       const geometry = backgroundFeature.getGeometry()
       const turfMultiPolygon = multiPolygon(geometry.getCoordinates())
 
@@ -131,6 +146,7 @@ const drawGranuleBackgroundsAndImagery = ({
         if (!granuleDiff) return
       }
 
+      // Calculate the union of all the granules added so far
       if (index === 0) {
         // If this is the first granule, the union will be the current granule geometry
         granulesUnion = turfMultiPolygon
@@ -145,10 +161,6 @@ const drawGranuleBackgroundsAndImagery = ({
           granulesUnion = previousGranulesUnion
         }
       }
-
-      // For each granule, add a new layer to the map
-      // The layer should be a Tile layer with the gibs imagery
-      // in a prerender of that layer lets clip the imagery to the granule geometry
 
       // `granuleDiff` is a turf geometry, but we need it to be an openlayers geometry
       // for clipping the imagery
@@ -171,15 +183,15 @@ const drawGranuleBackgroundsAndImagery = ({
       const cacheKey = `${granuleId}-${gibsData.product}-${gibsData.time}-${projectionCode}`
 
       let imageryLayer
-      if (tileCache.containsKey(cacheKey)) {
-        imageryLayer = tileCache.get(cacheKey)
+      if (tileLayerCache.containsKey(cacheKey)) {
+        imageryLayer = tileLayerCache.get(cacheKey)
 
-        // `UnByKey` removes the event listeners by the key provided
+        // `unByKey` removes the event listeners by the key provided
         const { prerenderKey } = imageryLayer.getProperties()
 
         // Remove the existing event listeners for the cached layer
         unByKey(prerenderKey)
-        imageryLayer.un('postrender', onTileLayerPostrender)
+        imageryLayer.un(RenderEventType.POSTRENDER, onTileLayerPostrender)
       } else {
         imageryLayer = new TileLayer({
           className: `granule-imagery-${granuleId}`,
@@ -217,10 +229,18 @@ const drawGranuleBackgroundsAndImagery = ({
                   if (!imageryCache.containsKey(tileCacheKey)) {
                     imageryCache.set(tileCacheKey, image)
                   }
+
+                  // Set the image to the tile
+                  tile.setImage(image)
                 }
 
-                // Set the image to the tile
-                tile.setImage(image)
+                image.onerror = () => {
+                  // If the image errored it was most likely because that tile does not exist.
+                  // Cache the reponse so we don't try to load it again
+                  if (!imageryCache.containsKey(tileCacheKey)) {
+                    imageryCache.set(tileCacheKey, image)
+                  }
+                }
               }
             },
             url: gibsData.url,
@@ -229,15 +249,18 @@ const drawGranuleBackgroundsAndImagery = ({
         })
 
         // Save the layer to the cache
-        tileCache.set(cacheKey, imageryLayer)
+        tileLayerCache.set(cacheKey, imageryLayer)
       }
 
       // Set the opacity of the layer provided by the gibsData
       imageryLayer.setOpacity(gibsData.opacity)
 
       // Add the event listeners to the layer
-      const prerenderKey = imageryLayer.on('prerender', onTileLayerPrerender.bind(null, map, geometryToClip))
-      imageryLayer.on('postrender', onTileLayerPostrender)
+      const prerenderKey = imageryLayer.on(
+        RenderEventType.PRERENDER,
+        onTileLayerPrerender.bind(null, map, geometryToClip)
+      )
+      imageryLayer.on(RenderEventType.POSTRENDER, onTileLayerPostrender)
 
       // Save the event listener key to the layer properties, for turning off the listener later
       imageryLayer.set('prerenderKey', prerenderKey)
