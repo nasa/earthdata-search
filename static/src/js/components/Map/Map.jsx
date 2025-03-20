@@ -30,9 +30,9 @@ import {
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import { LegendControl } from '../Legend/LegendControl'
-import ProjectionSwitcherControl from './ProjectionSwitcherControl'
-import ZoomControl from './ZoomControl'
+import MapControls from './MapControls'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
@@ -158,7 +158,6 @@ const createView = ({
   return view
 }
 
-// TODO Might want to move these out of this file at some point
 const scaleMetric = new ScaleLine({
   className: 'edsc-map-scale-metric',
   units: 'metric'
@@ -169,19 +168,6 @@ const scaleImperial = new ScaleLine({
 })
 const attribution = new Attribution({
   collapsible: false
-})
-
-const zoomControl = (projectionCode) => new ZoomControl({
-  className: 'edsc-map-zoom',
-  homeLocation: {
-    center: projectionConfigs[projectionCode].center,
-    zoom: projectionConfigs[projectionCode].zoom,
-    rotation: 0
-  },
-  PlusIcon: <EDSCIcon size="0.75rem" icon={Plus} />,
-  MinusIcon: <EDSCIcon size="0.75rem" icon={Minus} />,
-  HomeIcon: <EDSCIcon size="0.75rem" icon={FaHome} />,
-  duration: 250
 })
 
 // Clear the focused granule source
@@ -242,10 +228,6 @@ const Map = ({
         attribution,
         scaleMetric,
         scaleImperial,
-        zoomControl(projectionCode),
-        new ProjectionSwitcherControl({
-          onChangeProjection
-        }),
         new LegendControl({
           colorMap,
           isFocusedCollectionPage
@@ -275,6 +257,17 @@ const Map = ({
       })
     })
     mapRef.current = map
+
+    const mapControls = new MapControls({
+      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
+      map,
+      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
+      onChangeProjection,
+      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
+      projectionCode
+    })
+
+    map.addControl(mapControls)
 
     const handleMoveEnd = (event) => {
       // When the map is moved we need to call onChangeMap to update Redux
