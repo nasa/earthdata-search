@@ -14,9 +14,10 @@ export const ExternalLink = ({
   innerLink,
   ...rest
 }) => {
-  const classes = classNames([
-    'external-link link--external',
+  const wrapperClasses = classNames([
     {
+      // If this is an inner link, the external link class needs to be added to the wrapping element
+      'external-link': innerLink,
       'link--light': variant === 'light'
     },
     className
@@ -25,8 +26,8 @@ export const ExternalLink = ({
   // If the link has a parent link this is needed to avoid DOM warnings while keeping styling
   if (innerLink) {
     return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-      <span className={classes} {...rest}>
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      <span className={wrapperClasses} {...rest}>
         {children}
         <EDSCIcon
           className="external-link__icon"
@@ -38,15 +39,17 @@ export const ExternalLink = ({
   }
 
   return (
-  // eslint-disable-next-line react/jsx-props-no-spreading
-    <a className={classes} target="_blank" rel="noopener noreferrer" {...rest}>
-      {children}
-      <EDSCIcon
-        className="external-link__icon"
-        icon={ArrowLineDiagonal}
-        size="0.875em"
-      />
-    </a>
+    <span className={wrapperClasses}>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <a className="link link--external" target="_blank" rel="noopener noreferrer" {...rest}>
+        {children}
+        <EDSCIcon
+          className="external-link__icon"
+          icon={ArrowLineDiagonal}
+          size="0.875em"
+        />
+      </a>
+    </span>
   )
 }
 

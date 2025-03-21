@@ -117,10 +117,10 @@ export const CollectionDetailsCloudAccessInstance = ({
         }
         <dt>AWS S3 Credentials</dt>
         <dd className="direct-distribution-information__links--horizontal">
-          <ExternalLink href={s3CredentialsApiEndpoint} className="collection-details-cloud-access-direct-distribution-information__link">
+          <ExternalLink href={s3CredentialsApiEndpoint} className="link--separated collection-details-cloud-access-direct-distribution-information__link">
             Get AWS S3 Credentials
           </ExternalLink>
-          <ExternalLink href={s3CredentialsApiDocumentationUrl} className="link--separated collection-details-cloud-access-direct-distribution-information__link">
+          <ExternalLink href={s3CredentialsApiDocumentationUrl} className="collection-details-cloud-access-direct-distribution-information__link">
             Documentation
           </ExternalLink>
         </dd>
