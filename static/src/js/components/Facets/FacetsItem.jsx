@@ -145,7 +145,7 @@ class FacetsItem extends Component {
               )
             }
           </div>
-          { (!applied || !children) && (facet.count !== undefined) && <span className="facets-item__total">{commafy(facet.count)}</span> }
+          { (!applied || !children) && (facet.count != null) && <span className="facets-item__total">{commafy(facet.count)}</span> }
         </label>
         { children && <ul className="facets-list">{children}</ul> }
       </li>
