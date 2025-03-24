@@ -1,12 +1,58 @@
+import { centroid as turfCentroid } from '@turf/turf'
 import { pointRadius } from './styles'
+import { getPolygonArea } from './normalizeSpatial'
+
+const getCanvasPointsFromLatLong = ([lat, lng], options) => {
+  const x = (lng + 180) * (options.canvasWidth / 360) // Convert longitude to x
+  const y = (90 - lat) * (options.canvasHeight / 180) // Convert latitude to y
+
+  return {
+    x,
+    y
+  }
+}
+
+export const drawMultiPointFeature = (ctx, feature, options) => {
+  feature.geometry.coordinates.forEach(([lng, lat]) => {
+    const { x, y } = getCanvasPointsFromLatLong([lat, lng], options)
+    ctx.arc(x, y, pointRadius * options.scale, 0, 2 * Math.PI)
+    ctx.closePath()
+    ctx.stroke()
+    ctx.fill()
+  })
+}
+
+/**
+ * Converts square meters to square kilometers
+ * @param {number} squareMeters - The area in square meters
+ * @returns {number} The area in square kilometers
+ */
+const squareMetersToKilometers = (squareMeters) => squareMeters / 1000000
 
 export const drawMultiPolygonFeature = (ctx, feature, options) => {
-  // The shape is a polygon (bounding boxes are converted to polygons)
+  const polygonArea = squareMetersToKilometers(getPolygonArea(feature))
+  // If a polygon is too small it won't draw well on a map draw it as an arc
+  if (polygonArea < 1000) {
+    const centroidFeature = turfCentroid(feature)
+    // Get the centroid of the polygon convert to a multi-point and draw
+    const multiPointCentroidFeature = {
+      type: 'Feature',
+      properties: {},
+      geometry: {
+        type: 'MultiPoint',
+        coordinates: [centroidFeature.geometry.coordinates]
+      }
+    }
+
+    drawMultiPointFeature(ctx, multiPointCentroidFeature, options)
+
+    return
+  }
+
   feature.geometry.coordinates.forEach((coordinate) => {
     coordinate.forEach((points) => {
       points.forEach(([lng, lat], index) => {
-        const x = (lng + 180) * (options.canvasWidth / 360) // Convert longitude to x
-        const y = (90 - lat) * (options.canvasHeight / 180) // Convert latitude to y
+        const { x, y } = getCanvasPointsFromLatLong([lat, lng], options)
 
         // If it is the first point move the canvas to start drawing over the map
         if (index === 0) {
@@ -23,24 +69,10 @@ export const drawMultiPolygonFeature = (ctx, feature, options) => {
   })
 }
 
-export const drawMultiPointFeature = (ctx, feature, options) => {
-  feature.geometry.coordinates.forEach(([lng, lat]) => {
-    const x = (lng + 180) * (options.canvasWidth / 360) // Convert longitude to x
-    const y = (90 - lat) * (options.canvasHeight / 180) // Convert latitude to y
-
-    ctx.arc(x, y, pointRadius * options.scale, 0, 2 * Math.PI)
-    ctx.closePath()
-    ctx.stroke()
-    ctx.fill()
-  })
-}
-
-// TODO try to combine this and polygons
 export const drawMultiLineFeature = (ctx, feature, options) => {
   feature.geometry.coordinates.forEach((coordinate) => {
     coordinate.forEach(([lng, lat], index) => {
-      const x = (lng + 180) * (options.canvasWidth / 360) // Convert longitude to x
-      const y = (90 - lat) * (options.canvasHeight / 180) // Convert latitude to y
+      const { x, y } = getCanvasPointsFromLatLong([lat, lng], options)
 
       if (index === 0) {
         ctx.moveTo(x, y)

@@ -2,6 +2,7 @@ import { greatCircleArc } from 'ol/geom/flat/geodesic'
 import { distance } from 'ol/coordinate'
 import { dividePolygon } from '@edsc/geo-utils'
 import {
+  area as turfArea,
   booleanContains,
   polygon as turfPolygon,
   simplify,
@@ -13,6 +14,13 @@ import { crsProjections } from './crs'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 const { mapPointsSimplifyThreshold } = getApplicationConfig()
+
+/**
+ * Converts square meters to square kilometers
+ * @param {number} squareMeters - The area in square meters
+ * @returns {number} The area in square kilometers
+ */
+export const squareMetersToKilometers = (squareMeters) => squareMeters / 1000000
 
 // This function adds points to the polygon so that the polygon follows the curvature of the Earth
 const interpolatePolygon = (coordinates) => {
@@ -148,53 +156,10 @@ const makeClockwise = (polygon) => {
   return polygon
 }
 
-/**
- * Calculates the bounds of a GeoJSON MultiPolygon and checks if the bounds are small
- * @param {Object} geoJson - GeoJSON object with MultiPolygon geometry
- * @returns {Object} An object containing the bounds and a flag indicating if the bounds are small
- */
-export const getGeoJsonBoundsAndCheckSize = (geoJson) => {
-  if (!geoJson || geoJson.type !== 'Feature' || geoJson.geometry.type !== 'MultiPolygon') {
-    throw new Error('Invalid GeoJSON object')
-  }
+export const getPolygonArea = (polygon) => {
+  const area = turfArea(polygon)
 
-  // Extract coordinates from the MultiPolygon
-  const { coordinates } = geoJson.geometry
-
-  // Flatten the coordinates to a single array of [lng, lat] pairs
-  const allCoordinates = coordinates.flat(3)
-  console.log('🚀 ~ file: normalizeSpatial.js:166 ~ allCoordinates:', allCoordinates)
-
-  const validCoordinates = allCoordinates.filter(coord => Array.isArray(coord) && coord.length === 2)
-
-  if (validCoordinates.length === 0) {
-    throw new Error('No valid coordinates found in the GeoJSON object')
-  }
-
-  // Separate latitudes and longitudes
-  // const lngs = allCoordinates.map((coord) => coord[0]) // Longitude is the first value
-  // console.log('🚀 ~ file: normalizeSpatial.js:170 ~ lngs:', lngs)
-  // const lats = allCoordinates.map((coord) => coord[1]) // Latitude is the second value
-
-  const lats = validCoordinates.map(coord => coord[1]) // Latitude is the second value
-  const lngs = validCoordinates.map(coord => coord[0]) // Longitude is the first value
-
-  // Calculate bounds
-  const north = Math.max(...lats)
-  const south = Math.min(...lats)
-  const east = Math.max(...lngs)
-  const west = Math.min(...lngs)
-
-  // Check if the bounds are small
-  const isSmall = (north - south) < 0.5 && (east - west) < 0.5
-
-  return {
-    north,
-    south,
-    east,
-    west,
-    isSmall
-  }
+  return area
 }
 
 // Normalize spatial metadata (boxes, lines, points, polygons) to polygons for simplified handling on the map
