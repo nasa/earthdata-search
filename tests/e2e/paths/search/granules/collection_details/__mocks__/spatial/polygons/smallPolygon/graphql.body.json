@@ -12,9 +12,7 @@
         ]
       },
       "associatedDois": null,
-      "boxes": [
-        "-90 -180 90 180"
-      ],
+      "boxes": null,
       "conceptId": "C1996546500-GHRC_DAAC",
       "coordinateSystem": "CARTESIAN",
       "dataCenter": "GHRC_DAAC",
@@ -70,7 +68,11 @@
         "netCDF-4"
       ],
       "points": null,
-      "polygons": null,
+      "polygons": [
+        [
+          "37.1 -76.378 37.1 -76.3 37.106 -76.3 37.106 -76.378 37.1 -76.378"
+        ]
+      ],
       "relatedUrls": [
         {
           "description": "Files may be downloaded directly to your workstation from this link",
@@ -238,14 +240,34 @@
         "horizontalSpatialDomain": {
           "geometry": {
             "coordinateSystem": "CARTESIAN",
-            "boundingRectangles": [
-              {
-                "westBoundingCoordinate": -180,
-                "northBoundingCoordinate": 90,
-                "eastBoundingCoordinate": 180,
-                "southBoundingCoordinate": -90
-              }
-            ]
+            "gpolygons": [
+                                {
+                                    "boundary": {
+                                        "points": [
+                                            {
+                                                "latitude": 37.1,
+                                                "longitude": -76.378
+                                            },
+                                            {
+                                                "latitude": 37.1,
+                                                "longitude": -76.3
+                                            },
+                                            {
+                                                "latitude": 37.106,
+                                                "longitude": -76.3
+                                            },
+                                            {
+                                                "latitude": 37.106,
+                                                "longitude": -76.378
+                                            },
+                                            {
+                                                "latitude": 37.1,
+                                                "longitude": -76.378
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
           }
         },
         "granuleSpatialRepresentation": "CARTESIAN"
