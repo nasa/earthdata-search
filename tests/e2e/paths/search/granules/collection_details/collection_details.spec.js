@@ -7,6 +7,11 @@ import { commafy } from '../../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../../static/src/js/util/pluralize'
 import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json'
 import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json'
+import boxGranulesBody from './__mocks__/spatial/boxes/granules.body.json'
+import linesGranulesBody from './__mocks__/spatial/lines/graphql.body.json'
+import polygonGranulesBody from './__mocks__/spatial/polygons/graphql.body.json'
+import pointSpatialGraphqlBody from './__mocks__/spatial/points/graphql.body.json'
+import pointSpatialGranulesBody from './__mocks__/spatial/points/granules.body.json'
 import assocatedDoisGraphQlBody from './__mocks__/associated_dois/graphql.body.json'
 import collectionsBody from './__mocks__/common/collections.body.json'
 import commonHeaders from './__mocks__/common/common.headers.json'
@@ -413,76 +418,143 @@ test.describe('Path /search/granules/collection-details', () => {
 
   // TODO enable these back in with EDSC-4424
   test.describe('When collection has spatial', () => {
-    test('displays the spatial on the minimap', async ({ page }) => {
-      const conceptId = 'C1996546500-GHRC_DAAC'
-      const cmrHits = 8180
-      const granuleHits = 6338
+    // Bounding box, line, point, and polygon
+    test.describe('with a bounding box', () => {
+      test('displays the box spatial on the minimap', async ({ page }) => {
+        const conceptId = 'C1996546500-GHRC_DAAC'
+        const cmrHits = 8180
+        const granuleHits = 6338
 
-      // The minim-map is coming from `static/src/assets/images/plate_carree_earth_scaled@2x.png` stored locally in the component
-      // await page.route('**/*.{/^(?!.*plate_carree_earth_scaled@2x.png$).*.png$/,jpg,jpeg}', (route) => route.abort())
+        // The minim-map is coming from `static/src/assets/images/plate_carree_earth_scaled@2x.png` stored locally in the component
+        // await page.route('**/*.{/^(?!.*plate_carree_earth_scaled@2x.png$).*.png$/,jpg,jpeg}', (route) => route.abort())
 
-      await page.route(/collections.json/, async (route) => {
-        const query = route.request().postData()
-        expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+        await page.route(/collections.json/, async (route) => {
+          const query = route.request().postData()
+          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
 
-        await route.fulfill({
-          json: collectionsBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': cmrHits.toString()
+          await route.fulfill({
+            json: collectionsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        })
+
+        await page.route(/granules.json/, async (route) => {
+          const query = route.request().postData()
+          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+
+          await route.fulfill({
+            json: boxGranulesBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': granuleHits.toString()
+            }
+          })
+        })
+
+        await page.route(/graphql/, async (route) => {
+          const { query } = JSON.parse(route.request().postData())
+
+          if (query === graphQlGetSubscriptionsQuery) {
+            await route.fulfill({
+              json: getSubscriptionsGraphQlBody,
+              headers: graphQlHeaders
+            })
+          }
+
+          if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+            await route.fulfill({
+              json: reformattingGraphQlBody,
+              headers: graphQlHeaders
+            })
           }
         })
+
+        await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
+
+        // 1 Rectangle should be drawn on the mini map
+        // await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
+        // Scroll so that the minimap and spatial label are visible
+        await page.getByText(/Bounding Rectangle:/).scrollIntoViewIfNeeded()
+        // Await page.getByTestId('collection-details-minimap').screenshot({ path: 'screenshot.png' })
+        const collectionMiniMap = await page.getByTestId('collection-details-minimap')
+        await expect(collectionMiniMap).toHaveScreenshot('collection-details-minimap-global-bounding-box-screenshot.png')
+
+        // Await expect(page).toHaveScreenshot('collection-minimap-screenshot.png', {
+        //   clip: {
+        //     x: 1135,
+        //     y: 85,
+        //     width: 252,
+        //     height: 47
+        //   }
+        // })
       })
+    })
 
-      await page.route(/granules.json/, async (route) => {
-        const query = route.request().postData()
-        expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+    test.describe('with a point', () => {
+      test('displays the point spatial, as a circle around it on the minimap', async ({ page }) => {
+        const conceptId = 'C1996546500-GHRC_DAAC'
+        const cmrHits = 8180
+        const granuleHits = 6338
 
-        await route.fulfill({
-          json: reformattingsGranulesBody,
-          headers: {
-            ...commonHeaders,
-            'cmr-hits': granuleHits.toString()
+        // The minim-map is coming from `static/src/assets/images/plate_carree_earth_scaled@2x.png` stored locally in the component
+        // await page.route('**/*.{/^(?!.*plate_carree_earth_scaled@2x.png$).*.png$/,jpg,jpeg}', (route) => route.abort())
+
+        await page.route(/collections.json/, async (route) => {
+          const query = route.request().postData()
+          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+          await route.fulfill({
+            json: collectionsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        })
+
+        await page.route(/granules.json/, async (route) => {
+          const query = route.request().postData()
+          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+
+          await route.fulfill({
+            json: pointSpatialGranulesBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': granuleHits.toString()
+            }
+          })
+        })
+
+        await page.route(/graphql/, async (route) => {
+          const { query } = JSON.parse(route.request().postData())
+
+          if (query === graphQlGetSubscriptionsQuery) {
+            await route.fulfill({
+              json: getSubscriptionsGraphQlBody,
+              headers: graphQlHeaders
+            })
+          }
+
+          if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+            await route.fulfill({
+              json: pointSpatialGraphqlBody,
+              headers: graphQlHeaders
+            })
           }
         })
+
+        await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
+
+        // 1 Rectangle should be drawn on the mini map
+        // await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
+        // Scroll so that the minimap and spatial label are visible
+        await page.getByText(/Point:/).scrollIntoViewIfNeeded()
+        const collectionMiniMap = await page.getByTestId('collection-details-minimap')
+        await expect(collectionMiniMap).toHaveScreenshot('collection-details-minimap-point-screenshot.png')
       })
-
-      await page.route(/graphql/, async (route) => {
-        const { query } = JSON.parse(route.request().postData())
-
-        if (query === graphQlGetSubscriptionsQuery) {
-          await route.fulfill({
-            json: getSubscriptionsGraphQlBody,
-            headers: graphQlHeaders
-          })
-        }
-
-        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
-          await route.fulfill({
-            json: reformattingGraphQlBody,
-            headers: graphQlHeaders
-          })
-        }
-      })
-
-      await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
-
-      // 1 Rectangle should be drawn on the mini map
-      // await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
-      // Scroll so that the minimap and spatial label are visible
-      await page.getByText(/Bounding Rectangle:/).scrollIntoViewIfNeeded()
-      // await page.getByTestId('collection-details-minimap').screenshot({ path: 'screenshot.png' })
-      const collectionMiniMap = await page.getByTestId('collection-details-minimap')
-      await expect(collectionMiniMap).toHaveScreenshot('collection-details-minimap-global-bounding-box-screenshot.png')
-
-      // Await expect(page).toHaveScreenshot('collection-minimap-screenshot.png', {
-      //   clip: {
-      //     x: 1135,
-      //     y: 85,
-      //     width: 252,
-      //     height: 47
-      //   }
-      // })
     })
   })
 })
