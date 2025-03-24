@@ -2,6 +2,14 @@ import { centroid as turfCentroid } from '@turf/turf'
 import { pointRadius } from './styles'
 import { getPolygonArea } from './normalizeSpatial'
 
+/**
+ * Converts square meters to square kilometers
+ * @param {number} squareMeters - The area in square meters
+ * @returns {number} The area in square kilometers
+ */
+const squareMetersToKilometers = (squareMeters) => squareMeters / 1000000
+
+// Convert lat/lng to canvas points
 const getCanvasPointsFromLatLong = ([lat, lng], options) => {
   const x = (lng + 180) * (options.canvasWidth / 360) // Convert longitude to x
   const y = (90 - lat) * (options.canvasHeight / 180) // Convert latitude to y
@@ -12,6 +20,7 @@ const getCanvasPointsFromLatLong = ([lat, lng], options) => {
   }
 }
 
+// Draw point features on the canvas
 export const drawMultiPointFeature = (ctx, feature, options) => {
   feature.geometry.coordinates.forEach(([lng, lat]) => {
     const { x, y } = getCanvasPointsFromLatLong([lat, lng], options)
@@ -22,13 +31,7 @@ export const drawMultiPointFeature = (ctx, feature, options) => {
   })
 }
 
-/**
- * Converts square meters to square kilometers
- * @param {number} squareMeters - The area in square meters
- * @returns {number} The area in square kilometers
- */
-const squareMetersToKilometers = (squareMeters) => squareMeters / 1000000
-
+// Draw polygon features on the canvas; if the polygon is too small it will draw as a point
 export const drawMultiPolygonFeature = (ctx, feature, options) => {
   const polygonArea = squareMetersToKilometers(getPolygonArea(feature))
   // If a polygon is too small it won't draw well on a map draw it as an arc
@@ -69,6 +72,7 @@ export const drawMultiPolygonFeature = (ctx, feature, options) => {
   })
 }
 
+// Draw line features on the canvas
 export const drawMultiLineFeature = (ctx, feature, options) => {
   feature.geometry.coordinates.forEach((coordinate) => {
     coordinate.forEach(([lng, lat], index) => {
@@ -87,15 +91,15 @@ export const drawMultiLineFeature = (ctx, feature, options) => {
   ctx.fill()
 }
 
+// Pass feature to draw functions for the canvas
 export const drawFeatures = (ctx, allFeatures, options) => {
   allFeatures.features.forEach((feature) => {
     const geoJsonFeatureType = feature.geometry.type
-    console.log('🚀 ~ file: CollectionDetailsMinimap.jsx:85 ~ geoJsonFeatureType:', geoJsonFeatureType)
 
     ctx.beginPath()
-    // TODO draw a marker when the polygon is small
     if (geoJsonFeatureType === 'MultiPolygon') {
       drawMultiPolygonFeature(ctx, feature, options)
+      console.log('fooo bar')
     }
 
     if (geoJsonFeatureType === 'MultiPoint') {

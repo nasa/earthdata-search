@@ -7,11 +7,14 @@ import { commafy } from '../../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../../static/src/js/util/pluralize'
 import reformattingGraphQlBody from './__mocks__/reformattings/graphql.body.json'
 import reformattingsGranulesBody from './__mocks__/reformattings/granules.body.json'
+
+// Spatial data for collection-minimap
 import boxGranulesBody from './__mocks__/spatial/boxes/granules.body.json'
 import linesGraphqlBody from './__mocks__/spatial/lines/graphql.body.json'
 import polygonGraphqlBody from './__mocks__/spatial/polygons/graphql.body.json'
 import smallPolygonGraphqlBody from './__mocks__/spatial/polygons/smallPolygon/graphql.body.json'
 import pointSpatialGraphqlBody from './__mocks__/spatial/points/graphql.body.json'
+
 import assocatedDoisGraphQlBody from './__mocks__/associated_dois/graphql.body.json'
 import collectionsBody from './__mocks__/common/collections.body.json'
 import commonHeaders from './__mocks__/common/common.headers.json'
@@ -425,9 +428,6 @@ test.describe('Path /search/granules/collection-details', () => {
         const cmrHits = 8180
         const granuleHits = 6338
 
-        // The minim-map is coming from `static/src/assets/images/plate_carree_earth_scaled@2x.png` stored locally in the component
-        // await page.route('**/*.{/^(?!.*plate_carree_earth_scaled@2x.png$).*.png$/,jpg,jpeg}', (route) => route.abort())
-
         await page.route(/collections.json/, async (route) => {
           const query = route.request().postData()
           expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
@@ -474,22 +474,9 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 
-        // 1 Rectangle should be drawn on the mini map
-        // await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
-        // Scroll so that the minimap and spatial label are visible
         await page.getByText(/Bounding Rectangle:/).scrollIntoViewIfNeeded()
-        // Await page.getByTestId('collection-details-minimap').screenshot({ path: 'screenshot.png' })
         const collectionMiniMap = await page.getByTestId('collection-details-minimap')
         await expect(collectionMiniMap).toHaveScreenshot('collection-details-minimap-global-bounding-box-screenshot.png')
-
-        // Await expect(page).toHaveScreenshot('collection-minimap-screenshot.png', {
-        //   clip: {
-        //     x: 1135,
-        //     y: 85,
-        //     width: 252,
-        //     height: 47
-        //   }
-        // })
       })
     })
 
@@ -498,9 +485,6 @@ test.describe('Path /search/granules/collection-details', () => {
         const conceptId = 'C1996546500-GHRC_DAAC'
         const cmrHits = 8180
         const granuleHits = 6338
-
-        // The minim-map is coming from `static/src/assets/images/plate_carree_earth_scaled@2x.png` stored locally in the component
-        // await page.route('**/*.{/^(?!.*plate_carree_earth_scaled@2x.png$).*.png$/,jpg,jpeg}', (route) => route.abort())
 
         await page.route(/collections.json/, async (route) => {
           const query = route.request().postData()
@@ -558,7 +542,7 @@ test.describe('Path /search/granules/collection-details', () => {
     })
 
     test.describe('with lines', () => {
-      test('displays the lines spatial  on the minimap', async ({ page }) => {
+      test('displays the lines spatial on the minimap', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
         const cmrHits = 8180
         const granuleHits = 6338
@@ -609,9 +593,6 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
 
-        // 1 Rectangle should be drawn on the mini map
-        // await expect(await page.locator('.collection-details-minimap g path').all()).toHaveLength(1)
-        // Scroll so that the minimap and spatial label are visible
         await page.getByText(/Line:/).scrollIntoViewIfNeeded()
         const collectionMiniMap = await page.getByTestId('collection-details-minimap')
         await expect(collectionMiniMap).toHaveScreenshot('collection-details-minimap-lines-screenshot.png')
