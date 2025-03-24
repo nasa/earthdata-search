@@ -99,7 +99,6 @@ export const drawFeatures = (ctx, allFeatures, options) => {
     ctx.beginPath()
     if (geoJsonFeatureType === 'MultiPolygon') {
       drawMultiPolygonFeature(ctx, feature, options)
-      console.log('fooo bar')
     }
 
     if (geoJsonFeatureType === 'MultiPoint') {

@@ -81,8 +81,6 @@ export const CollectionResultsItem = forwardRef(({
     isDefaultImage,
     versionId
   } = collectionMetadata
-  console.log('🚀 ~ file: CollectionResultsItem.jsx:84 ~ displayOrganization:', displayOrganization)
-
   const [loadingThumbnail, setLoadingThumbnail] = useState(true)
   const { thumbnailSize } = getApplicationConfig()
   const [base64Image, setBase64Image] = useState('')

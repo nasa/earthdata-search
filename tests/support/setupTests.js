@@ -15,7 +15,6 @@ const getImageFileName = (url) => {
   if (url.includes('/static/src/assets/images/')) {
     // eslint-disable-next-line prefer-destructuring
     filename = url.split('images/')[1]
-    console.log('🚀 ~ file: setupTests.js:6✅ ~ url:', url)
   }
 
   return filename
@@ -39,7 +38,6 @@ const saveImage = async (route, page) => {
 const mockImage = async (route) => {
   // Load the image from the file system
   const url = route.request().url()
-  console.log('🚀 ~ file: setupTests.js:40 ~ url:', url)
   const filename = getImageFileName(url)
   const imagePath = path.join('./tests/fixtures/images', filename)
 

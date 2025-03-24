@@ -7,7 +7,6 @@ const drawOutline = ({
   map,
   scale
 }) => {
-  // console.log('🚀 ~ file: drawGranuleOutlines.js:10 ~ geometry:', geometry)
   const geometryType = geometry.getType()
 
   // If the geometry is a point, draw a small circle around the point
@@ -17,8 +16,6 @@ const drawOutline = ({
       const [lng, lat] = point
       // Get the pixel location of the lat/lng
       const pixel = map.getPixelFromCoordinate([lng, lat])
-
-      // Console.log('🚀 ~ file: drawGranuleOutlines.js:64 ~ scale:', scale)
       // Draw the circle around the point
       ctx.moveTo((pixel[0] * scale) + (pointRadius * scale), pixel[1] * scale)
       ctx.arc(pixel[0] * scale, pixel[1] * scale, pointRadius * scale, 0, 2 * Math.PI)
@@ -40,12 +37,9 @@ const drawOutline = ({
     allShapes = geometry.getCoordinates()
   }
 
-  // Console.lohttp://localhost:8080/search/granules/collection-details?p=C1000000726-LARC_ASDC&pg[0][v]=f&q=C1000000726-LARC_ASDC&lat=-19.741068752501544&long=40.57383225114407&zoom=4.648478154374365g('🚀 ~ file: drawGranuleOutlines.js:82 ~ allShapes:', allShapes)
   allShapes.forEach((shape) => {
     shape.forEach((coordinate) => {
       coordinate.forEach(([lng, lat], index) => {
-        // console.log('🚀 ~ file: drawGranuleOutlines.js:57 ~ lng:', lng)
-
         // Get the pixel location of the lat/lng
         const pixel = map.getPixelFromCoordinate([lng, lat])
 
@@ -93,7 +87,6 @@ const drawGranuleOutlines = ({
 
     // Set the globalCompositeOperation to 'destination-over' so new granule outlines
     // are drawn behind existing granule backgrounds. This creates a 'stack' of granules.
-    // TODO do we need this for if there are multuple shapes on the minimap to show?
     ctx.globalCompositeOperation = 'destination-over'
 
     // Get the style value saved in the feature's properties

@@ -1,4 +1,4 @@
-import normalizeGranuleSpatial, { getGeoJsonBoundsAndCheckSize } from '../normalizeSpatial'
+import normalizeGranuleSpatial from '../normalizeSpatial'
 
 describe('normalizeGranuleSpatial', () => {
   describe('when the granule has no spatial information', () => {
@@ -467,48 +467,6 @@ describe('normalizeGranuleSpatial', () => {
             ]
           }
         })
-      })
-    })
-
-    describe('when the bounds of a polygon are small', () => {
-      test.skip('returns the polygons bounds and whether they are small enough to be rounded', () => {
-        const polygonFeature = {
-          type: 'Feature',
-          properties: {},
-          geometry: {
-            type: 'MultiPolygon',
-            coordinates: [
-              [
-                [
-                  [
-                    -76.378,
-                    37.1
-                  ],
-                  [
-                    -76.3,
-                    37.1
-                  ],
-                  [
-                    -76.3,
-                    37.106
-                  ],
-                  [
-                    -76.378,
-                    37.106
-                  ],
-                  [
-                    -76.378,
-                    37.1
-                  ]
-                ]
-              ]
-            ]
-          }
-        }
-
-        const response = getGeoJsonBoundsAndCheckSize(polygonFeature)
-
-        expect(response).toEqual({})
       })
     })
   })
