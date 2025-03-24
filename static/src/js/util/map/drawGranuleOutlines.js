@@ -16,6 +16,7 @@ const drawOutline = ({
       const [lng, lat] = point
       // Get the pixel location of the lat/lng
       const pixel = map.getPixelFromCoordinate([lng, lat])
+
       // Draw the circle around the point
       ctx.moveTo((pixel[0] * scale) + (pointRadius * scale), pixel[1] * scale)
       ctx.arc(pixel[0] * scale, pixel[1] * scale, pointRadius * scale, 0, 2 * Math.PI)

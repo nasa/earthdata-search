@@ -419,7 +419,6 @@ test.describe('Path /search/granules/collection-details', () => {
     })
   })
 
-  // TODO enable these back in with EDSC-4424
   test.describe('When collection has spatial', () => {
     // Bounding box, line, point, and polygon
     test.describe('with a bounding box', () => {
