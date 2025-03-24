@@ -20,7 +20,7 @@ const { mapPointsSimplifyThreshold } = getApplicationConfig()
  * @param {number} squareMeters - The area in square meters
  * @returns {number} The area in square kilometers
  */
-export const squareMetersToKilometers = (squareMeters) => squareMeters / 1000000
+export const squareMetersToSquareKilometers = (squareMeters) => parseInt(squareMeters / 1000000, 10)
 
 // This function adds points to the polygon so that the polygon follows the curvature of the Earth
 const interpolatePolygon = (coordinates) => {
