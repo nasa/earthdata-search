@@ -31,16 +31,18 @@
   }
 
   &--separated {
-    &:before {
+    &:after {
       display: inline-block;
       margin-left: calc(bootstrap.$spacer / 2);
-      padding-left: calc(bootstrap.$spacer / 2);
+      // -0.25rem is used here to remove the extra space between the separator and the link due to
+      // the trailing space added to inline-block elements.
+      padding-left: calc(bootstrap.$spacer  / 2 - 0.25rem);
       content: '|';
       color: transparent;
       border-left: 1px solid variables.$color__carbon--30;
     }
 
-    &:first-child:before {
+    &:last-child:after {
       display: none;
     }
   }
