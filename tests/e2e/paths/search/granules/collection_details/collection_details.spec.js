@@ -13,6 +13,7 @@ import linesGraphqlBody from './__mocks__/spatial/lines/graphql.body.json'
 import polygonGraphqlBody from './__mocks__/spatial/polygons/graphql.body.json'
 import smallPolygonGraphqlBody from './__mocks__/spatial/polygons/smallPolygon/graphql.body.json'
 import pointSpatialGraphqlBody from './__mocks__/spatial/points/graphql.body.json'
+import multiShapeGraphqlBody from './__mocks__/spatial/multi-shapes/graphql.body.json'
 
 import assocatedDoisGraphQlBody from './__mocks__/associated_dois/graphql.body.json'
 import collectionsBody from './__mocks__/common/collections.body.json'
@@ -713,6 +714,68 @@ test.describe('Path /search/granules/collection-details', () => {
           const collectionMiniMap = await page.getByTestId('collection-details-minimap')
           await expect(collectionMiniMap).toHaveScreenshot('collection-details-minimap-small-polygons-screenshot.png')
         })
+      })
+    })
+
+    test.describe('with multiple shape types', () => {
+      test('displays all the shapes on the minimap and the label', async ({ page }) => {
+        const conceptId = 'C1996546500-GHRC_DAAC'
+        const cmrHits = 8180
+        const granuleHits = 6338
+
+        await page.route(/collections.json/, async (route) => {
+          const query = route.request().postData()
+          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+          await route.fulfill({
+            json: collectionsBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': cmrHits.toString()
+            }
+          })
+        })
+
+        await page.route(/granules.json/, async (route) => {
+          const query = route.request().postData()
+          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+
+          await route.fulfill({
+            json: reformattingsGranulesBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': granuleHits.toString()
+            }
+          })
+        })
+
+        await page.route(/graphql/, async (route) => {
+          const { query } = JSON.parse(route.request().postData())
+
+          if (query === graphQlGetSubscriptionsQuery) {
+            await route.fulfill({
+              json: getSubscriptionsGraphQlBody,
+              headers: graphQlHeaders
+            })
+          }
+
+          if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+            await route.fulfill({
+              json: multiShapeGraphqlBody,
+              headers: graphQlHeaders
+            })
+          }
+        })
+
+        await page.goto('/search/granules/collection-details?p=C1996546500-GHRC_DAAC')
+        await page.waitForSelector('.collection-details-minimap')
+
+        // Get the whole element into view but, this has multiple labels
+        await page.getByText(/Line:/).scrollIntoViewIfNeeded()
+        await page.waitForSelector('.collection-details-minimap')
+
+        const collectionMiniMap = await page.getByTestId('collection-details-minimap')
+        await expect(collectionMiniMap).toHaveScreenshot('collection-details-multiple-shapes-screenshot.png')
       })
     })
   })
