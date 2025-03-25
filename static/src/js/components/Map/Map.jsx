@@ -8,11 +8,13 @@ import PropTypes from 'prop-types'
 
 import { altKeyOnly, never } from 'ol/events/condition'
 
+import { createEditingStyle } from 'ol/style/Style'
 import {
   defaults as defaultInteractions,
   DragRotate,
   Draw
 } from 'ol/interaction'
+import { Fill } from 'ol/style'
 import { transform } from 'ol/proj'
 import { View } from 'ol'
 import Attribution from 'ol/control/Attribution'
@@ -46,6 +48,7 @@ import { mapEventTypes } from '../../constants/eventTypes'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
 import { highlightFeature, unhighlightFeature } from '../../util/map/interactions/highlightFeature'
+import { markerDrawingStyle } from '../../util/map/styles'
 import boundingBoxGeometryFunction from '../../util/map/geometryFunctions/boundingBoxGeometryFunction'
 import circleGeometryFunction from '../../util/map/geometryFunctions/circleGeometryFunction'
 import drawFocusedGranule from '../../util/map/drawFocusedGranule'
@@ -311,6 +314,13 @@ const Map = ({
       let geometryFunction
       let type = spatialType
 
+      // Update the polygon fill style to be more transparent.
+      // Bounding box, circle, and polygon all use the polygon style
+      const updatedStyles = createEditingStyle()
+      updatedStyles.Polygon[0].setFill(new Fill({
+        color: 'rgba(255, 255, 255, 0.2)'
+      }))
+
       if (spatialType === spatialTypes.BOUNDING_BOX) {
         // To draw a box use the circle type and a geometry function that creates a polygon
         // of the box
@@ -325,12 +335,18 @@ const Map = ({
         geometryFunction = circleGeometryFunction
       }
 
+      if (spatialType === spatialTypes.POINT) {
+        // Draw the point spatial type as a marker
+        updatedStyles.Point[0] = markerDrawingStyle
+      }
+
       // Add the drawing interaction to the map
       const drawingInteraction = new Draw({
         freehandCondition: never,
         geometryFunction,
         stopClick: true,
-        type
+        type,
+        style: (drawingFeature) => updatedStyles[drawingFeature.getGeometry().getType()]
       })
 
       // This id is used to find the drawing interaction later to remove it

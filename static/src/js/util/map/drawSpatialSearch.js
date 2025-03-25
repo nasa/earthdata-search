@@ -11,7 +11,11 @@ import { splitListOfPoints } from '@edsc/geo-utils'
 import { crsProjections } from './crs'
 import { interpolateBoxPolygon, interpolatePolygon } from './normalizeGranuleSpatial'
 import projections from './projections'
-import { mbrStyle } from './styles'
+import {
+  markerStyle,
+  mbrStyle,
+  spatialSearchStyle
+} from './styles'
 
 /**
  * Draws the current spatial search query on the map
@@ -53,6 +57,8 @@ const drawSpatialSearch = ({
       const points = splitListOfPoints(regionSpatial)
 
       if (selectedRegion && regionSpatial) {
+        let geometry
+
         if (type === 'reach') {
           // Draw a line for the reach
           const lineCoordinates = points.map((point) => {
@@ -68,11 +74,7 @@ const drawSpatialSearch = ({
             crsProjections[projectionCode]
           )
 
-          const feature = new Feature({
-            geometry: lineInProjection
-          })
-
-          vectorSource.addFeature(feature)
+          geometry = lineInProjection
         } else {
           // Draw a polygon for the HUC
           const polygonCoordinates = points.map((point) => {
@@ -88,12 +90,16 @@ const drawSpatialSearch = ({
             crsProjections[projectionCode]
           )
 
-          const feature = new Feature({
-            geometry: polygonInProjection
-          })
-
-          vectorSource.addFeature(feature)
+          geometry = polygonInProjection
         }
+
+        const feature = new Feature({
+          geometry
+        })
+
+        feature.setStyle(spatialSearchStyle)
+
+        vectorSource.addFeature(feature)
       }
     }
   }
@@ -133,6 +139,8 @@ const drawSpatialSearch = ({
       geometry: polygonInProjection
     })
 
+    feature.setStyle(spatialSearchStyle)
+
     vectorSource.addFeature(feature)
   }
 
@@ -149,6 +157,9 @@ const drawSpatialSearch = ({
 
     // Create the feature and add it to the vector source
     const feature = new Feature(circleInProjection)
+
+    feature.setStyle(spatialSearchStyle)
+
     vectorSource.addFeature(feature)
   }
 
@@ -170,6 +181,8 @@ const drawSpatialSearch = ({
     const feature = new Feature({
       geometry: pointInProjection
     })
+
+    feature.setStyle(markerStyle)
 
     vectorSource.addFeature(feature)
   }
@@ -207,6 +220,8 @@ const drawSpatialSearch = ({
     const feature = new Feature({
       geometry: polygonInProjection
     })
+
+    feature.setStyle(spatialSearchStyle)
 
     vectorSource.addFeature(feature)
   }
