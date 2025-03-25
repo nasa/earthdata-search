@@ -63,6 +63,9 @@ class ZoomControl extends Zoom {
 
     // Add the home button to the control bewteen the plus and minus buttons
     element.insertBefore(homeElement, zoomOutElement)
+    element.className = options.className
+
+    this.setMap(options.map)
   }
 
   /**

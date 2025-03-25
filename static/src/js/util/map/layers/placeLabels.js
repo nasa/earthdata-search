@@ -32,7 +32,8 @@ const placeLabels = async ({
       attributions
     }),
     declutter: true,
-    renderMode: 'hybrid'
+    renderMode: 'hybrid',
+    zIndex: 5
   })
 
   // Style the layer according to the placeLabelsStyleUrl, provided by Worldview
