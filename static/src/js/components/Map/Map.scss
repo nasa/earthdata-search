@@ -1,7 +1,29 @@
 @use '../../../css/utils';
 
-.edsc-map-zoom,
-.edsc-map-projection-switcher,
+.edsc-map-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 10;
+  background-color: transparent;
+  right: 0.75rem;
+  bottom: 5.5rem;
+  gap: 1rem;
+
+  button {
+    margin: 0;
+    border-radius: 0;
+
+    &:first-of-type {
+      border-radius: 2px 2px 0 0;
+    }
+
+    &:last-of-type {
+      border-radius: 0 0 2px 2px;
+    }
+  }
+}
+
 .edsc-map-scale-imperial,
 .edsc-map-scale-metric,
 .edsc-map-legend {
@@ -11,6 +33,7 @@
   color: utils.$color__spacesuit-white;
   background-color: utils.$color__carbon--70;
   text-shadow: utils.$shadow__panel-dark;
+  border: none;
 }
 
 .edsc-map-legend {
@@ -30,13 +53,7 @@
   border-left: 2px solid utils.$color__spacesuit-white;
 }
 
-.edsc-map-zoom {
-  bottom: 92px;
-}
-
 .edsc-map-projection-switcher {
-  bottom: 200px;
-
   &__button {
     background-image: url('~Images/projection-sprite.png');
     background-size: 90px 30px;
