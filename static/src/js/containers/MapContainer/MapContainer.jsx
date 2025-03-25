@@ -459,17 +459,24 @@ export const MapContainer = (props) => {
         granule.highlightedStyle = highlightedGranuleStyle(index)
       }
 
-      const gibsTime = gibsData.layerPeriod?.toLowerCase() === 'subdaily' ? timeStart : timeStart.substring(0, 10)
-      granulesToDraw.push({
-        backgroundStyle: granule.backgroundStyle,
-        collectionId,
-        formattedTemporal,
-        gibsData: {
+      let granuleGibsData
+
+      if (gibsTag) {
+        const gibsTime = gibsData.layerPeriod?.toLowerCase() === 'subdaily' ? timeStart : timeStart.substring(0, 10)
+
+        granuleGibsData = {
           ...gibsData,
           opacity: shouldDrawRegularStyle ? 1 : 0.5,
           time: gibsTime,
           url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
-        },
+        }
+      }
+
+      granulesToDraw.push({
+        backgroundStyle: granule.backgroundStyle,
+        collectionId,
+        formattedTemporal,
+        gibsData: granuleGibsData,
         granuleId,
         granuleStyle: granule.granuleStyle,
         highlightedStyle: granule.highlightedStyle,
