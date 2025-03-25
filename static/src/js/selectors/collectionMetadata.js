@@ -37,3 +37,15 @@ export const getFocusedCollectionSubscriptions = createSelector(
     return items
   }
 )
+
+/**
+ * Retrieve tags from Redux pertaining to the focused collection id
+ */
+export const getFocusedCollectionTags = createSelector(
+  [getFocusedCollectionMetadata],
+  (focusedCollectionMetadata) => {
+    const { tags = {} } = focusedCollectionMetadata
+
+    return tags
+  }
+)

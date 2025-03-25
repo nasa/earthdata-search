@@ -1,15 +1,19 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .well {
   width: 100%;
   overflow: hidden;
-  color: $color__black--800;
+  color: utils.$color__carbon--80;
 
   &__main {
-    padding: $spacer*1.5;
+    padding: bootstrap.$spacer*1.5;
   }
 
   &__heading {
     font-weight: 700;
     font-size: 1.5rem;
+    letter-spacing: -0.015rem;
   }
 
   &__introduction {
@@ -17,15 +21,14 @@
 
     a {
       color: inherit;
-      text-decoration: underline;
     }
   }
 
   &__section {
-    margin-bottom: $spacer*1.5;
+    margin-bottom: bootstrap.$spacer*1.5;
   }
 
   &__footer {
-    padding: $spacer*1.5;
+    padding: bootstrap.$spacer*1.5;
   }
 }

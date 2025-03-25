@@ -1,11 +1,14 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .preferences-number-field {
   &__name {
     font-weight: bold;
   }
 
   &__description {
-    margin-bottom: $spacer/2;
-    color: $color__black--400;
+    margin-bottom: calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--60;
     font-size: 0.875rem;
   }
 

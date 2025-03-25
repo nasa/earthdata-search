@@ -7,7 +7,6 @@ import {
 } from '../constants/actionTypes'
 
 import ColorMapRequest from '../util/request/colorMapRequest'
-import actions from './index'
 
 export const setColorMapsErrored = (payload) => ({
   type: ERRORED_COLOR_MAPS,
@@ -44,11 +43,6 @@ export const getColorMap = (payload) => async (dispatch, getState) => {
     })
     .catch((error) => {
       dispatch(setColorMapsErrored({ product }))
-      dispatch(actions.handleError({
-        error,
-        action: 'getColorMap',
-        resource: 'colormaps',
-        requestObject
-      }))
+      console.log(`ColorMap loading has errored with: ${error}`)
     })
 }

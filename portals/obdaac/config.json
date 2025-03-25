@@ -1,7 +1,6 @@
 {
   "features": {
     "advancedSearch": true,
-    "authentication": false,
     "featureFacets": {
       "showAvailableInEarthdataCloud": false,
       "showCustomizable": false,

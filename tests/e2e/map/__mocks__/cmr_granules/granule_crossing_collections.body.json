@@ -1,0 +1,444 @@
+{
+  "feed": {
+    "updated": "2024-11-13T15:05:26.590Z",
+    "id": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=C1258816710-ASDC_DEV*&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "processing_level_id": "2",
+        "cloud_hosted": true,
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": false,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2024-11-13T12:43:34.216Z"
+            }
+          }
+        },
+        "boxes": ["-83 -180 83 180"],
+        "has_combine": false,
+        "time_start": "2020-12-31T00:00:00.000Z",
+        "version_id": "R00",
+        "dataset_id": "Polar Radiant Energy in the Far InfraRed Experiment (PREFIRE) Atmospheric Properties from PREFIRE Satellite 1",
+        "entry_id": "PREFIRE_SAT1_2B-ATM_R00",
+        "has_spatial_subsetting": true,
+        "has_transforms": false,
+        "associations": {
+          "variables": [
+            "V1260023875-ASDC_DEV2",
+            "V1260023873-ASDC_DEV2",
+            "V1260023881-ASDC_DEV2",
+            "V1260023857-ASDC_DEV2",
+            "V1260023971-ASDC_DEV2",
+            "V1260023927-ASDC_DEV2",
+            "V1260023897-ASDC_DEV2",
+            "V1260023961-ASDC_DEV2",
+            "V1260023871-ASDC_DEV2",
+            "V1260023977-ASDC_DEV2",
+            "V1260023957-ASDC_DEV2",
+            "V1260023975-ASDC_DEV2",
+            "V1260023853-ASDC_DEV2",
+            "V1260023938-ASDC_DEV2",
+            "V1260023942-ASDC_DEV2",
+            "V1260023885-ASDC_DEV2",
+            "V1260023935-ASDC_DEV2",
+            "V1260023855-ASDC_DEV2",
+            "V1260023889-ASDC_DEV2",
+            "V1260023945-ASDC_DEV2",
+            "V1260023947-ASDC_DEV2",
+            "V1260023959-ASDC_DEV2",
+            "V1260023969-ASDC_DEV2",
+            "V1260023973-ASDC_DEV2",
+            "V1260023953-ASDC_DEV2",
+            "V1260023883-ASDC_DEV2",
+            "V1260023863-ASDC_DEV2",
+            "V1260023891-ASDC_DEV2",
+            "V1260023940-ASDC_DEV2",
+            "V1260023967-ASDC_DEV2",
+            "V1260023963-ASDC_DEV2",
+            "V1260023861-ASDC_DEV2",
+            "V1260023955-ASDC_DEV2",
+            "V1260023985-ASDC_DEV2",
+            "V1260023879-ASDC_DEV2",
+            "V1260023867-ASDC_DEV2",
+            "V1260023859-ASDC_DEV2",
+            "V1260023906-ASDC_DEV2",
+            "V1260023877-ASDC_DEV2",
+            "V1260023893-ASDC_DEV2",
+            "V1260023951-ASDC_DEV2",
+            "V1260023899-ASDC_DEV2",
+            "V1260023895-ASDC_DEV2",
+            "V1260023965-ASDC_DEV2",
+            "V1260023887-ASDC_DEV2",
+            "V1260023979-ASDC_DEV2",
+            "V1260023869-ASDC_DEV2",
+            "V1260023914-ASDC_DEV2",
+            "V1260023949-ASDC_DEV2",
+            "V1260023981-ASDC_DEV2",
+            "V1260023865-ASDC_DEV2",
+            "V1260023983-ASDC_DEV2"
+          ],
+          "services": ["S1234899453-POCLOUD"]
+        },
+        "has_variables": true,
+        "data_center": "ASDC_DEV2",
+        "short_name": "PREFIRE_SAT1_2B-ATM",
+        "organizations": ["NASA/LARC/SD/ASDC"],
+        "title": "Polar Radiant Energy in the Far InfraRed Experiment (PREFIRE) Atmospheric Properties from PREFIRE Satellite 1",
+        "coordinate_system": "GEODETIC",
+        "summary": "The Polar Radiant Energy in the Far InfraRed Experiment (PREFIRE) Satellite 1 Level 2B Atmospheric Properties contains column water vapor, temperature, pressure, and water vapor profiles, surface temperature, and surface pressure as derived from PREFIRE L1B Radiance data via an optimal estimation retrieval.  Radiance data is collected from the PREFIRE Thermal Infrared Spectrometer (TIRS) aboard one of 2 PREFIRE polar orbiting CubeSats.  TIRS is a push broom spectrometer with 63 channels measuring mid- and far-infrared (FIR) radiation from approximately 5 to 53 µm.  The primary goal of PREFIRE is to fill knowledge gaps in the global energy budget by more accurately characterizing polar emissions, the majority of which are in the FIR.  Data retrieval for this collection started on May 1, 2024 and is ongoing.  Geographic coverage is global with the greatest concentration of data in the polar regions.  This data is available in NetCDF4 format.",
+        "has_granules": true,
+        "service_features": {
+          "harmony": {
+            "has_formats": true,
+            "has_variables": true,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": true
+          },
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {},
+        "id": "C1258816710-ASDC_DEV2",
+        "has_formats": true,
+        "score": 0.5,
+        "consortiums": ["GEOSS"],
+        "original_format": "UMM_JSON",
+        "collection_data_type": "OTHER",
+        "granule_count": 16,
+        "archive_center": "NASA/LARC/SD/ASDC",
+        "has_temporal_subsetting": true,
+        "browse_flag": false,
+        "platforms": ["PREFIRE-SAT1"],
+        "association_details": {
+          "variables": [
+            {
+              "concept_id": "V1260023875-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023873-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023881-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023857-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023971-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023927-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023897-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023961-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023871-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023977-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023957-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023975-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023853-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023938-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023942-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023885-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023935-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023855-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023889-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023945-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023947-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023959-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023969-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023973-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023953-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023883-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023863-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023891-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023940-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023967-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023963-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023861-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023955-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023985-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023879-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023867-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023859-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023906-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023877-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023893-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023951-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023899-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023895-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023965-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023887-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023979-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023869-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023914-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023949-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023981-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023865-ASDC_DEV2"
+            },
+            {
+              "concept_id": "V1260023983-ASDC_DEV2"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S1234899453-POCLOUD"
+            }
+          ]
+        },
+        "online_access_flag": false
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Atmosphere",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1258816710-ASDC_DEV*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Atmosphere"
+              },
+              "has_children": true
+            },
+            {
+              "title": "Spectral/Engineering",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1258816710-ASDC_DEV*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Space-based Platforms",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1258816710-ASDC_DEV*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platforms_h%5B0%5D%5Bbasis%5D=Space-based+Platforms"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "TIRS",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&instrument_h%5B%5D=TIRS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1258816710-ASDC_DEV*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "NetCDF",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&granule_data_format_h%5B%5D=NetCDF&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1258816710-ASDC_DEV*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Atmospheric Science Data Center (ASDC)",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=Atmospheric+Science+Data+Center+%28ASDC%29&keyword=C1258816710-ASDC_DEV*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Projects",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "PREFIRE",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=C1258816710-ASDC_DEV*&project_h%5B%5D=PREFIRE&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "2 - Geophys. Variables, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.uat.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&processing_level_id_h%5B%5D=2+-+Geophys.+Variables%2C+Sensor+Coordinates&keyword=C1258816710-ASDC_DEV*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,8 +1,10 @@
+@use '../../../css/utils';
+
 .contact-info-form {
   border-radius: 5px;
-  padding: 30px;
-  border-color: #e3e3e3;
-  color: #333333;
+  padding: 0;
+  border-color: utils.$color__carbon--10;
+  color: utils.$color__carbon--80;
 
   &__list {
     list-style: none;

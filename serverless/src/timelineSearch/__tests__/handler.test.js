@@ -22,7 +22,13 @@ describe('timelineSearch', () => {
     const event = {
       body: JSON.stringify({
         requestId: 'asdf-1234-qwer-5678',
-        params: {}
+        params: {
+          bounding_box: ['-78.27539,38.03269,-75.90234,39.75445'],
+          concept_id: ['C10000-EDSC'],
+          end_date: '2023-12-08T13:00:00.000Z',
+          interval: 'minute',
+          start_date: '2023-12-06T01:00:00.000Z'
+        }
       })
     }
 
@@ -33,7 +39,7 @@ describe('timelineSearch', () => {
       jwtToken: 'mockJwt',
       earthdataEnvironment: 'prod',
       path: '/search/granules/timeline',
-      params: '',
+      params: 'end_date=2023-12-08T13:00:00.000Z&interval=minute&start_date=2023-12-06T01:00:00.000Z&bounding_box[]=-78.27539,38.03269,-75.90234,39.75445&concept_id[]=C10000-EDSC',
       requestId: 'asdf-1234-qwer-5678'
     })
   })

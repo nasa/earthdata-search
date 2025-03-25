@@ -812,50 +812,10 @@ export const updateProps = {
     isOpenSearch: false,
     services: {
       count: 0,
-      items: null
+      items: []
     },
     shortName: 'MOD13Q1',
     tags: {
-      'edsc.extra.gibs': {
-        data: [
-          {
-            geo_resolution: '250m',
-            format: 'png',
-            antarctic: false,
-            group: 'overlays',
-            arctic_resolution: null,
-            geo: true,
-            source: 'Terra / MODIS',
-            arctic: false,
-            title: 'Vegetation Index (L3, 16-Day)',
-            resolution: '250m',
-            antarctic_resolution: null,
-            product: 'MODIS_Terra_L3_NDVI_16Day',
-            maxNativeZoom: 5,
-            match: {
-              time_start: '>=2000-03-05T00:00:00Z'
-            }
-          },
-          {
-            geo_resolution: '250m',
-            format: 'png',
-            antarctic: false,
-            group: 'overlays',
-            arctic_resolution: null,
-            geo: true,
-            source: 'Terra / MODIS',
-            arctic: false,
-            title: 'Enhanced Vegetation Index (L3, 16-Day)',
-            resolution: '250m',
-            antarctic_resolution: null,
-            product: 'MODIS_Terra_L3_EVI_16Day',
-            maxNativeZoom: 5,
-            match: {
-              time_start: '>=2000-03-05T00:00:00Z'
-            }
-          }
-        ]
-      },
       'edsc.extra.subset_service.esi': {
         data: [
           'S1568897222-LPDAAC_ECS'
@@ -902,6 +862,8 @@ export const updateProps = {
             arctic: false,
             title: 'Enhanced Vegetation Index (L3, 16-Day)',
             antarctic_resolution: null,
+            layerPeriod: 'Daily',
+            period: 'daily',
             product: 'MODIS_Terra_L3_EVI_16Day',
             match: {
               time_start: '>=2000-03-05T00:00:00Z'
@@ -947,6 +909,8 @@ export const updateProps = {
             arctic: false,
             title: 'Vegetation Index (L3, 16-Day)',
             antarctic_resolution: null,
+            layerPeriod: 'Daily',
+            period: 'daily',
             product: 'MODIS_Terra_L3_NDVI_16Day',
             match: {
               time_start: '>=2000-03-05T00:00:00Z'
@@ -983,7 +947,7 @@ export const updateProps = {
     title: 'MODIS/Terra Vegetation Indices 16-Day L3 Global 250m SIN Grid V006',
     variables: {
       count: 0,
-      items: null
+      items: []
     },
     versionId: '006',
     gibsLayers: 'Geographic',
@@ -1329,6 +1293,115 @@ export const updateProps = {
 
   },
   projection: 'epsg4326'
+}
+
+export const updatePropsSubdaily = {
+  ...updateProps,
+  metadata: {
+    ...updateProps.metadata,
+    tags: {
+      ...updateProps.metadata.tags,
+      'edsc.extra.serverless.gibs': {
+        ...updateProps.metadata.tags['edsc.extra.serverless.gibs'],
+        data: [
+          {
+            format: 'png',
+            antarctic: false,
+            geographic: true,
+            group: 'overlays',
+            geographic_resolution: '250m',
+            geographic_tile_matrix_limits: {
+              '250m': {
+                0: {
+                  matrixWidth: 2,
+                  matrixHeight: 2
+                },
+                1: {
+                  matrixWidth: 4,
+                  matrixHeight: 4
+                },
+                2: {
+                  matrixWidth: 8,
+                  matrixHeight: 8
+                },
+                3: {
+                  matrixWidth: 16,
+                  matrixHeight: 16
+                },
+                4: {
+                  matrixWidth: 32,
+                  matrixHeight: 32
+                },
+                5: {
+                  matrixWidth: 64,
+                  matrixHeight: 64
+                }
+              }
+            },
+            arctic_resolution: null,
+            source: 'Terra / MODIS',
+            arctic: false,
+            title: 'Enhanced Vegetation Index (L3, 16-Day)',
+            antarctic_resolution: null,
+            layerPeriod: 'Subdaily',
+            period: 'subdaily',
+            product: 'MODIS_Terra_L3_EVI_16Day',
+            match: {
+              time_start: '>=2000-03-05T00:00:00Z'
+            },
+            resolution: '250m'
+          },
+          {
+            format: 'png',
+            antarctic: false,
+            geographic: true,
+            group: 'overlays',
+            geographic_resolution: '250m',
+            geographic_tile_matrix_limits: {
+              '250m': {
+                0: {
+                  matrixWidth: 2,
+                  matrixHeight: 2
+                },
+                1: {
+                  matrixWidth: 4,
+                  matrixHeight: 4
+                },
+                2: {
+                  matrixWidth: 8,
+                  matrixHeight: 8
+                },
+                3: {
+                  matrixWidth: 16,
+                  matrixHeight: 16
+                },
+                4: {
+                  matrixWidth: 32,
+                  matrixHeight: 32
+                },
+                5: {
+                  matrixWidth: 64,
+                  matrixHeight: 64
+                }
+              }
+            },
+            arctic_resolution: null,
+            source: 'Terra / MODIS',
+            arctic: false,
+            title: 'Vegetation Index (L3, 16-Day)',
+            antarctic_resolution: null,
+            layerPeriod: 'Subdaily',
+            period: 'subdaily',
+            product: 'MODIS_Terra_L3_NDVI_16Day',
+            match: {
+              time_start: '>=2000-03-05T00:00:00Z'
+            },
+            resolution: '250m'
+          }
+        ]
+      }
+    }
+  }
 }
 
 export const pathsWithHolesResult = [[{

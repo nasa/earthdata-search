@@ -1,6 +1,8 @@
+@use '../../../css/utils';
+
 .advanced-search-form {
   &__label {
-    color: $color__black--500;
+    color: utils.$color__carbon--50;
     font-size: 0.925rem;
     font-weight: 700;
   }

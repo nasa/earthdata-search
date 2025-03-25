@@ -1,9 +1,9 @@
 import {
-  SET_ADMIN_METRICS_RETRIEVALS,
-  SET_ADMIN_METRICS_RETRIEVALS_LOADING,
-  SET_ADMIN_METRICS_RETRIEVALS_LOADED,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
-  UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE
+  SET_ADMIN_RETRIEVALS_METRICS,
+  SET_ADMIN_RETRIEVALS_METRICS_LOADING,
+  SET_ADMIN_RETRIEVALS_METRICS_LOADED,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE,
+  UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE
 } from '../../../constants/actionTypes'
 
 import adminRetrievalsMetricsReducer from '../retrievalsMetrics'
@@ -26,10 +26,10 @@ describe('INITIAL_STATE', () => {
   })
 })
 
-describe('SET_ADMIN_METRICS_RETRIEVALS_LOADED', () => {
+describe('SET_ADMIN_RETRIEVALS_METRICS_LOADED', () => {
   test('returns the correct state', () => {
     const action = {
-      type: SET_ADMIN_METRICS_RETRIEVALS_LOADED
+      type: SET_ADMIN_RETRIEVALS_METRICS_LOADED
     }
 
     const expectedState = {
@@ -42,10 +42,10 @@ describe('SET_ADMIN_METRICS_RETRIEVALS_LOADED', () => {
   })
 })
 
-describe('SET_ADMIN_METRICS_RETRIEVALS_LOADING', () => {
+describe('SET_ADMIN_RETRIEVALS_METRICS_LOADING', () => {
   test('returns the correct state', () => {
     const action = {
-      type: SET_ADMIN_METRICS_RETRIEVALS_LOADING
+      type: SET_ADMIN_RETRIEVALS_METRICS_LOADING
     }
 
     const expectedState = {
@@ -89,7 +89,7 @@ describe('SET_ADMIN_RETRIEVALS', () => {
       ]
     }
     const action = {
-      type: SET_ADMIN_METRICS_RETRIEVALS,
+      type: SET_ADMIN_RETRIEVALS_METRICS,
       payload
     }
 
@@ -129,12 +129,12 @@ describe('SET_ADMIN_RETRIEVALS', () => {
   })
 })
 
-describe('UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE', () => {
+describe('UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE', () => {
   test('returns the correct state', () => {
     const payload = '2022-09-28 20:32:08.666525'
 
     const action = {
-      type: UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE,
+      type: UPDATE_ADMIN_RETRIEVALS_METRICS_START_DATE,
       payload
     }
 
@@ -147,12 +147,12 @@ describe('UPDATE_ADMIN_METRICS_RETRIEVALS_START_DATE', () => {
   })
 })
 
-describe('UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE', () => {
+describe('UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE', () => {
   test('returns the correct state', () => {
     const payload = '2023-09-28 20:32:08.666525'
 
     const action = {
-      type: UPDATE_ADMIN_METRICS_RETRIEVALS_END_DATE,
+      type: UPDATE_ADMIN_RETRIEVALS_METRICS_END_DATE,
       payload
     }
 

@@ -1,0 +1,655 @@
+{
+  "data": {
+    "collection": {
+      "abstract": "The RSS SSMIS Ocean Product Grids Daily from DMSP F16 netCDF dataset is part of the collection of Special Sensor Microwave/Imager (SSM/I) and Special Sensor Microwave Imager Sounder (SSMIS) data products produced as part of NASA's MEaSUREs Program. Remote Sensing Systems generates SSM/I and SSMIS binary data products using a unified, physically based algorithm to simultaneously retrieve ocean wind speed, water vapor, cloud water, and rain rate. The SSMIS data have been carefully intercalibrated to the brightness temperature level of the previous SSM/I and therefore extend this important time series of ocean winds, vapor, cloud and rain values. This algorithm is a product of 20 years of refinements, improvements, and verifications. The Global Hydrology Resource Center has reformatted the binary data into a netCDF data product for each temporal group for each satellite. The netCDF SSMI/SSMIS collection will be available for F16 daily.",
+      "archiveAndDistributionInformation": {
+        "fileDistributionInformation": [
+          {
+            "formatType": "Native",
+            "fees": "0.0",
+            "format": "netCDF-4"
+          }
+        ]
+      },
+      "associatedDois": null,
+      "boxes": [
+        "-90 -180 90 180"
+      ],
+      "conceptId": "C1996546500-GHRC_DAAC",
+      "coordinateSystem": "CARTESIAN",
+      "dataCenter": "GHRC_DAAC",
+      "dataCenters": [
+        {
+          "roles": [
+            "ARCHIVER"
+          ],
+          "shortName": "NASA/MSFC/GHRC"
+        },
+        {
+          "roles": [
+            "ARCHIVER"
+          ],
+          "shortName": "Global Hydrology Resource Center, Marshall Space Flight Center, NASA",
+          "contactInformation": {
+            "contactMechanisms": [
+              {
+                "type": "Telephone",
+                "value": "+1 256-961-7932"
+              },
+              {
+                "type": "Fax",
+                "value": "+1 256-824-5149"
+              },
+              {
+                "type": "Email",
+                "value": "support-ghrc@earthdata.nasa.gov"
+              }
+            ],
+            "addresses": [
+              {
+                "streetAddresses": [
+                  "320 Sparkman Drive"
+                ],
+                "city": "Huntsville",
+                "stateProvince": "Alabama",
+                "country": "USA",
+                "postalCode": "35805"
+              }
+            ]
+          }
+        }
+      ],
+      "directDistributionInformation": null,
+      "doi": {
+        "missingReason": "Unknown",
+        "explanation": "It is unknown if this record has a DOI."
+      },
+      "hasGranules": true,
+      "lines": null,
+      "nativeDataFormats": [
+        "netCDF-4"
+      ],
+      "points": null,
+      "polygons": null,
+      "relatedUrls": [
+        {
+          "description": "Files may be downloaded directly to your workstation from this link",
+          "urlContentType": "DistributionURL",
+          "type": "GET DATA",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/data/"
+        },
+        {
+          "description": "Sample browse image",
+          "urlContentType": "VisualizationURL",
+          "type": "GET RELATED VISUALIZATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/browse/2008/f16_ssmis_20080101v7_A_CW.png"
+        },
+        {
+          "description": "Sample browse image",
+          "urlContentType": "VisualizationURL",
+          "type": "GET RELATED VISUALIZATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/browse/2008/f16_ssmis_20080101v7_A_WS.png"
+        },
+        {
+          "description": "Sample browse image",
+          "urlContentType": "VisualizationURL",
+          "type": "GET RELATED VISUALIZATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/browse/2008/f16_ssmis_20080101v7_A_WV.png"
+        },
+        {
+          "description": "Sample browse image",
+          "urlContentType": "VisualizationURL",
+          "type": "GET RELATED VISUALIZATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/browse/2008/f16_ssmis_20080101v7_A_RR.png"
+        },
+        {
+          "description": "GHRC at UAH - SSM/I and SSMIS Data in NetCDF User's Guide",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "GENERAL DOCUMENTATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/SSMI_Data_in_NetCDF.docx"
+        },
+        {
+          "description": "Digital Object Identifier for a collection of related datasets",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "url": "http://dx.doi.org/10.5067/MEASURES/SSMI-SSMIS/DATA301"
+        },
+        {
+          "description": "The guide document contains detailed information about the dataset",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "GENERAL DOCUMENTATION",
+          "url": "http://ghrc.nsstc.nasa.gov/uso/ds_docs/ssmi_netcdf/ssmi_ssmis_dataset.html"
+        },
+        {
+          "description": "SSM/I Rain Retrievals Within an Unified All-Weather Ocean Algorithm",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "PI DOCUMENTATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/rain.pdf"
+        },
+        {
+          "description": "Description of Remote Sensing Systems Version-7 Geophysical Retrievals",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "PI DOCUMENTATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/Hilburn_V7_Poster_AMS_SatMet_2010_Annapolis.pdf"
+        },
+        {
+          "description": "A Well Calibrated Ocean Algorithm for SSM/I",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "PI DOCUMENTATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ssmi.pdf"
+        },
+        {
+          "description": "OPeNDAP server dataset access",
+          "urlContentType": "DistributionURL",
+          "type": "USE SERVICE API",
+          "subtype": "OPENDAP DATA",
+          "url": "https://ghrc.nsstc.nasa.gov/opendap/ssmis/f16/daily/data/"
+        },
+        {
+          "description": "AMSR Ocean Algorithm documentation supplement",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "ALGORITHM DOCUMENTATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2_Supplement_1.pdf"
+        },
+        {
+          "description": "SSM/I Version-7 Calibration Report",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "ALGORITHM DOCUMENTATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/2012_Wentz_011012_Version-7_SSMI_Calibration.pdf"
+        },
+        {
+          "description": "AMSR Ocean Algorithm documentation",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "ALGORITHM DOCUMENTATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/AMSR_Ocean_Algorithm_Version_2.pdf"
+        },
+        {
+          "description": "netCDF read software",
+          "urlContentType": "DistributionURL",
+          "type": "DOWNLOAD SOFTWARE",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/doc/ssmi_netcdf/ReadNetCDF.c"
+        },
+        {
+          "description": "N/A",
+          "urlContentType": "VisualizationURL",
+          "type": "GET RELATED VISUALIZATION",
+          "url": "https://ghrc.nsstc.nasa.gov/pub/ssmis/f16/daily/browse/"
+        },
+        {
+          "description": "Instructions for citing GHRC data",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "GENERAL DOCUMENTATION",
+          "url": "https://ghrc.nsstc.nasa.gov/home/about-ghrc/citing-ghrc-daac-data"
+        }
+      ],
+      "scienceKeywords": [
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "Spectral/Engineering",
+          "term": "Precipitation",
+          "variableLevel1": "Precipitation Rate"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "Oceans",
+          "term": "Ocean Winds",
+          "variableLevel1": "Surface Winds"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "Atmosphere",
+          "term": "Precipitation",
+          "variableLevel1": "Liquid Precipitation",
+          "variableLevel2": "Rain"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "Atmosphere",
+          "term": "Atmospheric Winds",
+          "variableLevel1": "Surface Winds"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "Atmosphere",
+          "term": "Clouds",
+          "variableLevel1": "Cloud Microphysics",
+          "variableLevel2": "Cloud Liquid Water/Ice"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "Atmosphere",
+          "term": "Atmospheric Water Vapor",
+          "variableLevel1": "Water Vapor Indicators",
+          "variableLevel2": "Water Vapor"
+        }
+      ],
+      "shortName": "rssmif16d",
+      "spatialExtent": {
+        "spatialCoverageType": "HORIZONTAL",
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "coordinateSystem": "CARTESIAN",
+            "boundingRectangles": [
+              {
+                "westBoundingCoordinate": -180,
+                "northBoundingCoordinate": 90,
+                "eastBoundingCoordinate": 180,
+                "southBoundingCoordinate": -90
+              }
+            ]
+          }
+        },
+        "granuleSpatialRepresentation": "CARTESIAN"
+      },
+      "tags": {
+        "edsc.extra.serverless.gibs": {
+          "data": [
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "DMSP-F16 / SSMIS",
+              "arctic": false,
+              "title": "Cloud Liquid Water Over Oceans (Ascending, Local PM)",
+              "updated_at": "2021-06-08T12:00:15.587Z",
+              "antarctic_resolution": null,
+              "product": "SSMI_DMSP_F16_Cloud_Liquid_Water_Over_Oceans_Ascending",
+              "match": {
+                "time_start": ">=2003-10-26T00:00:00Z"
+              }
+            },
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "DMSP-F16 / SSMIS",
+              "arctic": false,
+              "title": "Cloud Liquid Water Over Oceans (Descending, Local AM)",
+              "updated_at": "2021-06-08T12:00:15.587Z",
+              "antarctic_resolution": null,
+              "product": "SSMI_DMSP_F16_Cloud_Liquid_Water_Over_Oceans_Descending",
+              "match": {
+                "time_start": ">=2003-10-26T00:00:00Z"
+              }
+            },
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "DMSP-F16 / SSMIS",
+              "arctic": false,
+              "title": "Rain Rate Over Oceans (Ascending, Local PM)",
+              "updated_at": "2021-06-08T12:00:15.587Z",
+              "antarctic_resolution": null,
+              "product": "SSMI_DMSP_F16_Rain_Rate_Over_Oceans_Ascending",
+              "match": {
+                "time_start": ">=2003-10-26T00:00:00Z"
+              }
+            },
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "DMSP-F16 / SSMIS",
+              "arctic": false,
+              "title": "Rain Rate Over Oceans (Descending, Local AM)",
+              "updated_at": "2021-06-08T12:00:15.587Z",
+              "antarctic_resolution": null,
+              "product": "SSMI_DMSP_F16_Rain_Rate_Over_Oceans_Descending",
+              "match": {
+                "time_start": ">=2003-10-26T00:00:00Z"
+              }
+            },
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "DMSP-F16 / SSMIS",
+              "arctic": false,
+              "title": "Water Vapor Over Oceans (Ascending, Local PM)",
+              "updated_at": "2021-06-08T12:00:15.587Z",
+              "antarctic_resolution": null,
+              "product": "SSMI_DMSP_F16_Water_Vapor_Over_Oceans_Ascending",
+              "match": {
+                "time_start": ">=2003-10-26T00:00:00Z"
+              }
+            },
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "DMSP-F16 / SSMIS",
+              "arctic": false,
+              "title": "Water Vapor Over Oceans (Descending, Local AM)",
+              "updated_at": "2021-06-08T12:00:15.587Z",
+              "antarctic_resolution": null,
+              "product": "SSMI_DMSP_F16_Water_Vapor_Over_Oceans_Descending",
+              "match": {
+                "time_start": ">=2003-10-26T00:00:00Z"
+              }
+            },
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "DMSP-F16 / SSMIS",
+              "arctic": false,
+              "title": "Surface Wind Speed Over Oceans (Ascending, Local PM)",
+              "updated_at": "2021-06-08T12:00:15.587Z",
+              "antarctic_resolution": null,
+              "product": "SSMI_DMSP_F16_Wind_Speed_Over_Oceans_Ascending",
+              "match": {
+                "time_start": ">=2003-10-26T00:00:00Z"
+              }
+            },
+            {
+              "format": "png",
+              "antarctic": false,
+              "geographic": true,
+              "group": "overlays",
+              "geographic_resolution": "2km",
+              "arctic_resolution": null,
+              "source": "DMSP-F16 / SSMIS",
+              "arctic": false,
+              "title": "Surface Wind Speed Over Oceans (Descending, Local AM)",
+              "updated_at": "2021-06-08T12:00:15.587Z",
+              "antarctic_resolution": null,
+              "product": "SSMI_DMSP_F16_Wind_Speed_Over_Oceans_Descending",
+              "match": {
+                "time_start": ">=2003-10-26T00:00:00Z"
+              }
+            }
+          ]
+        },
+        "edsc.extra.serverless.collection_capabilities": {
+          "data": {
+            "cloud_cover": false,
+            "day_night_flag": false,
+            "granule_online_access_flag": true,
+            "orbit_calculated_spatial_domains": false,
+            "updated_at": "2021-06-08T12:14:04.569Z"
+          }
+        },
+        "edsc.extra.serverless.subset_service.opendap": {
+          "data": {
+            "updated_at": "2021-06-08T12:00:37.847Z",
+            "id": "S2023593455-GHRC_DAAC",
+            "type": "OPeNDAP"
+          }
+        }
+      },
+      "temporalExtents": [
+        {
+          "endsAtPresentFlag": false,
+          "rangeDateTimes": [
+            {
+              "beginningDateTime": "2003-10-26T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "tilingIdentificationSystems": null,
+      "title": "RSS SSMIS OCEAN PRODUCT GRIDS DAILY FROM DMSP F16 NETCDF V7",
+      "versionId": "7",
+      "services": {
+        "count": 1,
+        "items": [
+          {
+            "conceptId": "S2023593455-GHRC_DAAC",
+            "longName": "GHRC Earthdata Cloud OPeNDAP",
+            "name": "GHRC_Cloud_OPeNDAP",
+            "type": "OPeNDAP",
+            "url": {
+              "urlValue": "https://opendap.earthdata.nasa.gov",
+              "description": "the main access point"
+            },
+            "serviceOptions": {
+              "supportedReformattings": [
+                {
+                  "supportedInputFormat": "NETCDF-4",
+                  "supportedOutputFormats": [
+                    "ASCII",
+                    "CSV",
+                    "NETCDF-3",
+                    "NETCDF-4"
+                  ]
+                },
+                {
+                  "supportedInputFormat": "HDF5",
+                  "supportedOutputFormats": [
+                    "ASCII",
+                    "CSV",
+                    "NETCDF-3",
+                    "NETCDF-4"
+                  ]
+                }
+              ],
+              "subset": {
+                "spatialSubset": {
+                  "boundingBox": {
+                    "allowMultipleValues": false
+                  }
+                },
+                "temporalSubset": {
+                  "allowMultipleValues": false
+                },
+                "variableSubset": {
+                  "allowMultipleValues": true
+                }
+              }
+            },
+            "supportedOutputProjections": null,
+            "supportedReformattings": [
+              {
+                "supportedInputFormat": "NETCDF-4",
+                "supportedOutputFormats": [
+                  "ASCII",
+                  "CSV",
+                  "NETCDF-3",
+                  "NETCDF-4"
+                ]
+              },
+              {
+                "supportedInputFormat": "HDF5",
+                "supportedOutputFormats": [
+                  "ASCII",
+                  "CSV",
+                  "NETCDF-3",
+                  "NETCDF-4"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "granules": {
+        "count": 6338,
+        "items": [
+          {
+            "conceptId": "G1999209074-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999206160-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999203980-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999209075-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999203933-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999206315-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999206304-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999209513-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999208549-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999208551-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999209531-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999209530-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999209519-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999208563-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999205894-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999208086-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999209524-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999209528-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999209535-GHRC_DAAC",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G1999208375-GHRC_DAAC",
+            "onlineAccessFlag": true
+          }
+        ]
+      },
+      "subscriptions": {
+        "count": 0,
+        "items": []
+      },
+      "variables": {
+        "count": 8,
+        "items": [
+          {
+            "conceptId": "V2022771597-GHRC_DAAC",
+            "definition": "Atmosphere Cloud Liquid Water Content in units of None",
+            "longName": "Atmosphere Cloud Liquid Water Content",
+            "name": "atmosphere_cloud_liquid_water_content",
+            "nativeId": "uvg_C1996546500-GHRC_DAAC_atmosphere_cloud_liquid_water_content",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V2022771594-GHRC_DAAC",
+            "definition": "Atmosphere Water Vapor Content in units of None",
+            "longName": "Atmosphere Water Vapor Content",
+            "name": "atmosphere_water_vapor_content",
+            "nativeId": "uvg_C1996546500-GHRC_DAAC_atmosphere_water_vapor_content",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V2022771584-GHRC_DAAC",
+            "definition": "Latitude in units of None",
+            "longName": "Latitude",
+            "name": "latitude",
+            "nativeId": "uvg_C1996546500-GHRC_DAAC_latitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V2022771583-GHRC_DAAC",
+            "definition": "Longitude in units of None",
+            "longName": "Longitude",
+            "name": "longitude",
+            "nativeId": "uvg_C1996546500-GHRC_DAAC_longitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V2022771596-GHRC_DAAC",
+            "definition": "Rainfall Rate in units of None",
+            "longName": "Rainfall Rate",
+            "name": "rainfall_rate",
+            "nativeId": "uvg_C1996546500-GHRC_DAAC_rainfall_rate",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V2022771588-GHRC_DAAC",
+            "definition": "Sst Dtime in units of None",
+            "longName": "Sst Dtime",
+            "name": "sst_dtime",
+            "nativeId": "uvg_C1996546500-GHRC_DAAC_sst_dtime",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V2022771587-GHRC_DAAC",
+            "definition": "Time in units of None",
+            "longName": "Time",
+            "name": "time",
+            "nativeId": "uvg_C1996546500-GHRC_DAAC_time",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V2022771592-GHRC_DAAC",
+            "definition": "Wind Speed in units of None",
+            "longName": "Wind Speed",
+            "name": "wind_speed",
+            "nativeId": "uvg_C1996546500-GHRC_DAAC_wind_speed",
+            "scienceKeywords": null
+          }
+        ]
+      }
+    }
+  }
+}

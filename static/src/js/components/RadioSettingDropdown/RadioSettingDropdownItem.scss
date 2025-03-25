@@ -1,5 +1,8 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .radio-setting-dropdown-item {
-  padding: $spacer/4 $spacer/2;
+  padding: calc(bootstrap.$spacer / 4) calc(bootstrap.$spacer / 2);
   font-size: 0.75rem;
 
   &--in-progress {
@@ -9,12 +12,12 @@
 
   &--is-active {
     &.dropdown-item {
-      background-color: $color__blue;
-      color: $color__white;
+      background-color: utils.$color__nasa-blue;
+      color: utils.$color__spacesuit-white;
 
       .radio-setting-dropdown-item:hover & {
-        background-color: $color__blue;
-        color: $color__white;
+        background-color: utils.$color__nasa-blue;
+        color: utils.$color__spacesuit-white;
       }
     }
   }
@@ -23,20 +26,20 @@
     display: inline-block;
     vertical-align: middle;
     width: 1rem;
-    margin-right: $spacer/4;
+    margin-right: calc(bootstrap.$spacer / 4);
     text-align: center;
-    color: $color__black--300;
+    color: utils.$color__carbon--30;
 
     .radio-setting-dropdown-item:hover & {
-      color: $color__black--400;
+      color: utils.$color__carbon--40;
     }
 
     .radio-setting-dropdown-item--is-active & {
-      color: $color__white;
+      color: utils.$color__spacesuit-white;
     }
 
     .radio-setting-dropdown-item--is-active:hover & {
-      color: $color__white;
+      color: utils.$color__spacesuit-white;
     }
   }
 

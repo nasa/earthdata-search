@@ -1,0 +1,136 @@
+name: Compare Bundle Size
+
+on:
+  pull_request: {}
+
+jobs:
+  generate-main-bundle-size:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        ref: main
+    - name: Use Node.js lts/jod
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/jod
+    - name: Cache node modules
+      uses: actions/cache@v4
+      env:
+        cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        # not caching node_modules because `npm ci` removes it
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Install dependencies
+      run: npm ci
+    - name: Copy secrets example file
+      run: npm run copy-secrets
+    - name: Prepare create overrideStatic.config.json
+      run: npm run jest:prepare-ci
+    - name: Run build
+      run: npm run build > build-output.txt
+    - name: Remove colors from output
+      run: sed -e "s/\x1B[^m]*m//g" build-output.txt > main-build-output.txt
+    - uses: actions/upload-artifact@v4
+      with:
+        name: mainBuildOutput
+        path: main-build-output.txt
+
+  generate-branch-bundle-size:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Use Node.js lts/jod
+      uses: actions/setup-node@v4
+      with:
+        node-version: lts/jod
+    - name: Cache node modules
+      uses: actions/cache@v4
+      env:
+        cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        # not caching node_modules because `npm ci` removes it
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Install dependencies
+      run: npm ci
+    - name: Copy secrets example file
+      run: npm run copy-secrets
+    - name: Prepare create overrideStatic.config.json
+      run: npm run jest:prepare-ci
+    - name: Run build
+      run: npm run build > build-output.txt
+    - name: Remove colors from output
+      run: sed -e "s/\x1B[^m]*m//g" build-output.txt > branch-build-output.txt
+    - uses: actions/upload-artifact@v4
+      with:
+        name: branchBuildOutput
+        path: branch-build-output.txt
+
+  compare-bundle-size:
+    runs-on: ubuntu-latest
+    needs: [
+      generate-main-bundle-size,
+      generate-branch-bundle-size
+    ]
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Cache node modules
+      uses: actions/cache@v4
+      env:
+        cache-name: cache-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        # not caching node_modules because `npm ci` removes it
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
+    - name: Install dependencies
+      run: npm ci
+    - uses: actions/download-artifact@v4
+      with:
+        name: mainBuildOutput
+    - uses: actions/download-artifact@v4
+      with:
+        name: branchBuildOutput
+    - name: Compare bundle size
+      run: node bin/compareBundleSize.mjs
+
+    # Leave or update comment on the PR
+    - name: Find Comment
+      uses: peter-evans/find-comment@v3
+      id: find-comment
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: Bundle Size Comparison
+    - name: Create comment
+      if: steps.find-comment.outputs.comment-id == ''
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        body-path: bundle-size-comment.md
+    - name: Update comment
+      if: steps.find-comment.outputs.comment-id != ''
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        comment-id: ${{ steps.find-comment.outputs.comment-id }}
+        body-path: bundle-size-comment.md
+        edit-mode: replace

@@ -1,26 +1,29 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .subscriptions-list-table {
   &__created-heading,
   &__updated-heading {
     width: 10rem;
   }
-  
+
   &__actions-heading {
     width: 8rem;
   }
 
   &__actions {
     text-align: center;
-  }
-
-  &__actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    
+    .actions-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   &__name,
   &__collection {
-    @include media-breakpoint-up(md) {
+    @include bootstrap.media-breakpoint-up(md) {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
@@ -30,7 +33,7 @@
   &__name {
     max-width: 8rem;
 
-    @include media-breakpoint-up(md) {
+    @include bootstrap.media-breakpoint-up(md) {
       max-width: 16rem;
     }
   }
@@ -38,7 +41,7 @@
   &__collection {
     max-width: 8rem;
 
-    @include media-breakpoint-up(md) {
+    @include bootstrap.media-breakpoint-up(md) {
       max-width: 16rem;
     }
   }

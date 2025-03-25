@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .datetime {
   &__buttons {
     order: 1;
@@ -6,11 +9,11 @@
   &__button {
     width: 100%;
     padding: 0.3125rem;
-    border-radius: $border-radius-sm;
+    border-radius: bootstrap.$border-radius-sm;
     font-weight: 700;
 
     &:hover {
-      background-color: $color__black--200;
+      background-color: utils.$color__carbon--20;
     }
   }
 
@@ -26,10 +29,10 @@
     flex-direction: column;
     width: 13.4375rem;
     font-size: 0.8125rem;
-    border: 1px solid $color__black--200;
-    border-radius: $border-radius;
-    color: $color__black--700;
-    @include carat('topleft');
+    border: 1px solid utils.$color__carbon--20;
+    border-radius: bootstrap.$border-radius;
+    color: utils.$color__carbon--70;
+    @include utils.carat('topleft');
 
     .rdtYears,
     .rdtMonths,
@@ -42,11 +45,11 @@
     }
 
     thead tr:first-child th {
-      border-radius: $border-radius-sm;
+      border-radius: bootstrap.$border-radius-sm;
     }
 
     td {
-      border-radius: $border-radius-sm;
+      border-radius: bootstrap.$border-radius-sm;
     }
   }
 }

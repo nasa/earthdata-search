@@ -1,10 +1,13 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .collection-results-item {
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid bootstrap.$border-color;
 
   &__link {
     display: flex;
     padding: 0.625rem 1rem;
-    background-color: $color__white;
+    background-color: utils.$color__spacesuit-white;
     // Prevent overflow in parent container
     overflow: hidden;
 
@@ -12,7 +15,7 @@
     &:active,
     &--active {
       cursor: pointer;
-      background-color: $color__black--100;
+      background-color: utils.$color__carbon--5;
     }
   }
 
@@ -33,7 +36,6 @@
     line-height: 1;
     font-size: 0.725rem;
     font-weight: 500;
-    color: $color__black--500;
     letter-spacing: 0.01rem;
 
     & > {
@@ -80,7 +82,7 @@
     flex-grow: 0;
     width: 4rem;
     height: 4rem;
-    background: $color__black--900;
+    background: utils.$color__carbon--90;
     font-size: 0.5rem;
     overflow: hidden;
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.175);
@@ -115,12 +117,12 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-top: $spacer * 0.25;
+    margin-top: bootstrap.$spacer * 0.25;
     margin-bottom: 0.25rem;
     font-size: 0.875rem;
     line-height: 1.325em;
     font-weight: 700;
-    color: $color__black--800;
+    color: utils.$color__carbon--80;
 
     .panels--md & {
       display: block;
@@ -143,37 +145,8 @@
     flex-shrink: 0;
     font-size: 0.825rem;
     font-weight: 500;
-    color: $color__black--700;
+    color: utils.$color__carbon--70;
     letter-spacing: 0.01em;
-  }
-
-  &__meta-icon {
-    color: $color__blue;
-    font-size: 0.75rem;
-
-    &:hover {
-      color: $color__blue--dark;
-    }
-  }
-
-  &__meta-label {
-    display: none;
-    margin-left: 0.25rem;
-  }
-
-  &__meta-detail {
-    margin-left: 0.25rem;
-    padding: 0.075rem 0.5rem;
-    border-radius: 1rem;
-    background-color: $color__black--200;
-    color: $color__black--600;
-    font-size: 0.625rem;
-    font-weight: 700;
-
-    .collection-results-item__meta-item:hover & {
-      background-color: $color__black--300;
-      color: $color__black--900;
-    }
   }
 
   &__desc {
@@ -181,9 +154,8 @@
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    margin-bottom: $spacer * 0.25;
+    margin-bottom: bootstrap.$spacer * 0.25;
     font-size: 0.825rem;
-    color: $color__black--600;
 
     .panels--sm & {
       -webkit-line-clamp: 2;
@@ -194,18 +166,6 @@
     display: flex;
     flex-shrink: 0;
     flex-grow: 0;
-
-    @media (hover: hover) {
-      visibility: hidden;
-      width: 0;
-
-      .collection-results-item__link:hover &,
-      .collection-results-item__link:focus &,
-      .collection-results-item__link--active & {
-        visibility: visible;
-        width: auto;
-      }
-    }
   }
 
   &__action {
@@ -214,8 +174,8 @@
     justify-content: center;
     flex-shrink: 0;
     padding: 0.5rem 0.5rem;
-    margin-right: $spacer/4;
-    color: $color__black--500;
+    margin-right: calc(bootstrap.$spacer / 4);
+    color: utils.$color__carbon--50;
     font-size: 0.925rem;
 
     .panels--sm & {
@@ -228,8 +188,8 @@
 
     .collection-results-item__link:hover &,
     .collection-results-item__link--active & {
-      background-color: $color__black--200;
-      color: $color__black--600;
+      background-color: utils.$color__carbon--10;
+      color: utils.$color__carbon--60;
     }
 
     .edsc-icon {
@@ -238,29 +198,28 @@
     }
 
     &--add {
-      color: $color__green;
+      color: utils.$color__active-green;
 
       .collection-results-item__link:hover &,
       .collection-results-item__link--active &  {
-        color: $color__green;
+        color: utils.$color__active-green;
       }
 
       &:hover {
-        color: darken($color__green, 20);
+        color: darken(utils.$color__active-green, 20);
       }
-
     }
 
     &--remove {
-      color: $color__red;
+      color: utils.$color__nasa-red;
 
       .collection-results-item__link:hover &,
       .collection-results-item__link--active & {
-        color: $color__red;
+        color: utils.$color__nasa-red;
       }
 
       &:hover {
-        color: darken($color__red, 20);
+        color: darken(utils.$color__nasa-red, 20);
       }
     }
   }
@@ -269,9 +228,9 @@
     word-break: break-all;
     line-break: normal;
     white-space: normal;
-    margin-right: $spacer/4;
-    margin-bottom: $spacer/8;
-    color: $color__white;
+    margin-right: calc(bootstrap.$spacer / 4);
+    margin-bottom:   calc(bootstrap.$spacer / 8);
+    color: utils.$color__spacesuit-white;
     text-transform: uppercase;
 
     &:hover {
@@ -300,15 +259,7 @@
 
   &__list-text {
     display: inline-block;
-
-    &--tooltip {
-      text-decoration:underline;
-      text-decoration-style: dotted;
-
-      &:hover {
-        text-decoration: none;
-      }
-    }
+    color: inherit;
   }
 
   &__attribution-list-item {
@@ -348,19 +299,6 @@
     }
   }
 
-  &__tooltip-feature-list {
-    width: auto;
-    margin: 0 auto;
-    padding: 0;
-    list-style: none;
-    text-align: center;
-  }
-
-  &__tooltip-feature-icon {
-    margin-right: 0.325rem;
-    color: $color__black--300;
-  }
-
   &__popover {
     display: flex;
     flex-direction: column;
@@ -394,7 +332,7 @@
     width: 7rem;
     height: 7rem;
     margin-bottom: 0.75rem;
-    background: $color__black--900;
+    background: utils.$color__carbon--90;
     font-size: 0.5rem;
     overflow: hidden;
     box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.175);

@@ -1,4 +1,5 @@
 # Project build files
+.esbuild
 .dockerignore
 .DS_Store
 .serverless
@@ -12,10 +13,7 @@ tmp
 # VSCode Settings
 .vscode
 
-cypress/screenshots
-cypress/videos
 overrideStatic.config.json
-cypress-coverage
 .nyc_output
 
 /test-results/
@@ -25,3 +23,6 @@ playwright-coverage
 /test-results/
 /playwright-report/
 /playwright/.cache/
+portals/availablePortals.json
+
+elasticmq.conf

@@ -1,4 +1,5 @@
-import { isEmpty, intersection } from 'lodash'
+import { isEmpty, intersection } from 'lodash-es'
+import 'array-foreach-async'
 
 import actions from './index'
 
@@ -33,6 +34,7 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getUsername } from '../selectors/user'
 import { isProjectCollectionValid } from '../util/isProjectCollectionValid'
 import { isCSDACollection } from '../util/isCSDACollection'
+import { retrieveVariablesRequest } from '../util/retrieveVariablesRequest'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { buildAccessMethods } from '../util/accessMethods/buildAccessMethods'
 
@@ -147,7 +149,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   const earthdataEnvironment = getEarthdataEnvironment(state)
   const username = getUsername(state)
 
-  const { defaultCmrSearchTags } = getApplicationConfig()
+  const { defaultCmrSearchTags, maxCmrPageSize } = getApplicationConfig()
 
   const emptyProjectCollections = []
 
@@ -198,6 +200,11 @@ export const getProjectCollections = () => async (dispatch, getState) => {
       action: 'getProjectCollections',
       resource: 'saved access configurations'
     }))
+
+    // If we know that the user is unauthorized and we need to redirect to EDL, stop here.
+    if (error.response.status === 401) {
+      return null
+    }
   }
 
   const collectionParams = prepareCollectionParams(state)
@@ -211,7 +218,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
   const graphQuery = `
-    query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput) {
+    query GetProjectCollections ($params: CollectionsInput, $subcriptionParams: SubscriptionsInput, $variableParams: VariablesInput) {
       collections (
         params: $params
       ) {
@@ -260,12 +267,15 @@ export const getProjectCollections = () => async (dispatch, getState) => {
           tags
           temporalExtents
           tilingIdentificationSystems
+          timeEnd
+          timeStart
           title
           versionId
           services {
             count
             items {
               conceptId
+              description
               longName
               name
               type
@@ -323,8 +333,11 @@ export const getProjectCollections = () => async (dispatch, getState) => {
               potentialAction
             }
           }
-          variables {
+          variables (
+            params: $variableParams
+          ) {
             count
+            cursor
             items {
               conceptId
               definition
@@ -338,112 +351,143 @@ export const getProjectCollections = () => async (dispatch, getState) => {
         }
       }
     }`
+  try {
+    const response = await graphQlRequestObject.search(graphQuery, {
+      params: {
+        conceptId: filteredIds,
+        includeTags: defaultCmrSearchTags.join(','),
+        includeHasGranules,
+        pageSize: filteredIds.length
+      },
+      subcriptionParams: {
+        subscriberId: username
+      },
+      variableParams: {
+        limit: maxCmrPageSize
+      }
+    })
 
-  const response = graphQlRequestObject.search(graphQuery, {
-    params: {
-      conceptId: filteredIds,
-      includeTags: defaultCmrSearchTags.join(','),
-      includeHasGranules,
-      pageSize: filteredIds.length
-    },
-    subcriptionParams: {
-      subscriberId: username
-    }
-  })
-    .then((responseObject) => {
-      const payload = []
+    const payload = []
 
+    const {
+      data: responseData
+    } = response
+    const { data } = responseData
+    const { collections } = data
+    const { items } = collections
+
+    await items.forEachAsync(async (metadata) => {
       const {
-        data: responseData
-      } = responseObject
-      const { data } = responseData
-      const { collections } = data
-      const { items } = collections
-      items.forEach((metadata) => {
-        const {
-          abstract,
-          archiveAndDistributionInformation,
-          associatedDois,
-          boxes,
-          cloudHosted,
-          conceptId,
-          coordinateSystem,
-          dataCenter,
-          dataCenters,
-          dataQualitySummaries,
-          duplicateCollections,
-          granules,
-          hasGranules,
-          relatedCollections,
-          services,
-          shortName,
-          subscriptions,
-          tags,
-          tilingIdentificationSystems,
-          title,
-          tools,
-          variables,
-          versionId
-        } = metadata
+        abstract,
+        archiveAndDistributionInformation,
+        associatedDois,
+        boxes,
+        cloudHosted,
+        conceptId,
+        coordinateSystem,
+        dataCenter,
+        dataCenters,
+        dataQualitySummaries,
+        duplicateCollections,
+        granules,
+        hasGranules,
+        relatedCollections,
+        services,
+        shortName,
+        subscriptions,
+        tags,
+        tilingIdentificationSystems,
+        title,
+        timeStart,
+        timeEnd,
+        tools,
+        variables,
+        versionId
+      } = metadata
 
-        const focusedMetadata = createFocusedCollectionMetadata(
-          metadata,
-          authToken,
-          earthdataEnvironment
+      if (variables && variables.count > maxCmrPageSize) {
+        // eslint-disable-next-line no-await-in-loop
+        const retrievedItems = await retrieveVariablesRequest(
+          variables,
+          {
+            params: {
+              conceptId,
+              includeHasGranules: false
+            },
+            variableParams: {
+              limit: maxCmrPageSize,
+              cursor: variables.cursor
+            }
+          },
+          graphQlRequestObject
         )
 
-        const isOpenSearch = !!getOpenSearchOsddLink(metadata)
+        variables.items = retrievedItems
 
-        payload.push({
-          abstract,
-          archiveAndDistributionInformation,
-          associatedDois,
-          boxes,
-          cloudHosted,
-          coordinateSystem,
-          dataQualitySummaries,
-          dataCenter,
-          duplicateCollections,
-          granules,
-          hasAllMetadata: true,
-          hasGranules,
-          id: conceptId,
-          isCSDA: isCSDACollection(dataCenters),
-          isOpenSearch,
-          relatedCollections,
-          services,
-          shortName,
-          subscriptions,
-          tags,
-          tilingIdentificationSystems,
-          title,
-          tools,
-          variables,
-          versionId,
-          ...focusedMetadata
-        })
+        if (variables.cursor) delete variables.cursor
+      }
 
-        const { [conceptId]: savedAccessConfig } = savedAccessConfigs
+      const focusedMetadata = createFocusedCollectionMetadata(
+        metadata,
+        authToken,
+        earthdataEnvironment
+      )
 
-        const accessMethodsObject = insertSavedAccessConfig(
-          buildAccessMethods(metadata, isOpenSearch),
-          savedAccessConfig
-        )
+      const isOpenSearch = !!getOpenSearchOsddLink(metadata)
 
-        const { methods = {} } = accessMethodsObject
-        let { selectedAccessMethod } = accessMethodsObject
+      payload.push({
+        abstract,
+        archiveAndDistributionInformation,
+        associatedDois,
+        boxes,
+        cloudHosted,
+        coordinateSystem,
+        dataQualitySummaries,
+        dataCenter,
+        duplicateCollections,
+        granules,
+        hasAllMetadata: true,
+        hasGranules,
+        id: conceptId,
+        isCSDA: isCSDACollection(dataCenters),
+        isOpenSearch,
+        relatedCollections,
+        services,
+        shortName,
+        subscriptions,
+        tags,
+        tilingIdentificationSystems,
+        title,
+        timeStart,
+        timeEnd,
+        tools,
+        variables,
+        versionId,
+        ...focusedMetadata
+      })
 
-        if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
-          const [firstAccessMethod] = Object.keys(methods)
-          selectedAccessMethod = firstAccessMethod
-        }
+      const { [conceptId]: savedAccessConfig } = savedAccessConfigs
 
-        dispatch(actions.addAccessMethods({
-          collectionId: conceptId,
-          methods,
-          selectedAccessMethod
-        }))
+      const accessMethodsObject = insertSavedAccessConfig(
+        buildAccessMethods(metadata, isOpenSearch),
+        savedAccessConfig
+      )
 
+      const { methods = {} } = accessMethodsObject
+      let { selectedAccessMethod } = accessMethodsObject
+
+      if (Object.keys(methods).length === 1 && !selectedAccessMethod) {
+        const [firstAccessMethod] = Object.keys(methods)
+        selectedAccessMethod = firstAccessMethod
+      }
+
+      dispatch(actions.addAccessMethods({
+        collectionId: conceptId,
+        methods,
+        selectedAccessMethod
+      }))
+
+      if (dataQualitySummaries) {
         const { items: dqsItems = [] } = dataQualitySummaries
         if (dqsItems) {
           dispatch(actions.setDataQualitySummaries({
@@ -451,20 +495,22 @@ export const getProjectCollections = () => async (dispatch, getState) => {
             dataQualitySummaries: dqsItems
           }))
         }
-      })
+      }
 
       // Update metadata in the store
       dispatch(actions.updateCollectionMetadata(payload))
-    })
-    .catch((error) => {
-      dispatch(actions.handleError({
-        error,
-        action: 'getProjectCollections',
-        resource: 'project collections'
-      }))
-    })
 
-  return response
+      return response
+    })
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'getProjectCollections',
+      resource: 'project collections'
+    }))
+  }
+
+  return null
 }
 
 /**

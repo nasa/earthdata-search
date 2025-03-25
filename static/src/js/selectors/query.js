@@ -33,6 +33,19 @@ export const getCollectionsQuery = (state) => {
 }
 
 /**
+ * Retrieve current collection spatial information from Redux
+ * @param {Object} state Current state of Redux
+ */
+export const getCollectionsQuerySpatial = createSelector(
+  [getCollectionsQuery],
+  (collectionsQuery) => {
+    const { spatial = {} } = collectionsQuery
+
+    return spatial
+  }
+)
+
+/**
  * Retrieve query information from Redux pertaining to the focused collection id
  */
 export const getFocusedCollectionGranuleQuery = createSelector(

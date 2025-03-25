@@ -1,0 +1,25 @@
+{
+  "file": {
+    "name": "ff124ffbc89f3a9440a40f1d134204d7line",
+    "type": "FeatureCollection",
+    "features": [
+      {
+        "id": "simple-id-3",
+        "type": "Feature",
+        "edscId": "0",
+        "geometry": {
+          "type": "LineString",
+          "coordinates": [
+            [-106, 35],
+            [-105, 36],
+            [-94, 33],
+            [-95, 30],
+            [-93, 31],
+            [-92, 30]
+          ]
+        }
+      }
+    ]
+  },
+  "shapefileName": "line.geojson"
+}

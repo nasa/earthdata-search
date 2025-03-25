@@ -1,10 +1,21 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .secondary-toolbar {
   display: flex;
-  align-items: stretch;
-  position: relative;
-  z-index: 2;
+  padding: 0.625rem;
+  justify-content: flex-end;
+  border-bottom: 1px solid utils.$color__carbon--20;
 
-  @include media-breakpoint-up(md) {
+  &--map-overlay {
+    z-index: 2;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    border-bottom: 0;
+  }
+
+  @include bootstrap.media-breakpoint-up(md) {
     margin-left: auto;
   }
 
@@ -12,8 +23,42 @@
   .dropdown {
     display: flex;
     flex-shrink: 1;
-    flex-grow: 1;
     white-space: nowrap;
+  }
+
+  &--map-overlay > {
+    .button,
+    .dropdown > .dropdown-toggle {
+      box-shadow: none;
+      border-radius: 0.25rem;
+      border: 2px solid rgba(utils.$color__carbon--80, 0.3);
+      background-clip: padding-box;
+
+      &:hover,
+      &:focus {
+        border: 2px solid rgba(utils.$color__carbon--80, 0.3);
+      }
+    }
+
+    // Bootstrap outline overrides for the dropdown-toggle
+    .show > .btn-light.dropdown-toggle,
+    .btn-light.dropdown-toggle:focus,
+    .btn-light.dropdown-toggle:active,
+    .show > .btn-light.dropdown-toggle:focus,
+    .show > .btn-light.dropdown-toggle:active,
+    .btn-light:not(:disabled):not(.disabled):active:focus {
+      border: 2px solid rgba(utils.$color__carbon--80, 0.3);
+    }
+  }
+
+  // Bootstrap outline overrides for the dropdown-toggle
+  .show > .btn-light.dropdown-toggle,
+  .btn-light.dropdown-toggle:focus,
+  .btn-light.dropdown-toggle:active,
+  .show > .btn-light.dropdown-toggle:focus,
+  .show > .btn-light.dropdown-toggle:active,
+  .btn-light:not(:disabled):not(.disabled):active:focus {
+    box-shadow: none;
   }
 
   .button {
@@ -21,11 +66,18 @@
   }
 
   &__project-name-dropdown {
+    margin-right: 0.5rem;
+
     .dropdown-menu {
-      padding: $spacer/2;
+      padding: calc(bootstrap.$spacer / 2);
     }
   }
 
+  &__start-tour-name-dropdown {
+    margin-right: 0.5rem;
+  }
+
+  &__start-tour-button,
   &__project-name-dropdown-toggle {
     &:after {
       display: none;
@@ -40,61 +92,24 @@
   }
 
   &__back,
-  &__project,
-  &__login,
-  &__project-name-dropdown-toggle,
-  &__user-dropdown-toggle {
-    position: relative;
-    padding: 0 1rem;
-    border: 0;
-    border-radius: 0;
-    outline: 0;
-    border-left: 1px solid $color__black--700 !important;
-    border-right: 1px solid transparent !important;
-    background: transparent;
-    color: $color__black--300;
-
-    .show > &,
-    &:hover {
-      background-color: rgba($color__black, 0.2) !important;
-      color: $color__black--100 !important;
-    }
+  &__project {
+    margin-right: 0.5rem;
   }
 
   &__project-name-form {
     .input-group {
-      width: 200px;
+      width: 12.5rem;
     }
   }
 
   &__username {
-    margin-right: 0.5rem;
+    margin-right: 0.25rem;
   }
 
   &__project-name-dropdown-toggle {
     &:after {
       display: none;
     }
-  }
-
-  &__user-dropdown {
-    .dropdown-item {
-      background-color: $color__white;
-      background-color: $color__white;
-
-      &:hover {
-        background-color: $color__black--200;
-      }
-    }
-
-    .dropdown-item.active,
-    .dropdown-item:active {
-      color: $color__black--800;
-      background-color: $color__white;
-
-      &:hover {
-        background-color: $color__black--200;
-      }
-    }
+    margin-left: 0.5rem;
   }
 }

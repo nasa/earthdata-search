@@ -7,7 +7,7 @@ import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { parseError } from '../../../sharedUtils/parseError'
 
 /**
- * Handler for retreiving a users projects
+ * Handler for retrieving a users projects
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
@@ -22,9 +22,9 @@ const getProjects = async (event, context) => {
 
   const jwtToken = getJwtToken(event)
 
-  const { username } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
+  const { id: userId } = getVerifiedJwtToken(jwtToken, earthdataEnvironment)
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
 
   try {
@@ -38,7 +38,7 @@ const getProjects = async (event, context) => {
       .join('users', { 'projects.user_id': 'users.id' })
       .orderBy('projects.created_at', 'DESC')
       .where({
-        'users.urs_id': username
+        'users.id': userId
       })
 
     // Return the name and path

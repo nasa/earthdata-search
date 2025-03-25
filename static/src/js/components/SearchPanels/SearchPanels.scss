@@ -1,8 +1,11 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .search-panels {
   &__note {
     display: block;
-    margin-bottom: $spacer/2;
-    color: $color__black--500;
+    margin-bottom: calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--50;
     font-size: 0.875rem;
   }
 
@@ -10,42 +13,41 @@
     font-weight: 500;
 
     &--opensearch {
-      color: $color__yellow;
+      color: utils.$color__international-orange;
     }
 
     &--csda {
-      color: $color__purple;
+      color: utils.$color__international-orange;
     }
   }
 
   &__actions {
-    padding: $spacer/2 $spacer;
+    padding: calc(bootstrap.$spacer / 2) bootstrap.$spacer;
   }
 
   &__action {
     display: flex;
     align-items: center;
-    color: $color__black--500;
+    color: utils.$color__carbon--50;
     padding-left: 0;
     padding-right: 0;
 
     &:hover,
     &:active {
-      color: $color__black--600;
+      color: utils.$color__carbon--60;
     }
 
     &--subscriptions {
       .badge {
-        background-color: $color__yellow;
+        background-color: utils.$color__international-orange;
       }
     }
   }
 
   &__focused-meta {
     margin: 0.5rem;
-    background: $color__white;
+    background: utils.$color__spacesuit-white;
     border-radius: 0.125rem;
     overflow: hidden;
   }
 }
-

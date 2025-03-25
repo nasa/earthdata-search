@@ -12,7 +12,7 @@ let dbTracker
 beforeEach(() => {
   jest.clearAllMocks()
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
-  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ username: 'testuser' }))
+  jest.spyOn(getVerifiedJwtToken, 'getVerifiedJwtToken').mockImplementation(() => ({ id: 1 }))
 
   jest.spyOn(getDbConnection, 'getDbConnection').mockImplementationOnce(() => {
     dbConnectionToMock = knex({
@@ -35,7 +35,7 @@ afterEach(() => {
 })
 
 describe('saveProject', () => {
-  describe('as an unauthticated user', () => {
+  describe('as an unauthenticated user', () => {
     test('saves an unnamed project into the database', async () => {
       const path = '/search?p=C123456-EDSC'
 
@@ -79,10 +79,6 @@ describe('saveProject', () => {
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
           query.response({
-            id: 12
-          })
-        } else if (step === 2) {
-          query.response({
             id: 12,
             path
           })
@@ -111,20 +107,17 @@ describe('saveProject', () => {
       const { queries } = dbTracker.queries
 
       expect(queries[0].method).toEqual('first')
-      expect(queries[1].method).toEqual('update')
 
       expect(result.body).toEqual(expectedBody)
     })
   })
 
-  describe('as an authticated user', () => {
+  describe('as an authenticated user', () => {
     test('saves an unnamed project into the database', async () => {
       const path = '/search?p=C123456-EDSC'
 
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response([{ id: 1 }])
-        } else if (step === 2) {
           query.response([{
             id: 12
           }])
@@ -152,8 +145,7 @@ describe('saveProject', () => {
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].method).toEqual('first')
-      expect(queries[1].method).toEqual('insert')
+      expect(queries[0].method).toEqual('insert')
 
       expect(result.body).toEqual(expectedBody)
     })
@@ -163,12 +155,10 @@ describe('saveProject', () => {
 
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response([{ id: 1 }])
-        } else if (step === 2) {
           query.response({
             id: 12
           })
-        } else if (step === 3) {
+        } else if (step === 2) {
           query.response({
             id: 12
           })
@@ -198,8 +188,7 @@ describe('saveProject', () => {
       const { queries } = dbTracker.queries
 
       expect(queries[0].method).toEqual('first')
-      expect(queries[1].method).toEqual('first')
-      expect(queries[2].method).toEqual('update')
+      expect(queries[1].method).toEqual('update')
 
       expect(result.body).toEqual(expectedBody)
     })
@@ -209,11 +198,9 @@ describe('saveProject', () => {
 
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
-          query.response([{ id: 1 }])
-        } else if (step === 2) {
           // Find project by projectId and userId
           query.response(undefined)
-        } else if (step === 3) {
+        } else if (step === 2) {
           query.response([{
             id: 13
           }])
@@ -243,8 +230,7 @@ describe('saveProject', () => {
       const { queries } = dbTracker.queries
 
       expect(queries[0].method).toEqual('first')
-      expect(queries[1].method).toEqual('first')
-      expect(queries[2].method).toEqual('insert')
+      expect(queries[1].method).toEqual('insert')
 
       expect(result.body).toEqual(expectedBody)
     })
@@ -311,8 +297,6 @@ describe('saveProject', () => {
 
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
-        query.response([{ id: 1 }])
-      } else if (step === 2) {
         // Find project by projectId and userId
         query.response(undefined)
       } else {
@@ -335,8 +319,6 @@ describe('saveProject', () => {
     const { queries } = dbTracker.queries
 
     expect(queries[0].method).toEqual('first')
-    expect(queries[1].method).toEqual('first')
-    expect(queries[2].method).toEqual('insert')
 
     expect(result.statusCode).toEqual(500)
   })

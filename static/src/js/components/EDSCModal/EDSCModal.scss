@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .edsc-modal {
   .modal-body {
     padding: 0;
@@ -63,7 +66,7 @@
     align-items: center;
     justify-content: center;
     z-index: 3;
-    background-color: $color__white;
+    background-color: utils.$color__spacesuit-white;
   }
 
   &__inner-body {
@@ -71,12 +74,12 @@
     overflow-y: auto;
 
     .edsc-modal--body-padding & {
-      padding: $spacer;
+      padding: bootstrap.$spacer;
     }
   }
 
   &__header {
-    background-color: $color__theme--light;
+    background-color: utils.$color__carbon--10;
     border-bottom: 0;
 
     &--is-empty {
@@ -90,7 +93,7 @@
 
   &__title {
     font-weight: 700;
-    color: $color__black--600;
+    color: utils.$color__carbon--80;
   }
 
   &__footer {
@@ -111,7 +114,7 @@
   }
 
   &__action {
-    margin-right: $spacer/2;
+    margin-right: calc(bootstrap.$spacer / 2);
 
     &:last-child {
       margin-right: 0;
@@ -127,8 +130,8 @@
     margin-top: 0.5rem;
     border-radius: 0.25rem;
     transform: translate(-50%, 0%);
-    background-color: #000;
-    color: #fff;
+    background-color: utils.$color__carbon-black;
+    color: utils.$color__spacesuit-white;
     white-space: nowrap;
   }
 }

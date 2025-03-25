@@ -2,6 +2,7 @@ import { test, expect } from 'playwright-test-coverage'
 
 import { login } from '../../support/login'
 import { testJwtToken } from '../../support/getJwtToken'
+import { setupTests } from '../../support/setupTests'
 
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
@@ -11,9 +12,20 @@ import collectionFixture from './__mocks__/authenticated_collections.json'
 const expectedCollectionCount = 6
 
 test.describe('Authentication', () => {
-  test.beforeEach(async ({ page }) => {
-    await page.route('**/*.{png,jpg,jpeg}', (route) => route.abort())
-    await page.route(/collections/, async (route) => {
+  test.beforeEach(async ({ page, context }) => {
+    await setupTests({
+      page,
+      context
+    })
+
+    await page.setViewportSize({
+      width: 1400,
+      // At the default height of 900, the results here are flaky returning 6 or 7 items.
+      // Shorten the window height to ensure we always get 6 items.
+      height: 850
+    })
+
+    await page.route(/collections$/, async (route) => {
       await route.fulfill({
         json: collectionFixture.body,
         headers: collectionFixture.headers

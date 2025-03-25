@@ -1,3 +1,6 @@
+@use 'vendor/bootstrap/configuration' as bootstrap;
+@use 'utils/variables';
+
 .route-wrapper {
   position: relative;
   margin: 0;
@@ -8,16 +11,16 @@
   height: 100%;
   overflow: hidden;
   align-items: flex-end;
-  background-color: #f3f3f3;
-  background-image: linear-gradient(#f3f3f3, #f5f5f5);
+  background-color: variables.$color__carbon--5;
+  background-image: linear-gradient(variables.$color__carbon--5, #f5f5f5);
 
   &__header {
-    background-color: $color__black--800;
-    color: $color__black--400;
-    border-bottom: 1px solid $color__black--700;
+    background-color: variables.$color__carbon--80;
+    color: variables.$color__carbon--40;
+    border-bottom: 1px solid variables.$color__carbon--70;
 
     .route-wrapper--light & {
-      border-bottom: 1px solid $color__black--200;
+      border-bottom: 1px solid variables.$color__carbon--20;
     }
   }
 
@@ -29,7 +32,7 @@
     height: auto;
     padding: 0.625rem;
 
-    @include media-breakpoint-up(md) {
+    @include bootstrap.media-breakpoint-up(md) {
       flex-wrap: nowrap;
       justify-content: space-between;
     }
@@ -45,25 +48,30 @@
     .route-wrapper--content-page & {
       justify-content: flex-start;
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
 
     .route-wrapper--content-page-centered & {
       justify-content: center;
     }
+
+    &--dark {
+      background: variables.$color__carbon-black;
+    }
+
   }
 
   &__content-nav {
-    padding: $spacer/2 $spacer;
-    color: $color__white;
+    padding: calc(bootstrap.$spacer / 2) bootstrap.$spacer;
+    color: variables.$color__spacesuit-white;
   }
 
   &__content-nav-link {
-    color: $color__white;
+    color: variables.$color__spacesuit-white;
 
     &:hover,
     &:active {
-      color: $color__black--100;
+      color: variables.$color__carbon--10;
     }
   }
 
@@ -76,13 +84,17 @@
   }
 
   &--light {
-    background: white;
+    background: variables.$color__spacesuit-white;
+  }
+
+  &--dark {
+    background: variables.$color__carbon-black;
   }
 
   &__page-heading {
     padding-bottom: 1rem;
     margin-bottom: 3rem;
     font-weight: 700;
-    border-bottom: 1px solid $color__black--200;
+    border-bottom: 1px solid variables.$color__carbon--20;
   }
 }

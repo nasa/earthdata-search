@@ -1,8 +1,11 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .project-collections-item {
   position: relative;
-  padding: $spacer/2;
-  border-bottom: 1px solid $border-color;
-  border-right: 1px solid $border-color;
+  padding: calc(bootstrap.$spacer / 2);
+  border-bottom: 1px solid bootstrap.$border-color;
+  border-right: 1px solid bootstrap.$border-color;
   border-left: 5px solid transparent;
   overflow: visible;
 
@@ -14,8 +17,8 @@
     display: block;
     height: 15px;
     width: 15px;
-    background: #fff;
-    border: 1px solid $border-color;
+    background: utils.$color__spacesuit-white;
+    border: 1px solid bootstrap.$border-color;
     box-shadow: 0 0 10px 3px rgba(0,0,0,0.04);
     color: black;
     transform: rotate(45deg) translate(-50%);
@@ -38,11 +41,11 @@
     flex-grow: 1;
     display: block;
     text-align: left;
-    color: $color__black--900;
+    color: utils.$color__carbon-black;
 
     &:hover,
     &:active {
-      color: $color__black--400;
+      color: utils.$color__carbon-black;
     }
   }
 
@@ -52,7 +55,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex-grow: 1;
-    margin-bottom: $spacer/4;
+    margin-bottom: calc(bootstrap.$spacer / 4);
     font-size: 0.85rem;
     line-height: 1.35em;
     font-weight: 700;
@@ -61,14 +64,14 @@
   &__stats-list {
     display: flex;
     margin: 0;
-    margin-bottom: $spacer/4;
+    margin-bottom: calc(bootstrap.$spacer / 4);
     padding: 0;
     list-style: none;
   }
 
   &__stats-item {
-    margin-right: $spacer/2;
-    color: $color__black--500;
+    margin-right: calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--60;
     font-size: 0.85rem;
 
     &:last-child {
@@ -77,14 +80,14 @@
   }
 
   &__more-actions {
-    top: -$spacer/4;
+    top: calc(-1 * bootstrap.$spacer / 4);
     flex-grow: 0;
     flex-shrink: 0;
   }
 
   &__more-actions-toggle {
     font-size: 1.125rem;
-    color: $color__black--400;
+    color: utils.$color__carbon--40;
   }
 
   &__footer {
@@ -94,7 +97,7 @@
   }
 
   &__status {
-    margin-right: $spacer/4;
+    margin-right: calc(bootstrap.$spacer / 4);
     height: 0.85rem;
     width: 0.85rem;
     display: inline;
@@ -104,7 +107,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $color__red;
+      color: utils.$color__nasa-red;
     }
   }
 
@@ -114,11 +117,11 @@
     justify-content: center;
     padding: 0;
     font-size: 0.85rem;
-    color: $color__black--500;
+    color: utils.$color__carbon--60;
 
     &:hover,
     &:active {
-      color: $color__black--600;
+      color: utils.$color__carbon--70;
     }
   }
 }

@@ -139,7 +139,7 @@ describe('updateStore', () => {
 
   describe('when a portal parameter is provided', () => {
     test('loads the included styles', async () => {
-      jest.mock('../../../../../portals/airmoss/styles.scss', () => ({
+      jest.mock('../../../../../portals/testPortal/styles.scss', () => ({
         unuse: jest.fn(),
         use: jest.fn()
       }))
@@ -155,7 +155,7 @@ describe('updateStore', () => {
         },
         focusedCollection: '',
         map: {},
-        portalId: 'airmoss',
+        portalId: 'testPortal',
         project: {},
         query: {
           collection: {
@@ -206,7 +206,7 @@ describe('updateStore', () => {
               }
             },
             footer: {
-              attributionText: 'NASA Official: Stephen Berrick',
+              attributionText: 'NASA Official: Test Official',
               displayVersion: true,
               primaryLinks: [
                 {
@@ -229,18 +229,18 @@ describe('updateStore', () => {
                 }
               ]
             },
-            moreInfoUrl: 'https://airmoss.ornl.gov',
-            pageTitle: 'AirMOSS',
+            moreInfoUrl: 'https://test.gov',
+            pageTitle: 'TEST',
             parentConfig: 'edsc',
             portalBrowser: true,
-            portalId: 'airmoss',
+            portalId: 'testPortal',
             query: {
               hasGranulesOrCwic: null,
-              project: 'AirMOSS'
+              project: 'testProject'
             },
             title: {
-              primary: 'AirMOSS',
-              secondary: 'Airborne Microwave Observatory of Subcanopy and Subsurface '
+              primary: 'test',
+              secondary: 'test secondary title'
             },
             ui: {
               showNonEosdisCheckbox: false,

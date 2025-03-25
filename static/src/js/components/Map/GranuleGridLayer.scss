@@ -1,9 +1,12 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .granule-spatial-label {
   white-space: nowrap;
   font-size: 1.2em;
-  color: #ffffff;
+  color: utils.$color__spacesuit-white;
   text-align: center;
-  text-shadow: 1px 1px 1px #000;
+  text-shadow: 1px 1px 1px utils.$color__carbon-black;
 
   /* Need to override styles placed on the icon by leaflet */
   width: 40em !important;
@@ -11,12 +14,12 @@
 
   i.fa-stack-2x {
     color: rgba(255,255,255, 0.2);
-    @include transition(color 0.3s ease-in-out);
+    @include bootstrap.transition(color 0.3s ease-in-out);
   }
 
   a {
     padding: 0 0 0 10px;
-    color: #fff;
+    color: utils.$color__spacesuit-white;
     text-shadow: none;
 
     &:hover i.fa-stack-2x {

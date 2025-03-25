@@ -1,11 +1,15 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .download-history {
   &__spinner {
     margin: 0 auto;
   }
 
   &__button {
-    margin: 0 $spacer/2;
-    color: $color__black--300;
+    display: inline-flex;
+    margin: 0 calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--30;
 
     &--share {
       i {
@@ -15,21 +19,12 @@
     }
 
     &:hover {
-      color: $color__black--600;
+      color: utils.$color__carbon--60;
     }
   }
 }
 
 .download-history-table {
-  a {
-    color: $color__blue;
-
-    &:hover,
-    &:active {
-      color: $color__blue--dark;
-    }
-  }
-
   &__ago {
     white-space: nowrap;
   }
@@ -44,9 +39,7 @@
   }
 
   &__actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
   }
 
 }

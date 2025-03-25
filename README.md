@@ -1,6 +1,5 @@
 # [Earthdata Search](https://search.earthdata.nasa.gov)
 
-[![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
 ![Build Status](https://github.com/nasa/earthdata-search/workflows/CI/badge.svg?branch=main)
 [![codecov](https://codecov.io/gh/nasa/earthdata-search/branch/main/graph/badge.svg?token=kIkZQ0NrqK)](https://codecov.io/gh/nasa/earthdata-search)
 [![Known Vulnerabilities](https://snyk.io/test/github/nasa/earthdata-search/badge.svg)](https://snyk.io/test/github/nasa/earthdata-search)
@@ -8,11 +7,11 @@
 ## About
 
 Earthdata Search is a web application developed by [NASA](http://nasa.gov) [EOSDIS](https://earthdata.nasa.gov) to enable data discovery, search, comparison, visualization, and access across EOSDIS' Earth Science data holdings.
-It builds upon several public-facing services provided by EOSDIS, including the [Common Metadata Repository (CMR)](https://cmr.earthdata.nasa.gov/search/) for data discovery and access, EOSDIS [User Registration System (URS)](https://urs.earthdata.nasa.gov) authentication, the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization, and a number of OPeNDAP services hosted by data providers.
+It builds upon several public-facing services provided by EOSDIS, including the [Common Metadata Repository (CMR)](https://cmr.earthdata.nasa.gov/search/) for data discovery and access, EOSDIS [Earthdata Login (EDL)](https://urs.earthdata.nasa.gov) authentication, the [Global Imagery Browse Services (GIBS)](https://earthdata.nasa.gov/gibs) for visualization, and a number of OPeNDAP services hosted by data providers.
 
 ## License
 
-> Copyright © 2007-2023 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
+> Copyright © 2007-2024 United States Government as represented by the Administrator of the National Aeronautics and Space Administration. All Rights Reserved.
 >
 > Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 > You may obtain a copy of the License at
@@ -24,40 +23,25 @@ It builds upon several public-facing services provided by EOSDIS, including the 
 
 ## Application Installation and Usage
 
-The Earthdata Search application uses Node v14 and Webpack 5 to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
+The Earthdata Search application uses NodeJS and Vite to generate static assets. The serverless application utilizes the following AWS services (important to note if deploying to an AWS environment):
 
 - S3
   - We highly recommend using CloudFront in front of S3.
 - SQS
+- Step Functions
 - API Gateway
 - Lambda
 - Cloudwatch (Events)
 
 ### Prerequisites
 
-##### Node
+#### NodeJS
 
-Earthdata Search runs on Node.js, in order to run the application you'll need to [install it](https://nodejs.org/en/download/).
+We recommend using [Node Version Manager](https://github.com/nvm-sh/nvm?tab=readme-ov-file#installing-and-updating) (NVM) to manage your NodeJS install. Use the shell integration to [automatically switch Node versions](https://github.com/nvm-sh/nvm?tab=readme-ov-file#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file).
 
-**Recommended:** Use Homebrew
+NVM will automatically install the correct node version defined in `.nvmrc`
 
-    brew install node
-
-##### NPM
-
-npm is a separate project from Node.js, and tends to update more frequently. As a result, even if you’ve just downloaded Node.js (and therefore npm), you’ll probably need to update your npm. Luckily, npm knows how to update itself! To update your npm, type this into your terminal:
-
-    npm install -g npm@latest
-
-##### NVM
-
-To ensure that you're using the correct version of Node it is recommended that you use Node Version Manager. Installation instructions can be found on [the repository](https://github.com/nvm-sh/nvm#install--update-script). The version used is defined in .nvmrc and will be used automatically if NVM is configured correctly.
-
-##### Serverless Framework
-
-Earthdata Search utilizes the [Serverless Framework](https://serverless.com/) for managing AWS resources. In order to fully run and manage the application you'll need to install it:
-
-    npm install -g serverless@latest
+    nvm use
 
 ##### PostgreSQL
 
@@ -71,13 +55,33 @@ Start the PostgreSQL server:
 
     # If you have never used brew services before:
     brew tap homebrew/services
-    
+
     # Start the server:
     brew services start postgresql
 
 If you decide to install via Homebrew you'll need to create the default user.
 
     createuser -s postgres
+
+##### Docker, Optional
+
+Docker is used to simulate SQS locally using [ElasticMQ](https://github.com/softwaremill/elasticmq).
+
+##### Redis, Optional
+
+To use an image cache you need to have Redis installed.
+
+**Recommended:** Use Homebrew
+
+    brew install redis
+
+Optionally you can run Redis in a Docker container with
+
+    npm run start:cache
+
+To stop the Redis Docker container
+
+    npm run stop:cache
 
 ### Initial Setup
 
@@ -95,7 +99,7 @@ For local development Earthdata Search uses a json configuration file to store s
 
     cp secret.config.json.example secret.config.json
 
-In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `databasePort` in `static.config.json` if you have custom configuration locally). 
+In order to operate against a local database this file will need `dbUsername` and `dbPassword` values set (you may need to update `dbHost`, `dbName` or `databasePort` in `static.config.json` if you have custom configuration locally).
 
 If you created the `postgres` user after a new PostgreSQL install as described above, both `dbUsername` and `dbPassword` will be the username you use to log into your computer.
 
@@ -115,11 +119,38 @@ Ensure that you have a database created:
 
 To run the migrations locally:
 
-    DATABASE_URL=postgresql://USERNAME:PASSWORD@localhost:5432/edsc_dev npm run migrate up
+    npm run invoke-local migrateDatabase
 
-Optionally, we can run the migration locally and not within a deployed Lambda. When deployed our database migrations run within Lambda due to the fact that in non-development environments our resources are not publicly accessible. To run the migrations you'll need to invoke the Lambda:
+###### Creating a new database migration
 
-    serverless invoke local --function migrateDatabase
+To create a new database migration use this command to ensure the migration follow the same timestamp name scheme.
+
+    npm run migrate create name-of-migration
+
+### Run the Application Locally
+
+The local development environment for the static assets can be started by executing the command below in the project root directory:
+
+    npm start
+
+This will start everything you need to run Earthdata Search locally.
+
+- React application: [http://localhost:8080](http://localhost:8080)
+- Mock API Gateway: [http://localhost:3001](http://localhost:3001)
+- Watch for code changes to the `serverless` directory
+- ElasticMQ container for SQS Queues.
+- Mock SQS service to trigger lambdas on SQS messages.
+- Mock S3 service for generating notebooks.
+
+#### Optional Services
+
+By default we don't run SQS or an image cache locally. In order to run the application with those services you need to include the follow environment variables when you start the application
+
+    USE_IMAGE_CACHE=true SKIP_SQS=false npm start
+
+Or run
+
+    npm run start:optionals
 
 ### Building the Application
 
@@ -127,35 +158,15 @@ The production build of the application will be output in the `/static/dist/` di
 
     npm run build
 
-### Run the Application Locally
+This production build can be run locally with any number of http-server solutions. A simple one is to use the http-server package
 
-The local development environment for the static assets can be started by executing the command below in the project root directory:
+    npx http-server static/dist
 
-    npm run start
+### Invoking lambdas locally
 
-This will run the React application at [http://localhost:8080](http://localhost:8080) -- please see `Serverless Framework` below for enabling the 'server' side functionality.
+To invoke lambdas locally we must create a stringified JSON file with the order information to the specific lambda we are trying to run the structure of the events will differ between the lambda. Typically this will include data from your local database instance which is used in the event information.
 
-### Serverless Framework
-
-The [serverless framework](https://serverless.com/framework/docs/providers/aws/) offers many plugins which allow for local development utilizing many of the services AWS offers. For the most part we only need API Gateway and Lambda for this application but there are plugins for many more services (a list of known exceptions will be maintained below).
-
-##### Exceptions
-
-- SQS
-
- While there is an sqs-offline plugin for serverless it still requires an actual queue be running, we may investigate this in the future but for now sqs functionality isn't available while developing locally which means the following pieces of functionality will not operate locally:
-
-- Generating Colormaps
-
-#### Running API Gateway and Lambda Locally
-
-Running the following command will spin up API Gateway and Lambda locally which will open up a vast majority of the functionality the backend offers.
-
-    npm run offline
-
-This will provide access to API Gateway at [http://localhost:3001](http://localhost:3001)
-
-Additionally, this ties in with the `serverless webpack` plugin which will ensure that your lambdas are re-built when changes are detected.
+    npm run invoke-local <name-of-lambda-function> ./path/to/event.json
 
 ### Run the Automated [Jest](https://jestjs.io/) tests
 
@@ -163,28 +174,17 @@ Once the project is built, you must ensure that the automated unit tests pass:
 
     npm run test
 
-### Run the Automated [Cypress](https://www.cypress.io/) tests
+To run Jest in `watch` mode
 
-You must also ensure that the automated integration tests pass:
+    npm run test:watch
 
-    npm run cypress:run
+To only get coverage on files tested run
 
-You can also use the Cypress GUI with:
+    npm run test:watch-lite
 
-    npm run cypress:open
+Test coverage will be updated in the coverage directory to see breakdown use
 
-##### Configuration
-
-###### Cypress Secrets
-
-When adding new Cypress tests, you will need to modify the secrets.config.json file. You will need to edit the "cypress" object to include data from your local database:
-
-    "cypress": {
-        "user": {
-        "id": 1, // This should match the ID of your user in the 'users' database table
-        "username": "your username here" // Replace with the urs_id field of your user in the 'users' database table
-        }
-    }
+    open coverage/lcov-report/index.html
 
 ### Deployment
 
@@ -192,12 +192,14 @@ When the time comes to deploy the application, first ensure that you have the re
 
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
+- STAGE_NAME
 
 This application runs in a VPC for NASA security purposes, therefore the following values are expected when a deployment occurs:
 
 - VPC_ID
 - SUBNET_ID_A
 - SUBNET_ID_B
+- INTERNET_SERVICE_EAST_VPC
 
 For production use, this application uses Scatter Swap to obfuscate some IDs -- the library does not require a value be provided but if you'd like to control it you can set the following ENV vars:
 
@@ -206,4 +208,6 @@ For production use, this application uses Scatter Swap to obfuscate some IDs -- 
 
 To deploy the full application use the following:
 
-    NODE_ENV=production serverless deploy --stage UNIQUE_STAGE
+    bin/deploy_bamboo.sh
+
+Note: In that script all the env variables are prefixed with `bamboo_` to match our deployments.

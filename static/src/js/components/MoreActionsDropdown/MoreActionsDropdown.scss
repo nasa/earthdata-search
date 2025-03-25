@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .more-actions-dropdown {
   display: flex;
   align-items: flex-start;
@@ -5,12 +8,16 @@
   &__toggle {
     &:hover,
     &:focus {
-      color: $color__black--500;
+      color: utils.$color__carbon--50;
     }
   }
 
   &__menu {
-    box-shadow: $box-shadow;
+    box-shadow: bootstrap.$box-shadow;
+  }
+
+  &__smart-handoff-link {
+    padding-left:0.825rem;
   }
 
   &__dropdown {

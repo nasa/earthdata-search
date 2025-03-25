@@ -1,0 +1,50 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
+.swodlr-form {
+  &__advanced-options-item {
+    flex-grow: 0;
+    flex-shrink: 0;
+    z-index: 1;
+    position: relative;
+
+    .collapse-panel__button {
+      width: 100%;
+      padding: bootstrap.$spacer;
+      border: 0;
+      border-top: 1px solid utils.$color__carbon--20;
+      background: none;
+      outline: none;
+      text-align: left;
+      padding: 0.825rem;
+
+      &:hover {
+        color: utils.$color__carbon--50;
+      }
+    }
+
+    .collapse-panel__panel {
+      border-top: 1px solid utils.$color__carbon--20;
+    }
+  }
+
+  &__table-td-granule-id {
+    white-space: normal;
+    line-break: anywhere;
+  }
+
+  &__col {
+    padding-right: 3rem;
+  }
+
+  &__form-group {
+    display: flex;
+    align-items: baseline;
+    gap: 0.825rem;
+    white-space: nowrap;
+  }
+
+  &__card-body {
+    padding: 0.1rem 1rem;
+  }
+}

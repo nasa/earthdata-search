@@ -1,3 +1,6 @@
+@use '../vendor/bootstrap/configuration' as bootstrap;
+@use '../utils';
+
 #root {
   .map {
     .projection-switcher {
@@ -35,11 +38,15 @@
       width: 100%;
     }
 
+    .leaflet-control {
+      z-index: 1;
+    }
+
     .leaflet-control.leaflet-control-zoom {
       margin-bottom: 55px;
 
       .leaflet-disabled {
-        color: $color__black--300;
+        color: utils.$color__carbon--30;
 
         &:hover {
           cursor: not-allowed;
@@ -74,9 +81,10 @@
       bottom: 0;
       right: 0px;
       position: absolute;
+      z-index: 5;
     }
 
-    Reduce the font size on the scale elements
+    // Reduce the font size on the scale elements
     .leaflet-control-scale-line {
       font-weight: 400;
     }
@@ -96,7 +104,7 @@
       border-radius: 2px;
 
       label {
-        margin-bottom: 5px;
+        margin-bottom: 15px;
 
         &:last-child {
           margin-bottom: 0;
@@ -126,7 +134,7 @@
       position: relative;
       display: inline-block;
       margin-top: 0;
-      margin-right: $spacer/4;
+      margin-right: calc(bootstrap.$spacer / 4);
       top: 0px;
     }
 
@@ -144,7 +152,7 @@
       padding: 10px;
       padding-top: 0px;
       font-size: 10px;
-      color: $color__black--400;
+      color: utils.$color__carbon--40;
       text-align: right;
     }
 
@@ -154,14 +162,14 @@
     .leaflet-touch .leaflet-bar a,
     .leaflet-touch .leaflet-bar button {
       border: 0;
-      background-color: #fff;
+      background-color: utils.$color__spacesuit-white;
       width: 30px;
       height: 30px;
       line-height: 30px;
       display: block;
       text-align: center;
       text-decoration: none;
-      color: #000;
+      color: utils.$color__carbon-black;
 
       &:hover,
       &:last-child {
@@ -193,7 +201,7 @@
       border-top-right-radius: 4px;
     }
 
-    .leaflet-bottom .leaflet-control-scale {
+    .leaflet-bottom {
       margin-bottom: 10px;
     }
 
@@ -224,8 +232,8 @@
     }
 
     .leaflet-draw-actions a {
-      background-color: $color__black--400;
-      color: $color__white;
+      background-color: utils.$color__carbon--40;
+      color: utils.$color__spacesuit-white;
     }
 
     .leaflet-draw-toolbar .leaflet-draw-edit-remove,
@@ -252,7 +260,7 @@
     .leaflet-touch .leaflet-draw-toolbar .leaflet-draw-edit-edit.leaflet-disabled {
       position: relative;
       cursor: not-allowed;
-      background-color: #e6e6e6;
+      background-color: utils.$color__carbon--10;
       overflow: hidden;
 
       /* A little trickery to make the background image look faded to match the other disabled styles */

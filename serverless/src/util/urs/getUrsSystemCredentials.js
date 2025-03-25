@@ -18,7 +18,8 @@ export const getUrsSystemCredentials = async (earthdataEnvironment) => {
 
     if (process.env.NODE_ENV === 'development') {
       const {
-        cmrSystemUsername, cmrSystemPassword
+        cmrSystemUsername,
+        cmrSystemPassword
       } = getSecretEarthdataConfig(earthdataEnvironment)
 
       return {

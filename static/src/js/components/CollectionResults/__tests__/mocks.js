@@ -25,6 +25,7 @@ export const collectionListItemProps = {
     versionId: '2'
   },
   onAddProjectCollection: jest.fn(),
+  onMetricsAddCollectionProject: jest.fn(),
   onRemoveCollectionFromProject: jest.fn(),
   onViewCollectionGranules: jest.fn(),
   onViewCollectionDetails: jest.fn()
@@ -48,6 +49,7 @@ export const collectionResultsBodyData = {
   hasTransforms: false,
   hasVariables: false,
   isCollectionInProject: false,
+  isDefaultImage: false,
   isCSDA: false,
   isLast: true,
   isNrt: false,

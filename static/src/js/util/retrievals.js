@@ -1,4 +1,4 @@
-import { pick } from 'lodash'
+import { pick } from 'lodash-es'
 import { mbr } from '@edsc/geo-utils'
 
 import {
@@ -44,6 +44,7 @@ const permittedAccessMethodFields = [
   'supportsShapefileSubsetting',
   'supportsConcatenation',
   'defaultConcatenation',
+  'swodlrData',
   'type',
   'url'
 ]

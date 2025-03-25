@@ -1,23 +1,26 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .data-quality-summary {
   &__panel {
-    background-color: $color__pale-yellow;
-    border-bottom: 1px solid $color__pale-yellow--dark;
+    background-color: utils.$color__carbon--5;
+    border-bottom: 1px solid utils.$color__carbon--5;
 
     .collapse-panel__button {
       width: 100%;
-      padding: $spacer/2 $spacer;
+      padding: calc(bootstrap.$spacer / 2) bootstrap.$spacer;
       background-color: transparent;
       font-size: 0.825rem;
       font-weight: 300;
       border: none;
-      color: rgba($color__black, 0.75);
+      color: rgba(utils.$color__carbon-black, 0.75);
 
       &:hover {
-        background-color: $color__pale-yellow--dark;
+        background-color: utils.$color__carbon--10;
       }
 
       &:focus {
-        outline: 3px solid $color__pale-yellow--dark;
+        outline: 3px solid utils.$color__carbon--10;
       }
     }
 
@@ -27,7 +30,7 @@
     }
 
     .collapse-panel__button-secondary {
-      color: rgba($color__black, 0.4)
+      color: rgba(utils.$color__carbon-black, 0.4)
     }
 
     .collapse-panel__panel {
@@ -35,9 +38,9 @@
       width: 100%;
       max-height: 100px;
       overflow-x: scroll;
-      background-color: $color__pale-yellow;
-      border-bottom: 1px solid $color__pale-yellow--dark;
-      padding: $spacer/2 $spacer;
+      background-color: utils.$color__carbon--5;
+      border-bottom: 1px solid utils.$color__carbon--5;
+      padding: calc(bootstrap.$spacer / 2) bootstrap.$spacer;
       font-size: 0.825rem;
       font-weight: 300;
 
@@ -53,7 +56,7 @@
 
   &__icon {
     margin-right: 0.5rem;
-    color: rgba($color__black, 0.75);    width: 0.725rem;
+    color: rgba(utils.$color__carbon-black, 0.75);    width: 0.725rem;
     height: 0.725rem;
   }
 }

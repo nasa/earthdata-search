@@ -1,6 +1,8 @@
 import {
   EXPORT_FINISHED,
   EXPORT_STARTED,
+  GENERATE_NOTEBOOK_STARTED,
+  GENERATE_NOTEBOOK_FINISHED,
   RESTORE_FROM_URL,
   TOGGLE_ABOUT_CSDA_MODAL,
   TOGGLE_ABOUT_CWIC_MODAL,
@@ -59,6 +61,7 @@ const initialState = {
   keyboardShortcutsModal: {
     isOpen: false
   },
+  generateNotebook: {},
   map: {
     drawingNewLayer: false
   },
@@ -265,6 +268,24 @@ const uiReducer = (state = initialState, action = {}) => {
       }
     }
 
+    case GENERATE_NOTEBOOK_STARTED: {
+      return {
+        ...state,
+        generateNotebook: {
+          ...state.generateNotebook,
+          [action.payload]: 'loading'
+        }
+      }
+    }
+
+    case GENERATE_NOTEBOOK_FINISHED: {
+      const nextState = { ...state }
+
+      delete nextState.generateNotebook[action.payload]
+
+      return nextState
+    }
+
     case TOGGLE_DEPRECATED_PARAMETER_MODAL: {
       const { payload: displayModal } = action
       const { deprecatedParameterModal } = state
@@ -284,8 +305,8 @@ const uiReducer = (state = initialState, action = {}) => {
     }
 
     case RESTORE_FROM_URL: {
-      const { payload } = action
-      const { deprecatedUrlParams } = payload
+      const { payload = {} } = action
+      const { deprecatedUrlParams = [] } = payload
       const { deprecatedParameterModal } = state
 
       if (deprecatedUrlParams.length === 0) return initialState

@@ -7,8 +7,9 @@ import { stringify } from 'qs'
 
 import { bboxToPolygon } from './bboxToPolygon'
 import { ccwShapefile } from './ccwShapefile'
+import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
 import { getClientId } from '../../../sharedUtils/getClientId'
-import { getEarthdataConfig } from '../../../sharedUtils/config'
+import { obfuscateId } from '../util/obfuscation/obfuscateId'
 import { parseError } from '../../../sharedUtils/parseError'
 import { pointStringToLatLng } from './pointStringToLatLng'
 import { readCmrResults } from '../util/cmr/readCmrResults'
@@ -18,10 +19,11 @@ import { readCmrResults } from '../util/cmr/readCmrResults'
  */
 export const constructOrderPayload = async ({
   accessMethod,
-  granuleParams,
   accessToken,
-  shapefile,
-  environment
+  environment,
+  granuleParams,
+  retrievalId,
+  shapefile
 }) => {
   // Request granules from CMR
   const granuleResponse = await axios({
@@ -51,6 +53,7 @@ export const constructOrderPayload = async ({
     mbr,
     selectedOutputFormat,
     selectedOutputProjection,
+    selectedVariableNames = [],
     supportsBoundingBoxSubsetting,
     supportsShapefileSubsetting,
     supportsConcatenation
@@ -58,8 +61,8 @@ export const constructOrderPayload = async ({
 
   // OGC uses duplicate parameter names for subsetting and the
   // standard javascript object will not support that so we need to use
-  // duplicate keys
   // the FormData object to avoid any language specific restrictions on
+  // duplicate keys
   const orderPayload = new FormData()
 
   orderPayload.append('forceAsync', 'true')
@@ -218,12 +221,21 @@ export const constructOrderPayload = async ({
   }
 
   // Adds supportsConcatenation to the payload and it's value
-  if (supportsConcatenation && enableConcatenateDownload) {
-    orderPayload.append('concatenate', true)
+  if (supportsConcatenation) {
+    orderPayload.append('concatenate', enableConcatenateDownload)
+  }
+
+  // Adds the selectedVariableNames if they were included in the access method
+  if (selectedVariableNames.length > 0) {
+    const selectedVariableNameFormElement = selectedVariableNames.join(',')
+    orderPayload.append('variable', selectedVariableNameFormElement)
   }
 
   // EDSC-3440: Add skipPreview=true to all Harmony orders
   orderPayload.append('skipPreview', true)
+
+  // Add label to identify EDSC orders in Harmony
+  orderPayload.append('label', `eed-edsc-${getApplicationConfig().env},edsc-id=${obfuscateId(retrievalId)}`)
 
   return orderPayload
 }

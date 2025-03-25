@@ -1,5 +1,8 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .facets-section-heading {
-  padding: $spacer;
+  padding: bootstrap.$spacer;
   font-size: 1.25rem;
   font-weight: 700;
 }

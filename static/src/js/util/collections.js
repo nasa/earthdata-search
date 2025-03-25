@@ -6,6 +6,21 @@ import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 import { withAdvancedSearch } from './withAdvancedSearch'
 
 /**
+ * If sortkey is set to 'default' or is undefined then
+ * set it to the default sort key
+ * @param {String} sortKey
+ */
+export const translateDefaultCollectionSortKey = (sortKey) => {
+  const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
+
+  if (sortKey === undefined) {
+    return defaultSortKey
+  }
+
+  return sortKey === 'default' ? defaultSortKey : sortKey
+}
+
+/**
  * Prepare parameters used in getCollections() based on current Redux State
  * @param {Object} state Current Redux State
  * @returns {Object} Parameters used in buildCollectionSearchParams
@@ -17,6 +32,7 @@ export const prepareCollectionParams = (state) => {
     authToken,
     facetsParams = {},
     portal = {},
+    preferences = {},
     query = {
       collection: {}
     },
@@ -31,11 +47,19 @@ export const prepareCollectionParams = (state) => {
     onlyEosdisCollections,
     overrideTemporal = {},
     pageNum,
-    sortKey = [],
+    paramCollectionSortKey,
     spatial = {},
     tagKey: selectedTag,
     temporal = {}
   } = collectionQuery
+
+  const { preferences: preferencesObj = {} } = preferences
+  const { collectionSort = 'default' } = preferencesObj
+
+  const userPrefSortKey = translateDefaultCollectionSortKey(collectionSort)
+
+  // Use parameter sort key if present, else use user preferences sort key
+  const sortKey = [paramCollectionSortKey || userPrefSortKey]
 
   const {
     boundingBox,
@@ -170,6 +194,7 @@ export const buildCollectionSearchParams = (params) => {
     standardProduct,
     tagKey,
     temporalString,
+    toolConceptId,
     viewAllFacets,
     viewAllFacetsCategory
   } = params
@@ -177,7 +202,7 @@ export const buildCollectionSearchParams = (params) => {
   let facetsToSend = { ...cmrFacets }
 
   // If viewAllFacets has any keys, we know that the view all facets modal is active and we want to
-  // detirmine the next results based on those facets.
+  // determine the next results based on those facets.
   if (Object.keys(viewAllFacets).length) {
     facetsToSend = { ...viewAllFacets }
   }
@@ -265,6 +290,7 @@ export const buildCollectionSearchParams = (params) => {
     standardProduct,
     tagKey,
     temporal: temporalString,
+    toolConceptId,
     twoDCoordinateSystemName: facetsToSend.two_d_coordinate_system_name,
     facetsSize: viewAllFacetsCategory
       ? { [categoryNameToCMRParam(viewAllFacetsCategory)]: 10000 }

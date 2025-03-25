@@ -1,5 +1,8 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .order-progress-item {
-  margin-bottom: $spacer*1.5;
+  margin-bottom: bootstrap.$spacer*1.5;
 
   &__header {
     display: flex;
@@ -13,7 +16,7 @@
   }
 
   &__processed {
-    margin-right: $spacer/4;
+    margin-right: calc(bootstrap.$spacer / 4);
   }
 
   &__info {
@@ -24,29 +27,29 @@
   &__title {
     margin-bottom: 0;
     font-size: 0.825rem;
-    color: $color__black--500;
+    color: utils.$color__carbon--50;
   }
 
   &__bar {
-    margin-top: $spacer/2;
+    margin-top: calc(bootstrap.$spacer / 2);
 
     .progress-bar {
-      background-color: $color__indigo;
-      border: 1px solid darken($color__indigo, 20)
+      background-color: utils.$color__nasa-blue;
+      border: 1px solid darken(utils.$color__nasa-blue, 20)
     }
   }
 
   &__badge {
-    margin-left: $spacer/2;
-    color: $color__white;
-    background-color: $color__indigo;
+    margin-left: calc(bootstrap.$spacer / 2);
+    color: utils.$color__spacesuit-white;
+    background-color: utils.$color__nasa-blue;
 
     &--complete {
-      background-color: $color__green;
+      background-color: utils.$color__active-green;
     }
 
     &--failed {
-      background-color: $color__red;
+      background-color: utils.$color__nasa-red--shade;
     }
   }
 }

@@ -9,6 +9,9 @@ import {
   UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_REGION_QUERY
 } from '../constants/actionTypes'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
+
+const { collectionSearchResultsSortKey } = getApplicationConfig()
 
 const initialState = {
   collection: {
@@ -18,7 +21,7 @@ const initialState = {
     pageNum: 1,
     spatial: {},
     temporal: {},
-    sortKey: ['-usage_score']
+    sortKey: [collectionSearchResultsSortKey]
   },
   region: {
     exact: false
@@ -207,13 +210,13 @@ const queryReducer = (state = initialState, action = {}) => {
     }
 
     case RESTORE_FROM_URL: {
-      const { query } = action.payload
+      const { query = {} } = action.payload
 
-      const { collection, collectionSortPreference } = query
+      const { collection = {}, collectionSortPreference } = query
 
       const initialCollectionQueryWithPreferences = { ...initialState.collection }
       if (collectionSortPreference !== 'default') {
-        initialCollectionQueryWithPreferences.sortKey = collectionSortPreference === 'relevance' ? undefined : [collectionSortPreference]
+        initialCollectionQueryWithPreferences.sortKey = [collectionSortPreference]
       }
 
       return {

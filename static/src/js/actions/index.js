@@ -9,10 +9,12 @@ import {
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
 
+import { fetchAdminPreferencesMetrics } from './admin/preferencesMetrics'
+
 import {
-  fetchAdminMetricsRetrievals,
-  updateAdminMetricsRetrievalsStartDate,
-  updateAdminMetricsRetrievalsEndDate
+  fetchAdminRetrievalsMetrics,
+  updateAdminRetrievalsMetricsStartDate,
+  updateAdminRetrievalsMetricsEndDate
 } from './admin/retrievalMetrics'
 
 import {
@@ -196,6 +198,7 @@ import {
 } from './subscriptions'
 import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
+import { generateNotebook } from './generateNotebook'
 import { addEarthdataDownloadRedirect } from './earthdataDownloadRedirect'
 
 const actions = {
@@ -254,6 +257,7 @@ const actions = {
   fetchRetrievalHistory,
   fetchSavedProjects,
   fetchShapefile,
+  generateNotebook,
   getCollections,
   getColorMap,
   getFocusedCollection,
@@ -325,9 +329,10 @@ const actions = {
   updateAccessMethod,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
-  fetchAdminMetricsRetrievals,
-  updateAdminMetricsRetrievalsStartDate,
-  updateAdminMetricsRetrievalsEndDate,
+  fetchAdminPreferencesMetrics,
+  fetchAdminRetrievalsMetrics,
+  updateAdminRetrievalsMetricsStartDate,
+  updateAdminRetrievalsMetricsEndDate,
   updateAdvancedSearch,
   updateAuthToken,
   updateBrowserVersion,

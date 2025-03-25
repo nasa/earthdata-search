@@ -1,3 +1,6 @@
+@use '../utils/variables';
+@use '../utils/mixins';
+
 .dropdown-menu {
   padding: .25rem 0;
   overflow: visible !important;
@@ -7,22 +10,22 @@
   }
 
   &--carat {
-    @include carat('center');
+    @include mixins.carat('center');
   }
 
   &--carat-right {
-    @include carat('topright');
+    @include mixins.carat('topright');
   }
 
   &--carat-bottom-left {
-    @include carat('bottomleft');
+    @include mixins.carat('bottomleft');
     bottom: 0.425rem !important;
   }
 }
 
 .dropdown-header {
   font-weight: 700;
-  color: $color__black--500;
+  color: variables.$color__carbon--50;
 
   .dropdown-menu--condensed & {
     padding: .25rem .75rem;
@@ -32,12 +35,12 @@
 }
 
 .dropdown-item {
-  color: $color__black--800;
+  color: variables.$color__carbon--80;
   font-size: 0.875rem;
 
   &:hover {
-    background-color: lighten($color__black--200, 5%);
-    color: $color__black--700;
+    background-color: variables.$color__carbon--10;
+    color: variables.$color__carbon--70;
   }
 
   .dropdown-menu--condensed & {

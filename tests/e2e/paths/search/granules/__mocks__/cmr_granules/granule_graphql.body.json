@@ -1,0 +1,107 @@
+{
+	"data": {
+		"granule": {
+			"granuleUr": "LANCEMODIS:2422839764",
+			"granuleSize": 82.8862571716309,
+			"title": "LANCEMODIS:2422839764",
+			"onlineAccessFlag": true,
+			"dayNightFlag": "NIGHT",
+			"timeStart": "2024-10-25T14:48:00.000Z",
+			"timeEnd": "2024-10-25T14:54:00.000Z",
+			"dataCenter": "LANCEMODIS",
+			"originalFormat": "ECHO10",
+			"conceptId": "G3275560218-LANCEMODIS",
+			"collectionConceptId": "C2208779826-LANCEMODIS",
+			"spatialExtent": {
+				"horizontalSpatialDomain": {
+					"geometry": {
+						"gpolygons": [
+							{
+								"boundary": {
+									"points": [
+										{
+											"longitude": -138.432129,
+											"latitude": 64.928474
+										},
+										{
+											"longitude": 133.446274,
+											"latitude": 77.625404
+										},
+										{
+											"longitude": 145.476135,
+											"latitude": 57.356636
+										},
+										{
+											"longitude": -168.715439,
+											"latitude": 50.412476
+										},
+										{
+											"longitude": -138.432129,
+											"latitude": 64.928474
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			},
+			"temporalExtent": {
+				"rangeDateTime": {
+					"beginningDateTime": "2024-10-25T14:48:00.000Z",
+					"endingDateTime": "2024-10-25T14:54:00.000Z"
+				}
+			},
+			"relatedUrls": [
+				{
+					"url": "https://nrt3.modaps.eosdis.nasa.gov/api/v2/content/archives/allData/5201/VJ102IMG_NRT/2024/299/VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc",
+					"type": "GET DATA",
+					"mimeType": "application/x-netcdf"
+				},
+				{
+					"url": "http://doi.org/10.5067/VIIRS/VJ102IMG_NRT.021",
+					"type": "VIEW RELATED INFORMATION",
+					"description": "A link to Data set landing page",
+					"mimeType": "text/html"
+				}
+			],
+			"dataGranule": {
+				"dayNightFlag": "Night",
+				"identifiers": [
+					{
+						"identifier": "VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc",
+						"identifierType": "ProducerGranuleId"
+					}
+				],
+				"productionDateTime": "2024-10-25T14:41:15.000Z",
+				"archiveAndDistributionInformation": [
+					{
+						"name": "Not provided",
+						"size": 82.8862571716309,
+						"sizeInBytes": 86912540,
+						"checksum": {
+							"value": "73ba281fc6b4d70b44062f9072feae3f",
+							"algorithm": "MD5"
+						},
+						"sizeUnit": "MB"
+					}
+				]
+			},
+			"measuredParameters": null,
+			"providerDates": [
+				{
+					"date": "2024-10-25T18:42:11.140Z",
+					"type": "Insert"
+				},
+				{
+					"date": "2024-10-25T18:42:16.070Z",
+					"type": "Update"
+				},
+				{
+					"date": "2024-11-01T18:42:16.060Z",
+					"type": "Delete"
+				}
+			]
+		}
+	}
+}

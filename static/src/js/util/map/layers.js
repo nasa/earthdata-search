@@ -1,6 +1,8 @@
 /* eslint-disable no-underscore-dangle, new-cap */
 import L from 'leaflet'
-import { castArray } from 'lodash'
+import { dividePolygon } from '@edsc/geo-utils'
+
+import { castArray } from 'lodash-es'
 
 // Is the granule coordinate system cartesian?
 export function isCartesian(metadata = {}) {
@@ -50,8 +52,6 @@ export function getPolygons(metadata = {}) {
   let polygons = []
   if (metadataPolygons && metadataPolygons !== null) {
     polygons = metadataPolygons.map((p) => p.map((s) => parseSpatial(s)))
-
-    return polygons
   }
 
   return polygons
@@ -174,17 +174,19 @@ export const buildLayer = (options, metadata) => {
 
   if (polygons.length) {
     castArray(polygons).forEach((polygon) => {
+      const { interiors } = dividePolygon(polygon)
+
       let polyLayer
       if (cartesian) {
-        polyLayer = new L.polygon(polygon)
+        polyLayer = new L.polygon(interiors)
         polyLayer._interpolationFn = 'cartesian'
       } else {
-        polyLayer = new L.sphericalPolygon(polygon, options)
+        polyLayer = new L.SphericalPolygon(interiors, options)
       }
 
       layer.addLayer(polyLayer)
 
-      const bounds = L.latLngBounds(polygon)
+      const bounds = L.latLngBounds(interiors)
       if (
         bounds.getNorth() - bounds.getSouth() < 0.5
         && bounds.getWest() - bounds.getEast() < 0.5
@@ -209,7 +211,7 @@ export const buildLayer = (options, metadata) => {
         shape = new L.polygon(rect, options)
         shape._interpolationFn = 'cartesian'
       } else {
-        shape = new L.sphericalPolygon(rect, options)
+        shape = new L.SphericalPolygon(rect, options)
       }
 
       layer.addLayer(shape)

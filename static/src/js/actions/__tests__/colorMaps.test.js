@@ -2,13 +2,10 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import actions from '..'
-
 import {
   SET_COLOR_MAPS_LOADED,
   SET_COLOR_MAPS_LOADING,
-  ERRORED_COLOR_MAPS,
-  ADD_ERROR
+  ERRORED_COLOR_MAPS
 } from '../../constants/actionTypes'
 
 import {
@@ -59,8 +56,6 @@ describe('setColorMapsLoading', () => {
 
 describe('getColorMaps with error', () => {
   test('should call all the SET_COLOR_MAPS_LOADING and ERRORED_COLOR_MAPS actions when there is an error', async () => {
-    const handleErrorMock = jest.spyOn(actions, 'handleError')
-
     nock(/localhost/)
       .get(/colormaps\/AIRS_Prata_SO2_Index_Day/)
       .reply(500)
@@ -71,8 +66,6 @@ describe('getColorMaps with error', () => {
 
     const store = mockStore({})
     const product = 'AIRS_Prata_SO2_Index_Day'
-
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(getColorMap({ product })).then(() => {
       const storeActions = store.getActions()
@@ -86,22 +79,6 @@ describe('getColorMaps with error', () => {
         type: ERRORED_COLOR_MAPS,
         payload: { product }
       })
-
-      expect(storeActions[2]).toEqual({
-        type: ADD_ERROR,
-        payload: expect.objectContaining({
-          title: 'Error retrieving colormaps',
-          message: 'Unknown Error'
-        })
-      })
-
-      expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
-        action: 'getColorMap',
-        resource: 'colormaps'
-      }))
-
-      expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
 })

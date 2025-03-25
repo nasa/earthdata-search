@@ -1,6 +1,9 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .arrow-tags {
   margin: 0;
-  margin-bottom: $spacer/4;
+  margin-bottom: calc(bootstrap.$spacer / 4);
   padding: 0;
   list-style: none;
 
@@ -9,13 +12,13 @@
     display: inline-block;
     height: 1.4rem;
     padding: 0 0.5rem 0 1rem;
-    color: #fff;
+    color: utils.$color__spacesuit-white;
     font-size: 0.75rem;
     font-weight: 300;
     line-height: 1.4rem;
     word-wrap: none;
     text-transform: uppercase;
-    background-color: #445565;
+    background-color: utils.$color__carbon--70;
     vertical-align: bottom;
 
     &:before {
@@ -26,7 +29,7 @@
       width: 0.7rem;
       padding: 0 0.75rem 0 0.5rem;
       border: 0.7rem solid transparent;
-      border-left-color: $color__white;
+      border-left-color: utils.$color__spacesuit-white;
     }
 
     &:after {
@@ -37,29 +40,29 @@
       width: 0.7rem;
       padding: 0 0.75rem 0 0.75rem;
       border: 0.7rem solid transparent;
-      border-left-color: #445565;
+      border-left-color: utils.$color__carbon--70;
       z-index: 1;
     }
 
     &:first-child {
       padding-left: 0.5rem;
-      background-color: #2c3e50;
-      border-bottom-left-radius: $border-radius;
-      border-top-left-radius: $border-radius;
+      background-color: utils.$color__carbon--90;
+      border-bottom-left-radius: bootstrap.$border-radius;
+      border-top-left-radius: bootstrap.$border-radius;
 
       &:before {
         display: none;
       }
 
       &:after {
-        border-left-color: #2c3e50;
+        border-left-color: utils.$color__carbon--90;
       }
     }
 
     &:last-child {
-      background-color: #596f83;
-      border-bottom-right-radius: $border-radius;
-      border-top-right-radius: $border-radius;
+      background-color: utils.$color__carbon--60;
+      border-bottom-right-radius: bootstrap.$border-radius;
+      border-top-right-radius: bootstrap.$border-radius;
 
        &:after {
          display: none;

@@ -1,20 +1,23 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .granule-details-body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: $color__black--100;
+  background-color: utils.$color__carbon--10;
 
   .nav-tabs {
     font-size: 0.925rem;
-    background-color: $color__black--100;
+    background-color: utils.$color__carbon--10;
 
     .nav-link:not(.active):hover {
       border: 1px solid transparent;
     }
 
     .nav-link.active {
-      color: $color__black--700;
-      background-color: $color__white;
+      color: utils.$color__carbon--70;
+      background-color: utils.$color__spacesuit-white;
       border-bottom-color: transparent;
     }
   }
@@ -23,7 +26,7 @@
     box-sizing: border-box;
     display: flex;
     flex-grow: 1;
-    background-color: $color__white;
+    background-color: utils.$color__spacesuit-white;
     overflow-y: scroll;
     overflow-x: scroll;
   }
@@ -35,6 +38,6 @@
   }
 
   .tab-pane {
-    padding: $spacer;
+    padding: bootstrap.$spacer;
   }
 }

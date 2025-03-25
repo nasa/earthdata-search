@@ -1,4 +1,5 @@
 import {
+  getCollectionsQuerySpatial,
   getCollectionSubscriptionQueryString,
   getFocusedCollectionGranuleQuery,
   getGranuleSubscriptionQueryString
@@ -22,6 +23,38 @@ describe('getFocusedCollectionGranuleQuery selector', () => {
     }
 
     expect(getFocusedCollectionGranuleQuery(state)).toEqual({ mock: 'data' })
+  })
+
+  test('returns an empty object when there is no focusedCollection', () => {
+    const state = {
+      focusedCollection: '',
+      query: {}
+    }
+
+    expect(getFocusedCollectionGranuleQuery(state)).toEqual({})
+  })
+})
+
+describe('getCollectionsQuerySpatial selector', () => {
+  test('returns the granule query', () => {
+    const state = {
+      focusedCollection: 'collectionId',
+      query: {
+        collection: {
+          spatial: {
+            boundingBox: [
+              '1,0,-1,0'
+            ]
+          }
+        }
+      }
+    }
+
+    expect(getCollectionsQuerySpatial(state)).toEqual({
+      boundingBox: [
+        '1,0,-1,0'
+      ]
+    })
   })
 
   test('returns an empty object when there is no focusedCollection', () => {

@@ -1,15 +1,18 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .project-header {
   flex-grow: 0;
   flex-shrink: 0;
-  padding: $spacer*2 $spacer*0.75 $spacer;
-  border-right: 1px solid $border-color;
-  border-bottom: 1px solid $border-color;
+  padding: bootstrap.$spacer*2 bootstrap.$spacer*0.75 bootstrap.$spacer;
+  border-right: 1px solid bootstrap.$border-color;
+  border-bottom: 1px solid bootstrap.$border-color;
 
   &__name {
     position: relative;
     display: flex;
     align-items: center;
-    margin-bottom: $spacer/4;
+    margin-bottom: calc(bootstrap.$spacer / 4);
     font-size: 1.125rem;
     font-weight: 300;
   }
@@ -76,19 +79,19 @@
     flex-grow: 0;
     height: 1.75rem;
     width: 1.75rem;
-    margin-left: $spacer/4;
+    margin-left: calc(bootstrap.$spacer / 4);
     padding: 0;
     font-size: 0.925rem;
     border: 0;
-    color: $color__black--300;
+    color: utils.$color__carbon--30;
     border-radius: 50%;
     z-index: 1;
     background: none;
 
     &:focus,
     &:hover {
-      color: $color__black--400;
-      background-color: $color__black--200;
+      color: utils.$color__carbon--40;
+      background-color: utils.$color__carbon--20;
     }
 
     .edsc-icon {
@@ -98,7 +101,7 @@
   }
 
   &__title {
-    min-width: $spacer/2;
+    min-width: calc(bootstrap.$spacer / 2);
     margin: 0;
     padding: 0;
     font-weight: 300;
@@ -114,7 +117,7 @@
 
     .project-header__name--is-editing & {
       margin-bottom: 0.1rem;
-      border-bottom: 2px solid $color__blue--dark;
+      border-bottom: 2px solid utils.$color__nasa-blue--shade;
     }
   }
 
@@ -126,11 +129,11 @@
   }
 
   &__stats-item {
-    margin-right: $spacer/2;
+    margin-right: calc(bootstrap.$spacer / 2);
     display: inline-block;
     font-size: 0.775rem;
     line-height: 1.25rem;
-    color: $color__black--500;
+    color: utils.$color__carbon--60;
     vertical-align: middle;
   }
 
@@ -144,7 +147,7 @@
     display: inline;
     height: 0.75rem;
     width: 0.75rem;
-    margin-left: $spacer/4;
-    color: $color__black--400;
+    margin-left: calc(bootstrap.$spacer / 4);
+    color: utils.$color__carbon--40;
   }
 }

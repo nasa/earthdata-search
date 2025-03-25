@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .project-collections-list {
   display: flex;
   flex-direction: column;
@@ -13,16 +16,16 @@
 
   &__notice {
     margin: 0 auto;
-    padding: $spacer;
+    padding: bootstrap.$spacer;
     font-size: 0.825rem;
     font-style: italic;
     text-align: center;
-    color: $color__black--400;
-    border-right: 1px solid $border-color;
+    color: utils.$color__carbon--40;
+    border-right: 1px solid bootstrap.$border-color;
   }
 
   &__filler {
     flex-grow: 1;
-    border-right: 1px solid $border-color;
+    border-right: 1px solid bootstrap.$border-color;
   }
 }

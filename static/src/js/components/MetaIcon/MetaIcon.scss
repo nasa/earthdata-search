@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .meta-icon {
   display: flex;
   align-items: center;
@@ -5,30 +7,34 @@
   flex-shrink: 0;
   font-size: 0.825rem;
   font-weight: 500;
-  color: $color__black--700;
+  color: utils.$color__carbon--80;
   letter-spacing: 0.01em;
 
   &__icon {
-    color: $color__black--500;
+    grid-area: 1 / 1 / 2 / 2;
+    color: utils.$color__carbon--50;
     font-size: 0.75rem;
 
     .meta-icon:hover & {
-      color: $color__black--600;
+      color: utils.$color__carbon--60;
     }
   }
 
-  &__metadata{
+  &__icon-wrapper {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    place-items: center;
+  }
+
+  &__metadata {
     margin-left: 0.25rem;
-    padding: 0.075rem 0.5rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 1rem;
-    background-color: $color__black--200;
-    color: $color__black--600;
+    background-color: utils.$color__carbon--10;
+    color: utils.$color__carbon--80;
     font-size: 0.625rem;
     font-weight: 700;
-
-    .meta-icon:hover & {
-      background-color: $color__black--300;
-      color: $color__black--900;
-    }
+    display: flex;
   }
 }

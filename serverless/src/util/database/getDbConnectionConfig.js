@@ -28,9 +28,9 @@ export const getDbConnectionConfig = async () => {
 
     connectionConfig = {
       ...configObject,
-      host: process.env.databaseEndpoint,
-      database: process.env.dbName,
-      port: process.env.databasePort
+      host: process.env.DATABASE_ENDPOINT,
+      database: process.env.DB_NAME,
+      port: process.env.DATABASE_PORT
     }
   }
 

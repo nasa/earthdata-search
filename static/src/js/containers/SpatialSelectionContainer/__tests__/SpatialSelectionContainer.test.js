@@ -37,6 +37,7 @@ function setup() {
     },
     pointSearch: ['Test value'],
     polygonSearch: ['Test value'],
+    projectCollections: {},
     onMetricsMap: jest.fn(),
     onMetricsSpatialEdit: jest.fn(),
     onRemoveSpatialFilter: jest.fn()
@@ -108,6 +109,12 @@ describe('mapStateToProps', () => {
       metadata: {
         collection: {}
       },
+      project: {
+        collections: {
+          allIds: [],
+          byId: {}
+        }
+      },
       query: {
         collection: {
           spatial: {
@@ -132,6 +139,7 @@ describe('mapStateToProps', () => {
       router: {},
       pointSearch: [],
       polygonSearch: [],
+      projectCollections: {},
       shapefile: {}
     }
 
@@ -150,6 +158,7 @@ describe('SpatialSelectionContainer component', () => {
     expect(enzymeWrapper.find(SpatialSelection).props().isProjectPage).toEqual(false)
     expect(enzymeWrapper.find(SpatialSelection).props().pointSearch).toEqual(['Test value'])
     expect(enzymeWrapper.find(SpatialSelection).props().polygonSearch).toEqual(['Test value'])
+    expect(enzymeWrapper.find(SpatialSelection).props().projectCollections).toEqual({})
     expect(enzymeWrapper.find(SpatialSelection).props().onChangeQuery).toEqual(props.onChangeQuery)
     expect(enzymeWrapper.find(SpatialSelection).props().onToggleDrawingNewLayer)
       .toEqual(props.onToggleDrawingNewLayer)

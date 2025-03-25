@@ -1,3 +1,5 @@
+@use '../../../css/utils';
+
 .temporal-selection {
   margin-bottom: 0.5rem;
 
@@ -26,7 +28,7 @@
 
   &__range-label {
     margin-left: 0.5rem;
-    color: $color__black--500;
+    color: utils.$color__carbon--50;
     font-size: 0.825em;
   }
 
@@ -45,10 +47,10 @@
 }
 
 .input-range__track--active {
-  background: $color__theme--blue;
+  background: utils.$color__nasa-blue--tint;
 }
 
 .input-range__slider {
-  background: $color__theme--blue;
-  border-color: $color__theme--blue;
+  background: utils.$color__nasa-blue--tint;
+  border-color: utils.$color__nasa-blue--tint;
 }

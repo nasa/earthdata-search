@@ -1,11 +1,13 @@
+@use '../../../css/utils';
+
 .geojson-svg {
   stroke-width: 1;
-  stroke: #f80;
+  stroke: utils.$color__international-orange;
   fill-opacity: 0;
 
   &:hover {
-    fill: #00C322;
-    stroke: #00C322;
+    fill: utils.$color__active-green;
+    stroke: utils.$color__active-green;
     fill-opacity: .5;
   }
 }

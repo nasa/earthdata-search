@@ -1,8 +1,11 @@
 import {
   getCollectionSortPreference,
   getGranuleSortPreference,
-  getMapPreferences
+  getMapPreferences,
+  getCollectionSortKeyParameter
 } from '../preferences'
+import { collectionSortKeys } from '../../constants/collectionSortKeys'
+import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
 describe('getMapPreferences selector', () => {
   test('returns the map preferences', () => {
@@ -42,7 +45,7 @@ describe('getCollectionSortPreference selector', () => {
     const state = {
       preferences: {
         preferences: {
-          collectionSort: '-usage_score'
+          collectionSort: collectionSortKeys.usageDescending
         }
       }
     }
@@ -74,5 +77,59 @@ describe('getGranuleSortPreference selector', () => {
     const state = {}
 
     expect(getGranuleSortPreference(state)).toEqual('default')
+  })
+})
+
+describe('getCollectionSortKeyParameter', () => {
+  beforeEach(() => {
+    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+      collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+    }))
+  })
+
+  test('returns undefined when paramCollectionSortKey is not defined', () => {
+    const state = {
+      query: {
+        collection: {
+          paramCollectionSortKey: undefined
+        }
+      }
+    }
+
+    expect(getCollectionSortKeyParameter(state)).toEqual(undefined)
+  })
+
+  test('returns the proper collection paramCollectionSortKey when it is not the same as the user preference sort key', () => {
+    const state = {
+      query: {
+        collection: {
+          paramCollectionSortKey: collectionSortKeys.startDateAscending
+        }
+      },
+      preferences: {
+        preferences: {
+          collectionSort: collectionSortKeys.usageDescending
+        }
+      }
+    }
+
+    expect(getCollectionSortKeyParameter(state)).toEqual(collectionSortKeys.startDateAscending)
+  })
+
+  test('returns the null when the user preference sort key and the paramCollectionSortKey is the same', () => {
+    const state = {
+      query: {
+        collection: {
+          paramCollectionSortKey: collectionSortKeys.startDateAscending
+        }
+      },
+      preferences: {
+        preferences: {
+          collectionSort: collectionSortKeys.startDateAscending
+        }
+      }
+    }
+
+    expect(getCollectionSortKeyParameter(state)).toEqual(null)
   })
 })

@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .filter-stack-contents {
   display: flex;
   flex-wrap: wrap;
@@ -10,7 +13,7 @@
   }
 
   &__label {
-    margin-right: $spacer/4;
+    margin-right: calc(bootstrap.$spacer / 4);
     font-weight: 700;
     visibility: hidden;
     height: 0;
@@ -22,7 +25,7 @@
       visibility: visible;
       margin-top: 0.25rem;
       font-size: 0.75rem;
-      color: $color__black--500;
+      color: utils.$color__carbon--50;
     }
   }
 

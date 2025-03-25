@@ -1,0 +1,80 @@
+@use '../../utils';
+
+/*
+* Custom Variables
+*/
+/* Gutter width */
+$grid-gutter-width: 2rem;
+
+/* Font */
+$font-size-base: 0.875rem;
+
+/* HDS Typography guidelines, font-family */
+// Public Sans, plus the default sans-serif list from Bootstrap 4
+$font-family-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-base: $font-family-sans-serif;
+$headings-font-family: "Inter", $font-family-sans-serif;
+// DM Mono, plus the default monospace list from Bootstrap 4
+$font-family-monospace: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+/* Body */
+$body-color: utils.$color__carbon--80;
+
+/* Model Content */
+$modal-content-bg: utils.$color__spacesuit-white;
+$modal-content-color: utils.$color__carbon--60;
+
+/* Theme Colors */
+$theme-colors: (
+  "primary": utils.$color__nasa-blue,
+  "light": utils.$color__carbon--5,
+  "success": utils.$color__active-green,
+  "danger": utils.$color__nasa-red--shade,
+  "red": utils.$color__nasa-red--shade,
+  "warning": utils.$color__international-orange,
+  "yellow": utils.$color__international-orange
+);
+
+$border-color: utils.$color__carbon--20;
+
+/* Buttons */
+$btn-border-radius: 0.125rem;
+
+/* Links */
+$link-color: utils.$color__carbon-black;
+$color__link: utils.$color__carbon-black;
+$link-hover-color: utils.$color__carbon-black;
+$link-decoration: underline dashed;
+$link-hover-decoration: underline;
+
+/* Badges */
+$badge-padding-y: 0.3125rem;
+$badge-padding-x: 0.5rem;
+$badge-font-size: 0.6875rem;
+$badge-border-radius: 0.125rem;
+
+/* Cards */
+$card-bg: utils.$color__carbon--5;
+$card-border-color: utils.$color__carbon--10;
+
+/* Dropdowns */
+$dropdown-bg: utils.$color__spacesuit-white;
+
+/* Custom Breakpoints */
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 567px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1900px
+);
+
+$container-max-widths: (
+  sm: 567px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1900px
+);

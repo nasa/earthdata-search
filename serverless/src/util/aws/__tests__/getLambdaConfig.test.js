@@ -15,9 +15,9 @@ afterEach(() => {
 })
 
 describe('util#getLambdaConfig', () => {
-  test('returns an endpoint when IS_OFFLINE is true', () => {
+  test('returns an endpoint when NODE_ENV is development', () => {
     // Set the necessary ENV variables to ensure all values are tested
-    process.env.IS_OFFLINE = true
+    process.env.NODE_ENV = 'development'
 
     const lambdaConfig = getLambdaConfig()
 
@@ -26,9 +26,9 @@ describe('util#getLambdaConfig', () => {
 })
 
 describe('util#getLambdaConfig', () => {
-  test('does not return an endpoint when IS_OFFLINE is false', () => {
+  test('does not return an endpoint when NODE_ENV is not development', () => {
     // Set the necessary ENV variables to ensure all values are tested
-    process.env.IS_OFFLINE = false
+    process.env.NODE_ENV = 'test'
 
     const lambdaConfig = getLambdaConfig()
 

@@ -38,6 +38,8 @@ export default class GranuleRequest extends CmrRequest {
   transformResponse(data) {
     super.transformResponse(data)
 
+    const { earthdataEnvironment } = this
+
     // If the response status code is not 200, return unaltered data
     // If the status code is 200, it doesn't exist in the response
     const { statusCode = 200 } = data
@@ -68,7 +70,8 @@ export default class GranuleRequest extends CmrRequest {
       const { height, width } = thumbnailSize
 
       if (id) {
-        updatedGranule.thumbnail = `${getEarthdataConfig(this.earthdataEnvironment).cmrHost}/browse-scaler/browse_images/granules/${id}?h=${height}&w=${width}`
+        // Retrieve collection thumbnail if it exists
+        updatedGranule.thumbnail = `${getEnvironmentConfig().apiHost}/scale/granules/${id}?h=${height}&w=${width}&ee=${earthdataEnvironment}`
       }
 
       if (links && links.length > 0) {

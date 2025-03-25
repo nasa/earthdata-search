@@ -22,16 +22,22 @@ export default class TimelineRequest extends CmrRequest {
 
   permittedCmrKeys() {
     return [
+      'bounding_box',
       'concept_id',
       'end_date',
       'interval',
+      'point',
+      'polygon',
       'start_date'
     ]
   }
 
   nonIndexedKeys() {
     return [
-      'concept_id'
+      'bounding_box',
+      'concept_id',
+      'point',
+      'polygon'
     ]
   }
 }

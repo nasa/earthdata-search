@@ -18,9 +18,11 @@
       "width": 85
     },
     "orderStatusRefreshTime": 60000,
+    "orderStatusRefreshTimeCreating": 5000,
     "defaultCmrPageSize": 20,
     "maxCmrPageSize": 2000,
     "granuleLinksPageSize": "500",
+    "collectionSearchResultsSortKey": "-score",
     "openSearchGranuleLinksPageSize": "50",
     "defaultCmrSearchTags": [
       "edsc.*",
@@ -44,12 +46,11 @@
       "client": "eed-PORTAL-ENV-serverless-client",
       "lambda": "eed-PORTAL-ENV-serverless-lambda"
     },
+    "disableDatabaseComponents": "false",
     "disableEddDownload": "false",
     "disableOrdering": "false",
-    "disableDatabaseComponents": "false",
-    "macOSEddDownloadSize":130,
-    "windowsEddDownloadSize":100,
-    "linuxEddDownloadSize":90
+    "disableSwodlr": "false",
+    "disableSiteTour": "false"
   },
   "environment": {
     "test": {
@@ -61,11 +62,11 @@
       "dbHost": "127.0.0.1",
       "dbName": "edsc_dev",
       "databasePort": 5432,
-      "apiHost": "http://localhost:3001/dev",
+      "apiHost": "http://localhost:3001",
       "edscHost": "http://localhost:8080"
     },
     "production": {
-      "apiHost": "http://localhost:3001/dev",
+      "apiHost": "http://localhost:3001",
       "edscHost": "http://localhost:8080"
     }
   },

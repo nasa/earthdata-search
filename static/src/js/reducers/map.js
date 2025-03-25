@@ -28,7 +28,7 @@ const mapReducer = (state = initialState, action = {}) => {
     }
 
     case RESTORE_FROM_URL: {
-      const { map } = action.payload
+      const { map = {} } = action.payload
 
       Object.keys(map).forEach((key) => map[key] === undefined && delete map[key])
 

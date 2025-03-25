@@ -1,16 +1,75 @@
-import { camelCase, uniq } from 'lodash'
+import { camelCase } from 'lodash-es'
 
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import * as accessMethodTypes from '../../constants/accessMethodTypes'
+import { buildEcho } from './buildAccessMethods/buildEcho'
+import { buildEsi } from './buildAccessMethods/buildEsi'
+import { buildOpendap } from './buildAccessMethods/buildOpendap'
+import { buildHarmony } from './buildAccessMethods/buildHarmony'
+import { buildSwodlr } from './buildAccessMethods/buildSwodlr'
+import { buildDownload } from './buildAccessMethods/buildDownload'
 
-import { isDownloadable } from '../../../../../sharedUtils/isDownloadable'
-import { generateFormDigest } from './generateFormDigest'
-import { getVariables } from './getVariables'
-import { supportsBoundingBoxSubsetting } from './supportsBoundingBoxSubsetting'
-import { supportsConcatenation } from './supportsConcatenation'
-import { defaultConcatenation } from './defaultConcatenation'
-import { supportsShapefileSubsetting } from './supportsShapefileSubsetting'
-import { supportsTemporalSubsetting } from './supportsTemporalSubsetting'
-import { supportsVariableSubsetting } from './supportsVariableSubsetting'
+/**
+ * Formats a service type into a lower case and camelCase version
+ * @param {string} serviceType serviceType
+ * @returns {string} formatted service typpe
+ */
+export const formatServiceType = (serviceType) => {
+  const lowerServiceType = serviceType.toLowerCase()
+
+  return camelCase(lowerServiceType)
+}
+
+/**
+ * Reduces a list of all the accessMethods into a single object with correctly incremented/listed values
+ * @param {Array} items list of accessMethod items
+ * @returns {Object} single object of all the accessMethod items
+ */
+export const reduceAccessMethods = (items = []) => {
+  let esiIndex = 0
+  let echoIndex = 0
+  let harmonyIndex = 0
+
+  const accessMethods = items.reduce((methods, item) => {
+    const { type: serviceType } = item
+
+    const methodKey = serviceType ? formatServiceType(serviceType) : ''
+
+    const updatedAccessMethods = { ...methods }
+
+    switch (methodKey) {
+      case (accessMethodTypes.ESI):
+        updatedAccessMethods[`${methodKey}${esiIndex}`] = item
+
+        esiIndex += 1
+        break
+      case (accessMethodTypes.ECHO_ORDERS):
+        updatedAccessMethods[`${methodKey}${echoIndex}`] = item
+
+        echoIndex += 1
+        break
+      case (accessMethodTypes.HARMONY):
+        updatedAccessMethods[`${methodKey}${harmonyIndex}`] = item
+
+        harmonyIndex += 1
+        break
+      // No need to create a "accessMethodKey" since you can only have one openDap or SWODLR
+      case (accessMethodTypes.OPENDAP):
+        updatedAccessMethods[methodKey] = item
+
+        break
+      case (accessMethodTypes.SWODLR):
+        updatedAccessMethods[methodKey] = item
+
+        break
+      default:
+        break
+    }
+
+    return updatedAccessMethods
+  }, {})
+
+  return accessMethods
+}
 
 /**
  * Builds the different access methods available for the provided collection
@@ -25,187 +84,48 @@ export const buildAccessMethods = (collectionMetadata, isOpenSearch) => {
     variables: collectionAssociatedVariables = {}
   } = collectionMetadata
 
-  const accessMethods = {}
-  let harmonyIndex = 0
-  const { items: serviceItems = null } = services
+  const { items: serviceItems = [] } = services
 
-  const { disableOrdering } = getApplicationConfig()
-
-  if (serviceItems !== null) {
-    serviceItems.forEach((serviceItem) => {
-      let associatedVariables = collectionAssociatedVariables
-      const {
-        conceptId: serviceConceptId,
-        orderOptions,
-        type: serviceType,
-        url,
-        longName,
-        maxItemsPerOrder,
-        name,
-        supportedReformattings,
-        variables: serviceAssociatedVariables = {}
-      } = serviceItem
-
-      if (serviceAssociatedVariables.items) {
-        associatedVariables = serviceAssociatedVariables
-      }
-
-      // Only process service types that EDSC supports
-      const supportedServiceTypes = ['esi', 'echo orders', 'opendap', 'harmony']
-      if (!supportedServiceTypes.includes(serviceType.toLowerCase())) return
-
-      const { urlValue } = url
-
-      const supportsOrderOptions = ['esi', 'echo orders']
-
-      // Only process orderOptions if the service type uses orderOptions
-      // Do not include access if orders are disabled
-      if (supportsOrderOptions.includes(serviceType.toLowerCase()) && (disableOrdering !== 'true')) {
-        const { items: orderOptionsItems } = orderOptions
-        if (orderOptionsItems === null) return
-
-        orderOptionsItems.forEach((orderOptionItem, orderOptionIndex) => {
-          const {
-            conceptId: orderOptionConceptId,
-            form,
-            name: orderOptionName
-          } = orderOptionItem
-
-          const method = {
-            type: serviceType,
-            maxItemsPerOrder,
-            url: urlValue,
-            optionDefinition: {
-              conceptId: orderOptionConceptId,
-              name: orderOptionName
-            },
-            form,
-            formDigest: generateFormDigest(form)
-          }
-
-          let methodKey = camelCase(serviceType)
-
-          // `echoOrders` needs to be singular to match existing savedAccessConfigurations
-          if (methodKey === 'echoOrders') {
-            methodKey = 'echoOrder'
-          }
-
-          accessMethods[`${methodKey}${orderOptionIndex}`] = method
-        })
-      }
-
-      if (serviceType.toLowerCase() === 'opendap') {
-        const {
-          hierarchyMappings,
-          keywordMappings,
-          variables
-        } = getVariables(associatedVariables)
-
-        const outputFormats = []
-
-        if (supportedReformattings) {
-          supportedReformattings.forEach((reformatting) => {
-            const { supportedOutputFormats } = reformatting
-
-            // Collect all supported output formats from each mapping
-            outputFormats.push(...supportedOutputFormats)
-          })
-        }
-
-        accessMethods.opendap = {
-          hierarchyMappings,
-          id: serviceConceptId,
-          isValid: true,
-          keywordMappings,
-          longName,
-          name,
-          supportedOutputFormats: uniq(outputFormats),
-          supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
-          type: serviceType,
-          variables
-        }
-      }
-
-      if (serviceType.toLowerCase() === 'harmony') {
-        const {
-          hierarchyMappings,
-          keywordMappings,
-          variables
-        } = getVariables(associatedVariables)
-        const {
-          supportedOutputProjections
-        } = serviceItem
-
-        const outputFormats = []
-
-        if (supportedReformattings) {
-          supportedReformattings.forEach((reformatting) => {
-            const { supportedOutputFormats } = reformatting
-
-            // Collect all supported output formats from each mapping
-            outputFormats.push(...supportedOutputFormats)
-          })
-        }
-
-        let outputProjections = []
-        if (supportedOutputProjections) {
-          outputProjections = supportedOutputProjections.filter((projection) => {
-            const { projectionAuthority } = projection
-
-            return projectionAuthority != null
-          }).map((projection) => {
-            const { projectionAuthority } = projection
-
-            return projectionAuthority
-          })
-        }
-
-        accessMethods[`harmony${harmonyIndex}`] = {
-          enableTemporalSubsetting: true,
-          enableSpatialSubsetting: true,
-          hierarchyMappings,
-          id: serviceConceptId,
-          isValid: true,
-          keywordMappings,
-          longName,
-          name,
-          supportedOutputFormats: uniq(outputFormats),
-          supportedOutputProjections: outputProjections,
-          supportsBoundingBoxSubsetting: supportsBoundingBoxSubsetting(serviceItem),
-          supportsShapefileSubsetting: supportsShapefileSubsetting(serviceItem),
-          supportsTemporalSubsetting: supportsTemporalSubsetting(serviceItem),
-          supportsVariableSubsetting: supportsVariableSubsetting(serviceItem),
-          supportsConcatenation: supportsConcatenation(serviceItem),
-          defaultConcatenation: defaultConcatenation(serviceItem),
-          enableConcatenateDownload: defaultConcatenation(serviceItem),
-          type: serviceType,
-          url: urlValue,
-          variables
-        }
-
-        harmonyIndex += 1
-      }
-    })
+  const buildMethods = {
+    echoOrders: (serviceItem) => buildEcho(serviceItem),
+    esi: (serviceItem) => buildEsi(serviceItem),
+    opendap: (serviceItem, params) => buildOpendap(serviceItem, params),
+    harmony: (serviceItem, params) => buildHarmony(serviceItem, params),
+    swodlr: (serviceItem) => buildSwodlr(serviceItem),
+    downloads: () => buildDownload(granules, isOpenSearch)
   }
 
-  // Determine if the collection should have the downloadable accessMethod
-  let onlineAccessFlag = false
+  const nonDownloadMethodItems = serviceItems.flatMap((serviceItem) => {
+    let associatedVariables = collectionAssociatedVariables
+    const {
+      type: serviceType,
+      variables: serviceAssociatedVariables = {}
+    } = serviceItem
 
-  if (granules) {
-    // If the collection has granules, check their online access flags to
-    // determine if this collection is downloadable
-    const { items: granuleItems } = granules
-
-    if (granuleItems) {
-      onlineAccessFlag = isDownloadable(granuleItems)
+    // Overwrite variables if there are variables associated to the service record
+    if (serviceAssociatedVariables.items && serviceAssociatedVariables.items.length > 0) {
+      associatedVariables = serviceAssociatedVariables
     }
 
-    if (onlineAccessFlag || isOpenSearch) {
-      accessMethods.download = {
-        isValid: true,
-        type: 'download'
-      }
+    const formattedServiceType = formatServiceType(serviceType)
+
+    // Only process service types that EDSC supports
+    if (!Object.values(accessMethodTypes).includes(formattedServiceType)) return {}
+
+    const params = {
+      associatedVariables
     }
+
+    const items = buildMethods[formattedServiceType](serviceItem, params)
+
+    return items
+  }, [])
+
+  const nonDownloadMethods = reduceAccessMethods(nonDownloadMethodItems)
+
+  const accessMethods = {
+    ...nonDownloadMethods,
+    ...buildMethods.downloads()
   }
 
   return accessMethods

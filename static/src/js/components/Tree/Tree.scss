@@ -1,7 +1,10 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .tree {
   &__filter-clear-button {
     &.btn-outline-secondary {
-      border-color: $gray-400;
+      border-color: bootstrap.$gray-400;
     }
   }
 
@@ -23,7 +26,7 @@
       top: -0.75rem;
       left: 0.625rem;
       height: calc(100% + 0.125rem);
-      border-left: 1px solid $gray-400;
+      border-left: 1px solid bootstrap.$gray-400;
       z-index: 0;
     }
 

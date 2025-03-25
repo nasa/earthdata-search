@@ -1,12 +1,15 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .region-search {
   &__selected-region-id {
-    margin-right: $spacer/2;
+    margin-right: calc(bootstrap.$spacer / 2);
     font-weight: 700;
   }
 
   &__selected-region-name {
-    margin-right: $spacer/2;
+    margin-right: calc(bootstrap.$spacer / 2);
     font-style: italic;
-    color: $color__black--400;
+    color: utils.$color__carbon--40;
   }
 }

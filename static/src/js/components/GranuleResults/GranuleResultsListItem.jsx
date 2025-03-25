@@ -1,0 +1,170 @@
+import React, {
+  memo,
+  useEffect,
+  useRef
+} from 'react'
+import { PropTypes } from 'prop-types'
+
+import { useRemsToPixels } from '../../hooks/useRemsToPixels'
+import { granuleListItem } from './skeleton'
+
+import GranuleResultsItem from './GranuleResultsItem'
+import Skeleton from '../Skeleton/Skeleton'
+
+import './GranuleResultsListItem.scss'
+
+/**
+ * Renders GranuleResultsListItem.
+ * @param {Object} props - The props passed into the component.
+ * @param {Number} props.columnIndex - The column index of the current item from react-window.
+ * @param {Object} props.data - The data of the current item from react-window.
+ * @param {Number} props.rowIndex - The row index of the current item from react-window.
+ * @param {Object} props.style - The style attributes of the current item from react-window.
+ */
+export const GranuleResultsListItem = memo(({
+  columnIndex,
+  data,
+  rowIndex,
+  style
+}) => {
+  const element = useRef()
+
+  const {
+    collectionId,
+    collectionQuerySpatial,
+    collectionTags,
+    directDistributionInformation,
+    generateNotebook,
+    granules,
+    isCollectionInProject,
+    isGranuleInProject,
+    isItemLoaded,
+    location,
+    numColumns,
+    onAddGranuleToProjectCollection,
+    onExcludeGranule,
+    onFocusedGranuleChange,
+    onGenerateNotebook,
+    onMetricsAddGranuleProject,
+    onMetricsDataAccess,
+    onRemoveGranuleFromProjectCollection,
+    readableGranuleName,
+    setRowHeight,
+    windowWidth
+  } = data
+
+  const { remInPixels } = useRemsToPixels()
+
+  // Calculate the index of the list item
+  const index = rowIndex * numColumns + columnIndex
+
+  useEffect(() => {
+    if (!element.current) return
+
+    // Calculate and set the size of the current item
+    const currentHeight = element.current.getBoundingClientRect().height
+
+    setRowHeight(rowIndex, columnIndex, currentHeight)
+  }, [windowWidth, element.current])
+
+  // Tweak the position of the elements to simulate the correct margins
+  const customStyle = {
+    ...style,
+    left: style.left + remInPixels,
+    top: style.top + remInPixels,
+    width: style.width - remInPixels,
+    height: style.height - remInPixels
+  }
+
+  // If the item has not loaded, render a placeholder
+  if (!isItemLoaded(index)) {
+    return (
+      <li
+        ref={element}
+        className="granule-results-list-item"
+        style={customStyle}
+      >
+        <Skeleton
+          className="granule-results-item"
+          containerStyle={
+            {
+              height: '140px',
+              width: '100%'
+            }
+          }
+          shapes={granuleListItem}
+        />
+      </li>
+    )
+  }
+
+  const granule = granules[index] || false
+
+  // Prevent rendering of additional items so we only get 1 placeholder during loading
+  if (!granule) return null
+
+  return (
+    <li className="granule-results-list-item" style={style}>
+      <div className="granule-results-list-item__wrapper">
+        <GranuleResultsItem
+          collectionId={collectionId}
+          collectionQuerySpatial={collectionQuerySpatial}
+          collectionTags={collectionTags}
+          directDistributionInformation={directDistributionInformation}
+          generateNotebook={generateNotebook}
+          granule={granules[index]}
+          isCollectionInProject={isCollectionInProject}
+          isGranuleInProject={isGranuleInProject}
+          location={location}
+          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+          onExcludeGranule={onExcludeGranule}
+          onGenerateNotebook={onGenerateNotebook}
+          onFocusedGranuleChange={onFocusedGranuleChange}
+          onMetricsDataAccess={onMetricsDataAccess}
+          onMetricsAddGranuleProject={onMetricsAddGranuleProject}
+          onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+          readableGranuleName={readableGranuleName}
+          ref={element}
+        />
+      </div>
+    </li>
+  )
+})
+
+GranuleResultsListItem.displayName = 'GranuleResultsListItem'
+
+GranuleResultsListItem.propTypes = {
+  columnIndex: PropTypes.number.isRequired,
+  data: PropTypes.shape({
+    collectionId: PropTypes.string,
+    collectionQuerySpatial: PropTypes.shape({}).isRequired,
+    collectionTags: PropTypes.shape({}).isRequired,
+    directDistributionInformation: PropTypes.shape({}),
+    generateNotebook: PropTypes.shape({}).isRequired,
+    granules: PropTypes.arrayOf(PropTypes.shape({})),
+    isCollectionInProject: PropTypes.bool,
+    isGranuleInProject: PropTypes.func,
+    isItemLoaded: PropTypes.func,
+    location: PropTypes.shape({}),
+    numColumns: PropTypes.number,
+    onAddGranuleToProjectCollection: PropTypes.func,
+    onExcludeGranule: PropTypes.func,
+    onFocusedGranuleChange: PropTypes.func,
+    onGenerateNotebook: PropTypes.func,
+    onMetricsAddGranuleProject: PropTypes.func,
+    onMetricsDataAccess: PropTypes.func,
+    onRemoveGranuleFromProjectCollection: PropTypes.func,
+    readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
+    setRowHeight: PropTypes.func,
+    windowWidth: PropTypes.number
+  }).isRequired,
+  rowIndex: PropTypes.number.isRequired,
+  style: PropTypes.shape({
+    height: PropTypes.number,
+    left: PropTypes.number,
+    top: PropTypes.number,
+    width: PropTypes.number
+  }).isRequired
+}
+
+export default GranuleResultsListItem

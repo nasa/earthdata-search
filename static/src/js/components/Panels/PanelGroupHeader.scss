@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .panel-group-header {
   display: flex;
   flex-direction: column;
@@ -6,13 +9,13 @@
   flex-wrap: nowrap;
   flex-shrink: 0;
   padding: 0;
-  border-bottom: 1px solid $color__black--200;
-  background-color: $color__white;
+  border-bottom: 1px solid utils.$color__carbon--20;
+  background-color: utils.$color__spacesuit-white;
 
   &__breadcrumbs {
     display: flex;
     width: 100%;
-    border-bottom: 1px solid $color__black--200;
+    border-bottom: 1px solid utils.$color__carbon--20;
     padding: 0.325rem 1rem;
     font-size: 0.825rem;
   }
@@ -44,7 +47,7 @@
     padding: 0 0.25rem;
     font-weight: 700;
     font-size: 0.875rem;
-    color: $color__black--300;
+    color: utils.$color__carbon--30;
   }
 
   &__heading {
@@ -54,20 +57,21 @@
     font-size: 1rem;
     vertical-align: middle;
     flex-grow: 1;
-    margin: 0.5*$spacer $spacer;
+    margin: 0.5*bootstrap.$spacer bootstrap.$spacer;
 
     &--skeleton {
-      margin-top: 0.75*$spacer
+      margin-top: 0.75*bootstrap.$spacer
     }
   }
 
   &__heading-wrap {
+    align-items: center;
     display: flex;
     width: 100%;
   }
 
   &__more-actions {
-    padding: 0.25*$spacer 0.5*$spacer;
+    padding: 0.25*bootstrap.$spacer 0.5*bootstrap.$spacer;
     flex-grow: 0;
     flex-shrink: 0;
   }
@@ -78,7 +82,7 @@
     align-items: stretch;
     justify-content: space-between;
     width: 100%;
-    background-color: darken($color__black--100, 7);
+    background-color: utils.$color__carbon--10;
     font-size: 0.725rem;
 
     .panels--md & {
@@ -86,36 +90,42 @@
     }
   }
 
+  &__heading-meta-text {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    font-weight: 500;
+  }
+
   &__heading-meta-primary {
     display: flex;
     align-items: center;
     height: auto;
-    padding: 0.325rem $spacer/2 0.325rem $spacer;
-    color: $color__black--600;
+    padding: 0.625rem 0.5rem 0.625rem  1rem;
+    color: utils.$color__carbon--80;
   }
 
   &__heading-meta-secondary {
     display: flex;
     flex-shrink: 0;
     align-items: center;
-    padding: 0 0 0 0.75*$spacer;
+    padding: 0 0 0 0.75*bootstrap.$spacer;
   }
 
   &__setting-dropdown {
     height: 100%;
-    border-left: 1px solid $color__black--300;
+    border-left: 1px solid utils.$color__carbon--30;
     transition: 0.2s ease-in-out;
 
     &:hover {
-      background-color: darken($color__black--200, 5);
+      background-color: utils.$color__carbon--10;
 
       .custom-toggle__icon {
-        color: $color__black--500;
+        color: utils.$color__carbon--50;
       }
     }
 
     .custom-toggle {
-      padding: 0 0.75*$spacer;
+      padding: 0 0.75*bootstrap.$spacer;
       height: 100%;
     }
 
@@ -135,16 +145,20 @@
       .radio-setting-dropdown__label {
         display: none;
       }
+
+      // When the panel space is not available hide the icons
+      .custom-toggle__icon {
+        display: none !important;
+      }
     }
   }
 
   &__heading-secondary {
     display: block;
-    margin-bottom: $spacer/4;
+    margin-bottom: calc(bootstrap.$spacer / 4);
     font-size: 0.825rem;
-    color: $color__black--900;
+    color: utils.$color__carbon--90;
   }
-
 
   &__heading-primary {
     display: inline;
@@ -152,7 +166,7 @@
     margin-right: 0.75rem;
     font-size: 1rem;
     font-weight: 500;
-    color: $color__black--700;
+    color: utils.$color__carbon--70;
   }
 
   &__heading-badge {
@@ -168,16 +182,16 @@
     padding: 0;
     font-size: 0.875rem;
     vertical-align: middle;
-    color: $color__blue;
+    color: utils.$color__nasa-blue;
   }
 
   &__heading-primary-link:hover {
-    color: $color__blue;
+    color: utils.$color__nasa-blue;
   }
 
   &__spinner-export {
-    margin: 0 0.75*$spacer;
-    border-left: 1px solid $color__black--300;
+    margin: 0 0.75*bootstrap.$spacer;
+    border-left: 1px solid utils.$color__carbon--30;
     height: 2rem;
   }
 }

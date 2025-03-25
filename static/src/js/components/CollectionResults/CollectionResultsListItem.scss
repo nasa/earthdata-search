@@ -1,10 +1,13 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .collection-results-list-item {
   &--loading {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: $spacer 0;
+    padding: bootstrap.$spacer 0;
     text-align: center;
-    color: $color__black--600;
+    color: utils.$color__carbon--60;
   }
 }

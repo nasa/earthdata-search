@@ -1,8 +1,10 @@
+@use '../utils/variables';
+
 .modal-backdrop {
   transition: all 0.2s ease;
 
   .is-dragging & {
-    background-color: $color__green;
+    background-color: variables.$color__active-green;
   }
 }
 

@@ -1,17 +1,20 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .more-actions-dropdown-item {
-  padding: $spacer/4 $spacer/2;
+  padding: calc(bootstrap.$spacer / 4) calc(bootstrap.$spacer / 2);
   font-size: 0.75rem;
 
   &__icon {
     display: inline-block;
     vertical-align: middle;
     width: 1rem;
-    margin-right: $spacer/4;
+    margin-right: calc(bootstrap.$spacer / 4);
     text-align: center;
-    color: $color__black--300;
+    color: utils.$color__carbon--30;
 
     .more-actions-dropdown-item:hover & {
-      color: $color__black--400;
+      color: utils.$color__carbon--40;
     }
   }
 

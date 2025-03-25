@@ -1,19 +1,21 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 $item-height: 3rem;
 
 .order-status-item {
   position: relative;
   margin-bottom: 0.5rem;
-  border: 1px solid $color__black--300;
+  border: 1px solid utils.$color__carbon--30;
   z-index: 0;
-  background: $color__white;
-  border-radius: $border-radius;
+  background: utils.$color__spacesuit-white;
+  border-radius: bootstrap.$border-radius;
 
   &:last-child {
-    border-bottom: 1px solid $color__black--300;
+    border-bottom: 1px solid utils.$color__carbon--30;
   }
 
   &--is-opened {
-    box-shadow: 0 0 0.75rem -0.125rem rgba($color__black, 0.15);
     z-index: 1;
   }
 
@@ -21,19 +23,21 @@ $item-height: 3rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 $spacer;
+    padding: 0;
+    padding-left: bootstrap.$spacer;
   }
 
   &__heading {
     line-height: $item-height;
-    padding-right: $spacer;
+    padding-right: bootstrap.$spacer;
     align-items: center;
     height: $item-height;
     width: 50%;
     margin: 0;
     padding: 0;
     font-weight: 700;
-    font-size: 0.875rem;
+    font-size: 1rem;
+    letter-spacing: -0.015rem;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -47,10 +51,9 @@ $item-height: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.5*$spacer;
+    padding: 0.5*bootstrap.$spacer;
     width: 15%;
-    font-size: 0.775rem;
-    color: $color__black--600;
+    color: utils.$color__carbon--60;
 
     &--progress {
       justify-content: flex-start;
@@ -58,8 +61,15 @@ $item-height: 3rem;
   }
 
   &__meta-row {
-    display: flex;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    gap: 1rem;
     flex-direction: row;
+
+    @include bootstrap.media-breakpoint-up(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   &__meta {
@@ -68,25 +78,26 @@ $item-height: 3rem;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    margin-bottom: $spacer;
+    margin-bottom: bootstrap.$spacer;
     width: auto;
     font-size: 0.875rem;
-    color: $color__black--600;
   }
 
   &__meta-heading {
-    margin-bottom: 0.125*$spacer;
-    font-size: 0.875rem;
-    color: $color__black--400;
+    margin-bottom: 0.25*bootstrap.$spacer;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    font-family: bootstrap.$font-family-monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
   }
 
   &__meta-body {
-    margin-top: 2px;
+    margin-top: 0.25rem;
 
     &--progress {
       display: flex;
-      align-items: center;
-      margin-top: 0rem;
+      align-items: flex-start;
     }
   }
 
@@ -95,21 +106,18 @@ $item-height: 3rem;
     flex-direction: column;
   }
 
-  &__body-header {
-    padding-top: 0;
-  }
-
   &__body-header-primary {
     display: flex;
     flex-direction: column;
-    padding: $spacer;
-    padding-bottom: 0.875rem;
-    padding-top: 0;
+    padding: bootstrap.$spacer*0.5 bootstrap.$spacer;
+    padding-top: bootstrap.$spacer*0.5;
   }
 
   &__progress-ring {
-    margin-right: $spacer/4;
+    margin-right: calc(bootstrap.$spacer / 4);
     height: 23px;
+    position: relative;
+    top: -0.075rem;
 
     .progress-ring__circle-back {
       animation: pulse 1s alternate infinite;
@@ -127,29 +135,29 @@ $item-height: 3rem;
     .order-status-item &,
     .order-status-item--in_progress & {
       .progress-ring__progress {
-        stroke: $color__indigo;
+        stroke: utils.$color__nasa-blue;
       }
     }
 
     .order-status-item--complete & {
       .progress-ring__progress {
-        stroke: $color__green;
+        stroke: utils.$color__active-green;
       }
     }
 
     .order-status-item--failed & {
       .progress-ring__progress {
-        stroke: $color__red;
+        stroke: utils.$color__nasa-red--shade;
       }
     }
   }
 
   &__button {
     width: 5%;
-    color: $color__black--400;
+    color: utils.$color__carbon--40;
 
     &:hover {
-      color: $color__black--500;
+      color: utils.$color__carbon--50;
     }
   }
 
@@ -162,40 +170,48 @@ $item-height: 3rem;
   }
 
   &__status {
-    line-height: 1rem;
+    font-weight: 700;
+    font-size: 0.925rem;
+    letter-spacing: -0.015rem;
   }
 
   &__percentage {
     display: inline-block;
-    margin-left: $spacer/4;
-    font-weight: 300;
+    margin-left: calc(bootstrap.$spacer / 4);
+    font-weight: 500;
     font-size: 0.725rem;
     line-height: 1rem;
-    color: $color__black--500;
+    color: utils.$color__carbon--60;
   }
 
-  &__orders-processed {
-    display: inline-block;
-    font-size: 0.725rem;
+  &__orders-processed,
+  &__last-updated {
+    margin-top: 0.325rem;
     line-height: 1rem;
-    font-weight: 300;
-    color: $color__black--500;
+  }
+
+  &__last-updated {
+    margin-top: 0.5rem;
+    font-style: italic;
+    font-size: 0.825rem;
+    margin-top: 0.5rem;
+    color: utils.$color__carbon--60;
   }
 
   &__additional-info {
     max-height: 7rem;
     overflow-y: scroll;
-    background-color: $color__black--200;
   }
 
   &__order-info {
-    font-size: 0.875rem;
+    padding: bootstrap.$spacer;
+    padding-top: 0;
   }
 
   &__note {
     display: block;
-    margin-bottom: $spacer/2;
-    color: $color__black--500;
+    margin-bottom: calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--50;
     font-size: 0.875rem;
   }
 
@@ -203,37 +219,37 @@ $item-height: 3rem;
     font-weight: 500;
 
     &--opensearch {
-      color: $color__yellow;
+      color: utils.$color__international-orange;
     }
 
     &--csda {
-      color: $color__purple;
+      color: utils.$color__international-orange;
     }
   }
 
   &__message {
-    padding: 0.875rem $spacer;
-    background-color: $color__pale-yellow;
-    border: 1px solid $color__pale-yellow--dark;
+    padding: 0.875rem bootstrap.$spacer;
+    background-color: rgba(utils.$color__international-orange, 0.25);
+    border: 1px solid rgba(utils.$color__international-orange, 0.25);
     border-left: 0;
     border-right: 0;
 
     &--is-error {
-      background-color: $color__pale-red;
-      border-color: $color__pale-red--dark;
+      background-color: rgba(utils.$color__nasa-red--shade, 0.25);
+      border-color: rgba(utils.$color__nasa-red--shade, 0.25);
     }
   }
 
   &__message-heading {
-    margin-bottom: $spacer*0.25;
+    margin-bottom: bootstrap.$spacer*0.25;
     font-size: 0.775rem;
-    color: rgba($color__black, 0.5);
+    color: rgba(utils.$color__carbon-black, 0.5);
   }
 
   &__message-body {
     margin-bottom: 0;
     font-size: 0.775rem;
-    color: rgba($color__black, 0.7);
+    color: rgba(utils.$color__carbon-black, 0.7);
   }
 
   &__body {
@@ -246,8 +262,8 @@ $item-height: 3rem;
   }
 
   &__tabs {
-    border-top: 1px solid $color__black--300;
-    background-color: $color__black--200;
+    border-top: 1px solid utils.$color__carbon--30;
+    background-color: utils.$color__carbon--10;
 
     .tab-content {
       display: flex;
@@ -278,7 +294,7 @@ $item-height: 3rem;
 
     .order-status-item__tab-status & {
       font-size: 1.125rem;
-      color: $color__black--500;
+      color: utils.$color__carbon--60;
       max-width: 30rem;
       text-align: center;
     }
@@ -287,7 +303,7 @@ $item-height: 3rem;
   &__status-text {
     font-style: italic;
     font-size: 0.825rem;
-    color: $color__black--500;
+    color: utils.$color__carbon--60;
     display: block;
     margin-bottom: 0.5rem;
   }
@@ -304,17 +320,17 @@ $item-height: 3rem;
 
     .link--external {
       &:after {
-        color: $color__black--500;
+        color: utils.$color__carbon--50;
       }
 
       &:hover:after {
-        color: $color__black--500;
+        color: utils.$color__carbon--50;
       }
     }
   }
 
   &__subtitle {
-    color: $color__black--500;
+    color: utils.$color__carbon--50;
     font-weight: 500;
     font-size: 0.925rem;
   }
@@ -322,42 +338,23 @@ $item-height: 3rem;
   &__direct-distribution-item {
     display: inline-block;
     margin-right: 1rem;
-    color: $color__black--500;
+    color: utils.$color__carbon--50;
     font-weight: 500;
   }
 
   &__direct-distribution-item-value {
     display: block;
     font-weight: 700;
-    color: $color__black--600;
-  }
-}
-
-.download-links-panel, .browse-links-panel {
-  &__list {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    li {
-      text-overflow: ellipsis;
-      overflow: hidden;
-      white-space: nowrap;
-    }
-  }
-
-  &__pre {
-    margin: 0;
-    padding: 0;
+    color: utils.$color__carbon--60;
   }
 }
 
 @keyframes pulse {
   from {
-    stroke: $color__black--300;
+    stroke: utils.$color__carbon--30;
   }
 
   to {
-    stroke: $color__black--500;
+    stroke: utils.$color__carbon--50;
   }
 }

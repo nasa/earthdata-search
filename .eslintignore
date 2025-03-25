@@ -1,2 +1,4 @@
 dist
 tmp
+playwright-report
+cdk.out

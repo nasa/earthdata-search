@@ -171,6 +171,11 @@ const urlDefs = {
     shortKey: 'oe',
     encode: encodeBoolean,
     decode: decodeBoolean
+  },
+  paramCollectionSortKey: {
+    shortKey: 'csk',
+    encode: encodeString,
+    decode: decodeString
   }
 }
 
@@ -197,7 +202,7 @@ export const decodeUrlParams = (paramString) => {
     parseArrays: false
   })
 
-  // Create an array of any deprectated parameters that appear in the params
+  // Create an array of any deprecated parameters that appear in the params
   const deprecatedUrlParams = Object.entries(params)
     .filter(([key]) => deprecatedURLParameters.includes(key))
     .map(([key]) => key)
@@ -236,6 +241,7 @@ export const decodeUrlParams = (paramString) => {
   collectionQuery.spatial = spatial
   collectionQuery.tagKey = decodeHelp(params, 'tagKey')
   collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
+  collectionQuery.paramCollectionSortKey = decodeHelp(params, 'paramCollectionSortKey')
 
   // Initialize the collection granule query
   const granuleQuery = {
@@ -369,9 +375,11 @@ export const encodeUrlQuery = (props) => {
  * because it shares the base url with the projects page.
  */
 export const urlPathsWithoutUrlParams = [
-  /^\/contact_info/,
+  /^\/admin/,
   /^\/auth_callback/,
-  /^\/admin/
+  /^\/contact_info/,
+  /^\/downloads/,
+  /^\/subscriptions/
 ]
 
 /**

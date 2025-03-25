@@ -1,8 +1,11 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .radio-setting-toggle {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $color__black--400;
+  color: utils.$color__carbon--40;
   font-size: 1.125rem;
 
   &__label {
@@ -12,10 +15,11 @@
     width: 0px;
     height: 0px;
     overflow: hidden;
-    font-size: 0.875rem;
-    color: $color__black--800;
-    margin-left: $spacer/4;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: utils.$color__carbon--80;
     text-indent: -10000px;
+    margin: 0;
 
     .panels--sm & {
       position: relative;

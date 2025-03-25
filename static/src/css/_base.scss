@@ -1,3 +1,6 @@
+@use 'vendor/bootstrap/configuration' as bootstrap;
+@use 'utils/variables';
+
 * > * {
   box-sizing: inherit;
 }
@@ -6,6 +9,7 @@
 * > button,
 * > input,
 * > textarea,
+.dropdown-toggle,
 .btn {
   &:focus {
     box-shadow: none;
@@ -13,8 +17,12 @@
 
   &:focus-visible {
     border-color: transparent;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba(83,130,177, 0.3);
+    outline: 1px dashed variables.$color__nasa-blue;
+    outline-offset: 0.125rem;
+
+    &.focus-light {
+      outline: 1px dashed variables.$color__spacesuit-white;
+    }
   }
 
   &.disabled,
@@ -30,7 +38,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: $color__black;
+  background: variables.$color__carbon-black;
 }
 
 body.is-panels-dragging {
@@ -42,19 +50,24 @@ body.is-panels-will-minimize {
   cursor: w-resize;
 }
 
-@include media-breakpoint-up(lg) {
+@include bootstrap.media-breakpoint-up(lg) {
   html {
     font-size: 100%;
   }
 }
 
-@include media-breakpoint-up(xl) {
+// Prevent tophat from resizing on page load
+body .th-wrapper {
+  font-size: 1rem;
+}
+
+@include bootstrap.media-breakpoint-up(xl) {
   html {
     font-size: 102%;
   }
 }
 
-@include media-breakpoint-up(xxl) {
+@include bootstrap.media-breakpoint-up(xxl) {
   html {
     font-size: 105%;
   }
@@ -62,9 +75,10 @@ body.is-panels-will-minimize {
 
 button {
   &:focus-visible {
-    border-color: $color__blue--dark;
-    outline: 0;
-    box-shadow: 0 0 0 0.2rem rgba($color__blue--dark, 0.5);
+    border-color: variables.$color__nasa-blue--shade;
+    text-decoration: none;
+    outline: 1px dashed variables.$color__nasa-blue--shade;
+    outline-offset: 0.125rem;
   }
 }
 
@@ -74,17 +88,17 @@ svg {
 }
 
 *::-webkit-scrollbar-track {
-  background-color: #EEE;
+  background-color: variables.$color__carbon--10;
 }
 
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
-  background-color: #EEE;
+  background-color: variables.$color__carbon--10;
 }
 
 *::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
-  background-color: #CCC;
+  background-color: variables.$color__carbon--20;
   border-radius: 8px;
 }

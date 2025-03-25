@@ -1,0 +1,11 @@
+@use '../../../css/utils';
+
+.error-boundary {
+  &__link {
+    color: utils.$color__spacesuit-white;
+
+    &:hover {
+      color: utils.$color__spacesuit-white;
+    }
+  }
+}

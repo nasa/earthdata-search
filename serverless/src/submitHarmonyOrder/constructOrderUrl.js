@@ -9,9 +9,11 @@ export const constructOrderUrl = (collectionId, accessMethod) => {
     url
   } = accessMethod
 
-  let variableParameter = 'all'
+  let variablesPath = 'all'
+
   if (selectedVariableNames.length > 0) {
-    variableParameter = encodeURIComponent(selectedVariableNames.join(','))
+    // Overwrite the pseudo-variable for harmony request
+    variablesPath = 'parameter_vars'
   }
 
   // Harmony's coverage api url is a bit verbose, construct all of the pieces to be joined below
@@ -19,7 +21,7 @@ export const constructOrderUrl = (collectionId, accessMethod) => {
     url,
     collectionId,
     'ogc-api-coverages/1.0.0',
-    `collections/${variableParameter}`,
+    `collections/${variablesPath}`,
     'coverage/rangeset'
   ]
 

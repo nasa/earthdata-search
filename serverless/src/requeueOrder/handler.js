@@ -3,6 +3,7 @@ import { SQSClient, SendMessageBatchCommand } from '@aws-sdk/client-sqs'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { getSqsConfig } from '../util/aws/getSqsConfig'
 import { getDbConnection } from '../util/database/getDbConnection'
+import { getQueueUrl, QUEUE_NAMES } from '../util/getQueueUrl'
 
 // AWS SQS adapter
 let sqsClient
@@ -56,17 +57,17 @@ const requeueOrder = async (event, context) => {
     if (type === 'ESI') {
       // Submits to Catalog Rest and is often referred to as a
       // service order -- this is presenting in EDSC as the 'Customize' access method
-      queueUrl = process.env.catalogRestQueueUrl
+      queueUrl = getQueueUrl(QUEUE_NAMES.CatalogRestOrderQueue)
     } else if (type === 'ECHO ORDERS') {
       // Submits to cmr-ordering and is often referred to as an
       // echo order -- this is presenting in EDSC as the 'Stage For Delivery' access method
-      queueUrl = process.env.cmrOrderingOrderQueueUrl
+      queueUrl = getQueueUrl(QUEUE_NAMES.CmrOrderingOrderQueue)
     } else if (type === 'Harmony') {
       // Submits to Harmony
-      queueUrl = process.env.harmonyQueueUrl
+      queueUrl = getQueueUrl(QUEUE_NAMES.HarmonyOrderQueue)
     }
 
-    if (!process.env.IS_OFFLINE) {
+    if (process.env.SKIP_SQS !== 'true') {
       // Send all of the order messages to sqs as a single batch
       await sqsClient.send(new SendMessageBatchCommand({
         QueueUrl: queueUrl,

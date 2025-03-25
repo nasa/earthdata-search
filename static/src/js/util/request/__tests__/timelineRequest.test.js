@@ -33,9 +33,12 @@ describe('TimelineRequest#permittedCmrKeys', () => {
     const request = new TimelineRequest(undefined, 'prod')
 
     expect(request.permittedCmrKeys()).toEqual([
+      'bounding_box',
       'concept_id',
       'end_date',
       'interval',
+      'point',
+      'polygon',
       'start_date'
     ])
   })
@@ -46,7 +49,10 @@ describe('TimelineRequest#nonIndexedKeys', () => {
     const request = new TimelineRequest(undefined, 'prod')
 
     expect(request.nonIndexedKeys()).toEqual([
-      'concept_id'
+      'bounding_box',
+      'concept_id',
+      'point',
+      'polygon'
     ])
   })
 })

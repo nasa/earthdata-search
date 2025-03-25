@@ -3,6 +3,9 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
+
+import * as metricsActions from '../../../middleware/metrics/actions'
+
 import {
   mapDispatchToProps,
   mapStateToProps,
@@ -14,6 +17,7 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
+    authToken: 'token',
     location: {
       search: 'value'
     },
@@ -21,6 +25,7 @@ function setup() {
       mock: 'data'
     },
     collectionQuery: {},
+    earthdataEnvironment: 'prod',
     focusedCollectionId: 'focusedCollection',
     focusedProjectCollection: {
       accessMethods: {},
@@ -73,6 +78,7 @@ function setup() {
       }
     },
     onAddProjectCollection: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onChangePath: jest.fn(),
@@ -137,11 +143,22 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('path')
   })
+
+  test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(metricsActions, 'metricsAddCollectionProject')
+
+    mapDispatchToProps(dispatch).onMetricsAddCollectionProject({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
 })
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
+      authToken: 'token',
       metadata: {
         collections: {
           collectionId: {
@@ -149,6 +166,7 @@ describe('mapStateToProps', () => {
           }
         }
       },
+      earthdataEnvironment: 'prod',
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
       query: {
@@ -162,10 +180,12 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
+      authToken: 'token',
       collectionMetadata: {
         subscriptions: []
       },
       collectionQuery: {},
+      earthdataEnvironment: 'prod',
       focusedCollectionId: 'collectionId',
       focusedProjectCollection: {},
       granuleQuery: {},

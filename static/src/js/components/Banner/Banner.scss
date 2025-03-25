@@ -1,9 +1,12 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .banner {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: $spacer;
+  padding: bootstrap.$spacer * .825 2rem;
   overflow: hidden;
   transition: top 0.2s ease-in-out;
   z-index: 1;
@@ -13,40 +16,56 @@
   }
 
   &--error {
-    background-color: #c0392b;
-    color: #fff;
+    background-color: utils.$color__nasa-red--shade;
+    color: utils.$color__spacesuit-white;
 
     .banner__title {
-      font-weight: 700;
+      font-weight: 500;
+      display: inline-flex;
     }
 
     .banner__message {
-      color: #fff;
+      display: flex
     }
 
     .banner__close {
-      color: #fff;
-      color: rgba(255,255,255,0.7);
+      color: utils.$color__spacesuit-white;
       transition: color 0.15s ease-in-out;
+      display: flex;
 
       &:hover {
-        color: #fff;
-        color: rgba(255,255,255,1);
+        color: utils.$color__spacesuit-white;
       }
     }
   }
 
+  &__content {
+    display: flex;
+    align-items: center;
+  }
+
+  &__icon {
+    display: inherit;
+    margin-right: 0.5rem;
+  }
+
   &__title {
-    display: inline;
+    color: utils.$color__spacesuit-white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 0;
-    margin-right: $spacer/2;
+    margin-right: calc(bootstrap.$spacer / 2);
     padding: 0;
-    font-size: 1rem;
+    font-size: 0.925rem;
     line-height: 1rem;
+    flex-shrink: 0;
   }
 
   &__message {
-    display: inline;
+    color: utils.$color__spacesuit-white;
+    font-size: 0.925rem;
+    font-weight: 200;
     margin: 0;
     padding: 0;
     line-height: 1rem;
@@ -56,12 +75,12 @@
     position: absolute;
     top: 50%;
     top: calc(50% + 1px);
-    right: 0.5rem;
-    color: $color__black--700;
+    right: 0.75rem;
+    color: utils.$color__carbon--70;
     transform: translateY(-50%);
 
     &:hover {
-     color: $color__black--600;
+     color: utils.$color__carbon--60;
     }
 
     &:focus {
@@ -70,4 +89,3 @@
     }
   }
 }
-

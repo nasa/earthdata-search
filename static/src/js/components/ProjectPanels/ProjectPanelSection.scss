@@ -1,5 +1,8 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .project-panel-section {
-  padding: $spacer;
+  padding: bootstrap.$spacer;
   max-width: 35rem;
 
   &--is-faded {
@@ -7,22 +10,22 @@
   }
 
   &--is-nested {
-    border: 1px solid $color__black--200;
-    border-left: 3px solid $color__blue--dark;
+    border: 1px solid utils.$color__carbon--20;
+    border-left: 3px solid utils.$color__nasa-blue--shade;
     border-radius: 0.125rem;
-    background-color: $color__black--100;
+    background-color: utils.$color__carbon--5;
     margin-bottom: 1rem;
   }
 
   &--is-step {
-    margin-left: $spacer*2;
+    margin-left: bootstrap.$spacer*2;
   }
 
   &__heading {
     position: relative;
     font-size: 0.925rem;
     font-weight: 700;
-    color: $color__black--900;
+    color: utils.$color__carbon--90;
     vertical-align: middle;
 
     .project-panel-section--is-nested & {
@@ -51,9 +54,9 @@
     width: 1.25rem;
     line-height: 1.25rem;
     text-align: center;
-    background-color: $color__blue--dark;
+    background-color: utils.$color__nasa-blue--shade;
     border-radius: 100%;
-    color: $color__white;
+    color: utils.$color__spacesuit-white;
     font-size: 0.75rem;
     vertical-align: middle;
     transform: translateY(-0.0625rem);

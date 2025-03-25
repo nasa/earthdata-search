@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .collection-details-cloud-access-direct-distribution-information {
   &__info {
     > dt {
@@ -19,22 +22,13 @@
     font-weight: 700;
     font-size: .925rem;
     line-height: 1.5rem;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline !important;
-    }
 
     .direct-distribution-information__links--horizontal & {
       display: inline-block;
       vertical-align: baseline;
 
-      &:hover {
-        text-decoration: underline;
-      }
-
       &:last-child {
-        padding-top: $spacer/8;
+        padding-top: calc(bootstrap.$spacer / 8);
       }
 
       .button {
@@ -52,7 +46,7 @@
   &__direct-distribution-information-list {
     padding-left: 1.25rem;
   }
-  
+
   &__instance-field-title {
     display: inline;
     padding-right: 5px;

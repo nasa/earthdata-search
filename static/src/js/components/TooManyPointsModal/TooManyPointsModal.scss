@@ -1,11 +1,13 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+
 .too-many-points-modal {
   &__actions {
     display: flex;
     justify-content: flex-start;
-    margin-top: $spacer*2;
+    margin-top: bootstrap.$spacer*2;
   }
 
   &__action {
-    margin-right: $spacer/2;
+    margin-right: calc(bootstrap.$spacer / 2);
   }
 }

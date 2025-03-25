@@ -1,3 +1,6 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .saved-projects {
   &__spinner {
     margin: 0 auto;
@@ -6,16 +9,18 @@
   &__share-popover {
     min-width: 230px;
     max-width: 400px;
-    color: $color__black--600;
+    color: utils.$color__carbon--60;
   }
 
   &__share-input {
+    background-color: utils.$color__carbon--10;
     width: 100%;
   }
 
   &__button {
-    margin: 0 $spacer/2;
-    color: $color__black--300;
+    margin: 0 calc(bootstrap.$spacer / 2);
+    color: utils.$color__carbon--30;
+    display: inline-flex;
 
     &--share {
       i {
@@ -25,21 +30,12 @@
     }
 
     &:hover {
-      color: $color__black--600;
+      color: utils.$color__carbon--60;
     }
   }
 }
 
 .saved-projects-table {
-  a {
-    color: $color__blue;
-
-    &:hover,
-    &:active {
-      color: $color__blue--dark;
-    }
-  }
-
   &__actions,
   &__actions-heading {
     text-align: center;
@@ -50,9 +46,6 @@
   }
 
   &__actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
   }
 }
-

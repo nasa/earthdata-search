@@ -3,15 +3,39 @@ import { LOCATION_CHANGE } from 'connected-react-router'
 import {
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
+  METRICS_BROWSE_GRANULE_IMAGE,
   METRICS_DATA_ACCESS,
+  METRICS_GRANULE_FILTER,
+  METRICS_ADD_COLLECTION_PROJECT,
+  METRICS_ADD_GRANULE_PROJECT,
   METRICS_MAP,
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
+  METRICS_SPATIAL_SELECTION,
+  METRICS_TEMPORAL_FILTER,
   METRICS_TIMELINE,
   METRICS_TIMING
 } from '../constants'
 import * as events from '../events'
 import metricsMiddleware from '../index'
+
+jest.mock('../events', () => ({
+  browseGranuleImage: jest.fn(),
+  collectionSortChange: jest.fn(),
+  dataAccess: jest.fn(),
+  defaultClick: jest.fn(),
+  granuleFilter: jest.fn(),
+  addCollectionProject: jest.fn(),
+  addGranuleProject: jest.fn(),
+  map: jest.fn(),
+  relatedCollection: jest.fn(),
+  spatialEdit: jest.fn(),
+  spatialSelection: jest.fn(),
+  temporalFilter: jest.fn(),
+  timeline: jest.fn(),
+  timing: jest.fn(),
+  virtualPageview: jest.fn()
+}))
 
 const createStore = () => {
   const store = {
@@ -39,8 +63,6 @@ describe('metrics middleware', () => {
   })
 
   test('calls virtualPageview on react-router location change', () => {
-    // eslint-disable-next-line no-import-assign
-    events.virtualPageview = jest.fn()
     const { store, invoke } = createStore()
 
     const action = {
@@ -52,8 +74,6 @@ describe('metrics middleware', () => {
   })
 
   test('calls dataAccess event', () => {
-    // eslint-disable-next-line no-import-assign
-    events.dataAccess = jest.fn()
     const { store, invoke } = createStore()
 
     const action = {
@@ -69,8 +89,6 @@ describe('metrics middleware', () => {
   })
 
   test('calls defaultClick event', () => {
-    // eslint-disable-next-line no-import-assign
-    events.defaultClick = jest.fn()
     const { invoke } = createStore()
 
     const action = {
@@ -84,9 +102,22 @@ describe('metrics middleware', () => {
     expect(events.defaultClick).toHaveBeenCalledWith(action)
   })
 
+  test('calls browseGranuleImage event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_BROWSE_GRANULE_IMAGE,
+      payload: {
+        value: 'Test Value',
+        granuleId: 'TEST_ID'
+      }
+    }
+    invoke(action)
+    expect(events.browseGranuleImage).toHaveBeenCalledTimes(1)
+    expect(events.browseGranuleImage).toHaveBeenCalledWith(action)
+  })
+
   test('calls timeline event', () => {
-    // eslint-disable-next-line no-import-assign
-    events.timeline = jest.fn()
     const { invoke } = createStore()
 
     const action = {
@@ -100,9 +131,7 @@ describe('metrics middleware', () => {
     expect(events.timeline).toHaveBeenCalledWith(action)
   })
 
-  test('calls timeline event', () => {
-    // eslint-disable-next-line no-import-assign
-    events.map = jest.fn()
+  test('calls map event', () => {
     const { invoke } = createStore()
 
     const action = {
@@ -117,8 +146,6 @@ describe('metrics middleware', () => {
   })
 
   test('calls spatialEdit event', () => {
-    // eslint-disable-next-line no-import-assign
-    events.spatialEdit = jest.fn()
     const { invoke } = createStore()
 
     const action = {
@@ -132,9 +159,77 @@ describe('metrics middleware', () => {
     expect(events.spatialEdit).toHaveBeenCalledWith(action)
   })
 
+  test('calls spatialSelection event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_SPATIAL_SELECTION,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.spatialSelection).toHaveBeenCalledTimes(1)
+    expect(events.spatialSelection).toHaveBeenCalledWith(action)
+  })
+
+  test('calls granuleFilter event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_GRANULE_FILTER,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.granuleFilter).toHaveBeenCalledTimes(1)
+    expect(events.granuleFilter).toHaveBeenCalledWith(action)
+  })
+
+  test('calls addCollectionProject event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_ADD_COLLECTION_PROJECT,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.addCollectionProject).toHaveBeenCalledTimes(1)
+    expect(events.addCollectionProject).toHaveBeenCalledWith(action)
+  })
+
+  test('calls addGranuleProject event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_ADD_GRANULE_PROJECT,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.addGranuleProject).toHaveBeenCalledTimes(1)
+    expect(events.addGranuleProject).toHaveBeenCalledWith(action)
+  })
+
+  test('calls temporalFilter event', () => {
+    const { invoke } = createStore()
+
+    const action = {
+      type: METRICS_TEMPORAL_FILTER,
+      payload: {
+        item: 'Test'
+      }
+    }
+    invoke(action)
+    expect(events.temporalFilter).toHaveBeenCalledTimes(1)
+    expect(events.temporalFilter).toHaveBeenCalledWith(action)
+  })
+
   test('calls timing event', () => {
-    // eslint-disable-next-line no-import-assign
-    events.timing = jest.fn()
     const { invoke } = createStore()
 
     const action = {
@@ -149,8 +244,6 @@ describe('metrics middleware', () => {
   })
 
   test('calls collectionSortChange event', () => {
-    // eslint-disable-next-line no-import-assign
-    events.collectionSortChange = jest.fn()
     const { invoke } = createStore()
 
     const action = {
@@ -165,8 +258,6 @@ describe('metrics middleware', () => {
   })
 
   test('calls relatedCollection event', () => {
-    // eslint-disable-next-line no-import-assign
-    events.relatedCollection = jest.fn()
     const { invoke } = createStore()
 
     const action = {

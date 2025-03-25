@@ -1,9 +1,12 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
 .panel-group-footer {
   position: relative;
   justify-self: flex-end;
   flex-grow: 0;
   margin-top: auto;
-  border-top: 1px solid $border-color;
+  border-top: 1px solid bootstrap.$border-color;
   z-index: 1;
-  background: $color__white;
+  background: utils.$color__spacesuit-white;
 }
