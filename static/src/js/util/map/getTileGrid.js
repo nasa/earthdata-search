@@ -43,6 +43,8 @@ export const getTileGrid = (projectionCode, resolution) => {
   if (projectionCode === projections.geographic) {
     return new WMTSTileGrid({
       origin: [-180, 90],
+      // Starting value of 0.5625 is found here
+      // https://github.com/nasa-gibs/gibs-web-examples/blob/main/examples/openlayers/geographic-epsg4326.js
       resolutions: Array.from({ length: resolutionLength }, (v, k) => 0.5625 / 2 ** k),
       matrixIds: Array.from({ length: resolutionLength }, (v, k) => k.toString()),
       tileSize: 512
@@ -51,8 +53,11 @@ export const getTileGrid = (projectionCode, resolution) => {
 
   if (projectionCode === projections.arctic || projectionCode === projections.antarctic) {
     return new WMTSTileGrid({
+      // Origin and resolution values found here
+      // https://github.com/nasa-gibs/gibs-web-examples/blob/main/examples/openlayers/arctic-epsg3413.js
+      // https://github.com/nasa-gibs/gibs-web-examples/blob/main/examples/openlayers/antarctic-epsg3031.js
       origin: [-4194304, 4194304],
-      resolutions: Array.from({ length: resolutionLength }, (v, k) => 16384 / 2 ** k),
+      resolutions: Array.from({ length: resolutionLength }, (v, k) => 8192.0 / 2 ** k),
       matrixIds: Array.from({ length: resolutionLength }, (v, k) => k.toString()),
       tileSize: 512
     })
