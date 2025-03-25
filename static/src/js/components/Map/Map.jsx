@@ -9,9 +9,10 @@ import PropTypes from 'prop-types'
 import { altKeyOnly } from 'ol/events/condition'
 
 import { defaults as defaultInteractions, DragRotate } from 'ol/interaction'
-import { View } from 'ol'
 import { transform } from 'ol/proj'
+import { View } from 'ol'
 import Attribution from 'ol/control/Attribution'
+import LayerGroup from 'ol/layer/Group'
 import MapBrowserEventType from 'ol/MapBrowserEventType'
 import MapEventType from 'ol/MapEventType'
 import OlMap from 'ol/Map'
@@ -29,16 +30,16 @@ import {
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import { LegendControl } from '../Legend/LegendControl'
-import ProjectionSwitcherControl from './ProjectionSwitcherControl'
-import ZoomControl from './ZoomControl'
+import MapControls from './MapControls'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
 import { highlightFeature, unhighlightFeature } from '../../util/map/interactions/highlightFeature'
 import drawFocusedGranule from '../../util/map/drawFocusedGranule'
-import drawGranuleBackgrounds from '../../util/map/drawGranuleBackgrounds'
+import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import labelsLayer from '../../util/map/layers/placeLabels'
 import onClickMap from '../../util/map/interactions/onClickMap'
@@ -89,7 +90,8 @@ const granuleOutlinesSource = new VectorSource({
 })
 const granuleOutlinesLayer = new VectorLayer({
   source: granuleOutlinesSource,
-  className: 'edsc-granules-outlines-layer'
+  className: 'edsc-granules-outlines-layer',
+  zIndex: 4
 })
 
 // Layer for granule highlights
@@ -99,7 +101,8 @@ const granuleHighlightsSource = new VectorSource({
 })
 const granuleHighlightsLayer = new VectorLayer({
   source: granuleHighlightsSource,
-  className: 'edsc-granules-highlights-layer'
+  className: 'edsc-granules-highlights-layer',
+  zIndex: 4
 })
 
 // Layer for focused granule
@@ -109,8 +112,12 @@ const focusedGranuleSource = new VectorSource({
 })
 const focusedGranuleLayer = new VectorLayer({
   source: focusedGranuleSource,
-  className: 'edsc-granules-focus-layer'
+  className: 'edsc-granules-focus-layer',
+  zIndex: 4
 })
+
+// Layer group for imagery layers
+const granuleImageryLayerGroup = new LayerGroup()
 
 // Create a view for the map. This will change when the padding needs to be updated
 const createView = ({
@@ -151,7 +158,6 @@ const createView = ({
   return view
 }
 
-// TODO Might want to move these out of this file at some point
 const scaleMetric = new ScaleLine({
   className: 'edsc-map-scale-metric',
   units: 'metric'
@@ -162,19 +168,6 @@ const scaleImperial = new ScaleLine({
 })
 const attribution = new Attribution({
   collapsible: false
-})
-
-const zoomControl = (projectionCode) => new ZoomControl({
-  className: 'edsc-map-zoom',
-  homeLocation: {
-    center: projectionConfigs[projectionCode].center,
-    zoom: projectionConfigs[projectionCode].zoom,
-    rotation: 0
-  },
-  PlusIcon: <EDSCIcon size="0.75rem" icon={Plus} />,
-  MinusIcon: <EDSCIcon size="0.75rem" icon={Minus} />,
-  HomeIcon: <EDSCIcon size="0.75rem" icon={FaHome} />,
-  duration: 250
 })
 
 // Clear the focused granule source
@@ -235,10 +228,6 @@ const Map = ({
         attribution,
         scaleMetric,
         scaleImperial,
-        zoomControl(projectionCode),
-        new ProjectionSwitcherControl({
-          onChangeProjection
-        }),
         new LegendControl({
           colorMap,
           isFocusedCollectionPage
@@ -255,7 +244,8 @@ const Map = ({
         granuleBackgroundsLayer,
         granuleOutlinesLayer,
         granuleHighlightsLayer,
-        focusedGranuleLayer
+        focusedGranuleLayer,
+        granuleImageryLayerGroup
       ],
       target: mapElRef.current,
       view: createView({
@@ -267,6 +257,17 @@ const Map = ({
       })
     })
     mapRef.current = map
+
+    const mapControls = new MapControls({
+      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
+      map,
+      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
+      onChangeProjection,
+      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
+      projectionCode
+    })
+
+    map.addControl(mapControls)
 
     const handleMoveEnd = (event) => {
       // When the map is moved we need to call onChangeMap to update Redux
@@ -554,14 +555,24 @@ const Map = ({
 
     // Clear the existing granule backgrounds
     granuleBackgroundsSource.clear()
+
     // Clear any existing granule highlights
     unhighlightFeature(granuleHighlightsSource)
 
     // Clear any existing focused granules
     clearFocusedGranuleSource(mapRef.current)
 
+    // Clear the granule imagery layers
+    granuleImageryLayerGroup.getLayers().clear()
+
     // Draw the granule backgrounds
-    drawGranuleBackgrounds(granules, granuleBackgroundsSource, projectionCode)
+    drawGranuleBackgroundsAndImagery({
+      granuleImageryLayerGroup,
+      granulesMetadata: granules,
+      map: mapRef.current,
+      projectionCode,
+      vectorSource: granuleBackgroundsSource
+    })
 
     // If there is a focused granule draw it
     if (focusedGranuleId) {

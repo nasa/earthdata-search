@@ -1,0 +1,629 @@
+{
+  "data": {
+    "collection": {
+      "abstract": "O2-O2 cloud Level 3 files provide cloud information on a regular grid covering the TEMPO field of regard for nominal TEMPO observations. Level 3 files are derived by combining information from all Level 2 files constituting a TEMPO East-West scan cycle. The files are provided in netCDF4 format, and contain information on effective cloud fraction, cloud optical centroid pressure, and ancillary data. The re-gridding algorithm uses an area-weighted approach. These data reached provisional validation on December 9, 2024.",
+      "archiveAndDistributionInformation": {
+        "fileDistributionInformation": [
+          {
+            "format": "netCDF-4",
+            "totalCollectionFileSize": 90,
+            "totalCollectionFileSizeUnit": "MB"
+          }
+        ]
+      },
+      "associatedDois": null,
+      "boxes": null,
+      "cloudHosted": true,
+      "conceptId": "C2930727817-LARC_CLOUD",
+      "coordinateSystem": "CARTESIAN",
+      "dataCenter": "LARC_CLOUD",
+      "dataCenters": [
+        {
+          "roles": [
+            "ARCHIVER"
+          ],
+          "shortName": "NASA/LARC/SD/ASDC",
+          "longName": "Atmospheric Science Data Center, Science Directorate, Langley Research Center, NASA",
+          "contactInformation": {
+            "addresses": [
+              {
+                "country": "United States"
+              }
+            ],
+            "relatedUrls": [
+              {
+                "description": "Data Center URL",
+                "urlContentType": "DataCenterURL",
+                "type": "HOME PAGE",
+                "url": "https://asdc.larc.nasa.gov/"
+              }
+            ]
+          },
+          "contactPersons": [
+            {
+              "roles": [
+                "Data Center Contact"
+              ],
+              "firstName": "ASDC",
+              "lastName": "USER SERVICES",
+              "contactInformation": {
+                "contactMechanisms": [
+                  {
+                    "type": "Telephone",
+                    "value": "757-864-8656"
+                  },
+                  {
+                    "type": "Email",
+                    "value": "support-asdc@earthdata.nasa.gov"
+                  }
+                ],
+                "addresses": [
+                  {
+                    "country": "United States",
+                    "streetAddresses": [
+                      "NASA Langley Atmospheric Science Data Center",
+                      "User and Data Services",
+                      "NASA Langley Research Center"
+                    ],
+                    "city": "Hampton",
+                    "postalCode": "23681-2199"
+                  }
+                ],
+                "relatedUrls": [
+                  {
+                    "description": "Data Center URL",
+                    "urlContentType": "DataContactURL",
+                    "type": "HOME PAGE",
+                    "url": "https://asdc.larc.nasa.gov/"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "directDistributionInformation": {
+        "s3BucketAndObjectPrefixNames": [
+          "asdc-prod-protected/TEMPO/TEMPO_CLDO4_L3_V03"
+        ],
+        "region": "us-west-2",
+        "s3CredentialsApiEndpoint": "https://data.asdc.earthdata.nasa.gov/s3credentials",
+        "s3CredentialsApiDocumentationUrl": "https://data.asdc.earthdata.nasa.gov/s3credentialsREADME"
+      },
+      "doi": {
+        "doi": "10.5067/IS-40e/TEMPO/CLDO4_L3.003",
+        "authority": "https://doi.org"
+      },
+      "duplicateCollections": {
+        "count": 0,
+        "items": []
+      },
+      "hasGranules": true,
+      "lines": null,
+      "nativeDataFormats": [],
+      "points": null,
+      "polygons": [
+        [
+          "10 -170 10 -10 80 -10 80 -170 10 -170"
+        ]
+      ],
+      "relatedUrls": [
+        {
+          "description": "TEMPO project page",
+          "urlContentType": "CollectionURL",
+          "type": "PROJECT HOME PAGE",
+          "url": "http://tempo.si.edu"
+        },
+        {
+          "description": "DOI data set landing page for TEMPO_CLDO4_L3_V03",
+          "urlContentType": "CollectionURL",
+          "type": "DATA SET LANDING PAGE",
+          "url": "https://doi.org/10.5067/IS-40e/TEMPO/CLDO4_L3.003"
+        },
+        {
+          "description": "Mission Logo",
+          "urlContentType": "VisualizationURL",
+          "type": "GET RELATED VISUALIZATION",
+          "subtype": "WORLDVIEW",
+          "url": "https://asdc.larc.nasa.gov/static/images/project_logos/tempo.png"
+        },
+        {
+          "description": "How to cite ASDC data",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "DATA CITATION GUIDELINES",
+          "url": "https://asdc.larc.nasa.gov/citing-data"
+        },
+        {
+          "description": "Earthdata Search for TEMPO_CLDO4_L3_V03 (NASA Application to search, discover, visualize, refine, and access NASA Earth Observation data)",
+          "urlContentType": "DistributionURL",
+          "type": "GET DATA",
+          "subtype": "Earthdata Search",
+          "url": "https://search.earthdata.nasa.gov/search/granules?p=C2930727817-LARC_CLOUD"
+        },
+        {
+          "description": "ASDC Data and Information for TEMPO",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "GENERAL DOCUMENTATION",
+          "url": "https://asdc.larc.nasa.gov/project/TEMPO"
+        },
+        {
+          "description": "Tropospheric Emissions: Monitoring Pollution (TEMPO) Project Trace Gas and Cloud Level 2 and 3 Data Products: User Guide",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "USER'S GUIDE",
+          "url": "https://asdc.larc.nasa.gov/documents/tempo/guide/TEMPO_Level-2-3_trace_gas_clouds_user_guide_V1.2.pdf"
+        },
+        {
+          "url": "https://asdc.larc.nasa.gov/documents/tempo/ATBD_TEMPO_v3_O2_Cloud_Product.pdf",
+          "description": "ATBD_TEMPO_v3_O2_Cloud_Product",
+          "urlContentType": "PublicationURL",
+          "type": "VIEW RELATED INFORMATION",
+          "subtype": "ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)"
+        }
+      ],
+      "relatedCollections": {
+        "count": 0,
+        "items": []
+      },
+      "scienceKeywords": [
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "ATMOSPHERE",
+          "term": "CLOUDS",
+          "variableLevel1": "CLOUD PROPERTIES",
+          "variableLevel2": "CLOUD TOP PRESSURE"
+        },
+        {
+          "category": "EARTH SCIENCE",
+          "topic": "ATMOSPHERE",
+          "term": "CLOUDS",
+          "variableLevel1": "CLOUD PROPERTIES",
+          "variableLevel2": "CLOUD FRACTION"
+        }
+      ],
+      "shortName": "TEMPO_CLDO4_L3",
+      "spatialExtent": {
+        "spatialCoverageType": "HORIZONTAL",
+        "horizontalSpatialDomain": {
+          "geometry": {
+            "coordinateSystem": "CARTESIAN",
+            "gpolygons": [
+              {
+                "boundary": {
+                  "points": [
+                    {
+                      "longitude": -170,
+                      "latitude": 10
+                    },
+                    {
+                      "longitude": -10,
+                      "latitude": 10
+                    },
+                    {
+                      "longitude": -10,
+                      "latitude": 80
+                    },
+                    {
+                      "longitude": -170,
+                      "latitude": 80
+                    },
+                    {
+                      "longitude": -170,
+                      "latitude": 10
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "granuleSpatialRepresentation": "CARTESIAN"
+      },
+      "tags": {
+        "edsc.extra.serverless.collection_capabilities": {
+          "data": {
+            "cloud_cover": false,
+            "day_night_flag": false,
+            "granule_online_access_flag": true,
+            "orbit_calculated_spatial_domains": false,
+            "updated_at": "2024-07-02T19:06:15.480Z"
+          }
+        },
+        "edsc.extra.serverless.gibs": {
+          "data": [
+            {
+              "antarctic": false,
+              "group": "overlays",
+              "product": "TEMPO_L3_Cloud_Cloud_Fraction_Total",
+              "antarctic_resolution": null,
+              "layerPeriod": "Subdaily",
+              "updated_at": "2025-03-19T12:45:17.772Z",
+              "arctic": false,
+              "title": "Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)",
+              "source": "TEMPO",
+              "match": {
+                "time_start": ">=2023-08-02T15:00:00Z",
+                "day_night_flag": "unspecified"
+              },
+              "geographic": true,
+              "arctic_resolution": null,
+              "format": "png",
+              "geographic_resolution": "1km"
+            },
+            {
+              "antarctic": false,
+              "group": "overlays",
+              "product": "TEMPO_L3_Cloud_Cloud_Pressure_Total",
+              "antarctic_resolution": null,
+              "layerPeriod": "Subdaily",
+              "updated_at": "2025-03-19T12:45:17.772Z",
+              "arctic": false,
+              "title": "Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)",
+              "source": "TEMPO",
+              "match": {
+                "time_start": ">=2023-08-02T15:00:00Z",
+                "day_night_flag": "unspecified"
+              },
+              "geographic": true,
+              "arctic_resolution": null,
+              "format": "png",
+              "geographic_resolution": "1km"
+            }
+          ]
+        }
+      },
+      "temporalExtents": [
+        {
+          "endsAtPresentFlag": true,
+          "rangeDateTimes": [
+            {
+              "beginningDateTime": "2023-08-01T00:00:00.000Z"
+            }
+          ]
+        }
+      ],
+      "timeStart": "2023-08-01T00:00:00.000Z",
+      "timeEnd": null,
+      "tilingIdentificationSystems": null,
+      "title": "TEMPO gridded cloud fraction and pressure (O2-O2 dimer) V03 (PROVISIONAL)",
+      "versionId": "V03",
+      "services": {
+        "count": 2,
+        "items": [
+          {
+            "conceptId": "S2164732315-XYZ_PROV",
+            "longName": "Harmony OPeNDAP SubSetter (HOSS) and MaskFill for geographic collections",
+            "name": "Harmony OPeNDAP SubSetter (HOSS) Geographic",
+            "type": "Harmony",
+            "url": {
+              "description": "This is the harmony root endpoint.",
+              "urlValue": "https://harmony.earthdata.nasa.gov"
+            },
+            "serviceOptions": {
+              "subset": {
+                "spatialSubset": {
+                  "boundingBox": {
+                    "allowMultipleValues": false
+                  },
+                  "shapefile": [
+                    {
+                      "format": "GeoJSON"
+                    }
+                  ]
+                },
+                "variableSubset": {
+                  "allowMultipleValues": true
+                },
+                "temporalSubset": {
+                  "allowMultipleValues": false
+                }
+              },
+              "supportedReformattings": [
+                {
+                  "supportedInputFormat": "HDF5",
+                  "supportedOutputFormats": [
+                    "NETCDF-4"
+                  ]
+                },
+                {
+                  "supportedInputFormat": "NETCDF-4",
+                  "supportedOutputFormats": [
+                    "NETCDF-4"
+                  ]
+                }
+              ]
+            },
+            "supportedOutputProjections": null,
+            "supportedReformattings": [
+              {
+                "supportedInputFormat": "HDF5",
+                "supportedOutputFormats": [
+                  "NETCDF-4"
+                ]
+              },
+              {
+                "supportedInputFormat": "NETCDF-4",
+                "supportedOutputFormats": [
+                  "NETCDF-4"
+                ]
+              }
+            ]
+          },
+          {
+            "conceptId": "S2874702816-XYZ_PROV",
+            "longName": "Opendap Hyrax data server",
+            "name": "OPeNDAP",
+            "type": "NOT PROVIDED",
+            "url": {
+              "description": "This is the URL to the Hyrax server's landing page",
+              "urlValue": "https://opendap.earthdata.nasa.gov"
+            },
+            "serviceOptions": {
+              "subset": {
+                "variableSubset": {
+                  "allowMultipleValues": true
+                }
+              }
+            },
+            "supportedOutputProjections": null,
+            "supportedReformattings": null
+          }
+        ]
+      },
+      "granules": {
+        "count": 8026,
+        "items": [
+          {
+            "conceptId": "G3059434363-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3059638800-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3059717295-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3059753026-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3059907368-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3060077030-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3060158729-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3071536975-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3071620337-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3071790238-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3071912712-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3072039333-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3072262050-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3072404276-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3072527097-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3072697299-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3072821010-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3072996281-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3073129580-LARC_CLOUD",
+            "onlineAccessFlag": true
+          },
+          {
+            "conceptId": "G3073214115-LARC_CLOUD",
+            "onlineAccessFlag": true
+          }
+        ]
+      },
+      "subscriptions": {
+        "count": 0,
+        "items": []
+      },
+      "tools": {
+        "count": 0,
+        "items": []
+      },
+      "variables": {
+        "count": 17,
+        "cursor": "eyJ1bW0iOiJbXCJ3ZWlnaHRcIixcIkxBUkNfQ0xPVURcIixcIndlaWdodFwiLFwiTEFSQ19DTE9VRFwiXSJ9",
+        "items": [
+          {
+            "conceptId": "V3009503023-LARC_CLOUD",
+            "definition": "geolocation/relative_azimuth_angle",
+            "instanceInformation": null,
+            "longName": "relative azimuth angle at pixel center",
+            "name": "geolocation/relative_azimuth_angle",
+            "nativeId": "C2930727817-LARC_CLOUD-geolocation_relative_azimuth_angle",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009502829-LARC_CLOUD",
+            "definition": "geolocation/solar_zenith_angle",
+            "instanceInformation": null,
+            "longName": "solar zenith angle at pixel center",
+            "name": "geolocation/solar_zenith_angle",
+            "nativeId": "C2930727817-LARC_CLOUD-geolocation_solar_zenith_angle",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009502923-LARC_CLOUD",
+            "definition": "geolocation/viewing_zenith_angle",
+            "instanceInformation": null,
+            "longName": "viewing zenith angle at pixel center",
+            "name": "geolocation/viewing_zenith_angle",
+            "nativeId": "C2930727817-LARC_CLOUD-geolocation_viewing_zenith_angle",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009501471-LARC_CLOUD",
+            "definition": "latitude",
+            "instanceInformation": null,
+            "longName": "latitude",
+            "name": "latitude",
+            "nativeId": "C2930727817-LARC_CLOUD-latitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009501290-LARC_CLOUD",
+            "definition": "longitude",
+            "instanceInformation": null,
+            "longName": "longitude",
+            "name": "longitude",
+            "nativeId": "C2930727817-LARC_CLOUD-longitude",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3004763347-LARC_CLOUD",
+            "definition": "mirror_step",
+            "instanceInformation": null,
+            "longName": "mirror_step",
+            "name": "mirror_step",
+            "nativeId": "C2930727817-LARC_CLOUD-mirror_step",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009502470-LARC_CLOUD",
+            "definition": "product/cloud_fraction",
+            "instanceInformation": null,
+            "longName": "effective cloud fraction at 466nm",
+            "name": "product/cloud_fraction",
+            "nativeId": "C2930727817-LARC_CLOUD-product_cloud_fraction",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009502219-LARC_CLOUD",
+            "definition": "product/cloud_pressure",
+            "instanceInformation": null,
+            "longName": "optical centroid pressure for cloud",
+            "name": "product/cloud_pressure",
+            "nativeId": "C2930727817-LARC_CLOUD-product_cloud_pressure",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009502721-LARC_CLOUD",
+            "definition": "product/CloudRadianceFraction440",
+            "instanceInformation": null,
+            "longName": "cloud radiance fraction at 440nm",
+            "name": "product/CloudRadianceFraction440",
+            "nativeId": "C2930727817-LARC_CLOUD-product_CloudRadianceFraction440",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009502771-LARC_CLOUD",
+            "definition": "product/CloudRadianceFraction466",
+            "instanceInformation": null,
+            "longName": "cloud radiance fraction at 466nm",
+            "name": "product/CloudRadianceFraction466",
+            "nativeId": "C2930727817-LARC_CLOUD-product_CloudRadianceFraction466",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3004763642-LARC_CLOUD",
+            "definition": "qa_statistics/fit_convergence_flag",
+            "instanceInformation": null,
+            "longName": "qa_statistics/fit_convergence_flag",
+            "name": "qa_statistics/fit_convergence_flag",
+            "nativeId": "C2930727817-LARC_CLOUD-qa_statistics_fit_convergence_flag",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009503208-LARC_CLOUD",
+            "definition": "support_data/GLER440",
+            "instanceInformation": null,
+            "longName": "440nm surface reflectivity used in calculation",
+            "name": "support_data/GLER440",
+            "nativeId": "C2930727817-LARC_CLOUD-support_data_GLER440",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009503329-LARC_CLOUD",
+            "definition": "support_data/GLER466",
+            "instanceInformation": null,
+            "longName": "466nm surface reflectivity used in calculation",
+            "name": "support_data/GLER466",
+            "nativeId": "C2930727817-LARC_CLOUD-support_data_GLER466",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3004763821-LARC_CLOUD",
+            "definition": "support_data/ground_pixel_quality_flag",
+            "instanceInformation": null,
+            "longName": "support_data/ground_pixel_quality_flag",
+            "name": "support_data/ground_pixel_quality_flag",
+            "nativeId": "C2930727817-LARC_CLOUD-support_data_ground_pixel_quality_flag",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009503108-LARC_CLOUD",
+            "definition": "support_data/surface_pressure",
+            "instanceInformation": null,
+            "longName": "Pixel Surface Pressure",
+            "name": "support_data/surface_pressure",
+            "nativeId": "C2930727817-LARC_CLOUD-support_data_surface_pressure",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009502155-LARC_CLOUD",
+            "definition": "time",
+            "instanceInformation": null,
+            "longName": "scan start time",
+            "name": "time",
+            "nativeId": "C2930727817-LARC_CLOUD-time",
+            "scienceKeywords": null
+          },
+          {
+            "conceptId": "V3009501789-LARC_CLOUD",
+            "definition": "weight",
+            "instanceInformation": null,
+            "longName": "sum of area weights",
+            "name": "weight",
+            "nativeId": "C2930727817-LARC_CLOUD-weight",
+            "scienceKeywords": null
+          }
+        ]
+      }
+    }
+  }
+}
