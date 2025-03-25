@@ -1,8 +1,12 @@
 import { getDistance } from 'ol/sphere'
 
 import spatialTypes from '../../../constants/spatialTypes'
+import { mapEventTypes } from '../../../constants/eventTypes'
+
 import { crsProjections } from '../crs'
 import projections from '../projections'
+
+import { eventEmitter } from '../../../events/events'
 
 /**
  * Handles the Draw interaction `drawend` event. Takes the coordinates of the drawn geometry,
@@ -18,6 +22,8 @@ import projections from '../projections'
  * @param {Object} event OpenLayers `drawend` event object
  */
 const handleDrawEnd = (params, event) => {
+  eventEmitter.emit(mapEventTypes.DRAWEND)
+
   const {
     drawingInteraction,
     map,

@@ -90,6 +90,6 @@ export const mbrStyle = new Style({
     color: '#c0392b',
     width: 3,
     lineDash: [2, 10],
-    opactiy: 0.8
+    opacity: 0.8
   })
 })

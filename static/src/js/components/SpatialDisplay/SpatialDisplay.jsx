@@ -28,9 +28,9 @@ import {
 } from '../../util/createSpatialDisplay'
 
 import spatialTypes from '../../constants/spatialTypes'
+import { mapEventTypes } from '../../constants/eventTypes'
 
 import './SpatialDisplay.scss'
-import { mapEventTypes } from '../../constants/eventTypes'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 

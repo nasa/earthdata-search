@@ -24,8 +24,6 @@ class MapControls extends Control {
     this.options = options
     const {
       CircleIcon,
-      handleDrawingCancel,
-      handleDrawingStart,
       HomeIcon,
       map,
       MinusIcon,
@@ -58,8 +56,6 @@ class MapControls extends Control {
 
     // Create the spatial drawing control
     const spatialDrawingControl = new SpatialDrawingControl({
-      handleDrawingCancel,
-      handleDrawingStart,
       CircleIcon,
       PointIcon
     })

@@ -201,6 +201,16 @@ const clearFocusedGranuleSource = (map) => {
   if (focusedGranuleOverlay) map.removeOverlay(focusedGranuleOverlay)
 }
 
+// Remove the drawing interaction from the map
+const removeDrawingInteraction = (map) => {
+  map.getInteractions().getArray().forEach((interaction) => {
+    if (interaction.get('id') === 'spatial-drawing-interaction') {
+      map.removeInteraction(interaction)
+      interaction.dispose()
+    }
+  })
+}
+
 /**
  * Uses OpenLayers to render a map
  * @param {Object} params
@@ -290,7 +300,11 @@ const Map = ({
     })
     mapRef.current = map
 
+    // Handle the map draw start event
     const handleDrawingStart = (spatialType) => {
+      // Remove any existing drawing interaction
+      removeDrawingInteraction(map)
+
       onToggleDrawingNewLayer(spatialType)
       spatialDrawingSource.clear()
 
@@ -337,13 +351,9 @@ const Map = ({
     const handleDrawingCancel = () => {
       onToggleDrawingNewLayer(false)
 
-      // Find the drawing interaction and remove it
-      map.getInteractions().getArray().forEach((interaction) => {
-        if (interaction.get('id') === 'spatial-drawing-interaction') {
-          map.removeInteraction(interaction)
-          interaction.dispose()
-        }
-      })
+      removeDrawingInteraction(map)
+
+      eventEmitter.emit(mapEventTypes.DRAWEND)
     }
 
     // Handle the map draw start event from the SpatialSelectionDropdown
@@ -352,8 +362,6 @@ const Map = ({
 
     const mapControls = new MapControls({
       CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
-      handleDrawingCancel,
-      handleDrawingStart,
       HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
       map,
       MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),

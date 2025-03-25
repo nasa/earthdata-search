@@ -20,7 +20,7 @@ class ProjectionSwitcherControl extends Control {
 
     // Create the North Polar Stereographic button
     const arcticButton = document.createElement('button')
-    arcticButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--arctic'
+    arcticButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--arctic edsc-map-controls__button'
     arcticButton.ariaLabel = 'North Polar Stereographic'
     arcticButton.title = 'North Polar Stereographic'
     arcticButton.setAttribute('data-bs-toggle', 'tooltip')
@@ -36,7 +36,7 @@ class ProjectionSwitcherControl extends Control {
 
     // Create the Geographic (Equirectangular) button
     const geographicButton = document.createElement('button')
-    geographicButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--geo'
+    geographicButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--geo edsc-map-controls__button'
     geographicButton.ariaLabel = 'Geographic (Equirectangular)'
     geographicButton.title = 'Geographic (Equirectangular)'
     geographicButton.setAttribute('data-bs-toggle', 'tooltip')
@@ -52,7 +52,7 @@ class ProjectionSwitcherControl extends Control {
 
     // Create the South Polar Stereographic button
     const antarcticButton = document.createElement('button')
-    antarcticButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--antarctic'
+    antarcticButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--antarctic edsc-map-controls__button'
     antarcticButton.ariaLabel = 'South Polar Stereographic'
     antarcticButton.title = 'South Polar Stereographic'
     antarcticButton.setAttribute('data-bs-toggle', 'tooltip')

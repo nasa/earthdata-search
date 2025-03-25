@@ -74,7 +74,7 @@ const drawSpatialSearch = ({
 
           vectorSource.addFeature(feature)
         } else {
-          // Draw a polygon for the region
+          // Draw a polygon for the HUC
           const polygonCoordinates = points.map((point) => {
             const [lng, lat] = point.split(',')
 

@@ -106,17 +106,11 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
     return advancedSearch
   },
   handleSubmit: (values, { props }) => {
+    console.log('🚀 ~ AdvancedSearchModalContainer.jsx:109 ~ values:', values)
     const {
       onUpdateAdvancedSearch,
       onChangeQuery
     } = props
-
-    onUpdateAdvancedSearch(values)
-    onChangeQuery({
-      collection: {
-        spatial: {}
-      }
-    })
 
     // Move the map to the extent of the new search
     const { regionSearch = {} } = values
@@ -128,21 +122,53 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
     const points = splitListOfPoints(regionSpatial)
 
     let shape
+    let coordinates
     if (type === 'reach') {
       const lineCoordinates = points.map((point) => {
         const [lng, lat] = point.split(',')
 
         return [parseFloat(lng), parseFloat(lat)]
       })
+
       shape = new LineString(lineCoordinates)
+
+      // CMR has a limit of 500 points in a line spatial query.
+      // If there are more than 500 points, simplify the shape
+      if (lineCoordinates.length > 500) {
+        shape = shape.simplify(0.001)
+      }
+
+      // Get the coordinates of the shape to save to the redux state
+      coordinates = shape.getFlatCoordinates().join(',')
     } else {
       const polygonCoordinates = points.map((point) => {
         const [lng, lat] = point.split(',')
 
         return [parseFloat(lng), parseFloat(lat)]
       })
+
       shape = new Polygon([polygonCoordinates])
+
+      // Get the coordinates of the shape to save to the redux state
+      coordinates = shape.getFlatCoordinates().join(',')
     }
+
+    onUpdateAdvancedSearch({
+      ...values,
+      regionSearch: {
+        ...values.regionSearch,
+        selectedRegion: {
+          ...values.regionSearch.selectedRegion,
+          spatial: coordinates
+        }
+      }
+    })
+
+    onChangeQuery({
+      collection: {
+        spatial: {}
+      }
+    })
 
     // Move the map
     eventEmitter.emit(mapEventTypes.MOVEMAP, { shape })
