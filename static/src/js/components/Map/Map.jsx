@@ -48,7 +48,7 @@ import projections from '../../util/map/projections'
 import worldImagery from '../../util/map/layers/worldImagery'
 import LayerSwitcherControl from './LayerSwitcherControl'
 import bordersRoads from '../../util/map/layers/bordersRoads'
-import oceanDepth from '../../util/map/layers/oceanDepth'
+import coastlines from '../../util/map/layers/coastlines'
 import correctedReflectance from '../../util/map/layers/correctedReflectance'
 import landWaterMap from '../../util/map/layers/landWaterMap'
 
@@ -85,8 +85,8 @@ const landWaterMapLayer = landWaterMap({
   projectionCode: projections.geographic
 })
 
-// Build the oceanDepth Layer
-const oceanDepthLayer = oceanDepth({
+// Build the coastlines Layer
+const coastlinesLayer = coastlines({
   attributions: esriAttribution,
   projectionCode: projections.geographic
 })
@@ -98,6 +98,7 @@ const bordersRoadsLayer = bordersRoads({
 })
 
 // Build the placeLabels layer
+// TODO: Do all these need to be awaited?
 const placeLabelsLayer = await labelsLayer({
   attributions: esriAttribution,
   projectionCode: projections.geographic
@@ -253,31 +254,52 @@ const Map = ({
   const mapElRef = useRef()
 
   const handleLayerChange = ({ id, checked }) => {
-    if (id === 'place-labels') {
-      placeLabelsLayer.setVisible(checked)
-    } else if (id === 'borders-roads') {
-      bordersRoadsLayer.setVisible(checked)
-    } else if (id === 'oceanDepth') {
-      oceanDepthLayer.setVisible(checked)
-    } else if (id === 'world-imagery') {
-      worldImageryLayer.setVisible(checked)
-      // Hide other base layers when this one is selected
-      if (checked) {
-        correctedReflectanceLayer.setVisible(false)
-        // If you add land-water-map layer later, hide that too
-      }
-    } else if (id === 'corrected-reflectance') {
-      correctedReflectanceLayer.setVisible(checked)
-      // Hide other base layers when this one is selected
-      if (checked) {
-        worldImageryLayer.setVisible(false)
-        // If you add land-water-map layer later, hide that too
-      }
+    switch (id) {
+      case 'place-labels':
+        placeLabelsLayer.setVisible(checked)
+        break
+
+      case 'borders-roads':
+        bordersRoadsLayer.setVisible(checked)
+        break
+
+      case 'coastlines':
+        coastlinesLayer.setVisible(checked)
+        break
+
+      case 'world-imagery':
+        worldImageryLayer.setVisible(checked)
+        if (checked) {
+          correctedReflectanceLayer.setVisible(false)
+          landWaterMapLayer.setVisible(false)
+        }
+
+        break
+
+      case 'corrected-reflectance':
+        correctedReflectanceLayer.setVisible(checked)
+        if (checked) {
+          worldImageryLayer.setVisible(false)
+          landWaterMapLayer.setVisible(false)
+        }
+
+        break
+
+      case 'land-water-map':
+        landWaterMapLayer.setVisible(checked)
+        if (checked) {
+          worldImageryLayer.setVisible(false)
+          correctedReflectanceLayer.setVisible(false)
+        }
+
+        break
+
+      default:
+        console.warn(`Unknown layer id: ${id}`)
     }
   }
 
   const layerSwitcherControl = (onChangeLayer) => {
-    // Create with debugging styles
     const control = new LayerSwitcherControl({
       className: 'edsc-map-layer-switcher',
       LayersIcon: <EDSCIcon size="0.75rem" icon={FileArchive} />,
@@ -301,8 +323,8 @@ const Map = ({
           label: 'Borders and Roads *'
         },
         {
-          id: 'oceanDepth',
-          label: 'Ocean Depth *'
+          id: 'coastlines',
+          label: 'Coastlines *'
         },
         {
           id: 'place-labels',
@@ -336,7 +358,7 @@ const Map = ({
         worldImageryLayer,
         correctedReflectanceLayer,
         landWaterMapLayer,
-        oceanDepthLayer,
+        coastlinesLayer,
         bordersRoadsLayer,
         placeLabelsLayer,
         granuleBackgroundsLayer,

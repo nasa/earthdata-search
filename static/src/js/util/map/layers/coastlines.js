@@ -4,21 +4,6 @@ import { createXYZ } from 'ol/tilegrid'
 import { crsProjections, projectionConfigs } from '../crs'
 
 /**
- * Get either today's date or yesterday's date, depending on data availability
- * GIBS typically has a 1-day delay
- * @return {String} Date in YYYY-MM-DD format
- */
-const getTodayOrYesterday = () => {
-  const today = new Date()
-  // GIBS usually has a 1-day delay in data availability
-  const yesterday = new Date(today)
-  yesterday.setDate(yesterday.getDate() - 1)
-
-  // Format as YYYY-MM-DD
-  return yesterday.toISOString().split('T')[0]
-}
-
-/**
  * Map our projection codes to GIBS projection identifiers
  * @param {String} projectionCode Our projection code
  * @return {String} GIBS projection identifier
@@ -34,22 +19,33 @@ const getGibsProjection = (projectionCode) => {
 }
 
 /**
- * Builds the Corrected Reflectance (True Color) layer
+ * Builds the standard resolution Coastlines layer using OSM data from GIBS
  * @param {Object} params
  * @param {String} params.attributions Attribution for the layer
  * @param {String} params.projectionCode The projection code for the layer
- * @param {String} params.date The date for the imagery in YYYY-MM-DD format (defaults to yesterday)
  */
-const correctedReflectance = ({
+const coastlines = ({
   attributions,
-  projectionCode,
-  date = getTodayOrYesterday()
+  projectionCode
 }) => {
   const projection = crsProjections[projectionCode]
   const gibsProjection = getGibsProjection(projectionCode)
 
+  // Add CSS for enhanced coastlines visibility
+  if (!document.getElementById('coastlines-style')) {
+    const style = document.createElement('style')
+    style.id = 'coastlines-style'
+    style.textContent = `
+      .edsc-map-coastlines-layer {
+        filter: contrast(1.5) brightness(0.8);
+      }
+    `
+
+    document.head.appendChild(style)
+  }
+
   const layer = new TileLayer({
-    className: 'edsc-map-base-layer',
+    className: 'edsc-map-coastlines-layer',
     source: new XYZ({
       attributions,
       maxResolution: 180 / 512,
@@ -57,17 +53,18 @@ const correctedReflectance = ({
       reprojectionErrorThreshold: 2,
       tileGrid: createXYZ({
         extent: projection.getExtent(),
-        maxResolution: 576 / 512,
+        maxResolution: 360 / 512,
         maxZoom: projectionConfigs[projectionCode].maxZoom
       }),
       tileSize: 512,
-      url: `https://gibs.earthdata.nasa.gov/wmts/${gibsProjection}/best/MODIS_Terra_CorrectedReflectance_TrueColor/default/${date}/250m/{z}/{y}/{x}.jpeg`,
+      url: `https://gibs.earthdata.nasa.gov/wmts/${gibsProjection}/best/Coastlines/default/250m/{z}/{y}/{x}.png`,
       wrapX: false
     }),
+    opacity: 1,
     visible: false
   })
 
   return layer
 }
 
-export default correctedReflectance
+export default coastlines
