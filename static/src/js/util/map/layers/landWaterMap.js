@@ -14,7 +14,6 @@ const getTodayOrYesterday = () => {
   const yesterday = new Date(today)
   yesterday.setDate(yesterday.getDate() - 1)
 
-  // Format as YYYY-MM-DD
   return yesterday.toISOString().split('T')[0]
 }
 

@@ -31,7 +31,6 @@ const coastlines = ({
   const projection = crsProjections[projectionCode]
   const gibsProjection = getGibsProjection(projectionCode)
 
-  // Add CSS for enhanced coastlines visibility
   if (!document.getElementById('coastlines-style')) {
     const style = document.createElement('style')
     style.id = 'coastlines-style'
@@ -53,10 +52,11 @@ const coastlines = ({
       reprojectionErrorThreshold: 2,
       tileGrid: createXYZ({
         extent: projection.getExtent(),
-        maxResolution: 360 / 512,
+        maxResolution: 576 / 512,
         maxZoom: projectionConfigs[projectionCode].maxZoom
       }),
       tileSize: 512,
+
       url: `https://gibs.earthdata.nasa.gov/wmts/${gibsProjection}/best/Coastlines/default/250m/{z}/{y}/{x}.png`,
       wrapX: false
     }),

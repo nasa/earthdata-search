@@ -7,7 +7,6 @@ import EventType from 'ol/events/EventType'
  */
 class LayerSwitcherControl extends Control {
   constructor(options) {
-    // Create the main element for this control
     const element = document.createElement('div')
     element.className = options.className || 'edsc-map-layer-switcher ol-unselectable ol-control'
 
@@ -16,7 +15,6 @@ class LayerSwitcherControl extends Control {
       element
     })
 
-    // Store the options and layer change callback
     this.options = options
     this.onChangeLayer = options.onChangeLayer || (() => {})
 
@@ -33,10 +31,8 @@ class LayerSwitcherControl extends Control {
       )
     }
 
-    // Add the toggle button to the main element
     element.appendChild(toggleButton)
 
-    // Create the panel element that will show the layer options
     const panel = document.createElement('div')
     panel.className = `${options.className}__panel` || 'edsc-map-layer-switcher__panel'
 
@@ -82,16 +78,13 @@ class LayerSwitcherControl extends Control {
       }
     ]
 
-    // Create a container for the options
     const optionsContainer = document.createElement('div')
     optionsContainer.className = `${className}__options`
 
-    // Add each layer option
     layerOptions.forEach((option) => {
       const optionContainer = document.createElement('div')
       optionContainer.className = `${className}__option`
 
-      // Create the radio/checkbox input
       const input = document.createElement('input')
       input.type = option.id === 'world-imagery' || option.id === 'corrected-reflectance' || option.id === 'land-water-map' ? 'radio' : 'checkbox'
       input.name = option.id === 'world-imagery' || option.id === 'corrected-reflectance' || option.id === 'land-water-map' ? 'base-layer' : option.id
@@ -106,23 +99,20 @@ class LayerSwitcherControl extends Control {
         })
       })
 
-      // Create the label
       const label = document.createElement('label')
       label.htmlFor = `layer-${option.id}`
       label.textContent = option.label
 
-      // Add the input and label to the option container
       optionContainer.appendChild(input)
       optionContainer.appendChild(label)
       optionsContainer.appendChild(optionContainer)
     })
 
-    // Add the attribution footnote
+    // Add the attribution footnote for OpenStreeMaps
     const attribution = document.createElement('div')
     attribution.className = `${className}__attribution`
     attribution.innerHTML = '* © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
 
-    // Add the options and attribution to the panel
     panel.appendChild(optionsContainer)
     panel.appendChild(attribution)
   }

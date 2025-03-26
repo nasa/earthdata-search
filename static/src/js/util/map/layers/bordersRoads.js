@@ -11,7 +11,6 @@ const bordersRoads = ({
   attributions,
   projectionCode
 }) => {
-  // Administrative boundaries layer
   const bordersLayer = new VectorLayer({
     source: new VectorSource({
       url: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson',
@@ -27,8 +26,6 @@ const bordersRoads = ({
     className: 'edsc-borders-vector-layer'
   })
 
-  // For roads, we'll use a tile layer because vector-based global roads data
-  // would be too large to load efficiently
   const roadsLayer = new TileLayer({
     source: new XYZ({
       attributions,
