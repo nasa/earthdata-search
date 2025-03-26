@@ -338,7 +338,6 @@ export const MapContainer = (props) => {
     }
   }
 
->>>>>>> EDSC-4410
   // Projection switching in leaflet is not supported. Here we render MapWrapper with a key of the projection prop.
   // So when the projection is changed in ProjectionSwitcher this causes the map to unmount and remount a new instance,
   // which creates the illusion of 'changing' the projection

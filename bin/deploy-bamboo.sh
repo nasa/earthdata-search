@@ -35,10 +35,7 @@ config="`jq '.application.orderStatusRefreshTime = $newValue' --arg newValue $ba
 config="`jq '.application.orderStatusRefreshTimeCreating = $newValue' --arg newValue $bamboo_ORDER_STATUS_REFRESH_TIME_CREATING <<< $config`"
 config="`jq '.application.collectionSearchResultsSortKey = $newValue' --arg newValue $bamboo_COLLECTION_SEARCH_RESULTS_SORT_KEY <<< $config`"
 config="`jq '.application.mapPointsSimplifyThreshold = $newValue' --arg newValue $bamboo_MAP_POINTS_SIMPLIFY_THRESHOLD <<< $config`"
-<<<<<<< HEAD
-=======
 config="`jq '.application.placeLabelsStyleUrl = $newValue' --arg newValue $bamboo_PLACE_LABELS_STYLE_URL <<< $config`"
->>>>>>> EDSC-4410
 config="`jq '.environment.production.apiHost = $newValue' --arg newValue $bamboo_API_HOST <<< $config`"
 config="`jq '.environment.production.edscHost = $newValue' --arg newValue $bamboo_EDSC_HOST <<< $config`"
 

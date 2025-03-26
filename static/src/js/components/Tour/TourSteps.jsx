@@ -486,12 +486,7 @@ const TourSteps = ({
       styles: commonStyles
     },
     {
-<<<<<<< HEAD
-      // TODO this needs to be updated, but the openlayers controls don't have a good wrapping element
-      target: '.leaflet-bottom.leaflet-right',
-=======
       target: '.edsc-map-controls',
->>>>>>> EDSC-4410
       content: (
         <div className="search-tour__content-wrapper">
           <StepCounter currentStep={stepIndex} totalSteps={TOTAL_STEPS} />
