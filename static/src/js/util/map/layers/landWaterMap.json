@@ -1,0 +1,548 @@
+{
+    "version": 8,
+    "sprite": "https://cdn.arcgis.com/sharing/rest/content/items/fe92de877afe498fa62a5ae4c5b6c8ba/resources/styles/../sprites/sprite",
+    "glyphs": "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_GCS_v2/VectorTileServer/resources/fonts/{fontstack}/{range}.pbf",
+    "sources": {
+      "esri": {
+        "type": "vector",
+        "url": "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_GCS_v2/VectorTileServer",
+        "tiles": [
+        "https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_GCS_v2/VectorTileServer/tile/{z}/{y}/{x}.pbf"
+        ]
+      }
+    },
+    "layers": [
+      {
+        "id": "background",
+        "type": "background",
+        "paint": {
+          "background-color": "#808080"
+        }
+      },
+      {
+        "id": "Marine area/bathymetry depth 1",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Marine area",
+        "layout": {},
+        "paint": {
+          "fill-color": "#808080"
+        }
+      },
+      {
+        "id": "Land",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Land",
+        "filter": [
+          "in",
+          "_symbol",
+          0,
+          1
+        ],
+        "minzoom": 0,
+        "layout": {},
+        "paint": {
+          "fill-color": {
+            "stops": [
+              [
+                0,
+                "#4b4b4b"
+              ],
+              [
+                7,
+                "#4b4b4b"
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "id": "Special area of interest/Water",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Special area of interest",
+        "filter": [
+          "==",
+          "_symbol",
+          7
+        ],
+        "minzoom": 15,
+        "layout": {},
+        "paint": {
+          "fill-color": "#808080"
+        }
+      },
+      {
+        "id": "Water line small scale",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line small scale",
+        "minzoom": 1,
+        "maxzoom": 5,
+        "layout": {
+          "line-join": "round",
+          "visibility": "none"
+        },
+        "paint": {
+          "line-color": "#808080",
+          "line-width": 0.5
+        }
+      },
+      {
+        "id": "Water line medium scale",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line medium scale",
+        "minzoom": 6,
+        "maxzoom": 7,
+        "layout": {
+          "line-join": "round"
+        },
+        "paint": {
+          "line-color": "#808080",
+          "line-width": {
+            "base": 1.2,
+            "stops": [
+              [
+                5,
+                0.5
+              ],
+              [
+                7,
+                0.7
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "id": "Water line large scale",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line large scale",
+        "minzoom": 7,
+        "maxzoom": 11,
+        "layout": {
+          "line-cap": "round",
+          "line-join": "round"
+        },
+        "paint": {
+          "line-color": "#808080",
+          "line-width": {
+            "base": 1.2,
+            "stops": [
+              [
+                7,
+                0.7
+              ],
+              [
+                11,
+                0.8
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "id": "Water line/Waterfall",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line",
+        "filter": [
+          "==",
+          "_symbol",
+          5
+        ],
+        "minzoom": 11,
+        "layout": {
+          "line-join": "round"
+        },
+        "paint": {
+          "line-color": "#808080",
+          "line-width": 0.8,
+          "line-dasharray": [
+            5,
+            5
+          ]
+        }
+      },
+      {
+        "id": "Water line/Dam or weir",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line",
+        "filter": [
+          "==",
+          "_symbol",
+          2
+        ],
+        "minzoom": 11,
+        "layout": {
+          "line-cap": "round",
+          "line-join": "round"
+        },
+        "paint": {
+          "line-color": "#808080",
+          "line-width": {
+            "base": 1.2,
+            "stops": [
+              [
+                11,
+                0.7
+              ],
+              [
+                14,
+                0.7
+              ],
+              [
+                17,
+                2
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "id": "Water line/Levee/1",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line",
+        "filter": [
+          "==",
+          "_symbol",
+          3
+        ],
+        "minzoom": 11,
+        "layout": {
+          "line-join": "round"
+        },
+        "paint": {
+          "line-color": "#808080",
+          "line-width": {
+            "base": 1.2,
+            "stops": [
+              [
+                11,
+                0.7
+              ],
+              [
+                14,
+                0.7
+              ],
+              [
+                17,
+                2
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "id": "Water line/Levee/0",
+        "type": "symbol",
+        "source": "esri",
+        "source-layer": "Water line",
+        "filter": [
+          "==",
+          "_symbol",
+          3
+        ],
+        "minzoom": 13,
+        "layout": {
+          "symbol-placement": "line",
+          "symbol-avoid-edges": true,
+          "icon-image": "Water line/Levee/0",
+          "symbol-spacing": 15,
+          "icon-rotation-alignment": "map",
+          "icon-allow-overlap": true,
+          "icon-padding": 1
+        },
+        "paint": {}
+      },
+      {
+        "id": "Water line/Canal or ditch",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line",
+        "filter": [
+          "==",
+          "_symbol",
+          1
+        ],
+        "minzoom": 11,
+        "layout": {
+          "line-cap": "round"
+        },
+        "paint": {
+          "line-color": "#808080",
+          "line-width": {
+            "base": 1.2,
+            "stops": [
+              [
+                11,
+                0.8
+              ],
+              [
+                14,
+                0.8
+              ],
+              [
+                17,
+                2
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "id": "Water line/Stream or river intermittent",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line",
+        "filter": [
+          "==",
+          "_symbol",
+          4
+        ],
+        "minzoom": 11,
+        "layout": {},
+        "paint": {
+          "line-color": "#808080",
+          "line-dasharray": [
+            7,
+            3
+          ],
+          "line-width": {
+            "base": 1.2,
+            "stops": [
+              [
+                11,
+                0.8
+              ],
+              [
+                14,
+                0.8
+              ],
+              [
+                17,
+                2
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "id": "Water line/Stream or river",
+        "type": "line",
+        "source": "esri",
+        "source-layer": "Water line",
+        "filter": [
+          "==",
+          "_symbol",
+          0
+        ],
+        "minzoom": 11,
+        "layout": {
+          "line-cap": "round"
+        },
+        "paint": {
+          "line-color": "#808080",
+          "line-width": {
+            "base": 1.2,
+            "stops": [
+              [
+                11,
+                0.8
+              ],
+              [
+                14,
+                0.8
+              ],
+              [
+                17,
+                2
+              ]
+            ]
+          }
+        }
+      },
+      {
+        "id": "Water area small scale",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area small scale",
+        "minzoom": 1,
+        "maxzoom": 5,
+        "layout": {},
+        "paint": {
+          "fill-color": "#808080"
+        }
+      },
+      {
+        "id": "Water area medium scale/Lake intermittent",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area medium scale",
+        "filter": [
+          "==",
+          "_symbol",
+          1
+        ],
+        "minzoom": 5,
+        "maxzoom": 7,
+        "layout": {},
+        "paint": {
+          "fill-pattern": "Water area/Lake or river intermittent"
+        }
+      },
+      {
+        "id": "Water area medium scale/Lake or river",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area medium scale",
+        "filter": [
+          "==",
+          "_symbol",
+          0
+        ],
+        "minzoom": 5,
+        "maxzoom": 7,
+        "layout": {},
+        "paint": {
+          "fill-color": "#808080"
+        }
+      },
+      {
+        "id": "Water area large scale/Lake intermittent",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area large scale",
+        "filter": [
+          "==",
+          "_symbol",
+          1
+        ],
+        "minzoom": 7,
+        "maxzoom": 11,
+        "layout": {},
+        "paint": {
+          "fill-pattern": "Water area/Lake or river intermittent"
+        }
+      },
+      {
+        "id": "Water area large scale/Lake or river",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area large scale",
+        "filter": [
+          "==",
+          "_symbol",
+          0
+        ],
+        "minzoom": 7,
+        "maxzoom": 11,
+        "layout": {},
+        "paint": {
+          "fill-color": "#808080"
+        }
+      },
+      {
+        "id": "Water area/Lake, river or bay",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area",
+        "filter": [
+          "==",
+          "_symbol",
+          7
+        ],
+        "minzoom": 11,
+        "layout": {},
+        "paint": {
+          "fill-color": "#808080"
+        }
+      },
+      {
+        "id": "Water area/Lake or river intermittent",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area",
+        "filter": [
+          "==",
+          "_symbol",
+          6
+        ],
+        "minzoom": 11,
+        "layout": {},
+        "paint": {
+          "fill-pattern": "Water area/Lake or river intermittent"
+        }
+      },
+      {
+        "id": "Water area/Inundated area",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area",
+        "filter": [
+          "==",
+          "_symbol",
+          4
+        ],
+        "minzoom": 11,
+        "layout": {},
+        "paint": {
+          "fill-pattern": "Water area/Inundated area"
+        }
+      },
+      {
+        "id": "Water area/Swamp or marsh",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area",
+        "filter": [
+          "==",
+          "_symbol",
+          3
+        ],
+        "minzoom": 11,
+        "layout": {},
+        "paint": {
+          "fill-pattern": "Water area/Swamp or marsh"
+        }
+      },
+      {
+        "id": "Water area/Playa",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area",
+        "filter": [
+          "==",
+          "_symbol",
+          1
+        ],
+        "minzoom": 11,
+        "layout": {},
+        "paint": {
+          "fill-pattern": "Water area/Playa"
+        }
+      },
+      {
+        "id": "Water area/Dam or weir",
+        "type": "fill",
+        "source": "esri",
+        "source-layer": "Water area",
+        "filter": [
+          "==",
+          "_symbol",
+          5
+        ],
+        "minzoom": 11,
+        "layout": {},
+        "paint": {
+          "fill-color": "#808080",
+          "fill-outline-color": "#808080"
+        }
+      }
+    ]
+  }

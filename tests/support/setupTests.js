@@ -19,6 +19,10 @@ const getImageFileName = (url) => {
     filename = url.split('earthdata.nasa.gov/')[1].replace(/\//g, '_')
   }
 
+  if (url.includes('gibs-c.earthdata.nasa.gov')) {
+    filename = url.split('gibs-c.earthdata.nasa.gov/')[1].replace(/\//g, '_')
+  }
+
   return filename
 }
 

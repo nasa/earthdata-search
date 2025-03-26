@@ -1,7 +1,8 @@
 import React, {
   useContext,
   useEffect,
-  useRef
+  useRef,
+  useState
 } from 'react'
 import { renderToString } from 'react-dom/server'
 import PropTypes from 'prop-types'
@@ -31,7 +32,8 @@ import VectorSource from 'ol/source/Vector'
 import {
   FaCircle,
   FaFile,
-  FaHome
+  FaHome,
+  FaLayerGroup
 } from 'react-icons/fa'
 import {
   Close,
@@ -70,11 +72,17 @@ import onClickMap from '../../util/map/interactions/onClickMap'
 import onClickShapefile from '../../util/map/interactions/onClickShapefile'
 import projections from '../../util/map/projections'
 import worldImagery from '../../util/map/layers/worldImagery'
+import LayerSwitcherControl from './LayerSwitcherControl'
+import bordersRoads from '../../util/map/layers/bordersRoads'
+import coastlines from '../../util/map/layers/coastlines'
+import correctedReflectance from '../../util/map/layers/correctedReflectance'
+import landWaterMap from '../../util/map/layers/landWaterMap'
 
 import { eventEmitter } from '../../events/events'
 
 import 'ol/ol.css'
 import './Map.scss'
+import mapLayers from '../../util/map/mapLayers'
 
 // TODO Data attributions
 
@@ -88,6 +96,30 @@ const esriAttribution = 'Powered by <a href="https://www.esri.com/" target="_bla
 
 // Build the worldImagery layer
 const worldImageryLayer = worldImagery({
+  attributions: esriAttribution,
+  projectionCode: projections.geographic
+})
+
+// Build the correctedReflectance Layer
+const correctedReflectanceLayer = correctedReflectance({
+  attributions: 'NASA EOSDIS GIBS',
+  projectionCode: projections.geographic
+})
+
+// Build the landWater Layer
+const landWaterMapLayer = landWaterMap({
+  attributions: esriAttribution,
+  projectionCode: projections.geographic
+})
+
+// Build the coastlines Layer
+const coastlinesLayer = coastlines({
+  attributions: esriAttribution,
+  projectionCode: projections.geographic
+})
+
+// Build the bordersRoads Layer
+const bordersRoadsLayer = bordersRoads({
   attributions: esriAttribution,
   projectionCode: projections.geographic
 })
@@ -251,6 +283,7 @@ const removeDrawingInteraction = (map) => {
  * @param {Number} params.zoom Zoom level of the map
  */
 const Map = ({
+  base,
   center,
   colorMap,
   focusedCollectionId,
@@ -270,6 +303,7 @@ const Map = ({
   onToggleShapefileUploadModal,
   onToggleTooManyPointsModal,
   onUpdateShapefile,
+  overlays,
   projectionCode,
   rotation,
   shapefile,
@@ -286,12 +320,129 @@ const Map = ({
   const mapRef = useRef()
   const mapElRef = useRef()
 
+  const [currentOverlays, setCurrentOverlays] = useState(overlays)
+
+  useEffect(() => {
+    // Set initial base layer visibility
+    worldImageryLayer.setVisible(base.worldImagery)
+    correctedReflectanceLayer.setVisible(base.trueColor)
+    landWaterMapLayer.setVisible(base.landWaterMap)
+
+    // Set initial overlay layer visibility
+    bordersRoadsLayer.setVisible(overlays.referenceFeatures)
+    coastlinesLayer.setVisible(overlays.coastlines)
+    placeLabelsLayer.setVisible(overlays.referenceLabels)
+
+    // Update the current overlays state
+    setCurrentOverlays(overlays)
+  }, [])
+
+  const handleLayerChange = ({ id, checked }) => {
+    // Handle base layers
+    // eslint-disable-next-line max-len
+    if ([mapLayers.worldImagery, mapLayers.correctedReflectance, mapLayers.landWaterMap].includes(id)) {
+      const newBase = {
+        worldImagery: false,
+        trueColor: false,
+        landWaterMap: false
+      }
+
+      // Set the selected base layer to true
+      if (id === mapLayers.worldImagery) newBase.worldImagery = checked
+      if (id === mapLayers.correctedReflectance) newBase.trueColor = checked
+      if (id === mapLayers.landWaterMap) newBase.landWaterMap = checked
+
+      // Update layer visibility
+      worldImageryLayer.setVisible(id === mapLayers.worldImagery && checked)
+      correctedReflectanceLayer.setVisible(id === mapLayers.correctedReflectance && checked)
+      landWaterMapLayer.setVisible(id === mapLayers.landWaterMap && checked)
+
+      onChangeMap({ base: newBase })
+    } else {
+      // Set overlay layer visibility
+      let overlayChanged = false
+      const newOverlays = { ...currentOverlays }
+
+      switch (id) {
+        case mapLayers.bordersRoads:
+          bordersRoadsLayer.setVisible(checked)
+          newOverlays.referenceFeatures = checked
+          overlayChanged = true
+          break
+
+        case mapLayers.coastlines:
+          coastlinesLayer.setVisible(checked)
+          newOverlays.coastlines = checked
+          overlayChanged = true
+          break
+
+        case mapLayers.placeLabels:
+          placeLabelsLayer.setVisible(checked)
+          newOverlays.referenceLabels = checked
+          overlayChanged = true
+          break
+
+        default:
+          console.warn(`Unknown layer id: ${id}`)
+      }
+
+      // Only update state and call onChangeMap if an overlay was changed
+      if (overlayChanged) {
+        setCurrentOverlays(newOverlays)
+        onChangeMap({ overlays: newOverlays })
+      }
+    }
+  }
+
+  const layerSwitcherControl = (onChangeLayer) => {
+    const control = new LayerSwitcherControl({
+      className: 'edsc-map-layer-switcher',
+      LayersIcon: <EDSCIcon size="0.75rem" icon={FaLayerGroup} />,
+      onChangeLayer,
+      layerOptions: [
+        {
+          id: mapLayers.worldImagery,
+          label: 'World Imagery',
+          checked: base.worldImagery
+        },
+        {
+          id: mapLayers.correctedReflectance,
+          label: 'Corrected Reflectance (True Color)',
+          checked: base.trueColor
+        },
+        {
+          id: mapLayers.landWaterMap,
+          label: 'Land / Water Map *',
+          checked: base.landWaterMap
+        },
+        {
+          id: mapLayers.bordersRoads,
+          label: 'Borders and Roads *',
+          checked: currentOverlays.referenceFeatures
+        },
+        {
+          id: mapLayers.coastlines,
+          label: 'Coastlines *',
+          checked: currentOverlays.coastlines
+        },
+        {
+          id: mapLayers.placeLabels,
+          label: 'Place Labels *',
+          checked: currentOverlays.referenceLabels
+        }
+      ]
+    })
+
+    return control
+  }
+
   useEffect(() => {
     const map = new OlMap({
       controls: [
         attribution,
         scaleMetric,
         scaleImperial,
+        layerSwitcherControl(handleLayerChange),
         new LegendControl({
           colorMap,
           isFocusedCollectionPage
@@ -304,6 +455,10 @@ const Map = ({
       ]),
       layers: [
         worldImageryLayer,
+        correctedReflectanceLayer,
+        landWaterMapLayer,
+        coastlinesLayer,
+        bordersRoadsLayer,
         placeLabelsLayer,
         granuleBackgroundsLayer,
         granuleOutlinesLayer,
@@ -884,6 +1039,16 @@ Map.defaultProps = {
 }
 
 Map.propTypes = {
+  base: PropTypes.shape({
+    worldImagery: PropTypes.bool,
+    trueColor: PropTypes.bool,
+    landWaterMap: PropTypes.bool
+  }).isRequired,
+  overlays: PropTypes.shape({
+    referenceFeatures: PropTypes.bool,
+    coastlines: PropTypes.bool,
+    referenceLabels: PropTypes.bool
+  }).isRequired,
   center: PropTypes.shape({
     latitude: PropTypes.number,
     longitude: PropTypes.number

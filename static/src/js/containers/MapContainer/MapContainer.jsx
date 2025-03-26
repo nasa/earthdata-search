@@ -530,6 +530,7 @@ export const MapContainer = (props) => {
 
   return (
     <Map
+      base={base}
       center={center}
       colorMap={colorMap}
       focusedCollectionId={focusedCollectionId}
@@ -549,6 +550,7 @@ export const MapContainer = (props) => {
       onToggleShapefileUploadModal={onToggleShapefileUploadModal}
       onToggleTooManyPointsModal={onToggleTooManyPointsModal}
       onUpdateShapefile={onUpdateShapefile}
+      overlays={overlays}
       projectionCode={projection}
       rotation={rotation}
       shapefile={memoizedShapefile}
