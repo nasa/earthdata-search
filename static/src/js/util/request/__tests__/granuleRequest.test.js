@@ -156,6 +156,10 @@ describe('GranuleRequest#transformResponse', () => {
               points: ['0 10'],
               spatial: {
                 type: 'Feature',
+<<<<<<< HEAD
+=======
+                properties: {},
+>>>>>>> EDSC-4410
                 geometry: {
                   type: 'MultiPoint',
                   coordinates: [[10, 0]]

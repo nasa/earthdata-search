@@ -2,6 +2,22 @@ import fs from 'fs'
 import path from 'path'
 import { resizeHack } from './resizeHack'
 
+<<<<<<< HEAD
+=======
+const getImageFileName = (url) => {
+  let filename
+  if (url.includes('arcgis.com')) {
+    filename = url.split('arcgis.com/')[1].replace(/\//g, '_')
+  }
+
+  if (url.includes('earthdata.nasa.gov')) {
+    filename = url.split('earthdata.nasa.gov/')[1].replace(/\//g, '_')
+  }
+
+  return filename
+}
+
+>>>>>>> EDSC-4410
 // This function can be used to download an image and save it locall to be mocked.
 // eslint-disable-next-line no-unused-vars
 const saveImage = async (route, page) => {
@@ -9,7 +25,11 @@ const saveImage = async (route, page) => {
   const buffer = await response.body()
 
   const url = route.request().url()
+<<<<<<< HEAD
   const filename = url.split('arcgis.com/')[1].replace(/\//g, '_')
+=======
+  const filename = getImageFileName(url)
+>>>>>>> EDSC-4410
   const imagePath = path.join('./tests/fixtures/images', filename)
   fs.writeFileSync(imagePath, buffer)
 
@@ -20,7 +40,11 @@ const saveImage = async (route, page) => {
 const mockImage = async (route) => {
   // Load the image from the file system
   const url = route.request().url()
+<<<<<<< HEAD
   const filename = url.split('arcgis.com/')[1].replace(/\//g, '_')
+=======
+  const filename = getImageFileName(url)
+>>>>>>> EDSC-4410
   const imagePath = path.join('./tests/fixtures/images', filename)
 
   try {
@@ -35,6 +59,19 @@ const mockImage = async (route) => {
   }
 }
 
+<<<<<<< HEAD
+=======
+// Handles saving and mocking images
+// eslint-disable-next-line no-unused-vars
+const handleImage = async (route, page) => {
+  // Uncomment this call to save images downloaded during a test
+  // await saveImage(route, page)
+
+  // Return the image from disk
+  await mockImage(route)
+}
+
+>>>>>>> EDSC-4410
 /**
  * Sets up Playwright tests to prevent loading the map and disable the tour by default.
  * @param {object} options - The options for setting up the test environment.
@@ -62,11 +99,19 @@ export const setupTests = async ({
   // Prevent loading of images and map tiles to speed up tests
   await page.route('**/*.{png,jpg,jpeg,pbf}', (route) => route.abort())
   await page.route('**/arcgis/**', async (route) => {
+<<<<<<< HEAD
     // Uncomment this call to save images downloaded during a test
     // await saveImage(route, page)
 
     // Return the image from disk
     await mockImage(route)
+=======
+    await handleImage(route, page)
+  })
+
+  await page.route('**/wmts.cgi**', async (route) => {
+    await handleImage(route, page)
+>>>>>>> EDSC-4410
   })
 
   await page.route('**/scale/**', (route) => route.abort())

@@ -22,6 +22,12 @@ import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
 import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
+import gibsCollectionGraphQlBody from './__mocks__/gibs/collection_graphql.body.json'
+import gibsCollectionGraphQlHeaders from './__mocks__/gibs/graphql.headers.json'
+import gibsCollectionsBody from './__mocks__/gibs/collections.body.json'
+import gibsGranuleGraphQlBody from './__mocks__/gibs/granule_graphql.body.json'
+import gibsGranulesBody from './__mocks__/gibs/granules.body.json'
+import gibsGranulesHeaders from './__mocks__/gibs/granules.headers.json'
 import granuleCrossingCollectionBody from './__mocks__/cmr_granules/granule_crossing_collections.body.json'
 import granuleCrossingCollectionGraphQlBody from './__mocks__/cmr_granules/granule_crossing_collection_graphql.body.json'
 import granuleCrossingGranuleGraphQlBody from './__mocks__/cmr_granules/granule_crossing_granule_graphql.body.json'
@@ -540,6 +546,89 @@ test.describe('Map: Granule interactions', () => {
             height: 50
           },
           maxDiffPixelRatio: 0.03
+        })
+      })
+    })
+  })
+
+  test.describe('when viewing granules with gibs imagery', () => {
+    test.describe('when the top granule has transparent imagery', () => {
+      test.beforeEach(async ({ page }) => {
+        const conceptId = 'C2930727817-LARC_CLOUD'
+
+        await interceptUnauthenticatedCollections({
+          page,
+          body: gibsCollectionsBody,
+          headers: commonHeaders
+        })
+
+        await page.route(/search\/granules.json/, async (route) => {
+          const query = route.request().postData()
+
+          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc&readable_granule_name[]=TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&sort_key=-start_date`) {
+            await route.fulfill({
+              json: gibsGranulesBody,
+              headers: gibsGranulesHeaders
+            })
+          }
+        })
+
+        await page.route(/api$/, async (route) => {
+          const query = route.request().postData()
+
+          if (query === graphQlGetCollection(conceptId)) {
+            await route.fulfill({
+              json: gibsCollectionGraphQlBody,
+              headers: gibsCollectionGraphQlHeaders
+            })
+          }
+
+          if (query === '{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G3453056435-LARC_CLOUD"}}}') {
+            await route.fulfill({
+              json: gibsGranuleGraphQlBody,
+              headers: { 'content-type': 'application/json' }
+            })
+          }
+        })
+
+        await page.route(/autocomplete$/, async (route) => {
+          await route.fulfill({
+            json: { feed: { entry: [] } }
+          })
+        })
+
+        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
+          await route.fulfill({
+            json: {}
+          })
+        })
+
+        await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+      })
+
+      test('does not draw the lower granule\'s imagery through the transparent pieces of the top granule', async ({ page }) => {
+        await expect(page).toHaveScreenshot('gibs-transparent.png', {
+          clip: screenshotClip
+        })
+      })
+
+      test.describe('when focusing on the lower granule', () => {
+        test.beforeEach(async ({ page }) => {
+          await page.getByText('TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc').click()
+
+          // The is a 250ms duration for fitting the granule to the view area
+          await page.waitForTimeout(250)
+        })
+
+        test('draws the imagery of the focused granule above the previous top granule', async ({ page }) => {
+          await expect(page.locator(temporalLabelClass)).toHaveText('2025-03-17 18:17:102025-03-17 19:16:51')
+
+          await expect(page).toHaveScreenshot('gibs-focused.png', {
+            clip: screenshotClip
+          })
         })
       })
     })

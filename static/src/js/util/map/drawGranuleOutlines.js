@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import projections from './projections'
 import { pointRadius } from './styles'
 
@@ -103,13 +104,20 @@ const drawOutline = ({
   // Draw the shape on the canvas
   ctx.stroke()
 }
+=======
+import drawOutline from './drawOutline'
+>>>>>>> EDSC-4410
 
 // Draw the granule outlines
 const drawGranuleOutlines = ({
   ctx,
   granuleBackgroundsSource,
+<<<<<<< HEAD
   map,
   projectionCode
+=======
+  map
+>>>>>>> EDSC-4410
 }) => {
   // Remove existing drawings on the canvas
   ctx.reset()
@@ -117,8 +125,21 @@ const drawGranuleOutlines = ({
   // Get the device pixel ratio for use in scaling the drawing
   const dpr = window.devicePixelRatio || 1
 
+<<<<<<< HEAD
   // Loop through the features that have been drawn on the granuleBackgroundsLayer
   granuleBackgroundsSource.forEachFeature((feature) => {
+=======
+  const viewExtent = map.getView().calculateExtent(map.getSize())
+
+  // Only get the features that intersect the view extent
+  const features = granuleBackgroundsSource.getFeaturesInExtent(viewExtent)
+
+  // Sort features by the index property
+  const sortedFeatures = features.sort((a, b) => a.get('index') - b.get('index'))
+
+  // Loop through the features that have been drawn on the granuleBackgroundsLayer
+  sortedFeatures.forEach((feature) => {
+>>>>>>> EDSC-4410
     ctx.beginPath()
 
     // Set the globalCompositeOperation to 'destination-over' so new granule outlines
@@ -153,6 +174,7 @@ const drawGranuleOutlines = ({
       scale: dpr
     })
 
+<<<<<<< HEAD
     // Add path around full earth
     drawBoundary({
       ctx,
@@ -160,6 +182,13 @@ const drawGranuleOutlines = ({
       projectionCode,
       scale: dpr
     })
+=======
+    // Draw the shape on the canvas
+    ctx.stroke()
+
+    // Add path around full canvas extent to clip the granule outlines
+    ctx.rect(0, 0, ctx.canvas.width, ctx.canvas.height)
+>>>>>>> EDSC-4410
 
     // Clip
     ctx.clip()

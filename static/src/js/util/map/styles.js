@@ -31,7 +31,11 @@ export const backgroundPointStyle = new Style({
 export const granuleStyle = (index) => new Style({
   stroke: new Stroke({
     color: getColorByIndex(index),
+<<<<<<< HEAD
     width: 1.5
+=======
+    width: 2
+>>>>>>> EDSC-4410
   })
 })
 

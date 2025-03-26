@@ -6,8 +6,14 @@ import { applyStyle } from 'ol-mapbox-style'
 
 import { crsProjections } from '../crs'
 
+<<<<<<< HEAD
 // Style provided by Worldview
 const styleUrl = 'https://nasa.maps.arcgis.com/sharing/rest/content/items/b611632010304f9a9358e1eec064cd25/resources/styles/root.json?f=pjson'
+=======
+import { getApplicationConfig } from '../../../../../../sharedUtils/config'
+
+const { placeLabelsStyleUrl } = getApplicationConfig()
+>>>>>>> EDSC-4410
 
 /**
  * Builds the place labels layer
@@ -31,11 +37,20 @@ const placeLabels = async ({
       attributions
     }),
     declutter: true,
+<<<<<<< HEAD
     renderMode: 'hybrid'
   })
 
   // Style the layer according to the styleUrl
   await applyStyle(layer, styleUrl, {
+=======
+    renderMode: 'hybrid',
+    zIndex: 5
+  })
+
+  // Style the layer according to the placeLabelsStyleUrl, provided by Worldview
+  await applyStyle(layer, placeLabelsStyleUrl, {
+>>>>>>> EDSC-4410
     resolutions: layer.getSource().getTileGrid().getResolutions(),
     transformRequest(url, resourceType) {
       if (resourceType === 'Tile') {

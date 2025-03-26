@@ -9,7 +9,11 @@ class ProjectionSwitcherControl extends Control {
   constructor(options) {
     // Create the element for this control
     const element = document.createElement('div')
+<<<<<<< HEAD
     element.className = 'edsc-map-projection-switcher ol-unselectable ol-control'
+=======
+    element.className = 'edsc-map-projection-switcher'
+>>>>>>> EDSC-4410
 
     super({
       ...options,
