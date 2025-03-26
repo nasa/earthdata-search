@@ -1,0 +1,123 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
+.home {
+  &__hero {
+    --hero-image-path-800x600: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800X600.jpg');
+    --hero-image-path-800x600-2x: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800X600.jpg');
+    --hero-image-path-1280x720: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg');
+    --hero-image-path-1280x720-2x: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg');
+    --hero-image-path-1920x1080: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg');
+    --hero-image-path-1920x1080-2x: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg');
+    --hero-image-path-2560x1440: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg');
+    --hero-image-path-2560x1440-2x: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg');
+    --hero-image-overlay: rgba(0, 0, 0, 0.4);
+
+    height: calc(100vh - 15rem);
+    min-height: 15rem;
+    max-height: 65rem;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: var(--hero-image-path-800x600);
+    text-shadow: 0 0 0.75rem rgba(utils.$color__carbon-black, 0.75);
+
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      background-image: var(--hero-image-path-800x600-2x);
+    }
+
+    @include bootstrap.media-breakpoint-up(md) {
+      max-height: auto;
+      background-image: var(--hero-image-path-1280x720);
+
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: var(--hero-image-path-1280x720-2x);
+      }
+    }
+
+    @include bootstrap.media-breakpoint-up(lg) {
+      background-image: var(--hero-image-path-1920x1080);
+
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: var(--hero-image-path-1920x1080-2x);
+      }
+    }
+
+    @include bootstrap.media-breakpoint-up(xl) {
+      background-image: var(--hero-image-path-2560x1440);
+
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: var(--hero-image-path-2560x1440-2x);
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--hero-image-overlay);
+    }
+  }
+
+  &__hero-input-icon {
+    top: 50%;
+    left: 0.75rem;
+    transform: translateY(-50%);
+    color: utils.$color__carbon--40
+  }
+
+
+  &__hero-input-wrapper {
+    max-width: 60rem;
+    align-self: center
+  }
+
+  &__hero-input {
+    padding-left: 2.5rem;
+  }
+
+  &__hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 0;
+  }
+
+  &__hero-image-link {
+    right: 0.75rem;
+    bottom: 0.75rem;
+  }
+
+  &__hero-image-popover {
+    &.bs-popover-top .popover-arrow:after {
+      border-top-color: utils.$color__carbon-black;
+    }
+
+    &.bs-popover-end .popover-arrow:after {
+      border-right-color: utils.$color__carbon-black;
+    }
+
+    &.bs-popover-bottom .popover-arrow:after {
+      border-bottom-color: utils.$color__carbon-black;
+    }
+
+    &.bs-popover-start .popover-arrow:after {
+      border-left-color: utils.$color__carbon-black;
+    }
+  }
+
+  &__hero-image-tooltip .tooltip-inner {
+    text-align: left;
+  }
+}
+
+.home-card {
+  &__image {
+    width: 3rem;
+    height: 3rem;
+  }
+}

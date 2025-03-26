@@ -9,6 +9,8 @@
   "extends": [
     "@edsc"
   ],
+  "plugins": ["@typescript-eslint"],
+  "parser": "@typescript-eslint/parser",
   "rules": {
     // Allowing cyclic dependencies
     "import/no-cycle": "off",

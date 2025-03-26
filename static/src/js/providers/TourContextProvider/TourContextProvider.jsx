@@ -12,16 +12,19 @@ const isSiteTourEnabled = disableSiteTour === 'false'
 
 const TourContextProvider = ({ children }) => {
   const [runTour, setRunTour] = useState(false)
+  const [searchLoaded, setSearchLoaded] = useState(false)
+
   useEffect(() => {
     const hasUserDisabledTour = localStorage.getItem('dontShowTour') === 'true'
     const shouldShowTour = isSiteTourEnabled && !hasUserDisabledTour
-    setRunTour(shouldShowTour)
-  }, [])
+    setRunTour(searchLoaded && shouldShowTour)
+  }, [searchLoaded])
 
   const providerValue = useMemo(
     () => ({
       runTour,
-      setRunTour
+      setRunTour,
+      setSearchLoaded
     }),
     [runTour]
   )

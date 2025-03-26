@@ -11,6 +11,7 @@ import Button from '../Button/Button'
 import TemporalSelection from '../TemporalSelection/TemporalSelection'
 
 import './TemporalSelectionDropdownMenu.scss'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 const TemporalSelectionDropdownMenu = ({
   allowRecurring,
@@ -74,15 +75,17 @@ const TemporalSelectionDropdownMenu = ({
         displayEndDate={displayEndDate}
       />
       <div className="temporal-selection-dropdown-menu__actions">
-        <Button
+        <PortalLinkContainer
           className={classes.btnApply}
+          type="button"
           bootstrapVariant="primary"
           label="Apply"
           onClick={onApplyClick}
           disabled={disabled}
+          to="/search"
         >
           Apply
-        </Button>
+        </PortalLinkContainer>
         <Button
           className={classes.btnCancel}
           bootstrapVariant="light"

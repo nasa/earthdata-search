@@ -20,7 +20,7 @@ const AutocompleteSuggestion = ({ suggestion }) => {
   const hierarchy = buildHierarchy({ fields })
 
   return (
-    <div title={title}>
+    <div>
       <div className="autocomplete-suggestion__suggestions-primary">
         <div className="autocomplete-suggestion__suggestions-type">
           {startCase(type)}
@@ -34,7 +34,7 @@ const AutocompleteSuggestion = ({ suggestion }) => {
                   hierarchy.map((parent) => (
                     <React.Fragment key={`${value}-${parent}`}>
                       {parent}
-                      <EDSCIcon icon={ArrowChevronRight} />
+                      <EDSCIcon icon={ArrowChevronRight} size="10" />
                       {' '}
                     </React.Fragment>
                   ))

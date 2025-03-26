@@ -152,61 +152,57 @@ export class TemporalSelection extends Component {
       }),
       inputStart: classNames(
         'temporal-selection__input-group',
-        'temporal-selection__input-group--start'
+        'temporal-selection__input-group--start',
+        'flex-grow-1'
       ),
       inputEnd: classNames(
         'temporal-selection__input-group',
-        'temporal-selection__input-group--end'
+        'temporal-selection__input-group--end',
+        'flex-grow-1'
       )
     }
 
     return (
       <div className={classes.temporalSelection}>
-        <div className="temporal-selection__inputs mb-1">
-          <Row>
-            <Col>
-              <Form.Group controlId={`${controlId}__start-date`} className={classes.inputStart}>
-                <Form.Label className="temporal-selection__label">
-                  Start
-                </Form.Label>
-                <DatepickerContainer
-                  id={`${controlId}__temporal-form__start-date`}
-                  label="Start Date"
-                  onSubmit={onSubmitStart}
-                  filterType={filterType}
-                  type="start"
-                  size={size}
-                  format={format}
-                  value={displayStartDate}
-                  minDate={minimumTemporalDateString}
-                  maxDate={moment().utc().toISOString()}
-                  shouldValidate={!isRecurring}
-                  viewMode={isRecurring ? 'months' : 'years'}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group controlId={`${controlId}__end-date`} className={classes.inputEnd}>
-                <Form.Label className="temporal-selection__label">
-                  End
-                </Form.Label>
-                <DatepickerContainer
-                  id={`${controlId}__temporal-form__end-date`}
-                  label="End Date"
-                  onSubmit={onSubmitEnd}
-                  filterType={filterType}
-                  type="end"
-                  size={size}
-                  format={format}
-                  value={displayEndDate}
-                  minDate={minimumTemporalDateString}
-                  maxDate={moment().utc().toISOString()}
-                  shouldValidate={!isRecurring}
-                  viewMode={isRecurring ? 'months' : 'years'}
-                />
-              </Form.Group>
-            </Col>
-          </Row>
+        <div className="temporal-selection__inputs mb-1 d-flex gap-3">
+          <Form.Group controlId={`${controlId}__start-date`} className={classes.inputStart}>
+            <Form.Label className="temporal-selection__label">
+              Start
+            </Form.Label>
+            <DatepickerContainer
+              id={`${controlId}__temporal-form__start-date`}
+              label="Start Date"
+              onSubmit={onSubmitStart}
+              filterType={filterType}
+              type="start"
+              size={size}
+              format={format}
+              value={displayStartDate}
+              minDate={minimumTemporalDateString}
+              maxDate={moment().utc().toISOString()}
+              shouldValidate={!isRecurring}
+              viewMode={isRecurring ? 'months' : 'years'}
+            />
+          </Form.Group>
+          <Form.Group controlId={`${controlId}__end-date`} className={classes.inputEnd}>
+            <Form.Label className="temporal-selection__label">
+              End
+            </Form.Label>
+            <DatepickerContainer
+              id={`${controlId}__temporal-form__end-date`}
+              label="End Date"
+              onSubmit={onSubmitEnd}
+              filterType={filterType}
+              type="end"
+              size={size}
+              format={format}
+              value={displayEndDate}
+              minDate={minimumTemporalDateString}
+              maxDate={moment().utc().toISOString()}
+              shouldValidate={!isRecurring}
+              viewMode={isRecurring ? 'months' : 'years'}
+            />
+          </Form.Group>
         </div>
         {
           validate && (
@@ -238,7 +234,7 @@ export class TemporalSelection extends Component {
               <Form.Check>
                 <Form.Check.Input disabled={enableRecurring} type="checkbox" onChange={onRecurringToggle} checked={isRecurring} />
                 <Form.Check.Label className="temporal-selection__label">
-                  Recurring?
+                  Use a recurring date range
                 </Form.Check.Label>
               </Form.Check>
             </Form.Group>

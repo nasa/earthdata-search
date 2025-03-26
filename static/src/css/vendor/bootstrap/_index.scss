@@ -3,6 +3,7 @@
 */
 
 @import 'custom-variables';
+@import 'typography-variables';
 
 
 /*
@@ -32,6 +33,8 @@
 /*
  * Bootstrap Overrides
 */
+
+@import "typography";
 
 @import "overrides/alert";
 @import "overrides/buttons";

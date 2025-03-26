@@ -12,6 +12,7 @@ import { difference } from 'lodash-es'
 import actions from '../../actions'
 import { metricsMap } from '../../middleware/metrics/actions'
 
+import { eventEmitter } from '../../events/events'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
@@ -41,6 +42,8 @@ import {
 import './MapContainer.scss'
 import spatialTypes from '../../constants/spatialTypes'
 import MbrContext from '../../contexts/MbrContext'
+
+import StartDrawingContext from '../../contexts/StartDrawingContext'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -132,6 +135,16 @@ export const MapContainer = (props) => {
     '/search/granules',
     '/search/granules/collection-details'
   ])
+
+  const { startDrawing } = useContext(StartDrawingContext)
+
+  const [mapReady, setMapReady] = useState(false)
+
+  useLayoutEffect(() => {
+    if (startDrawing && mapReady) {
+      eventEmitter.emit('map.drawStart', { type: startDrawing })
+    }
+  }, [mapProps, mapReady])
 
   const {
     base,
@@ -460,6 +473,7 @@ export const MapContainer = (props) => {
       shapefile={memoizedShapefile}
       spatialSearch={spatialSearch}
       zoom={zoom}
+      onMapReady={setMapReady}
     />
   )
 }

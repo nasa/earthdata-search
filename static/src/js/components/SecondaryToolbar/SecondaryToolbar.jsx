@@ -133,7 +133,7 @@ class SecondaryToolbar extends Component {
     const returnPath = window.location.href
     const { pathname, search } = location
     let isMapOverlay = false
-    let needsOverlayPaths = ['/search']
+    let needsOverlayPaths = ['/', '/search']
 
     // Currently saved projects and a project page share a route as such we must determine if we are on the saved projects page
     // If we are on the project page i.e. a specific project we will have the map included in the DOM and need to adjust the classname
