@@ -13,10 +13,21 @@ const getCanvasPointsFromLatLong = ([lat, lng], options) => {
   }
 }
 
+// Draw lines on the canvas element
+const drawCanvasLines = (ctx, x, y, index) => {
+  // If it is the first point move the canvas to start drawing over the map
+  if (index === 0) {
+    ctx.moveTo(x, y)
+  } else {
+    ctx.lineTo(x, y)
+  }
+}
+
 // Draw point features on the canvas
 export const drawMultiPointFeature = (ctx, feature, options) => {
   feature.geometry.coordinates.forEach(([lng, lat]) => {
     const { x, y } = getCanvasPointsFromLatLong([lat, lng], options)
+
     ctx.arc(x, y, pointRadius * options.scale, 0, 2 * Math.PI)
     ctx.closePath()
     ctx.stroke()
@@ -46,17 +57,13 @@ export const drawMultiPolygonFeature = (ctx, feature, options) => {
     return
   }
 
+  // Draw the polygon normally if its not too small
   feature.geometry.coordinates.forEach((coordinate) => {
     coordinate.forEach((points) => {
       points.forEach(([lng, lat], index) => {
         const { x, y } = getCanvasPointsFromLatLong([lat, lng], options)
 
-        // If it is the first point move the canvas to start drawing over the map
-        if (index === 0) {
-          ctx.moveTo(x, y)
-        } else {
-          ctx.lineTo(x, y)
-        }
+        drawCanvasLines(ctx, x, y, index)
       })
     })
 
@@ -71,12 +78,7 @@ export const drawMultiLineFeature = (ctx, feature, options) => {
   feature.geometry.coordinates.forEach((coordinate) => {
     coordinate.forEach(([lng, lat], index) => {
       const { x, y } = getCanvasPointsFromLatLong([lat, lng], options)
-
-      if (index === 0) {
-        ctx.moveTo(x, y)
-      } else {
-        ctx.lineTo(x, y)
-      }
+      drawCanvasLines(ctx, x, y, index)
     })
   })
 
@@ -86,7 +88,7 @@ export const drawMultiLineFeature = (ctx, feature, options) => {
 }
 
 // Pass feature to draw functions for the canvas
-export const drawFeatures = (ctx, allFeatures, options) => {
+export const drawCollectionSpatialFeatures = (ctx, allFeatures, options) => {
   allFeatures.features.forEach((feature) => {
     if (!feature.geometry) return
 

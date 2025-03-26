@@ -7,7 +7,7 @@ import { PropTypes } from 'prop-types'
 
 import { getColorByIndex } from '../../util/colors'
 import { getCollectionGeoFeatures } from '../../util/collectionMetadata/spatial'
-import { drawFeatures } from '../../util/map/drawCollectionMinimap'
+import { drawCollectionSpatialFeatures } from '../../util/map/drawCollectionMinimap'
 
 import './CollectionDetailsMinimap.scss'
 
@@ -22,7 +22,6 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
 
   // Populate all shapes
   const collectionGeoFeatures = getCollectionGeoFeatures(metadata)
-
   const allShapes = {
     type: 'FeatureCollection',
     features: collectionGeoFeatures
@@ -48,7 +47,7 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
     ctx.lineWidth = ctxLineWidth
     ctx.globalAlpha = ctxGlobalAlpha
 
-    drawFeatures(ctx, collectionAllShapes, {
+    drawCollectionSpatialFeatures(ctx, collectionAllShapes, {
       fill: false,
       scale: 2,
       canvasWidth,
