@@ -13,7 +13,8 @@
   }
 
   &__label {
-    margin-right: calc(bootstrap.$spacer / 4);
+    margin-top: 0.25rem;
+    margin-right: 0.5rem;
     font-weight: 700;
     visibility: hidden;
     height: 0;
@@ -23,9 +24,6 @@
       height: auto;
       width: auto;
       visibility: visible;
-      margin-top: 0.25rem;
-      font-size: 0.75rem;
-      color: utils.$color__carbon--50;
     }
   }
 

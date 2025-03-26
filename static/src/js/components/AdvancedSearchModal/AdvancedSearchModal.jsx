@@ -150,7 +150,6 @@ export class AdvancedSearchModal extends Component {
         isOpen={isOpen}
         id="advanced-search"
         size="lg"
-        fixedHeight="sm"
         onClose={this.onModalClose}
         body={body}
         modalOverlays={modalOverlays}

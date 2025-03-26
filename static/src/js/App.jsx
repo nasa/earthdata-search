@@ -20,7 +20,8 @@ import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils
 import WithProviders from './providers/WithProviders/WithProviders'
 
 // Routes
-import Search from './routes/Search/Search'
+import Home from './routes/Home/Home'
+import SearchTour from './components/SearchTour/SearchTour'
 
 // Components and Containers
 import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
@@ -40,13 +41,14 @@ import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModal
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
-import SearchTour from './components/Tour/SearchTour'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import Spinner from './components/Spinner/Spinner'
 import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import WrappingContainer from './containers/WrappingContainer/WrappingContainer'
+
+import Search from './routes/Search/Search'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -63,6 +65,7 @@ window.reactToastProvider = React.createRef()
 
 // Lazy loaded routes
 const Admin = lazy(() => import('./routes/Admin/Admin'))
+// const Search = lazy(() => import('./routes/Search/Search'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
@@ -86,6 +89,13 @@ class App extends Component {
   // a path to the param based portal
   portalPaths(path) {
     return [`/portal/:portalId${path}`, path]
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      import('./routes/Search/Search')
+      import('./containers/MapContainer/MapContainer')
+    }, 1000)
   }
 
   render() {
@@ -124,6 +134,15 @@ class App extends Component {
                   <WrappingContainer>
                     <SecondaryToolbarContainer />
                     <Switch>
+                      <Route
+                        path="/"
+                        exact
+                        render={
+                          () => (
+                            <Home />
+                          )
+                        }
+                      />
                       <Route
                         path="/admin"
                         render={
@@ -209,7 +228,6 @@ class App extends Component {
                         }
                       />
                       <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
-                      <Redirect exact from="/" to="/search" />
                       <Route
                         path={this.portalPaths('/search')}
                         render={

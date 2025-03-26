@@ -21,6 +21,7 @@ import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../portals/availablePortals.json'
+import { eventEmitter } from '../events/events'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -53,7 +54,8 @@ export const updateStore = ({
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
-    !isPath(pathname, urlPathsWithoutUrlParams)
+    pathname !== "/"
+    && !isPath(pathname, urlPathsWithoutUrlParams)
     && !isSavedProjectsPage(location)
   )
 
@@ -89,7 +91,7 @@ export const updateStore = ({
   }
 }
 
-export const changePath = (path = '') => async (dispatch, getState) => {
+export const changePath = (path = '', startDrawingCallback) => async (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -154,12 +156,15 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
   // other cases, getGranules will be requested using the granule search query params.
   if (
-    pathname === '/'
-    || pathname.includes('/search')
+    pathname.includes('/search')
     // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {
     dispatch(actions.getCollections())
+
+    if (pathname === '/search') {
+      startDrawingCallback(decodedParams.startDrawing)
+    }
 
     // Granules Search
     if (

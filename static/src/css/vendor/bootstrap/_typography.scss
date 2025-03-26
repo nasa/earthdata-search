@@ -1,0 +1,297 @@
+@mixin hds-display-xl {
+  @include font-size(240px);
+  @include rfs(240px, line-height);
+  letter-spacing: -12px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-display-1 {
+  @include font-size(120px);
+  @include rfs(120px, line-height);
+  letter-spacing: -5.5px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-display-2 {
+  @include font-size(100px);
+  @include rfs(100px, line-height);
+  letter-spacing: -4px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-display-3 {
+  @include font-size(80px);
+  @include rfs(80px, line-height);
+  letter-spacing: -1.5px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-display-4 {
+  @include font-size(72px);
+  @include rfs(72px, line-height);
+  letter-spacing: -1.5px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-display-5 {
+  @include font-size(60px);
+  @include rfs(64px, line-height);
+  letter-spacing: -1.5px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-display-6 {
+  @include font-size(48px);
+  @include rfs(48px, line-height);
+  letter-spacing: -1.5px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-display-7 {
+  @include font-size(41px);
+  @include rfs(45px, line-height);
+  letter-spacing: -1.25px;
+  font-weight: $font-weight-bold;
+}
+
+@mixin hds-h1 {
+  @include font-size($h1-font-size);
+  @include rfs(38px, line-height);
+  letter-spacing: -1px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-h2 {
+  @include font-size($h2-font-size);
+  @include rfs($h2-font-size, line-height);
+  letter-spacing: -0.75px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-h3 {
+  @include font-size($h3-font-size);
+  @include rfs(26px, line-height);
+  letter-spacing: -0.5px;
+  font-weight: $font-weight-bold;
+}
+@mixin hds-h4 {
+  @include font-size($h4-font-size);
+  @include rfs(23px, line-height);
+  letter-spacing: -0.5px;
+  font-weight: $font-weight-semibold;
+}
+@mixin hds-h5 {
+  font-size: $h5-font-size;
+  line-height: 20px;
+  letter-spacing: -0.5px;
+  font-weight: $font-weight-semibold;
+}
+@mixin hds-h6 {
+  font-size: $h6-font-size;
+  line-height: 19px;
+  letter-spacing: -0.25px;
+  font-weight: $font-weight-semibold;
+}
+@mixin hds-h7 {
+  font-size: 12px !important;
+  line-height: 15px;
+  letter-spacing: 0.25px;
+  font-weight: $font-weight-semibold;
+}
+@mixin hds-h8 {
+  font-size: 11px !important;
+  line-height: 19px;
+  letter-spacing: 0.25px;
+  font-weight: $font-weight-semibold;
+}
+
+// Body font-sizes.
+@mixin hds-fs-1 {
+  @include font-size($h1-font-size);
+}
+@mixin hds-fs-2 {
+  @include font-size($h2-font-size);
+}
+@mixin hds-fs-3 {
+  @include font-size($h3-font-size);
+}
+@mixin hds-fs-4 {
+  @include font-size($h4-font-size);
+  @include rfs(27px, line-height);
+  letter-spacing: -0.25px;
+}
+@mixin hds-fs-5 {
+  font-size: $h5-font-size;
+  line-height: 26px;
+  letter-spacing: 0;
+}
+@mixin hds-fs-6 {
+  font-size: $h6-font-size;
+  line-height: 20px;
+  letter-spacing: 0;
+}
+@mixin hds-fs-7 {
+  font-size: $h7-font-size;
+  line-height: 120%;
+  letter-spacing: 0.25px;
+}
+@mixin hds-fs-8 {
+  font-size: $h8-font-size;
+  line-height: 150%;
+  letter-spacing: 0.25px;
+}
+
+// Display Headings:
+.display- {
+  &xl,
+  &xl h1 {
+    @include hds-display-xl;
+    &.font-monospace {
+      letter-spacing: -2.5px;
+      font-weight: $font-weight-normal;
+    }
+  }
+  &1,
+  &1 h1 {
+    @include hds-display-1;
+    &.font-monospace {
+      letter-spacing: -3px;
+      font-weight: $font-weight-normal;
+    }
+  }
+  &2,
+  &2 h1 {
+    @include hds-display-2;
+  }
+  &3,
+  &3 h1 {
+    @include hds-display-3;
+  }
+  &4,
+  &4 h1 {
+    @include hds-display-4;
+  }
+  &5,
+  &5 h1 {
+    @include hds-display-5;
+  }
+  &6,
+  &6 h1 {
+    @include hds-display-6;
+    &.font-monospace {
+      letter-spacing: 0;
+      font-weight: $font-weight-normal;
+    }
+  }
+  &7,
+  &7 h1 {
+    @include hds-display-7;
+  }
+}
+
+// Headings
+h1, .h1 {
+  @include hds-h1;
+  &.fw-light {
+    @include rfs(43px, line-height);
+  }
+  &.font-monospace {
+    line-height: 1;
+    letter-spacing: 0;
+    font-weight: $font-weight-normal;
+  }
+}
+h2, .h2 {
+  @include hds-h2;
+  &.fw-light {
+    @include rfs(35px, line-height);
+  }
+  &.font-monospace {
+    @include font-size(1.75rem);
+    @include rfs(32px, line-height);
+    letter-spacing: 0;
+    font-weight: $font-weight-normal;
+  }
+}
+h3, .h3 {
+  @include hds-h3;
+}
+h4, .h4 {
+  @include hds-h4;
+}
+h5, .h5 {
+  @include hds-h5;
+}
+h6, .h6 {
+  @include hds-h6;
+  &.font-monospace {
+    line-height: 150%;
+    letter-spacing: 4.25px;
+    font-weight: $font-weight-normal;
+  }
+}
+.h7 {
+  @include hds-h7;
+  &.font-monospace {
+    line-height: 180%;
+    letter-spacing: 3.5px;
+    font-weight: $font-weight-normal;
+  }
+}
+.h8 {
+  @include hds-h8;
+  &.font-monospace {
+    line-height: 180%;
+    letter-spacing: 2.25px;
+    font-weight: $font-weight-normal;
+  }
+}
+
+// Body Text
+body {
+  letter-spacing: 0;
+}
+
+.fs- {
+  &1 {
+    @include hds-fs-1;
+    &.font-monospace {
+      line-height: 1;
+      letter-spacing: 0;
+      font-weight: $font-weight-light;
+    }
+  }
+  &2 {
+    @include hds-fs-2;
+    &.font-monospace {
+      font-size: 1.75rem;
+      line-height: 32px;
+      letter-spacing: 0;
+      font-weight: $font-weight-light;
+    }
+  }
+  &3 {
+    @include hds-fs-3;
+  }
+  &4 {
+    @include hds-fs-4;
+  }
+  &5 {
+    @include hds-fs-5;
+  }
+  &6 {
+    @include hds-fs-6;
+    &.font-monospace {
+      line-height: 150%;
+      letter-spacing: 4.25px;
+      font-weight: $font-weight-normal;
+    }
+  }
+  &7 {
+    @include hds-fs-7;
+    &.font-monospace {
+      line-height: 180%;
+      letter-spacing: 3.5px;
+      font-weight: $font-weight-normal;
+    }
+  }
+  &8 {
+    @include hds-fs-8;
+    &.font-monospace {
+      line-height: 180%;
+      letter-spacing: 2.25px;
+      font-weight: $font-weight-normal;
+    }
+  }
+}

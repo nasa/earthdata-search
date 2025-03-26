@@ -1,7 +1,9 @@
 import React, {
   useState,
   lazy,
-  Suspense
+  Suspense,
+  useEffect,
+  useContext
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -46,6 +48,7 @@ import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 import Button from '../../components/Button/Button'
 import Spinner from '../../components/Spinner/Spinner'
+import TourContext from '../../contexts/TourContext'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
@@ -83,6 +86,14 @@ export const Search = ({
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
+
+  const { setSearchLoaded } = useContext(TourContext)
+
+  useEffect(
+    () => {
+      setSearchLoaded(true)
+    }, []
+  )
 
   const {
     hasGranulesOrCwic = false,

@@ -1,15 +1,9 @@
 @use '../utils/variables';
 
 .tooltip {
-  font-size: 0.75rem;
-
   .tooltip-inner {
     background-color: variables.$color__carbon-black;
     border: 1px solid variables.$color__carbon--60;
-  }
-
-  &--large {
-    font-size: 0.625rem;
   }
 
   &--ta-left {

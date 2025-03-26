@@ -1,0 +1,315 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
+.search-tour {
+  &__heading {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1.8125rem;
+    letter-spacing: -1%;
+  }
+
+  &__welcome {
+    color: utils.$color__nasa-blue;
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.125rem;
+    font-family: bootstrap.$font-family-monospace;
+  }
+
+  &__subheading {
+    font-size: 1.5625rem;
+    font-weight: bold;
+    margin-bottom: 1.25rem;
+    letter-spacing: -1%;
+  }
+
+  &__content,
+  &__webinar-description {
+    font-size: 0.875rem;
+    margin-bottom: 1.25rem;
+    text-align: left;
+  }
+
+  &__earthdata-list {
+    list-style: none;
+    color: utils.$color__carbon-black;
+    padding: 0;
+    margin: 0;
+  }
+
+  &__list {
+    margin-bottom: 0.5rem;
+  }
+
+  &__note {
+    font-size: 0.775rem;
+    margin-bottom: 1.25rem;
+    text-align: left;
+  }
+
+  &__footnote {
+    font-size: 0.775rem;
+    font-style: italic;
+    margin-top: 0.25rem;
+    margin-bottom: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__tour-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+
+  &__footer {
+    position: relative;
+    padding: 0 0 0.5rem 0;
+  }
+
+  &__footer-content {
+    padding: 0 0 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  &__tour-toggle-footer {
+    display: flex;
+    align-items: center;
+    position: relative;
+    bottom: 0;
+  }
+
+  &__checkbox {
+    height: 1.1875rem;
+    width: 1.1875rem;
+    vertical-align: middle;
+  }
+
+  &__checkbox-label {
+    position: relative;
+    top: 0.225rem;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+    color: utils.$color__carbon-black;
+  }
+
+  &__hotkey-info {
+    background-color: utils.$color__carbon--5;
+    padding: 1rem 1rem 0.5rem;
+    margin-bottom: 0.9375rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    text-align: left;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+  }
+
+  &__intro-buttons {
+    display: flex;
+    gap: 0.75rem;
+    width: 100%;
+    justify-content: center;
+    position: static;
+    margin-top: 1.25rem;
+  }
+
+  &__info-box {
+    background-color: utils.$color__carbon--5;
+    padding: 1rem 1rem 0.0625rem;
+    margin-bottom: 0.9375rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    text-align: left;
+
+    &__link {
+      color: utils.$color__carbon-black;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  }
+
+  &__webinar-link {
+    background-color: utils.$color__carbon--5;
+    margin-bottom: 1.25rem;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    color: utils.$color__carbon-black;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    margin-top: 0.625rem;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: utils.$color__carbon--10;
+      text-decoration: none;
+    }
+  }
+
+  &__webinar-text {
+    flex: 0 0 13.75rem;
+  }
+
+  &__webinar-thumbnail-wrapper {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  &__webinar-thumbnail-overlay {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset: 0;
+    background-color: rgba(utils.$color__carbon-black, 0.25);
+  }
+
+  &__webinar-thumbnail-icon-bg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    background-color: rgba(utils.$color__nasa-red--shade, 0.875);
+    transition: all 0.2s ease-in-out;
+    transform: scale(1);
+
+    .search-tour__webinar-link:hover &,
+    .search-tour__webinar-link:focus-visible & {
+      background-color: rgba(utils.$color__nasa-red--shade, 1);
+      transform: scale(1.05);
+    }
+  }
+
+  &__webinar-thumbnail-icon {
+    position: relative;
+    z-index: 0;
+    display: block;
+    color: utils.$color__spacesuit-white;
+    font-size: 1rem;
+  }
+
+  &__webinar-thumbnail {
+    width: 100%;
+    height: auto;
+  }
+
+  &__webinar-content {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  &__webinar-inner-link {
+    display: inline;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 0.625rem;
+    margin-bottom: 0;
+    text-decoration: none;
+  }
+
+  &__webinar-discover-more {
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+
+    .search-tour__webinar-link:hover &,
+    .search-tour__webinar-link:focus-visible & {
+      text-decoration: none;
+    }
+  }
+
+  &__more-info {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 0.3125rem;
+  }
+
+  &__earthdata-link {
+    display: inline;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    .external-link-icon {
+      margin-left: 0.25rem;
+      font-size: 0.75rem;
+    }
+  }
+
+  &__tooltip {
+    width: 25rem;
+    background-color: utils.$color__spacesuit-white;
+    border-radius: 0.625rem;
+    font-size: 1rem;
+    text-align: center;
+    position: relative;
+    min-height: 12.5rem;
+  }
+
+  &__content-wrapper {
+    padding-bottom: 1.25rem;
+  }
+
+  &__step-counter-text {
+    font-family: bootstrap.$font-family-monospace;
+    letter-spacing: 0.125rem;
+    font-size: 0.75rem;
+    margin-bottom: 0.9375rem;
+    color: utils.$color__carbon--40;
+    text-align: left;
+  }
+
+  &__text-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -0.125rem;
+    height: 0.85rem;
+    width: 0.85rem;
+  }
+
+  &__kbd {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 0.75rem;
+    padding: 0.125rem 0.3875rem;
+  }
+
+  &__button-tour-finish {
+    min-width: 5.625rem;
+  }
+
+  &__target-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0);
+    z-index: 9999;
+    left: calc(100%);
+    pointer-events: none;
+  }
+}

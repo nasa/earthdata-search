@@ -170,7 +170,6 @@ const GranuleResultsActions = ({
                 label={subscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
                 title={subscriptions.length ? 'View or edit subscriptions' : 'Create subscription'}
                 badge={subscriptions.length ? `${subscriptions.length}` : false}
-                naked
                 to={
                   {
                     pathname: '/search/granules/subscriptions',

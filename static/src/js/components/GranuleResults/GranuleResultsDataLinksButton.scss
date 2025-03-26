@@ -2,7 +2,7 @@
 
 .granule-results-data-links-button {
   &__dropdown-item {
-    color: utils.$color__carbon--80;
+    color: utils.$color__carbon-black;
     font-size: 0.875rem;
     padding: 0.25rem 1rem;
     user-select: text;
@@ -11,7 +11,7 @@
     cursor: pointer;
 
     .button__icon {
-      color: utils.$color__carbon--50;
+      color: utils.$color__carbon-black;
     }
 
     &:hover {

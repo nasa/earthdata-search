@@ -3,8 +3,7 @@
 .autocomplete-display {
   display: flex;
   flex-wrap: wrap;
-  margin: -0.25rem;
-  padding: 0 0.5rem;
+  gap: 0.25rem;
 
   &__item {
     position: relative;
@@ -15,7 +14,6 @@
     overflow: hidden;
     flex-grow: 0;
     align-items: center;
-    margin: 0.25rem;
     line-height: 1.25rem;
     vertical-align: middle;
   }

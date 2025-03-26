@@ -2,6 +2,7 @@
 
 import React, {
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef
 } from 'react'
@@ -843,7 +844,7 @@ const SpatialSelection = (props) => {
     }
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const shouldCenter = false
     renderShape(shouldCenter)
 

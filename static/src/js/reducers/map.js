@@ -1,4 +1,5 @@
 import { UPDATE_MAP, RESTORE_FROM_URL } from '../constants/actionTypes'
+import { eventEmitter } from '../events/events'
 import projections from '../util/map/projections'
 
 const initialState = {

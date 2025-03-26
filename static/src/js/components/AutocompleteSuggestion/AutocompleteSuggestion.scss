@@ -3,7 +3,8 @@
 .autocomplete-suggestion {
   &__suggestions-primary {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+
     margin-bottom: 0.2rem;
   }
 
@@ -11,60 +12,33 @@
     flex-grow: 0;
     flex-shrink: 0;
     font-size: 0.675rem;
-    color: utils.$color__carbon--80;
+    color: utils.$color__carbon-black;
   }
 
   &__suggestions-value {
     line-height: 1.35;
+    font-weight: 700;
   }
 
   &__suggestions-hierarchy {
-    flex-grow: 0;
-    flex-shrink: 1;
-    padding-left: 1em;
     font-size: 0.675rem;
-    color: utils.$color__carbon--60;
+    color: utils.$color__carbon-black;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: clip;
+    text-overflow: ellipsis;
     position: relative;
     background-color: utils.$color__spacesuit-white;
     transition: all 0.1s ease-in-out;
 
-    &:before {
-      content: '\02026';
-      position: absolute;
-      z-index: 1;
-      left: -1em;
-      background-color: inherit;
-      padding-left: 1em;
-      margin-left: 0.5em;
-    }
-
     & > span {
+      display: flex;
+      align-items: center;
+      gap: 0.125rem;
       min-width: 100%;
       position: relative;
-      display: inline-block;
-      float: right;
-      overflow: visible;
+      text-overflow: ellipsis;
+      overflow: hidden;
       background-color: inherit;
-      text-indent: 0.5em;
-    }
-
-    & > span:before {
-      content: '';
-      position: absolute;
-      display: inline-block;
-      width: 1em;
-      height: 1.5em;
-      background-color: inherit;
-      z-index: 200;
-      left: -.5em;
-    }
-
-    .fa {
-      font-size: 0.25rem;
-      color: utils.$color__carbon--60;
     }
   }
 }

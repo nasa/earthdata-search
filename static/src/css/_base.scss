@@ -61,18 +61,6 @@ body .th-wrapper {
   font-size: 1rem;
 }
 
-@include bootstrap.media-breakpoint-up(xl) {
-  html {
-    font-size: 102%;
-  }
-}
-
-@include bootstrap.media-breakpoint-up(xxl) {
-  html {
-    font-size: 105%;
-  }
-}
-
 button {
   &:focus-visible {
     border-color: variables.$color__nasa-blue--shade;
@@ -89,6 +77,7 @@ svg {
 
 *::-webkit-scrollbar-track {
   background-color: variables.$color__carbon--10;
+  padding: 2px;
 }
 
 *::-webkit-scrollbar {

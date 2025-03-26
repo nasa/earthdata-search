@@ -2,14 +2,10 @@
 @use '../../../css/utils';
 
 .temporal-selection-dropdown-menu {
-  width: 27.25rem;
+  width: 36rem;
   margin-top: -0.5rem;
   padding: bootstrap.$spacer;
   box-shadow: utils.$shadow__panel;
-
-  @include bootstrap.media-breakpoint-up(xl) {
-    width: 29.25rem;
-  }
 
   &__actions {
     display: flex;

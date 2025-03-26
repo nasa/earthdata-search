@@ -9,10 +9,13 @@
   flex-basis: auto;
   flex-direction: row;
   height: 100%;
-  overflow: hidden;
+  // overflow: hidden;
   align-items: flex-end;
-  background-color: variables.$color__carbon--5;
-  background-image: linear-gradient(variables.$color__carbon--5, #f5f5f5);
+  background-color: variables.$color__spacesuit-white;
+
+  &.route-wrapper--content-page {
+    align-items: flex-start;
+  }
 
   &__header {
     background-color: variables.$color__carbon--80;
@@ -41,14 +44,14 @@
   &__content {
     display: flex;
     width: 100%;
-    height: 100%;
+    // height: 100%;
     justify-content: space-between;
     flex-direction: column;
 
     .route-wrapper--content-page & {
       justify-content: flex-start;
-      overflow-x: hidden;
-      overflow-y: auto;
+      // overflow-x: hidden;
+      // overflow-y: auto;
     }
 
     .route-wrapper--content-page-centered & {
@@ -89,6 +92,10 @@
 
   &--dark {
     background: variables.$color__carbon-black;
+  }
+
+  &--home {
+    flex-direction: column;
   }
 
   &__page-heading {
