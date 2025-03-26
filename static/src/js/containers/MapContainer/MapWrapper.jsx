@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import Control from 'react-leaflet-custom-control'
 import {
@@ -49,6 +49,7 @@ const MapWrapper = ({
   onShapefileErrored,
   onToggleTooManyPointsModal,
   onUpdateShapefile,
+  onMapReady,
   overlays,
   project,
   projection,
@@ -101,6 +102,10 @@ const MapWrapper = ({
 
   const { colorMapData: colorMap } = colorMapState
 
+  const onWhenReady = () => {
+    onMapReady(true)
+  }
+
   return (
     <LeafletMapContainer
       className="map"
@@ -111,6 +116,7 @@ const MapWrapper = ({
       zoomControl={false}
       attributionControl={false}
       zoomAnimation={false}
+      whenReady={onWhenReady}
       style={
         {
           position: 'absolute'

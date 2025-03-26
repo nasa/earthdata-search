@@ -1,5 +1,7 @@
 import React, {
   useCallback,
+  useContext,
+  useEffect,
   useLayoutEffect,
   useRef,
   useState
@@ -17,6 +19,7 @@ import LRUCache from 'lrucache'
 import actions from '../../actions'
 import { metricsMap } from '../../middleware/metrics/actions'
 
+import { eventEmitter } from '../../events/events'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
@@ -33,6 +36,7 @@ import 'leaflet/dist/leaflet.css'
 import './MapContainer.scss'
 
 import MapWrapper from './MapWrapper'
+import StartDrawingContext from '../../contexts/StartDrawingContext'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -106,6 +110,16 @@ export const MapContainer = (props) => {
   ])
   const [map, setMap] = useState(mapProps)
   const imageryCache = useRef(LRUCache(400))
+
+  const { startDrawing } = useContext(StartDrawingContext)
+
+  const [mapReady, setMapReady] = useState(false)
+
+  useLayoutEffect(() => {
+    if (startDrawing && mapReady) {
+      eventEmitter.emit('map.drawStart', { type: startDrawing })
+    }
+  }, [mapProps, mapReady])
 
   const {
     base,
@@ -268,6 +282,7 @@ export const MapContainer = (props) => {
       projection={projection}
       shapefile={shapefile}
       zoom={zoom}
+      onMapReady={setMapReady}
     />
   )
 }

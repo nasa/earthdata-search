@@ -82,8 +82,8 @@
     align-items: stretch;
     justify-content: space-between;
     width: 100%;
-    background-color: utils.$color__carbon--10;
     font-size: 0.725rem;
+    border-top: 1px solid utils.$color__carbon--20;
 
     .panels--md & {
       font-size: 0.825rem;
@@ -167,6 +167,7 @@
     font-size: 1rem;
     font-weight: 500;
     color: utils.$color__carbon--70;
+    line-height: 1;
   }
 
   &__heading-badge {

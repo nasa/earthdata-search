@@ -1,7 +1,8 @@
 @use '../utils/variables';
 @use '../vendor/bootstrap/configuration' as bootstrap;
 
-.link, a {
+.link,
+a {
   color: variables.$color__carbon-black;
   text-underline-offset: 0.25rem;
   text-decoration: underline dashed;

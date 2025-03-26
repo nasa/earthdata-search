@@ -5,12 +5,12 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 
 import {
-  FaCrop,
+  FaExpand,
   FaCircle,
   FaFile
 } from 'react-icons/fa'
 
-import { Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { eventEmitter } from '../../events/events'
 
@@ -75,15 +75,18 @@ const SpatialSelectionDropdown = (props) => {
   return (
     <Dropdown
       className="spatial-selection-dropdown"
+      placement='bottom-start'
     >
       <Dropdown.Toggle
         variant="light"
         id="spatial-selection-dropdown"
         aria-label="spatial-selection-dropdown"
         data-testid="spatial-selection-dropdown"
-        className="search-form__button search-form__button--dark"
+        className="search-form__button search-form__button--secondary btn-sm gap-1"
       >
-        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={FaCrop} size="0.825rem" />
+        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={FaExpand} size="0.825rem" />
+        Spatial
+        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={ArrowFilledDown} size="12" />
       </Dropdown.Toggle>
       <Dropdown.Menu className="spatial-selection-dropdown__menu">
         <Dropdown.Item

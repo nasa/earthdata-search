@@ -1,7 +1,9 @@
 import React, {
   useState,
   lazy,
-  Suspense
+  Suspense,
+  useEffect,
+  useContext
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -45,6 +47,7 @@ import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 import Button from '../../components/Button/Button'
+import TourContext from '../../contexts/TourContext'
 
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
 const GranuleResultsHighlightsContainer = lazy(() => import('../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'))
@@ -81,6 +84,14 @@ export const Search = ({
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
+
+  const { setSearchLoaded } = useContext(TourContext)
+
+  useEffect(
+    () => {
+      setSearchLoaded(true)
+    }, []
+  )
 
   const {
     hasGranulesOrCwic = false,
@@ -168,7 +179,7 @@ export const Search = ({
             {granuleFiltersSidebar}
           </Route>
           <Route path={path}>
-            <SidebarSection>
+            {/* <SidebarSection>
               <div className="sidebar-browse-portals">
                 <Button
                   variant="full"
@@ -182,7 +193,7 @@ export const Search = ({
                     overlay={
                       (
                         <Tooltip style={{ width: '20rem' }}>
-                          {/* eslint-disable-next-line max-len */}
+                        {/* eslint-disable-next-line max-len }
                           Enable a portal in order to refine the data available within Earthdata Search
                         </Tooltip>
                       )
@@ -192,7 +203,7 @@ export const Search = ({
                   </OverlayTrigger>
                 </Button>
               </div>
-            </SidebarSection>
+            </SidebarSection> */}
             <div className="sidebar-section-body">
               <SidebarSection
                 sectionTitle="Filter Collections"

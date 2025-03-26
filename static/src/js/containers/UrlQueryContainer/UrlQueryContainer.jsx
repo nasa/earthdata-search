@@ -12,10 +12,11 @@ import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getMapPreferences, getCollectionSortKeyParameter } from '../../selectors/preferences'
+import StartDrawingContext from '../../contexts/StartDrawingContext'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
-    (path) => dispatch(actions.changePath(path)),
+    (path, startDrawingCallback) => dispatch(actions.changePath(path, startDrawingCallback)),
   onChangeUrl:
     (query) => dispatch(actions.changeUrl(query))
 })
@@ -63,6 +64,8 @@ export const mapStateToProps = (state) => ({
 })
 
 export class UrlQueryContainer extends PureComponent {
+  static contextType = StartDrawingContext
+
   constructor(props) {
     super(props)
 
@@ -82,7 +85,9 @@ export class UrlQueryContainer extends PureComponent {
       search
     } = location
 
-    onChangePath([pathname, search].filter(Boolean).join(''))
+    const { setStartDrawing } = this.context
+
+    onChangePath([pathname, search].filter(Boolean).join(''), setStartDrawing)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
