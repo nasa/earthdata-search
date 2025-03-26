@@ -42,7 +42,7 @@ export const PortalLinkContainer = (props) => {
 
     // If newPortal was provided, use it
     if (newPortal) {
-      // If not portalId was provided, default to the env default portalId
+      // If no portalId was provided, default to the env default portalId
       const { portalId = defaultPortal } = newPortal
 
       return portalId

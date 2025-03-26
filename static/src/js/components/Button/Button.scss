@@ -27,6 +27,20 @@
     line-height: 1em;
   }
 
+  &--hds-primary {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+    font-weight: 700;
+    align-items: stretch;
+
+    &.button--dark {
+      color: utils.$color__spacesuit-white;
+    }
+  }
+
   &__contents {
     vertical-align: initial;
     display: inherit;
@@ -43,6 +57,10 @@
     .button--svg & {
       vertical-align: top;
       line-height: 1em;
+    }
+
+    .button--icon-only & {
+      display: none;
     }
   }
 
@@ -82,5 +100,21 @@
     background-color: rgba(utils.$color__carbon-black, 0.5);
     border-radius: 1em;
     vertical-align: middle;
+  }
+
+
+  &__hds-primary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.25em;
+    aspect-ratio: 1;
+    color: utils.$color__spacesuit-white;
+    background-color: utils.$color__nasa-red;
+    border-radius: 50%;
+
+    .button:hover & {
+      background-color: utils.$color__nasa-red--shade;
+    }
   }
 }

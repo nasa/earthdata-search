@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { FaTrash } from 'react-icons/fa'
+import { FaRegTrashAlt } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -64,14 +64,13 @@ const FilterStackItem = (props) => {
                       {
                         onRemove && (
                           <Button
-                            variant="naked"
+                            bootstrapVariant="secondary"
                             className="filter-stack-item__action-button"
-                            label={`Remove ${title.toLowerCase()} filter`}
-                            icon={FaTrash}
+                            icon={FaRegTrashAlt}
+                            tooltipId={`remove-${title.toLowerCase()}-filter-tooltip`}
+                            tooltip={`Remove ${title.toLowerCase()} filter`}
                             onClick={() => { onRemove() }}
-                          >
-                            Remove
-                          </Button>
+                          />
                         )
                       }
                     </div>

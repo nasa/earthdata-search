@@ -35,12 +35,12 @@
 }
 
 .dropdown-item {
-  color: variables.$color__carbon--80;
+  color: variables.$color__carbon--90;
   font-size: 0.875rem;
 
   &:hover {
-    background-color: variables.$color__carbon--10;
-    color: variables.$color__carbon--70;
+    background-color: variables.$color__carbon--5;
+    color: variables.$color__carbon-black;
   }
 
   .dropdown-menu--condensed & {

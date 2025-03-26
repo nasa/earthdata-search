@@ -51,9 +51,10 @@
     font-size: 0.875rem;
     font-weight: 400;
     transition: all 0.2s ease-in-out;
+    border-bottom: 1px solid utils.$color__carbon--10;
 
     &:hover {
-      background: utils.$color__carbon--5;
+      background: utils.$color__carbon--10;
     }
 
     &:focus {
