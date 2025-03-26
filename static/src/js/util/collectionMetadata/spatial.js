@@ -1,4 +1,5 @@
 import { castArray } from 'lodash-es'
+import normalizeSpatial from '../map/normalizeSpatial'
 
 const degrees = (value) => {
   if (value % 1 !== 0) {
@@ -8,6 +9,7 @@ const degrees = (value) => {
   return `${parseFloat(value).toFixed(1)}\xB0`
 }
 
+// Parse metadata for spatial information to populate minimap label
 export const buildSpatial = (json) => {
   const { spatialExtent } = json
   if (!spatialExtent) return undefined
@@ -80,6 +82,40 @@ export const buildSpatial = (json) => {
   }
 
   return spatialList
+}
+
+// Parses collection metadata and returns an array of GeoJSON features
+export const getCollectionGeoFeatures = (collectionMetadata) => {
+  const collectionGeoFeatures = []
+
+  const {
+    boxes,
+    lines,
+    points,
+    polygons
+  } = collectionMetadata
+
+  if (boxes) {
+    const boxFeatures = normalizeSpatial({ boxes })
+    collectionGeoFeatures.push(boxFeatures)
+  }
+
+  if (lines) {
+    const linesFeatures = normalizeSpatial({ lines })
+    collectionGeoFeatures.push(linesFeatures)
+  }
+
+  if (points) {
+    const pointsFeatures = normalizeSpatial({ points })
+    collectionGeoFeatures.push(pointsFeatures)
+  }
+
+  if (polygons) {
+    const polygonsFeatures = normalizeSpatial({ polygons })
+    collectionGeoFeatures.push(polygonsFeatures)
+  }
+
+  return collectionGeoFeatures
 }
 
 export default buildSpatial

@@ -2,7 +2,7 @@ import { greatCircleArc } from 'ol/geom/flat/geodesic'
 import { distance } from 'ol/coordinate'
 import { dividePolygon } from '@edsc/geo-utils'
 import {
-  area as turfArea,
+  area,
   booleanContains,
   polygon as turfPolygon,
   simplify,
@@ -157,7 +157,7 @@ const makeClockwise = (polygon) => {
 }
 
 // Return the area of the given polygon in square meters
-export const getPolygonArea = (polygon) => turfArea(polygon)
+export const getPolygonArea = (polygon) => area(polygon)
 
 // Normalize spatial metadata (boxes, lines, points, polygons) to polygons for simplified handling on the map
 const normalizeSpatial = (metadata) => {

@@ -27,12 +27,15 @@ const setup = (overrides) => {
   render(<CollectionDetailsMinimap {...props} />)
 }
 
-describe('CollectionDetailsBody component', () => {
+describe('CollectionDetailsMiniMap component', () => {
   describe('when the collection details mini-map is loaded with metadata', () => {
     test('calls leaflet to render the map container', () => {
       setup()
       const canvasElement = screen.getByTestId('collection-details-minimap')
+
       expect(canvasElement).toBeInTheDocument()
+      expect(canvasElement).toHaveAttribute('width', '360')
+      expect(canvasElement).toHaveAttribute('height', '180')
     })
   })
 })

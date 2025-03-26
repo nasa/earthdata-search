@@ -6,13 +6,12 @@ import React, {
 import { PropTypes } from 'prop-types'
 
 import { getColorByIndex } from '../../util/colors'
-import normalizeSpatial from '../../util/map/normalizeSpatial'
+import { getCollectionGeoFeatures } from '../../util/collectionMetadata/spatial'
 import { drawFeatures } from '../../util/map/drawCollectionMinimap'
 
 import './CollectionDetailsMinimap.scss'
 
 export const CollectionDetailsMinimap = ({ metadata }) => {
-  const collectionGeoFeatures = []
   const canvasWidth = 360
   const canvasHeight = 180
 
@@ -21,37 +20,9 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
   const ctxLineWidth = 2
   const ctxGlobalAlpha = 0.6
 
-  const getCollectionGeoFeatures = (collectionMetadata) => {
-    const {
-      boxes,
-      lines,
-      points,
-      polygons
-    } = collectionMetadata
-
-    if (boxes) {
-      const boxFeatures = normalizeSpatial({ boxes })
-      collectionGeoFeatures.push(boxFeatures)
-    }
-
-    if (lines) {
-      const linesFeatures = normalizeSpatial({ lines })
-      collectionGeoFeatures.push(linesFeatures)
-    }
-
-    if (points) {
-      const pointsFeatures = normalizeSpatial({ points })
-      collectionGeoFeatures.push(pointsFeatures)
-    }
-
-    if (polygons) {
-      const polygonsFeatures = normalizeSpatial({ polygons })
-      collectionGeoFeatures.push(polygonsFeatures)
-    }
-  }
-
   // Populate all shapes
-  getCollectionGeoFeatures(metadata)
+  const collectionGeoFeatures = getCollectionGeoFeatures(metadata)
+
   const allShapes = {
     type: 'FeatureCollection',
     features: collectionGeoFeatures
@@ -83,7 +54,7 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
       canvasWidth,
       canvasHeight
     }) // Draw GeoJSON on top of the base map image
-  })
+  }, [metadata])
 
   return (
     <div className="collection-details-minimap">

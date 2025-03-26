@@ -1,13 +1,6 @@
-import { centroid as turfCentroid } from '@turf/turf'
+import { centroid } from '@turf/turf'
 import { pointRadius } from './styles'
-import { getPolygonArea } from './normalizeSpatial'
-
-/**
- * Converts square meters to square kilometers
- * @param {number} squareMeters - The area in square meters
- * @returns {number} The area in square kilometers
- */
-const squareMetersToKilometers = (squareMeters) => squareMeters / 1000000
+import { getPolygonArea, squareMetersToSquareKilometers } from './normalizeSpatial'
 
 // Convert lat/lng to canvas points
 const getCanvasPointsFromLatLong = ([lat, lng], options) => {
@@ -33,11 +26,11 @@ export const drawMultiPointFeature = (ctx, feature, options) => {
 
 // Draw polygon features on the canvas; if the polygon is too small it will draw as a point
 export const drawMultiPolygonFeature = (ctx, feature, options) => {
-  const polygonArea = squareMetersToKilometers(getPolygonArea(feature))
+  const polygonArea = squareMetersToSquareKilometers(getPolygonArea(feature))
   // If a polygon is too small it won't draw well on a global map
   // less than 1000 square kilometers
   if (polygonArea < 1000) {
-    const centroidFeature = turfCentroid(feature)
+    const centroidFeature = centroid(feature)
     // Get the centroid of the polygon convert to a multi-point and draw
     const multiPointCentroidFeature = {
       type: 'Feature',
@@ -100,6 +93,7 @@ export const drawFeatures = (ctx, allFeatures, options) => {
     const geoJsonFeatureType = feature.geometry.type
 
     ctx.beginPath()
+    // Bounding boxes are polygons from normalizeSpatial
     if (geoJsonFeatureType === 'MultiPolygon') {
       drawMultiPolygonFeature(ctx, feature, options)
     }
