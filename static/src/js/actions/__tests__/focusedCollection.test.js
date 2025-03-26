@@ -22,7 +22,6 @@ import {
   UPDATE_FOCUSED_GRANULE
 } from '../../constants/actionTypes'
 
-import * as EventEmitter from '../../events/events'
 import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
@@ -922,8 +921,6 @@ describe('changeFocusedCollection', () => {
 
   describe('when a collection id is not provided', () => {
     test('should clear the focusedCollection and call ', () => {
-      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-
       const changeUrlMock = jest.spyOn(actions, 'changeUrl')
       changeUrlMock.mockImplementationOnce(() => jest.fn())
 
@@ -954,8 +951,11 @@ describe('changeFocusedCollection', () => {
         payload: false
       })
 
-      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(changeUrlMock).toHaveBeenCalledTimes(1)
+      expect(changeUrlMock).toHaveBeenCalledWith({
+        pathname: '/search',
+        search: '?some=testparams'
+      })
     })
   })
 })

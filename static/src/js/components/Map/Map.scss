@@ -1,7 +1,29 @@
 @use '../../../css/utils';
 
-.edsc-map-zoom,
-.edsc-map-projection-switcher,
+.edsc-map-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 10;
+  background-color: transparent;
+  right: 0.75rem;
+  bottom: 5.5rem;
+  gap: 1rem;
+
+  button {
+    margin: 0;
+    border-radius: 0;
+
+    &:first-of-type {
+      border-radius: 2px 2px 0 0;
+    }
+
+    &:last-of-type {
+      border-radius: 0 0 2px 2px;
+    }
+  }
+}
+
 .edsc-map-scale-imperial,
 .edsc-map-scale-metric,
 .edsc-map-legend {
@@ -11,6 +33,7 @@
   color: utils.$color__spacesuit-white;
   background-color: utils.$color__carbon--70;
   text-shadow: utils.$shadow__panel-dark;
+  border: none;
 }
 
 .edsc-map-legend {
@@ -30,13 +53,7 @@
   border-left: 2px solid utils.$color__spacesuit-white;
 }
 
-.edsc-map-zoom {
-  bottom: 92px;
-}
-
 .edsc-map-projection-switcher {
-  bottom: 200px;
-
   &__button {
     background-image: url('~Images/projection-sprite.png');
     background-size: 90px 30px;
@@ -89,7 +106,7 @@
       transition: opacity 0.2s ease;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-  
+
       &:hover {
         cursor: crosshair;
       }
@@ -98,6 +115,32 @@
     &--is-colormap-rendered .legend__bar {
       visibility: visible;
       opacity: 1;
+    }
+  }
+}
+
+.edsc-map__focused-granule-overlay {
+  &__granule-label {
+    color: utils.$color__spacesuit-white;
+    text-shadow: 1px 1px 1px utils.$color__carbon-black;
+
+    &__remove {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 1.25rem;
+      width: 1.25rem;
+      margin: 0.5rem auto;
+      border: 0;
+      outline: 0;
+      background-color: rgba(utils.$color__carbon--40, 0.5);
+      color: utils.$color__spacesuit-white;
+      border-radius: 50%;
+
+      &:hover,
+      &:focus {
+        background-color: utils.$color__nasa-red;
+      }
     }
   }
 }

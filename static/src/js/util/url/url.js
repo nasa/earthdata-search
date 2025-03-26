@@ -171,6 +171,11 @@ const urlDefs = {
     shortKey: 'oe',
     encode: encodeBoolean,
     decode: decodeBoolean
+  },
+  paramCollectionSortKey: {
+    shortKey: 'csk',
+    encode: encodeString,
+    decode: decodeString
   }
 }
 
@@ -236,6 +241,7 @@ export const decodeUrlParams = (paramString) => {
   collectionQuery.spatial = spatial
   collectionQuery.tagKey = decodeHelp(params, 'tagKey')
   collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
+  collectionQuery.paramCollectionSortKey = decodeHelp(params, 'paramCollectionSortKey')
 
   // Initialize the collection granule query
   const granuleQuery = {

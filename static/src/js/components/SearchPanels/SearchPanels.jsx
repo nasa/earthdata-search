@@ -4,22 +4,20 @@ import { Route, Switch } from 'react-router-dom'
 import { isEqual } from 'lodash-es'
 import Badge from 'react-bootstrap/Badge'
 import Col from 'react-bootstrap/Col'
-
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
-import { List, Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import {
+  FaLock,
   FaMap,
-  FaQuestionCircle,
-  FaTable,
-  FaLock
+  FaQuestionCircle
 } from 'react-icons/fa'
-
 import classNames from 'classnames'
 import Helmet from 'react-helmet'
 
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { isLoggedIn } from '../../util/isLoggedIn'
+import { translateDefaultCollectionSortKey } from '../../util/collections'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
@@ -180,10 +178,16 @@ class SearchPanels extends PureComponent {
 
     const {
       pageNum: collectionsPageNum = 1,
-      sortKey: collectionsSortKey = collectionSortKeys.scoreDescending
+      paramCollectionSortKey: urlCollectionsSortKey
     } = collectionQuery
 
-    const [activeCollectionsSortKey = collectionSortKeys.scoreDescending] = collectionsSortKey
+    const { collectionSort: userPrefCollectionSortKey } = preferences
+
+    // Translate 'default' to proper sort key if needed
+    const userPrefCollSortKey = translateDefaultCollectionSortKey(userPrefCollectionSortKey)
+
+    // Use the url parameter sort key if present, else use user preferences sort key
+    const activeCollectionsSortKey = urlCollectionsSortKey || userPrefCollSortKey
 
     const {
       allIds: collectionAllIds,
@@ -270,13 +274,11 @@ class SearchPanels extends PureComponent {
     const granulesViewsArray = [
       {
         label: 'List',
-        icon: List,
         isActive: granulePanelView === 'list',
         onClick: () => setGranulesActiveView('list')
       },
       {
         label: 'Table',
-        icon: FaTable,
         isActive: granulePanelView === 'table',
         onClick: () => setGranulesActiveView('table')
       }
@@ -284,9 +286,12 @@ class SearchPanels extends PureComponent {
 
     const setCollectionSort = (value) => {
       const sortKey = [value]
+      const paramCollectionSortKey = value
+
       onChangeQuery({
         collection: {
-          sortKey
+          sortKey,
+          paramCollectionSortKey
         }
       })
 
@@ -326,13 +331,11 @@ class SearchPanels extends PureComponent {
     const collectionsViewsArray = [
       {
         label: 'List',
-        icon: List,
         isActive: collectionPanelView === 'list',
         onClick: () => setCollectionsActiveView('list')
       },
       {
         label: 'Table',
-        icon: FaTable,
         isActive: collectionPanelView === 'table',
         onClick: () => setCollectionsActiveView('table')
       }
@@ -344,11 +347,13 @@ class SearchPanels extends PureComponent {
     } = isExportRunning
     const exportsArray = [
       {
+        title: 'Export CSV',
         label: 'CSV',
         onClick: () => onExport('csv'),
         inProgress: csvExportRunning
       },
       {
+        title: 'Export JSON',
         label: 'JSON',
         onClick: () => onExport('json'),
         inProgress: jsonExportRunning
@@ -409,6 +414,7 @@ class SearchPanels extends PureComponent {
 
     const panelSection = []
 
+    // Collection Results Panel
     panelSection.push(
       <PanelGroup
         key="collection-results-panel"
@@ -417,12 +423,13 @@ class SearchPanels extends PureComponent {
         headerMetaPrimaryLoading={initialCollectionsLoading}
         headerMetaPrimaryText={collectionResultsHeaderMetaPrimaryText}
         headerLoading={initialCollectionsLoading}
-        exportsArray={exportsArray}
         viewsArray={collectionsViewsArray}
+        activeSort={activeCollectionsSortKey}
         activeView={collectionPanelView}
         sortsArray={collectionsSortsArray}
         footer={buildCollectionResultsBodyFooter()}
         onPanelClose={this.onPanelClose}
+        moreActionsDropdownItems={exportsArray}
       >
         <PanelItem scrollable={false}>
           <CollectionResultsBodyContainer panelView={collectionPanelView} />
@@ -456,6 +463,7 @@ class SearchPanels extends PureComponent {
       )
     }
 
+    // Granule Results Panel
     panelSection.push(
       <PanelGroup
         key="granule-results-panel"
@@ -544,6 +552,7 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    // Collection Details Panel
     panelSection.push(
       <PanelGroup
         key="collection-details-panel"
@@ -584,6 +593,7 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    // Granule Details Panel
     panelSection.push(
       <PanelGroup
         key="granule-details-panel"
@@ -640,6 +650,7 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    // Granule Subscriptions Panel
     panelSection.push(
       <PanelGroup
         key="granule-subscriptions-panel"
@@ -698,6 +709,7 @@ class SearchPanels extends PureComponent {
       </PanelGroup>
     )
 
+    // Collection Subscriptions Panel
     panelSection.push(
       <PanelGroup
         key="collection-subscriptions-panel"
@@ -863,7 +875,8 @@ SearchPanels.propTypes = {
     pageNum: PropTypes.number,
     sortKey: PropTypes.arrayOf(
       PropTypes.string
-    )
+    ),
+    paramCollectionSortKey: PropTypes.string
   }).isRequired,
   collectionsSearch: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),
@@ -916,6 +929,7 @@ SearchPanels.propTypes = {
     pageTitle: PropTypes.string
   }).isRequired,
   preferences: PropTypes.shape({
+    collectionSort: PropTypes.string,
     collectionListView: PropTypes.node,
     granuleListView: PropTypes.node,
     panelState: PropTypes.string

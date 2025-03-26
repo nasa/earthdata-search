@@ -3,43 +3,50 @@ import React, {
   useEffect,
   useRef
 } from 'react'
+import { renderToString } from 'react-dom/server'
 import PropTypes from 'prop-types'
 
-import OlMap from 'ol/Map'
-import View from 'ol/View'
-import ScaleLine from 'ol/control/ScaleLine'
-import Attribution from 'ol/control/Attribution'
-import { transform } from 'ol/proj'
-import { defaults as defaultInteractions, DragRotate } from 'ol/interaction'
 import { altKeyOnly } from 'ol/events/condition'
 
-// TODO EDSC-4422: Don't actually need this until EDSC-4422
-// import { Feature } from 'ol'
+import { defaults as defaultInteractions, DragRotate } from 'ol/interaction'
+import { transform } from 'ol/proj'
+import { View } from 'ol'
+import Attribution from 'ol/control/Attribution'
+import LayerGroup from 'ol/layer/Group'
+import MapBrowserEventType from 'ol/MapBrowserEventType'
 import MapEventType from 'ol/MapEventType'
-// TODO EDSC-4422: Don't actually need this until EDSC-4422
-// import PointerEventType from 'ol/pointer/EventType'
+import OlMap from 'ol/Map'
+import PointerEventType from 'ol/pointer/EventType'
 import RenderEventType from 'ol/render/EventType'
+import ScaleLine from 'ol/control/ScaleLine'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 
 import { FaHome } from 'react-icons/fa'
-import { Plus, Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import {
+  Close,
+  Minus,
+  Plus
+} from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
 import { LegendControl } from '../Legend/LegendControl'
-import ProjectionSwitcherControl from './ProjectionSwitcherControl'
-import ZoomControl from './ZoomControl'
+import MapControls from './MapControls'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
-import { drawGranuleOutlines } from '../../util/map/drawGranuleOutlines'
-// TODO EDSC-4422: Don't actually need this until EDSC-4422
-// import { highlightedGranuleStyle } from '../../util/map/styles'
-import drawGranuleBackgrounds from '../../util/map/drawGranuleBackgrounds'
+import { highlightFeature, unhighlightFeature } from '../../util/map/interactions/highlightFeature'
+import drawFocusedGranule from '../../util/map/drawFocusedGranule'
+import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
+import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import labelsLayer from '../../util/map/layers/placeLabels'
+import onClickMap from '../../util/map/interactions/onClickMap'
 import projections from '../../util/map/projections'
 import worldImagery from '../../util/map/layers/worldImagery'
+
+import { eventEmitter } from '../../events/events'
 
 import 'ol/ol.css'
 import './Map.scss'
@@ -48,6 +55,10 @@ import './Map.scss'
 
 let previousGranulesKey
 let previousProjectionCode
+
+// Render the times icon to an SVG string for use in the focused granule overlay
+const timesIconSvg = renderToString(<EDSCIcon icon={Close} />)
+
 const esriAttribution = 'Powered by <a href="https://www.esri.com/" target="_blank">ESRI</a>'
 
 // Build the worldImagery layer
@@ -79,7 +90,8 @@ const granuleOutlinesSource = new VectorSource({
 })
 const granuleOutlinesLayer = new VectorLayer({
   source: granuleOutlinesSource,
-  className: 'edsc-granules-outlines-layer'
+  className: 'edsc-granules-outlines-layer',
+  zIndex: 4
 })
 
 // Layer for granule highlights
@@ -89,8 +101,23 @@ const granuleHighlightsSource = new VectorSource({
 })
 const granuleHighlightsLayer = new VectorLayer({
   source: granuleHighlightsSource,
-  className: 'edsc-granules-highlights-layer'
+  className: 'edsc-granules-highlights-layer',
+  zIndex: 4
 })
+
+// Layer for focused granule
+const focusedGranuleSource = new VectorSource({
+  overlaps: true,
+  wrapX: false
+})
+const focusedGranuleLayer = new VectorLayer({
+  source: focusedGranuleSource,
+  className: 'edsc-granules-focus-layer',
+  zIndex: 4
+})
+
+// Layer group for imagery layers
+const granuleImageryLayerGroup = new LayerGroup()
 
 // Create a view for the map. This will change when the padding needs to be updated
 const createView = ({
@@ -131,7 +158,6 @@ const createView = ({
   return view
 }
 
-// TODO Might want to move these out of this file at some point
 const scaleMetric = new ScaleLine({
   className: 'edsc-map-scale-metric',
   units: 'metric'
@@ -144,52 +170,14 @@ const attribution = new Attribution({
   collapsible: false
 })
 
-const zoomControl = (projectionCode) => new ZoomControl({
-  className: 'edsc-map-zoom',
-  homeLocation: {
-    center: projectionConfigs[projectionCode].center,
-    zoom: projectionConfigs[projectionCode].zoom,
-    rotation: 0
-  },
-  PlusIcon: <EDSCIcon size="0.75rem" icon={Plus} />,
-  MinusIcon: <EDSCIcon size="0.75rem" icon={Minus} />,
-  HomeIcon: <EDSCIcon size="0.75rem" icon={FaHome} />,
-  duration: 250
-})
+// Clear the focused granule source
+const clearFocusedGranuleSource = (map) => {
+  focusedGranuleSource.clear()
 
-// TODO EDSC-4422: Don't actually need this until EDSC-4422
-// let highlightedFeature
-// const highlightFeature = (coordinate) => {
-//   // Find the first feature at the coordinate, this will be the top granule
-//   const features = granuleBackgroundsSource.getFeaturesAtCoordinate(coordinate)
-//   // We only want the background feature, because it contains the full granule geometry
-//   // const featureToHighlight = features.find((feature) => feature.get('background'))
-//   const [featureToHighlight] = features
-
-//   // If we haven't found any features and we have a hightlited
-//   if (!featureToHighlight && highlightedFeature) {
-//     highlightsSource.removeFeature(highlightedFeature)
-//   }
-
-//   if (featureToHighlight) {
-//     // If we found a feature to highlight, remove the previous highlight
-//     if (highlightedFeature) {
-//       highlightsSource.removeFeature(highlightedFeature)
-//     }
-
-//     // Create a new feature with the geometry of the feature to highlight
-//     highlightedFeature = new Feature({
-//       geometry: featureToHighlight.getGeometry()
-//     })
-
-//     // Set the style for the highlighted feature
-//     // const style = featureToHighlight.getStyle()
-//     highlightedFeature.setStyle(highlightedGranuleStyle(0))
-
-//     // Add the highlighted feature to the vector source
-//     highlightsSource.addFeature(highlightedFeature)
-//   }
-// }
+  // If a focused granule overlay exists, remove it
+  const focusedGranuleOverlay = map.getOverlayById('focused-granule-overlay')
+  if (focusedGranuleOverlay) map.removeOverlay(focusedGranuleOverlay)
+}
 
 /**
  * Uses OpenLayers to render a map
@@ -197,21 +185,29 @@ const zoomControl = (projectionCode) => new ZoomControl({
  * @param {Object} params.center Center latitude and longitude of the map
  * @param {Object} params.granules Granules to render on the map
  * @param {String} params.granulesKey Key to determine if the granules have changed
+ * @param {String} params.focusedCollectionId Collection ID of the focused collection
+ * @param {String} params.focusedGranuleId Granule ID of the focused granule
  * @param {String} params.projectionCode Projection code of the map
  * @param {Number} params.rotation Rotation of the map
  * @param {Number} params.zoom Zoom level of the map
  * @param {Object} params.colorMap Color map for the focused collection
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
+ * @param {Function} params.onChangeFocusedGranule Function to call when the focused granule is changed
  */
 const Map = ({
   center,
   colorMap,
+  focusedCollectionId,
+  focusedGranuleId,
   granules,
   granulesKey,
   isFocusedCollectionPage,
+  isProjectPage,
+  onChangeFocusedGranule,
   onChangeMap,
   onChangeProjection,
+  onExcludeGranule,
   projectionCode,
   rotation,
   zoom
@@ -232,10 +228,6 @@ const Map = ({
         attribution,
         scaleMetric,
         scaleImperial,
-        zoomControl(projectionCode),
-        new ProjectionSwitcherControl({
-          onChangeProjection
-        }),
         new LegendControl({
           colorMap,
           isFocusedCollectionPage
@@ -251,7 +243,9 @@ const Map = ({
         placeLabelsLayer,
         granuleBackgroundsLayer,
         granuleOutlinesLayer,
-        granuleHighlightsLayer
+        granuleHighlightsLayer,
+        focusedGranuleLayer,
+        granuleImageryLayerGroup
       ],
       target: mapElRef.current,
       view: createView({
@@ -264,7 +258,18 @@ const Map = ({
     })
     mapRef.current = map
 
-    map.on(MapEventType.MOVEEND, (event) => {
+    const mapControls = new MapControls({
+      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
+      map,
+      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
+      onChangeProjection,
+      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
+      projectionCode
+    })
+
+    map.addControl(mapControls)
+
+    const handleMoveEnd = (event) => {
       // When the map is moved we need to call onChangeMap to update Redux
       // with the new values
       const eventMap = event.map
@@ -303,22 +308,122 @@ const Map = ({
         rotation: newRotationInDeg,
         zoom: newZoom
       })
-    })
+    }
 
-    // TODO EDSC-4422: Don't actually need this until EDSC-4422
-    // map.on(PointerEventType.POINTERMOVE, (event) => {
-    //   if (event.dragging) {
-    //     return
-    //   }
+    // When the map is moved, call handleMoveEnd
+    map.on(MapEventType.MOVEEND, handleMoveEnd)
 
-    //   highlightFeature(map.getEventCoordinate(event.originalEvent))
-    // })
+    // Handle the pointer move event
+    const handlePointerMove = (event) => {
+      // If the map is currently being dragged, don't highlight the feature
+      if (event.dragging) {
+        return
+      }
+
+      // Highlight the feature at the pointer's location
+      highlightFeature({
+        coordinate: map.getEventCoordinate(event.originalEvent),
+        granuleBackgroundsSource,
+        granuleHighlightsSource
+      })
+    }
+
+    // When the pointer moves, highlight the feature
+    map.on(PointerEventType.POINTERMOVE, handlePointerMove)
 
     return () => {
       map.setTarget(null)
+      map.un(MapEventType.MOVEEND, handleMoveEnd)
+      map.un(PointerEventType.POINTERMOVE, handlePointerMove)
     }
   }, [projectionCode])
 
+  // Handle the map click event
+  const handleMapClick = (event) => {
+    const { map } = event
+
+    onClickMap({
+      clearFocusedGranuleSource,
+      coordinate: map.getEventCoordinate(event.originalEvent),
+      focusedCollectionId,
+      focusedGranuleId,
+      focusedGranuleSource,
+      granuleBackgroundsSource,
+      isProjectPage,
+      map,
+      onChangeFocusedGranule,
+      onExcludeGranule,
+      timesIconSvg
+    })
+  }
+
+  // Update the map click event listeners when the focusedGranuleId changes
+  useEffect(() => {
+    const map = mapRef.current
+
+    // When the map is clicked, call handleMapClick
+    map.on(MapBrowserEventType.CLICK, handleMapClick)
+
+    return () => {
+      map.un(MapBrowserEventType.CLICK, handleMapClick)
+    }
+  }, [focusedGranuleId, projectionCode])
+
+  // Handle the map leave event
+  const handleMouseLeave = () => {
+    // When the mouse leaves the map element, unhighlight the feature
+    unhighlightFeature(granuleHighlightsSource)
+  }
+
+  // Update the map element event listeners when the map element ref changes
+  useEffect(() => {
+    // When the mouse leaves the map element, unhighlight the feature
+    mapElRef.current.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      mapElRef.current.removeEventListener('mouseleave', handleMouseLeave)
+    }
+  }, [mapElRef.current])
+
+  // Handle the granule highlight event
+  const handleHoverGranule = ({ granule }) => {
+    highlightFeature({
+      granuleBackgroundsSource,
+      granuleHighlightsSource,
+      granuleId: granule ? granule.id : null
+    })
+  }
+
+  // Handle the granule focus event
+  const handleFocusGranule = ({ granule }) => {
+    drawFocusedGranule({
+      collectionId: focusedCollectionId,
+      focusedGranuleSource,
+      granuleBackgroundsSource,
+      granuleId: granule ? granule.id : null,
+      isProjectPage,
+      map: mapRef.current,
+      onChangeFocusedGranule,
+      onExcludeGranule,
+      timesIconSvg
+    })
+  }
+
+  // Update the event listeners when the focusedCollectionId changes
+  useEffect(() => {
+    // Call handleHoverGranule when the the event is fired
+    eventEmitter.on(`map.layer.${focusedCollectionId}.hoverGranule`, handleHoverGranule)
+
+    // Call handleFocusGranule when the the event is fired
+    eventEmitter.on(`map.layer.${focusedCollectionId}.focusGranule`, handleFocusGranule)
+
+    return () => {
+      eventEmitter.off(`map.layer.${focusedCollectionId}.hoverGranule`, handleHoverGranule)
+      eventEmitter.off(`map.layer.${focusedCollectionId}.focusGranule`, handleFocusGranule)
+    }
+  }, [focusedCollectionId])
+
+  // Update the map view when the panelsWidth changes
   useEffect(() => {
     // When colorMap or isFocusedCollectionPage changes, remove the existing legend control
     // and add a new one if necessary.
@@ -451,8 +556,39 @@ const Map = ({
     // Clear the existing granule backgrounds
     granuleBackgroundsSource.clear()
 
+    // Clear any existing granule highlights
+    unhighlightFeature(granuleHighlightsSource)
+
+    // Clear any existing focused granules
+    clearFocusedGranuleSource(mapRef.current)
+
+    // Clear the granule imagery layers
+    granuleImageryLayerGroup.getLayers().clear()
+
     // Draw the granule backgrounds
-    drawGranuleBackgrounds(granules, granuleBackgroundsSource, projectionCode)
+    drawGranuleBackgroundsAndImagery({
+      granuleImageryLayerGroup,
+      granulesMetadata: granules,
+      map: mapRef.current,
+      projectionCode,
+      vectorSource: granuleBackgroundsSource
+    })
+
+    // If there is a focused granule draw it
+    if (focusedGranuleId) {
+      drawFocusedGranule({
+        collectionId: focusedCollectionId,
+        focusedGranuleSource,
+        granuleBackgroundsSource,
+        granuleId: focusedGranuleId,
+        isProjectPage,
+        map: mapRef.current,
+        onChangeFocusedGranule,
+        onExcludeGranule,
+        shouldMoveMap: false,
+        timesIconSvg
+      })
+    }
   }, [granules, granulesKey, projectionCode])
 
   // Draw the granule outlines
@@ -473,7 +609,9 @@ const Map = ({
 }
 
 Map.defaultProps = {
-  granules: []
+  granules: [],
+  focusedCollectionId: '',
+  focusedGranuleId: ''
 }
 
 Map.propTypes = {
@@ -481,15 +619,20 @@ Map.propTypes = {
     latitude: PropTypes.number,
     longitude: PropTypes.number
   }).isRequired,
+  colorMap: PropTypes.shape({}).isRequired,
+  focusedCollectionId: PropTypes.string,
+  focusedGranuleId: PropTypes.string,
   granules: PropTypes.arrayOf(PropTypes.shape({})),
   granulesKey: PropTypes.string.isRequired,
-  projectionCode: PropTypes.string.isRequired,
-  rotation: PropTypes.number.isRequired,
-  zoom: PropTypes.number.isRequired,
+  isFocusedCollectionPage: PropTypes.bool.isRequired,
+  isProjectPage: PropTypes.bool.isRequired,
+  onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
   onChangeProjection: PropTypes.func.isRequired,
-  isFocusedCollectionPage: PropTypes.bool.isRequired,
-  colorMap: PropTypes.shape({}).isRequired
+  onExcludeGranule: PropTypes.func.isRequired,
+  projectionCode: PropTypes.string.isRequired,
+  rotation: PropTypes.number.isRequired,
+  zoom: PropTypes.number.isRequired
 }
 
 export default Map

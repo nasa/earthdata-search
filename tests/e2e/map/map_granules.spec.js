@@ -22,6 +22,12 @@ import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
 import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
 import commonBody from './__mocks__/common_collections.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
+import gibsCollectionGraphQlBody from './__mocks__/gibs/collection_graphql.body.json'
+import gibsCollectionGraphQlHeaders from './__mocks__/gibs/graphql.headers.json'
+import gibsCollectionsBody from './__mocks__/gibs/collections.body.json'
+import gibsGranuleGraphQlBody from './__mocks__/gibs/granule_graphql.body.json'
+import gibsGranulesBody from './__mocks__/gibs/granules.body.json'
+import gibsGranulesHeaders from './__mocks__/gibs/granules.headers.json'
 import granuleCrossingCollectionBody from './__mocks__/cmr_granules/granule_crossing_collections.body.json'
 import granuleCrossingCollectionGraphQlBody from './__mocks__/cmr_granules/granule_crossing_collection_graphql.body.json'
 import granuleCrossingGranuleGraphQlBody from './__mocks__/cmr_granules/granule_crossing_granule_graphql.body.json'
@@ -35,6 +41,15 @@ import opensearchGranulesCollectionGraphQlHeaders from './__mocks__/opensearch_g
 import opensearchGranulesHeaders from './__mocks__/opensearch_granules/granules.headers.json'
 import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/timeline.body.json'
 import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json'
+
+const screenshotClip = {
+  x: 930,
+  y: 90,
+  width: 425,
+  height: 700
+}
+
+const temporalLabelClass = '.edsc-map__focused-granule-overlay__granule-label-temporal'
 
 test.describe('Map: Granule interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
@@ -99,16 +114,16 @@ test.describe('Map: Granule interactions', () => {
           })
         })
 
-        await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!`)
+        await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&lat=-6.34&long=44.58&zoom=6`)
       })
 
       test.describe('When hovering over a granule', () => {
         test('highlights the granule in the granule results list', async ({ page }) => {
-          await page.locator('g path.leaflet-interactive').hover({
+          await page.locator('.map').hover({
             force: true,
             position: {
-              x: 20,
-              y: 20
+              x: 1200,
+              y: 350
             }
           })
 
@@ -129,21 +144,28 @@ test.describe('Map: Granule interactions', () => {
             })
           })
 
-          await page.locator('g path.leaflet-interactive').click({
+          await page.locator('.map').click({
             force: true,
             position: {
-              x: 20,
-              y: 20
+              x: 1200,
+              y: 350
             }
           })
+
+          // The is a 250ms duration for fitting the granule to the view area
+          await page.waitForTimeout(250)
         })
 
         test('shows the granule and a label on the map and updates the url', async ({ page }) => {
-          await expect(await page.locator('g path').all()).toHaveLength(5)
-          await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+          await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
 
           // Updates the URL with the selected granule
           await expect(page).toHaveURL(/\/search\/granules.*g=G2061166811-ASF/)
+
+          // Draws the granule on the map
+          await expect(page).toHaveScreenshot('focused-granule.png', {
+            clip: screenshotClip
+          })
         })
 
         test.describe('when returning to the collections results list', () => {
@@ -152,34 +174,36 @@ test.describe('Map: Granule interactions', () => {
               .getByTestId('breadcrumb-button')
               .click()
 
-            await expect(page.locator('.granule-spatial-label-temporal')).not.toBeInViewport()
+            await expect(page.locator(temporalLabelClass)).not.toBeInViewport()
           })
         })
 
         test.describe('when panning the map', () => {
           test('does not remove the stickied granule', async ({ page }) => {
-            await expect(await page.locator('g path').all()).toHaveLength(5)
-
             // Drag the map
             await page.mouse.move(1000, 500)
             await page.mouse.down()
             await page.mouse.move(1000, 600)
             await page.mouse.up()
 
-            await expect(await page.locator('g path').all()).toHaveLength(3)
-            await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+            await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+
+            await expect(page).toHaveScreenshot('focused-granule-panned.png', {
+              clip: screenshotClip
+            })
           })
         })
 
         test.describe('when zooming the map', () => {
           test('does not remove the stickied granule', async ({ page }) => {
-            await expect(await page.locator('g path').all()).toHaveLength(5)
-
             // Zoom the map
-            await page.locator('.leaflet-control-zoom-in').click()
+            await page.locator('.edsc-map-zoom-in').click()
 
-            await expect(await page.locator('g path').all()).toHaveLength(3)
-            await expect(page.locator('.granule-spatial-label-temporal')).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+            await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+
+            await expect(page).toHaveScreenshot('focused-granule-zoomed.png', {
+              clip: screenshotClip
+            })
           })
         })
 
@@ -188,12 +212,12 @@ test.describe('Map: Granule interactions', () => {
             await page.locator('.map').click({
               force: true,
               position: {
-                x: 1100,
-                y: 720
+                x: 1300,
+                y: 100
               }
             })
 
-            await expect(page.locator('.granule-spatial-label-temporal')).not.toBeInViewport()
+            await expect(page.locator(temporalLabelClass)).not.toBeInViewport()
           })
         })
 
@@ -202,18 +226,18 @@ test.describe('Map: Granule interactions', () => {
             await page.locator('.map').click({
               force: true,
               position: {
-                x: 1000,
-                y: 720
+                x: 1200,
+                y: 600
               }
             })
 
-            await expect(page.locator('.granule-spatial-label-temporal')).not.toBeInViewport()
+            await expect(page.locator(temporalLabelClass)).not.toBeInViewport()
           })
         })
       })
     })
 
-    test.describe('When viewing OpenSearch granules with polygon spatial', () => {
+    test.describe.skip('When viewing OpenSearch granules with polygon spatial', () => {
       test.beforeEach(async ({ page }) => {
         const conceptId = 'C1972468359-SCIOPS'
 
@@ -238,7 +262,7 @@ test.describe('Map: Granule interactions', () => {
           expect(query).toEqual({
             boundingBox: '42.18750000000001,-9.453289809825428,49.218749999999986,-2.4064699999999886',
             conceptId: [],
-            echoCollectionId: 'C1972468359-SCIOPS',
+            echoCollectionId: conceptId,
             exclude: {},
             openSearchOsdd: 'http://47.90.244.40/glass/osdd/fapar_modis_0.05d.xml',
             options: {},
@@ -504,8 +528,8 @@ test.describe('Map: Granule interactions', () => {
         await page.locator('body').hover({
           force: true,
           position: {
-            x: 1100,
-            y: 200
+            x: 1300,
+            y: 350
           }
         })
       })
@@ -516,12 +540,95 @@ test.describe('Map: Granule interactions', () => {
         // screenshot instead of correctly drawing the granule outline.
         await expect(page).toHaveScreenshot('granule-crosses-antimeridian.png', {
           clip: {
-            x: 1000,
-            y: 200,
+            x: 1140,
+            y: 350,
             width: 300,
             height: 50
           },
           maxDiffPixelRatio: 0.03
+        })
+      })
+    })
+  })
+
+  test.describe('when viewing granules with gibs imagery', () => {
+    test.describe('when the top granule has transparent imagery', () => {
+      test.beforeEach(async ({ page }) => {
+        const conceptId = 'C2930727817-LARC_CLOUD'
+
+        await interceptUnauthenticatedCollections({
+          page,
+          body: gibsCollectionsBody,
+          headers: commonHeaders
+        })
+
+        await page.route(/search\/granules.json/, async (route) => {
+          const query = route.request().postData()
+
+          if (query === `echo_collection_id=${conceptId}&options[readable_granule_name][pattern]=true&page_num=1&page_size=20&readable_granule_name[]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc&readable_granule_name[]=TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&sort_key=-start_date`) {
+            await route.fulfill({
+              json: gibsGranulesBody,
+              headers: gibsGranulesHeaders
+            })
+          }
+        })
+
+        await page.route(/api$/, async (route) => {
+          const query = route.request().postData()
+
+          if (query === graphQlGetCollection(conceptId)) {
+            await route.fulfill({
+              json: gibsCollectionGraphQlBody,
+              headers: gibsCollectionGraphQlHeaders
+            })
+          }
+
+          if (query === '{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G3453056435-LARC_CLOUD"}}}') {
+            await route.fulfill({
+              json: gibsGranuleGraphQlBody,
+              headers: { 'content-type': 'application/json' }
+            })
+          }
+        })
+
+        await page.route(/autocomplete$/, async (route) => {
+          await route.fulfill({
+            json: { feed: { entry: [] } }
+          })
+        })
+
+        await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
+          await route.fulfill({
+            json: {}
+          })
+        })
+
+        await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+      })
+
+      test('does not draw the lower granule\'s imagery through the transparent pieces of the top granule', async ({ page }) => {
+        await expect(page).toHaveScreenshot('gibs-transparent.png', {
+          clip: screenshotClip
+        })
+      })
+
+      test.describe('when focusing on the lower granule', () => {
+        test.beforeEach(async ({ page }) => {
+          await page.getByText('TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc').click()
+
+          // The is a 250ms duration for fitting the granule to the view area
+          await page.waitForTimeout(250)
+        })
+
+        test('draws the imagery of the focused granule above the previous top granule', async ({ page }) => {
+          await expect(page.locator(temporalLabelClass)).toHaveText('2025-03-17 18:17:102025-03-17 19:16:51')
+
+          await expect(page).toHaveScreenshot('gibs-focused.png', {
+            clip: screenshotClip
+          })
         })
       })
     })

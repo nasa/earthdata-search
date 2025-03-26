@@ -6,6 +6,21 @@ import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 import { withAdvancedSearch } from './withAdvancedSearch'
 
 /**
+ * If sortkey is set to 'default' or is undefined then
+ * set it to the default sort key
+ * @param {String} sortKey
+ */
+export const translateDefaultCollectionSortKey = (sortKey) => {
+  const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
+
+  if (sortKey === undefined) {
+    return defaultSortKey
+  }
+
+  return sortKey === 'default' ? defaultSortKey : sortKey
+}
+
+/**
  * Prepare parameters used in getCollections() based on current Redux State
  * @param {Object} state Current Redux State
  * @returns {Object} Parameters used in buildCollectionSearchParams
@@ -17,6 +32,7 @@ export const prepareCollectionParams = (state) => {
     authToken,
     facetsParams = {},
     portal = {},
+    preferences = {},
     query = {
       collection: {}
     },
@@ -31,11 +47,19 @@ export const prepareCollectionParams = (state) => {
     onlyEosdisCollections,
     overrideTemporal = {},
     pageNum,
-    sortKey = [],
+    paramCollectionSortKey,
     spatial = {},
     tagKey: selectedTag,
     temporal = {}
   } = collectionQuery
+
+  const { preferences: preferencesObj = {} } = preferences
+  const { collectionSort = 'default' } = preferencesObj
+
+  const userPrefSortKey = translateDefaultCollectionSortKey(collectionSort)
+
+  // Use parameter sort key if present, else use user preferences sort key
+  const sortKey = [paramCollectionSortKey || userPrefSortKey]
 
   const {
     boundingBox,

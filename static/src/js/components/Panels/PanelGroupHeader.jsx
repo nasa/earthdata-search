@@ -8,6 +8,8 @@ import {
   FaTable,
   FaFileExport
 } from 'react-icons/fa'
+import { upperFirst } from 'lodash-es'
+import { humanizeSortKey } from '../../util/humanizedQueryValueFormatters'
 
 import { headerMetaSkeleton, titleSkeleton } from './skeleton'
 
@@ -57,6 +59,8 @@ export const PanelGroupHeader = ({
   sortsArray,
   viewsArray
 }) => {
+  const sortLabel = `Sort: ${humanizeSortKey(activeSort, sortsArray)}`
+  const viewLabel = `View: ${upperFirst(activeView)}`
   const panelGroupHeaderClasses = classNames([
     'panel-group-header',
     {
@@ -207,7 +211,8 @@ export const PanelGroupHeader = ({
                     title = '',
                     icon = '',
                     link = {},
-                    onClick = null
+                    onClick = null,
+                    inProgress
                   } = moreActionsDropdownItem
 
                   const {
@@ -219,6 +224,10 @@ export const PanelGroupHeader = ({
 
                   if (typeof onClick === 'function') {
                     onClickProps.onClick = onClick
+                  }
+
+                  if (inProgress) {
+                    onClickProps.inProgress = inProgress
                   }
 
                   let item = (
@@ -311,9 +320,8 @@ export const PanelGroupHeader = ({
                       <RadioSettingDropdown
                         id={`panel-group-header-dropdown__sort__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
-                        activeSortOrder={activeSort}
                         activeIcon={ActiveSortIcon}
-                        label="Sort"
+                        label={sortLabel}
                         settings={sortsArray}
                       />
                     )
@@ -324,7 +332,7 @@ export const PanelGroupHeader = ({
                         id={`panel-group-header-dropdown__view__${panelGroupId}`}
                         className="panel-group-header__setting-dropdown"
                         activeIcon={ActiveViewIcon}
-                        label="View"
+                        label={viewLabel}
                         settings={viewsArray}
                       />
                     )

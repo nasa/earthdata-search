@@ -81,7 +81,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                 <Button
                   className="button granule-results-table__granule-action granule-results-table__granule-action--add"
                   type="button"
-                  label="Add granule to project"
+                  ariaLabel="Add granule to project"
                   tooltip="Add granule to project"
                   tooltipId={`add-granule-table-tooltip-${id}`}
                   icon={Plus}
@@ -110,7 +110,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                 <Button
                   className="button granule-results-table__granule-action granule-results-table__granule-action--remove"
                   type="button"
-                  label="Remove granule from project"
+                  ariaLabel="Remove granule from project"
                   tooltip="Remove granule from project"
                   tooltipId={`remove-granule-table-tooltip-${id}`}
                   icon={Minus}

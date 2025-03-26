@@ -79,3 +79,43 @@ export const formatFacetHierarchy = (value, order) => value.map(
     return hierarchy
   }
 )
+
+/**
+ * Humanizes the sort key value sent to CMR with a human readable value
+ * @param {String} sortKey - The value for the sort key type sent to CMR
+ * @param {String} sortsArray - The array containing all of the sort orders for the concept type
+ * @returns {String} A humanized human readable string to display
+ */
+export const humanizeSortKey = (sortKey, sortsArray) => {
+  if (!sortKey) return 'Unknown'
+
+  // Define mapping objects for collection and granule sort keys
+  const collectionSortKeyMap = {
+    '-score': 'Relevance',
+    '-usage_score': 'Usage',
+    '-ongoing': 'End Date',
+    start_date: 'Start Date'
+  }
+
+  const granuleSortKeyMap = {
+    start_date: 'Start Date (Oldest)',
+    '-start_date': 'Start Date (Newest)',
+    end_date: 'End Date (Oldest)',
+    '-end_date': 'End Date (Newest)'
+  }
+
+  // Determine if we're dealing with collection sorts
+  const isCollectionSort = sortsArray && sortsArray.some((sort) => sort.label === 'Relevance')
+
+  // Return from the appropriate map based on context
+  if (isCollectionSort && sortKey in collectionSortKeyMap) {
+    return collectionSortKeyMap[sortKey]
+  }
+
+  if (!isCollectionSort && sortKey in granuleSortKeyMap) {
+    return granuleSortKeyMap[sortKey]
+  }
+
+  // Fallback to the original sort key if not found in maps
+  return sortKey
+}
