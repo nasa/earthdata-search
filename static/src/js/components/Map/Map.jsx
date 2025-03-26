@@ -26,7 +26,8 @@ import { FaHome } from 'react-icons/fa'
 import {
   Close,
   Minus,
-  Plus
+  Plus,
+  FileArchive
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -45,6 +46,11 @@ import labelsLayer from '../../util/map/layers/placeLabels'
 import onClickMap from '../../util/map/interactions/onClickMap'
 import projections from '../../util/map/projections'
 import worldImagery from '../../util/map/layers/worldImagery'
+import LayerSwitcherControl from './LayerSwitcherControl'
+import bordersRoads from '../../util/map/layers/bordersRoads'
+import oceanDepth from '../../util/map/layers/oceanDepth'
+import correctedReflectance from '../../util/map/layers/correctedReflectance'
+import landWaterMap from '../../util/map/layers/landWaterMap'
 
 import { eventEmitter } from '../../events/events'
 
@@ -63,6 +69,30 @@ const esriAttribution = 'Powered by <a href="https://www.esri.com/" target="_bla
 
 // Build the worldImagery layer
 const worldImageryLayer = worldImagery({
+  attributions: esriAttribution,
+  projectionCode: projections.geographic
+})
+
+// Build the correctedReflectance Layer
+const correctedReflectanceLayer = correctedReflectance({
+  attributions: 'NASA EOSDIS GIBS',
+  projectionCode: projections.geographic
+})
+
+// Build the landWater Layer
+const landWaterMapLayer = landWaterMap({
+  attributions: esriAttribution,
+  projectionCode: projections.geographic
+})
+
+// Build the oceanDepth Layer
+const oceanDepthLayer = oceanDepth({
+  attributions: esriAttribution,
+  projectionCode: projections.geographic
+})
+
+// Build the bordersRoads Layer
+const bordersRoadsLayer = bordersRoads({
   attributions: esriAttribution,
   projectionCode: projections.geographic
 })
@@ -222,12 +252,76 @@ const Map = ({
   const mapRef = useRef()
   const mapElRef = useRef()
 
+  const handleLayerChange = ({ id, checked }) => {
+    if (id === 'place-labels') {
+      placeLabelsLayer.setVisible(checked)
+    } else if (id === 'borders-roads') {
+      bordersRoadsLayer.setVisible(checked)
+    } else if (id === 'oceanDepth') {
+      oceanDepthLayer.setVisible(checked)
+    } else if (id === 'world-imagery') {
+      worldImageryLayer.setVisible(checked)
+      // Hide other base layers when this one is selected
+      if (checked) {
+        correctedReflectanceLayer.setVisible(false)
+        // If you add land-water-map layer later, hide that too
+      }
+    } else if (id === 'corrected-reflectance') {
+      correctedReflectanceLayer.setVisible(checked)
+      // Hide other base layers when this one is selected
+      if (checked) {
+        worldImageryLayer.setVisible(false)
+        // If you add land-water-map layer later, hide that too
+      }
+    }
+  }
+
+  const layerSwitcherControl = (onChangeLayer) => {
+    // Create with debugging styles
+    const control = new LayerSwitcherControl({
+      className: 'edsc-map-layer-switcher',
+      LayersIcon: <EDSCIcon size="0.75rem" icon={FileArchive} />,
+      onChangeLayer,
+      layerOptions: [
+        {
+          id: 'world-imagery',
+          label: 'World Imagery',
+          checked: true
+        },
+        {
+          id: 'corrected-reflectance',
+          label: 'Corrected Reflectance (True Color)'
+        },
+        {
+          id: 'land-water-map',
+          label: 'Land / Water Map *'
+        },
+        {
+          id: 'borders-roads',
+          label: 'Borders and Roads *'
+        },
+        {
+          id: 'oceanDepth',
+          label: 'Ocean Depth *'
+        },
+        {
+          id: 'place-labels',
+          label: 'Place Labels *',
+          checked: true
+        }
+      ]
+    })
+
+    return control
+  }
+
   useEffect(() => {
     const map = new OlMap({
       controls: [
         attribution,
         scaleMetric,
         scaleImperial,
+        layerSwitcherControl(handleLayerChange),
         new LegendControl({
           colorMap,
           isFocusedCollectionPage
@@ -240,6 +334,10 @@ const Map = ({
       ]),
       layers: [
         worldImageryLayer,
+        correctedReflectanceLayer,
+        landWaterMapLayer,
+        oceanDepthLayer,
+        bordersRoadsLayer,
         placeLabelsLayer,
         granuleBackgroundsLayer,
         granuleOutlinesLayer,
@@ -257,6 +355,8 @@ const Map = ({
       })
     })
     mapRef.current = map
+
+    placeLabelsLayer.setVisible(true)
 
     const mapControls = new MapControls({
       HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
