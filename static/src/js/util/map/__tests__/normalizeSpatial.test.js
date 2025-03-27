@@ -1,11 +1,50 @@
-import normalizeGranuleSpatial from '../normalizeGranuleSpatial'
+import normalizeSpatial, {
+  getPolygonArea,
+  squareMetersToSquareKilometers
+} from '../normalizeSpatial'
 
-describe('normalizeGranuleSpatial', () => {
+describe('normalizeSpatial', () => {
+  describe('get polygon area', () => {
+    test('returns the area of a polygon in square meters', () => {
+      const polygonFeature = {
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'MultiPolygon',
+          coordinates: [
+            [
+              [
+                [0, 0],
+                [10, 0],
+                [10, 10],
+                [7.500144327690457, 10.02806255960527],
+                [4.999999999999976, 10.037423045910712],
+                [2.499855672309495, 10.028062559605273],
+                [0, 10],
+                [0, 0]
+              ]
+            ]
+          ]
+        }
+      }
+      const polygonArea = getPolygonArea(polygonFeature)
+      expect(polygonArea).toEqual(1233014465748.1511)
+    })
+  })
+
+  describe('squareMetersToSquareKilometers', () => {
+    test('returns square kilometers from square meters input', () => {
+      const areaSquareMeters = 1233014465748.1511
+      const areaSquareKilometers = squareMetersToSquareKilometers(areaSquareMeters)
+      expect(areaSquareKilometers).toEqual(1233014)
+    })
+  })
+
   describe('when the granule has no spatial information', () => {
     test('returns null', () => {
       const granule = {}
 
-      const response = normalizeGranuleSpatial(granule)
+      const response = normalizeSpatial(granule)
 
       expect(response).toBeNull()
     })
@@ -17,7 +56,7 @@ describe('normalizeGranuleSpatial', () => {
         boxes: ['0 1 10 11']
       }
 
-      const response = normalizeGranuleSpatial(granule)
+      const response = normalizeSpatial(granule)
 
       expect(response).toEqual({
         type: 'Feature',
@@ -57,7 +96,7 @@ describe('normalizeGranuleSpatial', () => {
           boxes: ['0 1 10 11', '1 2 11 12']
         }
 
-        const response = normalizeGranuleSpatial(granule)
+        const response = normalizeSpatial(granule)
 
         expect(response).toEqual({
           type: 'Feature',
@@ -120,7 +159,7 @@ describe('normalizeGranuleSpatial', () => {
         lines: ['0 5 10 15']
       }
 
-      const response = normalizeGranuleSpatial(granule)
+      const response = normalizeSpatial(granule)
 
       expect(response).toEqual({
         type: 'Feature',
@@ -143,7 +182,7 @@ describe('normalizeGranuleSpatial', () => {
           lines: ['0 5 10 15', '1 6 11 16']
         }
 
-        const response = normalizeGranuleSpatial(granule)
+        const response = normalizeSpatial(granule)
 
         expect(response).toEqual({
           type: 'Feature',
@@ -171,7 +210,7 @@ describe('normalizeGranuleSpatial', () => {
           lines: ['1 170 2 175 3 -175 4 -170']
         }
 
-        const response = normalizeGranuleSpatial(granule)
+        const response = normalizeSpatial(granule)
 
         expect(response).toEqual({
           type: 'Feature',
@@ -202,7 +241,7 @@ describe('normalizeGranuleSpatial', () => {
         points: ['0 10']
       }
 
-      const response = normalizeGranuleSpatial(granule)
+      const response = normalizeSpatial(granule)
 
       expect(response).toEqual({
         type: 'Feature',
@@ -220,7 +259,7 @@ describe('normalizeGranuleSpatial', () => {
           points: ['0 10', '1 11']
         }
 
-        const response = normalizeGranuleSpatial(granule)
+        const response = normalizeSpatial(granule)
 
         expect(response).toEqual({
           type: 'Feature',
@@ -245,7 +284,7 @@ describe('normalizeGranuleSpatial', () => {
         ]
       }
 
-      const response = normalizeGranuleSpatial(granule)
+      const response = normalizeSpatial(granule)
 
       expect(response).toEqual({
         type: 'Feature',
@@ -279,7 +318,7 @@ describe('normalizeGranuleSpatial', () => {
           ]
         }
 
-        const response = normalizeGranuleSpatial(granule)
+        const response = normalizeSpatial(granule)
 
         expect(response).toEqual({
           type: 'Feature',
@@ -326,7 +365,7 @@ describe('normalizeGranuleSpatial', () => {
           ]
         }
 
-        const response = normalizeGranuleSpatial(granule)
+        const response = normalizeSpatial(granule)
 
         expect(response).toEqual({
           type: 'Feature',
@@ -366,7 +405,7 @@ describe('normalizeGranuleSpatial', () => {
           ]
         }
 
-        const response = normalizeGranuleSpatial(granule)
+        const response = normalizeSpatial(granule)
 
         expect(response).toEqual({
           type: 'Feature',
@@ -416,7 +455,7 @@ describe('normalizeGranuleSpatial', () => {
           ]
         }
 
-        const response = normalizeGranuleSpatial(granule)
+        const response = normalizeSpatial(granule)
 
         expect(response).toEqual({
           type: 'Feature',
