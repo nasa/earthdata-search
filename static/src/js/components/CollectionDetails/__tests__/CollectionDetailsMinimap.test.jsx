@@ -1,23 +1,10 @@
 import React from 'react'
+// Mock Canvas element for jest testing
+import 'jest-canvas-mock'
 
-import { render } from '@testing-library/react'
-
-import { MapContainer } from 'react-leaflet'
+import { render, screen } from '@testing-library/react'
 
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
-
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {}),
-  MapContainer: jest.fn().mockImplementation(() => (<div />)),
-  ImageOverlay: jest.fn().mockImplementation(() => (<div />))
-}))
-
-jest.mock('react-leaflet/ImageOverlay')
-
-jest.mock('../CollectionDetailsFeatureGroup', () => jest.fn(() => (
-  <mock-MapContainer data-testid="MapContainer" />
-)))
 
 const setup = (overrides) => {
   const {
@@ -40,12 +27,15 @@ const setup = (overrides) => {
   render(<CollectionDetailsMinimap {...props} />)
 }
 
-describe.skip('CollectionDetailsBody component', () => {
+describe('CollectionDetailsMiniMap component', () => {
   describe('when the collection details mini-map is loaded with metadata', () => {
     test('calls leaflet to render the map container', () => {
       setup()
+      const canvasElement = screen.getByTestId('collection-details-minimap')
 
-      expect(MapContainer).toHaveBeenCalledTimes(1)
+      expect(canvasElement).toBeInTheDocument()
+      expect(canvasElement).toHaveAttribute('width', '360')
+      expect(canvasElement).toHaveAttribute('height', '180')
     })
   })
 })
