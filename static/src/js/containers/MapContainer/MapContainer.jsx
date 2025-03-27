@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useState,
   useMemo,
@@ -44,6 +45,7 @@ import spatialTypes from '../../constants/spatialTypes'
 import MbrContext from '../../contexts/MbrContext'
 
 import StartDrawingContext from '../../contexts/StartDrawingContext'
+import { mapEventTypes } from '../../constants/eventTypes'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -136,13 +138,14 @@ export const MapContainer = (props) => {
     '/search/granules/collection-details'
   ])
 
-  const { startDrawing } = useContext(StartDrawingContext)
+  const { startDrawing, setStartDrawing } = useContext(StartDrawingContext)
 
   const [mapReady, setMapReady] = useState(false)
 
   useLayoutEffect(() => {
     if (startDrawing && mapReady) {
-      eventEmitter.emit('map.drawStart', { type: startDrawing })
+      eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
+      setStartDrawing(null)
     }
   }, [mapProps, mapReady])
 

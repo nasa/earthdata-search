@@ -230,6 +230,7 @@ const removeDrawingInteraction = (map) => {
  * @param {Function} params.onChangeQuery Function to call when the query is changed
  * @param {Function} params.onClearShapefile Function to call when the shapefile is cleared
  * @param {Function} params.onExcludeGranule Function to call when a granule is excluded
+ * @param {Function} params.onMapReady Function to call when the map is ready
  * @param {Function} params.onMetricsMap Function to call when a map metric is triggered
  * @param {Function} params.onToggleDrawingNewLayer Function to call when a new drawing layer is toggled
  * @param {Function} params.onToggleShapefileUploadModal Function to call when the shapefile upload modal is toggled
@@ -257,6 +258,7 @@ const Map = ({
   onChangeQuery,
   onClearShapefile,
   onExcludeGranule,
+  onMapReady,
   onMetricsMap,
   onToggleDrawingNewLayer,
   onToggleShapefileUploadModal,
@@ -519,6 +521,8 @@ const Map = ({
     }
 
     eventEmitter.on(shapefileEventTypes.REMOVESHAPEFILE, handleRemoveShapefile)
+
+    onMapReady(true)
 
     layersAdded = false
 
@@ -1028,6 +1032,7 @@ Map.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   onClearShapefile: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
+  onMapReady: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired,

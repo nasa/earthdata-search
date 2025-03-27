@@ -43,6 +43,8 @@ const SpatialSelectionDropdown = (props) => {
     }
 
     eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
+
+    // TODO if we are on the / page, navigate to the /search page with `?startDrawing=${spatialType}`
   }
 
   const { disableDatabaseComponents } = getApplicationConfig()
