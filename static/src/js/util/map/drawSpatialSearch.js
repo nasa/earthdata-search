@@ -9,7 +9,7 @@ import {
 import { splitListOfPoints } from '@edsc/geo-utils'
 
 import { crsProjections } from './crs'
-import { interpolateBoxPolygon, interpolatePolygon } from './normalizeGranuleSpatial'
+import { interpolateBoxPolygon, interpolatePolygon } from './normalizeSpatial'
 import projections from './projections'
 import {
   markerStyle,

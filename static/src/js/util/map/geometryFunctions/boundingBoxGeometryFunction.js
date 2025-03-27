@@ -4,7 +4,7 @@ import {
   Polygon
 } from 'ol/geom'
 
-import { interpolateBoxPolygon, makeCounterClockwise } from '../normalizeGranuleSpatial'
+import { interpolateBoxPolygon, makeCounterClockwise } from '../normalizeSpatial'
 import { crsProjections } from '../crs'
 import projections from '../projections'
 
