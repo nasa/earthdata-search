@@ -3,6 +3,7 @@
 
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -51,6 +52,7 @@ import './MapContainer.scss'
 import spatialTypes from '../../constants/spatialTypes'
 
 import StartDrawingContext from '../../contexts/StartDrawingContext'
+import { mapEventTypes } from '../../constants/eventTypes'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -148,13 +150,14 @@ export const MapContainer = (props) => {
   // TODO EDSC-4418 need to be sure URL values override preferences (broken in prod)
   const [map, setMap] = useState(mapProps)
 
-  const { startDrawing } = useContext(StartDrawingContext)
+  const { startDrawing, setStartDrawing } = useContext(StartDrawingContext)
 
   const [mapReady, setMapReady] = useState(false)
 
   useLayoutEffect(() => {
     if (startDrawing && mapReady) {
-      eventEmitter.emit('map.drawStart', { type: startDrawing })
+      eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
+      setStartDrawing(null)
     }
   }, [mapProps, mapReady])
 
