@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event'
 import * as EventEmitter from '../../../events/events'
 
 import SpatialDisplay from '../SpatialDisplay'
+import spatialTypes from '../../../constants/spatialTypes'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -130,7 +131,7 @@ describe('SpatialDisplay component', () => {
     })
 
     test('should render a hint to draw the polygon on the map', () => {
-      setup({ drawingNewLayer: 'polygon' })
+      setup({ drawingNewLayer: spatialTypes.POLYGON })
 
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')).toHaveLength(1)
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')[0]).toBeVisible()

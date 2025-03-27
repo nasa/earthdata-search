@@ -119,6 +119,7 @@ export class RegionSearchForm extends Component {
                       <Form.Select
                         name="endpoint"
                         onChange={handleChange}
+                        role="combobox"
                         value={endpoint}
                       >
                         {

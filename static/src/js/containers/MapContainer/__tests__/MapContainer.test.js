@@ -35,6 +35,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
+  test('onChangeQuery calls actions.changeQuery', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'changeQuery')
+
+    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
   test('onExcludeGranule calls actions.excludeGranule', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'excludeGranule')
@@ -85,6 +95,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
+  test('onToggleDrawingNewLayer calls actions.toggleDrawingNewLayer', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleDrawingNewLayer')
+
+    mapDispatchToProps(dispatch).onToggleDrawingNewLayer({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
   test('onToggleTooManyPointsModal calls actions.toggleTooManyPointsModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleTooManyPointsModal')
@@ -109,6 +129,7 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
+      advancedSearch: {},
       authToken: 'mock-token',
       metadata: {
         collections: {},
@@ -118,26 +139,41 @@ describe('mapStateToProps', () => {
       focusedGranule: 'granuleId',
       map: {},
       project: {},
+      query: {
+        collection: {
+          spatial: {}
+        }
+      },
       router: {},
       shapefile: {},
       ui: {
         map: {
           drawingNewLayer: false
+        },
+        spatialPolygonWarning: {
+          isDisplayed: false
         }
       }
     }
 
     const expectedState = {
+      advancedSearch: {},
       authToken: 'mock-token',
+      boundingBoxSearch: undefined,
+      circleSearch: undefined,
       collectionsMetadata: {},
       colormapsMetadata: {},
+      displaySpatialPolygonWarning: false,
       drawingNewLayer: false,
       focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
       granuleSearchResults: {},
       granulesMetadata: {},
+      lineSearch: undefined,
       map: {},
       mapPreferences: {},
+      pointSearch: undefined,
+      polygonSearch: undefined,
       project: {},
       router: {},
       shapefile: {}
