@@ -54,6 +54,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onChangeMap:
     (query) => dispatch(actions.changeMap(query)),
   onChangeQuery: (query) => dispatch(actions.changeQuery(query)),
+  onClearShapefile: (query) => dispatch(actions.clearShapefile(query)),
   onExcludeGranule:
     (data) => dispatch(actions.excludeGranule(data)),
   onFetchShapefile:
@@ -65,6 +66,8 @@ export const mapDispatchToProps = (dispatch) => ({
   onMetricsMap:
     (type) => dispatch(metricsMap(type)),
   onToggleDrawingNewLayer: (state) => dispatch(actions.toggleDrawingNewLayer(state)),
+  onToggleShapefileUploadModal:
+    (state) => dispatch(actions.toggleShapefileUploadModal(state)),
   onToggleTooManyPointsModal:
     (state) => dispatch(actions.toggleTooManyPointsModal(state)),
   onUpdateShapefile:
@@ -114,6 +117,7 @@ export const MapContainer = (props) => {
     onChangeFocusedGranule,
     onChangeMap,
     onChangeQuery,
+    onClearShapefile,
     onExcludeGranule,
     onFetchShapefile,
     onMetricsMap,
@@ -121,6 +125,7 @@ export const MapContainer = (props) => {
     onShapefileErrored,
     onToggleDrawingNewLayer,
     onToggleTooManyPointsModal,
+    onToggleShapefileUploadModal,
     onUpdateShapefile,
     pointSearch,
     polygonSearch,
@@ -208,6 +213,15 @@ export const MapContainer = (props) => {
 
     setMap(mapWithDefaults)
   }, [mapProps])
+
+  useEffect(() => {
+    if (shapefile) {
+      const { isLoaded, isLoading, shapefileId } = shapefile
+
+      if (shapefileId && !isLoaded && !isLoading) onFetchShapefile(shapefileId)
+    }
+  }, [shapefile])
+
 
   const maxZoom = projection === projections.geographic ? 7 : 4
 
@@ -511,6 +525,8 @@ export const MapContainer = (props) => {
     projection
   ])
 
+  const memoizedShapefile = useMemo(() => shapefile, [shapefile])
+
   return (
     <Map
       center={center}
@@ -525,11 +541,16 @@ export const MapContainer = (props) => {
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}
+      onClearShapefile={onClearShapefile}
       onExcludeGranule={onExcludeGranule}
       onMetricsMap={onMetricsMap}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
+      onToggleShapefileUploadModal={onToggleShapefileUploadModal}
+      onToggleTooManyPointsModal={onToggleTooManyPointsModal}
+      onUpdateShapefile={onUpdateShapefile}
       projectionCode={projection}
       rotation={rotation}
+      shapefile={memoizedShapefile}
       spatialSearch={spatialSearch}
       zoom={zoom}
     />

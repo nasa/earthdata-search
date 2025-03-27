@@ -6,6 +6,9 @@ let highlightedGranuleFeature
 
 // Remove the highlighted feature from the vector source
 export const unhighlightFeature = (granuleHighlightsSource) => {
+  // Reset the cursor
+  document.body.style.cursor = 'auto'
+
   if (!highlightedGranuleFeature) return
 
   const { collectionId } = highlightedGranuleFeature.getProperties()
@@ -50,6 +53,9 @@ export const highlightFeature = ({
 
   // If we found a feature to highlight, highlight it
   if (featureToHighlight) {
+    // Set the cursor to a pointer
+    document.body.style.cursor = 'pointer'
+
     const {
       collectionId,
       granuleId: toHighlightGranuleId,
@@ -61,7 +67,7 @@ export const highlightFeature = ({
 
       // If the feature to highlight is the same as the highlighted feature, don't do anything
       if (toHighlightGranuleId === highlightedGranuleId) {
-        return
+        return true
       }
     }
 
@@ -86,4 +92,6 @@ export const highlightFeature = ({
     // Fire the event to highlight the granule in the granule list
     if (coordinate) eventEmitter.emit(`map.layer.${collectionId}.hoverGranule`, { granule: { id: toHighlightGranuleId } })
   }
+
+  return !!featureToHighlight
 }

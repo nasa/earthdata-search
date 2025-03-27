@@ -108,6 +108,28 @@ export const markerStyle = new Style({
   })
 })
 
+const unselectedMarkerSvg = '<svg stroke="%23FFFFFF66" fill="%23EA6F24" xmlns="http://www.w3.org/2000/svg" stroke-width="0.5" width="1rem" height="1rem" viewBox="0 0 20 20" role="img" data-reactroot=""><path fill="%23EA6F24" fill-rule="evenodd" d="M10.457 19.544C13.798 16.214 17 13.02 17 8A7 7 0 1 0 3 8c0 5.021 3.202 8.213 6.543 11.544L10 20zM10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6" clip-rule="evenodd"></path></svg>'
+
+export const unselectedMarkerStyle = new Style({
+  image: new Icon({
+    anchor: [0.5, 1],
+    opacity: 1,
+    src: `data:image/svg+xml,${unselectedMarkerSvg}`,
+    scale: 2
+  })
+})
+
+const hoveredMarkerSvg = '<svg stroke="%2347DA84" fill="%2347DA8433" xmlns="http://www.w3.org/2000/svg" stroke-width="0.5" width="1rem" height="1rem" viewBox="0 0 20 20" role="img" data-reactroot=""><path fill="%2347DA8433" fill-rule="evenodd" d="M10.457 19.544C13.798 16.214 17 13.02 17 8A7 7 0 1 0 3 8c0 5.021 3.202 8.213 6.543 11.544L10 20zM10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6" clip-rule="evenodd"></path></svg>'
+
+export const hoveredMarkerStyle = new Style({
+  image: new Icon({
+    anchor: [0.5, 1],
+    opacity: 1,
+    src: `data:image/svg+xml,${hoveredMarkerSvg}`,
+    scale: 2
+  })
+})
+
 export const spatialSearchStyle = new Style({
   stroke: new Stroke({
     color: '#0099ff',
@@ -122,4 +144,24 @@ export const mbrStyle = new Style({
     lineDash: [2, 10],
     opacity: 0.8
   })
+})
+
+export const unselectedShapefileStyle = new Style({
+  stroke: new Stroke({
+    color: '#EA6F24',
+    width: 1
+  })
+})
+
+export const shapefileHoverStyle = new Style({
+  stroke: new Stroke({
+    color: '#47DA84',
+    width: 2
+  }),
+  fill: new Fill({
+    color: '#47DA8433'
+  })
+})
+
+export const shapefileSelectedStyle = new Style({
 })

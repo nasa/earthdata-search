@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import actions from '../../actions'
 
 import { eventEmitter } from '../../events/events'
+import { shapefileEventTypes } from '../../constants/eventTypes'
+
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -25,6 +27,24 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   authToken: state.authToken
 })
+
+// Add an edscId to each feature in the shapefile
+const addEdscIdsToShapefile = (file) => {
+  const fileWithIds = file
+  const { features } = file
+
+  const newFeatures = features.map((feature, index) => ({
+    ...feature,
+    properties: {
+      ...feature.properties,
+      edscId: index
+    }
+  }))
+
+  fileWithIds.features = newFeatures
+
+  return fileWithIds
+}
 
 const dropzoneOptions = {
   // Official Ogre web service
@@ -71,13 +91,15 @@ export const ShapefileDropzoneContainer = ({
 
         dropzoneEl.removeFile(file)
 
-        eventEmitter.emit('shapefile.success', file, resp)
+        const fileWithIds = addEdscIdsToShapefile(resp)
+
+        eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds)
 
         onToggleShapefileUploadModal(false)
 
         onSaveShapefile({
           authToken,
-          file: resp,
+          file: fileWithIds,
           filename: name,
           size: fileSize
         })
@@ -107,7 +129,7 @@ export const ShapefileDropzoneContainer = ({
     }
     onRemovedFile={
       (file, resp) => {
-        eventEmitter.emit('shapefile.removedfile', file, resp)
+        eventEmitter.emit(shapefileEventTypes.REMOVESHAPEFILE, file, resp)
       }
     }
   />

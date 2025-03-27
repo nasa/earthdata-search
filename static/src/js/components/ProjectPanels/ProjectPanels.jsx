@@ -42,17 +42,20 @@ import './ProjectPanels.scss'
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Object} projectCollection - The project collection.
+ * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} onChangePath - Callback to change the path.
- * @param {Function} onSetActivePanelGroup - Callback to set the page number.
+ * @param {Function} onChangeProjectGranulePageNum - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
+ * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
+ * @param {Function} onSelectAccessMethod - Selects an access method.
+ * @param {Function} onSetActivePanel - Switches the currently active panel.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
+ * @param {Function} onSetActivePanelGroup - Callback to set the page number.
+ * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
+ * @param {Function} onTogglePanels - Toggles the panels opened or closed.
+ * @param {Function} onToggleSpatialPolygonWarning - Toggles the spatial polygon warning.
  * @param {Function} onUpdateAccessMethod - Callback to update the access method.
  * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
- * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
- * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
- * @param {Function} onTogglePanels - Toggles the panels opened or closed.
- * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
- * @param {Function} onSetActivePanel - Switches the currently active panel.
  */
 class ProjectPanels extends PureComponent {
   constructor(props) {
@@ -282,6 +285,7 @@ class ProjectPanels extends PureComponent {
       onSetActivePanel,
       onToggleAboutCSDAModal,
       onTogglePanels,
+      onToggleSpatialPolygonWarning,
       onUpdateAccessMethod,
       panels,
       project,
@@ -590,6 +594,7 @@ class ProjectPanels extends PureComponent {
               onSelectAccessMethod={onSelectAccessMethod}
               onSetActivePanel={onSetActivePanel}
               onTogglePanels={onTogglePanels}
+              onToggleSpatialPolygonWarning={onToggleSpatialPolygonWarning}
               onUpdateAccessMethod={onUpdateAccessMethod}
               selectedAccessMethod={selectedAccessMethod}
               shapefileId={shapefileId}
@@ -719,6 +724,7 @@ ProjectPanels.propTypes = {
   onSetActivePanelGroup: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
+  onToggleSpatialPolygonWarning: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   overrideTemporal: PropTypes.shape({}).isRequired,

@@ -9,7 +9,16 @@ import granules from './__mocks__/granules.json'
 import shapefile from './__mocks__/shapefile.json'
 import collectionsGraphQlBody from './__mocks__/collections_graphql_body.json'
 
-test.describe.skip('Harmony with MBR', () => {
+const screenshotClip = {
+  x: 930,
+  y: 90,
+  width: 425,
+  height: 700
+}
+
+const mbrWarning = 'Only bounding boxes are supported. If this option is enabled, your line will be automatically converted into the bounding box shown above and outlined on the map.'
+
+test.describe('Harmony with MBR', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
       page,
@@ -64,13 +73,19 @@ test.describe.skip('Harmony with MBR', () => {
       test.describe('when Enable Spatial Subsetting is selected on load', () => {
         test.beforeEach(async ({ page }) => {
           await page.goto('/projects?p=C2930725014-LARC_CLOUD!C2930725014-LARC_CLOUD&pg[1][v]=t&pg[1][m]=harmony0&pg[1][cd]=t&pg[1][ets]=t&pg[1][ess]=t&q=TEMPO_NO2_L2&line[0]=-106%2C35%2C-105%2C36%2C-94%2C33%2C-95%2C30%2C-93%2C31%2C-92%2C30&qt=2024-10-30T23%3A55%3A54.901Z%2C2024-10-31T20%3A05%3A11.675Z&ff=Customizable&sf=0648513294&sfs[0]=0&lat=32.90825001027622&long=-113.4140625')
+
+          // Wait for the map to load
+          await page.waitForSelector('.edsc-map-base-layer')
+          await page.waitForTimeout(250)
         })
 
         test('displays a mbr on the map', async ({ page }) => {
-          await expect(await page.locator('g path').first()).toBeVisible()
+          // Expect the mbrWarning to be displayed
+          await expect(page.getByRole('alert')).toHaveText(mbrWarning)
 
-          // 3 paths are drawn on the map. The shapefile shape, the selected shape, and the mbr
-          await expect(await page.locator('g path').all()).toHaveLength(3)
+          await expect(page).toHaveScreenshot('mbr.png', {
+            clip: screenshotClip
+          })
         })
 
         test.describe('when deselecting Enable Spatial Subsetting', () => {
@@ -79,8 +94,12 @@ test.describe.skip('Harmony with MBR', () => {
           })
 
           test('removes the mbr from the map', async ({ page }) => {
-            // 2 paths are drawn on the map. The shapefile shape and the selected shape
-            await expect(await page.locator('g path').all()).toHaveLength(2)
+            // Expect the mbrWarning to be displayed
+            await expect(page.getByRole('alert')).toHaveCount(0)
+
+            await expect(page).toHaveScreenshot('mbr-removed.png', {
+              clip: screenshotClip
+            })
           })
         })
       })
@@ -88,13 +107,19 @@ test.describe.skip('Harmony with MBR', () => {
       test.describe('when Enable Spatial Subsetting is unselected on load', () => {
         test.beforeEach(async ({ page }) => {
           await page.goto('/projects?p=C2930725014-LARC_CLOUD!C2930725014-LARC_CLOUD&pg[1][v]=t&pg[1][m]=harmony0&pg[1][cd]=t&pg[1][ets]=t&pg[1][ess]=f&q=TEMPO_NO2_L2&line[0]=-106%2C35%2C-105%2C36%2C-94%2C33%2C-95%2C30%2C-93%2C31%2C-92%2C30&qt=2024-10-30T23%3A55%3A54.901Z%2C2024-10-31T20%3A05%3A11.675Z&ff=Customizable&sf=0648513294&sfs[0]=0&lat=32.90825001027622&long=-113.4140625')
+
+          // Wait for the map to load
+          await page.waitForSelector('.edsc-map-base-layer')
+          await page.waitForTimeout(250)
         })
 
         test('does not display a mbr on the map', async ({ page }) => {
-          await expect(await page.locator('g path').first()).toBeVisible()
+          // Expect the mbrWarning to be displayed
+          await expect(page.getByRole('alert')).toHaveCount(0)
 
-          // 2 paths are drawn on the map. The shapefile shape and the selected shape
-          await expect(await page.locator('g path').all()).toHaveLength(2)
+          await expect(page).toHaveScreenshot('mbr-removed.png', {
+            clip: screenshotClip
+          })
         })
 
         test.describe('when selecting Enable Spatial Subsetting', () => {
@@ -103,8 +128,12 @@ test.describe.skip('Harmony with MBR', () => {
           })
 
           test('adds the mbr to the map', async ({ page }) => {
-            // 3 paths are drawn on the map. The shapefile shape, the selected shape, and the mbr
-            await expect(await page.locator('g path').all()).toHaveLength(3)
+            // Expect the mbrWarning to be displayed
+            await expect(page.getByRole('alert')).toHaveText(mbrWarning)
+
+            await expect(page).toHaveScreenshot('mbr.png', {
+              clip: screenshotClip
+            })
           })
         })
       })

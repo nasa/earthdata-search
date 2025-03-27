@@ -106,7 +106,6 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
     return advancedSearch
   },
   handleSubmit: (values, { props }) => {
-    console.log('🚀 ~ AdvancedSearchModalContainer.jsx:109 ~ values:', values)
     const {
       onUpdateAdvancedSearch,
       onChangeQuery
