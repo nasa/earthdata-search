@@ -153,7 +153,7 @@ export const unselectedShapefileStyle = new Style({
   })
 })
 
-export const shapefileHoverStyle = new Style({
+export const hoveredShapefileStyle = new Style({
   stroke: new Stroke({
     color: '#47DA84',
     width: 2

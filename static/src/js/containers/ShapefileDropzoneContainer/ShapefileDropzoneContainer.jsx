@@ -37,7 +37,7 @@ const addEdscIdsToShapefile = (file) => {
     ...feature,
     properties: {
       ...feature.properties,
-      edscId: index
+      edscId: `${index}`
     }
   }))
 

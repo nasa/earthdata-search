@@ -4,8 +4,8 @@ import { eventEmitter } from '../../../events/events'
 
 let highlightedGranuleFeature
 
-// Remove the highlighted feature from the vector source
-export const unhighlightFeature = (granuleHighlightsSource) => {
+// Remove the highlighted granule from the vector source
+export const unhighlightGranule = (granuleHighlightsSource) => {
   // Reset the cursor
   document.body.style.cursor = 'auto'
 
@@ -13,7 +13,7 @@ export const unhighlightFeature = (granuleHighlightsSource) => {
 
   const { collectionId } = highlightedGranuleFeature.getProperties()
 
-  // Remove the highlighted feature from the vector source
+  // Remove the highlighted granule from the vector source
   granuleHighlightsSource.removeFeature(highlightedGranuleFeature)
   highlightedGranuleFeature = null
 
@@ -23,7 +23,7 @@ export const unhighlightFeature = (granuleHighlightsSource) => {
 
 // Highlighted granules are shown when a user hovers over the granule in the results list, or
 // when a user hovers over the granule outline on the map
-export const highlightFeature = ({
+export const highlightGranule = ({
   coordinate,
   granuleBackgroundsSource,
   granuleHighlightsSource,
@@ -48,7 +48,7 @@ export const highlightFeature = ({
 
   // If we haven't found any features and we have a hightlited
   if (!featureToHighlight && highlightedGranuleFeature) {
-    unhighlightFeature(granuleHighlightsSource)
+    unhighlightGranule(granuleHighlightsSource)
   }
 
   // If we found a feature to highlight, highlight it
@@ -72,7 +72,7 @@ export const highlightFeature = ({
     }
 
     // Remove the previous highlight
-    if (highlightedGranuleFeature) unhighlightFeature(granuleHighlightsSource)
+    if (highlightedGranuleFeature) unhighlightGranule(granuleHighlightsSource)
 
     // Create a new feature with the geometry of the feature to highlight
     highlightedGranuleFeature = new Feature({

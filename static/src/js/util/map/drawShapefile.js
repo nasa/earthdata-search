@@ -1,6 +1,8 @@
 import { Feature } from 'ol'
+import { transform } from 'ol/proj'
 import GeoJSON from 'ol/format/GeoJSON'
 import Polygon, { circular } from 'ol/geom/Polygon'
+
 import { booleanClockwise, simplify } from '@turf/turf'
 
 import {
@@ -204,8 +206,25 @@ const drawShapefile = ({
     // The vector source extent is the bounding box of all shapes
     const sourceExtent = vectorSource.getExtent()
 
+    let geographicExtent = sourceExtent
+    // If the current projection is not geographic, we need to transform the extent to geographic coordinates
+    if (projectionCode !== projections.geographic) {
+      const swPoint = transform(
+        [sourceExtent[0], sourceExtent[1]],
+        crsProjections[projectionCode],
+        crsProjections[projections.geographic]
+      )
+      const nePoint = transform(
+        [sourceExtent[2], sourceExtent[3]],
+        crsProjections[projectionCode],
+        crsProjections[projections.geographic]
+      )
+
+      geographicExtent = [swPoint[0], swPoint[1], nePoint[0], nePoint[1]]
+    }
+
     // Get the latitudes of the extent
-    const latitudes = sourceExtent.filter((value, index) => index % 2 === 1)
+    const latitudes = geographicExtent.filter((value, index) => index % 2 === 1)
 
     // If all of the latitudes are outside of 66.5 and -66.5, all of the points are in the Arctic or Antarctic
     const allLatitudesInArctic = latitudes.every((latitude) => latitude > 66.5)
@@ -222,11 +241,11 @@ const drawShapefile = ({
     }
   }
 
-  // Create the metrics event
-  onMetricsMap('Added Shapefile')
-
   // If the shapefile was just added, move the map to the shapefile
   if (shapefileAdded) {
+    // Create the metrics event
+    onMetricsMap('Added Shapefile')
+
     // SetTimeout is needed here because the map needs to be rendered before the map can be moved
     setTimeout(() => {
       eventEmitter.emit(mapEventTypes.MOVEMAP, {

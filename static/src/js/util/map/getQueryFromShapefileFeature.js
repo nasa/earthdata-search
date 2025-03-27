@@ -4,6 +4,7 @@ import spatialTypes from '../../constants/spatialTypes'
 const getQueryFromShapefileFeature = (feature) => {
   const geometry = feature.getGeometry()
   const {
+    circleGeometry,
     geometryType,
     geographicCoordinates
   } = feature.getProperties()
@@ -13,7 +14,7 @@ const getQueryFromShapefileFeature = (feature) => {
   // Get the coordinates from the feature
   let flatCoordinates
   if (geometryType === spatialTypes.CIRCLE) {
-    flatCoordinates = feature.get('circleGeometry')
+    flatCoordinates = circleGeometry
   } else if (geometryType === spatialTypes.POINT) {
     flatCoordinates = geometry.getFlatCoordinates()
   } else if (geometryType === spatialTypes.LINE_STRING) {

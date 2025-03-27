@@ -76,7 +76,7 @@ test.describe('Harmony with MBR', () => {
 
           // Wait for the map to load
           await page.waitForSelector('.edsc-map-base-layer')
-          await page.waitForTimeout(250)
+          await page.waitForTimeout(500)
         })
 
         test('displays a mbr on the map', async ({ page }) => {
@@ -91,10 +91,11 @@ test.describe('Harmony with MBR', () => {
         test.describe('when deselecting Enable Spatial Subsetting', () => {
           test.beforeEach(async ({ page }) => {
             await page.getByLabel('Trim output granules to the selected spatial constraint').uncheck()
+            await page.waitForTimeout(500)
           })
 
           test('removes the mbr from the map', async ({ page }) => {
-            // Expect the mbrWarning to be displayed
+            // Expect the mbrWarning not to be displayed
             await expect(page.getByRole('alert')).toHaveCount(0)
 
             await expect(page).toHaveScreenshot('mbr-removed.png', {
@@ -110,11 +111,11 @@ test.describe('Harmony with MBR', () => {
 
           // Wait for the map to load
           await page.waitForSelector('.edsc-map-base-layer')
-          await page.waitForTimeout(250)
+          await page.waitForTimeout(500)
         })
 
         test('does not display a mbr on the map', async ({ page }) => {
-          // Expect the mbrWarning to be displayed
+          // Expect the mbrWarning not to be displayed
           await expect(page.getByRole('alert')).toHaveCount(0)
 
           await expect(page).toHaveScreenshot('mbr-removed.png', {
@@ -125,6 +126,7 @@ test.describe('Harmony with MBR', () => {
         test.describe('when selecting Enable Spatial Subsetting', () => {
           test.beforeEach(async ({ page }) => {
             await page.getByLabel('Trim output granules to the selected spatial constraint').check()
+            await page.waitForTimeout(500)
           })
 
           test('adds the mbr to the map', async ({ page }) => {

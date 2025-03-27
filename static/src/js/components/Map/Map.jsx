@@ -51,7 +51,7 @@ import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
-import { highlightFeature, unhighlightFeature } from '../../util/map/interactions/highlightFeature'
+import { highlightGranule, unhighlightGranule } from '../../util/map/interactions/highlightGranule'
 import { markerDrawingStyle } from '../../util/map/styles'
 import boundingBoxGeometryFunction from '../../util/map/geometryFunctions/boundingBoxGeometryFunction'
 import circleGeometryFunction from '../../util/map/geometryFunctions/circleGeometryFunction'
@@ -463,7 +463,7 @@ const Map = ({
       const coordinate = map.getEventCoordinate(event.originalEvent)
 
       // Highlight the feature at the pointer's location
-      const wasFeatureHighlighted = highlightFeature({
+      const wasFeatureHighlighted = highlightGranule({
         coordinate,
         granuleBackgroundsSource,
         granuleHighlightsSource
@@ -605,7 +605,7 @@ const Map = ({
   // Handle the map leave event
   const handleMouseLeave = () => {
     // When the mouse leaves the map element, unhighlight the feature
-    unhighlightFeature(granuleHighlightsSource)
+    unhighlightGranule(granuleHighlightsSource)
   }
 
   // Update the map element event listeners when the map element ref changes
@@ -620,7 +620,7 @@ const Map = ({
 
   // Handle the granule highlight event
   const handleHoverGranule = ({ granule }) => {
-    highlightFeature({
+    highlightGranule({
       granuleBackgroundsSource,
       granuleHighlightsSource,
       granuleId: granule ? granule.id : null
@@ -790,7 +790,7 @@ const Map = ({
     granuleBackgroundsSource.clear()
 
     // Clear any existing granule highlights
-    unhighlightFeature(granuleHighlightsSource)
+    unhighlightGranule(granuleHighlightsSource)
 
     // Clear any existing focused granules
     clearFocusedGranuleSource(mapRef.current)
@@ -906,7 +906,7 @@ Map.propTypes = {
   rotation: PropTypes.number.isRequired,
   shapefile: PropTypes.shape({
     file: PropTypes.shape({}),
-    selectedFeatures: PropTypes.arrayOf(PropTypes.number)
+    selectedFeatures: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   spatialSearch: PropTypes.shape({
     displaySpatialPolygonWarning: PropTypes.bool,

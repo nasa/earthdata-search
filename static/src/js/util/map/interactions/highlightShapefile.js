@@ -2,7 +2,7 @@ import spatialTypes from '../../../constants/spatialTypes'
 import findShapefileFeature from './findShapefileFeature'
 import {
   hoveredMarkerStyle,
-  shapefileHoverStyle,
+  hoveredShapefileStyle,
   unselectedMarkerStyle,
   unselectedShapefileStyle
 } from '../styles'
@@ -61,7 +61,7 @@ const highlightShapefile = ({
   if (geometryType === spatialTypes.POINT) {
     feature.setStyle(hoveredMarkerStyle)
   } else {
-    feature.setStyle(shapefileHoverStyle)
+    feature.setStyle(hoveredShapefileStyle)
   }
 }
 

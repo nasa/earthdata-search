@@ -215,6 +215,10 @@ class SpatialDrawingControl extends Control {
     eventEmitter.emit(mapEventTypes.DRAWCANCEL)
   }
 
+  /**
+   * When the shapefile button is clicked, open the shapefile upload modal
+   * @param {Object} event - The click event
+   */
   handleShapefileClick(event) {
     event.stopPropagation()
 

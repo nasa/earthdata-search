@@ -214,6 +214,7 @@ export const MapContainer = (props) => {
     setMap(mapWithDefaults)
   }, [mapProps])
 
+  // If there is a shapefileId in the store but we haven't fetched the shapefile yet, fetch it
   useEffect(() => {
     if (shapefile) {
       const { isLoaded, isLoading, shapefileId } = shapefile
@@ -221,7 +222,6 @@ export const MapContainer = (props) => {
       if (shapefileId && !isLoaded && !isLoading) onFetchShapefile(shapefileId)
     }
   }, [shapefile])
-
 
   const maxZoom = projection === projections.geographic ? 7 : 4
 
