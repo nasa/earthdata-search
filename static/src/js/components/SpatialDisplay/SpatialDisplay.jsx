@@ -495,7 +495,7 @@ const SpatialDisplay = ({
       </SpatialDisplayEntry>
     )
 
-    secondaryTitle = 'Point'
+    secondaryTitle = spatialTypes.POINT
 
     contents.push((
       <FilterStackContents
@@ -645,7 +645,7 @@ const SpatialDisplay = ({
       </SpatialDisplayEntry>
     )
 
-    secondaryTitle = 'Circle'
+    secondaryTitle = spatialTypes.CIRCLE
 
     contents.push((
       <FilterStackContents

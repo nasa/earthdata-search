@@ -73,7 +73,7 @@ const drawGranuleBackgroundsAndImagery = ({
 
   granulesMetadata.forEach((granule, index) => {
     const {
-      backgroundStyle,
+      backgroundGranuleStyle,
       collectionId,
       formattedTemporal,
       gibsData,
@@ -108,7 +108,7 @@ const drawGranuleBackgroundsAndImagery = ({
       backgroundFeature.set('formattedTemporal', formattedTemporal)
 
       // Set the style for the feature
-      backgroundFeature.setStyle(backgroundStyle)
+      backgroundFeature.setStyle(backgroundGranuleStyle)
 
       // Add the feature to the vector source
       vectorSource.addFeature(backgroundFeature)

@@ -1,3 +1,5 @@
+import spatialTypes from '../../constants/spatialTypes'
+
 /**
 * Get the current keyword from the state.
 * @param {Object} state - The current Redux state.
@@ -27,10 +29,10 @@ export const computeSpatialType = (state) => {
     polygon,
     point
   } = spatial
-  if (boundingBox) return 'Bounding Box'
-  if (circle) return 'Circle'
-  if (polygon) return 'Polygon'
-  if (point) return 'Point'
+  if (boundingBox) return spatialTypes.BOUNDING_BOX
+  if (circle) return spatialTypes.CIRCLE
+  if (polygon) return spatialTypes.POLYGON
+  if (point) return spatialTypes.POINT
 
   return null
 }

@@ -52,7 +52,11 @@ import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
 import { highlightGranule, unhighlightGranule } from '../../util/map/interactions/highlightGranule'
-import { markerDrawingStyle } from '../../util/map/styles'
+import {
+  highlightShapefile,
+  unhighlightShapefile
+} from '../../util/map/interactions/highlightShapefile'
+import { spatialSearchMarkerDrawingStyle } from '../../util/map/styles'
 import boundingBoxGeometryFunction from '../../util/map/geometryFunctions/boundingBoxGeometryFunction'
 import circleGeometryFunction from '../../util/map/geometryFunctions/circleGeometryFunction'
 import drawFocusedGranule from '../../util/map/drawFocusedGranule'
@@ -61,7 +65,6 @@ import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
-import highlightShapefile from '../../util/map/interactions/highlightShapefile'
 import labelsLayer from '../../util/map/layers/placeLabels'
 import onClickMap from '../../util/map/interactions/onClickMap'
 import onClickShapefile from '../../util/map/interactions/onClickShapefile'
@@ -354,7 +357,7 @@ const Map = ({
 
       if (spatialType === spatialTypes.POINT) {
         // Draw the point spatial type as a marker
-        updatedStyles.Point[0] = markerDrawingStyle
+        updatedStyles.Point[0] = spatialSearchMarkerDrawingStyle
       }
 
       // Add the drawing interaction to the map
@@ -606,6 +609,7 @@ const Map = ({
   const handleMouseLeave = () => {
     // When the mouse leaves the map element, unhighlight the feature
     unhighlightGranule(granuleHighlightsSource)
+    unhighlightShapefile(spatialDrawingSource)
   }
 
   // Update the map element event listeners when the map element ref changes

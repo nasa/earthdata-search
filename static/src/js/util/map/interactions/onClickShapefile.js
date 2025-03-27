@@ -1,9 +1,9 @@
 import spatialTypes from '../../../constants/spatialTypes'
 import getQueryFromShapefileFeature from '../getQueryFromShapefileFeature'
 import {
-  markerStyle,
+  spatialSearchMarkerStyle,
   spatialSearchStyle,
-  unselectedMarkerStyle,
+  unselectedShapefileMarkerStyle,
   unselectedShapefileStyle
 } from '../styles'
 import findShapefileFeature from './findShapefileFeature'
@@ -44,7 +44,7 @@ const onClickShapefile = ({
   // Set the style of the feature
   let style
   if (geometryType === spatialTypes.POINT) {
-    style = newSelected ? markerStyle : unselectedMarkerStyle
+    style = newSelected ? spatialSearchMarkerStyle : unselectedShapefileMarkerStyle
   } else {
     style = newSelected ? spatialSearchStyle : unselectedShapefileStyle
   }

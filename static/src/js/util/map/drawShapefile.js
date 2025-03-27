@@ -6,10 +6,10 @@ import Polygon, { circular } from 'ol/geom/Polygon'
 import { booleanClockwise, simplify } from '@turf/turf'
 
 import {
-  markerStyle,
   mbrStyle,
+  spatialSearchMarkerStyle,
   spatialSearchStyle,
-  unselectedMarkerStyle,
+  unselectedShapefileMarkerStyle,
   unselectedShapefileStyle
 } from './styles'
 import { crsProjections } from './crs'
@@ -137,7 +137,7 @@ const drawShapefile = ({
     feature.setGeometry(geometryInProjection)
 
     // If the feature is a point with a radius, create a circle from the point
-    if (geometryType === 'Point' && radius) {
+    if (geometryType === spatialTypes.POINT && radius) {
       const circle = circular(geometryInProjection.getCoordinates(), radius, 64)
 
       // Save the circle geometry to use for the spatial query
@@ -154,8 +154,8 @@ const drawShapefile = ({
 
     // Set the style for the feature
     if (numFeatures > 1) {
-      if (geometryType === 'Point' && !radius) {
-        feature.setStyle(unselectedMarkerStyle)
+      if (geometryType === spatialTypes.POINT && !radius) {
+        feature.setStyle(unselectedShapefileMarkerStyle)
       } else {
         feature.setStyle(unselectedShapefileStyle)
       }
@@ -172,8 +172,8 @@ const drawShapefile = ({
       feature.set('selected', true)
 
       // Set the style for the feature
-      if (geometryType === 'Point' && !radius) {
-        feature.setStyle(markerStyle)
+      if (geometryType === spatialTypes.POINT && !radius) {
+        feature.setStyle(spatialSearchMarkerStyle)
       } else {
         feature.setStyle(spatialSearchStyle)
       }

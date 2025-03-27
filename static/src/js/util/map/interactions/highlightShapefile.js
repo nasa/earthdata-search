@@ -1,11 +1,33 @@
 import spatialTypes from '../../../constants/spatialTypes'
 import findShapefileFeature from './findShapefileFeature'
 import {
-  hoveredMarkerStyle,
+  hoveredShapefileMarkerStyle,
   hoveredShapefileStyle,
-  unselectedMarkerStyle,
+  unselectedShapefileMarkerStyle,
   unselectedShapefileStyle
 } from '../styles'
+
+export const unhighlightShapefile = (spatialDrawingSource) => {
+  // Reset the cursor
+  document.body.style.cursor = 'auto'
+
+  // Reset the style of each feature
+  spatialDrawingSource.forEachFeature((sourceFeature) => {
+    const {
+      geometryType,
+      isShapefile,
+      selected
+    } = sourceFeature.getProperties()
+
+    if (selected || !isShapefile) return
+
+    if (geometryType === spatialTypes.POINT) {
+      sourceFeature.setStyle(unselectedShapefileMarkerStyle)
+    } else {
+      sourceFeature.setStyle(unselectedShapefileStyle)
+    }
+  })
+}
 
 /**
  * Highlight a shapefile feature based on the coordinate
@@ -14,7 +36,7 @@ import {
  * @param {Object} params.map - The OpenLayers map object
  * @param {Object} params.spatialDrawingSource - The source to search for the feature
  */
-const highlightShapefile = ({
+export const highlightShapefile = ({
   coordinate,
   map,
   spatialDrawingSource
@@ -26,25 +48,7 @@ const highlightShapefile = ({
   })
 
   if (!feature) {
-    // Reset the cursor
-    document.body.style.cursor = 'auto'
-
-    // Reset the style of each feature
-    spatialDrawingSource.forEachFeature((sourceFeature) => {
-      const {
-        geometryType,
-        isShapefile,
-        selected
-      } = sourceFeature.getProperties()
-
-      if (selected || !isShapefile) return
-
-      if (geometryType === spatialTypes.POINT) {
-        sourceFeature.setStyle(unselectedMarkerStyle)
-      } else {
-        sourceFeature.setStyle(unselectedShapefileStyle)
-      }
-    })
+    unhighlightShapefile(spatialDrawingSource)
 
     return
   }
@@ -59,10 +63,8 @@ const highlightShapefile = ({
 
   // Set the style of the feature
   if (geometryType === spatialTypes.POINT) {
-    feature.setStyle(hoveredMarkerStyle)
+    feature.setStyle(hoveredShapefileMarkerStyle)
   } else {
     feature.setStyle(hoveredShapefileStyle)
   }
 }
-
-export default highlightShapefile

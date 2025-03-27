@@ -36,17 +36,18 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import Map from '../../components/Map/Map'
 import {
-  backgroundPointStyle,
-  backgroundStyle,
+  backgroundGranulePointStyle,
+  backgroundGranuleStyle,
   deemphisizedGranuleStyle,
-  deemphisizedPointStyle,
+  deemphisizedGranulePointStyle,
   granuleStyle,
   highlightedGranuleStyle,
-  highlightedPointStyle,
-  pointStyle
+  highlightedGranulePointStyle,
+  granulePointStyle
 } from '../../util/map/styles'
 
 import './MapContainer.scss'
+import spatialTypes from '../../constants/spatialTypes'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -467,12 +468,12 @@ export const MapContainer = (props) => {
       const { geometry = {} } = spatial
       const { type } = geometry
 
-      if (type === 'Point') {
-        granule.backgroundStyle = backgroundPointStyle
-        granule.granuleStyle = shouldDrawRegularStyle ? pointStyle(index) : deemphisizedPointStyle(index)
-        granule.highlightedStyle = highlightedPointStyle(index)
+      if (type === spatialTypes.POINT) {
+        granule.backgroundGranuleStyle = backgroundGranulePointStyle
+        granule.granuleStyle = shouldDrawRegularStyle ? granulePointStyle(index) : deemphisizedGranulePointStyle(index)
+        granule.highlightedStyle = highlightedGranulePointStyle(index)
       } else {
-        granule.backgroundStyle = backgroundStyle
+        granule.backgroundGranuleStyle = backgroundGranuleStyle
         granule.granuleStyle = shouldDrawRegularStyle ? granuleStyle(index) : deemphisizedGranuleStyle(index)
         granule.highlightedStyle = highlightedGranuleStyle(index)
       }
@@ -491,7 +492,7 @@ export const MapContainer = (props) => {
       }
 
       granulesToDraw.push({
-        backgroundStyle: granule.backgroundStyle,
+        backgroundGranuleStyle: granule.backgroundGranuleStyle,
         collectionId,
         formattedTemporal,
         gibsData: granuleGibsData,
