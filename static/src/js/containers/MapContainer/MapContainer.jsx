@@ -446,6 +446,10 @@ export const MapContainer = (props) => {
         spatial = {},
         timeStart
       } = granule
+
+      // If the granule does not have spatial, don't draw it
+      if (!spatial) return
+
       const { geometry = {} } = spatial
       const { type } = geometry
 
