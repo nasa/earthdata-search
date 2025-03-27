@@ -26,9 +26,11 @@ class ZoomControl extends Zoom {
 
     // Create the home button
     const homeElement = document.createElement('button')
-    homeElement.className = `${options.className}-home`
+    homeElement.className = `${options.className}-home edsc-map-controls__button`
     homeElement.setAttribute('type', 'button')
-    homeElement.title = 'Zoom Home'
+    homeElement.setAttribute('data-bs-toggle', 'tooltip')
+    homeElement.setAttribute('data-bs-placement', 'left')
+    homeElement.setAttribute('data-bs-title', 'Zoom Home')
 
     // Create the icon to show on the button
     ReactDOM.render(
@@ -48,6 +50,17 @@ class ZoomControl extends Zoom {
       firstChild: zoomInElement,
       lastChild: zoomOutElement
     } = element
+
+    // Update the zoom in and zoom out buttons to use Bootstrap tooltips
+    zoomInElement.setAttribute('data-bs-toggle', 'tooltip')
+    zoomInElement.setAttribute('data-bs-placement', 'left')
+    zoomInElement.setAttribute('data-bs-title', 'Zoom In')
+    zoomInElement.className = `${options.className}-in edsc-map-controls__button`
+
+    zoomOutElement.setAttribute('data-bs-toggle', 'tooltip')
+    zoomOutElement.setAttribute('data-bs-placement', 'left')
+    zoomOutElement.setAttribute('data-bs-title', 'Zoom Out')
+    zoomOutElement.className = `${options.className}-out edsc-map-controls__button`
 
     // Replace the plus character with an icon
     ReactDOM.render(

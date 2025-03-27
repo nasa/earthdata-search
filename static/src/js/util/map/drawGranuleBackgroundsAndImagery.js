@@ -128,6 +128,10 @@ const drawGranuleBackgroundsAndImagery = ({
       //    need to draw the granule imagery.
 
       const geometry = backgroundFeature.getGeometry()
+
+      // We are only expecting MultiPolygon geometries for granules. Return if the geometry is not a MultiPolygon
+      if (geometry.getType() !== 'MultiPolygon') return
+
       const turfMultiPolygon = multiPolygon(geometry.getCoordinates())
 
       let granuleDiff = turfMultiPolygon

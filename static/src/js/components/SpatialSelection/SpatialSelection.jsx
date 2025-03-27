@@ -31,6 +31,7 @@ import { eventEmitter } from '../../events/events'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { limitLatLngDecimalPoints } from '../../util/limitDecimalPoints'
 import { panFeatureGroupToCenter } from '../../util/map/actions/panFeatureGroupToCenter'
+import { mapEventTypes } from '../../constants/eventTypes'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
@@ -430,7 +431,7 @@ const SpatialSelection = (props) => {
     }
   }
 
-  // Triggered from eventEmitter.emit('map.drawCancel')
+  // Triggered from eventEmitter.emit(mapEventTypes.DRAWCANCEL)
   // Cancels Leaflet Draw
   const onDrawCancel = () => {
     if (drawControl.current) {
@@ -846,12 +847,12 @@ const SpatialSelection = (props) => {
     const shouldCenter = false
     renderShape(shouldCenter)
 
-    eventEmitter.on('map.drawStart', onSpatialDropdownClick)
-    eventEmitter.on('map.drawCancel', onDrawCancel)
+    eventEmitter.on(mapEventTypes.DRAWSTART, onSpatialDropdownClick)
+    eventEmitter.on(mapEventTypes.DRAWCANCEL, onDrawCancel)
 
     return () => {
-      eventEmitter.off('map.drawStart', onSpatialDropdownClick)
-      eventEmitter.off('map.drawCancel', onDrawCancel)
+      eventEmitter.off(mapEventTypes.DRAWSTART, onSpatialDropdownClick)
+      eventEmitter.off(mapEventTypes.DRAWCANCEL, onDrawCancel)
     }
   }, [])
 

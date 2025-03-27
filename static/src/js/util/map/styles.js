@@ -1,5 +1,6 @@
 import {
   Fill,
+  Icon,
   Stroke,
   Style
 } from 'ol/style'
@@ -82,5 +83,43 @@ export const highlightedPointStyle = (index) => new Style({
     fill: new Fill({
       color: highlightedFillColor
     })
+  })
+})
+
+const drawingMarkerSvg = '<svg stroke="%23FFFFFF" fill="%230099ff" xmlns="http://www.w3.org/2000/svg" stroke-width="1" width="1rem" height="1rem" viewBox="0 0 20 20" role="img" data-reactroot=""><path fill="%230099ff" fill-rule="evenodd" d="M10.457 19.544C13.798 16.214 17 13.02 17 8A7 7 0 1 0 3 8c0 5.021 3.202 8.213 6.543 11.544L10 20zM10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6" clip-rule="evenodd"></path></svg>'
+
+export const markerDrawingStyle = new Style({
+  image: new Icon({
+    anchor: [0.5, 1],
+    opacity: 1,
+    src: `data:image/svg+xml,${drawingMarkerSvg}`,
+    scale: 2
+  })
+})
+
+const markerSvg = '<svg stroke="%23FFFFFF66" fill="%230099ff" xmlns="http://www.w3.org/2000/svg" stroke-width="0.5" width="1rem" height="1rem" viewBox="0 0 20 20" role="img" data-reactroot=""><path fill="%230099ff" fill-rule="evenodd" d="M10.457 19.544C13.798 16.214 17 13.02 17 8A7 7 0 1 0 3 8c0 5.021 3.202 8.213 6.543 11.544L10 20zM10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6" clip-rule="evenodd"></path></svg>'
+
+export const markerStyle = new Style({
+  image: new Icon({
+    anchor: [0.5, 1],
+    opacity: 1,
+    src: `data:image/svg+xml,${markerSvg}`,
+    scale: 2
+  })
+})
+
+export const spatialSearchStyle = new Style({
+  stroke: new Stroke({
+    color: '#0099ff',
+    width: 3
+  })
+})
+
+export const mbrStyle = new Style({
+  stroke: new Stroke({
+    color: '#C0392B',
+    width: 3,
+    lineDash: [2, 10],
+    opacity: 0.8
   })
 })

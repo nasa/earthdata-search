@@ -19,6 +19,9 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
+import spatialTypes from '../../constants/spatialTypes'
+import { mapEventTypes } from '../../constants/eventTypes'
+
 import './SpatialSelectionDropdown.scss'
 
 const SpatialSelectionDropdown = (props) => {
@@ -27,37 +30,19 @@ const SpatialSelectionDropdown = (props) => {
     onMetricsSpatialSelection
   } = props
 
-  const onItemClick = (item) => {
+  const onItemClick = (spatialType) => {
     // Sends metrics for spatial selection usage
-    onMetricsSpatialSelection({ item })
+    onMetricsSpatialSelection({
+      item: spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase()
+    })
 
-    if (item === 'point') {
-      eventEmitter.emit('map.drawStart', {
-        type: 'marker'
-      })
-    }
-
-    if (item === 'rectangle') {
-      eventEmitter.emit('map.drawStart', {
-        type: 'rectangle'
-      })
-    }
-
-    if (item === 'polygon') {
-      eventEmitter.emit('map.drawStart', {
-        type: 'polygon'
-      })
-    }
-
-    if (item === 'circle') {
-      eventEmitter.emit('map.drawStart', {
-        type: 'circle'
-      })
-    }
-
-    if (item === 'file') {
+    if (spatialType === 'file') {
       onToggleShapefileUploadModal(true)
+
+      return
     }
+
+    eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
   }
 
   const { disableDatabaseComponents } = getApplicationConfig()
@@ -90,7 +75,7 @@ const SpatialSelectionDropdown = (props) => {
           className="spatial-selection-dropdown__button"
           as={Button}
           icon="edsc-icon-poly edsc-icon-fw"
-          onClick={() => onItemClick('polygon')}
+          onClick={() => onItemClick(spatialTypes.POLYGON)}
         >
           <span>Polygon</span>
         </Dropdown.Item>
@@ -98,7 +83,7 @@ const SpatialSelectionDropdown = (props) => {
           className="spatial-selection-dropdown__button"
           as={Button}
           icon="edsc-icon-rect edsc-icon-fw"
-          onClick={() => onItemClick('rectangle')}
+          onClick={() => onItemClick(spatialTypes.BOUNDING_BOX)}
         >
           <span>Rectangle</span>
         </Dropdown.Item>
@@ -106,7 +91,7 @@ const SpatialSelectionDropdown = (props) => {
           className="spatial-selection-dropdown__button"
           as={Button}
           icon={FaCircle}
-          onClick={() => onItemClick('circle')}
+          onClick={() => onItemClick(spatialTypes.CIRCLE)}
         >
           <span>Circle</span>
         </Dropdown.Item>
@@ -114,7 +99,7 @@ const SpatialSelectionDropdown = (props) => {
           className="spatial-selection-dropdown__button"
           as={Button}
           icon={Map}
-          onClick={() => onItemClick('point')}
+          onClick={() => onItemClick(spatialTypes.POINT)}
         >
           <span>Point</span>
         </Dropdown.Item>
