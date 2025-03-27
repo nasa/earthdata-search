@@ -31,11 +31,15 @@ const highlightShapefile = ({
 
     // Reset the style of each feature
     spatialDrawingSource.forEachFeature((sourceFeature) => {
-      const type = sourceFeature.get('geometryType')
-      const selected = sourceFeature.get('selected')
-      if (selected) return
+      const {
+        geometryType,
+        isShapefile,
+        selected
+      } = sourceFeature.getProperties()
 
-      if (type === spatialTypes.POINT) {
+      if (selected || !isShapefile) return
+
+      if (geometryType === spatialTypes.POINT) {
         sourceFeature.setStyle(unselectedMarkerStyle)
       } else {
         sourceFeature.setStyle(unselectedShapefileStyle)

@@ -19,7 +19,7 @@ test.describe('Timeline spec', () => {
     })
   })
 
-  test.skip('should resize the leaflet controls', async ({ page, context }) => {
+  test('should move the map controls', async ({ page, context }) => {
     await login(context)
 
     const authHeaders = getAuthHeaders()
@@ -80,6 +80,8 @@ test.describe('Timeline spec', () => {
     })
 
     await page.goto('/projects?p=!C1443528505-LAADS&sb=-77.15071%2C38.78817%2C-76.89801%2C38.99784&lat=37.64643&long=-77.40747&zoom=7qt=2020-01-06T04%3A15%3A27.310Z%2C2020-01-13T07%3A32%3A50.962Z&ff=Map%20Imagery&tl=1563377338!4!!')
+
+    await page.waitForSelector('.edsc-map-base-layer')
 
     // Click the back to search button
     await page.getByTestId('back-to-search-button').click()
