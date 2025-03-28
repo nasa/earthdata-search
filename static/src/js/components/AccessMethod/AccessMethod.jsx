@@ -662,11 +662,7 @@ const AccessMethod = ({
 
   useEffect(() => {
     // Toggle the spatial polygon warning if the warning is present
-    if (harmonyMbrWarning) {
-      onToggleSpatialPolygonWarning(true)
-    } else {
-      onToggleSpatialPolygonWarning(false)
-    }
+    onToggleSpatialPolygonWarning(!!harmonyMbrWarning)
   }, [harmonyMbrWarning])
 
   // Get spatial and temporal display values

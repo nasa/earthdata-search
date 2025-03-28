@@ -108,6 +108,9 @@ test.describe('Map: Granule interactions', () => {
         })
 
         await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&lat=-6.34&long=44.58&zoom=6`)
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
       })
 
       test.describe('When hovering over a granule', () => {
@@ -301,6 +304,9 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.goto('search/granules?p=C1996881146-POCLOUD')
+
+      // Wait for the map to load
+      await page.waitForSelector('.edsc-map-base-layer')
     })
 
     test('displays the color map on the page', async ({ page }) => {
@@ -433,11 +439,13 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.goto('/search/granules?p=C1258816710-ASDC_DEV2&pg[0][v]=f&pg[0][id]=PREFIRE_SAT1_2B-ATM_S02_R00_20210101190614_00013.nc&pg[0][gsk]=-start_date&ee=uat&g=G1259235357-ASDC_DEV2&q=C1258816710-ASDC_DEV&tl=1731348943!3!!&lat=58.66663295801644&long=169.857421875&zoom=5')
+
+      // Wait for the map to load
+      await page.waitForSelector('.edsc-map-base-layer')
     })
 
     test.describe('when hovering over the granule', () => {
       test.beforeEach(async ({ page }) => {
-        await page.waitForTimeout(500)
         await page.locator('body').hover({
           force: true,
           position: {

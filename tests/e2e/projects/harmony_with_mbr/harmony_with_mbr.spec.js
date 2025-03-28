@@ -76,12 +76,17 @@ test.describe('Harmony with MBR', () => {
 
           // Wait for the map to load
           await page.waitForSelector('.edsc-map-base-layer')
-          await page.waitForTimeout(500)
+
+          // Wait for the base map to load to avoid bad screenshots
+          await page.waitForResponse('https://wi.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/3/0/4')
         })
 
         test('displays a mbr on the map', async ({ page }) => {
           // Expect the mbrWarning to be displayed
           await expect(page.getByRole('alert')).toHaveText(mbrWarning)
+
+          // Expect the URL to be updated with `ess=t`
+          await expect(page).toHaveURL(/pg\[1\]\[ess\]=t/)
 
           await expect(page).toHaveScreenshot('mbr.png', {
             clip: screenshotClip
@@ -91,12 +96,14 @@ test.describe('Harmony with MBR', () => {
         test.describe('when deselecting Enable Spatial Subsetting', () => {
           test.beforeEach(async ({ page }) => {
             await page.getByLabel('Trim output granules to the selected spatial constraint').uncheck()
-            await page.waitForTimeout(500)
           })
 
           test('removes the mbr from the map', async ({ page }) => {
             // Expect the mbrWarning not to be displayed
             await expect(page.getByRole('alert')).toHaveCount(0)
+
+            // Expect the URL to be updated with `ess=f`
+            await expect(page).toHaveURL(/pg\[1\]\[ess\]=f/)
 
             await expect(page).toHaveScreenshot('mbr-removed.png', {
               clip: screenshotClip
@@ -111,12 +118,17 @@ test.describe('Harmony with MBR', () => {
 
           // Wait for the map to load
           await page.waitForSelector('.edsc-map-base-layer')
-          await page.waitForTimeout(500)
+
+          // Wait for the base map to load to avoid bad screenshots
+          await page.waitForResponse('https://wi.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/3/0/4')
         })
 
         test('does not display a mbr on the map', async ({ page }) => {
           // Expect the mbrWarning not to be displayed
           await expect(page.getByRole('alert')).toHaveCount(0)
+
+          // Expect the URL to be updated with `ess=f`
+          await expect(page).toHaveURL(/pg\[1\]\[ess\]=f/)
 
           await expect(page).toHaveScreenshot('mbr-removed.png', {
             clip: screenshotClip
@@ -126,12 +138,14 @@ test.describe('Harmony with MBR', () => {
         test.describe('when selecting Enable Spatial Subsetting', () => {
           test.beforeEach(async ({ page }) => {
             await page.getByLabel('Trim output granules to the selected spatial constraint').check()
-            await page.waitForTimeout(500)
           })
 
           test('adds the mbr to the map', async ({ page }) => {
             // Expect the mbrWarning to be displayed
             await expect(page.getByRole('alert')).toHaveText(mbrWarning)
+
+            // Expect the URL to be updated with `ess=t`
+            await expect(page).toHaveURL(/pg\[1\]\[ess\]=t/)
 
             await expect(page).toHaveScreenshot('mbr.png', {
               clip: screenshotClip
