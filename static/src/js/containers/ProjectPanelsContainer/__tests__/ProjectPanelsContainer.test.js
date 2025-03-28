@@ -24,6 +24,7 @@ function setup() {
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
+    onToggleSpatialPolygonWarning: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
     onChangeProjectGranulePageNum: jest.fn(),
     onSetActivePanelGroup: jest.fn(),
@@ -183,11 +184,21 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith('collectionId')
   })
 
-  test('onToggleAboutCSDAModal calls actions.viewCollectionGranules', () => {
+  test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
 
     mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith(true)
+  })
+
+  test('onToggleSpatialPolygonWarning calls actions.toggleSpatialPolygonWarning', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleSpatialPolygonWarning')
+
+    mapDispatchToProps(dispatch).onToggleSpatialPolygonWarning(true)
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith(true)

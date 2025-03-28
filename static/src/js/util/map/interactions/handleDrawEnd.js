@@ -28,10 +28,14 @@ const handleDrawEnd = (params, event) => {
     drawingInteraction,
     map,
     onChangeQuery,
+    onClearShapefile,
     onToggleDrawingNewLayer,
     projectionCode,
     spatialType
   } = params
+
+  // Clear any shapefile from the map and store
+  onClearShapefile()
 
   // Remove the drawing interaction, which stops the drawing
   map.removeInteraction(drawingInteraction)

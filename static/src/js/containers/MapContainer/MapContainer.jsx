@@ -36,17 +36,18 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import Map from '../../components/Map/Map'
 import {
-  backgroundPointStyle,
-  backgroundStyle,
+  backgroundGranulePointStyle,
+  backgroundGranuleStyle,
   deemphisizedGranuleStyle,
-  deemphisizedPointStyle,
+  deemphisizedGranulePointStyle,
   granuleStyle,
   highlightedGranuleStyle,
-  highlightedPointStyle,
-  pointStyle
+  highlightedGranulePointStyle,
+  granulePointStyle
 } from '../../util/map/styles'
 
 import './MapContainer.scss'
+import spatialTypes from '../../constants/spatialTypes'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -54,6 +55,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onChangeMap:
     (query) => dispatch(actions.changeMap(query)),
   onChangeQuery: (query) => dispatch(actions.changeQuery(query)),
+  onClearShapefile: (query) => dispatch(actions.clearShapefile(query)),
   onExcludeGranule:
     (data) => dispatch(actions.excludeGranule(data)),
   onFetchShapefile:
@@ -65,6 +67,8 @@ export const mapDispatchToProps = (dispatch) => ({
   onMetricsMap:
     (type) => dispatch(metricsMap(type)),
   onToggleDrawingNewLayer: (state) => dispatch(actions.toggleDrawingNewLayer(state)),
+  onToggleShapefileUploadModal:
+    (state) => dispatch(actions.toggleShapefileUploadModal(state)),
   onToggleTooManyPointsModal:
     (state) => dispatch(actions.toggleTooManyPointsModal(state)),
   onUpdateShapefile:
@@ -114,6 +118,7 @@ export const MapContainer = (props) => {
     onChangeFocusedGranule,
     onChangeMap,
     onChangeQuery,
+    onClearShapefile,
     onExcludeGranule,
     onFetchShapefile,
     onMetricsMap,
@@ -121,6 +126,7 @@ export const MapContainer = (props) => {
     onShapefileErrored,
     onToggleDrawingNewLayer,
     onToggleTooManyPointsModal,
+    onToggleShapefileUploadModal,
     onUpdateShapefile,
     pointSearch,
     polygonSearch,
@@ -208,6 +214,15 @@ export const MapContainer = (props) => {
 
     setMap(mapWithDefaults)
   }, [mapProps])
+
+  // If there is a shapefileId in the store but we haven't fetched the shapefile yet, fetch it
+  useEffect(() => {
+    if (shapefile) {
+      const { isLoaded, isLoading, shapefileId } = shapefile
+
+      if (shapefileId && !isLoaded && !isLoading) onFetchShapefile(shapefileId)
+    }
+  }, [shapefile])
 
   const maxZoom = projection === projections.geographic ? 7 : 4
 
@@ -453,12 +468,12 @@ export const MapContainer = (props) => {
       const { geometry = {} } = spatial
       const { type } = geometry
 
-      if (type === 'Point') {
-        granule.backgroundStyle = backgroundPointStyle
-        granule.granuleStyle = shouldDrawRegularStyle ? pointStyle(index) : deemphisizedPointStyle(index)
-        granule.highlightedStyle = highlightedPointStyle(index)
+      if (type === spatialTypes.POINT) {
+        granule.backgroundGranuleStyle = backgroundGranulePointStyle
+        granule.granuleStyle = shouldDrawRegularStyle ? granulePointStyle(index) : deemphisizedGranulePointStyle(index)
+        granule.highlightedStyle = highlightedGranulePointStyle(index)
       } else {
-        granule.backgroundStyle = backgroundStyle
+        granule.backgroundGranuleStyle = backgroundGranuleStyle
         granule.granuleStyle = shouldDrawRegularStyle ? granuleStyle(index) : deemphisizedGranuleStyle(index)
         granule.highlightedStyle = highlightedGranuleStyle(index)
       }
@@ -477,7 +492,7 @@ export const MapContainer = (props) => {
       }
 
       granulesToDraw.push({
-        backgroundStyle: granule.backgroundStyle,
+        backgroundGranuleStyle: granule.backgroundGranuleStyle,
         collectionId,
         formattedTemporal,
         gibsData: granuleGibsData,
@@ -511,6 +526,8 @@ export const MapContainer = (props) => {
     projection
   ])
 
+  const memoizedShapefile = useMemo(() => shapefile, [shapefile])
+
   return (
     <Map
       center={center}
@@ -525,11 +542,16 @@ export const MapContainer = (props) => {
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}
+      onClearShapefile={onClearShapefile}
       onExcludeGranule={onExcludeGranule}
       onMetricsMap={onMetricsMap}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
+      onToggleShapefileUploadModal={onToggleShapefileUploadModal}
+      onToggleTooManyPointsModal={onToggleTooManyPointsModal}
+      onUpdateShapefile={onUpdateShapefile}
       projectionCode={projection}
       rotation={rotation}
+      shapefile={memoizedShapefile}
       spatialSearch={spatialSearch}
       zoom={zoom}
     />

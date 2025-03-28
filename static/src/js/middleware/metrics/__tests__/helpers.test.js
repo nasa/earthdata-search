@@ -1,3 +1,4 @@
+import spatialTypes from '../../../constants/spatialTypes'
 import {
   computeKeyword,
   computeSpatialType,
@@ -64,7 +65,7 @@ describe('helpers', () => {
         }
       }
       const value = computeSpatialType(state)
-      expect(value).toEqual('Bounding Box')
+      expect(value).toEqual(spatialTypes.BOUNDING_BOX)
     })
 
     test('returns Bounding Box when bounding box is applied', () => {
@@ -80,7 +81,7 @@ describe('helpers', () => {
         }
       }
       const value = computeSpatialType(state)
-      expect(value).toEqual('Bounding Box')
+      expect(value).toEqual(spatialTypes.BOUNDING_BOX)
     })
 
     test('returns Polygon when polygon is applied', () => {
@@ -96,7 +97,7 @@ describe('helpers', () => {
         }
       }
       const value = computeSpatialType(state)
-      expect(value).toEqual('Polygon')
+      expect(value).toEqual(spatialTypes.POLYGON)
     })
 
     test('returns Point when point is applied', () => {
@@ -112,7 +113,7 @@ describe('helpers', () => {
         }
       }
       const value = computeSpatialType(state)
-      expect(value).toEqual('Point')
+      expect(value).toEqual(spatialTypes.POINT)
     })
 
     test('returns Circle when circle is applied', () => {
@@ -129,7 +130,7 @@ describe('helpers', () => {
         }
       }
       const value = computeSpatialType(state)
-      expect(value).toEqual('Circle')
+      expect(value).toEqual(spatialTypes.CIRCLE)
     })
   })
 

@@ -28,7 +28,11 @@ import ScaleLine from 'ol/control/ScaleLine'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 
-import { FaCircle, FaHome } from 'react-icons/fa'
+import {
+  FaCircle,
+  FaFile,
+  FaHome
+} from 'react-icons/fa'
 import {
   Close,
   Minus,
@@ -44,20 +48,26 @@ import MapControls from './MapControls'
 import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import spatialTypes from '../../constants/spatialTypes'
-import { mapEventTypes } from '../../constants/eventTypes'
+import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
-import { highlightFeature, unhighlightFeature } from '../../util/map/interactions/highlightFeature'
-import { markerDrawingStyle } from '../../util/map/styles'
+import { highlightGranule, unhighlightGranule } from '../../util/map/interactions/highlightGranule'
+import {
+  highlightShapefile,
+  unhighlightShapefile
+} from '../../util/map/interactions/highlightShapefile'
+import { spatialSearchMarkerDrawingStyle } from '../../util/map/styles'
 import boundingBoxGeometryFunction from '../../util/map/geometryFunctions/boundingBoxGeometryFunction'
 import circleGeometryFunction from '../../util/map/geometryFunctions/circleGeometryFunction'
 import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
+import drawShapefile from '../../util/map/drawShapefile'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
 import onClickMap from '../../util/map/interactions/onClickMap'
+import onClickShapefile from '../../util/map/interactions/onClickShapefile'
 import projections from '../../util/map/projections'
 import worldImagery from '../../util/map/layers/worldImagery'
 
@@ -227,11 +237,16 @@ const removeDrawingInteraction = (map) => {
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
  * @param {Function} params.onChangeQuery Function to call when the query is changed
+ * @param {Function} params.onClearShapefile Function to call when the shapefile is cleared
  * @param {Function} params.onExcludeGranule Function to call when a granule is excluded
  * @param {Function} params.onMetricsMap Function to call when a map metric is triggered
  * @param {Function} params.onToggleDrawingNewLayer Function to call when a new drawing layer is toggled
+ * @param {Function} params.onToggleShapefileUploadModal Function to call when the shapefile upload modal is toggled
+ * @param {Function} params.onToggleTooManyPointsModal Function to call when the too many points modal is toggled
+ * @param {Function} params.onUpdateShapefile Function to call when the shapefile is updated
  * @param {String} params.projectionCode Projection code of the map
  * @param {Number} params.rotation Rotation of the map
+ * @param {Object} params.shapefile Shapefile to render on the map
  * @param {Object} params.spatialSearch Spatial search object
  * @param {Number} params.zoom Zoom level of the map
  */
@@ -248,11 +263,16 @@ const Map = ({
   onChangeMap,
   onChangeProjection,
   onChangeQuery,
+  onClearShapefile,
   onExcludeGranule,
   onMetricsMap,
   onToggleDrawingNewLayer,
+  onToggleShapefileUploadModal,
+  onToggleTooManyPointsModal,
+  onUpdateShapefile,
   projectionCode,
   rotation,
+  shapefile,
   spatialSearch,
   zoom
 }) => {
@@ -337,7 +357,7 @@ const Map = ({
 
       if (spatialType === spatialTypes.POINT) {
         // Draw the point spatial type as a marker
-        updatedStyles.Point[0] = markerDrawingStyle
+        updatedStyles.Point[0] = spatialSearchMarkerDrawingStyle
       }
 
       // Add the drawing interaction to the map
@@ -357,6 +377,7 @@ const Map = ({
         drawingInteraction,
         map,
         onChangeQuery,
+        onClearShapefile,
         onToggleDrawingNewLayer,
         projectionCode,
         spatialType
@@ -382,9 +403,11 @@ const Map = ({
       map,
       MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
       onChangeProjection,
+      onToggleShapefileUploadModal,
       PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
       PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
-      projectionCode
+      projectionCode,
+      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />)
     })
 
     map.addControl(mapControls)
@@ -440,12 +463,23 @@ const Map = ({
         return
       }
 
+      const coordinate = map.getEventCoordinate(event.originalEvent)
+
       // Highlight the feature at the pointer's location
-      highlightFeature({
-        coordinate: map.getEventCoordinate(event.originalEvent),
+      const wasFeatureHighlighted = highlightGranule({
+        coordinate,
         granuleBackgroundsSource,
         granuleHighlightsSource
       })
+
+      // If there was no granule highlighted, check for a shapefile feature to highlight
+      if (!wasFeatureHighlighted) {
+        highlightShapefile({
+          coordinate,
+          map,
+          spatialDrawingSource
+        })
+      }
     }
 
     // When the pointer moves, highlight the feature
@@ -453,21 +487,63 @@ const Map = ({
 
     // Handle the move map event. This can be called from anywhere in the app and will move the map
     // to the provided extent.
-    const handleMoveMap = ({ shape }) => {
-      const shapeInProjection = shape.transform(
-        crsProjections[projections.geographic],
-        crsProjections[projectionCode]
-      )
+    const handleMoveMap = ({
+      shape,
+      source
+    }) => {
+      let extent
 
-      const extent = shapeInProjection.getExtent()
+      // If a shape was passed, use the extent of that shape
+      if (shape) {
+        const shapeInProjection = shape.transform(
+          crsProjections[projections.geographic],
+          crsProjections[projectionCode]
+        )
 
-      map.getView().fit(extent, {
-        duration: 250,
-        padding: [50, 50, 50, 50]
-      })
+        extent = shapeInProjection.getExtent()
+      } else if (source) {
+        // If a source was passed, use the extent of the source
+        extent = source.getExtent()
+      }
+
+      // Fit the map to the extent
+      if (extent) {
+        map.getView().fit(extent, {
+          duration: 250,
+          padding: [50, 50, 50, 50]
+        })
+      }
     }
 
     eventEmitter.on(mapEventTypes.MOVEMAP, handleMoveMap)
+
+    // Handle the add shapefile event
+    const handleAddShapefile = (dzFile, file) => {
+      const { displaySpatialPolygonWarning, drawingNewLayer } = spatialSearch
+
+      drawShapefile({
+        displaySpatialPolygonWarning,
+        drawingNewLayer,
+        shapefile: file,
+        onChangeQuery,
+        onChangeProjection,
+        onMetricsMap,
+        onToggleTooManyPointsModal,
+        onUpdateShapefile,
+        projectionCode,
+        shapefileAdded: true,
+        vectorSource: spatialDrawingSource
+      })
+    }
+
+    eventEmitter.on(shapefileEventTypes.ADDSHAPEFILE, handleAddShapefile)
+
+    // Handle the remove shapefile event
+    const handleRemoveShapefile = () => {
+      spatialDrawingSource.clear()
+    }
+
+    eventEmitter.on(shapefileEventTypes.REMOVESHAPEFILE, handleRemoveShapefile)
 
     return () => {
       map.setTarget(null)
@@ -477,6 +553,8 @@ const Map = ({
       eventEmitter.off(mapEventTypes.DRAWSTART, handleDrawingStart)
       eventEmitter.off(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
       eventEmitter.off(mapEventTypes.MOVEMAP, handleMoveMap)
+      eventEmitter.off(shapefileEventTypes.ADDSHAPEFILE, handleAddShapefile)
+      eventEmitter.off(shapefileEventTypes.REMOVESHAPEFILE, handleRemoveShapefile)
     }
   }, [projectionCode])
 
@@ -484,9 +562,11 @@ const Map = ({
   const handleMapClick = (event) => {
     const { map } = event
 
-    onClickMap({
+    const coordinate = map.getEventCoordinate(event.originalEvent)
+
+    const granuleClicked = onClickMap({
       clearFocusedGranuleSource,
-      coordinate: map.getEventCoordinate(event.originalEvent),
+      coordinate,
       focusedCollectionId,
       focusedGranuleId,
       focusedGranuleSource,
@@ -498,6 +578,19 @@ const Map = ({
       onMetricsMap,
       timesIconSvg
     })
+
+    // If a granule was not clicked, call onClickShapefile
+    if (!granuleClicked) {
+      onClickShapefile({
+        coordinate,
+        map,
+        onChangeQuery,
+        onUpdateShapefile,
+        shapefile,
+        spatialDrawingSource,
+        spatialSearch
+      })
+    }
   }
 
   // Update the map click event listeners when the focusedGranuleId changes
@@ -510,12 +603,13 @@ const Map = ({
     return () => {
       map.un(MapBrowserEventType.CLICK, handleMapClick)
     }
-  }, [focusedGranuleId, projectionCode])
+  }, [focusedGranuleId, projectionCode, shapefile, spatialSearch])
 
   // Handle the map leave event
   const handleMouseLeave = () => {
     // When the mouse leaves the map element, unhighlight the feature
-    unhighlightFeature(granuleHighlightsSource)
+    unhighlightGranule(granuleHighlightsSource)
+    unhighlightShapefile(spatialDrawingSource)
   }
 
   // Update the map element event listeners when the map element ref changes
@@ -530,7 +624,7 @@ const Map = ({
 
   // Handle the granule highlight event
   const handleHoverGranule = ({ granule }) => {
-    highlightFeature({
+    highlightGranule({
       granuleBackgroundsSource,
       granuleHighlightsSource,
       granuleId: granule ? granule.id : null
@@ -700,7 +794,7 @@ const Map = ({
     granuleBackgroundsSource.clear()
 
     // Clear any existing granule highlights
-    unhighlightFeature(granuleHighlightsSource)
+    unhighlightGranule(granuleHighlightsSource)
 
     // Clear any existing focused granules
     clearFocusedGranuleSource(mapRef.current)
@@ -734,6 +828,7 @@ const Map = ({
     }
   }, [granules, granulesKey, projectionCode])
 
+  // When the spatial search changes, draw the spatial search
   useEffect(() => {
     drawSpatialSearch({
       projectionCode,
@@ -741,6 +836,29 @@ const Map = ({
       vectorSource: spatialDrawingSource
     })
   }, [spatialSearch])
+
+  // When the shapefile changes, draw the shapefile
+  useEffect(() => {
+    if (shapefile && shapefile.file) {
+      const { file, selectedFeatures } = shapefile
+
+      const { displaySpatialPolygonWarning, drawingNewLayer } = spatialSearch
+
+      drawShapefile({
+        displaySpatialPolygonWarning,
+        drawingNewLayer,
+        selectedFeatures,
+        shapefile: file,
+        onChangeQuery,
+        onMetricsMap,
+        onToggleTooManyPointsModal,
+        onUpdateShapefile,
+        projectionCode,
+        shapefileAdded: false,
+        vectorSource: spatialDrawingSource
+      })
+    }
+  }, [shapefile, spatialSearch, projectionCode])
 
   // Draw the granule outlines
   granuleOutlinesLayer.on(RenderEventType.POSTRENDER, (event) => {
@@ -781,12 +899,23 @@ Map.propTypes = {
   onChangeMap: PropTypes.func.isRequired,
   onChangeProjection: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
+  onClearShapefile: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
+  onToggleShapefileUploadModal: PropTypes.func.isRequired,
+  onToggleTooManyPointsModal: PropTypes.func.isRequired,
+  onUpdateShapefile: PropTypes.func.isRequired,
   projectionCode: PropTypes.string.isRequired,
   rotation: PropTypes.number.isRequired,
-  spatialSearch: PropTypes.shape({}).isRequired,
+  shapefile: PropTypes.shape({
+    file: PropTypes.shape({}),
+    selectedFeatures: PropTypes.arrayOf(PropTypes.string)
+  }).isRequired,
+  spatialSearch: PropTypes.shape({
+    displaySpatialPolygonWarning: PropTypes.bool,
+    drawingNewLayer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+  }).isRequired,
   zoom: PropTypes.number.isRequired
 }
 

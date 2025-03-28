@@ -31,6 +31,13 @@ import temporalBody from './__mocks__/temporal.body.json'
 import temporalRecurringBody from './__mocks__/temporal_recurring.body.json'
 import tilingSystemBody from './__mocks__/tiling_system.body.json'
 
+const screenshotClip = {
+  x: 930,
+  y: 90,
+  width: 425,
+  height: 700
+}
+
 const defaultCmrPageSize = 20
 
 /**
@@ -228,7 +235,7 @@ test.describe('Path /search', () => {
     })
   })
 
-  test.describe.skip('When the path is loaded with a spatial query', () => {
+  test.describe('When the path is loaded with a spatial query', () => {
     test.describe('When the spatial query is a point', () => {
       test('loads with the spatial query applied', async ({ page }) => {
         const cmrHits = 5079
@@ -248,7 +255,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        await page.goto('/search?sp[0]=65.44171%2C4.33676')
+        await page.goto('/search?sp[0]=65.44171%2C4.33676&long=65.44171')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -261,8 +271,10 @@ test.describe('Path /search', () => {
 
         await expect(page.getByTestId('spatial-display_point')).toHaveValue('4.33676,65.44171')
 
-        // Test leaflet has drawn the point
-        await expect(await page.getByRole('button', { name: 'Marker' }).all()).toHaveLength(1)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('point.png', {
+          clip: screenshotClip
+        })
       })
     })
 
@@ -285,7 +297,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        await page.goto('/search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704')
+        await page.goto('/search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&long=66')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -298,9 +313,10 @@ test.describe('Path /search', () => {
 
         await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
 
-        // Test leaflet has drawn the shape
-        await expect(await page.locator('g path').first()).toBeVisible()
-        await expect(await page.locator('g path').all()).toHaveLength(1)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('polygon.png', {
+          clip: screenshotClip
+        })
       })
     })
 
@@ -323,7 +339,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        await page.goto('/search?circle[0]=62.18209%2C2.22154%2C100000')
+        await page.goto('/search?circle[0]=62.18209%2C2.22154%2C100000&long=62')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -337,9 +356,10 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('2.22154,62.18209')
         await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue('100000')
 
-        // Test leaflet has drawn the shape
-        await expect(await page.locator('g path').first()).toBeVisible()
-        await expect(await page.locator('g path').all()).toHaveLength(1)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('circle.png', {
+          clip: screenshotClip
+        })
       })
     })
 
@@ -362,7 +382,10 @@ test.describe('Path /search', () => {
           }
         })
 
-        await page.goto('/search?sb[0]=5.02679%2C0.99949%2C32.8678%2C26.17555')
+        await page.goto('/search?sb[0]=5.02679%2C0.99949%2C32.8678%2C26.17555&long=19')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
@@ -376,9 +399,10 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue('0.99949,5.02679')
         await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue('26.17555,32.8678')
 
-        // Test leaflet has drawn the shape
-        await expect(await page.locator('g path').first()).toBeVisible()
-        await expect(await page.locator('g path').all()).toHaveLength(1)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('box.png', {
+          clip: screenshotClip
+        })
       })
     })
 
@@ -434,13 +458,16 @@ test.describe('Path /search', () => {
           }
         })
 
-        await page.goto('/search?sf=123')
+        await page.goto('/search?sf=123&long=60')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Ensure the correct number of results were loaded
         await testResultsSize(page, cmrHits)
 
         // URL has the polygon added from the shapefile
-        await expect(page).toHaveURL('search?polygon[0]=59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704%2C59.34354%2C-9.21839&sf=123&sfs[0]=0')
+        await expect(page).toHaveURL('search?polygon[0]=64.87748%2C1.3704%2C59.34354%2C-9.21839%2C78.35163%2C-11.89902%2C64.87748%2C1.3704&sf=123&long=60')
 
         // Keyword input is empty
         await expect(page.getByTestId('keyword-search-input')).toHaveValue('')
@@ -451,9 +478,10 @@ test.describe('Path /search', () => {
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
-        // Test leaflet has drawn the shape
-        await expect(await page.locator('g path').first()).toBeVisible()
-        await expect(await page.locator('g path').all()).toHaveLength(2)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('shapefile.png', {
+          clip: screenshotClip
+        })
       })
     })
   })

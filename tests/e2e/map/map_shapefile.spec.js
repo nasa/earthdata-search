@@ -14,7 +14,14 @@ import tooManyPointsShapefileBody from './__mocks__/too_many_points_shapefile_co
 import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.json'
 import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
 
-test.describe.skip('Map: Shapefile interactions', () => {
+const screenshotClip = {
+  x: 930,
+  y: 90,
+  width: 425,
+  height: 700
+}
+
+test.describe('Map: Shapefile interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
       browserName,
@@ -30,7 +37,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
   })
 
   test.describe('When uploading a shapefile', () => {
-    test.describe('When the shapefile has a single polygon shape', () => {
+    test.describe('When the shapefile has a polygon shape', () => {
       test('renders correctly', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
@@ -42,7 +49,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
               ...commonHeaders,
               'cmr-hits': '2'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647,42.1875,-16.46517'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647'
           }]
         })
 
@@ -55,8 +62,11 @@ test.describe.skip('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
         // Upload the shapefile
-        await uploadShapefile(page, 'simple.geojson')
+        await uploadShapefile(page, 'polygon.geojson')
 
         // Populates the spatial display field
         await expect(
@@ -74,11 +84,13 @@ test.describe.skip('Map: Shapefile interactions', () => {
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
         await page.waitForURL(/zoom=5/, { timeout: 3000 })
 
-        // The shapefile has 1 svg shapes that is auto selected, so 2 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(2)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('polygon.png', {
+          clip: screenshotClip
+        })
 
         // Updates the URL
-        await expect(page).toHaveURL('search?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&sf=1&sfs[0]=0&lat=-9.435819999999993&long=49.21875&zoom=5')
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&sf=1&sfs\[0\]=0&lat=-9\.\d+&long=49\.\d+&zoom=5\.\d+/)
       })
     })
 
@@ -94,7 +106,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
               ...commonHeaders,
               'cmr-hits': '2'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.line?.[0] === '31,-15,36,-17,41,-15'
+            paramCheck: (parsedQuery) => parsedQuery?.line?.[0] === '-106,35,-105,36,-94,33,-95,30,-93,31,-92,30'
           }]
         })
 
@@ -107,8 +119,11 @@ test.describe.skip('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
         // Upload the shapefile
-        await uploadShapefile(page, 'multiple_shapes.geojson')
+        await uploadShapefile(page, 'line.geojson')
 
         // Populates the spatial display field
         await expect(
@@ -119,26 +134,21 @@ test.describe.skip('Map: Shapefile interactions', () => {
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        await page.waitForURL(/zoom=4/, { timeout: 3000 })
+        await page.waitForURL(/zoom=5/, { timeout: 3000 })
 
-        // The shapefile has 4 svg shapes, so 4 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(4)
-
-        // Select the line
-        // Playwright has trouble clicking the shape because of the leaflet-control-container, dispatchEvent('click') works
-        await page.locator('g path').nth(2).dispatchEvent('click')
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('line.png', {
+          clip: screenshotClip
+        })
 
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
-
-        // After clicking a shape the map will have 5 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(5)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Updates the URL
-        await expect(page).toHaveURL('search?line[0]=31%2C-15%2C36%2C-17%2C41%2C-15&sf=1&sfs[0]=2&lat=-8.296765000000008&long=44.625&zoom=4')
+        await expect(page).toHaveURL(/search\?line\[0\]=-106%2C35%2C-105%2C36%2C-94%2C33%2C-95%2C30%2C-93%2C31%2C-92%2C30&sf=1&sfs\[0\]=0&lat=33&long=-99&zoom=5\.\d+/)
       })
     })
 
@@ -154,7 +164,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
               ...commonHeaders,
               'cmr-hits': '2'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.circle?.[0] === '35,-5,50000'
+            paramCheck: (parsedQuery) => parsedQuery?.circle?.[0] === '-77.0163,38.883,50000'
           }]
         })
 
@@ -167,8 +177,11 @@ test.describe.skip('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
         // Upload the shapefile
-        await uploadShapefile(page, 'multiple_shapes.geojson')
+        await uploadShapefile(page, 'circle.geojson')
 
         // Populates the spatial display field
         await expect(
@@ -179,26 +192,21 @@ test.describe.skip('Map: Shapefile interactions', () => {
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        await page.waitForURL(/zoom=4/, { timeout: 3000 })
+        await page.waitForURL(/zoom=8/, { timeout: 3000 })
 
-        // The shapefile has 4 svg shapes, so 4 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(4)
-
-        // Select the circle
-        // Playwright has trouble clicking the shape because of the leaflet-control-container, dispatchEvent('click') works
-        await page.locator('g path').nth(3).dispatchEvent('click')
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('circle.png', {
+          clip: screenshotClip
+        })
 
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
-
-        // After clicking a shape the map will have 5 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(5)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Updates the URL
-        await expect(page).toHaveURL('search?circle[0]=35%2C-5%2C50000&sf=1&sfs[0]=3&lat=-8.296765000000008&long=44.625&zoom=4')
+        await expect(page).toHaveURL(/search\?circle\[0\]=-77.0163%2C38.883%2C50000&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-77\.\d+&zoom=8\.\d+/)
       })
     })
 
@@ -214,7 +222,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
               ...commonHeaders,
               'cmr-hits': '2'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.point?.[0] === '35,0'
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0] === '-77.0163,38.883'
           }]
         })
 
@@ -227,8 +235,11 @@ test.describe.skip('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
         // Upload the shapefile
-        await uploadShapefile(page, 'multiple_shapes.geojson')
+        await uploadShapefile(page, 'point.geojson')
 
         // Populates the spatial display field
         await expect(
@@ -239,26 +250,21 @@ test.describe.skip('Map: Shapefile interactions', () => {
         await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        await page.waitForURL(/zoom=4/, { timeout: 3000 })
+        await page.waitForURL(/zoom=21/, { timeout: 3000 })
 
-        // The shapefile has 1 point shapes, so 1 Marker button
-        await expect(await page.getByRole('button', { name: 'Marker' }).all()).toHaveLength(1)
-
-        // Select the point
-        // Playwright has trouble clicking the shape because of the leaflet-control-container, dispatchEvent('click') works
-        await page.getByRole('button', { name: 'Marker' }).dispatchEvent('click')
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('point.png', {
+          clip: screenshotClip
+        })
 
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
-
-        // After clicking a shape the map will have 2 Marker buttons
-        await expect(await page.getByRole('button', { name: 'Marker' }).all()).toHaveLength(2)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Updates the URL
-        await expect(page).toHaveURL('search?sp[0]=35%2C0&sf=1&sfs[0]=4&lat=-8.296765000000008&long=44.625&zoom=4')
+        await expect(page).toHaveURL('search?sp[0]=-77.0163%2C38.883&sf=1&sfs[0]=0&lat=38.883&long=-77.0163&zoom=21')
       })
     })
 
@@ -274,7 +280,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
               ...commonHeaders,
               'cmr-hits': '2'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647,42.1875,-16.46517' && parsedQuery?.polygon?.[1] === '58.25,-14.46517,58.25,0.40647,44.1875,0.40647,58.25,-14.46517'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647' && parsedQuery?.polygon?.[1] === '44.1875,0.40647,58.25,-14.46517,58.25,0.40647,44.1875,0.40647'
           }]
         })
 
@@ -286,6 +292,9 @@ test.describe.skip('Map: Shapefile interactions', () => {
         })
 
         await page.goto('/')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Upload the shapefile
         await uploadShapefile(page, 'multiple_shapes.geojson')
@@ -301,25 +310,43 @@ test.describe.skip('Map: Shapefile interactions', () => {
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
         await page.waitForURL(/zoom=4/, { timeout: 3000 })
 
-        // The shapefile has 4 svg shapes, so 4 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(4)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('multiple-shapes.png', {
+          clip: screenshotClip
+        })
 
-        // Select the two polygons
-        // Playwright has trouble clicking the shape because of the leaflet-control-container, dispatchEvent('click') works
-        await page.locator('g path').nth(0).dispatchEvent('click')
-        await page.locator('g path').nth(1).dispatchEvent('click')
+        // Lower Polygon
+        await page.locator('.map').click({
+          position: {
+            x: 1200,
+            y: 500
+          }
+        })
+
+        // Wait to avoid a double click
+        await page.waitForTimeout(200)
+
+        // Upper Polygon
+        await page.locator('.map').click({
+          position: {
+            x: 1350,
+            y: 400
+          }
+        })
+
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('multiple-shapes-selected.png', {
+          clip: screenshotClip
+        })
 
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('2 shapes selected')
-
-        // After clicking two shapes the map will have 6 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(6)
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Updates the URL
-        await expect(page).toHaveURL('search?polygon[0]=42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647%2C42.1875%2C-16.46517&polygon[1]=58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647%2C58.25%2C-14.46517&sf=1&sfs[0]=0&sfs[1]=1&lat=-8.296765000000008&long=44.625&zoom=4')
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&polygon\[1\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=0&sfs\[1\]=1&lat=-8.\d+&long=44.\d+&zoom=4\.\d+/)
       })
     })
 
@@ -335,7 +362,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
               ...commonHeaders,
               'cmr-hits': '2'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '-114.04999,36.95777,-114.0506,37.0004,-114.04826,41.99381,-119.99917,41.99454,-120.00101,38.99957,-118.71431,38.10218,-117.50012,37.22038,-116.0936,36.15581,-114.63667,35.00881,-114.63689,35.02837,-114.60362,35.06423,-114.64435,35.1059,-114.57852,35.12875,-114.56924,35.18348,-114.60431,35.35358,-114.67764,35.48974,-114.65431,35.59759,-114.68941,35.65141,-114.68321,35.68939,-114.70531,35.71159,-114.69571,35.75599,-114.71211,35.80618,-114.67742,35.87473,-114.73116,35.94392,-114.74376,35.9851,-114.73043,36.03132,-114.75562,36.08717,-114.57203,36.15161,-114.51172,36.15096,-114.50217,36.1288,-114.45837,36.13859,-114.44661,36.12597,-114.40547,36.14737,-114.37211,36.14311,-114.30843,36.08244,-114.31403,36.05817,-114.25265,36.02019,-114.14819,36.02801,-114.11416,36.09698,-114.12086,36.1146,-114.09987,36.12165,-114.04684,36.19407,-114.04999,36.95777'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '-114.0506,37.000396,-114.041723,41.99372,-119.999168,41.99454,-120.001014,38.999574,-118.714312,38.102185,-117.500117,37.22038,-115.852908,35.96966,-114.633013,35.002085,-114.636893,35.028367,-114.602908,35.068588,-114.646759,35.101872,-114.629934,35.118272,-114.578524,35.12875,-114.569238,35.18348,-114.604314,35.353584,-114.677643,35.489742,-114.677205,35.513491,-114.656905,35.534391,-114.666184,35.577576,-114.653406,35.610789,-114.689407,35.651412,-114.680607,35.685488,-114.705409,35.708287,-114.695709,35.755986,-114.71211,35.806185,-114.697767,35.854844,-114.67742,35.874728,-114.731159,35.943916,-114.743756,35.985095,-114.729707,36.028166,-114.755618,36.087166,-114.631716,36.142306,-114.616694,36.130101,-114.572031,36.15161,-114.511721,36.150956,-114.502172,36.128796,-114.463637,36.139695,-114.446605,36.12597,-114.405475,36.147371,-114.372106,36.143114,-114.30843,36.082443,-114.315557,36.059494,-114.252651,36.020193,-114.148191,36.028013,-114.114531,36.095217,-114.123144,36.111576,-114.09987,36.121654,-114.068027,36.180663,-114.046838,36.194069,-114.0506,37.000396'
           }]
         })
 
@@ -348,6 +375,9 @@ test.describe.skip('Map: Shapefile interactions', () => {
 
         await page.goto('/')
 
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
+
         // Upload the shapefile
         await uploadShapefile(page, 'too_many_points.geojson')
 
@@ -356,14 +386,19 @@ test.describe.skip('Map: Shapefile interactions', () => {
 
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
-        // The shapefile has 1 svg shapes that is auto selected, so 2 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(2)
-
         // Displays a modal
         await expect(page.getByTestId('edsc-modal__title')).toHaveText('Shape file has too many points')
 
+        // Closes the modal
+        await page.getByLabel('Close').click()
+
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('too-many-points.png', {
+          clip: screenshotClip
+        })
+
         // Updates the URL
-        await expect(page).toHaveURL('search?polygon[0]=-114.04999%2C36.95777%2C-114.0506%2C37.0004%2C-114.04826%2C41.99381%2C-119.99917%2C41.99454%2C-120.00101%2C38.99957%2C-118.71431%2C38.10218%2C-117.50012%2C37.22038%2C-116.0936%2C36.15581%2C-114.63667%2C35.00881%2C-114.63689%2C35.02837%2C-114.60362%2C35.06423%2C-114.64435%2C35.1059%2C-114.57852%2C35.12875%2C-114.56924%2C35.18348%2C-114.60431%2C35.35358%2C-114.67764%2C35.48974%2C-114.65431%2C35.59759%2C-114.68941%2C35.65141%2C-114.68321%2C35.68939%2C-114.70531%2C35.71159%2C-114.69571%2C35.75599%2C-114.71211%2C35.80618%2C-114.67742%2C35.87473%2C-114.73116%2C35.94392%2C-114.74376%2C35.9851%2C-114.73043%2C36.03132%2C-114.75562%2C36.08717%2C-114.57203%2C36.15161%2C-114.51172%2C36.15096%2C-114.50217%2C36.1288%2C-114.45837%2C36.13859%2C-114.44661%2C36.12597%2C-114.40547%2C36.14737%2C-114.37211%2C36.14311%2C-114.30843%2C36.08244%2C-114.31403%2C36.05817%2C-114.25265%2C36.02019%2C-114.14819%2C36.02801%2C-114.11416%2C36.09698%2C-114.12086%2C36.1146%2C-114.09987%2C36.12165%2C-114.04684%2C36.19407%2C-114.04999%2C36.95777&sf=1&sfs[0]=0&lat=38.502146&long=-117.02269700000001&zoom=6')
+        await expect(page).toHaveURL(/search\?polygon\[0\]=-114.0506%2C37.000396%2C-114.041723%2C41.99372%2C-119.999168%2C41.99454%2C-120.001014%2C38.999574%2C-118.714312%2C38.102185%2C-117.500117%2C37.22038%2C-115.852908%2C35.96966%2C-114.633013%2C35.002085%2C-114.636893%2C35.028367%2C-114.602908%2C35.068588%2C-114.646759%2C35.101872%2C-114.629934%2C35.118272%2C-114.578524%2C35.12875%2C-114.569238%2C35.18348%2C-114.604314%2C35.353584%2C-114.677643%2C35.489742%2C-114.677205%2C35.513491%2C-114.656905%2C35.534391%2C-114.666184%2C35.577576%2C-114.653406%2C35.610789%2C-114.689407%2C35.651412%2C-114.680607%2C35.685488%2C-114.705409%2C35.708287%2C-114.695709%2C35.755986%2C-114.71211%2C35.806185%2C-114.697767%2C35.854844%2C-114.67742%2C35.874728%2C-114.731159%2C35.943916%2C-114.743756%2C35.985095%2C-114.729707%2C36.028166%2C-114.755618%2C36.087166%2C-114.631716%2C36.142306%2C-114.616694%2C36.130101%2C-114.572031%2C36.15161%2C-114.511721%2C36.150956%2C-114.502172%2C36.128796%2C-114.463637%2C36.139695%2C-114.446605%2C36.12597%2C-114.405475%2C36.147371%2C-114.372106%2C36.143114%2C-114.30843%2C36.082443%2C-114.315557%2C36.059494%2C-114.252651%2C36.020193%2C-114.148191%2C36.028013%2C-114.114531%2C36.095217%2C-114.123144%2C36.111576%2C-114.09987%2C36.121654%2C-114.068027%2C36.180663%2C-114.046838%2C36.194069%2C-114.0506%2C37.000396&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-117\.\d+&zoom=6\.\d+/)
       })
     })
 
@@ -379,7 +414,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
               ...commonHeaders,
               'cmr-hits': '2'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,76.46517,56.25,76.46517,42.1875,82.40647,42.1875,76.46517'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,82.40647,42.1875,76.46517,56.25,76.46517,42.1875,82.40647'
           }]
         })
 
@@ -391,6 +426,9 @@ test.describe.skip('Map: Shapefile interactions', () => {
         })
 
         await page.goto('/')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Upload the shapefile
         await uploadShapefile(page, 'arctic.geojson')
@@ -405,17 +443,19 @@ test.describe.skip('Map: Shapefile interactions', () => {
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        await page.waitForURL(/zoom=0/, { timeout: 3000 })
+        await page.waitForURL(/zoom=4/, { timeout: 3000 })
 
         // Checking that the right number of results are loaded ensures that the route
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        // The shapefile has 1 svg shapes that is auto selected, so 2 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(2)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('arctic.png', {
+          clip: screenshotClip
+        })
 
         // Updates the URL
-        await expect(page).toHaveURL('search?polygon[0]=42.1875%2C76.46517%2C56.25%2C76.46517%2C42.1875%2C82.40647%2C42.1875%2C76.46517&sf=1&sfs[0]=0&lat=90&projection=EPSG%3A3413&zoom=0')
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C82.40647%2C42.1875%2C76.46517%2C56.25%2C76.46517%2C42.1875%2C82.40647&sf=1&sfs\[0\]=0&lat=79\.\d+&long=50\.\d+&projection=EPSG%3A3413&zoom=4\.\d+/)
       })
     })
 
@@ -431,7 +471,7 @@ test.describe.skip('Map: Shapefile interactions', () => {
               ...commonHeaders,
               'cmr-hits': '2'
             },
-            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-76.46517,42.1875,-82.40647,56.25,-76.46517,42.1875,-76.46517'
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-82.40647,56.25,-76.46517,42.1875,-76.46517,42.1875,-82.40647'
           }]
         })
 
@@ -443,6 +483,9 @@ test.describe.skip('Map: Shapefile interactions', () => {
         })
 
         await page.goto('/')
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Upload the shapefile
         await uploadShapefile(page, 'antarctic.geojson')
@@ -461,13 +504,15 @@ test.describe.skip('Map: Shapefile interactions', () => {
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
-        await page.waitForURL(/zoom=0/, { timeout: 3000 })
+        await page.waitForURL(/zoom=4/, { timeout: 3000 })
 
-        // The shapefile has 1 svg shapes that is auto selected, so 2 path elements
-        await expect(await page.locator('g path').all()).toHaveLength(2)
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('antarctic.png', {
+          clip: screenshotClip
+        })
 
         // Updates the URL
-        await expect(page).toHaveURL('search?polygon[0]=42.1875%2C-76.46517%2C42.1875%2C-82.40647%2C56.25%2C-76.46517%2C42.1875%2C-76.46517&sf=1&sfs[0]=0&lat=-90&projection=EPSG%3A3031&zoom=0')
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-82.40647%2C56.25%2C-76.46517%2C42.1875%2C-76.46517%2C42.1875%2C-82.40647&sf=1&sfs\[0\]=0&lat=-78\.\d+&long=46\.\d+&projection=EPSG%3A3031&zoom=4\.\d+/)
       })
     })
   })

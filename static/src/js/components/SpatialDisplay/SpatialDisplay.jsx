@@ -28,7 +28,7 @@ import {
 } from '../../util/createSpatialDisplay'
 
 import spatialTypes from '../../constants/spatialTypes'
-import { mapEventTypes } from '../../constants/eventTypes'
+import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import './SpatialDisplay.scss'
 
@@ -304,7 +304,9 @@ const SpatialDisplay = ({
     setManuallyEnteringVal(false)
 
     onRemoveSpatialFilter()
+
     eventEmitter.emit(mapEventTypes.DRAWCANCEL)
+    eventEmitter.emit(shapefileEventTypes.REMOVESHAPEFILE)
   }
 
   const onChangePointSearch = (event) => {
@@ -493,7 +495,7 @@ const SpatialDisplay = ({
       </SpatialDisplayEntry>
     )
 
-    secondaryTitle = 'Point'
+    secondaryTitle = spatialTypes.POINT
 
     contents.push((
       <FilterStackContents
@@ -643,7 +645,7 @@ const SpatialDisplay = ({
       </SpatialDisplayEntry>
     )
 
-    secondaryTitle = 'Circle'
+    secondaryTitle = spatialTypes.CIRCLE
 
     contents.push((
       <FilterStackContents

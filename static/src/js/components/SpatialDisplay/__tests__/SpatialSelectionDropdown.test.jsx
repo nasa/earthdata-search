@@ -11,6 +11,7 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import SpatialSelectionDropdown from '../SpatialSelectionDropdown'
 import * as EventEmitter from '../../../events/events'
 import spatialTypes from '../../../constants/spatialTypes'
+import { mapEventTypes } from '../../../constants/eventTypes'
 
 const onMetricsSpatialSelection = jest.fn()
 const onToggleShapefileUploadModal = jest.fn()
@@ -63,7 +64,7 @@ describe('SpatialSelectionDropdown component', () => {
     await user.click(screen.getByRole('button', { name: 'Polygon' }))
 
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawStart', spatialTypes.POLYGON)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWSTART, spatialTypes.POLYGON)
 
     expect(onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
     expect(onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'polygon' })
@@ -84,7 +85,10 @@ describe('SpatialSelectionDropdown component', () => {
     await user.click(screen.getByRole('button', { name: 'Rectangle' }))
 
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawStart', spatialTypes.BOUNDING_BOX)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith(
+      mapEventTypes.DRAWSTART,
+      spatialTypes.BOUNDING_BOX
+    )
 
     expect(onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
     expect(onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'rectangle' })
@@ -105,7 +109,7 @@ describe('SpatialSelectionDropdown component', () => {
     await user.click(screen.getByRole('button', { name: 'Point' }))
 
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawStart', spatialTypes.POINT)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWSTART, spatialTypes.POINT)
 
     expect(onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
     expect(onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'point' })
@@ -126,7 +130,7 @@ describe('SpatialSelectionDropdown component', () => {
     await user.click(screen.getByRole('button', { name: 'Circle' }))
 
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawStart', spatialTypes.CIRCLE)
+    expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWSTART, spatialTypes.CIRCLE)
 
     expect(onMetricsSpatialSelection).toHaveBeenCalledTimes(1)
     expect(onMetricsSpatialSelection).toHaveBeenCalledWith({ item: 'circle' })
