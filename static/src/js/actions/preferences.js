@@ -1,5 +1,7 @@
-import { isEmpty } from 'lodash-es'
+import { isEmpty, isEqual } from 'lodash-es'
 import jwt from 'jsonwebtoken'
+
+import { initialState } from '../reducers/map'
 
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/actionTypes'
 
@@ -23,7 +25,11 @@ export const setPreferences = (payload) => ({
   payload
 })
 
-export const setPreferencesFromJwt = (jwtToken) => (dispatch) => {
+export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
+  const { map: mapState = {} } = getState()
+  console.log('🚀 ~ file: preferences.js:30 ~ mapState:', mapState)
+  console.log('🚀 ~ file: preferences.js:45 ~ initialState:', initialState)
+
   if (!jwtToken) return
 
   const decoded = jwt.decode(jwtToken)
@@ -36,31 +42,33 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch) => {
   // correct values
   const { mapView = {} } = preferences
   if (!isEmpty(mapView)) {
-    const {
-      baseLayer,
-      latitude,
-      longitude,
-      overlayLayers,
-      projection,
-      zoom
-    } = mapView
+    if (isEqual(mapState, initialState)) {
+      const {
+        baseLayer,
+        latitude,
+        longitude,
+        overlayLayers,
+        projection,
+        zoom
+      } = mapView
 
-    const base = {
-      [baseLayer]: true
+      const base = {
+        [baseLayer]: true
+      }
+      const overlays = {}
+      overlayLayers.forEach((layer) => {
+        overlays[layer] = true
+      })
+
+      dispatch(changeMap({
+        base,
+        latitude,
+        longitude,
+        overlays,
+        projection,
+        zoom
+      }))
     }
-    const overlays = {}
-    overlayLayers.forEach((layer) => {
-      overlays[layer] = true
-    })
-
-    dispatch(changeMap({
-      base,
-      latitude,
-      longitude,
-      overlays,
-      projection,
-      zoom
-    }))
   }
 }
 

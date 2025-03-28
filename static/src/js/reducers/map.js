@@ -1,7 +1,7 @@
 import { UPDATE_MAP, RESTORE_FROM_URL } from '../constants/actionTypes'
 import projections from '../util/map/projections'
 
-const initialState = {
+export const initialState = {
   base: {
     blueMarble: true,
     trueColor: false,
