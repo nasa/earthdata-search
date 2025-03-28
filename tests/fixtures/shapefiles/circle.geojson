@@ -1,0 +1,18 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "radius": 50000
+      },
+      "geometry": {
+        "coordinates": [
+          -77.0163,
+          38.883
+        ],
+        "type": "Point"
+      }
+    }
+  ]
+}

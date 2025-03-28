@@ -28,9 +28,11 @@ class MapControls extends Control {
       map,
       MinusIcon,
       onChangeProjection,
+      onToggleShapefileUploadModal,
       PlusIcon,
       PointIcon,
-      projectionCode
+      projectionCode,
+      ShapefileIcon
     } = options
 
     // Create the zoom control
@@ -57,7 +59,9 @@ class MapControls extends Control {
     // Create the spatial drawing control
     const spatialDrawingControl = new SpatialDrawingControl({
       CircleIcon,
-      PointIcon
+      onToggleShapefileUploadModal,
+      PointIcon,
+      ShapefileIcon
     })
 
     // Add the controls to the container

@@ -50,6 +50,8 @@ export const mapDispatchToProps = (dispatch) => ({
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onTogglePanels:
     (value) => dispatch(actions.togglePanels(value)),
+  onToggleSpatialPolygonWarning:
+    (value) => dispatch(actions.toggleSpatialPolygonWarning(value)),
   onUpdateAccessMethod:
     (data) => dispatch(actions.updateAccessMethod(data)),
   onUpdateFocusedCollection:
@@ -71,17 +73,20 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Object} projectCollection - The project collection.
+ * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} onChangePath - Callback to change the path.
- * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
+ * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
+ * @param {Function} onSelectAccessMethod - Selects an access method.
+ * @param {Function} onSetActivePanel - Switches the currently active panel.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
+ * @param {Function} onSetActivePanelGroup - Callback to set the page number.
+ * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
+ * @param {Function} onTogglePanels - Toggles the panels opened or closed.
+ * @param {Function} onToggleSpatialPolygonWarning - Toggles the spatial polygon warning.
  * @param {Function} onUpdateAccessMethod - Callback to update the access method.
  * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
- * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
- * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
- * @param {Function} onTogglePanels - Toggles the panels opened or closed.
- * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
- * @param {Function} onSetActivePanel - Switches the currently active panel.
+ * @param {Function} onViewCollectionGranules - Views the collection granules.
  */
 export const ProjectPanelsContainer = ({
   dataQualitySummaries,
@@ -100,6 +105,7 @@ export const ProjectPanelsContainer = ({
   onSetActivePanelGroup,
   onToggleAboutCSDAModal,
   onTogglePanels,
+  onToggleSpatialPolygonWarning,
   onUpdateAccessMethod,
   onUpdateFocusedCollection,
   onViewCollectionGranules,
@@ -129,6 +135,7 @@ export const ProjectPanelsContainer = ({
     onSetActivePanelGroup={onSetActivePanelGroup}
     onToggleAboutCSDAModal={onToggleAboutCSDAModal}
     onTogglePanels={onTogglePanels}
+    onToggleSpatialPolygonWarning={onToggleSpatialPolygonWarning}
     onUpdateAccessMethod={onUpdateAccessMethod}
     onUpdateFocusedCollection={onUpdateFocusedCollection}
     onViewCollectionGranules={onViewCollectionGranules}
@@ -167,6 +174,7 @@ ProjectPanelsContainer.propTypes = {
   onSetActivePanelGroup: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
+  onToggleSpatialPolygonWarning: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,

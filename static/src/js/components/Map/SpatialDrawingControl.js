@@ -30,8 +30,12 @@ class SpatialDrawingControl extends Control {
 
     const {
       CircleIcon,
-      PointIcon
+      onToggleShapefileUploadModal,
+      PointIcon,
+      ShapefileIcon
     } = options
+
+    this.onToggleShapefileUploadModal = onToggleShapefileUploadModal
 
     // Create the polygon button
     const polygonButton = document.createElement('button')
@@ -117,6 +121,30 @@ class SpatialDrawingControl extends Control {
     // Add the button to the element
     buttonsElement.appendChild(pointButton)
 
+    // Create the shapefile button
+    const shapefileButton = document.createElement('button')
+    shapefileButton.className = 'edsc-map-spatial-drawing__button edsc-map-spatial-drawing__button--shapefile edsc-map-controls__button'
+    shapefileButton.ariaLabel = 'Search by shapefile'
+    shapefileButton.title = 'Search by shapefile'
+    shapefileButton.setAttribute('data-bs-toggle', 'tooltip')
+    shapefileButton.setAttribute('data-bs-placement', 'left')
+
+    // Set the click event for the button
+    shapefileButton.addEventListener(
+      EventType.CLICK,
+      this.handleShapefileClick.bind(this),
+      false
+    )
+
+    // Render the shapefile icon
+    ReactDOM.render(
+      ShapefileIcon,
+      shapefileButton
+    )
+
+    // Add the button to the element
+    buttonsElement.appendChild(shapefileButton)
+
     // Create the cancel button
     const cancelButton = document.createElement('button')
     cancelButton.className = 'edsc-map-spatial-drawing__button edsc-map-spatial-drawing__button--cancel'
@@ -185,6 +213,16 @@ class SpatialDrawingControl extends Control {
     event.stopPropagation()
 
     eventEmitter.emit(mapEventTypes.DRAWCANCEL)
+  }
+
+  /**
+   * When the shapefile button is clicked, open the shapefile upload modal
+   * @param {Object} event - The click event
+   */
+  handleShapefileClick(event) {
+    event.stopPropagation()
+
+    this.onToggleShapefileUploadModal(true)
   }
 }
 

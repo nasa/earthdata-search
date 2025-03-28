@@ -34,7 +34,7 @@ const onClickMap = ({
       onChangeFocusedGranule('')
     }
 
-    return
+    return false
   }
 
   // Get the granuleId of the featureToFocus
@@ -45,7 +45,7 @@ const onClickMap = ({
     onChangeFocusedGranule('')
     clearFocusedGranuleSource(map)
 
-    return
+    return false
   }
 
   // Track the event
@@ -64,6 +64,8 @@ const onClickMap = ({
     onExcludeGranule,
     timesIconSvg
   })
+
+  return true
 }
 
 export default onClickMap

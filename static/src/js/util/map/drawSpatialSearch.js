@@ -12,7 +12,7 @@ import { crsProjections } from './crs'
 import { interpolateBoxPolygon, interpolatePolygon } from './normalizeSpatial'
 import projections from './projections'
 import {
-  markerStyle,
+  spatialSearchMarkerStyle,
   mbrStyle,
   spatialSearchStyle
 } from './styles'
@@ -182,7 +182,7 @@ const drawSpatialSearch = ({
       geometry: pointInProjection
     })
 
-    feature.setStyle(markerStyle)
+    feature.setStyle(spatialSearchMarkerStyle)
 
     vectorSource.addFeature(feature)
   }

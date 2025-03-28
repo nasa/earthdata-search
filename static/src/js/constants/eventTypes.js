@@ -4,3 +4,8 @@ export const mapEventTypes = {
   DRAWCANCEL: 'map.drawCancel',
   DRAWEND: 'map.drawEnd'
 }
+
+export const shapefileEventTypes = {
+  ADDSHAPEFILE: 'shapefile.addShapefile',
+  REMOVESHAPEFILE: 'shapefile.removeShapefile'
+}

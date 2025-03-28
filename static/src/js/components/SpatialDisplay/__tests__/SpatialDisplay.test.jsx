@@ -8,6 +8,7 @@ import * as EventEmitter from '../../../events/events'
 
 import SpatialDisplay from '../SpatialDisplay'
 import spatialTypes from '../../../constants/spatialTypes'
+import { mapEventTypes, shapefileEventTypes } from '../../../constants/eventTypes'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -293,8 +294,9 @@ describe('SpatialDisplay component', () => {
       await userEvent.click(actionBtn)
 
       expect(onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
-      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-      expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawCancel')
+      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(2)
+      expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWCANCEL)
+      expect(eventEmitterEmitMock).toHaveBeenCalledWith(shapefileEventTypes.REMOVESHAPEFILE)
     })
   })
 
