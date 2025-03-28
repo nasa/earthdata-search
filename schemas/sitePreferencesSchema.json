@@ -130,7 +130,7 @@
           "type": "number",
           "title": "Zoom",
           "minimum": 0,
-          "maximum": 7,
+          "maximum": 21,
           "default": 2
         },
         "projection": {
