@@ -38,7 +38,7 @@
     "stop:cache": "docker-compose down",
     "prestart-ci": "NODE_OPTIONS=--max-old-space-size=8192 VITE_COVERAGE=true npm run build",
     "start-ci": "npm run preview",
-    "lint": "eslint . --ext .jsx,.js",
+    "lint": "eslint . --ext .jsx,.js,.ts,.tsx",
     "preinvoke-local": "npm run build:api",
     "invoke-local": "dotenvx run node bin/invokeLocal.mjs --",
     "jest:prepare-ci": "bin/jest-prepare-ci",
@@ -62,7 +62,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@chromatic-com/storybook": "^3.2.6",
     "@dotenvx/dotenvx": "^1.33.0",
-    "@edsc/eslint-config": "^0.0.8",
+    "@edsc/eslint-config": "file:../edsc-eslint-config/edsc-eslint-config-0.0.7.tgz",
     "@fastify/cors": "^10.0.2",
     "@playwright/test": "^1.51.1",
     "@storybook/addon-essentials": "^8.6.7",
@@ -110,6 +110,7 @@
     "start-server-and-test": "^2.0.0",
     "storybook": "^8.6.7",
     "typescript": "^5.8.2",
+    "typescript-eslint": "^8.28.0",
     "vitest": "^3.0.9"
   },
   "dependencies": {
@@ -155,7 +156,6 @@
     "crypto-browserify": "^3.12.0",
     "dropzone": "^5.9.3",
     "esbuild": "^0.24.2",
-    "eslint": "^8.14.0",
     "events": "^3.3.0",
     "fast-xml-parser": "^4.1.3",
     "formdata-node": "^2.5.0",

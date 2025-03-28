@@ -65,8 +65,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onMetricsMap:
     (type) => dispatch(metricsMap(type)),
   onToggleDrawingNewLayer: (state) => dispatch(actions.toggleDrawingNewLayer(state)),
-  onToggleShapefileUploadModal:
-    (state) => dispatch(actions.toggleShapefileUploadModal(state)),
+  onToggleShapefileUploadModal: (state) => dispatch(actions.toggleShapefileUploadModal(state)),
   onToggleTooManyPointsModal:
     (state) => dispatch(actions.toggleTooManyPointsModal(state)),
   onUpdateShapefile:
@@ -118,8 +117,8 @@ export const MapContainer = (props) => {
     onFetchShapefile,
     onMetricsMap,
     onToggleDrawingNewLayer,
-    onToggleTooManyPointsModal,
     onToggleShapefileUploadModal,
+    onToggleTooManyPointsModal,
     onUpdateShapefile,
     pointSearch,
     polygonSearch,
@@ -144,10 +143,14 @@ export const MapContainer = (props) => {
 
   useLayoutEffect(() => {
     if (startDrawing && mapReady) {
-      eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
-      setStartDrawing(null)
+      if (startDrawing === 'file') {
+        onToggleShapefileUploadModal(true)
+      } else {
+        eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
+        setStartDrawing(null)
+      }
     }
-  }, [mapProps, mapReady])
+  }, [startDrawing, mapReady])
 
   const {
     base,

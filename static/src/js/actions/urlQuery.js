@@ -21,7 +21,6 @@ import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../portals/availablePortals.json'
-import { eventEmitter } from '../events/events'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -54,7 +53,7 @@ export const updateStore = ({
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
-    pathname !== "/"
+    pathname !== '/'
     && !isPath(pathname, urlPathsWithoutUrlParams)
     && !isSavedProjectsPage(location)
   )
@@ -91,7 +90,8 @@ export const updateStore = ({
   }
 }
 
-export const changePath = (path = '', startDrawingCallback) => async (dispatch, getState) => {
+export const changePath = (path = '') => async (dispatch, getState) => {
+  console.log('🚀 ~ urlQuery.js:94 ~ changePath ~ path:', path)
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -161,10 +161,6 @@ export const changePath = (path = '', startDrawingCallback) => async (dispatch, 
     || pathname.match(/\/portal\/\w*/)
   ) {
     dispatch(actions.getCollections())
-
-    if (pathname === '/search') {
-      startDrawingCallback(decodedParams.startDrawing)
-    }
 
     // Granules Search
     if (
@@ -242,6 +238,7 @@ const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
  * changeUrl({ pathname: '/a-new-url' })
  */
 export const changeUrl = (options) => (dispatch, getState) => {
+  console.log('🚀 ~ urlQuery.js:240 ~ options:', options)
   const state = getState()
 
   // Retrieve data from Redux using selectors

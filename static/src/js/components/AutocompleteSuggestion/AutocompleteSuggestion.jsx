@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { isEmpty, startCase } from 'lodash-es'
 import { ArrowChevronRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import { buildHierarchy, buildHierarchicalAutocompleteTitle } from '../../util/autocompleteResults'
+import { buildHierarchy } from '../../util/autocompleteResults'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './AutocompleteSuggestion.scss'
@@ -16,7 +16,6 @@ const AutocompleteSuggestion = ({ suggestion }) => {
     value,
     fields = ''
   } = suggestion
-  const title = buildHierarchicalAutocompleteTitle(suggestion)
   const hierarchy = buildHierarchy({ fields })
 
   return (

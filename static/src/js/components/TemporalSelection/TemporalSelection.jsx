@@ -5,9 +5,7 @@ import moment from 'moment'
 import InputRange from 'react-input-range'
 
 import Alert from 'react-bootstrap/Alert'
-import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
 
 import DatepickerContainer from '../../containers/DatepickerContainer/DatepickerContainer'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'

@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { PropTypes } from 'prop-types'
 import Dropdown from 'react-bootstrap/Dropdown'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import {
   FaExpand,
@@ -22,13 +23,24 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 
+import StartDrawingContext from '../../contexts/StartDrawingContext'
+
 import './SpatialSelectionDropdown.scss'
 
 const SpatialSelectionDropdown = (props) => {
   const {
+    searchParams,
+    onChangeUrl,
+    onChangePath,
     onToggleShapefileUploadModal,
     onMetricsSpatialSelection
   } = props
+
+  const { setStartDrawing } = useContext(StartDrawingContext)
+
+  const location = useLocation()
+  const { pathname } = location
+  const isHomePage = pathname === '/'
 
   const onItemClick = (spatialType) => {
     // Sends metrics for spatial selection usage
@@ -36,15 +48,32 @@ const SpatialSelectionDropdown = (props) => {
       item: spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase()
     })
 
-    if (spatialType === 'file') {
-      onToggleShapefileUploadModal(true)
+    // If the user is on the home page, redirect to the search page with the spatial type as a query parameter
+    if (isHomePage) {
+      // Build a new URL object with the current origin and the search path
+      const newUrl = new URL('/search', window.location.origin)
+      const params = new URLSearchParams(searchParams)
 
-      return
+      newUrl.search = params.toString()
+      const urlString = `/search${newUrl.search}`
+
+      // Change the URL to the new value
+      onChangeUrl(urlString)
+
+      // Update the store to the new URL values
+      onChangePath(urlString)
+
+      // Set the startDrawing context to the selected spatial type
+      setStartDrawing(spatialType)
+    } else {
+      if (spatialType === 'file') {
+        onToggleShapefileUploadModal(true)
+
+        return
+      }
+
+      eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
     }
-
-    eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
-
-    // TODO if we are on the / page, navigate to the /search page with `?startDrawing=${spatialType}`
   }
 
   const { disableDatabaseComponents } = getApplicationConfig()
@@ -62,7 +91,7 @@ const SpatialSelectionDropdown = (props) => {
   return (
     <Dropdown
       className="spatial-selection-dropdown"
-      placement='bottom-start'
+      placement="bottom-start"
     >
       <Dropdown.Toggle
         variant="light"
@@ -142,6 +171,9 @@ const SpatialSelectionDropdown = (props) => {
 }
 
 SpatialSelectionDropdown.propTypes = {
+  searchParams: PropTypes.shape({}).isRequired,
+  onChangePath: PropTypes.func.isRequired,
+  onChangeUrl: PropTypes.func.isRequired,
   onMetricsSpatialSelection: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }

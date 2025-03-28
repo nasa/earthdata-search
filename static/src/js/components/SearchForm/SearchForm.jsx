@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
-import { FaRegTrashAlt, FaSearch, FaTimes, FaTrash, FaTrashAlt } from 'react-icons/fa'
+import { FaRegTrashAlt } from 'react-icons/fa'
 import { Filter, Search } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
@@ -183,18 +183,19 @@ class SearchForm extends Component {
     return value.trim().length > 2
   }
 
-    /**
-   * AutoSuggest method to render each suggestion
-   * @param {Object} suggestion
-   */
-    renderInputComponent(inputProps) {
-      return (
-        <div className="position-relative">
-          <EDSCIcon className="search-form__search-icon position-absolute" icon={Search} />
-          <input {...inputProps} />
-        </div>
-      )
-    }
+  /**
+ * AutoSuggest method to render each suggestion
+ * @param {Object} suggestion
+ */
+  renderInputComponent(inputProps) {
+    return (
+      <div className="position-relative">
+        <EDSCIcon className="search-form__search-icon position-absolute" icon={Search} />
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <input {...inputProps} />
+      </div>
+    )
+  }
 
   /**
    * AutoSuggest method to render each suggestion
