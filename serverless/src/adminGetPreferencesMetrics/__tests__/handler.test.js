@@ -38,7 +38,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -55,7 +55,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -119,7 +119,7 @@ describe('adminGetPreferencesMetrics', () => {
             ['referenceLabels', '100% (2)']
           ],
           baseLayer: [
-            ['blueMarble', '100% (2)']
+            ['worldImagery', '100% (2)']
           ]
         }
       }
@@ -137,7 +137,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -154,7 +154,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -237,8 +237,8 @@ describe('adminGetPreferencesMetrics', () => {
             ['not set (referenceFeatures & referenceLabels)', '50.0% (2)']
           ],
           baseLayer: [
-            ['blueMarble', '50.0% (2)'],
-            ['not set (blueMarble)', '50.0% (2)']
+            ['worldImagery', '50.0% (2)'],
+            ['not set (worldImagery)', '50.0% (2)']
           ]
         }
       }
@@ -256,7 +256,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -273,7 +273,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 1,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -290,7 +290,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 2,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -307,7 +307,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 3,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -324,7 +324,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 4,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -341,7 +341,7 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 5,
-                baseLayer: 'blueMarble',
+                baseLayer: 'worldImagery',
                 longitude: 0,
                 projection: 'epsg4326',
                 overlayLayers: ['referenceFeatures', 'referenceLabels']
@@ -428,8 +428,8 @@ describe('adminGetPreferencesMetrics', () => {
             ['not set (referenceFeatures & referenceLabels)', '25.0% (2)']
           ],
           baseLayer: [
-            ['blueMarble', '75.0% (6)'],
-            ['not set (blueMarble)', '25.0% (2)']
+            ['worldImagery', '75.0% (6)'],
+            ['not set (worldImagery)', '25.0% (2)']
           ]
         }
       }

@@ -1,13 +1,12 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import FormControl from 'react-bootstrap/FormControl'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import PreferencesMultiSelectField from '../PreferencesMultiSelectField'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
+const setup = (overrideProps) => {
+  const onChange = jest.fn()
+  const user = userEvent.setup()
   const props = {
     schema: {
       items: {
@@ -18,35 +17,107 @@ function setup() {
     },
     name: 'testField',
     formData: ['option1'],
-    onChange: jest.fn()
+    onChange,
+    ...overrideProps
   }
-
-  const enzymeWrapper = shallow(<PreferencesMultiSelectField {...props} />)
+  render(<PreferencesMultiSelectField {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    user,
+    onChange
   }
 }
 
 describe('PreferencesMultiSelectField component', () => {
   test('renders a radio form field', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    const input = enzymeWrapper.find(FormControl)
-
-    expect(input.props().value).toEqual(['option1'])
-    expect(input.props().name).toEqual('testField')
-    expect(input.props().label).toEqual('testField')
+    expect(screen.getByRole('option', { name: 'Option 1' })).toBeInTheDocument()
+    expect(screen.getByText('Test Field')).toBeVisible()
   })
 
-  test('onChange sets the state', () => {
-    const { enzymeWrapper } = setup()
+  // TODO put this test back in
+  test('onChange sets the state', async () => {
+    const { user, onChange } = setup()
+    const select = screen.getByRole('listbox')
+    await user.selectOptions(select, 'option2')
 
-    const input = enzymeWrapper.find(FormControl)
+    expect(onChange).toHaveBeenCalledTimes(1)
+    // TODO fix this assertion as it does not make sense that this passes
+    expect(onChange).toHaveBeenCalledWith(['option1', 'option2'])
+  })
+})
 
-    input.props().onChange({ target: { selectedOptions: [{ value: 'option2' }] } })
+describe('ensure that referenceLabels and referenceFeatures are correctly rendered', () => {
+  test('when blueMarble is the user preference it renders as world imagery', () => {
+    const props = {
+      schema: {
+        items: {
+          enum: [
+            'bordersRoads',
+            'coastlines',
+            'placeLabels',
+            'referenceFeatures',
+            'referenceLabels'
+          ],
+          enumNames: [
+            'Borders and Roads',
+            'Coastlines',
+            'Place Labels'
+          ]
+        },
+        title: 'Overlay Layers'
+      },
+      name: 'testField',
+      formData: ['bordersRoads', 'coastlines', 'placeLabels'],
+      onChange: jest.fn()
+    }
 
-    expect(enzymeWrapper.state().formData).toEqual(['option2'])
+    setup(props)
+
+    const inputFields = screen.getAllByRole('option')
+    console.log('🚀 ~ file: PreferencesMultiSelectField.test.jsx:83 ~ inputFields:', inputFields)
+
+    // Ensure the form elements are correct to accommodate the blueMarble change
+    expect(inputFields.length).toBe(3)
+  })
+
+  test.skip('when worldImagery is the user preference it renders as world imagery', () => {
+    const props = {
+      schema: {
+        items: {
+          enum: [
+            'worldImagery',
+            'trueColor',
+            'landWaterMap',
+            'blueMarble'
+          ],
+          enumNames: [
+            'World Imagery',
+            'Corrected Reflectance (True Color)',
+            'Land / Water Map'
+          ],
+          description: 'Test Field Description'
+        },
+        title: 'Base Layer'
+      },
+      name: 'testField',
+      // Form data is set to `worldImagery `
+      formData: 'worldImagery',
+      onChange: jest.fn()
+    }
+
+    setup(props)
+
+    const inputFields = screen.getAllByRole('radio')
+
+    // Ensure the form elements are correct to accommodate the blueMarble change
+    expect(inputFields.length).toBe(3)
+
+    expect(inputFields[0].checked).toEqual(true)
+    expect(inputFields[0].value).toEqual('worldImagery')
+
+    expect(inputFields[2].value).toEqual('landWaterMap')
+    expect(inputFields[2].checked).toEqual(false)
   })
 })

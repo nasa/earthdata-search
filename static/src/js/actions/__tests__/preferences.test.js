@@ -58,7 +58,7 @@ describe('setPreferencesFromJwt', () => {
       mapView: {
         zoom: 4,
         latitude: 39,
-        baseLayer: 'blueMarble',
+        baseLayer: 'worldImagery',
         longitude: -95,
         projection: 'epsg4326',
         overlayLayers: [
@@ -90,50 +90,126 @@ describe('setPreferencesFromJwt', () => {
     expect(storeActions.length).toBe(0)
   })
 
-  test('calls changeMap if map preferences exist', () => {
-    const preferences = {
-      mapView: {
-        zoom: 4,
-        latitude: 39,
-        baseLayer: 'blueMarble',
-        longitude: -95,
-        projection: 'epsg4326',
-        overlayLayers: [
-          'referenceFeatures',
-          'referenceLabels'
-        ]
-      },
-      panelState: 'default',
-      granuleSort: 'default',
-      collectionSort: 'default',
-      granuleListView: 'default',
-      collectionListView: 'default'
-    }
+  describe('when setting map preferences', () => {
+    test('calls changeMap if map preferences exist and the map state equals the initial state', () => {
+      const preferences = {
+        mapView: {
+          zoom: 4,
+          latitude: 39,
+          baseLayer: 'worldImagery',
+          longitude: -95,
+          projection: 'epsg4326',
+          overlayLayers: [
+            'referenceFeatures',
+            'referenceLabels'
+          ]
+        },
+        panelState: 'default',
+        granuleSort: 'default',
+        collectionSort: 'default',
+        granuleListView: 'default',
+        collectionListView: 'default'
+      }
 
-    const store = mockStore({})
-    store.dispatch(setPreferencesFromJwt(testJwtToken))
+      const store = mockStore({
+        map: {
+          base: {
+            worldImagery: true,
+            trueColor: false,
+            landWaterMap: false
+          },
+          latitude: 0,
+          longitude: 0,
+          overlays: {
+            referenceFeatures: true,
+            coastlines: false,
+            referenceLabels: true
+          },
+          projection: 'epsg4326',
+          rotation: 0,
+          zoom: 3
+        }
+      })
 
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: SET_PREFERENCES,
-      payload: preferences
+      store.dispatch(setPreferencesFromJwt(testJwtToken))
+
+      const storeActions = store.getActions()
+      expect(storeActions.length).toBe(2)
+
+      expect(storeActions[0]).toEqual({
+        type: SET_PREFERENCES,
+        payload: preferences
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_MAP,
+        payload: {
+          base: {
+            worldImagery: true
+          },
+          latitude: 39,
+          longitude: -95,
+          overlays: {
+            referenceFeatures: true,
+            referenceLabels: true
+          },
+          projection: 'epsg4326',
+          zoom: 4
+        }
+      })
     })
 
-    expect(storeActions[1]).toEqual({
-      type: UPDATE_MAP,
-      payload: {
-        base: {
-          blueMarble: true
+    test('does not call changeMap if map preferences exist and the map state does not equal the initial state', () => {
+      const preferences = {
+        mapView: {
+          zoom: 4,
+          latitude: 39,
+          baseLayer: 'worldImagery',
+          longitude: -95,
+          projection: 'epsg4326',
+          overlayLayers: [
+            'referenceFeatures',
+            'referenceLabels'
+          ]
         },
-        latitude: 39,
-        longitude: -95,
-        overlays: {
-          referenceFeatures: true,
-          referenceLabels: true
-        },
-        projection: 'epsg4326',
-        zoom: 4
+        panelState: 'default',
+        granuleSort: 'default',
+        collectionSort: 'default',
+        granuleListView: 'default',
+        collectionListView: 'default'
       }
+
+      const store = mockStore({
+        map: {
+          base: {
+            worldImagery: true,
+            trueColor: false,
+            landWaterMap: false
+          },
+          latitude: -120,
+          longitude: 47,
+          overlays: {
+            referenceFeatures: true,
+            coastlines: false,
+            referenceLabels: true
+          },
+          projection: 'epsg4326',
+          rotation: 0,
+          zoom: 3
+        }
+      })
+
+      store.dispatch(setPreferencesFromJwt(testJwtToken))
+
+      const storeActions = store.getActions()
+
+      // Does not call UPDATE_MAP because the map state does not equal the initial state
+      expect(storeActions.length).toBe(1)
+
+      expect(storeActions[0]).toEqual({
+        type: SET_PREFERENCES,
+        payload: preferences
+      })
     })
   })
 })

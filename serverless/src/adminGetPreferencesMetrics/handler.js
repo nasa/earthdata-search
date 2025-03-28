@@ -54,8 +54,8 @@ const adminGetPreferencesMetrics = async (event, context) => {
         latitude = 'not set (0)',
         longitude = 'not set (0)',
         projection = 'not set (epsg4326)',
-        overlayLayers = ['not set (referenceFeatures & referenceLabels)'],
-        baseLayer = 'not set (blueMarble)'
+        overlayLayers = ['not set (bordersRoads & placeLabels)'],
+        baseLayer = 'not set (worldImagery)'
       } = mapView
 
       return {

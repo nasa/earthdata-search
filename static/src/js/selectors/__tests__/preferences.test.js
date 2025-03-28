@@ -17,7 +17,7 @@ describe('getMapPreferences selector', () => {
           granuleListView: 'table',
           mapView: {
             zoom: 4,
-            baseLayer: 'blueMarble',
+            baseLayer: 'worldImagery',
             latitude: 39,
             longitude: -95,
             overlayLayers: [

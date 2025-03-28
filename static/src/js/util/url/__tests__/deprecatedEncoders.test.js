@@ -12,7 +12,7 @@ describe('url#decodeUrlParams', () => {
   test('decodes map correctly', () => {
     const expectedResult = {
       base: {
-        blueMarble: false,
+        worldImagery: false,
         trueColor: true,
         landWaterMap: false
       },

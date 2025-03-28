@@ -11,7 +11,7 @@ describe('util#createJwtToken', () => {
         mapView: {
           zoom: 4,
           latitude: 39,
-          baseLayer: 'blueMarble',
+          baseLayer: 'worldImagery',
           longitude: -95,
           projection: 'epsg4326',
           overlayLayers: [
@@ -40,7 +40,7 @@ describe('util#createJwtToken', () => {
         mapView: {
           zoom: 4,
           latitude: 39,
-          baseLayer: 'blueMarble',
+          baseLayer: 'worldImagery',
           longitude: -95,
           projection: 'epsg4326',
           overlayLayers: [

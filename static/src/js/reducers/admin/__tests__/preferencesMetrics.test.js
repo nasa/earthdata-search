@@ -102,7 +102,7 @@ describe('SET_ADMIN_PREFERENCES_METRICS', () => {
           ['referenceLabels', '100% (2)']
         ],
         baseLayer: [
-          ['blueMarble', '100% (2)']
+          ['worldImagery', '100% (2)']
         ]
       }
     }
@@ -148,7 +148,7 @@ describe('SET_ADMIN_PREFERENCES_METRICS', () => {
           ['referenceLabels', '100% (2)']
         ],
         baseLayer: [
-          ['blueMarble', '100% (2)']
+          ['worldImagery', '100% (2)']
         ]
       }
     }

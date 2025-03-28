@@ -42,12 +42,41 @@ class PreferencesMultiSelectField extends Component {
       schema
     } = this.props
 
-    const { items } = schema
+    const { items, title } = schema
+    console.log('🚀 ~ file: PreferencesMultiSelectField.jsx:46 ~ PreferencesMultiSelectField ~ title:', title)
     const {
       enum: values,
       enumNames,
       description
     } = items
+    console.log('🚀 ~ file: PreferencesMultiSelectField.jsx:52 ~ PreferencesMultiSelectField ~ title:', title)
+    // let parsedFormData = formData
+
+    // TODO EDSC-4443: remove this in a subsequent release
+    // if (title === 'Overlay Layers') {
+    //   // Remove blueMarble element from rendering a radio button
+    //   const referenceFeatureIndex = values.indexOf('referenceFeatures')
+    //   const referenceLabelsIndex = values.indexOf('referenceLabels')
+
+    //   // Remove "referenceLabels" if it exists in the array
+    //   if (referenceFeatureIndex !== -1) {
+    //     values.splice(referenceFeatureIndex, 1)
+    //   }
+
+    //   // Remove "referenceLabels" if it exists in the array
+    //   if (referenceLabelsIndex !== -1) {
+    //     values.splice(referenceLabelsIndex, 1)
+    //   }
+
+    //   // TODO make sure we use the constants for this
+    //   if (parsedFormData === 'referenceFeatures') {
+    //     parsedFormData = 'bordersRoads'
+    //   }
+
+    //   if (parsedFormData === 'referenceLabels') {
+    //     parsedFormData = 'placeLabels'
+    //   }
+    // }
 
     return (
       <div className="preferences-multi-select-field">
@@ -99,7 +128,8 @@ PreferencesMultiSelectField.propTypes = {
       enum: PropTypes.arrayOf(PropTypes.string),
       enumNames: PropTypes.arrayOf(PropTypes.string),
       description: PropTypes.string
-    })
+    }),
+    title: PropTypes.string
   }).isRequired
 }
 

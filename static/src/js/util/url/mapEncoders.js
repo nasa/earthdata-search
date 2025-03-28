@@ -59,7 +59,7 @@ export const encodeMap = (map, mapPreferences) => {
 
   // Home is used to determine if the map values need to be present in the URL
   let defaultValues = {
-    base: 'blueMarble',
+    base: 'worldImagery',
     lat: 0,
     long: 0,
     overlays: 'referenceFeatures,referenceLabels',
@@ -83,7 +83,7 @@ export const encodeMap = (map, mapPreferences) => {
     const encodedProjectionPreference = projectionList[mapProjection]
 
     let encodedBasePreference
-    if (baseLayer === 'blueMarble') encodedBasePreference = 'blueMarble'
+    if (baseLayer === 'worldImagery') encodedBasePreference = 'worldImagery'
     if (baseLayer === 'trueColor') encodedBasePreference = 'trueColor'
     if (baseLayer === 'landWaterMap') encodedBasePreference = 'landWaterMap'
 
@@ -170,22 +170,22 @@ export const decodeMap = (params) => {
   // If a base layer is set, convert the value to the format the state expects
   if (baseParam) {
     decodedBase = {
-      blueMarble: baseParam === 'blueMarble',
+      worldImagery: baseParam === 'worldImagery',
       trueColor: baseParam === 'trueColor',
       landWaterMap: baseParam === 'landWaterMap'
     }
 
     const { trueColor, landWaterMap } = decodedBase
 
-    if (!trueColor && !landWaterMap) decodedBase.blueMarble = true
+    if (!trueColor && !landWaterMap) decodedBase.worldImagery = true
   }
 
   // If a overlay layers are set, convert the value to the format the state expects
   if (overlaysParam) {
     decodedOverlays = {
-      referenceFeatures: overlaysParam.split(',').indexOf('referenceFeatures') !== -1,
+      bordersRoads: overlaysParam.split(',').indexOf('bordersRoads') !== -1,
       coastlines: overlaysParam.split(',').indexOf('coastlines') !== -1,
-      referenceLabels: overlaysParam.split(',').indexOf('referenceLabels') !== -1
+      placeLabels: overlaysParam.split(',').indexOf('placeLabels') !== -1
     }
   }
 

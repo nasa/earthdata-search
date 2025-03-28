@@ -20,7 +20,7 @@ describe('decodes base correctly', () => {
       ...emptyDecodedResult,
       map: {
         base: {
-          blueMarble: false,
+          worldImagery: false,
           trueColor: true,
           landWaterMap: false
         },
@@ -40,7 +40,7 @@ describe('decodes base correctly', () => {
       ...emptyDecodedResult,
       map: {
         base: {
-          blueMarble: true,
+          worldImagery: true,
           trueColor: false,
           landWaterMap: false
         },
@@ -275,7 +275,7 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       map: {
         base: {
-          blueMarble: true,
+          worldImagery: true,
           trueColor: false,
           landWaterMap: false
         },
@@ -302,7 +302,7 @@ describe('url#encodeUrlQuery', () => {
         map: {
           ...defaultProps.map,
           base: {
-            blueMarble: false,
+            worldImagery: false,
             trueColor: false,
             landWaterMap: true
           },
@@ -326,7 +326,7 @@ describe('url#encodeUrlQuery', () => {
         map: {
           ...defaultProps.map,
           base: {
-            blueMarble: false,
+            worldImagery: false,
             trueColor: false,
             landWaterMap: true
           },
@@ -341,7 +341,7 @@ describe('url#encodeUrlQuery', () => {
           zoom: 0
         },
         mapPreferences: {
-          baseLayer: 'blueMarble',
+          baseLayer: 'worldImagery',
           latitude: 39,
           longitude: -95,
           overlayLayers: [
@@ -362,7 +362,7 @@ describe('url#encodeUrlQuery', () => {
         map: {
           ...defaultProps.map,
           base: {
-            blueMarble: false,
+            worldImagery: false,
             trueColor: false,
             landWaterMap: true
           },
