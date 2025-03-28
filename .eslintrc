@@ -12,16 +12,18 @@
   "plugins": ["@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "rules": {
+    // https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-unresolved.md
+    // If you're using a module bundler other than Node or Webpack, you may end up with a lot of false positive reports of missing dependencies.
+    // We are using Vite, and it is giving incorrect results for .ts files
+    "import/no-unresolved": "off",
+
     // Allowing cyclic dependencies
     "import/no-cycle": "off",
-    "import/no-unresolved": [
-      "error",
-      {
-        "ignore": [
-          "^@edsc/earthdata-react-icons/.+"
-        ]
-      }
-    ]
+
+    // https://stackoverflow.com/questions/57802057/eslint-configuring-no-unused-vars-for-typescript/61555310#61555310
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error", {}]
+
   },
   "overrides": [
     {

@@ -12,7 +12,6 @@ import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getMapPreferences, getCollectionSortKeyParameter } from '../../selectors/preferences'
-import StartDrawingContext from '../../contexts/StartDrawingContext'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -64,8 +63,6 @@ export const mapStateToProps = (state) => ({
 })
 
 export class UrlQueryContainer extends PureComponent {
-  static contextType = StartDrawingContext
-
   constructor(props) {
     super(props)
 

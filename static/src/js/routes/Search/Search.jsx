@@ -89,11 +89,9 @@ export const Search = ({
 
   const { setSearchLoaded } = useContext(TourContext)
 
-  useEffect(
-    () => {
-      setSearchLoaded(true)
-    }, []
-  )
+  useEffect(() => {
+    setSearchLoaded(true)
+  }, [])
 
   const {
     hasGranulesOrCwic = false,

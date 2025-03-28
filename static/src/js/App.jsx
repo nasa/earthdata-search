@@ -21,7 +21,6 @@ import WithProviders from './providers/WithProviders/WithProviders'
 
 // Routes
 import Home from './routes/Home/Home'
-import SearchTour from './components/SearchTour/SearchTour'
 
 // Components and Containers
 import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
@@ -48,8 +47,6 @@ import TooManyPointsModalContainer from './containers/TooManyPointsModalContaine
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import WrappingContainer from './containers/WrappingContainer/WrappingContainer'
 
-import Search from './routes/Search/Search'
-
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
 
@@ -65,7 +62,8 @@ window.reactToastProvider = React.createRef()
 
 // Lazy loaded routes
 const Admin = lazy(() => import('./routes/Admin/Admin'))
-// const Search = lazy(() => import('./routes/Search/Search'))
+const Search = lazy(() => import('./routes/Search/Search'))
+const SearchTour = lazy(() => import('./components/SearchTour/SearchTour'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
@@ -85,17 +83,17 @@ class App extends Component {
     this.env = env
   }
 
+  componentDidMount() {
+    setTimeout(() => {
+      import('./routes/Search/Search')
+      import('./components/SearchTour/SearchTour')
+    }, 1000)
+  }
+
   // Portal paths have been removed, but this needs to stay in order to redirect users using
   // a path to the param based portal
   portalPaths(path) {
     return [`/portal/:portalId${path}`, path]
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      import('./routes/Search/Search')
-      import('./containers/MapContainer/MapContainer')
-    }, 1000)
   }
 
   render() {
@@ -232,10 +230,10 @@ class App extends Component {
                         path={this.portalPaths('/search')}
                         render={
                           () => (
-                            <>
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
                               <SearchTour />
                               <Search />
-                            </>
+                            </Suspense>
                           )
                         }
                       />

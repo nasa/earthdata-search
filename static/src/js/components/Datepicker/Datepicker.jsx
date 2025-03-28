@@ -216,7 +216,7 @@ class Datepicker extends PureComponent {
           inputProps={
             {
               id,
-              placeholder: "Type or click to select a date",
+              placeholder: 'Type or click to select a date',
               autoComplete: 'off',
               className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
               'aria-label': label,
