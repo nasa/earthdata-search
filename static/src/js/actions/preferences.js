@@ -27,8 +27,6 @@ export const setPreferences = (payload) => ({
 
 export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
   const { map: mapState = {} } = getState()
-  console.log('🚀 ~ file: preferences.js:30 ~ mapState:', mapState)
-  console.log('🚀 ~ file: preferences.js:45 ~ initialState:', initialState)
 
   if (!jwtToken) return
 
@@ -37,9 +35,8 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
 
   dispatch(setPreferences(preferences))
 
-  // If the user has map preferences set use those to set the map store
-  // This will happen on page load to ensure that the map will default to the
-  // correct values
+  // If the user has map preferences set use those to set the map store if there is no map url parameters
+  // This will happen on page load to ensure that the map will default to the preferences
   const { mapView = {} } = preferences
   if (!isEmpty(mapView)) {
     if (isEqual(mapState, initialState)) {
