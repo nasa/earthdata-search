@@ -107,12 +107,12 @@ const MapEvents = (props) => {
     },
     baselayerchange: (event) => {
       const base = {
-        blueMarble: false,
+        worldImagery: false,
         trueColor: false,
         landWaterMap: false
       }
 
-      if (event.name === 'Blue Marble') base.blueMarble = true
+      if (event.name === 'World Imagery') base.worldImagery = true
       if (event.name === 'Corrected Reflectance (True Color)') base.trueColor = true
       if (event.name === 'Land / Water Map *') base.landWaterMap = true
 

@@ -151,14 +151,14 @@
         "baseLayer": {
           "type": "string",
           "title": "Base Layer",
-          "default": "blueMarble",
+          "default": "worldImagery",
           "enum": [
-            "blueMarble",
+            "worldImagery",
             "trueColor",
             "landWaterMap"
           ],
           "enumNames": [
-            "Blue Marble",
+            "World Imagery",
             "Corrected Reflectance (True Color)",
             "Land / Water Map"
           ]

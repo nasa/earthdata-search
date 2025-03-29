@@ -284,6 +284,7 @@ test.describe('Map: Control interactions', () => {
     })
   })
 
+  // TODO rebase and fix tests after EDSC-4412
   test.describe.skip('When changing the map layers', () => {
     test.describe('When changing the base layer to Blue Marble', () => {
       test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {

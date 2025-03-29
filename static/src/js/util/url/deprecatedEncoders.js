@@ -30,7 +30,7 @@ export const decodeDeprecatedMapParam = (param) => {
   let decodedBaseFromMParam
   if (baseFromMParam) {
     decodedBaseFromMParam = {
-      blueMarble: baseFromMParam === '0',
+      worldImagery: baseFromMParam === '0',
       trueColor: baseFromMParam === '1',
       landWaterMap: baseFromMParam === '2'
     }

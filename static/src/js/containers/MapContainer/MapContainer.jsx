@@ -580,7 +580,7 @@ MapContainer.propTypes = {
     projection: PropTypes.string,
     zoom: PropTypes.number,
     base: PropTypes.shape({
-      blueMarble: PropTypes.bool,
+      worldImagery: PropTypes.bool,
       trueColor: PropTypes.bool,
       landWaterMap: PropTypes.bool
     }),
