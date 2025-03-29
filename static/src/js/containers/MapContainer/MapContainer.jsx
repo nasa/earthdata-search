@@ -4,18 +4,12 @@
 import React, {
   useCallback,
   useEffect,
-  useLayoutEffect,
-  useRef,
   useState,
   useMemo
 } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {
-  difference,
-  isEqual,
-  merge
-} from 'lodash-es'
+import { difference } from 'lodash-es'
 
 import actions from '../../actions'
 import { metricsMap } from '../../middleware/metrics/actions'
@@ -142,8 +136,6 @@ export const MapContainer = (props) => {
     '/search/granules',
     '/search/granules/collection-details'
   ])
-  // TODO EDSC-4418 need to be sure URL values override preferences (broken in prod)
-  const [map, setMap] = useState(mapProps)
 
   const {
     base,
@@ -153,7 +145,7 @@ export const MapContainer = (props) => {
     projection: propsProjection,
     rotation,
     zoom: zoomProps
-  } = map
+  } = mapProps
 
   const [projection, setProjection] = useState(propsProjection)
   const [center, setCenter] = useState({
@@ -161,59 +153,6 @@ export const MapContainer = (props) => {
     longitude
   })
   const [zoom, setZoom] = useState(zoomProps)
-
-  useLayoutEffect(() => {
-    const {
-      latitude: latitudePreference,
-      longitude: longitudePreference,
-      projection: projectionPreference,
-      zoom: zoomPreference
-    } = mapPreferences
-
-    // Format base and overlay layer preferences to before merging with the defaults
-    const {
-      baseLayer: baseLayerFromPreference,
-      overlayLayers: overlayLayersFromPreference = []
-    } = mapPreferences
-
-    const baseLayerPreference = { [baseLayerFromPreference]: true }
-    const overlayLayersPreference = {}
-    overlayLayersFromPreference.forEach((layer) => {
-      overlayLayersPreference[layer] = true
-    })
-
-    // Merge the current map settings with the preferences, using preferences in a parameter is not set
-    const mapWithDefaults = merge(
-      {
-        base: baseLayerPreference,
-        latitude: latitudePreference,
-        longitude: longitudePreference,
-        overlays: overlayLayersPreference,
-        projection: projectionPreference,
-        zoom: zoomPreference
-      },
-      mapProps
-    )
-
-    const {
-      latitude: defaultLatitude,
-      longitude: defaultLongitude,
-      projection: defaultProjection,
-      zoom: defaultZoom
-    } = mapWithDefaults
-
-    if (isEqual(map, mapWithDefaults)) return
-
-    setCenter({
-      latitude: defaultLatitude,
-      longitude: defaultLongitude
-    })
-
-    setZoom(defaultZoom)
-    setProjection(defaultProjection)
-
-    setMap(mapWithDefaults)
-  }, [mapProps])
 
   // If there is a shapefileId in the store but we haven't fetched the shapefile yet, fetch it
   useEffect(() => {
@@ -224,9 +163,7 @@ export const MapContainer = (props) => {
     }
   }, [shapefile])
 
-  const maxZoom = projection === projections.geographic ? 7 : 4
-
-  let nonExcludedGranules = {}
+  const nonExcludedGranules = {}
   // If the focusedGranuleId is set, add it to the nonExcludedGranules first.
   // This is so the focused granule is always drawn on top of the other granules
   if (focusedGranuleId && granulesMetadata[focusedGranuleId]) {
@@ -338,7 +275,6 @@ export const MapContainer = (props) => {
     return colorMapData
   }, [gibsTag, colormapsMetadata, projection])
 
-
   const { colorMapData: colorMap = {} } = colorMapState
 
   // Get GIBS data to pass to the map within each granule
@@ -409,12 +345,11 @@ export const MapContainer = (props) => {
   //   />
   // )
 
-
   // Added and removed granule ids for the focused collection are used to apply different
   // styles to the granules. Granules that are added are drawn with a regular style, while
   // granules that are removed are drawn with a deemphasized style.
-  let allAddedGranuleIds = []
-  let allRemovedGranuleIds = []
+  const allAddedGranuleIds = []
+  const allRemovedGranuleIds = []
 
   // If the focusedCollectionId is set, get the added and removed granule ids
   if (focusedCollectionId && focusedCollectionId !== '') {
@@ -584,7 +519,7 @@ MapContainer.propTypes = {
     projection: PropTypes.string,
     zoom: PropTypes.number,
     base: PropTypes.shape({
-      blueMarble: PropTypes.bool,
+      worldImagery: PropTypes.bool,
       trueColor: PropTypes.bool,
       landWaterMap: PropTypes.bool
     }),

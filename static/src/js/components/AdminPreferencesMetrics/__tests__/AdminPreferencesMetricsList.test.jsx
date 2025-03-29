@@ -113,7 +113,7 @@ describe('AdminPreferencesMetricsList component', () => {
             ['referenceLabels', '100% (4)'] // Column Header 13
           ],
           baseLayer: [
-            ['blueMarble', '100% (4)'] // Column Header 14
+            ['worldImagery', '100% (4)'] // Column Header 14
           ]
         }
       }
@@ -164,7 +164,7 @@ describe('AdminPreferencesMetricsList component', () => {
     expect(within(tables[9]).getByRole('columnheader', { name: 'referenceLabels' })).toBeInTheDocument()
     expect(within(tables[9]).getAllByRole('cell', { name: '100% (4)' })[1]).toBeInTheDocument()
 
-    expect(within(tables[10]).getByRole('columnheader', { name: 'blueMarble' })).toBeInTheDocument()
+    expect(within(tables[10]).getByRole('columnheader', { name: 'worldImagery' })).toBeInTheDocument()
     expect(within(tables[10]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
     expect(screen.queryAllByLabelText('Preferences Metrics Spinner').length).toEqual(0)

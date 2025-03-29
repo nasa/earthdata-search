@@ -1,5 +1,7 @@
-import { isEmpty } from 'lodash-es'
+import { isEmpty, isEqual } from 'lodash-es'
 import jwt from 'jsonwebtoken'
+
+import { initialState } from '../reducers/map'
 
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/actionTypes'
 
@@ -23,7 +25,9 @@ export const setPreferences = (payload) => ({
   payload
 })
 
-export const setPreferencesFromJwt = (jwtToken) => (dispatch) => {
+export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
+  const { map: mapState = {} } = getState()
+
   if (!jwtToken) return
 
   const decoded = jwt.decode(jwtToken)
@@ -31,36 +35,37 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch) => {
 
   dispatch(setPreferences(preferences))
 
-  // If the user has map preferences set use those to set the map store
-  // This will happen on page load to ensure that the map will default to the
-  // correct values
+  // If the user has map preferences set use those to set the map store if there is no map url parameters
+  // This will happen on page load to ensure that the map will default to the preferences
   const { mapView = {} } = preferences
   if (!isEmpty(mapView)) {
-    const {
-      baseLayer,
-      latitude,
-      longitude,
-      overlayLayers,
-      projection,
-      zoom
-    } = mapView
+    if (isEqual(mapState, initialState)) {
+      const {
+        baseLayer,
+        latitude,
+        longitude,
+        overlayLayers,
+        projection,
+        zoom
+      } = mapView
 
-    const base = {
-      [baseLayer]: true
+      const base = {
+        [baseLayer]: true
+      }
+      const overlays = {}
+      overlayLayers.forEach((layer) => {
+        overlays[layer] = true
+      })
+
+      dispatch(changeMap({
+        base,
+        latitude,
+        longitude,
+        overlays,
+        projection,
+        zoom
+      }))
     }
-    const overlays = {}
-    overlayLayers.forEach((layer) => {
-      overlays[layer] = true
-    })
-
-    dispatch(changeMap({
-      base,
-      latitude,
-      longitude,
-      overlays,
-      projection,
-      zoom
-    }))
   }
 }
 

@@ -9,7 +9,7 @@ const initialState = {
     mapView: {
       zoom: 3,
       latitude: 0,
-      baseLayer: 'blueMarble',
+      baseLayer: 'worldImagery',
       longitude: 0,
       projection: 'epsg4326',
       overlayLayers: [
