@@ -462,6 +462,7 @@ export const MapContainer = (props) => {
 
   return (
     <Map
+      base={base}
       center={center}
       colorMap={colorMap}
       focusedCollectionId={focusedCollectionId}
@@ -474,6 +475,7 @@ export const MapContainer = (props) => {
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
       onExcludeGranule={onExcludeGranule}
+      overlays={overlays}
       projectionCode={projection}
       rotation={rotation}
       zoom={zoom}

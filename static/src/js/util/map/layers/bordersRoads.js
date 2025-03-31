@@ -8,14 +8,14 @@ import TileLayer from 'ol/layer/Tile'
 import XYZ from 'ol/source/XYZ'
 
 const bordersRoads = ({
-  attributions,
-  projectionCode
+  attributions
 }) => {
   const bordersLayer = new VectorLayer({
     source: new VectorSource({
       url: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson',
       format: new GeoJSON(),
-      attributions
+      attributions,
+      wrapX: false
     }),
     style: new Style({
       stroke: new Stroke({

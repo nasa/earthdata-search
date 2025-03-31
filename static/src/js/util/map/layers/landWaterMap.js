@@ -1,21 +1,8 @@
 import TileLayer from 'ol/layer/Tile'
 import { XYZ } from 'ol/source'
 import { createXYZ } from 'ol/tilegrid'
+import moment from 'moment'
 import { crsProjections, projectionConfigs } from '../crs'
-
-/**
- * Get either today's date or yesterday's date, depending on data availability
- * GIBS typically has a 1-day delay
- * @return {String} Date in YYYY-MM-DD format
- */
-const getTodayOrYesterday = () => {
-  const today = new Date()
-  // GIBS usually has a 1-day delay in data availability
-  const yesterday = new Date(today)
-  yesterday.setDate(yesterday.getDate() - 1)
-
-  return yesterday.toISOString().split('T')[0]
-}
 
 /**
  * Map our projection codes to GIBS projection identifiers
@@ -41,11 +28,12 @@ const getGibsProjection = (projectionCode) => {
  */
 const landWaterMap = ({
   attributions,
-  projectionCode,
-  date = getTodayOrYesterday()
+  projectionCode
 }) => {
   const projection = crsProjections[projectionCode]
   const gibsProjection = getGibsProjection(projectionCode)
+  const yesterday = moment().subtract(1, 'days')
+  const date = yesterday.format('YYYY-MM-DD')
 
   const layer = new TileLayer({
     className: 'edsc-map-base-layer',

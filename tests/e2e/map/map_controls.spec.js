@@ -284,7 +284,183 @@ test.describe('Map: Control interactions', () => {
     })
   })
 
-  test.describe.skip('When changing the map layers', () => {
+  test.describe('When changing the map layers', () => {
+    test.describe('When changing the base layer to World Imagery', () => {
+      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/search?base=trueColor')
+
+        // Set up the response promise BEFORE interacting with the UI
+        const responsePromise = page.waitForResponse((response) => response.url().includes('wi.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer'))
+
+        // Look for the layer switcher button by its class and aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Click the Land/Water Map radio button
+        await page.locator('input#layer-world-imagery').click()
+        await page.waitForTimeout(500)
+
+        // Verify URL change
+        await expect(page).toHaveURL('search')
+
+        // Now wait for the response promise we set up earlier
+        await responsePromise
+      })
+    })
+
+    test.describe('When changing the base layer to Corrected Reflectance (True Color)', () => {
+      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/')
+
+        // Set up the response promise BEFORE interacting with the UI
+        const responsePromise = page.waitForResponse((response) => response.url().includes('CorrectedReflectance_TrueColor'))
+
+        // Look for the layer switcher button by its class and aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Click the Land/Water Map radio button
+        await page.locator('input#layer-corrected-reflectance').click()
+        await page.waitForTimeout(500)
+
+        // Verify URL change
+        await expect(page).toHaveURL('search?base=trueColor')
+
+        // Now wait for the response promise we set up earlier
+        await responsePromise
+      })
+    })
+
+    test.describe('When changing the base layer to Land/Water Map', () => {
+      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+        page.on('request', (request) => console.log('Request:', request.url()))
+        page.on('response', (response) => console.log('Response:', response.url(), response.status()))
+
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        await page.goto('/')
+
+        // Set up the response promise BEFORE interacting with the UI
+        const responsePromise = page.waitForResponse((response) => response.url().includes('server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation'))
+
+        // Look for the layer switcher button by its class and aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Click the Land/Water Map radio button
+        await page.locator('input#layer-land-water-map').click()
+        await page.waitForTimeout(500)
+
+        // Verify URL change
+        await expect(page).toHaveURL('search?base=landWaterMap')
+
+        // Now wait for the response promise we set up earlier
+        await responsePromise
+      })
+    })
+
+    test.describe('When changing the Place Labels overlay layer', () => {
+      test('updates the URL with the new map parameter', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        // Visit with no overlays loaded
+        await page.goto('/search?overlays=false')
+
+        // Look for the layer switcher button by its class and aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Click the checkbox for Place Labels
+        await page.locator('input#layer-place-labels').click()
+        await page.waitForTimeout(500)
+
+        // Verify URL is updated with the correct overlay parameter
+        await expect(page).toHaveURL('search?overlays=referenceLabels')
+      })
+    })
+
+    test.describe('When changing the Borders and Roads overlay layer', () => {
+      test('updates the URL with the new map parameter', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        // Visit with no overlays loaded
+        await page.goto('/search?overlays=false')
+
+        // Look for the layer switcher button by its class and aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Click the checkbox for Borders and Roads
+        await page.locator('input#layer-borders-roads').click()
+        await page.waitForTimeout(500)
+
+        // Verify URL is updated with the correct overlay parameter
+        await expect(page).toHaveURL('search?overlays=referenceFeatures')
+      })
+    })
+
+    test.describe('When changing the Coastlines overlay layer', () => {
+      test('updates the URL with the new map parameter', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        // Visit with no overlays loaded
+        await page.goto('/search?overlays=false')
+
+        // Look for the layer switcher button by its class and aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Click the checkbox for Coastlines
+        await page.locator('input#layer-coastlines').click()
+        await page.waitForTimeout(500)
+
+        // Verify URL is updated with the correct overlay parameter
+        await expect(page).toHaveURL('search?overlays=coastlines')
+      })
+    })
+  })
+
+  test.describe.skip('When changing the map layers -- old', () => {
     test.describe('When changing the base layer to Blue Marble', () => {
       test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
         await interceptUnauthenticatedCollections({
