@@ -11,18 +11,6 @@ import { getTileGrid } from '../getTileGrid'
 const coastlines = ({
   projectionCode
 }) => {
-  if (!document.getElementById('coastlines-style')) {
-    const style = document.createElement('style')
-    style.id = 'coastlines-style'
-    style.textContent = `
-      .edsc-map-coastlines-layer {
-        filter: contrast(1.5) brightness(0.8);
-      }
-    `
-
-    document.head.appendChild(style)
-  }
-
   const layer = new TileLayer({
     className: 'edsc-map-coastlines-layer',
     source: new WMTS({

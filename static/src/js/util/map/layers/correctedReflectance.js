@@ -1,5 +1,5 @@
 import TileLayer from 'ol/layer/Tile'
-import { WMTS, XYZ } from 'ol/source'
+import { WMTS } from 'ol/source'
 import moment from 'moment'
 import { getTileGrid } from '../getTileGrid'
 
