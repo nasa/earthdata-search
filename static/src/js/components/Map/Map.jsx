@@ -1,8 +1,7 @@
 import React, {
   useContext,
   useEffect,
-  useRef,
-  useState
+  useRef
 } from 'react'
 import { renderToString } from 'react-dom/server'
 import PropTypes from 'prop-types'
