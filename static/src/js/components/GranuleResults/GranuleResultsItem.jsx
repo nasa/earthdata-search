@@ -205,7 +205,7 @@ const GranuleResultsItem = forwardRef(({
           className="granule-results-item__title-wrapper"
         >
           <h3
-            className="granule-results-item__title"
+            className="granule-results-item__title h6"
           >
             <Highlighter
               highlightClassName="granule-results-item__highlighted-title"

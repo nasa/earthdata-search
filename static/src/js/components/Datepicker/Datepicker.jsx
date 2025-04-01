@@ -230,7 +230,6 @@ class Datepicker extends PureComponent {
               },
               onBlur: onInputBlur,
               onFocus: onInputFocus,
-
               onKeyDown,
               ...conditionalInputProps
             }

@@ -91,7 +91,6 @@ export const updateStore = ({
 }
 
 export const changePath = (path = '') => async (dispatch, getState) => {
-  console.log('🚀 ~ urlQuery.js:94 ~ changePath ~ path:', path)
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -238,7 +237,6 @@ const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
  * changeUrl({ pathname: '/a-new-url' })
  */
 export const changeUrl = (options) => (dispatch, getState) => {
-  console.log('🚀 ~ urlQuery.js:240 ~ options:', options)
   const state = getState()
 
   // Retrieve data from Redux using selectors

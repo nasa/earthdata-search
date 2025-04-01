@@ -49,19 +49,14 @@
       }
     }
   }
+}
 
-  input[type="checkbox"] {
-    margin-right: 0.7rem;
-    border-radius: 4px;
-    position: relative;
-    vertical-align: top;
-    opacity: 0.3;
-    flex: none;
-
-    &:checked {
-      opacity: 1;
-    }
-  }
+.form-check-input:focus,
+.form-check-input:focus-visible {
+  border: 0;
+  box-shadow: none;
+  outline: 1px dashed utils.$color__carbon-black;
+  outline-offset: 2px;
 }
 
 .form-check-input:hover,

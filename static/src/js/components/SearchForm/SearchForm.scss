@@ -60,6 +60,8 @@
     position: relative;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
     border-radius: 0;
     background-color: utils.$color__nasa-blue;
     color: utils.$color__spacesuit-white;
@@ -68,7 +70,6 @@
     z-index: 1;
     font-weight: 500;
     border: 0;
-    font-size: 0.8rem;
 
     &.show,
     &:active,
@@ -117,7 +118,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0.5rem;
+      padding: 0.5rem 0.625rem;
     }
 
     &--submit {
@@ -139,6 +140,10 @@
     }
   }
 
+  .dropdown-toggle {
+    padding-right: 0.325rem;
+  }
+
   &__label {
     width: 100%;
     margin-bottom: 0;
@@ -148,11 +153,12 @@
     display: inline-block;
     width: 100%;
     padding: 0.5rem 0.925rem 0.5rem 1.75rem;
-s
+    border: 0;
 
     &:focus {
       box-shadow: none;
       outline: 0;
+      border: 0;
     }
   }
 

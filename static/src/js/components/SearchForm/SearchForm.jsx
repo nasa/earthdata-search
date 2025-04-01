@@ -381,7 +381,6 @@ class SearchForm extends Component {
               onClick={this.onSearchClear}
               icon={FaRegTrashAlt}
               iconSize="0.825rem"
-              disabled
             />
           </div>
           <FilterStack isOpen={showFilterStack}>

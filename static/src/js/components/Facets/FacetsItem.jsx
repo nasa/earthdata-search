@@ -99,7 +99,7 @@ class FacetsItem extends Component {
         >
           <input
             id={uid}
-            className="facets-item__checkbox"
+            className="facets-item__checkbox form-check-input mt-0"
             data-testid={`facet_item-${kebabCase(facet.title)}`}
             type="checkbox"
             name={facet.title}

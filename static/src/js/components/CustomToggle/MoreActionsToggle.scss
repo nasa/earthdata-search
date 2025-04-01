@@ -1,7 +1,20 @@
 @use '../../../css/utils';
 
 .more-actions-toggle {
-  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2rem;
+  height: 2rem;
   color: utils.$color__carbon-black;
+
+  .edsc-icon {
+    position: relative;
+    top: 0.075rem;
+
+    svg {
+      height: 1.125rem;
+      width: 1.125rem;
+    }
+  }
 }

@@ -84,10 +84,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
+    document.addEventListener('DOMContentLoaded', function() {
       import('./routes/Search/Search')
       import('./components/SearchTour/SearchTour')
-    }, 1000)
+      import('./containers/MapContainer/MapContainer')
+    })
   }
 
   // Portal paths have been removed, but this needs to stay in order to redirect users using

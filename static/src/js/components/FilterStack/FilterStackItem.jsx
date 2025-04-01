@@ -53,7 +53,7 @@ const FilterStackItem = (props) => {
                   <header className="filter-stack-item__header">
                     <div className="filter-stack-item__header-primary">
                       <EDSCIcon className={iconClass} icon={icon} title={title} />
-                      <h3 className="filter-stack-item__title">{title}</h3>
+                      <h3 className="filter-stack-item__title h6">{title}</h3>
                       {
                         secondaryTitle && (
                           <span className="filter-stack-item__secondary-title">{secondaryTitle}</span>

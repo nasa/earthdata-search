@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
@@ -10,6 +10,7 @@ import TemporalSelectionDropdownMenu from './TemporalSelectionDropdownMenu'
 import TemporalSelectionDropdownToggle from './TemporalSelectionDropdownToggle'
 
 import './TemporalSelectionDropdown.scss'
+import { useLocation } from 'react-router-dom'
 
 /**
  * TODO:
@@ -22,6 +23,7 @@ import './TemporalSelectionDropdown.scss'
 const TemporalSelectionDropdown = ({
   allowRecurring,
   onChangeQuery,
+  searchParams,
   temporalSearch,
   onMetricsTemporalFilter
 }) => {
@@ -33,6 +35,7 @@ const TemporalSelectionDropdown = ({
     isRecurring = false
   } = temporalSearch
 
+  const dropdownMenuRef = useRef(null)
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const [temporal, setTemporal] = useState({
@@ -47,6 +50,10 @@ const TemporalSelectionDropdown = ({
     end: false
   })
 
+  const location = useLocation()
+  const { pathname } = location
+  const isHomePage = pathname === '/'
+
   useEffect(() => {
     setTemporal(temporalSearch)
 
@@ -57,7 +64,7 @@ const TemporalSelectionDropdown = ({
   }, [temporalSearch])
 
   /**
-   * Toggles state of open
+ * Toggles state of open  to show or hide the dropdown
    */
   const onToggleOpen = () => {
     setOpen(!open)
@@ -94,11 +101,19 @@ const TemporalSelectionDropdown = ({
       })
     }
 
-    onChangeQuery({
+    const newParams = {
       collection: {
         temporal: newTemporal
       }
-    })
+    }
+
+    if (isHomePage) {
+      if (searchParams.q) {
+        newParams.collection.keyword = searchParams.q
+      }
+    }
+
+    onChangeQuery(newParams)
 
     setOpen(false)
   }
@@ -339,6 +354,7 @@ const TemporalSelectionDropdown = ({
       {
         open && (
           <TemporalSelectionDropdownMenu
+            ref={dropdownMenuRef}
             allowRecurring={allowRecurring}
             disabled={disabled}
             onApplyClick={onApplyClick}

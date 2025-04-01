@@ -24,12 +24,14 @@ export const mapStateToProps = (state) => ({
 export const TemporalSelectionDropdownContainer = (props) => {
   const {
     onChangeQuery,
+    searchParams,
     temporalSearch,
     onMetricsTemporalFilter
   } = props
 
   return (
     <TemporalSelectionDropdown
+      searchParams={searchParams}
       onChangeQuery={onChangeQuery}
       temporalSearch={temporalSearch}
       onMetricsTemporalFilter={onMetricsTemporalFilter}

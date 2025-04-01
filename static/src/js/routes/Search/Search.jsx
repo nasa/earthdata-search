@@ -180,31 +180,6 @@ export const Search = ({
               {granuleFiltersSidebar}
             </Route>
             <Route path={path}>
-              <SidebarSection>
-                <div className="sidebar-browse-portals">
-                  <Button
-                    variant="full"
-                    bootstrapVariant="light"
-                    icon={FaSitemap}
-                    onClick={() => onTogglePortalBrowserModal(true)}
-                  >
-                    Browse Portals
-                    <OverlayTrigger
-                      placement="top"
-                      overlay={
-                        (
-                          <Tooltip style={{ width: '20rem' }}>
-                            {/* eslint-disable-next-line max-len */}
-                            Enable a portal in order to refine the data available within Earthdata Search
-                          </Tooltip>
-                        )
-                      }
-                    >
-                      <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
-                    </OverlayTrigger>
-                  </Button>
-                </div>
-              </SidebarSection>
               <div className="sidebar-section-body">
                 <SidebarSection
                   sectionTitle="Filter Collections"

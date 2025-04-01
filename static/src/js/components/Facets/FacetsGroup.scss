@@ -4,6 +4,10 @@
   display: block;
   color: utils.$color__spacesuit-white;
 
+  &--is-open {
+    border-bottom: 1px solid utils.$color__carbon--20;
+  }
+
   &__heading {
     margin: 0;
     font-size: 1rem;
@@ -51,19 +55,29 @@
     font-size: 0.875rem;
     font-weight: 400;
     transition: all 0.2s ease-in-out;
-    border-bottom: 1px solid utils.$color__carbon--10;
+    border: none;
+    border-bottom: 1px solid utils.$color__carbon--20;
+
+    .facets-group--is-open & {
+      border-bottom-color: transparent;
+
+      &:hover {
+        border-bottom-color: transparent;
+      }
+    }
 
     &:hover {
       background: utils.$color__carbon--10;
+      border-bottom: 1px solid utils.$color__carbon--20;
     }
 
-    &:focus {
-      outline: 0;
-      border-color: transparent;
+    &:focus-visible {
+      z-index: 1;
     }
 
     &:disabled {
       background-color: utils.$color__spacesuit-white;
+      border-bottom: 1px solid utils.$color__carbon--40;
       cursor: not-allowed;
     }
   }
@@ -80,7 +94,7 @@
   &__header {
     display: flex;
     padding: 0.2rem 0.5rem 0.325rem 0.7rem;
-    background-color: utils.$color__spacesuit-white;
+    background-color: utils.$color__carbon--5;
     color: utils.$color__spacesuit-white;
   }
 

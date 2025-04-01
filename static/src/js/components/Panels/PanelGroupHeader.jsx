@@ -186,7 +186,7 @@ export const PanelGroupHeader = ({
             : (
               <span className="panel-group-header__heading">
                 <h2
-                  className="panel-group-header__heading-primary"
+                  className="panel-group-header__heading-primary h5"
                   data-testid="panel-group-header__heading-primary"
                 >
                   {primaryHeading}

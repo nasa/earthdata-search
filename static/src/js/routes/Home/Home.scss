@@ -3,53 +3,20 @@
 
 .home {
   &__hero {
-    --hero-image-path-800x600: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800X600.jpg');
-    --hero-image-path-800x600-2x: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800X600.jpg');
-    --hero-image-path-1280x720: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg');
-    --hero-image-path-1280x720-2x: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg');
-    --hero-image-path-1920x1080: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg');
-    --hero-image-path-1920x1080-2x: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg');
-    --hero-image-path-2560x1440: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg');
-    --hero-image-path-2560x1440-2x: url('../../../assets/images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg');
-    --hero-image-overlay: rgba(0, 0, 0, 0.4);
-
     height: calc(100vh - 15rem);
     min-height: 15rem;
     max-height: 65rem;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-image: var(--hero-image-path-800x600);
-    text-shadow: 0 0 0.75rem rgba(utils.$color__carbon-black, 0.75);
+    text-shadow:
+      0 0 0.5rem utils.$color__carbon-black,
+      0 0 2rem utils.$color__carbon-black;
+  }
 
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-      background-image: var(--hero-image-path-800x600-2x);
-    }
-
-    @include bootstrap.media-breakpoint-up(md) {
-      max-height: auto;
-      background-image: var(--hero-image-path-1280x720);
-
-      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-        background-image: var(--hero-image-path-1280x720-2x);
-      }
-    }
-
-    @include bootstrap.media-breakpoint-up(lg) {
-      background-image: var(--hero-image-path-1920x1080);
-
-      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-        background-image: var(--hero-image-path-1920x1080-2x);
-      }
-    }
-
-    @include bootstrap.media-breakpoint-up(xl) {
-      background-image: var(--hero-image-path-2560x1440);
-
-      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-        background-image: var(--hero-image-path-2560x1440-2x);
-      }
-    }
+  &__hero-image {
+    position: absolute;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    inset: 0;
 
     &::before {
       content: "";
@@ -59,32 +26,51 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: var(--hero-image-overlay);
+      background-color: rgba(20, 9, 9, 0.4);
+      mix-blend-mode: multiply;
     }
+  }
+
+  &__hero-image img {
+    inset: 0;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
   }
 
   &__hero-input-icon {
     top: 50%;
     left: 0.75rem;
     transform: translateY(-50%);
-    color: utils.$color__carbon--40
+    color: utils.$color__carbon--40;
+    pointer-events: none;
   }
 
 
   &__hero-input-wrapper {
     max-width: 60rem;
-    align-self: center
+    align-self: center;
   }
 
   &__hero-input {
     padding-left: 2.5rem;
+
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+    }
   }
 
-  &__hero-image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    z-index: 0;
+  &__hero-submit-button {
+    background-color: utils.$color__nasa-red;
+    border: 0;
+
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: utils.$color__nasa-red--shade !important; // !important is needed to override the bootstrap active color
+      border: 0;
+    }
   }
 
   &__hero-image-link {
@@ -119,5 +105,25 @@
   &__image {
     width: 3rem;
     height: 3rem;
+  }
+}
+
+.home-topic-card__title,
+.home-portal-card__title {
+  font-weight: 400;
+}
+
+.home-portal-card__subtitle {
+  font-weight: 400;
+  color: utils.$color__carbon--70;
+}
+
+.home__grid {
+  --bs-columns: 2;
+  --bs-gap: 1rem;
+
+  @include bootstrap.media-breakpoint-up(lg) {
+    --bs-columns: 5;
+    --bs-gap: 1rem;
   }
 }

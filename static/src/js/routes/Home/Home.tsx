@@ -8,8 +8,13 @@ import {
   Container,
   OverlayTrigger,
   Popover,
-  Row
+  Row,
+  Tooltip
 } from 'react-bootstrap'
+import { connect, MapDispatchToProps } from 'react-redux'
+// @ts-ignore
+import { withRouter } from 'react-router-dom'
+
 
 import {
   ArrowCircleDown,
@@ -23,6 +28,9 @@ import { usePortalLogo } from '../../hooks/usePortalLogo'
 import Button from '../../components/Button/Button'
 // @ts-ignore
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
+// @ts-ignore
+import ExternalLink from '../../components/ExternalLink/ExternalLink'
+
 // @ts-ignore
 import Spinner from '../../components/Spinner/Spinner'
 import SpatialSelectionDropdownContainer
@@ -58,6 +66,26 @@ import topicIconSunEarthInteractions from '~Images/homepage-topic-icons/sun-eart
 // @ts-ignore
 import topicIconTerrestrialHydrosphere from '~Images/homepage-topic-icons/terrestrial-hydrosphere-icon.svg'
 
+// @ts-ignore
+import heroImg800 from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600.jpg";
+// @ts-ignore
+import heroImg800_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600@2x.jpg";
+// @ts-ignore
+import heroImg1280 from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg";
+// @ts-ignore
+import heroImg1280_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720@2x.jpg";
+// @ts-ignore
+import heroImg1920 from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg";
+// @ts-ignore
+import heroImg1920_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080@2x.jpg";
+// @ts-ignore
+import heroImg2560 from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg";
+// @ts-ignore
+import heroImg2560_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x.jpg";
+
+// @ts-ignore
+import actions from '../../actions'
+
 import './Home.scss'
 
 interface HomeTopic {
@@ -81,7 +109,7 @@ const topics: HomeTopic[] = [
   {
     title: 'Biosphere',
     image: topicIconBiosphere,
-    url: '/search??fst0=Biosphere',
+    url: '/search?fst0=Biosphere',
     color: '#53B45C'
   },
   {
@@ -137,14 +165,17 @@ const topics: HomeTopic[] = [
 interface HomeTopicCardProps extends HomeTopic {}
 
 const HomeTopicCard: React.FC<HomeTopicCardProps> = ({
-  color, image, url, title
+  color,
+  image,
+  url,
+  title
 }) => (
-  <Card key={title} className="text-decoration-none" as={PortalLinkContainer} to={url} updatePath naked bg="white">
+  <Card key={title} className="text-decoration-none" as={PortalLinkContainer} to={url} updatePath naked>
     <Card.Body className="d-flex align-items-center gap-3">
       <div className="home-card__image d-flex align-items-center justify-content-center flex-shrink-0 flex-grow-0 rounded-circle" style={{ backgroundColor: color }}>
         <Card.Img className="w-auto flex-shrink-0 flex-grow-0" height={50} width={50} src={image} />
       </div>
-      <Card.Title as="h3" className="mb-0 h5">{title}</Card.Title>
+      <Card.Title as="h3" className="home-topic-card__title mb-0 h5">{title}</Card.Title>
     </Card.Body>
   </Card>
 )
@@ -217,20 +248,59 @@ interface HomePortal {
 interface HomePortalCardProps extends HomePortal {}
 
 const HomePortalCard: React.FC<HomePortalCardProps> = (portal) => {
-  const { portalId, title, subtitle } = portal
+  const {
+    portalId,
+    title,
+    subtitle,
+    url
+  } = portal
 
   return (
-    <Card key={title} className="text-decoration-none" as={PortalLinkContainer} to="/search" newPortal={portal} updatePath naked bg="white">
-      <Card.Body className="d-flex flex-column align-items-start gap-2">
-        <PortalLogo portalId={portalId} primaryTitle={title} secondaryTitle={subtitle} />
-        <Card.Title as="h3" className="mb-0 h5">{title}</Card.Title>
-        <Card.Subtitle className="small">{subtitle}</Card.Subtitle>
+    <Card key={title} className="text-decoration-none" as={PortalLinkContainer} to="/search" newPortal={portal} updatePath naked>
+      <Card.Body className="d-flex flex-column align-items-start justify-content-between gap-2">
+        <header className="d-flex flex-column align-items-start gap-2">
+          <PortalLogo portalId={portalId} primaryTitle={title} secondaryTitle={subtitle} />
+          <Card.Title as="h3" className="home-portal-card__title mb-0 h5">{title}</Card.Title>
+          <Card.Subtitle className="home-portal-card__subtitle small">{subtitle}</Card.Subtitle>
+        </header>
+        {
+          url && (
+            <footer>
+              <OverlayTrigger
+                overlay={
+                  <Tooltip id="more-info-tooltip">{`Find more information about ${title}`}</Tooltip>
+                }
+              >
+                <div>
+                    <ExternalLink
+                    className="small"
+                    href={url}
+                    onClick={
+                      (event: React.MouseEvent<HTMLAnchorElement>) => {
+                        event.stopPropagation()
+                      }
+                    }
+                    >
+                    More Info
+                    </ExternalLink>
+                </div>
+              </OverlayTrigger>
+            </footer>
+          )
+        }
       </Card.Body>
     </Card>
   )
 }
 
-const Home = () => {
+export const mapDispatchToProps: MapDispatchToProps<{}, {}> = (dispatch) => ({
+  onChangePath:
+    // @ts-ignore
+    (path: string) => dispatch(actions.changePath(path))
+})
+
+// @ts-ignore
+const Home = ({ onChangePath, history }) => {
   const [showAllPortals, setShowAllPortals] = useState(false)
 
   const onShowAllPortalsClick = () => {
@@ -244,7 +314,7 @@ const Home = () => {
       portalId: portal.portalId,
       subtitle: portal.title.secondary,
       title: portal.title.primary,
-      url: portal.url
+      url: portal.moreInfoUrl
     }))
 
   const visiblePortals = sortedPortals.slice(0, 10)
@@ -263,27 +333,62 @@ const Home = () => {
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
       <div className="route-wrapper__content">
-        <section className="home__hero position-relative w-100 d-flex px-5 flex-column justify-content-center align-items-center flex-shrink-0 gap-5">
+        <section
+          className="home__hero position-relative w-100 d-flex px-5 flex-column justify-content-center flex-shrink-0 gap-5"
+          >
+          <picture className="home__hero-image position-absolute">
+            <source
+              srcSet={`${heroImg2560}, ${heroImg2560_2x} 2x`}
+              media="(min-width: 1200px)"
+            />
+            <source
+              srcSet={`${heroImg1920}, ${heroImg1920_2x} 2x`}
+              media="(min-width: 992px)"
+            />
+            <source
+              srcSet={`${heroImg1280}, ${heroImg1280_2x} 2x`}
+              media="(min-width: 768px)"
+            />
+            <source
+              srcSet={`${heroImg800}, ${heroImg800_2x} 2x`}
+              media="(max-width: 767px)"
+            />
+            <img src={heroImg800} alt="Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the Moderate Resolution Imaging Spectroradiometer (MODIS) aboard the Terra platform on March 12, 2025" />
+          </picture>
           <div className="text-center z-1 d-flex gap-3 flex-column">
             <h1 className="text-white display-7">Search NASA&apos;s 1.8 billion+ Earth observations</h1>
             <p className="text-white mb-0 lead">Use keywords and filter by time and spatial area to search NASA&apos;s Earth science data</p>
           </div>
           <div className="d-flex flex-shrink-1 flex-column align-items-stretch gap-5 z-1">
             <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 flex-grow-1 justify-content-center align-items-center gap-3">
-              <div className="d-flex justify-content-center flex-grow-1">
-                <div className="d-flex flex-grow-1 position-relative">
+              <form
+                className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  onChangePath(`/search?q=${keyword}`)
+                  history.push(`/search?q=${keyword}`)
+                }}
+              >
+                <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
                   <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22" />
-                  <input className="home__hero-input flex-grow-1 form-control form-control-lg border-end-0" type="text" placeholder="Type to search for data" value={keyword} onChange={onChangeKeyword} />
+                  <input
+                    className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
+                    type="text"
+                    placeholder="Type to search for data"
+                    value={keyword}
+                    autoFocus
+                    onChange={onChangeKeyword}
+                  />
                 </div>
-                <div className="d-flex gap-3 align-items-center ps-2 pe-2 bg-white border-top border-bottom">
-                  <TemporalSelectionDropdownContainer />
+                <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                  <TemporalSelectionDropdownContainer searchParams={searchParams} />
                   <SpatialSelectionDropdownContainer searchParams={searchParams} />
                 </div>
-                <PortalLinkContainer className="btn btn-primary btn-lg" variant="primary" size="lg" to={`/search?q=${keyword}`} updatePath>Search</PortalLinkContainer>
-              </div>
+                <Button type="submit" className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light" bootstrapVariant="primary" bootstrapSize="lg">Search</Button>
+              </form>
             </div>
             <div className="d-flex flex-grow-1 justify-content-center">
-              <PortalLinkContainer className="mt-5" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
+              <PortalLinkContainer className="mt-5 focus-light" type="button" updatePath variant="hds-primary" bootstrapSize="lg" dark to="/search">Browse all Earth Science Data</PortalLinkContainer>
             </div>
           </div>
           <OverlayTrigger
@@ -314,13 +419,15 @@ const Home = () => {
                       {' '}
                       platform on March 12, 2025
                     </p>
-                    <PortalLinkContainer type="button" variant="hds-primary" dark to="/search/granules?p=C1378579425-LAADS&pg[0][v]=f&q=MOD02QKM&sb[0]=-29.95172%2C11.43036%2C-16.57503%2C19.31775&qt=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z&tl=1742988379.162!3!!&lat=15.539366708787597&long=-28.25244140625&zoom=6" updatePath>Explore this data on the map</PortalLinkContainer>
+                    <PortalLinkContainer className="focus-light" type="button" variant="hds-primary" dark to="/search/granules?p=C1378579425-LAADS&pg[0][v]=f&q=MOD02QKM&pg[0][gsk]=-start_date&sb[0]=-29.95172%2C11.43036%2C-16.57503%2C19.31775&qt=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z&tl=1347419148.752!5!!&lat=15.27060660&long=-22.78519821&zoom=6" updatePath>Explore this data on the map</PortalLinkContainer>
                   </Popover.Body>
                 </Popover>
               )
             }
           >
-            <Button className="home__hero-image-link position-absolute text-white" bootstrapVariant="link">What is this image?</Button>
+            <div className="home__hero-image-link position-absolute">
+              <Button className="text-white focus-light" bootstrapVariant="link">What is this image?</Button>
+            </div>
           </OverlayTrigger>
         </section>
         <section className="py-5">
@@ -333,13 +440,7 @@ const Home = () => {
             </Row>
             {/* @ts-ignore */}
             <div
-              className="grid"
-              style={
-                {
-                  '--bs-columns': 5,
-                  '--bs-gap': '1rem'
-                }
-              }
+              className="home__grid grid"
             >
               {
                 topics && topics.map((topic) => (
@@ -359,13 +460,7 @@ const Home = () => {
             </Row>
             {/* @ts-ignore */}
             <div
-              className="grid"
-              style={
-                {
-                  '--bs-columns': 5,
-                  '--bs-gap': '1rem'
-                }
-              }
+              className="home__grid grid"
             >
               {
                 visiblePortals && visiblePortals.map((portal) => (
@@ -376,13 +471,7 @@ const Home = () => {
             <Collapse in={showAllPortals}>
               {/* @ts-ignore */}
               <div
-                className="grid mt-3"
-                style={
-                  {
-                    '--bs-columns': 5,
-                    '--bs-gap': '1rem'
-                  }
-                }
+                className="home__grid grid mt-3"
               >
                 {
                   hiddenPortals && hiddenPortals.map((portal) => (
@@ -402,4 +491,6 @@ const Home = () => {
   )
 }
 
-export default Home
+export default withRouter(
+  connect(null, mapDispatchToProps)(Home)
+)
