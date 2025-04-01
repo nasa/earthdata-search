@@ -320,8 +320,6 @@ const Map = ({
   const mapRef = useRef()
   const mapElRef = useRef()
 
-  const [currentOverlays, setCurrentOverlays] = useState(overlays)
-
   useEffect(() => {
     // Set initial base layer visibility
     worldImageryLayer.setVisible(base.worldImagery)
@@ -332,9 +330,6 @@ const Map = ({
     bordersRoadsLayer.setVisible(overlays.referenceFeatures)
     coastlinesLayer.setVisible(overlays.coastlines)
     placeLabelsLayer.setVisible(overlays.referenceLabels)
-
-    // Update the current overlays state
-    setCurrentOverlays(overlays)
   }, [])
 
   const handleLayerChange = ({ id, checked }) => {
@@ -361,7 +356,7 @@ const Map = ({
     } else {
       // Set overlay layer visibility
       let overlayChanged = false
-      const newOverlays = { ...currentOverlays }
+      const newOverlays = { ...overlays }
 
       switch (id) {
         case mapLayers.bordersRoads:
@@ -388,7 +383,6 @@ const Map = ({
 
       // Only update state and call onChangeMap if an overlay was changed
       if (overlayChanged) {
-        setCurrentOverlays(newOverlays)
         onChangeMap({ overlays: newOverlays })
       }
     }
@@ -418,17 +412,17 @@ const Map = ({
         {
           id: mapLayers.bordersRoads,
           label: 'Borders and Roads *',
-          checked: currentOverlays.referenceFeatures
+          checked: overlays.referenceFeatures
         },
         {
           id: mapLayers.coastlines,
           label: 'Coastlines *',
-          checked: currentOverlays.coastlines
+          checked: overlays.coastlines
         },
         {
           id: mapLayers.placeLabels,
           label: 'Place Labels *',
-          checked: currentOverlays.referenceLabels
+          checked: overlays.referenceLabels
         }
       ]
     })
