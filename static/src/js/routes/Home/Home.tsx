@@ -87,6 +87,8 @@ import heroImg2560_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 import actions from '../../actions'
 
 import './Home.scss'
+// TODO: Clean up css so preloading this file is not necessary
+import '../../components/SearchForm/SearchForm.scss'
 
 interface HomeTopic {
   /** The title of the topic */

@@ -111,6 +111,7 @@
     "storybook": "^8.6.7",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0",
+    "vite-plugin-svgr": "^4.3.0",
     "vitest": "^3.0.9"
   },
   "dependencies": {

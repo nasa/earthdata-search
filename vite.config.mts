@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import svgr from 'vite-plugin-svgr'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { resolve } from 'path'
@@ -56,6 +57,9 @@ export default defineConfig({
       extension: ['.js', '.jsx', '.ts', '.tsx'],
       requireEnv: true,
       forceBuildInstrument: process.env.VITE_COVERAGE === 'true'
+    }),
+    svgr({
+      include: "**/*.svg?react"
     })
   ],
   css: {

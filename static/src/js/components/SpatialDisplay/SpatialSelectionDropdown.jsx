@@ -6,12 +6,13 @@ import Tooltip from 'react-bootstrap/Tooltip'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import {
-  FaExpand,
   FaCircle,
   FaFile
 } from 'react-icons/fa'
 
 import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
+import SpatialOutline from '~Images/icons/spatial-outline.svg?react'
 
 import { eventEmitter } from '../../events/events'
 
@@ -100,7 +101,7 @@ const SpatialSelectionDropdown = (props) => {
         data-testid="spatial-selection-dropdown"
         className="search-form__button search-form__button--secondary btn-sm gap-1"
       >
-        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={FaExpand} size="0.825rem" />
+        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={SpatialOutline} size="0.825rem" />
         Spatial
         <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={ArrowFilledDown} size="12" />
       </Dropdown.Toggle>
