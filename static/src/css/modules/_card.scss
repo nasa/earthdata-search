@@ -1,0 +1,13 @@
+@use '../utils/variables';
+
+.card {
+  &:is(a) {
+    background-color: variables.$color__spacesuit-white;
+
+    &:hover,
+    &:focus {
+      background-color: variables.$color__carbon--5;
+      border-color: variables.$color__carbon--10;
+    }
+  }
+}
