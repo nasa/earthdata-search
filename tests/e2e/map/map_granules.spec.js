@@ -34,13 +34,6 @@ import granuleCrossingGranuleGraphQlBody from './__mocks__/cmr_granules/granule_
 import granuleCrossingGranulesBody from './__mocks__/cmr_granules/granule_crossing_granules.body.json'
 import granuleCrossingGranulesHeaders from './__mocks__/cmr_granules/granule_crossing_granules.headers.json'
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
-import opensearchGranulesBody from './__mocks__/opensearch_granules/granules_body'
-import opensearchGranulesCollectionBody from './__mocks__/opensearch_granules/collections.body.json'
-import opensearchGranulesCollectionGraphQlBody from './__mocks__/opensearch_granules/graphql.body.json'
-import opensearchGranulesCollectionGraphQlHeaders from './__mocks__/opensearch_granules/graphql.headers.json'
-import opensearchGranulesHeaders from './__mocks__/opensearch_granules/granules.headers.json'
-import opensearchGranulesTimelineBody from './__mocks__/opensearch_granules/timeline.body.json'
-import opensearchGranulesTimelineHeaders from './__mocks__/opensearch_granules/timeline.headers.json'
 
 const screenshotClip = {
   x: 930,
@@ -115,6 +108,9 @@ test.describe('Map: Granule interactions', () => {
         })
 
         await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&lat=-6.34&long=44.58&zoom=6`)
+
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
       })
 
       test.describe('When hovering over a granule', () => {
@@ -179,7 +175,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         test.describe('when panning the map', () => {
-          test('does not remove the stickied granule', async ({ page }) => {
+          test('does not remove the focused granule', async ({ page }) => {
             // Drag the map
             await page.mouse.move(1000, 500)
             await page.mouse.down()
@@ -195,11 +191,15 @@ test.describe('Map: Granule interactions', () => {
         })
 
         test.describe('when zooming the map', () => {
-          test('does not remove the stickied granule', async ({ page }) => {
+          test('does not remove the focused granule', async ({ page }) => {
             // Zoom the map
             await page.locator('.edsc-map-zoom-in').click()
 
             await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
+
+            // Wait for the map animation to complete
+            await page.waitForURL(/zoom=7/)
+            await page.waitForTimeout(500)
 
             await expect(page).toHaveScreenshot('focused-granule-zoomed.png', {
               clip: screenshotClip
@@ -208,7 +208,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         test.describe('when clicking on an empty spot on the map', () => {
-          test('removes the stickied granule', async ({ page }) => {
+          test('removes the focused granule', async ({ page }) => {
             await page.locator('.map').click({
               force: true,
               position: {
@@ -222,7 +222,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         test.describe('when clicking the same granule again', () => {
-          test('removes the stickied granule', async ({ page }) => {
+          test('removes the focused granule', async ({ page }) => {
             await page.locator('.map').click({
               force: true,
               position: {
@@ -234,90 +234,6 @@ test.describe('Map: Granule interactions', () => {
             await expect(page.locator(temporalLabelClass)).not.toBeInViewport()
           })
         })
-      })
-    })
-
-    test.describe.skip('When viewing OpenSearch granules with polygon spatial', () => {
-      test.beforeEach(async ({ page }) => {
-        const conceptId = 'C1972468359-SCIOPS'
-
-        await interceptUnauthenticatedCollections({
-          page,
-          body: commonBody,
-          headers: commonHeaders,
-          additionalRequests: [{
-            body: opensearchGranulesCollectionBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': '1'
-            },
-            paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
-          }],
-          includeDefault: false
-        })
-
-        await page.route(/opensearch\/granules$/, async (route) => {
-          const query = JSON.parse(route.request().postData()).params
-
-          expect(query).toEqual({
-            boundingBox: '42.18750000000001,-9.453289809825428,49.218749999999986,-2.4064699999999886',
-            conceptId: [],
-            echoCollectionId: conceptId,
-            exclude: {},
-            openSearchOsdd: 'http://47.90.244.40/glass/osdd/fapar_modis_0.05d.xml',
-            options: {},
-            pageNum: 1,
-            pageSize: 20,
-            sortKey: '-start_date',
-            twoDCoordinateSystem: {}
-          })
-
-          await route.fulfill({
-            json: opensearchGranulesBody,
-            headers: opensearchGranulesHeaders
-          })
-        })
-
-        await page.route(/search\/granules\/timeline$/, async (route) => {
-          const query = route.request().postData()
-
-          expect(query).toEqual('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1972468359-SCIOPS&polygon[]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647')
-
-          await route.fulfill({
-            json: opensearchGranulesTimelineBody,
-            headers: opensearchGranulesTimelineHeaders
-          })
-        })
-
-        await page.route(/api$/, async (route) => {
-          const query = route.request().postData()
-
-          expect(query).toEqual(graphQlGetCollection(conceptId))
-
-          await route.fulfill({
-            json: opensearchGranulesCollectionGraphQlBody,
-            headers: opensearchGranulesCollectionGraphQlHeaders
-          })
-        })
-
-        await page.route(/autocomplete$/, async (route) => {
-          await route.fulfill({
-            json: { feed: { entry: [] } }
-          })
-        })
-
-        await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!`)
-      })
-
-      test('displays a hint about using a bounding box instead of polygon and an MBR on the map', async ({ page }) => {
-        await expect(page.getByText('Showing 20 of 42,706 matching granules')).toBeVisible()
-
-        await expect(
-          page.getByTestId('filter-stack__spatial').locator('.filter-stack-item__error')
-        ).toHaveText('This collection does not support polygon search. Your polygon has been converted to a bounding box.')
-
-        await expect(await page.locator('g path').first()).toBeVisible()
-        await expect(await page.locator('g path').all()).toHaveLength(2)
       })
     })
   })
@@ -388,6 +304,9 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.goto('search/granules?p=C1996881146-POCLOUD')
+
+      // Wait for the map to load
+      await page.waitForSelector('.edsc-map-base-layer')
     })
 
     test('displays the color map on the page', async ({ page }) => {
@@ -520,11 +439,13 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.goto('/search/granules?p=C1258816710-ASDC_DEV2&pg[0][v]=f&pg[0][id]=PREFIRE_SAT1_2B-ATM_S02_R00_20210101190614_00013.nc&pg[0][gsk]=-start_date&ee=uat&g=G1259235357-ASDC_DEV2&q=C1258816710-ASDC_DEV&tl=1731348943!3!!&lat=58.66663295801644&long=169.857421875&zoom=5')
+
+      // Wait for the map to load
+      await page.waitForSelector('.edsc-map-base-layer')
     })
 
     test.describe('when hovering over the granule', () => {
       test.beforeEach(async ({ page }) => {
-        await page.waitForTimeout(500)
         await page.locator('body').hover({
           force: true,
           position: {

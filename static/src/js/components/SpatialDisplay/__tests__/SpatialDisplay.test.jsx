@@ -7,6 +7,8 @@ import userEvent from '@testing-library/user-event'
 import * as EventEmitter from '../../../events/events'
 
 import SpatialDisplay from '../SpatialDisplay'
+import spatialTypes from '../../../constants/spatialTypes'
+import { mapEventTypes, shapefileEventTypes } from '../../../constants/eventTypes'
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -130,7 +132,7 @@ describe('SpatialDisplay component', () => {
     })
 
     test('should render a hint to draw the polygon on the map', () => {
-      setup({ drawingNewLayer: 'polygon' })
+      setup({ drawingNewLayer: spatialTypes.POLYGON })
 
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')).toHaveLength(1)
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')[0]).toBeVisible()
@@ -292,8 +294,9 @@ describe('SpatialDisplay component', () => {
       await userEvent.click(actionBtn)
 
       expect(onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
-      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-      expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.drawCancel')
+      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(2)
+      expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWCANCEL)
+      expect(eventEmitterEmitMock).toHaveBeenCalledWith(shapefileEventTypes.REMOVESHAPEFILE)
     })
   })
 

@@ -34,6 +34,7 @@
   &__spatial-bounding {
     width: 360px;
     padding: 0.625rem;
+    white-space: break-spaces;
     font-size: 0.8rem;
     font-weight: 300;
     background: utils.$color__carbon--60;

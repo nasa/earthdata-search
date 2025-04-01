@@ -72,12 +72,15 @@ test.describe.skip('When clicking on a granule on the map', () => {
       })
     })
 
-    await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&q=${conceptId}&tl=1730131646!3!!&lat=35.35040540820201&long=90.140625`)
+    await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&q=${conceptId}&tl=1730131646!3!!&lat=35.35040540820201&long=150.140625&zoom=4`)
+
+    // Wait for the map to load
+    await page.waitForSelector('.edsc-map-base-layer')
   })
 
   test.describe('When clicking on a map granule while in the granule list view', () => {
     test.beforeEach(async ({ page }) => {
-      await page.waitForSelector('.map')
+      await page.waitForSelector('.edsc-map-base-layer')
       await page.locator('.map').click({
         force: true,
         position: {
@@ -85,6 +88,8 @@ test.describe.skip('When clicking on a granule on the map', () => {
           y: 150
         }
       })
+
+      await page.waitForTimeout(250)
     })
 
     test('scrolls to the highlighted granule', async ({ page }) => {
@@ -106,9 +111,7 @@ test.describe.skip('When clicking on a granule on the map', () => {
         await page.getByRole('button', { name: /Table/ }).click()
 
         // Ensure the row is highlighted
-        const highlightedRow = await page.getByRole('row', {
-          name: granuleName
-        })
+        const highlightedRow = await page.getByRole('row').filter({ hasText: granuleName })
 
         // Check that the granule is highlighted
         await expect(highlightedRow).toHaveClass(/granule-results-table__tr--active/)
@@ -126,7 +129,7 @@ test.describe.skip('When clicking on a granule on the map', () => {
       await page.getByRole('button', { name: /Table/ }).click()
 
       // Click on the granule on the map
-      await page.waitForSelector('.map')
+      await page.waitForSelector('.edsc-map-base-layer')
       await page.locator('.map').click({
         force: true,
         position: {
@@ -137,9 +140,7 @@ test.describe.skip('When clicking on a granule on the map', () => {
     })
 
     test('scrolls to the highlighted granule', async ({ page }) => {
-      const highlightedRow = await page.getByRole('row', {
-        name: granuleName
-      })
+      const highlightedRow = await page.getByRole('row').filter({ hasText: granuleName })
 
       // Check that the granule is highlighted
       await expect(highlightedRow).toHaveClass(/granule-results-table__tr--active/)

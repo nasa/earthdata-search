@@ -38,6 +38,8 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {Object} props.metadata - The metadata of the current collection.
  * @param {Function} props.onSelectAccessMethod - Selects an access method.
  * @param {Function} props.onSetActivePanel - Switches the currently active panel.
+ * @param {Function} props.onTogglePanels - Toggles the panels.
+ * @param {Function} props.onToggleSpatialPolygonWarning - Toggles the spatial polygon warning.
  * @param {Function} props.onUpdateAccessMethod - Updates an access method.
  * @param {Object} props.projectCollection - The project collection.
  * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
@@ -52,6 +54,7 @@ const AccessMethod = ({
   onSelectAccessMethod,
   onSetActivePanel,
   onTogglePanels,
+  onToggleSpatialPolygonWarning,
   onUpdateAccessMethod,
   projectCollection,
   selectedAccessMethod,
@@ -657,6 +660,11 @@ const AccessMethod = ({
     harmonyMbrWarning = `Only bounding boxes are supported. If this option is enabled, your ${spatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
   }
 
+  useEffect(() => {
+    // Toggle the spatial polygon warning if the warning is present
+    onToggleSpatialPolygonWarning(!!harmonyMbrWarning)
+  }, [harmonyMbrWarning])
+
   // Get spatial and temporal display values
   const selectedTemporalDisplay = createTemporalDisplay(temporal)
   const selectedSpatialDisplay = createSpatialDisplay(spatial, !!harmonyMbrWarning)
@@ -1014,6 +1022,7 @@ AccessMethod.propTypes = {
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
   onTogglePanels: PropTypes.func,
+  onToggleSpatialPolygonWarning: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string,
   shapefileId: PropTypes.string,

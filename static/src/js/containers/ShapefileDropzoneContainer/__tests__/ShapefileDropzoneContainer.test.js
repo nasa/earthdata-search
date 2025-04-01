@@ -10,6 +10,8 @@ import {
   ShapefileDropzoneContainer
 } from '../ShapefileDropzoneContainer'
 
+import { shapefileEventTypes } from '../../../constants/eventTypes'
+
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
@@ -163,7 +165,7 @@ describe('ShapefileDropzoneContainer component', () => {
         name: 'test-file-name.zip',
         size: '<span>200KB</span>'
       }, {
-        test: 'test-response'
+        features: []
       }, {
         filesize: filesizeMock,
         removeFile: jest.fn()
@@ -176,7 +178,7 @@ describe('ShapefileDropzoneContainer component', () => {
       expect(props.onSaveShapefile).toHaveBeenCalledWith({
         authToken: 'test-auth-token',
         file: {
-          test: 'test-response'
+          features: []
         },
         filename: 'test-file-name.zip',
         size: '200KB'
@@ -184,13 +186,13 @@ describe('ShapefileDropzoneContainer component', () => {
 
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        'shapefile.success',
+        shapefileEventTypes.ADDSHAPEFILE,
         {
           name: 'test-file-name.zip',
           size: '<span>200KB</span>'
         },
         {
-          test: 'test-response'
+          features: []
         }
       )
     })
@@ -481,7 +483,7 @@ describe('ShapefileDropzoneContainer component', () => {
 
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
-        'shapefile.removedfile',
+        shapefileEventTypes.REMOVESHAPEFILE,
         {
           name: 'test-file.shp'
         },

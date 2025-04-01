@@ -36,23 +36,26 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import Map from '../../components/Map/Map'
 import {
-  backgroundPointStyle,
-  backgroundStyle,
+  backgroundGranulePointStyle,
+  backgroundGranuleStyle,
   deemphisizedGranuleStyle,
-  deemphisizedPointStyle,
+  deemphisizedGranulePointStyle,
   granuleStyle,
   highlightedGranuleStyle,
-  highlightedPointStyle,
-  pointStyle
+  highlightedGranulePointStyle,
+  granulePointStyle
 } from '../../util/map/styles'
 
 import './MapContainer.scss'
+import spatialTypes from '../../constants/spatialTypes'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
   onChangeMap:
     (query) => dispatch(actions.changeMap(query)),
+  onChangeQuery: (query) => dispatch(actions.changeQuery(query)),
+  onClearShapefile: (query) => dispatch(actions.clearShapefile(query)),
   onExcludeGranule:
     (data) => dispatch(actions.excludeGranule(data)),
   onFetchShapefile:
@@ -63,6 +66,9 @@ export const mapDispatchToProps = (dispatch) => ({
     (data) => dispatch(actions.shapefileErrored(data)),
   onMetricsMap:
     (type) => dispatch(metricsMap(type)),
+  onToggleDrawingNewLayer: (state) => dispatch(actions.toggleDrawingNewLayer(state)),
+  onToggleShapefileUploadModal:
+    (state) => dispatch(actions.toggleShapefileUploadModal(state)),
   onToggleTooManyPointsModal:
     (state) => dispatch(actions.toggleTooManyPointsModal(state)),
   onUpdateShapefile:
@@ -70,16 +76,23 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
+  advancedSearch: state.advancedSearch,
   authToken: state.authToken,
+  boundingBoxSearch: state.query.collection.spatial.boundingBox,
+  circleSearch: state.query.collection.spatial.circle,
   collectionsMetadata: state.metadata.collections,
   colormapsMetadata: getColormapsMetadata(state),
+  displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
+  lineSearch: state.query.collection.spatial.line,
   map: state.map,
   mapPreferences: getMapPreferences(state),
+  pointSearch: state.query.collection.spatial.point,
+  polygonSearch: state.query.collection.spatial.polygon,
   project: state.project,
   router: state.router,
   shapefile: state.shapefile
@@ -87,28 +100,39 @@ export const mapStateToProps = (state) => ({
 
 export const MapContainer = (props) => {
   const {
+    advancedSearch,
     authToken,
-    map: mapProps,
+    boundingBoxSearch,
+    circleSearch,
     collectionsMetadata,
     colormapsMetadata,
+    displaySpatialPolygonWarning,
     drawingNewLayer,
     focusedCollectionId,
     focusedGranuleId,
     granuleSearchResults,
     granulesMetadata,
+    lineSearch,
+    map: mapProps,
     mapPreferences,
-    project,
-    router,
-    onChangeMap,
-    shapefile,
     onChangeFocusedGranule,
+    onChangeMap,
+    onChangeQuery,
+    onClearShapefile,
     onExcludeGranule,
     onFetchShapefile,
+    onMetricsMap,
     onSaveShapefile,
     onShapefileErrored,
-    onMetricsMap,
+    onToggleDrawingNewLayer,
     onToggleTooManyPointsModal,
-    onUpdateShapefile
+    onToggleShapefileUploadModal,
+    onUpdateShapefile,
+    pointSearch,
+    polygonSearch,
+    project,
+    router,
+    shapefile
   } = props
 
   const { location } = router
@@ -190,6 +214,15 @@ export const MapContainer = (props) => {
 
     setMap(mapWithDefaults)
   }, [mapProps])
+
+  // If there is a shapefileId in the store but we haven't fetched the shapefile yet, fetch it
+  useEffect(() => {
+    if (shapefile) {
+      const { isLoaded, isLoading, shapefileId } = shapefile
+
+      if (shapefileId && !isLoaded && !isLoading) onFetchShapefile(shapefileId)
+    }
+  }, [shapefile])
 
   const maxZoom = projection === projections.geographic ? 7 : 4
 
@@ -428,30 +461,41 @@ export const MapContainer = (props) => {
         spatial = {},
         timeStart
       } = granule
+
+      // If the granule does not have spatial, don't draw it
+      if (!spatial) return
+
       const { geometry = {} } = spatial
       const { type } = geometry
 
-      if (type === 'Point') {
-        granule.backgroundStyle = backgroundPointStyle
-        granule.granuleStyle = shouldDrawRegularStyle ? pointStyle(index) : deemphisizedPointStyle(index)
-        granule.highlightedStyle = highlightedPointStyle(index)
+      if (type === spatialTypes.POINT) {
+        granule.backgroundGranuleStyle = backgroundGranulePointStyle
+        granule.granuleStyle = shouldDrawRegularStyle ? granulePointStyle(index) : deemphisizedGranulePointStyle(index)
+        granule.highlightedStyle = highlightedGranulePointStyle(index)
       } else {
-        granule.backgroundStyle = backgroundStyle
+        granule.backgroundGranuleStyle = backgroundGranuleStyle
         granule.granuleStyle = shouldDrawRegularStyle ? granuleStyle(index) : deemphisizedGranuleStyle(index)
         granule.highlightedStyle = highlightedGranuleStyle(index)
       }
 
-      const gibsTime = gibsData.layerPeriod?.toLowerCase() === 'subdaily' ? timeStart : timeStart.substring(0, 10)
-      granulesToDraw.push({
-        backgroundStyle: granule.backgroundStyle,
-        collectionId,
-        formattedTemporal,
-        gibsData: {
+      let granuleGibsData
+
+      if (gibsTag) {
+        const gibsTime = gibsData.layerPeriod?.toLowerCase() === 'subdaily' ? timeStart : timeStart.substring(0, 10)
+
+        granuleGibsData = {
           ...gibsData,
           opacity: shouldDrawRegularStyle ? 1 : 0.5,
           time: gibsTime,
           url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
-        },
+        }
+      }
+
+      granulesToDraw.push({
+        backgroundGranuleStyle: granule.backgroundGranuleStyle,
+        collectionId,
+        formattedTemporal,
+        gibsData: granuleGibsData,
         granuleId,
         granuleStyle: granule.granuleStyle,
         highlightedStyle: granule.highlightedStyle,
@@ -459,6 +503,30 @@ export const MapContainer = (props) => {
       })
     })
   }
+
+  // Create the spatial search object to pass to the map
+  const spatialSearch = useMemo(() => ({
+    advancedSearch,
+    boundingBoxSearch,
+    circleSearch,
+    displaySpatialPolygonWarning,
+    drawingNewLayer,
+    lineSearch,
+    pointSearch,
+    polygonSearch
+  }), [
+    advancedSearch,
+    boundingBoxSearch,
+    circleSearch,
+    displaySpatialPolygonWarning,
+    drawingNewLayer,
+    lineSearch,
+    pointSearch,
+    polygonSearch,
+    projection
+  ])
+
+  const memoizedShapefile = useMemo(() => shapefile, [shapefile])
 
   return (
     <Map
@@ -474,10 +542,19 @@ export const MapContainer = (props) => {
       onChangeFocusedGranule={onChangeFocusedGranule}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
+      onChangeQuery={onChangeQuery}
+      onClearShapefile={onClearShapefile}
       onExcludeGranule={onExcludeGranule}
+      onMetricsMap={onMetricsMap}
+      onToggleDrawingNewLayer={onToggleDrawingNewLayer}
+      onToggleShapefileUploadModal={onToggleShapefileUploadModal}
+      onToggleTooManyPointsModal={onToggleTooManyPointsModal}
+      onUpdateShapefile={onUpdateShapefile}
       overlays={overlays}
       projectionCode={projection}
       rotation={rotation}
+      shapefile={memoizedShapefile}
+      spatialSearch={spatialSearch}
       zoom={zoom}
     />
   )

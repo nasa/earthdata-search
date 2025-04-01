@@ -1,5 +1,19 @@
 @use '../../../css/utils';
 
+.edsc-map-spatial-drawing__cancel-wrapper {
+  position: absolute;
+  top: 0;
+  right: 2rem;
+}
+
+button.edsc-map-spatial-drawing__button--cancel {
+    height: 1.75rem;
+    border-radius: 2px;
+    border: none;
+    padding: 0.25rem 0.5rem;
+    width: fit-content;
+}
+
 .edsc-map-controls {
   display: flex;
   flex-direction: column;
@@ -10,7 +24,7 @@
   bottom: 8.5rem;
   gap: 1rem;
 
-  button {
+  .edsc-map-controls__button {
     margin: 0;
     border-radius: 0;
 
@@ -85,7 +99,7 @@
 }
 
 .ol-control {
-  button {
+  button.edsc-map-controls__button {
     width: 1.75rem;
     height: 1.75rem;
     background-color: none;

@@ -4,8 +4,15 @@ import { resizeHack } from './resizeHack'
 
 const getImageFileName = (url) => {
   let filename
+
+  // For the arcgis images, don't return the real image, just mock a single image that will repeat
+  // This gives the screenshots some context without needing to keep hundreds of images
   if (url.includes('arcgis.com')) {
-    filename = url.split('arcgis.com/')[1].replace(/\//g, '_')
+    if (url.includes('World_Imagery')) {
+      filename = 'world-imagery-mock'
+    } else if (url.includes('World_Basemap')) {
+      filename = 'world-basemap-mock'
+    }
   }
 
   if (url.includes('earthdata.nasa.gov')) {
@@ -87,7 +94,15 @@ export const setupTests = async ({
   }, dontShowTour.toString())
 
   // Prevent loading of images and map tiles to speed up tests
-  await page.route('**/*.{png,jpg,jpeg,pbf}', (route) => route.abort())
+  await page.route('**/*.{png,jpg,jpeg,pbf}', (route) => {
+    // If the request for the image is from localhost, allow it to continue
+    if (route.request().url().includes('localhost')) {
+      route.continue()
+    } else {
+      route.abort()
+    }
+  })
+
   await page.route('**/arcgis/**', async (route) => {
     await handleImage(route, page)
   })

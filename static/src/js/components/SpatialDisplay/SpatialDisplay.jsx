@@ -10,6 +10,9 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Spinner from 'react-bootstrap/Spinner'
 
+import { circular } from 'ol/geom/Polygon'
+import { Point, Polygon } from 'ol/geom'
+
 import { eventEmitter } from '../../events/events'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../util/pluralize'
@@ -23,6 +26,9 @@ import {
   transformBoundingBoxCoordinates,
   transformSingleCoordinate
 } from '../../util/createSpatialDisplay'
+
+import spatialTypes from '../../constants/spatialTypes'
+import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import './SpatialDisplay.scss'
 
@@ -157,18 +163,33 @@ const SpatialDisplay = ({
   const onSubmitBoundingBoxSearch = (event) => {
     if (event.type === 'blur' || event.key === 'Enter') {
       if (currentBoundingBoxSearch[0] && currentBoundingBoxSearch[1]) {
-        eventEmitter.emit('map.drawCancel')
+        eventEmitter.emit(mapEventTypes.DRAWCANCEL)
 
         if (error === '') {
           setManuallyEnteringVal(false)
 
+          const boundingBox = [transformBoundingBoxCoordinates(currentBoundingBoxSearch.join(',')).join(',')]
           onChangeQuery({
             collection: {
               spatial: {
-                boundingBox: [transformBoundingBoxCoordinates(currentBoundingBoxSearch.join(',')).join(',')]
+                boundingBox
               }
             }
           })
+
+          // Create a polygon of the box
+          const points = boundingBox[0].split(',').reverse().map(Number)
+          const polygonOfBoundingBox = [
+            [points[1], points[0]],
+            [points[1], points[2]],
+            [points[3], points[2]],
+            [points[3], points[0]],
+            [points[1], points[0]]
+          ]
+
+          // Move the map to the polygon of the box
+          const olPolygon = new Polygon([polygonOfBoundingBox])
+          eventEmitter.emit(mapEventTypes.MOVEMAP, { shape: olPolygon })
         }
       }
     }
@@ -206,7 +227,7 @@ const SpatialDisplay = ({
       const [center, radius] = currentCircleSearch
 
       if (center && radius) {
-        eventEmitter.emit('map.drawCancel')
+        eventEmitter.emit(mapEventTypes.DRAWCANCEL)
 
         if (error === '') {
           setManuallyEnteringVal(false)
@@ -220,6 +241,16 @@ const SpatialDisplay = ({
               }
             }
           })
+
+          // Move the map to the circle
+          // Using 5 as the number of points here because we aren't actually drawing the
+          // circle, we just need an extent
+          const olCircle = circular(
+            center.split(',').reverse().map(Number),
+            radius,
+            5
+          )
+          eventEmitter.emit(mapEventTypes.MOVEMAP, { shape: olCircle })
         }
       }
     }
@@ -273,7 +304,9 @@ const SpatialDisplay = ({
     setManuallyEnteringVal(false)
 
     onRemoveSpatialFilter()
-    eventEmitter.emit('map.drawCancel')
+
+    eventEmitter.emit(mapEventTypes.DRAWCANCEL)
+    eventEmitter.emit(shapefileEventTypes.REMOVESHAPEFILE)
   }
 
   const onChangePointSearch = (event) => {
@@ -287,7 +320,7 @@ const SpatialDisplay = ({
 
   const onSubmitPointSearch = (event) => {
     if (event.type === 'blur' || event.key === 'Enter') {
-      eventEmitter.emit('map.drawCancel')
+      eventEmitter.emit(mapEventTypes.DRAWCANCEL)
 
       if (error === '') {
         setManuallyEnteringVal(false)
@@ -300,6 +333,10 @@ const SpatialDisplay = ({
             }
           }
         })
+
+        // Move the map to the point
+        const olPoint = new Point(point[0].split(',').map(Number))
+        eventEmitter.emit(mapEventTypes.MOVEMAP, { shape: olPoint })
       }
     }
 
@@ -417,7 +454,14 @@ const SpatialDisplay = ({
         hint={hint}
       />
     ))
-  } else if (((currentPointSearch && currentPointSearch.length) && !drawingNewLayer) || drawingNewLayer === 'marker' || manuallyEnteringVal === 'marker') {
+  } else if (
+    (
+      (currentPointSearch && currentPointSearch.length)
+      && !drawingNewLayer
+    )
+    || drawingNewLayer === spatialTypes.POINT
+    || manuallyEnteringVal === spatialTypes.POINT
+  ) {
     entry = (
       <SpatialDisplayEntry>
         <Row className="spatial-display__form-row">
@@ -443,7 +487,7 @@ const SpatialDisplay = ({
                 onChange={onChangePointSearch}
                 onBlur={onSubmitPointSearch}
                 onKeyUp={onSubmitPointSearch}
-                onFocus={() => onFocusSpatialSearch('marker')}
+                onFocus={() => onFocusSpatialSearch(spatialTypes.POINT)}
               />
             </Col>
           </Form.Group>
@@ -451,7 +495,7 @@ const SpatialDisplay = ({
       </SpatialDisplayEntry>
     )
 
-    secondaryTitle = 'Point'
+    secondaryTitle = spatialTypes.POINT
 
     contents.push((
       <FilterStackContents
@@ -460,7 +504,14 @@ const SpatialDisplay = ({
         title="Point"
       />
     ))
-  } else if (((currentBoundingBoxSearch && currentBoundingBoxSearch.length) && (currentBoundingBoxSearch[0] || currentBoundingBoxSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'rectangle' || manuallyEnteringVal === 'rectangle') {
+  } else if (
+    (
+      (currentBoundingBoxSearch && currentBoundingBoxSearch.length)
+      && (currentBoundingBoxSearch[0] || currentBoundingBoxSearch[1])
+      && !drawingNewLayer
+    )
+    || drawingNewLayer === spatialTypes.BOUNDING_BOX
+    || manuallyEnteringVal === spatialTypes.BOUNDING_BOX) {
     entry = (
       <SpatialDisplayEntry>
         <Row className="spatial-display__form-row">
@@ -485,7 +536,7 @@ const SpatialDisplay = ({
                 onChange={onChangeBoundingBoxSearch}
                 onBlur={onSubmitBoundingBoxSearch}
                 onKeyUp={onSubmitBoundingBoxSearch}
-                onFocus={() => onFocusSpatialSearch('rectangle')}
+                onFocus={() => onFocusSpatialSearch(spatialTypes.BOUNDING_BOX)}
               />
             </Col>
           </Form.Group>
@@ -510,7 +561,7 @@ const SpatialDisplay = ({
                 onChange={onChangeBoundingBoxSearch}
                 onBlur={onSubmitBoundingBoxSearch}
                 onKeyUp={onSubmitBoundingBoxSearch}
-                onFocus={() => onFocusSpatialSearch('rectangle')}
+                onFocus={() => onFocusSpatialSearch(spatialTypes.BOUNDING_BOX)}
               />
             </Col>
           </Form.Group>
@@ -528,7 +579,15 @@ const SpatialDisplay = ({
         variant="block"
       />
     ))
-  } else if (((currentCircleSearch && currentCircleSearch.length) && (currentCircleSearch[0] || currentCircleSearch[1]) && !drawingNewLayer) || drawingNewLayer === 'circle' || manuallyEnteringVal === 'circle') {
+  } else if (
+    (
+      (currentCircleSearch && currentCircleSearch.length)
+      && (currentCircleSearch[0] || currentCircleSearch[1])
+      && !drawingNewLayer
+    )
+    || drawingNewLayer === spatialTypes.CIRCLE
+    || manuallyEnteringVal === spatialTypes.CIRCLE
+  ) {
     entry = (
       <SpatialDisplayEntry>
         <Row className="spatial-display__form-row">
@@ -553,7 +612,7 @@ const SpatialDisplay = ({
                 onChange={onChangeCircleCenter}
                 onBlur={onSubmitCircleSearch}
                 onKeyUp={onSubmitCircleSearch}
-                onFocus={() => onFocusSpatialSearch('circle')}
+                onFocus={() => onFocusSpatialSearch(spatialTypes.CIRCLE)}
               />
             </Col>
           </Form.Group>
@@ -578,7 +637,7 @@ const SpatialDisplay = ({
                 onChange={onChangeCircleRadius}
                 onBlur={onSubmitCircleSearch}
                 onKeyUp={onSubmitCircleSearch}
-                onFocus={() => onFocusSpatialSearch('circle')}
+                onFocus={() => onFocusSpatialSearch(spatialTypes.CIRCLE)}
               />
             </Col>
           </Form.Group>
@@ -586,7 +645,7 @@ const SpatialDisplay = ({
       </SpatialDisplayEntry>
     )
 
-    secondaryTitle = 'Circle'
+    secondaryTitle = spatialTypes.CIRCLE
 
     contents.push((
       <FilterStackContents
@@ -596,7 +655,12 @@ const SpatialDisplay = ({
         variant="block"
       />
     ))
-  } else if (((currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer) || drawingNewLayer === 'polygon') {
+  } else if (
+    (
+      (currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer
+    )
+    || drawingNewLayer === spatialTypes.POLYGON
+  ) {
     const pointArray = currentPolygonSearch.length ? currentPolygonSearch[0].split(',') : []
     const pointCount = (pointArray.length / 2) - 1
 

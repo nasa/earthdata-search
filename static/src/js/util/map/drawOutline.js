@@ -1,3 +1,4 @@
+import spatialTypes from '../../constants/spatialTypes'
 import { pointRadius } from './styles'
 
 // Draw the granule outlines
@@ -10,7 +11,7 @@ const drawOutline = ({
   const geometryType = geometry.getType()
 
   // If the geometry is a point, draw a small circle around the point
-  if (geometryType === 'MultiPoint') {
+  if (geometryType === spatialTypes.MULTI_POINT) {
     const points = geometry.getCoordinates()
     points.forEach((point) => {
       const [lng, lat] = point
@@ -28,10 +29,10 @@ const drawOutline = ({
 
   // Get the coordinates of the shape
   let allShapes
-  if (geometryType === 'MultiLineString') {
+  if (geometryType === spatialTypes.MULTI_LINE_STRING) {
     const coordinates = geometry.getCoordinates()
     allShapes = [coordinates]
-  } else if (geometryType === 'MultiPolygon') {
+  } else if (geometryType === spatialTypes.MULTI_POLYGON) {
     allShapes = geometry.getCoordinates()
   }
 
@@ -51,7 +52,7 @@ const drawOutline = ({
       })
 
       // Close the path if it is a polygon
-      if (geometryType === 'MultiPolygon') ctx.closePath()
+      if (geometryType === spatialTypes.MULTI_POLYGON) ctx.closePath()
     })
   })
 }
