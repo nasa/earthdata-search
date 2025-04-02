@@ -6,6 +6,7 @@ import { projectionConfigs } from '../../util/map/crs'
 import ZoomControl from './ZoomControl'
 import ProjectionSwitcherControl from './ProjectionSwitcherControl'
 import SpatialDrawingControl from './SpatialDrawingControl'
+import LayerSwitcherControl from './LayerSwitcherControl'
 
 /**
  * This class adds our custom map controls to the map. It wraps them in a container div which makes
@@ -32,7 +33,12 @@ class MapControls extends Control {
       PlusIcon,
       PointIcon,
       projectionCode,
-      ShapefileIcon
+      ShapefileIcon,
+      LayersIcon,
+      base,
+      overlays,
+      mapLayers,
+      onChangeLayer
     } = options
 
     // Create the zoom control
@@ -64,11 +70,51 @@ class MapControls extends Control {
       ShapefileIcon
     })
 
+    // Create the layer switcher control
+    const layerSwitcher = new LayerSwitcherControl({
+      className: 'edsc-map-layer-switcher',
+      LayersIcon,
+      onChangeLayer,
+      layerOptions: [
+        {
+          id: mapLayers.worldImagery,
+          label: 'World Imagery',
+          checked: base.worldImagery
+        },
+        {
+          id: mapLayers.correctedReflectance,
+          label: 'Corrected Reflectance (True Color)',
+          checked: base.trueColor
+        },
+        {
+          id: mapLayers.landWaterMap,
+          label: 'Land / Water Map *',
+          checked: base.landWaterMap
+        },
+        {
+          id: mapLayers.bordersRoads,
+          label: 'Borders and Roads *',
+          checked: overlays.referenceFeatures
+        },
+        {
+          id: mapLayers.coastlines,
+          label: 'Coastlines *',
+          checked: overlays.coastlines
+        },
+        {
+          id: mapLayers.placeLabels,
+          label: 'Place Labels *',
+          checked: overlays.referenceLabels
+        }
+      ]
+    })
+
     // Add the controls to the container
     // The order here matters, the first element is the top-most element
     this.element.appendChild(spatialDrawingControl.element)
     this.element.appendChild(projectionSwitcher.element)
     this.element.appendChild(zoomControl.element)
+    this.element.appendChild(layerSwitcher.element)
 
     // Enable Bootstrap tooltips on each button
     const tooltipTriggerList = [].slice.call(element.querySelectorAll('[data-bs-toggle="tooltip"]'))

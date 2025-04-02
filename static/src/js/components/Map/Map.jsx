@@ -71,7 +71,6 @@ import onClickMap from '../../util/map/interactions/onClickMap'
 import onClickShapefile from '../../util/map/interactions/onClickShapefile'
 import projections from '../../util/map/projections'
 import worldImagery from '../../util/map/layers/worldImagery'
-import LayerSwitcherControl from './LayerSwitcherControl'
 import bordersRoads from '../../util/map/layers/bordersRoads'
 import coastlines from '../../util/map/layers/coastlines'
 import correctedReflectance from '../../util/map/layers/correctedReflectance'
@@ -387,55 +386,12 @@ const Map = ({
     }
   }
 
-  const layerSwitcherControl = (onChangeLayer) => {
-    const control = new LayerSwitcherControl({
-      className: 'edsc-map-layer-switcher',
-      LayersIcon: <EDSCIcon size="0.75rem" icon={FaLayerGroup} />,
-      onChangeLayer,
-      layerOptions: [
-        {
-          id: mapLayers.worldImagery,
-          label: 'World Imagery',
-          checked: base.worldImagery
-        },
-        {
-          id: mapLayers.correctedReflectance,
-          label: 'Corrected Reflectance (True Color)',
-          checked: base.trueColor
-        },
-        {
-          id: mapLayers.landWaterMap,
-          label: 'Land / Water Map *',
-          checked: base.landWaterMap
-        },
-        {
-          id: mapLayers.bordersRoads,
-          label: 'Borders and Roads *',
-          checked: overlays.referenceFeatures
-        },
-        {
-          id: mapLayers.coastlines,
-          label: 'Coastlines *',
-          checked: overlays.coastlines
-        },
-        {
-          id: mapLayers.placeLabels,
-          label: 'Place Labels *',
-          checked: overlays.referenceLabels
-        }
-      ]
-    })
-
-    return control
-  }
-
   useEffect(() => {
     const map = new OlMap({
       controls: [
         attribution,
         scaleMetric,
         scaleImperial,
-        layerSwitcherControl(handleLayerChange),
         new LegendControl({
           colorMap,
           isFocusedCollectionPage
@@ -555,7 +511,12 @@ const Map = ({
       PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
       PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
       projectionCode,
-      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />)
+      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />),
+      LayersIcon: (<EDSCIcon size="0.75rem" icon={FaLayerGroup} />),
+      base,
+      overlays,
+      mapLayers,
+      onChangeLayer: handleLayerChange
     })
 
     map.addControl(mapControls)

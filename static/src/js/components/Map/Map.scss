@@ -21,7 +21,7 @@ button.edsc-map-spatial-drawing__button--cancel {
   z-index: 10;
   background-color: transparent;
   right: 0.75rem;
-  bottom: 8.5rem;
+  bottom: 5.5rem;
   gap: 1rem;
 
   .edsc-map-controls__button {
@@ -134,18 +134,17 @@ button.edsc-map-spatial-drawing__button--cancel {
 }
 
 .edsc-map-layer-switcher {
-  position: absolute;
   z-index: 15;
-  right: 0.75rem;
   color: utils.$color__carbon--70;
   background-color: utils.$color__spacesuit-white;
-  bottom: 6rem;
-  border-radius: 4px;
+  border-radius: 2px;
   padding: 0;
   overflow: visible;
   font-weight: 500;
+  width: 1.75rem;
+  height: 1.75rem;
 
-  &__button {
+  button {
     width: 1.75rem;
     height: 1.75rem;
     background-color: transparent;
@@ -153,10 +152,7 @@ button.edsc-map-spatial-drawing__button--cancel {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    padding: 0.25rem;
-    color: utils.$color__carbon--70;
-
+    
     svg {
       width: 1rem;
       height: 1rem;
@@ -232,7 +228,7 @@ button.edsc-map-spatial-drawing__button--cancel {
     text-align: right;
 
     a {
-      color: lightblue;
+      color: utils.$color__nasa-blue--tint;
       text-decoration: none;
 
       &:hover {
