@@ -298,14 +298,14 @@ test.describe('Map: Control interactions', () => {
         // Set up the response promise BEFORE interacting with the UI
         const responsePromise = page.waitForResponse((response) => response.url().includes('wi.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer'))
 
-        // Look for the layer switcher button by its class and aria-label
+        // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
-        // Click the Land/Water Map radio button
-        await page.locator('input#layer-worldImagery').click()
+        // Click the World Imagery radio button by its label
+        await page.getByLabel('World Imagery').click()
         await page.waitForTimeout(500)
 
         // Verify URL change
@@ -329,14 +329,14 @@ test.describe('Map: Control interactions', () => {
         // Set up the response promise BEFORE interacting with the UI
         const responsePromise = page.waitForResponse((response) => response.url().includes('CorrectedReflectance_TrueColor'))
 
-        // Look for the layer switcher button by its class and aria-label
+        // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
-        // Click the Land/Water Map radio button
-        await page.locator('input#layer-correctedReflectance').click()
+        // Click the Corrected Reflectance radio button by its label
+        await page.getByLabel('Corrected Reflectance (True Color)').click()
         await page.waitForTimeout(500)
 
         // Verify URL change
@@ -363,14 +363,14 @@ test.describe('Map: Control interactions', () => {
         // Set up the response promise BEFORE interacting with the UI
         const responsePromise = page.waitForResponse((response) => response.url().includes('server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation'))
 
-        // Look for the layer switcher button by its class and aria-label
+        // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
-        // Click the Land/Water Map radio button
-        await page.locator('input#layer-landWaterMap').click()
+        // Click the Land/Water Map radio button by its label
+        await page.getByLabel('Land / Water Map *').click()
         await page.waitForTimeout(500)
 
         // Verify URL change
@@ -392,14 +392,14 @@ test.describe('Map: Control interactions', () => {
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
 
-        // Look for the layer switcher button by its class and aria-label
+        // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
-        // Click the checkbox for Place Labels
-        await page.locator('input#layer-placeLabels').click()
+        // Click the checkbox for Place Labels by its label
+        await page.getByLabel('Place Labels *').click()
         await page.waitForTimeout(500)
 
         // Verify URL is updated with the correct overlay parameter
@@ -418,14 +418,14 @@ test.describe('Map: Control interactions', () => {
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
 
-        // Look for the layer switcher button by its class and aria-label
+        // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
-        // Click the checkbox for Borders and Roads
-        await page.locator('input#layer-bordersRoads').click()
+        // Click the checkbox for Borders and Roads by its label
+        await page.getByLabel('Borders and Roads *').click()
         await page.waitForTimeout(500)
 
         // Verify URL is updated with the correct overlay parameter
@@ -444,14 +444,14 @@ test.describe('Map: Control interactions', () => {
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
 
-        // Look for the layer switcher button by its class and aria-label
+        // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
-        // Click the checkbox for Coastlines
-        await page.locator('input#layer-coastlines').click()
+        // Click the checkbox for Coastlines by its label
+        await page.getByLabel('Coastlines *').click()
         await page.waitForTimeout(500)
 
         // Verify URL is updated with the correct overlay parameter

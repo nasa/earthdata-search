@@ -1,38 +1,30 @@
-import TileLayer from 'ol/layer/Tile'
-import { WMTS } from 'ol/source'
 import moment from 'moment'
-import { getTileGrid } from '../getTileGrid'
+import gibsLayer from './gibsLayer'
 
 /**
  * Builds the Corrected Reflectance (True Color) layer
  * @param {Object} params
  * @param {String} params.projectionCode The projection code for the layer
+ * @param {String} params.attributions Optional attributions for the layer
  */
 const correctedReflectance = ({
-  projectionCode
+  projectionCode,
+  attributions = null
 }) => {
   // Return near time image so that the map is completely filled
-  const projection = projectionCode
   const yesterday = moment().subtract(1, 'days')
   const date = yesterday.format('YYYY-MM-DD')
 
-  const layer = new TileLayer({
+  return gibsLayer({
     className: 'edsc-map-base-layer',
-    source: new WMTS({
-      crossOrigin: 'anonymous',
-      format: 'image/jpeg',
-      interpolate: false,
-      layer: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
-      matrixSet: '250m',
-      projection: projectionCode,
-      tileGrid: getTileGrid(projectionCode, '250m'),
-      url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${date}`,
-      wrapX: false
-    }),
-    visible: false
+    format: 'image/jpeg',
+    layer: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
+    matrixSet: '250m',
+    projectionCode,
+    time: date,
+    visible: false,
+    attributions
   })
-
-  return layer
 }
 
 export default correctedReflectance

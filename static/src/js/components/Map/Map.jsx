@@ -50,7 +50,7 @@ import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
-import mapLayers from '../../constants/mapLayers'
+import mapLayers, { baseLayerIds } from '../../constants/mapLayers'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
 import { highlightGranule, unhighlightGranule } from '../../util/map/interactions/highlightGranule'
@@ -183,6 +183,18 @@ const spatialDrawingLayer = new VectorLayer({
 
 // Layer group for imagery layers
 const granuleImageryLayerGroup = new LayerGroup()
+
+const baseLayers = {
+  [mapLayers.worldImagery]: worldImageryLayer,
+  [mapLayers.correctedReflectance]: correctedReflectanceLayer,
+  [mapLayers.landWaterMap]: landWaterMapLayer
+}
+
+const overlayLayers = {
+  [mapLayers.bordersRoads]: bordersRoadsLayer,
+  [mapLayers.coastlines]: coastlinesLayer,
+  [mapLayers.placeLabels]: placeLabelsLayer
+}
 
 // Create a view for the map. This will change when the padding needs to be updated
 const createView = ({
@@ -332,13 +344,6 @@ const Map = ({
 
   const handleLayerChange = ({ id, checked }) => {
     // Handle base layers
-    const baseLayerIds = [
-      mapLayers.worldImagery,
-      mapLayers.correctedReflectance,
-      mapLayers.landWaterMap
-    ]
-
-    // Then in your handleLayerChange function
     if (baseLayerIds.includes(id)) {
       const newBase = {
         worldImagery: false,
@@ -346,48 +351,34 @@ const Map = ({
         landWaterMap: false
       }
 
-      // Set the selected base layer to true
+      // Set the selected base layer to true in the Redux state
       if (id === mapLayers.worldImagery) newBase.worldImagery = checked
       if (id === mapLayers.correctedReflectance) newBase.trueColor = checked
       if (id === mapLayers.landWaterMap) newBase.landWaterMap = checked
 
-      // Update layer visibility
-      worldImageryLayer.setVisible(id === mapLayers.worldImagery && checked)
-      correctedReflectanceLayer.setVisible(id === mapLayers.correctedReflectance && checked)
-      landWaterMapLayer.setVisible(id === mapLayers.landWaterMap && checked)
+      // Update all base layer visibility
+      Object.keys(baseLayers).forEach((layerId) => {
+        baseLayers[layerId].setVisible(layerId === id && checked)
+      })
 
       onChangeMap({ base: newBase })
     } else {
-      // Set overlay layer visibility
-      let overlayChanged = false
+      // Handle overlay layers
       const newOverlays = { ...overlays }
 
-      switch (id) {
-        case mapLayers.bordersRoads:
-          bordersRoadsLayer.setVisible(checked)
-          newOverlays.referenceFeatures = checked
-          overlayChanged = true
-          break
+      // Update the overlay layer visibility if it exists in our mapping
+      if (id in overlayLayers) {
+        overlayLayers[id].setVisible(checked)
 
-        case mapLayers.coastlines:
-          coastlinesLayer.setVisible(checked)
-          newOverlays.coastlines = checked
-          overlayChanged = true
-          break
+        // Update the corresponding property in overlays state
+        // (maintaining the mapping between layer IDs and state property names)
+        if (id === mapLayers.bordersRoads) newOverlays.referenceFeatures = checked
+        else if (id === mapLayers.coastlines) newOverlays.coastlines = checked
+        else if (id === mapLayers.placeLabels) newOverlays.referenceLabels = checked
 
-        case mapLayers.placeLabels:
-          placeLabelsLayer.setVisible(checked)
-          newOverlays.referenceLabels = checked
-          overlayChanged = true
-          break
-
-        default:
-          console.warn(`Unknown layer id: ${id}`)
-      }
-
-      // Only update state and call onChangeMap if an overlay was changed
-      if (overlayChanged) {
         onChangeMap({ overlays: newOverlays })
+      } else {
+        console.warn(`Unknown layer id: ${id}`)
       }
     }
   }

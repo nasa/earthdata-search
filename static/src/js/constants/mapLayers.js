@@ -9,4 +9,12 @@ const mapLayers = {
   coastlines: 'coastlines',
   placeLabels: 'placeLabels'
 }
+
+// Base Layer IDs
+export const baseLayerIds = [
+  mapLayers.worldImagery,
+  mapLayers.correctedReflectance,
+  mapLayers.landWaterMap
+]
+
 export default mapLayers

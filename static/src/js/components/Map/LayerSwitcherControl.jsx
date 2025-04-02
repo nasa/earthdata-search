@@ -73,7 +73,7 @@ class LayerSwitcherControl extends Control {
       },
       {
         id: mapLayers.landWaterMap,
-        label: 'Land / Water Map *'
+        label: 'Land / Water Map'
       },
       {
         id: mapLayers.bordersRoads,
