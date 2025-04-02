@@ -4,7 +4,6 @@ import { resizeHack } from './resizeHack'
 
 const getImageFileName = (url) => {
   let filename
-
   // For the arcgis images, don't return the real image, just mock a single image that will repeat
   // This gives the screenshots some context without needing to keep hundreds of images
   if (url.includes('arcgis.com')) {
@@ -15,12 +14,12 @@ const getImageFileName = (url) => {
     }
   }
 
-  if (url.includes('earthdata.nasa.gov')) {
-    filename = url.split('earthdata.nasa.gov/')[1].replace(/\//g, '_')
+  if (url.includes('CorrectedReflectance')) {
+    return 'corrected-reflectance-mock'
   }
 
-  if (url.includes('gibs-c.earthdata.nasa.gov')) {
-    filename = url.split('gibs-c.earthdata.nasa.gov/')[1].replace(/\//g, '_')
+  if (url.includes('earthdata.nasa.gov')) {
+    filename = url.split('earthdata.nasa.gov/')[1].replace(/\//g, '_')
   }
 
   return filename

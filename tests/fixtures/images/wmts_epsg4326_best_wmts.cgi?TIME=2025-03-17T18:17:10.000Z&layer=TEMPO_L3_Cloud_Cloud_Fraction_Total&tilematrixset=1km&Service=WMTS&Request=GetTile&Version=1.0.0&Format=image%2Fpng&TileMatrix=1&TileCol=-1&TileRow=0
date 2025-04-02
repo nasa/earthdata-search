@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ExceptionReport xmlns="http://www.opengis.net/ows/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.opengis.net/ows/1.1.0/owsExceptionReport.xsd" version="1.1.0" xml:lang="en">
-<Exception exceptionCode="InvalidParameterValue" locator="TILECOL">
-<ExceptionText>TILECOL is not a valid integer</ExceptionText></Exception>
-<Exception exceptionCode="TileOutOfRange" locator="TILECOL">
-<ExceptionText>TILECOL is out of range, maximum value is 2</ExceptionText></Exception>
-</ExceptionReport>
