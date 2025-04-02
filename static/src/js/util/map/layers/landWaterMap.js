@@ -32,7 +32,6 @@ const landWaterMap = async ({
     }),
     declutter: true,
     renderMode: 'hybrid'
-    // ZIndex: 5
   })
 
   // Style the layer according to the landWaterMapStyleUrl, provided by Worldview
