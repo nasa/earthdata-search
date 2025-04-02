@@ -11,7 +11,7 @@ import { getTileGrid } from '../getTileGrid'
 const correctedReflectance = ({
   projectionCode
 }) => {
-  // Return near time image so that the map is completely filled 
+  // Return near time image so that the map is completely filled
   const projection = projectionCode
   const yesterday = moment().subtract(1, 'days')
   const date = yesterday.format('YYYY-MM-DD')
