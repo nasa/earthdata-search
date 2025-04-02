@@ -6,9 +6,7 @@ import { getTileGrid } from '../getTileGrid'
 /**
  * Builds the Corrected Reflectance (True Color) layer
  * @param {Object} params
- * @param {String} params.attributions Attribution for the layer
  * @param {String} params.projectionCode The projection code for the layer
- * @param {String} params.date The date for the imagery in YYYY-MM-DD format (defaults to yesterday)
  */
 const correctedReflectance = ({
   projectionCode

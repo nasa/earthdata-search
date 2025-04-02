@@ -17,7 +17,7 @@ import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.js
 
 const granuleName = 'VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc'
 
-test.describe.skip('When clicking on a granule on the map', () => {
+test.describe('When clicking on a granule on the map', () => {
   test.beforeEach(async ({ page, context }) => {
     const conceptId = 'C2208779826-LANCEMODIS'
 

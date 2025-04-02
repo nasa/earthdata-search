@@ -6,8 +6,6 @@ import { applyStyle } from 'ol-mapbox-style'
 
 import { crsProjections } from '../crs'
 
-import { getApplicationConfig } from '../../../../../../sharedUtils/config'
-
 // Import the land-water map style JSON file
 import landWaterMapStyleUrl from './landWaterMap.json'
 

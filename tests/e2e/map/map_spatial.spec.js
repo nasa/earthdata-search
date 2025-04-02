@@ -37,7 +37,7 @@ const screenshotClip = {
   height: 700
 }
 
-test.describe.skip('Map: Spatial interactions', () => {
+test.describe('Map: Spatial interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
       browserName,
@@ -193,7 +193,7 @@ test.describe.skip('Map: Spatial interactions', () => {
         })
       })
 
-      test.describe.skip('When editing a point', () => {
+      test.describe('When editing a point', () => {
         test('renders correctly', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
@@ -416,7 +416,7 @@ test.describe.skip('Map: Spatial interactions', () => {
         })
       })
 
-      test.describe.skip('When editing a circle', () => {
+      test.describe('When editing a circle', () => {
         test('renders correctly', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
@@ -638,7 +638,7 @@ test.describe.skip('Map: Spatial interactions', () => {
         })
       })
 
-      test.describe.skip('When editing a bounding box', () => {
+      test.describe('When editing a bounding box', () => {
         test('renders correctly', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
@@ -830,7 +830,7 @@ test.describe.skip('Map: Spatial interactions', () => {
         })
       })
 
-      test.describe.skip('When editing a polygon', () => {
+      test.describe('When editing a polygon', () => {
         test('renders correctly', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,

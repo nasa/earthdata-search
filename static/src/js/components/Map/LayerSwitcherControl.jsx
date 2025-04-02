@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom'
 import Control from 'ol/control/Control'
 import EventType from 'ol/events/EventType'
+import mapLayers from '../../util/map/mapLayers'
 
 /**
  * This class adds a layer switcher control to the map
@@ -55,25 +56,25 @@ class LayerSwitcherControl extends Control {
     const className = this.options.className || 'edsc-map-layer-switcher'
     const layerOptions = this.options.layerOptions || [
       {
-        id: 'worldImagery',
+        id: mapLayers.worldImagery,
         label: 'World Imagery',
         checked: true
       },
       {
-        id: 'correctedReflectance',
+        id: mapLayers.correctedReflectance,
         label: 'Corrected Reflectance (True Color)'
       },
       {
-        id: 'landWaterMap',
+        id: mapLayers.landWaterMap,
         label: 'Land / Water Map *'
       },
       {
-        id: 'bordersRoads',
+        id: mapLayers.bordersRoads,
         label: 'Borders and Roads *',
         checked: true
       },
       {
-        id: 'placeLabels',
+        id: mapLayers.placeLabels,
         label: 'Place Labels *'
       }
     ]
@@ -86,8 +87,8 @@ class LayerSwitcherControl extends Control {
       optionContainer.className = `${className}__option`
 
       const input = document.createElement('input')
-      input.type = option.id === 'worldImagery' || option.id === 'correctedReflectance' || option.id === 'landWaterMap' ? 'radio' : 'checkbox'
-      input.name = option.id === 'worldImagery' || option.id === 'correctedReflectance' || option.id === 'landWaterMap' ? 'base-layer' : option.id
+      input.type = option.id === mapLayers.worldImagery || option.id === mapLayers.correctedReflectance || option.id === mapLayers.landWaterMap ? 'radio' : 'checkbox'
+      input.name = option.id === mapLayers.worldImagery || option.id === mapLayers.correctedReflectance || option.id === mapLayers.landWaterMap ? 'base-layer' : option.id
       input.id = `layer-${option.id}`
       input.checked = option.checked || false
 

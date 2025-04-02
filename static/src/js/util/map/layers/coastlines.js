@@ -5,7 +5,6 @@ import { getTileGrid } from '../getTileGrid'
 /**
  * Builds the standard resolution Coastlines layer using OSM data from GIBS
  * @param {Object} params
- * @param {String} params.attributions Attribution for the layer
  * @param {String} params.projectionCode The projection code for the layer
  */
 const coastlines = ({
