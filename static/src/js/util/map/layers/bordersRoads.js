@@ -1,49 +1,32 @@
-import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
-import GeoJSON from 'ol/format/GeoJSON'
-import Style from 'ol/style/Style'
-import Stroke from 'ol/style/Stroke'
-import LayerGroup from 'ol/layer/Group'
 import TileLayer from 'ol/layer/Tile'
-import XYZ from 'ol/source/XYZ'
+import { WMTS } from 'ol/source'
+import { getTileGrid } from '../getTileGrid'
 
+/**
+ * Builds the standard resolution Coastlines layer using OSM data from GIBS
+ * @param {Object} params
+ * @param {String} params.projectionCode The projection code for the layer
+ */
 const bordersRoads = ({
-  attributions
+  projectionCode
 }) => {
-  const bordersLayer = new VectorLayer({
-    source: new VectorSource({
-      url: 'https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson',
-      format: new GeoJSON(),
-      attributions,
+  const layer = new TileLayer({
+    className: 'edsc-map-coastlines-layer',
+    source: new WMTS({
+      crossOrigin: 'anonymous',
+      format: 'image/png',
+      layer: 'Reference_Features_15m',
+      matrixSet: '15.625m',
+      projection: projectionCode,
+      tileGrid: getTileGrid(projectionCode, '15.625m'),
+      url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projectionCode}/best/wmts.cgi`,
       wrapX: false
     }),
-    style: new Style({
-      stroke: new Stroke({
-        color: '#8A8A8A',
-        width: 1
-      })
-    }),
-    className: 'edsc-borders-vector-layer'
-  })
-
-  const roadsLayer = new TileLayer({
-    source: new XYZ({
-      attributions,
-      url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}',
-      maxZoom: 16,
-      projection: 'EPSG:3857'
-    }),
-    className: 'edsc-roads-layer'
-  })
-
-  // Combine into a layer group
-  const bordersRoadsGroup = new LayerGroup({
-    layers: [bordersLayer, roadsLayer],
-    className: 'edsc-bordersRoads-vector-group',
+    opacity: 1,
     visible: false
   })
 
-  return bordersRoadsGroup
+  return layer
 }
 
 export default bordersRoads
