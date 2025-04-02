@@ -7,7 +7,7 @@ import { applyStyle } from 'ol-mapbox-style'
 import { crsProjections } from '../crs'
 
 // Import the land-water map style JSON file
-import landWaterMapStyleUrl from './landWaterMap.json'
+import landWaterMapStyle from './landWaterMap.json'
 
 /**
  * Builds the place labels layer
@@ -34,8 +34,8 @@ const landWaterMap = async ({
     renderMode: 'hybrid'
   })
 
-  // Style the layer according to the landWaterMapStyleUrl, provided by Worldview
-  await applyStyle(layer, landWaterMapStyleUrl, {
+  // Style the layer according to the landWaterMapStyle, provided by Worldview
+  await applyStyle(layer, landWaterMapStyle, {
     resolutions: layer.getSource().getTileGrid().getResolutions(),
     transformRequest(url, resourceType) {
       if (resourceType === 'Tile') {

@@ -3,7 +3,7 @@ import { WMTS } from 'ol/source'
 import { getTileGrid } from '../getTileGrid'
 
 /**
- * Builds the standard resolution Coastlines layer using OSM data from GIBS
+ * Builds the standard resolution Borders and Roads layer using OSM data from GIBS
  * @param {Object} params
  * @param {String} params.projectionCode The projection code for the layer
  */
@@ -11,7 +11,7 @@ const bordersRoads = ({
   projectionCode
 }) => {
   const layer = new TileLayer({
-    className: 'edsc-map-coastlines-layer',
+    className: 'edsc-map-bordersRoads-layer',
     source: new WMTS({
       crossOrigin: 'anonymous',
       format: 'image/png',

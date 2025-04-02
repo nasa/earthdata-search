@@ -1,7 +1,7 @@
 import { isEmpty } from 'lodash-es'
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/actionTypes'
 import projections from '../util/map/projections'
-import mapLayers from '../util/map/mapLayers'
+import mapLayers from '../constants/mapLayers'
 
 const initialState = {
   preferences: {

@@ -24,21 +24,21 @@ class MapControls extends Control {
 
     this.options = options
     const {
+      base,
       CircleIcon,
       HomeIcon,
+      LayersIcon,
       map,
+      mapLayers,
       MinusIcon,
+      onChangeLayer,
       onChangeProjection,
       onToggleShapefileUploadModal,
+      overlays,
       PlusIcon,
       PointIcon,
       projectionCode,
-      ShapefileIcon,
-      LayersIcon,
-      base,
-      overlays,
-      mapLayers,
-      onChangeLayer
+      ShapefileIcon
     } = options
 
     // Create the zoom control

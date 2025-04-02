@@ -50,6 +50,7 @@ import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
+import mapLayers from '../../constants/mapLayers'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
 import { highlightGranule, unhighlightGranule } from '../../util/map/interactions/highlightGranule'
@@ -80,7 +81,6 @@ import { eventEmitter } from '../../events/events'
 
 import 'ol/ol.css'
 import './Map.scss'
-import mapLayers from '../../util/map/mapLayers'
 
 // TODO Data attributions
 
@@ -332,8 +332,14 @@ const Map = ({
 
   const handleLayerChange = ({ id, checked }) => {
     // Handle base layers
-    // eslint-disable-next-line max-len
-    if ([mapLayers.worldImagery, mapLayers.correctedReflectance, mapLayers.landWaterMap].includes(id)) {
+    const baseLayerIds = [
+      mapLayers.worldImagery,
+      mapLayers.correctedReflectance,
+      mapLayers.landWaterMap
+    ]
+
+    // Then in your handleLayerChange function
+    if (baseLayerIds.includes(id)) {
       const newBase = {
         worldImagery: false,
         trueColor: false,
@@ -502,21 +508,21 @@ const Map = ({
     eventEmitter.on(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
 
     const mapControls = new MapControls({
+      base,
       CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
       HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
+      LayersIcon: (<EDSCIcon size="0.75rem" icon={FaLayerGroup} />),
       map,
+      mapLayers,
       MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
+      onChangeLayer: handleLayerChange,
       onChangeProjection,
       onToggleShapefileUploadModal,
+      overlays,
       PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
       PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
       projectionCode,
-      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />),
-      LayersIcon: (<EDSCIcon size="0.75rem" icon={FaLayerGroup} />),
-      base,
-      overlays,
-      mapLayers,
-      onChangeLayer: handleLayerChange
+      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />)
     })
 
     map.addControl(mapControls)
@@ -994,14 +1000,9 @@ Map.defaultProps = {
 
 Map.propTypes = {
   base: PropTypes.shape({
-    worldImagery: PropTypes.bool,
+    landWaterMap: PropTypes.bool,
     trueColor: PropTypes.bool,
-    landWaterMap: PropTypes.bool
-  }).isRequired,
-  overlays: PropTypes.shape({
-    referenceFeatures: PropTypes.bool,
-    coastlines: PropTypes.bool,
-    referenceLabels: PropTypes.bool
+    worldImagery: PropTypes.bool
   }).isRequired,
   center: PropTypes.shape({
     latitude: PropTypes.number,
@@ -1025,6 +1026,11 @@ Map.propTypes = {
   onToggleShapefileUploadModal: PropTypes.func.isRequired,
   onToggleTooManyPointsModal: PropTypes.func.isRequired,
   onUpdateShapefile: PropTypes.func.isRequired,
+  overlays: PropTypes.shape({
+    coastlines: PropTypes.bool,
+    referenceFeatures: PropTypes.bool,
+    referenceLabels: PropTypes.bool
+  }).isRequired,
   projectionCode: PropTypes.string.isRequired,
   rotation: PropTypes.number.isRequired,
   shapefile: PropTypes.shape({

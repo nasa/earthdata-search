@@ -1,7 +1,14 @@
 import ReactDOM from 'react-dom'
 import Control from 'ol/control/Control'
 import EventType from 'ol/events/EventType'
-import mapLayers from '../../util/map/mapLayers'
+import mapLayers from '../../constants/mapLayers'
+
+// Define base layers outside of the class
+const baseLayers = [
+  mapLayers.worldImagery,
+  mapLayers.correctedReflectance,
+  mapLayers.landWaterMap
+]
 
 /**
  * This class adds a layer switcher control to the map
@@ -9,7 +16,7 @@ import mapLayers from '../../util/map/mapLayers'
 class LayerSwitcherControl extends Control {
   constructor(options) {
     const element = document.createElement('div')
-    element.className = options.className || 'edsc-map-layer-switcher ol-unselectable ol-control'
+    element.className = options.className
 
     super({
       ...options,
@@ -20,7 +27,7 @@ class LayerSwitcherControl extends Control {
     this.onChangeLayer = options.onChangeLayer || (() => {})
 
     const toggleButton = document.createElement('button')
-    toggleButton.className = `${options.className}__button` || 'edsc-map-layer-switcher__button'
+    toggleButton.className = `${options.className}__button`
     toggleButton.setAttribute('type', 'button')
     toggleButton.title = 'Layer Options'
     toggleButton.ariaLabel = 'Layer Options'
@@ -35,17 +42,17 @@ class LayerSwitcherControl extends Control {
     element.appendChild(toggleButton)
 
     const panel = document.createElement('div')
-    panel.className = `${options.className}__panel` || 'edsc-map-layer-switcher__panel'
+    panel.className = `${options.className}__panel`
 
     this.addLayerOptions(panel)
     element.appendChild(panel)
 
     element.addEventListener('mouseenter', () => {
-      panel.classList.add(`${options.className}__panel--visible` || 'edsc-map-layer-switcher__panel--visible')
+      panel.classList.add(`${options.className}__panel--visible`)
     })
 
     element.addEventListener('mouseleave', () => {
-      panel.classList.remove(`${options.className}__panel--visible` || 'edsc-map-layer-switcher__panel--visible')
+      panel.classList.remove(`${options.className}__panel--visible`)
     })
   }
 
@@ -53,7 +60,7 @@ class LayerSwitcherControl extends Control {
    * Adds layer options to the panel
    */
   addLayerOptions(panel) {
-    const className = this.options.className || 'edsc-map-layer-switcher'
+    const { className } = this.options
     const layerOptions = this.options.layerOptions || [
       {
         id: mapLayers.worldImagery,
@@ -86,9 +93,11 @@ class LayerSwitcherControl extends Control {
       const optionContainer = document.createElement('div')
       optionContainer.className = `${className}__option`
 
+      const isBaseLayer = baseLayers.includes(option.id)
+
       const input = document.createElement('input')
-      input.type = option.id === mapLayers.worldImagery || option.id === mapLayers.correctedReflectance || option.id === mapLayers.landWaterMap ? 'radio' : 'checkbox'
-      input.name = option.id === mapLayers.worldImagery || option.id === mapLayers.correctedReflectance || option.id === mapLayers.landWaterMap ? 'base-layer' : option.id
+      input.type = isBaseLayer ? 'radio' : 'checkbox'
+      input.name = isBaseLayer ? 'base-layer' : option.id
       input.id = `layer-${option.id}`
       input.checked = option.checked || false
 
@@ -112,7 +121,7 @@ class LayerSwitcherControl extends Control {
     // Add the attribution footnote for OpenStreeMaps
     const attribution = document.createElement('div')
     attribution.className = `${className}__attribution`
-    attribution.innerHTML = '* © <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
+    attribution.innerHTML = '&ast; &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
 
     panel.appendChild(optionsContainer)
     panel.appendChild(attribution)
