@@ -305,7 +305,7 @@ test.describe('Map: Control interactions', () => {
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
         // Click the Land/Water Map radio button
-        await page.locator('input#layer-world-imagery').click()
+        await page.locator('input#layer-worldImagery').click()
         await page.waitForTimeout(500)
 
         // Verify URL change
@@ -336,7 +336,7 @@ test.describe('Map: Control interactions', () => {
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
         // Click the Land/Water Map radio button
-        await page.locator('input#layer-corrected-reflectance').click()
+        await page.locator('input#layer-correctedReflectance').click()
         await page.waitForTimeout(500)
 
         // Verify URL change
@@ -370,7 +370,7 @@ test.describe('Map: Control interactions', () => {
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
         // Click the Land/Water Map radio button
-        await page.locator('input#layer-land-water-map').click()
+        await page.locator('input#layer-landWaterMap').click()
         await page.waitForTimeout(500)
 
         // Verify URL change
@@ -399,7 +399,7 @@ test.describe('Map: Control interactions', () => {
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
         // Click the checkbox for Place Labels
-        await page.locator('input#layer-place-labels').click()
+        await page.locator('input#layer-placeLabels').click()
         await page.waitForTimeout(500)
 
         // Verify URL is updated with the correct overlay parameter
@@ -425,7 +425,7 @@ test.describe('Map: Control interactions', () => {
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
         // Click the checkbox for Borders and Roads
-        await page.locator('input#layer-borders-roads').click()
+        await page.locator('input#layer-bordersRoads').click()
         await page.waitForTimeout(500)
 
         // Verify URL is updated with the correct overlay parameter

@@ -106,7 +106,7 @@ const correctedReflectanceLayer = correctedReflectance({
 })
 
 // Build the landWater Layer
-const landWaterMapLayer = landWaterMap({
+const landWaterMapLayer = await landWaterMap({
   attributions: esriAttribution,
   projectionCode: projections.geographic
 })

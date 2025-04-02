@@ -1,57 +1,52 @@
-import TileLayer from 'ol/layer/Tile'
-import { XYZ } from 'ol/source'
-import { createXYZ } from 'ol/tilegrid'
-import moment from 'moment'
-import { crsProjections, projectionConfigs } from '../crs'
+import VectorTileLayer from 'ol/layer/VectorTile'
+import VectorTileSource from 'ol/source/VectorTile'
+import MVT from 'ol/format/MVT'
+
+import { applyStyle } from 'ol-mapbox-style'
+
+import { crsProjections } from '../crs'
+
+import { getApplicationConfig } from '../../../../../../sharedUtils/config'
+
+// Import the land-water map style JSON file
+import landWaterMapStyleUrl from './landWaterMap.json'
 
 /**
- * Map our projection codes to GIBS projection identifiers
- * @param {String} projectionCode Our projection code
- * @return {String} GIBS projection identifier
- */
-const getGibsProjection = (projectionCode) => {
-  const projectionMap = {
-    epsg4326: 'epsg4326',
-    epsg3413: 'epsg3413', // Arctic
-    epsg3031: 'epsg3031' // Antarctic
-  }
-
-  return projectionMap[projectionCode] || 'epsg4326'
-}
-
-/**
- * Builds the Corrected Reflectance (True Color) layer
+ * Builds the place labels layer
  * @param {Object} params
  * @param {String} params.attributions Attribution for the layer
  * @param {String} params.projectionCode The projection code for the layer
- * @param {String} params.date The date for the imagery in YYYY-MM-DD format (defaults to yesterday)
  */
-const landWaterMap = ({
+const landWaterMap = async ({
   attributions,
   projectionCode
 }) => {
   const projection = crsProjections[projectionCode]
-  const gibsProjection = getGibsProjection(projectionCode)
-  const yesterday = moment().subtract(1, 'days')
-  const date = yesterday.format('YYYY-MM-DD')
 
-  const layer = new TileLayer({
-    className: 'edsc-map-base-layer',
-    source: new XYZ({
-      attributions,
-      maxResolution: 180 / 512,
+  // Setup the VectorTileLayer
+  const layer = new VectorTileLayer({
+    source: new VectorTileSource({
+      url: 'https://basemaps.arcgis.com/arcgis/rest/services/World_Basemap_GCS_v2/VectorTileServer/tile/{z}/{y}/{x}.pbf',
+      wrapX: false,
+      format: new MVT(),
       projection,
-      reprojectionErrorThreshold: 2,
-      tileGrid: createXYZ({
-        extent: projection.getExtent(),
-        maxResolution: 576 / 512,
-        maxZoom: projectionConfigs[projectionCode].maxZoom
-      }),
-      tileSize: 512,
-      url: `https://gibs.earthdata.nasa.gov/wmts/${gibsProjection}/best/OSM_Land_Water_Map/default/${date}/250m/{z}/{y}/{x}.png`,
-      wrapX: false
+      attributions
     }),
-    visible: false
+    declutter: true,
+    renderMode: 'hybrid'
+    // ZIndex: 5
+  })
+
+  // Style the layer according to the landWaterMapStyleUrl, provided by Worldview
+  await applyStyle(layer, landWaterMapStyleUrl, {
+    resolutions: layer.getSource().getTileGrid().getResolutions(),
+    transformRequest(url, resourceType) {
+      if (resourceType === 'Tile') {
+        return new Request(url.replace('/VectorTileServer', '/VectorTileServer/'))
+      }
+
+      return new Request(url)
+    }
   })
 
   return layer

@@ -55,25 +55,25 @@ class LayerSwitcherControl extends Control {
     const className = this.options.className || 'edsc-map-layer-switcher'
     const layerOptions = this.options.layerOptions || [
       {
-        id: 'world-imagery',
+        id: 'worldImagery',
         label: 'World Imagery',
         checked: true
       },
       {
-        id: 'corrected-reflectance',
+        id: 'correctedReflectance',
         label: 'Corrected Reflectance (True Color)'
       },
       {
-        id: 'land-water-map',
+        id: 'landWaterMap',
         label: 'Land / Water Map *'
       },
       {
-        id: 'borders-roads',
+        id: 'bordersRoads',
         label: 'Borders and Roads *',
         checked: true
       },
       {
-        id: 'place-labels',
+        id: 'placeLabels',
         label: 'Place Labels *'
       }
     ]
@@ -86,8 +86,8 @@ class LayerSwitcherControl extends Control {
       optionContainer.className = `${className}__option`
 
       const input = document.createElement('input')
-      input.type = option.id === 'world-imagery' || option.id === 'corrected-reflectance' || option.id === 'land-water-map' ? 'radio' : 'checkbox'
-      input.name = option.id === 'world-imagery' || option.id === 'corrected-reflectance' || option.id === 'land-water-map' ? 'base-layer' : option.id
+      input.type = option.id === 'worldImagery' || option.id === 'correctedReflectance' || option.id === 'landWaterMap' ? 'radio' : 'checkbox'
+      input.name = option.id === 'worldImagery' || option.id === 'correctedReflectance' || option.id === 'landWaterMap' ? 'base-layer' : option.id
       input.id = `layer-${option.id}`
       input.checked = option.checked || false
 

@@ -1,12 +1,12 @@
 const mapLayers = {
   // Base layers
-  worldImagery: 'world-imagery',
-  correctedReflectance: 'corrected-reflectance',
-  landWaterMap: 'land-water-map',
+  worldImagery: 'worldImagery',
+  correctedReflectance: 'correctedReflectance',
+  landWaterMap: 'landWaterMap',
 
   // Overlay layers
-  bordersRoads: 'borders-roads',
+  bordersRoads: 'bordersRoads',
   coastlines: 'coastlines',
-  placeLabels: 'place-labels'
+  placeLabels: 'placeLabels'
 }
 export default mapLayers
