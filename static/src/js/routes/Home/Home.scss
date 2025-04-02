@@ -99,31 +99,14 @@
   &__hero-image-tooltip .tooltip-inner {
     text-align: left;
   }
-}
 
-.home-card {
-  &__image {
-    width: 3rem;
-    height: 3rem;
-  }
-}
-
-.home-topic-card__title,
-.home-portal-card__title {
-  font-weight: 400;
-}
-
-.home-portal-card__subtitle {
-  font-weight: 400;
-  color: utils.$color__carbon--70;
-}
-
-.home__grid {
-  --bs-columns: 2;
-  --bs-gap: 1rem;
-
-  @include bootstrap.media-breakpoint-up(lg) {
-    --bs-columns: 5;
+  &__grid {
+    --bs-columns: 2;
     --bs-gap: 1rem;
+
+    @include bootstrap.media-breakpoint-up(lg) {
+      --bs-columns: 5;
+      --bs-gap: 1rem;
+    }
   }
 }

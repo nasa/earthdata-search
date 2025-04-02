@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react'
-// @ts-ignore
+import * as React from 'react'
+import { useCallback, useState } from 'react'
 import { sortBy } from 'lodash-es'
 import {
   Card,
@@ -12,8 +12,7 @@ import {
   Tooltip
 } from 'react-bootstrap'
 import { connect, MapDispatchToProps } from 'react-redux'
-// @ts-ignore
-import { withRouter } from 'react-router-dom'
+import { withRouter, type RouteComponentProps } from 'react-router-dom'
 
 
 import {
@@ -34,15 +33,17 @@ import ExternalLink from '../../components/ExternalLink/ExternalLink'
 // @ts-ignore
 import Spinner from '../../components/Spinner/Spinner'
 import SpatialSelectionDropdownContainer
-  // @ts-ignore
-  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
-import TemporalSelectionDropdownContainer
-  // @ts-ignore
-  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 // @ts-ignore
-
+from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
+import TemporalSelectionDropdownContainer
+// @ts-ignore
+from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
+// @ts-ignore
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import TopicCard from './HomeTopicCard'
+import HomePortalCard from './HomePortalCard'
 
+// @ts-ignore
 import availablePortals from '../../../../../portals/availablePortals.json'
 
 // @ts-ignore
@@ -89,8 +90,13 @@ import actions from '../../actions'
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
+import { Dispatch } from 'redux'
 
-interface HomeTopic {
+export const mapDispatchToProps: MapDispatchToProps<{}, {}> = (dispatch: Dispatch) => ({
+  onChangePath:
+    (path: string) => dispatch(actions.changePath(path))
+})
+export interface HomeTopic {
   /** The title of the topic */
   title: string
   /** The image URL for the topic icon */
@@ -164,160 +170,38 @@ const topics: HomeTopic[] = [
   }
 ]
 
-interface HomeTopicCardProps extends HomeTopic {}
-
-const HomeTopicCard: React.FC<HomeTopicCardProps> = ({
-  color,
-  image,
-  url,
-  title
-}) => (
-  <Card key={title} className="text-decoration-none" as={PortalLinkContainer} to={url} updatePath naked>
-    <Card.Body className="d-flex align-items-center gap-3">
-      <div className="home-card__image d-flex align-items-center justify-content-center flex-shrink-0 flex-grow-0 rounded-circle" style={{ backgroundColor: color }}>
-        <Card.Img className="w-auto flex-shrink-0 flex-grow-0" height={50} width={50} src={image} />
-      </div>
-      <Card.Title as="h3" className="home-topic-card__title mb-0 h5">{title}</Card.Title>
-    </Card.Body>
-  </Card>
-)
-
-interface PortalLogoProps {
-  /** The portal id used to identify the portal */
-  portalId: string,
+interface PortalTitle {
   /** The primary title of the portal */
-  primaryTitle: string,
+  primary: string
   /** The secondary title of the portal */
-  secondaryTitle?: string
+  secondary?: string
 }
 
-const PortalLogo: React.FC<PortalLogoProps> = ({ portalId, primaryTitle, secondaryTitle }) => {
-  const portalLogoSrc = usePortalLogo(portalId)
-
-  const [thumbnailLoading, setThumbnailLoading] = useState(portalLogoSrc === undefined)
-
-  const onThumbnailLoaded = useCallback(() => {
-    setThumbnailLoading(false)
-  }, [])
-
-  const displayTitle = `${primaryTitle}${secondaryTitle && ` (${secondaryTitle})`}`
-
-  return (portalLogoSrc === undefined || portalLogoSrc) && (
-    <div
-      style={
-        {
-          width: 56,
-          height: 56
-        }
-      }
-      className="d-flex align-items-center justify-content-center"
-    >
-      {
-        thumbnailLoading && (
-          <Spinner
-            className="portal-list__thumb-spinner"
-            dataTestId="portal-thumbnail-spinner"
-            type="dots"
-            color="gray"
-            size="x-tiny"
-          />
-        )
-      }
-      {
-        portalLogoSrc && (
-          <img
-            className="flex-shrink-0 flex-grow-0 w-100 h-auto"
-            alt={`A logo for ${displayTitle}`}
-            src={portalLogoSrc}
-            width="56"
-            height="56"
-            onLoad={() => onThumbnailLoaded()}
-          />
-        )
-      }
-    </div>
-  )
-}
-
-interface HomePortal {
-  image: string
+export interface Portal {
+  /** The image URL for the portal logo */
+  portalLogoSrc?: string
+  /** The ID of the portal */
   portalId: string
-  subtitle: string
-  title: string
-  url: string
+  /** The title of the portal */
+  title: PortalTitle
+/** The URL to navigate to when the portal is clicked */
+  moreInfoUrl?: string
 }
 
-interface HomePortalCardProps extends HomePortal {}
-
-const HomePortalCard: React.FC<HomePortalCardProps> = (portal) => {
-  const {
-    portalId,
-    title,
-    subtitle,
-    url
-  } = portal
-
-  return (
-    <Card key={title} className="text-decoration-none" as={PortalLinkContainer} to="/search" newPortal={portal} updatePath naked>
-      <Card.Body className="d-flex flex-column align-items-start justify-content-between gap-2">
-        <header className="d-flex flex-column align-items-start gap-2">
-          <PortalLogo portalId={portalId} primaryTitle={title} secondaryTitle={subtitle} />
-          <Card.Title as="h3" className="home-portal-card__title mb-0 h5">{title}</Card.Title>
-          <Card.Subtitle className="home-portal-card__subtitle small">{subtitle}</Card.Subtitle>
-        </header>
-        {
-          url && (
-            <footer>
-              <OverlayTrigger
-                overlay={
-                  <Tooltip id="more-info-tooltip">{`Find more information about ${title}`}</Tooltip>
-                }
-              >
-                <div>
-                    <ExternalLink
-                    className="small"
-                    href={url}
-                    onClick={
-                      (event: React.MouseEvent<HTMLAnchorElement>) => {
-                        event.stopPropagation()
-                      }
-                    }
-                    >
-                    More Info
-                    </ExternalLink>
-                </div>
-              </OverlayTrigger>
-            </footer>
-          )
-        }
-      </Card.Body>
-    </Card>
-  )
+interface HomeProps extends RouteComponentProps {
+  /** The Redux action to change the path */
+  onChangePath: (path: string) => void
 }
 
-export const mapDispatchToProps: MapDispatchToProps<{}, {}> = (dispatch) => ({
-  onChangePath:
-    // @ts-ignore
-    (path: string) => dispatch(actions.changePath(path))
-})
-
-// @ts-ignore
-const Home = ({ onChangePath, history }) => {
+const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
   const [showAllPortals, setShowAllPortals] = useState(false)
 
   const onShowAllPortalsClick = () => {
     setShowAllPortals(!showAllPortals)
   }
 
-  const sortedPortals: HomePortal[] = sortBy(availablePortals, (portal: any) => portal.title.primary)
+  const sortedPortals: Portal[] = sortBy(availablePortals, (portal: any) => portal.title.primary)
     .filter((portal: any) => portal.portalBrowser)
-    .map((portal: any) => ({
-      image: portal.portalLogoSrc,
-      portalId: portal.portalId,
-      subtitle: portal.title.secondary,
-      title: portal.title.primary,
-      url: portal.moreInfoUrl
-    }))
 
   const visiblePortals = sortedPortals.slice(0, 10)
   const hiddenPortals = sortedPortals.slice(10)
@@ -440,13 +324,12 @@ const Home = ({ onChangePath, history }) => {
                 <p>Search for data within a research area</p>
               </Col>
             </Row>
-            {/* @ts-ignore */}
             <div
               className="home__grid grid"
             >
               {
                 topics && topics.map((topic) => (
-                  <HomeTopicCard key={topic.title} {...topic} />
+                  <TopicCard key={topic.title} {...topic} />
                 ))
               }
             </div>
@@ -460,24 +343,22 @@ const Home = ({ onChangePath, history }) => {
                 <p>Search for data using curated portals to limit results to an area of interest, project, or organization</p>
               </Col>
             </Row>
-            {/* @ts-ignore */}
             <div
               className="home__grid grid"
             >
               {
                 visiblePortals && visiblePortals.map((portal) => (
-                  <HomePortalCard key={portal.title} {...portal} />
+                  <HomePortalCard key={portal.portalId} {...portal} />
                 ))
               }
             </div>
             <Collapse in={showAllPortals}>
-              {/* @ts-ignore */}
               <div
                 className="home__grid grid mt-3"
               >
                 {
                   hiddenPortals && hiddenPortals.map((portal) => (
-                    <HomePortalCard key={portal.title} {...portal} />
+                    <HomePortalCard key={portal.portalId} {...portal} />
                   ))
                 }
               </div>
