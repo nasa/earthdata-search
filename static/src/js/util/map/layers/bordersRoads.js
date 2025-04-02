@@ -39,7 +39,7 @@ const bordersRoads = ({
   // Combine into a layer group
   const bordersRoadsGroup = new LayerGroup({
     layers: [bordersLayer, roadsLayer],
-    className: 'edsc-borders-roads-vector-group',
+    className: 'edsc-bordersRoads-vector-group',
     visible: false
   })
 
