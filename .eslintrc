@@ -18,6 +18,12 @@
     // We are using Vite, and it is giving incorrect results for .ts files
     "import/no-unresolved": "off",
 
+    // Enforce extension usage for certain types
+    "import/extensions": ["error", {
+        "svg": "always",
+        "json": "always", 
+        "jpg": "always" 
+    }],
     // Allowing cyclic dependencies
     "import/no-cycle": "off",
 
