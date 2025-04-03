@@ -45,7 +45,7 @@ test.describe('Authentication', () => {
   })
 
   test('logs the user in with the auth_callback endpoint and redirects the user', async ({ page }) => {
-    await page.goto(`/auth_callback?jwt=${testJwtToken}&redirect=http://localhost:8080/`)
+    await page.goto(`/auth_callback?jwt=${testJwtToken}&redirect=http://localhost:8080/search`)
     await page.waitForSelector('[data-testid="collection-results-item"]')
 
     await expect(page.getByText('Earthdata Login')).not.toBeVisible()
@@ -67,7 +67,7 @@ test.describe('Authentication', () => {
       })
     ])
 
-    await page.goto('/')
+    await page.goto('/search')
 
     await expect(page.getByText('Earthdata Login')).not.toBeVisible()
     await expect(page.getByTestId('collection-results-list')).toBeVisible()

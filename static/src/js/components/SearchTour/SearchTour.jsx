@@ -14,7 +14,7 @@ const SearchTour = () => {
   const authToken = useSelector((state) => state.authToken)
   const loggedIn = isLoggedIn(authToken)
 
-  const TOTAL_STEPS = loggedIn ? 14 : 13
+  const TOTAL_STEPS = loggedIn ? 13 : 12
 
   const [isChecked, setIsChecked] = useState(localStorage.getItem('dontShowTour') === 'true')
   const [stepIndex, setStepIndex] = useState(0)
@@ -42,22 +42,11 @@ const SearchTour = () => {
   }, [TOTAL_STEPS, loggedIn])
 
   useEffect(() => {
-    // Scrolling to the top to ensure "Browse Portals" is visible.
-    // If users are scrolled to the bottom of the Filters panel, the "Browse Portals"
-    // box will be out of view, but the tour will still highlight it even through the
-    // user cannot see it.
-    if (stepIndex === 6) {
-      const element = document.querySelector('.sidebar__content .simplebar-content-wrapper')
-      if (element) {
-        element.scrollTop = 0
-      }
-    }
-
     // On the step where we highlight the map, we are creating an element
     // to overlay the visible portion of the map and highlighting that
     // element with the tour spotlight
     let overlayDiv
-    if (stepIndex === 10) {
+    if (stepIndex === 9) {
       const sidebarEl = document.querySelector('.sidebar')
       const panelEl = document.querySelector('.panels')
       const mapEl = document.querySelector('.map')

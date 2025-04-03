@@ -26,7 +26,7 @@ test.describe('Panel Behavior', () => {
       })
     })
 
-    await page.goto('/')
+    await page.goto('/search')
   })
 
   test('is present by default on page load', async ({ page }) => {

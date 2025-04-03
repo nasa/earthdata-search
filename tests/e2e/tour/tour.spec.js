@@ -12,7 +12,7 @@ const expectWithinMargin = async (actual, expected, margin, step) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
     if (diff >= margin) {
-      console.log(`Step: ${step} - ${key} - Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
+      console.log(`Step: ${step} - Key: ${key} - Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
     }
 
     expect.soft(diff).toBeLessThanOrEqual(margin)
@@ -34,7 +34,7 @@ test.describe('When dontShowTour is set to false', () => {
       })
     })
 
-    await page.goto('/search')
+    await page.goto('search')
   })
 
   test.describe('When clicking the "Skip for now" button', () => {
@@ -101,7 +101,7 @@ test.describe('When loading the page with dontShowTour preference set to true', 
       })
     })
 
-    await page.goto('/search')
+    await page.goto('search')
   })
 
   test('should not see the tour when the page loads', async ({ page }) => {
@@ -135,7 +135,8 @@ test.describe('When logged in', () => {
       })
     })
 
-    await page.goto('/search')
+    await page.goto('search')
+    await page.waitForSelector('.edsc-map-base-layer')
   })
 
   test('should see the additional tour steps for logged in users', async ({ page }) => {
@@ -160,9 +161,6 @@ test.describe('When logged in', () => {
 
     await page.keyboard.press('ArrowRight')
     await expect(page.getByRole('alertdialog', { name: 'Use Advanced Search parameters to filter results using features like Hydrologic Unit Code (HUC) or SWORD River Reach.' })).toBeVisible()
-
-    await page.keyboard.press('ArrowRight')
-    await expect(page.getByRole('alertdialog', { name: 'Choose a portal to refine search results to a particular area of study, project, or organization.' })).toBeVisible()
 
     await page.keyboard.press('ArrowRight')
     await expect(page.getByRole('alertdialog', { name: 'Refine your search further using categories like Features, Keywords, Platforms, Organizations, etc.' })).toBeVisible()
@@ -205,7 +203,8 @@ test.describe('When not logged in', () => {
       })
     })
 
-    await page.goto('/search')
+    await page.goto('search')
+    await page.waitForSelector('.edsc-map-base-layer')
   })
 
   test('should navigate through the Joyride tour highlighting the correct parts of the page', async ({ page }) => {
@@ -236,7 +235,7 @@ test.describe('When not logged in', () => {
     expectWithinMargin(spotlightRect, {
       left: -10,
       top: 22,
-      width: 330,
+      width: 340,
       height: 844
     }, 10, 1)
 
@@ -274,7 +273,7 @@ test.describe('When not logged in', () => {
     expectWithinMargin(spotlightRect, {
       left: -10,
       top: 72,
-      width: 60,
+      width: 134,
       height: 69
     }, 10, 2)
 
@@ -293,10 +292,10 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 30,
+      left: 116,
       top: 72,
-      width: 60,
-      height: 69
+      width: 119,
+      height: 61
     }, 10, 3)
 
     // Step 4: Spatial filters
@@ -314,7 +313,7 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 69,
+      left: 219,
       top: 72,
       width: 60,
       height: 69
@@ -335,34 +334,13 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 3,
+      left: -10,
       top: 136,
-      width: 303,
-      height: 56
+      width: 339,
+      height: 720
     }, 10, 5)
 
-    // Step 6: Browse Portals
-    await page.waitForTimeout(500)
-    await expect(page.getByRole('alertdialog', { name: 'Choose a portal to refine search results' })).toBeVisible()
-    await page.getByRole('button', { name: 'Next' }).click()
-
-    // Get and verify the position and size of the highlighted section
-    rect = await spotlight.boundingBox()
-    spotlightRect = {
-      left: rect.x,
-      top: rect.y,
-      width: rect.width,
-      height: rect.height
-    }
-
-    expectWithinMargin(spotlightRect, {
-      left: -10,
-      top: 189,
-      width: 338,
-      height: 720
-    }, 10, 6)
-
-    // Step 7: Refine Search by Category
+    // Step 6: Refine Search by Category
     await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Refine your search further using categories like Features, Keywords' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
@@ -377,13 +355,13 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 300,
+      left: 310,
       top: 22,
       width: 620,
       height: 844
     }, 10, 7)
 
-    // Step 8: High-level description for each search result
+    // Step 7: High-level description for each search result
     await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'A high-level description is displayed for each search result' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
@@ -398,13 +376,13 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 900,
+      left: 910,
       top: 39,
       width: 40,
       height: 85
     }, 10, 8)
 
-    // Step 9: Resize Search Results Panel
+    // Step 8: Resize Search Results Panel
     await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'To make more room to view the map, the search results can be resized' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
@@ -419,13 +397,13 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 900,
+      left: 910,
       top: 22,
-      width: 510,
+      width: 500,
       height: 844
     }, 10, 9)
 
-    // Step 10: Pan and zoom the map
+    // Step 9: Pan and zoom the map
     await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Pan the map by clicking and dragging, and zoom by using the scroll wheel' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
@@ -440,18 +418,18 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1273,
-      top: 335,
-      width: 124,
-      height: 513
+      left: 1348,
+      top: 423,
+      width: 49,
+      height: 360
     }, 10, 10)
 
-    // Step 11: Map tools
+    // Step 10: Map tools
     await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Use the map tools to switch map projections, draw, edit, or remove spatial bounds' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
 
-    // Step 12: Log in to set preferences, save projects, etc.
+    // Step 11: Log in to set preferences, save projects, etc.
     await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'Log in with Earthdata Login to set' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
@@ -461,7 +439,7 @@ test.describe('When not logged in', () => {
     await expect(page.getByRole('alertdialog', { name: 'Log in with Earthdata Login' })).toBeVisible()
     await page.getByRole('button', { name: 'Next' }).click()
 
-    // Step 13: Replay info
+    // Step 12: Replay info
     await page.waitForTimeout(500)
     await expect(page.getByRole('alertdialog', { name: 'You can replay this tour anytime' })).toBeVisible()
     await page.getByRole('button', { name: 'Finish Tour' }).click()

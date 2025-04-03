@@ -10,23 +10,35 @@ import { type Portal } from './Home'
 import { usePortalLogo } from '../../hooks/usePortalLogo'
 // @ts-expect-error: Types do not exist for this file
 import ExternalLink from '../../components/ExternalLink/ExternalLink'
+// @ts-expect-error: Types do not exist for this file
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import './HomePortalCard.scss'
 
-const HomePortalCard: React.FC<Portal> = ({
-  portalId,
-  title: {
-    primary: title,
-    secondary: subtitle
-  },
-  moreInfoUrl
-}) => {
+const HomePortalCard: React.FC<Portal> = (portal) => {
+  const {
+    portalId,
+    title: {
+      primary: title,
+      secondary: subtitle
+    },
+    moreInfoUrl
+  } = portal
+
   const portalLogoSrc = usePortalLogo(portalId)
 
   const displayTitle = `${title}${subtitle && ` (${subtitle})`}`
 
   return (
-    <Card className="text-decoration-none">
+    <Card
+      key={title}
+      className="text-decoration-none"
+      as={PortalLinkContainer}
+      to="/search"
+      newPortal={portal}
+      updatePath
+      naked
+    >
       <Card.Body className="d-flex flex-column align-items-start justify-content-between gap-2">
         <header className="d-flex flex-column align-items-start gap-2">
           {

@@ -59,8 +59,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -117,8 +116,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -176,8 +174,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -235,8 +232,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -294,8 +290,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -379,8 +374,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -432,8 +426,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -490,8 +483,7 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise

@@ -46,7 +46,7 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -74,9 +74,7 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
-
-        await initialMapPromise
+        await page.goto('/search')
 
         // Zoom the map
         await page.getByRole('button', { name: 'Zoom In' }).click()
@@ -97,7 +95,7 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -144,12 +142,7 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
-
-        await page.goto('/search?projection=EPSG%3A3413&zoom=2')
-
-        // Wait for the map to load
-        await initialMapPromise
+        await page.goto('/search')
 
         // Change the projection
         const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
@@ -196,10 +189,7 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
-
-        // Wait for the map to load
-        await initialMapPromise
+        await page.goto('/search')
 
         // Change the projection
         const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
@@ -245,10 +235,7 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
-
-        // Wait for the map to load
-        await initialMapPromise
+        await page.goto('/search')
 
         // Change the projection to North Polar
         await page.getByLabel('North Polar Stereographic').click()
@@ -279,10 +266,7 @@ test.describe('Map: Control interactions', () => {
 
       const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-      await page.goto('/')
-
-      // Wait for the map to load
-      await initialMapPromise
+      await page.goto('/search')
 
       // Change the projection
       const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
@@ -336,11 +320,7 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
-
-        await page.goto('/search?base=trueColor')
-
-        await trueColorPromise
+        await page.goto('/search')
 
         // Zoom in to force new tiles to load
         await page.getByRole('button', { name: 'Zoom In' }).click()
@@ -375,7 +355,7 @@ test.describe('Map: Control interactions', () => {
 
         const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
         await worldImageryPromise
 
@@ -407,14 +387,13 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+        await page.goto('/search')
 
-        await page.goto('/search?overlays=coastlines')
-
-        await worldImageryPromise
-
-        // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+        // Change the base layer
+        await page.getByRole('button', {
+          name: 'Layers',
+          exact: true
+        }).hover({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control__panel--visible')

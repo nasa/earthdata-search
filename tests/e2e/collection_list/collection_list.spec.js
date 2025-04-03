@@ -18,7 +18,7 @@ test.describe('Collection List Behavior', () => {
       })
     })
 
-    await page.goto('/')
+    await page.goto('/search')
   })
 
   test('defaults to the list view and displays results', async ({ page }) => {
