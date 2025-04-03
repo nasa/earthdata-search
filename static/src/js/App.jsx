@@ -84,7 +84,10 @@ class App extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('DOMContentLoaded', function() {
+    // This event listener is used to load the Search and Map components
+    // when the DOM is ready which helps prevent a flash of white when the
+    // page loads.
+    document.addEventListener('DOMContentLoaded', () => {
       import('./routes/Search/Search')
       import('./components/SearchTour/SearchTour')
       import('./containers/MapContainer/MapContainer')

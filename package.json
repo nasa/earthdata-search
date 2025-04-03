@@ -79,8 +79,6 @@
     "@types/react-dom": "^19.0.4",
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-mock-store": "^1.5.0",
-    "@vitest/browser": "^3.0.9",
-    "@vitest/coverage-v8": "^3.0.9",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.8.0",
     "babel-jest": "^29.0.0",
@@ -118,8 +116,7 @@
     "ts-jest": "^29.3.1",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.28.0",
-    "vite-plugin-svgr": "^4.3.0",
-    "vitest": "^3.0.9"
+    "vite-plugin-svgr": "^4.3.0"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.352.0",
