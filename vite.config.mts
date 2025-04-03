@@ -59,7 +59,7 @@ export default defineConfig({
       forceBuildInstrument: process.env.VITE_COVERAGE === 'true'
     }),
     svgr({
-      include: "**/*.svg?react"
+      include: '**/*.svg?react'
     })
   ],
   css: {
@@ -84,7 +84,7 @@ export default defineConfig({
     outDir: 'static/dist'
   },
   // TODO: vitest is currently blocked by enzyme removal ticket EDSC-4201
-  // @ts-ignore
+  // @ts-expect-error: configuring vitest causes overload error
   test: {
     globals: true,
     environment: 'jsdom',

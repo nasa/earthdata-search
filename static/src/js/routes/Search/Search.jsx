@@ -13,15 +13,8 @@ import {
   withRouter
 } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
-import {
-  FaSitemap,
-  FaQuestionCircle,
-  FaFilter,
-  FaMap
-} from 'react-icons/fa'
+import { FaFilter, FaMap } from 'react-icons/fa'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
@@ -42,11 +35,9 @@ import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
-import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
-import Button from '../../components/Button/Button'
 import Spinner from '../../components/Spinner/Spinner'
 import TourContext from '../../contexts/TourContext'
 
@@ -81,7 +72,6 @@ export const Search = ({
   collectionQuery,
   match,
   onChangeQuery,
-  onTogglePortalBrowserModal,
   onUpdateAdvancedSearch
 }) => {
   const { path } = match
@@ -255,7 +245,6 @@ Search.propTypes = {
     path: PropTypes.string
   }).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onTogglePortalBrowserModal: PropTypes.func.isRequired,
   onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 

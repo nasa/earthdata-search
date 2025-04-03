@@ -40,13 +40,15 @@ export const TemporalSelectionDropdownContainer = (props) => {
 }
 
 TemporalSelectionDropdownContainer.defaultProps = {
+  searchParams: {},
   temporalSearch: {}
 }
 
 TemporalSelectionDropdownContainer.propTypes = {
-  temporalSearch: PropTypes.shape({}),
   onChangeQuery: PropTypes.func.isRequired,
-  onMetricsTemporalFilter: PropTypes.func.isRequired
+  onMetricsTemporalFilter: PropTypes.func.isRequired,
+  searchParams: PropTypes.shape({}),
+  temporalSearch: PropTypes.shape({})
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TemporalSelectionDropdownContainer)

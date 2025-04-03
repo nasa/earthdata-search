@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   act,
+  queryAllByAttribute,
   render,
   screen,
   waitFor
@@ -14,10 +15,24 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
+import { Router } from 'react-router'
+import { useLocation } from 'react-router-dom'
+import { createMemoryHistory } from 'history'
 import * as metricsActions from '../../../middleware/metrics/actions'
 
 import TemporalSelectionDropdown from '../TemporalSelectionDropdown'
 import TemporalSelectionDropdownMenu from '../TemporalSelectionDropdownMenu'
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/',
+    search: '',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
 
 const MockTemporalMenu = ({ setStartDate, setEndDate }) => {
   const newStartDate = moment.utc('2020-06-15')
@@ -63,9 +78,12 @@ jest.mock('../TemporalSelectionDropdownMenu')
 const mockStore = configureMockStore()
 const store = mockStore({})
 
+const history = createMemoryHistory()
+
 const setup = (overrideProps) => {
   const user = userEvent.setup()
   const props = {
+    searchParams: {},
     temporalSearch: {
       endDate: '',
       startDate: '',
@@ -79,7 +97,17 @@ const setup = (overrideProps) => {
   // Wrapping this in a Redux provider because DatepickerContainer has to be connected to Redux
   render(
     <Provider store={store}>
-      <TemporalSelectionDropdown {...props} />
+      <Router
+        history={history}
+        location={
+          {
+            search: '',
+            pathname: '/'
+          }
+        }
+      >
+        <TemporalSelectionDropdown {...props} />
+      </Router>
     </Provider>
   )
 
@@ -320,7 +348,7 @@ describe('TemporalSelectionDropdown component', () => {
     expect(endField).toHaveValue(validEndDate)
 
     // Select Recurring
-    await user.click(screen.getByLabelText('Recurring?'))
+    await user.click(screen.getByLabelText('Use a recurring date range'))
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
     await user.click(applyBtn)
@@ -419,7 +447,7 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
-    const recurringCheckbox = screen.getByLabelText('Recurring?')
+    const recurringCheckbox = screen.getByLabelText('Use a recurring date range')
 
     await waitFor(async () => {
       await user.click(recurringCheckbox)
@@ -440,7 +468,7 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
     })
 
-    const recurringCheckbox = screen.getByLabelText('Recurring?')
+    const recurringCheckbox = screen.getByLabelText('Use a recurring date range')
 
     await waitFor(async () => {
       await user.click(recurringCheckbox)
@@ -696,7 +724,7 @@ describe('TemporalSelectionDropdown component', () => {
       expect(endDateInput).toHaveValue('')
       expect(screen.queryByText('Year Range:')).not.toBeInTheDocument()
 
-      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Use a recurring date range' })
       await user.click(recurringCheckbox)
       await waitFor(() => {
         expect(recurringCheckbox).toBeChecked()
@@ -834,6 +862,127 @@ describe('TemporalSelectionDropdown component', () => {
       })
 
       MockDate.reset()
+    })
+  })
+
+  describe('when applying with search params are present', () => {
+    describe('when on the landing page', () => {
+      test('adds the search keyword to the params', async () => {
+        const onChangeQueryMock = jest.fn()
+        const { user } = setup({
+          searchParams: {
+            q: 'test'
+          },
+          onChangeQuery: onChangeQueryMock
+        })
+
+        const validStartDate = '2019-03-29 00:00:00'
+        const validEndDate = '2019-03-30 00:00:00'
+
+        const expectedStartDate = '2019-03-29T00:00:00.000Z'
+        const expectedEndDate = '2019-03-30T23:59:59.999Z'
+
+        await act(async () => {
+          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+        })
+
+        const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+        const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+        await act(async () => {
+          await user.type(startDateInput, validStartDate)
+          await user.type(endDateInput, validEndDate)
+
+          await user.click(startDateInput)
+        })
+
+        expect(window.console.warn).toHaveBeenCalledTimes(36)
+
+        expect(startDateInput).toHaveValue(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
+        expect(endDateInput).toHaveValue(moment.utc(validEndDate).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
+
+        const applyBtn = screen.getByRole('button', { name: 'Apply' })
+
+        await waitFor(async () => {
+          await user.click(applyBtn)
+        })
+
+        expect(onChangeQueryMock).toHaveBeenCalledWith({
+          collection: {
+            keyword: 'test',
+            temporal: {
+              isRecurring: false,
+              startDate: expectedStartDate,
+              endDate: expectedEndDate
+            }
+          }
+        })
+
+        expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    describe('when not on the landing page', () => {
+      test('adds the search keyword to the params', async () => {
+        useLocation.mockReturnValue({
+          pathname: '/search',
+          search: '',
+          hash: '',
+          state: null,
+          key: 'testKey'
+        })
+
+        const onChangeQueryMock = jest.fn()
+        const { user } = setup({
+          searchParams: {
+            q: 'test'
+          },
+          onChangeQuery: onChangeQueryMock
+        })
+
+        const validStartDate = '2019-03-29 00:00:00'
+        const validEndDate = '2019-03-30 00:00:00'
+
+        const expectedStartDate = '2019-03-29T00:00:00.000Z'
+        const expectedEndDate = '2019-03-30T23:59:59.999Z'
+
+        await act(async () => {
+          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
+        })
+
+        const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
+        const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
+
+        await act(async () => {
+          await user.type(startDateInput, validStartDate)
+          await user.type(endDateInput, validEndDate)
+
+          await user.click(startDateInput)
+        })
+
+        expect(window.console.warn).toHaveBeenCalledTimes(36)
+
+        expect(startDateInput).toHaveValue(moment.utc(validStartDate).format('YYYY-MM-DD HH:mm:ss'))
+        expect(endDateInput).toHaveValue(moment.utc(validEndDate).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
+
+        const applyBtn = screen.getByRole('button', { name: 'Apply' })
+
+        await waitFor(async () => {
+          await user.click(applyBtn)
+        })
+
+        expect(onChangeQueryMock).toHaveBeenCalledWith({
+          collection: {
+            temporal: {
+              isRecurring: false,
+              startDate: expectedStartDate,
+              endDate: expectedEndDate
+            }
+          }
+        })
+
+        expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
+      })
     })
   })
 })

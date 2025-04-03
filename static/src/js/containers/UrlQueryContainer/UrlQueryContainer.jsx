@@ -15,7 +15,7 @@ import { getMapPreferences, getCollectionSortKeyParameter } from '../../selector
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
-    (path, startDrawingCallback) => dispatch(actions.changePath(path, startDrawingCallback)),
+    (path) => dispatch(actions.changePath(path)),
   onChangeUrl:
     (query) => dispatch(actions.changeUrl(query))
 })

@@ -28,6 +28,9 @@ module.exports = {
     '^axios$': require.resolve('axios'),
     // Available Portals is not defined until the start of the application and is subject to change as portal maintainers update values mock the output in tests
     'portals/availablePortals.json': '<rootDir>/portals/__mocks__/availablePortals.json'
+    // TODO: Remove this if not needed
+    // Mock the ~Images alias to the images directory
+    // '^~Images/(.*)$': '<rootDir>/static/src/assets/images/$1'
   },
   coveragePathIgnorePatterns: [
     'package.json',
@@ -53,7 +56,8 @@ module.exports = {
     '(?<=/portals)(?<=/logo).png':
       '<rootDir>/static/src/js/util/jest/fileTransformer.cjs',
     '^.+\\.(js|jsx)$': 'babel-jest',
-    '^.+\\.ipynb$': '<rootDir>/static/src/js/util/jest/ipynbTransformer.cjs'
+    '^.+\\.ipynb$': '<rootDir>/static/src/js/util/jest/ipynbTransformer.cjs',
+    '^.+\\.(ts|tsx)?$': 'ts-jest'
   },
   testEnvironment: 'jsdom',
   transformIgnorePatterns: [`/node_modules/(?!${esModulesToIgnore})`]

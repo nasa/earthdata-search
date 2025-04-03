@@ -1,98 +1,89 @@
 import * as React from 'react'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import { sortBy } from 'lodash-es'
 import {
-  Card,
   Col,
   Collapse,
   Container,
   OverlayTrigger,
   Popover,
-  Row,
-  Tooltip
+  Row
 } from 'react-bootstrap'
 import { connect, MapDispatchToProps } from 'react-redux'
 import { withRouter, type RouteComponentProps } from 'react-router-dom'
-
 
 import {
   ArrowCircleDown,
   ArrowCircleUp,
   Search
-  // @ts-ignore
+  // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-// @ts-ignore
-import { usePortalLogo } from '../../hooks/usePortalLogo'
+
+import { type Dispatch } from 'redux'
 
 import Button from '../../components/Button/Button'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
-// @ts-ignore
-import ExternalLink from '../../components/ExternalLink/ExternalLink'
 
-// @ts-ignore
-import Spinner from '../../components/Spinner/Spinner'
 import SpatialSelectionDropdownContainer
-// @ts-ignore
-from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
+// @ts-expect-error: Types do not exist for this file
+  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
 import TemporalSelectionDropdownContainer
-// @ts-ignore
-from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
+  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
+// @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import TopicCard from './HomeTopicCard'
 import HomePortalCard from './HomePortalCard'
 
-// @ts-ignore
 import availablePortals from '../../../../../portals/availablePortals.json'
 
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconAtmosphere from '~Images/homepage-topic-icons/atmosphere-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconBiosphere from '~Images/homepage-topic-icons/biosphere-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconClimateIndicators from '~Images/homepage-topic-icons/climate-indicators-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconCryosphere from '~Images/homepage-topic-icons/cryosphere-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconHumanDimensions from '~Images/homepage-topic-icons/human-dimensions-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconLandSurface from '~Images/homepage-topic-icons/land-surface-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconOcean from '~Images/homepage-topic-icons/ocean-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconSolidEarth from '~Images/homepage-topic-icons/solid-earth-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconSunEarthInteractions from '~Images/homepage-topic-icons/sun-earth-interactions-icon.svg'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import topicIconTerrestrialHydrosphere from '~Images/homepage-topic-icons/terrestrial-hydrosphere-icon.svg'
 
-// @ts-ignore
-import heroImg800 from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600.jpg";
-// @ts-ignore
-import heroImg800_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600@2x.jpg";
-// @ts-ignore
-import heroImg1280 from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg";
-// @ts-ignore
-import heroImg1280_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720@2x.jpg";
-// @ts-ignore
-import heroImg1920 from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg";
-// @ts-ignore
-import heroImg1920_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080@2x.jpg";
-// @ts-ignore
-import heroImg2560 from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg";
-// @ts-ignore
-import heroImg2560_2x from "~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x.jpg";
+// @ts-expect-error: Types do not exist for this file
+import heroImg800 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600.jpg'
+// @ts-expect-error: Types do not exist for this file
+import heroImg8002x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600@2x.jpg'
+// @ts-expect-error: Types do not exist for this file
+import heroImg1280 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg'
+// @ts-expect-error: Types do not exist for this file
+import heroImg12802x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720@2x.jpg'
+// @ts-expect-error: Types do not exist for this file
+import heroImg1920 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg'
+// @ts-expect-error: Types do not exist for this file
+import heroImg19202x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080@2x.jpg'
+// @ts-expect-error: Types do not exist for this file
+import heroImg2560 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg'
+// @ts-expect-error: Types do not exist for this file
+import heroImg25602x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x.jpg'
 
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
-import { Dispatch } from 'redux'
 
-export const mapDispatchToProps: MapDispatchToProps<{}, {}> = (dispatch: Dispatch) => ({
+export const mapDispatchToProps: MapDispatchToProps<object, object> = (dispatch: Dispatch) => ({
   onChangePath:
     (path: string) => dispatch(actions.changePath(path))
 })
@@ -103,70 +94,58 @@ export interface HomeTopic {
   image: string
   /** The URL to navigate to when the topic is clicked */
   url: string
-  /** The color of the topic icon */
-  color: string
 }
 
 const topics: HomeTopic[] = [
   {
     title: 'Atmosphere',
     image: topicIconAtmosphere,
-    url: '/search?fst0=Atmosphere',
-    color: '#3670DC'
+    url: '/search?fst0=Atmosphere'
   },
   {
     title: 'Biosphere',
     image: topicIconBiosphere,
-    url: '/search?fst0=Biosphere',
-    color: '#53B45C'
+    url: '/search?fst0=Biosphere'
   },
   {
     title: 'Climate Indicators',
     image: topicIconClimateIndicators,
-    url: '/search?fst0=Climate+Indicators',
-    color: '#3F8E7D'
+    url: '/search?fst0=Climate+Indicators'
   },
   {
     title: 'Cryosphere',
     image: topicIconCryosphere,
-    url: '/search?fst0=Cryosphere',
-    color: '#82A2AA'
+    url: '/search?fst0=Cryosphere'
   },
   {
     title: 'Human Dimensions',
     image: topicIconHumanDimensions,
-    url: '/search?fst0=Human+Dimensions',
-    color: '#D24032'
+    url: '/search?fst0=Human+Dimensions'
   },
   {
     title: 'Land Surface',
     image: topicIconLandSurface,
-    url: '/search?fst0=Land+Surface',
-    color: '#367A3E'
+    url: '/search?fst0=Land+Surface'
   },
   {
     title: 'Oceans',
     image: topicIconOcean,
-    url: '/search?fst0=Oceans',
-    color: '#0B3D91'
+    url: '/search?fst0=Oceans'
   },
   {
     title: 'Solid Earth',
     image: topicIconSolidEarth,
-    url: '/search?fst0=Solid+Earth',
-    color: '#42636F'
+    url: '/search?fst0=Solid+Earth'
   },
   {
     title: 'Sun-Earth Interactions',
     image: topicIconSunEarthInteractions,
-    url: '/search?fst0=Sun-Earth+Interactions',
-    color: '#E6A059'
+    url: '/search?fst0=Sun-Earth+Interactions'
   },
   {
     title: 'Terrestrial Hydrosphere',
     image: topicIconTerrestrialHydrosphere,
-    url: '/search?fst0=Terrestrial+Hydrosphere',
-    color: '#5AC5AD'
+    url: '/search?fst0=Terrestrial+Hydrosphere'
   }
 ]
 
@@ -178,6 +157,8 @@ interface PortalTitle {
 }
 
 export interface Portal {
+  /** A flag that denotes if the portal should be included in the portal browser */
+  portalBrowser?: boolean
   /** The image URL for the portal logo */
   portalLogoSrc?: string
   /** The ID of the portal */
@@ -188,20 +169,22 @@ export interface Portal {
   moreInfoUrl?: string
 }
 
-interface HomeProps extends RouteComponentProps {
+interface HomeDispatchProps {
   /** The Redux action to change the path */
   onChangePath: (path: string) => void
 }
 
-const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
+type HomeProps = HomeDispatchProps & RouteComponentProps
+
+export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
   const [showAllPortals, setShowAllPortals] = useState(false)
 
   const onShowAllPortalsClick = () => {
     setShowAllPortals(!showAllPortals)
   }
 
-  const sortedPortals: Portal[] = sortBy(availablePortals, (portal: any) => portal.title.primary)
-    .filter((portal: any) => portal.portalBrowser)
+  const sortedPortals: Portal[] = sortBy(availablePortals, (portal: Portal) => portal.title.primary)
+    .filter((portal: Portal) => portal.portalBrowser)
 
   const visiblePortals = sortedPortals.slice(0, 10)
   const hiddenPortals = sortedPortals.slice(10)
@@ -221,25 +204,29 @@ const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
       <div className="route-wrapper__content">
         <section
           className="home__hero position-relative w-100 d-flex px-5 flex-column justify-content-center flex-shrink-0 gap-5"
-          >
+        >
           <picture className="home__hero-image position-absolute">
             <source
-              srcSet={`${heroImg2560}, ${heroImg2560_2x} 2x`}
+              srcSet={`${heroImg2560}, ${heroImg25602x} 2x`}
               media="(min-width: 1200px)"
             />
             <source
-              srcSet={`${heroImg1920}, ${heroImg1920_2x} 2x`}
+              srcSet={`${heroImg1920}, ${heroImg19202x} 2x`}
               media="(min-width: 992px)"
             />
             <source
-              srcSet={`${heroImg1280}, ${heroImg1280_2x} 2x`}
+              srcSet={`${heroImg1280}, ${heroImg12802x} 2x`}
               media="(min-width: 768px)"
             />
             <source
-              srcSet={`${heroImg800}, ${heroImg800_2x} 2x`}
+              srcSet={`${heroImg800}, ${heroImg8002x} 2x`}
               media="(max-width: 767px)"
             />
-            <img src={heroImg800} alt="Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the Moderate Resolution Imaging Spectroradiometer (MODIS) aboard the Terra platform on March 12, 2025" />
+            {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
+            <img
+              src={heroImg800}
+              alt="Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the Moderate Resolution Imaging Spectroradiometer (MODIS) aboard the Terra platform on March 12, 2025"
+            />
           </picture>
           <div className="text-center z-1 d-flex gap-3 flex-column">
             <h1 className="text-white display-7">Search NASA&apos;s 1.8 billion+ Earth observations</h1>
@@ -249,11 +236,13 @@ const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
             <div className="home__hero-input-wrapper w-100 d-flex flex-shrink-1 flex-grow-1 justify-content-center align-items-center gap-3">
               <form
                 className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  onChangePath(`/search?q=${keyword}`)
-                  history.push(`/search?q=${keyword}`)
-                }}
+                onSubmit={
+                  (e) => {
+                    e.preventDefault()
+                    onChangePath(`/search?q=${keyword}`)
+                    history.push(`/search?q=${keyword}`)
+                  }
+                }
               >
                 <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
                   <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22" />
@@ -262,8 +251,8 @@ const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
                     type="text"
                     placeholder="Type to search for data"
                     value={keyword}
-                    autoFocus
                     onChange={onChangeKeyword}
+                    ref={(input) => { if (input) input.focus() }}
                   />
                 </div>
                 <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
@@ -354,7 +343,11 @@ const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
             </div>
             <Collapse in={showAllPortals}>
               <div
+                id="portal-cards-collapse"
                 className="home__grid grid mt-3"
+                aria-labelledby="portal-collapse-button"
+                aria-hidden={!showAllPortals}
+                style={{ display: showAllPortals ? 'block' : 'none' }}
               >
                 {
                   hiddenPortals && hiddenPortals.map((portal) => (
@@ -364,8 +357,38 @@ const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
               </div>
             </Collapse>
             <div className="mt-3 d-flex justify-content-center align-items-center">
-              {!showAllPortals && <Button variant="naked" icon={ArrowCircleDown} iconPosition="right" bootstrapVariant="naked" onClick={() => onShowAllPortalsClick()}>Show all portals</Button>}
-              {showAllPortals && <Button variant="naked" icon={ArrowCircleUp} iconPosition="right" bootstrapVariant="naked" onClick={() => onShowAllPortalsClick()}>Show fewer portals</Button>}
+              {
+                !showAllPortals && (
+                  <Button
+                    id="portal-collapse-button"
+                    variant="naked"
+                    icon={ArrowCircleDown}
+                    iconPosition="right"
+                    bootstrapVariant="naked"
+                    onClick={() => onShowAllPortalsClick()}
+                    aria-expanded={showAllPortals}
+                    aria-controls="portal-cards-collapse"
+                  >
+                    Show all portals
+                  </Button>
+                )
+              }
+              {
+                showAllPortals && (
+                  <Button
+                    id="portal-collapse-button"
+                    variant="naked"
+                    icon={ArrowCircleUp}
+                    iconPosition="right"
+                    bootstrapVariant="naked"
+                    onClick={() => onShowAllPortalsClick()}
+                    aria-expanded={showAllPortals}
+                    aria-controls="portal-cards-collapse"
+                  >
+                    Show fewer portals
+                  </Button>
+                )
+              }
             </div>
           </Container>
         </section>

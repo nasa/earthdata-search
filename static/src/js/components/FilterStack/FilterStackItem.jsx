@@ -69,7 +69,8 @@ const FilterStackItem = (props) => {
                             icon={FaRegTrashAlt}
                             tooltipId={`remove-${title.toLowerCase()}-filter-tooltip`}
                             tooltip={`Remove ${title.toLowerCase()} filter`}
-                            onClick={() => { onRemove() }}
+                            ariaLabel={`Remove ${title.toLowerCase()} filter`}
+                            onClick={() => { console.log('calling onremove'); onRemove() }}
                           />
                         )
                       }

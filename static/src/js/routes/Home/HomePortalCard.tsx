@@ -1,19 +1,19 @@
-import React, { useCallback, useState } from 'react'
-import { Card, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import React from 'react'
+import {
+  Card,
+  OverlayTrigger,
+  Tooltip
+} from 'react-bootstrap'
 
 import { type Portal } from './Home'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import { usePortalLogo } from '../../hooks/usePortalLogo'
-// @ts-ignore
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-// @ts-ignore
+// @ts-expect-error: Types do not exist for this file
 import ExternalLink from '../../components/ExternalLink/ExternalLink'
 
 import './HomePortalCard.scss'
 
-interface HomePortalCardProps extends Portal { }
-
-const HomePortalCard: React.FC<HomePortalCardProps> = ({
+const HomePortalCard: React.FC<Portal> = ({
   portalId,
   title: {
     primary: title,
@@ -26,10 +26,9 @@ const HomePortalCard: React.FC<HomePortalCardProps> = ({
   const displayTitle = `${title}${subtitle && ` (${subtitle})`}`
 
   return (
-    <Card className="text-decoration-none" as={PortalLinkContainer} to="/search" newPortal={{ portalId }} updatePath naked>
+    <Card className="text-decoration-none">
       <Card.Body className="d-flex flex-column align-items-start justify-content-between gap-2">
         <header className="d-flex flex-column align-items-start gap-2">
-
           {
             portalLogoSrc && (
               <div className="home-portal-card__image-wrapper d-flex align-items-center justify-content-center flex-shrink-0 flex-grow-0 rounded-circle">
@@ -50,9 +49,7 @@ const HomePortalCard: React.FC<HomePortalCardProps> = ({
           moreInfoUrl && (
             <footer>
               <OverlayTrigger
-                overlay={
-                  <Tooltip id="more-info-tooltip">{`Find more information about ${title}`}</Tooltip>
-                }
+                overlay={<Tooltip id="more-info-tooltip">{`Find more information about ${title}`}</Tooltip>}
               >
                 <div>
                   <ExternalLink

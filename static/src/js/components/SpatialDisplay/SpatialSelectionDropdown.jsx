@@ -3,12 +3,9 @@ import { PropTypes } from 'prop-types'
 import Dropdown from 'react-bootstrap/Dropdown'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
-import {
-  FaCircle,
-  FaFile
-} from 'react-icons/fa'
+import { FaCircle, FaFile } from 'react-icons/fa'
 
 import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 

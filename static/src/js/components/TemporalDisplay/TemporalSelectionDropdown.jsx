@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import moment from 'moment'
 
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -10,7 +11,6 @@ import TemporalSelectionDropdownMenu from './TemporalSelectionDropdownMenu'
 import TemporalSelectionDropdownToggle from './TemporalSelectionDropdownToggle'
 
 import './TemporalSelectionDropdown.scss'
-import { useLocation } from 'react-router-dom'
 
 /**
  * TODO:
@@ -35,7 +35,6 @@ const TemporalSelectionDropdown = ({
     isRecurring = false
   } = temporalSearch
 
-  const dropdownMenuRef = useRef(null)
   const [open, setOpen] = useState(false)
   const [disabled, setDisabled] = useState(false)
   const [temporal, setTemporal] = useState({
@@ -218,7 +217,7 @@ const TemporalSelectionDropdown = ({
         ...temporal,
         isRecurring: isChecked
       })
-    } catch (error) {
+    } catch {
       setTemporal({
         ...temporal,
         isRecurring: isChecked
@@ -354,7 +353,6 @@ const TemporalSelectionDropdown = ({
       {
         open && (
           <TemporalSelectionDropdownMenu
-            ref={dropdownMenuRef}
             allowRecurring={allowRecurring}
             disabled={disabled}
             onApplyClick={onApplyClick}
@@ -389,6 +387,7 @@ const TemporalSelectionDropdown = ({
 TemporalSelectionDropdown.defaultProps = {
   allowRecurring: true,
   onMetricsTemporalFilter: null,
+  searchParams: {},
   temporalSearch: {}
 }
 
@@ -396,6 +395,9 @@ TemporalSelectionDropdown.propTypes = {
   allowRecurring: PropTypes.bool,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsTemporalFilter: PropTypes.func,
+  searchParams: PropTypes.shape({
+    q: PropTypes.string
+  }),
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,

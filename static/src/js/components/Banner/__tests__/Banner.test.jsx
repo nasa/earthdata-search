@@ -2,7 +2,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import Bannner from '../Banner'
+import Banner from '../Banner'
 
 function setup(overrideProps = {}) {
   const props = {
@@ -13,14 +13,14 @@ function setup(overrideProps = {}) {
     ...overrideProps
   }
 
-  render(<Bannner {...props} />)
+  render(<Banner {...props} />)
 
   return {
     props
   }
 }
 
-describe('Bannner component', () => {
+describe('Banner component', () => {
   test('should render self', () => {
     setup()
 

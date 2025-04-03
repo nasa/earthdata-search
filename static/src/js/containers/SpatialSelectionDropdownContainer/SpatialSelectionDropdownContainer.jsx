@@ -38,7 +38,14 @@ export const SpatialSelectionDropdownContainer = (props) => {
   )
 }
 
+SpatialSelectionDropdownContainer.defaultProps = {
+  searchParams: {}
+}
+
 SpatialSelectionDropdownContainer.propTypes = {
+  searchParams: PropTypes.shape(),
+  onChangeUrl: PropTypes.func.isRequired,
+  onChangePath: PropTypes.func.isRequired,
   onMetricsSpatialSelection: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }

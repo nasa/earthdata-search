@@ -152,11 +152,6 @@ const urlDefs = {
     encode: encodeArray,
     decode: decodeArray
   },
-  startDrawing: {
-    shortKey: 'startDrawing',
-    encode: encodeString,
-    decode: encodeString
-  },
   tagKey: {
     shortKey: 'tag_key',
     encode: encodeString,
@@ -283,7 +278,6 @@ export const decodeUrlParams = (paramString) => {
   const scienceKeywords = decodeScienceKeywords(params)
   const platforms = decodePlatforms(params)
   const latency = decodeHelp(params, 'latency')
-  const startDrawing = decodeHelp(params, 'startDrawing')
 
   const cmrFacets = {
     data_center_h: organizations,
@@ -328,7 +322,6 @@ export const decodeUrlParams = (paramString) => {
       collection: collectionQuery
     },
     shapefile,
-    startDrawing,
     timeline
   }
 }

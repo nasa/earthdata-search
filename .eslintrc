@@ -7,6 +7,7 @@
   },
   // Use AirBnb settings as a base
   "extends": [
+    "plugin:@typescript-eslint/recommended",
     "@edsc"
   ],
   "plugins": ["@typescript-eslint"],
@@ -79,6 +80,12 @@
         "testing-library/prefer-screen-queries": "off",
         "testing-library/prefer-user-event": "off",
         "testing-library/render-result-naming-convention": "off"
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "react/require-default-props": "off"
       }
     }
   ],

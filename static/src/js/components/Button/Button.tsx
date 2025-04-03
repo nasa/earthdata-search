@@ -1,16 +1,24 @@
-import React, { forwardRef, ReactNode, CSSProperties } from 'react'
+import React, {
+  forwardRef,
+  ReactNode,
+  CSSProperties
+} from 'react'
 import classNames from 'classnames'
-import type { BadgeProps as BSBadgeProps, ButtonProps as BSButtonProps, OverlayTriggerProps as BSOverlayTriggerProps } from 'react-bootstrap'
+import type {
+  BadgeProps as BSBadgeProps,
+  ButtonProps as BSButtonProps,
+  OverlayTriggerProps as BSOverlayTriggerProps
+} from 'react-bootstrap'
 import Btn from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-// @ts-ignore
+// @ts-expect-error: This file does not have types
 import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-// @ts-ignore
+// @ts-expect-error: This file does not have types
 import Spinner from '../Spinner/Spinner'
-// @ts-ignore
+// @ts-expect-error: This file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './Button.scss'
@@ -18,9 +26,9 @@ import './Button.scss'
 /**
  * Props for the Button component.
  */
-interface ButtonProps {
+export interface ButtonProps {
   /** The HTML element or component to render as the button. */
-  as?: string | React.ComponentType<any> | undefined
+  as?: string | React.ComponentType<unknown> | undefined
   /** ARIA label for accessibility. */
   ariaLabel?: string
   /** Badge content to display on the button. */
@@ -46,7 +54,7 @@ interface ButtonProps {
   /** URL to navigate to if the button is a link. */
   href?: string
   /** Icon to display in the button. */
-  icon?: string | Function
+  icon?: string | (() => void)
   /** Position of the icon ('left' or 'right'). */
   iconPosition?: 'left' | 'right'
   /** Size of the icon. */
@@ -77,10 +85,12 @@ interface ButtonProps {
   variant?: 'naked' | 'full' | 'link' | 'hds-primary'
 }
 
+type BootstrapButtonProps = React.ComponentProps<typeof Btn>
+
 /**
  * A button component with various styling options.
 */
-export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
+export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   as = 'button',
   ariaLabel,
   badge,
@@ -100,7 +110,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   label,
   onClick,
   overlayClass,
-  spinner = false,
+  spinner,
   style,
   target,
   title,
@@ -148,7 +158,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
     rel = 'noopener nofollow'
   }
 
-  let asEl: any = as
+  let asEl = as
   if (as === 'button' && href) {
     asEl = undefined
   }
@@ -200,19 +210,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
         )
       }
       {
-        children || spinner && (
-          <span className="button__contents">
-            {
-              spinner
-                ? (
-                  <span>
-                    <Spinner type="dots" color="white" size="tiny" inline />
-                  </span>
-                )
-                : children
-            }
-          </span>
-        )
+        spinner
+          ? (
+            <span className="button__contents">
+              <span>
+                <Spinner type="dots" color="white" size="tiny" inline />
+              </span>
+            </span>
+          )
+          : (
+            <span className="button__contents">
+              {children}
+            </span>
+          )
       }
       {
         (!spinner && icon && iconPosition === 'right') && (
