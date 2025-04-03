@@ -27,8 +27,9 @@ module.exports = {
     // After the update to 1.x the CJS changed import method. Adding a module mapper to resolve issues. See https://stackoverflow.com/a/74079349
     '^axios$': require.resolve('axios'),
     // Available Portals is not defined until the start of the application and is subject to change as portal maintainers update values mock the output in tests
-    'portals/availablePortals.json': '<rootDir>/portals/__mocks__/availablePortals.json'
+    'portals/availablePortals.json': '<rootDir>/portals/__mocks__/availablePortals.json',
     // TODO: Remove this if not needed
+    "\\.svg\\?(react|url)$": "<rootDir>/static/src/js/util/mocks/fileMock.js"
     // Mock the ~Images alias to the images directory
     // '^~Images/(.*)$': '<rootDir>/static/src/assets/images/$1'
   },
