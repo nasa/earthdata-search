@@ -134,7 +134,7 @@ button.edsc-map-spatial-drawing__button--cancel {
 }
 
 .edsc-map-layer-switcher {
-  z-index: 15;
+  z-index: 5;
   color: utils.$color__carbon--70;
   background-color: utils.$color__spacesuit-white;
   border-radius: 2px;
@@ -172,7 +172,7 @@ button.edsc-map-spatial-drawing__button--cancel {
     width: 18rem;
     color: utils.$color__carbon-black;
     text-shadow: none;
-    z-index: 16;
+    z-index: 6;
 
     &--visible {
       opacity: 1;
