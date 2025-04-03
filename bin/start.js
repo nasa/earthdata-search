@@ -14,9 +14,11 @@
  * - SQS (mocked SQS triggers)
  */
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs')
 const childProcess = require('child_process')
 const concurrently = require('concurrently')
+/* eslint-enable */
 
 // If the CDK template file does not exist, run `npm run run-synth` to generate it
 if (!fs.existsSync('./cdk/earthdata-search/cdk.out/earthdata-search-dev.template.json')) {

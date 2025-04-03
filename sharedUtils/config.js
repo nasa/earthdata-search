@@ -11,7 +11,7 @@ const getConfig = () => {
     const merged = merge(staticConfig, overrideConfig)
 
     return merged
-  } catch (error) {
+  } catch {
     return staticConfig
   }
 }

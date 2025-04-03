@@ -1,9 +1,9 @@
-import * as apigateway from 'aws-cdk-lib/aws-apigateway';
-import * as cdk from 'aws-cdk-lib';
+import * as apigateway from 'aws-cdk-lib/aws-apigateway'
+import * as cdk from 'aws-cdk-lib'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
-import { Construct } from 'constructs';
+import { Construct } from 'constructs'
 
-import { application } from '@edsc/cdk-utils';
+import { application } from '@edsc/cdk-utils'
 
 export interface AuthorizersProps {
   /** The API Gateway Rest API resource */
@@ -13,18 +13,18 @@ export interface AuthorizersProps {
 }
 
 export class Authorizers extends Construct {
-  public readonly edlAuthorizer: apigateway.CfnAuthorizer;
+  public readonly edlAuthorizer: apigateway.CfnAuthorizer
 
-  public readonly edlAdminAuthorizer: apigateway.CfnAuthorizer;
+  public readonly edlAdminAuthorizer: apigateway.CfnAuthorizer
 
-  public readonly edlOptionalAuthorizer: apigateway.CfnAuthorizer;
+  public readonly edlOptionalAuthorizer: apigateway.CfnAuthorizer
 
   constructor(scope: cdk.Stack, id: string, props: AuthorizersProps) {
-    super(scope, id);
+    super(scope, id)
 
     const {
       apiGatewayRestApi,
-      defaultLambdaConfig,
+      defaultLambdaConfig
     } = props
 
     const functionNamePrefix = scope.stackName
@@ -38,7 +38,8 @@ export class Authorizers extends Construct {
       entry: '../../serverless/src/edlAuthorizer/handler.js',
       functionName: 'edlAuthorizer',
       functionNamePrefix
-    });
+    })
+    // eslint-disable-next-line no-new
     new lambda.CfnPermission(scope, 'EdlAuthorizerLambdaPermissionApiGateway', {
       functionName: edlAuthorizerLambda.functionName,
       action: 'lambda:InvokeFunction',
@@ -54,7 +55,8 @@ export class Authorizers extends Construct {
         apiGatewayRestApi.ref,
         '/*/*'
       ].join('')
-    });
+    })
+
     const edlAuthorizer = new apigateway.CfnAuthorizer(edlAuthorizerNestedStack, 'EdlAuthorizer', {
       authorizerResultTtlInSeconds: 0,
       authorizerUri: cdk.Fn.join('', [
@@ -70,8 +72,8 @@ export class Authorizers extends Construct {
       name: 'edlAuthorizer',
       restApiId: apiGatewayRestApi.ref,
       type: 'REQUEST'
-    });
-    this.edlAuthorizer = edlAuthorizer;
+    })
+    this.edlAuthorizer = edlAuthorizer
 
     /**
      * EDL Admin Authorizer
@@ -82,7 +84,8 @@ export class Authorizers extends Construct {
       entry: '../../serverless/src/edlAdminAuthorizer/handler.js',
       functionName: 'edlAdminAuthorizer',
       functionNamePrefix
-    });
+    })
+    // eslint-disable-next-line no-new
     new lambda.CfnPermission(edlAdminAuthorizerNestedStack, 'EdlAdminAuthorizerLambdaPermissionApiGateway', {
       functionName: edlAdminAuthorizerLambda.functionName,
       action: 'lambda:InvokeFunction',
@@ -98,7 +101,8 @@ export class Authorizers extends Construct {
         apiGatewayRestApi.ref,
         '/*/*'
       ].join('')
-    });
+    })
+
     const edlAdminAuthorizer = new apigateway.CfnAuthorizer(edlAdminAuthorizerNestedStack, 'EdlAdminAuthorizer', {
       authorizerResultTtlInSeconds: 0,
       authorizerUri: cdk.Fn.join('', [
@@ -114,8 +118,8 @@ export class Authorizers extends Construct {
       name: 'edlAdminAuthorizer',
       restApiId: apiGatewayRestApi.ref,
       type: 'REQUEST'
-    });
-    this.edlAdminAuthorizer = edlAdminAuthorizer;
+    })
+    this.edlAdminAuthorizer = edlAdminAuthorizer
 
     /**
      * EDL Optional Authorizer
@@ -126,7 +130,8 @@ export class Authorizers extends Construct {
       entry: '../../serverless/src/edlOptionalAuthorizer/handler.js',
       functionName: 'edlOptionalAuthorizer',
       functionNamePrefix
-    });
+    })
+    // eslint-disable-next-line no-new
     new lambda.CfnPermission(edlOptionalAuthorizerNestedStack, 'EdlOptionalAuthorizerLambdaPermissionApiGateway', {
       functionName: edlOptionalAuthorizerLambda.functionName,
       action: 'lambda:InvokeFunction',
@@ -142,7 +147,8 @@ export class Authorizers extends Construct {
         apiGatewayRestApi.ref,
         '/*/*'
       ].join('')
-    });
+    })
+
     const edlOptionalAuthorizer = new apigateway.CfnAuthorizer(edlOptionalAuthorizerNestedStack, 'EdlOptionalAuthorizer', {
       authorizerResultTtlInSeconds: 0,
       authorizerUri: cdk.Fn.join('', [
@@ -158,7 +164,7 @@ export class Authorizers extends Construct {
       name: 'edlOptionalAuthorizer',
       restApiId: apiGatewayRestApi.ref,
       type: 'REQUEST'
-    });
-    this.edlOptionalAuthorizer = edlOptionalAuthorizer;
+    })
+    this.edlOptionalAuthorizer = edlOptionalAuthorizer
   }
 }

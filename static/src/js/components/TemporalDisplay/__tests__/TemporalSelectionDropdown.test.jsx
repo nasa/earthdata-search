@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   act,
-  queryAllByAttribute,
   render,
   screen,
   waitFor

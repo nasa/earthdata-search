@@ -15,7 +15,7 @@ export const retrieveThumbnail = async (thumbnailSrc) => {
     const responseImg = `data:image/png;base64, ${base64ImageString}`
 
     return responseImg
-  } catch (error) {
+  } catch {
     console.log('There was an error retrieving the thumbnail from', thumbnailSrc)
 
     return unavailableImg

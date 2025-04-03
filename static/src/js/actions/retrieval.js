@@ -205,7 +205,7 @@ export const deleteRetrieval = (id) => (dispatch, getState) => {
       })
 
     return response
-  } catch (error) {
+  } catch {
     return null
   }
 }

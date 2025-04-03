@@ -1,15 +1,14 @@
-import * as cdk from 'aws-cdk-lib';
-import * as ec2 from 'aws-cdk-lib/aws-ec2';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as cdk from 'aws-cdk-lib'
+import * as ec2 from 'aws-cdk-lib/aws-ec2'
+import * as iam from 'aws-cdk-lib/aws-iam'
+import * as lambda from 'aws-cdk-lib/aws-lambda'
 
-import { application } from '@edsc/cdk-utils';
+import { application } from '@edsc/cdk-utils'
 
-import { Queues } from './earthdata-search-queues';
-import { Functions } from './earthdata-search-functions';
-import { Authorizers } from './earthdata-search-authorizers';
-import { StepFunctions } from './earthdata-search-step-functions';
-
+import { Queues } from './earthdata-search-queues'
+import { Functions } from './earthdata-search-functions'
+import { Authorizers } from './earthdata-search-authorizers'
+import { StepFunctions } from './earthdata-search-step-functions'
 
 export interface EarthdataSearchStackProps extends cdk.StackProps {
 }
@@ -36,8 +35,8 @@ const {
   SUBNET_ID_B = 'local-subnet-b',
   USE_IMAGE_CACHE = 'false',
   VPC_ID = 'local-vpc'
-} = process.env;
-const runtime = lambda.Runtime.NODEJS_22_X;
+} = process.env
+const runtime = lambda.Runtime.NODEJS_22_X
 
 /**
  * The AWS CloudFormation template for this Serverless application
@@ -46,13 +45,13 @@ export class EarthdataSearchStack extends cdk.Stack {
   /**
    * URL of the service endpoint
    */
-  public readonly serviceEndpoint;
+  public readonly serviceEndpoint
 
   public constructor(scope: cdk.App, id: string, props: EarthdataSearchStackProps = {}) {
-    super(scope, id, props);
+    super(scope, id, props)
 
-    const applicationRole = cdk.Fn.importValue(`${STAGE_NAME}-EDSCServerlessAppRole`);
-    const lambdaSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(this, 'EarthdataSearchLambdaSecurityGroup', cdk.Fn.importValue(`${STAGE_NAME}-EarthdataSearchLambdaSecurityGroup`));
+    const applicationRole = cdk.Fn.importValue(`${STAGE_NAME}-EDSCServerlessAppRole`)
+    const lambdaSecurityGroup = ec2.SecurityGroup.fromSecurityGroupId(this, 'EarthdataSearchLambdaSecurityGroup', cdk.Fn.importValue(`${STAGE_NAME}-EarthdataSearchLambdaSecurityGroup`))
 
     const lambdaRole = iam.Role.fromRoleArn(this, 'EarthdataSearchLambdaRole', applicationRole)
 
@@ -63,7 +62,7 @@ export class EarthdataSearchStack extends cdk.Stack {
         SUBNET_ID_B
       ],
       vpcId: VPC_ID
-    });
+    })
 
     const apiNestedStack = new cdk.NestedStack(this, 'ApiNestedStack')
 
@@ -71,7 +70,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       apiScope: apiNestedStack,
       apiName: this.stackName,
       binaryMediaTypes: ['image/png'],
-      stageName: STAGE_NAME,
+      stageName: STAGE_NAME
     })
     const {
       apiGatewayDeployment,
@@ -80,7 +79,7 @@ export class EarthdataSearchStack extends cdk.Stack {
 
     const queues = new Queues(this, 'Queues', {
       queueNameSuffix: logGroupSuffix
-    });
+    })
     const {
       catalogRestOrderQueue,
       cmrOrderingOrderQueue,
@@ -89,7 +88,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       swodlrOrderQueue,
       tagProcessingQueue,
       userDataQueue
-    } = queues;
+    } = queues
 
     const environment = {
       CACHE_HOST: cdk.Fn.importValue(`${STAGE_NAME}-ElastiCacheEndpoint`),
@@ -153,6 +152,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       defaultLambdaConfig
     })
 
+    // eslint-disable-next-line no-new
     new Functions(this, 'Functions', {
       apiGatewayDeployment,
       apiGatewayRestApi,
@@ -169,6 +169,7 @@ export class EarthdataSearchStack extends cdk.Stack {
       vpcId: VPC_ID
     })
 
+    // eslint-disable-next-line no-new
     new StepFunctions(this, 'StepFunctions', {
       defaultLambdaConfig,
       logGroupSuffix,
@@ -186,13 +187,15 @@ export class EarthdataSearchStack extends cdk.Stack {
       this.region,
       '.',
       this.urlSuffix,
-      `/${STAGE_NAME}`,
-    ].join('');
+      `/${STAGE_NAME}`
+    ].join('')
+
+    // eslint-disable-next-line no-new
     new cdk.CfnOutput(this, 'CfnOutputServiceEndpoint', {
       key: 'ServiceEndpoint',
       description: 'URL of the service endpoint',
       exportName: `sls-${this.stackName}-ServiceEndpoint`,
-      value: this.serviceEndpoint!.toString(),
-    });
+      value: this.serviceEndpoint!.toString()
+    })
   }
 }

@@ -1,7 +1,7 @@
-import * as cdk from 'aws-cdk-lib';
-import * as iam from 'aws-cdk-lib/aws-iam';
+import * as cdk from 'aws-cdk-lib'
+import * as iam from 'aws-cdk-lib/aws-iam'
 
-import { infrastructure } from '@edsc/cdk-utils';
+import { infrastructure } from '@edsc/cdk-utils'
 
 export interface EarthdataSearchInfrastructureStackProps extends cdk.StackProps {
 }
@@ -12,8 +12,8 @@ const {
   SUBNET_ID_A = 'local-subnet-a',
   SUBNET_ID_B = 'local-subnet-b',
   STAGE_NAME = 'dev',
-  VPC_ID = 'local-vpc',
-} = process.env;
+  VPC_ID = 'local-vpc'
+} = process.env
 
 /**
  * The AWS CloudFormation template for this Serverless application
@@ -22,20 +22,24 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
   /**
    * Role used to execute commands across the serverless application
    */
-  public readonly edscServerlessAppRole;
+  public readonly edscServerlessAppRole
 
-  public constructor(scope: cdk.App, id: string, props: EarthdataSearchInfrastructureStackProps = {}) {
-    super(scope, id, props);
+  public constructor(
+    scope: cdk.App,
+    id: string,
+    props: EarthdataSearchInfrastructureStackProps = {}
+  ) {
+    super(scope, id, props)
 
     // Resources
     const serverlessAppRole = new iam.CfnRole(this, 'ServerlessAppRole', {
       managedPolicyArns: [
-        'arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole',
+        'arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole'
       ],
       permissionsBoundary: [
         'arn:aws:iam::',
         this.account,
-        ':policy/NGAPShRoleBoundary',
+        ':policy/NGAPShRoleBoundary'
       ].join(''),
       assumeRolePolicyDocument: {
         Version: '2012-10-17',
@@ -46,12 +50,12 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
               Service: [
                 'lambda.amazonaws.com',
                 'states.amazonaws.com',
-                'events.amazonaws.com',
-              ],
+                'events.amazonaws.com'
+              ]
             },
-            Action: 'sts:AssumeRole',
-          },
-        ],
+            Action: 'sts:AssumeRole'
+          }
+        ]
       },
       policies: [
         {
@@ -62,7 +66,7 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
               {
                 Effect: 'Allow',
                 Action: [
-                  'rds-db:connect',
+                  'rds-db:connect'
                 ],
                 Resource: [
                   'arn:aws:rds-db:',
@@ -70,11 +74,11 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
                   ':',
                   this.account,
                   ':dbuser',
-                  '/lambda',
-                ].join(''),
-              },
-            ],
-          },
+                  '/lambda'
+                ].join('')
+              }
+            ]
+          }
         },
         {
           policyName: 'EDSCLambdaBase',
@@ -84,53 +88,54 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
               {
                 Effect: 'Allow',
                 Action: [
-                  'sqs:*',
+                  'sqs:*'
                 ],
-                Resource: '*',
+                Resource: '*'
               },
               {
                 Effect: 'Allow',
                 Action: [
-                  'secretsmanager:GetSecretValue',
+                  'secretsmanager:GetSecretValue'
                 ],
-                Resource: '*',
+                Resource: '*'
               },
               {
                 Effect: 'Allow',
                 Action: [
-                  'lambda:InvokeFunction',
+                  'lambda:InvokeFunction'
                 ],
-                Resource: '*',
+                Resource: '*'
               },
               {
                 Effect: 'Allow',
                 Action: [
-                  'states:*',
+                  'states:*'
                 ],
-                Resource: '*',
+                Resource: '*'
               },
               {
                 Effect: 'Allow',
                 Action: [
                   's3:GetBucketLocation',
                   's3:GetObject',
-                  's3:PutObject',
+                  's3:PutObject'
                 ],
-                Resource: '*',
-              },
-            ],
-          },
-        },
-      ],
-    });
+                Resource: '*'
+              }
+            ]
+          }
+        }
+      ]
+    })
 
     const lambdaSecurityGroup = new infrastructure.LambdaSecurityGroup(this, 'EDSCLambdaSecurityGroup', {
       appName: 'EarthdataSearch',
       groupDescriptionName: 'EDSC',
       stageName: STAGE_NAME,
       vpcId: VPC_ID
-    });
+    })
 
+    // eslint-disable-next-line no-new
     new infrastructure.Redis(this, 'EDSCRedis', {
       appName: 'EarthdataSearch',
       cacheName: `earthdata-search-${STAGE_NAME}`,
@@ -141,6 +146,7 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
       vpcId: VPC_ID
     })
 
+    // eslint-disable-next-line no-new
     new infrastructure.Database(this, 'EDSCDatabase', {
       allocatedStorage: DB_ALLOCATED_STORAGE,
       appName: 'EDSC',
@@ -153,15 +159,16 @@ export class EarthdataSearchInfrastructureStack extends cdk.Stack {
       stageName: STAGE_NAME,
       subnetIds: [SUBNET_ID_A, SUBNET_ID_B],
       vpcId: VPC_ID
-    });
+    })
 
     // Outputs
-    this.edscServerlessAppRole = serverlessAppRole.attrArn;
+    this.edscServerlessAppRole = serverlessAppRole.attrArn
+    // eslint-disable-next-line no-new
     new cdk.CfnOutput(this, 'CfnOutputEDSCServerlessAppRole', {
       key: 'EDSCServerlessAppRole',
       description: 'Role used to execute commands across the serverless application',
       exportName: `${STAGE_NAME}-EDSCServerlessAppRole`,
-      value: this.edscServerlessAppRole!.toString(),
-    });
+      value: this.edscServerlessAppRole!.toString()
+    })
   }
 }

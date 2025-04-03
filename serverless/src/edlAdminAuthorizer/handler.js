@@ -33,7 +33,7 @@ const edlAdminAuthorizer = async (event, context) => {
     let adminUsers
     try {
       adminUsers = await getAdminUsers()
-    } catch (error) {
+    } catch {
       adminUsers = []
     }
 

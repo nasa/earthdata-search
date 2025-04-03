@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-import * as cdk from 'aws-cdk-lib';
-import { EarthdataSearchStack } from '../lib/earthdata-search-stack';
+import * as cdk from 'aws-cdk-lib'
+import { EarthdataSearchStack } from '../lib/earthdata-search-stack'
 
 const {
   AWS_ACCOUNT = '1234567890',
   AWS_REGION = 'us-east-1',
-  STAGE_NAME = 'dev',
-} = process.env;
-const app = new cdk.App();
+  STAGE_NAME = 'dev'
+} = process.env
+const app = new cdk.App()
+// eslint-disable-next-line no-new
 new EarthdataSearchStack(app, `earthdata-search-${STAGE_NAME}`, {
   /* If you don't specify 'env', this stack will be environment-agnostic.
    * Account/Region-dependent features and context lookups will not work,
@@ -19,7 +20,10 @@ new EarthdataSearchStack(app, `earthdata-search-${STAGE_NAME}`, {
 
   /* Uncomment the next line if you know exactly what Account and Region you
    * want to deploy the stack to. */
-  env: { account: AWS_ACCOUNT, region: AWS_REGION },
+  env: {
+    account: AWS_ACCOUNT,
+    region: AWS_REGION
+  }
 
   /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+})

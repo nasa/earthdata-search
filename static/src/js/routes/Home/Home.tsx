@@ -284,6 +284,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
                 >
                   <Popover.Body className="bg-black text-white">
                     <p>
+                      {/* eslint-disable-next-line max-len */}
                       Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the
                       {' '}
                       <strong>Moderate Resolution Imaging Spectroradiometer (MODIS)</strong>
@@ -329,6 +330,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
             <Row>
               <Col>
                 <h2 className="h1">Browse Data by Portal</h2>
+                {/* eslint-disable-next-line max-len */}
                 <p>Search for data using curated portals to limit results to an area of interest, project, or organization</p>
               </Col>
             </Row>

@@ -1,4 +1,4 @@
-const { encodeFacets, decodeFacets } = require('../facetEncoders')
+import { encodeFacets, decodeFacets } from '../facetEncoders'
 
 describe('encodeFacets', () => {
   test('encodes facets array into a string', () => {

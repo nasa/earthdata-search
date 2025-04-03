@@ -56,7 +56,7 @@ const copyStringToClipBoard = async ({
         autoDismiss: true
       })
     }
-  } catch (err) {
+  } catch {
     if (failureText) {
       addToast(failureText, {
         appearance: 'error',

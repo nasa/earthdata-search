@@ -1,6 +1,9 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
 
@@ -279,7 +282,7 @@ describe('SpatialDisplay component', () => {
   })
 
   describe('#onSpatialRemove', () => {
-    test.only('calls onRemoveSpatialFilter', async () => {
+    test('calls onRemoveSpatialFilter', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
       userEvent.setup()
 
@@ -291,6 +294,7 @@ describe('SpatialDisplay component', () => {
       const actionBtn = actionBtns[0]
       expect(actionBtns).toHaveLength(1)
 
+      // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(async () => {
         await userEvent.click(actionBtn)
       })

@@ -5,6 +5,7 @@
  * This is currently only used for the local development environment.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const { build } = require('esbuild')
 
 build({
