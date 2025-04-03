@@ -8,16 +8,18 @@ const { placeLabelsStyleUrl } = getApplicationConfig()
  * @param {Object} params
  * @param {String} params.attributions
  * @param {String} params.projectionCode
+ * @param {String} params.visible
  */
 const placeLabels = async ({
   attributions,
-  projectionCode
+  projectionCode,
+  visible
 }) => vectorTileLayer({
   attributions,
   projectionCode,
   style: placeLabelsStyleUrl,
   zIndex: 5,
-  visible: false
+  visible
 })
 
 export default placeLabels

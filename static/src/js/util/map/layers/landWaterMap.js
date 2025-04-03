@@ -6,15 +6,17 @@ import landWaterMapStyleConfig from './landWaterMap.json'
  * @param {Object} params
  * @param {String} params.attributions
  * @param {String} params.projectionCode
+ * @param {String} params.visible
  */
 const landWaterMap = async ({
   attributions,
-  projectionCode
+  projectionCode,
+  visible
 }) => vectorTileLayer({
   attributions,
   projectionCode,
   style: landWaterMapStyleConfig,
-  visible: false
+  visible
 })
 
 export default landWaterMap

@@ -6,10 +6,12 @@ import gibsLayer from './gibsLayer'
  * @param {Object} params
  * @param {String} params.projectionCode The projection code for the layer
  * @param {String} params.attributions Optional attributions for the layer
+ * @param {String} params.visible The visibility flag for the layer
  */
 const correctedReflectance = ({
   projectionCode,
-  attributions = null
+  attributions = null,
+  visible
 }) => {
   // Return near time image so that the map is completely filled
   const yesterday = moment().subtract(1, 'days')
@@ -22,7 +24,7 @@ const correctedReflectance = ({
     matrixSet: '250m',
     projectionCode,
     time: date,
-    visible: false,
+    visible,
     attributions
   })
 }
