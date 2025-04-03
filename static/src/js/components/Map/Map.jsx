@@ -149,15 +149,15 @@ const spatialDrawingLayer = new VectorLayer({
 const granuleImageryLayerGroup = new LayerGroup()
 
 const baseLayers = {
-  [mapLayers.worldImagery]: null, // WorldImageryLayer,
-  [mapLayers.correctedReflectance]: null, // CorrectedReflectanceLayer,
-  [mapLayers.landWaterMap]: null // LandWaterMapLayer
+  [mapLayers.worldImagery]: null,
+  [mapLayers.correctedReflectance]: null,
+  [mapLayers.landWaterMap]: null
 }
 
 const overlayLayers = {
-  [mapLayers.bordersRoads]: null, // BordersRoadsLayer,
-  [mapLayers.coastlines]: null, // CoastlinesLayer,
-  [mapLayers.placeLabels]: null // PlaceLabelsLayer
+  [mapLayers.bordersRoads]: null,
+  [mapLayers.coastlines]: null,
+  [mapLayers.placeLabels]: null
 }
 
 // Create a view for the map. This will change when the padding needs to be updated
@@ -295,44 +295,43 @@ const Map = ({
   const mapElRef = useRef()
 
   const handleLayerChange = ({ id, checked }) => {
+    // State objects to track changes for both layer types
+    let newBase = { ...base }
+    const newOverlays = { ...overlays }
+
     // Handle base layers
     if (baseLayerIds.includes(id)) {
-      const newBase = {
+      // Reset all base layer selections
+      newBase = {
         worldImagery: false,
         trueColor: false,
         landWaterMap: false
       }
 
-      // Set the selected base layer to true in the Redux state
-      if (id === mapLayers.worldImagery) newBase.worldImagery = checked
-      if (id === mapLayers.correctedReflectance) newBase.trueColor = checked
-      if (id === mapLayers.landWaterMap) newBase.landWaterMap = checked
+      // Set the selected base layer to true in the state
+      newBase[id] = checked
 
       // Update all base layer visibility
       Object.keys(baseLayers).forEach((layerId) => {
-        baseLayers[layerId].setVisible(layerId === id && checked)
+        baseLayers[layerId].setVisible(newBase[layerId])
       })
-
-      onChangeMap({ base: newBase })
-    } else {
-      // Handle overlay layers
-      const newOverlays = { ...overlays }
-
-      // Update the overlay layer visibility if it exists in our mapping
-      if (id in overlayLayers) {
-        overlayLayers[id].setVisible(checked)
-
-        // Update the corresponding property in overlays state
-        // (maintaining the mapping between layer IDs and state property names)
-        if (id === mapLayers.bordersRoads) newOverlays.referenceFeatures = checked
-        else if (id === mapLayers.coastlines) newOverlays.coastlines = checked
-        else if (id === mapLayers.placeLabels) newOverlays.referenceLabels = checked
-
-        onChangeMap({ overlays: newOverlays })
-      } else {
-        console.warn(`Unknown layer id: ${id}`)
-      }
     }
+
+    // Handle overlay layers
+    if (id in overlayLayers) {
+      overlayLayers[id].setVisible(checked)
+
+      // Update the corresponding property in overlays state
+      newOverlays[id] = checked
+    } else {
+      console.warn(`Unknown layer id: ${id}`)
+    }
+
+    // Single call to onChangeMap with all changes
+    onChangeMap({
+      base: newBase,
+      overlays: newOverlays
+    })
   }
 
   useEffect(() => {

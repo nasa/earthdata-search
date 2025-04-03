@@ -24,7 +24,7 @@ class LayerSwitcherControl extends Control {
     })
 
     this.options = options
-    this.onChangeLayer = options.onChangeLayer || (() => {})
+    this.onChangeLayer = options.onChangeLayer
 
     const toggleButton = document.createElement('button')
     toggleButton.className = `${options.className}__button`
@@ -61,33 +61,13 @@ class LayerSwitcherControl extends Control {
    */
   addLayerOptions(panel) {
     const { className } = this.options
-    const layerOptions = this.options.layerOptions || [
-      {
-        id: mapLayers.worldImagery,
-        label: 'World Imagery',
-        checked: true
-      },
-      {
-        id: mapLayers.correctedReflectance,
-        label: 'Corrected Reflectance (True Color)'
-      },
-      {
-        id: mapLayers.landWaterMap,
-        label: 'Land / Water Map'
-      },
-      {
-        id: mapLayers.bordersRoads,
-        label: 'Borders and Roads *',
-        checked: true
-      },
-      {
-        id: mapLayers.placeLabels,
-        label: 'Place Labels *'
-      }
-    ]
+    const { layerOptions } = this.options
 
     const optionsContainer = document.createElement('div')
     optionsContainer.className = `${className}__options`
+
+    // Track how many base layers we've added
+    let baseLayersAdded = 0
 
     layerOptions.forEach((option) => {
       const optionContainer = document.createElement('div')
@@ -116,9 +96,21 @@ class LayerSwitcherControl extends Control {
       optionContainer.appendChild(input)
       optionContainer.appendChild(label)
       optionsContainer.appendChild(optionContainer)
+
+      // If this is a base layer, increment our counter
+      if (isBaseLayer) {
+        baseLayersAdded += 1
+
+        // If this was the last base layer, add a separator after it
+        if (baseLayersAdded === baseLayers.length) {
+          const separator = document.createElement('hr')
+          separator.className = `${className}__separator`
+          optionsContainer.appendChild(separator)
+        }
+      }
     })
 
-    // Add the attribution footnote for OpenStreeMaps
+    // Add the attribution footnote for OpenStreetMap
     const attribution = document.createElement('div')
     attribution.className = `${className}__attribution`
     attribution.innerHTML = '&ast; &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a> contributors'
