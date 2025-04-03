@@ -6,15 +6,42 @@ import {
   screen
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { Router } from 'react-router'
+import { createMemoryHistory } from 'history'
+import { useLocation } from 'react-router-dom'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import SpatialSelectionDropdown from '../SpatialSelectionDropdown'
 import * as EventEmitter from '../../../events/events'
 import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes } from '../../../constants/eventTypes'
+import Providers from '../../../providers/Providers/Providers'
 
+const onChangeUrl = jest.fn()
+const onChangePath = jest.fn()
 const onMetricsSpatialSelection = jest.fn()
 const onToggleShapefileUploadModal = jest.fn()
+const history = createMemoryHistory()
+
+// Mock react react-router-dom so that the tests do not think we are on the homepage
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/',
+    search: '',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
+
+useLocation.mockReturnValue({
+  pathname: '/search',
+  search: '',
+  hash: '',
+  state: null,
+  key: 'testKey'
+})
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -22,19 +49,31 @@ beforeEach(() => {
 })
 
 const setup = () => {
+  const user = userEvent.setup()
+
   const props = {
+    searchParams: {},
+    onChangePath,
+    onChangeUrl,
     onToggleShapefileUploadModal,
-    onMetricsSpatialSelection
+    onMetricsSpatialSelection,
+    location: '/search'
   }
 
-  render(<SpatialSelectionDropdown {...props} />)
+  render(
+    <Providers>
+      <Router history={history} location="/search">
+        <SpatialSelectionDropdown {...props} />
+      </Router>
+    </Providers>
+  )
+
+  return { user }
 }
 
 describe('SpatialSelectionDropdown component', () => {
   test('renders dropdown items', async () => {
-    const user = userEvent.setup()
-
-    setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
@@ -50,10 +89,9 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the polygon dropdown emits an event and tracks metric', async () => {
-    const user = userEvent.setup()
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-    setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
@@ -71,10 +109,9 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the rectangle dropdown emits an event and tracks metric', async () => {
-    const user = userEvent.setup()
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-    setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
@@ -95,10 +132,9 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the point dropdown emits an event and tracks metric', async () => {
-    const user = userEvent.setup()
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-    setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
@@ -116,10 +152,9 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the circle dropdown emits an event and tracks metric', async () => {
-    const user = userEvent.setup()
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-    setup()
+    const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
@@ -137,9 +172,7 @@ describe('SpatialSelectionDropdown component', () => {
   })
 
   test('clicking the shapefile dropdown calls onToggleShapefileUploadModal', async () => {
-    const user = userEvent.setup()
-
-    setup()
+    const { user } = setup()
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
     await act(async () => {
@@ -161,9 +194,7 @@ describe('SpatialSelectionDropdown component', () => {
         disableDatabaseComponents: 'true'
       }))
 
-      const user = userEvent.setup()
-
-      setup()
+      const { user } = setup()
 
       const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
@@ -184,8 +215,7 @@ describe('SpatialSelectionDropdown component', () => {
         disableDatabaseComponents: 'true'
       }))
 
-      const user = userEvent.setup()
-      setup()
+      const { user } = setup()
 
       const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
