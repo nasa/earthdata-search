@@ -62,7 +62,7 @@
     "@babel/preset-typescript": "^7.26.0",
     "@chromatic-com/storybook": "^3.2.6",
     "@dotenvx/dotenvx": "^1.33.0",
-    "@edsc/eslint-config": "file:../edsc-eslint-config/edsc-eslint-config-0.0.9.tgz",
+    "@edsc/eslint-config": "^0.0.9",
     "@fastify/cors": "^10.0.2",
     "@playwright/test": "^1.51.1",
     "@storybook/addon-essentials": "^8.6.7",
