@@ -44,12 +44,12 @@ const vectorTileLayer = async ({
 
   await applyStyle(layer, style, {
     resolutions: layer.getSource().getTileGrid().getResolutions(),
-    transformRequest(url, resourceType) {
+    transformRequest(tileUrl, resourceType) {
       if (resourceType === 'Tile') {
-        return new Request(url.replace('/VectorTileServer', '/VectorTileServer/'))
+        return new Request(tileUrl.replace('/VectorTileServer', '/VectorTileServer/'))
       }
 
-      return new Request(url)
+      return new Request(tileUrl)
     }
   })
 
