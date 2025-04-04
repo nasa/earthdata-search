@@ -131,6 +131,7 @@ test.describe('Map: Control interactions', () => {
         })
 
         await page.goto('/')
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Change the projection
         await page.getByLabel('North Polar Stereographic').click()
@@ -294,7 +295,8 @@ test.describe('Map: Control interactions', () => {
         })
 
         await page.goto('/search?base=trueColor')
-
+        // Wait for the map to load
+        await page.waitForSelector('.edsc-map-base-layer')
         // Set up the response promise BEFORE interacting with the UI
         const responsePromise = page.waitForResponse((response) => response.url().includes('wi.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer'))
 
@@ -341,7 +343,7 @@ test.describe('Map: Control interactions', () => {
 
         // Verify URL change
         await expect(page).toHaveURL('search?base=trueColor')
-
+        await page.waitForSelector('.edsc-map-base-layer')
         // Now wait for the response promise we set up earlier
         await responsePromise
       })
@@ -360,8 +362,8 @@ test.describe('Map: Control interactions', () => {
 
         await page.goto('/')
 
-        // Set up the response promise BEFORE interacting with the UI
-        const responsePromise = page.waitForResponse((response) => response.url().includes('server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation'))
+        // Land water uses the same vector files as worldImagery but, we apply a style
+        const responsePromise = page.waitForResponse((response) => response.url().includes('wi.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer'))
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
