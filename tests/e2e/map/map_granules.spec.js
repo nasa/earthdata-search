@@ -342,7 +342,7 @@ test.describe('Map: Granule interactions', () => {
       test('displays color map data to the user', async ({ page }) => {
         await page.getByTestId('legend').hover({
           position: {
-            x: 113,
+            x: 108,
             y: 5
           }
         })
