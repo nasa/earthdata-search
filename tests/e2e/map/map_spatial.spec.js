@@ -37,7 +37,7 @@ const screenshotClip = {
   height: 700
 }
 
-test.describe.skip('Map: Spatial interactions', () => {
+test.describe('Map: Spatial interactions', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
       browserName,

@@ -335,72 +335,6 @@ const Map = ({
   }
 
   useEffect(() => {
-    const buildLayers = async () => {
-      // Build the worldImagery layer
-      const worldImageryLayer = worldImagery({
-        attributions: esriAttribution,
-        projectionCode: projections.geographic,
-        visible: base.worldImagery
-      })
-
-      // Build the correctedReflectance Layer
-      const correctedReflectanceLayer = correctedReflectance({
-        attributions: 'NASA EOSDIS GIBS',
-        projectionCode,
-        visible: base.trueColor
-      })
-
-      // Build the landWater Layer
-      const landWaterMapLayer = await landWaterMap({
-        attributions: esriAttribution,
-        projectionCode,
-        visible: base.landWaterMap
-      })
-
-      // Build the placeLabels layer
-      const placeLabelsLayer = await labelsLayer({
-        attributions: esriAttribution,
-        projectionCode: projections.geographic,
-        visible: overlays.referenceLabels
-      })
-
-      // Build the coastlines Layer
-      const coastlinesLayer = coastlines({
-        attributions: esriAttribution,
-        projectionCode,
-        visible: overlays.coastlines
-      })
-
-      // Build the bordersRoads Layer
-      const bordersRoadsLayer = bordersRoads({
-        attributions: esriAttribution,
-        projectionCode,
-        visible: overlays.referenceFeatures
-      })
-
-      baseLayers[mapLayers.worldImagery] = worldImageryLayer
-      baseLayers[mapLayers.correctedReflectance] = correctedReflectanceLayer
-      baseLayers[mapLayers.landWaterMap] = landWaterMapLayer
-
-      overlayLayers[mapLayers.placeLabels] = placeLabelsLayer
-      overlayLayers[mapLayers.coastlines] = coastlinesLayer
-      overlayLayers[mapLayers.bordersRoads] = bordersRoadsLayer
-
-      Object.keys(baseLayers).forEach((layerId) => {
-        mapRef.current.addLayer(baseLayers[layerId])
-      })
-
-      Object.keys(overlayLayers).forEach((layerId) => {
-        mapRef.current.addLayer(overlayLayers[layerId])
-      })
-    }
-
-    if (mapRef.current) {
-      buildLayers()
-    }
-  }, [projectionCode, mapRef.current])
-
-  useEffect(() => {
     const map = new OlMap({
       controls: [
         attribution,
@@ -675,29 +609,71 @@ const Map = ({
     }
   }, [projectionCode])
 
-  // UseEffect(() => {
-  //   // Set initial base layer visibility
-  //   // worldImageryLayer.setVisible(base.worldImagery)
-  //   // correctedReflectanceLayer.setVisible(base.trueColor)
-  //   // landWaterMapLayer.setVisible(base.landWaterMap)
+  useEffect(() => {
+    const buildLayers = async () => {
+      // Build the worldImagery layer
+      const worldImageryLayer = worldImagery({
+        attributions: esriAttribution,
+        projectionCode: projections.geographic,
+        visible: base.worldImagery
+      })
 
-  //   Object.keys(baseLayers).forEach((layerId) => {
-  //     if (baseLayers[layerId]) {
-  //       baseLayers[layerId].setVisible(base[layerId])
-  //     }
-  //   })
+      // Build the correctedReflectance Layer
+      const correctedReflectanceLayer = correctedReflectance({
+        attributions: 'NASA EOSDIS GIBS',
+        projectionCode,
+        visible: base.trueColor
+      })
 
-  //   // Set initial overlay layer visibility
-  //   // bordersRoadsLayer.setVisible(overlays.referenceFeatures)
-  //   // coastlinesLayer.setVisible(overlays.coastlines)
-  //   // placeLabelsLayer.setVisible(overlays.referenceLabels)
+      // Build the landWater Layer
+      const landWaterMapLayer = await landWaterMap({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: base.landWaterMap
+      })
 
-  //   Object.keys(overlayLayers).forEach((layerId) => {
-  //     if (overlayLayers[layerId]) {
-  //       overlayLayers[layerId].setVisible(overlays[layerId])
-  //     }
-  //   })
-  // }, [])
+      // Build the placeLabels layer
+      const placeLabelsLayer = await labelsLayer({
+        attributions: esriAttribution,
+        projectionCode: projections.geographic,
+        visible: overlays.referenceLabels
+      })
+
+      // Build the coastlines Layer
+      const coastlinesLayer = coastlines({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: overlays.coastlines
+      })
+
+      // Build the bordersRoads Layer
+      const bordersRoadsLayer = bordersRoads({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: overlays.referenceFeatures
+      })
+
+      baseLayers[mapLayers.worldImagery] = worldImageryLayer
+      baseLayers[mapLayers.correctedReflectance] = correctedReflectanceLayer
+      baseLayers[mapLayers.landWaterMap] = landWaterMapLayer
+
+      overlayLayers[mapLayers.placeLabels] = placeLabelsLayer
+      overlayLayers[mapLayers.coastlines] = coastlinesLayer
+      overlayLayers[mapLayers.bordersRoads] = bordersRoadsLayer
+
+      Object.keys(baseLayers).forEach((layerId) => {
+        mapRef.current.addLayer(baseLayers[layerId])
+      })
+
+      Object.keys(overlayLayers).forEach((layerId) => {
+        mapRef.current.addLayer(overlayLayers[layerId])
+      })
+    }
+
+    if (mapRef.current) {
+      buildLayers()
+    }
+  }, [projectionCode, mapRef.current])
 
   // Handle the map click event
   const handleMapClick = (event) => {
