@@ -21,8 +21,8 @@
     // Enforce extension usage for certain types
     "import/extensions": ["error", {
         "svg": "always",
-        "json": "always", 
-        "jpg": "always" 
+        "json": "always",
+        "jpg": "always"
     }],
     // Allowing cyclic dependencies
     "import/no-cycle": "off",

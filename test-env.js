@@ -7,6 +7,11 @@ import enableHooks from 'jest-react-hooks-shallow'
 
 import '@testing-library/jest-dom'
 
+import { TextEncoder, TextDecoder } from 'util'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
+
 // Google Tag Manager dataLayer
 global.dataLayer = {
   push: jest.fn()

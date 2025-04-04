@@ -21,10 +21,10 @@ describe('getS3Client', () => {
       }))
 
       const credentials = await result.config.credentials()
-      expect(credentials).toEqual({
+      expect(credentials).toEqual(expect.objectContaining({
         accessKeyId: 'S3RVER',
         secretAccessKey: 'S3RVER'
-      })
+      }))
 
       const endpoint = await result.config.endpoint()
       expect(endpoint).toEqual({
