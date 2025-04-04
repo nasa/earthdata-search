@@ -370,7 +370,10 @@ class SearchForm extends Component {
                   onClick={this.onToggleAdvancedSearch}
                   icon={Filter}
                   iconSize="0.825rem"
-                />
+                  childrenHidden
+                >
+                  Advanced Search
+                </Button>
               </PortalFeatureContainer>
             </div>
             <Button

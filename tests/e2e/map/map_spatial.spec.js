@@ -921,7 +921,7 @@ test.describe('Map: Spatial interactions', () => {
         // Wait for the map to load
         await initialMapPromise
 
-        await page.getByRole('button', { name: 'Advanced search' }).click()
+        await page.getByRole('button', { name: 'Advanced Search' }).click()
       })
 
       test.describe('when drawing a river reach', () => {

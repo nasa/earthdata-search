@@ -43,6 +43,8 @@ export interface ButtonProps {
   className?: string
   /** Button content, including text or other elements. */
   children?: ReactNode
+  /** Whether to hide the button text visually. */
+  childrenHidden?: boolean
   /** Test ID for testing purposes. */
   dataTestId?: string
   /** Whether the button is displayed on a dark background */
@@ -99,6 +101,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   bootstrapSize,
   className,
   children,
+  childrenHidden = false,
   dataTestId,
   dark = false,
   disabled = false,
@@ -179,6 +182,13 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
     hdsPrimaryIconSize = '12'
   }
 
+  const childrenClasses = classNames(
+    'button__contents',
+    {
+      'visually-hidden': childrenHidden
+    }
+  )
+
   const button = (
     <Btn
       ref={ref}
@@ -219,7 +229,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
             </span>
           )
           : (
-            <span className="button__contents">
+            <span className={childrenClasses}>
               {children}
             </span>
           )
