@@ -8,7 +8,6 @@ import istanbul from 'vite-plugin-istanbul'
 
 import availablePortals from './portals/availablePortals.json'
 
-// @ts-ignore
 import { getApplicationConfig } from './sharedUtils/config'
 
 const {
@@ -18,13 +17,14 @@ const {
   feedbackApp
 } = getApplicationConfig()
 
-// @ts-ignore
+// @ts-expect-error: this is a workaround for the issue with the types
 const { [defaultPortal]: portalConfig } = availablePortals
 const { footer, ui } = portalConfig
 const { showTophat } = ui
 const { attributionText } = footer
 
 export default defineConfig({
+  publicDir: 'static/src/public',
   server: {
     host: true,
     port: 8080,

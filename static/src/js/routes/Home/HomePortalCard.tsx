@@ -31,7 +31,6 @@ const HomePortalCard: React.FC<Portal> = (portal) => {
 
   return (
     <Card
-      key={title}
       className="text-decoration-none"
       as={PortalLinkContainer}
       to="/search"

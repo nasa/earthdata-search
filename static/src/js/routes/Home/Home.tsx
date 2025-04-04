@@ -1,14 +1,12 @@
 import * as React from 'react'
 import { useState } from 'react'
 import { sortBy } from 'lodash-es'
-import {
-  Col,
-  Collapse,
-  Container,
-  OverlayTrigger,
-  Popover,
-  Row
-} from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
+import Collapse from 'react-bootstrap/Collapse'
+import Container from 'react-bootstrap/Container'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Popover from 'react-bootstrap/Popover'
+import Row from 'react-bootstrap/Row'
 import { connect, MapDispatchToProps } from 'react-redux'
 import { withRouter, type RouteComponentProps } from 'react-router-dom'
 
@@ -38,42 +36,24 @@ import HomePortalCard from './HomePortalCard'
 
 import availablePortals from '../../../../../portals/availablePortals.json'
 
-// @ts-expect-error: Types do not exist for this file
 import topicIconAtmosphere from '~Images/homepage-topic-icons/atmosphere-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconBiosphere from '~Images/homepage-topic-icons/biosphere-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconClimateIndicators from '~Images/homepage-topic-icons/climate-indicators-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconCryosphere from '~Images/homepage-topic-icons/cryosphere-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconHumanDimensions from '~Images/homepage-topic-icons/human-dimensions-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconLandSurface from '~Images/homepage-topic-icons/land-surface-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconOcean from '~Images/homepage-topic-icons/ocean-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconSolidEarth from '~Images/homepage-topic-icons/solid-earth-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconSunEarthInteractions from '~Images/homepage-topic-icons/sun-earth-interactions-icon.svg'
-// @ts-expect-error: Types do not exist for this file
 import topicIconTerrestrialHydrosphere from '~Images/homepage-topic-icons/terrestrial-hydrosphere-icon.svg'
 
-// @ts-expect-error: Types do not exist for this file
 import heroImg800 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600.jpg'
-// @ts-expect-error: Types do not exist for this file
 import heroImg8002x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600@2x.jpg'
-// @ts-expect-error: Types do not exist for this file
 import heroImg1280 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg'
-// @ts-expect-error: Types do not exist for this file
 import heroImg12802x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720@2x.jpg'
-// @ts-expect-error: Types do not exist for this file
 import heroImg1920 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg'
-// @ts-expect-error: Types do not exist for this file
 import heroImg19202x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080@2x.jpg'
-// @ts-expect-error: Types do not exist for this file
 import heroImg2560 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg'
-// @ts-expect-error: Types do not exist for this file
 import heroImg25602x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x.jpg'
 
 // @ts-expect-error: Types do not exist for this file
@@ -349,7 +329,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
                 className="home__grid grid mt-3"
                 aria-labelledby="portal-collapse-button"
                 aria-hidden={!showAllPortals}
-                style={{ display: showAllPortals ? 'block' : 'none' }}
+                style={{ display: showAllPortals ? '' : 'none' }}
               >
                 {
                   hiddenPortals && hiddenPortals.map((portal) => (

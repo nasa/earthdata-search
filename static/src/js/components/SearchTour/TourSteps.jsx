@@ -16,6 +16,7 @@ import ExternalLink from '../ExternalLink/ExternalLink'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Button from '../Button/Button'
 import TourThumbnail from '../../../assets/images/tour-video-thumbnail.png'
+// import TourThumbnail from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800X600.jpg'
 
 import './SearchTour.scss'
 
