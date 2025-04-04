@@ -74,7 +74,7 @@ import projections from '../../util/map/projections'
 import worldImagery from '../../util/map/layers/worldImagery'
 import bordersRoads from '../../util/map/layers/bordersRoads'
 import coastlines from '../../util/map/layers/coastlines'
-import correctedReflectance from '../../util/map/layers/correctedReflectance'
+import trueColor from '../../util/map/layers/trueColor'
 import landWaterMap from '../../util/map/layers/landWaterMap'
 
 import { eventEmitter } from '../../events/events'
@@ -150,14 +150,14 @@ const granuleImageryLayerGroup = new LayerGroup()
 
 const baseLayers = {
   [mapLayers.worldImagery]: null,
-  [mapLayers.correctedReflectance]: null,
+  [mapLayers.trueColor]: null,
   [mapLayers.landWaterMap]: null
 }
 
 const overlayLayers = {
-  [mapLayers.bordersRoads]: null,
+  [mapLayers.referenceFeatures]: null,
   [mapLayers.coastlines]: null,
-  [mapLayers.placeLabels]: null
+  [mapLayers.referenceLabels]: null
 }
 
 // Create a view for the map. This will change when the padding needs to be updated
@@ -333,6 +333,72 @@ const Map = ({
       overlays: newOverlays
     })
   }
+
+  useEffect(() => {
+    const buildLayers = async () => {
+      // Build the worldImagery layer
+      const worldImageryLayer = worldImagery({
+        attributions: esriAttribution,
+        projectionCode: projections.geographic,
+        visible: base.worldImagery
+      })
+
+      // Build the trueColor Layer
+      const trueColorLayer = trueColor({
+        attributions: 'NASA EOSDIS GIBS',
+        projectionCode,
+        visible: base.trueColor
+      })
+
+      // Build the landWater Layer
+      const landWaterMapLayer = await landWaterMap({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: base.landWaterMap
+      })
+
+      // Build the placeLabels layer
+      const placeLabelsLayer = await labelsLayer({
+        attributions: esriAttribution,
+        projectionCode: projections.geographic,
+        visible: overlays.referenceLabels
+      })
+
+      // Build the coastlines Layer
+      const coastlinesLayer = coastlines({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: overlays.coastlines
+      })
+
+      // Build the bordersRoads Layer
+      const bordersRoadsLayer = bordersRoads({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: overlays.referenceFeatures
+      })
+
+      baseLayers[mapLayers.worldImagery] = worldImageryLayer
+      baseLayers[mapLayers.trueColor] = trueColorLayer
+      baseLayers[mapLayers.landWaterMap] = landWaterMapLayer
+
+      overlayLayers[mapLayers.referenceLabels] = placeLabelsLayer
+      overlayLayers[mapLayers.coastlines] = coastlinesLayer
+      overlayLayers[mapLayers.referenceFeatures] = bordersRoadsLayer
+
+      Object.keys(baseLayers).forEach((layerId) => {
+        mapRef.current.addLayer(baseLayers[layerId])
+      })
+
+      Object.keys(overlayLayers).forEach((layerId) => {
+        mapRef.current.addLayer(overlayLayers[layerId])
+      })
+    }
+
+    if (mapRef.current) {
+      buildLayers()
+    }
+  }, [projectionCode, mapRef.current])
 
   useEffect(() => {
     const map = new OlMap({
@@ -608,72 +674,6 @@ const Map = ({
       eventEmitter.off(shapefileEventTypes.REMOVESHAPEFILE, handleRemoveShapefile)
     }
   }, [projectionCode])
-
-  useEffect(() => {
-    const buildLayers = async () => {
-      // Build the worldImagery layer
-      const worldImageryLayer = worldImagery({
-        attributions: esriAttribution,
-        projectionCode: projections.geographic,
-        visible: base.worldImagery
-      })
-
-      // Build the correctedReflectance Layer
-      const correctedReflectanceLayer = correctedReflectance({
-        attributions: 'NASA EOSDIS GIBS',
-        projectionCode,
-        visible: base.trueColor
-      })
-
-      // Build the landWater Layer
-      const landWaterMapLayer = await landWaterMap({
-        attributions: esriAttribution,
-        projectionCode,
-        visible: base.landWaterMap
-      })
-
-      // Build the placeLabels layer
-      const placeLabelsLayer = await labelsLayer({
-        attributions: esriAttribution,
-        projectionCode: projections.geographic,
-        visible: overlays.referenceLabels
-      })
-
-      // Build the coastlines Layer
-      const coastlinesLayer = coastlines({
-        attributions: esriAttribution,
-        projectionCode,
-        visible: overlays.coastlines
-      })
-
-      // Build the bordersRoads Layer
-      const bordersRoadsLayer = bordersRoads({
-        attributions: esriAttribution,
-        projectionCode,
-        visible: overlays.referenceFeatures
-      })
-
-      baseLayers[mapLayers.worldImagery] = worldImageryLayer
-      baseLayers[mapLayers.correctedReflectance] = correctedReflectanceLayer
-      baseLayers[mapLayers.landWaterMap] = landWaterMapLayer
-
-      overlayLayers[mapLayers.placeLabels] = placeLabelsLayer
-      overlayLayers[mapLayers.coastlines] = coastlinesLayer
-      overlayLayers[mapLayers.bordersRoads] = bordersRoadsLayer
-
-      Object.keys(baseLayers).forEach((layerId) => {
-        mapRef.current.addLayer(baseLayers[layerId])
-      })
-
-      Object.keys(overlayLayers).forEach((layerId) => {
-        mapRef.current.addLayer(overlayLayers[layerId])
-      })
-    }
-
-    if (mapRef.current) {
-      buildLayers()
-    }
-  }, [projectionCode, mapRef.current])
 
   // Handle the map click event
   const handleMapClick = (event) => {

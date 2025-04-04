@@ -15,8 +15,6 @@ const landWaterMap = async ({
   projectionCode,
   visible
 }) => {
-  console.log(projectionCode)
-
   if (projectionCode === projections.geographic) {
     return vectorTileLayer({
       attributions,

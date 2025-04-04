@@ -1,19 +1,19 @@
 const mapLayers = {
   // Base layers
   worldImagery: 'worldImagery',
-  correctedReflectance: 'correctedReflectance',
+  trueColor: 'trueColor',
   landWaterMap: 'landWaterMap',
 
   // Overlay layers
-  bordersRoads: 'bordersRoads',
+  referenceFeatures: 'referenceFeatures',
   coastlines: 'coastlines',
-  placeLabels: 'placeLabels'
+  referenceLabels: 'referenceLabels'
 }
 
 // Base Layer IDs
 export const baseLayerIds = [
   mapLayers.worldImagery,
-  mapLayers.correctedReflectance,
+  mapLayers.trueColor,
   mapLayers.landWaterMap
 ]
 

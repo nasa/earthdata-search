@@ -1,14 +1,7 @@
 import ReactDOM from 'react-dom'
 import Control from 'ol/control/Control'
 import EventType from 'ol/events/EventType'
-import mapLayers from '../../constants/mapLayers'
-
-// Define base layers outside of the class
-const baseLayers = [
-  mapLayers.worldImagery,
-  mapLayers.correctedReflectance,
-  mapLayers.landWaterMap
-]
+import { baseLayerIds } from '../../constants/mapLayers'
 
 /**
  * This class adds a layer switcher control to the map
@@ -73,7 +66,7 @@ class LayerSwitcherControl extends Control {
       const optionContainer = document.createElement('div')
       optionContainer.className = `${className}__option`
 
-      const isBaseLayer = baseLayers.includes(option.id)
+      const isBaseLayer = baseLayerIds.includes(option.id)
 
       const input = document.createElement('input')
       input.type = isBaseLayer ? 'radio' : 'checkbox'
@@ -102,7 +95,7 @@ class LayerSwitcherControl extends Control {
         baseLayersAdded += 1
 
         // If this was the last base layer, add a separator after it
-        if (baseLayersAdded === baseLayers.length) {
+        if (baseLayersAdded === baseLayerIds.length) {
           const separator = document.createElement('hr')
           separator.className = `${className}__separator`
           optionsContainer.appendChild(separator)

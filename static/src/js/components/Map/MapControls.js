@@ -82,7 +82,7 @@ class MapControls extends Control {
           checked: base.worldImagery
         },
         {
-          id: mapLayers.correctedReflectance,
+          id: mapLayers.trueColor,
           label: 'Corrected Reflectance (True Color)',
           checked: base.trueColor
         },
@@ -92,7 +92,7 @@ class MapControls extends Control {
           checked: base.landWaterMap
         },
         {
-          id: mapLayers.bordersRoads,
+          id: mapLayers.referenceFeatures,
           label: 'Borders and Roads *',
           checked: overlays.referenceFeatures
         },
@@ -102,7 +102,7 @@ class MapControls extends Control {
           checked: overlays.coastlines
         },
         {
-          id: mapLayers.placeLabels,
+          id: mapLayers.referenceLabels,
           label: 'Place Labels *',
           checked: overlays.referenceLabels
         }

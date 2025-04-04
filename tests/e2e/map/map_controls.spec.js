@@ -327,9 +327,10 @@ test.describe('Map: Control interactions', () => {
         })
 
         await page.goto('/')
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Set up the response promise BEFORE interacting with the UI
-        const responsePromise = page.waitForResponse((response) => response.url().includes('CorrectedReflectance_TrueColor'))
+        const responsePromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -339,11 +340,10 @@ test.describe('Map: Control interactions', () => {
 
         // Click the Corrected Reflectance radio button by its label
         await page.getByLabel('Corrected Reflectance (True Color)').click()
-        await page.waitForTimeout(500)
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Verify URL change
         await expect(page).toHaveURL('search?base=trueColor')
-        await page.waitForSelector('.edsc-map-base-layer')
         // Now wait for the response promise we set up earlier
         await responsePromise
       })
@@ -351,19 +351,18 @@ test.describe('Map: Control interactions', () => {
 
     test.describe('When changing the base layer to Land/Water Map', () => {
       test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
-        page.on('request', (request) => console.log('Request:', request.url()))
-        page.on('response', (response) => console.log('Response:', response.url(), response.status()))
-
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
           headers: commonHeaders
         })
 
-        await page.goto('/')
+        await page.goto('/search?overlays=coastlines')
+
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Land water uses the same vector files as worldImagery but, we apply a style
-        const responsePromise = page.waitForResponse((response) => response.url().includes('wi.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer'))
+        const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -376,7 +375,7 @@ test.describe('Map: Control interactions', () => {
         await page.waitForTimeout(500)
 
         // Verify URL change
-        await expect(page).toHaveURL('search?base=landWaterMap')
+        await expect(page).toHaveURL('/search?base=landWaterMap&overlays=coastlines')
 
         // Now wait for the response promise we set up earlier
         await responsePromise
@@ -393,6 +392,8 @@ test.describe('Map: Control interactions', () => {
 
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
+
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -419,6 +420,7 @@ test.describe('Map: Control interactions', () => {
 
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -445,6 +447,7 @@ test.describe('Map: Control interactions', () => {
 
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })

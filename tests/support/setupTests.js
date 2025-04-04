@@ -15,7 +15,7 @@ const getImageFileName = (url) => {
   }
 
   if (url.includes('CorrectedReflectance')) {
-    // Return 'corrected-reflectance-mock'
+    return 'corrected-reflectance-mock'
   }
 
   if (url.includes('earthdata.nasa.gov')) {
