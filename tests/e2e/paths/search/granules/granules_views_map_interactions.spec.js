@@ -14,6 +14,7 @@ import cmrGranulesCollectionGraphQlHeaders from './__mocks__/cmr_granules/graphq
 import cmrGranulesBody from './__mocks__/cmr_granules/granules.body.json'
 import cmrGranulesHeaders from './__mocks__/cmr_granules/granules.headers.json'
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
+import colormapBody from './__mocks__/cmr_granules/colormap.body.json'
 
 const granuleName = 'VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc'
 
@@ -72,17 +73,23 @@ test.describe('When clicking on a granule on the map', () => {
       })
     })
 
-    const tilesPromise = page.waitForResponse(/World_Imagery/)
+    await page.route(/colormaps\/VIIRS_NOAA20_Brightness_Temp_BandI5_Day/, async (route) => {
+      await route.fulfill({
+        json: colormapBody
+      })
+    })
+
+    const baseTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
 
     await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&q=${conceptId}&tl=1730131646!3!!&lat=35.35040540820201&long=150.140625&zoom=4`)
 
     // Wait for the map to load
-    await tilesPromise
+    await baseTilePromise
   })
 
   test.describe('When clicking on a map granule while in the granule list view', () => {
     test.beforeEach(async ({ page }) => {
-      const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
+      const zoomedOutTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
 
       await page.locator('.map').click({
         force: true,
@@ -92,7 +99,7 @@ test.describe('When clicking on a granule on the map', () => {
         }
       })
 
-      await tilesPromise
+      await zoomedOutTilePromise
     })
 
     test('scrolls to the highlighted granule', async ({ page }) => {
