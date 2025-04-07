@@ -110,7 +110,7 @@ test.describe('When clicking on a granule on the map', () => {
     test.describe('when switching from the list view to the table view', () => {
       test('the granule remains highlighted and visible', async ({ page }) => {
         // Switch to the table view
-        await page.locator('.panel-group--is-active').getByRole('button', { name: /View/ }).hover()
+        await page.locator('.panel-group--is-active').getByRole('button', { name: /View/ }).click()
         await page.getByRole('button', { name: /Table/ }).click()
 
         // Ensure the row is highlighted
@@ -158,7 +158,7 @@ test.describe('When clicking on a granule on the map', () => {
     test.describe('when switching from the table view to the list view', () => {
       test('the granule remains highlighted and visible', async ({ page }) => {
         // Switch to the table view
-        await page.locator('.panel-group--is-active').getByRole('button', { name: /View/ }).hover()
+        await page.locator('.panel-group--is-active').getByRole('button', { name: /View/ }).click()
 
         // Grab the drop-down menu item not the panel header
         await page.getByRole('button', { name: /List/ }).filter({ hasNot: page.getByText('View: List') }).click()
