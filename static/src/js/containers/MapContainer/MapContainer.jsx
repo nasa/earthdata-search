@@ -443,7 +443,7 @@ export const MapContainer = (props) => {
   if (granuleIds.length > 0) {
     granuleIds.forEach((granuleId) => {
       const { collectionId, index } = nonExcludedGranules[granuleId]
-      const granule = granulesMetadata[granuleId]
+      const granule = { ...granulesMetadata[granuleId] }
 
       // Determine if the granule should be drawn with the regular style or the deemphasized style
       let shouldDrawRegularStyle = true

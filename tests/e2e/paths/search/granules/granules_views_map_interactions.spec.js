@@ -72,15 +72,18 @@ test.describe('When clicking on a granule on the map', () => {
       })
     })
 
+    const tilesPromise = page.waitForResponse(/World_Imagery/)
+
     await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&q=${conceptId}&tl=1730131646!3!!&lat=35.35040540820201&long=150.140625&zoom=4`)
 
     // Wait for the map to load
-    await page.waitForSelector('.edsc-map-base-layer')
+    await tilesPromise
   })
 
   test.describe('When clicking on a map granule while in the granule list view', () => {
     test.beforeEach(async ({ page }) => {
-      await page.waitForSelector('.edsc-map-base-layer')
+      const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
+
       await page.locator('.map').click({
         force: true,
         position: {
@@ -89,7 +92,7 @@ test.describe('When clicking on a granule on the map', () => {
         }
       })
 
-      await page.waitForTimeout(250)
+      await tilesPromise
     })
 
     test('scrolls to the highlighted granule', async ({ page }) => {
@@ -129,7 +132,8 @@ test.describe('When clicking on a granule on the map', () => {
       await page.getByRole('button', { name: /Table/ }).click()
 
       // Click on the granule on the map
-      await page.waitForSelector('.edsc-map-base-layer')
+      const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
+
       await page.locator('.map').click({
         force: true,
         position: {
@@ -137,6 +141,8 @@ test.describe('When clicking on a granule on the map', () => {
           y: 150
         }
       })
+
+      await tilesPromise
     })
 
     test('scrolls to the highlighted granule', async ({ page }) => {
