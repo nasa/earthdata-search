@@ -956,6 +956,8 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly', async ({ page }) => {
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
+
           const dialog = await page.getByRole('dialog')
 
           const select = await dialog.getByRole('combobox')
@@ -972,7 +974,7 @@ test.describe('Map: Spatial interactions', () => {
           await dialog.getByRole('button', { name: 'Apply' }).click()
 
           // Wait for map animation to complete
-          await page.waitForTimeout(250)
+          await tilesPromise
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-reach-spatial.png', {
@@ -1013,6 +1015,8 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly', async ({ page }) => {
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
+
           const dialog = await page.getByRole('dialog')
 
           await dialog.getByRole('textbox', { value: 'keyword' }).type('04010101')
@@ -1026,7 +1030,7 @@ test.describe('Map: Spatial interactions', () => {
           await dialog.getByRole('button', { name: 'Apply' }).click()
 
           // Wait for map animation to complete
-          await page.waitForTimeout(250)
+          await tilesPromise
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('4326-huc-spatial.png', {
@@ -1647,6 +1651,8 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly', async ({ page }) => {
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/11/)
+
           const dialog = await page.getByRole('dialog')
 
           const select = await dialog.getByRole('combobox')
@@ -1662,8 +1668,7 @@ test.describe('Map: Spatial interactions', () => {
 
           await dialog.getByRole('button', { name: 'Apply' }).click()
 
-          // Wait for map animation to complete
-          await page.waitForTimeout(250)
+          await tilesPromise
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('3413-reach-spatial.png', {
@@ -1704,6 +1709,8 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly', async ({ page }) => {
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
+
           const dialog = await page.getByRole('dialog')
 
           await dialog.getByRole('textbox', { value: 'keyword' }).type('04010101')
@@ -1716,8 +1723,7 @@ test.describe('Map: Spatial interactions', () => {
 
           await dialog.getByRole('button', { name: 'Apply' }).click()
 
-          // Wait for map animation to complete
-          await page.waitForTimeout(250)
+          await tilesPromise
 
           // Draws the spatial on the map
           await expect(page).toHaveScreenshot('3413-huc-spatial.png', {

@@ -304,12 +304,14 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/search?base=trueColor')
-        // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
 
-        // Set up the response promise BEFORE interacting with the UI
-        const responsePromise = page.waitForResponse(/World_Imagery/)
+        await page.goto('/search?base=trueColor')
+
+        await trueColorPromise
+
+        // Zoom in to force new tiles to load
+        await page.locator('.edsc-map-zoom-in').click()
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -317,15 +319,17 @@ test.describe('Map: Control interactions', () => {
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
+        // Set up the response promise BEFORE interacting with the UI
+        const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
+
         // Click the World Imagery radio button by its label
         await page.getByLabel('World Imagery').click()
-        await page.waitForSelector('.edsc-map-base-layer')
-
-        // Verify URL change
-        await expect(page).toHaveURL('search')
 
         // Now wait for the response promise we set up earlier
-        await responsePromise
+        await worldImageryPromise
+
+        // Verify URL change
+        await expect(page).toHaveURL('search?zoom=4')
       })
     })
 
@@ -337,11 +341,14 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
+
         await page.goto('/')
-        await page.waitForSelector('.edsc-map-base-layer')
+
+        await worldImageryPromise
 
         // Set up the response promise BEFORE interacting with the UI
-        const responsePromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
+        const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -351,12 +358,12 @@ test.describe('Map: Control interactions', () => {
 
         // Click the Corrected Reflectance radio button by its label
         await page.getByLabel('Corrected Reflectance (True Color)').click()
-        await page.waitForSelector('.edsc-map-base-layer')
+
+        // Now wait for the response promise we set up earlier
+        await trueColorPromise
 
         // Verify URL change
         await expect(page).toHaveURL('search?base=trueColor')
-        // Now wait for the response promise we set up earlier
-        await responsePromise
       })
     })
 
@@ -368,12 +375,11 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
+
         await page.goto('/search?overlays=coastlines')
 
-        await page.waitForSelector('.edsc-map-base-layer')
-
-        // Land water uses the same vector files as worldImagery but, we apply a style
-        const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
+        await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -381,15 +387,17 @@ test.describe('Map: Control interactions', () => {
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
+        // Land water uses the same vector files as worldImagery but, we apply a style
+        const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
+
         // Click the Land/Water Map radio button by its label
         await page.getByLabel('Land / Water Map *').click()
-        await page.waitForTimeout(500)
-
-        // Verify URL change
-        await expect(page).toHaveURL('/search?base=landWaterMap&overlays=coastlines')
 
         // Now wait for the response promise we set up earlier
         await responsePromise
+
+        // Verify URL change
+        await expect(page).toHaveURL('/search?base=landWaterMap&overlays=coastlines')
       })
     })
 
@@ -401,13 +409,12 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        // Wait for the correct layer to load
-        const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
 
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
 
-        await page.waitForSelector('.edsc-map-base-layer')
+        await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -415,15 +422,17 @@ test.describe('Map: Control interactions', () => {
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
+
         // Click the checkbox for Place Labels by its label
         await page.getByLabel('Place Labels *').click()
-        await page.waitForTimeout(500)
-
-        // Verify URL is updated with the correct overlay parameter
-        await expect(page).toHaveURL('search?overlays=referenceLabels')
 
         // Wait for the correct layer to load
         await responsePromise
+
+        // Verify URL is updated with the correct overlay parameter
+        await expect(page).toHaveURL('search?overlays=referenceLabels')
       })
     })
 
@@ -435,12 +444,12 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        // Wait for the correct layer to load
-        const responsePromise = page.waitForResponse(/Reference_Features_15m/)
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
 
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
-        await page.waitForSelector('.edsc-map-base-layer')
+
+        await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -448,15 +457,17 @@ test.describe('Map: Control interactions', () => {
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/Reference_Features_15m/)
+
         // Click the checkbox for Borders and Roads by its label
         await page.getByLabel('Borders and Roads *').click()
-        await page.waitForTimeout(500)
-
-        // Verify URL is updated with the correct overlay parameter
-        await expect(page).toHaveURL('search?overlays=referenceFeatures')
 
         // Wait for the correct layer to load
         await responsePromise
+
+        // Verify URL is updated with the correct overlay parameter
+        await expect(page).toHaveURL('search?overlays=referenceFeatures')
       })
     })
 
@@ -468,12 +479,12 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        // Wait for the correct layer to load
-        const responsePromise = page.waitForResponse(/Coastlines_15m/)
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
 
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
-        await page.waitForSelector('.edsc-map-base-layer')
+
+        await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -481,15 +492,17 @@ test.describe('Map: Control interactions', () => {
         // Wait for the panel to become visible
         await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
 
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/Coastlines_15m/)
+
         // Click the checkbox for Coastlines by its label
         await page.getByLabel('Coastlines *').click()
-        await page.waitForTimeout(500)
-
-        // Verify URL is updated with the correct overlay parameter
-        await expect(page).toHaveURL('search?overlays=coastlines')
 
         // Wait for the correct layer to load
         await responsePromise
+
+        // Verify URL is updated with the correct overlay parameter
+        await expect(page).toHaveURL('search?overlays=coastlines')
       })
     })
   })
