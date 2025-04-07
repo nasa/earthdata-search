@@ -18,6 +18,7 @@ class LayerSwitcherControl extends Control {
 
     this.options = options
     this.onChangeLayer = options.onChangeLayer
+    this.setIsLayerSwitcherOpen = options.setIsLayerSwitcherOpen
 
     const toggleButton = document.createElement('button')
     toggleButton.className = `${options.className}__button`
@@ -37,15 +38,17 @@ class LayerSwitcherControl extends Control {
     const panel = document.createElement('div')
     panel.className = `${options.className}__panel`
 
+    if (options.isLayerSwitcherOpen) panel.className += ` ${options.className}__panel--visible`
+
     this.addLayerOptions(panel)
     element.appendChild(panel)
 
     element.addEventListener('mouseenter', () => {
-      panel.classList.add(`${options.className}__panel--visible`)
+      this.setIsLayerSwitcherOpen(true)
     })
 
     element.addEventListener('mouseleave', () => {
-      panel.classList.remove(`${options.className}__panel--visible`)
+      this.setIsLayerSwitcherOpen(false)
     })
   }
 
@@ -77,8 +80,7 @@ class LayerSwitcherControl extends Control {
       input.addEventListener(EventType.CHANGE, () => {
         this.onChangeLayer({
           id: option.id,
-          checked: input.checked,
-          type: input.type
+          checked: input.checked
         })
       })
 

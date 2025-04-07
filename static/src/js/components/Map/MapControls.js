@@ -27,6 +27,7 @@ class MapControls extends Control {
       base,
       CircleIcon,
       HomeIcon,
+      isLayerSwitcherOpen,
       LayersIcon,
       map,
       mapLayers,
@@ -38,6 +39,7 @@ class MapControls extends Control {
       PlusIcon,
       PointIcon,
       projectionCode,
+      setIsLayerSwitcherOpen,
       ShapefileIcon
     } = options
 
@@ -73,40 +75,35 @@ class MapControls extends Control {
     // Create the layer switcher control
     const layerSwitcher = new LayerSwitcherControl({
       className: 'edsc-map-layer-switcher',
+      isLayerSwitcherOpen,
+      layerOptions: [{
+        checked: base.worldImagery,
+        id: mapLayers.worldImagery,
+        label: 'World Imagery'
+      }, {
+        checked: base.trueColor,
+        id: mapLayers.trueColor,
+        label: 'Corrected Reflectance (True Color)'
+      }, {
+        checked: base.landWaterMap,
+        id: mapLayers.landWaterMap,
+        label: 'Land / Water Map *'
+      }, {
+        checked: overlays.referenceFeatures,
+        id: mapLayers.referenceFeatures,
+        label: 'Borders and Roads *'
+      }, {
+        checked: overlays.coastlines,
+        id: mapLayers.coastlines,
+        label: 'Coastlines *'
+      }, {
+        checked: overlays.referenceLabels,
+        id: mapLayers.referenceLabels,
+        label: 'Place Labels *'
+      }],
       LayersIcon,
       onChangeLayer,
-      layerOptions: [
-        {
-          id: mapLayers.worldImagery,
-          label: 'World Imagery',
-          checked: base.worldImagery
-        },
-        {
-          id: mapLayers.trueColor,
-          label: 'Corrected Reflectance (True Color)',
-          checked: base.trueColor
-        },
-        {
-          id: mapLayers.landWaterMap,
-          label: 'Land / Water Map *',
-          checked: base.landWaterMap
-        },
-        {
-          id: mapLayers.referenceFeatures,
-          label: 'Borders and Roads *',
-          checked: overlays.referenceFeatures
-        },
-        {
-          id: mapLayers.coastlines,
-          label: 'Coastlines *',
-          checked: overlays.coastlines
-        },
-        {
-          id: mapLayers.referenceLabels,
-          label: 'Place Labels *',
-          checked: overlays.referenceLabels
-        }
-      ]
+      setIsLayerSwitcherOpen
     })
 
     // Add the controls to the container

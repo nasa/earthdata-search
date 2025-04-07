@@ -18,6 +18,14 @@ const getImageFileName = (url) => {
     return 'corrected-reflectance-mock'
   }
 
+  if (url.includes('Reference_Features_15m')) {
+    return 'reference-features-15-m-mock'
+  }
+
+  if (url.includes('Coastlines_15m')) {
+    return 'coastlines-15-m-mock'
+  }
+
   if (url.includes('earthdata.nasa.gov')) {
     filename = url.split('earthdata.nasa.gov/')[1].replace(/\//g, '_')
   }

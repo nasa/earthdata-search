@@ -307,11 +307,9 @@ test.describe('Map: Control interactions', () => {
         await page.goto('/search?base=trueColor')
         // Wait for the map to load
         await page.waitForSelector('.edsc-map-base-layer')
-        await page.waitForTimeout(500)
 
         // Set up the response promise BEFORE interacting with the UI
-        // TODO something odd if happening here its not finding this request though its getting logged
-        // const responsePromise = page.waitForResponse(/World_Imagery/)
+        const responsePromise = page.waitForResponse(/World_Imagery/)
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
@@ -327,7 +325,7 @@ test.describe('Map: Control interactions', () => {
         await expect(page).toHaveURL('search')
 
         // Now wait for the response promise we set up earlier
-        // await responsePromise
+        await responsePromise
       })
     })
 
@@ -403,6 +401,9 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
+
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
 
@@ -420,6 +421,9 @@ test.describe('Map: Control interactions', () => {
 
         // Verify URL is updated with the correct overlay parameter
         await expect(page).toHaveURL('search?overlays=referenceLabels')
+
+        // Wait for the correct layer to load
+        await responsePromise
       })
     })
 
@@ -430,6 +434,9 @@ test.describe('Map: Control interactions', () => {
           body: commonBody,
           headers: commonHeaders
         })
+
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/Reference_Features_15m/)
 
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
@@ -447,6 +454,9 @@ test.describe('Map: Control interactions', () => {
 
         // Verify URL is updated with the correct overlay parameter
         await expect(page).toHaveURL('search?overlays=referenceFeatures')
+
+        // Wait for the correct layer to load
+        await responsePromise
       })
     })
 
@@ -457,6 +467,9 @@ test.describe('Map: Control interactions', () => {
           body: commonBody,
           headers: commonHeaders
         })
+
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/Coastlines_15m/)
 
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
@@ -474,6 +487,9 @@ test.describe('Map: Control interactions', () => {
 
         // Verify URL is updated with the correct overlay parameter
         await expect(page).toHaveURL('search?overlays=coastlines')
+
+        // Wait for the correct layer to load
+        await responsePromise
       })
     })
   })

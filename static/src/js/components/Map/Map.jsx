@@ -1,7 +1,8 @@
 import React, {
   useContext,
   useEffect,
-  useRef
+  useRef,
+  useState
 } from 'react'
 import { renderToString } from 'react-dom/server'
 import PropTypes from 'prop-types'
@@ -295,43 +296,7 @@ const Map = ({
   const mapRef = useRef()
   const mapElRef = useRef()
 
-  const handleLayerChange = ({ id, checked }) => {
-    // State objects to track changes for both layer types
-    let newBase = { ...base }
-    const newOverlays = { ...overlays }
-
-    // Handle base layers
-    if (baseLayerIds.includes(id)) {
-      // Reset all base layer selections
-      newBase = {
-        worldImagery: false,
-        trueColor: false,
-        landWaterMap: false
-      }
-
-      // Set the selected base layer to true in the state
-      newBase[id] = checked
-
-      // Update all base layer visibility
-      Object.keys(baseLayers).forEach((layerId) => {
-        baseLayers[layerId].setVisible(newBase[layerId])
-      })
-    }
-
-    // Handle overlay layers
-    if (id in overlayLayers) {
-      overlayLayers[id].setVisible(checked)
-
-      // Update the corresponding property in overlays state
-      newOverlays[id] = checked
-    }
-
-    // Single call to onChangeMap with all changes
-    onChangeMap({
-      base: newBase,
-      overlays: newOverlays
-    })
-  }
+  const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
   useEffect(() => {
     const map = new OlMap({
@@ -441,26 +406,6 @@ const Map = ({
     // Handle the map draw start event from the SpatialSelectionDropdown
     eventEmitter.on(mapEventTypes.DRAWSTART, handleDrawingStart)
     eventEmitter.on(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
-
-    const mapControls = new MapControls({
-      base,
-      CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
-      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
-      LayersIcon: (<EDSCIcon size="0.75rem" icon={FaLayerGroup} />),
-      map,
-      mapLayers,
-      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
-      onChangeLayer: handleLayerChange,
-      onChangeProjection,
-      onToggleShapefileUploadModal,
-      overlays,
-      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
-      PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
-      projectionCode,
-      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />)
-    })
-
-    map.addControl(mapControls)
 
     const handleMoveEnd = (event) => {
       // When the map is moved we need to call onChangeMap to update Redux
@@ -610,6 +555,7 @@ const Map = ({
     }
   }, [projectionCode])
 
+  // Adds layers to the map
   useEffect(() => {
     const buildLayers = async () => {
       // Build the worldImagery layer
@@ -676,6 +622,81 @@ const Map = ({
       layersAdded = true
     }
   }, [projectionCode, mapRef.current])
+
+  // Add the controls to the map
+  useEffect(() => {
+    // If the mapRef is not set, return an empty cleanup function
+    if (!mapRef.current) return () => {}
+
+    const handleLayerChange = ({ id, checked }) => {
+      // State objects to track changes for both layer types
+      let newBase = { ...base }
+      const newOverlays = { ...overlays }
+
+      // Handle base layers
+      if (baseLayerIds.includes(id)) {
+        // Reset all base layer selections
+        newBase = {
+          worldImagery: false,
+          trueColor: false,
+          landWaterMap: false
+        }
+
+        // Set the selected base layer to true in the state
+        newBase[id] = checked
+
+        // Update all base layer visibility
+        Object.keys(baseLayers).forEach((layerId) => {
+          baseLayers[layerId].setVisible(newBase[layerId])
+        })
+      }
+
+      // Handle overlay layers
+      if (id in overlayLayers) {
+        overlayLayers[id].setVisible(checked)
+
+        // Update the corresponding property in overlays state
+        newOverlays[id] = checked
+      }
+
+      // Single call to onChangeMap with all changes
+      onChangeMap({
+        base: newBase,
+        overlays: newOverlays
+      })
+    }
+
+    const mapControls = new MapControls({
+      base,
+      CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
+      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
+      isLayerSwitcherOpen,
+      LayersIcon: (<EDSCIcon size="0.75rem" icon={FaLayerGroup} />),
+      map: mapRef.current,
+      mapLayers,
+      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
+      onChangeLayer: handleLayerChange,
+      onChangeProjection,
+      onToggleShapefileUploadModal,
+      overlays,
+      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
+      PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
+      projectionCode,
+      setIsLayerSwitcherOpen,
+      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />)
+    })
+
+    mapRef.current.addControl(mapControls)
+
+    return () => {
+      mapRef.current.removeControl(mapControls)
+    }
+  }, [
+    base,
+    isLayerSwitcherOpen,
+    mapRef.current,
+    overlays
+  ])
 
   // Handle the map click event
   const handleMapClick = (event) => {
