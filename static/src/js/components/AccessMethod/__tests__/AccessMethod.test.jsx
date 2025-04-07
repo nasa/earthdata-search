@@ -11,6 +11,7 @@ import userEvent from '@testing-library/user-event'
 import ResizeObserver from 'resize-observer-polyfill'
 import AccessMethod from '../AccessMethod'
 import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
+import MbrContext from '../../../contexts/MbrContext'
 
 beforeEach(() => {
   global.ResizeObserver = ResizeObserver
@@ -46,7 +47,6 @@ const setup = (overrideProps) => {
   const onSetActivePanel = jest.fn()
   const onUpdateAccessMethod = jest.fn()
   const onTogglePanels = jest.fn()
-  const onToggleSpatialPolygonWarning = jest.fn()
 
   const props = {
     accessMethods: {},
@@ -61,7 +61,6 @@ const setup = (overrideProps) => {
     onSelectAccessMethod,
     onSetActivePanel,
     onTogglePanels,
-    onToggleSpatialPolygonWarning,
     onUpdateAccessMethod,
     projectCollection: {
       granules: {}
@@ -70,14 +69,22 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  render(<AccessMethod {...props} />)
+  const context = {
+    setShowMbr: jest.fn()
+  }
+
+  render(
+    <MbrContext.Provider value={context}>
+      <AccessMethod {...props} />
+    </MbrContext.Provider>
+  )
 
   return {
+    context,
     onSelectAccessMethod,
     onSetActivePanel,
     onUpdateAccessMethod,
     onTogglePanels,
-    onToggleSpatialPolygonWarning,
     user
   }
 }
@@ -1409,7 +1416,7 @@ describe('AccessMethod component', () => {
 
           describe('when the user provided point spatial and the harmony service does not support shapefile subsetting', () => {
             test('displays a warning and a bounding box Selected Area', async () => {
-              const { onToggleSpatialPolygonWarning, user } = setup({
+              const { context, user } = setup({
                 accessMethods: {
                   harmony0: {
                     name: 'test name',
@@ -1434,14 +1441,14 @@ describe('AccessMethod component', () => {
 
               expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your point will be automatically converted into the bounding box shown above and outlined on the map.')
 
-              expect(onToggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
-              expect(onToggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
+              expect(context.setShowMbr).toHaveBeenCalledTimes(2)
+              expect(context.setShowMbr).toHaveBeenNthCalledWith(2, true)
             })
           })
 
           describe('when the user provided circle spatial and the harmony service does not support shapefile subsetting', () => {
             test('displays a warning and a bounding box Selected Area', async () => {
-              const { onToggleSpatialPolygonWarning, user } = setup({
+              const { context, user } = setup({
                 accessMethods: {
                   harmony0: {
                     name: 'test name',
@@ -1466,14 +1473,14 @@ describe('AccessMethod component', () => {
 
               expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your circle will be automatically converted into the bounding box shown above and outlined on the map.')
 
-              expect(onToggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
-              expect(onToggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
+              expect(context.setShowMbr).toHaveBeenCalledTimes(2)
+              expect(context.setShowMbr).toHaveBeenNthCalledWith(2, true)
             })
           })
 
           describe('when the user provided line spatial and the harmony service does not support shapefile subsetting', () => {
             test('displays a warning and a bounding box Selected Area', async () => {
-              const { onToggleSpatialPolygonWarning, user } = setup({
+              const { context, user } = setup({
                 accessMethods: {
                   harmony0: {
                     name: 'test name',
@@ -1498,14 +1505,14 @@ describe('AccessMethod component', () => {
 
               expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your line will be automatically converted into the bounding box shown above and outlined on the map.')
 
-              expect(onToggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
-              expect(onToggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
+              expect(context.setShowMbr).toHaveBeenCalledTimes(2)
+              expect(context.setShowMbr).toHaveBeenNthCalledWith(2, true)
             })
           })
 
           describe('when the user provided polygon spatial and the harmony service does not support shapefile subsetting', () => {
             test('displays a warning and a bounding box Selected Area', async () => {
-              const { onToggleSpatialPolygonWarning, user } = setup({
+              const { context, user } = setup({
                 accessMethods: {
                   harmony0: {
                     name: 'test name',
@@ -1530,8 +1537,8 @@ describe('AccessMethod component', () => {
 
               expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your polygon will be automatically converted into the bounding box shown above and outlined on the map.')
 
-              expect(onToggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
-              expect(onToggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
+              expect(context.setShowMbr).toHaveBeenCalledTimes(2)
+              expect(context.setShowMbr).toHaveBeenNthCalledWith(2, true)
             })
           })
         })

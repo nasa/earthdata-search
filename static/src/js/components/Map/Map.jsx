@@ -514,19 +514,19 @@ const Map = ({
 
     // Handle the add shapefile event
     const handleAddShapefile = (dzFile, file) => {
-      const { displaySpatialPolygonWarning, drawingNewLayer } = spatialSearch
+      const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({
-        displaySpatialPolygonWarning,
         drawingNewLayer,
-        shapefile: file,
-        onChangeQuery,
         onChangeProjection,
+        onChangeQuery,
         onMetricsMap,
         onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
+        shapefile: file,
         shapefileAdded: true,
+        showMbr,
         vectorSource: spatialDrawingSource
       })
     }
@@ -982,23 +982,27 @@ const Map = ({
     if (shapefile && shapefile.file) {
       const { file, selectedFeatures } = shapefile
 
-      const { displaySpatialPolygonWarning, drawingNewLayer } = spatialSearch
+      const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({
-        displaySpatialPolygonWarning,
         drawingNewLayer,
-        selectedFeatures,
-        shapefile: file,
         onChangeQuery,
         onMetricsMap,
         onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
+        selectedFeatures,
+        shapefile: file,
         shapefileAdded: false,
+        showMbr,
         vectorSource: spatialDrawingSource
       })
     }
-  }, [shapefile, spatialSearch, projectionCode])
+  }, [
+    shapefile,
+    spatialSearch,
+    projectionCode
+  ])
 
   // Draw the granule outlines
   granuleOutlinesLayer.on(RenderEventType.POSTRENDER, (event) => {
@@ -1063,7 +1067,7 @@ Map.propTypes = {
     selectedFeatures: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   spatialSearch: PropTypes.shape({
-    displaySpatialPolygonWarning: PropTypes.bool,
+    showMbr: PropTypes.bool,
     drawingNewLayer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
   }).isRequired,
   zoom: PropTypes.number.isRequired

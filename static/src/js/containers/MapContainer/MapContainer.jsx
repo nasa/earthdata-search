@@ -7,7 +7,8 @@ import React, {
   useLayoutEffect,
   useRef,
   useState,
-  useMemo
+  useMemo,
+  useContext
 } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -48,6 +49,7 @@ import {
 
 import './MapContainer.scss'
 import spatialTypes from '../../constants/spatialTypes'
+import MbrContext from '../../contexts/MbrContext'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -134,6 +136,8 @@ export const MapContainer = (props) => {
     router,
     shapefile
   } = props
+
+  const { showMbr } = useContext(MbrContext)
 
   const { location } = router
   const { pathname } = location
@@ -509,11 +513,11 @@ export const MapContainer = (props) => {
     advancedSearch,
     boundingBoxSearch,
     circleSearch,
-    displaySpatialPolygonWarning,
     drawingNewLayer,
     lineSearch,
     pointSearch,
-    polygonSearch
+    polygonSearch,
+    showMbr: showMbr || displaySpatialPolygonWarning,
   }), [
     advancedSearch,
     boundingBoxSearch,
@@ -523,7 +527,8 @@ export const MapContainer = (props) => {
     lineSearch,
     pointSearch,
     polygonSearch,
-    projection
+    projection,
+    showMbr
   ])
 
   const memoizedShapefile = useMemo(() => shapefile, [shapefile])

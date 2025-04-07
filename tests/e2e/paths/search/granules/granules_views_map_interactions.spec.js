@@ -111,7 +111,10 @@ test.describe('When clicking on a granule on the map', () => {
       test('the granule remains highlighted and visible', async ({ page }) => {
         // Switch to the table view
         await page.locator('.panel-group--is-active').getByRole('button', { name: /View/ }).click()
-        await page.getByRole('button', { name: /Table/ }).click()
+        await page.getByRole('button', {
+          name: 'Table',
+          exact: true
+        }).click()
 
         // Ensure the row is highlighted
         const highlightedRow = await page.getByRole('row').filter({ hasText: granuleName })
@@ -161,7 +164,10 @@ test.describe('When clicking on a granule on the map', () => {
         await page.locator('.panel-group--is-active').getByRole('button', { name: /View/ }).click()
 
         // Grab the drop-down menu item not the panel header
-        await page.getByRole('button', { name: /List/ }).filter({ hasNot: page.getByText('View: List') }).click()
+        await page.getByRole('button', {
+          name: 'List',
+          exact: true
+        }).click()
 
         const highlightedCard = await page.getByRole('button', {
           name: granuleName

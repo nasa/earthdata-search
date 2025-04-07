@@ -53,7 +53,6 @@ import './ProjectPanels.scss'
  * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  * @param {Function} onTogglePanels - Toggles the panels opened or closed.
- * @param {Function} onToggleSpatialPolygonWarning - Toggles the spatial polygon warning.
  * @param {Function} onUpdateAccessMethod - Callback to update the access method.
  * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
  */
@@ -285,7 +284,6 @@ class ProjectPanels extends PureComponent {
       onSetActivePanel,
       onToggleAboutCSDAModal,
       onTogglePanels,
-      onToggleSpatialPolygonWarning,
       onUpdateAccessMethod,
       panels,
       project,
@@ -594,7 +592,6 @@ class ProjectPanels extends PureComponent {
               onSelectAccessMethod={onSelectAccessMethod}
               onSetActivePanel={onSetActivePanel}
               onTogglePanels={onTogglePanels}
-              onToggleSpatialPolygonWarning={onToggleSpatialPolygonWarning}
               onUpdateAccessMethod={onUpdateAccessMethod}
               selectedAccessMethod={selectedAccessMethod}
               shapefileId={shapefileId}
@@ -724,7 +721,6 @@ ProjectPanels.propTypes = {
   onSetActivePanelGroup: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onToggleSpatialPolygonWarning: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   overrideTemporal: PropTypes.shape({}).isRequired,

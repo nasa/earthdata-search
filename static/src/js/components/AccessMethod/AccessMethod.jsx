@@ -2,7 +2,9 @@ import React, {
   useState,
   useEffect,
   lazy,
-  Suspense
+  Suspense,
+  useMemo,
+  useContext
 } from 'react'
 import PropTypes from 'prop-types'
 import Alert from 'react-bootstrap/Alert'
@@ -25,6 +27,8 @@ import SwodlrForm from './SwodlrForm'
 
 import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
+import MbrContext from '../../contexts/MbrContext'
+
 import './AccessMethod.scss'
 
 const EchoForm = lazy(() => import('./EchoForm'))
@@ -39,7 +43,6 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {Function} props.onSelectAccessMethod - Selects an access method.
  * @param {Function} props.onSetActivePanel - Switches the currently active panel.
  * @param {Function} props.onTogglePanels - Toggles the panels.
- * @param {Function} props.onToggleSpatialPolygonWarning - Toggles the spatial polygon warning.
  * @param {Function} props.onUpdateAccessMethod - Updates an access method.
  * @param {Object} props.projectCollection - The project collection.
  * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
@@ -54,7 +57,6 @@ const AccessMethod = ({
   onSelectAccessMethod,
   onSetActivePanel,
   onTogglePanels,
-  onToggleSpatialPolygonWarning,
   onUpdateAccessMethod,
   projectCollection,
   selectedAccessMethod,
@@ -63,6 +65,8 @@ const AccessMethod = ({
   temporal,
   ursProfile
 }) => {
+  const { setShowMbr } = useContext(MbrContext)
+
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
 
   const {
@@ -639,30 +643,41 @@ const AccessMethod = ({
   const hasNonBoundingBoxSpatial = spatial
     && (spatial.polygon || spatial.point || spatial.line || spatial.circle)
 
-  let harmonyMbrWarning
-  if (
-    enableSpatialSubsetting
-    && supportsBoundingBoxSubsetting
-    && !supportsShapefileSubsetting
-    && hasNonBoundingBoxSpatial
-  ) {
-    let spatialType = ''
-    if (spatial.polygon) {
-      spatialType = 'polygon'
-    } else if (spatial.point) {
-      spatialType = 'point'
-    } else if (spatial.line) {
-      spatialType = 'line'
-    } else if (spatial.circle) {
-      spatialType = 'circle'
+  const harmonyMbrWarning = useMemo(() => {
+    let warning
+
+    if (
+      enableSpatialSubsetting
+      && supportsBoundingBoxSubsetting
+      && !supportsShapefileSubsetting
+      && hasNonBoundingBoxSpatial
+    ) {
+      let spatialType = ''
+      if (spatial.polygon) {
+        spatialType = 'polygon'
+      } else if (spatial.point) {
+        spatialType = 'point'
+      } else if (spatial.line) {
+        spatialType = 'line'
+      } else if (spatial.circle) {
+        spatialType = 'circle'
+      }
+
+      warning = `Only bounding boxes are supported. If this option is enabled, your ${spatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
     }
 
-    harmonyMbrWarning = `Only bounding boxes are supported. If this option is enabled, your ${spatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
-  }
+    return warning
+  }, [
+    enableSpatialSubsetting,
+    hasNonBoundingBoxSpatial,
+    spatial,
+    supportsBoundingBoxSubsetting,
+    supportsShapefileSubsetting
+  ])
 
   useEffect(() => {
     // Toggle the spatial polygon warning if the warning is present
-    onToggleSpatialPolygonWarning(!!harmonyMbrWarning)
+    setShowMbr(!!harmonyMbrWarning)
   }, [harmonyMbrWarning])
 
   // Get spatial and temporal display values
@@ -1022,7 +1037,6 @@ AccessMethod.propTypes = {
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func,
   onTogglePanels: PropTypes.func,
-  onToggleSpatialPolygonWarning: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string,
   shapefileId: PropTypes.string,

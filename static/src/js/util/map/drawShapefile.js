@@ -69,7 +69,6 @@ const simplifyShape = ({
 /**
  * Draws the shapefile on the map
  * @param {Object} params
- * @param {Boolean} params.displaySpatialPolygonWarning - If the spatial polygon warning should be displayed
  * @param {Boolean} params.drawingNewLayer - If a new layer is being drawn
  * @param {Array} params.selectedFeatures - The currently selected features
  * @param {Object} params.shapefile - The shapefile to draw
@@ -80,10 +79,10 @@ const simplifyShape = ({
  * @param {Function} params.onUpdateShapefile - Callback to update the shapefile
  * @param {String} params.projectionCode - The current map projection
  * @param {Boolean} params.shapefileAdded - If the shapefile was just added
+ * @param {Boolean} params.showMbr - If the spatial polygon warning should be displayed
  * @param {Object} params.vectorSource - The source to draw the shapefile on
  */
 const drawShapefile = ({
-  displaySpatialPolygonWarning,
   drawingNewLayer,
   selectedFeatures,
   shapefile,
@@ -94,6 +93,7 @@ const drawShapefile = ({
   onUpdateShapefile,
   projectionCode,
   shapefileAdded,
+  showMbr,
   vectorSource
 }) => {
   vectorSource.clear()
@@ -255,7 +255,7 @@ const drawShapefile = ({
   }
 
   // If the spatial polygon warning is enabled, add an MBR around the shape
-  if (displaySpatialPolygonWarning) {
+  if (showMbr) {
     // Loop through all the features in the vector source
     vectorSource.getFeatures().forEach((feature) => {
       // Get the extent of the feature (which is the MBR)
