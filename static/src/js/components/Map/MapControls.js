@@ -89,16 +89,16 @@ class MapControls extends Control {
         id: mapLayers.landWaterMap,
         label: 'Land / Water Map *'
       }, {
-        checked: overlays.referenceFeatures,
-        id: mapLayers.referenceFeatures,
+        checked: overlays.bordersRoads,
+        id: mapLayers.bordersRoads,
         label: 'Borders and Roads *'
       }, {
         checked: overlays.coastlines,
         id: mapLayers.coastlines,
         label: 'Coastlines *'
       }, {
-        checked: overlays.referenceLabels,
-        id: mapLayers.referenceLabels,
+        checked: overlays.placeLabels,
+        id: mapLayers.placeLabels,
         label: 'Place Labels *'
       }],
       LayersIcon,

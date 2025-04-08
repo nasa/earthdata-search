@@ -14,6 +14,7 @@ import PreferencesRequest from '../util/request/preferencesRequest'
 
 import actions from './index'
 import { changeMap } from './map'
+import mapLayers from '../constants/mapLayers'
 
 export const setIsSubmitting = (payload) => ({
   type: SET_PREFERENCES_IS_SUBMITTING,
@@ -31,24 +32,22 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
   if (!jwtToken) return
 
   const decoded = jwt.decode(jwtToken)
-  console.log('🚀 ~ file: preferences.js:34 ~ decoded:', decoded)
   const { preferences = {} } = decoded
-  console.log('🛑  ~ file: preferences.js:36 ~ before:', preferences)
+
+  // TODO Remove in EDSC-4443
+  // If there are map view preferences, ensure they are the new layer names
   if (preferences.mapView) {
     const { baseLayer, overlayLayers } = preferences.mapView
     if (baseLayer === 'blueMarble') {
-      preferences.mapView.baseLayer = 'worldImagery'
+      preferences.mapView.baseLayer = mapLayers.worldImagery
     }
 
     const referenceFeatureIndex = overlayLayers.indexOf('referenceFeatures')
     const referenceLabelsIndex = overlayLayers.indexOf('referenceLabels')
-    overlayLayers[referenceFeatureIndex] = 'bordersRoads'
-    overlayLayers[referenceLabelsIndex] = 'placeLabels'
+    overlayLayers[referenceFeatureIndex] = mapLayers.bordersRoads
+    overlayLayers[referenceLabelsIndex] = mapLayers.placeLabels
   }
 
-  console.log('✅ ~ file: preferences.js:84 ~  AFTER preferences:', preferences)
-
-  // TODO update the values for the
   dispatch(setPreferences(preferences))
 
   // If the user has map preferences set use those to set the map store if there is no map url parameters

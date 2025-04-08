@@ -143,9 +143,9 @@
             "epsg3031"
           ],
           "enumNames": [
-            "Geographic",
-            "Arctic",
-            "Antarctic"
+            "Geographic (Equirectangular)",
+            "North Polar Stereographic",
+            "South Polar Stereographic"
           ]
         },
         "baseLayer": {

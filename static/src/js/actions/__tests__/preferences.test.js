@@ -20,6 +20,8 @@ import actions from '..'
 
 import * as addToast from '../../util/addToast'
 import { testJwtToken } from './mocks'
+import mapLayers from '../../constants/mapLayers'
+import projections from '../../util/map/projections'
 
 const mockStore = configureMockStore([thunk])
 
@@ -58,12 +60,12 @@ describe('setPreferencesFromJwt', () => {
       mapView: {
         zoom: 4,
         latitude: 39,
-        baseLayer: 'worldImagery',
+        baseLayer: mapLayers.worldImagery,
         longitude: -95,
-        projection: 'epsg4326',
+        projection: projections.geographic,
         overlayLayers: [
-          'referenceFeatures',
-          'referenceLabels'
+          mapLayers.bordersRoads,
+          mapLayers.placeLabels
         ]
       },
       panelState: 'default',
@@ -96,12 +98,12 @@ describe('setPreferencesFromJwt', () => {
         mapView: {
           zoom: 4,
           latitude: 39,
-          baseLayer: 'worldImagery',
+          baseLayer: mapLayers.worldImagery,
           longitude: -95,
-          projection: 'epsg4326',
+          projection: projections.geographic,
           overlayLayers: [
-            'referenceFeatures',
-            'referenceLabels'
+            mapLayers.bordersRoads,
+            mapLayers.placeLabels
           ]
         },
         panelState: 'default',
@@ -121,11 +123,11 @@ describe('setPreferencesFromJwt', () => {
           latitude: 0,
           longitude: 0,
           overlays: {
-            referenceFeatures: true,
+            bordersRoads: true,
             coastlines: false,
-            referenceLabels: true
+            placeLabels: true
           },
-          projection: 'epsg4326',
+          projection: projections.geographic,
           rotation: 0,
           zoom: 3
         }
@@ -150,10 +152,10 @@ describe('setPreferencesFromJwt', () => {
           latitude: 39,
           longitude: -95,
           overlays: {
-            referenceFeatures: true,
-            referenceLabels: true
+            bordersRoads: true,
+            placeLabels: true
           },
-          projection: 'epsg4326',
+          projection: projections.geographic,
           zoom: 4
         }
       })
@@ -164,12 +166,12 @@ describe('setPreferencesFromJwt', () => {
         mapView: {
           zoom: 4,
           latitude: 39,
-          baseLayer: 'worldImagery',
+          baseLayer: mapLayers.worldImagery,
           longitude: -95,
-          projection: 'epsg4326',
+          projection: projections.geographic,
           overlayLayers: [
-            'referenceFeatures',
-            'referenceLabels'
+            mapLayers.bordersRoads,
+            mapLayers.placeLabels
           ]
         },
         panelState: 'default',
@@ -189,11 +191,11 @@ describe('setPreferencesFromJwt', () => {
           latitude: -120,
           longitude: 47,
           overlays: {
-            referenceFeatures: true,
+            bordersRoads: true,
             coastlines: false,
-            referenceLabels: true
+            placeLabels: true
           },
-          projection: 'epsg4326',
+          projection: projections.geographic,
           rotation: 0,
           zoom: 3
         }
@@ -209,6 +211,70 @@ describe('setPreferencesFromJwt', () => {
       expect(storeActions[0]).toEqual({
         type: SET_PREFERENCES,
         payload: preferences
+      })
+    })
+  })
+
+  // TODO Remove in EDSC-4443
+  describe('when setting map preferences with old layer names', () => {
+    test('translate the layer names correctly', () => {
+      // Translate blueMarble to worldImagery
+      // Translate referenceFeatures to bordersRoads
+      // Translate referenceLabels to placeLabels
+
+      const preferences = {
+        mapView: {
+          zoom: 4,
+          latitude: 39,
+          baseLayer: 'blueMarble',
+          longitude: -95,
+          projection: projections.geographic,
+          overlayLayers: [
+            'referenceFeatures',
+            'referenceLabels'
+          ]
+        },
+        panelState: 'default',
+        granuleSort: 'default',
+        collectionSort: 'default',
+        granuleListView: 'default',
+        collectionListView: 'default'
+      }
+      const store = mockStore({
+        map: {
+          base: {
+            worldImagery: true,
+            trueColor: false,
+            landWaterMap: false
+          },
+          latitude: 0,
+          longitude: 0,
+          overlays: {
+            bordersRoads: true,
+            coastlines: false,
+            placeLabels: true
+          },
+          projection: projections.geographic,
+          rotation: 0,
+          zoom: 3
+        }
+      })
+      store.dispatch(setPreferencesFromJwt(testJwtToken))
+      const storeActions = store.getActions()
+      expect(storeActions.length).toBe(2)
+      expect(storeActions[0]).toEqual({
+        type: SET_PREFERENCES,
+        payload: {
+          ...preferences,
+          mapView: {
+            ...preferences.mapView,
+            baseLayer: mapLayers.worldImagery,
+            overlayLayers: [
+              mapLayers.bordersRoads,
+              mapLayers.placeLabels
+            ]
+          }
+        }
       })
     })
   })

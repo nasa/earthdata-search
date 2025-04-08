@@ -5,9 +5,9 @@ const mapLayers = {
   landWaterMap: 'landWaterMap',
 
   // Overlay layers
-  referenceFeatures: 'referenceFeatures',
+  bordersRoads: 'bordersRoads',
   coastlines: 'coastlines',
-  referenceLabels: 'referenceLabels'
+  placeLabels: 'placeLabels'
 }
 
 // Base Layer IDs

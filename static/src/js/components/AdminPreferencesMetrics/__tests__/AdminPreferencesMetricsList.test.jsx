@@ -6,6 +6,8 @@ import {
 } from '@testing-library/react'
 
 import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
+import mapLayers from '../../../constants/mapLayers'
+import projections from '../../../util/map/projections'
 
 const setup = (overrideProps) => {
   const props = {
@@ -106,14 +108,14 @@ describe('AdminPreferencesMetricsList component', () => {
             [2, '75% (3)'] // Column Header 10
           ],
           projection: [
-            ['epsg4326', '100% (4)'] // // Column Header 11
+            [projections.geographic, '100% (4)'] // // Column Header 11
           ],
           overlayLayers: [
-            ['referenceFeatures', '100% (4)'], // Column Header 12
-            ['referenceLabels', '100% (4)'] // Column Header 13
+            [mapLayers.bordersRoads, '100% (4)'], // Column Header 12
+            [mapLayers.placeLabels, '100% (4)'] // Column Header 13
           ],
           baseLayer: [
-            ['worldImagery', '100% (4)'] // Column Header 14
+            [mapLayers.worldImagery, '100% (4)'] // Column Header 14
           ]
         }
       }
@@ -155,16 +157,16 @@ describe('AdminPreferencesMetricsList component', () => {
     expect(within(tables[7]).getByRole('columnheader', { name: '2' })).toBeInTheDocument()
     expect(within(tables[7]).getByRole('cell', { name: '75% (3)' })).toBeInTheDocument()
 
-    expect(within(tables[8]).getByRole('columnheader', { name: 'epsg4326' })).toBeInTheDocument()
+    expect(within(tables[8]).getByRole('columnheader', { name: projections.geographic })).toBeInTheDocument()
     expect(within(tables[8]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
-    expect(within(tables[9]).getByRole('columnheader', { name: 'referenceFeatures' })).toBeInTheDocument()
+    expect(within(tables[9]).getByRole('columnheader', { name: mapLayers.bordersRoads })).toBeInTheDocument()
     expect(within(tables[9]).getAllByRole('cell', { name: '100% (4)' })[0]).toBeInTheDocument()
 
-    expect(within(tables[9]).getByRole('columnheader', { name: 'referenceLabels' })).toBeInTheDocument()
+    expect(within(tables[9]).getByRole('columnheader', { name: mapLayers.placeLabels })).toBeInTheDocument()
     expect(within(tables[9]).getAllByRole('cell', { name: '100% (4)' })[1]).toBeInTheDocument()
 
-    expect(within(tables[10]).getByRole('columnheader', { name: 'worldImagery' })).toBeInTheDocument()
+    expect(within(tables[10]).getByRole('columnheader', { name: mapLayers.worldImagery })).toBeInTheDocument()
     expect(within(tables[10]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
     expect(screen.queryAllByLabelText('Preferences Metrics Spinner').length).toEqual(0)

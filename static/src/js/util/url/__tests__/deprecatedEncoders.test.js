@@ -19,9 +19,9 @@ describe('url#decodeUrlParams', () => {
       latitude: 0,
       longitude: 0,
       overlays: {
-        referenceFeatures: true,
+        bordersRoads: true,
         coastlines: false,
-        referenceLabels: true
+        placeLabels: true
       },
       projection: projections.arctic,
       zoom: 2

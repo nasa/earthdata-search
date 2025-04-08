@@ -157,9 +157,9 @@ const baseLayers = {
 }
 
 const overlayLayers = {
-  [mapLayers.referenceFeatures]: null,
+  [mapLayers.bordersRoads]: null,
   [mapLayers.coastlines]: null,
-  [mapLayers.referenceLabels]: null
+  [mapLayers.placeLabels]: null
 }
 
 // Create a view for the map. This will change when the padding needs to be updated
@@ -583,7 +583,7 @@ const Map = ({
       const bordersRoadsLayer = bordersRoads({
         attributions: esriAttribution,
         projectionCode,
-        visible: overlays.referenceFeatures
+        visible: overlays.bordersRoads
       })
 
       // Build the coastlines Layer
@@ -597,16 +597,16 @@ const Map = ({
       const placeLabelsLayer = await labelsLayer({
         attributions: esriAttribution,
         projectionCode: projections.geographic,
-        visible: overlays.referenceLabels
+        visible: overlays.placeLabels
       })
 
       baseLayers[mapLayers.worldImagery] = worldImageryLayer
       baseLayers[mapLayers.trueColor] = trueColorLayer
       baseLayers[mapLayers.landWaterMap] = landWaterMapLayer
 
-      overlayLayers[mapLayers.referenceFeatures] = bordersRoadsLayer
+      overlayLayers[mapLayers.bordersRoads] = bordersRoadsLayer
       overlayLayers[mapLayers.coastlines] = coastlinesLayer
-      overlayLayers[mapLayers.referenceLabels] = placeLabelsLayer
+      overlayLayers[mapLayers.placeLabels] = placeLabelsLayer
 
       Object.keys(baseLayers).forEach((layerId) => {
         mapRef.current.addLayer(baseLayers[layerId])
@@ -1057,8 +1057,8 @@ Map.propTypes = {
   onUpdateShapefile: PropTypes.func.isRequired,
   overlays: PropTypes.shape({
     coastlines: PropTypes.bool,
-    referenceFeatures: PropTypes.bool,
-    referenceLabels: PropTypes.bool
+    bordersRoads: PropTypes.bool,
+    placeLabels: PropTypes.bool
   }).isRequired,
   projectionCode: PropTypes.string.isRequired,
   rotation: PropTypes.number.isRequired,

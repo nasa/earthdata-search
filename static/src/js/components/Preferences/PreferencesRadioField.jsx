@@ -39,25 +39,8 @@ class PreferencesRadioField extends Component {
     const {
       enum: values,
       description,
-      title,
       enumNames
     } = schema
-
-    let parsedFormData = formData
-    // TODO EDSC-4443: remove this in a subsequent release
-    // if (title === 'Base Layer') {
-    //   // Remove blueMarble element from rendering a radio button
-    //   const index = values.indexOf('blueMarble')
-
-    //   // Remove "blueMarble" if it exists in the array
-    //   if (index !== -1) {
-    //     values.splice(index, 1)
-    //   }
-
-    //   if (parsedFormData === 'blueMarble') {
-    //     parsedFormData = 'worldImagery'
-    //   }
-    // }
 
     return (
       <div className="preferences-radio-field">
@@ -101,7 +84,6 @@ PreferencesRadioField.propTypes = {
   schema: PropTypes.shape({
     enum: PropTypes.arrayOf(PropTypes.string),
     enumNames: PropTypes.arrayOf(PropTypes.string),
-    title: PropTypes.string,
     description: PropTypes.string
   }).isRequired
 }
