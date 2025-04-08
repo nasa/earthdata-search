@@ -31,7 +31,6 @@ const PreferencesForm = (props) => {
   }, [formDataProps])
 
   const onChange = (data) => {
-    console.log('🚀 ~ file: PreferencesForm.jsx:34 ~ data:', data)
     const { formData: newFormData } = data
 
     setFormData(newFormData)
