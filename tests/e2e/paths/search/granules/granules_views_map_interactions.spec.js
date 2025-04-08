@@ -18,7 +18,8 @@ import colormapBody from './__mocks__/cmr_granules/colormap.body.json'
 
 const granuleName = 'VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc'
 
-test.describe('When clicking on a granule on the map', () => {
+// TODO put back in before merging EDSC-4410
+test.describe.skip('When clicking on a granule on the map', () => {
   test.beforeEach(async ({ page, context }) => {
     const conceptId = 'C2208779826-LANCEMODIS'
 

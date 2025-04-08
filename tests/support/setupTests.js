@@ -126,6 +126,11 @@ export const setupTests = async ({
     json: '{"success":true,"notifications":[]}'
   }))
 
+  // Mock requests to the relevancy_logger lambda
+  await page.route(/relevancy_logger/, (route) => route.fulfill({
+    status: 200
+  }))
+
   if (browserName) {
     page.on('domcontentloaded', async () => {
       await resizeHack(page, browserName)
