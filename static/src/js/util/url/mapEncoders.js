@@ -37,8 +37,7 @@ export const encodeMap = (map, mapPreferences) => {
   const encodedProjection = projectionList[projection]
 
   let encodedBase
-  // TODO this base layer will get fixed in EDSC-4410
-  if (base?.blueMarble) encodedBase = mapLayers.blueMarble
+  if (base?.worldImagery) encodedBase = mapLayers.worldImagery
   if (base?.trueColor) encodedBase = mapLayers.trueColor
   if (base?.landWaterMap) encodedBase = mapLayers.landWaterMap
 
@@ -76,21 +75,13 @@ export const encodeMap = (map, mapPreferences) => {
       longitude: longitudePreference,
       overlayLayers,
       projection: mapProjection,
-      rotation: rotationPreference,
+      rotation: rotationPreference = 0, // We don't currently expose rotation as a preference
       zoom: zoomPreference
     } = mapPreferences
 
     const encodedProjectionPreference = projectionList[mapProjection]
-
-    let encodedBasePreference
-    if (baseLayer === mapLayers.worldImagery) encodedBasePreference = mapLayers.worldImagery
-    if (baseLayer === mapLayers.trueColor) encodedBasePreference = mapLayers.trueColor
-    if (baseLayer === mapLayers.landWaterMap) encodedBasePreference = mapLayers.landWaterMap
-
-    const encodedOverlaysPreference = []
-    if (overlayLayers.indexOf(mapLayers.bordersRoads) > -1) encodedOverlaysPreference.push(mapLayers.bordersRoads)
-    if (overlayLayers.indexOf(mapLayers.coastlines) > -1) encodedOverlaysPreference.push(mapLayers.coastlines)
-    if (overlayLayers.indexOf(mapLayers.placeLabels) > -1) encodedOverlaysPreference.push(mapLayers.placeLabels)
+    const encodedBasePreference = baseLayer
+    const encodedOverlaysPreference = overlayLayers
 
     defaultValues = {
       base: encodedBasePreference,

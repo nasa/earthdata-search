@@ -50,10 +50,11 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
 
   dispatch(setPreferences(preferences))
 
-  // If the user has map preferences set use those to set the map store if there is no map url parameters
+  // If the user has map preferences use those to set the map store if there is no map url parameters
   // This will happen on page load to ensure that the map will default to the preferences
-  const { mapView = {} } = preferences
-  if (!isEmpty(mapView)) {
+  const { mapView: preferencesMapView = {} } = preferences
+
+  if (!isEmpty(preferencesMapView)) {
     if (isEqual(mapState, initialState)) {
       const {
         baseLayer,
@@ -62,7 +63,7 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
         overlayLayers,
         projection,
         zoom
-      } = mapView
+      } = preferencesMapView
 
       const base = {
         [baseLayer]: true

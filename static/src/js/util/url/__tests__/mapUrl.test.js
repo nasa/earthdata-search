@@ -378,13 +378,13 @@ describe('url#encodeUrlQuery', () => {
           zoom: 4
         },
         mapPreferences: {
-          baseLayer: 'landWaterMap',
+          baseLayer: mapLayers.landWaterMap,
           latitude: 39,
           longitude: -95,
           overlayLayers: [
-            'bordersRoads'
+            mapLayers.bordersRoads
           ],
-          projection: 'epsg4326',
+          projection: projections.geographic,
           rotation: 1,
           zoom: 4
         }
