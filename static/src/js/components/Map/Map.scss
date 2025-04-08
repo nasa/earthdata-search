@@ -133,6 +133,82 @@ button.edsc-map-spatial-drawing__button--cancel {
   }
 }
 
+.edsc-map-layer-switcher {
+  background-color: utils.$color__spacesuit-white;
+  border-radius: 2px;
+
+  button {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+  
+  &__panel {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: utils.$color__spacesuit-white;
+    border-radius: 2px;
+    opacity: 0;
+    visibility: hidden;
+    width: 18rem;
+    color: utils.$color__carbon-black;
+    font-weight: 500;
+    z-index: 6;
+
+    &--visible {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  &__options {
+    padding: 0.75rem 0.75rem 0.5rem;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    input {
+      margin-right: 0.5rem;
+    }
+
+    label {
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__separator {
+    margin: 0.75rem -0.75rem;
+    border: none;
+    height: 1px;
+    background-color: #000000;
+    display: block;
+    width: calc(100% + 1.5rem);
+  }
+
+  &__attribution {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.75rem 0.5rem;
+    text-align: right;
+
+    a {
+      color: utils.$color__nasa-blue--tint;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 .edsc-map__focused-granule-overlay {
   &__granule-label {
     color: utils.$color__spacesuit-white;

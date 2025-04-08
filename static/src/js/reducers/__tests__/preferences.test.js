@@ -1,5 +1,6 @@
 import preferencesReducer from '../preferences'
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../../constants/actionTypes'
+import mapLayers from '../../constants/mapLayers'
 
 const initialState = {
   preferences: {
@@ -9,7 +10,7 @@ const initialState = {
     mapView: {
       zoom: 3,
       latitude: 0,
-      baseLayer: 'blueMarble',
+      baseLayer: mapLayers.worldImagery,
       longitude: 0,
       projection: 'epsg4326',
       overlayLayers: [

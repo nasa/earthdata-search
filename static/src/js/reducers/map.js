@@ -3,7 +3,7 @@ import projections from '../util/map/projections'
 
 const initialState = {
   base: {
-    blueMarble: true,
+    worldImagery: true,
     trueColor: false,
     landWaterMap: false
   },

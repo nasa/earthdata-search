@@ -1,7 +1,8 @@
 import React, {
   useContext,
   useEffect,
-  useRef
+  useRef,
+  useState
 } from 'react'
 import { renderToString } from 'react-dom/server'
 import PropTypes from 'prop-types'
@@ -31,7 +32,8 @@ import VectorSource from 'ol/source/Vector'
 import {
   FaCircle,
   FaFile,
-  FaHome
+  FaHome,
+  FaLayerGroup
 } from 'react-icons/fa'
 import {
   Close,
@@ -49,6 +51,7 @@ import PanelWidthContext from '../../contexts/PanelWidthContext'
 
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
+import mapLayers, { baseLayerIds } from '../../constants/mapLayers'
 
 import { crsProjections, projectionConfigs } from '../../util/map/crs'
 import { highlightGranule, unhighlightGranule } from '../../util/map/interactions/highlightGranule'
@@ -70,6 +73,10 @@ import onClickMap from '../../util/map/interactions/onClickMap'
 import onClickShapefile from '../../util/map/interactions/onClickShapefile'
 import projections from '../../util/map/projections'
 import worldImagery from '../../util/map/layers/worldImagery'
+import bordersRoads from '../../util/map/layers/bordersRoads'
+import coastlines from '../../util/map/layers/coastlines'
+import trueColor from '../../util/map/layers/trueColor'
+import landWaterMap from '../../util/map/layers/landWaterMap'
 
 import { eventEmitter } from '../../events/events'
 
@@ -80,23 +87,12 @@ import './Map.scss'
 
 let previousGranulesKey
 let previousProjectionCode
+let layersAdded = false
 
 // Render the times icon to an SVG string for use in the focused granule overlay
 const timesIconSvg = renderToString(<EDSCIcon icon={Close} />)
 
 const esriAttribution = 'Powered by <a href="https://www.esri.com/" target="_blank">ESRI</a>'
-
-// Build the worldImagery layer
-const worldImageryLayer = worldImagery({
-  attributions: esriAttribution,
-  projectionCode: projections.geographic
-})
-
-// Build the placeLabels layer
-const placeLabelsLayer = await labelsLayer({
-  attributions: esriAttribution,
-  projectionCode: projections.geographic
-})
 
 // Layer for granule backgrounds
 const granuleBackgroundsSource = new VectorSource({
@@ -153,6 +149,18 @@ const spatialDrawingLayer = new VectorLayer({
 
 // Layer group for imagery layers
 const granuleImageryLayerGroup = new LayerGroup()
+
+const baseLayers = {
+  [mapLayers.worldImagery]: null,
+  [mapLayers.trueColor]: null,
+  [mapLayers.landWaterMap]: null
+}
+
+const overlayLayers = {
+  [mapLayers.referenceFeatures]: null,
+  [mapLayers.coastlines]: null,
+  [mapLayers.referenceLabels]: null
+}
 
 // Create a view for the map. This will change when the padding needs to be updated
 const createView = ({
@@ -251,6 +259,7 @@ const removeDrawingInteraction = (map) => {
  * @param {Number} params.zoom Zoom level of the map
  */
 const Map = ({
+  base,
   center,
   colorMap,
   focusedCollectionId,
@@ -270,6 +279,7 @@ const Map = ({
   onToggleShapefileUploadModal,
   onToggleTooManyPointsModal,
   onUpdateShapefile,
+  overlays,
   projectionCode,
   rotation,
   shapefile,
@@ -285,6 +295,8 @@ const Map = ({
   // Create a ref for the map and the map dome element
   const mapRef = useRef()
   const mapElRef = useRef()
+
+  const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
   useEffect(() => {
     const map = new OlMap({
@@ -303,8 +315,6 @@ const Map = ({
         })
       ]),
       layers: [
-        worldImageryLayer,
-        placeLabelsLayer,
         granuleBackgroundsLayer,
         granuleOutlinesLayer,
         granuleHighlightsLayer,
@@ -396,21 +406,6 @@ const Map = ({
     // Handle the map draw start event from the SpatialSelectionDropdown
     eventEmitter.on(mapEventTypes.DRAWSTART, handleDrawingStart)
     eventEmitter.on(mapEventTypes.DRAWCANCEL, handleDrawingCancel)
-
-    const mapControls = new MapControls({
-      CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
-      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
-      map,
-      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
-      onChangeProjection,
-      onToggleShapefileUploadModal,
-      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
-      PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
-      projectionCode,
-      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />)
-    })
-
-    map.addControl(mapControls)
 
     const handleMoveEnd = (event) => {
       // When the map is moved we need to call onChangeMap to update Redux
@@ -519,19 +514,19 @@ const Map = ({
 
     // Handle the add shapefile event
     const handleAddShapefile = (dzFile, file) => {
-      const { displaySpatialPolygonWarning, drawingNewLayer } = spatialSearch
+      const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({
-        displaySpatialPolygonWarning,
         drawingNewLayer,
-        shapefile: file,
-        onChangeQuery,
         onChangeProjection,
+        onChangeQuery,
         onMetricsMap,
         onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
+        shapefile: file,
         shapefileAdded: true,
+        showMbr,
         vectorSource: spatialDrawingSource
       })
     }
@@ -545,6 +540,8 @@ const Map = ({
 
     eventEmitter.on(shapefileEventTypes.REMOVESHAPEFILE, handleRemoveShapefile)
 
+    layersAdded = false
+
     return () => {
       map.setTarget(null)
       map.un(MapEventType.MOVEEND, handleMoveEnd)
@@ -557,6 +554,149 @@ const Map = ({
       eventEmitter.off(shapefileEventTypes.REMOVESHAPEFILE, handleRemoveShapefile)
     }
   }, [projectionCode])
+
+  // Adds layers to the map
+  useEffect(() => {
+    const buildLayers = async () => {
+      // Build the worldImagery layer
+      const worldImageryLayer = worldImagery({
+        attributions: esriAttribution,
+        projectionCode: projections.geographic,
+        visible: base.worldImagery
+      })
+
+      // Build the trueColor Layer
+      const trueColorLayer = trueColor({
+        attributions: 'NASA EOSDIS GIBS',
+        projectionCode,
+        visible: base.trueColor
+      })
+
+      // Build the landWater Layer
+      const landWaterMapLayer = await landWaterMap({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: base.landWaterMap
+      })
+
+      // Build the bordersRoads Layer
+      const bordersRoadsLayer = bordersRoads({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: overlays.referenceFeatures
+      })
+
+      // Build the coastlines Layer
+      const coastlinesLayer = coastlines({
+        attributions: esriAttribution,
+        projectionCode,
+        visible: overlays.coastlines
+      })
+
+      // Build the placeLabels layer
+      const placeLabelsLayer = await labelsLayer({
+        attributions: esriAttribution,
+        projectionCode: projections.geographic,
+        visible: overlays.referenceLabels
+      })
+
+      baseLayers[mapLayers.worldImagery] = worldImageryLayer
+      baseLayers[mapLayers.trueColor] = trueColorLayer
+      baseLayers[mapLayers.landWaterMap] = landWaterMapLayer
+
+      overlayLayers[mapLayers.referenceFeatures] = bordersRoadsLayer
+      overlayLayers[mapLayers.coastlines] = coastlinesLayer
+      overlayLayers[mapLayers.referenceLabels] = placeLabelsLayer
+
+      Object.keys(baseLayers).forEach((layerId) => {
+        mapRef.current.addLayer(baseLayers[layerId])
+      })
+
+      Object.keys(overlayLayers).forEach((layerId) => {
+        mapRef.current.addLayer(overlayLayers[layerId])
+      })
+    }
+
+    if (mapRef.current && !layersAdded) {
+      buildLayers()
+      layersAdded = true
+    }
+  }, [projectionCode, mapRef.current])
+
+  // Add the controls to the map
+  useEffect(() => {
+    // If the mapRef is not set, return an empty cleanup function
+    if (!mapRef.current) return () => {}
+
+    const handleLayerChange = ({ id, checked }) => {
+      // State objects to track changes for both layer types
+      let newBase = { ...base }
+      const newOverlays = { ...overlays }
+
+      // Handle base layers
+      if (baseLayerIds.includes(id)) {
+        // Reset all base layer selections
+        newBase = {
+          worldImagery: false,
+          trueColor: false,
+          landWaterMap: false
+        }
+
+        // Set the selected base layer to true in the state
+        newBase[id] = checked
+
+        // Update all base layer visibility
+        Object.keys(baseLayers).forEach((layerId) => {
+          baseLayers[layerId].setVisible(newBase[layerId])
+        })
+      }
+
+      // Handle overlay layers
+      if (id in overlayLayers) {
+        overlayLayers[id].setVisible(checked)
+
+        // Update the corresponding property in overlays state
+        newOverlays[id] = checked
+      }
+
+      // Single call to onChangeMap with all changes
+      onChangeMap({
+        base: newBase,
+        overlays: newOverlays
+      })
+    }
+
+    const mapControls = new MapControls({
+      base,
+      CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
+      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
+      isLayerSwitcherOpen,
+      LayersIcon: (<EDSCIcon size="0.75rem" icon={FaLayerGroup} />),
+      map: mapRef.current,
+      mapLayers,
+      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
+      onChangeLayer: handleLayerChange,
+      onChangeProjection,
+      onToggleShapefileUploadModal,
+      overlays,
+      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
+      PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
+      projectionCode,
+      setIsLayerSwitcherOpen,
+      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />)
+    })
+
+    mapRef.current.addControl(mapControls)
+
+    return () => {
+      mapRef.current.removeControl(mapControls)
+    }
+  }, [
+    base,
+    isLayerSwitcherOpen,
+    mapRef.current,
+    overlays
+  ])
 
   // Handle the map click event
   const handleMapClick = (event) => {
@@ -842,23 +982,27 @@ const Map = ({
     if (shapefile && shapefile.file) {
       const { file, selectedFeatures } = shapefile
 
-      const { displaySpatialPolygonWarning, drawingNewLayer } = spatialSearch
+      const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({
-        displaySpatialPolygonWarning,
         drawingNewLayer,
-        selectedFeatures,
-        shapefile: file,
         onChangeQuery,
         onMetricsMap,
         onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
+        selectedFeatures,
+        shapefile: file,
         shapefileAdded: false,
+        showMbr,
         vectorSource: spatialDrawingSource
       })
     }
-  }, [shapefile, spatialSearch, projectionCode])
+  }, [
+    shapefile,
+    spatialSearch,
+    projectionCode
+  ])
 
   // Draw the granule outlines
   granuleOutlinesLayer.on(RenderEventType.POSTRENDER, (event) => {
@@ -884,6 +1028,11 @@ Map.defaultProps = {
 }
 
 Map.propTypes = {
+  base: PropTypes.shape({
+    landWaterMap: PropTypes.bool,
+    trueColor: PropTypes.bool,
+    worldImagery: PropTypes.bool
+  }).isRequired,
   center: PropTypes.shape({
     latitude: PropTypes.number,
     longitude: PropTypes.number
@@ -906,6 +1055,11 @@ Map.propTypes = {
   onToggleShapefileUploadModal: PropTypes.func.isRequired,
   onToggleTooManyPointsModal: PropTypes.func.isRequired,
   onUpdateShapefile: PropTypes.func.isRequired,
+  overlays: PropTypes.shape({
+    coastlines: PropTypes.bool,
+    referenceFeatures: PropTypes.bool,
+    referenceLabels: PropTypes.bool
+  }).isRequired,
   projectionCode: PropTypes.string.isRequired,
   rotation: PropTypes.number.isRequired,
   shapefile: PropTypes.shape({
@@ -913,7 +1067,7 @@ Map.propTypes = {
     selectedFeatures: PropTypes.arrayOf(PropTypes.string)
   }).isRequired,
   spatialSearch: PropTypes.shape({
-    displaySpatialPolygonWarning: PropTypes.bool,
+    showMbr: PropTypes.bool,
     drawingNewLayer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
   }).isRequired,
   zoom: PropTypes.number.isRequired

@@ -1,5 +1,7 @@
 import { isEmpty } from 'lodash-es'
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/actionTypes'
+import projections from '../util/map/projections'
+import mapLayers from '../constants/mapLayers'
 
 const initialState = {
   preferences: {
@@ -9,9 +11,9 @@ const initialState = {
     mapView: {
       zoom: 3,
       latitude: 0,
-      baseLayer: 'blueMarble',
+      baseLayer: mapLayers.worldImagery,
       longitude: 0,
-      projection: 'epsg4326',
+      projection: projections.geographic,
       overlayLayers: [
         'referenceFeatures',
         'referenceLabels'

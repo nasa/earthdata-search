@@ -538,10 +538,11 @@ test.describe('Map: Granule interactions', () => {
 
       test.describe('when focusing on the lower granule', () => {
         test.beforeEach(async ({ page }) => {
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/1/)
+
           await page.getByText('TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc').click()
 
-          // The is a 250ms duration for fitting the granule to the view area
-          await page.waitForTimeout(250)
+          await tilesPromise
         })
 
         test('draws the imagery of the focused granule above the previous top granule', async ({ page }) => {
