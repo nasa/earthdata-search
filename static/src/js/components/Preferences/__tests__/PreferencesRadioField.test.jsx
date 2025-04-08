@@ -29,7 +29,6 @@ describe('PreferencesRadioField component', () => {
     setup(props)
     const inputFields = screen.getAllByRole('radio')
 
-    // Ensure the form elements are correct to accommodate the blueMarble change
     expect(inputFields.length).toBe(2)
 
     expect(inputFields[0].checked).toEqual(true)
@@ -55,7 +54,6 @@ describe('PreferencesRadioField component', () => {
 
     const inputFields = screen.getAllByRole('radio')
 
-    // Ensure the form elements are correct to accommodate the blueMarble change
     expect(inputFields.length).toBe(2)
 
     expect(inputFields[0].checked).toEqual(true)

@@ -99,8 +99,7 @@ PreferencesMultiSelectField.propTypes = {
       enum: PropTypes.arrayOf(PropTypes.string),
       enumNames: PropTypes.arrayOf(PropTypes.string),
       description: PropTypes.string
-    }),
-    title: PropTypes.string
+    })
   }).isRequired
 }
 

@@ -38,8 +38,8 @@ class PreferencesRadioField extends Component {
 
     const {
       enum: values,
-      description,
-      enumNames
+      enumNames,
+      description
     } = schema
 
     return (
