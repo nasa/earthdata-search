@@ -9,10 +9,12 @@ import { crsProjections, projectionConfigs } from '../crs'
  * @param {Object} params
  * @param {String} params.attributions Attribution for the layer
  * @param {String} params.projectionCode The projection code for the layer
+ * @param {String} params.visible The visibility flag for the layer
  */
 const worldImagery = ({
   attributions,
-  projectionCode
+  projectionCode,
+  visible
 }) => {
   const projection = crsProjections[projectionCode]
 
@@ -30,6 +32,7 @@ const worldImagery = ({
       }),
       tileSize: 512,
       url: 'https://wi.maptiles.arcgis.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+      visible,
       wrapX: false
     })
   })

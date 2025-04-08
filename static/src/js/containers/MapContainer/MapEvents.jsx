@@ -61,7 +61,7 @@ const MapEvents = (props) => {
     if (layersControl && !layersControlElement) {
       const attributionElement = document.createElement('footer')
       attributionElement.classList.add('leaflet-control-layers-attribution')
-      attributionElement.innerHTML = '* © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attributionElement.innerHTML = '&ast; &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       layersControl.appendChild(attributionElement)
     }
 

@@ -35,10 +35,10 @@ const drawSpatialSearch = ({
     advancedSearch,
     boundingBoxSearch,
     circleSearch,
-    displaySpatialPolygonWarning,
     drawingNewLayer,
     pointSearch,
-    polygonSearch
+    polygonSearch,
+    showMbr
   } = spatialSearch
 
   // If new spatial is being drawn, don't draw the existing spatial
@@ -227,7 +227,7 @@ const drawSpatialSearch = ({
   }
 
   // If the spatial polygon warning is enabled, add an MBR around the shape
-  if (displaySpatialPolygonWarning) {
+  if (showMbr) {
     // Loop through all the features in the vector source
     vectorSource.getFeatures().forEach((feature) => {
       // Get the extent of the feature (which is the MBR)

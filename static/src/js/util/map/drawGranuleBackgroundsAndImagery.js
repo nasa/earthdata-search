@@ -200,6 +200,7 @@ const drawGranuleBackgroundsAndImagery = ({
         imageryLayer = new TileLayer({
           className: `granule-imagery-${granuleId}`,
           preload: 5,
+          zIndex: 3,
           source: new WMTS({
             crossOrigin: 'anonymous',
             format: `image/${gibsData.format}`,

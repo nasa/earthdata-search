@@ -4,7 +4,6 @@ import { resizeHack } from './resizeHack'
 
 const getImageFileName = (url) => {
   let filename
-
   // For the arcgis images, don't return the real image, just mock a single image that will repeat
   // This gives the screenshots some context without needing to keep hundreds of images
   if (url.includes('arcgis.com')) {
@@ -13,6 +12,18 @@ const getImageFileName = (url) => {
     } else if (url.includes('World_Basemap')) {
       filename = 'world-basemap-mock'
     }
+  }
+
+  if (url.includes('CorrectedReflectance')) {
+    return 'corrected-reflectance-mock'
+  }
+
+  if (url.includes('Reference_Features_15m')) {
+    return 'reference-features-15-m-mock'
+  }
+
+  if (url.includes('Coastlines_15m')) {
+    return 'coastlines-15-m-mock'
   }
 
   if (url.includes('earthdata.nasa.gov')) {
@@ -113,6 +124,11 @@ export const setupTests = async ({
   await page.route(/status\.earthdata\.nasa\.gov/, (route) => route.fulfill({
     status: 200,
     json: '{"success":true,"notifications":[]}'
+  }))
+
+  // Mock requests to the relevancy_logger lambda
+  await page.route(/relevancy_logger/, (route) => route.fulfill({
+    status: 200
   }))
 
   if (browserName) {

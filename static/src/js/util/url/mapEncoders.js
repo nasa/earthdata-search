@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash-es'
-
+import mapLayers from '../../constants/mapLayers'
 import projections from '../map/projections'
 import { decodeDeprecatedMapParam } from './deprecatedEncoders'
 
@@ -34,18 +34,18 @@ export const encodeMap = (map, mapPreferences) => {
     rotation,
     zoom
   } = map
-
   const encodedProjection = projectionList[projection]
 
   let encodedBase
-  if (base?.blueMarble) encodedBase = 'blueMarble'
-  if (base?.trueColor) encodedBase = 'trueColor'
-  if (base?.landWaterMap) encodedBase = 'landWaterMap'
+  // TODO this base layer will get fixed in EDSC-4410
+  if (base?.blueMarble) encodedBase = mapLayers.blueMarble
+  if (base?.trueColor) encodedBase = mapLayers.trueColor
+  if (base?.landWaterMap) encodedBase = mapLayers.landWaterMap
 
   const encodedOverlays = []
-  if (overlays?.referenceFeatures) encodedOverlays.push('referenceFeatures')
-  if (overlays?.coastlines) encodedOverlays.push('coastlines')
-  if (overlays?.referenceLabels) encodedOverlays.push('referenceLabels')
+  if (overlays?.referenceFeatures) encodedOverlays.push(mapLayers.referenceFeatures)
+  if (overlays?.coastlines) encodedOverlays.push(mapLayers.coastlines)
+  if (overlays?.referenceLabels) encodedOverlays.push(mapLayers.referenceLabels)
 
   const encodedObj = {
     base: encodedBase,

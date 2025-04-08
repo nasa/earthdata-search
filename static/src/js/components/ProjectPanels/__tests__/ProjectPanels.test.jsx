@@ -92,7 +92,6 @@ function setup(overrideProps) {
     onSelectAccessMethod: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
     onTogglePanels: jest.fn(),
-    onToggleSpatialPolygonWarning: jest.fn(),
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
     onChangeGranulePageNum: jest.fn(),

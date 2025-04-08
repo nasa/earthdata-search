@@ -91,9 +91,11 @@ test.describe('Map: Control interactions', () => {
         })
 
         await page.goto('/')
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Change the projection
         await page.getByLabel('North Polar Stereographic').click()
+        await page.waitForSelector('.edsc-map-base-layer')
 
         await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=2')
 
@@ -131,6 +133,7 @@ test.describe('Map: Control interactions', () => {
         })
 
         await page.goto('/')
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Change the projection
         await page.getByLabel('North Polar Stereographic').click()
@@ -177,9 +180,11 @@ test.describe('Map: Control interactions', () => {
         })
 
         await page.goto('/')
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Change the projection
         await page.getByLabel('South Polar Stereographic').click()
+        await page.waitForSelector('.edsc-map-base-layer')
 
         await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=2')
 
@@ -217,14 +222,17 @@ test.describe('Map: Control interactions', () => {
         })
 
         await page.goto('/')
+        await page.waitForSelector('.edsc-map-base-layer')
 
         // Change the projection to North Polar
         await page.getByLabel('North Polar Stereographic').click()
+        await page.waitForSelector('.edsc-map-base-layer')
 
         await expect(page).toHaveURL('search?lat=90&projection=EPSG%3A3413&zoom=2')
 
         // Change the projection to South Polar
         await page.getByLabel('South Polar Stereographic').click()
+        await page.waitForSelector('.edsc-map-base-layer')
 
         await expect(page).toHaveURL('search?lat=-90&projection=EPSG%3A3031&zoom=2')
 
@@ -244,9 +252,11 @@ test.describe('Map: Control interactions', () => {
       })
 
       await page.goto('/')
+      await page.waitForSelector('.edsc-map-base-layer')
 
       // Change the projection
       await page.getByLabel('North Polar Stereographic').click()
+      await page.waitForSelector('.edsc-map-base-layer')
 
       // Rotate the map
       await page.keyboard.down('Alt')
@@ -257,6 +267,7 @@ test.describe('Map: Control interactions', () => {
       await page.keyboard.up('Alt')
 
       await expect(page).toHaveURL(/rotation=32.\d+/)
+      await page.waitForSelector('.edsc-map-base-layer')
 
       await expect(page).toHaveScreenshot('rotation.png', {
         clip: screenshotClip
@@ -284,8 +295,8 @@ test.describe('Map: Control interactions', () => {
     })
   })
 
-  test.describe.skip('When changing the map layers', () => {
-    test.describe('When changing the base layer to Blue Marble', () => {
+  test.describe('When changing the map layers', () => {
+    test.describe('When changing the base layer to World Imagery', () => {
       test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
@@ -293,31 +304,36 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/')
+        const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
 
-        // Change the base layer
-        await page.getByRole('button', {
-          name: 'Layers',
-          exact: true
-        }).hover({ force: true })
+        await page.goto('/search?base=trueColor')
 
-        await page.getByRole('radio', { name: 'Corrected Reflectance (True Color)' }).click()
-        await page.getByRole('radio', { name: 'Blue Marble' }).click()
+        await trueColorPromise
 
-        await expect(page).toHaveURL('search')
+        // Zoom in to force new tiles to load
+        await page.locator('.edsc-map-zoom-in').click()
 
-        await expect(
-          page
-            .locator('.leaflet-tile-pane')
-            .locator('.leaflet-layer')
-            .last()
-            .locator('img.leaflet-tile')
-            .first()
-        ).toHaveAttribute('src', /BlueMarble_ShadedRelief_Bathymetry/)
+        // Look for the layer switcher button by its aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Set up the response promise BEFORE interacting with the UI
+        const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
+
+        // Click the World Imagery radio button by its label
+        await page.getByLabel('World Imagery').click()
+
+        // Now wait for the response promise we set up earlier
+        await worldImageryPromise
+
+        // Verify URL change
+        await expect(page).toHaveURL('search?zoom=4')
       })
     })
 
-    test.describe('When changing the base layer to Corrected Reflectance', () => {
+    test.describe('When changing the base layer to Corrected Reflectance (True Color)', () => {
       test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
@@ -325,30 +341,33 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
+
         await page.goto('/')
 
-        // Change the base layer
-        await page.getByRole('button', {
-          name: 'Layers',
-          exact: true
-        }).hover({ force: true })
+        await worldImageryPromise
 
-        await page.getByRole('radio', { name: 'Corrected Reflectance (True Color)' }).click()
+        // Set up the response promise BEFORE interacting with the UI
+        const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
 
+        // Look for the layer switcher button by its aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Click the Corrected Reflectance radio button by its label
+        await page.getByLabel('Corrected Reflectance (True Color)').click()
+
+        // Now wait for the response promise we set up earlier
+        await trueColorPromise
+
+        // Verify URL change
         await expect(page).toHaveURL('search?base=trueColor')
-
-        await expect(
-          page
-            .locator('.leaflet-tile-pane')
-            .locator('.leaflet-layer')
-            .last()
-            .locator('img.leaflet-tile')
-            .first()
-        ).toHaveAttribute('src', /VIIRS_SNPP_CorrectedReflectance_TrueColor/)
       })
     })
 
-    test.describe('When changing the base layer to Land / Water Map', () => {
+    test.describe('When changing the base layer to Land/Water Map', () => {
       test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
@@ -356,122 +375,134 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/')
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
 
-        // Change the base layer
-        await page.getByRole('button', {
-          name: 'Layers',
-          exact: true
-        }).hover({ force: true })
+        await page.goto('/search?overlays=coastlines')
 
-        await page.getByRole('radio', { name: 'Land / Water Map' }).click()
+        await worldImageryPromise
 
-        await expect(page).toHaveURL('search?base=landWaterMap')
+        // Look for the layer switcher button by its aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
-        await expect(
-          page
-            .locator('.leaflet-tile-pane')
-            .locator('.leaflet-layer')
-            .last()
-            .locator('img.leaflet-tile')
-            .first()
-        ).toHaveAttribute('src', /OSM_Land_Water_Map/)
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Land water uses the same vector files as worldImagery but, we apply a style
+        const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
+
+        // Click the Land/Water Map radio button by its label
+        await page.getByLabel('Land / Water Map *').click()
+
+        // Now wait for the response promise we set up earlier
+        await responsePromise
+
+        // Verify URL change
+        await expect(page).toHaveURL('/search?base=landWaterMap&overlays=coastlines')
+      })
+    })
+
+    test.describe('When changing the Place Labels overlay layer', () => {
+      test('updates the URL with the new map parameter', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
+
+        // Visit with no overlays loaded
+        await page.goto('/search?overlays=false')
+
+        await worldImageryPromise
+
+        // Look for the layer switcher button by its aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
+
+        // Click the checkbox for Place Labels by its label
+        await page.getByLabel('Place Labels *').click()
+
+        // Wait for the correct layer to load
+        await responsePromise
+
+        // Verify URL is updated with the correct overlay parameter
+        await expect(page).toHaveURL('search?overlays=referenceLabels')
       })
     })
 
     test.describe('When changing the Borders and Roads overlay layer', () => {
-      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+      test('updates the URL with the new map parameter', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
           headers: commonHeaders
         })
 
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
+
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
 
-        // Add the overlay layer
-        await page.getByRole('button', {
-          name: 'Layers',
-          exact: true
-        }).hover({ force: true })
+        await worldImageryPromise
 
-        await page.getByRole('checkbox', { name: 'Borders and Roads' }).click()
+        // Look for the layer switcher button by its aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/Reference_Features_15m/)
+
+        // Click the checkbox for Borders and Roads by its label
+        await page.getByLabel('Borders and Roads *').click()
+
+        // Wait for the correct layer to load
+        await responsePromise
+
+        // Verify URL is updated with the correct overlay parameter
         await expect(page).toHaveURL('search?overlays=referenceFeatures')
-
-        await expect(
-          page
-            .locator('.leaflet-tile-pane')
-            .locator('.leaflet-layer')
-            .last()
-            .locator('img.leaflet-tile')
-            .first()
-        ).toHaveAttribute('src', /Reference_Features/)
       })
     })
 
     test.describe('When changing the Coastlines overlay layer', () => {
-      test('updates the URL with the new map parameter and updates the src of tile images', async ({ page }) => {
+      test('updates the URL with the new map parameter', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
           headers: commonHeaders
         })
 
+        const worldImageryPromise = page.waitForResponse(/World_Imagery/)
+
         // Visit with no overlays loaded
         await page.goto('/search?overlays=false')
 
-        // Add the overlay layer
-        await page.getByRole('button', {
-          name: 'Layers',
-          exact: true
-        }).hover({ force: true })
+        await worldImageryPromise
 
-        await page.getByRole('checkbox', { name: 'Coastlines' }).click()
+        // Look for the layer switcher button by its aria-label
+        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
+        // Wait for the panel to become visible
+        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+
+        // Wait for the correct layer to load
+        const responsePromise = page.waitForResponse(/Coastlines_15m/)
+
+        // Click the checkbox for Coastlines by its label
+        await page.getByLabel('Coastlines *').click()
+
+        // Wait for the correct layer to load
+        await responsePromise
+
+        // Verify URL is updated with the correct overlay parameter
         await expect(page).toHaveURL('search?overlays=coastlines')
-
-        await expect(
-          page
-            .locator('.leaflet-tile-pane')
-            .locator('.leaflet-layer')
-            .last()
-            .locator('img.leaflet-tile')
-            .first()
-        ).toHaveAttribute('src', /Coastlines/)
-      })
-    })
-
-    test.describe.skip('When changing the Place Labels overlay layer', () => {
-      test('updates the URL with the new map  parameter and updates the src of tile images', async ({ page }) => {
-        await interceptUnauthenticatedCollections({
-          page,
-          body: commonBody,
-          headers: commonHeaders
-        })
-
-        // Visit with no overlays loaded
-        await page.goto('/search?overlays=false')
-
-        // Add the overlay layer
-        await page.getByRole('button', {
-          name: 'Layers',
-          exact: true
-        }).hover({ force: true })
-
-        await page.getByRole('checkbox', { name: 'Place Labels' }).click()
-
-        await expect(page).toHaveURL('search?overlays=referenceLabels')
-
-        await expect(
-          page
-            .locator('.leaflet-tile-pane')
-            .locator('.leaflet-layer')
-            .last()
-            .locator('img.leaflet-tile')
-            .first()
-        ).toHaveAttribute('src', /Reference_Labels/)
       })
     })
   })

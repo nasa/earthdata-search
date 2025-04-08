@@ -4,7 +4,7 @@ import projections from '../../util/map/projections'
 
 const initialState = {
   base: {
-    blueMarble: true,
+    worldImagery: true,
     trueColor: false,
     landWaterMap: false
   },
@@ -32,7 +32,7 @@ describe('UPDATE_MAP', () => {
   test('returns the correct state', () => {
     const payload = {
       base: {
-        blueMarble: true,
+        worldImagery: true,
         trueColor: false,
         landWaterMap: false
       },
@@ -62,7 +62,7 @@ describe('RESTORE_FROM_URL', () => {
   test('returns the correct state', () => {
     const map = {
       base: {
-        blueMarble: true,
+        worldImagery: true,
         trueColor: false,
         landWaterMap: false
       },
@@ -81,7 +81,7 @@ describe('RESTORE_FROM_URL', () => {
     const initial = {
       ...initialState,
       base: {
-        blueMarble: false,
+        worldImagery: false,
         trueColor: false,
         landWaterMap: true
       }
