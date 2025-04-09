@@ -130,7 +130,7 @@
           "type": "number",
           "title": "Zoom",
           "minimum": 0,
-          "maximum": 7,
+          "maximum": 21,
           "default": 2
         },
         "projection": {
@@ -143,22 +143,22 @@
             "epsg3031"
           ],
           "enumNames": [
-            "Geographic",
-            "Arctic",
-            "Antarctic"
+            "Geographic (Equirectangular)",
+            "North Polar Stereographic",
+            "South Polar Stereographic"
           ]
         },
         "baseLayer": {
           "type": "string",
           "title": "Base Layer",
-          "default": "blueMarble",
+          "default": "worldImagery",
           "enum": [
-            "blueMarble",
+            "worldImagery",
             "trueColor",
             "landWaterMap"
           ],
           "enumNames": [
-            "Blue Marble",
+            "World Imagery",
             "Corrected Reflectance (True Color)",
             "Land / Water Map"
           ]
@@ -166,13 +166,13 @@
         "overlayLayers": {
           "type": "array",
           "title": "Overlay Layers",
-          "default": ["referenceFeatures", "referenceLabels"],
+          "default": ["bordersRoads", "placeLabels"],
           "items": {
             "type": "string",
             "enum": [
-              "referenceFeatures",
+              "bordersRoads",
               "coastlines",
-              "referenceLabels"
+              "placeLabels"
             ],
             "enumNames": [
               "Borders and Roads",

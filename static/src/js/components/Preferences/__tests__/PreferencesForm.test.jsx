@@ -8,6 +8,8 @@ import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import PreferencesForm from '../PreferencesForm'
 import schema from '../../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../../schemas/sitePreferencesUISchema.json'
+import mapLayers from '../../../constants/mapLayers'
+import projections from '../../../util/map/projections'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -66,14 +68,14 @@ describe('PreferencesForm component', () => {
           granuleSort: 'end_date',
           mapView: {
             zoom: 4,
-            baseLayer: 'blueMarble',
+            baseLayer: mapLayers.worldImagery,
             latitude: 39,
             longitude: -95,
             overlayLayers: [
-              'referenceFeatures',
-              'referenceLabels'
+              mapLayers.bordersRoads,
+              mapLayers.placeLabels
             ],
-            projection: 'epsg4326'
+            projection: projections.geographic
           }
         }
       })
@@ -89,14 +91,14 @@ describe('PreferencesForm component', () => {
       granuleSort: 'end_date',
       mapView: {
         zoom: 4,
-        baseLayer: 'blueMarble',
+        baseLayer: mapLayers.worldImagery,
         latitude: 39,
         longitude: -95,
         overlayLayers: [
-          'referenceFeatures',
-          'referenceLabels'
+          mapLayers.bordersRoads,
+          mapLayers.placeLabels
         ],
-        projection: 'epsg4326'
+        projection: projections.geographic
       }
     })
   })

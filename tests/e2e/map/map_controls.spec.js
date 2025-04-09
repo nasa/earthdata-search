@@ -432,7 +432,7 @@ test.describe('Map: Control interactions', () => {
         await responsePromise
 
         // Verify URL is updated with the correct overlay parameter
-        await expect(page).toHaveURL('search?overlays=referenceLabels')
+        await expect(page).toHaveURL('search?overlays=placeLabels')
       })
     })
 
@@ -467,7 +467,7 @@ test.describe('Map: Control interactions', () => {
         await responsePromise
 
         // Verify URL is updated with the correct overlay parameter
-        await expect(page).toHaveURL('search?overlays=referenceFeatures')
+        await expect(page).toHaveURL('search?overlays=bordersRoads')
       })
     })
 

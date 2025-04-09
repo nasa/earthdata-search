@@ -6,6 +6,7 @@ import { emptyDecodedResult } from './url.mocks'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import mapLayers from '../../../constants/mapLayers'
 
 beforeEach(() => {
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
@@ -20,7 +21,7 @@ describe('decodes base correctly', () => {
       ...emptyDecodedResult,
       map: {
         base: {
-          blueMarble: false,
+          worldImagery: false,
           trueColor: true,
           landWaterMap: false
         },
@@ -40,7 +41,7 @@ describe('decodes base correctly', () => {
       ...emptyDecodedResult,
       map: {
         base: {
-          blueMarble: true,
+          worldImagery: true,
           trueColor: false,
           landWaterMap: false
         },
@@ -134,15 +135,15 @@ describe('decodes overlays correctly', () => {
         longitude: undefined,
         overlays: {
           coastlines: true,
-          referenceFeatures: true,
-          referenceLabels: false
+          bordersRoads: true,
+          placeLabels: false
         },
         projection: undefined,
         rotation: undefined,
         zoom: undefined
       }
     }
-    expect(decodeUrlParams('?overlays=referenceFeatures%2Ccoastlines')).toEqual(expectedResult)
+    expect(decodeUrlParams('?overlays=bordersRoads%2Ccoastlines')).toEqual(expectedResult)
   })
 
   test('when the result is invalid', () => {
@@ -154,8 +155,8 @@ describe('decodes overlays correctly', () => {
         longitude: undefined,
         overlays: {
           coastlines: false,
-          referenceFeatures: false,
-          referenceLabels: false
+          bordersRoads: false,
+          placeLabels: false
         },
         projection: undefined,
         rotation: undefined,
@@ -275,16 +276,16 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       map: {
         base: {
-          blueMarble: true,
+          worldImagery: true,
           trueColor: false,
           landWaterMap: false
         },
         latitude: 0,
         longitude: 0,
         overlays: {
-          referenceFeatures: true,
+          bordersRoads: true,
           coastlines: false,
-          referenceLabels: true
+          placeLabels: true
         },
         projection: projections.geographic,
         rotation: 0,
@@ -302,22 +303,22 @@ describe('url#encodeUrlQuery', () => {
         map: {
           ...defaultProps.map,
           base: {
-            blueMarble: false,
+            worldImagery: false,
             trueColor: false,
             landWaterMap: true
           },
           latitude: 10,
           longitude: 15,
           overlays: {
-            referenceFeatures: true,
+            bordersRoads: true,
             coastlines: false,
-            referenceLabels: false
+            placeLabels: false
           },
           rotation: 0,
           zoom: 0
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=referenceFeatures&zoom=0')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=bordersRoads&zoom=0')
     })
 
     test('encodes map correctly when map preferences exist', () => {
@@ -326,34 +327,34 @@ describe('url#encodeUrlQuery', () => {
         map: {
           ...defaultProps.map,
           base: {
-            blueMarble: false,
+            worldImagery: false,
             trueColor: false,
             landWaterMap: true
           },
           latitude: 10,
           longitude: 15,
           overlays: {
-            referenceFeatures: true,
+            bordersRoads: true,
             coastlines: false,
-            referenceLabels: false
+            placeLabels: false
           },
           rotation: 0,
           zoom: 0
         },
         mapPreferences: {
-          baseLayer: 'blueMarble',
+          baseLayer: mapLayers.worldImagery,
           latitude: 39,
           longitude: -95,
           overlayLayers: [
-            'referenceFeatures',
-            'referenceLabels'
+            mapLayers.bordersRoads,
+            mapLayers.placeLabels
           ],
-          projection: 'epsg4326',
+          projection: projections.geographic,
           rotation: 1,
           zoom: 4
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=referenceFeatures&rotation=0&zoom=0')
+      expect(encodeUrlQuery(props)).toEqual('/path/here?base=landWaterMap&lat=10&long=15&overlays=bordersRoads&rotation=0&zoom=0')
     })
 
     test('does not encode the map when it matches the map preferences', () => {
@@ -362,28 +363,28 @@ describe('url#encodeUrlQuery', () => {
         map: {
           ...defaultProps.map,
           base: {
-            blueMarble: false,
+            worldImagery: false,
             trueColor: false,
             landWaterMap: true
           },
           latitude: 39,
           longitude: -95,
           overlays: {
-            referenceFeatures: true,
+            bordersRoads: true,
             coastlines: false,
-            referenceLabels: false
+            placeLabels: false
           },
           rotation: 1,
           zoom: 4
         },
         mapPreferences: {
-          baseLayer: 'landWaterMap',
+          baseLayer: mapLayers.landWaterMap,
           latitude: 39,
           longitude: -95,
           overlayLayers: [
-            'referenceFeatures'
+            mapLayers.bordersRoads
           ],
-          projection: 'epsg4326',
+          projection: projections.geographic,
           rotation: 1,
           zoom: 4
         }

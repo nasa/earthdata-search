@@ -20,6 +20,8 @@ import actions from '..'
 
 import * as addToast from '../../util/addToast'
 import { testJwtToken } from './mocks'
+import mapLayers from '../../constants/mapLayers'
+import projections from '../../util/map/projections'
 
 const mockStore = configureMockStore([thunk])
 
@@ -58,12 +60,12 @@ describe('setPreferencesFromJwt', () => {
       mapView: {
         zoom: 4,
         latitude: 39,
-        baseLayer: 'blueMarble',
+        baseLayer: mapLayers.worldImagery,
         longitude: -95,
-        projection: 'epsg4326',
+        projection: projections.geographic,
         overlayLayers: [
-          'referenceFeatures',
-          'referenceLabels'
+          mapLayers.bordersRoads,
+          mapLayers.placeLabels
         ]
       },
       panelState: 'default',
@@ -90,50 +92,190 @@ describe('setPreferencesFromJwt', () => {
     expect(storeActions.length).toBe(0)
   })
 
-  test('calls changeMap if map preferences exist', () => {
-    const preferences = {
-      mapView: {
-        zoom: 4,
-        latitude: 39,
-        baseLayer: 'blueMarble',
-        longitude: -95,
-        projection: 'epsg4326',
-        overlayLayers: [
-          'referenceFeatures',
-          'referenceLabels'
-        ]
-      },
-      panelState: 'default',
-      granuleSort: 'default',
-      collectionSort: 'default',
-      granuleListView: 'default',
-      collectionListView: 'default'
-    }
+  describe('when setting map preferences', () => {
+    test('calls changeMap if map preferences exist and the map state equals the initial state', () => {
+      const preferences = {
+        mapView: {
+          zoom: 4,
+          latitude: 39,
+          baseLayer: mapLayers.worldImagery,
+          longitude: -95,
+          projection: projections.geographic,
+          overlayLayers: [
+            mapLayers.bordersRoads,
+            mapLayers.placeLabels
+          ]
+        },
+        panelState: 'default',
+        granuleSort: 'default',
+        collectionSort: 'default',
+        granuleListView: 'default',
+        collectionListView: 'default'
+      }
 
-    const store = mockStore({})
-    store.dispatch(setPreferencesFromJwt(testJwtToken))
+      const store = mockStore({
+        map: {
+          base: {
+            worldImagery: true,
+            trueColor: false,
+            landWaterMap: false
+          },
+          latitude: 0,
+          longitude: 0,
+          overlays: {
+            bordersRoads: true,
+            coastlines: false,
+            placeLabels: true
+          },
+          projection: projections.geographic,
+          rotation: 0,
+          zoom: 3
+        }
+      })
 
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: SET_PREFERENCES,
-      payload: preferences
+      store.dispatch(setPreferencesFromJwt(testJwtToken))
+
+      const storeActions = store.getActions()
+      expect(storeActions.length).toBe(2)
+
+      expect(storeActions[0]).toEqual({
+        type: SET_PREFERENCES,
+        payload: preferences
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: UPDATE_MAP,
+        payload: {
+          base: {
+            worldImagery: true
+          },
+          latitude: 39,
+          longitude: -95,
+          overlays: {
+            bordersRoads: true,
+            placeLabels: true
+          },
+          projection: projections.geographic,
+          zoom: 4
+        }
+      })
     })
 
-    expect(storeActions[1]).toEqual({
-      type: UPDATE_MAP,
-      payload: {
-        base: {
-          blueMarble: true
+    test('does not call changeMap if map preferences exist and the map state does not equal the initial state', () => {
+      const preferences = {
+        mapView: {
+          zoom: 4,
+          latitude: 39,
+          baseLayer: mapLayers.worldImagery,
+          longitude: -95,
+          projection: projections.geographic,
+          overlayLayers: [
+            mapLayers.bordersRoads,
+            mapLayers.placeLabels
+          ]
         },
-        latitude: 39,
-        longitude: -95,
-        overlays: {
-          referenceFeatures: true,
-          referenceLabels: true
-        },
-        projection: 'epsg4326',
-        zoom: 4
+        panelState: 'default',
+        granuleSort: 'default',
+        collectionSort: 'default',
+        granuleListView: 'default',
+        collectionListView: 'default'
       }
+
+      const store = mockStore({
+        map: {
+          base: {
+            worldImagery: true,
+            trueColor: false,
+            landWaterMap: false
+          },
+          latitude: -120,
+          longitude: 47,
+          overlays: {
+            bordersRoads: true,
+            coastlines: false,
+            placeLabels: true
+          },
+          projection: projections.geographic,
+          rotation: 0,
+          zoom: 3
+        }
+      })
+
+      store.dispatch(setPreferencesFromJwt(testJwtToken))
+
+      const storeActions = store.getActions()
+
+      // Does not call UPDATE_MAP because the map state does not equal the initial state
+      expect(storeActions.length).toBe(1)
+
+      expect(storeActions[0]).toEqual({
+        type: SET_PREFERENCES,
+        payload: preferences
+      })
+    })
+  })
+
+  // TODO Remove in EDSC-4443
+  describe('when setting map preferences with old layer names', () => {
+    test('translate the layer names correctly', () => {
+      // Translate blueMarble to worldImagery
+      // Translate referenceFeatures to bordersRoads
+      // Translate referenceLabels to placeLabels
+
+      const preferences = {
+        mapView: {
+          zoom: 4,
+          latitude: 39,
+          baseLayer: 'blueMarble',
+          longitude: -95,
+          projection: projections.geographic,
+          overlayLayers: [
+            'referenceFeatures',
+            'referenceLabels'
+          ]
+        },
+        panelState: 'default',
+        granuleSort: 'default',
+        collectionSort: 'default',
+        granuleListView: 'default',
+        collectionListView: 'default'
+      }
+      const store = mockStore({
+        map: {
+          base: {
+            worldImagery: true,
+            trueColor: false,
+            landWaterMap: false
+          },
+          latitude: 0,
+          longitude: 0,
+          overlays: {
+            bordersRoads: true,
+            coastlines: false,
+            placeLabels: true
+          },
+          projection: projections.geographic,
+          rotation: 0,
+          zoom: 3
+        }
+      })
+      store.dispatch(setPreferencesFromJwt(testJwtToken))
+      const storeActions = store.getActions()
+      expect(storeActions.length).toBe(2)
+      expect(storeActions[0]).toEqual({
+        type: SET_PREFERENCES,
+        payload: {
+          ...preferences,
+          mapView: {
+            ...preferences.mapView,
+            baseLayer: mapLayers.worldImagery,
+            overlayLayers: [
+              mapLayers.bordersRoads,
+              mapLayers.placeLabels
+            ]
+          }
+        }
+      })
     })
   })
 })

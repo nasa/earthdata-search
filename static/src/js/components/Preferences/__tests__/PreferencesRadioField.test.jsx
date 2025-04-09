@@ -1,55 +1,69 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import FormCheck from 'react-bootstrap/FormCheck'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import PreferencesRadioField from '../PreferencesRadioField'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
-    schema: {
-      enum: ['option1', 'option2'],
-      enumNames: ['Option 1', 'Option 2'],
-      description: 'Test Field Description'
-    },
-    name: 'testField',
-    formData: 'option1',
-    onChange: jest.fn()
-  }
-
-  const enzymeWrapper = shallow(<PreferencesRadioField {...props} />)
+const setup = (overrideProps) => {
+  const user = userEvent.setup()
+  render(<PreferencesRadioField {...overrideProps} />)
 
   return {
-    enzymeWrapper,
-    props
+    user,
+    overrideProps
   }
 }
 
 describe('PreferencesRadioField component', () => {
   test('renders a radio form field', () => {
-    const { enzymeWrapper } = setup()
+    const props = {
+      schema: {
+        enum: ['option1', 'option2'],
+        enumNames: ['Option 1', 'Option 2'],
+        description: 'Test Field Description'
+      },
+      name: 'testField',
+      formData: 'option1',
+      onChange: jest.fn()
+    }
+    setup(props)
+    const inputFields = screen.getAllByRole('radio')
 
-    const input1 = enzymeWrapper.find(FormCheck).first()
-    const input2 = enzymeWrapper.find(FormCheck).last()
+    expect(inputFields.length).toBe(2)
 
-    expect(input1.props().value).toEqual('option1')
-    expect(input1.props().checked).toBeTruthy()
-    expect(input1.props().name).toEqual('testField')
+    expect(inputFields[0].checked).toEqual(true)
+    expect(inputFields[0].value).toEqual('option1')
 
-    expect(input2.props().value).toEqual('option2')
-    expect(input2.props().checked).toBeFalsy()
-    expect(input2.props().name).toEqual('testField')
+    expect(inputFields[1].value).toEqual('option2')
+    expect(inputFields[1].checked).toEqual(false)
   })
 
-  test('onChange sets the state', () => {
-    const { enzymeWrapper } = setup()
+  test('onChange sets the state', async () => {
+    const onChange = jest.fn()
+    const props = {
+      schema: {
+        enum: ['option1', 'option2'],
+        enumNames: ['Option 1', 'Option 2'],
+        description: 'Test Field Description'
+      },
+      name: 'testField',
+      formData: 'option1',
+      onChange
+    }
+    const { user } = setup(props)
 
-    const input2 = enzymeWrapper.find(FormCheck).last()
+    const inputFields = screen.getAllByRole('radio')
 
-    input2.props().onChange({ target: { value: 'option2' } })
+    expect(inputFields.length).toBe(2)
 
-    expect(enzymeWrapper.state().formData).toEqual('option2')
+    expect(inputFields[0].checked).toEqual(true)
+    expect(inputFields[0].value).toEqual('option1')
+
+    expect(inputFields[1].checked).toEqual(false)
+    expect(inputFields[1].value).toEqual('option2')
+    await user.click(inputFields[1])
+
+    expect(onChange).toHaveBeenCalledTimes(1)
+    expect(onChange).toHaveBeenCalledWith('option2')
   })
 })

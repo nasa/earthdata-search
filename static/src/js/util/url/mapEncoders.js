@@ -37,15 +37,14 @@ export const encodeMap = (map, mapPreferences) => {
   const encodedProjection = projectionList[projection]
 
   let encodedBase
-  // TODO this base layer will get fixed in EDSC-4410
-  if (base?.blueMarble) encodedBase = mapLayers.blueMarble
+  if (base?.worldImagery) encodedBase = mapLayers.worldImagery
   if (base?.trueColor) encodedBase = mapLayers.trueColor
   if (base?.landWaterMap) encodedBase = mapLayers.landWaterMap
 
   const encodedOverlays = []
-  if (overlays?.referenceFeatures) encodedOverlays.push(mapLayers.referenceFeatures)
+  if (overlays?.bordersRoads) encodedOverlays.push(mapLayers.bordersRoads)
   if (overlays?.coastlines) encodedOverlays.push(mapLayers.coastlines)
-  if (overlays?.referenceLabels) encodedOverlays.push(mapLayers.referenceLabels)
+  if (overlays?.placeLabels) encodedOverlays.push(mapLayers.placeLabels)
 
   const encodedObj = {
     base: encodedBase,
@@ -59,10 +58,10 @@ export const encodeMap = (map, mapPreferences) => {
 
   // Home is used to determine if the map values need to be present in the URL
   let defaultValues = {
-    base: 'blueMarble',
+    base: mapLayers.worldImagery,
     lat: 0,
     long: 0,
-    overlays: 'referenceFeatures,referenceLabels',
+    overlays: [mapLayers.bordersRoads, mapLayers.placeLabels].join(','),
     projection: 'EPSG:4326',
     rotation: 0,
     zoom: 3
@@ -76,21 +75,13 @@ export const encodeMap = (map, mapPreferences) => {
       longitude: longitudePreference,
       overlayLayers,
       projection: mapProjection,
-      rotation: rotationPreference,
+      rotation: rotationPreference = 0, // We don't currently expose rotation as a preference
       zoom: zoomPreference
     } = mapPreferences
 
     const encodedProjectionPreference = projectionList[mapProjection]
-
-    let encodedBasePreference
-    if (baseLayer === 'blueMarble') encodedBasePreference = 'blueMarble'
-    if (baseLayer === 'trueColor') encodedBasePreference = 'trueColor'
-    if (baseLayer === 'landWaterMap') encodedBasePreference = 'landWaterMap'
-
-    const encodedOverlaysPreference = []
-    if (overlayLayers.indexOf('referenceFeatures') > -1) encodedOverlaysPreference.push('referenceFeatures')
-    if (overlayLayers.indexOf('coastlines') > -1) encodedOverlaysPreference.push('coastlines')
-    if (overlayLayers.indexOf('referenceLabels') > -1) encodedOverlaysPreference.push('referenceLabels')
+    const encodedBasePreference = baseLayer
+    const encodedOverlaysPreference = overlayLayers
 
     defaultValues = {
       base: encodedBasePreference,
@@ -170,22 +161,22 @@ export const decodeMap = (params) => {
   // If a base layer is set, convert the value to the format the state expects
   if (baseParam) {
     decodedBase = {
-      blueMarble: baseParam === 'blueMarble',
-      trueColor: baseParam === 'trueColor',
-      landWaterMap: baseParam === 'landWaterMap'
+      worldImagery: baseParam === mapLayers.worldImagery,
+      trueColor: baseParam === mapLayers.trueColor,
+      landWaterMap: baseParam === mapLayers.landWaterMap
     }
 
     const { trueColor, landWaterMap } = decodedBase
 
-    if (!trueColor && !landWaterMap) decodedBase.blueMarble = true
+    if (!trueColor && !landWaterMap) decodedBase.worldImagery = true
   }
 
   // If a overlay layers are set, convert the value to the format the state expects
   if (overlaysParam) {
     decodedOverlays = {
-      referenceFeatures: overlaysParam.split(',').indexOf('referenceFeatures') !== -1,
-      coastlines: overlaysParam.split(',').indexOf('coastlines') !== -1,
-      referenceLabels: overlaysParam.split(',').indexOf('referenceLabels') !== -1
+      bordersRoads: overlaysParam.split(',').indexOf(mapLayers.bordersRoads) !== -1,
+      coastlines: overlaysParam.split(',').indexOf(mapLayers.coastlines) !== -1,
+      placeLabels: overlaysParam.split(',').indexOf(mapLayers.placeLabels) !== -1
     }
   }
 

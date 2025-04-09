@@ -11,9 +11,9 @@ const initialState = {
   latitude: 0,
   longitude: 0,
   overlays: {
-    referenceFeatures: true,
+    bordersRoads: true,
     coastlines: false,
-    referenceLabels: true
+    placeLabels: true
   },
   projection: projections.geographic,
   rotation: 0,
@@ -39,9 +39,9 @@ describe('UPDATE_MAP', () => {
       latitude: 0,
       longitude: 0,
       overlays: {
-        referenceFeatures: true,
+        bordersRoads: true,
         coastlines: false,
-        referenceLabels: true
+        placeLabels: true
       },
       projection: projections.geographic,
       rotation: 0,
@@ -69,9 +69,9 @@ describe('RESTORE_FROM_URL', () => {
       latitude: 0,
       longitude: 0,
       overlays: {
-        referenceFeatures: true,
+        bordersRoads: true,
         coastlines: false,
-        referenceLabels: true
+        placeLabels: true
       },
       projection: projections.geographic,
       rotation: 0,

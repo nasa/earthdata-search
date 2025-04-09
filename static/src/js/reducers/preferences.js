@@ -15,8 +15,8 @@ const initialState = {
       longitude: 0,
       projection: projections.geographic,
       overlayLayers: [
-        'referenceFeatures',
-        'referenceLabels'
+        mapLayers.bordersRoads,
+        mapLayers.placeLabels
       ],
       rotation: 0
     }

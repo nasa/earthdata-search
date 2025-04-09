@@ -6,6 +6,8 @@ import {
 } from '../preferences'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
+import mapLayers from '../../constants/mapLayers'
+import projections from '../../util/map/projections'
 
 describe('getMapPreferences selector', () => {
   test('returns the map preferences', () => {
@@ -17,14 +19,14 @@ describe('getMapPreferences selector', () => {
           granuleListView: 'table',
           mapView: {
             zoom: 4,
-            baseLayer: 'blueMarble',
+            baseLayer: mapLayers.worldImagery,
             latitude: 39,
             longitude: -95,
             overlayLayers: [
-              'referenceFeatures',
-              'referenceLabels'
+              mapLayers.bordersRoads,
+              mapLayers.placeLabels
             ],
-            projection: 'epsg4326'
+            projection: projections.geographic
           }
         }
       }
