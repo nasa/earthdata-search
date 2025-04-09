@@ -14,7 +14,7 @@ import {
 } from './styles'
 import { crsProjections } from './crs'
 import getQueryFromShapefileFeature from './getQueryFromShapefileFeature'
-import projections from './projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 import { eventEmitter } from '../../events/events'
 
@@ -109,7 +109,7 @@ const drawShapefile = ({
   features.forEach((feature) => {
     feature.set('isShapefile', true)
     feature.set('selected', false)
-    feature.set('projectionCode', projections.geographic)
+    feature.set('projectionCode', projectionCodes.geographic)
 
     let geometry = feature.getGeometry()
     const geometryType = geometry.getType()
@@ -127,9 +127,9 @@ const drawShapefile = ({
 
     let geometryInProjection = geometry.clone()
 
-    if (projectionCode !== projections.geographic) {
+    if (projectionCode !== projectionCodes.geographic) {
       geometryInProjection = geometryInProjection.transform(
-        crsProjections[projections.geographic],
+        crsProjections[projectionCodes.geographic],
         crsProjections[projectionCode]
       )
     }
@@ -208,16 +208,16 @@ const drawShapefile = ({
 
     let geographicExtent = sourceExtent
     // If the current projection is not geographic, we need to transform the extent to geographic coordinates
-    if (projectionCode !== projections.geographic) {
+    if (projectionCode !== projectionCodes.geographic) {
       const swPoint = transform(
         [sourceExtent[0], sourceExtent[1]],
         crsProjections[projectionCode],
-        crsProjections[projections.geographic]
+        crsProjections[projectionCodes.geographic]
       )
       const nePoint = transform(
         [sourceExtent[2], sourceExtent[3]],
         crsProjections[projectionCode],
-        crsProjections[projections.geographic]
+        crsProjections[projectionCodes.geographic]
       )
 
       geographicExtent = [swPoint[0], swPoint[1], nePoint[0], nePoint[1]]
@@ -232,8 +232,8 @@ const drawShapefile = ({
 
     // Set the new projection if all of the latitudes are in the Arctic or Antarctic
     let newProjection
-    if (allLatitudesInArctic) newProjection = projections.arctic
-    if (allLatitudesInAntarctic) newProjection = projections.antarctic
+    if (allLatitudesInArctic) newProjection = projectionCodes.arctic
+    if (allLatitudesInAntarctic) newProjection = projectionCodes.antarctic
 
     // If there is a new projection, update the map projection
     if (newProjection) {
@@ -275,9 +275,9 @@ const drawShapefile = ({
       let polygonInProjection = polygon
 
       // If the projection is not geographic, transform the polygon to the current projection
-      if (projectionCode !== projections.geographic) {
+      if (projectionCode !== projectionCodes.geographic) {
         polygonInProjection = polygon.transform(
-          crsProjections[projections.geographic],
+          crsProjections[projectionCodes.geographic],
           crsProjections[projectionCode]
         )
       }

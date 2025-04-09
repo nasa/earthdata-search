@@ -6,22 +6,21 @@ import { crsProjections, projectionConfigs } from '../crs'
 
 /**
  * Builds the World Imagery base map layer
+ * https://www.arcgis.com/home/item.html?id=898f58f2ee824b3c97bae0698563a4b3
  * @param {Object} params
- * @param {String} params.attributions Attribution for the layer
  * @param {String} params.projectionCode The projection code for the layer
  * @param {String} params.visible The visibility flag for the layer
  */
 const worldImagery = ({
-  attributions,
   projectionCode,
   visible
 }) => {
   const projection = crsProjections[projectionCode]
 
   const layer = new TileLayer({
-    className: 'edsc-map-base-layer',
+    className: 'edsc-map__world-imagery-layer',
     source: new XYZ({
-      attributions,
+      attributions: 'Esri, Maxar, Earthstar Geographics, and the GIS User Community',
       maxResolution: 180 / 512,
       projection,
       reprojectionErrorThreshold: 2,

@@ -91,7 +91,7 @@ test.describe('Timeline spec', () => {
 
     await page.waitForSelector('[data-testid="collection-result-item_C1443528505-LAADS"]')
 
-    // Confirm the leaflet tools are in the correct location
+    // Confirm the map controls are in the correct location
     await expect(page).toHaveScreenshot('search-screenshot.png', {
       clip: {
         x: 1200,
@@ -107,7 +107,7 @@ test.describe('Timeline spec', () => {
     // Wait for the timeline to be visible
     await expect(page.getByTestId('timeline')).toBeInViewport()
 
-    // Confirm the leaflet tools are in the correct location
+    // Confirm the map controls are in the correct location
     await expect(page).toHaveScreenshot('granules-screenshot.png', {
       clip: {
         x: 1200,

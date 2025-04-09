@@ -14,13 +14,13 @@ class SpatialDrawingControl extends Control {
   constructor(options) {
     // Create the element for this control
     const element = document.createElement('div')
-    element.className = 'edsc-map-spatial-drawing'
+    element.className = 'edsc-map__spatial-drawing'
 
     const buttonsElement = document.createElement('div')
     element.appendChild(buttonsElement)
 
     const cancelWrapper = document.createElement('div')
-    cancelWrapper.className = 'edsc-map-spatial-drawing__cancel-wrapper'
+    cancelWrapper.className = 'edsc-map__spatial-drawing__cancel-wrapper'
     element.appendChild(cancelWrapper)
 
     super({
@@ -39,7 +39,7 @@ class SpatialDrawingControl extends Control {
 
     // Create the polygon button
     const polygonButton = document.createElement('button')
-    polygonButton.className = 'edsc-map-spatial-drawing__button edsc-map-spatial-drawing__button--polygon edsc-icon-poly edsc-icon-fw edsc-map-controls__button'
+    polygonButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--polygon edsc-icon-poly edsc-icon-fw edsc-map__controls__button'
     polygonButton.ariaLabel = 'Search by spatial polygon'
     polygonButton.title = 'Search by spatial polygon'
     polygonButton.setAttribute('data-bs-toggle', 'tooltip')
@@ -57,7 +57,7 @@ class SpatialDrawingControl extends Control {
 
     // Create the bounding box button
     const boundingBoxButton = document.createElement('button')
-    boundingBoxButton.className = 'edsc-map-spatial-drawing__button edsc-map-spatial-drawing__button--rectangle edsc-icon-rect edsc-icon-fw edsc-map-controls__button'
+    boundingBoxButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--rectangle edsc-icon-rect edsc-icon-fw edsc-map__controls__button'
     boundingBoxButton.ariaLabel = 'Search by spatial rectangle'
     boundingBoxButton.title = 'Search by spatial rectangle'
     boundingBoxButton.setAttribute('data-bs-toggle', 'tooltip')
@@ -75,7 +75,7 @@ class SpatialDrawingControl extends Control {
 
     // Create the circle button
     const circleButton = document.createElement('button')
-    circleButton.className = 'edsc-map-spatial-drawing__button edsc-map-spatial-drawing__button--circle edsc-map-controls__button'
+    circleButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--circle edsc-map__controls__button'
     circleButton.ariaLabel = 'Search by spatial circle'
     circleButton.title = 'Search by spatial circle'
     circleButton.setAttribute('data-bs-toggle', 'tooltip')
@@ -99,7 +99,7 @@ class SpatialDrawingControl extends Control {
 
     // Create the point button
     const pointButton = document.createElement('button')
-    pointButton.className = 'edsc-map-spatial-drawing__button edsc-map-spatial-drawing__button--point edsc-map-controls__button'
+    pointButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--point edsc-map__controls__button'
     pointButton.ariaLabel = 'Search by spatial coordinate'
     pointButton.title = 'Search by spatial coordinate'
     pointButton.setAttribute('data-bs-toggle', 'tooltip')
@@ -123,7 +123,7 @@ class SpatialDrawingControl extends Control {
 
     // Create the shapefile button
     const shapefileButton = document.createElement('button')
-    shapefileButton.className = 'edsc-map-spatial-drawing__button edsc-map-spatial-drawing__button--shapefile edsc-map-controls__button'
+    shapefileButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--shapefile edsc-map__controls__button'
     shapefileButton.ariaLabel = 'Search by shapefile'
     shapefileButton.title = 'Search by shapefile'
     shapefileButton.setAttribute('data-bs-toggle', 'tooltip')
@@ -147,7 +147,7 @@ class SpatialDrawingControl extends Control {
 
     // Create the cancel button
     const cancelButton = document.createElement('button')
-    cancelButton.className = 'edsc-map-spatial-drawing__button edsc-map-spatial-drawing__button--cancel'
+    cancelButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--cancel'
     cancelButton.ariaLabel = 'Cancel spatial drawing'
     cancelButton.title = 'Cancel spatial drawing'
     cancelButton.textContent = 'Cancel'

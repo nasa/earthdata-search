@@ -9,7 +9,7 @@ import PreferencesForm from '../PreferencesForm'
 import schema from '../../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../../schemas/sitePreferencesUISchema.json'
 import mapLayers from '../../../constants/mapLayers'
-import projections from '../../../util/map/projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -75,7 +75,7 @@ describe('PreferencesForm component', () => {
               mapLayers.bordersRoads,
               mapLayers.placeLabels
             ],
-            projection: projections.geographic
+            projection: projectionCodes.geographic
           }
         }
       })
@@ -98,7 +98,7 @@ describe('PreferencesForm component', () => {
           mapLayers.bordersRoads,
           mapLayers.placeLabels
         ],
-        projection: projections.geographic
+        projection: projectionCodes.geographic
       }
     })
   })

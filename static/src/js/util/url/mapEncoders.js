@@ -1,12 +1,12 @@
 import { isEmpty } from 'lodash-es'
 import mapLayers from '../../constants/mapLayers'
-import projections from '../map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 import { decodeDeprecatedMapParam } from './deprecatedEncoders'
 
 const projectionList = {
-  [projections.arctic]: 'EPSG:3413',
-  [projections.geographic]: 'EPSG:4326',
-  [projections.antarctic]: 'EPSG:3031'
+  [projectionCodes.arctic]: 'EPSG:3413',
+  [projectionCodes.geographic]: 'EPSG:4326',
+  [projectionCodes.antarctic]: 'EPSG:3031'
 }
 
 /**

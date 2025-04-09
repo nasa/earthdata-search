@@ -15,7 +15,7 @@ import LayerSwitcherControl from './LayerSwitcherControl'
 class MapControls extends Control {
   constructor(options) {
     const element = document.createElement('div')
-    element.className = 'edsc-map-controls ol-control'
+    element.className = 'edsc-map__controls ol-control'
 
     super({
       ...options,
@@ -40,12 +40,13 @@ class MapControls extends Control {
       PointIcon,
       projectionCode,
       setIsLayerSwitcherOpen,
-      ShapefileIcon
+      ShapefileIcon,
+      showDrawingControls
     } = options
 
     // Create the zoom control
     const zoomControl = new ZoomControl({
-      className: 'edsc-map-zoom',
+      className: 'edsc-map__zoom',
       duration: 250,
       HomeIcon,
       homeLocation: {
@@ -74,7 +75,7 @@ class MapControls extends Control {
 
     // Create the layer switcher control
     const layerSwitcher = new LayerSwitcherControl({
-      className: 'edsc-map-layer-switcher',
+      className: 'edsc-map__layer-switcher',
       isLayerSwitcherOpen,
       layerOptions: [{
         checked: base.worldImagery,
@@ -108,7 +109,7 @@ class MapControls extends Control {
 
     // Add the controls to the container
     // The order here matters, the first element is the top-most element
-    this.element.appendChild(spatialDrawingControl.element)
+    if (showDrawingControls) this.element.appendChild(spatialDrawingControl.element)
     this.element.appendChild(projectionSwitcher.element)
     this.element.appendChild(zoomControl.element)
     this.element.appendChild(layerSwitcher.element)

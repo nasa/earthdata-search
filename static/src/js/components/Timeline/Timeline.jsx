@@ -43,7 +43,6 @@ export const Timeline = ({
 
   // Refs for tracking the timer container and the previous height so we can trigger a resize event
   const containerRef = useRef()
-  const previousHeight = useRef(0)
 
   // When pathname has changed, we want redo the initial setup
   useEffect(() => {
@@ -72,9 +71,6 @@ export const Timeline = ({
 
   useEffect(() => {
     if (!isInitialSetup) {
-      // This resize event moves the leaflet controls above the EDSCTimeline component after it is rendered intially.
-      window.dispatchEvent(new Event('resize'))
-
       return
     }
 
@@ -98,22 +94,6 @@ export const Timeline = ({
       })
     }
   }, [isMetadataLoaded, isInitialSetup])
-
-  useEffect(() => {
-    if (containerRef.current) {
-      const { height: elementHeight } = containerRef.current.getBoundingClientRect()
-
-      // If the current height of the element is different than the previous render,
-      // dispatch a resize event to set the size of the leaflet tools
-      if (elementHeight !== previousHeight.current) window.dispatchEvent(new Event('resize'))
-
-      previousHeight.current = elementHeight
-    }
-
-    return () => {
-      window.dispatchEvent(new Event('resize'))
-    }
-  }, [containerRef.current])
 
   // Show the override temporal modal if temporal and focused exist and showOverrideModal is true
   useEffect(() => {

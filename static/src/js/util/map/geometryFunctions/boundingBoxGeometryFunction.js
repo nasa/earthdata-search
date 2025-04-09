@@ -6,7 +6,7 @@ import {
 
 import { interpolateBoxPolygon, makeCounterClockwise } from '../normalizeSpatial'
 import { crsProjections } from '../crs'
-import projections from '../projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 /**
  * OpenLayers GeometryFunction for drawing a bounding box
@@ -40,11 +40,11 @@ const boundingBoxGeometryFunction = (coordinates, geometry, projection) => {
   // Create a polygon from the starting and ending points
   const startCoords = startingPoint.transform(
     projection,
-    crsProjections[projections.geographic]
+    crsProjections[projectionCodes.geographic]
   ).getCoordinates()
   const endCoords = endingPoint.transform(
     projection,
-    crsProjections[projections.geographic]
+    crsProjections[projectionCodes.geographic]
   ).getCoordinates()
   const polygonCoordinates = [
     startCoords,
@@ -62,7 +62,7 @@ const boundingBoxGeometryFunction = (coordinates, geometry, projection) => {
 
   // Transform the polygon to the projection of the map
   const polygonInProjection = new Polygon(interpolatedPolygon).transform(
-    crsProjections[projections.geographic],
+    crsProjections[projectionCodes.geographic],
     projection
   )
 

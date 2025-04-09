@@ -8,7 +8,7 @@ import { getDistance } from 'ol/sphere'
 import { circular } from 'ol/geom/Polygon'
 
 import { crsProjections } from '../crs'
-import projections from '../projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 /**
  * OpenLayers GeometryFunction for drawing a circle
@@ -37,12 +37,12 @@ const circleGeometryFunction = (coordinates, geometry, projection) => {
   const circleCenter = transform(
     coordinates[0],
     projection,
-    crsProjections[projections.geographic]
+    crsProjections[projectionCodes.geographic]
   )
   const circleLast = transform(
     coordinates[1],
     projection,
-    crsProjections[projections.geographic]
+    crsProjections[projectionCodes.geographic]
   )
 
   // Calculate the radius of the circle

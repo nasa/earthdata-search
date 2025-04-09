@@ -21,7 +21,7 @@ import actions from '..'
 import * as addToast from '../../util/addToast'
 import { testJwtToken } from './mocks'
 import mapLayers from '../../constants/mapLayers'
-import projections from '../../util/map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 const mockStore = configureMockStore([thunk])
 
@@ -62,7 +62,7 @@ describe('setPreferencesFromJwt', () => {
         latitude: 39,
         baseLayer: mapLayers.worldImagery,
         longitude: -95,
-        projection: projections.geographic,
+        projection: projectionCodes.geographic,
         overlayLayers: [
           mapLayers.bordersRoads,
           mapLayers.placeLabels
@@ -100,7 +100,7 @@ describe('setPreferencesFromJwt', () => {
           latitude: 39,
           baseLayer: mapLayers.worldImagery,
           longitude: -95,
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           overlayLayers: [
             mapLayers.bordersRoads,
             mapLayers.placeLabels
@@ -127,7 +127,7 @@ describe('setPreferencesFromJwt', () => {
             coastlines: false,
             placeLabels: true
           },
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           rotation: 0,
           zoom: 3
         }
@@ -155,7 +155,7 @@ describe('setPreferencesFromJwt', () => {
             bordersRoads: true,
             placeLabels: true
           },
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           zoom: 4
         }
       })
@@ -168,7 +168,7 @@ describe('setPreferencesFromJwt', () => {
           latitude: 39,
           baseLayer: mapLayers.worldImagery,
           longitude: -95,
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           overlayLayers: [
             mapLayers.bordersRoads,
             mapLayers.placeLabels
@@ -195,7 +195,7 @@ describe('setPreferencesFromJwt', () => {
             coastlines: false,
             placeLabels: true
           },
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           rotation: 0,
           zoom: 3
         }
@@ -228,7 +228,7 @@ describe('setPreferencesFromJwt', () => {
           latitude: 39,
           baseLayer: 'blueMarble',
           longitude: -95,
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           overlayLayers: [
             'referenceFeatures',
             'referenceLabels'
@@ -254,7 +254,7 @@ describe('setPreferencesFromJwt', () => {
             coastlines: false,
             placeLabels: true
           },
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           rotation: 0,
           zoom: 3
         }

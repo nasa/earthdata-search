@@ -1,12 +1,12 @@
 @use '../../../css/utils';
 
-.edsc-map-spatial-drawing__cancel-wrapper {
+.edsc-map__spatial-drawing__cancel-wrapper {
   position: absolute;
   top: 0;
   right: 2rem;
 }
 
-button.edsc-map-spatial-drawing__button--cancel {
+button.edsc-map__spatial-drawing__button--cancel {
     height: 1.75rem;
     border-radius: 2px;
     border: none;
@@ -14,17 +14,17 @@ button.edsc-map-spatial-drawing__button--cancel {
     width: fit-content;
 }
 
-.edsc-map-controls {
+.edsc-map__controls {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   z-index: 10;
   background-color: transparent;
   right: 0.75rem;
-  bottom: 5.5rem;
+  bottom: 6.5rem;
   gap: 1rem;
 
-  .edsc-map-controls__button {
+  .edsc-map__controls__button {
     margin: 0;
     border-radius: 0;
 
@@ -38,9 +38,9 @@ button.edsc-map-spatial-drawing__button--cancel {
   }
 }
 
-.edsc-map-scale-imperial,
-.edsc-map-scale-metric,
-.edsc-map-legend {
+.edsc-map__scale-imperial,
+.edsc-map__scale-metric,
+.edsc-map__legend {
   position: absolute;
   z-index: 10;
   right: 0.75rem;
@@ -50,24 +50,54 @@ button.edsc-map-spatial-drawing__button--cancel {
   border: none;
 }
 
-.edsc-map-legend {
+.edsc-map__attribution {
+  font-size: 16px;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  z-index: 11;
+  background-color: none;
+
+  button {
+    position: absolute;
+    bottom: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+    background-color: none;
+    border: none;
+  }
+
+  ul {
+    background-color: utils.$color__spacesuit-white;
+    border-radius: 2px;
+    max-width: 25rem;
+    margin-right: 1.875rem;
+    padding: 0.5rem;
+
+    li {
+      display: list-item;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.edsc-map__legend {
   background-color: transparent;
   top: 45px;
 }
 
-.edsc-map-scale-imperial {
-  bottom: 30px;
+.edsc-map__scale-imperial {
+  bottom: 53px;
   border-top: 2px solid utils.$color__spacesuit-white;
   border-left: 2px solid utils.$color__spacesuit-white;
 }
 
-.edsc-map-scale-metric {
-  bottom: 53px;
+.edsc-map__scale-metric {
+  bottom: 75px;
   border-bottom: 2px solid utils.$color__spacesuit-white;
   border-left: 2px solid utils.$color__spacesuit-white;
 }
 
-.edsc-map-projection-switcher {
+.edsc-map__projection-switcher {
   &__button {
     background-image: url('~Images/projection-sprite.png');
     background-size: 90px 30px;
@@ -93,13 +123,15 @@ button.edsc-map-spatial-drawing__button--cancel {
 
 .ol-attribution {
   font-family: Avenir Next W00, Helvetica Neue, Helvetica, Arial, sans-serif;
-  color: #323232;
-  background-color: #ffffff;
-  font-size: 12px;
+  color: utils.$color__carbon--70;
+}
+
+.ol-attribution:not(.ol-collapsed) {
+  background: none;
 }
 
 .ol-control {
-  button.edsc-map-controls__button {
+  button.edsc-map__controls__button {
     width: 1.75rem;
     height: 1.75rem;
     background-color: none;
@@ -133,7 +165,7 @@ button.edsc-map-spatial-drawing__button--cancel {
   }
 }
 
-.edsc-map-layer-switcher {
+.edsc-map__layer-switcher {
   background-color: utils.$color__spacesuit-white;
   border-radius: 2px;
 
@@ -141,7 +173,7 @@ button.edsc-map-spatial-drawing__button--cancel {
     width: 1.75rem;
     height: 1.75rem;
   }
-  
+
   &__panel {
     position: absolute;
     bottom: 0;
@@ -153,7 +185,7 @@ button.edsc-map-spatial-drawing__button--cancel {
     width: 18rem;
     color: utils.$color__carbon-black;
     font-weight: 500;
-    z-index: 6;
+    z-index: 10;
 
     &--visible {
       opacity: 1;

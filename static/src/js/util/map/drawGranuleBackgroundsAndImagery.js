@@ -17,7 +17,8 @@ import {
 import { crsProjections } from './crs'
 import { getTileGrid } from './getTileGrid'
 import drawOutline from './drawOutline'
-import projections from './projections'
+
+import projectionCodes from '../../constants/projectionCodes'
 
 const tileLayerCache = new LRUCache(100)
 const imageryCache = new LRUCache(100)
@@ -88,7 +89,7 @@ const drawGranuleBackgroundsAndImagery = ({
 
     // Create a feature for the current granule based on the granule spatial
     const backgroundFeatures = new GeoJSON({
-      dataProjection: crsProjections[projections.geographic],
+      dataProjection: crsProjections[projectionCodes.geographic],
       featureProjection: crsProjections[projectionCode]
     }).readFeatures(spatial)
 

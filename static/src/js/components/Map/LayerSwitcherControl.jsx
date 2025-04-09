@@ -50,6 +50,11 @@ class LayerSwitcherControl extends Control {
     element.addEventListener('mouseleave', () => {
       this.setIsLayerSwitcherOpen(false)
     })
+
+    panel.addEventListener('hover', (event) => {
+      event.stopPropagation()
+      event.preventDefault()
+    })
   }
 
   /**

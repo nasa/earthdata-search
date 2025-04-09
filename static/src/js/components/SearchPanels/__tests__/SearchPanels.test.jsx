@@ -23,11 +23,6 @@ import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
 import Providers from '../../../providers/Providers/Providers'
 
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {})
-}))
-
 const store = configureStore()
 
 Enzyme.configure({ adapter: new Adapter() })

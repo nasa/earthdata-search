@@ -1,6 +1,6 @@
 import EventType from 'ol/events/EventType'
 import Control from 'ol/control/Control'
-import projections from '../../util/map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 /**
  * This class class adds 3 buttons to the map to switch between projections
@@ -9,7 +9,7 @@ class ProjectionSwitcherControl extends Control {
   constructor(options) {
     // Create the element for this control
     const element = document.createElement('div')
-    element.className = 'edsc-map-projection-switcher'
+    element.className = 'edsc-map__projection-switcher'
 
     super({
       ...options,
@@ -20,14 +20,14 @@ class ProjectionSwitcherControl extends Control {
 
     // Create the North Polar Stereographic button
     const arcticButton = document.createElement('button')
-    arcticButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--arctic edsc-map-controls__button'
+    arcticButton.className = 'edsc-map__projection-switcher__button edsc-map__projection-switcher__button--arctic edsc-map__controls__button'
     arcticButton.ariaLabel = 'North Polar Stereographic'
     arcticButton.title = 'North Polar Stereographic'
     arcticButton.setAttribute('data-bs-toggle', 'tooltip')
     arcticButton.setAttribute('data-bs-placement', 'left')
     arcticButton.addEventListener(
       EventType.CLICK,
-      this.changeProjection.bind(this, projections.arctic),
+      this.changeProjection.bind(this, projectionCodes.arctic),
       false
     )
 
@@ -36,14 +36,14 @@ class ProjectionSwitcherControl extends Control {
 
     // Create the Geographic (Equirectangular) button
     const geographicButton = document.createElement('button')
-    geographicButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--geo edsc-map-controls__button'
+    geographicButton.className = 'edsc-map__projection-switcher__button edsc-map__projection-switcher__button--geo edsc-map__controls__button'
     geographicButton.ariaLabel = 'Geographic (Equirectangular)'
     geographicButton.title = 'Geographic (Equirectangular)'
     geographicButton.setAttribute('data-bs-toggle', 'tooltip')
     geographicButton.setAttribute('data-bs-placement', 'left')
     geographicButton.addEventListener(
       EventType.CLICK,
-      this.changeProjection.bind(this, projections.geographic),
+      this.changeProjection.bind(this, projectionCodes.geographic),
       false
     )
 
@@ -52,14 +52,14 @@ class ProjectionSwitcherControl extends Control {
 
     // Create the South Polar Stereographic button
     const antarcticButton = document.createElement('button')
-    antarcticButton.className = 'edsc-map-projection-switcher__button edsc-map-projection-switcher__button--antarctic edsc-map-controls__button'
+    antarcticButton.className = 'edsc-map__projection-switcher__button edsc-map__projection-switcher__button--antarctic edsc-map__controls__button'
     antarcticButton.ariaLabel = 'South Polar Stereographic'
     antarcticButton.title = 'South Polar Stereographic'
     antarcticButton.setAttribute('data-bs-toggle', 'tooltip')
     antarcticButton.setAttribute('data-bs-placement', 'left')
     antarcticButton.addEventListener(
       EventType.CLICK,
-      this.changeProjection.bind(this, projections.antarctic),
+      this.changeProjection.bind(this, projectionCodes.antarctic),
       false
     )
 

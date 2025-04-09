@@ -22,9 +22,8 @@ const screenshotClip = {
 }
 
 test.describe('Map: Shapefile interactions', () => {
-  test.beforeEach(async ({ page, context, browserName }) => {
+  test.beforeEach(async ({ page, context }) => {
     await setupTests({
-      browserName,
       context,
       page
     })
@@ -60,10 +59,11 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         // Upload the shapefile
         await uploadShapefile(page, 'polygon.geojson')
@@ -117,10 +117,11 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         // Upload the shapefile
         await uploadShapefile(page, 'line.geojson')
@@ -175,10 +176,11 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         // Upload the shapefile
         await uploadShapefile(page, 'circle.geojson')
@@ -233,10 +235,11 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         // Upload the shapefile
         await uploadShapefile(page, 'point.geojson')
@@ -291,13 +294,16 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         // Upload the shapefile
+        const shapefileZoomPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         await uploadShapefile(page, 'multiple_shapes.geojson')
+        await shapefileZoomPromise
 
         // Populates the spatial display field
         await expect(
@@ -373,10 +379,11 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         // Upload the shapefile
         await uploadShapefile(page, 'too_many_points.geojson')
@@ -425,10 +432,11 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         // Upload the shapefile
         await uploadShapefile(page, 'arctic.geojson')
@@ -482,10 +490,11 @@ test.describe('Map: Shapefile interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         // Upload the shapefile
         await uploadShapefile(page, 'antarctic.geojson')

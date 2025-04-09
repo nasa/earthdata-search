@@ -130,7 +130,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      authToken: 'mock-token',
       metadata: {
         collections: {},
         colormaps: {}
@@ -158,7 +157,6 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      authToken: 'mock-token',
       boundingBoxSearch: undefined,
       circleSearch: undefined,
       collectionsMetadata: {},

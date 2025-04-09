@@ -2,8 +2,6 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import projections from '../../../util/map/projections'
-
 import actions from '../../../actions'
 import {
   mapDispatchToProps,
@@ -12,6 +10,7 @@ import {
 } from '../ProjectCollectionsContainer'
 import ProjectCollections from '../../../components/ProjectCollections/ProjectCollections'
 import * as metricsDataAccess from '../../../middleware/metrics/actions'
+import projectionCodes from '../../../constants/projectionCodes'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -19,7 +18,7 @@ function setup() {
   const props = {
     collectionsQuery: {},
     map: {
-      projection: projections.geographic
+      projection: projectionCodes.geographic
     },
     project: {
       collections: {
