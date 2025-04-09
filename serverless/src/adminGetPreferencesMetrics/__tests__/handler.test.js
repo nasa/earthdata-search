@@ -2,6 +2,8 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import adminGetPreferencesMetrics from '../handler'
+import mapLayers from '../../../../static/src/js/constants/mapLayers'
+import projections from '../../../../static/src/js/util/map/projections'
 
 let dbTracker
 
@@ -38,10 +40,13 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [
+                  mapLayers.bordersRoads,
+                  mapLayers.placeLabels
+                ]
               },
               panelState: 'open',
               granuleSort: 'start_date',
@@ -55,10 +60,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -112,14 +117,14 @@ describe('adminGetPreferencesMetrics', () => {
             ['0', '100% (2)']
           ],
           projection: [
-            ['epsg4326', '100% (2)']
+            [projections.geographic, '100% (2)']
           ],
           overlayLayers: [
-            ['referenceFeatures', '100% (2)'],
-            ['referenceLabels', '100% (2)']
+            [mapLayers.bordersRoads, '100% (2)'],
+            [mapLayers.placeLabels, '100% (2)']
           ],
           baseLayer: [
-            ['blueMarble', '100% (2)']
+            [mapLayers.worldImagery, '100% (2)']
           ]
         }
       }
@@ -137,10 +142,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: 'start_date',
@@ -154,10 +159,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -228,17 +233,17 @@ describe('adminGetPreferencesMetrics', () => {
             ['not set (0)', '50.0% (2)']
           ],
           projection: [
-            ['epsg4326', '50.0% (2)'],
-            ['not set (epsg4326)', '50.0% (2)']
+            [projections.geographic, '50.0% (2)'],
+            [`not set (${projections.geographic})`, '50.0% (2)']
           ],
           overlayLayers: [
-            ['referenceFeatures', '50.0% (2)'],
-            ['referenceLabels', '50.0% (2)'],
-            ['not set (referenceFeatures & referenceLabels)', '50.0% (2)']
+            [mapLayers.bordersRoads, '50.0% (2)'],
+            [mapLayers.placeLabels, '50.0% (2)'],
+            [`not set (${mapLayers.bordersRoads} & ${mapLayers.placeLabels})`, '50.0% (2)']
           ],
           baseLayer: [
-            ['blueMarble', '50.0% (2)'],
-            ['not set (blueMarble)', '50.0% (2)']
+            [mapLayers.worldImagery, '50.0% (2)'],
+            [`not set (${mapLayers.worldImagery})`, '50.0% (2)']
           ]
         }
       }
@@ -256,10 +261,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 0,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: 'start_date',
@@ -273,10 +278,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 1,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -290,10 +295,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 2,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -307,10 +312,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 3,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -324,10 +329,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 4,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -341,10 +346,10 @@ describe('adminGetPreferencesMetrics', () => {
               mapView: {
                 zoom: 2,
                 latitude: 5,
-                baseLayer: 'blueMarble',
+                baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: 'epsg4326',
-                overlayLayers: ['referenceFeatures', 'referenceLabels']
+                projection: projections.geographic,
+                overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
               granuleSort: '-start_date',
@@ -419,17 +424,17 @@ describe('adminGetPreferencesMetrics', () => {
             ['not set (0)', '25.0% (2)']
           ],
           projection: [
-            ['epsg4326', '75.0% (6)'],
-            ['not set (epsg4326)', '25.0% (2)']
+            [projections.geographic, '75.0% (6)'],
+            [`not set (${projections.geographic})`, '25.0% (2)']
           ],
           overlayLayers: [
-            ['referenceFeatures', '75.0% (6)'],
-            ['referenceLabels', '75.0% (6)'],
-            ['not set (referenceFeatures & referenceLabels)', '25.0% (2)']
+            [mapLayers.bordersRoads, '75.0% (6)'],
+            [mapLayers.placeLabels, '75.0% (6)'],
+            [`not set (${mapLayers.bordersRoads} & ${mapLayers.placeLabels})`, '25.0% (2)']
           ],
           baseLayer: [
-            ['blueMarble', '75.0% (6)'],
-            ['not set (blueMarble)', '25.0% (2)']
+            [mapLayers.worldImagery, '75.0% (6)'],
+            [`not set (${mapLayers.worldImagery})`, '25.0% (2)']
           ]
         }
       }

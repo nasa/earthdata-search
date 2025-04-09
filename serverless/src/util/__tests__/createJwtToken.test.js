@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 
 import { createJwtToken } from '../createJwtToken'
+import mapLayers from '../../../../static/src/js/constants/mapLayers'
+import projections from '../../../../static/src/js/util/map/projections'
 
 describe('util#createJwtToken', () => {
   test('correctly returns the JWT token', () => {
@@ -11,12 +13,12 @@ describe('util#createJwtToken', () => {
         mapView: {
           zoom: 4,
           latitude: 39,
-          baseLayer: 'blueMarble',
+          baseLayer: mapLayers.worldImagery,
           longitude: -95,
-          projection: 'epsg4326',
+          projection: projections.geographic,
           overlayLayers: [
-            'referenceFeatures',
-            'referenceLabels'
+            mapLayers.bordersRoads,
+            mapLayers.placeLabels
           ]
         },
         panelState: 'default',
@@ -40,12 +42,12 @@ describe('util#createJwtToken', () => {
         mapView: {
           zoom: 4,
           latitude: 39,
-          baseLayer: 'blueMarble',
+          baseLayer: mapLayers.worldImagery,
           longitude: -95,
-          projection: 'epsg4326',
+          projection: projections.geographic,
           overlayLayers: [
-            'referenceFeatures',
-            'referenceLabels'
+            mapLayers.bordersRoads,
+            mapLayers.placeLabels
           ]
         },
         panelState: 'default',

@@ -1,6 +1,8 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
+import projections from '../../../static/src/js/util/map/projections'
+import mapLayers from '../../../static/src/js/constants/mapLayers'
 
 /**
  * Sort the values for each key and pull out the top 5 values
@@ -53,9 +55,9 @@ const adminGetPreferencesMetrics = async (event, context) => {
         zoom = 'not set (2)',
         latitude = 'not set (0)',
         longitude = 'not set (0)',
-        projection = 'not set (epsg4326)',
-        overlayLayers = ['not set (referenceFeatures & referenceLabels)'],
-        baseLayer = 'not set (blueMarble)'
+        projection = `not set (${projections.geographic})`,
+        overlayLayers = [`not set (${mapLayers.bordersRoads} & ${mapLayers.placeLabels})`],
+        baseLayer = `not set (${mapLayers.worldImagery})`
       } = mapView
 
       return {

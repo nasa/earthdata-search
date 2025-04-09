@@ -3,6 +3,8 @@ import {
   SET_ADMIN_PREFERENCES_METRICS_LOADING,
   SET_ADMIN_PREFERENCES_METRICS_LOADED
 } from '../../../constants/actionTypes'
+import mapLayers from '../../../constants/mapLayers'
+import projections from '../../../util/map/projections'
 
 import adminPreferencesMetricsReducer from '../preferencesMetrics'
 
@@ -95,14 +97,14 @@ describe('SET_ADMIN_PREFERENCES_METRICS', () => {
           [0, '100% (2)']
         ],
         projection: [
-          ['epsg4326', '100% (2)']
+          [projections.geographic, '100% (2)']
         ],
         overlayLayers: [
-          ['referenceFeatures', '100% (2)'],
-          ['referenceLabels', '100% (2)']
+          [mapLayers.bordersRoads, '100% (2)'],
+          [mapLayers.placeLabels, '100% (2)']
         ],
         baseLayer: [
-          ['blueMarble', '100% (2)']
+          [mapLayers.worldImagery, '100% (2)']
         ]
       }
     }
@@ -141,14 +143,14 @@ describe('SET_ADMIN_PREFERENCES_METRICS', () => {
           [0, '100% (2)']
         ],
         projection: [
-          ['epsg4326', '100% (2)']
+          [projections.geographic, '100% (2)']
         ],
         overlayLayers: [
-          ['referenceFeatures', '100% (2)'],
-          ['referenceLabels', '100% (2)']
+          [mapLayers.bordersRoads, '100% (2)'],
+          [mapLayers.placeLabels, '100% (2)']
         ],
         baseLayer: [
-          ['blueMarble', '100% (2)']
+          [mapLayers.worldImagery, '100% (2)']
         ]
       }
     }

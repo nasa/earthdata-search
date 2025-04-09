@@ -12,16 +12,16 @@ describe('url#decodeUrlParams', () => {
   test('decodes map correctly', () => {
     const expectedResult = {
       base: {
-        blueMarble: false,
+        worldImagery: false,
         trueColor: true,
         landWaterMap: false
       },
       latitude: 0,
       longitude: 0,
       overlays: {
-        referenceFeatures: true,
+        bordersRoads: true,
         coastlines: false,
-        referenceLabels: true
+        placeLabels: true
       },
       projection: projections.arctic,
       zoom: 2

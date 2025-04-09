@@ -1,7 +1,7 @@
 import { UPDATE_MAP, RESTORE_FROM_URL } from '../constants/actionTypes'
 import projections from '../util/map/projections'
 
-const initialState = {
+export const initialState = {
   base: {
     worldImagery: true,
     trueColor: false,
@@ -10,9 +10,9 @@ const initialState = {
   latitude: 0,
   longitude: 0,
   overlays: {
-    referenceFeatures: true,
+    bordersRoads: true,
     coastlines: false,
-    referenceLabels: true
+    placeLabels: true
   },
   projection: projections.geographic,
   rotation: 0,
