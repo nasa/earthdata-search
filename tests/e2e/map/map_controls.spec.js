@@ -79,7 +79,7 @@ test.describe('Map: Control interactions', () => {
         await initialMapPromise
 
         // Zoom the map
-        await page.locator('.edsc-map-zoom-in').click()
+        await page.locator('.edsc-map__zoom-in').click()
 
         await expect(page).toHaveURL('search?zoom=4')
       })
@@ -343,13 +343,13 @@ test.describe('Map: Control interactions', () => {
         await trueColorPromise
 
         // Zoom in to force new tiles to load
-        await page.locator('.edsc-map-zoom-in').click()
+        await page.locator('.edsc-map__zoom-in').click()
 
         // Look for the layer switcher button by its aria-label
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+        await page.waitForSelector('.edsc-map__layer-switcher__panel--visible')
 
         // Set up the response promise BEFORE interacting with the UI
         const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
@@ -386,7 +386,7 @@ test.describe('Map: Control interactions', () => {
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+        await page.waitForSelector('.edsc-map__layer-switcher__panel--visible')
 
         // Click the Corrected Reflectance radio button by its label
         await page.getByLabel('Corrected Reflectance (True Color)').click()
@@ -417,7 +417,7 @@ test.describe('Map: Control interactions', () => {
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+        await page.waitForSelector('.edsc-map__layer-switcher__panel--visible')
 
         // Land water uses the same vector files as worldImagery but, we apply a style
         const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
@@ -452,7 +452,7 @@ test.describe('Map: Control interactions', () => {
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+        await page.waitForSelector('.edsc-map__layer-switcher__panel--visible')
 
         // Wait for the correct layer to load
         const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
@@ -487,7 +487,7 @@ test.describe('Map: Control interactions', () => {
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+        await page.waitForSelector('.edsc-map__layer-switcher__panel--visible')
 
         // Wait for the correct layer to load
         const responsePromise = page.waitForResponse(/Reference_Features_15m/)
@@ -522,7 +522,7 @@ test.describe('Map: Control interactions', () => {
         await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.edsc-map-layer-switcher__panel--visible')
+        await page.waitForSelector('.edsc-map__layer-switcher__panel--visible')
 
         // Wait for the correct layer to load
         const responsePromise = page.waitForResponse(/Coastlines_15m/)

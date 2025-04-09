@@ -441,7 +441,7 @@ test.describe('When not logged in', () => {
 
     expectWithinMargin(spotlightRect, {
       left: 1348,
-      top: 349,
+      top: 335,
       width: 49,
       height: 425
     }, 10, 10)

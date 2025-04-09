@@ -13,7 +13,7 @@ import Legend from './Legend'
 export class LegendControl extends Control {
   constructor(options) {
     const element = document.createElement('div')
-    element.className = 'ol-control edsc-map-legend'
+    element.className = 'ol-control edsc-map__legend'
 
     super({
       element,

@@ -204,7 +204,7 @@ test.describe('Map: Granule interactions', () => {
             const zoomPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
 
             // Zoom the map
-            await page.locator('.edsc-map-zoom-in').click()
+            await page.locator('.edsc-map__zoom-in').click()
 
             await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
 

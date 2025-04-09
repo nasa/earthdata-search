@@ -333,7 +333,6 @@ const Map = ({
       })
     })
     mapRef.current = map
-    console.log('🚀 ~ Map.jsx:339 ~ useEffect ~ map:', map.getAllLayers())
 
     // Handle the map draw start event
     const handleDrawingStart = (spatialType) => {
