@@ -207,11 +207,7 @@ const scaleImperial = new ScaleLine({
   units: 'imperial'
 })
 const attribution = new Attribution({
-  // TODO
-  // collapsible: false
-  // attributions: esriAttribution,
   className: 'edsc-map__attribution ol-attribution'
-  // Original classes class="ol-attribution ol-unselectable ol-control ol-collapsed"
 })
 
 // Clear the focused granule source
