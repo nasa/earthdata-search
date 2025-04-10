@@ -117,7 +117,10 @@ test.describe('When clicking on a granule on the map', () => {
     test.describe('when switching from the list view to the table view', () => {
       test('the granule remains highlighted and visible', async ({ page }) => {
         // Switch to the table view
-        await page.locator('.panel-group--is-active').getByRole('button', { name: 'View: List' }).click()
+
+        // "View: List" button
+        await page.getByTestId('panel-group-header-dropdown__view__1').hover()
+
         await page.getByRole('button', {
           name: 'Table',
           exact: true
@@ -141,8 +144,13 @@ test.describe('When clicking on a granule on the map', () => {
   test.describe('When clicking on a map granule while in the granule table view', () => {
     test.beforeEach(async ({ page }) => {
       // Click on the view button and select table
-      await page.locator('.panel-group--is-active').getByRole('button', { name: 'View: List' }).click()
-      await page.getByRole('button', { name: /Table/ }).click()
+      // "View: List" button
+      await page.getByTestId('panel-group-header-dropdown__view__1').hover()
+
+      await page.getByRole('button', {
+        name: 'Table',
+        exact: true
+      }).click({ force: true })
 
       // Click on the granule on the map
       const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
@@ -171,7 +179,9 @@ test.describe('When clicking on a granule on the map', () => {
     test.describe('when switching from the table view to the list view', () => {
       test('the granule remains highlighted and visible', async ({ page }) => {
         // Switch to the table view
-        await page.locator('.panel-group--is-active').getByRole('button', { name: 'View: Table' }).click()
+        // await page.locator('.panel-group--is-active').getByRole('button', { name: 'View: Table' }).click()
+        // "View: Table" button
+        await page.getByTestId('panel-group-header-dropdown__view__1').hover()
 
         // Grab the drop-down menu item not the panel header
         await page.getByRole('button', {
