@@ -123,6 +123,9 @@ test.describe('When clicking on a granule on the map', () => {
           exact: true
         }).click({ force: true })
 
+        // Wait a little bit for the item to scroll into view
+        await page.waitForTimeout(100)
+
         // Ensure the row is highlighted
         const highlightedRow = await page.getByRole('row').filter({ hasText: granuleName })
 
@@ -175,6 +178,9 @@ test.describe('When clicking on a granule on the map', () => {
           name: 'List',
           exact: true
         }).click({ force: true })
+
+        // Wait a little bit for the item to scroll into view
+        await page.waitForTimeout(100)
 
         const highlightedCard = await page.getByRole('button', {
           name: granuleName
