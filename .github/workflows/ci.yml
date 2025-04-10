@@ -155,6 +155,10 @@ jobs:
           ${{ runner.os }}-
     - name: Install dependencies
       run: npm ci
+    - name: Copy secrets example file
+      run: npm run copy-secrets
+    - name: Prepare for Playwright tests
+      run: npm run playwright:prepare-ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
 
