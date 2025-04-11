@@ -19,6 +19,8 @@ jobs:
     - name: Setup
       uses: ./.github/actions/npm-setup
 
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npm run playwright:ci:performance
     - name: Upload coverage to codecov
