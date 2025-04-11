@@ -24,10 +24,8 @@ jobs:
         cache-name: cache-node-modules
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: |
-          ~/.npm
-          node_modules/
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{github.run_number}}
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
@@ -56,10 +54,8 @@ jobs:
         cache-name: cache-node-modules
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: |
-          ~/.npm
-          node_modules/
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{github.run_number}}
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
@@ -96,10 +92,8 @@ jobs:
         cache-name: cache-node-modules
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: |
-          ~/.npm
-          node_modules/
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{github.run_number}}
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
@@ -150,10 +144,8 @@ jobs:
         cache-name: cache-node-modules
       with:
         # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: |
-          ~/.npm
-          node_modules/
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}-${{github.run_number}}
+        path: ~/.npm
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
           ${{ runner.os }}-build-${{ env.cache-name }}-
           ${{ runner.os }}-build-
@@ -164,54 +156,13 @@ jobs:
       run: npm run copy-secrets
     - name: Prepare for Playwright tests
       run: npm run playwright:prepare-ci
-
-    # - name: Install Playwright Browsers
-    #   run: npx playwright install --with-deps
-
-
-    # From https://github.com/microsoft/playwright/issues/7249#issuecomment-1154603556
-    #
-    # Cache the Playwright browser binaries so that we don't have to download
-    # them every time we run the tests.
-    - name: Get installed Playwright version
-      id: playwright-version
-      run: echo -n "::set-output name=version::$(npm ls @playwright/test --json | jq --raw-output '.dependencies["@playwright/test"].version')"
-
-    # Attempt to restore the correct Playwright browser binaries based on the
-    # currently installed version of Playwright (The browser binary versions
-    # may change with Playwright versions).
-    # Note: Playwright's cache directory is hard coded because that's what it
-    # says to do in the docs. There doesn't appear to be a command that prints
-    # it out for us.
-    - name: Cache playwright browsers
-      uses: actions/cache@v4
-      id: playwright-cache
-      with:
-        path: '~/.cache/ms-playwright'
-        key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}'
-        # As a fallback, if the Playwright version has changed, try use the
-        # most recently cached version. There's a good chance that at least one
-        # of the browser binary versions haven't been updated, so Playwright can
-        # skip installing that in the next step.
-        # Note: When falling back to an old cache, `cache-hit` (used below)
-        # will be `false`. This allows us to restore the potentially out of
-        # date cache, but still let Playwright decide if it needs to download
-        # new binaries or not.
-        restore-keys: |
-          ${{ runner.os }}-playwright-
-
-    # If the Playwright browser binaries weren't able to be restored, we tell
-    # paywright to install everything for us.
     - name: Install Playwright Browsers
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: npx playwright install --with-deps
-
     - name: Download build
       uses: actions/download-artifact@v4
       with:
         name: static-build
         path: static/dist/
-
     - name: Run Playwright tests
       run: bin/start-playwright.sh ${{ matrix.shard }}
     - name: Upload coverage to codecov
