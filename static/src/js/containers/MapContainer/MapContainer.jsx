@@ -147,7 +147,7 @@ export const MapContainer = (props) => {
         onToggleShapefileUploadModal(true)
       } else {
         eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
-        setStartDrawing(null)
+        // setStartDrawing(null)
       }
     }
   }, [startDrawing, mapReady])
@@ -276,11 +276,23 @@ export const MapContainer = (props) => {
     callbackOnChangeMap({ ...newMap })
   }, [projection])
 
+  const handleDrawEnd = useCallback((geometry) => {
+    if (startDrawing) {
+      eventEmitter.emit(mapEventTypes.MOVEMAP, { source: geometry })
+    }
+
+    setStartDrawing(false)
+  }, [setStartDrawing])
+
   // Get the metadata for the currently focused collection, or an empty object if no collection is focused
+<<<<<<< HEAD
   const focusedCollectionMetadata = useMemo(
     () => collectionsMetadata[focusedCollectionId] || {},
     [focusedCollectionId, collectionsMetadata]
   )
+=======
+  const focusedCollectionMetadata = useMemo(()  => collectionsMetadata[focusedCollectionId] || {}, [focusedCollectionId, collectionsMetadata])
+>>>>>>> a6a3f81d1 (EDSC-4386: Close panel when entering spatial, open keyword facet when clicking topic, fixing spatial entry bug for bounding box, point, and circle)
   const { tags } = focusedCollectionMetadata
   const [gibsTag] = getValueForTag('gibs', tags) || []
 
@@ -467,6 +479,7 @@ export const MapContainer = (props) => {
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}
       onClearShapefile={onClearShapefile}
+      onDrawEnd={handleDrawEnd}
       onExcludeGranule={onExcludeGranule}
       onMetricsMap={onMetricsMap}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}

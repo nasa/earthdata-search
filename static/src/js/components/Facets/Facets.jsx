@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { camelCase } from 'lodash-es'
 
@@ -17,8 +17,15 @@ const Facets = (props) => {
     portal,
     onChangeCmrFacet,
     onChangeFeatureFacet,
-    onTriggerViewAllFacets
+    onTriggerViewAllFacets,
+    openKeywordFacet,
+    setOpenKeywordFacet
   } = props
+
+  useEffect(() => {
+    // Reset the value in the context once the component mounts
+    setOpenKeywordFacet(false)
+  }, [])
 
   const featureFacetHandler = (e, facetLinkInfo) => {
     changeFeatureFacet(e, facetLinkInfo, onChangeFeatureFacet)
@@ -89,6 +96,7 @@ const Facets = (props) => {
 
   const keywordsFacet = {
     ...cmrFacetDefaults,
+    applied: openKeywordFacet,
     title: 'Keywords',
     autocompleteType: 'science_keywords',
     options: {

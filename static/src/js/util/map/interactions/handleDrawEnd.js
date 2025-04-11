@@ -29,6 +29,7 @@ const handleDrawEnd = (params, event) => {
     map,
     onChangeQuery,
     onClearShapefile,
+    onDrawEnd,
     onToggleDrawingNewLayer,
     projectionCode,
     spatialType
@@ -46,6 +47,8 @@ const handleDrawEnd = (params, event) => {
 
   // Get the geometry of the drawn feature
   const geometry = event.feature.getGeometry()
+
+  // Const extent = geometry.getExtent()
 
   let flatCoordinates
 
@@ -168,6 +171,9 @@ const handleDrawEnd = (params, event) => {
       }
     }
   })
+
+  // Call any onDrawEnd callback passed to the function
+  onDrawEnd(geometry)
 }
 
 export default handleDrawEnd

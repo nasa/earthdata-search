@@ -4,13 +4,16 @@ import StartDrawingContext from '../../contexts/StartDrawingContext'
 
 const StartDrawingContextProvider = ({ children }) => {
   const [startDrawing, setStartDrawing] = useState()
+  const [openKeywordFacet, setOpenKeywordFacet] = useState()
 
   const providerValue = useMemo(
     () => ({
       startDrawing,
-      setStartDrawing
+      setStartDrawing,
+      openKeywordFacet,
+      setOpenKeywordFacet
     }),
-    [startDrawing]
+    [startDrawing, openKeywordFacet]
   )
 
   return (

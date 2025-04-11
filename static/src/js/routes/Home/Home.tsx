@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { sortBy } from 'lodash-es'
 import Col from 'react-bootstrap/Col'
 import Collapse from 'react-bootstrap/Collapse'
@@ -9,6 +8,7 @@ import Popover from 'react-bootstrap/Popover'
 import Row from 'react-bootstrap/Row'
 import { connect, MapDispatchToProps } from 'react-redux'
 import { withRouter, type RouteComponentProps } from 'react-router-dom'
+import { type Dispatch } from 'redux'
 
 import {
   ArrowCircleDown,
@@ -17,7 +17,8 @@ import {
   // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import { type Dispatch } from 'redux'
+// @ts-expect-error: Types do not exist for this file
+import StartDrawingContext from '../../contexts/StartDrawingContext'
 
 import Button from '../../components/Button/Button'
 // @ts-expect-error: Types do not exist for this file
@@ -158,6 +159,7 @@ type HomeProps = HomeDispatchProps & RouteComponentProps
 
 export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
   const [showAllPortals, setShowAllPortals] = useState(false)
+  const { setOpenKeywordFacet } = useContext(StartDrawingContext)
 
   const onShowAllPortalsClick = () => {
     setShowAllPortals(!showAllPortals)

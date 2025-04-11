@@ -166,7 +166,8 @@ class SearchPanels extends PureComponent {
       onMetricsCollectionSortChange,
       onToggleAboutCSDAModal,
       onToggleAboutCwicModal,
-      preferences
+      preferences,
+      startDrawing
     } = this.props
 
     const loggedIn = isLoggedIn(authToken)
@@ -740,6 +741,9 @@ class SearchPanels extends PureComponent {
 
     const { edscHost } = this
 
+    // If start drawing is set, we want to hide the panel so the user has more space to use the map
+    const showPanel = !startDrawing
+
     return (
       <Switch key="panel-children">
         <Route
@@ -826,7 +830,7 @@ class SearchPanels extends PureComponent {
                   }
                   <Panels
                     className="search-panels"
-                    show
+                    show={showPanel}
                     activePanel={activePanel}
                     draggable
                     panelState={panelState}

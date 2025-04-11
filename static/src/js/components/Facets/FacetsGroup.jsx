@@ -18,6 +18,7 @@ class FacetsGroup extends Component {
     super(props)
 
     const { facet } = props
+
     const { options = {} } = facet
 
     this.state = {
