@@ -7,7 +7,7 @@ import {
 
 import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
 import mapLayers from '../../../constants/mapLayers'
-import projections from '../../../util/map/projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 const setup = (overrideProps) => {
   const props = {
@@ -108,7 +108,7 @@ describe('AdminPreferencesMetricsList component', () => {
             [2, '75% (3)'] // Column Header 10
           ],
           projection: [
-            [projections.geographic, '100% (4)'] // // Column Header 11
+            [projectionCodes.geographic, '100% (4)'] // // Column Header 11
           ],
           overlayLayers: [
             [mapLayers.bordersRoads, '100% (4)'], // Column Header 12
@@ -157,7 +157,7 @@ describe('AdminPreferencesMetricsList component', () => {
     expect(within(tables[7]).getByRole('columnheader', { name: '2' })).toBeInTheDocument()
     expect(within(tables[7]).getByRole('cell', { name: '75% (3)' })).toBeInTheDocument()
 
-    expect(within(tables[8]).getByRole('columnheader', { name: projections.geographic })).toBeInTheDocument()
+    expect(within(tables[8]).getByRole('columnheader', { name: projectionCodes.geographic })).toBeInTheDocument()
     expect(within(tables[8]).getByRole('cell', { name: '100% (4)' })).toBeInTheDocument()
 
     expect(within(tables[9]).getByRole('columnheader', { name: mapLayers.bordersRoads })).toBeInTheDocument()

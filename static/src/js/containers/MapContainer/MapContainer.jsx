@@ -1,6 +1,3 @@
-/* eslint-disable */
-// TODO I'm just disabling eslint here because I want to leave the existing code in place as reference
-
 import React, {
   useCallback,
   useEffect,
@@ -23,7 +20,7 @@ import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 import { getMapPreferences } from '../../selectors/preferences'
 import { isPath } from '../../util/isPath'
 import { locationPropType } from '../../util/propTypes/location'
-import projections from '../../util/map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
@@ -73,7 +70,6 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
-  authToken: state.authToken,
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
   collectionsMetadata: state.metadata.collections,
@@ -97,7 +93,6 @@ export const mapStateToProps = (state) => ({
 export const MapContainer = (props) => {
   const {
     advancedSearch,
-    authToken,
     boundingBoxSearch,
     circleSearch,
     collectionsMetadata,
@@ -110,7 +105,6 @@ export const MapContainer = (props) => {
     granulesMetadata,
     lineSearch,
     map: mapProps,
-    mapPreferences,
     onChangeFocusedGranule,
     onChangeMap,
     onChangeQuery,
@@ -118,8 +112,6 @@ export const MapContainer = (props) => {
     onExcludeGranule,
     onFetchShapefile,
     onMetricsMap,
-    onSaveShapefile,
-    onShapefileErrored,
     onToggleDrawingNewLayer,
     onToggleTooManyPointsModal,
     onToggleShapefileUploadModal,
@@ -161,7 +153,11 @@ export const MapContainer = (props) => {
   // If there is a shapefileId in the store but we haven't fetched the shapefile yet, fetch it
   useEffect(() => {
     if (shapefile) {
-      const { isLoaded, isLoading, shapefileId } = shapefile
+      const {
+        isLoaded,
+        isLoading,
+        shapefileId
+      } = shapefile
 
       if (shapefileId && !isLoaded && !isLoading) onFetchShapefile(shapefileId)
     }
@@ -234,8 +230,8 @@ export const MapContainer = (props) => {
       onMetricsMap: callbackOnMetricsMap
     } = props
 
-    const Projection = Object.keys(projections).find(((key) => (
-      projections[key] === newProjectionCode
+    const Projection = Object.keys(projectionCodes).find(((key) => (
+      projectionCodes[key] === newProjectionCode
     )))
 
     const projectionConfig = projectionConfigs[newProjectionCode]
@@ -262,7 +258,10 @@ export const MapContainer = (props) => {
   }, [projection])
 
   // Get the metadata for the currently focused collection, or an empty object if no collection is focused
-  const focusedCollectionMetadata = useMemo(() => collectionsMetadata[focusedCollectionId] || {}, [focusedCollectionId, collectionsMetadata])
+  const focusedCollectionMetadata = useMemo(
+    () => collectionsMetadata[focusedCollectionId] || {},
+    [focusedCollectionId, collectionsMetadata]
+  )
   const { tags } = focusedCollectionMetadata
   const [gibsTag] = getValueForTag('gibs', tags) || []
 
@@ -294,9 +293,9 @@ export const MapContainer = (props) => {
     } = gibsTag
 
     let resolution
-    if (projection === projections.antarctic) {
+    if (projection === projectionCodes.antarctic) {
       resolution = antarcticResolution
-    } else if (projection === projections.arctic) {
+    } else if (projection === projectionCodes.arctic) {
       resolution = arcticResolution
     } else {
       resolution = geographicResolution
@@ -309,45 +308,6 @@ export const MapContainer = (props) => {
       resolution
     }
   }
-
-  // Projection switching in leaflet is not supported. Here we render MapWrapper with a key of the projection prop.
-  // So when the projection is changed in ProjectionSwitcher this causes the map to unmount and remount a new instance,
-  // which creates the illusion of 'changing' the projection
-  // return (
-  //   <MapWrapper
-  //     key={projection}
-  //     authToken={authToken}
-  //     base={base}
-  //     center={center}
-  //     collectionsMetadata={collectionsMetadata}
-  //     colormapsMetadata={colormapsMetadata}
-  //     drawingNewLayer={drawingNewLayer}
-  //     focusedCollectionId={focusedCollectionId}
-  //     focusedGranuleId={focusedGranuleId}
-  //     granules={nonExcludedGranules}
-  //     granulesMetadata={granulesMetadata}
-  //     imageryCache={imageryCache.current}
-  //     isFocusedCollectionPage={isFocusedCollectionPage}
-  //     isProjectPage={isProjectPage}
-  //     mapProps={mapProps}
-  //     maxZoom={maxZoom}
-  //     onChangeFocusedGranule={onChangeFocusedGranule}
-  //     onChangeMap={onChangeMap}
-  //     onChangeProjection={handleProjectionSwitching}
-  //     onExcludeGranule={onExcludeGranule}
-  //     onFetchShapefile={onFetchShapefile}
-  //     onMetricsMap={onMetricsMap}
-  //     onSaveShapefile={onSaveShapefile}
-  //     onShapefileErrored={onShapefileErrored}
-  //     onToggleTooManyPointsModal={onToggleTooManyPointsModal}
-  //     onUpdateShapefile={onUpdateShapefile}
-  //     overlays={overlays}
-  //     project={project}
-  //     projection={projection}
-  //     shapefile={shapefile}
-  //     zoom={zoom}
-  //   />
-  // )
 
   // Added and removed granule ids for the focused collection are used to apply different
   // styles to the granules. Granules that are added are drawn with a regular style, while
@@ -409,12 +369,16 @@ export const MapContainer = (props) => {
 
       if (type === spatialTypes.POINT) {
         granule.backgroundGranuleStyle = backgroundGranulePointStyle
-        granule.granuleStyle = shouldDrawRegularStyle ? granulePointStyle(index) : deemphisizedGranulePointStyle(index)
         granule.highlightedStyle = highlightedGranulePointStyle(index)
+        granule.granuleStyle = shouldDrawRegularStyle
+          ? granulePointStyle(index)
+          : deemphisizedGranulePointStyle(index)
       } else {
         granule.backgroundGranuleStyle = backgroundGranuleStyle
-        granule.granuleStyle = shouldDrawRegularStyle ? granuleStyle(index) : deemphisizedGranuleStyle(index)
         granule.highlightedStyle = highlightedGranuleStyle(index)
+        granule.granuleStyle = shouldDrawRegularStyle
+          ? granuleStyle(index)
+          : deemphisizedGranuleStyle(index)
       }
 
       let granuleGibsData
@@ -452,7 +416,7 @@ export const MapContainer = (props) => {
     lineSearch,
     pointSearch,
     polygonSearch,
-    showMbr: showMbr || displaySpatialPolygonWarning,
+    showMbr: showMbr || displaySpatialPolygonWarning
   }), [
     advancedSearch,
     boundingBoxSearch,
@@ -501,17 +465,23 @@ export const MapContainer = (props) => {
 }
 
 MapContainer.defaultProps = {
-  map: {}
+  map: {},
+  advancedSearch: {},
+  boundingBoxSearch: undefined,
+  circleSearch: undefined,
+  lineSearch: undefined,
+  pointSearch: undefined,
+  polygonSearch: undefined
 }
 
 MapContainer.propTypes = {
-  authToken: PropTypes.string.isRequired,
+  advancedSearch: PropTypes.shape({}),
+  boundingBoxSearch: PropTypes.arrayOf(PropTypes.string),
+  circleSearch: PropTypes.arrayOf(PropTypes.string),
   collectionsMetadata: PropTypes.shape({}).isRequired,
   colormapsMetadata: PropTypes.shape({}).isRequired,
-  drawingNewLayer: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool
-  ]).isRequired,
+  displaySpatialPolygonWarning: PropTypes.bool.isRequired,
+  drawingNewLayer: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granuleSearchResults: PropTypes.shape({
@@ -520,6 +490,7 @@ MapContainer.propTypes = {
     isOpenSearch: PropTypes.bool
   }).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
+  lineSearch: PropTypes.arrayOf(PropTypes.string),
   map: PropTypes.shape({
     latitude: PropTypes.number,
     longitude: PropTypes.number,
@@ -534,7 +505,8 @@ MapContainer.propTypes = {
       coastlines: PropTypes.bool,
       bordersRoads: PropTypes.bool,
       placeLabels: PropTypes.bool
-    })
+    }),
+    rotation: PropTypes.number
   }),
   mapPreferences: PropTypes.shape({
     latitude: PropTypes.number,
@@ -542,24 +514,38 @@ MapContainer.propTypes = {
     projection: PropTypes.string,
     zoom: PropTypes.number,
     baseLayer: PropTypes.string,
-    overlayLayers: PropTypes.arrayOf(
-      PropTypes.string
-    )
+    overlayLayers: PropTypes.arrayOf(PropTypes.string),
+    rotation: PropTypes.number
   }).isRequired,
   onChangeFocusedGranule: PropTypes.func.isRequired,
   onChangeMap: PropTypes.func.isRequired,
+  onChangeQuery: PropTypes.func.isRequired,
+  onClearShapefile: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFetchShapefile: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onSaveShapefile: PropTypes.func.isRequired,
   onShapefileErrored: PropTypes.func.isRequired,
+  onToggleDrawingNewLayer: PropTypes.func.isRequired,
+  onToggleShapefileUploadModal: PropTypes.func.isRequired,
   onToggleTooManyPointsModal: PropTypes.func.isRequired,
   onUpdateShapefile: PropTypes.func.isRequired,
-  project: PropTypes.shape({}).isRequired,
+  pointSearch: PropTypes.arrayOf(PropTypes.string),
+  polygonSearch: PropTypes.arrayOf(PropTypes.string),
+  project: PropTypes.shape({
+    collections: PropTypes.shape({
+      allIds: PropTypes.arrayOf(PropTypes.string),
+      byId: PropTypes.shape({})
+    })
+  }).isRequired,
   router: PropTypes.shape({
     location: locationPropType
   }).isRequired,
-  shapefile: PropTypes.shape({}).isRequired
+  shapefile: PropTypes.shape({
+    isLoaded: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    shapefileId: PropTypes.string
+  }).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer)

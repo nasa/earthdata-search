@@ -1,12 +1,12 @@
 import WMTSTileGrid from 'ol/tilegrid/WMTS'
 
-import projections from './projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 // For each projection and resolution, returns the number of zoom levels available
 // This data was derived from wv.json. Within that json, `sources.GIBS:geographic.matrixsSets.16km.resolutions`
 // contains the number of zoom levels available for the 16km resolution in the geographic projection (3).
 const resolutionMap = {
-  [projections.geographic]: {
+  [projectionCodes.geographic]: {
     '16km': 3,
     '2km': 6,
     '1km': 7,
@@ -15,13 +15,13 @@ const resolutionMap = {
     '31.25m': 12,
     '15.625m': 13
   },
-  [projections.arctic]: {
+  [projectionCodes.arctic]: {
     '1km': 4,
     '500m': 5,
     '250m': 6,
     '31.25m': 9
   },
-  [projections.antarctic]: {
+  [projectionCodes.antarctic]: {
     '1km': 4,
     '500m': 5,
     '250m': 6
@@ -40,7 +40,7 @@ export const getTileGrid = (projectionCode, resolution) => {
   // and stretching it to fit.
   const resolutionLength = resolutionMap[projectionCode][resolution]
 
-  if (projectionCode === projections.geographic) {
+  if (projectionCode === projectionCodes.geographic) {
     return new WMTSTileGrid({
       origin: [-180, 90],
       // Starting value of 0.5625 is found here
@@ -51,7 +51,7 @@ export const getTileGrid = (projectionCode, resolution) => {
     })
   }
 
-  if (projectionCode === projections.arctic || projectionCode === projections.antarctic) {
+  if (projectionCode === projectionCodes.arctic || projectionCode === projectionCodes.antarctic) {
     return new WMTSTileGrid({
       // Origin and resolution values found here
       // https://github.com/nasa-gibs/gibs-web-examples/blob/main/examples/openlayers/arctic-epsg3413.js

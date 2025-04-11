@@ -10,7 +10,7 @@ import Button from '../Button/Button'
 import PreferencesRadioField from './PreferencesRadioField'
 import PreferencesNumberField from './PreferencesNumberField'
 import PreferencesMultiSelectField from './PreferencesMultiSelectField'
-import projections from '../../util/map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 import './PreferencesForm.scss'
 
@@ -46,7 +46,7 @@ const PreferencesForm = (props) => {
   //  The validate() function is called after the JSON schema validation.
   const customValidate = (formDataObject, errors) => {
     // Projections that aren't geographic have a zoom limit of 12
-    if (formDataObject.mapView.projection !== projections.geographic
+    if (formDataObject.mapView.projection !== projectionCodes.geographic
       && formDataObject.mapView.zoom > 12) {
       errors.mapView.zoom.addError('should be less than or equal to 12')
     }

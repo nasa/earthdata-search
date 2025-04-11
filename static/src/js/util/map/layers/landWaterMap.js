@@ -1,51 +1,51 @@
 import vectorTileLayer from './vectorTileLayer'
 import landWaterMapStyleConfig from './landWaterMap.json'
-import projections from '../projections'
+import projectionCodes from '../../../constants/projectionCodes'
 import gibsLayer from './gibsLayer'
 
 /**
  * Builds the land-water map layer
  * @param {Object} params
- * @param {String} params.attributions
  * @param {String} params.projectionCode
  * @param {String} params.visible
  */
 const landWaterMap = async ({
-  attributions,
   projectionCode,
   visible
 }) => {
-  if (projectionCode === projections.geographic) {
+  if (projectionCode === projectionCodes.geographic) {
+    // https://www.arcgis.com/home/item.html?id=a70340a048224752915ddbed9d2101a7
     return vectorTileLayer({
-      attributions,
+      attributions: 'Sources: Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community',
+      className: 'land-water-layer',
       projectionCode,
       style: landWaterMapStyleConfig,
       visible
     })
   }
 
-  if (projectionCode === projections.arctic) {
+  if (projectionCode === projectionCodes.arctic) {
     return gibsLayer({
-      className: 'edsc-map-landwater-layer',
+      attributions: '&copy; OpenStreetMap contributors',
+      className: 'land-water-layer',
       format: 'image/png',
       layer: 'OSM_Land_Water_Map',
       matrixSet: '250m',
-      projectionCode,
-      visible,
       opacity: 1,
-      attributions
+      projectionCode,
+      visible
     })
   }
 
   return gibsLayer({
-    className: 'edsc-map-landwater-layer',
+    attributions: '&copy; OpenStreetMap contributors',
+    className: 'land-water-layer',
     format: 'image/png',
     layer: 'SCAR_Land_Water_Map',
     matrixSet: '250m',
-    projectionCode,
-    visible,
     opacity: 1,
-    attributions
+    projectionCode,
+    visible
   })
 }
 

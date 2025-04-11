@@ -1,0 +1,23 @@
+@use '../../../css/utils';
+
+.scale-control {
+  &__scale {
+    z-index: 10;
+    right: 0;
+    color: utils.$color__spacesuit-white;
+    background-color: utils.$color__carbon--70;
+    text-shadow: utils.$shadow__panel-dark;
+    border: none;
+    border-left: 2px solid utils.$color__spacesuit-white;
+
+    &--metric {
+      border-bottom: 1px solid utils.$color__spacesuit-white;
+    }
+
+    &--imperial {
+      border-top: 1px solid utils.$color__spacesuit-white;
+      position: relative;
+      top: -1px;
+    }
+  }
+}

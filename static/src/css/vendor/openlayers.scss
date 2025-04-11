@@ -1,0 +1,48 @@
+@use '../utils';
+@use '../vendor/bootstrap/configuration' as bootstrap;
+
+.ol-attribution {
+  font-family: bootstrap.$font-family-sans-serif;
+  font-size: bootstrap.$font-size-base;
+
+  color: utils.$color__carbon--70;
+}
+
+.ol-attribution:not(.ol-collapsed) {
+  background: none;
+}
+
+.ol-control {
+  button {
+    width: 1.75rem;
+    height: 1.75rem;
+    background-color: none;
+    border: none;
+  }
+}
+
+.ol-viewport {
+  .legend {
+    &__bar {
+      margin: 0.125rem;
+      display: block;
+      height: 1rem;
+      width: 15rem;
+      border-radius: 0.125rem;
+      opacity: 0;
+      visibility: visible;
+      transition: opacity 0.2s ease;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+
+      &:hover {
+        cursor: crosshair;
+      }
+    }
+
+    &--is-colormap-rendered .legend__bar {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+}

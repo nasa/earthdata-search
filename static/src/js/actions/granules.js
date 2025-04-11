@@ -324,7 +324,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
 
   // TODO can I replace this with a single page of fetchGranuleLinks? Maybe just the opensearch call
   if (isOpenSearch) {
-    requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment)
+    requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment, collectionId)
 
     const { polygon } = searchParams
 
@@ -460,7 +460,7 @@ export const getProjectGranules = () => (dispatch, getState) => {
 
     // TODO can I replace this with a single page of fetchGranuleLinks?
     if (isOpenSearch) {
-      requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment)
+      requestObject = new OpenSearchGranuleRequest(authToken, earthdataEnvironment, collectionId)
 
       // Provide the correctly named collection id parameter
       searchParams.echoCollectionId = collectionId

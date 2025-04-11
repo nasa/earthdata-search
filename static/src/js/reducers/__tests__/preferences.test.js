@@ -1,7 +1,7 @@
 import preferencesReducer from '../preferences'
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../../constants/actionTypes'
 import mapLayers from '../../constants/mapLayers'
-import projections from '../../util/map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 const initialState = {
   preferences: {
@@ -13,7 +13,7 @@ const initialState = {
       latitude: 0,
       baseLayer: mapLayers.worldImagery,
       longitude: 0,
-      projection: projections.geographic,
+      projection: projectionCodes.geographic,
       overlayLayers: [
         mapLayers.bordersRoads,
         mapLayers.placeLabels

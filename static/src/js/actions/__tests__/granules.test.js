@@ -356,9 +356,11 @@ describe('getSearchGranules', () => {
       expect(storeActions[7]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [{
-          title: 'CWIC Granule',
+          browse_flag: false,
+          collectionConceptId: 'collectionId',
           isOpenSearch: true,
-          browse_flag: false
+          spatial: null,
+          title: 'CWIC Granule'
         }]
       })
 
@@ -367,9 +369,11 @@ describe('getSearchGranules', () => {
         payload: {
           collectionId: 'collectionId',
           results: [{
-            title: 'CWIC Granule',
+            browse_flag: false,
+            collectionConceptId: 'collectionId',
             isOpenSearch: true,
-            browse_flag: false
+            spatial: null,
+            title: 'CWIC Granule'
           }],
           isOpenSearch: true,
           hits: 1,
@@ -470,12 +474,14 @@ describe('getSearchGranules', () => {
         type: ADD_GRANULE_METADATA,
         payload: [{
           browse_flag: false,
+          collectionConceptId: 'collectionId',
           formatted_temporal: [
             '2020-06-09 23:59:59',
             null
           ],
           id: '12345',
           isOpenSearch: true,
+          spatial: null,
           time_start: '2020-06-09T23:59:59Z',
           title: 'CWIC Granule',
           updated: '2020-06-09T23:59:59Z'
@@ -488,12 +494,14 @@ describe('getSearchGranules', () => {
           collectionId: 'collectionId',
           results: [{
             browse_flag: false,
+            collectionConceptId: 'collectionId',
             formatted_temporal: [
               '2020-06-09 23:59:59',
               null
             ],
             id: '12345',
             isOpenSearch: true,
+            spatial: null,
             time_start: '2020-06-09T23:59:59Z',
             title: 'CWIC Granule',
             updated: '2020-06-09T23:59:59Z'
@@ -864,9 +872,11 @@ describe('getProjectGranules', () => {
       expect(storeActions[6]).toEqual({
         type: ADD_GRANULE_METADATA,
         payload: [{
-          title: 'CWIC Granule',
+          browse_flag: false,
+          collectionConceptId: 'C10000000000-EDSC',
           isOpenSearch: true,
-          browse_flag: false
+          spatial: null,
+          title: 'CWIC Granule'
         }]
       })
 
@@ -875,9 +885,11 @@ describe('getProjectGranules', () => {
         payload: {
           collectionId: 'C10000000000-EDSC',
           results: [{
-            title: 'CWIC Granule',
+            browse_flag: false,
+            collectionConceptId: 'C10000000000-EDSC',
             isOpenSearch: true,
-            browse_flag: false
+            spatial: null,
+            title: 'CWIC Granule'
           }],
           isOpenSearch: true,
           hits: 1,

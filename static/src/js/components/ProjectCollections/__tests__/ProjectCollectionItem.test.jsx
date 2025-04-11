@@ -4,7 +4,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import Skeleton from '../../Skeleton/Skeleton'
 import ProjectCollectionItem from '../ProjectCollectionItem'
-import projections from '../../../util/map/projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -29,7 +29,7 @@ function setup(overrideProps) {
     },
     color: 'color',
     map: {
-      projection: projections.geographic
+      projection: projectionCodes.geographic
     },
     index: 0,
     isPanelActive: false,

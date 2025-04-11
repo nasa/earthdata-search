@@ -29,7 +29,7 @@ const setup = (overrides) => {
 
 describe('CollectionDetailsMiniMap component', () => {
   describe('when the collection details mini-map is loaded with metadata', () => {
-    test('calls leaflet to render the map container', () => {
+    test('renders the map container', () => {
       setup()
       const canvasElement = screen.getByTestId('collection-details-minimap')
 

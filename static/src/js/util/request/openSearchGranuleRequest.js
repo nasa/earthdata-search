@@ -5,9 +5,10 @@ import Request from './request'
 
 import { getTemporal } from '../../../../../sharedUtils/edscDate'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import normalizeSpatial from '../map/normalizeSpatial'
 
 export default class OpenSearchGranuleRequest extends Request {
-  constructor(authToken, earthdataEnvironment) {
+  constructor(authToken, earthdataEnvironment, collectionId) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.lambda = true
@@ -26,6 +27,8 @@ export default class OpenSearchGranuleRequest extends Request {
     }
 
     this.searchPath = 'opensearch/granules'
+
+    this.collectionConceptId = collectionId
   }
 
   /**
@@ -214,6 +217,11 @@ export default class OpenSearchGranuleRequest extends Request {
 
           updatedGranule.browse_url = browseUrl
         })
+
+        // Create a GeoJSON representation of the granule spatial
+        updatedGranule.spatial = normalizeSpatial(granule)
+
+        updatedGranule.collectionConceptId = this.collectionConceptId
 
         return updatedGranule
       })

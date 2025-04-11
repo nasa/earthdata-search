@@ -4,7 +4,7 @@ import { getApplicationConfig } from '../../../../sharedUtils/config'
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
 /**
-   * Turns '1,2' into '2,1' for leaflet
+   * Turns '1,2' into '2,1'
    * @param {String} coordinateString A single coordinate representing a point on a map
    */
 export const transformSingleCoordinate = (coordinateString) => {
@@ -14,7 +14,7 @@ export const transformSingleCoordinate = (coordinateString) => {
 }
 
 /**
-   * Turns '1,2,3,4' into ['2,1', '4,3'] for leaflet
+   * Turns '1,2,3,4' into ['2,1', '4,3']
    * @param {String} boundingBoxCoordinates A set of two points representing a bounding box
    */
 // Returns empty strings by default as input fields cannot be set to undefined
@@ -26,7 +26,7 @@ export const transformBoundingBoxCoordinates = (boundingBoxCoordinates) => (
     : ['', ''])
 
 /**
-   * Turns '1,2,3' into ['2,1', '3'] for leaflet
+   * Turns '1,2,3' into ['2,1', '3']
    * @param {String} circleCoordinates A center point and radius
    */
 export const transformCircleCoordinates = (circleCoordinates) => {

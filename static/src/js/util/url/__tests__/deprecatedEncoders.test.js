@@ -1,4 +1,4 @@
-import projections from '../../map/projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 import { decodeDeprecatedMapParam } from '../deprecatedEncoders'
 
@@ -23,7 +23,7 @@ describe('url#decodeUrlParams', () => {
         coastlines: false,
         placeLabels: true
       },
-      projection: projections.arctic,
+      projection: projectionCodes.arctic,
       zoom: 2
     }
     expect(decodeDeprecatedMapParam('0!0!2!0!1!0,2')).toEqual(expectedResult)

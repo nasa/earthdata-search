@@ -134,9 +134,9 @@ const setup = (overrides) => {
   }
 }
 
-describe('CollectionDetailsBody component', () => {
+describe('RelatedUrlsModal component', () => {
   describe('when the relatedUrls Modal has relatedUrls', () => {
-    test('calls leaflet to render map with correct props', () => {
+    test('renders correctly', () => {
       setup()
 
       expect(screen.getByText('Related URLs')).toBeInTheDocument()
@@ -144,7 +144,7 @@ describe('CollectionDetailsBody component', () => {
   })
 
   describe('when the isOpen prop for the Modal is off', () => {
-    test('calls leaflet to render map with correct props', () => {
+    test('renders correctly', () => {
       setup({
         overrideProps: {
           isOpen: false
@@ -158,7 +158,7 @@ describe('CollectionDetailsBody component', () => {
   })
 
   describe('when the related urls is empty', () => {
-    test('calls leaflet to render map with correct props', () => {
+    test('renders correctly', () => {
       setup({
         overrideMetadata: {
           relatedUrls: []
@@ -172,7 +172,7 @@ describe('CollectionDetailsBody component', () => {
   })
 
   describe('when the related urls is null', () => {
-    test('calls leaflet to render map with correct props', () => {
+    test('renders correctly', () => {
       setup({
         overrideMetadata: {
           relatedUrls: null

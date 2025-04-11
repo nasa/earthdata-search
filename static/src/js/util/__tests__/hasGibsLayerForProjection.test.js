@@ -1,4 +1,4 @@
-import projections from '../map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 import hasGibsLayerForProjection from '../hasGibsLayerForProjection'
 
 describe('hasGibsLayerForProjection test', () => {
@@ -9,7 +9,7 @@ describe('hasGibsLayerForProjection test', () => {
       antarctic: null
     }
 
-    expect(hasGibsLayerForProjection(gibsLayer, projections.arctic)).toBe(false)
+    expect(hasGibsLayerForProjection(gibsLayer, projectionCodes.arctic)).toBe(false)
   })
 
   test('returns true with valid arctic value', () => {
@@ -19,7 +19,7 @@ describe('hasGibsLayerForProjection test', () => {
       antarctic: null
     }
 
-    expect(hasGibsLayerForProjection(gibsLayer, 'epsg3413')).toBeTruthy()
+    expect(hasGibsLayerForProjection(gibsLayer, projectionCodes.arctic)).toBeTruthy()
   })
 })
 
@@ -31,17 +31,17 @@ describe('hasGibsLayerForProjection test for geographic/antarctic values', () =>
       antarctic: null
     }
 
-    expect(hasGibsLayerForProjection(gibsLayer, 'epsg4326')).toBeTruthy()
+    expect(hasGibsLayerForProjection(gibsLayer, projectionCodes.geographic)).toBeTruthy()
   })
 
-  test('returns true with invalid antarctic value', () => {
+  test('returns true with valid antarctic value', () => {
     const gibsLayer = {
       arctic: null,
       geographic: null,
       antarctic: true
     }
 
-    expect(hasGibsLayerForProjection(gibsLayer, 'epsg3031')).toBeTruthy()
+    expect(hasGibsLayerForProjection(gibsLayer, projectionCodes.antarctic)).toBeTruthy()
   })
 
   test('returns false with invalid antarctic value', () => {

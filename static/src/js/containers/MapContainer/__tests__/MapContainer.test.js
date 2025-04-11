@@ -45,6 +45,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
+  test('onClearShapefile calls actions.clearShapefile', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'clearShapefile')
+
+    mapDispatchToProps(dispatch).onClearShapefile({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
   test('onExcludeGranule calls actions.excludeGranule', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'excludeGranule')
@@ -105,6 +115,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledWith({ mock: 'data' })
   })
 
+  test('onToggleShapefileUploadModal calls actions.toggleShapefileUploadModal', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'toggleShapefileUploadModal')
+
+    mapDispatchToProps(dispatch).onToggleShapefileUploadModal({ mock: 'data' })
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith({ mock: 'data' })
+  })
+
   test('onToggleTooManyPointsModal calls actions.toggleTooManyPointsModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleTooManyPointsModal')
@@ -130,7 +150,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      authToken: 'mock-token',
       metadata: {
         collections: {},
         colormaps: {}
@@ -158,7 +177,6 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      authToken: 'mock-token',
       boundingBoxSearch: undefined,
       circleSearch: undefined,
       collectionsMetadata: {},

@@ -1,0 +1,9 @@
+@use '../../../css/utils';
+
+button.map-button {
+  width: 1.75rem;
+  height: 1.75rem;
+
+  // Using this hex to match the projection switcher sprite
+  color: #404040;
+}

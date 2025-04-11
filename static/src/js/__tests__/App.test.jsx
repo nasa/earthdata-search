@@ -7,12 +7,6 @@ import { render, waitFor } from '@testing-library/react'
 import * as AppConfig from '../../../../sharedUtils/config'
 import App from '../App'
 
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {}),
-  createControlComponent: jest.fn().mockImplementation(() => {})
-}))
-
 // Mock App components routes and containers
 jest.mock('../routes/Admin/Admin', () => () => {
   const MockedAdmin = () => <div data-testid="mocked-admin" />

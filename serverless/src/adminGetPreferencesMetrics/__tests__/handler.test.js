@@ -3,7 +3,7 @@ import mockKnex from 'mock-knex'
 import * as getDbConnection from '../../util/database/getDbConnection'
 import adminGetPreferencesMetrics from '../handler'
 import mapLayers from '../../../../static/src/js/constants/mapLayers'
-import projections from '../../../../static/src/js/util/map/projections'
+import projectionCodes from '../../../../static/src/js/constants/projectionCodes'
 
 let dbTracker
 
@@ -42,7 +42,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 0,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [
                   mapLayers.bordersRoads,
                   mapLayers.placeLabels
@@ -62,7 +62,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 0,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -117,7 +117,7 @@ describe('adminGetPreferencesMetrics', () => {
             ['0', '100% (2)']
           ],
           projection: [
-            [projections.geographic, '100% (2)']
+            [projectionCodes.geographic, '100% (2)']
           ],
           overlayLayers: [
             [mapLayers.bordersRoads, '100% (2)'],
@@ -144,7 +144,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 0,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -161,7 +161,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 0,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -233,8 +233,8 @@ describe('adminGetPreferencesMetrics', () => {
             ['not set (0)', '50.0% (2)']
           ],
           projection: [
-            [projections.geographic, '50.0% (2)'],
-            [`not set (${projections.geographic})`, '50.0% (2)']
+            [projectionCodes.geographic, '50.0% (2)'],
+            [`not set (${projectionCodes.geographic})`, '50.0% (2)']
           ],
           overlayLayers: [
             [mapLayers.bordersRoads, '50.0% (2)'],
@@ -263,7 +263,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 0,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -280,7 +280,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 1,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -297,7 +297,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 2,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -314,7 +314,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 3,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -331,7 +331,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 4,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -348,7 +348,7 @@ describe('adminGetPreferencesMetrics', () => {
                 latitude: 5,
                 baseLayer: mapLayers.worldImagery,
                 longitude: 0,
-                projection: projections.geographic,
+                projection: projectionCodes.geographic,
                 overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels]
               },
               panelState: 'open',
@@ -424,8 +424,8 @@ describe('adminGetPreferencesMetrics', () => {
             ['not set (0)', '25.0% (2)']
           ],
           projection: [
-            [projections.geographic, '75.0% (6)'],
-            [`not set (${projections.geographic})`, '25.0% (2)']
+            [projectionCodes.geographic, '75.0% (6)'],
+            [`not set (${projectionCodes.geographic})`, '25.0% (2)']
           ],
           overlayLayers: [
             [mapLayers.bordersRoads, '75.0% (6)'],

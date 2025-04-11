@@ -18,14 +18,12 @@ import {
 import { Fill } from 'ol/style'
 import { transform } from 'ol/proj'
 import { View } from 'ol'
-import Attribution from 'ol/control/Attribution'
 import LayerGroup from 'ol/layer/Group'
 import MapBrowserEventType from 'ol/MapBrowserEventType'
 import MapEventType from 'ol/MapEventType'
 import OlMap from 'ol/Map'
 import PointerEventType from 'ol/pointer/EventType'
 import RenderEventType from 'ol/render/EventType'
-import ScaleLine from 'ol/control/ScaleLine'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 
@@ -44,7 +42,7 @@ import {
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
-import { LegendControl } from '../Legend/LegendControl'
+import LegendControl from './LegendControl'
 import MapControls from './MapControls'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
@@ -71,7 +69,7 @@ import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
 import onClickMap from '../../util/map/interactions/onClickMap'
 import onClickShapefile from '../../util/map/interactions/onClickShapefile'
-import projections from '../../util/map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 import worldImagery from '../../util/map/layers/worldImagery'
 import bordersRoads from '../../util/map/layers/bordersRoads'
 import coastlines from '../../util/map/layers/coastlines'
@@ -83,16 +81,12 @@ import { eventEmitter } from '../../events/events'
 import 'ol/ol.css'
 import './Map.scss'
 
-// TODO Data attributions
-
 let previousGranulesKey
 let previousProjectionCode
 let layersAdded = false
 
 // Render the times icon to an SVG string for use in the focused granule overlay
 const timesIconSvg = renderToString(<EDSCIcon icon={Close} />)
-
-const esriAttribution = 'Powered by <a href="https://www.esri.com/" target="_blank">ESRI</a>'
 
 // Layer for granule backgrounds
 const granuleBackgroundsSource = new VectorSource({
@@ -101,7 +95,8 @@ const granuleBackgroundsSource = new VectorSource({
 })
 const granuleBackgroundsLayer = new VectorLayer({
   source: granuleBackgroundsSource,
-  className: 'edsc-granules-vector-layer'
+  className: 'map__granules-backgrounds-layer',
+  zIndex: 1
 })
 
 // Layer for granule outlines
@@ -111,7 +106,7 @@ const granuleOutlinesSource = new VectorSource({
 })
 const granuleOutlinesLayer = new VectorLayer({
   source: granuleOutlinesSource,
-  className: 'edsc-granules-outlines-layer',
+  className: 'map__granules-outlines-layer',
   zIndex: 4
 })
 
@@ -122,7 +117,7 @@ const granuleHighlightsSource = new VectorSource({
 })
 const granuleHighlightsLayer = new VectorLayer({
   source: granuleHighlightsSource,
-  className: 'edsc-granules-highlights-layer',
+  className: 'map__granules-highlights-layer',
   zIndex: 4
 })
 
@@ -133,7 +128,7 @@ const focusedGranuleSource = new VectorSource({
 })
 const focusedGranuleLayer = new VectorLayer({
   source: focusedGranuleSource,
-  className: 'edsc-granules-focus-layer',
+  className: 'map__granules-focus-layer',
   zIndex: 4
 })
 
@@ -143,7 +138,7 @@ const spatialDrawingSource = new VectorSource({
 })
 const spatialDrawingLayer = new VectorLayer({
   source: spatialDrawingSource,
-  className: 'edsc-spatial-drawing-layer',
+  className: 'map__spatial-drawing-layer',
   zIndex: 4
 })
 
@@ -178,7 +173,7 @@ const createView = ({
   const { latitude, longitude } = center || projectionConfig.center
   const reprojectedCenter = transform(
     [longitude, latitude],
-    crsProjections[projections.geographic],
+    crsProjections[projectionCodes.geographic],
     projection
   )
 
@@ -200,18 +195,6 @@ const createView = ({
 
   return view
 }
-
-const scaleMetric = new ScaleLine({
-  className: 'edsc-map-scale-metric',
-  units: 'metric'
-})
-const scaleImperial = new ScaleLine({
-  className: 'edsc-map-scale-imperial',
-  units: 'imperial'
-})
-const attribution = new Attribution({
-  collapsible: false
-})
 
 // Clear the focused granule source
 const clearFocusedGranuleSource = (map) => {
@@ -301,9 +284,6 @@ const Map = ({
   useEffect(() => {
     const map = new OlMap({
       controls: [
-        attribution,
-        scaleMetric,
-        scaleImperial,
         new LegendControl({
           colorMap,
           isFocusedCollectionPage
@@ -360,7 +340,7 @@ const Map = ({
         geometryFunction = boundingBoxGeometryFunction
       }
 
-      if (spatialType === spatialTypes.CIRCLE && projectionCode === projections.geographic) {
+      if (spatialType === spatialTypes.CIRCLE && projectionCode === projectionCodes.geographic) {
         // We only need this special geometry function for circles in geographic projection
         geometryFunction = circleGeometryFunction
       }
@@ -429,7 +409,7 @@ const Map = ({
         const newReprojectedCenter = transform(
           newCenter,
           view.getProjection(),
-          crsProjections[projections.geographic]
+          crsProjections[projectionCodes.geographic]
         );
 
         [newLongitude, newLatitude] = newReprojectedCenter
@@ -491,7 +471,7 @@ const Map = ({
       // If a shape was passed, use the extent of that shape
       if (shape) {
         const shapeInProjection = shape.transform(
-          crsProjections[projections.geographic],
+          crsProjections[projectionCodes.geographic],
           crsProjections[projectionCode]
         )
 
@@ -560,43 +540,37 @@ const Map = ({
     const buildLayers = async () => {
       // Build the worldImagery layer
       const worldImageryLayer = worldImagery({
-        attributions: esriAttribution,
-        projectionCode: projections.geographic,
+        projectionCode: projectionCodes.geographic,
         visible: base.worldImagery
       })
 
       // Build the trueColor Layer
       const trueColorLayer = trueColor({
-        attributions: 'NASA EOSDIS GIBS',
         projectionCode,
         visible: base.trueColor
       })
 
       // Build the landWater Layer
       const landWaterMapLayer = await landWaterMap({
-        attributions: esriAttribution,
         projectionCode,
         visible: base.landWaterMap
       })
 
       // Build the bordersRoads Layer
       const bordersRoadsLayer = bordersRoads({
-        attributions: esriAttribution,
         projectionCode,
         visible: overlays.bordersRoads
       })
 
       // Build the coastlines Layer
       const coastlinesLayer = coastlines({
-        attributions: esriAttribution,
         projectionCode,
         visible: overlays.coastlines
       })
 
       // Build the placeLabels layer
       const placeLabelsLayer = await labelsLayer({
-        attributions: esriAttribution,
-        projectionCode: projections.geographic,
+        projectionCode,
         visible: overlays.placeLabels
       })
 
@@ -609,11 +583,15 @@ const Map = ({
       overlayLayers[mapLayers.placeLabels] = placeLabelsLayer
 
       Object.keys(baseLayers).forEach((layerId) => {
-        mapRef.current.addLayer(baseLayers[layerId])
+        if (baseLayers[layerId]) {
+          mapRef.current.addLayer(baseLayers[layerId])
+        }
       })
 
       Object.keys(overlayLayers).forEach((layerId) => {
-        mapRef.current.addLayer(overlayLayers[layerId])
+        if (overlayLayers[layerId]) {
+          mapRef.current.addLayer(overlayLayers[layerId])
+        }
       })
     }
 
@@ -647,13 +625,13 @@ const Map = ({
 
         // Update all base layer visibility
         Object.keys(baseLayers).forEach((layerId) => {
-          baseLayers[layerId].setVisible(newBase[layerId])
+          baseLayers[layerId]?.setVisible(newBase[layerId])
         })
       }
 
       // Handle overlay layers
       if (id in overlayLayers) {
-        overlayLayers[id].setVisible(checked)
+        overlayLayers[id]?.setVisible(checked)
 
         // Update the corresponding property in overlays state
         newOverlays[id] = checked
@@ -683,7 +661,8 @@ const Map = ({
       PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
       projectionCode,
       setIsLayerSwitcherOpen,
-      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />)
+      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />),
+      showDrawingControls: !isProjectPage
     })
 
     mapRef.current.addControl(mapControls)
@@ -819,8 +798,7 @@ const Map = ({
     if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
       controls.push(
         new LegendControl({
-          colorMap,
-          isFocusedCollectionPage
+          colorMap
         })
       )
     }
@@ -873,7 +851,7 @@ const Map = ({
 
     // If the difference in pixels is not 0, adjust the center of the map
     if (diffInPixels !== 0) {
-      if (projectionCode === projections.geographic) {
+      if (projectionCode === projectionCodes.geographic) {
         // In the geographic projection adjust the longitude of the center
 
         // Generate the new center longitude
@@ -898,7 +876,7 @@ const Map = ({
         const [newLongitude, newLatitude] = transform(
           updatedProjectionCenter,
           crsProjections[projectionCode],
-          crsProjections[projections.geographic]
+          crsProjections[projectionCodes.geographic]
         )
 
         newCenter = {

@@ -6,10 +6,10 @@ import Button from '../../Button/Button'
 import ProjectCollections from '../ProjectCollections'
 import ProjectCollectionsList from '../ProjectCollectionsList'
 import ProjectHeader from '../ProjectHeader'
-import projections from '../../../util/map/projections'
 
 import * as isProjectValid from '../../../util/isProjectValid'
 import { validAccessMethod } from '../../../util/accessMethods'
+import projectionCodes from '../../../constants/projectionCodes'
 
 Enzyme.configure({ adapter: new Adapter() })
 
@@ -27,7 +27,7 @@ function setup(overrideProps = {}) {
       pageNum: 1
     },
     map: {
-      projection: projections.geographic
+      projection: projectionCodes.geographic
     },
     project: {
       collections: {

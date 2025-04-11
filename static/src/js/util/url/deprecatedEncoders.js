@@ -1,4 +1,4 @@
-import projections from '../map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 /**
  * Decode the deprecated map parameter
@@ -20,9 +20,9 @@ export const decodeDeprecatedMapParam = (param) => {
   const decodedZoomFromMParam = parseFloat(zoomFromMParam)
 
   const formattedProjectionList = [
-    projections.arctic,
-    projections.geographic,
-    projections.antarctic
+    projectionCodes.arctic,
+    projectionCodes.geographic,
+    projectionCodes.antarctic
   ]
 
   const decodedProjectionFromMParam = formattedProjectionList[projectionFromMParam]

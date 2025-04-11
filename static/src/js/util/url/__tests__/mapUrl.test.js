@@ -1,4 +1,4 @@
-import projections from '../../map/projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 import { decodeUrlParams, encodeUrlQuery } from '../url'
 
@@ -287,7 +287,7 @@ describe('url#encodeUrlQuery', () => {
           coastlines: false,
           placeLabels: true
         },
-        projection: projections.geographic,
+        projection: projectionCodes.geographic,
         rotation: 0,
         zoom: 3
       }
@@ -349,7 +349,7 @@ describe('url#encodeUrlQuery', () => {
             mapLayers.bordersRoads,
             mapLayers.placeLabels
           ],
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           rotation: 1,
           zoom: 4
         }
@@ -384,7 +384,7 @@ describe('url#encodeUrlQuery', () => {
           overlayLayers: [
             mapLayers.bordersRoads
           ],
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           rotation: 1,
           zoom: 4
         }

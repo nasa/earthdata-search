@@ -11,11 +11,6 @@ import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/P
 import AdvancedSearchModalContainer from '../../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import actions from '../../../actions'
 
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {})
-}))
-
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {

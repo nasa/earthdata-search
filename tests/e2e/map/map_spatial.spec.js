@@ -31,16 +31,15 @@ import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 import reachSearchBody from './__mocks__/reach_search.body.json'
 
 const screenshotClip = {
-  x: 930,
+  x: 940,
   y: 90,
-  width: 425,
-  height: 700
+  width: 415,
+  height: 640
 }
 
 test.describe('Map: Spatial interactions', () => {
-  test.beforeEach(async ({ page, context, browserName }) => {
+  test.beforeEach(async ({ page, context }) => {
     await setupTests({
-      browserName,
       context,
       page
     })
@@ -70,10 +69,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -115,10 +115,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'Search by spatial coordinate' }).click()
@@ -159,10 +160,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -217,10 +219,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the point spatial type
           await page.getByRole('link', { name: 'Draw a coordinate on the map to select a spatial extent' }).click()
@@ -280,10 +283,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -330,10 +334,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'Search by spatial circle' }).click()
@@ -376,10 +381,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -506,10 +512,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -554,10 +561,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'Search by spatial rectangle' }).click()
@@ -601,10 +609,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -729,10 +738,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -790,7 +800,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
+
+          // Wait for the map to load
+          await initialMapPromise
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'Search by spatial polygon' }).click()
@@ -856,7 +870,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/')
+
+          // Wait for the map to load
+          await initialMapPromise
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -916,10 +934,11 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('when drawing advanced search spatial', () => {
       test.beforeEach(async ({ page }) => {
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         await page.getByRole('button', { name: 'Advanced search' }).click()
       })
@@ -1060,10 +1079,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1105,10 +1125,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'Search by spatial coordinate' }).click()
@@ -1149,10 +1170,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1201,10 +1223,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1251,10 +1274,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'Search by spatial circle' }).click()
@@ -1297,10 +1321,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1356,10 +1381,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1404,10 +1430,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'Search by spatial rectangle' }).click()
@@ -1451,10 +1478,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1507,10 +1535,11 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Wait for the map to load
-          await page.waitForSelector('.edsc-map-base-layer')
+          await initialMapPromise
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -1611,10 +1640,11 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('when drawing advanced search spatial', () => {
       test.beforeEach(async ({ page }) => {
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
 
         await page.getByRole('button', { name: 'Advanced search' }).click()
       })
@@ -1803,10 +1833,11 @@ test.describe('Map: Spatial interactions', () => {
         })
       })
 
+      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
       await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&lat=-6.300790127755789&long=45.26748690488419&zoom=5.925373594462485&tl=1622520000!3!!`)
 
       // Wait for the map to load
-      await page.waitForSelector('.edsc-map-base-layer')
+      await initialMapPromise
     })
 
     test('displays a hint about using a bounding box instead of polygon and an MBR on the map', async ({ page }) => {
