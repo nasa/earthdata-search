@@ -12,26 +12,9 @@ jobs:
         matrix:
           node-version: ['lts/jod']
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache node modules
-      uses: actions/cache@v4
-      env:
-        cache-name: cache-node-modules
-      with:
-        # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Install dependencies
-      run: npm ci
+    - name: Setup
+      uses: ./.github/actions/npm-setup
+
     - name: Run eslint
       run: npm run lint
   jest:
@@ -42,30 +25,9 @@ jobs:
           node-version: ['lts/jod']
           shard: [1/3, 2/3, 3/3]
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache node modules
-      uses: actions/cache@v4
-      env:
-        cache-name: cache-node-modules
-      with:
-        # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Install dependencies
-      run: npm ci
-    - name: Copy secrets example file
-      run: npm run copy-secrets
-    - name: Prepare for jest tests
-      run: npm run jest:prepare-ci
+    - name: Setup
+      uses: ./.github/actions/npm-setup
+
     - name: Run Jest tests
       run: npm run silent-test -- --shard=${{ matrix.shard }}
     - name: Upload coverage to codecov
@@ -80,30 +42,8 @@ jobs:
         matrix:
           node-version: ['lts/jod']
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache node modules
-      uses: actions/cache@v4
-      env:
-        cache-name: cache-node-modules
-      with:
-        # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Install dependencies
-      run: npm ci
-    - name: Copy secrets example file
-      run: npm run copy-secrets
-    - name: Prepare for Playwright tests
-      run: npm run playwright:prepare-ci
+    - name: Setup
+      uses: ./.github/actions/npm-setup
 
     - name: Run build
       run: npm run prestart-ci
@@ -132,30 +72,9 @@ jobs:
             6/6
           ]
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-    - name: Cache node modules
-      uses: actions/cache@v4
-      env:
-        cache-name: cache-node-modules
-      with:
-        # npm cache files are stored in `~/.npm` on Linux/macOS
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
-    - name: Install dependencies
-      run: npm ci
-    - name: Copy secrets example file
-      run: npm run copy-secrets
-    - name: Prepare for Playwright tests
-      run: npm run playwright:prepare-ci
+    - name: Setup
+      uses: ./.github/actions/npm-setup
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Download build
