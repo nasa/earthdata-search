@@ -1,5 +1,5 @@
 import { UPDATE_MAP, RESTORE_FROM_URL } from '../constants/actionTypes'
-import projections from '../util/map/projections'
+import projectionCodes from '../constants/projectionCodes'
 
 export const initialState = {
   base: {
@@ -14,7 +14,7 @@ export const initialState = {
     coastlines: false,
     placeLabels: true
   },
-  projection: projections.geographic,
+  projection: projectionCodes.geographic,
   rotation: 0,
   zoom: 3
 }

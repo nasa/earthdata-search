@@ -36,18 +36,24 @@ import granuleCrossingGranulesHeaders from './__mocks__/cmr_granules/granule_cro
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 
 const screenshotClip = {
-  x: 930,
+  x: 940,
   y: 90,
-  width: 425,
-  height: 700
+  width: 415,
+  height: 640
 }
 
-const temporalLabelClass = '.edsc-map__focused-granule-overlay__granule-label-temporal'
+const colormapScreenshotClip = {
+  x: 1135,
+  y: 92,
+  width: 252,
+  height: 47
+}
+
+const temporalLabelClass = '.map__focused-granule-overlay__granule-label-temporal'
 
 test.describe('Map: Granule interactions', () => {
-  test.beforeEach(async ({ page, context, browserName }) => {
+  test.beforeEach(async ({ page, context }) => {
     await setupTests({
-      browserName,
       context,
       page
     })
@@ -107,10 +113,11 @@ test.describe('Map: Granule interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
         await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&lat=-6.34&long=44.58&zoom=6`)
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
       })
 
       test.describe('When hovering over a granule', () => {
@@ -140,6 +147,7 @@ test.describe('Map: Granule interactions', () => {
             })
           })
 
+          const focusedPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
           await page.locator('.map').click({
             force: true,
             position: {
@@ -147,6 +155,8 @@ test.describe('Map: Granule interactions', () => {
               y: 350
             }
           })
+
+          await focusedPromise
 
           // The is a 250ms duration for fitting the granule to the view area
           await page.waitForTimeout(250)
@@ -179,7 +189,13 @@ test.describe('Map: Granule interactions', () => {
             // Drag the map
             await page.mouse.move(1000, 500)
             await page.mouse.down()
-            await page.mouse.move(1000, 600)
+
+            // Wait just a little before moving the mouse
+            await page.waitForTimeout(100)
+            await page.mouse.move(1000, 600, { steps: 3 })
+
+            // Wait just a little before releasing the mouse
+            await page.waitForTimeout(100)
             await page.mouse.up()
 
             await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
@@ -192,14 +208,16 @@ test.describe('Map: Granule interactions', () => {
 
         test.describe('when zooming the map', () => {
           test('does not remove the focused granule', async ({ page }) => {
+            const zoomPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
+
             // Zoom the map
-            await page.locator('.edsc-map-zoom-in').click()
+            await page.getByRole('button', { name: 'Zoom In' }).click()
 
             await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
 
             // Wait for the map animation to complete
             await page.waitForURL(/zoom=7/)
-            await page.waitForTimeout(500)
+            await zoomPromise
 
             await expect(page).toHaveScreenshot('focused-granule-zoomed.png', {
               clip: screenshotClip
@@ -303,21 +321,17 @@ test.describe('Map: Granule interactions', () => {
         })
       })
 
+      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
       await page.goto('search/granules?p=C1996881146-POCLOUD')
 
       // Wait for the map to load
-      await page.waitForSelector('.edsc-map-base-layer')
+      await initialMapPromise
     })
 
     test('displays the color map on the page', async ({ page }) => {
       await page.getByTestId('legend').scrollIntoViewIfNeeded()
       await expect(page).toHaveScreenshot('colormap-screenshot.png', {
-        clip: {
-          x: 1135,
-          y: 85,
-          width: 252,
-          height: 47
-        }
+        clip: colormapScreenshotClip
       })
 
       await expect(page.getByTestId('legend-label-min')).toHaveText('0 – 1 %')
@@ -355,12 +369,7 @@ test.describe('Map: Granule interactions', () => {
           await expect(page.getByTestId('timeline')).toBeInViewport()
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
-            clip: {
-              x: 1135,
-              y: 85,
-              width: 252,
-              height: 47
-            }
+            clip: colormapScreenshotClip
           })
 
           await expect(page.getByTestId('legend-label-min')).toHaveText('0.00 – 0.12 DU')
@@ -438,10 +447,11 @@ test.describe('Map: Granule interactions', () => {
         }
       })
 
+      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/4/)
       await page.goto('/search/granules?p=C1258816710-ASDC_DEV2&pg[0][v]=f&pg[0][id]=PREFIRE_SAT1_2B-ATM_S02_R00_20210101190614_00013.nc&pg[0][gsk]=-start_date&ee=uat&g=G1259235357-ASDC_DEV2&q=C1258816710-ASDC_DEV&tl=1731348943!3!!&lat=58.66663295801644&long=169.857421875&zoom=5')
 
       // Wait for the map to load
-      await page.waitForSelector('.edsc-map-base-layer')
+      await initialMapPromise
     })
 
     test.describe('when hovering over the granule', () => {
@@ -524,10 +534,11 @@ test.describe('Map: Granule interactions', () => {
           })
         })
 
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
 
         // Wait for the map to load
-        await page.waitForSelector('.edsc-map-base-layer')
+        await initialMapPromise
       })
 
       test('does not draw the lower granule\'s imagery through the transparent pieces of the top granule', async ({ page }) => {

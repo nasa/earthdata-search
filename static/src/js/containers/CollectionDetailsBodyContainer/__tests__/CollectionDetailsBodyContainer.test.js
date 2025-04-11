@@ -9,11 +9,6 @@ import {
   mapStateToProps
 } from '../CollectionDetailsBodyContainer'
 
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {})
-}))
-
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {

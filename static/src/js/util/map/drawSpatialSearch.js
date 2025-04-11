@@ -10,7 +10,7 @@ import { splitListOfPoints } from '@edsc/geo-utils'
 
 import { crsProjections } from './crs'
 import { interpolateBoxPolygon, interpolatePolygon } from './normalizeSpatial'
-import projections from './projections'
+import projectionCodes from '../../constants/projectionCodes'
 import {
   spatialSearchMarkerStyle,
   mbrStyle,
@@ -70,7 +70,7 @@ const drawSpatialSearch = ({
           const line = new LineString(lineCoordinates)
 
           const lineInProjection = line.transform(
-            crsProjections[projections.geographic],
+            crsProjections[projectionCodes.geographic],
             crsProjections[projectionCode]
           )
 
@@ -86,7 +86,7 @@ const drawSpatialSearch = ({
           const polygon = new Polygon([polygonCoordinates])
 
           const polygonInProjection = polygon.transform(
-            crsProjections[projections.geographic],
+            crsProjections[projectionCodes.geographic],
             crsProjections[projectionCode]
           )
 
@@ -118,7 +118,7 @@ const drawSpatialSearch = ({
 
     let polygonInProjection
 
-    if (projectionCode === projections.geographic) {
+    if (projectionCode === projectionCodes.geographic) {
       // The coordinates are already in the geographic projection
       polygonInProjection = new Polygon([polygonCoordinates])
     } else {
@@ -129,7 +129,7 @@ const drawSpatialSearch = ({
 
       // Ensure the polygon is in the correct projection
       polygonInProjection = polygon.transform(
-        crsProjections[projections.geographic],
+        crsProjections[projectionCodes.geographic],
         crsProjections[projectionCode]
       )
     }
@@ -151,7 +151,7 @@ const drawSpatialSearch = ({
     // Create the circular polygon. 64 is the number of points in the circle
     const circle = circular([lon, lat], radiusInMeters, 64)
     const circleInProjection = circle.transform(
-      crsProjections[projections.geographic],
+      crsProjections[projectionCodes.geographic],
       crsProjections[projectionCode]
     )
 
@@ -170,9 +170,9 @@ const drawSpatialSearch = ({
     let pointInProjection = point
 
     // If the projection is not geographic, transform the point to the current projection
-    if (projectionCode !== projections.geographic) {
+    if (projectionCode !== projectionCodes.geographic) {
       pointInProjection = point.transform(
-        crsProjections[projections.geographic],
+        crsProjections[projectionCodes.geographic],
         crsProjections[projectionCode]
       )
     }
@@ -209,9 +209,9 @@ const drawSpatialSearch = ({
     let polygonInProjection = polygon
 
     // If the projection is not geographic, transform the polygon to the current projection
-    if (projectionCode !== projections.geographic) {
+    if (projectionCode !== projectionCodes.geographic) {
       polygonInProjection = polygon.transform(
-        crsProjections[projections.geographic],
+        crsProjections[projectionCodes.geographic],
         crsProjections[projectionCode]
       )
     }
@@ -247,9 +247,9 @@ const drawSpatialSearch = ({
       let polygonInProjection = polygon
 
       // If the projection is not geographic, transform the polygon to the current projection
-      if (projectionCode !== projections.geographic) {
+      if (projectionCode !== projectionCodes.geographic) {
         polygonInProjection = polygon.transform(
-          crsProjections[projections.geographic],
+          crsProjections[projectionCodes.geographic],
           crsProjections[projectionCode]
         )
       }

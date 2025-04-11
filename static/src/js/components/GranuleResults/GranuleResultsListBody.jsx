@@ -150,7 +150,7 @@ export const GranuleResultsListBody = ({
       listRef.current.scrollToItem({
         rowIndex,
         columnIndex
-      }, 'auto')
+      }, 'center')
     }
   }, [listRef.current])
 
@@ -170,9 +170,8 @@ export const GranuleResultsListBody = ({
 
       listRef.current.scrollToItem({
         rowIndex: rowIndex === 0 ? 0 : rowIndex + 1,
-        columnIndex,
-        align: 'center'
-      })
+        columnIndex
+      }, 'center')
     }
   }
 

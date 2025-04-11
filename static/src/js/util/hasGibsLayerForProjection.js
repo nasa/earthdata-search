@@ -1,9 +1,9 @@
-import projections from './map/projections'
+import projectionCodes from '../constants/projectionCodes'
 
 const hasGibsLayerForProjection = (gibsLayer, projection) => {
-  if (projection === projections.arctic && gibsLayer.arctic) return true
-  if (projection === projections.geographic && gibsLayer.geographic) return true
-  if (projection === projections.antarctic && gibsLayer.antarctic) return true
+  if (projection === projectionCodes.arctic && gibsLayer.arctic) return true
+  if (projection === projectionCodes.geographic && gibsLayer.geographic) return true
+  if (projection === projectionCodes.antarctic && gibsLayer.antarctic) return true
 
   return false
 }

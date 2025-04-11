@@ -1,7 +1,7 @@
 import { getDbConnection } from '../util/database/getDbConnection'
 import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
-import projections from '../../../static/src/js/util/map/projections'
+import projectionCodes from '../../../static/src/js/constants/projectionCodes'
 import mapLayers from '../../../static/src/js/constants/mapLayers'
 
 /**
@@ -55,7 +55,7 @@ const adminGetPreferencesMetrics = async (event, context) => {
         zoom = 'not set (2)',
         latitude = 'not set (0)',
         longitude = 'not set (0)',
-        projection = `not set (${projections.geographic})`,
+        projection = `not set (${projectionCodes.geographic})`,
         overlayLayers = [`not set (${mapLayers.bordersRoads} & ${mapLayers.placeLabels})`],
         baseLayer = `not set (${mapLayers.worldImagery})`
       } = mapView

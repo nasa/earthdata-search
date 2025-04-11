@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 
 import { createJwtToken } from '../createJwtToken'
 import mapLayers from '../../../../static/src/js/constants/mapLayers'
-import projections from '../../../../static/src/js/util/map/projections'
+import projectionCodes from '../../../../static/src/js/constants/projectionCodes'
 
 describe('util#createJwtToken', () => {
   test('correctly returns the JWT token', () => {
@@ -15,7 +15,7 @@ describe('util#createJwtToken', () => {
           latitude: 39,
           baseLayer: mapLayers.worldImagery,
           longitude: -95,
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           overlayLayers: [
             mapLayers.bordersRoads,
             mapLayers.placeLabels
@@ -44,7 +44,7 @@ describe('util#createJwtToken', () => {
           latitude: 39,
           baseLayer: mapLayers.worldImagery,
           longitude: -95,
-          projection: projections.geographic,
+          projection: projectionCodes.geographic,
           overlayLayers: [
             mapLayers.bordersRoads,
             mapLayers.placeLabels

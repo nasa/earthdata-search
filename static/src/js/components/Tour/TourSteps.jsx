@@ -486,7 +486,7 @@ const TourSteps = ({
       styles: commonStyles
     },
     {
-      target: '.edsc-map-controls',
+      target: '.map-controls',
       content: (
         <div className="search-tour__content-wrapper">
           <StepCounter currentStep={stepIndex} totalSteps={TOTAL_STEPS} />

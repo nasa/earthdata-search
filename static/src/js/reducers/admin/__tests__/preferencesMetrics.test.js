@@ -4,7 +4,7 @@ import {
   SET_ADMIN_PREFERENCES_METRICS_LOADED
 } from '../../../constants/actionTypes'
 import mapLayers from '../../../constants/mapLayers'
-import projections from '../../../util/map/projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 import adminPreferencesMetricsReducer from '../preferencesMetrics'
 
@@ -97,7 +97,7 @@ describe('SET_ADMIN_PREFERENCES_METRICS', () => {
           [0, '100% (2)']
         ],
         projection: [
-          [projections.geographic, '100% (2)']
+          [projectionCodes.geographic, '100% (2)']
         ],
         overlayLayers: [
           [mapLayers.bordersRoads, '100% (2)'],
@@ -143,7 +143,7 @@ describe('SET_ADMIN_PREFERENCES_METRICS', () => {
           [0, '100% (2)']
         ],
         projection: [
-          [projections.geographic, '100% (2)']
+          [projectionCodes.geographic, '100% (2)']
         ],
         overlayLayers: [
           [mapLayers.bordersRoads, '100% (2)'],

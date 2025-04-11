@@ -1,0 +1,16 @@
+.spatial-drawing-control {
+  &__cancel-wrapper {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+  }
+
+    &__button {
+      &--cancel {
+        height: 1.75rem;
+        border: none;
+        padding: 0.25rem 0.5rem;
+        width: fit-content;
+      }
+    }
+}

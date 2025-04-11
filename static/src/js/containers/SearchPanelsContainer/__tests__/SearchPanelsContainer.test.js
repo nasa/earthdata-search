@@ -11,11 +11,6 @@ import {
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
 import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
 
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {})
-}))
-
 Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {

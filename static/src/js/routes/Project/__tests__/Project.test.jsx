@@ -16,12 +16,6 @@ import * as AppConfig from '../../../../../../sharedUtils/config'
 import actions from '../../../actions'
 import { Project } from '../Project'
 
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {}),
-  createControlComponent: jest.fn().mockImplementation(() => {})
-}))
-
 jest.mock('../../../containers/SidebarContainer/SidebarContainer', () => {
   const MockedSidebarContainer = () => <div data-testid="mocked-sidebarContainer" />
 

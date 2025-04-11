@@ -4,7 +4,7 @@ import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes } from '../../../constants/eventTypes'
 
 import { crsProjections } from '../crs'
-import projections from '../projections'
+import projectionCodes from '../../../constants/projectionCodes'
 
 import { eventEmitter } from '../../../events/events'
 
@@ -56,11 +56,11 @@ const handleDrawEnd = (params, event) => {
     const geometries = geometry.getGeometries()
     const start = geometries[1].transform(
       crsProjections[projectionCode],
-      crsProjections[projections.geographic]
+      crsProjections[projectionCodes.geographic]
     ).getCoordinates()
     const end = geometries[2].transform(
       crsProjections[projectionCode],
-      crsProjections[projections.geographic]
+      crsProjections[projectionCodes.geographic]
     ).getCoordinates()
 
     // Get the southwest and northeast coordinates of the bounding box
@@ -87,10 +87,10 @@ const handleDrawEnd = (params, event) => {
     // Transform the geometry to geographic coordinates
     const geographicCoordinates = geometry.transform(
       crsProjections[projectionCode],
-      crsProjections[projections.geographic]
+      crsProjections[projectionCodes.geographic]
     )
 
-    if (projectionCode === projections.geographic) {
+    if (projectionCode === projectionCodes.geographic) {
       // If the map is in the geographic projection, the geometry will be a GeometryCollection
       // The first geometry is the polygon representing the circle, and the second geometry is the center point
       const [polygon, point] = geographicCoordinates.getGeometries()
@@ -130,7 +130,7 @@ const handleDrawEnd = (params, event) => {
     // For a point, we can just flatten the geographic coordinates
     const geographicCoordinates = geometry.transform(
       crsProjections[projectionCode],
-      crsProjections[projections.geographic]
+      crsProjections[projectionCodes.geographic]
     )
 
     // Flatten the point coordinates so CMR can understand them
@@ -141,7 +141,7 @@ const handleDrawEnd = (params, event) => {
     // For a polygon, we need to get the coordinates of the polygon in counter-clockwise order
     const geographicCoordinates = geometry.transform(
       crsProjections[projectionCode],
-      crsProjections[projections.geographic]
+      crsProjections[projectionCodes.geographic]
     )
 
     // Get the coordinates of the polygon in counter-clockwise order

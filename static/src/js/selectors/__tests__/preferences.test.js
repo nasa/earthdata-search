@@ -7,7 +7,7 @@ import {
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
 import mapLayers from '../../constants/mapLayers'
-import projections from '../../util/map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 describe('getMapPreferences selector', () => {
   test('returns the map preferences', () => {
@@ -26,7 +26,7 @@ describe('getMapPreferences selector', () => {
               mapLayers.bordersRoads,
               mapLayers.placeLabels
             ],
-            projection: projections.geographic
+            projection: projectionCodes.geographic
           }
         }
       }

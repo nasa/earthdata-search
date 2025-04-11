@@ -1,6 +1,6 @@
 import mapReducer from '../map'
 import { UPDATE_MAP, RESTORE_FROM_URL } from '../../constants/actionTypes'
-import projections from '../../util/map/projections'
+import projectionCodes from '../../constants/projectionCodes'
 
 const initialState = {
   base: {
@@ -15,7 +15,7 @@ const initialState = {
     coastlines: false,
     placeLabels: true
   },
-  projection: projections.geographic,
+  projection: projectionCodes.geographic,
   rotation: 0,
   zoom: 3
 }
@@ -43,7 +43,7 @@ describe('UPDATE_MAP', () => {
         coastlines: false,
         placeLabels: true
       },
-      projection: projections.geographic,
+      projection: projectionCodes.geographic,
       rotation: 0,
       zoom: 2
     }
@@ -73,7 +73,7 @@ describe('RESTORE_FROM_URL', () => {
         coastlines: false,
         placeLabels: true
       },
-      projection: projections.geographic,
+      projection: projectionCodes.geographic,
       rotation: 0,
       zoom: 2
     }
