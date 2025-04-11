@@ -2,6 +2,9 @@ import ReactDOM from 'react-dom'
 import Control from 'ol/control/Control'
 import EventType from 'ol/events/EventType'
 import { baseLayerIds } from '../../constants/mapLayers'
+import mapButton from './mapButton'
+
+import './LayerSwitcherControl.scss'
 
 /**
  * This class adds a layer switcher control to the map
@@ -9,22 +12,24 @@ import { baseLayerIds } from '../../constants/mapLayers'
 class LayerSwitcherControl extends Control {
   constructor(options) {
     const element = document.createElement('div')
-    element.className = options.className
 
     super({
       ...options,
       element
     })
 
+    this.className = 'layer-switcher-control'
+    element.className = `${this.className} bg-white`
+
     this.options = options
     this.onChangeLayer = options.onChangeLayer
     this.setIsLayerSwitcherOpen = options.setIsLayerSwitcherOpen
 
-    const toggleButton = document.createElement('button')
-    toggleButton.className = `${options.className}__button`
-    toggleButton.setAttribute('type', 'button')
-    toggleButton.title = 'Layer Options'
-    toggleButton.ariaLabel = 'Layer Options'
+    const toggleButton = mapButton({
+      className: `${this.className}__button`,
+      title: 'Layer Options',
+      tooltip: false
+    })
 
     if (options.LayersIcon) {
       ReactDOM.render(
@@ -36,9 +41,9 @@ class LayerSwitcherControl extends Control {
     element.appendChild(toggleButton)
 
     const panel = document.createElement('div')
-    panel.className = `${options.className}__panel`
+    panel.className = `${this.className}__panel bg-white`
 
-    if (options.isLayerSwitcherOpen) panel.className += ` ${options.className}__panel--visible`
+    if (options.isLayerSwitcherOpen) panel.className += ` ${this.className}__panel--visible`
 
     this.addLayerOptions(panel)
     element.appendChild(panel)
@@ -62,7 +67,7 @@ class LayerSwitcherControl extends Control {
    * Adds layer options to the panel
    */
   addLayerOptions(panel) {
-    const { className } = this.options
+    const { className } = this
     const { layerOptions } = this.options
 
     const optionsContainer = document.createElement('div')

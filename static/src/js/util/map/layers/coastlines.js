@@ -11,7 +11,7 @@ const coastlines = ({
   projectionCode,
   visible
 }) => gibsLayer({
-  className: 'edsc-map__coastlines-layer',
+  className: 'coastlines-layer',
   format: 'image/png',
   layer: projectionCode === projectionCodes.geographic ? 'Coastlines_15m' : 'Coastlines',
   matrixSet: projectionCode === projectionCodes.geographic ? '15.625m' : '250m',

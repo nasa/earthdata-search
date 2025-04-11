@@ -6,6 +6,9 @@ import Control from 'ol/control/Control'
 import spatialTypes from '../../constants/spatialTypes'
 import { eventEmitter } from '../../events/events'
 import { mapEventTypes } from '../../constants/eventTypes'
+import mapButton from './mapButton'
+
+import './SpatialDrawingControl.scss'
 
 /**
  * This class adds spatial drawing buttons to the map
@@ -14,19 +17,21 @@ class SpatialDrawingControl extends Control {
   constructor(options) {
     // Create the element for this control
     const element = document.createElement('div')
-    element.className = 'edsc-map__spatial-drawing'
 
     const buttonsElement = document.createElement('div')
     element.appendChild(buttonsElement)
 
     const cancelWrapper = document.createElement('div')
-    cancelWrapper.className = 'edsc-map__spatial-drawing__cancel-wrapper'
     element.appendChild(cancelWrapper)
 
     super({
       ...options,
       element
     })
+
+    this.className = 'spatial-drawing-control'
+    element.className = this.className
+    cancelWrapper.className = `${this.className}__cancel-wrapper`
 
     const {
       CircleIcon,
@@ -38,12 +43,10 @@ class SpatialDrawingControl extends Control {
     this.onToggleShapefileUploadModal = onToggleShapefileUploadModal
 
     // Create the polygon button
-    const polygonButton = document.createElement('button')
-    polygonButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--polygon edsc-icon-poly edsc-icon-fw edsc-map__controls__button'
-    polygonButton.ariaLabel = 'Search by spatial polygon'
-    polygonButton.title = 'Search by spatial polygon'
-    polygonButton.setAttribute('data-bs-toggle', 'tooltip')
-    polygonButton.setAttribute('data-bs-placement', 'left')
+    const polygonButton = mapButton({
+      className: `${this.className}__button ${this.className}__button--polygon edsc-icon-poly edsc-icon-fw`,
+      title: 'Search by spatial polygon'
+    })
 
     // Set the click event for the button
     polygonButton.addEventListener(
@@ -56,12 +59,10 @@ class SpatialDrawingControl extends Control {
     buttonsElement.appendChild(polygonButton)
 
     // Create the bounding box button
-    const boundingBoxButton = document.createElement('button')
-    boundingBoxButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--rectangle edsc-icon-rect edsc-icon-fw edsc-map__controls__button'
-    boundingBoxButton.ariaLabel = 'Search by spatial rectangle'
-    boundingBoxButton.title = 'Search by spatial rectangle'
-    boundingBoxButton.setAttribute('data-bs-toggle', 'tooltip')
-    boundingBoxButton.setAttribute('data-bs-placement', 'left')
+    const boundingBoxButton = mapButton({
+      className: `${this.className}__button ${this.className}__button--rectangle edsc-icon-rect edsc-icon-fw`,
+      title: 'Search by spatial rectangle'
+    })
 
     // Set the click event for the button
     boundingBoxButton.addEventListener(
@@ -74,12 +75,10 @@ class SpatialDrawingControl extends Control {
     buttonsElement.appendChild(boundingBoxButton)
 
     // Create the circle button
-    const circleButton = document.createElement('button')
-    circleButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--circle edsc-map__controls__button'
-    circleButton.ariaLabel = 'Search by spatial circle'
-    circleButton.title = 'Search by spatial circle'
-    circleButton.setAttribute('data-bs-toggle', 'tooltip')
-    circleButton.setAttribute('data-bs-placement', 'left')
+    const circleButton = mapButton({
+      className: `${this.className}__button ${this.className}__button--circle`,
+      title: 'Search by spatial circle'
+    })
 
     // Set the click event for the button
     circleButton.addEventListener(
@@ -98,12 +97,10 @@ class SpatialDrawingControl extends Control {
     buttonsElement.appendChild(circleButton)
 
     // Create the point button
-    const pointButton = document.createElement('button')
-    pointButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--point edsc-map__controls__button'
-    pointButton.ariaLabel = 'Search by spatial coordinate'
-    pointButton.title = 'Search by spatial coordinate'
-    pointButton.setAttribute('data-bs-toggle', 'tooltip')
-    pointButton.setAttribute('data-bs-placement', 'left')
+    const pointButton = mapButton({
+      className: `${this.className}__button ${this.className}__button--point`,
+      title: 'Search by spatial coordinate'
+    })
 
     // Set the click event for the button
     pointButton.addEventListener(
@@ -122,12 +119,10 @@ class SpatialDrawingControl extends Control {
     buttonsElement.appendChild(pointButton)
 
     // Create the shapefile button
-    const shapefileButton = document.createElement('button')
-    shapefileButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--shapefile edsc-map__controls__button'
-    shapefileButton.ariaLabel = 'Search by shapefile'
-    shapefileButton.title = 'Search by shapefile'
-    shapefileButton.setAttribute('data-bs-toggle', 'tooltip')
-    shapefileButton.setAttribute('data-bs-placement', 'left')
+    const shapefileButton = mapButton({
+      className: `${this.className}__button ${this.className}__button--shapefile`,
+      title: 'Search by shapefile'
+    })
 
     // Set the click event for the button
     shapefileButton.addEventListener(
@@ -146,10 +141,11 @@ class SpatialDrawingControl extends Control {
     buttonsElement.appendChild(shapefileButton)
 
     // Create the cancel button
-    const cancelButton = document.createElement('button')
-    cancelButton.className = 'edsc-map__spatial-drawing__button edsc-map__spatial-drawing__button--cancel'
-    cancelButton.ariaLabel = 'Cancel spatial drawing'
-    cancelButton.title = 'Cancel spatial drawing'
+    const cancelButton = mapButton({
+      title: 'Cancel',
+      tooltip: false
+    })
+    cancelButton.className = `${this.className}__button ${this.className}__button--cancel bg-white`
     cancelButton.textContent = 'Cancel'
     cancelButton.style.display = 'none'
 

@@ -1,267 +1,28 @@
 @use '../../../css/utils';
 
-.edsc-map__spatial-drawing__cancel-wrapper {
-  position: absolute;
-  top: 0;
-  right: 2rem;
-}
-
-button.edsc-map__spatial-drawing__button--cancel {
-    height: 1.75rem;
-    border-radius: 2px;
-    border: none;
-    padding: 0.25rem 0.5rem;
-    width: fit-content;
-}
-
-.edsc-map__controls {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  z-index: 10;
-  background-color: transparent;
-  right: 0.75rem;
-  bottom: 6.5rem;
-  gap: 1rem;
-
-  .edsc-map__controls__button {
-    margin: 0;
-    border-radius: 0;
-
-    &:first-of-type {
-      border-radius: 2px 2px 0 0;
-    }
-
-    &:last-of-type {
-      border-radius: 0 0 2px 2px;
-    }
-  }
-}
-
-.edsc-map__scale-imperial,
-.edsc-map__scale-metric,
-.edsc-map__legend {
-  position: absolute;
-  z-index: 10;
-  right: 0.75rem;
-  color: utils.$color__spacesuit-white;
-  background-color: utils.$color__carbon--70;
-  text-shadow: utils.$shadow__panel-dark;
-  border: none;
-}
-
-.edsc-map__attribution {
-  font-size: 16px;
-  bottom: 0.75rem;
-  right: 0.75rem;
-  z-index: 11;
-  background-color: none;
-
-  button {
-    position: absolute;
-    bottom: 0;
-    width: 1.75rem;
-    height: 1.75rem;
-    background-color: none;
-    border: none;
-  }
-
-  ul {
-    background-color: utils.$color__spacesuit-white;
-    border-radius: 2px;
-    max-width: 25rem;
-    margin-right: 1.875rem;
-    padding: 0.5rem;
-
-    li {
-      display: list-item;
-      margin-bottom: 0.5rem;
-    }
-  }
-}
-
-.edsc-map__legend {
-  background-color: transparent;
-  top: 45px;
-}
-
-.edsc-map__scale-imperial {
-  bottom: 53px;
-  border-top: 2px solid utils.$color__spacesuit-white;
-  border-left: 2px solid utils.$color__spacesuit-white;
-}
-
-.edsc-map__scale-metric {
-  bottom: 75px;
-  border-bottom: 2px solid utils.$color__spacesuit-white;
-  border-left: 2px solid utils.$color__spacesuit-white;
-}
-
-.edsc-map__projection-switcher {
-  &__button {
-    background-image: url('~Images/projection-sprite.png');
-    background-size: 90px 30px;
-    background-repeat: no-repeat;
-
-    &--arctic {
-      background-position: -57px -1px;
-    }
-
-    &--geo {
-      background-position: -29px -1px;
-    }
-
-    &--antarctic {
-      background-position: -1px -1px;
-    }
-
-    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-      background-image: url('~Images/projection-sprite@2x.png');
-    }
-  }
-}
-
-.ol-attribution {
-  font-family: Avenir Next W00, Helvetica Neue, Helvetica, Arial, sans-serif;
-  color: utils.$color__carbon--70;
-}
-
-.ol-attribution:not(.ol-collapsed) {
-  background: none;
-}
-
-.ol-control {
-  button.edsc-map__controls__button {
-    width: 1.75rem;
-    height: 1.75rem;
-    background-color: none;
-    border: none;
-  }
-}
-
-.ol-viewport {
-  .legend {
-    &__bar {
-      margin: 0.125rem;
-      display: block;
-      height: 1rem;
-      width: 15rem;
-      border-radius: 0.125rem;
-      opacity: 0;
-      visibility: visible;
-      transition: opacity 0.2s ease;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-
-      &:hover {
-        cursor: crosshair;
-      }
-    }
-
-    &--is-colormap-rendered .legend__bar {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
-}
-
-.edsc-map__layer-switcher {
-  background-color: utils.$color__spacesuit-white;
-  border-radius: 2px;
-
-  button {
-    width: 1.75rem;
-    height: 1.75rem;
-  }
-
-  &__panel {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: utils.$color__spacesuit-white;
-    border-radius: 2px;
-    opacity: 0;
-    visibility: hidden;
-    width: 18rem;
-    color: utils.$color__carbon-black;
-    font-weight: 500;
-    z-index: 10;
-
-    &--visible {
-      opacity: 1;
-      visibility: visible;
-    }
-  }
-
-  &__options {
-    padding: 0.75rem 0.75rem 0.5rem;
-  }
-
-  &__option {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-
-    input {
-      margin-right: 0.5rem;
-    }
-
-    label {
-      font-size: 0.875rem;
-      cursor: pointer;
-    }
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  &__separator {
-    margin: 0.75rem -0.75rem;
-    border: none;
-    height: 1px;
-    background-color: #000000;
-    display: block;
-    width: calc(100% + 1.5rem);
-  }
-
-  &__attribution {
-    font-size: 0.75rem;
-    padding: 0.25rem 0.75rem 0.5rem;
-    text-align: right;
-
-    a {
-      color: utils.$color__nasa-blue--tint;
-      text-decoration: none;
-
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-.edsc-map__focused-granule-overlay {
-  &__granule-label {
-    color: utils.$color__spacesuit-white;
-    text-shadow: 1px 1px 1px utils.$color__carbon-black;
-
-    &__remove {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 1.25rem;
-      width: 1.25rem;
-      margin: 0.5rem auto;
-      border: 0;
-      outline: 0;
-      background-color: rgba(utils.$color__carbon--40, 0.5);
+.map {
+  &__focused-granule-overlay {
+    &__granule-label {
       color: utils.$color__spacesuit-white;
-      border-radius: 50%;
+      text-shadow: 1px 1px 1px utils.$color__carbon-black;
 
-      &:hover,
-      &:focus {
-        background-color: utils.$color__nasa-red;
+      &__remove {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 1.25rem;
+        width: 1.25rem;
+        margin: 0.5rem auto;
+        border: 0;
+        outline: 0;
+        background-color: rgba(utils.$color__carbon--40, 0.5);
+        color: utils.$color__spacesuit-white;
+        border-radius: 50%;
+
+        &:hover,
+        &:focus {
+          background-color: utils.$color__nasa-red;
+        }
       }
     }
   }

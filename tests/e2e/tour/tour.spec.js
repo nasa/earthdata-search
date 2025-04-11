@@ -12,7 +12,7 @@ const expectWithinMargin = async (actual, expected, margin, step) => {
   Object.keys(expected).forEach((key) => {
     const diff = Math.abs(actual[key] - expected[key])
     if (diff >= margin) {
-      console.log(`Step: ${step} - Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
+      console.log(`Step: ${step} - ${key} - Expected: ${expected[key]} - Actual: ${actual[key]} - Delta: ${diff}`)
     }
 
     expect.soft(diff).toBeLessThanOrEqual(margin)
@@ -440,10 +440,10 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1348,
+      left: 1273,
       top: 335,
-      width: 49,
-      height: 425
+      width: 124,
+      height: 513
     }, 10, 10)
 
     // Step 11: Map tools

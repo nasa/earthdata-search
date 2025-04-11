@@ -31,10 +31,10 @@ import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 import reachSearchBody from './__mocks__/reach_search.body.json'
 
 const screenshotClip = {
-  x: 930,
+  x: 940,
   y: 90,
-  width: 425,
-  height: 700
+  width: 415,
+  height: 640
 }
 
 test.describe('Map: Spatial interactions', () => {

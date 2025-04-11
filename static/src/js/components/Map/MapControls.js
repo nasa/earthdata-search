@@ -1,12 +1,17 @@
 import Control from 'ol/control/Control'
+import Attribution from 'ol/control/Attribution'
 
 import { Tooltip } from 'bootstrap'
 
 import { projectionConfigs } from '../../util/map/crs'
-import ZoomControl from './ZoomControl'
-import ProjectionSwitcherControl from './ProjectionSwitcherControl'
-import SpatialDrawingControl from './SpatialDrawingControl'
+
 import LayerSwitcherControl from './LayerSwitcherControl'
+import ProjectionSwitcherControl from './ProjectionSwitcherControl'
+import ScaleControl from './ScaleControl'
+import SpatialDrawingControl from './SpatialDrawingControl'
+import ZoomControl from './ZoomControl'
+
+import './MapControls.scss'
 
 /**
  * This class adds our custom map controls to the map. It wraps them in a container div which makes
@@ -15,7 +20,7 @@ import LayerSwitcherControl from './LayerSwitcherControl'
 class MapControls extends Control {
   constructor(options) {
     const element = document.createElement('div')
-    element.className = 'edsc-map__controls ol-control'
+    element.className = 'map-controls d-flex flex-column align-items-end'
 
     super({
       ...options,
@@ -46,7 +51,6 @@ class MapControls extends Control {
 
     // Create the zoom control
     const zoomControl = new ZoomControl({
-      className: 'edsc-map__zoom',
       duration: 250,
       HomeIcon,
       homeLocation: {
@@ -75,7 +79,6 @@ class MapControls extends Control {
 
     // Create the layer switcher control
     const layerSwitcher = new LayerSwitcherControl({
-      className: 'edsc-map__layer-switcher',
       isLayerSwitcherOpen,
       layerOptions: [{
         checked: base.worldImagery,
@@ -107,12 +110,23 @@ class MapControls extends Control {
       setIsLayerSwitcherOpen
     })
 
+    const scaleControl = new ScaleControl({
+      map
+    })
+
+    const attribution = new Attribution({
+      className: 'map-controls__attribution ol-attribution'
+    })
+    attribution.setMap(map)
+
     // Add the controls to the container
     // The order here matters, the first element is the top-most element
     if (showDrawingControls) this.element.appendChild(spatialDrawingControl.element)
     this.element.appendChild(projectionSwitcher.element)
     this.element.appendChild(zoomControl.element)
     this.element.appendChild(layerSwitcher.element)
+    this.element.appendChild(attribution.element)
+    this.element.appendChild(scaleControl.element)
 
     // Enable Bootstrap tooltips on each button
     const tooltipTriggerList = [].slice.call(element.querySelectorAll('[data-bs-toggle="tooltip"]'))

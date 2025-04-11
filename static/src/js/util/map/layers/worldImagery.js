@@ -18,7 +18,7 @@ const worldImagery = ({
   const projection = crsProjections[projectionCode]
 
   const layer = new TileLayer({
-    className: 'edsc-map__world-imagery-layer',
+    className: 'world-imagery-layer',
     source: new XYZ({
       attributions: 'Esri, Maxar, Earthstar Geographics, and the GIS User Community',
       maxResolution: 180 / 512,

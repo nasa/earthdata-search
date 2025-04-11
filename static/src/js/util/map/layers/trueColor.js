@@ -17,7 +17,7 @@ const correctedReflectance = ({
 
   return gibsLayer({
     attributions: 'Terra / MODIS',
-    className: 'edsc-map__true-color-layer',
+    className: 'true-color-layer',
     format: 'image/jpeg',
     layer: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
     matrixSet: '250m',

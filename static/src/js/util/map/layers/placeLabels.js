@@ -15,7 +15,7 @@ const placeLabels = async ({
   visible
 }) => vectorTileLayer({
   attributions: 'Sources: Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community',
-  className: 'edsc-map__place-labels-layer',
+  className: 'place-labels-layer',
   projectionCode,
   style: placeLabelsStyleUrl,
   visible,

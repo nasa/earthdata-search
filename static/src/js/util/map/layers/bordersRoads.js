@@ -12,7 +12,7 @@ const bordersRoads = ({
   visible
 }) => gibsLayer({
   attributions: '&copy; OpenStreetMap contributors, Natural Earth',
-  className: 'edsc-map__borders-roads-layer',
+  className: 'borders-roads-layer',
   format: 'image/png',
   layer: projectionCode === projectionCodes.geographic ? 'Reference_Features_15m' : 'Reference_Features',
   matrixSet: projectionCode === projectionCodes.geographic ? '15.625m' : '250m',

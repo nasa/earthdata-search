@@ -15,10 +15,10 @@ import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.j
 import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
 
 const screenshotClip = {
-  x: 930,
+  x: 940,
   y: 90,
-  width: 425,
-  height: 700
+  width: 415,
+  height: 640
 }
 
 test.describe('Map: Shapefile interactions', () => {
@@ -335,8 +335,8 @@ test.describe('Map: Shapefile interactions', () => {
         // Upper Polygon
         await page.locator('.map').click({
           position: {
-            x: 1350,
-            y: 400
+            x: 1250,
+            y: 350
           }
         })
 

@@ -36,13 +36,20 @@ import granuleCrossingGranulesHeaders from './__mocks__/cmr_granules/granule_cro
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 
 const screenshotClip = {
-  x: 930,
+  x: 940,
   y: 90,
-  width: 425,
-  height: 700
+  width: 415,
+  height: 640
 }
 
-const temporalLabelClass = '.edsc-map__focused-granule-overlay__granule-label-temporal'
+const colormapScreenshotClip = {
+  x: 1135,
+  y: 92,
+  width: 252,
+  height: 47
+}
+
+const temporalLabelClass = '.map__focused-granule-overlay__granule-label-temporal'
 
 test.describe('Map: Granule interactions', () => {
   test.beforeEach(async ({ page, context }) => {
@@ -204,7 +211,7 @@ test.describe('Map: Granule interactions', () => {
             const zoomPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
 
             // Zoom the map
-            await page.locator('.edsc-map__zoom-in').click()
+            await page.getByRole('button', { name: 'Zoom In' }).click()
 
             await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
 
@@ -324,12 +331,7 @@ test.describe('Map: Granule interactions', () => {
     test('displays the color map on the page', async ({ page }) => {
       await page.getByTestId('legend').scrollIntoViewIfNeeded()
       await expect(page).toHaveScreenshot('colormap-screenshot.png', {
-        clip: {
-          x: 1135,
-          y: 85,
-          width: 252,
-          height: 47
-        }
+        clip: colormapScreenshotClip
       })
 
       await expect(page.getByTestId('legend-label-min')).toHaveText('0 – 1 %')
@@ -367,12 +369,7 @@ test.describe('Map: Granule interactions', () => {
           await expect(page.getByTestId('timeline')).toBeInViewport()
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
-            clip: {
-              x: 1135,
-              y: 85,
-              width: 252,
-              height: 47
-            }
+            clip: colormapScreenshotClip
           })
 
           await expect(page.getByTestId('legend-label-min')).toHaveText('0.00 – 0.12 DU')

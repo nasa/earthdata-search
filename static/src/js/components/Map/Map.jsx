@@ -18,14 +18,12 @@ import {
 import { Fill } from 'ol/style'
 import { transform } from 'ol/proj'
 import { View } from 'ol'
-import Attribution from 'ol/control/Attribution'
 import LayerGroup from 'ol/layer/Group'
 import MapBrowserEventType from 'ol/MapBrowserEventType'
 import MapEventType from 'ol/MapEventType'
 import OlMap from 'ol/Map'
 import PointerEventType from 'ol/pointer/EventType'
 import RenderEventType from 'ol/render/EventType'
-import ScaleLine from 'ol/control/ScaleLine'
 import VectorLayer from 'ol/layer/Vector'
 import VectorSource from 'ol/source/Vector'
 
@@ -44,7 +42,7 @@ import {
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
-import { LegendControl } from '../Legend/LegendControl'
+import LegendControl from './LegendControl'
 import MapControls from './MapControls'
 
 import PanelWidthContext from '../../contexts/PanelWidthContext'
@@ -97,7 +95,7 @@ const granuleBackgroundsSource = new VectorSource({
 })
 const granuleBackgroundsLayer = new VectorLayer({
   source: granuleBackgroundsSource,
-  className: 'edsc-map__granules-backgrounds-layer',
+  className: 'map__granules-backgrounds-layer',
   zIndex: 1
 })
 
@@ -108,7 +106,7 @@ const granuleOutlinesSource = new VectorSource({
 })
 const granuleOutlinesLayer = new VectorLayer({
   source: granuleOutlinesSource,
-  className: 'edsc-map__granules-outlines-layer',
+  className: 'map__granules-outlines-layer',
   zIndex: 4
 })
 
@@ -119,7 +117,7 @@ const granuleHighlightsSource = new VectorSource({
 })
 const granuleHighlightsLayer = new VectorLayer({
   source: granuleHighlightsSource,
-  className: 'edsc-map__granules-highlights-layer',
+  className: 'map__granules-highlights-layer',
   zIndex: 4
 })
 
@@ -130,7 +128,7 @@ const focusedGranuleSource = new VectorSource({
 })
 const focusedGranuleLayer = new VectorLayer({
   source: focusedGranuleSource,
-  className: 'edsc-map__granules-focus-layer',
+  className: 'map__granules-focus-layer',
   zIndex: 4
 })
 
@@ -140,7 +138,7 @@ const spatialDrawingSource = new VectorSource({
 })
 const spatialDrawingLayer = new VectorLayer({
   source: spatialDrawingSource,
-  className: 'edsc-map__spatial-drawing-layer',
+  className: 'map__spatial-drawing-layer',
   zIndex: 4
 })
 
@@ -197,18 +195,6 @@ const createView = ({
 
   return view
 }
-
-const scaleMetric = new ScaleLine({
-  className: 'edsc-map__scale-metric',
-  units: 'metric'
-})
-const scaleImperial = new ScaleLine({
-  className: 'edsc-map__scale-imperial',
-  units: 'imperial'
-})
-const attribution = new Attribution({
-  className: 'edsc-map__attribution ol-attribution'
-})
 
 // Clear the focused granule source
 const clearFocusedGranuleSource = (map) => {
@@ -298,9 +284,6 @@ const Map = ({
   useEffect(() => {
     const map = new OlMap({
       controls: [
-        attribution,
-        scaleMetric,
-        scaleImperial,
         new LegendControl({
           colorMap,
           isFocusedCollectionPage
@@ -815,8 +798,7 @@ const Map = ({
     if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
       controls.push(
         new LegendControl({
-          colorMap,
-          isFocusedCollectionPage
+          colorMap
         })
       )
     }

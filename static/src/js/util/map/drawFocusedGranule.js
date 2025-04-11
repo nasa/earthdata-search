@@ -23,7 +23,7 @@ const overlayContent = ({
     excludeHtml = `
       <button
         id="remove-focused-granule"
-        class="mt-2 edsc-map__focused-granule-overlay__granule-label__remove" data-granule-id="${granuleId}"
+        class="mt-2 map__focused-granule-overlay__granule-label__remove" data-granule-id="${granuleId}"
         title="Filter granule"
       >
         ${timesIconSvg}
@@ -32,8 +32,8 @@ const overlayContent = ({
   }
 
   return `
-    <div class="edsc-map__focused-granule-overlay__granule-label">
-      <span class="edsc-map__focused-granule-overlay__granule-label-temporal">${temporalLabel}</span>
+    <div class="map__focused-granule-overlay__granule-label">
+      <span class="map__focused-granule-overlay__granule-label-temporal">${temporalLabel}</span>
       ${excludeHtml}
     </div>
   `
@@ -124,7 +124,7 @@ const drawFocusedGranule = ({
 
   // Create the overlay for the focused granule
   const element = document.createElement('div')
-  element.className = 'edsc-map__focused-granule-overlay'
+  element.className = 'map__focused-granule-overlay'
   element.innerHTML = overlayContent({
     formattedTemporal,
     granuleId,
