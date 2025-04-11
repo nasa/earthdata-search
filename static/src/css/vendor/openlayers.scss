@@ -1,7 +1,10 @@
 @use '../utils';
+@use '../vendor/bootstrap/configuration' as bootstrap;
 
 .ol-attribution {
-  font-family: Avenir Next W00, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: bootstrap.$font-family-sans-serif;
+  font-size: bootstrap.$font-size-base;
+
   color: utils.$color__carbon--70;
 }
 
