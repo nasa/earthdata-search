@@ -13,7 +13,7 @@ jobs:
           node-version: ['lts/jod']
     steps:
     - name: Setup
-      uses: ./.github/actions/npm-setup
+      uses: ./.github/actions/npm-setup/action.yml
 
     - name: Run eslint
       run: npm run lint
@@ -26,7 +26,7 @@ jobs:
           shard: [1/3, 2/3, 3/3]
     steps:
     - name: Setup
-      uses: ./.github/actions/npm-setup
+      uses: ./.github/actions/npm-setup/action.yml
 
     - name: Run Jest tests
       run: npm run silent-test -- --shard=${{ matrix.shard }}
@@ -43,7 +43,7 @@ jobs:
           node-version: ['lts/jod']
     steps:
     - name: Setup
-      uses: ./.github/actions/npm-setup
+      uses: ./.github/actions/npm-setup/action.yml
 
     - name: Run build
       run: npm run prestart-ci
@@ -73,7 +73,7 @@ jobs:
           ]
     steps:
     - name: Setup
-      uses: ./.github/actions/npm-setup
+      uses: ./.github/actions/npm-setup/action.yml
 
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
