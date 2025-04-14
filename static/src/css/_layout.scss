@@ -8,8 +8,9 @@
   display: flex;
   flex-basis: auto;
   flex-direction: row;
+  align-items: stretch;
+  flex-grow: 1;
   height: 100%;
-  align-items: flex-end;
   background-color: variables.$color__spacesuit-white;
 
   &.route-wrapper--content-page {

@@ -1,7 +1,8 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { mount } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
+import { render, screen } from '@testing-library/react'
 import actions from '../../../actions'
 import {
   mapDispatchToProps,
@@ -10,8 +11,23 @@ import {
 } from '../SearchPanelsContainer'
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
 import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
+import HomeContext from '../../../contexts/HomeContext'
 
 Enzyme.configure({ adapter: new Adapter() })
+
+jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
+
+const mockSetOpenKeywordFacet = jest.fn()
+const mockOnApplyGranuleFilters = jest.fn
+const mockOnChangeQuery = jest.fn
+const mockOnChangePath = jest.fn
+const mockOnFocusedCollectionChange = jest.fn
+const mockOnMetricsCollectionSortChange = jest.fn
+const mockOnToggleAboutCSDAModal = jest.fn
+const mockOnToggleAboutCwicModal = jest.fn
+const mockOnTogglePanels = jest.fn
+const mockOnSetActivePanel = jest.fn
+const mockOnExport = jest.fn
 
 function setup() {
   const props = {
@@ -32,16 +48,16 @@ function setup() {
       url: '/search'
     },
     map: {},
-    onApplyGranuleFilters: jest.fn(),
-    onChangeQuery: jest.fn(),
-    onChangePath: jest.fn(),
-    onFocusedCollectionChange: jest.fn(),
-    onMetricsCollectionSortChange: jest.fn(),
-    onToggleAboutCSDAModal: jest.fn(),
-    onToggleAboutCwicModal: jest.fn(),
-    onTogglePanels: jest.fn(),
-    onSetActivePanel: jest.fn(),
-    onExport: jest.fn(),
+    onApplyGranuleFilters: mockOnApplyGranuleFilters,
+    onChangeQuery: mockOnChangeQuery,
+    onChangePath: mockOnChangePath,
+    onFocusedCollectionChange: mockOnFocusedCollectionChange,
+    onMetricsCollectionSortChange: mockOnMetricsCollectionSortChange,
+    onToggleAboutCSDAModal: mockOnToggleAboutCSDAModal,
+    onToggleAboutCwicModal: mockOnToggleAboutCwicModal,
+    onTogglePanels: mockOnTogglePanels,
+    onSetActivePanel: mockOnSetActivePanel,
+    onExport: mockOnExport,
     panels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -56,7 +72,17 @@ function setup() {
     }
   }
 
-  const enzymeWrapper = shallow(<SearchPanelsContainer {...props} />)
+  const enzymeWrapper = render(
+    <HomeContext.Provider value={
+      {
+        openKeywordFacet: false,
+        setOpenKeywordFacet: mockSetOpenKeywordFacet
+      }
+    }
+    >
+      <SearchPanelsContainer {...props} />
+    </HomeContext.Provider>
+  )
 
   return {
     enzymeWrapper,
@@ -224,22 +250,27 @@ describe('mapStateToProps', () => {
 })
 
 describe('SearchPanelsContainer component', () => {
-  test('passes its props and renders a single SearchPanels component', () => {
-    const { enzymeWrapper } = setup()
+  test('passes its props and renders a single SearchPanels component', async () => {
+    setup()
 
-    const searchPanels = enzymeWrapper.find(SearchPanels)
+    const panels = await screen.findByText('Search Panels')
 
-    expect(searchPanels.length).toBe(1)
-    expect(typeof searchPanels.props().onSetActivePanel).toEqual('function')
-    expect(typeof searchPanels.props().onTogglePanels).toEqual('function')
-    expect(searchPanels.props().panels).toEqual({
-      activePanel: '0.0.0',
-      isOpen: false
-    })
-
-    expect(searchPanels.props().match).toEqual({ url: '/search' })
-    expect(searchPanels.props().portal).toEqual({
-      test: 'portal'
-    })
+    expect(panels).toBeInTheDocument()
+    expect(SearchPanels).toHaveBeenCalledTimes(1)
+    expect(SearchPanels).toHaveBeenCalledWith(
+      expect.objectContaining({
+        match: { url: '/search' },
+        onSetActivePanel: mockOnSetActivePanel,
+        onTogglePanels: mockOnTogglePanels,
+        panels: {
+          activePanel: '0.0.0',
+          isOpen: false
+        },
+        portal: {
+          test: 'portal'
+        }
+      }),
+      {}
+    )
   })
 })

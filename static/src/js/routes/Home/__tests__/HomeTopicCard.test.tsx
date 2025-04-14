@@ -7,10 +7,16 @@ import '@testing-library/jest-dom'
 import {
   MemoryRouter,
   Switch,
-  Route
+  Route,
+  Link
 } from 'react-router-dom'
 
+import userEvent from '@testing-library/user-event'
+// @ts-expect-error: Types do not exist for this module
+import HomeContext from '../../../contexts/HomeContext'
 import HomeTopicCard from '../HomeTopicCard'
+
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children, to, onClick }) => (<Link to={to} onClick={onClick}>{ children }</Link>)))
 
 const mockStore = configureMockStore([thunk])
 
@@ -22,7 +28,11 @@ const store = mockStore({
   }
 })
 
+const mockSetOpenKeywordFacet = jest.fn()
+
 const setup = () => {
+  const user = userEvent.setup()
+
   const mockProps = {
     title: 'Test Topic',
     image: 'mock-image-src',
@@ -30,23 +40,39 @@ const setup = () => {
     color: '#123456'
   }
 
-  return render(
+  render(
     <Provider store={store}>
-      <MemoryRouter>
-        <Switch>
-          <Route exact path="/">
-            <HomeTopicCard {...mockProps} />
-          </Route>
-          <Route path="/search">
-            <div>Search</div>
-          </Route>
-        </Switch>
-      </MemoryRouter>
+      <HomeContext.Provider value={
+        {
+          openKeywordFacet: false,
+          setOpenKeywordFacet: mockSetOpenKeywordFacet
+        }
+      }
+      >
+        <MemoryRouter>
+          <Switch>
+            <Route exact path="/">
+              <HomeTopicCard {...mockProps} />
+            </Route>
+            <Route path="/search">
+              <div>Search</div>
+            </Route>
+          </Switch>
+        </MemoryRouter>
+      </HomeContext.Provider>
     </Provider>
   )
+
+  return {
+    user
+  }
 }
 
 describe('HomeTopicCard', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('renders the topic card with the correct title', () => {
     setup()
 
@@ -62,17 +88,24 @@ describe('HomeTopicCard', () => {
     expect(image).toHaveAttribute('alt', 'Test Topic')
   })
 
-  // TODO: Figure out how to test the navigation on click
-  // It('navigates to the correct URL when clicked', async () => {
-  //   const user = userEvent.setup()
+  test('navigates to the correct URL when clicked', async () => {
+    const { user } = setup()
 
-  //   setup()
+    const portalLinkContainer = screen.getByRole('link')
 
-  //   const portalLinkContainer = screen.getByRole('link')
+    await user.click(portalLinkContainer)
 
-  //   await user.click(portalLinkContainer)
+    expect(await screen.findByText('Search')).toBeDefined()
+  })
 
-  //   screen.debug()
-  //   expect(screen.getByText('Search')).toBeInTheDocument()
-  // })
+  test('calls setOpenKeywordFacet when clicked', async () => {
+    const { user } = setup()
+
+    const portalLinkContainer = screen.getByRole('link')
+
+    await user.click(portalLinkContainer)
+
+    expect(mockSetOpenKeywordFacet).toHaveBeenCalledTimes(1)
+    expect(mockSetOpenKeywordFacet).toHaveBeenCalledWith(true)
+  })
 })

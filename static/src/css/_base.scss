@@ -33,12 +33,13 @@
 
 html,
 body {
-  height: 100%;
+  min-height: 100vh;
   width: 100%;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   background: variables.$color__carbon-black;
+  overflow: auto;
 }
 
 body.is-panels-dragging {
@@ -75,19 +76,3 @@ svg {
   max-width: 100%;
 }
 
-*::-webkit-scrollbar-track {
-  background-color: variables.$color__carbon--10;
-  padding: 2px;
-}
-
-*::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background-color: variables.$color__carbon--10;
-}
-
-*::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.2);
-  background-color: variables.$color__carbon--20;
-  border-radius: 8px;
-}

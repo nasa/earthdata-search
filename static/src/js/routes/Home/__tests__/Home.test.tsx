@@ -10,6 +10,9 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { createMemoryHistory } from 'history'
 
+// @ts-expect-error: Types do not exist for this file
+import HomeContext from '../../../contexts/HomeContext'
+
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
 
@@ -72,6 +75,8 @@ const mockProps = {
 }
 
 const store = mockStore({})
+
+const mockSetOpenKeywordFacet = jest.fn()
 
 const setup = (props = mockProps) => {
   const user = userEvent.setup()

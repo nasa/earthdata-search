@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
 import Facets from '../../components/Facets/Facets'
-import StartDrawingContext from '../../contexts/StartDrawingContext'
+import HomeContext from '../../contexts/HomeContext'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeCmrFacet:
@@ -34,7 +34,7 @@ export const FacetsContainer = (props) => {
     onTriggerViewAllFacets
   } = props
 
-  const { openKeywordFacet, setOpenKeywordFacet } = useContext(StartDrawingContext)
+  const { openKeywordFacet, setOpenKeywordFacet } = useContext(HomeContext)
 
   return (
     <Facets

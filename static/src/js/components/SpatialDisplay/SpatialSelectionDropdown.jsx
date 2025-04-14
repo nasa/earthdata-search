@@ -21,7 +21,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 
-import StartDrawingContext from '../../contexts/StartDrawingContext'
+import HomeContext from '../../contexts/HomeContext'
 
 import './SpatialSelectionDropdown.scss'
 
@@ -34,7 +34,7 @@ const SpatialSelectionDropdown = (props) => {
     onMetricsSpatialSelection
   } = props
 
-  const { setStartDrawing } = useContext(StartDrawingContext)
+  const { setStartDrawing } = useContext(HomeContext)
 
   const location = useLocation()
   const { pathname } = location

@@ -18,7 +18,7 @@ import {
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 // @ts-expect-error: Types do not exist for this file
-import StartDrawingContext from '../../contexts/StartDrawingContext'
+import HomeContext from '../../contexts/HomeContext'
 
 import Button from '../../components/Button/Button'
 // @ts-expect-error: Types do not exist for this file
@@ -159,7 +159,6 @@ type HomeProps = HomeDispatchProps & RouteComponentProps
 
 export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
   const [showAllPortals, setShowAllPortals] = useState(false)
-  const { setOpenKeywordFacet } = useContext(StartDrawingContext)
 
   const onShowAllPortalsClick = () => {
     setShowAllPortals(!showAllPortals)

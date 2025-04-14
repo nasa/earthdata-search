@@ -17,11 +17,11 @@ function setup(overrideProps = {}) {
   const onChangeCmrFacet = jest.fn()
   const onChangeFeatureFacet = jest.fn()
   const onTriggerViewAllFacets = jest.fn()
+  const setOpenKeywordFacet = jest.fn()
 
   const props = {
     facetsById: {
       Keywords: {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -38,7 +38,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       Platforms: {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -55,7 +54,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       Instruments: {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -72,7 +70,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       Organizations: {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -89,7 +86,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       Projects: {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -106,7 +102,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       'Processing Levels': {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -123,7 +118,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       'Data Format': {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -140,7 +134,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       'Tiling System': {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -157,7 +150,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       'Horizontal Data Resolution': {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -174,7 +166,6 @@ function setup(overrideProps = {}) {
         type: 'group'
       },
       Latency: {
-        applied: false,
         children: [{
           applied: false,
           count: 1,
@@ -197,6 +188,7 @@ function setup(overrideProps = {}) {
       mapImagery: false,
       nearRealTime: false
     },
+    openKeywordFacet: false,
     portal: {
       features: {
         featureFacets: {
@@ -209,6 +201,7 @@ function setup(overrideProps = {}) {
     onChangeCmrFacet,
     onChangeFeatureFacet,
     onTriggerViewAllFacets,
+    setOpenKeywordFacet,
     ...overrideProps
   }
 
@@ -218,7 +211,8 @@ function setup(overrideProps = {}) {
     props,
     onChangeCmrFacet,
     onChangeFeatureFacet,
-    onTriggerViewAllFacets
+    onTriggerViewAllFacets,
+    setOpenKeywordFacet
   }
 }
 
@@ -610,5 +604,25 @@ describe('Facets Features Map Imagery component', () => {
 
     await user.click(viewAllButton)
     expect(onTriggerViewAllFacets).toBeCalledWith('Projects')
+  })
+
+  describe('when rendering with openKeywordFacet set to true', () => {
+    test('renders the keyword facet group as open', () => {
+      setup({
+        openKeywordFacet: true
+      })
+
+      const keywordsElements = screen.getByText('Mock Keyword Facet')
+      expect(keywordsElements).toBeInTheDocument()
+    })
+
+    test('calls setOpenKeywordFacet to reset the value', () => {
+      const { props } = setup({
+        openKeywordFacet: true
+      })
+
+      expect(props.setOpenKeywordFacet).toHaveBeenCalledTimes(1)
+      expect(props.setOpenKeywordFacet).toHaveBeenCalledWith(false)
+    })
   })
 })

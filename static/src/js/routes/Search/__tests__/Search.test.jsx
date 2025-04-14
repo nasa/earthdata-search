@@ -32,11 +32,6 @@ afterEach(() => {
   }
 })
 
-// Mock react-leaflet because it causes errors
-jest.mock('react-leaflet', () => ({
-  createLayerComponent: jest.fn().mockImplementation(() => {})
-}))
-
 // Mock router components
 jest.mock('../../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer', () => {
   const RelatedUrlsModalContainer = () => <div data-testid="mocked-RelatedUrlsModalContainer" />

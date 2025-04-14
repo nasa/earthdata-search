@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Card } from 'react-bootstrap'
 
 // @ts-expect-error: Types do not exist for this file
-import StartDrawingContext, { StartDrawingContextType } from '../../contexts/StartDrawingContext'
+import HomeContext, { HomeContextType } from '../../contexts/HomeContext'
 
 import { type HomeTopic } from './Home'
 // @ts-expect-error: Types do not exist for this file
@@ -15,7 +15,7 @@ const HomeTopicCard: React.FC<HomeTopic> = ({
   url,
   title
 }) => {
-  const { setOpenKeywordFacet } = useContext(StartDrawingContext) as StartDrawingContextType
+  const { setOpenKeywordFacet } = useContext(HomeContext) as HomeContextType
 
   return (
     <Card

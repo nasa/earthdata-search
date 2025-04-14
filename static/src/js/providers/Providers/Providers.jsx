@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import TourContextProvider from '../TourContextProvider/TourContextProvider'
 import PanelWidthContextProvider from '../PanelWidthContextProvider/PanelWidthContextProvider'
-import StartDrawingContextProvider from '../StartDrawingContextProvider/StartDrawingContextProvider'
+import HomeContextProvider from '../HomeContextProvider/HomeContextProvider'
 import MbrContextProvider from '../MbrContextProvider/MbrContextProvider'
 
 /**
@@ -27,7 +27,7 @@ const Providers = ({ children }) => {
     <TourContextProvider key="provider_tour-context-provider" />,
     <PanelWidthContextProvider key="provider_panel-width-context-provider" />,
     <MbrContextProvider key="provider_mbr-context-provider" />,
-    <StartDrawingContextProvider key="provider_start-drawing-context-provider" />
+    <HomeContextProvider key="provider_start-drawing-context-provider" />
   ]
 
   // Combine the Providers into a single Provider component

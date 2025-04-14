@@ -12,7 +12,7 @@ import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
-import StartDrawingContext from '../../contexts/StartDrawingContext'
+import HomeContext from '../../contexts/HomeContext'
 
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
@@ -103,7 +103,7 @@ export const SearchPanelsContainer = ({
   match,
   portal
 }) => {
-  const { startDrawing } = useContext(StartDrawingContext)
+  const { startDrawing } = useContext(HomeContext)
 
   return (
     <SearchPanels

@@ -2,30 +2,44 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
+import { render, screen } from '@testing-library/react'
+
+import Providers from '../../../providers/Providers/Providers'
+import Facets from '../../../components/Facets/Facets'
+
 import actions from '../../../actions'
 import {
   mapDispatchToProps,
   mapStateToProps,
   FacetsContainer
 } from '../FacetsContainer'
-import Facets from '../../../components/Facets/Facets'
 
 Enzyme.configure({ adapter: new Adapter() })
+
+const mockOnChangeCmrFacet = jest.fn()
+const mockOnChangeFeatureFacet = jest.fn()
+const mockOnTriggerViewAllFacets = jest.fn()
+
+jest.mock('../../../components/Facets/Facets', () => jest.fn(() => <div>Facets</div>))
 
 function setup() {
   const props = {
     facetsById: {},
     featureFacets: {},
     portal: {},
-    onChangeCmrFacet: jest.fn(),
-    onChangeFeatureFacet: jest.fn(),
-    onTriggerViewAllFacets: jest.fn()
+    onChangeCmrFacet: mockOnChangeCmrFacet,
+    onChangeFeatureFacet: mockOnChangeFeatureFacet,
+    onTriggerViewAllFacets: mockOnTriggerViewAllFacets
   }
 
-  const enzymeWrapper = shallow(<FacetsContainer {...props} />)
+  const { container } = render(
+    <Providers>
+      <FacetsContainer {...props} />
+    </Providers>
+  )
 
   return {
-    enzymeWrapper,
+    container,
     props
   }
 }
@@ -87,15 +101,24 @@ describe('mapStateToProps', () => {
 })
 
 describe('FacetsContainer component', () => {
-  test('passes its props and renders a single Facets component', () => {
-    const { enzymeWrapper } = setup()
+  test('Renders the facets component with the correct the props', async () => {
+    setup()
 
-    expect(enzymeWrapper.find(Facets).length).toBe(1)
-    expect(enzymeWrapper.find(Facets).props().facetsById).toEqual({})
-    expect(enzymeWrapper.find(Facets).props().featureFacets).toEqual({})
-    expect(enzymeWrapper.find(Facets).props().portal).toEqual({})
-    expect(typeof enzymeWrapper.find(Facets).props().onChangeCmrFacet).toEqual('function')
-    expect(typeof enzymeWrapper.find(Facets).props().onChangeFeatureFacet).toEqual('function')
-    expect(typeof enzymeWrapper.find(Facets).props().onTriggerViewAllFacets).toEqual('function')
+    expect(await screen.findByText('Facets')).toBeInTheDocument()
+    expect(Facets).toHaveBeenCalledTimes(1)
+    expect(Facets).toHaveBeenCalledWith(
+      expect.objectContaining({
+        facetsById: {},
+        featureFacets: {},
+        portal: {},
+        onChangeCmrFacet: mockOnChangeCmrFacet,
+        onChangeFeatureFacet: mockOnChangeFeatureFacet,
+        onTriggerViewAllFacets: mockOnTriggerViewAllFacets,
+        openKeywordFacet: false
+        // TODO: Check if theres a better way to test this
+        // setOpenKeywordFacet: expect.any(Function)
+      }),
+      {}
+    )
   })
 })

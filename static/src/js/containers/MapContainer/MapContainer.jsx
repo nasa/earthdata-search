@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useState,
   useMemo,
-  useContext
+  useLayoutEffect
 } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -44,7 +44,7 @@ import './MapContainer.scss'
 import spatialTypes from '../../constants/spatialTypes'
 import MbrContext from '../../contexts/MbrContext'
 
-import StartDrawingContext from '../../contexts/StartDrawingContext'
+import HomeContext from '../../contexts/HomeContext'
 import { mapEventTypes } from '../../constants/eventTypes'
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -137,7 +137,7 @@ export const MapContainer = (props) => {
     '/search/granules/collection-details'
   ])
 
-  const { startDrawing, setStartDrawing } = useContext(StartDrawingContext)
+  const { startDrawing, setStartDrawing } = useContext(HomeContext)
 
   const [mapReady, setMapReady] = useState(false)
 
@@ -147,7 +147,7 @@ export const MapContainer = (props) => {
         onToggleShapefileUploadModal(true)
       } else {
         eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
-        // setStartDrawing(null)
+        // SetStartDrawing(null)
       }
     }
   }, [startDrawing, mapReady])
@@ -285,14 +285,11 @@ export const MapContainer = (props) => {
   }, [setStartDrawing])
 
   // Get the metadata for the currently focused collection, or an empty object if no collection is focused
-<<<<<<< HEAD
   const focusedCollectionMetadata = useMemo(
     () => collectionsMetadata[focusedCollectionId] || {},
     [focusedCollectionId, collectionsMetadata]
   )
-=======
-  const focusedCollectionMetadata = useMemo(()  => collectionsMetadata[focusedCollectionId] || {}, [focusedCollectionId, collectionsMetadata])
->>>>>>> a6a3f81d1 (EDSC-4386: Close panel when entering spatial, open keyword facet when clicking topic, fixing spatial entry bug for bounding box, point, and circle)
+
   const { tags } = focusedCollectionMetadata
   const [gibsTag] = getValueForTag('gibs', tags) || []
 

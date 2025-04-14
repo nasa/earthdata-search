@@ -214,9 +214,11 @@ Facets.propTypes = {
   portal: PropTypes.shape({
     features: PropTypes.shape({})
   }).isRequired,
+  openKeywordFacet: PropTypes.bool.isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
   onChangeFeatureFacet: PropTypes.func.isRequired,
-  onTriggerViewAllFacets: PropTypes.func.isRequired
+  onTriggerViewAllFacets: PropTypes.func.isRequired,
+  setOpenKeywordFacet: PropTypes.func.isRequired
 }
 
 export default Facets
