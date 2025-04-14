@@ -4,9 +4,8 @@ import { parseError } from '../../../../sharedUtils/parseError'
  * Formats the metadata shown in the collection results
  * @param {Object} collections collections object from searchResults in the store
  * @param {Array} projectIds Array of collection ids that are added to the project
- * @param {Object} browser browser object from the store
  */
-export const formatCollectionList = (collections, metadata, projectIds = [], browser = {}) => {
+export const formatCollectionList = (collections, metadata, projectIds = []) => {
   const { allIds: collectionIds } = collections
 
   return collectionIds.map((collectionId, index) => {
@@ -31,10 +30,6 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       timeStart = null,
       versionId
     } = collectionMetadata
-
-    const {
-      name: browserName
-    } = browser
 
     let displayOrganization = ''
 
@@ -81,9 +76,6 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
         }
       }
     }
-
-    let truncatedAbstract = summary
-    if (browserName === 'ie') truncatedAbstract = `${summary.substring(0, 280)}...`
 
     const isCollectionInProject = projectIds.indexOf(collectionId) !== -1
 
@@ -158,7 +150,7 @@ export const formatCollectionList = (collections, metadata, projectIds = [], bro
       nrt,
       organizations,
       shortName,
-      summary: truncatedAbstract,
+      summary,
       temporalEnd,
       temporalRange,
       temporalStart,

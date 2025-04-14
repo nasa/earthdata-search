@@ -15,7 +15,6 @@ import './CollectionResultsBody.scss'
 /**
  * Renders CollectionResultsBody.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.browser - Browser information.
  * @param {Array} props.collections - Collections passed from redux store.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
  * @param {Function} props.onAddProjectCollection - Callback to add a collection to a project.
@@ -26,7 +25,6 @@ import './CollectionResultsBody.scss'
  * @param {String} props.panelView - The current active view.
  */
 const CollectionResultsBody = ({
-  browser,
   collectionsSearch,
   collectionsMetadata,
   projectCollectionsIds,
@@ -50,8 +48,7 @@ const CollectionResultsBody = ({
   const collectionList = useMemo(() => formatCollectionList(
     collectionsSearch,
     collectionsMetadata,
-    projectCollectionsIds,
-    browser
+    projectCollectionsIds
   ), [
     isLoading,
     collectionsMetadata,
@@ -105,7 +102,6 @@ const CollectionResultsBody = ({
       >
         <CollectionResultsList
           visibleMiddleIndex={visibleMiddleIndex}
-          browser={browser}
           collectionsMetadata={collectionList}
           onAddProjectCollection={onAddProjectCollection}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
@@ -169,7 +165,6 @@ const CollectionResultsBody = ({
 }
 
 CollectionResultsBody.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),

@@ -432,7 +432,6 @@ export const Timeline = ({
 }
 
 Timeline.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
