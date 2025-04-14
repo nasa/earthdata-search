@@ -49,7 +49,6 @@ describe('formatCollectionList', () => {
       }
     }
     const projectIds = []
-    const browser = { name: 'chrome' }
 
     const expectedResult = {
       cloudHosted: true,
@@ -82,7 +81,7 @@ describe('formatCollectionList', () => {
       versionId: 2
     }
 
-    expect(formatCollectionList(collections, metadata, projectIds, browser)[0])
+    expect(formatCollectionList(collections, metadata, projectIds)[0])
       .toEqual(expectedResult)
   })
 
@@ -96,7 +95,6 @@ describe('formatCollectionList', () => {
       }
     }
     const projectIds = []
-    const browser = { name: 'chrome' }
 
     const expectedResult = {
       cloudHosted: false,
@@ -129,7 +127,7 @@ describe('formatCollectionList', () => {
       versionId: undefined
     }
 
-    expect(formatCollectionList(collections, metadata, projectIds, browser)[0])
+    expect(formatCollectionList(collections, metadata, projectIds)[0])
       .toEqual(expectedResult)
   })
 
@@ -144,7 +142,6 @@ describe('formatCollectionList', () => {
       }
     }
     const projectIds = []
-    const browser = { name: 'chrome' }
 
     const expectedResult = {
       temporalEnd: 'ongoing',
@@ -152,7 +149,7 @@ describe('formatCollectionList', () => {
       temporalStart: '2019-01-14'
     }
 
-    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
+    expect(formatCollectionList(collections, metadata, projectIds)[0]).toEqual(
       expect.objectContaining(expectedResult)
     )
   })
@@ -168,7 +165,6 @@ describe('formatCollectionList', () => {
       }
     }
     const projectIds = []
-    const browser = { name: 'chrome' }
 
     const expectedResult = {
       temporalEnd: '2019-01-15',
@@ -176,7 +172,7 @@ describe('formatCollectionList', () => {
       temporalStart: ''
     }
 
-    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
+    expect(formatCollectionList(collections, metadata, projectIds)[0]).toEqual(
       expect.objectContaining(expectedResult)
     )
   })
@@ -228,7 +224,6 @@ describe('formatCollectionList', () => {
       }
     }
     const projectIds = []
-    const browser = { name: 'chrome' }
 
     const expectedResult = {
       cloudHosted: false,
@@ -261,7 +256,7 @@ describe('formatCollectionList', () => {
       versionId: 2
     }
 
-    expect(formatCollectionList(collections, metadata, projectIds, browser)[0])
+    expect(formatCollectionList(collections, metadata, projectIds)[0])
       .toEqual(expectedResult)
   })
 
@@ -278,7 +273,6 @@ describe('formatCollectionList', () => {
         }
       }
       const projectIds = []
-      const browser = { name: 'chrome' }
 
       const expectedResult = {
         temporalEnd: '2019-01-14',
@@ -286,7 +280,7 @@ describe('formatCollectionList', () => {
         temporalStart: ''
       }
 
-      expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
+      expect(formatCollectionList(collections, metadata, projectIds)[0]).toEqual(
         expect.objectContaining(expectedResult)
       )
     })
@@ -303,7 +297,6 @@ describe('formatCollectionList', () => {
         }
       }
       const projectIds = []
-      const browser = { name: 'chrome' }
 
       const expectedResult = {
         temporalEnd: 'ongoing',
@@ -311,7 +304,7 @@ describe('formatCollectionList', () => {
         temporalStart: '2019-01-14'
       }
 
-      expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
+      expect(formatCollectionList(collections, metadata, projectIds)[0]).toEqual(
         expect.objectContaining(expectedResult)
       )
     })
@@ -328,7 +321,6 @@ describe('formatCollectionList', () => {
         }
       }
       const projectIds = []
-      const browser = { name: 'chrome' }
 
       const expectedResult = {
         temporalEnd: '',
@@ -336,31 +328,9 @@ describe('formatCollectionList', () => {
         temporalStart: ''
       }
 
-      expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
+      expect(formatCollectionList(collections, metadata, projectIds)[0]).toEqual(
         expect.objectContaining(expectedResult)
       )
     })
-  })
-
-  test('formats the summary in IE', () => {
-    const collections = {
-      allIds: ['collectionId']
-    }
-    const metadata = {
-      collectionId: {
-        id: 'collectionId',
-        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-      }
-    }
-    const projectIds = []
-    const browser = { name: 'ie' }
-
-    const expectedResult = {
-      summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in volupt...'
-    }
-
-    expect(formatCollectionList(collections, metadata, projectIds, browser)[0]).toEqual(
-      expect.objectContaining(expectedResult)
-    )
   })
 })

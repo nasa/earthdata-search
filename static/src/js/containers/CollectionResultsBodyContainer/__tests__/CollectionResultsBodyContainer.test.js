@@ -17,9 +17,6 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    browser: {
-      name: 'browser name'
-    },
     collectionsMetadata: {
       id1: {
         title: 'collection 1 title'
@@ -119,7 +116,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      browser: {},
       metadata: {
         collections: {}
       },
@@ -133,7 +129,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      browser: {},
       collectionsSearch: {},
       collectionsMetadata: {},
       portal: {},
@@ -150,9 +145,6 @@ describe('CollectionResultsBodyContainer component', () => {
     const { enzymeWrapper } = setup()
 
     expect(enzymeWrapper.find(CollectionResultsBody).length).toBe(1)
-    expect(enzymeWrapper.find(CollectionResultsBody).props().browser).toEqual({
-      name: 'browser name'
-    })
 
     expect(enzymeWrapper.find(CollectionResultsBody).props().collectionsMetadata).toEqual({
       id1: {

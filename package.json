@@ -130,7 +130,6 @@
     "axios-retry": "^3.2.4",
     "babel-loader": "^8.2.5",
     "bootstrap": "^5.3.3",
-    "browser-detect": "^0.2.28",
     "camelcase-keys": "^6.2.2",
     "circular-dependency-plugin": "^5.2.2",
     "classnames": "^2.3.1",
