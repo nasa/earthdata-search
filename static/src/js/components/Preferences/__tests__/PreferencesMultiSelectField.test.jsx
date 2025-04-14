@@ -11,9 +11,11 @@ const setup = (overrideProps) => {
     schema: {
       items: {
         enum: ['option1', 'option2'],
-        enumNames: ['Option 1', 'Option 2'],
         description: 'Test Field Description'
       }
+    },
+    uiSchema: {
+      'ui:enumNames': ['Option 1', 'Option 2']
     },
     name: 'testField',
     formData: ['option1'],

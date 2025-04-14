@@ -10,7 +10,6 @@ import Button from '../Button/Button'
 import PreferencesRadioField from './PreferencesRadioField'
 import PreferencesNumberField from './PreferencesNumberField'
 import PreferencesMultiSelectField from './PreferencesMultiSelectField'
-import projectionCodes from '../../constants/projectionCodes'
 
 import './PreferencesForm.scss'
 
@@ -42,18 +41,6 @@ const PreferencesForm = (props) => {
     radio: PreferencesRadioField
   }
 
-  //  Notes: - The validate() function must always return the errors object received as second argument
-  //  The validate() function is called after the JSON schema validation.
-  const customValidate = (formDataObject, errors) => {
-    // Projections that aren't geographic have a zoom limit of 12
-    if (formDataObject.mapView.projection !== projectionCodes.geographic
-      && formDataObject.mapView.zoom > 12) {
-      errors.mapView.zoom.addError('should be less than or equal to 12')
-    }
-
-    return errors
-  }
-
   const transformErrors = (errors) => errors.map((error) => {
     // eslint-disable-next-line no-param-reassign
     error.message = error.message.replace('<=', 'less than or equal to')
@@ -75,7 +62,6 @@ const PreferencesForm = (props) => {
         schema={schema}
         transformErrors={transformErrors}
         uiSchema={uiSchema}
-        customValidate={customValidate}
         validator={validator}
       >
         <div>
