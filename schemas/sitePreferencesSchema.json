@@ -21,13 +21,6 @@
 				"-usage_score",
 				"start_date",
 				"-ongoing"
-			],
-			"enumNames": [
-				"Default",
-				"Relevance",
-				"Usage",
-				"Start Date",
-				"End Date"
 			]
 		},
 		"granuleSort": {
@@ -42,13 +35,6 @@
 				"start_date",
 				"-end_date",
 				"end_date"
-			],
-			"enumNames": [
-				"Default",
-				"Start Date, Newest First",
-				"Start Date, Oldest First",
-				"End Date, Newest First",
-				"End Date, Oldest First"
 			]
 		},
 		"panelState": {
@@ -62,12 +48,6 @@
 				"collapsed",
 				"open",
 				"fullWidth"
-			],
-			"enumNames": [
-				"Default",
-				"Collapsed",
-				"Open",
-				"Full Width"
 			]
 		},
 		"collectionListView": {
@@ -80,11 +60,6 @@
 				"default",
 				"list",
 				"table"
-			],
-			"enumNames": [
-				"Default",
-				"List",
-				"Table"
 			]
 		},
 		"granuleListView": {
@@ -97,11 +72,6 @@
 				"default",
 				"list",
 				"table"
-			],
-			"enumNames": [
-				"Default",
-				"List",
-				"Table"
 			]
     },
     "mapView": {
@@ -141,11 +111,6 @@
             "epsg4326",
             "epsg3413",
             "epsg3031"
-          ],
-          "enumNames": [
-            "Geographic (Equirectangular)",
-            "North Polar Stereographic",
-            "South Polar Stereographic"
           ]
         },
         "baseLayer": {
@@ -156,11 +121,6 @@
             "worldImagery",
             "trueColor",
             "landWaterMap"
-          ],
-          "enumNames": [
-            "World Imagery",
-            "Corrected Reflectance (True Color)",
-            "Land / Water Map"
           ]
         },
         "overlayLayers": {
@@ -173,16 +133,44 @@
               "bordersRoads",
               "coastlines",
               "placeLabels"
-            ],
-            "enumNames": [
-              "Borders and Roads",
-              "Coastlines",
-              "Place Labels"
             ]
           },
           "uniqueItems": true
         }
       }
     }
-	}
+	},
+  "if": {
+    "properties": {
+      "mapView": {
+        "properties": {
+          "projection": {
+            "const": "epsg4326"
+          }
+        }
+      }
+    }
+  },
+  "then": {
+    "properties": {
+      "mapView": {
+        "properties": {
+          "zoom": {
+            "maximum": 21
+          }
+        }
+      }
+    }
+  },
+  "else": {
+    "properties": {
+      "mapView": {
+        "properties": {
+          "zoom": {
+            "maximum": 12
+          }
+        }
+      }
+    }
+  }
 }
