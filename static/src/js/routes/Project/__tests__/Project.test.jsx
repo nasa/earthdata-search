@@ -64,6 +64,16 @@ jest.mock('react-router-dom', () => ({
 
 const mockStore = configureMockStore([thunk])
 
+const mockClassListAdd = jest.fn()
+const mockClassListRemove = jest.fn()
+
+jest.spyOn(document, 'querySelector').mockImplementation(() => ({
+  classList: {
+    add: mockClassListAdd,
+    remove: mockClassListRemove
+  }
+}))
+
 beforeEach(() => {
   jest.clearAllMocks()
   jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({
@@ -83,7 +93,7 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  render(
+  const { unmount } = render(
     <MemoryRouter>
       <Project {...props} />
     </MemoryRouter>
@@ -91,7 +101,8 @@ const setup = (overrideProps) => {
 
   return {
     onSubmitRetrieval: props.onSubmitRetrieval,
-    onToggleChunkedOrderModal: props.onToggleChunkedOrderModal
+    onToggleChunkedOrderModal: props.onToggleChunkedOrderModal,
+    unmount
   }
 }
 
@@ -132,6 +143,8 @@ describe('Project component', () => {
           search: ''
         }
       })
+
+      screen.debug()
 
       expect(screen.getByTestId('mocked-savedProjectsContainer')).toBeInTheDocument()
     })
@@ -330,6 +343,31 @@ describe('Project component', () => {
       expect(helmet.metaTags.find((tag) => tag.name === 'title').content).toBe('Test Project')
       expect(helmet.metaTags.find((tag) => tag.name === 'robots').content).toBe('noindex, nofollow')
       expect(helmet.linkTags.find((tag) => tag.rel === 'canonical').href).toContain('https://search.earthdata.nasa.gov')
+    })
+  })
+
+  describe('when mounting the component', () => {
+    test('adds the root__app--fixed-footer class to the root', () => {
+      setup()
+
+      expect(mockClassListAdd).toHaveBeenCalledTimes(1)
+      expect(mockClassListAdd).toHaveBeenCalledWith('root__app--fixed-footer')
+
+      expect(mockClassListRemove).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('when unmounting the component', () => {
+    test('removes the root__app--fixed-footer class to the root', () => {
+      const { unmount } = setup()
+
+      expect(mockClassListAdd).toHaveBeenCalledTimes(1)
+      expect(mockClassListAdd).toHaveBeenCalledWith('root__app--fixed-footer')
+
+      unmount()
+
+      expect(mockClassListRemove).toHaveBeenCalledTimes(1)
+      expect(mockClassListRemove).toHaveBeenCalledWith('root__app--fixed-footer')
     })
   })
 })

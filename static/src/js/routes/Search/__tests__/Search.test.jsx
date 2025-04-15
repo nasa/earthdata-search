@@ -15,6 +15,16 @@ import actions from '../../../actions'
 import Providers from '../../../providers/Providers/Providers'
 import configureStore from '../../../store/configureStore'
 
+const mockClassListAdd = jest.fn()
+const mockClassListRemove = jest.fn()
+
+jest.spyOn(document, 'querySelector').mockImplementation(() => ({
+  classList: {
+    add: mockClassListAdd,
+    remove: mockClassListRemove
+  }
+}))
+
 // Needed to get the test to render
 beforeEach(() => {
   // Create a div with id 'root' for portals
@@ -211,6 +221,31 @@ describe.skip('Search component', () => {
           onlyEosdisCollections: true
         }
       })
+    })
+  })
+
+  describe('when mounting the component', () => {
+    test('adds the root__app--fixed-footer class to the root', () => {
+      setup()
+
+      expect(mockClassListAdd).toHaveBeenCalledTimes(1)
+      expect(mockClassListAdd).toHaveBeenCalledWith('root__app--fixed-footer')
+
+      expect(mockClassListRemove).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('when unmounting the component', () => {
+    test('removes the root__app--fixed-footer class to the root', () => {
+      const { unmount } = setup()
+
+      expect(mockClassListAdd).toHaveBeenCalledTimes(1)
+      expect(mockClassListAdd).toHaveBeenCalledWith('root__app--fixed-footer')
+
+      unmount()
+
+      expect(mockClassListRemove).toHaveBeenCalledTimes(1)
+      expect(mockClassListRemove).toHaveBeenCalledWith('root__app--fixed-footer')
     })
   })
 })
