@@ -180,6 +180,9 @@ test.describe('Map: Control interactions', () => {
         // Wait for the map to load
         await initialMapPromise
 
+        // Ensure the image has loaded
+        await page.waitForTimeout(500)
+
         await expect(page).toHaveScreenshot('geographic.png', {
           clip: screenshotClip
         })
@@ -227,6 +230,9 @@ test.describe('Map: Control interactions', () => {
 
         // Wait for the map to load
         await initialMapPromise
+
+        // Ensure the image has loaded
+        await page.waitForTimeout(500)
 
         await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
           clip: screenshotClip

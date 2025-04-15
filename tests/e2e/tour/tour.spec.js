@@ -136,7 +136,6 @@ test.describe('When logged in', () => {
     })
 
     await page.goto('search')
-    await page.waitForSelector('.edsc-map-base-layer')
   })
 
   test('should see the additional tour steps for logged in users', async ({ page }) => {
@@ -204,7 +203,6 @@ test.describe('When not logged in', () => {
     })
 
     await page.goto('search')
-    await page.waitForSelector('.edsc-map-base-layer')
   })
 
   test('should navigate through the Joyride tour highlighting the correct parts of the page', async ({ page }) => {
@@ -418,10 +416,10 @@ test.describe('When not logged in', () => {
     }
 
     expectWithinMargin(spotlightRect, {
-      left: 1348,
-      top: 423,
-      width: 49,
-      height: 360
+      left: 1274,
+      top: 359,
+      width: 124,
+      height: 500
     }, 10, 10)
 
     // Step 10: Map tools

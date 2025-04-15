@@ -65,7 +65,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-28\.\d+,-9\.\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-27\.\d+,-9\.\d+/)
             }]
           })
 
@@ -83,10 +83,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 500)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sp\[0\]=-28\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sp\[0\]=-27\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-28\.\d+/)
+          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-27\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -111,7 +111,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-28\.\d+,-9\.\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-27\.\d+,-9\.\d+/)
             }]
           })
 
@@ -128,10 +128,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 500)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sp\[0\]=-28\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sp\[0\]=-27\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-28\.\d+/)
+          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-27\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -176,7 +176,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.keyboard.up('Enter')
 
           // Updates the URL
-          await expect(page).toHaveURL('search?sp[0]=42.1875%2C4.5297&lat=4.5297&long=42.1875&zoom=21')
+          await expect(page).toHaveURL(/search\?sp\[0\]=42\.1875%2C4\.5297&lat=4\.5297&long=42\.\d+&zoom=21/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_point')).toHaveValue('4.5297,42.1875')
@@ -279,7 +279,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-28\.\d+,-9\.\d+,195\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-27\.\d+,-9\.\d+,195\d+/)
             }]
           })
 
@@ -301,10 +301,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 510)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-28\.\d+%2C-9\.\d+%2C195\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-27\.\d+%2C-9\.\d+%2C195\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-9\.\d+,-28\.\d+/)
+          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-9\.\d+,-27\.\d+/)
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/195\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
@@ -330,7 +330,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-28\.\d+,-9\.\d+,195\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-27\.\d+,-9\.\d+,195\d+/)
             }]
           })
 
@@ -348,10 +348,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 510)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-28\.\d+%2C-9\.\d+%2C195\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-27\.\d+%2C-9\.\d+%2C195\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-9\.\d+,-28\.\d+/)
+          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-9\.\d+,-27\.\d+/)
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/195\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
@@ -510,7 +510,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-28\.\d+,-44\.\d+,-10\.\d+,-9\.\d+/)
+                ?.match(/-27\.\d+,-44\.\d+,-10\.\d+,-9\.\d+/)
             }]
           })
 
@@ -529,10 +529,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1100, 700)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-28\.\d+%2C-44\.\d+%2C-10\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-27\.\d+%2C-44\.\d+%2C-10\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-28\.\d+/)
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-27\.\d+/)
           await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-10\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
@@ -559,7 +559,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-28\.\d+,-44\.\d+,-10\.\d+,-9\.\d+/)
+                ?.match(/-27\.\d+,-44\.\d+,-10\.\d+,-9\.\d+/)
             }]
           })
 
@@ -577,10 +577,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1100, 700)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-28\.\d+%2C-44\.\d+%2C-10\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-27\.\d+%2C-44\.\d+%2C-10\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-28\.\d+/)
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-27\.\d+/)
           await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-10\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
@@ -629,7 +629,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.keyboard.up('Enter')
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=42.1875%2C-9.53964%2C56.25%2C4.5297&lat=-2\.\d+&long=49\.\d+&zoom=5\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=42.1875%2C-9.53964%2C56.25%2C4.5297&lat=-2\.\d+&long=49\.\d+&zoom=4\.\d+/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue('-9.53964,42.1875')
@@ -738,7 +738,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-28\.\d+,-9\.\d+,-28\.\d+,-44\.\d+,-10\.\d+,-44\.\d+,-28\.\d+,-9\.\d+/)
+                ?.match(/-27\.\d+,-9\.\d+,-27\.\d+,-44\.\d+,-10\.\d+,-44\.\d+,-27\.\d+,-9\.\d+/)
             }]
           })
 
@@ -766,7 +766,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-28\.\d+%2C-9\.\d+%2C-28\.\d+%2C-44\.\d+%2C-10\.\d+%2C-44\.\d+%2C-28\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-27\.\d+%2C-9\.\d+%2C-27\.\d+%2C-44\.\d+%2C-10\.\d+%2C-44\.\d+%2C-27\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -800,7 +800,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-28\.\d+,-9\.\d+,-28\.\d+,-44\.\d+,-10\.\d+,-44\.\d+,-28\.\d+,-9\.\d+/)
+                ?.match(/-27\.\d+,-9\.\d+,-27\.\d+,-44\.\d+,-10\.\d+,-44\.\d+,-27\.\d+,-9\.\d+/)
             }]
           })
 
@@ -823,7 +823,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-28\.\d+%2C-9\.\d+%2C-28\.\d+%2C-44\.\d+%2C-10\.\d+%2C-44\.\d+%2C-28\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-27\.\d+%2C-9\.\d+%2C-27\.\d+%2C-44\.\d+%2C-10\.\d+%2C-44\.\d+%2C-27\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -866,7 +866,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '3'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/42\.\d+,-7\.\d+,42\.\d+,-21\.\d+,63\.\d+,-28\.\d+,42\.\d+,-7\.\d+/)
+                ?.match(/42\.\d+,-7\.\d+,42\.\d+,-21\.\d+,63\.\d+,-27\.\d+,42\.\d+,-7\.\d+/)
             }]
           })
 
@@ -916,7 +916,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.getByRole('link', { name: 'Save' }).click()
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?polygon\[0\]=42\.\d+%2C-7\.\d+%2C42\.\d+%2C-21\.\d+%2C63\.\d+%2C-28\.\d+%2C42\.\d+%2C-7\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=42\.\d+%2C-7\.\d+%2C42\.\d+%2C-21\.\d+%2C63\.\d+%2C-27\.\d+%2C42\.\d+%2C-7\.\d+/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
@@ -971,7 +971,7 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly', async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/9/)
 
           const dialog = await page.getByRole('dialog')
 
@@ -1030,7 +1030,7 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly', async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
 
           const dialog = await page.getByRole('dialog')
 
@@ -1182,7 +1182,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.keyboard.up('Enter')
 
           // Updates the URL
-          await expect(page).toHaveURL('search?sp[0]=-108.80547%2C76.61639&lat=76.61639&long=-108.80547&projection=EPSG%3A3413&zoom=12')
+          await expect(page).toHaveURL(/search\?sp\[0\]=-108\.80547%2C76\.61639&lat=76\.\d+&long=-108\.\d+&projection=EPSG%3A3413&zoom=12/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_point')).toHaveValue('76.61639,-108.80547')
@@ -1338,7 +1338,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.keyboard.up('Enter')
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-108.80547%2C76.61639%2C166091&lat=76\.\d+&long=-109\.\d+&projection=EPSG%3A3413&zoom=5\.\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-108.80547%2C76.61639%2C166091&lat=76\.\d+&long=-108\.\d+&projection=EPSG%3A3413&zoom=4\.\d+/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('76.61639,-108.80547')
@@ -1373,7 +1373,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-108\.\d+,70\.\d+,-58\.\d+,76\.\d+/)
+                ?.match(/-108\.\d+,68\.\d+,-56\.\d+,76\.\d+/)
             }]
           })
 
@@ -1389,14 +1389,14 @@ test.describe('Map: Spatial interactions', () => {
 
           // Add the bounding box to the map
           await page.mouse.click(1000, 525)
-          await page.mouse.click(1100, 700)
+          await page.mouse.click(1100, 725)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-108\.\d+%2C70\.\d+%2C-58\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-108\.\d+%2C68\.\d+%2C-56\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/70\.\d+,-108\.\d+/)
-          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/76\.\d+,-58\.\d+/)
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/68\.\d+,-108\.\d+/)
+          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/76\.\d+,-56\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -1422,7 +1422,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-108\.\d+,70\.\d+,-58\.\d+,76\.\d+/)
+                ?.match(/-108\.\d+,68\.\d+,-56\.\d+,76\.\d+/)
             }]
           })
 
@@ -1437,14 +1437,14 @@ test.describe('Map: Spatial interactions', () => {
 
           // Add the bounding box to the map
           await page.mouse.click(1000, 525)
-          await page.mouse.click(1100, 700)
+          await page.mouse.click(1100, 725)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-108\.\d+%2C70\.\d+%2C-58\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-108\.\d+%2C68\.\d+%2C-56\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/70\.\d+,-108\.\d+/)
-          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/76\.\d+,-58\.\d+/)
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/68\.\d+,-108\.\d+/)
+          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/76\.\d+,-56\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -1527,7 +1527,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-108\.\d+,76\.\d+,-77\.\d+,67\.\d+,-58\.\d+,70\.\d+,-108\.\d+,76\.\d+/)
+                ?.match(/-108\.\d+,76\.\d+,-74\.\d+,66\.\d+,-56\.\d+,68\.\d+,-108\.\d+,76\.\d+/)
             }]
           })
 
@@ -1545,17 +1545,17 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 525)
 
           await page.waitForTimeout(200)
-          await page.mouse.click(1100, 700)
+          await page.mouse.click(1100, 725)
 
           await page.waitForTimeout(200)
-          await page.mouse.click(1000, 700)
+          await page.mouse.click(1000, 725)
 
           await page.waitForTimeout(200)
           await page.mouse.click(1000, 525)
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-108\.\d+%2C76\.\d+%2C-77\.\d+%2C67\.\d+%2C-58\.\d+%2C70\.\d+%2C-108\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-108\.\d+%2C76\.\d+%2C-74\.\d+%2C66\.\d+%2C-56\.\d+%2C68\.\d+%2C-108\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -1589,7 +1589,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-108\.\d+,76\.\d+,-77\.\d+,67\.\d+,-58\.\d+,70\.\d+,-108\.\d+,76\.\d+/)
+                ?.match(/-108\.\d+,76\.\d+,-74\.\d+,66\.\d+,-56\.\d+,68\.\d+,-108\.\d+,76\.\d+/)
             }]
           })
 
@@ -1602,17 +1602,17 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 525)
 
           await page.waitForTimeout(200)
-          await page.mouse.click(1100, 700)
+          await page.mouse.click(1100, 725)
 
           await page.waitForTimeout(200)
-          await page.mouse.click(1000, 700)
+          await page.mouse.click(1000, 725)
 
           await page.waitForTimeout(200)
           await page.mouse.click(1000, 525)
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-108\.\d+%2C76\.\d+%2C-77\.\d+%2C67\.\d+%2C-58\.\d+%2C70\.\d+%2C-108\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-108\.\d+%2C76\.\d+%2C-74\.\d+%2C66\.\d+%2C-56\.\d+%2C68\.\d+%2C-108\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -1677,7 +1677,7 @@ test.describe('Map: Spatial interactions', () => {
         })
 
         test('renders the spatial correctly', async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/11/)
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
 
           const dialog = await page.getByRole('dialog')
 

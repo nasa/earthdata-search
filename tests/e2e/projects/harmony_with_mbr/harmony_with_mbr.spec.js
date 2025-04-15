@@ -10,7 +10,7 @@ import shapefile from './__mocks__/shapefile.json'
 import collectionsGraphQlBody from './__mocks__/collections_graphql_body.json'
 
 const screenshotClip = {
-  x: 1027,
+  x: 1065,
   y: 473,
   width: 180,
   height: 90

@@ -274,7 +274,7 @@ test.describe('Home Page', () => {
     })
 
     test('should navigate to the correct portal', async ({ page }) => {
-      await page.getByRole('link', { name: 'ABoVE' }).click()
+      await page.getByRole('link', { name: 'A logo for ABoVE (Arctic-' }).click()
 
       await expect(page).toHaveURL('search?portal=above')
     })
