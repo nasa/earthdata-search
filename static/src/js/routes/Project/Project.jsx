@@ -1,4 +1,8 @@
-import React, { lazy, Suspense } from 'react'
+import React, {
+  lazy,
+  Suspense,
+  useEffect
+} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -34,6 +38,14 @@ const mapStateToProps = (state) => ({
 })
 
 export const Project = (props) => {
+  useEffect(() => {
+    document.querySelector('.root__app').classList.add('root__app--fixed-footer')
+
+    return () => {
+      document.querySelector('.root__app').classList.remove('root__app--fixed-footer')
+    }
+  })
+
   const {
     onSubmitRetrieval,
     onToggleChunkedOrderModal,

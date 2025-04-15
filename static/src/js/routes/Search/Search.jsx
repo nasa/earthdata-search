@@ -81,6 +81,12 @@ export const Search = ({
 
   useEffect(() => {
     setSearchLoaded(true)
+
+    document.querySelector('.root__app').classList.add('root__app--fixed-footer')
+
+    return () => {
+      document.querySelector('.root__app').classList.remove('root__app--fixed-footer')
+    }
   }, [])
 
   const {
