@@ -69,6 +69,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -114,6 +115,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -158,6 +160,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -216,6 +219,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -279,6 +283,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -329,6 +334,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -375,6 +381,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -439,7 +446,9 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
+          await initialMapPromise
 
           // Select the circle spatial type
           await page.getByRole('link', { name: 'Draw a circle on the map to select a spatial extent' }).click()
@@ -505,6 +514,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -553,6 +563,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -600,6 +611,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load
@@ -663,7 +675,9 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
+          await initialMapPromise
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
@@ -728,6 +742,7 @@ test.describe('Map: Spatial interactions', () => {
             }]
           })
 
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
           await page.goto('/search')
 
           // Wait for the map to load

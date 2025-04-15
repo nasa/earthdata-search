@@ -76,6 +76,8 @@ test.describe('Map: Control interactions', () => {
 
         await page.goto('/search')
 
+        await initialMapPromise
+
         // Zoom the map
         await page.getByRole('button', { name: 'Zoom In' }).click()
 
@@ -142,7 +144,12 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/search')
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
+
+        await page.goto('/search?projection=EPSG%3A3413&zoom=2')
+
+        // Wait for the map to load
+        await initialMapPromise
 
         // Change the projection
         const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
@@ -191,6 +198,8 @@ test.describe('Map: Control interactions', () => {
 
         await page.goto('/search')
 
+        await initialMapPromise
+
         // Change the projection
         const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         await page.getByLabel('South Polar Stereographic').click()
@@ -237,6 +246,8 @@ test.describe('Map: Control interactions', () => {
 
         await page.goto('/search')
 
+        await initialMapPromise
+
         // Change the projection to North Polar
         await page.getByLabel('North Polar Stereographic').click()
 
@@ -267,6 +278,8 @@ test.describe('Map: Control interactions', () => {
       const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
       await page.goto('/search')
+
+      await initialMapPromise
 
       // Change the projection
       const projectionChangePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
@@ -320,7 +333,11 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/search')
+        const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
+
+        await page.goto('/search?base=trueColor')
+
+        await trueColorPromise
 
         // Zoom in to force new tiles to load
         await page.getByRole('button', { name: 'Zoom In' }).click()
@@ -387,11 +404,15 @@ test.describe('Map: Control interactions', () => {
           headers: commonHeaders
         })
 
-        await page.goto('/search')
+        const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+
+        await page.goto('/search?overlays=coastlines')
+
+        await worldImageryPromise
 
         // Change the base layer
         await page.getByRole('button', {
-          name: 'Layers',
+          name: 'Layer Options',
           exact: true
         }).hover({ force: true })
 
