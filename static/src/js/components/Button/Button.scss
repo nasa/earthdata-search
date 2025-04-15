@@ -28,16 +28,24 @@
   }
 
   &--hds-primary {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: flex;
     margin: 0;
     padding: 0;
     line-height: 1;
     font-weight: 700;
-    align-items: stretch;
+    align-items: center;
+    padding: 0.125rem 0.25rem;
+    border: 0;
+    outline: 1px solid transparent;
 
     &.button--dark {
       color: utils.$color__spacesuit-white;
+
+      &:active,
+      &:focus {
+        outline: 1px dashed utils.$color__spacesuit-white;
+        color: utils.$color__spacesuit-white;
+      }
     }
   }
 
@@ -104,6 +112,8 @@
 
 
   &__hds-primary-icon {
+    height: 1em;
+    width: 1em;
     display: flex;
     align-items: center;
     justify-content: center;
