@@ -608,10 +608,13 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 1
 
-        await page.route('**/search/collections.json', (route, request) => {
+        await page.route('**/search/collections.json', async (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
             expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&science_keywords_h[0][topic]=Aerosols&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+            // Delay the response to be more realistic to CMR
+            await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
             route.fulfill({
               body: JSON.stringify(keywordsBody),
@@ -654,10 +657,13 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 108
 
-        await page.route('**/search/collections.json', (route, request) => {
+        await page.route('**/search/collections.json', async (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
             expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&platforms_h[0][basis]=Aircraft&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+            // Delay the response to be more realistic to CMR
+            await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
             route.fulfill({
               body: JSON.stringify(platformsBody),
@@ -700,10 +706,13 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 104
 
-        await page.route('**/search/collections.json', (route, request) => {
+        await page.route('**/search/collections.json', async (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
             expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+            // Delay the response to be more realistic to CMR
+            await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
             route.fulfill({
               body: JSON.stringify(instrumentsBody),
@@ -746,10 +755,13 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 128
 
-        await page.route('**/search/collections.json', (route, request) => {
+        await page.route('**/search/collections.json', async (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
             expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&data_center_h[]=Alaska Satellite Facility&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+            // Delay the response to be more realistic to CMR
+            await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
             route.fulfill({
               body: JSON.stringify(organizationsBody),
@@ -792,10 +804,13 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 175
 
-        await page.route('**/search/collections.json', (route, request) => {
+        await page.route('**/search/collections.json', async (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
             expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&project_h[]=ABoVE&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+            // Delay the response to be more realistic to CMR
+            await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
             route.fulfill({
               body: JSON.stringify(projectsBody),
@@ -838,10 +853,13 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 50
 
-        await page.route('**/search/collections.json', (route, request) => {
+        await page.route('**/search/collections.json', async (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
             expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&processing_level_id_h[]=0 - Raw Data&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+            // Delay the response to be more realistic to CMR
+            await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
             route.fulfill({
               body: JSON.stringify(processingLevelsBody),
@@ -884,10 +902,13 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 5
 
-        await page.route('**/search/collections.json', (route, request) => {
+        await page.route('**/search/collections.json', async (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
             expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&granule_data_format_h[]=ArcGIS&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+            // Delay the response to be more realistic to CMR
+            await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
             route.fulfill({
               body: JSON.stringify(dataFormatBody),
@@ -930,10 +951,13 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 69
 
-        await page.route('**/search/collections.json', (route, request) => {
+        await page.route('**/search/collections.json', async (route, request) => {
           if (request.method() === 'POST') {
             const body = request.postData()
             expect(body).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&two_d_coordinate_system_name[]=CALIPSO')
+
+            // Delay the response to be more realistic to CMR
+            await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
             route.fulfill({
               body: JSON.stringify(tilingSystemBody),
@@ -976,9 +1000,12 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 41
 
-        await page.route('**/search/collections.json', (route) => {
+        await page.route('**/search/collections.json', async (route) => {
           const req = route.request()
           expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&horizontal_data_resolution_range[]=0 to 1 meter&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+          // Delay the response to be more realistic to CMR
+          await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
           route.fulfill({
             body: JSON.stringify(horizontalDataResolutionBody),
@@ -1020,9 +1047,12 @@ test.describe('Path /search', () => {
       test('loads with the facet applied', async ({ page }) => {
         const cmrHits = 11
 
-        await page.route('**/search/collections.json', (route) => {
+        await page.route('**/search/collections.json', async (route) => {
           const req = route.request()
           expect(req.postData()).toBe('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&latency[]=1 to 3 hours&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+
+          // Delay the response to be more realistic to CMR
+          await new Promise((resolve) => { setTimeout(resolve, 1000) })
 
           route.fulfill({
             body: JSON.stringify(latencyBody),
