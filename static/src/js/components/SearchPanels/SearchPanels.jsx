@@ -938,7 +938,10 @@ SearchPanels.propTypes = {
     granuleListView: PropTypes.node,
     panelState: PropTypes.string
   }).isRequired,
-  startDrawing: PropTypes.bool.isRequired
+  startDrawing: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]).isRequired
 }
 
 export default SearchPanels
