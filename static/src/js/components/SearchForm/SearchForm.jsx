@@ -371,9 +371,8 @@ class SearchForm extends Component {
                   icon={Filter}
                   iconSize="0.825rem"
                   childrenHidden
-                >
-                  Advanced Search
-                </Button>
+                  ariaLabel="Show advanced search options"
+                />
               </PortalFeatureContainer>
             </div>
             <Button
@@ -384,6 +383,7 @@ class SearchForm extends Component {
               onClick={this.onSearchClear}
               icon={FaRegTrashAlt}
               iconSize="0.825rem"
+              ariaLabel="Clear all search filters"
             />
           </div>
           <FilterStack isOpen={showFilterStack}>

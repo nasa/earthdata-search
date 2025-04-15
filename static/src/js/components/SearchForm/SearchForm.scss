@@ -24,9 +24,10 @@
 
   &__primary {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     width: 100%;
-    border-bottom: 1px solid utils.$color__carbon--20;  }
+    border-bottom: 1px solid utils.$color__carbon--20;
+  }
 
   &__secondary {
     display: flex;
@@ -122,6 +123,7 @@
     }
 
     &--submit {
+      flex-grow: 1;
       color: utils.$color__spacesuit-white;
       background-color: utils.$color__nasa-red;
       border: 0;

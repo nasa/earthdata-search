@@ -4,7 +4,7 @@
 .home {
   &__hero {
     height: calc(100vh - 15rem);
-    min-height: 15rem;
+    min-height: 40rem;
     max-height: 65rem;
     text-shadow:
       0 0 0.5rem utils.$color__carbon-black,
@@ -107,6 +107,12 @@
     @include bootstrap.media-breakpoint-up(lg) {
       --bs-columns: 5;
       --bs-gap: 1rem;
+    }
+  }
+
+  &__container {
+    @include bootstrap.media-breakpoint-up(xxl) {
+      max-width: 1200px;
     }
   }
 }

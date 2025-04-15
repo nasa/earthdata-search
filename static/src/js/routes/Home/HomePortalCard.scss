@@ -11,6 +11,15 @@
     color: utils.$color__carbon--70;
   }
 
+  &__body-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  &__footer {
+    bottom: 1rem;
+    left: 1rem
+  }
+
   &__image-wrapper {
     height: 3.5rem;
     width: 3.5rem;

@@ -285,7 +285,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
           </OverlayTrigger>
         </section>
         <section className="py-5">
-          <Container>
+          <Container className="home__container">
             <Row>
               <Col>
                 <h2 className="h1">Browse Data by Topic</h2>
@@ -304,7 +304,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
           </Container>
         </section>
         <section className="py-5 mb-5">
-          <Container>
+          <Container className="home__container">
             <Row>
               <Col>
                 <h2 className="h1">Browse Data by Portal</h2>

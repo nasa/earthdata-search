@@ -138,6 +138,10 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
     className
   )
 
+  if (ariaLabel === 'Show advanced search options') {
+    console.log('!!icon && children === nul', !!icon && children === null)
+  }
+
   let iconClasses
 
   if (icon) {
