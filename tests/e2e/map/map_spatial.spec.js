@@ -510,7 +510,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-27\.\d+,-44\.\d+,-10\.\d+,-9\.\d+/)
+                ?.match(/-27\.\d+,-44\.\d+,-9\.\d+,-9\.\d+/)
             }]
           })
 
@@ -529,11 +529,11 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1100, 700)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-27\.\d+%2C-44\.\d+%2C-10\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-27\.\d+%2C-44\.\d+%2C-9\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-27\.\d+/)
-          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-10\.\d+/)
+          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-9\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -559,7 +559,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-27\.\d+,-44\.\d+,-10\.\d+,-9\.\d+/)
+                ?.match(/-27\.\d+,-44\.\d+,-9\.\d+,-9\.\d+/)
             }]
           })
 
@@ -577,11 +577,11 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1100, 700)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-27\.\d+%2C-44\.\d+%2C-10\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-27\.\d+%2C-44\.\d+%2C-9\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-27\.\d+/)
-          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-10\.\d+/)
+          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-9\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -738,7 +738,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-27\.\d+,-9\.\d+,-27\.\d+,-44\.\d+,-10\.\d+,-44\.\d+,-27\.\d+,-9\.\d+/)
+                ?.match(/-27\.\d+,-9\.\d+,-27\.\d+,-44\.\d+,-9\.\d+,-44\.\d+,-27\.\d+,-9\.\d+/)
             }]
           })
 
@@ -766,7 +766,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-27\.\d+%2C-9\.\d+%2C-27\.\d+%2C-44\.\d+%2C-10\.\d+%2C-44\.\d+%2C-27\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-27\.\d+%2C-9\.\d+%2C-27\.\d+%2C-44\.\d+%2C-9\.\d+%2C-44\.\d+%2C-27\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -800,7 +800,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-27\.\d+,-9\.\d+,-27\.\d+,-44\.\d+,-10\.\d+,-44\.\d+,-27\.\d+,-9\.\d+/)
+                ?.match(/-27\.\d+,-9\.\d+,-27\.\d+,-44\.\d+,-9\.\d+,-44\.\d+,-27\.\d+,-9\.\d+/)
             }]
           })
 
@@ -823,7 +823,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-27\.\d+%2C-9\.\d+%2C-27\.\d+%2C-44\.\d+%2C-10\.\d+%2C-44\.\d+%2C-27\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-27\.\d+%2C-9\.\d+%2C-27\.\d+%2C-44\.\d+%2C-9\.\d+%2C-44\.\d+%2C-27\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
           await expect(
