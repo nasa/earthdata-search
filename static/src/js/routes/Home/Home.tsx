@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { sortBy } from 'lodash-es'
 import Col from 'react-bootstrap/Col'
 import Collapse from 'react-bootstrap/Collapse'
@@ -16,9 +16,6 @@ import {
   Search
   // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
-
-// @ts-expect-error: Types do not exist for this file
-import HomeContext from '../../contexts/HomeContext'
 
 import Button from '../../components/Button/Button'
 // @ts-expect-error: Types do not exist for this file

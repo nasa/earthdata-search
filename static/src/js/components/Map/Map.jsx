@@ -1033,6 +1033,7 @@ Map.propTypes = {
   onChangeProjection: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onClearShapefile: PropTypes.func.isRequired,
+  onDrawEnd: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onMapReady: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,

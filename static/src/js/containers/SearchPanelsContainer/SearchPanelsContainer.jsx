@@ -11,6 +11,7 @@ import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
+
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 import HomeContext from '../../contexts/HomeContext'
 
@@ -115,7 +116,6 @@ export const SearchPanelsContainer = ({
       granuleMetadata={granuleMetadata}
       granuleSearchResults={granuleSearchResults}
       granuleQuery={granuleQuery}
-      history={history}
       isExportRunning={isExportRunning}
       location={location}
       map={map}

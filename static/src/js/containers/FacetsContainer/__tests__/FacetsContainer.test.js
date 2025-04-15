@@ -1,6 +1,4 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import { render, screen } from '@testing-library/react'
 
@@ -13,8 +11,6 @@ import {
   mapStateToProps,
   FacetsContainer
 } from '../FacetsContainer'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 const mockOnChangeCmrFacet = jest.fn()
 const mockOnChangeFeatureFacet = jest.fn()

@@ -1,19 +1,17 @@
 import React from 'react'
-import Enzyme, { mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import { render, screen } from '@testing-library/react'
+
 import actions from '../../../actions'
+import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
+import HomeContext from '../../../contexts/HomeContext'
+
+import SearchPanels from '../../../components/SearchPanels/SearchPanels'
 import {
   mapDispatchToProps,
   mapStateToProps,
   SearchPanelsContainer
 } from '../SearchPanelsContainer'
-import SearchPanels from '../../../components/SearchPanels/SearchPanels'
-import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
-import HomeContext from '../../../contexts/HomeContext'
-
-Enzyme.configure({ adapter: new Adapter() })
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
 
