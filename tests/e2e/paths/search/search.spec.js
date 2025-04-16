@@ -32,10 +32,10 @@ import temporalRecurringBody from './__mocks__/temporal_recurring.body.json'
 import tilingSystemBody from './__mocks__/tiling_system.body.json'
 
 const screenshotClip = {
-  x: 930,
+  x: 950,
   y: 90,
-  width: 425,
-  height: 700
+  width: 405,
+  height: 640
 }
 
 const defaultCmrPageSize = 20

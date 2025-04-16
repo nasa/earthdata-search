@@ -56,11 +56,8 @@ export const CollectionDetailsMinimap = ({ metadata }) => {
   }, [metadata])
 
   return (
-    <div
-      className="collection-details-minimap"
-      data-testid="collection-details-minimap"
-    >
-      <canvas ref={canvasRef} className="collection-details-minimap__minimap" />
+    <div className="collection-details-minimap">
+      <canvas ref={canvasRef} className="collection-details-minimap__minimap" data-testid="collection-details-minimap" />
     </div>
   )
 }

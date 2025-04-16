@@ -1215,7 +1215,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-10(8|9)\.\d+,76\.\d+,166\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-10(8|9)\.\d+,76\.\d+,16(5|6)\d+/)
             }]
           })
 
@@ -1237,11 +1237,11 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 545)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-10(8|9)\.\d+%2C76\.\d+%2C166\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-10(8|9)\.\d+%2C76\.\d+%2C16(5|6)\d+/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/76\.\d+,-10(8|9)\.\d+/)
-          await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/166\d+/)
+          await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/16(5|6)\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -1266,7 +1266,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-10(8|9)\.\d+,76\.\d+,166\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-10(8|9)\.\d+,76\.\d+,16(5|6)\d+/)
             }]
           })
 
@@ -1284,11 +1284,11 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 545)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-10(8|9)\.\d+%2C76\.\d+%2C166\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-10(8|9)\.\d+%2C76\.\d+%2C16(5|6)\d+/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/76\.\d+,-10(8|9)\.\d+/)
-          await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/166\d+/)
+          await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/16(5|6)\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
