@@ -288,7 +288,7 @@ class SearchForm extends Component {
       onClearAutocompleteSuggestions,
       onFetchAutocomplete
     } = this.props
-    console.log('🚀 ~ SearchForm ~ render ~ advancedSearch:', advancedSearch)
+
     const {
       isLoading,
       isLoaded,

@@ -70,7 +70,7 @@ const FilterStackItem = (props) => {
                             tooltipId={`remove-${title.toLowerCase()}-filter-tooltip`}
                             tooltip={`Remove ${title.toLowerCase()} filter`}
                             ariaLabel={`Remove ${title.toLowerCase()} filter`}
-                            onClick={() => { console.log('calling onremove'); onRemove() }}
+                            onClick={() => { onRemove() }}
                           />
                         )
                       }

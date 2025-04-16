@@ -105,7 +105,6 @@ export const SearchPanelsContainer = ({
   portal
 }) => {
   const { startDrawing } = useContext(HomeContext)
-  console.log('🚀 ~ startDrawing:', startDrawing)
 
   return (
     <SearchPanels
