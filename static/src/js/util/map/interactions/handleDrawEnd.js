@@ -48,8 +48,6 @@ const handleDrawEnd = (params, event) => {
   // Get the geometry of the drawn feature
   const geometry = event.feature.getGeometry()
 
-  // Const extent = geometry.getExtent()
-
   let flatCoordinates
 
   if (spatialType === spatialTypes.BOUNDING_BOX) {

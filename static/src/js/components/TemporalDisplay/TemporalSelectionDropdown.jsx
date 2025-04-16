@@ -63,7 +63,7 @@ const TemporalSelectionDropdown = ({
   }, [temporalSearch])
 
   /**
- * Toggles state of open  to show or hide the dropdown
+   * Toggles state of open to show or hide the dropdown
    */
   const onToggleOpen = () => {
     setOpen(!open)

@@ -144,8 +144,6 @@ describe('Project component', () => {
         }
       })
 
-      screen.debug()
-
       expect(screen.getByTestId('mocked-savedProjectsContainer')).toBeInTheDocument()
     })
   })

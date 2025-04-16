@@ -77,6 +77,6 @@ describe('HomePortalCard', () => {
 
     moreInfoLink.dispatchEvent(event)
 
-    expect(stopPropagationMock).toHaveBeenCalled()
+    expect(stopPropagationMock).toHaveBeenCalledTimes(1)
   })
 })
