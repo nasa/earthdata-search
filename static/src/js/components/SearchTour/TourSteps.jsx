@@ -642,7 +642,7 @@ const TourSteps = ({
                   <div className="search-tour__webinar-thumbnail-icon-bg">
                     <EDSCIcon
                       className="search-tour__webinar-thumbnail-icon"
-                      size="18px"
+                      size="18"
                       icon={FaPlay}
                       aria-label="Play Webinar Video"
                     />

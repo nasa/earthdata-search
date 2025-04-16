@@ -51,7 +51,7 @@ export const RadioSettingDropdownItem = ({
         icon && !inProgress && (
           <EDSCIcon
             className="radio-setting-dropdown-item__icon"
-            size="0.75rem"
+            size="12"
             icon={icon}
           />
         )

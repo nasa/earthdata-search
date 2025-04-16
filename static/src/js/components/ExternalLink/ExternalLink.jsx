@@ -32,7 +32,7 @@ export const ExternalLink = ({
         <EDSCIcon
           className="external-link__icon"
           icon={ArrowLineDiagonal}
-          size="0.875em"
+          size="14"
         />
       </span>
     )
@@ -52,7 +52,7 @@ export const ExternalLink = ({
         <EDSCIcon
           className="external-link__icon"
           icon={ArrowLineDiagonal}
-          size="0.875em"
+          size="14"
         />
       </a>
     </span>

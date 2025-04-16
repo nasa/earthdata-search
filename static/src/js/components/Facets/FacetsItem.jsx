@@ -136,7 +136,7 @@ class FacetsItem extends Component {
                 >
                   <EDSCIcon
                     icon={FaQuestionCircle}
-                    size="0.625rem"
+                    size="10"
                     variant="more-info"
                     ariaLabel="A question mark icon indicating there is more information"
                     data-testid={`facet_item-${kebabCase(facet.title)}-info`}

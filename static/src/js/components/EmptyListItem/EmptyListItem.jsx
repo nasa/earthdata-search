@@ -33,7 +33,7 @@ export const EmptyListItem = ({
 
   return (
     <li className={listItemClasses}>
-      <EDSCIcon className="empty-list-item__icon" icon={Icon} size="1.25rem" />
+      <EDSCIcon className="empty-list-item__icon" icon={Icon} size="20" />
       <p className="empty-list-item__body">
         {children}
       </p>

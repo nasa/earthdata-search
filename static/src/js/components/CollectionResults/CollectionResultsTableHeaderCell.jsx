@@ -48,7 +48,7 @@ const CollectionResultsTableHeaderCell = (props) => {
         <Button
           className="collection-results-table__collection-action collection-results-table__collection-action--info"
           icon={AlertInformation}
-          iconSize="3rem"
+          iconSize="48"
           variant="naked"
           label="View collection details"
           title="View collection details"

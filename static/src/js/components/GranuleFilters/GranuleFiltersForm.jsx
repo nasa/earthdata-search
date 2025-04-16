@@ -332,7 +332,7 @@ export const GranuleFiltersForm = (props) => {
                       aria-label="A question mark in a circle"
                       icon={FaQuestionCircle}
                       role="img"
-                      size="0.625rem"
+                      size="10"
                       variant="more-info"
                     />
                   </OverlayTrigger>

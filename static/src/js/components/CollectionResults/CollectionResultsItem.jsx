@@ -398,7 +398,7 @@ export const CollectionResultsItem = forwardRef(({
                             <EDSCIcon
                               className="collection-results-item__icon collection-results-item__icon--csda d-inline-block me-1"
                               icon={FaLock}
-                              size="0.55rem"
+                              size="8"
                             />
                             CSDA
                           </span>

@@ -652,22 +652,22 @@ const Map = ({
 
     const mapControls = new MapControls({
       base,
-      CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
-      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
+      CircleIcon: (<EDSCIcon size="12" icon={FaCircle} />),
+      HomeIcon: (<EDSCIcon size="12" icon={FaHome} />),
       isLayerSwitcherOpen,
-      LayersIcon: (<EDSCIcon size="0.75rem" icon={FaLayerGroup} />),
+      LayersIcon: (<EDSCIcon size="12" icon={FaLayerGroup} />),
       map: mapRef.current,
       mapLayers,
-      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
+      MinusIcon: (<EDSCIcon size="12" icon={Minus} />),
       onChangeLayer: handleLayerChange,
       onChangeProjection,
       onToggleShapefileUploadModal,
       overlays,
-      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
-      PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
+      PlusIcon: (<EDSCIcon size="12" icon={Plus} />),
+      PointIcon: (<EDSCIcon size="12" icon={MapIcon} />),
       projectionCode,
       setIsLayerSwitcherOpen,
-      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />),
+      ShapefileIcon: (<EDSCIcon size="12" icon={FaFile} />),
       showDrawingControls: !isProjectPage
     })
 

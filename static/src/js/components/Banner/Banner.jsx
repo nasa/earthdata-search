@@ -25,7 +25,7 @@ export const Banner = ({
     <div className={bannerClassNames} role="banner">
       <div className="banner__content">
         <h2 className="banner__title">
-          <AlertHighPriority className="banner__icon icon" aria-label="High Alert Icon" size="1.375rem" />
+          <AlertHighPriority className="banner__icon icon" aria-label="High Alert Icon" size="22" />
           {title}
         </h2>
         {

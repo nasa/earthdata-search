@@ -370,7 +370,7 @@ class SearchForm extends Component {
                   tooltipId="search-form--advanced-search"
                   onClick={this.onToggleAdvancedSearch}
                   icon={Filter}
-                  iconSize="0.825rem"
+                  iconSize="14"
                   ariaLabel="Show advanced search options"
                 />
               </PortalFeatureContainer>
@@ -382,7 +382,7 @@ class SearchForm extends Component {
               tooltipId="search-form--clear-filters"
               onClick={this.onSearchClear}
               icon={FaRegTrashAlt}
-              iconSize="0.825rem"
+              iconSize="14"
               ariaLabel="Clear all search filters"
             />
           </div>

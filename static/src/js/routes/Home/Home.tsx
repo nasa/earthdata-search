@@ -223,7 +223,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
                 }
               >
                 <div className="d-flex flex-grow-1 position-relative flex-shrink-1">
-                  <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22" />
+                  <EDSCIcon className="home__hero-input-icon position-absolute" icon={Search} size="22px" />
                   <input
                     className="home__hero-input flex-grow-1 flex-shrink-1 form-control form-control-lg border-end-0"
                     type="text"

@@ -33,7 +33,7 @@ export const MoreActionsDropdownItem = ({
         icon && (
           <EDSCIcon
             className={moreActionItemIconClasses}
-            size="0.75rem"
+            size="12"
             icon={icon}
           />
         )

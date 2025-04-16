@@ -360,7 +360,7 @@ class SecondaryToolbar extends Component {
           as={Button}
           onClick={this.onToggleProjectDropdown}
           icon={FaSave}
-          iconSize="0.825rem"
+          iconSize="14"
           bootstrapVariant="light"
           tooltip="Create a project with your current search"
           tooltipId="create-project-tooltip"
@@ -414,7 +414,7 @@ class SecondaryToolbar extends Component {
                 as={Button}
                 aria-label="Start Search Tour"
                 icon={FaQuestion}
-                iconSize="0.825rem"
+                iconSize="14"
                 onClick={setRunTour}
                 bootstrapVariant="light"
                 tooltip="Take a tour to learn how to use Earthdata Search"
