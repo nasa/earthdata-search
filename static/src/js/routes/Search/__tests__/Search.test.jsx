@@ -3,8 +3,11 @@ import { render, screen } from '@testing-library/react'
 import { Provider } from 'react-redux'
 import { Route } from 'react-router'
 import { MemoryRouter } from 'react-router-dom'
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 
 import { createMemoryHistory } from 'history'
+import userEvent from '@testing-library/user-event'
 import {
   Search,
   mapDispatchToProps,
@@ -13,7 +16,6 @@ import {
 
 import actions from '../../../actions'
 import Providers from '../../../providers/Providers/Providers'
-import configureStore from '../../../store/configureStore'
 
 const mockClassListAdd = jest.fn()
 const mockClassListRemove = jest.fn()
@@ -59,7 +61,12 @@ jest.mock('../../../containers/FacetsModalContainer/FacetsModalContainer', () =>
   return FacetsModalContainer
 })
 
-// Mock the lazy loaded components
+jest.mock('../../../containers/FacetsContainer/FacetsContainer', () => {
+  const FacetsContainer = () => <div data-testid="mocked-FacetsContainer" />
+
+  return FacetsContainer
+})
+
 jest.mock('../../../containers/MapContainer/MapContainer', () => {
   const MapContainer = () => <div data-testid="mock-MapContainer" />
 
@@ -97,9 +104,11 @@ jest.mock('../../../containers/SearchPanelsContainer/SearchPanelsContainer', () 
 })
 
 const history = createMemoryHistory()
-const mockStore = configureStore()
+const mockStore = configureMockStore([thunk])
 
 function setup() {
+  const user = userEvent.setup()
+
   const props = {
     collectionQuery: {},
     match: { path: '/search' },
@@ -109,17 +118,37 @@ function setup() {
     onUpdateAdvancedSearch: jest.fn()
   }
 
-  render(
-    <Provider store={mockStore}>
+  const store = mockStore({
+    portal: {
+      ui: {
+        showNonEosdisCheckbox: true,
+        showOnlyGranulesCheckbox: true
+      }
+    },
+    ui: {
+      portalBrowserModal: {
+        isOpen: false
+      }
+    }
+  })
+
+  const { unmount } = render(
+    <Provider store={store}>
       <Providers>
-        <MemoryRouter>
-          <Route history={history} location={props.location}>
+        <MemoryRouter initialEntries={['/search']}>
+          <Route history={history} path="/search">
             <Search {...props} />
           </Route>
         </MemoryRouter>
       </Providers>
     </Provider>
   )
+
+  return {
+    props,
+    unmount,
+    user
+  }
 }
 
 describe('mapDispatchToProps', () => {
@@ -170,74 +199,70 @@ describe('mapStateToProps', () => {
   })
 })
 
-// TODO fix these tests
 describe('Search component', () => {
-  test.skip('should render self', async () => {
-    setup()
-
-    const searchResultMatches = await screen.findAllByText('Search Results')
-    expect(searchResultMatches[0]).toBeDefined()
+  beforeEach(() => {
+    jest.clearAllMocks()
   })
 
-  test('renders SearchSidebarHeaderContainer', async () => {
-    setup()
+  describe('when on the /search route', () => {
+    test('should render search panels', async () => {
+      setup()
 
-    expect(await screen.findByTestId('mock-SearchSidebarHeaderContainer')).toBeInTheDocument()
-  })
-
-  test.skip('renders the "Include collections without granules" checkbox under PortalFeatureContainer', async () => {
-    setup()
-    expect(await screen.findByText('Include collections without granules')).toBeInTheDocument()
-  })
-
-  test.skip('renders the "Include only EOSDIS collections" checkbox under PortalFeatureContainer', async () => {
-    setup()
-    expect(await screen.findByText('Include only EOSDIS collections')).toBeInTheDocument()
-  })
-
-  describe.skip('handleCheckboxCheck', () => {
-    test('checking the "Include collections without granules" checkbox calls onChangeQuery', () => {
-      const { enzymeWrapper, props } = setup()
-
-      const event = {
-        target: {
-          checked: true,
-          id: 'input__only-granules'
-        }
-      }
-
-      enzymeWrapper.find('#input__only-granules').props().onChange(event)
-
-      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({
-        collection: {
-          hasGranulesOrCwic: undefined
-        }
-      })
+      const searchResultsPanel = await screen.findByTestId('mock-SearchPanelsContainer')
+      expect(searchResultsPanel).toBeInTheDocument()
     })
 
-    test.skip('checking the "Include only EOSDIS collections" checkbox calls onChangeQuery', () => {
-      const { enzymeWrapper, props } = setup()
+    test('renders SearchSidebarHeaderContainer', async () => {
+      setup()
 
-      const event = {
-        target: {
-          checked: true,
-          id: 'input__non-eosdis'
-        }
-      }
+      expect(await screen.findByTestId('mock-SearchSidebarHeaderContainer')).toBeInTheDocument()
+    })
 
-      enzymeWrapper.find('#input__non-eosdis').props().onChange(event)
+    test('renders the "Include collections without granules" checkbox under PortalFeatureContainer', async () => {
+      setup()
 
-      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({
-        collection: {
-          onlyEosdisCollections: true
-        }
+      expect(await screen.findByText('Include collections without granules')).toBeInTheDocument()
+    })
+
+    test('renders the "Include only EOSDIS collections" checkbox under PortalFeatureContainer', async () => {
+      setup()
+      expect(await screen.findByText('Include only EOSDIS collections')).toBeInTheDocument()
+    })
+
+    describe('handleCheckboxCheck', () => {
+      test('checking the "Include collections without granules" checkbox calls onChangeQuery', async () => {
+        const { user, props } = setup()
+
+        const includeWithoutGranulesCheckbox = await screen.findByText('Include collections without granules')
+
+        await user.click(includeWithoutGranulesCheckbox)
+
+        expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+        expect(props.onChangeQuery).toHaveBeenCalledWith({
+          collection: {
+            hasGranulesOrCwic: true
+          }
+        })
+      })
+
+      test('checking the "Include only EOSDIS collections" checkbox calls onChangeQuery', async () => {
+        const { user, props } = setup()
+
+        const includeWithoutGranulesCheckbox = await screen.findByText('Include only EOSDIS collections')
+
+        await user.click(includeWithoutGranulesCheckbox)
+
+        expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+        expect(props.onChangeQuery).toHaveBeenCalledWith({
+          collection: {
+            onlyEosdisCollections: true
+          }
+        })
       })
     })
   })
 
-  describe.skip('when mounting the component', () => {
+  describe('when mounting the component', () => {
     test('adds the root__app--fixed-footer class to the root', () => {
       setup()
 
@@ -248,7 +273,7 @@ describe('Search component', () => {
     })
   })
 
-  describe.skip('when unmounting the component', () => {
+  describe('when unmounting the component', () => {
     test('removes the root__app--fixed-footer class to the root', () => {
       const { unmount } = setup()
 
