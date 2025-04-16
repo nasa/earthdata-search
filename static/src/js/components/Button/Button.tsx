@@ -43,8 +43,6 @@ export interface ButtonProps {
   className?: string
   /** Button content, including text or other elements. */
   children?: ReactNode
-  /** Whether to hide the button text visually. */
-  childrenHidden?: boolean
   /** Test ID for testing purposes. */
   dataTestId?: string
   /** Whether the button is displayed on a dark background */
@@ -101,7 +99,6 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   bootstrapSize,
   className,
   children,
-  childrenHidden = false,
   dataTestId,
   dark = false,
   disabled = false,
@@ -137,10 +134,6 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
     },
     className
   )
-
-  if (ariaLabel === 'Show advanced search options') {
-    console.log('!!icon && children === nul', !!icon && children === null)
-  }
 
   let iconClasses
 
@@ -187,10 +180,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   }
 
   const childrenClasses = classNames(
-    'button__contents',
-    {
-      'visually-hidden': childrenHidden
-    }
+    'button__contents'
   )
 
   const button = (

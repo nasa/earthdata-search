@@ -173,7 +173,7 @@ const handleDrawEnd = (params, event) => {
   })
 
   // Call any onDrawEnd callback passed to the function
-  onDrawEnd(geometry)
+  if (onDrawEnd) onDrawEnd(geometry)
 }
 
 export default handleDrawEnd

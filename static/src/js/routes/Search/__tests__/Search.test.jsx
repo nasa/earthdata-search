@@ -19,6 +19,10 @@ const mockClassListAdd = jest.fn()
 const mockClassListRemove = jest.fn()
 
 jest.spyOn(document, 'querySelector').mockImplementation(() => ({
+  getBoundingClientRect: jest.fn(() => ({
+    height: 100,
+    width: 100
+  })),
   classList: {
     add: mockClassListAdd,
     remove: mockClassListRemove
@@ -78,6 +82,18 @@ jest.mock('../../../containers/GranuleFiltersContainer/GranuleFiltersContainer',
   const GranuleFiltersContainer = () => <div data-testid="mock-GranuleFiltersContainer" />
 
   return GranuleFiltersContainer
+})
+
+jest.mock('../../../containers/SearchSidebarHeaderContainer/SearchSidebarHeaderContainer', () => {
+  const SearchSidebarHeaderContainer = () => <div data-testid="mock-SearchSidebarHeaderContainer" />
+
+  return SearchSidebarHeaderContainer
+})
+
+jest.mock('../../../containers/SearchPanelsContainer/SearchPanelsContainer', () => {
+  const SearchPanelsContainer = () => <div data-testid="mock-SearchPanelsContainer" />
+
+  return SearchPanelsContainer
 })
 
 const history = createMemoryHistory()
@@ -155,29 +171,26 @@ describe('mapStateToProps', () => {
 })
 
 // TODO fix these tests
-describe.skip('Search component', () => {
-  test('should render self', async () => {
+describe('Search component', () => {
+  test.skip('should render self', async () => {
     setup()
+
     const searchResultMatches = await screen.findAllByText('Search Results')
     expect(searchResultMatches[0]).toBeDefined()
   })
 
-  test('renders AdvancedSearchModalContainer under PortalFeatureContainer', async () => {
+  test('renders SearchSidebarHeaderContainer', async () => {
     setup()
-    await screen.findByRole('button', { name: 'Advanced Search' })
+
+    expect(await screen.findByTestId('mock-SearchSidebarHeaderContainer')).toBeInTheDocument()
   })
 
-  test('renders the Additional Filters under PortalFeatureContainer', async () => {
-    setup()
-    expect(await screen.findByText('Additional Filters')).toBeInTheDocument()
-  })
-
-  test('renders the "Include collections without granules" checkbox under PortalFeatureContainer', async () => {
+  test.skip('renders the "Include collections without granules" checkbox under PortalFeatureContainer', async () => {
     setup()
     expect(await screen.findByText('Include collections without granules')).toBeInTheDocument()
   })
 
-  test('renders the "Include only EOSDIS collections" checkbox under PortalFeatureContainer', async () => {
+  test.skip('renders the "Include only EOSDIS collections" checkbox under PortalFeatureContainer', async () => {
     setup()
     expect(await screen.findByText('Include only EOSDIS collections')).toBeInTheDocument()
   })
@@ -203,7 +216,7 @@ describe.skip('Search component', () => {
       })
     })
 
-    test('checking the "Include only EOSDIS collections" checkbox calls onChangeQuery', () => {
+    test.skip('checking the "Include only EOSDIS collections" checkbox calls onChangeQuery', () => {
       const { enzymeWrapper, props } = setup()
 
       const event = {
@@ -224,7 +237,7 @@ describe.skip('Search component', () => {
     })
   })
 
-  describe('when mounting the component', () => {
+  describe.skip('when mounting the component', () => {
     test('adds the root__app--fixed-footer class to the root', () => {
       setup()
 
@@ -235,7 +248,7 @@ describe.skip('Search component', () => {
     })
   })
 
-  describe('when unmounting the component', () => {
+  describe.skip('when unmounting the component', () => {
     test('removes the root__app--fixed-footer class to the root', () => {
       const { unmount } = setup()
 

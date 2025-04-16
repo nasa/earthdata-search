@@ -147,7 +147,6 @@ export const MapContainer = (props) => {
         onToggleShapefileUploadModal(true)
       } else {
         eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
-        // SetStartDrawing(null)
       }
     }
   }, [startDrawing, mapReady])

@@ -28,10 +28,8 @@ module.exports = {
     '^axios$': require.resolve('axios'),
     // Available Portals is not defined until the start of the application and is subject to change as portal maintainers update values mock the output in tests
     'portals/availablePortals.json': '<rootDir>/portals/__mocks__/availablePortals.json',
-    // TODO: Remove this if not needed
+    // Return a file mock when an svg is imported using react or url flags to replicate the SVGR import
     '\\.svg\\?(react|url)$': '<rootDir>/static/src/js/util/mocks/fileMock.js'
-    // Mock the ~Images alias to the images directory
-    // '^~Images/(.*)$': '<rootDir>/static/src/assets/images/$1'
   },
   coveragePathIgnorePatterns: [
     'package.json',

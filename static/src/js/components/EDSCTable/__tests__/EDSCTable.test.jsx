@@ -81,8 +81,6 @@ describe('EDSCTable component', () => {
     const { enzymeWrapper } = setup(mount)
     const header = enzymeWrapper.find('.edsc-table__thead')
 
-    console.log(enzymeWrapper.debug())
-
     expect(header.text()).toContain('Collection ID')
     expect(header.text()).toContain('Version')
   })

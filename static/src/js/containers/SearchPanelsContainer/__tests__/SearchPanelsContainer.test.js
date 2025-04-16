@@ -70,7 +70,7 @@ function setup() {
     }
   }
 
-  const enzymeWrapper = render(
+  render(
     <HomeContext.Provider value={
       {
         openKeywordFacet: false,
@@ -83,7 +83,6 @@ function setup() {
   )
 
   return {
-    enzymeWrapper,
     props
   }
 }

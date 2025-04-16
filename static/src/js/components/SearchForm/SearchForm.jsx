@@ -288,6 +288,7 @@ class SearchForm extends Component {
       onClearAutocompleteSuggestions,
       onFetchAutocomplete
     } = this.props
+    console.log('🚀 ~ SearchForm ~ render ~ advancedSearch:', advancedSearch)
     const {
       isLoading,
       isLoaded,
@@ -370,7 +371,6 @@ class SearchForm extends Component {
                   onClick={this.onToggleAdvancedSearch}
                   icon={Filter}
                   iconSize="0.825rem"
-                  childrenHidden
                   ariaLabel="Show advanced search options"
                 />
               </PortalFeatureContainer>
