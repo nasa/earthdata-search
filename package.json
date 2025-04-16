@@ -36,7 +36,7 @@
     "test:watch-lite": "TZ=US/Eastern jest --watchAll --collectCoverageFrom='' --coverage=true",
     "start:cache": "docker-compose up -d",
     "stop:cache": "docker-compose down",
-    "prestart-ci": "NODE_OPTIONS=--max-old-space-size=8192 VITE_COVERAGE=true npm run build",
+    "prestart-ci": "NODE_OPTIONS=--max-old-space-size=8192 VITE_COVERAGE=true VITE_PLAYWRIGHT=true npm run build",
     "start-ci": "npm run preview",
     "lint": "eslint . --ext .jsx,.js,.ts,.tsx",
     "preinvoke-local": "npm run build:api",
