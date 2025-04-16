@@ -98,7 +98,7 @@ const SpatialSelectionDropdown = (props) => {
         data-testid="spatial-selection-dropdown"
         className="search-form__button search-form__button--secondary btn-sm gap-1"
       >
-        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={SpatialOutline} size="0.825rem" />
+        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={SpatialOutline} size="14" />
         Spatial
         <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={ArrowFilledDown} size="12" />
       </Dropdown.Toggle>

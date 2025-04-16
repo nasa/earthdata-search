@@ -117,8 +117,8 @@ const drawFocusedGranule = ({
   // Fit the focused granule in the view
   if (shouldMoveMap) {
     map.getView().fit(geometry, {
-      duration: 250,
-      padding: [50, 50, 50, 50]
+      duration: 400,
+      padding: [100, 125, 100, 100]
     })
   }
 

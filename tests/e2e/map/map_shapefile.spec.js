@@ -15,9 +15,9 @@ import arcticShapefileBody from './__mocks__/arctic_shapefile_collections.body.j
 import antarcticShapefileBody from './__mocks__/antarctic_shapefile_collections.body.json'
 
 const screenshotClip = {
-  x: 940,
+  x: 950,
   y: 90,
-  width: 415,
+  width: 405,
   height: 640
 }
 
@@ -37,7 +37,7 @@ test.describe('Map: Shapefile interactions', () => {
 
   test.describe('When uploading a shapefile', () => {
     test.describe('When the shapefile has a polygon shape', () => {
-      test('renders correctly', async ({ page }) => {
+      test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -97,7 +97,7 @@ test.describe('Map: Shapefile interactions', () => {
     })
 
     test.describe('When the shapefile has a line shape', () => {
-      test('renders correctly', async ({ page }) => {
+      test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -158,7 +158,7 @@ test.describe('Map: Shapefile interactions', () => {
     })
 
     test.describe('When the shapefile has a circle shape', () => {
-      test('renders correctly', async ({ page }) => {
+      test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -219,7 +219,7 @@ test.describe('Map: Shapefile interactions', () => {
     })
 
     test.describe('When the shapefile has a point shape', () => {
-      test('renders correctly', async ({ page }) => {
+      test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -280,7 +280,7 @@ test.describe('Map: Shapefile interactions', () => {
     })
 
     test.describe('When the shapefile has multiple shapes selected', () => {
-      test('renders correctly', async ({ page }) => {
+      test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -338,7 +338,7 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         // Wait to avoid a double click
-        await page.waitForTimeout(200)
+        await page.waitForTimeout(300)
 
         // Upper Polygon
         await page.locator('.map').click({
@@ -360,12 +360,12 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Updates the URL
-        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&polygon\[1\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=0&sfs\[1\]=1&lat=-8\.\d+&long=45\.\d+&zoom=3\.\d+/)
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&polygon\[1\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=0&sfs\[1\]=1&lat=-8\.\d+&long=46\.\d+&zoom=3\.\d+/)
       })
     })
 
     test.describe('When the shapefile has a polygon with too many points', () => {
-      test('renders correctly', async ({ page }) => {
+      test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -420,7 +420,7 @@ test.describe('Map: Shapefile interactions', () => {
     })
 
     test.describe('When the shapefile has only arctic latitudes', () => {
-      test('renders correctly', async ({ page }) => {
+      test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -480,7 +480,7 @@ test.describe('Map: Shapefile interactions', () => {
     })
 
     test.describe('When the shapefile has only antarctic latitudes', () => {
-      test('renders correctly', async ({ page }) => {
+      test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,

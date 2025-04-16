@@ -88,7 +88,7 @@ test.describe('Map: Control interactions', () => {
 
   test.describe('When switching projections', () => {
     test.describe('When switching to the North Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -116,7 +116,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When loading the map with the North Polar Stereographic projection url parameter', () => {
-      test('displays the map with the correct projection', async ({ page }) => {
+      test('displays the map with the correct projection @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -137,7 +137,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When switching to the Geographic projection', () => {
-      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -166,7 +166,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When loading the page with the Geographic projection url parameter', () => {
-      test('displays the map with the correct projection', async ({ page }) => {
+      test('displays the map with the correct projection @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -190,7 +190,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When switching to the South Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -217,7 +217,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When loading the map with the South Polar Stereographic projection url parameter', () => {
-      test('displays the map with the correct projection', async ({ page }) => {
+      test('displays the map with the correct projection @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -241,7 +241,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When switching from the North Polar Stereographic projection to the South Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -274,7 +274,7 @@ test.describe('Map: Control interactions', () => {
   })
 
   test.describe('When rotating the map', () => {
-    test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+    test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
       await interceptUnauthenticatedCollections({
         page,
         body: commonBody,
@@ -308,7 +308,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When loading the map with a rotation url parameter', () => {
-      test('displays the map with the correct rotation', async ({ page }) => {
+      test('displays the map with the correct rotation @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,

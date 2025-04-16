@@ -236,7 +236,7 @@ test.describe('Path /search', () => {
 
   test.describe('When the path is loaded with a spatial query', () => {
     test.describe('When the spatial query is a point', () => {
-      test('loads with the spatial query applied', async ({ page }) => {
+      test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5079
 
         await page.route('**/search/collections.json', (route, request) => {
@@ -279,7 +279,7 @@ test.describe('Path /search', () => {
     })
 
     test.describe('When the spatial query is a polygon', () => {
-      test('loads with the spatial query applied', async ({ page }) => {
+      test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5133
 
         await page.route('**/search/collections.json', (route, request) => {
@@ -322,7 +322,7 @@ test.describe('Path /search', () => {
     })
 
     test.describe('When the spatial query is a circle', () => {
-      test('loads with the spatial query applied', async ({ page }) => {
+      test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5080
 
         await page.route('**/search/collections.json', (route, request) => {
@@ -366,7 +366,7 @@ test.describe('Path /search', () => {
     })
 
     test.describe('When the spatial query is a bounding box', () => {
-      test('loads with the spatial query applied', async ({ page }) => {
+      test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5209
 
         await page.route('**/search/collections.json', (route, request) => {
@@ -410,7 +410,7 @@ test.describe('Path /search', () => {
     })
 
     test.describe('When the spatial query is a shapefile', () => {
-      test('loads with the spatial query applied', async ({ page }) => {
+      test('loads with the spatial query applied @screenshot', async ({ page }) => {
         const cmrHits = 5133
 
         // Retrieve the shapefile from lambda

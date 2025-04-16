@@ -422,7 +422,7 @@ test.describe('Path /search/granules/collection-details', () => {
   test.describe('When collection has spatial', () => {
     // Bounding box, line, point, and polygon
     test.describe('with a bounding box', () => {
-      test('displays the box spatial on the minimap', async ({ page }) => {
+      test('displays the box spatial on the minimap @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
         const cmrHits = 8180
         const granuleHits = 6338
@@ -481,7 +481,7 @@ test.describe('Path /search/granules/collection-details', () => {
     })
 
     test.describe('with a point', () => {
-      test('displays the point spatial, as a circle around it on the minimap', async ({ page }) => {
+      test('displays the point spatial, as a circle around it on the minimap @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
         const cmrHits = 8180
         const granuleHits = 6338
@@ -540,7 +540,7 @@ test.describe('Path /search/granules/collection-details', () => {
     })
 
     test.describe('with lines', () => {
-      test('displays the lines spatial on the minimap', async ({ page }) => {
+      test('displays the lines spatial on the minimap @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
         const cmrHits = 8180
         const granuleHits = 6338
@@ -599,7 +599,7 @@ test.describe('Path /search/granules/collection-details', () => {
     })
 
     test.describe('with polygons', () => {
-      test('display the polygons minimap', async ({ page }) => {
+      test('display the polygons minimap @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
         const cmrHits = 8180
         const granuleHits = 6338
@@ -659,7 +659,7 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       test.describe('when a polygon is small', () => {
-        test('draw it as a circle on the minimap', async ({ page }) => {
+        test('draw it as a circle on the minimap @screenshot', async ({ page }) => {
           const conceptId = 'C1996546500-GHRC_DAAC'
           const cmrHits = 8180
           const granuleHits = 6338
@@ -718,7 +718,7 @@ test.describe('Path /search/granules/collection-details', () => {
     })
 
     test.describe('with multiple shape types', () => {
-      test('displays all the shapes on the minimap and the label', async ({ page }) => {
+      test('displays all the shapes on the minimap and the label @screenshot', async ({ page }) => {
         const conceptId = 'C1996546500-GHRC_DAAC'
         const cmrHits = 8180
         const granuleHits = 6338

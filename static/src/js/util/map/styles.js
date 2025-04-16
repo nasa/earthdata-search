@@ -12,7 +12,7 @@ const backgroundColor = 'rgba(128, 128, 128, 0.6)'
 export const pointRadius = 5
 const highlightedFillColor = 'rgba(46, 204, 113, 0.2)'
 
-const getMarkerSvg = (stroke, fill) => `<svg stroke="${encodeURIComponent(stroke)}" fill="${encodeURIComponent(fill)}" xmlns="http://www.w3.org/2000/svg" stroke-width="1" width="1rem" height="1rem" viewBox="0 0 20 20" role="img" data-reactroot=""><path fill="${encodeURIComponent(fill)}" fill-rule="evenodd" d="M10.457 19.544C13.798 16.214 17 13.02 17 8A7 7 0 1 0 3 8c0 5.021 3.202 8.213 6.543 11.544L10 20zM10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6" clip-rule="evenodd"></path></svg>`
+const getMarkerSvg = (stroke, fill) => `<svg stroke="${encodeURIComponent(stroke)}" fill="${encodeURIComponent(fill)}" xmlns="http://www.w3.org/2000/svg" stroke-width="1" width="16" height="16" viewBox="0 0 20 20" role="img" data-reactroot=""><path fill="${encodeURIComponent(fill)}" fill-rule="evenodd" d="M10.457 19.544C13.798 16.214 17 13.02 17 8A7 7 0 1 0 3 8c0 5.021 3.202 8.213 6.543 11.544L10 20zM10 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6" clip-rule="evenodd"></path></svg>`
 
 // The background of the granules drawn on the map
 export const backgroundGranuleStyle = new Style({

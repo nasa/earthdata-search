@@ -19,7 +19,7 @@ test.describe('Timeline spec', () => {
     })
   })
 
-  test('should move the map controls', async ({ page, context }) => {
+  test('should move the map controls @screenshot', async ({ page, context }) => {
     await login(context)
 
     const authHeaders = getAuthHeaders()

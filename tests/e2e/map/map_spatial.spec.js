@@ -31,9 +31,9 @@ import polygonBodyEdited from './__mocks__/polygon_collections_edited.body.json'
 import reachSearchBody from './__mocks__/reach_search.body.json'
 
 const screenshotClip = {
-  x: 940,
+  x: 950,
   y: 90,
-  width: 415,
+  width: 405,
   height: 640
 }
 
@@ -54,7 +54,7 @@ test.describe('Map: Spatial interactions', () => {
   test.describe('when drawing spatial in the geographic projection', () => {
     test.describe('When drawing point spatial', () => {
       test.describe('When drawing a new point from the spatial selection', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -65,7 +65,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-27\.\d+,-9\.\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-28\.\d+,-9\.\d+/)
             }]
           })
 
@@ -83,10 +83,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 500)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sp\[0\]=-27\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sp\[0\]=-28\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-27\.\d+/)
+          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-28\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -100,7 +100,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When drawing a new point from the map controls', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -111,7 +111,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-27\.\d+,-9\.\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-28\.\d+,-9\.\d+/)
             }]
           })
 
@@ -128,10 +128,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 500)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sp\[0\]=-27\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sp\[0\]=-28\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-27\.\d+/)
+          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-28\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -145,7 +145,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When typing a new point in the spatial display', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -196,7 +196,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe.skip('When editing a point', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -268,7 +268,7 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('When drawing circle spatial', () => {
       test.describe('When drawing a new circle from the spatial selection', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -279,7 +279,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-27\.\d+,-9\.\d+,195\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-28\.\d+,-9\.\d+,195\d+/)
             }]
           })
 
@@ -301,10 +301,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 510)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-27\.\d+%2C-9\.\d+%2C195\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-28\.\d+%2C-9\.\d+%2C195\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-9\.\d+,-27\.\d+/)
+          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-9\.\d+,-28\.\d+/)
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/195\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
@@ -319,7 +319,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When drawing a new circle from the map controls', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -330,7 +330,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-27\.\d+,-9\.\d+,195\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-28\.\d+,-9\.\d+,195\d+/)
             }]
           })
 
@@ -348,10 +348,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 510)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-27\.\d+%2C-9\.\d+%2C195\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-28\.\d+%2C-9\.\d+%2C195\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-9\.\d+,-27\.\d+/)
+          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/-9\.\d+,-28\.\d+/)
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/195\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
@@ -366,7 +366,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When typing a new circle in the spatial display', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -423,7 +423,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe.skip('When editing a circle', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -498,7 +498,7 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('When drawing bounding box spatial', () => {
       test.describe('When drawing a new bounding box from the spatial selection', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -510,7 +510,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-27\.\d+,-44\.\d+,-9\.\d+,-9\.\d+/)
+                ?.match(/-28\.\d+,-44\.\d+,-11\.\d+,-9\.\d+/)
             }]
           })
 
@@ -529,11 +529,11 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1100, 700)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-27\.\d+%2C-44\.\d+%2C-9\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-28\.\d+%2C-44\.\d+%2C-11\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-27\.\d+/)
-          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-9\.\d+/)
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-28\.\d+/)
+          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-11\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -547,7 +547,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When drawing a new bounding box from the map controls', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -559,7 +559,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-27\.\d+,-44\.\d+,-9\.\d+,-9\.\d+/)
+                ?.match(/-28\.\d+,-44\.\d+,-11\.\d+,-9\.\d+/)
             }]
           })
 
@@ -577,11 +577,11 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1100, 700)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-27\.\d+%2C-44\.\d+%2C-9\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-28\.\d+%2C-44\.\d+%2C-11\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-27\.\d+/)
-          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-9\.\d+/)
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/-44\.\d+,-28\.\d+/)
+          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/-9\.\d+,-11\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -595,7 +595,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When typing a new bounding box in the spatial display', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -650,7 +650,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe.skip('When editing a bounding box', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -726,7 +726,7 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('When drawing polygon spatial', () => {
       test.describe('When drawing a new polygon from the spatial selection', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -738,7 +738,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-27\.\d+,-9\.\d+,-27\.\d+,-44\.\d+,-9\.\d+,-44\.\d+,-27\.\d+,-9\.\d+/)
+                ?.match(/-28\.\d+,-9\.\d+,-28\.\d+,-44\.\d+,-11\.\d+,-44\.\d+,-28\.\d+,-9\.\d+/)
             }]
           })
 
@@ -766,7 +766,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-27\.\d+%2C-9\.\d+%2C-27\.\d+%2C-44\.\d+%2C-9\.\d+%2C-44\.\d+%2C-27\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-28\.\d+%2C-9\.\d+%2C-28\.\d+%2C-44\.\d+%2C-11\.\d+%2C-44\.\d+%2C-28\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -788,7 +788,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When drawing a new polygon from the map controls', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -800,7 +800,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-27\.\d+,-9\.\d+,-27\.\d+,-44\.\d+,-9\.\d+,-44\.\d+,-27\.\d+,-9\.\d+/)
+                ?.match(/-28\.\d+,-9\.\d+,-28\.\d+,-44\.\d+,-11\.\d+,-44\.\d+,-28\.\d+,-9\.\d+/)
             }]
           })
 
@@ -823,7 +823,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-27\.\d+%2C-9\.\d+%2C-27\.\d+%2C-44\.\d+%2C-9\.\d+%2C-44\.\d+%2C-27\.\d+%2C-9\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-28\.\d+%2C-9\.\d+%2C-28\.\d+%2C-44\.\d+%2C-11\.\d+%2C-44\.\d+%2C-28\.\d+%2C-9\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -845,7 +845,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe.skip('When editing a polygon', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -866,7 +866,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '3'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/42\.\d+,-7\.\d+,42\.\d+,-21\.\d+,63\.\d+,-27\.\d+,42\.\d+,-7\.\d+/)
+                ?.match(/42\.\d+,-7\.\d+,42\.\d+,-21\.\d+,63\.\d+,-28\.\d+,42\.\d+,-7\.\d+/)
             }]
           })
 
@@ -916,7 +916,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.getByRole('link', { name: 'Save' }).click()
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?polygon\[0\]=42\.\d+%2C-7\.\d+%2C42\.\d+%2C-21\.\d+%2C63\.\d+%2C-27\.\d+%2C42\.\d+%2C-7\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=42\.\d+%2C-7\.\d+%2C42\.\d+%2C-21\.\d+%2C63\.\d+%2C-28\.\d+%2C42\.\d+%2C-7\.\d+/)
 
           // Populates the spatial display field
           await expect(page.getByTestId('spatial-display_polygon')).toHaveText('3 Points')
@@ -970,7 +970,7 @@ test.describe('Map: Spatial interactions', () => {
           })
         })
 
-        test('renders the spatial correctly', async ({ page }) => {
+        test('renders the spatial correctly @screenshot', async ({ page }) => {
           const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/9/)
 
           const dialog = await page.getByRole('dialog')
@@ -1029,7 +1029,7 @@ test.describe('Map: Spatial interactions', () => {
           })
         })
 
-        test('renders the spatial correctly', async ({ page }) => {
+        test('renders the spatial correctly @screenshot', async ({ page }) => {
           const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
 
           const dialog = await page.getByRole('dialog')
@@ -1060,7 +1060,7 @@ test.describe('Map: Spatial interactions', () => {
   test.describe('when drawing spatial in the arctic projection', () => {
     test.describe('When drawing point spatial', () => {
       test.describe('When drawing a new point from the spatial selection', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1071,7 +1071,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-108\.\d+,76\.\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-10(8|9)\.\d+,76\.\d+/)
             }]
           })
 
@@ -1089,10 +1089,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 525)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sp\[0\]=-108\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?sp\[0\]=-10(8|9)\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/76\.\d+,-108\.\d+/)
+          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/76\.\d+,-10(8|9)\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -1106,7 +1106,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When drawing a new point from the map controls', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1117,7 +1117,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-108\.\d+,76\.\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-10(8|9)\.\d+,76\.\d+/)
             }]
           })
 
@@ -1134,10 +1134,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 525)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sp\[0\]=-108\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?sp\[0\]=-10(8|9)\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/76\.\d+,-108\.\d+/)
+          await expect(page.getByTestId('spatial-display_point')).toHaveValue(/76\.\d+,-10(8|9)\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -1151,7 +1151,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When typing a new point in the spatial display', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1162,7 +1162,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-108\.\d+,76\.\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.point?.[0]?.match(/-109\.\d+,76\.\d+/)
             }]
           })
 
@@ -1178,14 +1178,14 @@ test.describe('Map: Spatial interactions', () => {
 
           // Enter the spatial point
           await page.getByTestId('spatial-display_point').focus()
-          await page.keyboard.type('76.61639,-108.80547')
+          await page.keyboard.type('76.61639,-109.80547')
           await page.keyboard.up('Enter')
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sp\[0\]=-108\.80547%2C76\.61639&lat=76\.\d+&long=-108\.\d+&projection=EPSG%3A3413&zoom=12/)
+          await expect(page).toHaveURL(/search\?sp\[0\]=-109\.80547%2C76\.61639&lat=76\.\d+&long=-109\.\d+&projection=EPSG%3A3413&zoom=12/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_point')).toHaveValue('76.61639,-108.80547')
+          await expect(page.getByTestId('spatial-display_point')).toHaveValue('76.61639,-109.80547')
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -1204,7 +1204,7 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('When drawing circle spatial', () => {
       test.describe('When drawing a new circle from the spatial selection', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1215,7 +1215,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-108\.\d+,76\.\d+,166\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-10(8|9)\.\d+,76\.\d+,166\d+/)
             }]
           })
 
@@ -1237,10 +1237,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 545)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-108\.\d+%2C76\.\d+%2C166\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-10(8|9)\.\d+%2C76\.\d+%2C166\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/76\.\d+,-108\.\d+/)
+          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/76\.\d+,-10(8|9)\.\d+/)
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/166\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
@@ -1255,7 +1255,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When drawing a new circle from the map controls', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1266,7 +1266,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-108\.\d+,76\.\d+,166\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-10(8|9)\.\d+,76\.\d+,166\d+/)
             }]
           })
 
@@ -1284,10 +1284,10 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1000, 545)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-108\.\d+%2C76\.\d+%2C166\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-10(8|9)\.\d+%2C76\.\d+%2C166\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/76\.\d+,-108\.\d+/)
+          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue(/76\.\d+,-10(8|9)\.\d+/)
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/166\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
@@ -1302,7 +1302,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When typing a new circle in the spatial display', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1313,7 +1313,7 @@ test.describe('Map: Spatial interactions', () => {
                 ...commonHeaders,
                 'cmr-hits': '2'
               },
-              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-108\.\d+,76\.\d+,166\d+/)
+              paramCheck: (parsedQuery) => parsedQuery?.circle?.[0]?.match(/-109\.\d+,76\.\d+,166\d+/)
             }]
           })
 
@@ -1332,16 +1332,16 @@ test.describe('Map: Spatial interactions', () => {
 
           // Enter the circle values
           await page.getByTestId('spatial-display_circle-center').focus()
-          await page.keyboard.type('76.61639,-108.80547')
+          await page.keyboard.type('76.61639,-109.80547')
           await page.getByTestId('spatial-display_circle-radius').focus()
           await page.keyboard.type('166091')
           await page.keyboard.up('Enter')
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?circle\[0\]=-108.80547%2C76.61639%2C166091&lat=76\.\d+&long=-108\.\d+&projection=EPSG%3A3413&zoom=4\.\d+/)
+          await expect(page).toHaveURL(/search\?circle\[0\]=-109.80547%2C76.61639%2C166091&lat=76\.\d+&long=-109\.\d+&projection=EPSG%3A3413&zoom=4\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('76.61639,-108.80547')
+          await expect(page.getByTestId('spatial-display_circle-center')).toHaveValue('76.61639,-109.80547')
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue('166091')
 
           // Checking that the right number of results are loaded ensures that the route
@@ -1361,7 +1361,7 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('When drawing bounding box spatial', () => {
       test.describe('When drawing a new bounding box from the spatial selection', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1373,7 +1373,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-108\.\d+,68\.\d+,-56\.\d+,76\.\d+/)
+                ?.match(/-10(8|9)\.\d+,68\.\d+,-57\.\d+,76\.\d+/)
             }]
           })
 
@@ -1392,11 +1392,11 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1100, 725)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-108\.\d+%2C68\.\d+%2C-56\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-10(8|9)\.\d+%2C68\.\d+%2C-57\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/68\.\d+,-108\.\d+/)
-          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/76\.\d+,-56\.\d+/)
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/68\.\d+,-10(8|9)\.\d+/)
+          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/76\.\d+,-57\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -1410,7 +1410,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When drawing a new bounding box from the map controls', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1422,7 +1422,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-108\.\d+,68\.\d+,-56\.\d+,76\.\d+/)
+                ?.match(/-10(8|9)\.\d+,68\.\d+,-57\.\d+,76\.\d+/)
             }]
           })
 
@@ -1440,11 +1440,11 @@ test.describe('Map: Spatial interactions', () => {
           await page.mouse.click(1100, 725)
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-108\.\d+%2C68\.\d+%2C-56\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-10(8|9)\.\d+%2C68\.\d+%2C-57\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/68\.\d+,-108\.\d+/)
-          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/76\.\d+,-56\.\d+/)
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue(/68\.\d+,-10(8|9)\.\d+/)
+          await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue(/76\.\d+,-57\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
           // was fulfilled correctly with the succesfull paramCheck
@@ -1458,7 +1458,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When typing a new bounding box in the spatial display', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1470,7 +1470,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.bounding_box?.[0]
-                ?.match(/-108\.\d+,70\.\d+,-58\.\d+,76\.\d+/)
+                ?.match(/-109\.\d+,70\.\d+,-58\.\d+,76\.\d+/)
             }]
           })
 
@@ -1486,16 +1486,16 @@ test.describe('Map: Spatial interactions', () => {
 
           // Enter the bounding box values
           await page.getByTestId('spatial-display_southwest-point').focus()
-          await page.keyboard.type('70.50112,-108.80547')
+          await page.keyboard.type('70.50112,-109.80547')
           await page.getByTestId('spatial-display_northeast-point').focus()
           await page.keyboard.type('76.61639,-58.21561')
           await page.keyboard.up('Enter')
 
           // Updates the URL
-          await expect(page).toHaveURL(/search\?sb\[0\]=-108\.\d+%2C70\.\d+%2C-58\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?sb\[0\]=-109\.\d+%2C70\.\d+%2C-58\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
-          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue('70.50112,-108.80547')
+          await expect(page.getByTestId('spatial-display_southwest-point')).toHaveValue('70.50112,-109.80547')
           await expect(page.getByTestId('spatial-display_northeast-point')).toHaveValue('76.61639,-58.21561')
 
           // Checking that the right number of results are loaded ensures that the route
@@ -1515,7 +1515,7 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('When drawing polygon spatial', () => {
       test.describe('When drawing a new polygon from the spatial selection', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1527,7 +1527,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-108\.\d+,76\.\d+,-74\.\d+,66\.\d+,-56\.\d+,68\.\d+,-108\.\d+,76\.\d+/)
+                ?.match(/-10(8|9)\.\d+,76\.\d+,-75\.\d+,65\.\d+,-57\.\d+,68\.\d+,-10(8|9)\.\d+,76\.\d+/)
             }]
           })
 
@@ -1555,7 +1555,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-108\.\d+%2C76\.\d+%2C-74\.\d+%2C66\.\d+%2C-56\.\d+%2C68\.\d+%2C-108\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-10(8|9)\.\d+%2C76\.\d+%2C-75\.\d+%2C65\.\d+%2C-57\.\d+%2C68\.\d+%2C-10(8|9)\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -1577,7 +1577,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       test.describe('When drawing a new polygon from the map controls', () => {
-        test('renders correctly', async ({ page }) => {
+        test('renders correctly @screenshot', async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
             body: commonBody,
@@ -1589,7 +1589,7 @@ test.describe('Map: Spatial interactions', () => {
                 'cmr-hits': '2'
               },
               paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0]
-                ?.match(/-108\.\d+,76\.\d+,-74\.\d+,66\.\d+,-56\.\d+,68\.\d+,-108\.\d+,76\.\d+/)
+                ?.match(/-10(8|9)\.\d+,76\.\d+,-75\.\d+,65\.\d+,-57\.\d+,68\.\d+,-10(8|9)\.\d+,76\.\d+/)
             }]
           })
 
@@ -1612,7 +1612,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Updates the URL
           // eslint-disable-next-line max-len
-          await expect(page).toHaveURL(/search\?polygon\[0\]=-108\.\d+%2C76\.\d+%2C-74\.\d+%2C66\.\d+%2C-56\.\d+%2C68\.\d+%2C-108\.\d+%2C76\.\d+/)
+          await expect(page).toHaveURL(/search\?polygon\[0\]=-10(8|9)\.\d+%2C76\.\d+%2C-75\.\d+%2C65\.\d+%2C-57\.\d+%2C68\.\d+%2C-10(8|9)\.\d+%2C76\.\d+/)
 
           // Populates the spatial display field
           await expect(
@@ -1676,7 +1676,7 @@ test.describe('Map: Spatial interactions', () => {
           })
         })
 
-        test('renders the spatial correctly', async ({ page }) => {
+        test('renders the spatial correctly @screenshot', async ({ page }) => {
           const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/10/)
 
           const dialog = await page.getByRole('dialog')
@@ -1734,7 +1734,7 @@ test.describe('Map: Spatial interactions', () => {
           })
         })
 
-        test('renders the spatial correctly', async ({ page }) => {
+        test('renders the spatial correctly @screenshot', async ({ page }) => {
           const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
 
           const dialog = await page.getByRole('dialog')
@@ -1836,7 +1836,7 @@ test.describe('Map: Spatial interactions', () => {
       await initialMapPromise
     })
 
-    test('displays a hint about using a bounding box instead of polygon and an MBR on the map', async ({ page }) => {
+    test('displays a hint about using a bounding box instead of polygon and an MBR on the map @screenshot', async ({ page }) => {
       await expect(page.getByText('Showing 20 of 42,706 matching granules')).toBeVisible()
 
       await expect(

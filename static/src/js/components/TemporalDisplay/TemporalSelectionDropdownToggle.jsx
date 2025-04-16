@@ -13,7 +13,7 @@ const TemporalSelectionDropdownToggle = ({ onToggleClick }) => (
     className="search-form__button search-form__button--secondary gap-1 btn-sm"
     onClick={onToggleClick}
   >
-    <EDSCIcon className="button__icon" icon={Calendar} size="0.825rem" />
+    <EDSCIcon className="button__icon" icon={Calendar} size="14" />
     Temporal
     <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={ArrowFilledDown} size="12" />
   </Dropdown.Toggle>

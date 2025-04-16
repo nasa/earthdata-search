@@ -143,7 +143,7 @@ EDSCIcon.defaultProps = {
   context: null,
   icon: null,
   inlineFlex: true,
-  size: '1rem',
+  size: '16',
   title: null,
   variant: null
 }
