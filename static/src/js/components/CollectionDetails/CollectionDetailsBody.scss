@@ -90,6 +90,8 @@
     line-height: 1.5rem;
 
     .collection-details-body__links--horizontal & {
+      display: inline-block;
+
       &:last-child {
         padding-top:   calc(bootstrap.$spacer / 8);
       }
