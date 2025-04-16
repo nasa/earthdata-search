@@ -14,7 +14,7 @@ class ScaleControl extends Control {
     })
 
     this.className = 'scale-control'
-    element.className = `${this.className} d-flex align-items-end flex-column text-center`
+    element.className = `${this.className} d-flex align-items-end flex-column`
 
     const { map } = options
 
