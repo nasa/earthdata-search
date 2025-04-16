@@ -65,12 +65,14 @@
   }
 
   &__heading-wrap {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
     width: 100%;
   }
 
   &__more-actions {
+    position: relative;
+    left: 0.25rem;
     padding: 0.25*bootstrap.$spacer 0.5*bootstrap.$spacer;
     flex-grow: 0;
     flex-shrink: 0;
