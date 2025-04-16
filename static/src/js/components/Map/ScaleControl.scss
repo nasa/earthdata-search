@@ -11,6 +11,8 @@
     border: none;
     border-left: 2px solid utils.$color__spacesuit-white;
     font-weight: 400;
+    font-size: 0.875rem;
+    white-space: nowrap;
 
     &--metric {
       border-bottom: 1px solid utils.$color__spacesuit-white;
@@ -24,7 +26,7 @@
   }
 
   &__scale-inner {
-    padding: 0 0.5rem;
+    padding: 0 0.325rem 0 0;
   }
 }
 
