@@ -16,8 +16,11 @@ const Sidebar = ({
     'sidebar--hidden': !visible
   })
 
+  // TODO: We should not need to use a style attribute to define the width of the sidebar
+  // but we are currently seeing an sporadic issue in playwright due to lazy loading the
+  // css and the sidebar being a flex child.
   return (
-    <section className={className}>
+    <section className={className} style={{ width: '20.5rem' }}>
       <div className="sidebar__inner">
         { headerChildren }
         <SimpleBar

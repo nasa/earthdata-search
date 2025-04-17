@@ -17,12 +17,8 @@ import './Panels.scss'
 
 // Returns the width of the sidebar
 const getSidebarWidth = () => {
-  // We are having issues with this function returning incorrect values in Playwright Webkit tests.
-  // This is a workaround to return a fixed value for the sidebar width in those tests.
-  // 328 is equal to 20.5rem in pixels, which is defined in Sidebar.scss
-  if (import.meta.env.VITE_PLAYWRIGHT) return 328
-
   const sidebar = document.querySelector('.sidebar')
+
   if (sidebar) {
     const width = sidebar.offsetWidth
 
@@ -190,6 +186,7 @@ export class Panels extends PureComponent {
   }
 
   onWindowKeyUp(event) {
+    console.log('🚀 ~ Panels ~ onWindowKeyUp ~ onWindowKeyUp:')
     const { show } = this.state
     const { keyboardShortcuts } = this
 
@@ -396,6 +393,7 @@ export class Panels extends PureComponent {
   }
 
   onPanelDragStart(clickStartWidth, clickStartX) {
+    console.log('🚀 ~ Panels ~ onPanelDragStart ~ onPanelDragStart:')
     this.onWindowResize()
     this.setState({
       dragging: true
