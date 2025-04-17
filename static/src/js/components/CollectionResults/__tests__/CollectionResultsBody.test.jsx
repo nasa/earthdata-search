@@ -17,9 +17,6 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup(overrideProps) {
   const props = {
-    browser: {
-      name: 'browser name'
-    },
     collectionsMetadata: {
       collectionId: {
         cloudHosted: true,
@@ -102,7 +99,6 @@ describe('CollectionResultsBody component', () => {
     const { enzymeWrapper, props } = setup()
 
     const {
-      browser,
       loadNextPage,
       onAddProjectCollection,
       onRemoveCollectionFromProject,
@@ -113,7 +109,6 @@ describe('CollectionResultsBody component', () => {
     const resultsList = enzymeWrapper.find(CollectionResultsList)
 
     expect(resultsList.props()).toEqual(expect.objectContaining({
-      browser,
       collectionsMetadata: [{
         ...collectionResultsBodyData
       }],

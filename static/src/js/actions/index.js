@@ -164,7 +164,6 @@ import {
 import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleAlert } from './alerts'
 import { handleError, removeError } from './errors'
-import { updateBrowserVersion } from './browser'
 import { collectionRelevancyMetrics } from './relevancy'
 import {
   fetchContactInfo,
@@ -335,7 +334,6 @@ const actions = {
   updateAdminRetrievalsMetricsEndDate,
   updateAdvancedSearch,
   updateAuthToken,
-  updateBrowserVersion,
   updateCmrFacet,
   updateCollectionMetadata,
   updateFeatureFacet,

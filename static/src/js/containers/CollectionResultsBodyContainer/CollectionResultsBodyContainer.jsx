@@ -13,7 +13,6 @@ import { getProjectCollectionsIds } from '../../selectors/project'
 import CollectionResultsBody from '../../components/CollectionResults/CollectionResultsBody'
 
 export const mapStateToProps = (state) => ({
-  browser: state.browser,
   collectionsSearch: state.searchResults.collections,
   collectionsMetadata: state.metadata.collections,
   portal: state.portal,
@@ -38,7 +37,6 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const CollectionResultsBodyContainer = (props) => {
   const {
-    browser,
     collectionsMetadata,
     collectionsSearch,
     location,
@@ -62,7 +60,6 @@ export const CollectionResultsBodyContainer = (props) => {
 
   return (
     <CollectionResultsBody
-      browser={browser}
       collectionsMetadata={collectionsMetadata}
       collectionsSearch={collectionsSearch}
       loadNextPage={loadNextPage}
@@ -80,7 +77,6 @@ export const CollectionResultsBodyContainer = (props) => {
 }
 
 CollectionResultsBodyContainer.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
