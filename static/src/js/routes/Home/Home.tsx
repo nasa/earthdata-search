@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { sortBy } from 'lodash-es'
 import Col from 'react-bootstrap/Col'
 import Collapse from 'react-bootstrap/Collapse'
@@ -156,6 +156,27 @@ type HomeProps = HomeDispatchProps & RouteComponentProps
 
 export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
   const [showAllPortals, setShowAllPortals] = useState(false)
+
+  useEffect(() => {
+    // This event listener is used to load the Search and Map components
+    // when the DOM is ready which helps prevent a flash of white when the
+    // page loads.
+
+    const preloadRoutes = () => {
+      // @ts-expect-error: Types are not defined in this file
+      import('../Search/Search')
+      // @ts-expect-error: Types are not defined in this file
+      import('../../components/SearchTour/SearchTour')
+      // @ts-expect-error: Types are not defined in this file
+      import('../../containers/MapContainer/MapContainer')
+    }
+
+    document.addEventListener('DOMContentLoaded', preloadRoutes)
+
+    return () => {
+      document.removeEventListener('DOMContentLoaded', preloadRoutes)
+    }
+  }, [])
 
   const onShowAllPortalsClick = () => {
     setShowAllPortals(!showAllPortals)

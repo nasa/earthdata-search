@@ -83,17 +83,6 @@ class App extends Component {
     this.env = env
   }
 
-  componentDidMount() {
-    // This event listener is used to load the Search and Map components
-    // when the DOM is ready which helps prevent a flash of white when the
-    // page loads.
-    document.addEventListener('DOMContentLoaded', () => {
-      import('./routes/Search/Search')
-      import('./components/SearchTour/SearchTour')
-      import('./containers/MapContainer/MapContainer')
-    })
-  }
-
   // Portal paths have been removed, but this needs to stay in order to redirect users using
   // a path to the param based portal
   portalPaths(path) {
