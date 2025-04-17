@@ -27,7 +27,6 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
-  browser: state.browser,
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
   isOpen: state.ui.timeline.isOpen,
@@ -40,7 +39,6 @@ export const mapStateToProps = (state) => ({
 
 export const TimelineContainer = (props) => {
   const {
-    browser,
     collectionsMetadata,
     focusedCollectionId,
     isOpen,
@@ -81,7 +79,6 @@ export const TimelineContainer = (props) => {
 
   return (
     <Timeline
-      browser={browser}
       collectionMetadata={collectionMetadata}
       isOpen={isOpen}
       onChangeQuery={onChangeQuery}
@@ -103,7 +100,6 @@ TimelineContainer.defaultProps = {
 }
 
 TimelineContainer.propTypes = {
-  browser: PropTypes.shape({}).isRequired,
   collectionsMetadata: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   onChangeQuery: PropTypes.func.isRequired,

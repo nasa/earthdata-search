@@ -3,8 +3,6 @@ import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
 import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from '@redux-devtools/extension'
-
-import { updateBrowserVersion } from '../actions/browser'
 import createRootReducer from '../reducers'
 import { metricsMiddleware } from '../middleware/metrics'
 
@@ -29,9 +27,6 @@ export const configureStore = () => {
       applyMiddleware(routerMiddleware(history), metricsMiddleware, thunk)
     )
   )
-
-  // Set the browser version on the store
-  store.dispatch(updateBrowserVersion())
 
   return store
 }

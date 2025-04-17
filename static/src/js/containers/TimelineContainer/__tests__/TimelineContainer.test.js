@@ -105,7 +105,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      browser: {},
       metadata: {
         collections: {}
       },
@@ -129,7 +128,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      browser: {},
       collectionsMetadata: {},
       focusedCollectionId: 'collectionId',
       pathname: '',
