@@ -2,11 +2,15 @@
 
 .wrapping-container {
   position: relative;
-  overflow-y: hidden;
   flex-grow: 1;
+  overflow-y: auto;
   background-color: utils.$color__spacesuit-white;
 
   &--map-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
     background-color: utils.$color__carbon-black;
+    overflow-y: hidden;
   }
 }

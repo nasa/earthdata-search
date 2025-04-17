@@ -22,24 +22,24 @@ export const Banner = ({
   ])
 
   return (
-    <div className={bannerClassNames} role="banner" aria-label="Banner">
+    <div className={bannerClassNames} role="banner">
       <div className="banner__content">
-        <h2 className="banner__title" aria-label="Banner Title">
-          <AlertHighPriority className="banner__icon icon" aria-label="High Alert Icon" size="1.375rem" />
+        <h2 className="banner__title">
+          <AlertHighPriority className="banner__icon icon" aria-label="High Alert Icon" size="22" />
           {title}
         </h2>
         {
           message && (
             <>
               {' '}
-              <p className="banner__message" aria-label="Banner Message">{message}</p>
+              <p className="banner__message">{message}</p>
             </>
           )
         }
       </div>
       <Button
         className="banner__close"
-        label="close"
+        label="Close"
         onClick={onClose}
         icon={Close}
       />

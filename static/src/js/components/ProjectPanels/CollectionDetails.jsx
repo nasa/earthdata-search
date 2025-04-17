@@ -125,7 +125,7 @@ export const CollectionDetails = ({
                         }
                         label="View granule details"
                         icon={AlertInformation}
-                        iconSize="0.875rem"
+                        iconSize="14"
                         to={
                           {
                             pathname: '/search/granules/granule-details',
@@ -139,7 +139,7 @@ export const CollectionDetails = ({
                         type="button"
                         label="Remove granule"
                         icon={Minus}
-                        iconSize="0.875rem"
+                        iconSize="14"
                         onClick={
                           (event) => {
                             onRemoveGranuleFromProjectCollection({

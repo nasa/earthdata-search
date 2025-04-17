@@ -26,7 +26,7 @@ test.describe('Panel Behavior', () => {
       })
     })
 
-    await page.goto('/')
+    await page.goto('/search')
   })
 
   test('is present by default on page load', async ({ page }) => {
@@ -87,6 +87,6 @@ test.describe('Panel Behavior', () => {
   test('drags the panel to maximum width', async ({ page }) => {
     await dragPanelToX(page, 1500)
 
-    await expect(page.getByTestId('panels-section')).toHaveCSS('width', '916px')
+    await expect(page.getByTestId('panels-section')).toHaveCSS('width', '907px')
   })
 })

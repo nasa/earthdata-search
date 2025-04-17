@@ -1,25 +1,39 @@
 import React from 'react'
 
 import { render, screen } from '@testing-library/react'
+import { Router } from 'react-router'
+import { createMemoryHistory } from 'history'
 
 import actions from '../../../actions'
 import * as metricsSpatialSelection from '../../../middleware/metrics/actions'
+import Providers from '../../../providers/Providers/Providers'
 
 import {
   mapDispatchToProps,
   SpatialSelectionDropdownContainer
 } from '../SpatialSelectionDropdownContainer'
 
+const onChangePath = jest.fn()
+const onChangeUrl = jest.fn()
 const onToggleShapefileUploadModal = jest.fn()
 const onMetricsSpatialSelection = jest.fn()
+const history = createMemoryHistory()
 
 const setup = () => {
   const props = {
+    onChangeUrl,
+    onChangePath,
     onToggleShapefileUploadModal,
     onMetricsSpatialSelection
   }
 
-  render(<SpatialSelectionDropdownContainer {...props} />)
+  render(
+    <Providers>
+      <Router history={history} location={props.location}>
+        <SpatialSelectionDropdownContainer {...props} />
+      </Router>
+    </Providers>
+  )
 }
 
 describe('mapDispatchToProps', () => {

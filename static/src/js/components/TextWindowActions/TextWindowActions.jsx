@@ -252,7 +252,7 @@ export const TextWindowActions = ({
                 <EDSCIcon
                   className="text-window-actions__modal-icon"
                   icon={ArrowLineDiagonal}
-                  size="2.25rem"
+                  size="36"
                 />
               </div>
               <Spinner

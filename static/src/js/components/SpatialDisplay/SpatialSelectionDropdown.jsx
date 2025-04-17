@@ -1,16 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { PropTypes } from 'prop-types'
 import Dropdown from 'react-bootstrap/Dropdown'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
+import { useLocation } from 'react-router-dom'
 
-import {
-  FaCrop,
-  FaCircle,
-  FaFile
-} from 'react-icons/fa'
+import { FaCircle, FaFile } from 'react-icons/fa'
 
-import { Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
+import SpatialOutline from '~Images/icons/spatial-outline.svg?react'
 
 import { eventEmitter } from '../../events/events'
 
@@ -22,13 +21,24 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 
+import HomeContext from '../../contexts/HomeContext'
+
 import './SpatialSelectionDropdown.scss'
 
 const SpatialSelectionDropdown = (props) => {
   const {
+    searchParams,
+    onChangeUrl,
+    onChangePath,
     onToggleShapefileUploadModal,
     onMetricsSpatialSelection
   } = props
+
+  const { setStartDrawing } = useContext(HomeContext)
+
+  const location = useLocation()
+  const { pathname } = location
+  const isHomePage = pathname === '/'
 
   const onItemClick = (spatialType) => {
     // Sends metrics for spatial selection usage
@@ -36,13 +46,32 @@ const SpatialSelectionDropdown = (props) => {
       item: spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase()
     })
 
-    if (spatialType === 'file') {
-      onToggleShapefileUploadModal(true)
+    // If the user is on the home page, redirect to the search page with the spatial type as a query parameter
+    if (isHomePage) {
+      // Build a new URL object with the current origin and the search path
+      const newUrl = new URL('/search', window.location.origin)
+      const params = new URLSearchParams(searchParams)
 
-      return
+      newUrl.search = params.toString()
+      const urlString = `/search${newUrl.search}`
+
+      // Change the URL to the new value
+      onChangeUrl(urlString)
+
+      // Update the store to the new URL values
+      onChangePath(urlString)
+
+      // Set the startDrawing context to the selected spatial type
+      setStartDrawing(spatialType)
+    } else {
+      if (spatialType === 'file') {
+        onToggleShapefileUploadModal(true)
+
+        return
+      }
+
+      eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
     }
-
-    eventEmitter.emit(mapEventTypes.DRAWSTART, spatialType)
   }
 
   const { disableDatabaseComponents } = getApplicationConfig()
@@ -60,15 +89,18 @@ const SpatialSelectionDropdown = (props) => {
   return (
     <Dropdown
       className="spatial-selection-dropdown"
+      placement="bottom-start"
     >
       <Dropdown.Toggle
         variant="light"
         id="spatial-selection-dropdown"
         aria-label="spatial-selection-dropdown"
         data-testid="spatial-selection-dropdown"
-        className="search-form__button search-form__button--dark"
+        className="search-form__button search-form__button--secondary btn-sm gap-1"
       >
-        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={FaCrop} size="0.825rem" />
+        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={SpatialOutline} size="14" />
+        Spatial
+        <EDSCIcon className="spatial-selection-dropdown__icon button__icon" icon={ArrowFilledDown} size="12" />
       </Dropdown.Toggle>
       <Dropdown.Menu className="spatial-selection-dropdown__menu">
         <Dropdown.Item
@@ -137,6 +169,9 @@ const SpatialSelectionDropdown = (props) => {
 }
 
 SpatialSelectionDropdown.propTypes = {
+  searchParams: PropTypes.shape({}).isRequired,
+  onChangePath: PropTypes.func.isRequired,
+  onChangeUrl: PropTypes.func.isRequired,
   onMetricsSpatialSelection: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }

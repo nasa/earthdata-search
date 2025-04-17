@@ -3,26 +3,19 @@
 /*
 * Custom Variables
 */
+/* Enable grid */
+$enable-cssgrid: true;
+
 /* Gutter width */
 $grid-gutter-width: 2rem;
-
-/* Font */
-$font-size-base: 0.875rem;
-
-/* HDS Typography guidelines, font-family */
-// Public Sans, plus the default sans-serif list from Bootstrap 4
-$font-family-sans-serif: "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-$font-family-base: $font-family-sans-serif;
-$headings-font-family: "Inter", $font-family-sans-serif;
-// DM Mono, plus the default monospace list from Bootstrap 4
-$font-family-monospace: "DM Mono", SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 
 /* Body */
 $body-color: utils.$color__carbon--80;
 
 /* Model Content */
 $modal-content-bg: utils.$color__spacesuit-white;
-$modal-content-color: utils.$color__carbon--60;
+$modal-content-color: utils.$color__carbon-black;
+$modal-content-border-radius: 0;
 
 /* Theme Colors */
 $theme-colors: (
@@ -37,8 +30,14 @@ $theme-colors: (
 
 $border-color: utils.$color__carbon--20;
 
+$input-border-radius: 0;
+$input-border-radius-lg: 0;
+$input-border-radius-sm: 0;
+
 /* Buttons */
-$btn-border-radius: 0.125rem;
+$btn-border-radius: 0;
+$btn-border-radius-lg: 0;
+$btn-border-radius-sm: 0;
 
 /* Links */
 $link-color: utils.$color__carbon-black;
@@ -51,14 +50,16 @@ $link-hover-decoration: underline;
 $badge-padding-y: 0.3125rem;
 $badge-padding-x: 0.5rem;
 $badge-font-size: 0.6875rem;
-$badge-border-radius: 0.125rem;
+$badge-border-radius: 0rem;
 
 /* Cards */
 $card-bg: utils.$color__carbon--5;
 $card-border-color: utils.$color__carbon--10;
+$card-border-radius: 0;
 
 /* Dropdowns */
 $dropdown-bg: utils.$color__spacesuit-white;
+$dropdown-border-radius: 0;
 
 /* Custom Breakpoints */
 

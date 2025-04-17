@@ -82,7 +82,9 @@ export class UrlQueryContainer extends PureComponent {
       search
     } = location
 
-    onChangePath([pathname, search].filter(Boolean).join(''))
+    const { setStartDrawing } = this.context
+
+    onChangePath([pathname, search].filter(Boolean).join(''), setStartDrawing)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {

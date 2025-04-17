@@ -6,6 +6,7 @@
  * environment after restarting the dev server.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs')
 
 // When adding a new portal, add your config file to the `portals` directory, and
@@ -39,7 +40,7 @@ const availablePortals = {}
 
 // Loop through each portal config and add contents to the `availablePortals` object
 portals.forEach((portalId) => {
-  // eslint-disable-next-line import/no-dynamic-require, global-require
+  // eslint-disable-next-line import/no-dynamic-require, global-require, @typescript-eslint/no-require-imports
   const config = require(`../portals/${portalId}/config.json`)
 
   availablePortals[portalId] = {

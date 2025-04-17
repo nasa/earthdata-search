@@ -12,7 +12,7 @@ test.describe('Performance Benchmarking', () => {
 
   test('Search page load time is less than 2 second', async ({ page, browserName }) => {
     if (['chromium'].includes(browserName)) {
-      await page.goto('/')
+      await page.goto('/search')
       const requestFinishedPromise = page.waitForEvent('requestfinished')
       const request = await requestFinishedPromise
 
@@ -24,7 +24,7 @@ test.describe('Performance Benchmarking', () => {
 
   test('Search page LCP start time is less than 2 second', async ({ page, browserName }) => {
     if (browserName === 'chromium') {
-      await page.goto('/')
+      await page.goto('/search')
       const paintTimingJson = await page.evaluate(async () => new Promise((resolve) => {
         new PerformanceObserver((entryList) => {
           const largestPaintEntry = entryList.getEntries().find(

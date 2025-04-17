@@ -85,7 +85,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                   tooltip="Add granule to project"
                   tooltipId={`add-granule-table-tooltip-${id}`}
                   icon={Plus}
-                  iconSize="0.75rem"
+                  iconSize="12"
                   onClick={
                     (event) => {
                       onAddGranuleToProjectCollection({
@@ -114,7 +114,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                   tooltip="Remove granule from project"
                   tooltipId={`remove-granule-table-tooltip-${id}`}
                   icon={Minus}
-                  iconSize="0.75rem"
+                  iconSize="12"
                   onClick={
                     (event) => {
                       onRemoveGranuleFromProjectCollection({

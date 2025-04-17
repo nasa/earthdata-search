@@ -99,7 +99,7 @@ class FacetsItem extends Component {
         >
           <input
             id={uid}
-            className="facets-item__checkbox"
+            className="facets-item__checkbox form-check-input mt-0"
             data-testid={`facet_item-${kebabCase(facet.title)}`}
             type="checkbox"
             name={facet.title}
@@ -136,7 +136,7 @@ class FacetsItem extends Component {
                 >
                   <EDSCIcon
                     icon={FaQuestionCircle}
-                    size="0.625rem"
+                    size="10"
                     variant="more-info"
                     ariaLabel="A question mark icon indicating there is more information"
                     data-testid={`facet_item-${kebabCase(facet.title)}-info`}

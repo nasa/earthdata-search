@@ -161,7 +161,7 @@ const SpatialDisplay = ({
   }
 
   const onSubmitBoundingBoxSearch = (event) => {
-    if (event.type === 'blur' || event.key === 'Enter') {
+    if ((event.type === 'blur' || event.key === 'Enter') && !isEqual(currentBoundingBoxSearch, transformBoundingBoxCoordinates(boundingBoxSearch[0]))) {
       if (currentBoundingBoxSearch[0] && currentBoundingBoxSearch[1]) {
         eventEmitter.emit(mapEventTypes.DRAWCANCEL)
 
@@ -223,7 +223,7 @@ const SpatialDisplay = ({
   }
 
   const onSubmitCircleSearch = (event) => {
-    if (event.type === 'blur' || event.key === 'Enter') {
+    if ((event.type === 'blur' || event.key === 'Enter') && !isEqual(currentCircleSearch, transformCircleCoordinates(circleSearch[0]))) {
       const [center, radius] = currentCircleSearch
 
       if (center && radius) {
@@ -256,6 +256,63 @@ const SpatialDisplay = ({
     }
 
     event.preventDefault()
+  }
+
+  const onChangePointSearch = (event) => {
+    const { value = '' } = event.target
+    const trimmedValue = trimCoordinate(value)
+    const point = transformSingleCoordinate(trimmedValue)
+
+    setCurrentPointSearch([point])
+    setError(validateCoordinate(trimmedValue))
+  }
+
+  const onSubmitPointSearch = (event) => {
+    if ((event.type === 'blur' || event.key === 'Enter') && currentPointSearch[0] !== pointSearch[0]) {
+      eventEmitter.emit(mapEventTypes.DRAWCANCEL)
+
+      if (error === '') {
+        setManuallyEnteringVal(false)
+
+        const point = currentPointSearch[0].length ? [currentPointSearch[0].replace(/\s/g, '')] : []
+        onChangeQuery({
+          collection: {
+            spatial: {
+              point
+            }
+          }
+        })
+
+        // Move the map to the point
+        const olPoint = new Point(point[0].split(',').map(Number))
+        eventEmitter.emit(mapEventTypes.MOVEMAP, { shape: olPoint })
+      }
+    }
+
+    event.preventDefault()
+  }
+
+  const onChangeBoundingBoxSearch = (event) => {
+    const [swPoint, nePoint] = currentBoundingBoxSearch
+
+    const {
+      name,
+      value = ''
+    } = event.target
+
+    const trimmedValue = trimCoordinate(value)
+    let newSearch
+
+    if (name === 'swPoint') {
+      newSearch = [trimmedValue, nePoint]
+    }
+
+    if (name === 'nePoint') {
+      newSearch = [swPoint, trimmedValue]
+    }
+
+    setCurrentBoundingBoxSearch(newSearch)
+    setError(validateBoundingBoxCoordinates(newSearch))
   }
 
   useEffect(() => {
@@ -307,63 +364,6 @@ const SpatialDisplay = ({
 
     eventEmitter.emit(mapEventTypes.DRAWCANCEL)
     eventEmitter.emit(shapefileEventTypes.REMOVESHAPEFILE)
-  }
-
-  const onChangePointSearch = (event) => {
-    const { value = '' } = event.target
-    const trimmedValue = trimCoordinate(value)
-    const point = transformSingleCoordinate(trimmedValue)
-
-    setCurrentPointSearch([point])
-    setError(validateCoordinate(trimmedValue))
-  }
-
-  const onSubmitPointSearch = (event) => {
-    if (event.type === 'blur' || event.key === 'Enter') {
-      eventEmitter.emit(mapEventTypes.DRAWCANCEL)
-
-      if (error === '') {
-        setManuallyEnteringVal(false)
-
-        const point = currentPointSearch[0].length ? [currentPointSearch[0].replace(/\s/g, '')] : []
-        onChangeQuery({
-          collection: {
-            spatial: {
-              point
-            }
-          }
-        })
-
-        // Move the map to the point
-        const olPoint = new Point(point[0].split(',').map(Number))
-        eventEmitter.emit(mapEventTypes.MOVEMAP, { shape: olPoint })
-      }
-    }
-
-    event.preventDefault()
-  }
-
-  const onChangeBoundingBoxSearch = (event) => {
-    const [swPoint, nePoint] = currentBoundingBoxSearch
-
-    const {
-      name,
-      value = ''
-    } = event.target
-
-    const trimmedValue = trimCoordinate(value)
-    let newSearch
-
-    if (name === 'swPoint') {
-      newSearch = [trimmedValue, nePoint]
-    }
-
-    if (name === 'nePoint') {
-      newSearch = [swPoint, trimmedValue]
-    }
-
-    setCurrentBoundingBoxSearch(newSearch)
-    setError(validateBoundingBoxCoordinates(newSearch))
   }
 
   const contents = []

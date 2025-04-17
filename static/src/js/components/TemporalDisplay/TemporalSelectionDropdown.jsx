@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import moment from 'moment'
 
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -22,6 +23,7 @@ import './TemporalSelectionDropdown.scss'
 const TemporalSelectionDropdown = ({
   allowRecurring,
   onChangeQuery,
+  searchParams,
   temporalSearch,
   onMetricsTemporalFilter
 }) => {
@@ -47,6 +49,10 @@ const TemporalSelectionDropdown = ({
     end: false
   })
 
+  const location = useLocation()
+  const { pathname } = location
+  const isHomePage = pathname === '/'
+
   useEffect(() => {
     setTemporal(temporalSearch)
 
@@ -57,7 +63,7 @@ const TemporalSelectionDropdown = ({
   }, [temporalSearch])
 
   /**
-   * Toggles state of open
+   * Toggles state of open to show or hide the dropdown
    */
   const onToggleOpen = () => {
     setOpen(!open)
@@ -94,11 +100,19 @@ const TemporalSelectionDropdown = ({
       })
     }
 
-    onChangeQuery({
+    const newParams = {
       collection: {
         temporal: newTemporal
       }
-    })
+    }
+
+    if (isHomePage) {
+      if (searchParams.q) {
+        newParams.collection.keyword = searchParams.q
+      }
+    }
+
+    onChangeQuery(newParams)
 
     setOpen(false)
   }
@@ -203,7 +217,7 @@ const TemporalSelectionDropdown = ({
         ...temporal,
         isRecurring: isChecked
       })
-    } catch (error) {
+    } catch {
       setTemporal({
         ...temporal,
         isRecurring: isChecked
@@ -373,6 +387,7 @@ const TemporalSelectionDropdown = ({
 TemporalSelectionDropdown.defaultProps = {
   allowRecurring: true,
   onMetricsTemporalFilter: null,
+  searchParams: {},
   temporalSearch: {}
 }
 
@@ -380,6 +395,9 @@ TemporalSelectionDropdown.propTypes = {
   allowRecurring: PropTypes.bool,
   onChangeQuery: PropTypes.func.isRequired,
   onMetricsTemporalFilter: PropTypes.func,
+  searchParams: PropTypes.shape({
+    q: PropTypes.string
+  }),
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
     isRecurring: PropTypes.bool,

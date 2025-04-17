@@ -1,0 +1,819 @@
+{
+  "feed": {
+    "updated": "2025-04-03T19:02:03.922Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&keyword=MOD02QKM*&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&temporal=2025-03-12T00:00:00.000Z,2025-03-12T23:59:59.999Z&bounding_box[]=-29.95172,11.43036,-16.57503,19.31775&sort_key[]=has_granules_or_cwic&sort_key[]=-score",
+    "title": "ECHO dataset metadata",
+    "entry": [
+      {
+        "processing_level_id": "1B",
+        "cloud_hosted": false,
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2025-04-03T12:50:12.041Z"
+            }
+          },
+          "edsc.portal.cwic.collections": {},
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands367",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 3-6-7)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              },
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands721",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              },
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_TrueColor",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (True Color)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              }
+            ]
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "has_combine": false,
+        "time_start": "2017-10-11T00:00:00.000Z",
+        "dif_ids": [
+          "MOD02QKM_6.1NRT"
+        ],
+        "version_id": "6.1NRT",
+        "dataset_id": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m - NRT",
+        "entry_id": "MOD02QKM_6.1NRT",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LANCEMODIS",
+        "short_name": "MOD02QKM",
+        "organizations": [
+          "NASA/GSFC/EOS/ESDIS/LANCEMODIS"
+        ],
+        "title": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m - NRT",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The 250 meter MODIS Level 1B Near Real Time (NRT) data set contains calibrated and geolocated at-aperture radiances for 2 discrete bands located in the 0.62 to 0.88 micron region of the electromagnetic spectrum. These data are generated from the MODIS Level 1A scans of raw radiance and in the process converted to geophysical units of W / (m^2 um sr). Additional data are provided including quality flags, error estimates and calibration data. \nChannel locations for the MODIS 250 meter data are as follows:\n\nBand   Center Wavelength (um)    Primary Use\n----   ----------------------    -----------\n1        0.620  - 0.670        Land/Cloud Boundaries\n\n2        0.841  - 0.876        Land/Cloud Boundaries\n\nSeparate L1B products are available for the five 500m resolution channels (MOD02HKM) and the twenty-nine 1km resolution channels (MOD021KM). For the 500m product, there are actually seven channels available since the data from the two 250 m channels have been aggregated to 500m resolution.  Similarly, for the 1km product, all 36 MODIS channels are available since the data from the two 250m and five 500m channels have been aggregated into equivalent 1km\npixel values.\n\nSpatial resolution for pixels at nadir is 250 m, degrading to 1.2 km in the along-scan direction and 0.5 km in the along-track direction for pixels located at the scan extremes. A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330 km orbital swath width and provides global coverage every one to two days. A single MODIS Level 1B 250 m granule will contain a scene built from 203 scans sampled 5416 times in the cross-track direction, corresponding to approximately 5 minutes worth of data; thus 288 granules will be produced per day. Since an individual MODIS scan will contain 40 along-track spatial elements for the 250 m channels, the scene will be composed of (5416 x 8120) pixels, resulting in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry, there will be increasing scan overlap beyond about 17 degrees scan angle.\n\nThe Shortname for this product is MOD02QKM and is stored in the Earth Observing System Hierarchical\nData Format (HDF-EOS). A typical file size will be approximately 140 MB and the total daily volume is around 22GB.\n\nEnvironmental information derived from MODIS L1B measurements will offer a comprehensive and unprecedented look at terrestrial, atmospheric, and ocean phenomenology for a wide and diverse community of users throughout the world.\n\nSee the MODIS Characterization Support Team webpage for more C6 product information at:\n\nhttp://mcst.gsfc.nasa.gov/l1b/product-information\n\n\nor visit Science Team homepage at: \nhttp://modis.gsfc.nasa.gov/data/dataprod/",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {},
+        "id": "C1426416980-LANCEMODIS",
+        "has_formats": false,
+        "score": 0.97999995,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "original_format": "DIF10",
+        "collection_data_type": "NEAR_REAL_TIME",
+        "granule_count": 0,
+        "archive_center": "NASA/GSFC/EOS/ESDIS/LANCEMODIS",
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://earthdata.nasa.gov/earth-observation-data/near-real-time/download-nrt-data/modis-nrt"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "http://lance3.modaps.eosdis.nasa.gov/data_products/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://nrt3.modaps.eosdis.nasa.gov/archive/allData/61/MOD02QKM/"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1B",
+        "cloud_hosted": true,
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2025-04-03T12:50:11.955Z"
+            }
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands367",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 3-6-7)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              },
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands721",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              },
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_TrueColor",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (True Color)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              },
+              {
+                "antarctic": false,
+                "group": "overlays",
+                "product": "MODIS_Terra_Data_No_Data",
+                "antarctic_resolution": null,
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.118Z",
+                "arctic": false,
+                "title": "Areas of No Data (mask)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": null,
+                "format": "png",
+                "geographic_resolution": "250m"
+              }
+            ]
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "has_combine": false,
+        "time_start": "2000-02-24T00:00:00.000Z",
+        "version_id": "6.1",
+        "dataset_id": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m",
+        "entry_id": "MOD02QKM_6.1",
+        "has_spatial_subsetting": false,
+        "has_transforms": false,
+        "has_variables": false,
+        "data_center": "LAADS",
+        "short_name": "MOD02QKM",
+        "organizations": [
+          "NASA/GSFC/SED/ESD/HBSL/BISB/LAADS",
+          "NASA/GSFC/SED/ESD/HBSL/BSB/MCST",
+          "NASA/GSFC/SED/ESD/TISL/MODAPS"
+        ],
+        "title": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS/Terra Calibrated Radiances 5Min L1B Swath 250m data set contains calibrated and geolocated at-aperture radiances for 2 discrete bands located in the 0.62 to 0.88 micron region of the electromagnetic spectrum. These data are generated from the MODIS Level 1A scans of raw radiance which have been processed to geophysical units of W / (m^2 um sr). Additional data are provided including quality flags, error estimates and calibration data. \r\n\r\nSeparate L1B products are available for the five 500m resolution channels (MOD02HKM) and the twenty-nine 1km resolution channels (MOD021KM). For the 500m product, there are actually seven channels available since the data from the two 250 m channels have been aggregated to 500m resolution.  Similarly, for the 1km product, all 36 MODIS channels are available since the data from the two 250m and five 500m channels have been aggregated into equivalent 1km\r\npixel values.\r\n\r\nSpatial resolution for pixels at nadir is 250 m, degrading to 1.2 km in the along-scan direction and 0.5 km in the along-track direction for pixels located at the scan extremes. A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330 km orbital swath width and provides global coverage every one to two days. A single MODIS Level 1B 250 m granule will contain a scene built from 203 scans sampled 5416 times in the cross-track direction, corresponding to approximately 5 minutes worth of data; thus 288 granules will be produced per day. Since an individual MODIS scan will contain 40 along-track spatial elements for the 250 m channels, the scene will be composed of (5416 x 8120) pixels, resulting in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry, there will be increasing scan overlap beyond about 17 degrees scan angle.\r\n\r\nThe shortname for this product is MOD02QKM and is stored in the Earth Observing System Hierarchical\r\nData Format (HDF-EOS). A typical file size will be approximately 140 MB and the total daily volume is around 22GB.\r\n\r\nEnvironmental information derived from MODIS L1B measurements will offer a comprehensive and unprecedented look at terrestrial, atmospheric, and ocean phenomenology for a wide and diverse community of users throughout the world.\r\n\r\nSee the MODIS Characterization Support Team webpage for more C6 product information at:\r\n\r\nhttps://mcst.gsfc.nasa.gov/l1b/product-information\r\n\r\nor visit the Science Team homepage at: \r\nhttps://modis.gsfc.nasa.gov/data/dataprod/",
+        "has_granules": true,
+        "service_features": {
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "harmony": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {},
+        "id": "C1378579425-LAADS",
+        "has_formats": false,
+        "score": 0.97999995,
+        "consortiums": [
+          "EOSDIS",
+          "GEOSS"
+        ],
+        "original_format": "UMM_JSON",
+        "collection_data_type": "SCIENCE_QUALITY",
+        "granule_count": 1,
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mcst.gsfc.nasa.gov/sites/default/files/file_attachments/M1054D_PUG_083112_final.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MOD02QKM.061"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/search/order/2/MOD02QKM--61"
+          },
+          {
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MOD02QKM/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MOD02QKM/contents.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mcst.gsfc.nasa.gov/sites/mcst.gsfc/files/file_attachments/MODIS_L1B_ATBD_ver4.pdf"
+          }
+        ]
+      },
+      {
+        "processing_level_id": "1B",
+        "cloud_hosted": true,
+        "tags": {
+          "edsc.extra.serverless.collection_capabilities": {
+            "data": {
+              "cloud_cover": false,
+              "day_night_flag": true,
+              "granule_online_access_flag": true,
+              "orbit_calculated_spatial_domains": false,
+              "updated_at": "2025-04-03T12:50:12.599Z"
+            }
+          },
+          "edsc.extra.serverless.gibs": {
+            "data": [
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands367",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 3-6-7)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              },
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_Bands721",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (Bands 7-2-1)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              },
+              {
+                "antarctic": true,
+                "group": "baselayers",
+                "product": "MODIS_Terra_CorrectedReflectance_TrueColor",
+                "antarctic_resolution": "250m",
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.095Z",
+                "arctic": true,
+                "title": "Corrected Reflectance (True Color)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": "250m",
+                "format": "jpeg",
+                "geographic_resolution": "250m"
+              },
+              {
+                "antarctic": false,
+                "group": "overlays",
+                "product": "MODIS_Terra_Data_No_Data",
+                "antarctic_resolution": null,
+                "layerPeriod": "Daily",
+                "updated_at": "2025-04-03T12:45:18.118Z",
+                "arctic": false,
+                "title": "Areas of No Data (mask)",
+                "source": "Terra / MODIS",
+                "match": {
+                  "time_start": ">=2000-02-24T00:00:00Z",
+                  "day_night_flag": "day"
+                },
+                "geographic": true,
+                "arctic_resolution": null,
+                "format": "png",
+                "geographic_resolution": "250m"
+              }
+            ]
+          }
+        },
+        "boxes": [
+          "-90 -180 90 180"
+        ],
+        "has_combine": false,
+        "time_start": "2000-02-24T00:05:00.000Z",
+        "version_id": "6.1",
+        "dataset_id": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 500m",
+        "entry_id": "MOD02HKM_6.1",
+        "has_spatial_subsetting": true,
+        "has_transforms": true,
+        "associations": {
+          "variables": [
+            "V2949017878-LAADS",
+            "V3206792521-LAADS",
+            "V3206792500-LAADS",
+            "V2949017890-LAADS",
+            "V3206792459-LAADS",
+            "V3206792299-LAADS",
+            "V3206792436-LAADS",
+            "V2949017837-LAADS",
+            "V3206792247-LAADS",
+            "V3206792518-LAADS",
+            "V3206792512-LAADS",
+            "V3206792411-LAADS",
+            "V3206792390-LAADS",
+            "V3206792333-LAADS",
+            "V3206792477-LAADS"
+          ],
+          "services": [
+            "S2951645688-LAADS",
+            "S3269314724-LAADS"
+          ]
+        },
+        "has_variables": true,
+        "data_center": "LAADS",
+        "short_name": "MOD02HKM",
+        "organizations": [
+          "NASA/GSFC/SED/ESD/HBSL/BISB/LAADS",
+          "NASA/GSFC/SED/ESD/HBSL/BSB/MCST",
+          "NASA/GSFC/SED/ESD/TISL/MODAPS"
+        ],
+        "title": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 500m",
+        "coordinate_system": "CARTESIAN",
+        "summary": "The MODIS/Terra Calibrated Radiances 5Min L1B Swath 500m data set contains calibrated and geolocated at-aperture radiances for 7 discrete bands located in the 0.45 to 2.20 micron region of the electromagnetic spectrum. These data are generated from the MODIS Level 1A scans of raw radiance and in the process converted to geophysical units of W/(m^2 um sr). Additional data are provided including quality flags, error estimates and calibration data.\r\n\r\nVisible, shortwave infrared, and near infrared measurements are only made during the daytime (except band 26), while radiances for the thermal infrared region (bands 20-25, 27-36) are measured continuously.\r\n\r\nChannels 1 and 2 have 250 m resolution, channels 3 through 7 have 500 m resolution. However, for the MODIS L1B 500 m product, the 250 m band radiance data and their associated uncertainties have been aggregated to 500m resolution. Thus the entire channel data set has been co-registered to the same spatial scale in the 500 m product. Separate L1B products are available for the 250 m resolution channels (MOD02QKM) and 1 km resolution channels (MOD021KM). For the latter product, the 250 m and 500 m channel data (bands 1 through 7) have been aggregated into equivalent 1 km pixel values.\r\n            \r\nSpatial resolution for pixels at nadir is 500 km, degrading to 2.4 km in the along-scan direction at the scan extremes. However, thanks to the overlapping of consecutive swaths and respectively pixels there, the resulting resolution at the scan extremes is about 1 km. A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330 km orbital swath width and provides global coverage every one to two days. A single MODIS Level 1B 500 m granule will contain a scene built from 203 scans sampled 2708 times in the cross-track direction, corresponding to approximately 5 minutes worth of data; thus 288 granules will be produced per day. Since an individual MODIS scan will contain 20 along-track spatial elements for the 500 m channels, the scene will be composed of (2708 x 4060) pixels, resulting in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry, there will be increasing scan overlap beyond about 20 degrees scan angle.      \r\n\r\nTo summarize, the MODIS L1B 500 m data product consists of:\r\n            \r\n1. Calibrated radiances, uncertainties and number of samples for (2) 250 m reflected solar bands aggregated to 500 m resolution\r\n            \r\n2. Calibrated radiances and uncertainties for (5) 500 m reflected solar bands\r\n            \r\n3. Geolocation for 1km pixels, that must be interpolated to get 500 m pixel locations. For the relationship of 1km pixels to 500m pixels, see the Geolocation ATBD https://modis.gsfc.nasa.gov/data/atbd/atbd_mod28_v3.pdf.\r\n            \r\n4. Calibration data for all channels (scale and offset) \r\n            \r\n5. Comprehensive set of file-level metadata summarizing the spatial, temporal and parameter attributes of the data, as well as auxiliary information pertaining to instrument status and data quality characterization users requiring all geolocation and solar/satellite geometry fields at 1km resolution can obtain the separate MODIS Level 1 Geolocation product (MOD03) from LAADS  https://ladsweb.modaps.eosdis.nasa.gov/ . \r\n            \r\nThe shortname for this product is MOD02HKM and is stored in the Earth Observing System Hierarchical Data Format (HDF-EOS). A typical MOD02HKM file size is approximately 135 MB.\r\n            \r\nEnvironmental information derived from MODIS L1B measurements will offer a comprehensive and unprecedented look at terrestrial, atmospheric, and ocean phenomenology for a wide and diverse community of users throughout the world.\r\n\r\nSee the MODIS Characterization Support Team webpage for more C6 product information at:\r\n\r\nhttps://mcst.gsfc.nasa.gov/l1b/product-information\r\n\r\n\r\nor visit Science Team homepage at:\r\nhttps://modis.gsfc.nasa.gov/data/dataprod/",
+        "has_granules": true,
+        "service_features": {
+          "harmony": {
+            "has_formats": false,
+            "has_variables": true,
+            "has_transforms": true,
+            "has_combine": false,
+            "has_spatial_subsetting": true,
+            "has_temporal_subsetting": false
+          },
+          "opendap": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          },
+          "esi": {
+            "has_formats": false,
+            "has_variables": false,
+            "has_transforms": false,
+            "has_combine": false,
+            "has_spatial_subsetting": false,
+            "has_temporal_subsetting": false
+          }
+        },
+        "orbit_parameters": {},
+        "id": "C1378577630-LAADS",
+        "has_formats": false,
+        "score": 0.5,
+        "consortiums": [
+          "GEOSS",
+          "EOSDIS"
+        ],
+        "original_format": "UMM_JSON",
+        "collection_data_type": "SCIENCE_QUALITY",
+        "granule_count": 1,
+        "has_temporal_subsetting": false,
+        "browse_flag": false,
+        "platforms": [
+          "Terra"
+        ],
+        "association_details": {
+          "variables": [
+            {
+              "concept_id": "V2949017878-LAADS"
+            },
+            {
+              "concept_id": "V3206792521-LAADS"
+            },
+            {
+              "concept_id": "V3206792500-LAADS"
+            },
+            {
+              "concept_id": "V2949017890-LAADS"
+            },
+            {
+              "concept_id": "V3206792459-LAADS"
+            },
+            {
+              "concept_id": "V3206792299-LAADS"
+            },
+            {
+              "concept_id": "V3206792436-LAADS"
+            },
+            {
+              "concept_id": "V2949017837-LAADS"
+            },
+            {
+              "concept_id": "V3206792247-LAADS"
+            },
+            {
+              "concept_id": "V3206792518-LAADS"
+            },
+            {
+              "concept_id": "V3206792512-LAADS"
+            },
+            {
+              "concept_id": "V3206792411-LAADS"
+            },
+            {
+              "concept_id": "V3206792390-LAADS"
+            },
+            {
+              "concept_id": "V3206792333-LAADS"
+            },
+            {
+              "concept_id": "V3206792477-LAADS"
+            }
+          ],
+          "services": [
+            {
+              "concept_id": "S2951645688-LAADS"
+            },
+            {
+              "concept_id": "S3269314724-LAADS"
+            }
+          ]
+        },
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MOD02HKM.061"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mcst.gsfc.nasa.gov/sites/default/files/file_attachments/M1054D_PUG_083112_final.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mcst.gsfc.nasa.gov/sites/mcst.gsfc/files/file_attachments/MODIS_L1B_ATBD_ver4.pdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/search/order/2/MOD02HKM--61"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MOD02HKM/"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "application/x-netcdf",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MOD02HKM/contents.html"
+          }
+        ]
+      }
+    ],
+    "facets": {
+      "title": "Browse Collections",
+      "type": "group",
+      "has_children": true,
+      "children": [
+        {
+          "title": "Keywords",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Spectral/Engineering",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&science_keywords_h%5B0%5D%5Btopic%5D=Spectral%2FEngineering&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Platforms",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Space-based Platforms",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&platforms_h%5B0%5D%5Bbasis%5D=Space-based+Platforms&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": true
+            }
+          ]
+        },
+        {
+          "title": "Instruments",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "MODIS",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&instrument_h%5B%5D=MODIS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Data Format",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "HDF",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&granule_data_format_h%5B%5D=HDF&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Organizations",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "Level-1 and Atmosphere Archive & Distribution System (LAADS)",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=Level-1+and+Atmosphere+Archive+%26+Distribution+System+%28LAADS%29&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/HBSL/BSB/MCST",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FHBSL%2FBSB%2FMCST&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            },
+            {
+              "title": "NASA/GSFC/SED/ESD/TISL/MODAPS",
+              "type": "filter",
+              "applied": false,
+              "count": 2,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&data_center_h%5B%5D=NASA%2FGSFC%2FSED%2FESD%2FTISL%2FMODAPS&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Processing Levels",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "1B - Radiance, Sensor Coordinates",
+              "type": "filter",
+              "applied": false,
+              "count": 3,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&processing_level_id_h%5B%5D=1B+-+Radiance%2C+Sensor+Coordinates&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Latency",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "1 to 3 hours",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&latency%5B%5D=1+to+3+hours&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            }
+          ]
+        },
+        {
+          "title": "Horizontal Data Resolution",
+          "type": "group",
+          "applied": false,
+          "has_children": true,
+          "children": [
+            {
+              "title": "100 to 250 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=100+to+250+meters&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            },
+            {
+              "title": "250 to 500 meters",
+              "type": "filter",
+              "applied": false,
+              "count": 1,
+              "links": {
+                "apply": "https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&bounding_box%5B%5D=-29.95172%2C11.43036%2C-16.57503%2C19.31775&options%5Btemporal%5D%5Blimit_to_granules%5D=true&has_granules_or_cwic=true&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-score&keyword=MOD02QKM*&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&horizontal_data_resolution_range%5B%5D=250+to+500+meters&include_facets=v2&temporal=2025-03-12T00%3A00%3A00.000Z%2C2025-03-12T23%3A59%3A59.999Z"
+              },
+              "has_children": false
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,6 +1,9 @@
 import React from 'react'
-
-import { render, screen } from '@testing-library/react'
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
 
 import userEvent from '@testing-library/user-event'
 
@@ -287,11 +290,14 @@ describe('SpatialDisplay component', () => {
 
       const { onRemoveSpatialFilter } = props
 
-      const actionBtns = screen.getAllByRole('button')
+      const actionBtns = await screen.findAllByRole('button')
       const actionBtn = actionBtns[0]
       expect(actionBtns).toHaveLength(1)
 
-      await userEvent.click(actionBtn)
+      // eslint-disable-next-line testing-library/no-unnecessary-act
+      await act(async () => {
+        await userEvent.click(actionBtn)
+      })
 
       expect(onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(2)

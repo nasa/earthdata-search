@@ -29,6 +29,7 @@ const handleDrawEnd = (params, event) => {
     map,
     onChangeQuery,
     onClearShapefile,
+    onDrawEnd,
     onToggleDrawingNewLayer,
     projectionCode,
     spatialType
@@ -168,6 +169,9 @@ const handleDrawEnd = (params, event) => {
       }
     }
   })
+
+  // Call any onDrawEnd callback passed to the function
+  if (onDrawEnd) onDrawEnd(geometry)
 }
 
 export default handleDrawEnd

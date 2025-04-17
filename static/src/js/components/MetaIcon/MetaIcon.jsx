@@ -38,13 +38,13 @@ export const MetaIcon = ({
       <span className="meta-icon__icon-wrapper">
         <EDSCIcon
           className="meta-icon__icon"
-          size="1rem"
+          size="16"
           icon={icon}
           {...iconProps}
         />
         {
           notAvailable && (
-            <NotAvailableIcon size="1rem" />
+            <NotAvailableIcon size="16" />
           )
         }
       </span>

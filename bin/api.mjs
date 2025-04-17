@@ -114,6 +114,7 @@ const lambdaProxyWrapper = (method) => async (request, reply) => {
 
 // Create a Fastify server
 const fastify = Fastify({
+  bodyLimit: 1048576 * 10, // 1MB * 10
   logger: true,
   requestTimeout: 30000,
   requestIdHeader: 'x-request-id'

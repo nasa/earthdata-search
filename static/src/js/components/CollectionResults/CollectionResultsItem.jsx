@@ -307,7 +307,7 @@ export const CollectionResultsItem = forwardRef(({
                     <MetaIcon
                       id="feature-icon-list-view__map-imagery"
                       icon={FaMap}
-                      iconProps={{ size: '0.975rem' }}
+                      iconProps={{ size: '15' }}
                       label="Map Imagery"
                       tooltipClassName="collection-results-item__tooltip"
                       tooltipContent="Supports advanced map visualizations using the GIBS tile service"
@@ -319,7 +319,7 @@ export const CollectionResultsItem = forwardRef(({
                     <MetaIcon
                       id="feature-icon-list-view__map-imagery"
                       icon={FaMap}
-                      iconProps={{ size: '0.975rem' }}
+                      iconProps={{ size: '15' }}
                       label="No map imagery"
                       notAvailable
                       tooltipClassName="collection-results-item__tooltip"
@@ -332,7 +332,7 @@ export const CollectionResultsItem = forwardRef(({
                     <MetaIcon
                       id="feature-icon-list-view__near-real-time"
                       icon={FaClock}
-                      iconProps={{ size: '0.825rem' }}
+                      iconProps={{ size: '14' }}
                       label="Near Real Time"
                       metadata={nrtLabel}
                       tooltipClassName="collection-results-item__tooltip"
@@ -398,7 +398,7 @@ export const CollectionResultsItem = forwardRef(({
                             <EDSCIcon
                               className="collection-results-item__icon collection-results-item__icon--csda d-inline-block me-1"
                               icon={FaLock}
-                              size="0.55rem"
+                              size="8"
                             />
                             CSDA
                           </span>

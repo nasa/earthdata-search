@@ -74,12 +74,11 @@
     overflow-y: auto;
 
     .edsc-modal--body-padding & {
-      padding: bootstrap.$spacer;
+      padding: 3rem;
     }
   }
 
   &__header {
-    background-color: utils.$color__carbon--10;
     border-bottom: 0;
 
     &--is-empty {

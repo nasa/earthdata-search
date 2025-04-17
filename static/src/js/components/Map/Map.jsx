@@ -230,6 +230,7 @@ const removeDrawingInteraction = (map) => {
  * @param {Function} params.onChangeQuery Function to call when the query is changed
  * @param {Function} params.onClearShapefile Function to call when the shapefile is cleared
  * @param {Function} params.onExcludeGranule Function to call when a granule is excluded
+ * @param {Function} params.onMapReady Function to call when the map is ready
  * @param {Function} params.onMetricsMap Function to call when a map metric is triggered
  * @param {Function} params.onToggleDrawingNewLayer Function to call when a new drawing layer is toggled
  * @param {Function} params.onToggleShapefileUploadModal Function to call when the shapefile upload modal is toggled
@@ -256,7 +257,9 @@ const Map = ({
   onChangeProjection,
   onChangeQuery,
   onClearShapefile,
+  onDrawEnd,
   onExcludeGranule,
+  onMapReady,
   onMetricsMap,
   onToggleDrawingNewLayer,
   onToggleShapefileUploadModal,
@@ -368,6 +371,7 @@ const Map = ({
         map,
         onChangeQuery,
         onClearShapefile,
+        onDrawEnd,
         onToggleDrawingNewLayer,
         projectionCode,
         spatialType
@@ -484,8 +488,8 @@ const Map = ({
       // Fit the map to the extent
       if (extent) {
         map.getView().fit(extent, {
-          duration: 250,
-          padding: [50, 50, 50, 50]
+          duration: 400,
+          padding: [100, 125, 100, 100]
         })
       }
     }
@@ -519,6 +523,8 @@ const Map = ({
     }
 
     eventEmitter.on(shapefileEventTypes.REMOVESHAPEFILE, handleRemoveShapefile)
+
+    onMapReady(true)
 
     layersAdded = false
 
@@ -646,22 +652,22 @@ const Map = ({
 
     const mapControls = new MapControls({
       base,
-      CircleIcon: (<EDSCIcon size="0.75rem" icon={FaCircle} />),
-      HomeIcon: (<EDSCIcon size="0.75rem" icon={FaHome} />),
+      CircleIcon: (<EDSCIcon size="12" icon={FaCircle} />),
+      HomeIcon: (<EDSCIcon size="12" icon={FaHome} />),
       isLayerSwitcherOpen,
-      LayersIcon: (<EDSCIcon size="0.75rem" icon={FaLayerGroup} />),
+      LayersIcon: (<EDSCIcon size="12" icon={FaLayerGroup} />),
       map: mapRef.current,
       mapLayers,
-      MinusIcon: (<EDSCIcon size="0.75rem" icon={Minus} />),
+      MinusIcon: (<EDSCIcon size="12" icon={Minus} />),
       onChangeLayer: handleLayerChange,
       onChangeProjection,
       onToggleShapefileUploadModal,
       overlays,
-      PlusIcon: (<EDSCIcon size="0.75rem" icon={Plus} />),
-      PointIcon: (<EDSCIcon size="0.75rem" icon={MapIcon} />),
+      PlusIcon: (<EDSCIcon size="12" icon={Plus} />),
+      PointIcon: (<EDSCIcon size="12" icon={MapIcon} />),
       projectionCode,
       setIsLayerSwitcherOpen,
-      ShapefileIcon: (<EDSCIcon size="0.75rem" icon={FaFile} />),
+      ShapefileIcon: (<EDSCIcon size="12" icon={FaFile} />),
       showDrawingControls: !isProjectPage
     })
 
@@ -812,91 +818,8 @@ const Map = ({
     const map = mapRef.current
     const view = map.getView()
 
-    // Get the previousPanelsWidth from the previousPadding value from the map
-    const properties = view.getProperties()
-    const { padding: previousPadding } = properties
-    const previousPanelsWidth = previousPadding[3]
-
     // Set the new padding value with the new panelsWidth
-    const newPadding = [0, 0, 0, panelsWidth]
-
-    // Get the current center longitude and latitude
-    let [currentLongitude, currentLatitude] = view.getCenter()
-    let newCenter = {
-      longitude: currentLongitude,
-      latitude: currentLatitude
-    }
-
-    // In order to keep the map from moving when we change the padding we need to adjust
-    // the center of the map.
-
-    // If the current center is 0,0 then use the projection's default center for calculations
-    if (currentLongitude === 0 && currentLatitude === 0) {
-      const projectionConfig = projectionConfigs[projectionCode];
-      [currentLongitude, currentLatitude] = projectionConfig.center
-
-      newCenter = {
-        longitude: currentLongitude,
-        latitude: currentLatitude
-      }
-    }
-
-    // Adjust the center based on the difference in the panels
-
-    // Find the pixel difference between the previousPanelsWidth and the panelsWidth
-    const diffInPixels = panelsWidth - previousPanelsWidth
-
-    // Find the coordinate difference based on the resolution of the view
-    const diff = (view.getResolution() * diffInPixels) / 2
-
-    // If the difference in pixels is not 0, adjust the center of the map
-    if (diffInPixels !== 0) {
-      if (projectionCode === projectionCodes.geographic) {
-        // In the geographic projection adjust the longitude of the center
-
-        // Generate the new center longitude
-        newCenter = {
-          longitude: currentLongitude + diff,
-          latitude: currentLatitude
-        }
-      } else {
-        // In polar projections adjust the x coordinate of the center
-
-        // In the polar projections the coordinates are x,y instead of longitude,latitude
-        const currentX = currentLongitude
-        const currentY = currentLatitude
-
-        // Generate the updated center x coordinate
-        const updatedProjectionCenter = [
-          currentX + diff,
-          currentY
-        ]
-
-        // Convert the updated center back to geographic coordinates
-        const [newLongitude, newLatitude] = transform(
-          updatedProjectionCenter,
-          crsProjections[projectionCode],
-          crsProjections[projectionCodes.geographic]
-        )
-
-        newCenter = {
-          longitude: newLongitude,
-          latitude: newLatitude
-        }
-      }
-    }
-
-    // Create a new view for the map based on the new center, zoom, and padding
-    const newView = createView({
-      center: newCenter,
-      padding: newPadding,
-      projectionCode,
-      rotation,
-      zoom
-    })
-
-    // Update the map with the new view
-    map.setView(newView)
+    view.padding = [0, 0, 0, panelsWidth]
   }, [panelsWidth])
 
   // When the granules change, draw the granule backgrounds
@@ -1027,7 +950,9 @@ Map.propTypes = {
   onChangeProjection: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onClearShapefile: PropTypes.func.isRequired,
+  onDrawEnd: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
+  onMapReady: PropTypes.func.isRequired,
   onMetricsMap: PropTypes.func.isRequired,
   onToggleDrawingNewLayer: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired,

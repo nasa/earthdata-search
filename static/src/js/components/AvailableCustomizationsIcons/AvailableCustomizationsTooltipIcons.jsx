@@ -48,7 +48,7 @@ export const AvailableCustomizationsTooltipIcons = ({
             <EDSCIcon
               className="available-customizations-tooltip-icons__tooltip-feature-icon"
               title="A white globe icon"
-              size="0.725rem"
+              size="12"
               icon={FaGlobe}
               inlineFlex={false}
             />
@@ -62,7 +62,7 @@ export const AvailableCustomizationsTooltipIcons = ({
             <EDSCIcon
               className="available-customizations-tooltip-icons__tooltip-feature-icon"
               title="A white clock icon"
-              size="0.725rem"
+              size="12"
               icon={FaClock}
               inlineFlex={false}
             />
@@ -76,7 +76,7 @@ export const AvailableCustomizationsTooltipIcons = ({
             <EDSCIcon
               className="available-customizations-tooltip-icons__tooltip-feature-icon"
               title="A white tags icon"
-              size="0.725rem"
+              size="12"
               icon={FaTags}
               inlineFlex={false}
             />
@@ -90,7 +90,7 @@ export const AvailableCustomizationsTooltipIcons = ({
             <EDSCIcon
               className="available-customizations-tooltip-icons__tooltip-feature-icon"
               title="A white horizontal sliders icon"
-              size="0.725rem"
+              size="12"
               icon={Filter}
               inlineFlex={false}
             />
@@ -104,7 +104,7 @@ export const AvailableCustomizationsTooltipIcons = ({
             <EDSCIcon
               className="available-customizations-tooltip-icons__tooltip-feature-icon"
               title="A white file icon"
-              size="0.725rem"
+              size="12"
               icon={FileGeneric}
               inlineFlex={false}
             />
@@ -118,7 +118,7 @@ export const AvailableCustomizationsTooltipIcons = ({
             <EDSCIcon
               className="available-customizations-tooltip-icons__tooltip-feature-icon"
               title="A white cubes icon"
-              size="0.725rem"
+              size="12"
               icon={FaCubes}
               inlineFlex={false}
             />

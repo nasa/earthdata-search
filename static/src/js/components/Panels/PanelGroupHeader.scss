@@ -65,12 +65,14 @@
   }
 
   &__heading-wrap {
-    align-items: center;
+    align-items: flex-start;
     display: flex;
     width: 100%;
   }
 
   &__more-actions {
+    position: relative;
+    left: 0.25rem;
     padding: 0.25*bootstrap.$spacer 0.5*bootstrap.$spacer;
     flex-grow: 0;
     flex-shrink: 0;
@@ -82,8 +84,8 @@
     align-items: stretch;
     justify-content: space-between;
     width: 100%;
-    background-color: utils.$color__carbon--10;
     font-size: 0.725rem;
+    border-top: 1px solid utils.$color__carbon--20;
 
     .panels--md & {
       font-size: 0.825rem;
@@ -167,6 +169,7 @@
     font-size: 1rem;
     font-weight: 500;
     color: utils.$color__carbon--70;
+    line-height: 1;
   }
 
   &__heading-badge {

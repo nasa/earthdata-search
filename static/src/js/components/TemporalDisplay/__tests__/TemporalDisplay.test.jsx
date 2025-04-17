@@ -96,6 +96,7 @@ describe('TemporalDisplay component', () => {
         isRecurring: false
       }
     })
+
     const remove = screen.getByRole('button', { name: /remove temporal filter/i })
 
     await act(async () => {

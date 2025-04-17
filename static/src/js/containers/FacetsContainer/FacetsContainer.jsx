@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
 
 import Facets from '../../components/Facets/Facets'
+import HomeContext from '../../contexts/HomeContext'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeCmrFacet:
@@ -33,6 +34,8 @@ export const FacetsContainer = (props) => {
     onTriggerViewAllFacets
   } = props
 
+  const { openKeywordFacet, setOpenKeywordFacet } = useContext(HomeContext)
+
   return (
     <Facets
       facetsById={facetsById}
@@ -41,6 +44,8 @@ export const FacetsContainer = (props) => {
       onChangeCmrFacet={onChangeCmrFacet}
       onChangeFeatureFacet={onChangeFeatureFacet}
       onTriggerViewAllFacets={onTriggerViewAllFacets}
+      openKeywordFacet={openKeywordFacet}
+      setOpenKeywordFacet={setOpenKeywordFacet}
     />
   )
 }

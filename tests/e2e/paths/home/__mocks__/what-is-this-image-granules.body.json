@@ -1,0 +1,105 @@
+{
+  "feed": {
+    "updated": "2025-04-03T18:56:54.247Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C1378579425-LAADS&page_num=1&page_size=20&temporal=2025-03-12T00:00:00.000Z,2025-03-12T23:59:59.999Z&bounding_box[]=-29.95172,11.43036,-16.57503,19.31775&sort_key=-start_date",
+    "title": "ECHO granule metadata",
+    "entry": [
+      {
+        "producer_granule_id": "MOD02QKM.A2025071.1055.061.2025071212158.hdf",
+        "time_start": "2025-03-12T10:55:00.000Z",
+        "updated": "2025-03-12T23:29:10.630Z",
+        "dataset_id": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m",
+        "data_center": "LAADS",
+        "title": "LAADS:8783801365",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "DAY",
+        "time_end": "2025-03-12T11:00:00.000Z",
+        "id": "G3446542190-LAADS",
+        "original_format": "ECHO10",
+        "granule_size": "137.635577201843",
+        "browse_flag": true,
+        "polygons": [
+          [
+            "10.419548 -31.726376 7.586997 -11.009508 25.371026 -6.098696 28.627067 -29.002242 10.419548 -31.726376"
+          ]
+        ],
+        "collection_concept_id": "C1378579425-LAADS",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "type": "application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "https://data.laadsdaac.earthdatacloud.nasa.gov/prod-lads/MOD02QKM/MOD02QKM.A2025071.1055.061.2025071212158.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "type": "application/x-hdfeos",
+            "hreflang": "en-US",
+            "href": "s3://prod-lads/MOD02QKM/MOD02QKM.A2025071.1055.061.2025071212158.hdf"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "title": "This file may be accessed using OPeNDAP directly from this link (OPENDAP DATA)",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MOD02QKM/2025/071/MOD02QKM.A2025071.1055.061.2025071212158.hdf.html"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "type": "text/html",
+            "title": "A link to Data set landing page (Data Set Landing Page)",
+            "hreflang": "en-US",
+            "href": "http://doi.org/10.5067/MODIS/MOD02QKM.061"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/browse#",
+            "type": "image/jpeg",
+            "title": "This Browse file may be downloaded directly from this link",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MOBRGB/2025/071/MOBRGB.A2025071.1055.061.2025071214357.jpg"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mcst.gsfc.nasa.gov/sites/default/files/file_attachments/M1054D_PUG_083112_final.pdf"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "hreflang": "en-US",
+            "href": "https://doi.org/10.5067/MODIS/MOD02QKM.061"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/search/order/2/MOD02QKM--61"
+          },
+          {
+            "inherited": true,
+            "length": "0.0KB",
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MOD02QKM/"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/service#",
+            "type": "text/html",
+            "hreflang": "en-US",
+            "href": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MOD02QKM/contents.html"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://mcst.gsfc.nasa.gov/sites/mcst.gsfc/files/file_attachments/MODIS_L1B_ATBD_ver4.pdf"
+          }
+        ]
+      }
+    ]
+  }
+}

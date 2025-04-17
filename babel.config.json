@@ -9,7 +9,9 @@
         }
       }
     ],
-    "@babel/preset-react"
+    "@babel/preset-react",
+    "@babel/preset-typescript",
+    "babel-preset-vite"
   ],
   "sourceType": "unambiguous",
   "plugins": [

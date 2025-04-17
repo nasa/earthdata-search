@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import svgr from 'vite-plugin-svgr'
 import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { resolve } from 'path'
@@ -16,12 +17,14 @@ const {
   feedbackApp
 } = getApplicationConfig()
 
+// @ts-expect-error: this is a workaround for the issue with the types
 const { [defaultPortal]: portalConfig } = availablePortals
 const { footer, ui } = portalConfig
 const { showTophat } = ui
 const { attributionText } = footer
 
 export default defineConfig({
+  publicDir: 'static/src/public',
   server: {
     host: true,
     port: 8080,
@@ -51,9 +54,12 @@ export default defineConfig({
     istanbul({
       include: 'static/src/*',
       exclude: ['node_modules', 'test/'],
-      extension: ['.js', '.jsx'],
+      extension: ['.js', '.jsx', '.ts', '.tsx'],
       requireEnv: true,
       forceBuildInstrument: process.env.VITE_COVERAGE === 'true'
+    }),
+    svgr({
+      include: '**/*.svg?react'
     })
   ],
   css: {
@@ -66,6 +72,7 @@ export default defineConfig({
     }
   },
   resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     alias: {
       '~bootstrap': resolve(__dirname, 'node_modules/bootstrap'),
       '~Fonts': resolve(__dirname, 'static/src/assets/fonts'),
@@ -77,6 +84,7 @@ export default defineConfig({
     outDir: 'static/dist'
   },
   // TODO: vitest is currently blocked by enzyme removal ticket EDSC-4201
+  // @ts-expect-error: configuring vitest causes overload error
   test: {
     globals: true,
     environment: 'jsdom',

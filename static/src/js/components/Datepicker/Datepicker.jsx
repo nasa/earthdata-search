@@ -216,7 +216,7 @@ class Datepicker extends PureComponent {
           inputProps={
             {
               id,
-              placeholder: format,
+              placeholder: 'Type or click to select a date',
               autoComplete: 'off',
               className: `form-control ${size === 'sm' ? 'form-control-sm' : ''}`,
               'aria-label': label,
@@ -230,7 +230,6 @@ class Datepicker extends PureComponent {
               },
               onBlur: onInputBlur,
               onFocus: onInputFocus,
-
               onKeyDown,
               ...conditionalInputProps
             }
@@ -249,6 +248,7 @@ class Datepicker extends PureComponent {
           value={value}
           viewMode={viewMode}
         />
+        {format && <div className="form-text">{format}</div>}
       </div>
     )
   }

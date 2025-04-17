@@ -53,7 +53,8 @@ export const updateStore = ({
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
-    !isPath(pathname, urlPathsWithoutUrlParams)
+    pathname !== '/'
+    && !isPath(pathname, urlPathsWithoutUrlParams)
     && !isSavedProjectsPage(location)
   )
 
@@ -154,8 +155,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
   // other cases, getGranules will be requested using the granule search query params.
   if (
-    pathname === '/'
-    || pathname.includes('/search')
+    pathname.includes('/search')
     // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {

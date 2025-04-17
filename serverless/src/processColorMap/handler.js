@@ -141,7 +141,7 @@ const processColorMap = async (event, context) => {
 
               scaleValues.push(v)
             })
-          } catch (error) {
+          } catch {
             throw Error(`Invalid value: ${value.toString()}`)
           }
 

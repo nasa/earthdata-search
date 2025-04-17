@@ -1,9 +1,10 @@
 import React, {
   useCallback,
+  useContext,
   useEffect,
   useState,
   useMemo,
-  useContext
+  useLayoutEffect
 } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -12,6 +13,7 @@ import { difference } from 'lodash-es'
 import actions from '../../actions'
 import { metricsMap } from '../../middleware/metrics/actions'
 
+import { eventEmitter } from '../../events/events'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
@@ -42,6 +44,9 @@ import './MapContainer.scss'
 import spatialTypes from '../../constants/spatialTypes'
 import MbrContext from '../../contexts/MbrContext'
 
+import HomeContext from '../../contexts/HomeContext'
+import { mapEventTypes } from '../../constants/eventTypes'
+
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
@@ -60,8 +65,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onMetricsMap:
     (type) => dispatch(metricsMap(type)),
   onToggleDrawingNewLayer: (state) => dispatch(actions.toggleDrawingNewLayer(state)),
-  onToggleShapefileUploadModal:
-    (state) => dispatch(actions.toggleShapefileUploadModal(state)),
+  onToggleShapefileUploadModal: (state) => dispatch(actions.toggleShapefileUploadModal(state)),
   onToggleTooManyPointsModal:
     (state) => dispatch(actions.toggleTooManyPointsModal(state)),
   onUpdateShapefile:
@@ -113,8 +117,8 @@ export const MapContainer = (props) => {
     onFetchShapefile,
     onMetricsMap,
     onToggleDrawingNewLayer,
-    onToggleTooManyPointsModal,
     onToggleShapefileUploadModal,
+    onToggleTooManyPointsModal,
     onUpdateShapefile,
     pointSearch,
     polygonSearch,
@@ -132,6 +136,20 @@ export const MapContainer = (props) => {
     '/search/granules',
     '/search/granules/collection-details'
   ])
+
+  const { startDrawing, setStartDrawing } = useContext(HomeContext)
+
+  const [mapReady, setMapReady] = useState(false)
+
+  useLayoutEffect(() => {
+    if (startDrawing && mapReady) {
+      if (startDrawing === 'file') {
+        onToggleShapefileUploadModal(true)
+      } else {
+        eventEmitter.emit(mapEventTypes.DRAWSTART, startDrawing)
+      }
+    }
+  }, [startDrawing, mapReady])
 
   const {
     base,
@@ -257,11 +275,20 @@ export const MapContainer = (props) => {
     callbackOnChangeMap({ ...newMap })
   }, [projection])
 
+  const handleDrawEnd = useCallback((geometry) => {
+    if (startDrawing) {
+      eventEmitter.emit(mapEventTypes.MOVEMAP, { source: geometry })
+    }
+
+    setStartDrawing(false)
+  }, [setStartDrawing])
+
   // Get the metadata for the currently focused collection, or an empty object if no collection is focused
   const focusedCollectionMetadata = useMemo(
     () => collectionsMetadata[focusedCollectionId] || {},
     [focusedCollectionId, collectionsMetadata]
   )
+
   const { tags } = focusedCollectionMetadata
   const [gibsTag] = getValueForTag('gibs', tags) || []
 
@@ -448,6 +475,7 @@ export const MapContainer = (props) => {
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}
       onClearShapefile={onClearShapefile}
+      onDrawEnd={handleDrawEnd}
       onExcludeGranule={onExcludeGranule}
       onMetricsMap={onMetricsMap}
       onToggleDrawingNewLayer={onToggleDrawingNewLayer}
@@ -460,6 +488,7 @@ export const MapContainer = (props) => {
       shapefile={memoizedShapefile}
       spatialSearch={spatialSearch}
       zoom={zoom}
+      onMapReady={setMapReady}
     />
   )
 }

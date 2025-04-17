@@ -18,6 +18,7 @@ import './Panels.scss'
 // Returns the width of the sidebar
 const getSidebarWidth = () => {
   const sidebar = document.querySelector('.sidebar')
+
   if (sidebar) {
     const width = sidebar.offsetWidth
 
@@ -185,6 +186,7 @@ export class Panels extends PureComponent {
   }
 
   onWindowKeyUp(event) {
+    console.log('🚀 ~ Panels ~ onWindowKeyUp ~ onWindowKeyUp:')
     const { show } = this.state
     const { keyboardShortcuts } = this
 
@@ -391,6 +393,7 @@ export class Panels extends PureComponent {
   }
 
   onPanelDragStart(clickStartWidth, clickStartX) {
+    console.log('🚀 ~ Panels ~ onPanelDragStart ~ onPanelDragStart:')
     this.onWindowResize()
     this.setState({
       dragging: true

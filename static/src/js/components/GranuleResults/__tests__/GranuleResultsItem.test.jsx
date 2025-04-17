@@ -32,7 +32,7 @@ jest.mock('react-highlight-words', () => jest.fn(
 ))
 
 jest.mock('../../EDSCImage/EDSCImage', () => jest.fn(
-  ({ className }) => <div className={className} alt="Browse Image for " data-testid="mock-edsc-image">EDSC Image</div>
+  ({ className }) => <div className={className} alt="Browse Image for " data-testid="mock-edsc-image"><img alt="Mocked Browse" /></div>
 ))
 
 const setup = (type, overrideProps) => {
@@ -821,8 +821,8 @@ describe('GranuleResultsItem component', () => {
 
       const { browseUrl } = granule
 
-      expect(screen.getByRole('link', { name: 'View image' })).toBeInTheDocument()
-      expect(screen.getByRole('link', { name: 'View image' })).toHaveAttribute('href', browseUrl)
+      expect(screen.getByRole('link', { name: 'Mocked Browse' })).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: 'Mocked Browse' })).toHaveAttribute('href', browseUrl)
     })
 
     test('adds the modifier class name', () => {

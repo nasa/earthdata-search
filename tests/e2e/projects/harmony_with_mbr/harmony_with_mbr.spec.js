@@ -81,7 +81,7 @@ test.describe('Harmony with MBR', () => {
           await tilesPromise
         })
 
-        test('displays a mbr on the map', async ({ page }) => {
+        test('displays a mbr on the map @screenshot', async ({ page }) => {
           // Expect the mbrWarning to be displayed
           await expect(page.getByRole('alert')).toHaveText(mbrWarning)
 
@@ -102,7 +102,7 @@ test.describe('Harmony with MBR', () => {
             await page.getByLabel('Trim output granules to the selected spatial constraint').uncheck()
           })
 
-          test('removes the mbr from the map', async ({ page }) => {
+          test('removes the mbr from the map @screenshot', async ({ page }) => {
             // Expect the mbrWarning not to be displayed
             await expect(page.getByRole('alert')).toHaveCount(0)
 
@@ -128,7 +128,7 @@ test.describe('Harmony with MBR', () => {
           await tilesPromise
         })
 
-        test('does not display a mbr on the map', async ({ page }) => {
+        test('does not display a mbr on the map @screenshot', async ({ page }) => {
           // Expect the mbrWarning not to be displayed
           await expect(page.getByRole('alert')).toHaveCount(0)
 
@@ -146,7 +146,7 @@ test.describe('Harmony with MBR', () => {
             await page.getByLabel('Trim output granules to the selected spatial constraint').check()
           })
 
-          test('adds the mbr to the map', async ({ page }) => {
+          test('adds the mbr to the map @screenshot', async ({ page }) => {
             // Expect the mbrWarning to be displayed
             await expect(page.getByRole('alert')).toHaveText(mbrWarning)
 

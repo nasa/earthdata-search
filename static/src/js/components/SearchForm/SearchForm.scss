@@ -7,7 +7,6 @@
   width: auto;
   z-index: 2;
   background-color: utils.$color__spacesuit-white;
-  box-shadow: 0 0 0.75rem 0 rgba(0, 0, 0, 0.1);
 
   &__loading-suggestions {
     display: flex;
@@ -37,7 +36,7 @@
   &__secondary-actions {
     display: flex;
     flex-direction: row;
-    height: 3rem;
+    padding: 0.325rem 0.5rem;
   }
 
   &__back-to-collections {
@@ -54,18 +53,47 @@
   }
 
   &__button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     position: relative;
-    border: 0;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
     border-radius: 0;
-    background-color: utils.$color__spacesuit-white;
+    background-color: utils.$color__nasa-blue;
+    color: utils.$color__spacesuit-white;
     vertical-align: middle;
-    color: utils.$color__carbon--60;
-    border-right: 1px solid utils.$color__carbon--20;
+    letter-spacing: -0.0125rem;
     z-index: 1;
+    font-weight: 500;
+    border: 0;
 
+    &.show,
+    &:active,
+    &:first-child:active,
     &:hover,
     &:focus {
-      background-color: utils.$color__carbon--10;
+      background-color: utils.$color__nasa-blue--shade;
+      color: utils.$color__spacesuit-white;
+    }
+
+    &--secondary {
+      background-color: utils.$color__spacesuit-white;
+      border: 1px solid utils.$color__nasa-blue;
+      color: utils.$color__carbon-black;
+
+      &.show,
+      &:active,
+      &:first-child:active,
+      &:hover,
+      &:focus {
+        background-color: utils.$color__spacesuit-white;
+        border: 1px solid utils.$color__nasa-blue--shade;
+        color: utils.$color__carbon-black;
+      }
     }
 
     &:focus {
@@ -76,9 +104,14 @@
       margin-top: 0.3em;
     }
 
-    &--clear {
-      border-left: 1px solid utils.$color__carbon--20;
-      border-right: 0;
+    .edsc-icon:first-child {
+      width: 0.925rem;
+      height: auto;
+
+      svg {
+        height: 0.925rem;
+        width: 0.925rem;
+      }
     }
 
     .search-form__secondary & {
@@ -86,6 +119,34 @@
       align-items: center;
       justify-content: center;
     }
+
+    &--submit {
+      flex-grow: 1;
+      color: utils.$color__spacesuit-white;
+      background-color: utils.$color__nasa-red;
+      border: 0;
+      margin-right: 0;
+      font-size: 1rem;
+
+      &.show,
+      &:active,
+      &:first-child:active,
+      &:hover,
+      &:focus {
+        background-color: utils.$color__nasa-red--shade;
+        color: utils.$color__spacesuit-white;
+        border: 0;
+      }
+    }
+
+    &--advanced-search,
+    &--clear {
+      aspect-ratio: 1;
+    }
+  }
+
+  .dropdown-toggle {
+    padding-right: 0.325rem;
   }
 
   &__label {
@@ -96,25 +157,21 @@
   &__input {
     display: inline-block;
     width: 100%;
-    padding: 0.825rem 0.925rem;
-    border: none;
-    font-size: 0.875rem;
-
-    &:before {
-      display: inline-block;
-      font-style: normal;
-      font-variant: normal;
-      text-rendering: auto;
-      -webkit-font-smoothing: antialiased;
-      font-family: "Font Awesome 5 Free";
-      font-weight: 900;
-      content: "\f007";
-    }
+    padding: 0.5rem 0.925rem 0.5rem 1.75rem;
+    border: 0;
 
     &:focus {
       box-shadow: none;
       outline: 0;
+      border: 0;
     }
+  }
+
+  &__search-icon {
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    color: utils.$color__carbon--40;
   }
 
   &__spinner {
@@ -173,12 +230,14 @@
 
       &--highlighted,
       &:hover {
-        background-color: darken(utils.$color__carbon--10, 1);
+        background-color: utils.$color__carbon--5;
 
         .autocomplete-suggestion__suggestions-hierarchy {
-          background-color: darken(utils.$color__carbon--10, 1);
+          background-color: utils.$color__carbon--5;
         }
       }
     }
   }
+
+
 }

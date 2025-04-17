@@ -17,6 +17,7 @@
     },
     "pageTitle": "",
     "portalBrowser": false,
+    "portalId": "default",
     "query": {},
     "title": {
       "primary": "Default"
@@ -25,8 +26,7 @@
       "showNonEosdisCheckbox": false,
       "showOnlyGranulesCheckbox": false,
       "showTophat": false
-    },
-    "portalId": "default"
+    }
   },
   "edsc": {
     "features": {
@@ -64,6 +64,7 @@
     },
     "pageTitle": "Earthdata Search",
     "portalBrowser": false,
+    "portalId": "edsc",
     "title": {
       "primary": "Earthdata Search"
     },
@@ -71,14 +72,14 @@
       "showNonEosdisCheckbox": true,
       "showOnlyGranulesCheckbox": true,
       "showTophat": true
-    },
-    "portalId": "edsc"
+    }
   },
   "testPortal": {
     "moreInfoUrl": "https://test.gov",
     "pageTitle": "TEST",
     "parentConfig": "edsc",
     "portalBrowser": true,
+    "portalId": "testPortal",
     "query": {
       "hasGranulesOrCwic": null,
       "project": "testProject"
@@ -90,14 +91,68 @@
     "ui": {
       "showNonEosdisCheckbox": false,
       "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal10": {
+    "moreInfoUrl": "https://test10.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal10",
+    "query": {
+      "hasGranulesOrCwic": null
     },
-    "portalId": "testPortal"
+    "title": {
+      "primary": "testPortal10",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal11": {
+    "moreInfoUrl": "https://test11.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal11",
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "testPortal11",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal12": {
+    "moreInfoUrl": "https://test12.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal12",
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "testPortal12",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
   },
   "testPortal2": {
     "moreInfoUrl": "https://test.org",
     "pageTitle": "TEST",
     "parentConfig": "edsc",
     "portalBrowser": true,
+    "portalId": "testPortal2",
     "query": {
       "hasGranulesOrCwic": null
     },
@@ -108,7 +163,132 @@
     "ui": {
       "showNonEosdisCheckbox": false,
       "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal3": {
+    "moreInfoUrl": "https://test3.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal3",
+    "query": {
+      "hasGranulesOrCwic": null
     },
-    "portalId": "testPortal2"
+    "title": {
+      "primary": "testPortal3",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal4": {
+    "moreInfoUrl": "https://test4.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal4",
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "testPortal4",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal5": {
+    "moreInfoUrl": "https://test5.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal5",
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "testPortal5",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal6": {
+    "moreInfoUrl": "https://test6.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal6",
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "testPortal6",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal7": {
+    "moreInfoUrl": "https://test7.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal7",
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "testPortal7",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal8": {
+    "moreInfoUrl": "https://test8.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal8",
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "testPortal8",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
+  },
+  "testPortal9": {
+    "moreInfoUrl": "https://test9.gov",
+    "pageTitle": "TEST",
+    "parentConfig": "edsc",
+    "portalBrowser": true,
+    "portalId": "testPortal9",
+    "query": {
+      "hasGranulesOrCwic": null
+    },
+    "title": {
+      "primary": "testPortal9",
+      "secondary": "test secondary title"
+    },
+    "ui": {
+      "showNonEosdisCheckbox": false,
+      "showOnlyGranulesCheckbox": false
+    }
   }
 }

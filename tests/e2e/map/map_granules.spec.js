@@ -36,9 +36,9 @@ import granuleCrossingGranulesHeaders from './__mocks__/cmr_granules/granule_cro
 import granuleGraphQlBody from './__mocks__/cmr_granules/granule_graphql.body.json'
 
 const screenshotClip = {
-  x: 940,
+  x: 950,
   y: 90,
-  width: 415,
+  width: 405,
   height: 640
 }
 
@@ -114,7 +114,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
-        await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&lat=-6.34&long=44.58&zoom=6`)
+        await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&polygon[0]=42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647&tl=1622520000!3!!&lat=-5.067707&long=44.91944336437247&zoom=5.714045446675903`)
 
         // Wait for the map to load
         await initialMapPromise
@@ -147,7 +147,6 @@ test.describe('Map: Granule interactions', () => {
             })
           })
 
-          const focusedPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
           await page.locator('.map').click({
             force: true,
             position: {
@@ -155,14 +154,9 @@ test.describe('Map: Granule interactions', () => {
               y: 350
             }
           })
-
-          await focusedPromise
-
-          // The is a 250ms duration for fitting the granule to the view area
-          await page.waitForTimeout(250)
         })
 
-        test('shows the granule and a label on the map and updates the url', async ({ page }) => {
+        test('shows the granule and a label on the map and updates the url @screenshot', async ({ page }) => {
           await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
 
           // Updates the URL with the selected granule
@@ -185,7 +179,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         test.describe('when panning the map', () => {
-          test('does not remove the focused granule', async ({ page }) => {
+          test('does not remove the focused granule @screenshot', async ({ page }) => {
             // Drag the map
             await page.mouse.move(1000, 500)
             await page.mouse.down()
@@ -207,7 +201,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         test.describe('when zooming the map', () => {
-          test('does not remove the focused granule', async ({ page }) => {
+          test('does not remove the focused granule @screenshot', async ({ page }) => {
             const zoomPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
 
             // Zoom the map
@@ -216,7 +210,7 @@ test.describe('Map: Granule interactions', () => {
             await expect(page.locator(temporalLabelClass)).toHaveText('2021-05-31 15:30:522021-05-31 15:31:22')
 
             // Wait for the map animation to complete
-            await page.waitForURL(/zoom=7/)
+            await page.waitForURL(/zoom=6/)
             await zoomPromise
 
             await expect(page).toHaveScreenshot('focused-granule-zoomed.png', {
@@ -328,7 +322,7 @@ test.describe('Map: Granule interactions', () => {
       await initialMapPromise
     })
 
-    test('displays the color map on the page', async ({ page }) => {
+    test('displays the color map on the page @screenshot', async ({ page }) => {
       await page.getByTestId('legend').scrollIntoViewIfNeeded()
       await expect(page).toHaveScreenshot('colormap-screenshot.png', {
         clip: colormapScreenshotClip
@@ -342,7 +336,7 @@ test.describe('Map: Granule interactions', () => {
       test('displays color map data to the user', async ({ page }) => {
         await page.getByTestId('legend').hover({
           position: {
-            x: 113,
+            x: 108,
             y: 5
           }
         })
@@ -364,7 +358,7 @@ test.describe('Map: Granule interactions', () => {
       })
 
       test.describe('when visiting another collection with a colormap', () => {
-        test('displays a new colormap', async ({ page }) => {
+        test('displays a new colormap @screenshot', async ({ page }) => {
           await page.getByTestId('collection-result-item_C1243477369-GES_DISC').click()
           await expect(page.getByTestId('timeline')).toBeInViewport()
 
@@ -465,7 +459,7 @@ test.describe('Map: Granule interactions', () => {
         })
       })
 
-      test('correctly draws the granule outline', async ({ page }) => {
+      test('correctly draws the granule outline @screenshot', async ({ page }) => {
         // This takes a very narrow screenshot of one portion of the granule where it cross the antimeridian.
         // Before fixing a bug in the code (EDSC-3903), a horizontal line would be drawn through this
         // screenshot instead of correctly drawing the granule outline.
@@ -541,7 +535,7 @@ test.describe('Map: Granule interactions', () => {
         await initialMapPromise
       })
 
-      test('does not draw the lower granule\'s imagery through the transparent pieces of the top granule', async ({ page }) => {
+      test('does not draw the lower granule\'s imagery through the transparent pieces of the top granule @screenshot', async ({ page }) => {
         await expect(page).toHaveScreenshot('gibs-transparent.png', {
           clip: screenshotClip
         })
@@ -549,14 +543,14 @@ test.describe('Map: Granule interactions', () => {
 
       test.describe('when focusing on the lower granule', () => {
         test.beforeEach(async ({ page }) => {
-          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/1/)
+          const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
 
           await page.getByText('TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc').click()
 
           await tilesPromise
         })
 
-        test('draws the imagery of the focused granule above the previous top granule', async ({ page }) => {
+        test('draws the imagery of the focused granule above the previous top granule @screenshot', async ({ page }) => {
           await expect(page.locator(temporalLabelClass)).toHaveText('2025-03-17 18:17:102025-03-17 19:16:51')
 
           await expect(page).toHaveScreenshot('gibs-focused.png', {

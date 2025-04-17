@@ -32,7 +32,7 @@ export const ExternalLink = ({
         <EDSCIcon
           className="external-link__icon"
           icon={ArrowLineDiagonal}
-          size="0.875em"
+          size="14"
         />
       </span>
     )
@@ -41,12 +41,18 @@ export const ExternalLink = ({
   return (
     <span className={wrapperClasses}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <a className="link link--external" target="_blank" rel="noopener noreferrer" {...rest}>
+      <a
+        className="link link--external"
+        target="_blank"
+        rel="noopener noreferrer"
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...rest}
+      >
         {children}
         <EDSCIcon
           className="external-link__icon"
           icon={ArrowLineDiagonal}
-          size="0.875em"
+          size="14"
         />
       </a>
     </span>

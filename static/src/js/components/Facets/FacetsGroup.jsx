@@ -5,6 +5,7 @@ import {
   ArrowChevronUp
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
+import classNames from 'classnames'
 import { kebabCase } from 'lodash-es'
 
 import FacetsList from './FacetsList'
@@ -17,6 +18,7 @@ class FacetsGroup extends Component {
     super(props)
 
     const { facet } = props
+
     const { options = {} } = facet
 
     this.state = {
@@ -66,8 +68,15 @@ class FacetsGroup extends Component {
       buttonTitleText += ' (0 Filters Available)'
     }
 
+    const facetsGroupClassNames = classNames([
+      'facets-group',
+      {
+        'facets-group--is-open': isOpen
+      }
+    ])
+
     return (
-      <li className="facets-group" key={title} data-testid={`facet_group-${kebabCase(title)}`}>
+      <li className={facetsGroupClassNames} key={title} data-testid={`facet_group-${kebabCase(title)}`}>
         <h3 className="facets-group__heading">
           <div className="d-grid gap-2">
             <button

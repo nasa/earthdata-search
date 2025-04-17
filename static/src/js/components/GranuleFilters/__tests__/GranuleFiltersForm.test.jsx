@@ -481,7 +481,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const isRecurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+          const isRecurringCheckbox = screen.getByRole('checkbox', { name: 'Use a recurring date range' })
           expect(isRecurringCheckbox.checked).toBe(false)
 
           await user.click(isRecurringCheckbox)
@@ -518,7 +518,7 @@ describe('GranuleFiltersForm component', () => {
             }
           })
 
-          const isRecurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+          const isRecurringCheckbox = screen.getByRole('checkbox', { name: 'Use a recurring date range' })
           expect(isRecurringCheckbox.checked).toBe(false)
 
           await user.click(isRecurringCheckbox)
@@ -1567,7 +1567,7 @@ describe('GranuleFiltersForm component', () => {
         }
       })
 
-      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Use a recurring date range' })
       await user.click(recurringCheckbox)
 
       // Verify isRecurring was set
@@ -1602,7 +1602,7 @@ describe('GranuleFiltersForm component', () => {
         }
       })
 
-      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Recurring?' })
+      const recurringCheckbox = screen.getByRole('checkbox', { name: 'Use a recurring date range' })
       await user.click(recurringCheckbox)
 
       // Verify start date was NOT adjusted since years are different

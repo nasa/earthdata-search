@@ -331,28 +331,6 @@ const TourSteps = ({
       styles: commonStyles
     },
     {
-      target: '.sidebar-browse-portals',
-      content: (
-        <div className="search-tour__content-wrapper">
-          <StepCounter currentStep={stepIndex} totalSteps={TOTAL_STEPS} />
-          <p className="search-tour__content">
-            Choose a portal to refine search results to a particular area of study,
-            project, or organization.
-          </p>
-          <TourButtons
-            stepIndex={stepIndex}
-            setStepIndex={setStepIndex}
-            isChecked={isChecked}
-            handleCheckboxChange={handleCheckboxChange}
-          />
-        </div>
-      ),
-      placement: 'right',
-      hideFooter: true,
-      disableScrolling: true,
-      styles: commonStyles
-    },
-    {
       target: '.sidebar-section-body',
       content: (
         <div className="search-tour__content-wrapper">
@@ -460,6 +438,7 @@ const TourSteps = ({
       styles: commonStyles
     },
     {
+      id: 'map',
       target: '.search-tour__target-overlay',
       content: (
         <div className="search-tour__content-wrapper">
@@ -663,7 +642,7 @@ const TourSteps = ({
                   <div className="search-tour__webinar-thumbnail-icon-bg">
                     <EDSCIcon
                       className="search-tour__webinar-thumbnail-icon"
-                      size="18px"
+                      size="18"
                       icon={FaPlay}
                       aria-label="Play Webinar Video"
                     />

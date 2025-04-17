@@ -1,11 +1,11 @@
-import * as cdk from 'aws-cdk-lib';
+import * as cdk from 'aws-cdk-lib'
 import * as events from 'aws-cdk-lib/aws-events'
 import * as eventsTargets from 'aws-cdk-lib/aws-events-targets'
-import * as stepfunctions from 'aws-cdk-lib/aws-stepfunctions';
+import * as stepfunctions from 'aws-cdk-lib/aws-stepfunctions'
 
-import { Construct } from 'constructs';
+import { Construct } from 'constructs'
 
-import { application } from '@edsc/cdk-utils';
+import { application } from '@edsc/cdk-utils'
 
 export interface StepFunctionsProps {
   /** Default Lambda config options */
@@ -39,7 +39,7 @@ export interface StepFunctionsProps {
 
 export class StepFunctions extends Construct {
   constructor(scope: cdk.Stack, id: string, props: StepFunctionsProps) {
-    super(scope, id);
+    super(scope, id)
 
     const {
       defaultLambdaConfig,
@@ -47,7 +47,7 @@ export class StepFunctions extends Construct {
       orderStatusRefreshTime,
       role,
       stageName,
-      queues,
+      queues
     } = props
 
     const functionNamePrefix = scope.stackName
@@ -55,46 +55,46 @@ export class StepFunctions extends Construct {
     /**
      * Fetch Catalog Rest Order
      */
-    const fetchCatalogRestOrderNestedStack = new cdk.NestedStack(scope, 'FetchCatalogRestOrderNestedStack');
+    const fetchCatalogRestOrderNestedStack = new cdk.NestedStack(scope, 'FetchCatalogRestOrderNestedStack')
     const { lambdaFunction: fetchCatalogRestOrderLambda } = new application.NodeJsFunction(fetchCatalogRestOrderNestedStack, 'FetchCatalogRestOrderLambda', {
       ...defaultLambdaConfig,
       entry: '../../serverless/src/fetchCatalogRestOrder/handler.js',
       functionName: 'fetchCatalogRestOrder',
       functionNamePrefix
-    });
+    })
 
     /**
      * Fetch CMR Ordering Order
      */
-    const fetchCmrOrderingOrderNestedStack = new cdk.NestedStack(scope, 'FetchCmrOrderingOrderNestedStack');
+    const fetchCmrOrderingOrderNestedStack = new cdk.NestedStack(scope, 'FetchCmrOrderingOrderNestedStack')
     const { lambdaFunction: fetchCmrOrderingOrderLambda } = new application.NodeJsFunction(fetchCmrOrderingOrderNestedStack, 'FetchCmrOrderingOrderLambda', {
       ...defaultLambdaConfig,
       entry: '../../serverless/src/fetchCmrOrderingOrder/handler.js',
       functionName: 'fetchCmrOrderingOrder',
       functionNamePrefix
-    });
+    })
 
     /**
      * Fetch Harmony Order
      */
-    const fetchHarmonyOrderNestedStack = new cdk.NestedStack(scope, 'FetchHarmonyOrderNestedStack');
+    const fetchHarmonyOrderNestedStack = new cdk.NestedStack(scope, 'FetchHarmonyOrderNestedStack')
     const { lambdaFunction: fetchHarmonyOrderLambda } = new application.NodeJsFunction(fetchHarmonyOrderNestedStack, 'FetchHarmonyOrderLambda', {
       ...defaultLambdaConfig,
       entry: '../../serverless/src/fetchHarmonyOrder/handler.js',
       functionName: 'fetchHarmonyOrder',
       functionNamePrefix
-    });
+    })
 
     /**
      * Fetch SWODLR Order
      */
-    const fetchSwodlrOrderNestedStack = new cdk.NestedStack(scope, 'FetchSwodlrOrderNestedStack');
+    const fetchSwodlrOrderNestedStack = new cdk.NestedStack(scope, 'FetchSwodlrOrderNestedStack')
     const { lambdaFunction: fetchSwodlrOrderLambda } = new application.NodeJsFunction(fetchSwodlrOrderNestedStack, 'FetchSwodlrOrderLambda', {
       ...defaultLambdaConfig,
       entry: '../../serverless/src/fetchSwodlrOrder/handler.js',
       functionName: 'fetchSwodlrOrder',
       functionNamePrefix
-    });
+    })
 
     /**
      * Update Order Status
@@ -183,15 +183,15 @@ export class StepFunctions extends Construct {
           OrderFailed: {
             Type: 'Fail'
           }
-        },
-      })),
-    });
-
+        }
+      }))
+    })
 
     /**
      * Submit Catalog Rest Order
      */
-    const submitCatalogRestOrderNestedStack = new cdk.NestedStack(scope, 'SubmitCatalogRestOrderNestedStack');
+    const submitCatalogRestOrderNestedStack = new cdk.NestedStack(scope, 'SubmitCatalogRestOrderNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(submitCatalogRestOrderNestedStack, 'SubmitCatalogRestOrderLambda', {
       ...defaultLambdaConfig,
       environment: {
@@ -203,15 +203,16 @@ export class StepFunctions extends Construct {
       functionNamePrefix,
       memorySize: 192,
       sqs: {
-        queue: queues.catalogRestOrderQueue,
+        queue: queues.catalogRestOrderQueue
       },
-      timeout: cdk.Duration.minutes(10),
-    });
+      timeout: cdk.Duration.minutes(10)
+    })
 
     /**
      * Submit CMR Ordering Order
      */
-    const submitCmrOrderingOrderNestedStack = new cdk.NestedStack(scope, 'SubmitCmrOrderingOrderNestedStack');
+    const submitCmrOrderingOrderNestedStack = new cdk.NestedStack(scope, 'SubmitCmrOrderingOrderNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(submitCmrOrderingOrderNestedStack, 'SubmitCmrOrderingOrderLambda', {
       ...defaultLambdaConfig,
       environment: {
@@ -222,15 +223,16 @@ export class StepFunctions extends Construct {
       functionName: 'submitCmrOrderingOrder',
       functionNamePrefix,
       sqs: {
-        queue: queues.cmrOrderingOrderQueue,
+        queue: queues.cmrOrderingOrderQueue
       },
-      timeout: cdk.Duration.minutes(10),
-    });
+      timeout: cdk.Duration.minutes(10)
+    })
 
     /**
      * Submit Harmony Order
      */
-    const submitHarmonyOrderNestedStack = new cdk.NestedStack(scope, 'SubmitHarmonyOrderNestedStack');
+    const submitHarmonyOrderNestedStack = new cdk.NestedStack(scope, 'SubmitHarmonyOrderNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(submitHarmonyOrderNestedStack, 'SubmitHarmonyOrderLambda', {
       ...defaultLambdaConfig,
       environment: {
@@ -242,15 +244,16 @@ export class StepFunctions extends Construct {
       functionNamePrefix,
       memorySize: 256,
       sqs: {
-        queue: queues.harmonyOrderQueue,
+        queue: queues.harmonyOrderQueue
       },
-      timeout: cdk.Duration.minutes(10),
-    });
+      timeout: cdk.Duration.minutes(10)
+    })
 
     /**
      * Submit SWODLR Order
      */
-    const submitSwodlrOrderNestedStack = new cdk.NestedStack(scope, 'SubmitSwodlrOrderNestedStack');
+    const submitSwodlrOrderNestedStack = new cdk.NestedStack(scope, 'SubmitSwodlrOrderNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(submitSwodlrOrderNestedStack, 'SubmitSwodlrOrderLambda', {
       ...defaultLambdaConfig,
       environment: {
@@ -261,24 +264,23 @@ export class StepFunctions extends Construct {
       functionName: 'submitSwodlrOrder',
       functionNamePrefix,
       sqs: {
-        queue: queues.swodlrOrderQueue,
+        queue: queues.swodlrOrderQueue
       },
-      timeout: cdk.Duration.minutes(10),
-    });
-
+      timeout: cdk.Duration.minutes(10)
+    })
 
     /**
      * Generate Collection Capability Tags
      */
-    const generateCollectionCapabilityTagsNestedStack = new cdk.NestedStack(scope, 'GenerateCollectionCapabilityTagsNestedStack');
+    const generateCollectionCapabilityTagsNestedStack = new cdk.NestedStack(scope, 'GenerateCollectionCapabilityTagsNestedStack')
     const { lambdaFunction: generateCollectionCapabilityTagsLambda } = new application.NodeJsFunction(generateCollectionCapabilityTagsNestedStack, 'GenerateCollectionCapabilityTagsLambda', {
       ...defaultLambdaConfig,
       description: 'Iterate over all CMR collections adding tags specific to EDSC',
       entry: '../../serverless/src/generateCollectionCapabilityTags/handler.js',
       functionName: 'generateCollectionCapabilityTags',
       functionNamePrefix,
-      timeout: cdk.Duration.minutes(15),
-    });
+      timeout: cdk.Duration.minutes(15)
+    })
 
     /**
      * Generate Collection Capability Tags
@@ -308,10 +310,11 @@ export class StepFunctions extends Construct {
             Type: 'Succeed'
           }
         }
-      })),
-    });
+      }))
+    })
 
     // Schedule the GenerateCollectionCapabilityTags state machine
+    // eslint-disable-next-line no-new
     new events.Rule(generateCollectionCapabilityTagsNestedStack, 'GenerateCollectionCapabilityTagsSchedule', {
       schedule: events.Schedule.cron({
         hour: '12,18',
@@ -323,6 +326,6 @@ export class StepFunctions extends Construct {
       targets: [
         new eventsTargets.SfnStateMachine(generateCollectionCapabilityStateMachine)
       ]
-    });
+    })
   }
 }

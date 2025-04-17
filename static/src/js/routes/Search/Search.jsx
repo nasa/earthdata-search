@@ -1,7 +1,9 @@
 import React, {
   useState,
   lazy,
-  Suspense
+  Suspense,
+  useEffect,
+  useContext
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -11,15 +13,8 @@ import {
   withRouter
 } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
-import {
-  FaSitemap,
-  FaQuestionCircle,
-  FaFilter,
-  FaMap
-} from 'react-icons/fa'
+import { FaFilter, FaMap } from 'react-icons/fa'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
@@ -40,12 +35,11 @@ import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
-import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
-import Button from '../../components/Button/Button'
 import Spinner from '../../components/Spinner/Spinner'
+import TourContext from '../../contexts/TourContext'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
@@ -78,11 +72,22 @@ export const Search = ({
   collectionQuery,
   match,
   onChangeQuery,
-  onTogglePortalBrowserModal,
   onUpdateAdvancedSearch
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
+
+  const { setSearchLoaded } = useContext(TourContext)
+
+  useEffect(() => {
+    setSearchLoaded(true)
+
+    document.querySelector('.root__app').classList.add('root__app--fixed-footer')
+
+    return () => {
+      document.querySelector('.root__app').classList.remove('root__app--fixed-footer')
+    }
+  }, [])
 
   const {
     hasGranulesOrCwic = false,
@@ -171,31 +176,6 @@ export const Search = ({
               {granuleFiltersSidebar}
             </Route>
             <Route path={path}>
-              <SidebarSection>
-                <div className="sidebar-browse-portals">
-                  <Button
-                    variant="full"
-                    bootstrapVariant="light"
-                    icon={FaSitemap}
-                    onClick={() => onTogglePortalBrowserModal(true)}
-                  >
-                    Browse Portals
-                    <OverlayTrigger
-                      placement="top"
-                      overlay={
-                        (
-                          <Tooltip style={{ width: '20rem' }}>
-                            {/* eslint-disable-next-line max-len */}
-                            Enable a portal in order to refine the data available within Earthdata Search
-                          </Tooltip>
-                        )
-                      }
-                    >
-                      <EDSCIcon icon={FaQuestionCircle} size="0.625rem" variant="more-info" />
-                    </OverlayTrigger>
-                  </Button>
-                </div>
-              </SidebarSection>
               <div className="sidebar-section-body">
                 <SidebarSection
                   sectionTitle="Filter Collections"
@@ -271,7 +251,6 @@ Search.propTypes = {
     path: PropTypes.string
   }).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onTogglePortalBrowserModal: PropTypes.func.isRequired,
   onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 

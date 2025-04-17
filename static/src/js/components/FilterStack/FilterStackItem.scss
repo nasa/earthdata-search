@@ -13,10 +13,6 @@
     padding: 0.5rem;
   }
 
-  &:last-child {
-    border-bottom: transparent;
-  }
-
   &__header {
     display: flex;
     flex-grow: 0;
@@ -30,7 +26,7 @@
     align-items: center;
     flex-shrink: 0;
     flex-grow: 1;
-    color: utils.$color__carbon--50;
+    color: utils.$color__carbon-black;
   }
 
   &__header-secondary {
@@ -55,17 +51,18 @@
     display: inline-block;
     margin-bottom: 0;
     margin-left: 0.25rem;
-    font-size: 0.875rem;
-    color: utils.$color__carbon--70;
+    font-size: 0.825rem;
+    font-weight: 700;
+    color: utils.$color__carbon-black;
   }
 
   &__secondary-title {
     margin-left: 0.5rem;
     padding: 0.0125rem .5rem;
-    border-radius: 1rem;
-    background-color: utils.$color__nasa-blue;
-    color: utils.$color__spacesuit-white;
+    border: 1px solid utils.$color__carbon--30;
+    color: utils.$color__carbon--60;
     font-size: 0.75rem;
+    font-weight: 400;
   }
 
   &__content {
@@ -80,7 +77,6 @@
 
   &__body-primary {
     width: 100%;
-    margin-right: 0.25rem;
   }
 
   &__body-contents {
@@ -93,23 +89,28 @@
   &__action-button {
     display: flex;
     align-items: center;
-    color: utils.$color__nasa-red;
+    border: 1px solid utils.$color__nasa-blue;
+    color: utils.$color__carbon-black;
+    padding: 0.325rem;
+    border-radius: 50%;
+    aspect-ratio: 1;
 
     &:hover {
-      color: darken(utils.$color__nasa-red, 10);
+      border: 1px solid utils.$color__nasa-blue--shade;
+     color: utils.$color__carbon-black;
     }
   }
 
   &__hint {
     margin-top: calc(bootstrap.$spacer / 4);
     margin-left: calc(bootstrap.$spacer / 4);
-    font-size: 0.8rem;
-    color: utils.$color__carbon--40;
+    font-size: 0.825rem;
+    color: utils.$color__carbon--60;
   }
 
   &__error {
     margin-top: calc(bootstrap.$spacer / 2);
-    font-size: 0.8rem;
+    font-size: 0.825rem;
     color: utils.$color__nasa-red;
     font-weight: bold;
   }

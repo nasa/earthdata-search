@@ -166,7 +166,8 @@ class SearchPanels extends PureComponent {
       onMetricsCollectionSortChange,
       onToggleAboutCSDAModal,
       onToggleAboutCwicModal,
-      preferences
+      preferences,
+      startDrawing
     } = this.props
 
     const loggedIn = isLoggedIn(authToken)
@@ -518,7 +519,7 @@ class SearchPanels extends PureComponent {
               <EDSCIcon
                 className="collection-results-item__badge-icon collection-results-item__badge-icon--csda d-inline-block me-1"
                 icon={FaLock}
-                size="0.55rem"
+                size="8"
               />
               CSDA
             </Badge>
@@ -740,6 +741,9 @@ class SearchPanels extends PureComponent {
 
     const { edscHost } = this
 
+    // If start drawing is set, we want to hide the panel so the user has more space to use the map
+    const showPanel = !startDrawing
+
     return (
       <Switch key="panel-children">
         <Route
@@ -826,7 +830,7 @@ class SearchPanels extends PureComponent {
                   }
                   <Panels
                     className="search-panels"
-                    show
+                    show={showPanel}
                     activePanel={activePanel}
                     draggable
                     panelState={panelState}
@@ -933,7 +937,11 @@ SearchPanels.propTypes = {
     collectionListView: PropTypes.node,
     granuleListView: PropTypes.node,
     panelState: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  startDrawing: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool
+  ]).isRequired
 }
 
 export default SearchPanels

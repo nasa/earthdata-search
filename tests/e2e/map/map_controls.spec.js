@@ -46,7 +46,7 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -74,7 +74,7 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
         await initialMapPromise
 
@@ -88,7 +88,7 @@ test.describe('Map: Control interactions', () => {
 
   test.describe('When switching projections', () => {
     test.describe('When switching to the North Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -97,7 +97,7 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
         // Wait for the map to load
         await initialMapPromise
@@ -116,7 +116,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When loading the map with the North Polar Stereographic projection url parameter', () => {
-      test('displays the map with the correct projection', async ({ page }) => {
+      test('displays the map with the correct projection @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -137,7 +137,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When switching to the Geographic projection', () => {
-      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -166,7 +166,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When loading the page with the Geographic projection url parameter', () => {
-      test('displays the map with the correct projection', async ({ page }) => {
+      test('displays the map with the correct projection @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -180,6 +180,9 @@ test.describe('Map: Control interactions', () => {
         // Wait for the map to load
         await initialMapPromise
 
+        // Ensure the image has loaded
+        await page.waitForTimeout(500)
+
         await expect(page).toHaveScreenshot('geographic.png', {
           clip: screenshotClip
         })
@@ -187,7 +190,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When switching to the South Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -196,9 +199,8 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
-        // Wait for the map to load
         await initialMapPromise
 
         // Change the projection
@@ -215,7 +217,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When loading the map with the South Polar Stereographic projection url parameter', () => {
-      test('displays the map with the correct projection', async ({ page }) => {
+      test('displays the map with the correct projection @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -229,6 +231,9 @@ test.describe('Map: Control interactions', () => {
         // Wait for the map to load
         await initialMapPromise
 
+        // Ensure the image has loaded
+        await page.waitForTimeout(500)
+
         await expect(page).toHaveScreenshot('south_polar_stereographic.png', {
           clip: screenshotClip
         })
@@ -236,7 +241,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When switching from the North Polar Stereographic projection to the South Polar Stereographic projection', () => {
-      test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+      test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -245,9 +250,8 @@ test.describe('Map: Control interactions', () => {
 
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
-        // Wait for the map to load
         await initialMapPromise
 
         // Change the projection to North Polar
@@ -270,7 +274,7 @@ test.describe('Map: Control interactions', () => {
   })
 
   test.describe('When rotating the map', () => {
-    test('updates the URL with the new map parameter and updates the map', async ({ page }) => {
+    test('updates the URL with the new map parameter and updates the map @screenshot', async ({ page }) => {
       await interceptUnauthenticatedCollections({
         page,
         body: commonBody,
@@ -279,9 +283,8 @@ test.describe('Map: Control interactions', () => {
 
       const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-      await page.goto('/')
+      await page.goto('/search')
 
-      // Wait for the map to load
       await initialMapPromise
 
       // Change the projection
@@ -305,7 +308,7 @@ test.describe('Map: Control interactions', () => {
     })
 
     test.describe('When loading the map with a rotation url parameter', () => {
-      test('displays the map with the correct rotation', async ({ page }) => {
+      test('displays the map with the correct rotation @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({
           page,
           body: commonBody,
@@ -375,7 +378,7 @@ test.describe('Map: Control interactions', () => {
 
         const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
 
-        await page.goto('/')
+        await page.goto('/search')
 
         await worldImageryPromise
 
@@ -413,8 +416,11 @@ test.describe('Map: Control interactions', () => {
 
         await worldImageryPromise
 
-        // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+        // Change the base layer
+        await page.getByRole('button', {
+          name: 'Layer Options',
+          exact: true
+        }).hover({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control__panel--visible')

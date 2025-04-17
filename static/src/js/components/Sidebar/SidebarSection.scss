@@ -6,9 +6,7 @@
   min-height: 0;
   color: utils.$color__carbon-black;
   background-color: utils.$color__spacesuit-white;
-  border-radius: 0.25rem;
-  border: 1px solid darken(utils.$color__carbon--20, 5);
-  box-shadow: 0 0.25rem 0.75rem 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid utils.$color__carbon--20;
 
   &--padded {
     padding: 0.5*bootstrap.$spacer;
@@ -37,7 +35,7 @@
   }
 
   &__header-primary {
-    padding:0.5rem;
+    padding:0.75rem;
     flex-grow: 1;
   }
 
@@ -51,6 +49,9 @@
     margin: 0;
     font-size: 0.825rem;
     font-weight: 700;
+    color: utils.$color__spacesuit-white;
+    line-height: 1;
+    letter-spacing: 0;
   }
 
   &__title-icon {
@@ -124,8 +125,9 @@
     background-color: utils.$color__spacesuit-white;
 
     &:hover,
+    &:focus,
     &:active {
-      background-color: utils.$color__carbon--10;
+      background-color: utils.$color__carbon--5;
     }
   }
 }

@@ -1,14 +1,14 @@
-import * as apigateway from 'aws-cdk-lib/aws-apigateway';
-import * as cdk from 'aws-cdk-lib';
-import * as events from 'aws-cdk-lib/aws-events';
-import * as eventsTargets from "aws-cdk-lib/aws-events-targets";
+import * as apigateway from 'aws-cdk-lib/aws-apigateway'
+import * as cdk from 'aws-cdk-lib'
+import * as events from 'aws-cdk-lib/aws-events'
+import * as eventsTargets from 'aws-cdk-lib/aws-events-targets'
 import * as lambda from 'aws-cdk-lib/aws-lambda'
-import * as s3 from 'aws-cdk-lib/aws-s3';
-import * as sqs from 'aws-cdk-lib/aws-sqs';
-import { Construct } from 'constructs';
+import * as s3 from 'aws-cdk-lib/aws-s3'
+import * as sqs from 'aws-cdk-lib/aws-sqs'
+import { Construct } from 'constructs'
 
-import { application } from '@edsc/cdk-utils';
-import { SharedApiGatewayResources } from './earthdata-search-shared-api-gateway-resources';
+import { application } from '@edsc/cdk-utils'
+import { SharedApiGatewayResources } from './earthdata-search-shared-api-gateway-resources'
 
 export interface FunctionsProps {
   /** The API Nested Stack scope */
@@ -63,7 +63,7 @@ export interface FunctionsProps {
 
 export class Functions extends Construct {
   constructor(scope: cdk.Stack, id: string, props: FunctionsProps) {
-    super(scope, id);
+    super(scope, id)
 
     const {
       apiGatewayDeployment,
@@ -111,7 +111,8 @@ export class Functions extends Construct {
     /**
      * Admin Get Preferences Metrics
      */
-    const adminGetPreferencesMetricsNestedStack = new cdk.NestedStack(scope, 'AdminGetPreferencesMetricsNestedStack');
+    const adminGetPreferencesMetricsNestedStack = new cdk.NestedStack(scope, 'AdminGetPreferencesMetricsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(adminGetPreferencesMetricsNestedStack, 'AdminGetPreferencesMetricsLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -126,13 +127,14 @@ export class Functions extends Construct {
       entry: '../../serverless/src/adminGetPreferencesMetrics/handler.js',
       functionName: 'adminGetPreferencesMetrics',
       functionNamePrefix,
-      memorySize: 1024,
-    });
+      memorySize: 1024
+    })
 
     /**
      * Admin Get Projects
      */
-    const adminGetProjectsNestedStack = new cdk.NestedStack(scope, 'AdminGetProjectsNestedStack');
+    const adminGetProjectsNestedStack = new cdk.NestedStack(scope, 'AdminGetProjectsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(adminGetProjectsNestedStack, 'AdminGetProjectsLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -146,13 +148,14 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/adminGetProjects/handler.js',
       functionName: 'adminGetProjects',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Admin Get Project
      */
-    const adminGetProjectNestedStack = new cdk.NestedStack(scope, 'AdminGetProjectNestedStack');
+    const adminGetProjectNestedStack = new cdk.NestedStack(scope, 'AdminGetProjectNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(adminGetProjectNestedStack, 'AdminGetProjectLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -172,7 +175,8 @@ export class Functions extends Construct {
     /**
      * Admin Get Retrievals
      */
-    const adminGetRetrievalsNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalsNestedStack');
+    const adminGetRetrievalsNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(adminGetRetrievalsNestedStack, 'AdminGetRetrievalsLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -186,13 +190,14 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/adminGetRetrievals/handler.js',
       functionName: 'adminGetRetrievals',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Admin Get Retrieval
      */
-    const adminGetRetrievalNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalNestedStack');
+    const adminGetRetrievalNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(adminGetRetrievalNestedStack, 'AdminGetRetrievalLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -206,13 +211,14 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/adminGetRetrieval/handler.js',
       functionName: 'adminGetRetrieval',
-      functionNamePrefix,
+      functionNamePrefix
     })
 
     /**
      * Admin Get Retrievals Metrics
      */
-    const adminGetRetrievalsMetricsNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalsMetricsNestedStack');
+    const adminGetRetrievalsMetricsNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalsMetricsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(adminGetRetrievalsMetricsNestedStack, 'AdminGetRetrievalsMetricsLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -226,13 +232,14 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/adminGetRetrievalsMetrics/handler.js',
       functionName: 'adminGetRetrievalsMetrics',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Admin Is Authorized
      */
-    const adminIsAuthorizedNestedStack = new cdk.NestedStack(scope, 'AdminIsAuthorizedNestedStack');
+    const adminIsAuthorizedNestedStack = new cdk.NestedStack(scope, 'AdminIsAuthorizedNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(adminIsAuthorizedNestedStack, 'AdminIsAuthorizedLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -246,30 +253,32 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/adminIsAuthorized/handler.js',
       functionName: 'adminIsAuthorized',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Alert Logger
      */
     const alertLoggerNestedStack = new cdk.NestedStack(scope, 'AlertLoggerNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(alertLoggerNestedStack, 'AlertLoggerLambda', {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
         methods: ['POST'],
-        path: 'alert_logger',
+        path: 'alert_logger'
       },
       entry: '../../serverless/src/alertLogger/handler.js',
       functionName: 'alertLogger',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Autocomplete
      */
     const autocompleteNestedStack = new cdk.NestedStack(scope, 'AutocompleteNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(autocompleteNestedStack, 'AutocompleteLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -277,17 +286,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlOptionalAuthorizer,
         methods: ['POST'],
-        path: 'autocomplete',
+        path: 'autocomplete'
       },
       entry: '../../serverless/src/autocomplete/handler.js',
       functionName: 'autocomplete',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Cloudfront To Cloudwatch
      */
-    const cloudfrontToCloudwatchNestedStack = new cdk.NestedStack(scope, 'CloudfrontToCloudwatchNestedStack');
+    const cloudfrontToCloudwatchNestedStack = new cdk.NestedStack(scope, 'CloudfrontToCloudwatchNestedStack')
+    // eslint-disable-next-line no-new
     new application.CloudfrontToCloudwatchFunction(cloudfrontToCloudwatchNestedStack, 'CloudfrontToCloudwatchLambda', {
       cloudfrontBucketName,
       functionNamePrefix,
@@ -300,13 +310,14 @@ export class Functions extends Construct {
       ],
       stageName,
       securityGroups: defaultLambdaConfig.securityGroups,
-      vpc: defaultLambdaConfig.vpc,
-    });
+      vpc: defaultLambdaConfig.vpc
+    })
 
     /**
      * CMR Granule Search
      */
-    const cmrGranuleSearchNestedStack = new cdk.NestedStack(scope, 'CmrGranuleSearchNestedStack');
+    const cmrGranuleSearchNestedStack = new cdk.NestedStack(scope, 'CmrGranuleSearchNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(cmrGranuleSearchNestedStack, 'CmrGranuleSearchLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -315,18 +326,19 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['POST'],
-        path: 'granules',
+        path: 'granules'
       },
       entry: '../../serverless/src/cmrGranuleSearch/handler.js',
       functionName: 'cmrGranuleSearch',
       functionNamePrefix,
       memorySize: 256
-    });
+    })
 
     /**
      * Collection Search
      */
-    const collectionSearchNestedStack = new cdk.NestedStack(scope, 'CollectionSearchNestedStack');
+    const collectionSearchNestedStack = new cdk.NestedStack(scope, 'CollectionSearchNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(collectionSearchNestedStack, 'CollectionSearchLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -335,18 +347,19 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['POST'],
-        path: 'collections',
+        path: 'collections'
       },
       entry: '../../serverless/src/collectionSearch/handler.js',
       functionName: 'collectionSearch',
       functionNamePrefix,
-      memorySize: 192,
-    });
+      memorySize: 192
+    })
 
     /**
      * Concept Metadata
      */
-    const conceptMetadataNestedStack = new cdk.NestedStack(scope, 'ConceptMetadataNestedStack');
+    const conceptMetadataNestedStack = new cdk.NestedStack(scope, 'ConceptMetadataNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(conceptMetadataNestedStack, 'ConceptMetadataLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -355,34 +368,36 @@ export class Functions extends Construct {
         methods: ['GET'],
         parentId: conceptsApiGatewayResource.ref,
         parentPath: 'concepts',
-        path: 'metadata',
+        path: 'metadata'
       },
       entry: '../../serverless/src/conceptMetadata/handler.js',
       functionName: 'conceptMetadata',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Decode ID
      */
-    const decodeIdNestedStack = new cdk.NestedStack(scope, 'DecodeIdNestedStack');
+    const decodeIdNestedStack = new cdk.NestedStack(scope, 'DecodeIdNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(decodeIdNestedStack, 'DecodeIdLambda', {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
         methods: ['GET'],
-        path: 'decode_id',
+        path: 'decode_id'
       },
       entry: '../../serverless/src/decodeId/handler.js',
       functionName: 'decodeId',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Get Projects
      */
-    const getProjectsNestedStack = new cdk.NestedStack(scope, 'GetProjectsNestedStack');
+    const getProjectsNestedStack = new cdk.NestedStack(scope, 'GetProjectsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getProjectsNestedStack, 'GetProjectsLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -391,17 +406,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['GET'],
-        path: 'projects',
+        path: 'projects'
       },
       entry: '../../serverless/src/getProjects/handler.js',
       functionName: 'getProjects',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Delete Project
      */
-    const deleteProjectNestedStack = new cdk.NestedStack(scope, 'DeleteProjectNestedStack');
+    const deleteProjectNestedStack = new cdk.NestedStack(scope, 'DeleteProjectNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(deleteProjectNestedStack, 'DeleteProjectLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -411,17 +427,18 @@ export class Functions extends Construct {
         authorizer: authorizers.edlAuthorizer,
         methods: ['DELETE'],
         parentPath: 'projects',
-        path: '{id}',
+        path: '{id}'
       },
       entry: '../../serverless/src/deleteProject/handler.js',
       functionName: 'deleteProject',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Get Retrievals
      */
-    const getRetrievalsNestedStack = new cdk.NestedStack(scope, 'GetRetrievalsNestedStack');
+    const getRetrievalsNestedStack = new cdk.NestedStack(scope, 'GetRetrievalsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getRetrievalsNestedStack, 'GetRetrievalsLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -430,18 +447,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['GET'],
-        path: 'retrievals',
+        path: 'retrievals'
       },
       entry: '../../serverless/src/getRetrievals/handler.js',
       functionName: 'getRetrievals',
-      functionNamePrefix,
-    });
-
+      functionNamePrefix
+    })
 
     /**
      * Delete Retrieval
      */
-    const deleteRetrievalNestedStack = new cdk.NestedStack(scope, 'DeleteRetrievalNestedStack');
+    const deleteRetrievalNestedStack = new cdk.NestedStack(scope, 'DeleteRetrievalNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(deleteRetrievalNestedStack, 'DeleteRetrievalLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -451,85 +468,90 @@ export class Functions extends Construct {
         authorizer: authorizers.edlAuthorizer,
         methods: ['DELETE'],
         parentPath: 'retrievals',
-        path: '{id}',
+        path: '{id}'
       },
       entry: '../../serverless/src/deleteRetrieval/handler.js',
       functionName: 'deleteRetrieval',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * EDD Logger
      */
-    const eddLoggerNestedStack = new cdk.NestedStack(scope, 'EddLoggerNestedStack');
+    const eddLoggerNestedStack = new cdk.NestedStack(scope, 'EddLoggerNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(eddLoggerNestedStack, 'EddLoggerLambda', {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
         methods: ['POST'],
-        path: 'edd_logger',
+        path: 'edd_logger'
       },
       entry: '../../serverless/src/eddLogger/handler.js',
       functionName: 'eddLogger',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * EDL Callback
      */
-    const edlCallbackNestedStack = new cdk.NestedStack(scope, 'EdlCallbackNestedStack');
+    const edlCallbackNestedStack = new cdk.NestedStack(scope, 'EdlCallbackNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(edlCallbackNestedStack, 'EdlCallbackLambda', {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
         methods: ['GET'],
-        path: 'urs_callback',
+        path: 'urs_callback'
       },
       entry: '../../serverless/src/edlCallback/handler.js',
       functionName: 'edlCallback',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * EDL Login
      */
-    const edlLoginNestedStack = new cdk.NestedStack(scope, 'EdlLoginNestedStack');
+    const edlLoginNestedStack = new cdk.NestedStack(scope, 'EdlLoginNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(edlLoginNestedStack, 'EdlLoginLambda', {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
         methods: ['GET'],
-        path: 'login',
+        path: 'login'
       },
       entry: '../../serverless/src/edlLogin/handler.js',
       functionName: 'edlLogin',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Error Logger
      */
-    const errorLoggerNestedStack = new cdk.NestedStack(scope, 'ErrorLoggerNestedStack');
+    const errorLoggerNestedStack = new cdk.NestedStack(scope, 'ErrorLoggerNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(errorLoggerNestedStack, 'ErrorLoggerLambda', {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
         methods: ['POST'],
-        path: 'error_logger',
+        path: 'error_logger'
       },
       entry: '../../serverless/src/errorLogger/handler.js',
       functionName: 'errorLogger',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Export Search
      */
-    const exportSearchNestedStack = new cdk.NestedStack(scope, 'ExportSearchNestedStack');
+    const exportSearchNestedStack = new cdk.NestedStack(scope, 'ExportSearchNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(exportSearchNestedStack, 'ExportSearchLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -539,31 +561,33 @@ export class Functions extends Construct {
         methods: ['POST'],
         parentId: collectionsApiGatewayResource?.ref,
         parentPath: 'collections',
-        path: 'export',
+        path: 'export'
       },
       entry: '../../serverless/src/exportSearch/handler.js',
       functionName: 'exportSearch',
       functionNamePrefix,
-      memorySize: 192,
-    });
+      memorySize: 192
+    })
 
     /**
      * Fix Retrieval Collection Metadata
      */
-    const fixRetrievalCollectionMetadataNestedStack = new cdk.NestedStack(scope, 'FixRetrievalCollectionMetadataNestedStack');
+    const fixRetrievalCollectionMetadataNestedStack = new cdk.NestedStack(scope, 'FixRetrievalCollectionMetadataNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(fixRetrievalCollectionMetadataNestedStack, 'FixRetrievalCollectionMetadataLambda', {
       ...defaultLambdaConfig,
       description: 'Fixes retrieval collection metadata that was improperly written',
       entry: '../../serverless/src/fixRetrievalCollectionMetadata/handler.js',
       functionName: 'fixRetrievalCollectionMetadata',
       functionNamePrefix,
-      timeout: cdk.Duration.minutes(15),
-    });
+      timeout: cdk.Duration.minutes(15)
+    })
 
     /**
      * Generate Color Maps
      */
-    const generateColorMapsNestedStack = new cdk.NestedStack(scope, 'GenerateColorMapsNestedStack');
+    const generateColorMapsNestedStack = new cdk.NestedStack(scope, 'GenerateColorMapsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(generateColorMapsNestedStack, 'GenerateColorMapsLambda', {
       ...defaultLambdaConfig,
       description: 'Gather Color Map data from GIBS and store it in RDS',
@@ -581,7 +605,7 @@ export class Functions extends Construct {
           month: '*',
           weekDay: 'MON-FRI',
           year: '*'
-        }),
+        })
       }, {
         enabled: colormapJobEnabled,
         input: {
@@ -593,7 +617,7 @@ export class Functions extends Construct {
           month: '*',
           weekDay: 'MON-FRI',
           year: '*'
-        }),
+        })
       }, {
         enabled: colormapJobEnabled,
         input: {
@@ -605,7 +629,7 @@ export class Functions extends Construct {
           month: '*',
           weekDay: 'MON-FRI',
           year: '*'
-        }),
+        })
       }, {
         enabled: colormapJobEnabled,
         input: {
@@ -619,13 +643,14 @@ export class Functions extends Construct {
           year: '*'
         })
       }],
-      timeout: cdk.Duration.minutes(5),
-    });
+      timeout: cdk.Duration.minutes(5)
+    })
 
     /**
      * Generate GIBS Tags
      */
-    const generateGibsTagsNestedStack = new cdk.NestedStack(scope, 'GenerateGibsTagsNestedStack');
+    const generateGibsTagsNestedStack = new cdk.NestedStack(scope, 'GenerateGibsTagsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(generateGibsTagsNestedStack, 'GenerateGibsTagsLambda', {
       ...defaultLambdaConfig,
       description: 'Tag CMR collections with GIBS product information',
@@ -641,15 +666,16 @@ export class Functions extends Construct {
           month: '*',
           weekDay: 'MON-FRI',
           year: '*'
-        }),
+        })
       }],
-      timeout: cdk.Duration.minutes(5),
-    });
+      timeout: cdk.Duration.minutes(5)
+    })
 
     /**
      * Generate Notebook
      */
-    const generateNotebookNestedStack = new cdk.NestedStack(scope, 'GenerateNotebookNestedStack');
+    const generateNotebookNestedStack = new cdk.NestedStack(scope, 'GenerateNotebookNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(generateNotebookNestedStack, 'GenerateNotebookLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -657,12 +683,12 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlOptionalAuthorizer,
         methods: ['POST'],
-        path: 'generate_notebook',
+        path: 'generate_notebook'
       },
       entry: '../../serverless/src/generateNotebook/handler.js',
       functionName: 'generateNotebook',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     // S3 bucket for the Generate Notebooks service
     const generateNotebookBucket = new s3.Bucket(generateNotebookNestedStack, 'GenerateNotebooksBucket', {
@@ -675,6 +701,7 @@ export class Functions extends Construct {
       ]
     })
 
+    // eslint-disable-next-line no-new
     new s3.CfnBucketPolicy(generateNotebookNestedStack, 'GenerateNotebooksBucketPolicy', {
       bucket: generateNotebookBucket.bucketName,
       policyDocument: {
@@ -719,7 +746,8 @@ export class Functions extends Construct {
     /**
      * Get Color Map
      */
-    const getColorMapNestedStack = new cdk.NestedStack(scope, 'GetColorMapNestedStack');
+    const getColorMapNestedStack = new cdk.NestedStack(scope, 'GetColorMapNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getColorMapNestedStack, 'GetColorMapLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -728,17 +756,18 @@ export class Functions extends Construct {
         methods: ['GET'],
         parentId: colormapsApiGatewayResource.ref,
         parentPath: 'colormaps',
-        path: '{product}',
+        path: '{product}'
       },
       entry: '../../serverless/src/getColorMap/handler.js',
       functionName: 'getColorMap',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Get Contact Info
      */
-    const getContactInfoNestedStack = new cdk.NestedStack(scope, 'GetContactInfoNestedStack');
+    const getContactInfoNestedStack = new cdk.NestedStack(scope, 'GetContactInfoNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getContactInfoNestedStack, 'GetContactInfoLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -747,17 +776,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['GET'],
-        path: 'contact_info',
+        path: 'contact_info'
       },
       entry: '../../serverless/src/getContactInfo/handler.js',
       functionName: 'getContactInfo',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Get Project
      */
-    const getProjectNestedStack = new cdk.NestedStack(scope, 'GetProjectNestedStack');
+    const getProjectNestedStack = new cdk.NestedStack(scope, 'GetProjectNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getProjectNestedStack, 'GetProjectLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -766,17 +796,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         methods: ['GET'],
         parentPath: 'projects',
-        path: '{id}',
+        path: '{id}'
       },
       entry: '../../serverless/src/getProject/handler.js',
       functionName: 'getProject',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Get Retrieval
      */
-    const getRetrievalNestedStack = new cdk.NestedStack(scope, 'GetRetrievalNestedStack');
+    const getRetrievalNestedStack = new cdk.NestedStack(scope, 'GetRetrievalNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getRetrievalNestedStack, 'GetRetrievalLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -786,17 +817,18 @@ export class Functions extends Construct {
         authorizer: authorizers.edlAuthorizer,
         methods: ['GET'],
         parentPath: 'retrievals',
-        path: '{id}',
+        path: '{id}'
       },
       entry: '../../serverless/src/getRetrieval/handler.js',
       functionName: 'getRetrieval',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Get Retrieval Collection
      */
-    const getRetrievalCollectionNestedStack = new cdk.NestedStack(scope, 'GetRetrievalCollectionNestedStack');
+    const getRetrievalCollectionNestedStack = new cdk.NestedStack(scope, 'GetRetrievalCollectionNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getRetrievalCollectionNestedStack, 'GetRetrievalCollectionLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -806,17 +838,18 @@ export class Functions extends Construct {
         methods: ['GET'],
         parentId: retrievalCollectionsApiGatewayResource.ref,
         parentPath: 'retrieval_collections',
-        path: '{id}',
+        path: '{id}'
       },
       entry: '../../serverless/src/getRetrievalCollection/handler.js',
       functionName: 'getRetrievalCollection',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Get Saved Access Configs
      */
-    const getSavedAccessConfigsNestedStack = new cdk.NestedStack(scope, 'GetSavedAccessConfigsNestedStack');
+    const getSavedAccessConfigsNestedStack = new cdk.NestedStack(scope, 'GetSavedAccessConfigsNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getSavedAccessConfigsNestedStack, 'GetSavedAccessConfigsLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -824,17 +857,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['POST'],
-        path: 'saved_access_configs',
+        path: 'saved_access_configs'
       },
       entry: '../../serverless/src/getSavedAccessConfigs/handler.js',
       functionName: 'getSavedAccessConfigs',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Save Shapefile
      */
-    const saveShapefileNestedStack = new cdk.NestedStack(scope, 'SaveShapefileNestedStack');
+    const saveShapefileNestedStack = new cdk.NestedStack(scope, 'SaveShapefileNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(saveShapefileNestedStack, 'SaveShapefileLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -842,17 +876,18 @@ export class Functions extends Construct {
         apiGatewayResource: shapefilesApiGatewayResource,
         apiGatewayRestApi,
         methods: ['POST'],
-        path: 'shapefiles',
+        path: 'shapefiles'
       },
       entry: '../../serverless/src/saveShapefile/handler.js',
       functionName: 'saveShapefile',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Get Shapefile
      */
-    const getShapefileNestedStack = new cdk.NestedStack(scope, 'GetShapefileNestedStack');
+    const getShapefileNestedStack = new cdk.NestedStack(scope, 'GetShapefileNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(getShapefileNestedStack, 'GetShapefileLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -861,17 +896,18 @@ export class Functions extends Construct {
         methods: ['GET'],
         parentId: shapefilesApiGatewayResource?.ref,
         parentPath: 'shapefiles',
-        path: '{id}',
+        path: '{id}'
       },
       entry: '../../serverless/src/getShapefile/handler.js',
       functionName: 'getShapefile',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * GraphQL
      */
-    const graphQlNestedStack = new cdk.NestedStack(scope, 'GraphQlNestedStack');
+    const graphQlNestedStack = new cdk.NestedStack(scope, 'GraphQlNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(graphQlNestedStack, 'GraphQlLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -879,17 +915,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlOptionalAuthorizer,
         methods: ['POST'],
-        path: 'graphql',
+        path: 'graphql'
       },
       entry: '../../serverless/src/graphQl/handler.js',
       functionName: 'graphql',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Logout
      */
-    const logoutNestedStack = new cdk.NestedStack(scope, 'LogoutNestedStack');
+    const logoutNestedStack = new cdk.NestedStack(scope, 'LogoutNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(logoutNestedStack, 'LogoutLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -897,17 +934,17 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['DELETE'],
-        path: 'logout',
+        path: 'logout'
       },
       entry: '../../serverless/src/logout/handler.js',
       functionName: 'logout',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Migrate Database
      */
-    const migrateDatabaseNestedStack = new cdk.NestedStack(scope, 'MigrateDatabaseNestedStack');
+    const migrateDatabaseNestedStack = new cdk.NestedStack(scope, 'MigrateDatabaseNestedStack')
     const { lambdaFunction: migrateDatabaseLambda } = new application.NodeJsFunction(migrateDatabaseNestedStack, 'MigrateDatabaseLambda', {
       ...defaultLambdaConfig,
       bundling: {
@@ -920,19 +957,20 @@ export class Functions extends Construct {
             return [
               `mkdir -p ${outputDir}/migrations`,
               `cp -R ${inputDir}/../../migrations ${outputDir}/`
-            ];
+            ]
           },
           beforeInstall(): string[] {
             return []
-          },
+          }
         }
       },
       entry: '../../serverless/src/migrateDatabase/handler.js',
       functionName: 'migrateDatabase',
       functionNamePrefix,
-      timeout: cdk.Duration.minutes(5),
-    });
+      timeout: cdk.Duration.minutes(5)
+    })
     // Run database migrations when deployment is completed
+    // eslint-disable-next-line no-new
     new events.Rule(migrateDatabaseNestedStack, 'RunMigrationsRule', {
       eventPattern: {
         detailType: ['CloudFormation Stack Status Change'],
@@ -940,17 +978,18 @@ export class Functions extends Construct {
         detail: {
           'stack-id': [`${scope.stackId}`],
           'status-details': {
-            'status': ['UPDATE_COMPLETE']
+            status: ['UPDATE_COMPLETE']
           }
-        },
+        }
       },
       targets: [new eventsTargets.LambdaFunction(migrateDatabaseLambda)]
-    });
+    })
 
     /**
      * OpenSearch Granule Search
      */
-    const openSearchGranuleSearchNestedStack = new cdk.NestedStack(scope, 'OpenSearchGranuleSearchNestedStack');
+    const openSearchGranuleSearchNestedStack = new cdk.NestedStack(scope, 'OpenSearchGranuleSearchNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(openSearchGranuleSearchNestedStack, 'OpenSearchGranuleSearchLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -960,17 +999,18 @@ export class Functions extends Construct {
         methods: ['POST'],
         parentId: opensearchApiGatewayResource.ref,
         parentPath: 'opensearch',
-        path: 'granules',
+        path: 'granules'
       },
       entry: '../../serverless/src/openSearchGranuleSearch/handler.js',
       functionName: 'openSearchGranuleSearch',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Process Color Map
      */
-    const processColorMapNestedStack = new cdk.NestedStack(scope, 'ProcessColorMapNestedStack');
+    const processColorMapNestedStack = new cdk.NestedStack(scope, 'ProcessColorMapNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(processColorMapNestedStack, 'ProcessColorMapLambda', {
       ...defaultLambdaConfig,
       entry: '../../serverless/src/processColorMap/handler.js',
@@ -979,15 +1019,16 @@ export class Functions extends Construct {
       reservedConcurrentExecutions: 25,
       sqs: {
         batchSize: 10,
-        queue: queues.colorMapsProcessingQueue,
+        queue: queues.colorMapsProcessingQueue
       },
-      timeout: cdk.Duration.minutes(5),
-    });
+      timeout: cdk.Duration.minutes(5)
+    })
 
     /**
      * Process Tag
      */
-    const processTagNestedStack = new cdk.NestedStack(scope, 'ProcessTagNestedStack');
+    const processTagNestedStack = new cdk.NestedStack(scope, 'ProcessTagNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(processTagNestedStack, 'ProcessTagLambda', {
       ...defaultLambdaConfig,
       entry: '../../serverless/src/processTag/handler.js',
@@ -996,62 +1037,66 @@ export class Functions extends Construct {
       reservedConcurrentExecutions: 25,
       sqs: {
         batchSize: 10,
-        queue: queues.tagProcessingQueue,
+        queue: queues.tagProcessingQueue
       },
-      timeout: cdk.Duration.minutes(5),
-    });
+      timeout: cdk.Duration.minutes(5)
+    })
 
     /**
      * Region Search
      */
-    const regionSearchNestedStack = new cdk.NestedStack(scope, 'RegionSearchNestedStack');
+    const regionSearchNestedStack = new cdk.NestedStack(scope, 'RegionSearchNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(regionSearchNestedStack, 'RegionSearchLambda', {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
         methods: ['GET'],
-        path: 'regions',
+        path: 'regions'
       },
       entry: '../../serverless/src/regionSearch/handler.js',
       functionName: 'regionSearch',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Relevancy Logger
      */
-    const relevancyLoggerNestedStack = new cdk.NestedStack(scope, 'RelevancyLoggerNestedStack');
+    const relevancyLoggerNestedStack = new cdk.NestedStack(scope, 'RelevancyLoggerNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(relevancyLoggerNestedStack, 'RelevancyLoggerLambda', {
       ...defaultLambdaConfig,
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
         methods: ['POST'],
-        path: 'relevancy_logger',
+        path: 'relevancy_logger'
       },
       entry: '../../serverless/src/relevancyLogger/handler.js',
       functionName: 'relevancyLogger',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Replace CWIC With OpenSearch
      */
-    const replaceCwicWithOpenSearchNestedStack = new cdk.NestedStack(scope, 'ReplaceCwicWithOpenSearchNestedStack');
+    const replaceCwicWithOpenSearchNestedStack = new cdk.NestedStack(scope, 'ReplaceCwicWithOpenSearchNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(replaceCwicWithOpenSearchNestedStack, 'ReplaceCwicWithOpenSearchLambda', {
       ...defaultLambdaConfig,
       description: 'Replaces references of isCwic with isOpenSearch',
       entry: '../../serverless/src/replaceCwicWithOpenSearch/handler.js',
       functionName: 'replaceCwicWithOpenSearch',
       functionNamePrefix,
-      timeout: cdk.Duration.minutes(15),
-    });
+      timeout: cdk.Duration.minutes(15)
+    })
 
     /**
      * Requeue Order
      */
-    const requeueOrderNestedStack = new cdk.NestedStack(scope, 'RequeueOrderNestedStack');
+    const requeueOrderNestedStack = new cdk.NestedStack(scope, 'RequeueOrderNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(requeueOrderNestedStack, 'RequeueOrderLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1059,17 +1104,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAdminAuthorizer,
         methods: ['POST'],
-        path: 'requeue_order',
+        path: 'requeue_order'
       },
       entry: '../../serverless/src/requeueOrder/handler.js',
       functionName: 'requeueOrder',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Retrieve Concept
      */
-    const retrieveConceptNestedStack = new cdk.NestedStack(scope, 'RetrieveConceptNestedStack');
+    const retrieveConceptNestedStack = new cdk.NestedStack(scope, 'RetrieveConceptNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(retrieveConceptNestedStack, 'RetrieveConceptLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1079,17 +1125,18 @@ export class Functions extends Construct {
         methods: ['GET'],
         parentId: conceptsApiGatewayResource.ref,
         parentPath: 'concepts',
-        path: '{id}',
+        path: '{id}'
       },
       entry: '../../serverless/src/retrieveConcept/handler.js',
       functionName: 'retrieveConcept',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Retrieve Granule Links
      */
-    const retrieveGranuleLinksNestedStack = new cdk.NestedStack(scope, 'RetrieveGranuleLinksNestedStack');
+    const retrieveGranuleLinksNestedStack = new cdk.NestedStack(scope, 'RetrieveGranuleLinksNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(retrieveGranuleLinksNestedStack, 'RetrieveGranuleLinksLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1097,18 +1144,19 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['GET'],
-        path: 'granule_links',
+        path: 'granule_links'
       },
       entry: '../../serverless/src/retrieveGranuleLinks/handler.js',
       functionName: 'retrieveGranuleLinks',
       functionNamePrefix,
-      memorySize: 256,
-    });
+      memorySize: 256
+    })
 
     /**
      * Save Contact Info
      */
-    const saveContactInfoNestedStack = new cdk.NestedStack(scope, 'SaveContactInfoNestedStack');
+    const saveContactInfoNestedStack = new cdk.NestedStack(scope, 'SaveContactInfoNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(saveContactInfoNestedStack, 'SaveContactInfoLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1117,17 +1165,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['POST'],
-        path: 'contact_info',
+        path: 'contact_info'
       },
       entry: '../../serverless/src/saveContactInfo/handler.js',
       functionName: 'saveContactInfo',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Save Project
      */
-    const saveProjectNestedStack = new cdk.NestedStack(scope, 'SaveProjectNestedStack');
+    const saveProjectNestedStack = new cdk.NestedStack(scope, 'SaveProjectNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(saveProjectNestedStack, 'SaveProjectLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1135,12 +1184,12 @@ export class Functions extends Construct {
         apiGatewayResource: projectsApiGatewayResource,
         apiGatewayRestApi,
         methods: ['POST'],
-        path: 'projects',
+        path: 'projects'
       },
       entry: '../../serverless/src/saveProject/handler.js',
       functionName: 'saveProject',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Scale Image
@@ -1149,11 +1198,12 @@ export class Functions extends Construct {
     // Download the release-x64.zip file, rename it sharp-{release}-x64.zip and place it in the layers directory
     // The release number needs to match the version of sharp installed in package.json
     const sharpLambdaLayer = new lambda.LayerVersion(scope, 'SharpLambdaLayer', {
-      code: lambda.Code.fromAsset('../../layers/sharp-0.33.5-x64.zip',),
+      code: lambda.Code.fromAsset('../../layers/sharp-0.33.5-x64.zip'),
       compatibleRuntimes: [defaultLambdaConfig.runtime],
-      description: 'Sharp Lambda Layer',
+      description: 'Sharp Lambda Layer'
     })
-    const scaleImageNestedStack = new cdk.NestedStack(scope, 'ScaleImageNestedStack');
+    const scaleImageNestedStack = new cdk.NestedStack(scope, 'ScaleImageNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(scaleImageNestedStack, 'ScaleImageLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1162,34 +1212,36 @@ export class Functions extends Construct {
         methods: ['GET'],
         parentId: scaleConceptTypeApiGatewayResource.ref,
         parentPath: 'scale',
-        path: '{concept_id}',
+        path: '{concept_id}'
       },
       entry: '../../serverless/src/scaleImage/handler.js',
       functionName: 'scaleImage',
       functionNamePrefix,
       layers: [sharpLambdaLayer],
-      memorySize: 256,
-    });
+      memorySize: 256
+    })
 
     /**
      * Store User Data
      */
-    const storeUserDataNestedStack = new cdk.NestedStack(scope, 'StoreUserDataNestedStack');
+    const storeUserDataNestedStack = new cdk.NestedStack(scope, 'StoreUserDataNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(storeUserDataNestedStack, 'StoreUserDataLambda', {
       ...defaultLambdaConfig,
       entry: '../../serverless/src/storeUserData/handler.js',
       functionName: 'storeUserData',
       functionNamePrefix,
       sqs: {
-        queue: queues.userDataQueue,
+        queue: queues.userDataQueue
       },
-      timeout: cdk.Duration.minutes(5),
-    });
+      timeout: cdk.Duration.minutes(5)
+    })
 
     /**
      * Submit Retrieval
      */
-    const submitRetrievalNestedStack = new cdk.NestedStack(scope, 'SubmitRetrievalNestedStack');
+    const submitRetrievalNestedStack = new cdk.NestedStack(scope, 'SubmitRetrievalNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(submitRetrievalNestedStack, 'SubmitRetrievalLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1198,17 +1250,18 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['POST'],
-        path: 'retrievals',
+        path: 'retrievals'
       },
       entry: '../../serverless/src/submitRetrieval/handler.js',
       functionName: 'submitRetrieval',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Timeline Search
      */
-    const timelineSearchNestedStack = new cdk.NestedStack(scope, 'TimelineSearchNestedStack');
+    const timelineSearchNestedStack = new cdk.NestedStack(scope, 'TimelineSearchNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(timelineSearchNestedStack, 'TimelineSearchLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1218,17 +1271,18 @@ export class Functions extends Construct {
         methods: ['POST'],
         parentId: granulesApiGatewayResource?.ref,
         parentPath: 'granules',
-        path: 'timeline',
+        path: 'timeline'
       },
       entry: '../../serverless/src/timelineSearch/handler.js',
       functionName: 'timelineSearch',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
 
     /**
      * Update Preferences
      */
-    const updatePreferencesNestedStack = new cdk.NestedStack(scope, 'UpdatePreferencesNestedStack');
+    const updatePreferencesNestedStack = new cdk.NestedStack(scope, 'UpdatePreferencesNestedStack')
+    // eslint-disable-next-line no-new
     new application.NodeJsFunction(updatePreferencesNestedStack, 'UpdatePreferencesLambda', {
       ...defaultLambdaConfig,
       api: {
@@ -1236,11 +1290,11 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         authorizer: authorizers.edlAuthorizer,
         methods: ['POST'],
-        path: 'preferences',
+        path: 'preferences'
       },
       entry: '../../serverless/src/updatePreferences/handler.js',
       functionName: 'updatePreferences',
-      functionNamePrefix,
-    });
+      functionNamePrefix
+    })
   }
 }

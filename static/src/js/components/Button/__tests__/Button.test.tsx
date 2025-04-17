@@ -4,13 +4,26 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import { FaGlobe } from 'react-icons/fa'
 
 import Button from '../Button'
+
+// @ts-expect-error: types do not exist for this file
 import Spinner from '../../Spinner/Spinner'
+// @ts-expect-error: types do not exist for this file
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(type) {
-  const props = {
+interface ComponentProps {
+  onClick?: jest.Mock
+  label?: string | undefined
+  ariaLabel?: string
+  icon?: React.FC | string
+  badge?: string
+  spinner?: boolean
+  iconPosition?: 'right'
+}
+
+function setup(type?: string) {
+  const props: ComponentProps = {
     onClick: jest.fn(),
     label: 'Test Label',
     ariaLabel: 'Test aria Label'
@@ -63,7 +76,8 @@ describe('Button component', () => {
     const button = enzymeWrapper.find('button')
 
     button.simulate('click')
-    expect(props.onClick.mock.calls.length).toBe(1)
+
+    expect(props.onClick?.mock.calls.length).toBe(1)
   })
 
   test('should not render self with an icon when missing an iconClass prop', () => {

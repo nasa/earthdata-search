@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
@@ -11,7 +11,9 @@ import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
+
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
+import HomeContext from '../../contexts/HomeContext'
 
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
@@ -101,35 +103,40 @@ export const SearchPanelsContainer = ({
   preferences,
   match,
   portal
-}) => (
-  <SearchPanels
-    authToken={authToken}
-    collectionMetadata={collectionMetadata}
-    collectionQuery={collectionQuery}
-    collectionsSearch={collectionsSearch}
-    collectionSubscriptions={collectionSubscriptions}
-    granuleMetadata={granuleMetadata}
-    granuleSearchResults={granuleSearchResults}
-    granuleQuery={granuleQuery}
-    isExportRunning={isExportRunning}
-    location={location}
-    map={map}
-    onApplyGranuleFilters={onApplyGranuleFilters}
-    onFocusedCollectionChange={onFocusedCollectionChange}
-    onChangePath={onChangePath}
-    onChangeQuery={onChangeQuery}
-    onMetricsCollectionSortChange={onMetricsCollectionSortChange}
-    onSetActivePanel={onSetActivePanel}
-    onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-    onToggleAboutCwicModal={onToggleAboutCwicModal}
-    onTogglePanels={onTogglePanels}
-    onExport={onExport}
-    panels={panels}
-    preferences={preferences}
-    match={match}
-    portal={portal}
-  />
-)
+}) => {
+  const { startDrawing } = useContext(HomeContext)
+
+  return (
+    <SearchPanels
+      authToken={authToken}
+      collectionMetadata={collectionMetadata}
+      collectionQuery={collectionQuery}
+      collectionsSearch={collectionsSearch}
+      collectionSubscriptions={collectionSubscriptions}
+      granuleMetadata={granuleMetadata}
+      granuleSearchResults={granuleSearchResults}
+      granuleQuery={granuleQuery}
+      isExportRunning={isExportRunning}
+      location={location}
+      map={map}
+      onApplyGranuleFilters={onApplyGranuleFilters}
+      onFocusedCollectionChange={onFocusedCollectionChange}
+      onChangePath={onChangePath}
+      onChangeQuery={onChangeQuery}
+      onMetricsCollectionSortChange={onMetricsCollectionSortChange}
+      onSetActivePanel={onSetActivePanel}
+      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
+      onToggleAboutCwicModal={onToggleAboutCwicModal}
+      onTogglePanels={onTogglePanels}
+      onExport={onExport}
+      panels={panels}
+      portal={portal}
+      preferences={preferences}
+      match={match}
+      startDrawing={startDrawing}
+    />
+  )
+}
 
 SearchPanelsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,

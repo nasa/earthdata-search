@@ -18,6 +18,7 @@ const FilterStack = (props) => {
   })
 
   return (
+
     <ul className={className}>
       {children}
     </ul>

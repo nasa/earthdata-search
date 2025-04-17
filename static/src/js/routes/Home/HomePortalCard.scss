@@ -1,0 +1,32 @@
+@use '../../../css/vendor/bootstrap/configuration' as bootstrap;
+@use '../../../css/utils';
+
+.home-portal-card {
+  &__title {
+    font-weight: 400;
+  }
+
+  &__subtitle {
+    font-weight: 400;
+    color: utils.$color__carbon--70;
+  }
+
+  &__body-wrapper {
+    margin-bottom: 2rem;
+  }
+
+  &__footer {
+    bottom: 1rem;
+    left: 1rem
+  }
+
+  &__image-wrapper {
+    height: 3.5rem;
+    width: 3.5rem;
+  }
+
+  &__image {
+    height: 3.5rem;
+    width: 3.5rem;
+  }
+}

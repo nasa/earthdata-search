@@ -94,7 +94,7 @@ test.describe('History', () => {
 
     await login(context)
 
-    await page.goto('/')
+    await page.goto('/search')
   })
 
   test.describe('when pressing the back button', () => {

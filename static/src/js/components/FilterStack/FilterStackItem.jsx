@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { FaTrash } from 'react-icons/fa'
+import { FaRegTrashAlt } from 'react-icons/fa'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -53,7 +53,7 @@ const FilterStackItem = (props) => {
                   <header className="filter-stack-item__header">
                     <div className="filter-stack-item__header-primary">
                       <EDSCIcon className={iconClass} icon={icon} title={title} />
-                      <h3 className="filter-stack-item__title">{title}</h3>
+                      <h3 className="filter-stack-item__title h6">{title}</h3>
                       {
                         secondaryTitle && (
                           <span className="filter-stack-item__secondary-title">{secondaryTitle}</span>
@@ -64,14 +64,14 @@ const FilterStackItem = (props) => {
                       {
                         onRemove && (
                           <Button
-                            variant="naked"
+                            bootstrapVariant="secondary"
                             className="filter-stack-item__action-button"
-                            label={`Remove ${title.toLowerCase()} filter`}
-                            icon={FaTrash}
+                            icon={FaRegTrashAlt}
+                            tooltipId={`remove-${title.toLowerCase()}-filter-tooltip`}
+                            tooltip={`Remove ${title.toLowerCase()} filter`}
+                            ariaLabel={`Remove ${title.toLowerCase()} filter`}
                             onClick={() => { onRemove() }}
-                          >
-                            Remove
-                          </Button>
+                          />
                         )
                       }
                     </div>

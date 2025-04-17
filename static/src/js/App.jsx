@@ -20,7 +20,7 @@ import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils
 import WithProviders from './providers/WithProviders/WithProviders'
 
 // Routes
-import Search from './routes/Search/Search'
+import Home from './routes/Home/Home'
 
 // Components and Containers
 import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
@@ -40,7 +40,6 @@ import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModal
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
-import SearchTour from './components/Tour/SearchTour'
 import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
 import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
 import Spinner from './components/Spinner/Spinner'
@@ -63,6 +62,8 @@ window.reactToastProvider = React.createRef()
 
 // Lazy loaded routes
 const Admin = lazy(() => import('./routes/Admin/Admin'))
+const Search = lazy(() => import('./routes/Search/Search'))
+const SearchTour = lazy(() => import('./components/SearchTour/SearchTour'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
 const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
@@ -124,6 +125,15 @@ class App extends Component {
                   <WrappingContainer>
                     <SecondaryToolbarContainer />
                     <Switch>
+                      <Route
+                        path="/"
+                        exact
+                        render={
+                          () => (
+                            <Home />
+                          )
+                        }
+                      />
                       <Route
                         path="/admin"
                         render={
@@ -209,15 +219,14 @@ class App extends Component {
                         }
                       />
                       <Redirect exact from="/portal/:portalId/" to="/portal/:portalId/search" />
-                      <Redirect exact from="/" to="/search" />
                       <Route
                         path={this.portalPaths('/search')}
                         render={
                           () => (
-                            <>
+                            <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
                               <SearchTour />
                               <Search />
-                            </>
+                            </Suspense>
                           )
                         }
                       />

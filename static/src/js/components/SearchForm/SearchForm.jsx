@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { isEmpty, isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
-import { FaEraser } from 'react-icons/fa'
-import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { FaRegTrashAlt } from 'react-icons/fa'
+import { Filter, Search } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
 import AdvancedSearchDisplayContainer
@@ -26,6 +26,7 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
 import './SearchForm.scss'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 class SearchForm extends Component {
   constructor(props) {
@@ -50,6 +51,7 @@ class SearchForm extends Component {
     this.onSuggestionHighlighted = this.onSuggestionHighlighted.bind(this)
     this.onWindowKeyUp = this.onWindowKeyUp.bind(this)
     this.getSuggestionValue = this.getSuggestionValue.bind(this)
+    this.renderInputComponent = this.renderInputComponent.bind(this)
     this.renderSuggestion = this.renderSuggestion.bind(this)
     this.selectSuggestion = this.selectSuggestion.bind(this)
     this.shouldRenderSuggestions = this.shouldRenderSuggestions.bind(this)
@@ -182,6 +184,20 @@ class SearchForm extends Component {
   }
 
   /**
+ * AutoSuggest method to render each suggestion
+ * @param {Object} suggestion
+ */
+  renderInputComponent(inputProps) {
+    return (
+      <div className="position-relative">
+        <EDSCIcon className="search-form__search-icon position-absolute" icon={Search} />
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <input {...inputProps} />
+      </div>
+    )
+  }
+
+  /**
    * AutoSuggest method to render each suggestion
    * @param {Object} suggestion
    */
@@ -272,6 +288,7 @@ class SearchForm extends Component {
       onClearAutocompleteSuggestions,
       onFetchAutocomplete
     } = this.props
+
     const {
       isLoading,
       isLoaded,
@@ -300,6 +317,7 @@ class SearchForm extends Component {
           <form className="search-form__form" onSubmit={this.onFormSubmit}>
             <Autosuggest
               ref={this.inputRef}
+              className="search-form__autocomplete"
               suggestions={suggestions}
               onSuggestionsFetchRequested={onFetchAutocomplete}
               onSuggestionsClearRequested={onClearAutocompleteSuggestions}
@@ -314,6 +332,7 @@ class SearchForm extends Component {
                 })
               }
               renderSuggestion={this.renderSuggestion}
+              renderInputComponent={this.renderInputComponent}
               onSuggestionSelected={this.selectSuggestion}
               onSuggestionHighlighted={this.onSuggestionHighlighted}
               shouldRenderSuggestions={this.shouldRenderSuggestions}
@@ -321,8 +340,8 @@ class SearchForm extends Component {
                 {
                   name: 'keywordSearch',
                   'data-testid': 'keyword-search-input',
-                  className: 'search-form__input',
-                  placeholder: 'Search for collections or topics',
+                  className: 'search-form__input form-control',
+                  placeholder: 'Type to search for data',
                   value: keywordSearch,
                   onChange: this.onAutoSuggestChange
                 }
@@ -331,27 +350,41 @@ class SearchForm extends Component {
           </form>
           <Button
             bootstrapVariant="inline-block"
-            className="search-form__button search-form__button--clear"
-            label="Clear search"
-            onClick={this.onSearchClear}
-            icon={FaEraser}
-            iconSize="0.825rem"
-          />
+            className="search-form__button search-form__button--submit"
+            label="Search"
+            onClick={this.onSubmit}
+          >
+            Search
+          </Button>
         </div>
         <div className="search-form__secondary">
-          <div className="search-form__secondary-actions">
-            <TemporalSelectionDropdownContainer />
-            <SpatialSelectionDropdownContainer />
-            <PortalFeatureContainer advancedSearch>
-              <Button
-                bootstrapVariant="light"
-                className="search-form__button search-form__button--dark search-form__button--advanced-search"
-                label="Advanced search"
-                onClick={this.onToggleAdvancedSearch}
-                icon={Filter}
-                iconSize="0.825rem"
-              />
-            </PortalFeatureContainer>
+          <div className="search-form__secondary-actions d-flex justify-content-between flex-row">
+            <div className="d-flex gap-1">
+              <TemporalSelectionDropdownContainer />
+              <SpatialSelectionDropdownContainer />
+              <PortalFeatureContainer advancedSearch>
+                <Button
+                  bootstrapVariant="light"
+                  className="search-form__button search-form__button--secondary search-form__button--advanced-search"
+                  tooltip="Show advanced search options"
+                  tooltipId="search-form--advanced-search"
+                  onClick={this.onToggleAdvancedSearch}
+                  icon={Filter}
+                  iconSize="14"
+                  ariaLabel="Show advanced search options"
+                />
+              </PortalFeatureContainer>
+            </div>
+            <Button
+              bootstrapVariant="inline-block"
+              className="search-form__button search-form__button--secondary search-form__button--clear"
+              tooltip="Clear all search filters"
+              tooltipId="search-form--clear-filters"
+              onClick={this.onSearchClear}
+              icon={FaRegTrashAlt}
+              iconSize="14"
+              ariaLabel="Clear all search filters"
+            />
           </div>
           <FilterStack isOpen={showFilterStack}>
             <AutocompleteDisplayContainer />

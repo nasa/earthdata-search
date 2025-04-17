@@ -33,7 +33,7 @@ const getImageFileName = (url) => {
 }
 
 // This function can be used to download an image and save it locall to be mocked.
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const saveImage = async (route, page) => {
   const response = await page.request.fetch(route.request())
   const buffer = await response.body()
@@ -66,7 +66,7 @@ const mockImage = async (route) => {
 }
 
 // Handles saving and mocking images
-// eslint-disable-next-line no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const handleImage = async (route, page) => {
   // Uncomment this call to save images downloaded during a test
   // await saveImage(route, page)
