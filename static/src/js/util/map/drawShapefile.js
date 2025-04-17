@@ -40,6 +40,8 @@ const simplifyShape = ({
   }
 
   let tolerance = 0.001
+  let previousNumPoints = numPoints
+
   while (numPoints > MAX_POLYGON_SIZE) {
     // Take OpenLayers geometry and create a turf.js geometry to simplify
     const turfGeometry = new GeoJSON().writeGeometryObject(geometry)
@@ -61,6 +63,13 @@ const simplifyShape = ({
     // Get the number of points in the simplified geometry
     const newCoordinates = simplifiedGeometry.getFlatCoordinates()
     numPoints = newCoordinates.length / 2
+
+    if (numPoints === previousNumPoints) {
+      // If the number of points hasn't changed, break out of the loop
+      break
+    }
+
+    previousNumPoints = numPoints
   }
 
   return simplifiedGeometry
