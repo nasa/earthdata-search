@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { sortBy } from 'lodash-es'
 import Col from 'react-bootstrap/Col'
 import Collapse from 'react-bootstrap/Collapse'
@@ -60,6 +64,15 @@ import actions from '../../actions'
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
+
+const preloadRoutes = () => {
+  // @ts-expect-error: Types are not defined in this file
+  import('../Search/Search')
+  // @ts-expect-error: Types are not defined in this file
+  import('../../components/SearchTour/SearchTour')
+  // @ts-expect-error: Types are not defined in this file
+  import('../../containers/MapContainer/MapContainer')
+}
 
 export const mapDispatchToProps: MapDispatchToProps<object, object> = (dispatch: Dispatch) => ({
   onChangePath:
@@ -155,22 +168,18 @@ interface HomeDispatchProps {
 type HomeProps = HomeDispatchProps & RouteComponentProps
 
 export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
+  const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
 
   useEffect(() => {
+    // Focus the search input when the component mounts
+    if (inputRef.current) {
+      inputRef.current?.focus()
+    }
+
     // This event listener is used to load the Search and Map components
     // when the DOM is ready which helps prevent a flash of white when the
     // page loads.
-
-    const preloadRoutes = () => {
-      // @ts-expect-error: Types are not defined in this file
-      import('../Search/Search')
-      // @ts-expect-error: Types are not defined in this file
-      import('../../components/SearchTour/SearchTour')
-      // @ts-expect-error: Types are not defined in this file
-      import('../../containers/MapContainer/MapContainer')
-    }
-
     document.addEventListener('DOMContentLoaded', preloadRoutes)
 
     return () => {
@@ -178,7 +187,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
     }
   }, [])
 
-  const onShowAllPortalsClick = () => {
+  const onShowAllPortalsClick = (): void => {
     setShowAllPortals(!showAllPortals)
   }
 
@@ -251,7 +260,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
                     placeholder="Type to search for data"
                     value={keyword}
                     onChange={onChangeKeyword}
-                    ref={(input) => { if (input) input.focus() }}
+                    ref={inputRef}
                   />
                 </div>
                 <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
@@ -345,16 +354,17 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
             <Collapse in={showAllPortals}>
               <div
                 id="portal-cards-collapse"
-                className="home__grid grid mt-3"
                 aria-labelledby="portal-collapse-button"
                 aria-hidden={!showAllPortals}
                 style={{ display: showAllPortals ? '' : 'none' }}
               >
-                {
-                  hiddenPortals && hiddenPortals.map((portal) => (
-                    <HomePortalCard key={portal.portalId} {...portal} />
-                  ))
-                }
+                <div className="home__grid grid mt-3">
+                  {
+                    hiddenPortals && hiddenPortals.map((portal) => (
+                      <HomePortalCard key={portal.portalId} {...portal} />
+                    ))
+                  }
+                </div>
               </div>
             </Collapse>
             <div className="mt-3 d-flex justify-content-center align-items-center">
@@ -366,7 +376,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
                     icon={ArrowCircleDown}
                     iconPosition="right"
                     bootstrapVariant="naked"
-                    onClick={() => onShowAllPortalsClick()}
+                    onClick={onShowAllPortalsClick}
                     aria-expanded={showAllPortals}
                     aria-controls="portal-cards-collapse"
                   >
@@ -382,7 +392,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
                     icon={ArrowCircleUp}
                     iconPosition="right"
                     bootstrapVariant="naked"
-                    onClick={() => onShowAllPortalsClick()}
+                    onClick={onShowAllPortalsClick}
                     aria-expanded={showAllPortals}
                     aria-controls="portal-cards-collapse"
                   >
