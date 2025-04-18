@@ -21,12 +21,13 @@ export const parseTemporal = (metadata) => {
     singleDateTimes
   } = metadata
 
+  // If there is a singleDateTime in the metadata utilize that date
   if (singleDateTimes) {
-    // If there is a singleDateTime in the metadata utilize that date
-    const [singleDateTime] = singleDateTimes
-    const date = getDaysFromIsoDate(singleDateTime)
+    return singleDateTimes.map((dateTime) => {
+      const date = getDaysFromIsoDate(dateTime)
 
-    return endsAtPresentFlag ? `${date} ongoing` : date
+      return endsAtPresentFlag ? `${date} ongoing` : date
+    })
   }
 
   // Parse the temporal extents for the collection

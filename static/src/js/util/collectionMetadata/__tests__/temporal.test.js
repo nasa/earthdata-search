@@ -58,16 +58,30 @@ describe('parseTemporal', () => {
 
   test('parses singleDateTimes correctly', () => {
     const json = {
-      endsAtPresentFlag: true,
+      endsAtPresentFlag: false,
       singleDateTimes: [
-        '2024-02-14T01:02:04Z'
+        '1990-07-01T00:00:00.000Z',
+        '1995-07-01T00:00:00.000Z',
+        '2000-07-01T00:00:00.000Z'
       ],
       temporalResolution: {
         Value: 43,
         Unit: 'Minute'
       }
     }
-    expect(parseTemporal(json)).toEqual('2024-02-14 ongoing')
+    expect(parseTemporal(json)).toEqual(['1990-07-01', '1995-07-01', '2000-07-01'])
+  })
+
+  test('parses singleDateTimes where the endsAtPresent flag is true', () => {
+    const json = {
+      endsAtPresentFlag: true,
+      singleDateTimes: ['1990-07-01', '1995-07-01', '2000-07-01'],
+      temporalResolution: {
+        Value: 43,
+        Unit: 'Minute'
+      }
+    }
+    expect(parseTemporal(json)).toEqual(['1990-07-01 ongoing', '1995-07-01 ongoing', '2000-07-01 ongoing'])
   })
 })
 
