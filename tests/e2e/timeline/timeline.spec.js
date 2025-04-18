@@ -86,18 +86,15 @@ test.describe('Timeline spec', () => {
     await page.getByTestId('back-to-search-button').click()
     await tilesPromise
 
-    // Ensure tiles are fully loaded
-    await page.waitForTimeout(500)
-
     await page.waitForSelector('[data-testid="collection-result-item_C1443528505-LAADS"]')
 
     // Confirm the map controls are in the correct location
     await expect(page).toHaveScreenshot('search-screenshot.png', {
       clip: {
-        x: 1200,
-        y: 700,
-        width: 200,
-        height: 200
+        x: 1314,
+        y: 800,
+        width: 72,
+        height: 40
       }
     })
 
@@ -110,10 +107,10 @@ test.describe('Timeline spec', () => {
     // Confirm the map controls are in the correct location
     await expect(page).toHaveScreenshot('granules-screenshot.png', {
       clip: {
-        x: 1200,
-        y: 700,
-        width: 200,
-        height: 200
+        x: 1314,
+        y: 733,
+        width: 72,
+        height: 40
       }
     })
   })
