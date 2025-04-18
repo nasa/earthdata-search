@@ -50,7 +50,22 @@ describe('saveShapefile', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            file: {},
+            file: {
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: {
+                    coordinates: [
+                      -77.0163,
+                      38.883
+                    ],
+                    type: 'Point'
+                  }
+                }
+              ]
+            },
             filename: 'test_file.geojson'
           }
         })
@@ -65,7 +80,8 @@ describe('saveShapefile', () => {
 
     test('returns an existing shapefile if it has already been uploaded', async () => {
       dbTracker.on('query', (query, step) => {
-        if (step === 1) {
+        console.log('🚀 ~ handler.test.js:68 ~ dbTracker.on ~ query:', query)
+        if (step === 1 && query.bindings[0] === 'f7f2cb5d44de4d6d64578410055cf250') {
           query.response({
             id: 12
           })
@@ -77,7 +93,22 @@ describe('saveShapefile', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            file: {},
+            file: {
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: {
+                    coordinates: [
+                      -77.0163,
+                      38.883
+                    ],
+                    type: 'Point'
+                  }
+                }
+              ]
+            },
             filename: 'test_file.geojson'
           }
         })
@@ -122,7 +153,8 @@ describe('saveShapefile', () => {
 
     test('returns an existing shapefile if it has already been uploaded', async () => {
       dbTracker.on('query', (query, step) => {
-        if (step === 1) {
+        console.log('queryBindigns', query.bindings[0])
+        if (step === 1 && query.bindings[0] === 'f7f2cb5d44de4d6d64578410055cf250') {
           query.response({
             id: 12
           })
@@ -134,8 +166,22 @@ describe('saveShapefile', () => {
       const event = {
         body: JSON.stringify({
           params: {
-            authToken: 'mock token',
-            file: {},
+            file: {
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: {
+                    coordinates: [
+                      -77.0163,
+                      38.883
+                    ],
+                    type: 'Point'
+                  }
+                }
+              ]
+            },
             filename: 'test_file.geojson'
           }
         })

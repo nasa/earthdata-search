@@ -1,5 +1,6 @@
 import 'pg'
 import forge from 'node-forge'
+import md5 from 'md5'
 
 import { deployedEnvironment } from '../../../sharedUtils/deployedEnvironment'
 import { getApplicationConfig } from '../../../sharedUtils/config'
@@ -32,12 +33,17 @@ const saveShapefile = async (event, context) => {
 
   const earthdataEnvironment = deployedEnvironment()
 
-  // Retrive a connection to the database
+  // Retrieve a connection to the database
   const dbConnection = await getDbConnection()
 
   const fileHash = forge.md.md5.create()
-  fileHash.update(JSON.stringify(file))
 
+  fileHash.update(JSON.stringify(file))
+  fileHash.digest().toHex()
+
+  const foo = md5(JSON.stringify(file))
+  console.log('🚀 ~ file: handler.js:45 ~ foo:', foo)
+  console.log('node-forge hash', fileHash.digest().toHex())
   try {
     const shapefileSearchOptions = {
       file_hash: fileHash.digest().toHex()

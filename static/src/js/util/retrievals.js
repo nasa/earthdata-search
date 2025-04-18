@@ -29,21 +29,22 @@ const permittedCollectionMetadataFields = [
   'versionId'
 ]
 const permittedAccessMethodFields = [
+  'defaultConcatenation',
   'enableConcatenateDownload',
-  'enableTemporalSubsetting',
   'enableSpatialSubsetting',
+  'enableTemporalSubsetting',
+  'formDigest',
   'maxItemsPerOrder',
   'mbr',
   'model',
   'optionDefinition',
   'rawModel',
-  'selectedVariables',
   'selectedOutputFormat',
   'selectedOutputProjection',
+  'selectedVariables',
   'supportsBoundingBoxSubsetting',
-  'supportsShapefileSubsetting',
   'supportsConcatenation',
-  'defaultConcatenation',
+  'supportsShapefileSubsetting',
   'swodlrData',
   'type',
   'url'
