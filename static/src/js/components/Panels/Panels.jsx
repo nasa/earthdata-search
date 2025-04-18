@@ -186,7 +186,6 @@ export class Panels extends PureComponent {
   }
 
   onWindowKeyUp(event) {
-    console.log('🚀 ~ Panels ~ onWindowKeyUp ~ onWindowKeyUp:')
     const { show } = this.state
     const { keyboardShortcuts } = this
 

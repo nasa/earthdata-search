@@ -14,30 +14,33 @@ export const getDaysFromIsoDate = (date = '') => {
 }
 
 // Returns a date string for each temporal entry
-export const parseTemporal = (metadata, temporal) => {
+export const parseTemporal = (metadata) => {
   const {
     endsAtPresentFlag,
     rangeDateTimes,
-    temporalRangeType
+    singleDateTimes
   } = metadata
-
-  // Single date times are found on the SingleDateTime key
-  if (temporalRangeType === 'SingleDateTime') {
-    const date = getDaysFromIsoDate(temporal.singleDateTime)
+  if (singleDateTimes) {
+    // If there is a singleDateTime in the metadata utilize that date
+    const [singleDateTime] = singleDateTimes
+    const date = getDaysFromIsoDate(singleDateTime)
 
     return endsAtPresentFlag ? `${date} ongoing` : date
   }
 
-  // If were not dealing with a SingleDateTime, we're dealing with
-  // the metadata should have rangeDateTimes
+  // Parse the temporal extents for the collection
   if (Array.isArray(rangeDateTimes)) {
     return rangeDateTimes.map((range) => castArray(range).map(
       (entry) => {
         const beginningDateTime = getDaysFromIsoDate(entry.beginningDateTime)
         const endingDateTime = getDaysFromIsoDate(entry.endingDateTime)
 
-        // If endsAtPresentFlag is set, or endingDate time is missing, we know this is
-        // an 'ongoing' date
+        // If the ends at present flag is set we still need to check each temporal extent individually
+        if (endsAtPresentFlag && endingDateTime.length > 0) {
+          return `${beginningDateTime} to ${endingDateTime}`
+        }
+
+        // If the ending date time is empty, we know that this is an ongoing dataset
         if (endsAtPresentFlag || endingDateTime === '') {
           return `${beginningDateTime} ongoing`
         }

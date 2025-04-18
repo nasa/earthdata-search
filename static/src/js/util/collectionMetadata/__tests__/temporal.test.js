@@ -1,0 +1,128 @@
+import {
+  getDaysFromIsoDate,
+  parseTemporal,
+  buildTemporal
+} from '../temporal'
+
+describe('getDaysFromIsoDate', () => {
+  test('returns the date in YYYY-MM-DD format for a valid ISO string', () => {
+    const isoDate = '2023-10-01T12:34:56Z'
+    expect(getDaysFromIsoDate(isoDate)).toEqual('2023-10-01')
+  })
+
+  test('returns an empty string for an empty input', () => {
+    expect(getDaysFromIsoDate('')).toEqual('')
+  })
+
+  test('returns an empty string for undefined input', () => {
+    expect(getDaysFromIsoDate(undefined)).toEqual('')
+  })
+})
+
+describe('parseTemporal', () => {
+  test('returns a range for rangeDateTimes', () => {
+    const metadata = {
+      endsAtPresentFlag: false,
+      rangeDateTimes: [
+        {
+          beginningDateTime: '2023-01-01T00:00:00Z',
+          endingDateTime: '2023-12-31T23:59:59Z'
+        }
+      ]
+    }
+
+    expect(parseTemporal(metadata)).toEqual([['2023-01-01 to 2023-12-31']])
+  })
+
+  test('returns a range with "ongoing" for rangeDateTimes when endsAtPresentFlag is true', () => {
+    const metadata = {
+      endsAtPresentFlag: true,
+      rangeDateTimes: [
+        {
+          beginningDateTime: '2023-01-01T00:00:00Z',
+          endingDateTime: ''
+        }
+      ]
+    }
+
+    expect(parseTemporal(metadata)).toEqual([['2023-01-01 ongoing']])
+  })
+
+  test('returns "Not available" for invalid temporalRangeType', () => {
+    const metadata = {
+      endsAtPresentFlag: false
+    }
+
+    expect(parseTemporal(metadata)).toEqual('Not available')
+  })
+
+  test('parses singleDateTimes correctly', () => {
+    const json = {
+      endsAtPresentFlag: true,
+      singleDateTimes: [
+        '2024-02-14T01:02:04Z'
+      ],
+      temporalResolution: {
+        Value: 43,
+        Unit: 'Minute'
+      }
+    }
+    expect(parseTemporal(json)).toEqual('2024-02-14 ongoing')
+  })
+})
+
+describe('buildTemporal', () => {
+  test('parses temporalExtents correctly for single date time', () => {
+    const json = {
+      temporalExtents: [
+        {
+          endsAtPresentFlag: false,
+          rangeDateTimes: [
+            {
+              beginningDateTime: '2018-10-13T00:00:00.000Z',
+              endDateTime: '2020-11-13T00:00:00.000Z'
+            }
+          ]
+        }
+      ]
+    }
+
+    expect(buildTemporal(json)).toEqual(['2018-10-13 ongoing'])
+  })
+
+  test('parses temporalExtents correctly for multiple entries', () => {
+    const json = {
+      temporalExtents: [
+        {
+          rangeDateTimes: [
+            {
+              beginningDateTime: '2023-01-01T00:00:00Z',
+              endingDateTime: '2023-12-31T23:59:59Z'
+            }
+          ]
+        },
+        {
+          rangeDateTimes: [
+            {
+              beginningDateTime: '2024-01-01T00:00:00Z',
+              endingDateTime: ''
+            }
+          ]
+        }
+      ]
+    }
+
+    expect(buildTemporal(json)).toEqual([
+      '2023-01-01 to 2023-12-31',
+      '2024-01-01 ongoing'
+    ])
+  })
+
+  test('returns "Not available" for invalid temporalExtents', () => {
+    const json = {
+      temporalExtents: 'invalid'
+    }
+
+    expect(buildTemporal(json)).toEqual(['Not available'])
+  })
+})
