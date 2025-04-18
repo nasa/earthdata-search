@@ -4,6 +4,21 @@
   position: relative;
   z-index: 3;
 
+  // TODO: These overrides should not be necessary and should be fixed in EDSC-4473
+  .edsc-timeline-primary-section__title {
+    color: utils.$color__spacesuit-white;
+    line-height: 1;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  // TODO: These overrides should not be necessary and should be fixed in EDSC-4473
+  .edsc-timeline-primary-section__entry {
+    text-shadow:
+      1px 1px 0 rgba(utils.$color__carbon-black, 0.75),
+      0 0 0.75rem rgba(utils.$color__carbon-black, 0.75);
+  }
+
   &__container {
     display: flex;
 
