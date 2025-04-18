@@ -20,6 +20,7 @@ export const parseTemporal = (metadata) => {
     rangeDateTimes,
     singleDateTimes
   } = metadata
+
   if (singleDateTimes) {
     // If there is a singleDateTime in the metadata utilize that date
     const [singleDateTime] = singleDateTimes

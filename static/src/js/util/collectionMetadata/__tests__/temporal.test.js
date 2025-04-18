@@ -72,7 +72,7 @@ describe('parseTemporal', () => {
 })
 
 describe('buildTemporal', () => {
-  test('parses temporalExtents correctly for single date time', () => {
+  test('parses temporalExtents correctly for single date time that is not ongoing', () => {
     const json = {
       temporalExtents: [
         {
@@ -80,7 +80,25 @@ describe('buildTemporal', () => {
           rangeDateTimes: [
             {
               beginningDateTime: '2018-10-13T00:00:00.000Z',
-              endDateTime: '2020-11-13T00:00:00.000Z'
+              endingDateTime: '2020-11-13T00:00:00.000Z'
+            }
+          ]
+        }
+      ]
+    }
+
+    expect(buildTemporal(json)).toEqual(['2018-10-13 to 2020-11-13'])
+  })
+
+  test('parses temporalExtents correctly for single date time that is ongoing', () => {
+    const json = {
+      temporalExtents: [
+        {
+          endsAtPresentFlag: true,
+          rangeDateTimes: [
+            {
+              beginningDateTime: '2018-10-13T00:00:00.000Z',
+              endingDateTime: ''
             }
           ]
         }
@@ -93,6 +111,14 @@ describe('buildTemporal', () => {
   test('parses temporalExtents correctly for multiple entries', () => {
     const json = {
       temporalExtents: [
+        {
+          rangeDateTimes: [
+            {
+              beginningDateTime: '2018-01-01T00:00:00Z',
+              endingDateTime: '2022-01-01T00:00:00Z'
+            }
+          ]
+        },
         {
           rangeDateTimes: [
             {
@@ -113,6 +139,7 @@ describe('buildTemporal', () => {
     }
 
     expect(buildTemporal(json)).toEqual([
+      '2018-01-01 to 2022-01-01',
       '2023-01-01 to 2023-12-31',
       '2024-01-01 ongoing'
     ])
