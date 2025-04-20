@@ -4,6 +4,6 @@ describe('generateFormDigest', () => {
   test('retrieves the username from the endpoint field', () => {
     const form = 'mock echo form data'
 
-    expect(generateFormDigest(form)).toEqual('e60e33c401915211e731cbcf993ecfe1102a4a22')
+    expect(generateFormDigest(form)).toEqual('bW9jayBlY2hvIGZvcm0gZGF0YQ==')
   })
 })

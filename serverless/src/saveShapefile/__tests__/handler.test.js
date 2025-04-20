@@ -122,7 +122,7 @@ describe('saveShapefile', () => {
     })
   })
 
-  describe('as an authticated user', () => {
+  describe('as an authenticated user', () => {
     test('saves the shapefile into the database', async () => {
       dbTracker.on('query', (query, step) => {
         if (step === 1) {
