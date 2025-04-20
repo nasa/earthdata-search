@@ -43,6 +43,10 @@ const getSavedAccessConfigs = async (event, context) => {
 
     const configs = {}
 
+    if (accessConfigRecords.length > 0) {
+      console.log('Found savedAccessConfigs for collectionIds:', collectionIds)
+    }
+
     accessConfigRecords.forEach((config) => {
       const {
         collection_id: collectionId,

@@ -31,7 +31,8 @@ export const buildEcho = (serviceItem) => {
       const {
         conceptId: orderOptionConceptId,
         form,
-        name: orderOptionName
+        name: orderOptionName,
+        revisionId: orderOptionRevisionId
       } = orderOptionItem
 
       const method = {
@@ -40,7 +41,8 @@ export const buildEcho = (serviceItem) => {
         url: urlValue,
         optionDefinition: {
           conceptId: orderOptionConceptId,
-          name: orderOptionName
+          name: orderOptionName,
+          revisionId: orderOptionRevisionId
         },
         form,
         formDigest: generateFormDigest(form)

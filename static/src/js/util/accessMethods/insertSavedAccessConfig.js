@@ -19,8 +19,6 @@ export const insertSavedAccessConfig = (methods, savedAccessConfig) => {
     const method = methods[methodName]
 
     // Update the accessMethod that matches the savedAccessConfig
-    console.log(`Found savedAccessConfig of type ${savedAccessConfig.type}`)
-
     if (method.type === savedAccessConfig.type) {
       if (['download'].includes(method.type)) {
         selectedAccessMethod = methodName
