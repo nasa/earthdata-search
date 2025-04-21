@@ -12,6 +12,7 @@ import { kebabCase } from 'lodash-es'
 
 import Facets from '../Facets'
 import * as facetUtils from '../../../util/facets'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 function setup(overrideProps = {}) {
   const onChangeCmrFacet = jest.fn()
@@ -188,7 +189,6 @@ function setup(overrideProps = {}) {
       mapImagery: false,
       nearRealTime: false
     },
-    openKeywordFacet: false,
     portal: {
       features: {
         featureFacets: {
@@ -201,7 +201,6 @@ function setup(overrideProps = {}) {
     onChangeCmrFacet,
     onChangeFeatureFacet,
     onTriggerViewAllFacets,
-    setOpenKeywordFacet,
     ...overrideProps
   }
 
@@ -607,22 +606,38 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   describe('when rendering with openKeywordFacet set to true', () => {
-    test('renders the keyword facet group as open', () => {
-      setup({
-        openKeywordFacet: true
+    test('renders the keyword facet group as open', async () => {
+      const state = useEdscStore.getState()
+      useEdscStore.setState({
+        ...state,
+        home: {
+          ...state.home,
+          openKeywordFacet: true
+        }
       })
+
+      setup()
 
       const keywordsElements = screen.getByText('Mock Keyword Facet')
       expect(keywordsElements).toBeInTheDocument()
     })
 
     test('calls setOpenKeywordFacet to reset the value', () => {
-      const { props } = setup({
-        openKeywordFacet: true
+      const mockSetOpenKeywordFacet = jest.fn()
+      const state = useEdscStore.getState()
+      useEdscStore.setState({
+        ...state,
+        home: {
+          ...state.home,
+          setOpenKeywordFacet: mockSetOpenKeywordFacet,
+          openKeywordFacet: true
+        }
       })
 
-      expect(props.setOpenKeywordFacet).toHaveBeenCalledTimes(1)
-      expect(props.setOpenKeywordFacet).toHaveBeenCalledWith(false)
+      setup()
+
+      expect(mockSetOpenKeywordFacet).toHaveBeenCalledTimes(1)
+      expect(mockSetOpenKeywordFacet).toHaveBeenCalledWith(false)
     })
   })
 })

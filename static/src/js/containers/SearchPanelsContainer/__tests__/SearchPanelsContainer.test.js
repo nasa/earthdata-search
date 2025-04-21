@@ -4,7 +4,6 @@ import { render, screen } from '@testing-library/react'
 
 import actions from '../../../actions'
 import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
-import HomeContext from '../../../contexts/HomeContext'
 
 import SearchPanels from '../../../components/SearchPanels/SearchPanels'
 import {
@@ -15,7 +14,6 @@ import {
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
 
-const mockSetOpenKeywordFacet = jest.fn()
 const mockOnApplyGranuleFilters = jest.fn
 const mockOnChangeQuery = jest.fn
 const mockOnChangePath = jest.fn
@@ -71,15 +69,7 @@ function setup() {
   }
 
   render(
-    <HomeContext.Provider value={
-      {
-        openKeywordFacet: false,
-        setOpenKeywordFacet: mockSetOpenKeywordFacet
-      }
-    }
-    >
-      <SearchPanelsContainer {...props} />
-    </HomeContext.Provider>
+    <SearchPanelsContainer {...props} />
   )
 
   return {

@@ -17,7 +17,6 @@ import ogImage from '../assets/images/earthdata-search-og-image.jpg'
 import configureStore from './store/configureStore'
 import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'
-import WithProviders from './providers/WithProviders/WithProviders'
 
 // Routes
 import Home from './routes/Home/Home'
@@ -272,4 +271,4 @@ class App extends Component {
   }
 }
 
-export default WithProviders(App)
+export default App

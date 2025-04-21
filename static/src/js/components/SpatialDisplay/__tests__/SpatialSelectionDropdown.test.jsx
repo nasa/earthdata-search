@@ -15,7 +15,6 @@ import SpatialSelectionDropdown from '../SpatialSelectionDropdown'
 import * as EventEmitter from '../../../events/events'
 import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes } from '../../../constants/eventTypes'
-import Providers from '../../../providers/Providers/Providers'
 
 const onChangeUrl = jest.fn()
 const onChangePath = jest.fn()
@@ -61,11 +60,9 @@ const setup = () => {
   }
 
   render(
-    <Providers>
-      <Router history={history} location="/search">
-        <SpatialSelectionDropdown {...props} />
-      </Router>
-    </Providers>
+    <Router history={history} location="/search">
+      <SpatialSelectionDropdown {...props} />
+    </Router>
   )
 
   return { user }

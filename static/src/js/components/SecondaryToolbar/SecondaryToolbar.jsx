@@ -17,8 +17,8 @@ import {
   FaUser,
   FaSignInAlt
 } from 'react-icons/fa'
-import TourContext from '../../contexts/TourContext'
-import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
+
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { isDownloadPathWithId } from '../../util/isDownloadPathWithId'
@@ -31,12 +31,11 @@ import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './SecondaryToolbar.scss'
 
 class SecondaryToolbar extends Component {
-  // eslint-disable-next-line react/static-property-placement
-  static contextType = TourContext
-
   constructor(props) {
     super(props)
 
@@ -126,7 +125,8 @@ class SecondaryToolbar extends Component {
       ursProfile
     } = this.props
 
-    const { disableSiteTour } = getApplicationConfig()
+    const { setRunTour } = useEdscStore.getState().ui.tour
+
     const { first_name: firstName = '' } = ursProfile
 
     const loggedIn = authToken !== ''
@@ -406,31 +406,26 @@ class SecondaryToolbar extends Component {
         onToggle={this.onToggleProjectDropdown}
         align="end"
       >
-        <TourContext.Consumer>
-          {
-            ({ setRunTour }) => (
-              <Dropdown.Toggle
-                className={classNames(['secondary-toolbar__start-tour-button', { 'focus-light': isMapOverlay }])}
-                as={Button}
-                aria-label="Start Search Tour"
-                icon={FaQuestion}
-                iconSize="14"
-                onClick={setRunTour}
-                bootstrapVariant="light"
-                tooltip="Take a tour to learn how to use Earthdata Search"
-                tooltipId="start-tour-tooltip"
-                tooltipPlacement="left"
-                label="Start tour"
-              />
-            )
-          }
-        </TourContext.Consumer>
+        <Dropdown.Toggle
+          className={classNames(['secondary-toolbar__start-tour-button', { 'focus-light': isMapOverlay }])}
+          as={Button}
+          aria-label="Start Search Tour"
+          icon={FaQuestion}
+          iconSize="14"
+          // Passing `true` because we don't need the whole event object
+          onClick={() => setRunTour(true)}
+          bootstrapVariant="light"
+          tooltip="Take a tour to learn how to use Earthdata Search"
+          tooltipId="start-tour-tooltip"
+          tooltipPlacement="left"
+          label="Start tour"
+        />
       </Dropdown>
     )
 
     const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
     const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
-    const showStartTourButton = location.pathname === '/search' && (disableSiteTour !== 'true')
+    const showStartTourButton = location.pathname === '/search'
 
     return (
       secondaryToolbarEnabled

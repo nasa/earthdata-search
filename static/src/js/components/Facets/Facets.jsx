@@ -8,6 +8,8 @@ import { changeFeatureFacet, changeCmrFacet } from '../../util/facets'
 
 import FacetsGroup from './FacetsGroup'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './Facets.scss'
 
 const Facets = (props) => {
@@ -17,10 +19,16 @@ const Facets = (props) => {
     portal,
     onChangeCmrFacet,
     onChangeFeatureFacet,
-    onTriggerViewAllFacets,
+    onTriggerViewAllFacets
+  } = props
+
+  const {
     openKeywordFacet,
     setOpenKeywordFacet
-  } = props
+  } = useEdscStore((state) => ({
+    openKeywordFacet: state.home.openKeywordFacet,
+    setOpenKeywordFacet: state.home.setOpenKeywordFacet
+  }))
 
   useEffect(() => {
     // Reset the value in the context once the component mounts
@@ -214,11 +222,9 @@ Facets.propTypes = {
   portal: PropTypes.shape({
     features: PropTypes.shape({})
   }).isRequired,
-  openKeywordFacet: PropTypes.bool.isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
   onChangeFeatureFacet: PropTypes.func.isRequired,
-  onTriggerViewAllFacets: PropTypes.func.isRequired,
-  setOpenKeywordFacet: PropTypes.func.isRequired
+  onTriggerViewAllFacets: PropTypes.func.isRequired
 }
 
 export default Facets

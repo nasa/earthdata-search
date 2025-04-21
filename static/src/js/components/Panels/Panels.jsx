@@ -11,9 +11,8 @@ import history from '../../util/history'
 import { getPanelSizeMap } from '../../util/getPanelSizeMap'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
-import PanelWidthContext from '../../contexts/PanelWidthContext'
-
 import './Panels.scss'
+import useEdscStore from '../../zustand/useEdscStore'
 
 // Returns the width of the sidebar
 const getSidebarWidth = () => {
@@ -29,9 +28,6 @@ const getSidebarWidth = () => {
 }
 
 export class Panels extends PureComponent {
-  // eslint-disable-next-line react/static-property-placement
-  static contextType = PanelWidthContext
-
   constructor(props) {
     super(props)
     this.width = 600 // The default width the panel is displayed when open
@@ -97,7 +93,7 @@ export class Panels extends PureComponent {
     this.updateResponsiveClassNames()
 
     // When the component mounts call setPanelsWidth to set the initial width
-    const { setPanelsWidth } = this.context
+    const { setPanelsWidth } = useEdscStore.getState().ui.panels
     setPanelsWidth(this.width + getSidebarWidth())
   }
 
@@ -199,7 +195,7 @@ export class Panels extends PureComponent {
       const currentWidth = this.width
       const panelWidth = show ? 0 : currentWidth
 
-      const { setPanelsWidth } = this.context
+      const { setPanelsWidth } = useEdscStore.getState().ui.panels
       setPanelsWidth(getSidebarWidth() + panelWidth)
     }
 
@@ -240,7 +236,7 @@ export class Panels extends PureComponent {
   }
 
   onPanelHandleClickOrKeypress(event) {
-    const { setPanelsWidth } = this.context
+    const { setPanelsWidth } = useEdscStore.getState().ui.panels
     const { show } = this.state
     const {
       type,
@@ -418,7 +414,7 @@ export class Panels extends PureComponent {
       clickStartWidth
     } = this
 
-    const { setPanelsWidth } = this.context
+    const { setPanelsWidth } = useEdscStore.getState().ui.panels
 
     // Only change the state when the user finishes a drag. Click events
     // will fire this function, but they should not fire the dragend events.

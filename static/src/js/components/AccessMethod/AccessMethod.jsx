@@ -3,8 +3,7 @@ import React, {
   useEffect,
   lazy,
   Suspense,
-  useMemo,
-  useContext
+  useMemo
 } from 'react'
 import PropTypes from 'prop-types'
 import Alert from 'react-bootstrap/Alert'
@@ -27,7 +26,7 @@ import SwodlrForm from './SwodlrForm'
 
 import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
-import MbrContext from '../../contexts/MbrContext'
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './AccessMethod.scss'
 
@@ -65,7 +64,7 @@ const AccessMethod = ({
   temporal,
   ursProfile
 }) => {
-  const { setShowMbr } = useContext(MbrContext)
+  const setShowMbr = useEdscStore((state) => state.map.setShowMbr)
 
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
 
