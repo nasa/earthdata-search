@@ -1,3 +1,5 @@
+import { StateCreator } from 'zustand'
+
 export type HomeSlice = {
   home: {
     startDrawing: boolean | string
@@ -32,3 +34,5 @@ export type EdscStore =
   HomeSlice
   & MapSlice
   & UiSlice
+
+export type ImmerStateCreator<T> = StateCreator<EdscStore, [['zustand/immer', never], never], [], T>

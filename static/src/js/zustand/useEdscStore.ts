@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
+import { immer } from 'zustand/middleware/immer'
 
 import { EdscStore } from './types'
 
@@ -8,15 +9,17 @@ import createMapSlice from './slices/createMapSlice'
 import createUiSlice from './slices/createUiSlice'
 
 const useEdscStore = create<EdscStore>()(
-  devtools(
-    (...args) => ({
-      ...createHomeSlice(...args),
-      ...createMapSlice(...args),
-      ...createUiSlice(...args)
-    }),
-    {
-      name: 'edsc-store'
-    }
+  immer(
+    devtools(
+      (...args) => ({
+        ...createHomeSlice(...args),
+        ...createMapSlice(...args),
+        ...createUiSlice(...args)
+      }),
+      {
+        name: 'edsc-store'
+      }
+    )
   )
 )
 

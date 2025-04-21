@@ -1,27 +1,18 @@
-import { StateCreator } from 'zustand'
-import { EdscStore, HomeSlice } from '../types'
+import { HomeSlice, ImmerStateCreator } from '../types'
 
-const createHomeSlice: StateCreator<HomeSlice> = (set) => ({
+const createHomeSlice: ImmerStateCreator<HomeSlice> = (set) => ({
   home: {
     startDrawing: false,
     setStartDrawing: (startDrawing: boolean | string) => {
-      set((state: EdscStore) => ({
-        ...state,
-        home: {
-          ...state.home,
-          startDrawing
-        }
-      }))
+      set((state) => {
+        state.home.startDrawing = startDrawing
+      })
     },
     openKeywordFacet: false,
     setOpenKeywordFacet: (openKeywordFacet: boolean) => {
-      set((state: EdscStore) => ({
-        ...state,
-        home: {
-          ...state.home,
-          openKeywordFacet
-        }
-      }))
+      set((state) => {
+        state.home.openKeywordFacet = openKeywordFacet
+      })
     }
   }
 })

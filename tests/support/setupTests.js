@@ -90,7 +90,6 @@ export const setupTests = async ({
   // Set the 'dontShowTour' flag in localStorage
   await context.addInitScript((value) => {
     const previousValue = window.localStorage.getItem('dontShowTour')
-    console.log('🚀 ~ setupTests.js:95 ~ awaitcontext.addInitScript ~ previousValue:', previousValue)
 
     // If we already provided a value, we don't want to overwrite any changes that have been made
     if (previousValue) return
