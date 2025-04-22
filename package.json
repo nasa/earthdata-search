@@ -46,6 +46,7 @@
     "playwright:ci:performance": "start-server-and-test start-ci http-get://localhost:8080 'npm run playwright -- performance.spec.js'",
     "preplaywright": "rm -rf playwright-coverage/ .nyc_output/",
     "playwright": "NODE_ENV=playwright nyc playwright test --reporter=list",
+    "vite-bundle-vis": "npx vite-bundle-visualizer --sourcemap",
     "playwright:ui": "npx playwright test --ui",
     "postplaywright": "npx nyc report --reporter=json --reporter=lcov --reporter=clover --report-dir=playwright-coverage",
     "deploy-infrastructure": "cd cdk/earthdata-search-infrastructure && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
