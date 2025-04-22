@@ -1,71 +1,89 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import actions from '../../actions'
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
+import RetrievalRequest from '../../util/request/retrievalRequest'
+import { addToast } from '../../util/addToast'
 
-export const mapStateToProps = (state) => ({
-  earthdataEnvironment: state.earthdataEnvironment,
-  retrievalHistory: state.retrievalHistory.history,
-  retrievalHistoryLoading: state.retrievalHistory.isLoading,
-  retrievalHistoryLoaded: state.retrievalHistory.isLoaded
-})
+export const DownloadHistoryContainer = ({ 
+  authToken, 
+  earthdataEnvironment 
+}) => {
+  const [retrievalHistory, setRetrievalHistory] = useState([])
+  const [retrievalHistoryLoading, setRetrievalHistoryLoading] = useState(false)
+  const [retrievalHistoryLoaded, setRetrievalHistoryLoaded] = useState(false)
 
-export const mapDispatchToProps = (dispatch) => ({
-  onFetchRetrievalHistory: (earthdataEnvironment) => {
-    dispatch(actions.fetchRetrievalHistory(earthdataEnvironment))
-  },
-  onDeleteRetrieval:
-    (retrievalId) => dispatch(actions.deleteRetrieval(retrievalId))
-})
-
-export class DownloadHistoryContainer extends Component {
-  componentDidMount() {
-    const {
-      onFetchRetrievalHistory
-    } = this.props
-
-    onFetchRetrievalHistory()
+  const fetchRetrievalHistory = async () => {
+    if (!authToken) return
+    
+    setRetrievalHistoryLoading(true)
+    
+    try {
+      const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+      const response = await requestObject.all()
+      const { data } = response
+      
+      setRetrievalHistory(data)
+      setRetrievalHistoryLoaded(true)
+    } catch (error) {
+      console.error('Error fetching retrieval history:', error)
+    } finally {
+      setRetrievalHistoryLoading(false)
+    }
   }
 
-  render() {
-    const {
-      earthdataEnvironment,
-      retrievalHistory,
-      onDeleteRetrieval,
-      retrievalHistoryLoading,
-      retrievalHistoryLoaded
-    } = this.props
-
-    return (
-      <DownloadHistory
-        earthdataEnvironment={earthdataEnvironment}
-        retrievalHistory={retrievalHistory}
-        retrievalHistoryLoading={retrievalHistoryLoading}
-        retrievalHistoryLoaded={retrievalHistoryLoaded}
-        onDeleteRetrieval={onDeleteRetrieval}
-      />
-    )
+  const handleDeleteRetrieval = async (retrievalId) => {
+    if (!authToken) return
+    
+    try {
+      const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+      await requestObject.remove(retrievalId)
+      
+      setRetrievalHistory(prevHistory => 
+        prevHistory.filter(item => item.id !== retrievalId)
+      )
+      
+      addToast('Retrieval removed', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    } catch (error) {
+      console.error('Error deleting retrieval:', error)
+      
+      addToast('Error removing retrieval', {
+        appearance: 'error',
+        autoDismiss: true
+      })
+    }
   }
-}
 
-DownloadHistoryContainer.defaultProps = {
-  retrievalHistory: []
+  useEffect(() => {
+    fetchRetrievalHistory()
+  }, [earthdataEnvironment, authToken])
+
+  return (
+    <DownloadHistory
+      earthdataEnvironment={earthdataEnvironment}
+      retrievalHistory={retrievalHistory}
+      retrievalHistoryLoading={retrievalHistoryLoading}
+      retrievalHistoryLoaded={retrievalHistoryLoaded}
+      onDeleteRetrieval={handleDeleteRetrieval}
+    />
+  )
 }
 
 DownloadHistoryContainer.propTypes = {
-  earthdataEnvironment: PropTypes.string.isRequired,
-  retrievalHistory: PropTypes.arrayOf(
-    PropTypes.shape({})
-  ),
-  retrievalHistoryLoading: PropTypes.bool.isRequired,
-  retrievalHistoryLoaded: PropTypes.bool.isRequired,
-  onFetchRetrievalHistory: PropTypes.func.isRequired,
-  onDeleteRetrieval: PropTypes.func.isRequired
+  authToken: PropTypes.string.isRequired,
+  earthdataEnvironment: PropTypes.string.isRequired
 }
 
+const mapStateToProps = (state) => ({
+  authToken: state.authToken,
+  earthdataEnvironment: state.earthdataEnvironment
+})
+
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(DownloadHistoryContainer)
+  connect(mapStateToProps)(DownloadHistoryContainer)
 )
