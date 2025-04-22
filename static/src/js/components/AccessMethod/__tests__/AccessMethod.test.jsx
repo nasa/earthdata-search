@@ -253,7 +253,7 @@ describe('AccessMethod component', () => {
           details: 'Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis.',
           value: 'HarmonyMethodType'
         }),
-        expect.anything()
+        {}
       )
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
