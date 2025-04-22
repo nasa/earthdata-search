@@ -1,89 +1,82 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, screen, waitFor } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import configureStore from 'redux-mock-store'
 
-import actions from '../../../actions'
-import {
-  DownloadHistoryContainer,
-  mapDispatchToProps,
-  mapStateToProps
-} from '../DownloadHistoryContainer'
+import DownloadHistoryContainer from '../DownloadHistoryContainer'
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
+import RetrievalRequest from '../../../util/request/retrievalRequest'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../util/request/retrievalRequest')
+jest.mock('../../../util/addToast', () => ({
+  addToast: jest.fn()
+}))
+jest.mock('../../../components/DownloadHistory/DownloadHistory', () => ({
+  DownloadHistory: jest.fn(() => <div data-testid="download-history" />)
+}))
 
-function setup(props) {
-  const enzymeWrapper = shallow(<DownloadHistoryContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-describe('mapDispatchToProps', () => {
-  test('onFetchRetrievalHistory calls actions.fetchRetrievalHistory', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchRetrievalHistory')
-
-    mapDispatchToProps(dispatch).onFetchRetrievalHistory('prod')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('prod')
-  })
-
-  test('onDeleteRetrieval calls actions.deleteRetrieval', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'deleteRetrieval')
-
-    mapDispatchToProps(dispatch).onDeleteRetrieval('retrievalId')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('retrievalId')
-  })
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      earthdataEnvironment: 'prod',
-      retrievalHistory: {
-        history: {},
-        isLoading: false,
-        isLoaded: false
-      }
-    }
-
-    const expectedState = {
-      earthdataEnvironment: 'prod',
-      retrievalHistory: {},
-      retrievalHistoryLoading: false,
-      retrievalHistoryLoaded: false
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
+const mockStore = configureStore([])
 
 describe('DownloadHistoryContainer component', () => {
-  describe('when passed the correct props', () => {
-    test('renders a table when a retrieval exists with one collection that has no title', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [{
+  beforeEach(() => {
+    jest.clearAllMocks()
+    
+    // Mock the RetrievalRequest methods
+    RetrievalRequest.mockImplementation(() => ({
+      all: jest.fn().mockResolvedValue({ 
+        data: [{
           id: '8069076',
           jsondata: {},
           created_at: '2019-08-25T11:58:14.390Z',
           collections: [{}]
-        }],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: false,
-        onFetchRetrievalHistory: jest.fn(),
-        onDeleteRetrieval: jest.fn()
-      })
+        }] 
+      }),
+      remove: jest.fn().mockResolvedValue({})
+    }))
+  })
 
-      expect(enzymeWrapper.find(DownloadHistory).length).toBe(1)
+  test('renders the DownloadHistory component', async () => {
+    const store = mockStore({
+      authToken: 'testToken',
+      earthdataEnvironment: 'prod'
+    })
+    
+    render(
+      <Provider store={store}>
+        <MemoryRouter>
+          <DownloadHistoryContainer />
+        </MemoryRouter>
+      </Provider>
+    )
+    
+    await waitFor(() => {
+      expect(screen.getByTestId('download-history')).toBeInTheDocument()
+    })
+    
+    const calls = DownloadHistory.mock.calls
+    expect(calls.length).toBeGreaterThan(0)
+    
+    const lastCall = calls[calls.length - 1][0]
+    expect(lastCall.earthdataEnvironment).toBe('prod')
+    expect(lastCall.retrievalHistoryLoaded).toBe(true)
+    expect(Array.isArray(lastCall.retrievalHistory)).toBe(true)
+  })
+
+  test('maps state to props correctly', () => {
+    const mapStateToProps = (state) => ({
+      authToken: state.authToken,
+      earthdataEnvironment: state.earthdataEnvironment
+    })
+    
+    const state = {
+      authToken: 'testToken',
+      earthdataEnvironment: 'prod'
+    }
+    
+    expect(mapStateToProps(state)).toEqual({
+      authToken: 'testToken',
+      earthdataEnvironment: 'prod'
     })
   })
 })

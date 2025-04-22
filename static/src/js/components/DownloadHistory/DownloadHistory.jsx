@@ -71,6 +71,7 @@ export const DownloadHistory = ({
       {
         (retrievalHistoryLoading && !retrievalHistoryLoaded) && (
           <Spinner
+            dataTestId="spinner"
             className="download-history__spinner"
             type="dots"
             size="small"

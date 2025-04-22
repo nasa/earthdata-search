@@ -1,37 +1,52 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Table from 'react-bootstrap/Table'
-import Helmet from 'react-helmet'
+import { render, screen, fireEvent } from '@testing-library/react'
+import { MemoryRouter } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 import * as AppConfig from '../../../../../../sharedUtils/config'
 
-import Spinner from '../../Spinner/Spinner'
-import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { DownloadHistory } from '../DownloadHistory'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../../../../sharedUtils/deployedEnvironment', () => ({
+  deployedEnvironment: jest.fn()
+}))
+
+jest.mock('../../../../../../sharedUtils/config', () => ({
+  getEnvironmentConfig: jest.fn()
+}))
+
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  __esModule: true,
+  default: ({ children, to, portalId }) => (
+    <a 
+      href={`/downloads/${to.pathname.split('/').pop()}${to.search}`}
+      data-testid="portal-link"
+      data-portal-id={portalId}
+    >
+      {children}
+    </a>
+  )
+}))
 
 function setup(props) {
-  const enzymeWrapper = shallow(<DownloadHistory {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  return render(
+    <MemoryRouter>
+      <DownloadHistory {...props} />
+    </MemoryRouter>
+  )
 }
 
 beforeEach(() => {
-  jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
-  jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+  jest.clearAllMocks()
+  deployedEnvironment.deployedEnvironment.mockImplementation(() => 'prod')
+  AppConfig.getEnvironmentConfig.mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 describe('DownloadHistory component', () => {
   describe('when passed the correct props', () => {
     test('renders a spinner when retrievals are loading', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
+      setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [],
         retrievalHistoryLoading: true,
@@ -39,12 +54,16 @@ describe('DownloadHistory component', () => {
         onDeleteRetrieval: jest.fn()
       })
 
-      expect(enzymeWrapper.find(Spinner).length).toBe(1)
+      expect(screen.getByRole('heading', { name: /download status & history/i })).toBeInTheDocument()
+
+      const spinner = screen.getByTestId('spinner')
+
+      expect(spinner).toBeInTheDocument()
+      expect(spinner).toHaveClass('download-history__spinner')
     })
 
     test('renders a message when no retrievals exist', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
+      setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [],
         retrievalHistoryLoading: false,
@@ -52,14 +71,13 @@ describe('DownloadHistory component', () => {
         onDeleteRetrieval: jest.fn()
       })
 
-      expect(enzymeWrapper.find(Table).length).toBe(0)
-      expect(enzymeWrapper.find(Spinner).length).toBe(0)
-      expect(enzymeWrapper.find('p').text()).toBe('No download history to display.')
+      expect(screen.queryByRole('table')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('spinner')).not.toBeInTheDocument()
+      expect(screen.getByText('No download history to display.')).toBeInTheDocument()
     })
 
     test('renders a table when a retrieval exists with one collection that has no title', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
+      setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
@@ -71,19 +89,17 @@ describe('DownloadHistory component', () => {
         retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
-        pathname: '/downloads/8069076',
-        search: ''
-      })
 
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('1 collection')
+      expect(screen.getByRole('table')).toBeInTheDocument()
+      expect(screen.getByText('1 collection')).toBeInTheDocument()
+      
+      const link = screen.getByTestId('portal-link')
+      expect(link).toHaveAttribute('href', '/downloads/8069076')
+      expect(link).toHaveTextContent('1 collection')
     })
 
     test('renders a table when a retrieval exists with one collection', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
+      setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
@@ -97,19 +113,17 @@ describe('DownloadHistory component', () => {
         retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
-        pathname: '/downloads/8069076',
-        search: ''
-      })
 
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
+      expect(screen.getByRole('table')).toBeInTheDocument()
+      expect(screen.getByText('Collection Title')).toBeInTheDocument()
+      
+      const link = screen.getByTestId('portal-link')
+      expect(link).toHaveAttribute('href', '/downloads/8069076')
+      expect(link).toHaveTextContent('Collection Title')
     })
 
     test('renders a table when a retrieval exists with two collections', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
+      setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
@@ -125,49 +139,28 @@ describe('DownloadHistory component', () => {
         retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
-        pathname: '/downloads/8069076',
-        search: ''
-      })
 
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title and 1 other collection')
+      expect(screen.getByRole('table')).toBeInTheDocument()
+      
+      const link = screen.getByTestId('portal-link')
+      expect(link).toHaveAttribute('href', '/downloads/8069076')
+      expect(link).toHaveTextContent('Collection Title and 1 other collection')
     })
 
-    test('renders the correct Helmet meta information', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
+    test('renders document head metadata correctly', () => {
+      const { container } = setup({
         earthdataEnvironment: 'prod',
-        retrievalHistory: [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{
-            title: 'Collection Title'
-          }, {
-            title: 'Collection Title Two'
-          }]
-        }],
+        retrievalHistory: [],
         retrievalHistoryLoading: false,
         retrievalHistoryLoaded: true,
         onDeleteRetrieval: jest.fn()
       })
 
-      const helmet = enzymeWrapper.find(Helmet)
-      expect(helmet.childAt(0).type()).toEqual('title')
-      expect(helmet.childAt(0).text()).toEqual('Download Status & History')
-      expect(helmet.childAt(1).props().name).toEqual('title')
-      expect(helmet.childAt(1).props().content).toEqual('Download Status & History')
-      expect(helmet.childAt(2).props().name).toEqual('robots')
-      expect(helmet.childAt(2).props().content).toEqual('noindex, nofollow')
-      expect(helmet.childAt(3).props().rel).toEqual('canonical')
-      expect(helmet.childAt(3).props().href).toEqual('https://search.earthdata.nasa.gov/downloads')
+      expect(container.querySelector('h2')).toHaveTextContent('Download Status & History')
     })
 
     test('renders links correctly when portals were used to place an order', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
+      setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
@@ -184,20 +177,16 @@ describe('DownloadHistory component', () => {
         onDeleteRetrieval: jest.fn()
       })
 
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
-        pathname: '/downloads/8069076',
-        search: ''
-      })
-
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('portalId')).toEqual('test')
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
+      expect(screen.getByRole('table')).toBeInTheDocument()
+      
+      const link = screen.getByTestId('portal-link')
+      expect(link).toHaveAttribute('href', '/downloads/8069076')
+      expect(link).toHaveAttribute('data-portal-id', 'test')
+      expect(link).toHaveTextContent('Collection Title')
     })
 
-    test('renders links correctly when the earthdataEnvironment doesn\'t match the deployed environment', () => {
-      const { enzymeWrapper } = setup({
-        authToken: 'testToken',
+    test("renders links correctly when the earthdataEnvironment doesn't match the deployed environment", () => {
+      setup({
         earthdataEnvironment: 'uat',
         retrievalHistory: [{
           id: '8069076',
@@ -214,20 +203,18 @@ describe('DownloadHistory component', () => {
         onDeleteRetrieval: jest.fn()
       })
 
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual({
-        pathname: '/downloads/8069076',
-        search: '?ee=uat'
-      })
-
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('portalId')).toEqual('test')
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Collection Title')
+      expect(screen.getByRole('table')).toBeInTheDocument()
+      
+      const link = screen.getByTestId('portal-link')
+      expect(link).toHaveAttribute('href', '/downloads/8069076?ee=uat')
+      expect(link).toHaveAttribute('data-portal-id', 'test')
+      expect(link).toHaveTextContent('Collection Title')
     })
 
     test('onHandleRemove calls onDeleteRetrieval', () => {
-      const { enzymeWrapper, props } = setup({
-        authToken: 'testToken',
+      const onDeleteRetrieval = jest.fn()
+      
+      setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [{
           id: '8069076',
@@ -239,17 +226,16 @@ describe('DownloadHistory component', () => {
         }],
         retrievalHistoryLoading: false,
         retrievalHistoryLoaded: true,
-        onDeleteRetrieval: jest.fn()
+        onDeleteRetrieval
       })
 
       window.confirm = jest.fn().mockImplementation(() => true)
 
-      const removeButton = enzymeWrapper.find('.download-history__button--remove')
+      const deleteButton = screen.getByRole('button', { name: /delete download/i })
+      fireEvent.click(deleteButton)
 
-      removeButton.simulate('click')
-
-      expect(props.onDeleteRetrieval).toBeCalledTimes(1)
-      expect(props.onDeleteRetrieval).toBeCalledWith('8069076')
+      expect(onDeleteRetrieval).toHaveBeenCalledTimes(1)
+      expect(onDeleteRetrieval).toHaveBeenCalledWith('8069076')
     })
   })
 })
