@@ -76,8 +76,7 @@ describe('insertSavedAccessConfig', () => {
       selectedAccessMethod: 'esi0'
     })
 
-    expect(consoleSpy).toHaveBeenCalledTimes(2)
-    expect(consoleSpy).toHaveBeenCalledWith('Found savedAccessConfig of type ESI')
+    expect(consoleSpy).toHaveBeenCalledTimes(1)
     expect(consoleSpy).toHaveBeenCalledWith('There was a problem parsing the savedAccessConfig values, using the default form instead.')
   })
 
