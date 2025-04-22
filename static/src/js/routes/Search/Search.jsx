@@ -22,8 +22,6 @@ import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
-import PortalBrowserModalContainer
-  from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
@@ -223,7 +221,6 @@ export const Search = ({
           </Switch>
         </SidebarContainer>
         <div className="route-wrapper__content route-wrapper__content--dark">
-          <PortalBrowserModalContainer />
           <RelatedUrlsModalContainer />
           <FacetsModalContainer />
           <PortalFeatureContainer advancedSearch>

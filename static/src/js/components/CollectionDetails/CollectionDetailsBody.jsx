@@ -355,7 +355,7 @@ export const CollectionDetailsBody = ({
                         temporal.map((entry, i) => {
                           const key = `temporal_entry_${i}`
 
-                          return <span key={key}>{entry}</span>
+                          return <div key={key}>{entry}</div>
                         })
                       }
                     </dd>

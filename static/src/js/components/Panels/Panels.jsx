@@ -186,7 +186,6 @@ export class Panels extends PureComponent {
   }
 
   onWindowKeyUp(event) {
-    console.log('🚀 ~ Panels ~ onWindowKeyUp ~ onWindowKeyUp:')
     const { show } = this.state
     const { keyboardShortcuts } = this
 
@@ -393,7 +392,6 @@ export class Panels extends PureComponent {
   }
 
   onPanelDragStart(clickStartWidth, clickStartX) {
-    console.log('🚀 ~ Panels ~ onPanelDragStart ~ onPanelDragStart:')
     this.onWindowResize()
     this.setState({
       dragging: true
