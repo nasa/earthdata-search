@@ -1,20 +1,20 @@
-import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
-import Table from 'react-bootstrap/Table';
-import TimeAgo from 'react-timeago';
-import { XCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui';
-import { Helmet } from 'react-helmet';
+import React, { useCallback } from 'react'
+import PropTypes from 'prop-types'
+import Table from 'react-bootstrap/Table'
+import TimeAgo from 'react-timeago'
+import { XCircled } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { Helmet } from 'react-helmet'
 
-import { getEnvironmentConfig } from '../../../../../sharedUtils/config';
-import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment';
-import { pluralize } from '../../util/pluralize';
-import { stringify } from '../../util/url/url';
+import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
+import { pluralize } from '../../util/pluralize'
+import { stringify } from '../../util/url/url'
 
-import Button from '../Button/Button';
-import Spinner from '../Spinner/Spinner';
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer';
+import Button from '../Button/Button'
+import Spinner from '../Spinner/Spinner'
+import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
-import './DownloadHistory.scss';
+import './DownloadHistory.scss'
 
 /**
  * Return a concise description of the retrieval for display in the UI
@@ -22,24 +22,24 @@ import './DownloadHistory.scss';
  */
 const retrievalDescription = (collections) => {
   // Get the first collection with a valid title
-  const firstCollection = collections.find((collection) => (Object.values(collection) && 'title' in collection));
+  const firstCollection = collections.find((collection) => (Object.values(collection) && 'title' in collection))
 
   // If no collection exists with a valid title we'll just display how many collections there are
   if (firstCollection) {
-    const { title } = firstCollection;
+    const { title } = firstCollection
 
     // When only one collection exists we can just display the title
     if (collections.length === 1) {
-      return title;
+      return title
     }
 
     // If more than one collection exists show the title of the first
-    return `${title} and ${collections.length - 1} other ${pluralize('collection', collections.length - 1)}`;
+    return `${title} and ${collections.length - 1} other ${pluralize('collection', collections.length - 1)}`
   }
 
   // No collection title exists so we'll just display how many collections were downloaded
-  return `${collections.length} ${pluralize('collection', collections.length)}`;
-};
+  return `${collections.length} ${pluralize('collection', collections.length)}`
+}
 
 export const DownloadHistory = ({
   earthdataEnvironment,
@@ -48,16 +48,16 @@ export const DownloadHistory = ({
   retrievalHistoryLoaded,
   onDeleteRetrieval
 }) => {
-  const { edscHost } = getEnvironmentConfig();
+  const { edscHost } = getEnvironmentConfig()
 
   const handleRemove = useCallback((id) => {
     // eslint-disable-next-line no-alert
-    const confirmDeletion = window.confirm('Are you sure you want to remove this download from your history? This action cannot be undone.');
+    const confirmDeletion = window.confirm('Are you sure you want to remove this download from your history? This action cannot be undone.')
 
     if (confirmDeletion) {
-      onDeleteRetrieval(id);
+      onDeleteRetrieval(id)
     }
-  }, [onDeleteRetrieval]);
+  }, [onDeleteRetrieval])
 
   return (
     <>
@@ -97,9 +97,9 @@ export const DownloadHistory = ({
                       created_at: createdAt,
                       jsondata,
                       collections
-                    } = retrieval;
+                    } = retrieval
 
-                    const { portal_id: portalId } = jsondata;
+                    const { portal_id: portalId } = jsondata
 
                     return (
                       <tr key={id}>
@@ -129,7 +129,7 @@ export const DownloadHistory = ({
                           />
                         </td>
                       </tr>
-                    );
+                    )
                   })
                 }
               </tbody>
@@ -140,15 +140,15 @@ export const DownloadHistory = ({
         )
       }
     </>
-  );
-};
+  )
+}
 
 DownloadHistory.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
   retrievalHistory: PropTypes.arrayOf(
     PropTypes.shape({})
-  ),
+  ).isRequired,
   retrievalHistoryLoading: PropTypes.bool.isRequired,
   retrievalHistoryLoaded: PropTypes.bool.isRequired,
   onDeleteRetrieval: PropTypes.func.isRequired
-};
+}

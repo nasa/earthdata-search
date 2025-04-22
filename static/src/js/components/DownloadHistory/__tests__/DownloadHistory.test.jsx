@@ -1,7 +1,10 @@
 import React from 'react'
-import { render, screen, fireEvent } from '@testing-library/react'
+import {
+  render,
+  screen,
+  fireEvent
+} from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
-import { Helmet } from 'react-helmet'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 import * as AppConfig from '../../../../../../sharedUtils/config'
@@ -19,7 +22,7 @@ jest.mock('../../../../../../sharedUtils/config', () => ({
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
   __esModule: true,
   default: ({ children, to, portalId }) => (
-    <a 
+    <a
       href={`/downloads/${to.pathname.split('/').pop()}${to.search}`}
       data-testid="portal-link"
       data-portal-id={portalId}
@@ -92,7 +95,7 @@ describe('DownloadHistory component', () => {
 
       expect(screen.getByRole('table')).toBeInTheDocument()
       expect(screen.getByText('1 collection')).toBeInTheDocument()
-      
+
       const link = screen.getByTestId('portal-link')
       expect(link).toHaveAttribute('href', '/downloads/8069076')
       expect(link).toHaveTextContent('1 collection')
@@ -116,7 +119,7 @@ describe('DownloadHistory component', () => {
 
       expect(screen.getByRole('table')).toBeInTheDocument()
       expect(screen.getByText('Collection Title')).toBeInTheDocument()
-      
+
       const link = screen.getByTestId('portal-link')
       expect(link).toHaveAttribute('href', '/downloads/8069076')
       expect(link).toHaveTextContent('Collection Title')
@@ -141,14 +144,14 @@ describe('DownloadHistory component', () => {
       })
 
       expect(screen.getByRole('table')).toBeInTheDocument()
-      
+
       const link = screen.getByTestId('portal-link')
       expect(link).toHaveAttribute('href', '/downloads/8069076')
       expect(link).toHaveTextContent('Collection Title and 1 other collection')
     })
 
     test('renders document head metadata correctly', () => {
-      const { container } = setup({
+      setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [],
         retrievalHistoryLoading: false,
@@ -156,7 +159,7 @@ describe('DownloadHistory component', () => {
         onDeleteRetrieval: jest.fn()
       })
 
-      expect(container.querySelector('h2')).toHaveTextContent('Download Status & History')
+      expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Download Status & History')
     })
 
     test('renders links correctly when portals were used to place an order', () => {
@@ -178,7 +181,7 @@ describe('DownloadHistory component', () => {
       })
 
       expect(screen.getByRole('table')).toBeInTheDocument()
-      
+
       const link = screen.getByTestId('portal-link')
       expect(link).toHaveAttribute('href', '/downloads/8069076')
       expect(link).toHaveAttribute('data-portal-id', 'test')
@@ -204,7 +207,7 @@ describe('DownloadHistory component', () => {
       })
 
       expect(screen.getByRole('table')).toBeInTheDocument()
-      
+
       const link = screen.getByTestId('portal-link')
       expect(link).toHaveAttribute('href', '/downloads/8069076?ee=uat')
       expect(link).toHaveAttribute('data-portal-id', 'test')
@@ -213,7 +216,7 @@ describe('DownloadHistory component', () => {
 
     test('onHandleRemove calls onDeleteRetrieval', () => {
       const onDeleteRetrieval = jest.fn()
-      
+
       setup({
         earthdataEnvironment: 'prod',
         retrievalHistory: [{

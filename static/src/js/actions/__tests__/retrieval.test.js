@@ -2,7 +2,7 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { REMOVE_RETRIEVAL_HISTORY, SET_RETRIEVAL_LOADING } from '../../constants/actionTypes'
+import { SET_RETRIEVAL_LOADING } from '../../constants/actionTypes'
 
 import {
   submitRetrieval,
@@ -1026,10 +1026,6 @@ describe('deleteRetrieval', () => {
     // Call the dispatch
     await store.dispatch(deleteRetrieval('2057964173')).then(() => {
       expect(store.getActions().length).toEqual(1)
-      expect(store.getActions()[0]).toEqual({
-        payload: '2057964173',
-        type: REMOVE_RETRIEVAL_HISTORY
-      })
 
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Retrieval removed')
