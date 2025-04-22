@@ -7,9 +7,9 @@ import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistor
 import RetrievalRequest from '../../util/request/retrievalRequest'
 import { addToast } from '../../util/addToast'
 
-export const DownloadHistoryContainer = ({ 
-  authToken, 
-  earthdataEnvironment 
+export const DownloadHistoryContainer = ({
+  authToken,
+  earthdataEnvironment
 }) => {
   const [retrievalHistory, setRetrievalHistory] = useState([])
   const [retrievalHistoryLoading, setRetrievalHistoryLoading] = useState(false)
@@ -17,14 +17,14 @@ export const DownloadHistoryContainer = ({
 
   const fetchRetrievalHistory = async () => {
     if (!authToken) return
-    
+
     setRetrievalHistoryLoading(true)
-    
+
     try {
       const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
       const response = await requestObject.all()
       const { data } = response
-      
+
       setRetrievalHistory(data)
       setRetrievalHistoryLoaded(true)
     } catch (error) {
@@ -36,22 +36,20 @@ export const DownloadHistoryContainer = ({
 
   const handleDeleteRetrieval = async (retrievalId) => {
     if (!authToken) return
-    
+
     try {
       const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
       await requestObject.remove(retrievalId)
-      
-      setRetrievalHistory(prevHistory => 
-        prevHistory.filter(item => item.id !== retrievalId)
-      )
-      
+
+      setRetrievalHistory((prevHistory) => prevHistory.filter((item) => item.id !== retrievalId))
+
       addToast('Retrieval removed', {
         appearance: 'success',
         autoDismiss: true
       })
     } catch (error) {
       console.error('Error deleting retrieval:', error)
-      
+
       addToast('Error removing retrieval', {
         appearance: 'error',
         autoDismiss: true
