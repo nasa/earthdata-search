@@ -34,7 +34,6 @@ import preferencesReducer from './preferences'
 import projectReducer from './project'
 import queryReducer from './query'
 import regionResultsReducer from './regionResults'
-import retrievalHistoryReducer from './retrievalHistory'
 import retrievalReducer from './retrieval'
 import savedProjectReducer from './savedProject'
 import savedProjectsReducer from './savedProjects'
@@ -81,7 +80,6 @@ export default (history) => combineReducers({
   preferences: preferencesReducer,
   query: queryReducer,
   retrieval: retrievalReducer,
-  retrievalHistory: retrievalHistoryReducer,
   router: connectRouter(history),
   savedProject: savedProjectReducer,
   savedProjects: savedProjectsReducer,

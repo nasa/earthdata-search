@@ -10,7 +10,6 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { prepareRetrievalParams } from '../util/retrievals'
-import { removeRetrievalHistory } from './retrievalHistory'
 import { submittingProject, submittedProject } from './project'
 
 export const setRetrievalLoading = () => ({
@@ -188,7 +187,6 @@ export const deleteRetrieval = (id) => (dispatch, getState) => {
     const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
     const response = requestObject.remove(id)
       .then(() => {
-        dispatch(removeRetrievalHistory(id))
         addToast('Retrieval removed', {
           appearance: 'success',
           autoDismiss: true

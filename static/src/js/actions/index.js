@@ -146,7 +146,6 @@ import {
   submitRetrieval,
   deleteRetrieval
 } from './retrieval'
-import { fetchRetrievalHistory } from './retrievalHistory'
 import {
   clearShapefile,
   fetchShapefile,
@@ -253,7 +252,6 @@ const actions = {
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
-  fetchRetrievalHistory,
   fetchSavedProjects,
   fetchShapefile,
   generateNotebook,
