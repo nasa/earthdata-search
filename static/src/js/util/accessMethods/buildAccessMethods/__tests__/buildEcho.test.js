@@ -27,11 +27,13 @@ describe('buildEcho', () => {
               items: [
                 {
                   conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 },
                 {
                   conceptId: 'OO30000-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 }
@@ -50,9 +52,10 @@ describe('buildEcho', () => {
     expect(accessMethods).toEqual([
       {
         form: 'mock form',
-        formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+        formDigest: 'bW9jayBmb3Jt',
         optionDefinition: {
           conceptId: 'OO10000-EDSC',
+          revisionId: 1,
           name: 'mock form'
         },
         type: 'ECHO ORDERS',
@@ -61,9 +64,10 @@ describe('buildEcho', () => {
       },
       {
         form: 'mock form',
-        formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+        formDigest: 'bW9jayBmb3Jt',
         optionDefinition: {
           conceptId: 'OO30000-EDSC',
+          revisionId: 1,
           name: 'mock form'
         },
         type: 'ECHO ORDERS',
@@ -91,6 +95,7 @@ describe('buildEcho', () => {
               items: [
                 {
                   conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 }
