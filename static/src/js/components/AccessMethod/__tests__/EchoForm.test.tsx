@@ -22,7 +22,9 @@ function setup(overrideProps = {}) {
     shapefileId: null,
     spatial: {},
     temporal: {},
-    ursProfile: {},
+    ursProfile: {
+      email_address: ''
+    },
     onUpdateAccessMethod,
     ...overrideProps
   }

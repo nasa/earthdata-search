@@ -11,35 +11,64 @@ import './EchoForm.scss'
 import '@edsc/echoforms/dist/styles.css'
 
 interface Spatial {
+  /** The bounding box coordinates, if applied */
   boundingBox?: string[]
+  /** The circle coordinates, if applied */
   circle?: string[]
+  /** The point coordinates, if applied */
   point?: string[]
+  /** The polygon coordinates, if applied */
   polygon?: string[]
 }
 
 interface Temporal {
+  /** The end date timestamp, if applied */
   endDate?: string
+  /** The start date timestamp, if applied */
   startDate?: string
 }
 
 interface UrsProfile {
-  email_address?: string
+  /** The email address of the user from the URS profile */
+  email_address: string
 }
 
 interface EchoFormProps {
+  /** The collection ID */
   collectionId: string
+  /** The form xml */
   form: string
+  /** The access method key */
   methodKey: string
+  /** The raw EchoForms model */
   rawModel?: string | null
+  /** The shapefile ID, if applied */
   shapefileId?: string | null
+  /** The spatial object, if applied */
   spatial: Spatial
+  /** The temporal object, if applied */
   temporal: Temporal
+  /** The URS profile for the user */
   ursProfile: UrsProfile
+  /** A callback called when the access method is updated */
   onUpdateAccessMethod: (data: {
     collectionId: string
     method: Record<string, unknown>
   }) => void
 }
+
+/** The arguments for the updateAccessMethod function */
+type UpdateAccessMethodArgs = Record<string, unknown>
+
+/** The arguments for the onFormModelUpdated function */
+type OnFormModelUpdatedArgs = {
+  hasChanged: boolean,
+  model: unknown,
+  rawModel: string
+}
+
+/** The arguments for the onFormIsValid function */
+type OnFormIsValidUpdatedArgs = boolean
 
 export const EchoForm: React.FC<EchoFormProps> = ({
   collectionId,
@@ -104,7 +133,7 @@ export const EchoForm: React.FC<EchoFormProps> = ({
     const { email_address: emailAddress } = ursProfileObject
 
     return {
-      EMAIL: emailAddress || ''
+      EMAIL: emailAddress
     }
   }
 
@@ -122,7 +151,7 @@ export const EchoForm: React.FC<EchoFormProps> = ({
 
   const [prepopulateValues, setPrepopulateValues] = useState(calculatePrepopulateValues())
 
-  const updateAccessMethod = (data: Record<string, unknown>) => {
+  const updateAccessMethod = (data: UpdateAccessMethodArgs) => {
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -133,7 +162,7 @@ export const EchoForm: React.FC<EchoFormProps> = ({
     })
   }
 
-  const onFormModelUpdated = (value: { hasChanged: boolean, model: unknown, rawModel: string }) => {
+  const onFormModelUpdated = (value: OnFormModelUpdatedArgs) => {
     const {
       hasChanged,
       model,
@@ -147,7 +176,7 @@ export const EchoForm: React.FC<EchoFormProps> = ({
     })
   }
 
-  const onFormIsValidUpdated = (valid: boolean) => {
+  const onFormIsValidUpdated = (valid: OnFormIsValidUpdatedArgs) => {
     updateAccessMethod({ isValid: valid })
   }
 
