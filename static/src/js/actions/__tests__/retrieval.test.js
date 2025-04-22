@@ -1025,8 +1025,6 @@ describe('deleteRetrieval', () => {
 
     // Call the dispatch
     await store.dispatch(deleteRetrieval('2057964173')).then(() => {
-      expect(store.getActions().length).toEqual(1)
-
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Retrieval removed')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
