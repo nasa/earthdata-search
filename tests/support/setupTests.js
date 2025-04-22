@@ -84,7 +84,7 @@ const handleImage = async (route, page) => {
  */
 export const setupTests = async ({
   context,
-  dontShowTour: dontShowTourOption = true,
+  dontShowTour = true,
   page
 }) => {
   // Set the 'dontShowTour' flag in localStorage
@@ -95,7 +95,7 @@ export const setupTests = async ({
     if (previousValue) return
 
     window.localStorage.setItem('dontShowTour', value)
-  }, dontShowTourOption.toString())
+  }, dontShowTour.toString())
 
   // Prevent loading of images and map tiles to speed up tests
   await page.route('**/*.{png,jpg,jpeg,pbf}', (route) => {
