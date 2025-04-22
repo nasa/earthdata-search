@@ -5,7 +5,6 @@ import { render, screen } from '@testing-library/react'
 // @ts-expect-error: This file does not have types
 import EDSCEchoform from '@edsc/echoforms'
 
-// @ts-expect-error: This file does not have types
 import EchoForm from '../EchoForm'
 // @ts-expect-error: This file does not have types
 import { echoForm } from './mocks'

@@ -1,26 +1,59 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import EDSCEchoform from '@edsc/echoforms'
 import moment from 'moment'
 import { isEqual } from 'lodash-es'
+
+// @ts-expect-error: This file does not have types
 import { mbr } from '@edsc/geo-utils'
+// @ts-expect-error: This file does not have types
+import EDSCEchoform from '@edsc/echoforms'
 
 import './EchoForm.scss'
 import '@edsc/echoforms/dist/styles.css'
 
-export const EchoForm = ({
+interface Spatial {
+  boundingBox?: string[]
+  circle?: string[]
+  point?: string[]
+  polygon?: string[]
+}
+
+interface Temporal {
+  endDate?: string
+  startDate?: string
+}
+
+interface UrsProfile {
+  email_address?: string
+}
+
+interface EchoFormProps {
+  collectionId: string
+  form: string
+  methodKey: string
+  rawModel?: string | null
+  shapefileId?: string | null
+  spatial: Spatial
+  temporal: Temporal
+  ursProfile: UrsProfile
+  onUpdateAccessMethod: (data: {
+    collectionId: string
+    method: Record<string, unknown>
+  }) => void
+}
+
+export const EchoForm: React.FC<EchoFormProps> = ({
   collectionId,
   form,
   methodKey,
-  rawModel,
-  shapefileId,
+  rawModel = null,
+  shapefileId = null,
   spatial,
   temporal,
   ursProfile,
   onUpdateAccessMethod
 }) => {
   // Get the MBR of the spatial for prepopulated values
-  const getMbr = (spatialObject) => {
+  const getMbr = (spatialObject: Spatial) => {
     const {
       boundingBox = [],
       circle = [],
@@ -52,33 +85,26 @@ export const EchoForm = ({
   }
 
   // Format dates in correct format for Echoforms
-  const formatDate = (date) => moment.utc(date).format('YYYY-MM-DDTHH:mm:ss')
+  const formatDate = (date?: string) => (date ? moment.utc(date).format('YYYY-MM-DDTHH:mm:ss') : '')
 
   // Get the temporal prepopulated values
-  const getTemporalPrepopulateValues = (temporalObject) => {
+  const getTemporalPrepopulateValues = (temporalObject: Temporal) => {
     const {
       endDate,
       startDate
     } = temporalObject
 
-    if (endDate || startDate) {
-      return {
-        TEMPORAL_START: formatDate(startDate),
-        TEMPORAL_END: formatDate(endDate)
-      }
-    }
-
     return {
-      TEMPORAL_START: '',
-      TEMPORAL_END: ''
+      TEMPORAL_START: formatDate(startDate),
+      TEMPORAL_END: formatDate(endDate)
     }
   }
 
-  const getEmailPrepopulateValues = (ursProfileObject) => {
+  const getEmailPrepopulateValues = (ursProfileObject: UrsProfile) => {
     const { email_address: emailAddress } = ursProfileObject
 
     return {
-      EMAIL: emailAddress
+      EMAIL: emailAddress || ''
     }
   }
 
@@ -87,18 +113,16 @@ export const EchoForm = ({
     const temporalPrepopulateValues = getTemporalPrepopulateValues(temporal)
     const emailPrepopulateValues = getEmailPrepopulateValues(ursProfile)
 
-    const values = {
+    return {
       ...spatialPrepopulateValues,
       ...temporalPrepopulateValues,
       ...emailPrepopulateValues
     }
-
-    return values
   }
 
   const [prepopulateValues, setPrepopulateValues] = useState(calculatePrepopulateValues())
 
-  const updateAccessMethod = (data) => {
+  const updateAccessMethod = (data: Record<string, unknown>) => {
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -109,7 +133,7 @@ export const EchoForm = ({
     })
   }
 
-  const onFormModelUpdated = (value) => {
+  const onFormModelUpdated = (value: { hasChanged: boolean, model: unknown, rawModel: string }) => {
     const {
       hasChanged,
       model,
@@ -123,7 +147,7 @@ export const EchoForm = ({
     })
   }
 
-  const onFormIsValidUpdated = (valid) => {
+  const onFormIsValidUpdated = (valid: boolean) => {
     updateAccessMethod({ isValid: valid })
   }
 
@@ -137,7 +161,7 @@ export const EchoForm = ({
   }, [spatial, temporal])
 
   // EDSCEchoforms doesn't care about the shapefileId, just is there a shapefileId or not
-  const hasShapefile = !!(shapefileId)
+  const hasShapefile = !!shapefileId
 
   return (
     <section className="echoform">
@@ -152,41 +176,6 @@ export const EchoForm = ({
       />
     </section>
   )
-}
-
-EchoForm.defaultProps = {
-  rawModel: null,
-  shapefileId: null
-}
-
-EchoForm.propTypes = {
-  collectionId: PropTypes.string.isRequired,
-  form: PropTypes.string.isRequired,
-  methodKey: PropTypes.string.isRequired,
-  onUpdateAccessMethod: PropTypes.func.isRequired,
-  rawModel: PropTypes.string,
-  shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({
-    boundingBox: PropTypes.arrayOf(
-      PropTypes.string
-    ),
-    circle: PropTypes.arrayOf(
-      PropTypes.string
-    ),
-    point: PropTypes.arrayOf(
-      PropTypes.string
-    ),
-    polygon: PropTypes.arrayOf(
-      PropTypes.string
-    )
-  }).isRequired,
-  temporal: PropTypes.shape({
-    endDate: PropTypes.string,
-    startDate: PropTypes.string
-  }).isRequired,
-  ursProfile: PropTypes.shape({
-    email_address: PropTypes.string
-  }).isRequired
 }
 
 export default EchoForm
