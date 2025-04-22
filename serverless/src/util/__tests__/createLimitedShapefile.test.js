@@ -6,9 +6,7 @@ describe('createLimitedShapefile', () => {
       type: 'FeatureCollection',
       features: [
         {
-          properties: {
-            edscId: 0
-          },
+          properties: { edscId: 0 },
           type: 'Feature',
           geometry: {
             mock: 'feature0'

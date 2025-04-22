@@ -80,7 +80,6 @@ describe('saveShapefile', () => {
 
     test('returns an existing shapefile if it has already been uploaded', async () => {
       dbTracker.on('query', (query, step) => {
-        console.log('🚀 ~ handler.test.js:68 ~ dbTracker.on ~ query:', query)
         if (step === 1 && query.bindings[0] === 'f7f2cb5d44de4d6d64578410055cf250') {
           query.response({
             id: 12
