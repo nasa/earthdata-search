@@ -184,9 +184,13 @@ describe('EchoForm component', () => {
 
         const { props: overriddenProps, rerender } = setup(props)
 
+        expect(EDSCEchoform).toHaveBeenCalledTimes(1)
+
         rerender(<EchoForm {...overriddenProps} />)
 
-        expect(EDSCEchoform).toHaveBeenCalledWith(
+        expect(EDSCEchoform).toHaveBeenCalledTimes(2)
+        expect(EDSCEchoform).toHaveBeenNthCalledWith(
+          2,
           expect.objectContaining({
             prepopulateValues: expect.objectContaining({
               BBOX_EAST: -76,
@@ -220,6 +224,8 @@ describe('EchoForm component', () => {
 
         const { props: overriddenProps, rerender } = setup(props)
 
+        expect(EDSCEchoform).toHaveBeenCalledTimes(1)
+
         const newProps = {
           ...overriddenProps,
           spatial: {
@@ -229,7 +235,9 @@ describe('EchoForm component', () => {
 
         rerender(<EchoForm {...newProps} />)
 
-        expect(EDSCEchoform).toHaveBeenLastCalledWith(
+        expect(EDSCEchoform).toHaveBeenCalledTimes(3)
+        expect(EDSCEchoform).toHaveBeenNthCalledWith(
+          3,
           expect.objectContaining({
             prepopulateValues: expect.objectContaining({
               BBOX_EAST: -76,

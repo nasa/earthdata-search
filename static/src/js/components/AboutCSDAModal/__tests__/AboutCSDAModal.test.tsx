@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event'
 import AboutCSDAModal from '../AboutCSDAModal'
 
 function setup(overrideProps = {}) {
+  const user = userEvent.setup()
   const onToggleAboutCSDAModal = jest.fn()
 
   const props = {
@@ -17,7 +18,8 @@ function setup(overrideProps = {}) {
   render(<AboutCSDAModal {...props} />)
 
   return {
-    onToggleAboutCSDAModal
+    onToggleAboutCSDAModal,
+    user
   }
 }
 
@@ -41,8 +43,7 @@ describe('AboutCSDAModal component', () => {
   })
 
   test('should call onToggleAboutCSDAModal when the modal is closed', async () => {
-    const { onToggleAboutCSDAModal } = setup()
-    const user = userEvent.setup()
+    const { onToggleAboutCSDAModal, user } = setup()
 
     const closeButton = screen.getByRole('button', { name: /close/i })
     await user.click(closeButton)

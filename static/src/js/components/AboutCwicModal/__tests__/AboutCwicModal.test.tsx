@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event'
 import AboutCwicModal from '../AboutCwicModal'
 
 function setup(overrideProps = {}) {
+  const user = userEvent.setup()
   const onToggleAboutCwicModal = jest.fn()
 
   const props = {
@@ -17,7 +18,8 @@ function setup(overrideProps = {}) {
   render(<AboutCwicModal {...props} />)
 
   return {
-    onToggleAboutCwicModal
+    onToggleAboutCwicModal,
+    user
   }
 }
 
@@ -41,8 +43,7 @@ describe('AboutCwicModal component', () => {
   })
 
   test('should call onToggleAboutCwicModal when the modal is closed', async () => {
-    const { onToggleAboutCwicModal } = setup()
-    const user = userEvent.setup()
+    const { onToggleAboutCwicModal, user } = setup()
 
     const closeButton = screen.getByRole('button', { name: /close/i })
     await user.click(closeButton)
