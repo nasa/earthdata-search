@@ -212,7 +212,7 @@ describe('DownloadHistory component', () => {
     })
 
     test('onHandleRemove calls onDeleteRetrieval', async () => {
-      const user = userEvent.setup()
+      const view = userEvent.setup()
       const onDeleteRetrieval = jest.fn()
 
       setup({
@@ -233,7 +233,7 @@ describe('DownloadHistory component', () => {
       window.confirm = jest.fn().mockImplementation(() => true)
 
       const deleteButton = screen.getByRole('button', { name: /delete download/i })
-      await user.click(deleteButton)
+      await view.click(deleteButton)
 
       expect(onDeleteRetrieval).toHaveBeenCalledTimes(1)
       expect(onDeleteRetrieval).toHaveBeenCalledWith('8069076')
