@@ -34,6 +34,7 @@ describe('AdminPage component', () => {
     setup()
 
     expect(screen.getByRole('heading')).toBeInTheDocument()
+    expect(screen.getByRole('heading')).toHaveTextContent('Admin Title')
     expect(screen.getByRole('list')).toHaveClass('admin-page__breadcrumbs')
   })
 
