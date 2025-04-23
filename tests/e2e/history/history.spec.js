@@ -123,7 +123,6 @@ test.describe('History', () => {
     })
   })
 
-  // TODO fix this dude
   test.describe('when pressing the back button from the downloads page', () => {
     test.beforeEach(async ({ page }) => {
       await page.route(/saved_access_configs/, async (route) => {
