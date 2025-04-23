@@ -1,9 +1,6 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  fireEvent
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
@@ -214,7 +211,8 @@ describe('DownloadHistory component', () => {
       expect(link).toHaveTextContent('Collection Title')
     })
 
-    test('onHandleRemove calls onDeleteRetrieval', () => {
+    test('onHandleRemove calls onDeleteRetrieval', async () => {
+      const user = userEvent.setup()
       const onDeleteRetrieval = jest.fn()
 
       setup({
@@ -235,7 +233,7 @@ describe('DownloadHistory component', () => {
       window.confirm = jest.fn().mockImplementation(() => true)
 
       const deleteButton = screen.getByRole('button', { name: /delete download/i })
-      fireEvent.click(deleteButton)
+      await user.click(deleteButton)
 
       expect(onDeleteRetrieval).toHaveBeenCalledTimes(1)
       expect(onDeleteRetrieval).toHaveBeenCalledWith('8069076')
