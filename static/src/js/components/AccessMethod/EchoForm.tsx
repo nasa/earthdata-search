@@ -1,37 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import moment from 'moment'
 import { isEqual } from 'lodash-es'
-
-// @ts-expect-error: This file does not have types
-import { mbr } from '@edsc/geo-utils'
 // @ts-expect-error: This file does not have types
 import EDSCEchoform from '@edsc/echoforms'
 
+// @ts-expect-error: This file does not have types
+import { mbr } from '@edsc/geo-utils'
+
+import {
+  Spatial,
+  Temporal,
+  UrsProfile
+} from '../../types/sharedTypes'
+
 import './EchoForm.scss'
 import '@edsc/echoforms/dist/styles.css'
-
-interface Spatial {
-  /** The bounding box coordinates, if applied */
-  boundingBox?: string[]
-  /** The circle coordinates, if applied */
-  circle?: string[]
-  /** The point coordinates, if applied */
-  point?: string[]
-  /** The polygon coordinates, if applied */
-  polygon?: string[]
-}
-
-interface Temporal {
-  /** The end date timestamp, if applied */
-  endDate?: string
-  /** The start date timestamp, if applied */
-  startDate?: string
-}
-
-interface UrsProfile {
-  /** The email address of the user from the URS profile */
-  email_address: string
-}
 
 interface EchoFormProps {
   /** The collection ID */
@@ -69,6 +52,9 @@ type OnFormModelUpdatedArgs = {
 
 /** The arguments for the onFormIsValid function */
 type OnFormIsValidUpdatedArgs = boolean
+
+/** The arguments for the formatDate function */
+type FormatDateArgs = Temporal['startDate'] | Temporal['endDate']
 
 export const EchoForm: React.FC<EchoFormProps> = ({
   collectionId,
@@ -114,7 +100,7 @@ export const EchoForm: React.FC<EchoFormProps> = ({
   }
 
   // Format dates in correct format for Echoforms
-  const formatDate = (date?: string) => (date ? moment.utc(date).format('YYYY-MM-DDTHH:mm:ss') : '')
+  const formatDate = (date: FormatDateArgs) => (date ? moment.utc(date).format('YYYY-MM-DDTHH:mm:ss') : '')
 
   // Get the temporal prepopulated values
   const getTemporalPrepopulateValues = (temporalObject: Temporal) => {
