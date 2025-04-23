@@ -143,11 +143,15 @@ export const DownloadHistory = ({
   )
 }
 
+DownloadHistory.defaultProps = {
+  retrievalHistory: []
+}
+
 DownloadHistory.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
   retrievalHistory: PropTypes.arrayOf(
     PropTypes.shape({})
-  ).isRequired,
+  ),
   retrievalHistoryLoading: PropTypes.bool.isRequired,
   retrievalHistoryLoaded: PropTypes.bool.isRequired,
   onDeleteRetrieval: PropTypes.func.isRequired
