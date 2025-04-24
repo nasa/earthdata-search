@@ -1,8 +1,8 @@
 import React from 'react'
 import {
   render,
-  screen,
-  waitFor
+  waitFor,
+  act
 } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -10,6 +10,7 @@ import configureStore from 'redux-mock-store'
 import nock from 'nock'
 
 import { addToast } from '../../../util/addToast'
+import { handleError } from '../../../actions/errors'
 import DownloadHistoryContainer from '../DownloadHistoryContainer'
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
 
@@ -17,35 +18,51 @@ jest.mock('../../../util/addToast', () => ({
   addToast: jest.fn()
 }))
 
+jest.mock('../../../actions/errors', () => ({
+  handleError: jest.fn(() => ({ type: 'HANDLE_ERROR' }))
+}))
+
+let lastPassedOnDeleteRetrieval = null
+
 jest.mock('../../../components/DownloadHistory/DownloadHistory', () => ({
-  DownloadHistory: jest.fn(() => <div>Download History Component</div>)
+  DownloadHistory: jest.fn((props) => {
+    lastPassedOnDeleteRetrieval = props.onDeleteRetrieval
+
+    return <div>Download History Component</div>
+  })
 }))
 
 const mockStore = configureStore([])
-const mockConsoleError = jest.spyOn(console, 'error').mockImplementation()
 
 describe('DownloadHistoryContainer component', () => {
-  const store = mockStore({
-    authToken: 'mock-token',
-    earthdataEnvironment: 'prod'
-  })
+  let store
 
   beforeEach(() => {
+    store = mockStore({
+      authToken: 'mock-token',
+      earthdataEnvironment: 'prod'
+    })
+
     jest.clearAllMocks()
+    nock.cleanAll()
+    lastPassedOnDeleteRetrieval = null
+  })
+
+  afterEach(() => {
     nock.cleanAll()
   })
 
   describe('when the component renders', () => {
     test('renders the DownloadHistory component with the correct props', async () => {
-      // Mock the API endpoint response
+      const historyData = [{
+        id: '8069076',
+        jsondata: {},
+        created_at: '2019-08-25T11:58:14.390Z',
+        collections: [{}]
+      }]
       nock(/.*/)
         .get(/retrievals/)
-        .reply(200, [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{}]
-        }])
+        .reply(200, historyData)
 
       render(
         <Provider store={store}>
@@ -55,34 +72,22 @@ describe('DownloadHistoryContainer component', () => {
         </Provider>
       )
 
-      // Wait for the component to render and data to be loaded
       await waitFor(() => {
-        // Check for calls where retrievalHistoryLoaded is true
-        const { calls } = DownloadHistory.mock
-        const loadedCall = calls.find((call) => call[0].retrievalHistoryLoaded === true
-          && call[0].retrievalHistory.length > 0)
-        expect(loadedCall).toBeTruthy()
+        expect(DownloadHistory).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            earthdataEnvironment: 'prod',
+            retrievalHistoryLoaded: true,
+            retrievalHistoryLoading: false,
+            retrievalHistory: historyData
+          }),
+          expect.anything()
+        )
       })
-
-      // Now check the specific props after we know the loaded state has been reached
-      expect(DownloadHistory).toHaveBeenCalledWith(
-        expect.objectContaining({
-          earthdataEnvironment: 'prod',
-          retrievalHistoryLoaded: true,
-          retrievalHistory: expect.arrayContaining([
-            expect.objectContaining({
-              id: '8069076'
-            })
-          ])
-        }),
-        expect.anything()
-      )
     })
   })
 
   describe('when fetching retrieval history fails', () => {
-    test('logs the error', async () => {
-      // Mock the API endpoint to return an error
+    test('dispatches handleError', async () => {
       nock(/.*/)
         .get(/retrievals/)
         .replyWithError('Failed to fetch retrieval history')
@@ -90,41 +95,53 @@ describe('DownloadHistoryContainer component', () => {
       render(
         <Provider store={store}>
           <MemoryRouter>
-            <DownloadHistoryContainer
-              authToken="mock-token"
-              earthdataEnvironment="test"
-            />
+            <DownloadHistoryContainer />
           </MemoryRouter>
         </Provider>
       )
 
-      // Wait for the error to be logged
       await waitFor(() => {
-        expect(mockConsoleError).toHaveBeenCalledWith(
-          'Error fetching retrieval history:',
-          expect.any(Error)
+        expect(handleError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          action: 'fetchRetrievalHistory',
+          resource: 'retrieval history',
+          verb: 'fetching',
+          notificationType: 'banner'
+        })
+      })
+
+      await waitFor(() => {
+        expect(DownloadHistory).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            retrievalHistoryLoaded: false,
+            retrievalHistoryLoading: false,
+            retrievalHistory: []
+          }),
+          expect.anything()
         )
       })
     })
   })
 
   describe('when deleting a retrieval', () => {
-    test('handles successful deletion', async () => {
-      // Mock the API endpoints
+    const initialHistory = [{
+      id: '8069076',
+      jsondata: {},
+      created_at: '2019-08-25T11:58:14.390Z',
+      collections: [{}]
+    }]
+
+    beforeEach(() => {
       nock(/.*/)
         .get(/retrievals/)
-        .reply(200, [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{}]
-        }])
+        .reply(200, initialHistory)
+    })
 
+    test('handles successful deletion', async () => {
       nock(/.*/)
         .delete(/retrievals\/8069076/)
         .reply(200, {})
 
-      // Set up the component
       render(
         <Provider store={store}>
           <MemoryRouter>
@@ -133,42 +150,42 @@ describe('DownloadHistoryContainer component', () => {
         </Provider>
       )
 
-      // Wait for initial data to load
       await waitFor(() => {
-        expect(screen.getByText('Download History Component')).toBeInTheDocument()
+        expect(lastPassedOnDeleteRetrieval).toEqual(expect.any(Function))
       })
 
-      // Get the onDeleteRetrieval function that was passed to DownloadHistory
-      const { calls } = DownloadHistory.mock
-      const lastCall = calls[calls.length - 1][0]
-      const { onDeleteRetrieval } = lastCall
+      await act(async () => {
+        if (!lastPassedOnDeleteRetrieval) {
+          throw new Error('onDeleteRetrieval callback was not captured by mock')
+        }
 
-      // Call the function directly to test it
-      await onDeleteRetrieval('8069076')
+        await lastPassedOnDeleteRetrieval('8069076')
+      })
 
-      // Check that addToast was called with success message
-      expect(addToast).toHaveBeenCalledWith('Retrieval removed', {
-        appearance: 'success',
-        autoDismiss: true
+      await waitFor(() => {
+        expect(addToast).toHaveBeenCalledWith('Retrieval removed', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+      })
+
+      expect(handleError).not.toHaveBeenCalled()
+
+      await waitFor(() => {
+        expect(DownloadHistory).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            retrievalHistory: []
+          }),
+          expect.anything()
+        )
       })
     })
 
     test('handles error when deletion fails', async () => {
-      // Mock the API endpoints
-      nock(/.*/)
-        .get(/retrievals/)
-        .reply(200, [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{}]
-        }])
-
       nock(/.*/)
         .delete(/retrievals\/8069076/)
         .replyWithError('Failed to delete retrieval')
 
-      // Set up the component
       render(
         <Provider store={store}>
           <MemoryRouter>
@@ -177,29 +194,37 @@ describe('DownloadHistoryContainer component', () => {
         </Provider>
       )
 
-      // Wait for initial data to load
       await waitFor(() => {
-        expect(screen.getByText('Download History Component')).toBeInTheDocument()
+        expect(lastPassedOnDeleteRetrieval).toEqual(expect.any(Function))
       })
 
-      // Get the onDeleteRetrieval function that was passed to DownloadHistory
-      const { calls } = DownloadHistory.mock
-      const lastCall = calls[calls.length - 1][0]
-      const { onDeleteRetrieval } = lastCall
+      await act(async () => {
+        if (!lastPassedOnDeleteRetrieval) {
+          throw new Error('onDeleteRetrieval callback was not captured by mock')
+        }
 
-      // Call the function directly to test the error path
-      await onDeleteRetrieval('8069076')
+        await lastPassedOnDeleteRetrieval('8069076')
+      })
 
-      // Check that console.error was called with the error
-      expect(mockConsoleError).toHaveBeenCalledWith(
-        'Error deleting retrieval:',
-        expect.any(Error)
-      )
+      await waitFor(() => {
+        expect(handleError).toHaveBeenCalledWith({
+          error: expect.any(Error),
+          action: 'handleDeleteRetrieval',
+          resource: 'retrieval',
+          verb: 'deleting',
+          notificationType: 'banner'
+        })
+      })
 
-      // Check that addToast was called with error message
-      expect(addToast).toHaveBeenCalledWith('Error removing retrieval', {
-        appearance: 'error',
-        autoDismiss: true
+      expect(addToast).not.toHaveBeenCalledWith('Retrieval removed', expect.anything())
+
+      await waitFor(() => {
+        expect(DownloadHistory).toHaveBeenLastCalledWith(
+          expect.objectContaining({
+            retrievalHistory: initialHistory
+          }),
+          expect.anything()
+        )
       })
     })
   })

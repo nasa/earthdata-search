@@ -6,10 +6,12 @@ import { withRouter } from 'react-router-dom'
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 import RetrievalRequest from '../../util/request/retrievalRequest'
 import { addToast } from '../../util/addToast'
+import { handleError } from '../../actions/errors'
 
 export const DownloadHistoryContainer = ({
   authToken,
-  earthdataEnvironment
+  earthdataEnvironment,
+  dispatchHandleError
 }) => {
   const [retrievalHistory, setRetrievalHistory] = useState([])
   const [retrievalHistoryLoading, setRetrievalHistoryLoading] = useState(false)
@@ -28,7 +30,13 @@ export const DownloadHistoryContainer = ({
       setRetrievalHistory(data)
       setRetrievalHistoryLoaded(true)
     } catch (error) {
-      console.error('Error fetching retrieval history:', error)
+      dispatchHandleError({
+        error,
+        action: 'fetchRetrievalHistory',
+        resource: 'retrieval history',
+        verb: 'fetching',
+        notificationType: 'banner'
+      })
     } finally {
       setRetrievalHistoryLoading(false)
     }
@@ -48,11 +56,12 @@ export const DownloadHistoryContainer = ({
         autoDismiss: true
       })
     } catch (error) {
-      console.error('Error deleting retrieval:', error)
-
-      addToast('Error removing retrieval', {
-        appearance: 'error',
-        autoDismiss: true
+      dispatchHandleError({
+        error,
+        action: 'handleDeleteRetrieval',
+        resource: 'retrieval',
+        verb: 'deleting',
+        notificationType: 'banner'
       })
     }
   }
@@ -74,7 +83,8 @@ export const DownloadHistoryContainer = ({
 
 DownloadHistoryContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired
+  earthdataEnvironment: PropTypes.string.isRequired,
+  dispatchHandleError: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -82,6 +92,10 @@ const mapStateToProps = (state) => ({
   earthdataEnvironment: state.earthdataEnvironment
 })
 
+const mapDispatchToProps = (dispatch) => ({
+  dispatchHandleError: (errorConfig) => dispatch(handleError(errorConfig))
+})
+
 export default withRouter(
-  connect(mapStateToProps)(DownloadHistoryContainer)
+  connect(mapStateToProps, mapDispatchToProps)(DownloadHistoryContainer)
 )
