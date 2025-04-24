@@ -132,6 +132,29 @@ describe('SearchForm component', () => {
     expect(props.onClearFilters.mock.calls.length).toBe(1)
   })
 
+  test('should call onFormSubmit and submit the search when the submit button is clicked', () => {
+    const { enzymeWrapper, props } = setup({}, false)
+    const input = enzymeWrapper.find('.search-form__input')
+
+    input.simulate('change', { target: { value: 'MODIS' } })
+
+    const button = enzymeWrapper.find('.search-form__button--submit')
+
+    button.at(2).simulate('click', { preventDefault: jest.fn() })
+
+    expect(props.onCancelAutocomplete.mock.calls.length).toBe(1)
+    expect(props.onCancelAutocomplete).toHaveBeenCalledTimes(1)
+    expect(props.onCancelAutocomplete).toHaveBeenCalledWith()
+    expect(props.onChangeFocusedCollection).toHaveBeenCalledTimes(1)
+    expect(props.onChangeFocusedCollection).toHaveBeenCalledWith('')
+    expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+    expect(props.onChangeQuery).toHaveBeenCalledWith(expect.objectContaining({
+      collection: {
+        keyword: 'MODIS'
+      }
+    }))
+  })
+
   test('componentWillReceiveProps sets the state', () => {
     const { enzymeWrapper } = setup()
 

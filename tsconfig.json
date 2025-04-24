@@ -10,8 +10,8 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["vite/client", "jest"]
+    "types": ["vite/client", "jest", "node", "@testing-library/jest-dom"],
   },
-  "include": ["static/src"],
+  "include": ["static/src", "jest-setup.ts"],
   "exclude": ["node_modules"]
 }

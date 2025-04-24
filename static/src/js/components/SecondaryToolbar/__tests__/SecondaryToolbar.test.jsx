@@ -6,7 +6,6 @@ import {
   act
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import '@testing-library/jest-dom'
 import { Router } from 'react-router'
 import { createMemoryHistory } from 'history'
 

@@ -1,26 +1,74 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
-import EDSCEchoform from '@edsc/echoforms'
 import moment from 'moment'
 import { isEqual } from 'lodash-es'
+// @ts-expect-error: This file does not have types
+import EDSCEchoform from '@edsc/echoforms'
+
+// @ts-expect-error: This file does not have types
 import { mbr } from '@edsc/geo-utils'
+
+import {
+  Spatial,
+  Temporal,
+  UrsProfile
+} from '../../types/sharedTypes'
 
 import './EchoForm.scss'
 import '@edsc/echoforms/dist/styles.css'
 
-export const EchoForm = ({
+interface EchoFormProps {
+  /** The collection ID */
+  collectionId: string
+  /** The form xml */
+  form: string
+  /** The access method key */
+  methodKey: string
+  /** The raw EchoForms model */
+  rawModel?: string | null
+  /** The shapefile ID, if applied */
+  shapefileId?: string | null
+  /** The spatial object, if applied */
+  spatial: Spatial
+  /** The temporal object, if applied */
+  temporal: Temporal
+  /** The URS profile for the user */
+  ursProfile: UrsProfile
+  /** A callback called when the access method is updated */
+  onUpdateAccessMethod: (data: {
+    collectionId: string
+    method: Record<string, unknown>
+  }) => void
+}
+
+/** The arguments for the updateAccessMethod function */
+type UpdateAccessMethodArgs = Record<string, unknown>
+
+/** The arguments for the onFormModelUpdated function */
+type OnFormModelUpdatedArgs = {
+  hasChanged: boolean,
+  model: unknown,
+  rawModel: string
+}
+
+/** The arguments for the onFormIsValid function */
+type OnFormIsValidUpdatedArgs = boolean
+
+/** The arguments for the formatDate function */
+type FormatDateArgs = Temporal['startDate'] | Temporal['endDate']
+
+export const EchoForm: React.FC<EchoFormProps> = ({
   collectionId,
   form,
   methodKey,
-  rawModel,
-  shapefileId,
+  rawModel = null,
+  shapefileId = null,
   spatial,
   temporal,
   ursProfile,
   onUpdateAccessMethod
 }) => {
   // Get the MBR of the spatial for prepopulated values
-  const getMbr = (spatialObject) => {
+  const getMbr = (spatialObject: Spatial) => {
     const {
       boundingBox = [],
       circle = [],
@@ -52,29 +100,22 @@ export const EchoForm = ({
   }
 
   // Format dates in correct format for Echoforms
-  const formatDate = (date) => moment.utc(date).format('YYYY-MM-DDTHH:mm:ss')
+  const formatDate = (date: FormatDateArgs) => (date ? moment.utc(date).format('YYYY-MM-DDTHH:mm:ss') : '')
 
   // Get the temporal prepopulated values
-  const getTemporalPrepopulateValues = (temporalObject) => {
+  const getTemporalPrepopulateValues = (temporalObject: Temporal) => {
     const {
       endDate,
       startDate
     } = temporalObject
 
-    if (endDate || startDate) {
-      return {
-        TEMPORAL_START: formatDate(startDate),
-        TEMPORAL_END: formatDate(endDate)
-      }
-    }
-
     return {
-      TEMPORAL_START: '',
-      TEMPORAL_END: ''
+      TEMPORAL_START: formatDate(startDate),
+      TEMPORAL_END: formatDate(endDate)
     }
   }
 
-  const getEmailPrepopulateValues = (ursProfileObject) => {
+  const getEmailPrepopulateValues = (ursProfileObject: UrsProfile) => {
     const { email_address: emailAddress } = ursProfileObject
 
     return {
@@ -87,18 +128,16 @@ export const EchoForm = ({
     const temporalPrepopulateValues = getTemporalPrepopulateValues(temporal)
     const emailPrepopulateValues = getEmailPrepopulateValues(ursProfile)
 
-    const values = {
+    return {
       ...spatialPrepopulateValues,
       ...temporalPrepopulateValues,
       ...emailPrepopulateValues
     }
-
-    return values
   }
 
   const [prepopulateValues, setPrepopulateValues] = useState(calculatePrepopulateValues())
 
-  const updateAccessMethod = (data) => {
+  const updateAccessMethod = (data: UpdateAccessMethodArgs) => {
     onUpdateAccessMethod({
       collectionId,
       method: {
@@ -109,7 +148,7 @@ export const EchoForm = ({
     })
   }
 
-  const onFormModelUpdated = (value) => {
+  const onFormModelUpdated = (value: OnFormModelUpdatedArgs) => {
     const {
       hasChanged,
       model,
@@ -123,7 +162,7 @@ export const EchoForm = ({
     })
   }
 
-  const onFormIsValidUpdated = (valid) => {
+  const onFormIsValidUpdated = (valid: OnFormIsValidUpdatedArgs) => {
     updateAccessMethod({ isValid: valid })
   }
 
@@ -137,7 +176,7 @@ export const EchoForm = ({
   }, [spatial, temporal])
 
   // EDSCEchoforms doesn't care about the shapefileId, just is there a shapefileId or not
-  const hasShapefile = !!(shapefileId)
+  const hasShapefile = !!shapefileId
 
   return (
     <section className="echoform">
@@ -152,41 +191,6 @@ export const EchoForm = ({
       />
     </section>
   )
-}
-
-EchoForm.defaultProps = {
-  rawModel: null,
-  shapefileId: null
-}
-
-EchoForm.propTypes = {
-  collectionId: PropTypes.string.isRequired,
-  form: PropTypes.string.isRequired,
-  methodKey: PropTypes.string.isRequired,
-  onUpdateAccessMethod: PropTypes.func.isRequired,
-  rawModel: PropTypes.string,
-  shapefileId: PropTypes.string,
-  spatial: PropTypes.shape({
-    boundingBox: PropTypes.arrayOf(
-      PropTypes.string
-    ),
-    circle: PropTypes.arrayOf(
-      PropTypes.string
-    ),
-    point: PropTypes.arrayOf(
-      PropTypes.string
-    ),
-    polygon: PropTypes.arrayOf(
-      PropTypes.string
-    )
-  }).isRequired,
-  temporal: PropTypes.shape({
-    endDate: PropTypes.string,
-    startDate: PropTypes.string
-  }).isRequired,
-  ursProfile: PropTypes.shape({
-    email_address: PropTypes.string
-  }).isRequired
 }
 
 export default EchoForm
