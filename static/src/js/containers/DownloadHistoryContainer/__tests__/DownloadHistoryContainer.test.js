@@ -7,19 +7,18 @@ import {
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
+import nock from 'nock'
 
 import { addToast } from '../../../util/addToast'
 import DownloadHistoryContainer from '../DownloadHistoryContainer'
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
-import RetrievalRequest from '../../../util/request/retrievalRequest'
 
-jest.mock('../../../util/request/retrievalRequest')
 jest.mock('../../../util/addToast', () => ({
   addToast: jest.fn()
 }))
 
 jest.mock('../../../components/DownloadHistory/DownloadHistory', () => ({
-  DownloadHistory: jest.fn(() => <div data-testid="download-history" />)
+  DownloadHistory: jest.fn(() => <div>Download History Component</div>)
 }))
 
 const mockStore = configureStore([])
@@ -33,183 +32,194 @@ describe('DownloadHistoryContainer component', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+    nock.cleanAll()
+  })
 
-    // Mock the RetrievalRequest methods
-    RetrievalRequest.mockImplementation(() => ({
-      all: jest.fn().mockResolvedValue({
-        data: [{
+  describe('when the component renders', () => {
+    test('renders the DownloadHistory component with the correct props', async () => {
+      // Mock the API endpoint response
+      nock(/.*/)
+        .get(/retrievals/)
+        .reply(200, [{
           id: '8069076',
           jsondata: {},
           created_at: '2019-08-25T11:58:14.390Z',
           collections: [{}]
-        }]
-      }),
-      remove: jest.fn().mockResolvedValue({})
-    }))
-  })
+        }])
 
-  test('renders the DownloadHistory component', async () => {
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <DownloadHistoryContainer />
-        </MemoryRouter>
-      </Provider>
-    )
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <DownloadHistoryContainer />
+          </MemoryRouter>
+        </Provider>
+      )
 
-    await waitFor(() => {
-      expect(screen.getByTestId('download-history')).toBeInTheDocument()
-    })
+      // Wait for the component to render and data to be loaded
+      await waitFor(() => {
+        // Check for calls where retrievalHistoryLoaded is true
+        const { calls } = DownloadHistory.mock
+        const loadedCall = calls.find((call) => call[0].retrievalHistoryLoaded === true
+          && call[0].retrievalHistory.length > 0)
+        expect(loadedCall).toBeTruthy()
+      })
 
-    const { calls } = DownloadHistory.mock
-    expect(calls.length).toBeGreaterThan(0)
-
-    const lastCall = calls[calls.length - 1][0]
-    expect(lastCall.earthdataEnvironment).toBe('prod')
-    expect(lastCall.retrievalHistoryLoaded).toBe(true)
-    expect(Array.isArray(lastCall.retrievalHistory)).toBe(true)
-  })
-
-  test('logs error when fetchRetrievalHistory fails', async () => {
-    // Setup RetrievalRequest to throw an error
-    const mockError = new Error('Failed to fetch retrieval history')
-    RetrievalRequest.mockImplementation(() => ({
-      all: jest.fn().mockRejectedValue(mockError)
-    }))
-
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <DownloadHistoryContainer
-            authToken="mock-token"
-            earthdataEnvironment="test"
-          />
-        </MemoryRouter>
-      </Provider>
-    )
-
-    // Wait for the error to be logged
-    await waitFor(() => {
-      expect(mockConsoleError).toHaveBeenCalledWith(
-        'Error fetching retrieval history:',
-        mockError
+      // Now check the specific props after we know the loaded state has been reached
+      expect(DownloadHistory).toHaveBeenCalledWith(
+        expect.objectContaining({
+          earthdataEnvironment: 'prod',
+          retrievalHistoryLoaded: true,
+          retrievalHistory: expect.arrayContaining([
+            expect.objectContaining({
+              id: '8069076'
+            })
+          ])
+        }),
+        expect.anything()
       )
     })
   })
 
-  test('handles deleteRetrieval successfully', async () => {
-    // Create a mock remove function we can track
-    const mockRemove = jest.fn().mockResolvedValue({})
+  describe('when fetching retrieval history fails', () => {
+    test('logs the error', async () => {
+      // Mock the API endpoint to return an error
+      nock(/.*/)
+        .get(/retrievals/)
+        .replyWithError('Failed to fetch retrieval history')
 
-    // Set up the RetrievalRequest mock with our trackable remove function
-    RetrievalRequest.mockImplementation(() => ({
-      all: jest.fn().mockResolvedValue({
-        data: [{
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <DownloadHistoryContainer
+              authToken="mock-token"
+              earthdataEnvironment="test"
+            />
+          </MemoryRouter>
+        </Provider>
+      )
+
+      // Wait for the error to be logged
+      await waitFor(() => {
+        expect(mockConsoleError).toHaveBeenCalledWith(
+          'Error fetching retrieval history:',
+          expect.any(Error)
+        )
+      })
+    })
+  })
+
+  describe('when deleting a retrieval', () => {
+    test('handles successful deletion', async () => {
+      // Mock the API endpoints
+      nock(/.*/)
+        .get(/retrievals/)
+        .reply(200, [{
           id: '8069076',
           jsondata: {},
           created_at: '2019-08-25T11:58:14.390Z',
           collections: [{}]
-        }]
-      }),
-      remove: mockRemove
-    }))
+        }])
 
-    // Set up the component
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <DownloadHistoryContainer />
-        </MemoryRouter>
-      </Provider>
-    )
+      nock(/.*/)
+        .delete(/retrievals\/8069076/)
+        .reply(200, {})
 
-    // Wait for initial data to load
-    await waitFor(() => {
-      expect(screen.getByTestId('download-history')).toBeInTheDocument()
+      // Set up the component
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <DownloadHistoryContainer />
+          </MemoryRouter>
+        </Provider>
+      )
+
+      // Wait for initial data to load
+      await waitFor(() => {
+        expect(screen.getByText('Download History Component')).toBeInTheDocument()
+      })
+
+      // Get the onDeleteRetrieval function that was passed to DownloadHistory
+      const { calls } = DownloadHistory.mock
+      const lastCall = calls[calls.length - 1][0]
+      const { onDeleteRetrieval } = lastCall
+
+      // Call the function directly to test it
+      await onDeleteRetrieval('8069076')
+
+      // Check that addToast was called with success message
+      expect(addToast).toHaveBeenCalledWith('Retrieval removed', {
+        appearance: 'success',
+        autoDismiss: true
+      })
     })
 
-    // Get the onDeleteRetrieval function that was passed to DownloadHistory
-    const { calls } = DownloadHistory.mock
-    const lastCall = calls[calls.length - 1][0]
-    const { onDeleteRetrieval } = lastCall
-
-    // Call the function directly to test it
-    await onDeleteRetrieval('8069076')
-
-    // Check that our mockRemove was called with the correct ID
-    expect(mockRemove).toHaveBeenCalledWith('8069076')
-
-    // Check that addToast was called with success message
-    expect(addToast).toHaveBeenCalledWith('Retrieval removed', {
-      appearance: 'success',
-      autoDismiss: true
-    })
-  })
-
-  test('handles error when deleting retrieval', async () => {
-    // Setup RetrievalRequest.remove to throw an error
-    const mockError = new Error('Failed to delete retrieval')
-    RetrievalRequest.mockImplementation(() => ({
-      all: jest.fn().mockResolvedValue({
-        data: [{
+    test('handles error when deletion fails', async () => {
+      // Mock the API endpoints
+      nock(/.*/)
+        .get(/retrievals/)
+        .reply(200, [{
           id: '8069076',
           jsondata: {},
           created_at: '2019-08-25T11:58:14.390Z',
           collections: [{}]
-        }]
-      }),
-      remove: jest.fn().mockRejectedValue(mockError)
-    }))
+        }])
 
-    // Set up the component
-    render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <DownloadHistoryContainer />
-        </MemoryRouter>
-      </Provider>
-    )
+      nock(/.*/)
+        .delete(/retrievals\/8069076/)
+        .replyWithError('Failed to delete retrieval')
 
-    // Wait for initial data to load
-    await waitFor(() => {
-      expect(screen.getByTestId('download-history')).toBeInTheDocument()
-    })
+      // Set up the component
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <DownloadHistoryContainer />
+          </MemoryRouter>
+        </Provider>
+      )
 
-    // Get the onDeleteRetrieval function that was passed to DownloadHistory
-    const { calls } = DownloadHistory.mock
-    const lastCall = calls[calls.length - 1][0]
-    const { onDeleteRetrieval } = lastCall
+      // Wait for initial data to load
+      await waitFor(() => {
+        expect(screen.getByText('Download History Component')).toBeInTheDocument()
+      })
 
-    // Call the function directly to test the error path
-    await onDeleteRetrieval('8069076')
+      // Get the onDeleteRetrieval function that was passed to DownloadHistory
+      const { calls } = DownloadHistory.mock
+      const lastCall = calls[calls.length - 1][0]
+      const { onDeleteRetrieval } = lastCall
 
-    // Check that console.error was called with the error
-    expect(mockConsoleError).toHaveBeenCalledWith(
-      'Error deleting retrieval:',
-      mockError
-    )
+      // Call the function directly to test the error path
+      await onDeleteRetrieval('8069076')
 
-    // Check that addToast was called with error message
-    expect(addToast).toHaveBeenCalledWith('Error removing retrieval', {
-      appearance: 'error',
-      autoDismiss: true
+      // Check that console.error was called with the error
+      expect(mockConsoleError).toHaveBeenCalledWith(
+        'Error deleting retrieval:',
+        expect.any(Error)
+      )
+
+      // Check that addToast was called with error message
+      expect(addToast).toHaveBeenCalledWith('Error removing retrieval', {
+        appearance: 'error',
+        autoDismiss: true
+      })
     })
   })
 
-  test('maps state to props correctly', () => {
-    const mapStateToProps = (state) => ({
-      authToken: state.authToken,
-      earthdataEnvironment: state.earthdataEnvironment
-    })
+  describe('mapStateToProps', () => {
+    test('maps state to props correctly', () => {
+      const mapStateToProps = (state) => ({
+        authToken: state.authToken,
+        earthdataEnvironment: state.earthdataEnvironment
+      })
 
-    const state = {
-      authToken: 'testToken',
-      earthdataEnvironment: 'prod'
-    }
+      const state = {
+        authToken: 'testToken',
+        earthdataEnvironment: 'prod'
+      }
 
-    expect(mapStateToProps(state)).toEqual({
-      authToken: 'testToken',
-      earthdataEnvironment: 'prod'
+      expect(mapStateToProps(state)).toEqual({
+        authToken: 'testToken',
+        earthdataEnvironment: 'prod'
+      })
     })
   })
 })
