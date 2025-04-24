@@ -1,5 +1,5 @@
 /**
- * Generates a SHA1 digest of the echoform, used to determine if the saved
+ * Generates a base64 encoding of the echoform, used to determine if the saved
  * EchoForm data is up to date with the current EchoForm
  * @param {String} form EchoForm string
  */
