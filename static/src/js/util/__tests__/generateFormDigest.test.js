@@ -4,6 +4,6 @@ describe('generateFormDigest', () => {
   test('converts a form element into a base64 encoded string representation', () => {
     const form = 'mock echo form data'
 
-    expect(generateFormDigest(form)).toEqual('bW9jayBlY2hvIGZvcm0gZGF0YQ==')
+    expect(generateFormDigest(form)).toEqual('746dab54ecfceb61450dcd8296135f46')
   })
 })

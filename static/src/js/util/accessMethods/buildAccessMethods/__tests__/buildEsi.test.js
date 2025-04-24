@@ -43,7 +43,7 @@ describe('buildEsi', () => {
     expect(accessMethodsList).toEqual([
       {
         form: 'mock form',
-        formDigest: 'bW9jayBmb3Jt',
+        formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
         optionDefinition: {
           conceptId: 'OO10000-EDSC',
           revisionId: 1,
@@ -97,7 +97,7 @@ describe('buildEsi', () => {
       [
         {
           form: 'mock form',
-          formDigest: 'bW9jayBmb3Jt',
+          formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
           optionDefinition: {
             conceptId: 'OO20000-EDSC',
             revisionId: 1,
@@ -109,7 +109,7 @@ describe('buildEsi', () => {
         },
         {
           form: 'mock form',
-          formDigest: 'bW9jayBmb3Jt',
+          formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
           optionDefinition: {
             conceptId: 'OO30000-EDSC',
             revisionId: 2,

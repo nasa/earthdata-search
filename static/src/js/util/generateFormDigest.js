@@ -1,10 +1,12 @@
+import md5 from 'md5'
+
 /**
  * Generates a base64 encoding of the echoform, used to determine if the saved
  * EchoForm data is up to date with the current EchoForm
  * @param {String} form EchoForm string
  */
 export const generateFormDigest = (form) => {
-  const formDigest = Buffer.from(form).toString('base64')
+  const formDigest = md5(form)
 
   return formDigest
 }

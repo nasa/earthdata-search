@@ -4164,7 +4164,7 @@ describe('when buildAccessMethods is called', () => {
         {
           echoOrders0: {
             form: 'mock form',
-            formDigest: 'bW9jayBmb3Jt',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
             maxItemsPerOrder: 2000,
             optionDefinition: {
               conceptId: 'OO10000-EDSC',
@@ -4176,7 +4176,7 @@ describe('when buildAccessMethods is called', () => {
           },
           echoOrders1: {
             form: 'mock form',
-            formDigest: 'bW9jayBmb3Jt',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
             maxItemsPerOrder: 2000,
             optionDefinition: {
               conceptId: 'OO10002-EDSC',
@@ -4188,7 +4188,7 @@ describe('when buildAccessMethods is called', () => {
           },
           esi0: {
             form: 'mock form',
-            formDigest: 'bW9jayBmb3Jt',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
             maxItemsPerOrder: 2000,
             optionDefinition: {
               conceptId: 'OO10001-EDSC',

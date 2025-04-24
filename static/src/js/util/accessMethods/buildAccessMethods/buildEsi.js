@@ -1,5 +1,5 @@
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
-import { generateFormDigest } from '../../../../../../sharedUtils/generateFormDigest'
+import { generateFormDigest } from '../../generateFormDigest'
 
 /**
  * Builds the ESI access method
