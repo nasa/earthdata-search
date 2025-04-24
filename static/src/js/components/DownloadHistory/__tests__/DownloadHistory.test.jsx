@@ -29,13 +29,11 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => (
   )
 }))
 
-function setup(props) {
-  return render(
-    <MemoryRouter>
-      <DownloadHistory {...props} />
-    </MemoryRouter>
-  )
-}
+const setup = (props) => render(
+  <MemoryRouter>
+    <DownloadHistory {...props} />
+  </MemoryRouter>
+)
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -45,198 +43,184 @@ beforeEach(() => {
 
 describe('DownloadHistory component', () => {
   describe('when passed the correct props', () => {
-    test('renders a spinner when retrievals are loading', () => {
-      setup({
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [],
-        retrievalHistoryLoading: true,
-        retrievalHistoryLoaded: false,
-        onDeleteRetrieval: jest.fn()
+    describe('when retrievals are loading', () => {
+      test('renders a spinner', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [],
+          retrievalHistoryLoading: true,
+          retrievalHistoryLoaded: false,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('heading', { name: /download status & history/i })).toBeInTheDocument()
+        expect(screen.getByTestId('spinner')).toBeInTheDocument()
+        expect(screen.getByTestId('spinner')).toHaveClass('download-history__spinner')
       })
-
-      expect(screen.getByRole('heading', { name: /download status & history/i })).toBeInTheDocument()
-
-      const spinner = screen.getByTestId('spinner')
-
-      expect(spinner).toBeInTheDocument()
-      expect(spinner).toHaveClass('download-history__spinner')
     })
 
-    test('renders a message when no retrievals exist', () => {
-      setup({
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: true,
-        onDeleteRetrieval: jest.fn()
-      })
+    describe('when no retrievals exist', () => {
+      test('renders a message', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
 
-      expect(screen.queryByRole('table')).not.toBeInTheDocument()
-      expect(screen.queryByTestId('spinner')).not.toBeInTheDocument()
-      expect(screen.getByText('No download history to display.')).toBeInTheDocument()
+        expect(screen.queryByRole('table')).not.toBeInTheDocument()
+        expect(screen.queryByTestId('spinner')).not.toBeInTheDocument()
+        expect(screen.getByText('No download history to display.')).toBeInTheDocument()
+      })
     })
 
-    test('renders a table when a retrieval exists with one collection that has no title', () => {
-      setup({
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{}]
-        }],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: true,
-        onDeleteRetrieval: jest.fn()
+    describe('when a retrieval exists with one collection that has no title', () => {
+      test('renders a table with collection count', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{}]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: '1 collection' })).toHaveAttribute('href', '/downloads/8069076')
       })
-
-      expect(screen.getByRole('table')).toBeInTheDocument()
-      expect(screen.getByText('1 collection')).toBeInTheDocument()
-
-      const link = screen.getByTestId('portal-link')
-      expect(link).toHaveAttribute('href', '/downloads/8069076')
-      expect(link).toHaveTextContent('1 collection')
     })
 
-    test('renders a table when a retrieval exists with one collection', () => {
-      setup({
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{
-            title: 'Collection Title'
-          }]
-        }],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: true,
-        onDeleteRetrieval: jest.fn()
+    describe('when a retrieval exists with one collection', () => {
+      test('renders a table with the collection title', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: 'Collection Title' })).toHaveAttribute('href', '/downloads/8069076')
       })
-
-      expect(screen.getByRole('table')).toBeInTheDocument()
-      expect(screen.getByText('Collection Title')).toBeInTheDocument()
-
-      const link = screen.getByTestId('portal-link')
-      expect(link).toHaveAttribute('href', '/downloads/8069076')
-      expect(link).toHaveTextContent('Collection Title')
     })
 
-    test('renders a table when a retrieval exists with two collections', () => {
-      setup({
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{
-            title: 'Collection Title'
-          }, {
-            title: 'Collection Title Two'
-          }]
-        }],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: true,
-        onDeleteRetrieval: jest.fn()
+    describe('when a retrieval exists with two collections', () => {
+      test('renders a table with the first collection title and count of others', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }, {
+              title: 'Collection Title Two'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: 'Collection Title and 1 other collection' })).toHaveAttribute('href', '/downloads/8069076')
       })
-
-      expect(screen.getByRole('table')).toBeInTheDocument()
-
-      const link = screen.getByTestId('portal-link')
-      expect(link).toHaveAttribute('href', '/downloads/8069076')
-      expect(link).toHaveTextContent('Collection Title and 1 other collection')
     })
 
-    test('renders document head metadata correctly', () => {
-      setup({
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: true,
-        onDeleteRetrieval: jest.fn()
-      })
+    describe('when portals were used to place an order', () => {
+      test('renders links with the correct portal ID', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {
+              portal_id: 'test'
+            },
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
 
-      expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Download Status & History')
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        const link = screen.getByRole('link', { name: 'Collection Title' })
+        expect(link).toHaveAttribute('href', '/downloads/8069076')
+        expect(link).toHaveAttribute('data-portal-id', 'test')
+      })
     })
 
-    test('renders links correctly when portals were used to place an order', () => {
-      setup({
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [{
-          id: '8069076',
-          jsondata: {
-            portal_id: 'test'
-          },
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{
-            title: 'Collection Title'
-          }]
-        }],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: true,
-        onDeleteRetrieval: jest.fn()
+    describe('when the earthdataEnvironment doesn\'t match the deployed environment', () => {
+      test('renders links with the correct environment parameter', () => {
+        setup({
+          earthdataEnvironment: 'uat',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {
+              portal_id: 'test'
+            },
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        const link = screen.getByRole('link', { name: 'Collection Title' })
+        expect(link).toHaveAttribute('href', '/downloads/8069076?ee=uat')
+        expect(link).toHaveAttribute('data-portal-id', 'test')
       })
-
-      expect(screen.getByRole('table')).toBeInTheDocument()
-
-      const link = screen.getByTestId('portal-link')
-      expect(link).toHaveAttribute('href', '/downloads/8069076')
-      expect(link).toHaveAttribute('data-portal-id', 'test')
-      expect(link).toHaveTextContent('Collection Title')
     })
 
-    test("renders links correctly when the earthdataEnvironment doesn't match the deployed environment", () => {
-      setup({
-        earthdataEnvironment: 'uat',
-        retrievalHistory: [{
-          id: '8069076',
-          jsondata: {
-            portal_id: 'test'
-          },
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{
-            title: 'Collection Title'
-          }]
-        }],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: true,
-        onDeleteRetrieval: jest.fn()
+    describe('when the delete button is clicked', () => {
+      test('calls onDeleteRetrieval with the correct ID', async () => {
+        const view = userEvent.setup()
+        const onDeleteRetrieval = jest.fn()
+
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval
+        })
+
+        window.confirm = jest.fn().mockImplementation(() => true)
+
+        const deleteButton = screen.getByRole('button', { name: /delete download/i })
+        await view.click(deleteButton)
+
+        expect(onDeleteRetrieval).toHaveBeenCalledTimes(1)
+        expect(onDeleteRetrieval).toHaveBeenCalledWith('8069076')
       })
-
-      expect(screen.getByRole('table')).toBeInTheDocument()
-
-      const link = screen.getByTestId('portal-link')
-      expect(link).toHaveAttribute('href', '/downloads/8069076?ee=uat')
-      expect(link).toHaveAttribute('data-portal-id', 'test')
-      expect(link).toHaveTextContent('Collection Title')
-    })
-
-    test('onHandleRemove calls onDeleteRetrieval', async () => {
-      const view = userEvent.setup()
-      const onDeleteRetrieval = jest.fn()
-
-      setup({
-        earthdataEnvironment: 'prod',
-        retrievalHistory: [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{
-            title: 'Collection Title'
-          }]
-        }],
-        retrievalHistoryLoading: false,
-        retrievalHistoryLoaded: true,
-        onDeleteRetrieval
-      })
-
-      window.confirm = jest.fn().mockImplementation(() => true)
-
-      const deleteButton = screen.getByRole('button', { name: /delete download/i })
-      await view.click(deleteButton)
-
-      expect(onDeleteRetrieval).toHaveBeenCalledTimes(1)
-      expect(onDeleteRetrieval).toHaveBeenCalledWith('8069076')
     })
   })
 })
