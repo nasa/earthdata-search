@@ -1,5 +1,4 @@
 import React from 'react'
-import '@testing-library/jest-dom'
 import { render, screen } from '@testing-library/react'
 
 // @ts-expect-error: This file does not have types
@@ -11,7 +10,7 @@ import { echoForm } from './mocks'
 
 jest.mock('@edsc/echoforms', () => jest.fn(() => <div data-testid="edsc-echoforms" />))
 
-function setup(overrideProps = {}) {
+const setup = (overrideProps = {}) => {
   const onUpdateAccessMethod = jest.fn()
 
   const props = {
@@ -69,23 +68,65 @@ describe('EchoForm component', () => {
     )
   })
 
-  test('renders an EDSCEchoform with temporal prepopulated', () => {
-    setup({
-      temporal: {
-        endDate: '2020-03-05T17:49:07.369Z',
-        startDate: '2019-12-06T07:34:12.613Z'
-      }
-    })
+  describe('when both startDate and endDate are set', () => {
+    test('renders an EDSCEchoform with temporal prepopulated', () => {
+      setup({
+        temporal: {
+          endDate: '2020-03-05T17:49:07.369Z',
+          startDate: '2019-12-06T07:34:12.613Z'
+        }
+      })
 
-    expect(EDSCEchoform).toHaveBeenCalledWith(
-      expect.objectContaining({
-        prepopulateValues: expect.objectContaining({
-          TEMPORAL_START: '2019-12-06T07:34:12',
-          TEMPORAL_END: '2020-03-05T17:49:07'
-        })
-      }),
-      {}
-    )
+      expect(EDSCEchoform).toHaveBeenCalledWith(
+        expect.objectContaining({
+          prepopulateValues: expect.objectContaining({
+            TEMPORAL_START: '2019-12-06T07:34:12',
+            TEMPORAL_END: '2020-03-05T17:49:07'
+          })
+        }),
+        {}
+      )
+    })
+  })
+
+  describe('when a startDate is set', () => {
+    test('renders an EDSCEchoform with temporal prepopulated', () => {
+      setup({
+        temporal: {
+          startDate: '2019-12-06T07:34:12.613Z'
+        }
+      })
+
+      expect(EDSCEchoform).toHaveBeenCalledWith(
+        expect.objectContaining({
+          prepopulateValues: expect.objectContaining({
+            TEMPORAL_START: '2019-12-06T07:34:12',
+            TEMPORAL_END: ''
+          })
+        }),
+        {}
+      )
+    })
+  })
+
+  describe('when a endDate is set', () => {
+    test('renders an EDSCEchoform with temporal prepopulated', () => {
+      setup({
+        temporal: {
+          endDate: '2020-03-05T17:49:07.369Z'
+        }
+      })
+
+      expect(EDSCEchoform).toHaveBeenCalledWith(
+        expect.objectContaining({
+          prepopulateValues: expect.objectContaining({
+            TEMPORAL_START: '',
+            TEMPORAL_END: '2020-03-05T17:49:07'
+          })
+        }),
+        {}
+      )
+    })
   })
 
   test('renders an EDSCEchoform with email prepopulated', () => {

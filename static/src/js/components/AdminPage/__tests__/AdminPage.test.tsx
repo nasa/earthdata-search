@@ -1,5 +1,4 @@
 import React from 'react'
-import '@testing-library/jest-dom'
 import {
   render,
   screen,
@@ -9,7 +8,7 @@ import { MemoryRouter } from 'react-router'
 
 import AdminPage from '../AdminPage'
 
-function setup(overrideProps = {}) {
+const setup = (overrideProps = {}) => {
   const props = {
     children: null,
     pageTitle: 'Admin Title',
@@ -60,7 +59,6 @@ describe('AdminPage component', () => {
     expect(within(breadcrumbs).getByRole('link')).toHaveAttribute('href', '/admin')
     expect(within(breadcrumbs).getByText('Admin Title')).toBeInTheDocument()
     expect(within(breadcrumbs).getByRole('listitem', { current: 'page' })).toHaveTextContent('Retrievals')
-    expect(within(breadcrumbs).getByText('Retrievals')).toBeInTheDocument()
     expect(within(breadcrumbs).getByText('Retrievals')).toBeInTheDocument()
   })
 })

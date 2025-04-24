@@ -1,5 +1,4 @@
 import React from 'react'
-import '@testing-library/jest-dom'
 import {
   render,
   screen,
@@ -12,9 +11,9 @@ import { AdminProject } from '../AdminProject'
 // @ts-expect-error: This file does not have types
 import AdminProjectDetails from '../../AdminProjectDetails/AdminProjectDetails'
 
-jest.mock('../../AdminProjectDetails/AdminProjectDetails', () => jest.fn(() => <div data-testid="mocked-admin-project-details" />))
+jest.mock('../../AdminProjectDetails/AdminProjectDetails', () => jest.fn(() => <div />))
 
-function setup(overrideProps = {}) {
+const setup = (overrideProps = {}) => {
   const props = {
     project: {
       id: 1

@@ -4,8 +4,11 @@ import { Link } from 'react-router-dom'
 import './AdminPage.scss'
 
 interface Breadcrumb {
+  /** The text of the breadcrumb */
   name: string
+  /** The href of the breadcrumb */
   href?: string
+  /** Whether or not the breadcrumb should appear as active */
   active?: boolean
 }
 
