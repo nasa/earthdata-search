@@ -352,7 +352,7 @@ class SearchForm extends Component {
             bootstrapVariant="inline-block"
             className="search-form__button search-form__button--submit"
             label="Search"
-            onClick={this.onSubmit}
+            onClick={this.onFormSubmit}
           >
             Search
           </Button>
