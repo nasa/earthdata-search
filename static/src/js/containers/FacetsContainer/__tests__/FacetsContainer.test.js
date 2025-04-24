@@ -2,7 +2,6 @@ import React from 'react'
 
 import { render, screen } from '@testing-library/react'
 
-import Providers from '../../../providers/Providers/Providers'
 import Facets from '../../../components/Facets/Facets'
 
 import actions from '../../../actions'
@@ -29,9 +28,7 @@ function setup() {
   }
 
   const { container } = render(
-    <Providers>
-      <FacetsContainer {...props} />
-    </Providers>
+    <FacetsContainer {...props} />
   )
 
   return {
@@ -109,10 +106,7 @@ describe('FacetsContainer component', () => {
         portal: {},
         onChangeCmrFacet: mockOnChangeCmrFacet,
         onChangeFeatureFacet: mockOnChangeFeatureFacet,
-        onTriggerViewAllFacets: mockOnTriggerViewAllFacets,
-        openKeywordFacet: false
-        // TODO: Check if theres a better way to test this
-        // setOpenKeywordFacet: expect.any(Function)
+        onTriggerViewAllFacets: mockOnTriggerViewAllFacets
       }),
       {}
     )

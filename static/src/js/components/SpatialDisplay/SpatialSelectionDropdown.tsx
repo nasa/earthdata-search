@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { PropTypes } from 'prop-types'
+import React from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
@@ -7,25 +6,40 @@ import { useLocation } from 'react-router-dom'
 
 import { FaCircle, FaFile } from 'react-icons/fa'
 
+// @ts-expect-error: This file does not have types
 import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
+// @ts-expect-error: This file does not have types
 import SpatialOutline from '~Images/icons/spatial-outline.svg?react'
 
+// @ts-expect-error: This file does not have types
 import { eventEmitter } from '../../events/events'
 
+// @ts-expect-error: This file does not have types
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
+// @ts-expect-error: This file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 
-import HomeContext from '../../contexts/HomeContext'
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './SpatialSelectionDropdown.scss'
 
-const SpatialSelectionDropdown = (props) => {
+type SpatialSelectionDropdownProps = {
+  searchParams: {
+    [key: string]: string
+  }
+  onChangeUrl: (url: string) => void
+  onChangePath: (path: string) => void
+  onToggleShapefileUploadModal: (show: boolean) => void
+  onMetricsSpatialSelection: (data: { item: string }) => void
+}
+
+const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
   const {
     searchParams,
     onChangeUrl,
@@ -34,13 +48,13 @@ const SpatialSelectionDropdown = (props) => {
     onMetricsSpatialSelection
   } = props
 
-  const { setStartDrawing } = useContext(HomeContext)
+  const setStartDrawing = useEdscStore((state) => state.home.setStartDrawing)
 
   const location = useLocation()
   const { pathname } = location
   const isHomePage = pathname === '/'
 
-  const onItemClick = (spatialType) => {
+  const onItemClick = (spatialType: string) => {
     // Sends metrics for spatial selection usage
     onMetricsSpatialSelection({
       item: spatialType === spatialTypes.BOUNDING_BOX ? 'rectangle' : spatialType.toLowerCase()
@@ -166,14 +180,6 @@ const SpatialSelectionDropdown = (props) => {
       </Dropdown.Menu>
     </Dropdown>
   )
-}
-
-SpatialSelectionDropdown.propTypes = {
-  searchParams: PropTypes.shape({}).isRequired,
-  onChangePath: PropTypes.func.isRequired,
-  onChangeUrl: PropTypes.func.isRequired,
-  onMetricsSpatialSelection: PropTypes.func.isRequired,
-  onToggleShapefileUploadModal: PropTypes.func.isRequired
 }
 
 export default SpatialSelectionDropdown

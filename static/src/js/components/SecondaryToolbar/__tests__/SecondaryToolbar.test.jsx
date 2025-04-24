@@ -9,7 +9,6 @@ import userEvent from '@testing-library/user-event'
 import '@testing-library/jest-dom'
 import { Router } from 'react-router'
 import { createMemoryHistory } from 'history'
-import Providers from '../../../providers/Providers/Providers'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
@@ -66,11 +65,9 @@ const setup = (state, overrideProps) => {
   const history = createMemoryHistory()
 
   render(
-    <Providers>
-      <Router history={history} location={props.location}>
-        <SecondaryToolbar {...props} />
-      </Router>
-    </Providers>
+    <Router history={history} location={props.location}>
+      <SecondaryToolbar {...props} />
+    </Router>
   )
 
   return {

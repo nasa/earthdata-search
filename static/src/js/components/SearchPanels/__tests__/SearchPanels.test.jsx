@@ -21,7 +21,6 @@ import Panels from '../../Panels/Panels'
 import PanelGroup from '../../Panels/PanelGroup'
 import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
-import Providers from '../../../providers/Providers/Providers'
 
 const store = configureStore()
 
@@ -125,11 +124,9 @@ function setup(overrideProps, location = '/search') {
 
   const enzymeWrapper = mount(
     <Provider store={store}>
-      <Providers>
-        <StaticRouter location={location}>
-          <SearchPanels {...props} />
-        </StaticRouter>
-      </Providers>
+      <StaticRouter location={location}>
+        <SearchPanels {...props} />
+      </StaticRouter>
     </Provider>
   )
 
@@ -139,8 +136,7 @@ function setup(overrideProps, location = '/search') {
   }
 }
 
-// TODO These tests don't work with the added PanelsWidthContext, wrapping the render in <Providers> didn't help. It might be because they are using Enzyme and not React Testing Library
-describe.skip('SearchPanels component', () => {
+describe('SearchPanels component', () => {
   describe('while on the /search route', () => {
     test('sets the correct view state', () => {
       const { enzymeWrapper } = setup()

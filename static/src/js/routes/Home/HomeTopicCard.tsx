@@ -1,12 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Card } from 'react-bootstrap'
-
-// @ts-expect-error: Types do not exist for this file
-import HomeContext from '../../contexts/HomeContext'
 
 import { type HomeTopic } from './Home'
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './HomeTopicCard.scss'
 
@@ -15,8 +14,7 @@ const HomeTopicCard: React.FC<HomeTopic> = ({
   url,
   title
 }) => {
-  // @ts-expect-error: Types do not exist for this file
-  const { setOpenKeywordFacet } = useContext(HomeContext)
+  const setOpenKeywordFacet = useEdscStore((state) => state.home.setOpenKeywordFacet)
 
   return (
     <Card
