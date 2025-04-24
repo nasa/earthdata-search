@@ -4,14 +4,9 @@ import thunk from 'redux-thunk'
 
 import { SET_RETRIEVAL_LOADING } from '../../constants/actionTypes'
 
-import {
-  submitRetrieval,
-  fetchRetrieval,
-  deleteRetrieval
-} from '../retrieval'
+import { submitRetrieval, fetchRetrieval } from '../retrieval'
 
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
-import * as addToast from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
@@ -1004,53 +999,6 @@ describe('fetchRetrieval', () => {
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(fetchRetrieval(7)).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
-    })
-  })
-})
-
-describe('deleteRetrieval', () => {
-  test('calls lambda to delete a retrieval', async () => {
-    const addToastMock = jest.spyOn(addToast, 'addToast')
-
-    nock(/localhost/)
-      .delete(/2057964173/)
-      .reply(204)
-
-    // MockStore with initialState
-    const store = mockStore({
-      authToken: 'mockToken',
-      retrievalHistory: []
-    })
-
-    // Call the dispatch
-    await store.dispatch(deleteRetrieval('2057964173')).then(() => {
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Retrieval removed')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-    })
-  })
-
-  test('does not call removeRetrievalHistory on error', async () => {
-    nock(/localhost/)
-      .delete(/2057964173/)
-      .reply(500, {
-        errors: ['An error occured.']
-      })
-
-    nock(/localhost/)
-      .post(/error_logger/)
-      .reply(200)
-
-    const store = mockStore({
-      authToken: 'mockToken',
-      retrievalHistory: []
-    })
-
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
-    await store.dispatch(deleteRetrieval('2057964173')).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })

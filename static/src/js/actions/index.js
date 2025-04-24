@@ -141,11 +141,7 @@ import {
   setDataQualitySummaries
 } from './project'
 import { getRegions } from './regions'
-import {
-  fetchRetrieval,
-  submitRetrieval,
-  deleteRetrieval
-} from './retrieval'
+import { fetchRetrieval, submitRetrieval } from './retrieval'
 import {
   clearShapefile,
   fetchShapefile,
@@ -237,7 +233,6 @@ const actions = {
   createSubscription,
   deleteAutocompleteValue,
   deleteCollectionSubscription,
-  deleteRetrieval,
   deleteSavedProject,
   deleteSubscription,
   excludeGranule,
