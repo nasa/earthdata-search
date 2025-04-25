@@ -1,249 +1,225 @@
 import React from 'react'
-import {
-  render,
-  waitFor,
-  act
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import configureStore from 'redux-mock-store'
-import nock from 'nock'
 
-import { addToast } from '../../../util/addToast'
-import { handleError } from '../../../actions/errors'
-import DownloadHistoryContainer from '../DownloadHistoryContainer'
+import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
+import * as AppConfig from '../../../../../../sharedUtils/config'
+
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
 
-jest.mock('../../../util/addToast', () => ({
-  addToast: jest.fn()
+jest.mock('../../../../../../sharedUtils/deployedEnvironment', () => ({
+  deployedEnvironment: jest.fn()
 }))
 
-jest.mock('../../../actions/errors', () => ({
-  handleError: jest.fn(() => ({ type: 'HANDLE_ERROR' }))
+jest.mock('../../../../../../sharedUtils/config', () => ({
+  getEnvironmentConfig: jest.fn()
 }))
 
-let lastPassedOnDeleteRetrieval = null
-
-jest.mock('../../../components/DownloadHistory/DownloadHistory', () => ({
-  DownloadHistory: jest.fn((props) => {
-    lastPassedOnDeleteRetrieval = props.onDeleteRetrieval
-
-    return <div>Download History Component</div>
-  })
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
+  __esModule: true,
+  default: ({ children, to, portalId }) => (
+    <a
+      href={`/downloads/${to.pathname.split('/').pop()}${to.search}`}
+      data-testid="portal-link"
+      data-portal-id={portalId}
+    >
+      {children}
+    </a>
+  )
 }))
 
-const mockStore = configureStore([])
+const setup = (props) => render(
+  <MemoryRouter>
+    <DownloadHistory {...props} />
+  </MemoryRouter>
+)
 
-describe('DownloadHistoryContainer component', () => {
-  let store
+beforeEach(() => {
+  jest.clearAllMocks()
+  deployedEnvironment.deployedEnvironment.mockImplementation(() => 'prod')
+  AppConfig.getEnvironmentConfig.mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+})
 
-  beforeEach(() => {
-    store = mockStore({
-      authToken: 'mock-token',
-      earthdataEnvironment: 'prod'
-    })
-
-    jest.clearAllMocks()
-    nock.cleanAll()
-    lastPassedOnDeleteRetrieval = null
-  })
-
-  afterEach(() => {
-    nock.cleanAll()
-  })
-
-  describe('when the component renders', () => {
-    test('renders the DownloadHistory component with the correct props', async () => {
-      const historyData = [{
-        id: '8069076',
-        jsondata: {},
-        created_at: '2019-08-25T11:58:14.390Z',
-        collections: [{}]
-      }]
-      nock(/.*/)
-        .get(/retrievals/)
-        .reply(200, historyData)
-
-      render(
-        <Provider store={store}>
-          <MemoryRouter>
-            <DownloadHistoryContainer />
-          </MemoryRouter>
-        </Provider>
-      )
-
-      await waitFor(() => {
-        expect(DownloadHistory).toHaveBeenLastCalledWith(
-          expect.objectContaining({
-            earthdataEnvironment: 'prod',
-            retrievalHistoryLoaded: true,
-            retrievalHistoryLoading: false,
-            retrievalHistory: historyData
-          }),
-          expect.anything()
-        )
-      })
-    })
-  })
-
-  describe('when fetching retrieval history fails', () => {
-    test('dispatches handleError', async () => {
-      nock(/.*/)
-        .get(/retrievals/)
-        .replyWithError('Failed to fetch retrieval history')
-
-      render(
-        <Provider store={store}>
-          <MemoryRouter>
-            <DownloadHistoryContainer />
-          </MemoryRouter>
-        </Provider>
-      )
-
-      await waitFor(() => {
-        expect(handleError).toHaveBeenCalledWith({
-          error: expect.any(Error),
-          action: 'fetchRetrievalHistory',
-          resource: 'retrieval history',
-          verb: 'fetching',
-          notificationType: 'banner'
+describe('DownloadHistory component', () => {
+  describe('when passed the correct props', () => {
+    describe('when retrievals are loading', () => {
+      test('renders a spinner', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [],
+          retrievalHistoryLoading: true,
+          retrievalHistoryLoaded: false,
+          onDeleteRetrieval: jest.fn()
         })
-      })
 
-      await waitFor(() => {
-        expect(DownloadHistory).toHaveBeenLastCalledWith(
-          expect.objectContaining({
-            retrievalHistoryLoaded: false,
-            retrievalHistoryLoading: false,
-            retrievalHistory: []
-          }),
-          expect.anything()
-        )
+        expect(screen.getByRole('heading', { name: /download status & history/i })).toBeInTheDocument()
+        expect(screen.getByTestId('spinner')).toBeInTheDocument()
+        expect(screen.getByTestId('spinner')).toHaveClass('download-history__spinner')
       })
     })
-  })
 
-  describe('when deleting a retrieval', () => {
-    const initialHistory = [{
-      id: '8069076',
-      jsondata: {},
-      created_at: '2019-08-25T11:58:14.390Z',
-      collections: [{}]
-    }]
-
-    beforeEach(() => {
-      nock(/.*/)
-        .get(/retrievals/)
-        .reply(200, initialHistory)
-    })
-
-    test('handles successful deletion', async () => {
-      nock(/.*/)
-        .delete(/retrievals\/8069076/)
-        .reply(200, {})
-
-      render(
-        <Provider store={store}>
-          <MemoryRouter>
-            <DownloadHistoryContainer />
-          </MemoryRouter>
-        </Provider>
-      )
-
-      await waitFor(() => {
-        expect(lastPassedOnDeleteRetrieval).toEqual(expect.any(Function))
-      })
-
-      await act(async () => {
-        if (!lastPassedOnDeleteRetrieval) {
-          throw new Error('onDeleteRetrieval callback was not captured by mock')
-        }
-
-        await lastPassedOnDeleteRetrieval('8069076')
-      })
-
-      await waitFor(() => {
-        expect(addToast).toHaveBeenCalledWith('Retrieval removed', {
-          appearance: 'success',
-          autoDismiss: true
+    describe('when no retrievals exist', () => {
+      test('renders a message', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
         })
-      })
 
-      expect(handleError).not.toHaveBeenCalled()
-
-      await waitFor(() => {
-        expect(DownloadHistory).toHaveBeenLastCalledWith(
-          expect.objectContaining({
-            retrievalHistory: []
-          }),
-          expect.anything()
-        )
+        expect(screen.queryByRole('table')).not.toBeInTheDocument()
+        expect(screen.queryByTestId('spinner')).not.toBeInTheDocument()
+        expect(screen.getByText('No download history to display.')).toBeInTheDocument()
       })
     })
 
-    test('handles error when deletion fails', async () => {
-      nock(/.*/)
-        .delete(/retrievals\/8069076/)
-        .replyWithError('Failed to delete retrieval')
-
-      render(
-        <Provider store={store}>
-          <MemoryRouter>
-            <DownloadHistoryContainer />
-          </MemoryRouter>
-        </Provider>
-      )
-
-      await waitFor(() => {
-        expect(lastPassedOnDeleteRetrieval).toEqual(expect.any(Function))
-      })
-
-      await act(async () => {
-        if (!lastPassedOnDeleteRetrieval) {
-          throw new Error('onDeleteRetrieval callback was not captured by mock')
-        }
-
-        await lastPassedOnDeleteRetrieval('8069076')
-      })
-
-      await waitFor(() => {
-        expect(handleError).toHaveBeenCalledWith({
-          error: expect.any(Error),
-          action: 'handleDeleteRetrieval',
-          resource: 'retrieval',
-          verb: 'deleting',
-          notificationType: 'banner'
+    describe('when a retrieval exists with one collection that has no title', () => {
+      test('renders a table with collection count', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{}]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
         })
-      })
 
-      expect(addToast).not.toHaveBeenCalledWith('Retrieval removed', expect.anything())
-
-      await waitFor(() => {
-        expect(DownloadHistory).toHaveBeenLastCalledWith(
-          expect.objectContaining({
-            retrievalHistory: initialHistory
-          }),
-          expect.anything()
-        )
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: '1 collection' })).toHaveAttribute('href', '/downloads/8069076')
       })
     })
-  })
 
-  describe('mapStateToProps', () => {
-    test('maps state to props correctly', () => {
-      const mapStateToProps = (state) => ({
-        authToken: state.authToken,
-        earthdataEnvironment: state.earthdataEnvironment
+    describe('when a retrieval exists with one collection', () => {
+      test('renders a table with the collection title', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: 'Collection Title' })).toHaveAttribute('href', '/downloads/8069076')
       })
+    })
 
-      const state = {
-        authToken: 'testToken',
-        earthdataEnvironment: 'prod'
-      }
+    describe('when a retrieval exists with two collections', () => {
+      test('renders a table with the first collection title and count of others', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }, {
+              title: 'Collection Title Two'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
 
-      expect(mapStateToProps(state)).toEqual({
-        authToken: 'testToken',
-        earthdataEnvironment: 'prod'
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: 'Collection Title and 1 other collection' })).toHaveAttribute('href', '/downloads/8069076')
+      })
+    })
+
+    describe('when portals were used to place an order', () => {
+      test('renders links with the correct portal ID', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {
+              portal_id: 'test'
+            },
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        const link = screen.getByRole('link', { name: 'Collection Title' })
+        expect(link).toHaveAttribute('href', '/downloads/8069076')
+        expect(link).toHaveAttribute('data-portal-id', 'test')
+      })
+    })
+
+    describe('when the earthdataEnvironment doesn\'t match the deployed environment', () => {
+      test('renders links with the correct environment parameter', () => {
+        setup({
+          earthdataEnvironment: 'uat',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {
+              portal_id: 'test'
+            },
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        const link = screen.getByRole('link', { name: 'Collection Title' })
+        expect(link).toHaveAttribute('href', '/downloads/8069076?ee=uat')
+        expect(link).toHaveAttribute('data-portal-id', 'test')
+      })
+    })
+
+    describe('when the delete button is clicked', () => {
+      test('calls onDeleteRetrieval with the correct ID', async () => {
+        const view = userEvent.setup()
+        const onDeleteRetrieval = jest.fn()
+
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval
+        })
+
+        window.confirm = jest.fn().mockImplementation(() => true)
+
+        const deleteButton = screen.getByRole('button', { name: /delete download/i })
+        await view.click(deleteButton)
+
+        expect(onDeleteRetrieval).toHaveBeenCalledTimes(1)
+        expect(onDeleteRetrieval).toHaveBeenCalledWith('8069076')
       })
     })
   })

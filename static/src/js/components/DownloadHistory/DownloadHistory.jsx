@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import Table from 'react-bootstrap/Table'
 import TimeAgo from 'react-timeago'
@@ -59,6 +59,15 @@ export const DownloadHistory = ({
     }
   }, [onDeleteRetrieval])
 
+  const handleRemoveClick = useCallback((id) => () => handleRemove(id), [handleRemove])
+
+  // Memoize the descriptions for all items in the history
+  const memoizedDescriptions = useMemo(() => retrievalHistory.reduce((acc, retrieval) => {
+    acc[retrieval.id] = retrievalDescription(retrieval.collections)
+
+    return acc
+  }, {}), [retrievalHistory])
+
   return (
     <>
       <Helmet>
@@ -79,64 +88,65 @@ export const DownloadHistory = ({
         )
       }
       {
-        retrievalHistoryLoaded && (
-          retrievalHistory.length > 0 ? (
-            <Table className="download-history-table">
-              <thead>
-                <tr>
-                  <th className="download-history-table__contents-heading">Contents</th>
-                  <th className="download-history-table__created-heading">Created</th>
-                  <th className="download-history-table__actions-heading">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  retrievalHistory.map((retrieval) => {
-                    const {
-                      id,
-                      created_at: createdAt,
-                      jsondata,
-                      collections
-                    } = retrieval
+        retrievalHistoryLoaded && retrievalHistory.length > 0 && (
+          <Table className="download-history-table">
+            <thead>
+              <tr>
+                <th className="download-history-table__contents-heading">Contents</th>
+                <th className="download-history-table__created-heading">Created</th>
+                <th className="download-history-table__actions-heading">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                retrievalHistory.map((retrieval) => {
+                  const {
+                    id,
+                    created_at: createdAt,
+                    jsondata,
+                    collections
+                  } = retrieval
 
-                    const { portal_id: portalId } = jsondata
+                  const { portal_id: portalId } = jsondata
 
-                    return (
-                      <tr key={id}>
-                        <td>
-                          <PortalLinkContainer
-                            portalId={portalId}
-                            to={
-                              {
-                                pathname: `/downloads/${id}`,
-                                search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-                              }
+                  return (
+                    <tr key={id}>
+                      <td>
+                        <PortalLinkContainer
+                          portalId={portalId}
+                          to={
+                            {
+                              pathname: `/downloads/${id}`,
+                              search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
                             }
-                          >
-                            {retrievalDescription(collections)}
-                          </PortalLinkContainer>
-                        </td>
-                        <td className="download-history-table__ago">
-                          <TimeAgo date={createdAt} />
-                        </td>
-                        <td className="download-history-table__actions">
-                          <Button
-                            className="download-history__button download-history__button--remove"
-                            onClick={() => handleRemove(id)}
-                            variant="naked"
-                            icon={XCircled}
-                            label="Delete Download"
-                          />
-                        </td>
-                      </tr>
-                    )
-                  })
-                }
-              </tbody>
-            </Table>
-          ) : (
-            <p>No download history to display.</p>
-          )
+                          }
+                        >
+                          {memoizedDescriptions[id]}
+                        </PortalLinkContainer>
+                      </td>
+                      <td className="download-history-table__ago">
+                        <TimeAgo date={createdAt} />
+                      </td>
+                      <td className="download-history-table__actions">
+                        <Button
+                          className="download-history__button download-history__button--remove"
+                          onClick={handleRemoveClick(id)}
+                          variant="naked"
+                          icon={XCircled}
+                          label="Delete Download"
+                        />
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </Table>
+        )
+      }
+      {
+        retrievalHistoryLoaded && retrievalHistory.length === 0 && (
+          <p>No download history to display.</p>
         )
       }
     </>
@@ -150,7 +160,18 @@ DownloadHistory.defaultProps = {
 DownloadHistory.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
   retrievalHistory: PropTypes.arrayOf(
-    PropTypes.shape({})
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired,
+      jsondata: PropTypes.shape({
+        portal_id: PropTypes.string
+      }).isRequired,
+      collections: PropTypes.arrayOf(
+        PropTypes.shape({
+          title: PropTypes.string
+        })
+      ).isRequired
+    })
   ),
   retrievalHistoryLoading: PropTypes.bool.isRequired,
   retrievalHistoryLoaded: PropTypes.bool.isRequired,

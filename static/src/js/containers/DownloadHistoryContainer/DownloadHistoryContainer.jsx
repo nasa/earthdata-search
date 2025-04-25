@@ -1,4 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
@@ -7,6 +11,15 @@ import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistor
 import RetrievalRequest from '../../util/request/retrievalRequest'
 import { addToast } from '../../util/addToast'
 import { handleError } from '../../actions/errors'
+
+const mapStateToProps = (state) => ({
+  authToken: state.authToken,
+  earthdataEnvironment: state.earthdataEnvironment
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  dispatchHandleError: (errorConfig) => dispatch(handleError(errorConfig))
+})
 
 export const DownloadHistoryContainer = ({
   authToken,
@@ -17,7 +30,7 @@ export const DownloadHistoryContainer = ({
   const [retrievalHistoryLoading, setRetrievalHistoryLoading] = useState(false)
   const [retrievalHistoryLoaded, setRetrievalHistoryLoaded] = useState(false)
 
-  const fetchRetrievalHistory = async () => {
+  const fetchRetrievalHistory = useCallback(async () => {
     if (!authToken) return
 
     setRetrievalHistoryLoading(true)
@@ -40,9 +53,9 @@ export const DownloadHistoryContainer = ({
     } finally {
       setRetrievalHistoryLoading(false)
     }
-  }
+  }, [authToken, earthdataEnvironment, dispatchHandleError])
 
-  const handleDeleteRetrieval = async (retrievalId) => {
+  const handleDeleteRetrieval = useCallback(async (retrievalId) => {
     if (!authToken) return
 
     try {
@@ -64,11 +77,13 @@ export const DownloadHistoryContainer = ({
         notificationType: 'banner'
       })
     }
-  }
+  }, [authToken, earthdataEnvironment, dispatchHandleError])
 
   useEffect(() => {
-    fetchRetrievalHistory()
-  }, [earthdataEnvironment, authToken])
+    if (authToken) {
+      fetchRetrievalHistory()
+    }
+  }, [fetchRetrievalHistory])
 
   return (
     <DownloadHistory
@@ -86,15 +101,6 @@ DownloadHistoryContainer.propTypes = {
   earthdataEnvironment: PropTypes.string.isRequired,
   dispatchHandleError: PropTypes.func.isRequired
 }
-
-const mapStateToProps = (state) => ({
-  authToken: state.authToken,
-  earthdataEnvironment: state.earthdataEnvironment
-})
-
-const mapDispatchToProps = (dispatch) => ({
-  dispatchHandleError: (errorConfig) => dispatch(handleError(errorConfig))
-})
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DownloadHistoryContainer)
