@@ -288,6 +288,7 @@ export const getProjectCollections = () => async (dispatch, getState) => {
                 count
                 items {
                   conceptId
+                  revisionId
                   name
                   form
                 }

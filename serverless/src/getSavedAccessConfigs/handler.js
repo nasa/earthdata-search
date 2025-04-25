@@ -48,6 +48,7 @@ const getSavedAccessConfigs = async (event, context) => {
         collection_id: collectionId,
         access_method: accessMethod
       } = config
+      console.log(`Found savedAccessConfigs for ${accessMethod.type} collectionIds: ${collectionIds}`)
 
       // After EDSC-3638, we are saving the form digest as `formDigest`, but previous access configurations will need to be updated
       let { formDigest } = accessMethod
