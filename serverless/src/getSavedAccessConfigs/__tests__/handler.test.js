@@ -36,6 +36,8 @@ afterEach(() => {
 
 describe('getSavedAccessConfigs', () => {
   test('does not return configuration if none exist', async () => {
+    const consoleMock = jest.spyOn(console, 'log')
+
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response([])
@@ -51,6 +53,7 @@ describe('getSavedAccessConfigs', () => {
     }
 
     const result = await getSavedAccessConfigs(event, {})
+    expect(consoleMock).toHaveBeenCalledTimes(0)
 
     expect(result).toEqual({
       body: JSON.stringify({}),
@@ -65,6 +68,8 @@ describe('getSavedAccessConfigs', () => {
   })
 
   test('returns the saved access configuration with the old `form_digest`', async () => {
+    const consoleMock = jest.spyOn(console, 'log')
+
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response([{
@@ -93,6 +98,8 @@ describe('getSavedAccessConfigs', () => {
     }
 
     const result = await getSavedAccessConfigs(event, {})
+    expect(consoleMock).toHaveBeenCalledTimes(1)
+    expect(consoleMock.mock.calls[0]).toEqual(['Found savedAccessConfigs for ECHO ORDERS collectionIds: collectionId'])
 
     expect(result).toEqual({
       body: JSON.stringify({
@@ -120,6 +127,8 @@ describe('getSavedAccessConfigs', () => {
   })
 
   test('returns the saved access configuration with the new `formDigest`', async () => {
+    const consoleMock = jest.spyOn(console, 'log')
+
     dbTracker.on('query', (query, step) => {
       if (step === 1) {
         query.response([{
@@ -148,6 +157,9 @@ describe('getSavedAccessConfigs', () => {
     }
 
     const result = await getSavedAccessConfigs(event, {})
+
+    expect(consoleMock).toHaveBeenCalledTimes(1)
+    expect(consoleMock.mock.calls[0]).toEqual(['Found savedAccessConfigs for ECHO ORDERS collectionIds: collectionId'])
 
     expect(result).toEqual({
       body: JSON.stringify({
