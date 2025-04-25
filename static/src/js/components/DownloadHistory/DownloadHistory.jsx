@@ -103,8 +103,7 @@ export const DownloadHistory = ({
                   const {
                     id,
                     created_at: createdAt,
-                    jsondata,
-                    collections
+                    jsondata
                   } = retrieval
 
                   const { portal_id: portalId } = jsondata
