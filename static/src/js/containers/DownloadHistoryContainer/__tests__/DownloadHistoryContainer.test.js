@@ -13,7 +13,10 @@ jest.mock('../../../../../../sharedUtils/deployedEnvironment', () => ({
 }))
 
 jest.mock('../../../../../../sharedUtils/config', () => ({
-  getEnvironmentConfig: jest.fn()
+  getEnvironmentConfig: jest.fn(),
+  getApplicationConfig: jest.fn(() => ({
+    defaultCmrPageSize: 20
+  }))
 }))
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({

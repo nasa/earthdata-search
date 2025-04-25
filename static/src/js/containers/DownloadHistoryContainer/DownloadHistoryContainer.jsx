@@ -12,12 +12,12 @@ import RetrievalRequest from '../../util/request/retrievalRequest'
 import { addToast } from '../../util/addToast'
 import { handleError } from '../../actions/errors'
 
-const mapStateToProps = (state) => ({
+export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   earthdataEnvironment: state.earthdataEnvironment
 })
 
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({
   dispatchHandleError: (errorConfig) => dispatch(handleError(errorConfig))
 })
 
