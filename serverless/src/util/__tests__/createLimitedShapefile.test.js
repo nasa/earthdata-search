@@ -6,21 +6,21 @@ describe('createLimitedShapefile', () => {
       type: 'FeatureCollection',
       features: [
         {
-          edscId: 0,
+          properties: { edscId: 0 },
           type: 'Feature',
           geometry: {
             mock: 'feature0'
           }
         },
         {
-          edscId: 1,
+          properties: { edscId: 1 },
           type: 'Feature',
           geometry: {
             mock: 'feature1'
           }
         },
         {
-          edscId: 2,
+          properties: { edscId: 2 },
           type: 'Feature',
           geometry: {
             mock: 'feature2'
@@ -33,7 +33,7 @@ describe('createLimitedShapefile', () => {
       type: 'FeatureCollection',
       features: [
         {
-          edscId: 1,
+          properties: { edscId: 1 },
           type: 'Feature',
           geometry: {
             mock: 'feature1'
@@ -50,21 +50,21 @@ describe('createLimitedShapefile', () => {
       type: 'FeatureCollection',
       features: [
         {
-          edscId: 0,
+          properties: { edscId: 0 },
           type: 'Feature',
           geometry: {
             mock: 'feature0'
           }
         },
         {
-          edscId: 1,
+          properties: { edscId: 1 },
           type: 'Feature',
           geometry: {
             mock: 'feature1'
           }
         },
         {
-          edscId: 2,
+          properties: { edscId: 2 },
           type: 'Feature',
           geometry: {
             mock: 'feature2'
@@ -77,14 +77,14 @@ describe('createLimitedShapefile', () => {
       type: 'FeatureCollection',
       features: [
         {
-          edscId: 1,
+          properties: { edscId: 1 },
           type: 'Feature',
           geometry: {
             mock: 'feature1'
           }
         },
         {
-          edscId: 2,
+          properties: { edscId: 2 },
           type: 'Feature',
           geometry: {
             mock: 'feature2'

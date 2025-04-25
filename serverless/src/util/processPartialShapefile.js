@@ -1,5 +1,4 @@
-import forge from 'node-forge'
-
+import md5 from 'md5'
 import { createLimitedShapefile } from './createLimitedShapefile'
 import { deobfuscateId } from './obfuscation/deobfuscateId'
 
@@ -39,8 +38,7 @@ export const processPartialShapefile = async (
 
     file = newFile
 
-    const fileHash = forge.md.md5.create()
-    fileHash.update(JSON.stringify(file))
+    const fileHash = md5(JSON.stringify(file))
 
     // If the user already used this file, don't save the file again
     const existingShapefileRecord = await dbConnection('shapefiles')
@@ -56,7 +54,7 @@ export const processPartialShapefile = async (
       // Save new shapefile into database, adding the parent_shapefile_id
       await dbConnection('shapefiles')
         .insert({
-          file_hash: fileHash.digest().toHex(),
+          file_hash: fileHash,
           file,
           filename: `Limited-${filename}`,
           parent_shapefile_id: deobfuscatedShapefileId,

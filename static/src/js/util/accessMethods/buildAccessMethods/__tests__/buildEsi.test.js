@@ -24,6 +24,7 @@ describe('buildEsi', () => {
           orderOptions: {
             items: [{
               conceptId: 'OO10000-EDSC',
+              revisionId: 1,
               name: 'mock form',
               form: 'mock form'
             }]
@@ -42,9 +43,10 @@ describe('buildEsi', () => {
     expect(accessMethodsList).toEqual([
       {
         form: 'mock form',
-        formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+        formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
         optionDefinition: {
           conceptId: 'OO10000-EDSC',
+          revisionId: 1,
           name: 'mock form'
         },
         type: 'ESI',
@@ -67,11 +69,13 @@ describe('buildEsi', () => {
               items: [
                 {
                   conceptId: 'OO20000-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 },
                 {
                   conceptId: 'OO30000-EDSC',
+                  revisionId: 2,
                   name: 'mock form',
                   form: 'mock form'
                 }
@@ -93,9 +97,10 @@ describe('buildEsi', () => {
       [
         {
           form: 'mock form',
-          formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+          formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
           optionDefinition: {
             conceptId: 'OO20000-EDSC',
+            revisionId: 1,
             name: 'mock form'
           },
           type: 'ESI',
@@ -104,9 +109,10 @@ describe('buildEsi', () => {
         },
         {
           form: 'mock form',
-          formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+          formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
           optionDefinition: {
             conceptId: 'OO30000-EDSC',
+            revisionId: 2,
             name: 'mock form'
           },
           type: 'ESI',
@@ -135,6 +141,7 @@ describe('buildEsi', () => {
               items: [
                 {
                   conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 }

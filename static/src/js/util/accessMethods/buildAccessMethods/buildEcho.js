@@ -1,5 +1,5 @@
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
-import { generateFormDigest } from '../../../../../../sharedUtils/generateFormDigest'
+import { generateFormDigest } from '../../generateFormDigest'
 
 /**
  * Builds the Echo Ordering access method
@@ -31,7 +31,8 @@ export const buildEcho = (serviceItem) => {
       const {
         conceptId: orderOptionConceptId,
         form,
-        name: orderOptionName
+        name: orderOptionName,
+        revisionId: orderOptionRevisionId
       } = orderOptionItem
 
       const method = {
@@ -40,7 +41,8 @@ export const buildEcho = (serviceItem) => {
         url: urlValue,
         optionDefinition: {
           conceptId: orderOptionConceptId,
-          name: orderOptionName
+          name: orderOptionName,
+          revisionId: orderOptionRevisionId
         },
         form,
         formDigest: generateFormDigest(form)
