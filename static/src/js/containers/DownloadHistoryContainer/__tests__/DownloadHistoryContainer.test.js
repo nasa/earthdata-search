@@ -197,7 +197,7 @@ describe('DownloadHistory component', () => {
     })
 
     describe('when the delete button is clicked', () => {
-      test('calls onDeleteRetrieval with the correct ID', async () => {
+      test('calls onDeleteRetrieval with the correct ID when confirmed', async () => {
         const view = userEvent.setup()
         const onDeleteRetrieval = jest.fn()
 
@@ -223,6 +223,110 @@ describe('DownloadHistory component', () => {
 
         expect(onDeleteRetrieval).toHaveBeenCalledTimes(1)
         expect(onDeleteRetrieval).toHaveBeenCalledWith('8069076')
+      })
+
+      test('does not call onDeleteRetrieval when not confirmed', async () => {
+        const view = userEvent.setup()
+        const onDeleteRetrieval = jest.fn()
+
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval
+        })
+
+        window.confirm = jest.fn().mockImplementation(() => false)
+
+        const deleteButton = screen.getByRole('button', { name: /delete download/i })
+        await view.click(deleteButton)
+
+        expect(onDeleteRetrieval).not.toHaveBeenCalled()
+      })
+    })
+
+    describe('when multiple retrievals exist', () => {
+      test('renders a table with multiple rows', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [
+            {
+              id: '8069076',
+              jsondata: {},
+              created_at: '2019-08-25T11:58:14.390Z',
+              collections: [{
+                title: 'Collection A'
+              }]
+            },
+            {
+              id: '8069077',
+              jsondata: {},
+              created_at: '2019-08-26T12:00:00.000Z',
+              collections: [{
+                title: 'Collection B'
+              }]
+            }
+          ],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        const rows = screen.getAllByRole('row')
+        expect(rows).toHaveLength(3)
+        expect(screen.getByRole('link', { name: 'Collection A' })).toHaveAttribute('href', '/downloads/8069076')
+        expect(screen.getByRole('link', { name: 'Collection B' })).toHaveAttribute('href', '/downloads/8069077')
+      })
+    })
+
+    describe('when a retrieval exists', () => {
+      test('renders the created_at date', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: [{
+              title: 'Collection Title'
+            }]
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        const timeElement = screen.getByText(/years ago/i).closest('time')
+        expect(timeElement).toHaveAttribute('datetime', '2019-08-25T11:58:14.390Z')
+      })
+    })
+
+    describe('when a retrieval exists with no collections', () => {
+      test('renders a table with "0 collections"', () => {
+        setup({
+          earthdataEnvironment: 'prod',
+          retrievalHistory: [{
+            id: '8069076',
+            jsondata: {},
+            created_at: '2019-08-25T11:58:14.390Z',
+            collections: []
+          }],
+          retrievalHistoryLoading: false,
+          retrievalHistoryLoaded: true,
+          onDeleteRetrieval: jest.fn()
+        })
+
+        expect(screen.getByRole('table')).toBeInTheDocument()
+        expect(screen.getByRole('link', { name: '0 collections' })).toHaveAttribute('href', '/downloads/8069076')
       })
     })
   })
