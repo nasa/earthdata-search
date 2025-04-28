@@ -4,19 +4,17 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
-import * as AppConfig from '../../../../../../sharedUtils/config'
+import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
+import { mapStateToProps, mapDispatchToProps } from '../DownloadHistoryContainer'
+import * as errorsModule from '../../../actions/errors'
 
-jest.mock('../../../../../../sharedUtils/deployedEnvironment', () => ({
-  deployedEnvironment: jest.fn()
-}))
+jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
 
-jest.mock('../../../../../../sharedUtils/config', () => ({
-  getEnvironmentConfig: jest.fn(),
-  getApplicationConfig: jest.fn(() => ({
-    defaultCmrPageSize: 20
-  }))
+jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  env: 'test',
+  defaultCmrPageSize: 20
 }))
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
@@ -40,8 +38,6 @@ const setup = (props) => render(
 
 beforeEach(() => {
   jest.clearAllMocks()
-  deployedEnvironment.deployedEnvironment.mockImplementation(() => 'prod')
-  AppConfig.getEnvironmentConfig.mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
 describe('DownloadHistory component', () => {
@@ -328,6 +324,45 @@ describe('DownloadHistory component', () => {
         expect(screen.getByRole('table')).toBeInTheDocument()
         expect(screen.getByRole('link', { name: '0 collections' })).toHaveAttribute('href', '/downloads/8069076')
       })
+    })
+  })
+})
+
+describe('mapStateToProps', () => {
+  test('maps state to props correctly', () => {
+    const state = {
+      authToken: 'mockToken',
+      earthdataEnvironment: 'prod'
+    }
+    const props = mapStateToProps(state)
+    expect(props).toEqual({
+      authToken: 'mockToken',
+      earthdataEnvironment: 'prod'
+    })
+  })
+})
+
+describe('mapDispatchToProps', () => {
+  beforeEach(() => {
+    jest.spyOn(errorsModule, 'handleError').mockImplementation(
+      (errorConfig) => ({
+        type: 'HANDLE_ERROR',
+        payload: errorConfig
+      })
+    )
+  })
+
+  test('maps dispatch to props correctly', () => {
+    const dispatch = jest.fn()
+    const props = mapDispatchToProps(dispatch)
+    const errorConfig = { some: 'error' }
+
+    props.dispatchHandleError(errorConfig)
+
+    expect(dispatch).toHaveBeenCalledTimes(1)
+    expect(dispatch).toHaveBeenCalledWith({
+      type: 'HANDLE_ERROR',
+      payload: errorConfig
     })
   })
 })
