@@ -8,7 +8,8 @@ import {
   greatCircle,
   flattenEach,
   cleanCoords,
-  distance
+  distance,
+  truncate
 } from '@turf/turf'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -411,14 +412,19 @@ const normalizeSpatial = (metadata) => {
     })
 
     // Return the polygons as GeoJSON MultiPolygon (to simplify drawing on the map)
-    const json = cleanCoords({
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'MultiPolygon',
-        coordinates: polygonsArray
+    const json = truncate(
+      cleanCoords({
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'MultiPolygon',
+          coordinates: polygonsArray
+        }
+      }),
+      {
+        precision: 10
       }
-    })
+    )
 
     const numPoints = json.geometry.coordinates.reduce((acc, polygon) => acc + polygon[0].length, 0)
 
