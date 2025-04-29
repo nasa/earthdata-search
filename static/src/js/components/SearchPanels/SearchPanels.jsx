@@ -46,6 +46,8 @@ import PanelItem from '../Panels/PanelItem'
 import PanelSection from '../Panels/PanelSection'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './SearchPanels.scss'
 
 /**
@@ -166,9 +168,10 @@ class SearchPanels extends PureComponent {
       onMetricsCollectionSortChange,
       onToggleAboutCSDAModal,
       onToggleAboutCwicModal,
-      preferences,
-      startDrawing
+      preferences
     } = this.props
+
+    const { startDrawing } = useEdscStore.getState().home
 
     const loggedIn = isLoggedIn(authToken)
 
@@ -937,11 +940,7 @@ SearchPanels.propTypes = {
     collectionListView: PropTypes.node,
     granuleListView: PropTypes.node,
     panelState: PropTypes.string
-  }).isRequired,
-  startDrawing: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.bool
-  ]).isRequired
+  }).isRequired
 }
 
 export default SearchPanels

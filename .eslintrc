@@ -99,6 +99,23 @@
       "rules": {
         "react/require-default-props": "off"
       }
+    },
+    {
+      // Allow param reassignment in the zustand/slices files (this is handled correctly by immer)
+      "files": [
+        "static/src/js/zustand/slices/*.ts"
+      ],
+      "rules": {
+        "no-param-reassign": [
+          "error",
+          {
+            "props": true, // This is provided in the airbnb config
+            "ignorePropertyModificationsFor": [
+              "state" // Allow the state param to be reassigned
+            ]
+          }
+        ]
+      }
     }
   ],
   // Define version settings

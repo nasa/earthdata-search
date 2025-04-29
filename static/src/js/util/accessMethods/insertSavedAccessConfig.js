@@ -19,8 +19,6 @@ export const insertSavedAccessConfig = (methods, savedAccessConfig) => {
     const method = methods[methodName]
 
     // Update the accessMethod that matches the savedAccessConfig
-    console.log(`Found savedAccessConfig of type ${savedAccessConfig.type}`)
-
     if (method.type === savedAccessConfig.type) {
       if (['download'].includes(method.type)) {
         selectedAccessMethod = methodName
@@ -59,11 +57,13 @@ export const insertSavedAccessConfig = (methods, savedAccessConfig) => {
 
             // Pull out values from the saved access method that would not have changed
             const {
-              form = '',
               model = '',
               rawModel = '',
               formDigest
             } = savedAccessConfig
+
+            // Pull out the form from the access method
+            const { form } = method
 
             // Parse the savedAccessConfig values and if it is not valid XML, don't use it
             if (

@@ -1,6 +1,5 @@
 import React, {
   useCallback,
-  useContext,
   useEffect,
   useState,
   useMemo,
@@ -40,12 +39,13 @@ import {
   granulePointStyle
 } from '../../util/map/styles'
 
-import './MapContainer.scss'
 import spatialTypes from '../../constants/spatialTypes'
-import MbrContext from '../../contexts/MbrContext'
 
-import HomeContext from '../../contexts/HomeContext'
 import { mapEventTypes } from '../../constants/eventTypes'
+
+import useEdscStore from '../../zustand/useEdscStore'
+
+import './MapContainer.scss'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangeFocusedGranule:
@@ -127,8 +127,6 @@ export const MapContainer = (props) => {
     shapefile
   } = props
 
-  const { showMbr } = useContext(MbrContext)
-
   const { location } = router
   const { pathname } = location
   const isProjectPage = isPath(pathname, '/projects')
@@ -137,7 +135,15 @@ export const MapContainer = (props) => {
     '/search/granules/collection-details'
   ])
 
-  const { startDrawing, setStartDrawing } = useContext(HomeContext)
+  const {
+    showMbr,
+    startDrawing,
+    setStartDrawing
+  } = useEdscStore((state) => ({
+    showMbr: state.map.showMbr,
+    startDrawing: state.home.startDrawing,
+    setStartDrawing: state.home.setStartDrawing
+  }))
 
   const [mapReady, setMapReady] = useState(false)
 

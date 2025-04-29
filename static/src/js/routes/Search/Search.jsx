@@ -2,8 +2,7 @@ import React, {
   useState,
   lazy,
   Suspense,
-  useEffect,
-  useContext
+  useEffect
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -22,8 +21,6 @@ import AdvancedSearchModalContainer
   from '../../containers/AdvancedSearchModalContainer/AdvancedSearchModalContainer'
 import FacetsContainer from '../../containers/FacetsContainer/FacetsContainer'
 import FacetsModalContainer from '../../containers/FacetsModalContainer/FacetsModalContainer'
-import PortalBrowserModalContainer
-  from '../../containers/PortalBrowserModalContainer/PortalBrowserModalContainer'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
@@ -35,11 +32,12 @@ import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
+import Spinner from '../../components/Spinner/Spinner'
 
 import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
-import Spinner from '../../components/Spinner/Spinner'
-import TourContext from '../../contexts/TourContext'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
@@ -77,10 +75,10 @@ export const Search = ({
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
 
-  const { setSearchLoaded } = useContext(TourContext)
+  const onSearchLoaded = useEdscStore((state) => state.ui.tour.onSearchLoaded)
 
   useEffect(() => {
-    setSearchLoaded(true)
+    onSearchLoaded()
 
     document.querySelector('.root__app').classList.add('root__app--fixed-footer')
 
@@ -223,7 +221,6 @@ export const Search = ({
           </Switch>
         </SidebarContainer>
         <div className="route-wrapper__content route-wrapper__content--dark">
-          <PortalBrowserModalContainer />
           <RelatedUrlsModalContainer />
           <FacetsModalContainer />
           <PortalFeatureContainer advancedSearch>

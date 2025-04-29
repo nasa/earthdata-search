@@ -13,8 +13,8 @@ const esModulesToIgnore = [
 module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
-    'serverless/src/**/*.js',
-    'static/src/**/*.{js,jsx}',
+    'serverless/src/**/*.js,ts',
+    'static/src/**/*.{js,jsx,ts,tsx}',
     'sharedUtils/**/*.js'
   ],
   moduleNameMapper: {
@@ -36,7 +36,7 @@ module.exports = {
     'package-lock.json'
   ],
   setupFilesAfterEnv: [
-    '<rootDir>/test-env.js'
+    '<rootDir>/test-env.ts'
   ],
   // Skips files from running tests
   testPathIgnorePatterns: [

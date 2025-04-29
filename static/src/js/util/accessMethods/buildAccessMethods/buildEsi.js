@@ -1,5 +1,5 @@
 import { getApplicationConfig } from '../../../../../../sharedUtils/config'
-import { generateFormDigest } from '../../../../../../sharedUtils/generateFormDigest'
+import { generateFormDigest } from '../../generateFormDigest'
 
 /**
  * Builds the ESI access method
@@ -32,7 +32,8 @@ export const buildEsi = (serviceItem) => {
       const {
         conceptId: orderOptionConceptId,
         form,
-        name: orderOptionName
+        name: orderOptionName,
+        revisionId: orderOptionRevisionId
       } = orderOptionItem
 
       const method = {
@@ -41,7 +42,8 @@ export const buildEsi = (serviceItem) => {
         url: urlValue,
         optionDefinition: {
           conceptId: orderOptionConceptId,
-          name: orderOptionName
+          name: orderOptionName,
+          revisionId: orderOptionRevisionId
         },
         form,
         formDigest: generateFormDigest(form)

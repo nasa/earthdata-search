@@ -54,6 +54,7 @@ describe('when buildAccessMethods is called', () => {
               items: [
                 {
                   conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 }
@@ -87,6 +88,7 @@ describe('when buildAccessMethods is called', () => {
               items: [
                 {
                   conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 }
@@ -103,6 +105,7 @@ describe('when buildAccessMethods is called', () => {
               items: [
                 {
                   conceptId: 'OO10001-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 }
@@ -116,7 +119,7 @@ describe('when buildAccessMethods is called', () => {
 
     buildAccessMethods(collectionMetadata, isOpenSearch)
 
-    expect(buildEchoMock).toBeCalledTimes(2)
+    expect(buildEchoMock).toHaveBeenCalledTimes(2)
 
     expect(buildEchoMock).toHaveBeenNthCalledWith(
       1,
@@ -126,6 +129,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10000-EDSC',
+              revisionId: 1,
               form: 'mock form',
               name: 'mock form'
             }
@@ -146,6 +150,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10001-EDSC',
+              revisionId: 1,
               form: 'mock form',
               name: 'mock form'
             }
@@ -175,6 +180,7 @@ describe('when buildAccessMethods is called', () => {
               items: [
                 {
                   conceptId: 'OO10000-EDSC',
+                  revisionId: 1,
                   name: 'mock form',
                   form: 'mock form'
                 }
@@ -197,6 +203,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10000-EDSC',
+              revisionId: 1,
               form: 'mock form',
               name: 'mock form'
             }
@@ -3141,6 +3148,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10000-EDSC',
+              revisionId: 1,
               name: 'mock form',
               form: 'mock form'
             }
@@ -3158,6 +3166,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10001-EDSC',
+              revisionId: 1,
               name: 'mock form',
               form: 'mock form'
             }
@@ -3260,6 +3269,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10002-EDSC',
+              revisionId: 1,
               name: 'mock form',
               form: 'mock form'
             }
@@ -3643,6 +3653,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10000-EDSC',
+              revisionId: 1,
               form: 'mock form',
               name: 'mock form'
             }
@@ -3660,6 +3671,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10001-EDSC',
+              revisionId: 1,
               form: 'mock form',
               name: 'mock form'
             }
@@ -3677,6 +3689,7 @@ describe('when buildAccessMethods is called', () => {
           items: [
             {
               conceptId: 'OO10002-EDSC',
+              revisionId: 1,
               form: 'mock form',
               name: 'mock form'
             }
@@ -4151,10 +4164,11 @@ describe('when buildAccessMethods is called', () => {
         {
           echoOrders0: {
             form: 'mock form',
-            formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
             maxItemsPerOrder: 2000,
             optionDefinition: {
               conceptId: 'OO10000-EDSC',
+              revisionId: 1,
               name: 'mock form'
             },
             type: 'ECHO ORDERS',
@@ -4162,10 +4176,11 @@ describe('when buildAccessMethods is called', () => {
           },
           echoOrders1: {
             form: 'mock form',
-            formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
             maxItemsPerOrder: 2000,
             optionDefinition: {
               conceptId: 'OO10002-EDSC',
+              revisionId: 1,
               name: 'mock form'
             },
             type: 'ECHO ORDERS',
@@ -4173,10 +4188,11 @@ describe('when buildAccessMethods is called', () => {
           },
           esi0: {
             form: 'mock form',
-            formDigest: '75f9480053e9ba083665951820d17ae5c2139d92',
+            formDigest: 'b7036eff8a2e3abec0f9f0e36a7f3ee9',
             maxItemsPerOrder: 2000,
             optionDefinition: {
               conceptId: 'OO10001-EDSC',
+              revisionId: 1,
               name: 'mock form'
             },
             type: 'ESI',

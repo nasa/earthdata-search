@@ -178,7 +178,8 @@ describe('ShapefileDropzoneContainer component', () => {
       expect(props.onSaveShapefile).toHaveBeenCalledWith({
         authToken: 'test-auth-token',
         file: {
-          features: []
+          features: [],
+          name: 'test-file-name.zip'
         },
         filename: 'test-file-name.zip',
         size: '200KB'
@@ -192,7 +193,8 @@ describe('ShapefileDropzoneContainer component', () => {
           size: '<span>200KB</span>'
         },
         {
-          features: []
+          features: [],
+          name: 'test-file-name.zip'
         }
       )
     })

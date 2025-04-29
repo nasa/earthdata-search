@@ -91,7 +91,11 @@ export const ShapefileDropzoneContainer = ({
 
         dropzoneEl.removeFile(file)
 
-        const fileWithIds = addEdscIdsToShapefile(resp)
+        // Update the name to the original name (ogre puts a hash into this name field)
+        const updatedResponse = resp
+        updatedResponse.name = name
+
+        const fileWithIds = addEdscIdsToShapefile(updatedResponse)
 
         eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds)
 

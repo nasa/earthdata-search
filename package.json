@@ -46,6 +46,7 @@
     "playwright:ci:performance": "start-server-and-test start-ci http-get://localhost:8080 'npm run playwright -- performance.spec.js'",
     "preplaywright": "rm -rf playwright-coverage/ .nyc_output/",
     "playwright": "NODE_ENV=playwright nyc playwright test --reporter=list",
+    "vite-bundle-vis": "npx vite-bundle-visualizer --sourcemap",
     "playwright:ui": "npx playwright test --ui",
     "postplaywright": "npx nyc report --reporter=json --reporter=lcov --reporter=clover --report-dir=playwright-coverage",
     "deploy-infrastructure": "cd cdk/earthdata-search-infrastructure && npm ci --include=dev && npm run cdk deploy -- --progress events --require-approval never",
@@ -168,12 +169,13 @@
     "handlebars": "^4.7.8",
     "hex-to-rgba": "^2.0.1",
     "history": "^4.10.1",
+    "immer": "^10.1.1",
     "jsonwebtoken": "^9.0.0",
     "knex": "^3.1.0",
     "lodash-es": "^4.17.21",
     "lowercase-keys": "^2.0.0",
+    "md5": "^2.3.0",
     "moment": "^2.29.5",
-    "node-forge": "^1.3.1",
     "node-pg-migrate": "^6.2.2",
     "number-abbreviate": "^2.0.0",
     "ol": "^10.5.0",
@@ -229,7 +231,8 @@
     "vite-plugin-svgr": "^4.3.0",
     "ws": "^8.18.0",
     "xpath": "0.0.27",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.5.6"
   },
   "engines": {
     "yarn": "YARN NO LONGER USED - use npm instead."

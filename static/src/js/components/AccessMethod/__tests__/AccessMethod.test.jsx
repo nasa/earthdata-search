@@ -7,11 +7,11 @@ import {
   within
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-
 import ResizeObserver from 'resize-observer-polyfill'
+
 import AccessMethod from '../AccessMethod'
 import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
-import MbrContext from '../../../contexts/MbrContext'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 beforeEach(() => {
   global.ResizeObserver = ResizeObserver
@@ -43,6 +43,18 @@ jest.mock('../EchoForm', () => mockEchoForm)
 const setup = (overrideProps) => {
   const user = userEvent.setup()
 
+  const mockSetShowMbr = jest.fn()
+
+  const state = useEdscStore.getState()
+  useEdscStore.setState({
+    ...state,
+    map: {
+      ...state.map,
+      showMbr: false,
+      setShowMbr: mockSetShowMbr
+    }
+  })
+
   const onSelectAccessMethod = jest.fn()
   const onSetActivePanel = jest.fn()
   const onUpdateAccessMethod = jest.fn()
@@ -69,22 +81,16 @@ const setup = (overrideProps) => {
     ...overrideProps
   }
 
-  const context = {
-    setShowMbr: jest.fn()
-  }
-
   render(
-    <MbrContext.Provider value={context}>
-      <AccessMethod {...props} />
-    </MbrContext.Provider>
+    <AccessMethod {...props} />
   )
 
   return {
-    context,
     onSelectAccessMethod,
     onSetActivePanel,
     onUpdateAccessMethod,
     onTogglePanels,
+    mockSetShowMbr,
     user
   }
 }
@@ -247,7 +253,7 @@ describe('AccessMethod component', () => {
           details: 'Select options like variables, transformations, and output formats by applying a Harmony service. Data will be staged in the cloud for download and analysis.',
           value: 'HarmonyMethodType'
         }),
-        expect.anything()
+        {}
       )
 
       const directDownloadAccessMethodRadioButton = screen.getByRole('radio')
@@ -1416,7 +1422,7 @@ describe('AccessMethod component', () => {
 
           describe('when the user provided point spatial and the harmony service does not support shapefile subsetting', () => {
             test('displays a warning and a bounding box Selected Area', async () => {
-              const { context, user } = setup({
+              const { mockSetShowMbr, user } = setup({
                 accessMethods: {
                   harmony0: {
                     name: 'test name',
@@ -1441,14 +1447,14 @@ describe('AccessMethod component', () => {
 
               expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your point will be automatically converted into the bounding box shown above and outlined on the map.')
 
-              expect(context.setShowMbr).toHaveBeenCalledTimes(2)
-              expect(context.setShowMbr).toHaveBeenNthCalledWith(2, true)
+              expect(mockSetShowMbr).toHaveBeenCalledTimes(2)
+              expect(mockSetShowMbr).toHaveBeenNthCalledWith(2, true)
             })
           })
 
           describe('when the user provided circle spatial and the harmony service does not support shapefile subsetting', () => {
             test('displays a warning and a bounding box Selected Area', async () => {
-              const { context, user } = setup({
+              const { mockSetShowMbr, user } = setup({
                 accessMethods: {
                   harmony0: {
                     name: 'test name',
@@ -1473,14 +1479,14 @@ describe('AccessMethod component', () => {
 
               expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your circle will be automatically converted into the bounding box shown above and outlined on the map.')
 
-              expect(context.setShowMbr).toHaveBeenCalledTimes(2)
-              expect(context.setShowMbr).toHaveBeenNthCalledWith(2, true)
+              expect(mockSetShowMbr).toHaveBeenCalledTimes(2)
+              expect(mockSetShowMbr).toHaveBeenNthCalledWith(2, true)
             })
           })
 
           describe('when the user provided line spatial and the harmony service does not support shapefile subsetting', () => {
             test('displays a warning and a bounding box Selected Area', async () => {
-              const { context, user } = setup({
+              const { mockSetShowMbr, user } = setup({
                 accessMethods: {
                   harmony0: {
                     name: 'test name',
@@ -1505,14 +1511,14 @@ describe('AccessMethod component', () => {
 
               expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your line will be automatically converted into the bounding box shown above and outlined on the map.')
 
-              expect(context.setShowMbr).toHaveBeenCalledTimes(2)
-              expect(context.setShowMbr).toHaveBeenNthCalledWith(2, true)
+              expect(mockSetShowMbr).toHaveBeenCalledTimes(2)
+              expect(mockSetShowMbr).toHaveBeenNthCalledWith(2, true)
             })
           })
 
           describe('when the user provided polygon spatial and the harmony service does not support shapefile subsetting', () => {
             test('displays a warning and a bounding box Selected Area', async () => {
-              const { context, user } = setup({
+              const { mockSetShowMbr, user } = setup({
                 accessMethods: {
                   harmony0: {
                     name: 'test name',
@@ -1537,8 +1543,8 @@ describe('AccessMethod component', () => {
 
               expect(screen.getByRole('alert')).toHaveTextContent('Only bounding boxes are supported. If this option is enabled, your polygon will be automatically converted into the bounding box shown above and outlined on the map.')
 
-              expect(context.setShowMbr).toHaveBeenCalledTimes(2)
-              expect(context.setShowMbr).toHaveBeenNthCalledWith(2, true)
+              expect(mockSetShowMbr).toHaveBeenCalledTimes(2)
+              expect(mockSetShowMbr).toHaveBeenNthCalledWith(2, true)
             })
           })
         })

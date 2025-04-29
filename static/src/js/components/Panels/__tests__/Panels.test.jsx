@@ -5,7 +5,6 @@ import Panels from '../Panels'
 import { PanelSection } from '../PanelSection'
 import { PanelGroup } from '../PanelGroup'
 import { PanelItem } from '../PanelItem'
-import Providers from '../../../providers/Providers/Providers'
 
 jest.mock('../PanelSection', () => ({
   PanelSection: jest.fn(({ children }) => (
@@ -43,54 +42,52 @@ const setup = (renderMethod, overrideProps = {}) => {
   }
 
   return renderMethod(
-    <Providers>
-      <Panels {...props}>
-        <PanelSection>
-          <PanelGroup
-            primaryHeading="Panel Group 0.0"
-            footer={<div className="footer">A group footer</div>}
-          >
-            <PanelItem>
-              Panel 0.0.0 Content
-            </PanelItem>
-            <PanelItem>
-              Panel 0.0.1 Content
-            </PanelItem>
-          </PanelGroup>
-          <PanelGroup
-            primaryHeading="Panel Group 0.1"
-            footer={<div className="footer">Another group footer</div>}
-          >
-            <PanelItem hideFooter>
-              Panel 0.1.0 Content
-            </PanelItem>
-          </PanelGroup>
-        </PanelSection>
-        <PanelSection>
-          <PanelGroup
-            primaryHeading="Panel Group 1.0"
-            footer={<div className="footer">A group footer</div>}
-          >
-            <PanelItem footer={<div className="fake-footer">A fake footer</div>}>
-              Panel 1.0.0 Content
-            </PanelItem>
-            <PanelItem>
-              Panel 1.0.1 Content
-            </PanelItem>
-          </PanelGroup>
-          <PanelGroup
-            primaryHeading="Panel Group 1.1"
-          >
-            <PanelItem>
-              Panel 1.1.0 Content
-            </PanelItem>
-            <PanelItem>
-              Panel 1.1.1 Content
-            </PanelItem>
-          </PanelGroup>
-        </PanelSection>
-      </Panels>
-    </Providers>
+    <Panels {...props}>
+      <PanelSection>
+        <PanelGroup
+          primaryHeading="Panel Group 0.0"
+          footer={<div className="footer">A group footer</div>}
+        >
+          <PanelItem>
+            Panel 0.0.0 Content
+          </PanelItem>
+          <PanelItem>
+            Panel 0.0.1 Content
+          </PanelItem>
+        </PanelGroup>
+        <PanelGroup
+          primaryHeading="Panel Group 0.1"
+          footer={<div className="footer">Another group footer</div>}
+        >
+          <PanelItem hideFooter>
+            Panel 0.1.0 Content
+          </PanelItem>
+        </PanelGroup>
+      </PanelSection>
+      <PanelSection>
+        <PanelGroup
+          primaryHeading="Panel Group 1.0"
+          footer={<div className="footer">A group footer</div>}
+        >
+          <PanelItem footer={<div className="fake-footer">A fake footer</div>}>
+            Panel 1.0.0 Content
+          </PanelItem>
+          <PanelItem>
+            Panel 1.0.1 Content
+          </PanelItem>
+        </PanelGroup>
+        <PanelGroup
+          primaryHeading="Panel Group 1.1"
+        >
+          <PanelItem>
+            Panel 1.1.0 Content
+          </PanelItem>
+          <PanelItem>
+            Panel 1.1.1 Content
+          </PanelItem>
+        </PanelGroup>
+      </PanelSection>
+    </Panels>
   )
 }
 

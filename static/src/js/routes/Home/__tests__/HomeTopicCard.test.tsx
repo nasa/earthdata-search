@@ -3,7 +3,6 @@ import { Provider } from 'react-redux'
 import { render, screen } from '@testing-library/react'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import '@testing-library/jest-dom'
 import {
   MemoryRouter,
   Switch,
@@ -12,9 +11,9 @@ import {
 } from 'react-router-dom'
 
 import userEvent from '@testing-library/user-event'
-// @ts-expect-error: Types do not exist for this module
-import HomeContext from '../../../contexts/HomeContext'
+
 import HomeTopicCard from '../HomeTopicCard'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children, to, onClick }) => (<Link to={to} onClick={onClick}>{ children }</Link>)))
 
@@ -28,10 +27,19 @@ const store = mockStore({
   }
 })
 
-const mockSetOpenKeywordFacet = jest.fn()
-
 const setup = () => {
   const user = userEvent.setup()
+
+  const mockSetOpenKeywordFacet = jest.fn()
+  const state = useEdscStore.getState()
+  useEdscStore.setState({
+    ...state,
+    home: {
+      ...state.home,
+      setOpenKeywordFacet: mockSetOpenKeywordFacet,
+      openKeywordFacet: true
+    }
+  })
 
   const mockProps = {
     title: 'Test Topic',
@@ -42,28 +50,21 @@ const setup = () => {
 
   render(
     <Provider store={store}>
-      <HomeContext.Provider value={
-        {
-          openKeywordFacet: false,
-          setOpenKeywordFacet: mockSetOpenKeywordFacet
-        }
-      }
-      >
-        <MemoryRouter>
-          <Switch>
-            <Route exact path="/">
-              <HomeTopicCard {...mockProps} />
-            </Route>
-            <Route path="/search">
-              <div>Search</div>
-            </Route>
-          </Switch>
-        </MemoryRouter>
-      </HomeContext.Provider>
+      <MemoryRouter>
+        <Switch>
+          <Route exact path="/">
+            <HomeTopicCard {...mockProps} />
+          </Route>
+          <Route path="/search">
+            <div>Search</div>
+          </Route>
+        </Switch>
+      </MemoryRouter>
     </Provider>
   )
 
   return {
+    mockSetOpenKeywordFacet,
     user
   }
 }
@@ -99,7 +100,7 @@ describe('HomeTopicCard', () => {
   })
 
   test('calls setOpenKeywordFacet when clicked', async () => {
-    const { user } = setup()
+    const { mockSetOpenKeywordFacet, user } = setup()
 
     const portalLinkContainer = screen.getByRole('link')
 

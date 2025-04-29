@@ -1,16 +1,17 @@
-import React, {
-  useState,
-  useEffect,
-  useContext
-} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Joyride, { STATUS, ACTIONS } from 'react-joyride'
+
 import TourSteps from './TourSteps'
-import TourContext from '../../contexts/TourContext'
+
 import { isLoggedIn } from '../../util/isLoggedIn'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const SearchTour = () => {
-  const { runTour, setRunTour } = useContext(TourContext)
+  const { runTour, setRunTour } = useEdscStore((state) => ({
+    runTour: state.ui.tour.runTour,
+    setRunTour: state.ui.tour.setRunTour
+  }))
   const authToken = useSelector((state) => state.authToken)
   const loggedIn = isLoggedIn(authToken)
 

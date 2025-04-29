@@ -1,5 +1,4 @@
 import React, {
-  useContext,
   useEffect,
   useRef,
   useState
@@ -45,7 +44,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import LegendControl from './LegendControl'
 import MapControls from './MapControls'
 
-import PanelWidthContext from '../../contexts/PanelWidthContext'
+import useEdscStore from '../../zustand/useEdscStore'
 
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
@@ -276,7 +275,7 @@ const Map = ({
   // on the map view when the panels are resized.
   // We adjust the padding so that centering the map on a point will center the point in the
   // viewable area of the map and not behind a panel.
-  const { panelsWidth } = useContext(PanelWidthContext)
+  const panelsWidth = useEdscStore((state) => state.ui.panels.panelsWidth)
 
   // Create a ref for the map and the map dome element
   const mapRef = useRef()

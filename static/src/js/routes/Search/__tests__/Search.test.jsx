@@ -15,7 +15,6 @@ import {
 } from '../Search'
 
 import actions from '../../../actions'
-import Providers from '../../../providers/Providers/Providers'
 
 const mockClassListAdd = jest.fn()
 const mockClassListRemove = jest.fn()
@@ -134,13 +133,11 @@ function setup() {
 
   const { unmount } = render(
     <Provider store={store}>
-      <Providers>
-        <MemoryRouter initialEntries={['/search']}>
-          <Route history={history} path="/search">
-            <Search {...props} />
-          </Route>
-        </MemoryRouter>
-      </Providers>
+      <MemoryRouter initialEntries={['/search']}>
+        <Route history={history} path="/search">
+          <Search {...props} />
+        </Route>
+      </MemoryRouter>
     </Provider>
   )
 
