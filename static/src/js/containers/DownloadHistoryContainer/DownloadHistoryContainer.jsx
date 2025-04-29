@@ -7,10 +7,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
+import actions from '../../actions'
+
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
 import RetrievalRequest from '../../util/request/retrievalRequest'
 import { addToast } from '../../util/addToast'
-import { handleError } from '../../actions/errors'
 
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
@@ -18,7 +19,7 @@ export const mapStateToProps = (state) => ({
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  dispatchHandleError: (errorConfig) => dispatch(handleError(errorConfig))
+  dispatchHandleError: (errorConfig) => dispatch(actions.handleError(errorConfig))
 })
 
 export const DownloadHistoryContainer = ({
