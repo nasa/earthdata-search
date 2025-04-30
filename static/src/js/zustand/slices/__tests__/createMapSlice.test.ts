@@ -1,7 +1,7 @@
 import useEdscStore from '../../useEdscStore'
 
 describe('createMapSlice', () => {
-  it('sets the default state', () => {
+  test('sets the default state', () => {
     const state = useEdscStore.getState().map
 
     expect(state).toEqual({
@@ -11,7 +11,7 @@ describe('createMapSlice', () => {
   })
 
   describe('setShowMbr', () => {
-    it('updates showMbr', () => {
+    test('updates showMbr', () => {
       const { setShowMbr } = useEdscStore.getState().map
       setShowMbr(true)
 

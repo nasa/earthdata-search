@@ -61,7 +61,6 @@ import {
   updateGranuleResults
 } from './granules'
 import { logout, updateAuthToken } from './authToken'
-import { changeTimelineQuery, getTimeline } from './timeline'
 import {
   changeCollectionPageNum,
   changeGranulePageNum,
@@ -220,7 +219,6 @@ const actions = {
   changeProjectQuery,
   changeQuery,
   changeRegionQuery,
-  changeTimelineQuery,
   changeUrl,
   changeViewAllFacet,
   clearAutocompleteSelected,
@@ -260,7 +258,6 @@ const actions = {
   getRegions,
   getSearchGranules,
   getSubscriptions,
-  getTimeline,
   getViewAllFacets,
   handleAlert,
   handleError,

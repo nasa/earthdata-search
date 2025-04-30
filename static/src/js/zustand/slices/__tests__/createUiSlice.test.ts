@@ -1,7 +1,7 @@
 import useEdscStore from '../../useEdscStore'
 
 describe('createUiSlice', () => {
-  it('sets the default state', () => {
+  test('sets the default state', () => {
     const state = useEdscStore.getState().ui
 
     expect(state).toEqual({
@@ -19,7 +19,7 @@ describe('createUiSlice', () => {
 
   describe('panels', () => {
     describe('setPanelsWidth', () => {
-      it('updates panelsWidth', () => {
+      test('updates panelsWidth', () => {
         const { setPanelsWidth } = useEdscStore.getState().ui.panels
         setPanelsWidth(100)
 
@@ -31,7 +31,7 @@ describe('createUiSlice', () => {
 
   describe('tour', () => {
     describe('setRunTour', () => {
-      it('updates runTour', () => {
+      test('updates runTour', () => {
         const { setRunTour } = useEdscStore.getState().ui.tour
         setRunTour(true)
 
@@ -42,7 +42,7 @@ describe('createUiSlice', () => {
 
     describe('onSearchLoaded', () => {
       describe('when localstorage dontShowTour is true', () => {
-        it('sets runTour to false', () => {
+        test('sets runTour to false', () => {
           jest.spyOn(Storage.prototype, 'getItem').mockReturnValue('true')
 
           const { onSearchLoaded } = useEdscStore.getState().ui.tour
@@ -55,7 +55,7 @@ describe('createUiSlice', () => {
       })
 
       describe('when localstorage dontShowTour is false', () => {
-        it('sets runTour to true', () => {
+        test('sets runTour to true', () => {
           jest.spyOn(Storage.prototype, 'getItem').mockReturnValue('false')
 
           const { onSearchLoaded } = useEdscStore.getState().ui.tour

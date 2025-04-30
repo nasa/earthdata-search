@@ -1,31 +1,39 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
+import { Dispatch } from 'redux'
 
+// @ts-expect-error The file does not have types
 import actions from '../../actions/index'
 
+// @ts-expect-error The file does not have types
 import { metricsTimeline } from '../../middleware/metrics/actions'
 
+// @ts-expect-error The file does not have types
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
+// @ts-expect-error The file does not have types
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+// @ts-expect-error The file does not have types
 import { getProjectCollectionsIds } from '../../selectors/project'
+// @ts-expect-error The file does not have types
 import { isPath } from '../../util/isPath'
 
+// @ts-expect-error The file does not have types
 import Timeline from '../../components/Timeline/Timeline'
 
-export const mapDispatchToProps = (dispatch) => ({
+import { CollectionsMetadata, Query } from '../../types/sharedTypes'
+
+export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeQuery:
-    (query) => dispatch(actions.changeQuery(query)),
-  onChangeTimelineQuery:
-    (query) => dispatch(actions.changeTimelineQuery(query)),
+    (query: Query) => dispatch(actions.changeQuery(query)),
   onToggleOverrideTemporalModal:
-    (open) => dispatch(actions.toggleOverrideTemporalModal(open)),
+    (open: boolean) => dispatch(actions.toggleOverrideTemporalModal(open)),
   onMetricsTimeline:
-    (type) => dispatch(metricsTimeline(type)),
+    (type: string) => dispatch(metricsTimeline(type)),
   onToggleTimeline:
-    (open) => dispatch(actions.toggleTimeline(open))
+    (open: boolean) => dispatch(actions.toggleTimeline(open))
 })
 
+// @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
@@ -33,25 +41,54 @@ export const mapStateToProps = (state) => ({
   pathname: state.router.location.pathname,
   projectCollectionsIds: getProjectCollectionsIds(state),
   search: state.router.location.search,
-  temporalSearch: state.query.collection.temporal,
-  timeline: state.timeline
+  temporalSearch: state.query.collection.temporal
 })
 
-export const TimelineContainer = (props) => {
+interface TemporalSearch {
+  /** The end date of the temporal search */
+  endDate?: string
+  /** The start date of the temporal search */
+  startDate?: string
+}
+
+interface TimelineContainerProps {
+  /** Collections Metadata */
+  collectionsMetadata: CollectionsMetadata
+  /** The focused collection ID */
+  focusedCollectionId: string
+  /** Whether the timeline is open */
+  isOpen: boolean
+  /** Function to change the query */
+  onChangeQuery: (query: Query) => void
+  /** Function to handle metrics timeline */
+  onMetricsTimeline: (type: string) => void
+  /** Function to toggle the override temporal modal */
+  onToggleOverrideTemporalModal: (open: boolean) => void
+  /** Function to toggle the timeline */
+  onToggleTimeline: (open: boolean) => void
+  /** The pathname of the current location */
+  pathname: string
+  /** The project collections IDs */
+  projectCollectionsIds: string[]
+  /** The search string from the location */
+  search: string
+  /** The temporal search object */
+  temporalSearch: TemporalSearch
+}
+
+export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
   const {
     collectionsMetadata,
     focusedCollectionId,
     isOpen,
     onChangeQuery,
-    onChangeTimelineQuery,
     onMetricsTimeline,
     onToggleOverrideTemporalModal,
     onToggleTimeline,
     pathname,
     projectCollectionsIds,
     search: searchLocation,
-    temporalSearch,
-    timeline
+    temporalSearch = {}
   } = props
 
   // Determine the collectionMetadata the timeline should be displaying
@@ -59,7 +96,7 @@ export const TimelineContainer = (props) => {
   const isProjectPage = isPath(pathname, ['/projects']) && (searchLocation.length > 0)
   const isGranulesPage = isPath(pathname, ['/search/granules'])
 
-  const collectionMetadata = {}
+  const collectionMetadata: CollectionsMetadata = {}
   const collectionsToRender = []
 
   if (isProjectPage) {
@@ -82,7 +119,6 @@ export const TimelineContainer = (props) => {
       collectionMetadata={collectionMetadata}
       isOpen={isOpen}
       onChangeQuery={onChangeQuery}
-      onChangeTimelineQuery={onChangeTimelineQuery}
       onMetricsTimeline={onMetricsTimeline}
       onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
       onToggleTimeline={onToggleTimeline}
@@ -90,29 +126,8 @@ export const TimelineContainer = (props) => {
       projectCollectionsIds={projectCollectionsIds}
       showOverrideModal={isProjectPage}
       temporalSearch={temporalSearch}
-      timeline={timeline}
     />
   )
-}
-
-TimelineContainer.defaultProps = {
-  temporalSearch: {}
-}
-
-TimelineContainer.propTypes = {
-  collectionsMetadata: PropTypes.shape({}).isRequired,
-  focusedCollectionId: PropTypes.string.isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
-  onChangeTimelineQuery: PropTypes.func.isRequired,
-  onMetricsTimeline: PropTypes.func.isRequired,
-  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
-  onToggleTimeline: PropTypes.func.isRequired,
-  pathname: PropTypes.string.isRequired,
-  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  temporalSearch: PropTypes.shape({}),
-  timeline: PropTypes.shape({}).isRequired,
-  isOpen: PropTypes.bool.isRequired,
-  search: PropTypes.string.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TimelineContainer)

@@ -39,7 +39,6 @@ import savedProjectReducer from './savedProject'
 import savedProjectsReducer from './savedProjects'
 import shapefileReducer from './shapefile'
 import subscriptionsReducer from './subscriptions'
-import timelineReducer from './timeline'
 import uiReducer from './ui'
 import userReducer from './user'
 import viewAllFacetsRequestReducer from './viewAllFacets'
@@ -91,7 +90,6 @@ export default (history) => combineReducers({
   }),
   shapefile: shapefileReducer,
   subscriptions: subscriptionsReducer,
-  timeline: timelineReducer,
   ui: uiReducer,
   user: userReducer
 })

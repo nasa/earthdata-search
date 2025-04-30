@@ -100,7 +100,6 @@
     "jest": "^29.7.0",
     "jest-canvas-mock": "^2.5.2",
     "jest-environment-jsdom": "^29.7.0",
-    "jest-react-hooks-shallow": "^1.5.1",
     "jsdom": "^16.7.0",
     "mock-knex": "^0.4.13",
     "mockdate": "^2.0.5",

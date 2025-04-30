@@ -7,6 +7,7 @@ import actions from '../index'
 import { UPDATE_SAVED_PROJECT, RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 import * as urlQuery from '../urlQuery'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -107,7 +108,13 @@ describe('updateStore', () => {
       }
 
       jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
-      jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
+
+      const getTimelineMock = jest.fn()
+      useEdscStore.setState({
+        timeline: {
+          getTimeline: getTimelineMock
+        }
+      })
 
       const store = mockStore({
         preferences: {
@@ -134,6 +141,8 @@ describe('updateStore', () => {
         },
         type: RESTORE_FROM_URL
       })
+
+      expect(getTimelineMock).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -170,7 +179,13 @@ describe('updateStore', () => {
       }
 
       jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
-      jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
+
+      const getTimelineMock = jest.fn()
+      useEdscStore.setState({
+        timeline: {
+          getTimeline: getTimelineMock
+        }
+      })
 
       const store = mockStore({
         preferences: {
@@ -251,6 +266,8 @@ describe('updateStore', () => {
         },
         type: RESTORE_FROM_URL
       })
+
+      expect(getTimelineMock).toHaveBeenCalledTimes(0)
     })
   })
 })
@@ -268,7 +285,13 @@ describe('changePath', () => {
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
     const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
     const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules').mockImplementation(() => jest.fn())
-    const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
+
+    const getTimelineMock = jest.fn()
+    useEdscStore.setState({
+      timeline: {
+        getTimeline: getTimelineMock
+      }
+    })
 
     const newPath = '/search?projectId=1'
 
@@ -308,8 +331,8 @@ describe('changePath', () => {
         type: UPDATE_SAVED_PROJECT
       })
 
-      expect(updateStoreMock).toBeCalledTimes(1)
-      expect(updateStoreMock).toBeCalledWith(
+      expect(updateStoreMock).toHaveBeenCalledTimes(1)
+      expect(updateStoreMock).toHaveBeenCalledWith(
         expect.objectContaining({
           featureFacets: {
             availableInEarthdataCloud: false,
@@ -353,17 +376,23 @@ describe('changePath', () => {
         })
       )
 
-      expect(getCollectionsMock).toBeCalledTimes(1)
-      expect(getProjectCollectionsMock).toBeCalledTimes(1)
-      expect(getProjectGranulesMock).toBeCalledTimes(1)
-      expect(getTimelineMock).toBeCalledTimes(1)
+      expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+      expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+      expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)
+      expect(getTimelineMock).toHaveBeenCalledTimes(1)
     })
   })
 
   test('updates the store if there is not a projectId', async () => {
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-    const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
+
+    const getTimelineMock = jest.fn()
+    useEdscStore.setState({
+      timeline: {
+        getTimeline: getTimelineMock
+      }
+    })
 
     const newPath = '/search?p=C00001-EDSC'
 
@@ -392,8 +421,8 @@ describe('changePath', () => {
 
     await store.dispatch(urlQuery.changePath(newPath))
 
-    expect(updateStoreMock).toBeCalledTimes(1)
-    expect(updateStoreMock).toBeCalledWith(expect.objectContaining({
+    expect(updateStoreMock).toHaveBeenCalledTimes(1)
+    expect(updateStoreMock).toHaveBeenCalledWith(expect.objectContaining({
       featureFacets: {
         availableInEarthdataCloud: false,
         customizable: false,
@@ -423,8 +452,8 @@ describe('changePath', () => {
       }
     }), '/search')
 
-    expect(getCollectionsMock).toBeCalledTimes(1)
-    expect(getTimelineMock).toBeCalledTimes(1)
+    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 
   test('handles an error fetching the project', async () => {
@@ -433,8 +462,13 @@ describe('changePath', () => {
       .reply(500, { mock: 'error' })
 
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-    const getTimelineMock = jest.spyOn(actions, 'getTimeline').mockImplementation(() => jest.fn())
     const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.fn()
+    useEdscStore.setState({
+      timeline: {
+        getTimeline: getTimelineMock
+      }
+    })
 
     const newPath = '/search?projectId=1'
 
@@ -468,11 +502,11 @@ describe('changePath', () => {
       const storeActions = store.getActions()
       expect(storeActions.length).toEqual(0)
 
-      expect(getCollectionsMock).toBeCalledTimes(1)
-      expect(getTimelineMock).toBeCalledTimes(1)
+      expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+      expect(getTimelineMock).toHaveBeenCalledTimes(1)
 
-      expect(handleErrorMock).toBeCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
         action: 'changePath',
         error: new Error('Request failed with status code 500'),
         resource: 'project',
@@ -514,8 +548,8 @@ describe('changePath', () => {
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        expect(getCollectionsMock).toBeCalledTimes(1)
-        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -551,8 +585,8 @@ describe('changePath', () => {
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        expect(getCollectionsMock).toBeCalledTimes(1)
-        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -588,8 +622,8 @@ describe('changePath', () => {
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        expect(getCollectionsMock).toBeCalledTimes(1)
-        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -627,9 +661,9 @@ describe('changePath', () => {
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        expect(getCollectionsMock).toBeCalledTimes(1)
-        expect(getFocusedCollectionMock).toBeCalledTimes(1)
-        expect(getFocusedGranuleMock).toBeCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
       })
     })
   })
@@ -667,8 +701,8 @@ describe('changePath', () => {
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        expect(getCollectionsMock).toBeCalledTimes(1)
-        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -704,8 +738,8 @@ describe('changePath', () => {
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        expect(getCollectionsMock).toBeCalledTimes(1)
-        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -741,8 +775,8 @@ describe('changePath', () => {
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        expect(getCollectionsMock).toBeCalledTimes(1)
-        expect(getFocusedCollectionMock).toBeCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -780,9 +814,9 @@ describe('changePath', () => {
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        expect(getCollectionsMock).toBeCalledTimes(1)
-        expect(getFocusedCollectionMock).toBeCalledTimes(1)
-        expect(getFocusedGranuleMock).toBeCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
       })
     })
   })
@@ -976,8 +1010,8 @@ describe('changeUrl', () => {
           expect(storeActions.length).toEqual(0)
         })
 
-        expect(handleErrorMock).toBeCalledTimes(1)
-        expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        expect(handleErrorMock).toHaveBeenCalledTimes(1)
+        expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
           action: 'changeUrl',
           error: new Error('Request failed with status code 500'),
           resource: 'project',

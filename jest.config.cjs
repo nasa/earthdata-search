@@ -36,7 +36,8 @@ module.exports = {
     'package-lock.json'
   ],
   setupFilesAfterEnv: [
-    '<rootDir>/test-env.ts'
+    '<rootDir>/jestConfigs/test-env.ts',
+    '<rootDir>/jestConfigs/setup-zustand.ts'
   ],
   // Skips files from running tests
   testPathIgnorePatterns: [

@@ -1,12 +1,13 @@
 import CmrRequest from './cmrRequest'
 
+// @ts-expect-error Types are not defined for this module
 import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 /**
  * Request object for timeline specific requests
  */
 export default class TimelineRequest extends CmrRequest {
-  constructor(authToken, earthdataEnvironment) {
+  constructor(authToken: string, earthdataEnvironment: string) {
     if (authToken && authToken !== '') {
       super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 

@@ -1,42 +1,50 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
 import OverrideTemporalModal from '../OverrideTemporalModal'
+import useEdscStore from '../../../zustand/useEdscStore'
 
-Enzyme.configure({ adapter: new Adapter() })
+const setup = () => {
+  const user = userEvent.setup()
 
-function setup() {
   const props = {
     isOpen: true,
     temporalSearch: {
       endDate: '2019-06-17T23:59:59.999Z',
       startDate: '2015-07-01T06:14:00.000Z'
     },
-    timeline: {
-      query: {
-        end: 1548979199999,
-        start: 1546300800000
-      }
-    },
     onChangeQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn()
   }
 
-  const enzymeWrapper = shallow(<OverrideTemporalModal {...props} />)
+  const state = useEdscStore.getState()
+  useEdscStore.setState({
+    timeline: {
+      ...state.timeline,
+      query: {
+        end: 1548979199999,
+        start: 1546300800000
+      }
+    }
+  })
+
+  render(<OverrideTemporalModal {...props} />)
 
   return {
-    enzymeWrapper,
-    props
+    props,
+    user
   }
 }
 
 describe('OverrideTemporalModal component', () => {
   describe('when the temporal search is selected', () => {
-    test('the callback fires correctly', () => {
-      const { enzymeWrapper, props } = setup()
+    test('the callback fires correctly', async () => {
+      const { props, user } = setup()
 
-      enzymeWrapper.instance().onTemporalClick()
+      const button = await screen.findByLabelText('Use Temporal Constraint')
+      await user.click(button)
+
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
@@ -48,14 +56,17 @@ describe('OverrideTemporalModal component', () => {
       })
 
       expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(false)
     })
   })
 
   describe('when the focused date is selected', () => {
-    test('the callback fires correctly', () => {
-      const { enzymeWrapper, props } = setup()
+    test('the callback fires correctly', async () => {
+      const { props, user } = setup()
 
-      enzymeWrapper.instance().onFocusedClick()
+      const button = await screen.findByLabelText('Use Focused Time Span')
+      await user.click(button)
+
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
@@ -67,6 +78,7 @@ describe('OverrideTemporalModal component', () => {
       })
 
       expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(false)
     })
   })
 })

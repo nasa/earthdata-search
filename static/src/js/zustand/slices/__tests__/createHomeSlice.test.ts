@@ -1,7 +1,7 @@
 import useEdscStore from '../../useEdscStore'
 
 describe('createHomeSlice', () => {
-  it('sets the default state', () => {
+  test('sets the default state', () => {
     const state = useEdscStore.getState().home
 
     expect(state).toEqual({
@@ -13,7 +13,7 @@ describe('createHomeSlice', () => {
   })
 
   describe('setStartDrawing', () => {
-    it('updates startDrawing', () => {
+    test('updates startDrawing', () => {
       const { setStartDrawing } = useEdscStore.getState().home
       setStartDrawing(true)
 
@@ -23,7 +23,7 @@ describe('createHomeSlice', () => {
   })
 
   describe('setOpenKeywordFacet', () => {
-    it('updates openKeywordFacet', () => {
+    test('updates openKeywordFacet', () => {
       const { setOpenKeywordFacet } = useEdscStore.getState().home
       setOpenKeywordFacet(true)
 

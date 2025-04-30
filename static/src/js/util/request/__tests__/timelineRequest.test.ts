@@ -1,4 +1,6 @@
 import TimelineRequest from '../timelineRequest'
+
+// @ts-expect-error Types are not defined for this module
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 beforeEach(() => {
@@ -9,7 +11,7 @@ beforeEach(() => {
 describe('TimelineRequest#constructor', () => {
   test('sets the default values when authenticated', () => {
     const token = '123'
-    const request = new TimelineRequest(token)
+    const request = new TimelineRequest(token, 'prod')
 
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
@@ -20,7 +22,7 @@ describe('TimelineRequest#constructor', () => {
   test('sets the default values when unauthenticated', () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({ cmrHost: 'https://cmr.earthdata.nasa.gov' }))
 
-    const request = new TimelineRequest(undefined, 'prod')
+    const request = new TimelineRequest('', 'prod')
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual('https://cmr.earthdata.nasa.gov')
@@ -30,7 +32,7 @@ describe('TimelineRequest#constructor', () => {
 
 describe('TimelineRequest#permittedCmrKeys', () => {
   test('returns an array of timeline CMR keys', () => {
-    const request = new TimelineRequest(undefined, 'prod')
+    const request = new TimelineRequest('', 'prod')
 
     expect(request.permittedCmrKeys()).toEqual([
       'bounding_box',
@@ -46,7 +48,7 @@ describe('TimelineRequest#permittedCmrKeys', () => {
 
 describe('TimelineRequest#nonIndexedKeys', () => {
   test('returns an array of timeline CMR keys', () => {
-    const request = new TimelineRequest(undefined, 'prod')
+    const request = new TimelineRequest('', 'prod')
 
     expect(request.nonIndexedKeys()).toEqual([
       'bounding_box',

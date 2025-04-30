@@ -1,4 +1,8 @@
-import { PureComponent } from 'react'
+import {
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
@@ -12,6 +16,8 @@ import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getMapPreferences, getCollectionSortKeyParameter } from '../../selectors/preferences'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -58,74 +64,58 @@ export const mapStateToProps = (state) => ({
   paramCollectionSortKey: getCollectionSortKeyParameter(state),
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
-  twoDCoordinateSystemNameFacets: state.facetsParams.cmr.two_d_coordinate_system_name,
-  timelineQuery: state.timeline.query
+  twoDCoordinateSystemNameFacets: state.facetsParams.cmr.two_d_coordinate_system_name
 })
 
-export class UrlQueryContainer extends PureComponent {
-  constructor(props) {
-    super(props)
+export const UrlQueryContainer = (props) => {
+  const {
+    children,
+    location,
+    onChangePath,
+    onChangeUrl
+  } = props
+  const {
+    pathname,
+    search
+  } = location
 
-    this.state = {
-      currentPath: ''
-    }
-  }
+  const [currentPath, setCurrentPath] = useState('')
+  const previousSearch = useRef(search)
 
-  componentDidMount() {
-    const {
-      onChangePath,
-      location
-    } = this.props
+  // Pull out values we have migrated to Zustand that are no longer passed as props
+  const zustandValues = useEdscStore((state) => ({
+    timelineQuery: state.timeline.query
+  }))
 
-    const {
-      pathname,
-      search
-    } = location
+  useEffect(() => {
+    onChangePath([pathname, search].filter(Boolean).join(''))
+  }, [])
 
-    const { setStartDrawing } = this.context
-
-    onChangePath([pathname, search].filter(Boolean).join(''), setStartDrawing)
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const {
-      location: nextLocation
-    } = nextProps
-
-    const {
-      onChangeUrl,
-      location
-    } = this.props
-
-    const { search } = location
-    const { currentPath } = this.state
-
-    const { search: nextSearch } = nextLocation
-
+  useEffect(() => {
     // The only time the search prop changes is after the URL has been updated
     // So we only need to worry about encoding the query and updating the URL
     // if the previous search and next search are the same
     if (
-      search === nextSearch
+      previousSearch.current === search
     ) {
-      const nextPath = encodeUrlQuery(nextProps)
+      const nextPath = encodeUrlQuery({
+        ...props,
+        ...zustandValues
+      })
+
       if (currentPath !== nextPath) {
-        this.setState({
-          currentPath: nextPath
-        })
+        setCurrentPath(nextPath)
 
         if (nextPath !== '') {
           onChangeUrl(nextPath)
         }
       }
     }
-  }
 
-  render() {
-    const { children } = this.props
+    previousSearch.current = search
+  }, [props, search, zustandValues])
 
-    return children
-  }
+  return children
 }
 
 UrlQueryContainer.propTypes = {

@@ -12,9 +12,12 @@ import {
 import MockDate from 'mockdate'
 import EDSCTimeline from '@edsc/timeline'
 import userEvent from '@testing-library/user-event'
-import Timeline from '../Timeline'
+import { isEmpty } from 'lodash-es'
 
-function setup(overrideProps) {
+import Timeline from '../Timeline'
+import useEdscStore from '../../../zustand/useEdscStore'
+
+const setup = (overrideProps = {}, overrideZustandState = {}) => {
   const user = userEvent.setup()
   const props = {
     browser: {
@@ -28,20 +31,27 @@ function setup(overrideProps) {
       }
     },
     temporalSearch: {},
-    timeline: {
-      intervals: {},
-      query: {}
-    },
     showOverrideModal: false,
     pathname: '/search/granules',
     projectCollectionsIds: ['collectionId'],
     onChangeQuery: jest.fn(),
-    onChangeTimelineQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
     onMetricsTimeline: jest.fn(),
     onToggleTimeline: jest.fn(),
     isOpen: true,
     ...overrideProps
+  }
+
+  if (!isEmpty(overrideZustandState)) {
+    useEdscStore.setState({
+      ...overrideZustandState,
+      timeline: {
+        intervals: {},
+        query: {},
+        setQuery: jest.fn(),
+        ...(overrideZustandState.timeline || {})
+      }
+    })
   }
 
   render(<Timeline {...props} />)
@@ -89,7 +99,8 @@ describe('Timeline component', () => {
       temporalSearch: {
         endDate: '2019-06-21T19:34:23.865Z',
         startDate: '2018-12-28T15:56:46.870Z'
-      },
+      }
+    }, {
       timeline: {
         intervals: {},
         query: {
@@ -135,7 +146,8 @@ describe('Timeline component', () => {
           title: 'Test Collection',
           timeStart: '2017-09-09'
         }
-      },
+      }
+    }, {
       timeline: {
         intervals: {
           collectionId: [
@@ -174,7 +186,8 @@ describe('Timeline component', () => {
           timeStart: '2017-09-09'
         }
       },
-      projectCollectionsIds: [], // Empty project collections
+      projectCollectionsIds: [] // Empty project collections
+    }, {
       timeline: {
         intervals: {
           someCollection: [
@@ -219,7 +232,8 @@ describe('Timeline component', () => {
           timeStart: '2017-09-09'
         }
       },
-      projectCollectionsIds: ['firstCollection', 'secondCollection', 'thirdCollection'],
+      projectCollectionsIds: ['firstCollection', 'secondCollection', 'thirdCollection']
+    }, {
       timeline: {
         intervals: {
           firstCollection: [
@@ -277,8 +291,13 @@ describe('Timeline component', () => {
 })
 
 describe('handleTimelineMoveEnd', () => {
-  test('calls onChangeTimelineQuery with new values', () => {
-    const { props } = setup()
+  test('calls timeline.setQuery with new values', () => {
+    setup({}, {
+      timeline: {
+        intervals: {},
+        query: {}
+      }
+    })
 
     const timelineEnd = '1970-01-01T00:00:00.000Z'
     const timelineStart = '1970-01-31T00:00:00.000Z'
@@ -293,8 +312,8 @@ describe('handleTimelineMoveEnd', () => {
       })
     })
 
-    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
-    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(
+    expect(useEdscStore.getState().timeline.setQuery).toHaveBeenCalledTimes(2)
+    expect(useEdscStore.getState().timeline.setQuery).toHaveBeenNthCalledWith(
       1,
       {
         center: 1609416000000,
@@ -302,7 +321,7 @@ describe('handleTimelineMoveEnd', () => {
       }
     )
 
-    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(
+    expect(useEdscStore.getState().timeline.setQuery).toHaveBeenNthCalledWith(
       2,
       {
         center: 123456789000,
@@ -361,7 +380,8 @@ describe('handleTemporalSet', () => {
   test('calls onToggleOverrideTemporalModal when setting temporal and focus already exists', () => {
     const { props } = setup({
       pathname: '/projects',
-      showOverrideModal: true,
+      showOverrideModal: true
+    }, {
       timeline: {
         intervals: {},
         query: {
@@ -392,6 +412,8 @@ describe('handleTemporalSet', () => {
     const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true
+    }, {
+      timeline: {}
     })
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
@@ -410,7 +432,8 @@ describe('handleTemporalSet', () => {
   test('does not call onToggleOverrideTemporalModal when setting temporal and focus exists on the granules page', () => {
     const { props } = setup({
       pathname: '/search/granules',
-      showOverrideModal: false,
+      showOverrideModal: false
+    }, {
       timeline: {
         intervals: {},
         query: {
@@ -440,7 +463,10 @@ describe('handleTemporalSet', () => {
 
 describe('handleFocusedSet', () => {
   test('when focus is added query is updated', () => {
-    const { props } = setup()
+    setup({}, {
+      timeline: {}
+    })
+
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
@@ -452,8 +478,8 @@ describe('handleFocusedSet', () => {
       })
     })
 
-    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
-    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(2, {
+    expect(useEdscStore.getState().timeline.setQuery).toHaveBeenCalledTimes(2)
+    expect(useEdscStore.getState().timeline.setQuery).toHaveBeenNthCalledWith(2, {
       center: 1609416000000,
       end: focusedEnd,
       start: focusedStart
@@ -461,15 +487,18 @@ describe('handleFocusedSet', () => {
   })
 
   test('when focus is removed query is updated', () => {
-    const { props } = setup()
+    setup({}, {
+      timeline: {}
+    })
+
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     act(() => {
       timelineProps.onFocusedSet({})
     })
 
-    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
-    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(2, {
+    expect(useEdscStore.getState().timeline.setQuery).toHaveBeenCalledTimes(2)
+    expect(useEdscStore.getState().timeline.setQuery).toHaveBeenNthCalledWith(2, {
       end: undefined,
       start: undefined
     })

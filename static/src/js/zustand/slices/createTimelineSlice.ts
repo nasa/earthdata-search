@@ -1,0 +1,131 @@
+import { CancelTokenSource, isCancel } from 'axios'
+
+import {
+  ImmerStateCreator,
+  TimelineIntervalData,
+  TimelineIntervals,
+  TimelineSlice
+} from '../types'
+
+import TimelineRequest from '../../util/request/timelineRequest'
+
+// @ts-expect-error Types are not defined for this module
+import { prepareTimelineParams } from '../../util/timeline'
+
+// @ts-expect-error Types are not defined for this module
+import configureStore from '../../store/configureStore'
+
+// @ts-expect-error Types are not defined for this module
+import actions from '../../actions'
+
+/** Timeline Response from CMR */
+type TimelineResponse = {
+  /** Data of the response */
+  data: {
+    /** The concept ID of the collection */
+    'concept-id': string
+    /** The timeline intervals for the collection */
+    intervals: TimelineIntervals
+  }[]
+}
+
+let cancelToken: CancelTokenSource
+
+const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
+  timeline: {
+    intervals: {},
+    query: {},
+
+    setQuery: (query) => {
+      set((state) => {
+        Object.assign(state.timeline.query, query)
+      })
+
+      // Fetch new timeline intervals
+      get().timeline.getTimeline()
+    },
+
+    getTimeline: async () => {
+      if (cancelToken) {
+        cancelToken.cancel()
+      }
+
+      const {
+        dispatch: reduxDispatch,
+        getState: reduxGetState
+      } = configureStore()
+      const reduxState = reduxGetState()
+
+      const {
+        authToken,
+        earthdataEnvironment
+      } = reduxState
+
+      const timelineParams = prepareTimelineParams({
+        ...reduxState,
+        timeline: get().timeline
+      })
+
+      if (!timelineParams) {
+        // If there are no timeline parameters, clear the intervals
+        set((state) => {
+          state.timeline.intervals = {}
+        })
+
+        return
+      }
+
+      const {
+        boundingBox,
+        conceptId,
+        endDate,
+        interval,
+        point,
+        polygon,
+        startDate
+      } = timelineParams
+
+      const requestObject = new TimelineRequest(authToken, earthdataEnvironment)
+
+      cancelToken = requestObject.getCancelToken()
+
+      requestObject.search({
+        boundingBox,
+        conceptId,
+        endDate,
+        interval,
+        point,
+        polygon,
+        startDate
+      })
+        .then((responseObject: TimelineResponse) => {
+          const { data } = responseObject
+
+          const newIntervals = {} as TimelineIntervalData
+
+          data.forEach((responseData) => {
+            const { 'concept-id': responseConceptId, intervals } = responseData
+
+            newIntervals[responseConceptId] = intervals
+          })
+
+          // Set the intervals
+          set((state) => {
+            state.timeline.intervals = newIntervals
+          })
+        })
+        .catch(async (error) => {
+          if (isCancel(error)) return
+
+          reduxDispatch(actions.handleError({
+            error,
+            action: 'getTimeline',
+            resource: 'timeline',
+            requestObject
+          }))
+        })
+    }
+  }
+})
+
+export default createTimelineSlice

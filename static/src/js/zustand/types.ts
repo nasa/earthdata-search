@@ -24,6 +24,53 @@ export type MapSlice = {
   }
 }
 
+/** The accepted timeline interval values in CMR */
+export enum TimelineInterval {
+  'decade' = 'decade',
+  'year' = 'year',
+  'month' = 'month',
+  'day' = 'day',
+  'hour' = 'hour',
+  'minute' = 'minute',
+  'second' = 'second',
+}
+
+export type TimelineIntervals = ((number)[])[]
+
+type TimelineQuery = {
+  /** The center timestamp of the timeline */
+  center?: number,
+  /** The interval of the timeline */
+  interval?: TimelineInterval,
+  /** The end date of the timeline */
+  endDate?: string,
+  /** The start date of the timeline */
+  startDate?: string,
+  /** The end of the focused timespan */
+  end?: number,
+  /** The start of the focused timespan */
+  start?: number,
+}
+
+export type TimelineIntervalData = {
+  /** The intervals of the timeline per concept-id */
+  [key: string]: TimelineIntervals
+}
+
+export type TimelineSlice = {
+  /** The Timeline Slice of the store */
+  timeline: {
+    /** The intervals of the timeline */
+    intervals: TimelineIntervalData,
+    /** The query of the timeline */
+    query: TimelineQuery,
+    /** Function to set the query value */
+    setQuery: (query: TimelineQuery) => void
+    /** Function to get the timeline */
+    getTimeline: () => Promise<void>
+  }
+}
+
 export type UiSlice = {
   /** The UI Slice of the store */
   ui: {
@@ -47,6 +94,7 @@ export type UiSlice = {
 export type EdscStore =
   HomeSlice
   & MapSlice
+  & TimelineSlice
   & UiSlice
 
 export type ImmerStateCreator<T> = StateCreator<EdscStore, [['zustand/immer', never], never], [], T>

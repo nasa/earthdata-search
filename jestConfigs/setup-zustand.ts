@@ -1,7 +1,6 @@
 // Mock Zustand for tests
 // https://zustand.docs.pmnd.rs/guides/testing#jest
 
-// __mocks__/zustand.ts
 import { act } from '@testing-library/react'
 import type * as ZustandExportedTypes from 'zustand'
 

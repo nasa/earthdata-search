@@ -21,6 +21,7 @@ import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../portals/availablePortals.json'
+import useEdscStore from '../zustand/useEdscStore'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -208,7 +209,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     await dispatch(actions.getProjectGranules())
   }
 
-  dispatch(actions.getTimeline())
+  useEdscStore.getState().timeline.getTimeline()
 
   return null
 }
