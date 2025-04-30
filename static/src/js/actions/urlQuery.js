@@ -90,6 +90,14 @@ export const updateStore = ({
         ...timeline
       }
     }))
+
+    useEdscStore.setState((zustandState) => ({
+      ...zustandState,
+      timeline: {
+        ...zustandState.timeline,
+        ...timeline
+      }
+    }))
   } else {
     // We always need to load the portal config
     await dispatch(restoreFromUrl({
