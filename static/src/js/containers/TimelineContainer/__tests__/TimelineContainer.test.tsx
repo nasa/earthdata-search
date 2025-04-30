@@ -45,6 +45,10 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 describe('mapDispatchToProps', () => {
   test('onChangeQuery calls actions.changeQuery', () => {
     const dispatch = jest.fn()
