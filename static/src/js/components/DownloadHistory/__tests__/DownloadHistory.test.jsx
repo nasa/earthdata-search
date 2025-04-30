@@ -5,6 +5,7 @@ import { MemoryRouter } from 'react-router-dom'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 import * as AppConfig from '../../../../../../sharedUtils/config'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { DownloadHistory } from '../DownloadHistory'
 
@@ -18,15 +19,7 @@ jest.mock('../../../../../../sharedUtils/config', () => ({
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => ({
   __esModule: true,
-  default: ({ children, to, portalId }) => (
-    <a
-      href={`/downloads/${to.pathname.split('/').pop()}${to.search}`}
-      data-testid="portal-link"
-      data-portal-id={portalId}
-    >
-      {children}
-    </a>
-  )
+  default: jest.fn(({ children }) => <div>{children}</div>)
 }))
 
 const setup = (props) => render(
@@ -54,8 +47,8 @@ describe('DownloadHistory component', () => {
         })
 
         expect(screen.getByRole('heading', { name: /download status & history/i })).toBeInTheDocument()
-        expect(screen.getByTestId('spinner')).toBeInTheDocument()
-        expect(screen.getByTestId('spinner')).toHaveClass('download-history__spinner')
+        expect(screen.getByRole('status')).toBeInTheDocument()
+        expect(screen.getByRole('status')).toHaveClass('download-history__spinner')
       })
     })
 
@@ -70,7 +63,7 @@ describe('DownloadHistory component', () => {
         })
 
         expect(screen.queryByRole('table')).not.toBeInTheDocument()
-        expect(screen.queryByTestId('spinner')).not.toBeInTheDocument()
+        expect(screen.queryByRole('status')).not.toBeInTheDocument()
         expect(screen.getByText('No download history to display.')).toBeInTheDocument()
       })
     })
@@ -91,7 +84,18 @@ describe('DownloadHistory component', () => {
         })
 
         expect(screen.getByRole('table')).toBeInTheDocument()
-        expect(screen.getByRole('link', { name: '1 collection' })).toHaveAttribute('href', '/downloads/8069076')
+        expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
+        expect(PortalLinkContainer).toHaveBeenCalledWith(
+          expect.objectContaining({
+            portalId: undefined,
+            to: {
+              pathname: '/downloads/8069076',
+              search: ''
+            },
+            children: '1 collection'
+          }),
+          expect.anything()
+        )
       })
     })
 
@@ -113,7 +117,18 @@ describe('DownloadHistory component', () => {
         })
 
         expect(screen.getByRole('table')).toBeInTheDocument()
-        expect(screen.getByRole('link', { name: 'Collection Title' })).toHaveAttribute('href', '/downloads/8069076')
+        expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
+        expect(PortalLinkContainer).toHaveBeenCalledWith(
+          expect.objectContaining({
+            portalId: undefined,
+            to: {
+              pathname: '/downloads/8069076',
+              search: ''
+            },
+            children: 'Collection Title'
+          }),
+          expect.anything()
+        )
       })
     })
 
@@ -137,33 +152,18 @@ describe('DownloadHistory component', () => {
         })
 
         expect(screen.getByRole('table')).toBeInTheDocument()
-        expect(screen.getByRole('link', { name: 'Collection Title and 1 other collection' })).toHaveAttribute('href', '/downloads/8069076')
-      })
-    })
-
-    describe('when portals were used to place an order', () => {
-      test('renders links with the correct portal ID', () => {
-        setup({
-          earthdataEnvironment: 'prod',
-          retrievalHistory: [{
-            id: '8069076',
-            jsondata: {
-              portal_id: 'test'
+        expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
+        expect(PortalLinkContainer).toHaveBeenCalledWith(
+          expect.objectContaining({
+            portalId: undefined,
+            to: {
+              pathname: '/downloads/8069076',
+              search: ''
             },
-            created_at: '2019-08-25T11:58:14.390Z',
-            collections: [{
-              title: 'Collection Title'
-            }]
-          }],
-          retrievalHistoryLoading: false,
-          retrievalHistoryLoaded: true,
-          onDeleteRetrieval: jest.fn()
-        })
-
-        expect(screen.getByRole('table')).toBeInTheDocument()
-        const link = screen.getByRole('link', { name: 'Collection Title' })
-        expect(link).toHaveAttribute('href', '/downloads/8069076')
-        expect(link).toHaveAttribute('data-portal-id', 'test')
+            children: 'Collection Title and 1 other collection'
+          }),
+          expect.anything()
+        )
       })
     })
 
@@ -187,9 +187,18 @@ describe('DownloadHistory component', () => {
         })
 
         expect(screen.getByRole('table')).toBeInTheDocument()
-        const link = screen.getByRole('link', { name: 'Collection Title' })
-        expect(link).toHaveAttribute('href', '/downloads/8069076?ee=uat')
-        expect(link).toHaveAttribute('data-portal-id', 'test')
+        expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
+        expect(PortalLinkContainer).toHaveBeenCalledWith(
+          expect.objectContaining({
+            portalId: 'test',
+            to: {
+              pathname: '/downloads/8069076',
+              search: '?ee=uat'
+            },
+            children: 'Collection Title'
+          }),
+          expect.anything()
+        )
       })
     })
 

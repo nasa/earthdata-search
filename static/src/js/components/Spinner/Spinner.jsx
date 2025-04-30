@@ -9,7 +9,8 @@ export const Dots = ({
   color,
   dataTestId,
   inline,
-  size
+  size,
+  label
 }) => {
   const classes = classNames([
     'spinner',
@@ -23,7 +24,12 @@ export const Dots = ({
   ])
 
   return (
-    <div className={classes} data-testid={dataTestId}>
+    <div
+      className={classes}
+      data-testid={dataTestId}
+      role="status"
+      aria-label={label}
+    >
       <div className="spinner__inner" />
       <div className="spinner__inner" />
       <div className="spinner__inner" />
@@ -36,7 +42,8 @@ Dots.defaultProps = {
   dataTestId: null,
   color: '',
   inline: false,
-  size: ''
+  size: '',
+  label: 'Loading...'
 }
 
 Dots.propTypes = {
@@ -44,7 +51,8 @@ Dots.propTypes = {
   dataTestId: PropTypes.string,
   color: PropTypes.string,
   inline: PropTypes.bool,
-  size: PropTypes.string
+  size: PropTypes.string,
+  label: PropTypes.string
 }
 
 export const Spinner = ({
@@ -53,7 +61,8 @@ export const Spinner = ({
   dataTestId,
   inline,
   size,
-  type
+  type,
+  label
 }) => {
   if (type === 'dots') {
     return (
@@ -63,6 +72,7 @@ export const Spinner = ({
         color={color}
         size={size}
         inline={inline}
+        label={label}
       />
     )
   }
@@ -75,7 +85,8 @@ Spinner.defaultProps = {
   dataTestId: null,
   color: '',
   inline: false,
-  size: ''
+  size: '',
+  label: 'Loading...'
 }
 
 Spinner.propTypes = {
@@ -84,7 +95,8 @@ Spinner.propTypes = {
   color: PropTypes.string,
   inline: PropTypes.bool,
   size: PropTypes.string,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  label: PropTypes.string
 }
 
 export default Spinner
