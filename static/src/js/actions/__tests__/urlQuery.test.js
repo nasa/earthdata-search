@@ -44,7 +44,13 @@ describe('updateStore', () => {
           temporal: {}
         }
       },
-      shapefile: {}
+      shapefile: {},
+      timeline: {
+        query: {
+          center: 1676443651000,
+          interval: 'month'
+        }
+      }
     }
 
     const store = mockStore({
@@ -72,6 +78,18 @@ describe('updateStore', () => {
         }
       },
       type: RESTORE_FROM_URL
+    })
+
+    // Expect the zustand store to be updated
+    const { timeline } = useEdscStore.getState()
+    expect(timeline).toEqual({
+      intervals: {},
+      query: {
+        center: 1676443651000,
+        interval: 'month'
+      },
+      setQuery: expect.any(Function),
+      getTimeline: expect.any(Function)
     })
   })
 
@@ -104,14 +122,23 @@ describe('updateStore', () => {
           },
           granule: { pageNum: 1 }
         },
-        shapefile: {}
+        shapefile: {},
+        timeline: {
+          query: {
+            center: 1676443651000,
+            interval: 'month'
+          }
+        }
       }
 
       jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
 
+      const initialState = useEdscStore.getInitialState()
       const getTimelineMock = jest.fn()
       useEdscStore.setState({
+        ...initialState,
         timeline: {
+          ...initialState.timeline,
           getTimeline: getTimelineMock
         }
       })
@@ -143,6 +170,18 @@ describe('updateStore', () => {
       })
 
       expect(getTimelineMock).toHaveBeenCalledTimes(0)
+
+      // Expect the zustand store to be updated
+      const { timeline } = useEdscStore.getState()
+      expect(timeline).toEqual({
+        intervals: {},
+        query: {
+          center: 1676443651000,
+          interval: 'month'
+        },
+        setQuery: expect.any(Function),
+        getTimeline: expect.any(Function)
+      })
     })
   })
 
@@ -175,14 +214,23 @@ describe('updateStore', () => {
           },
           granule: { pageNum: 1 }
         },
-        shapefile: {}
+        shapefile: {},
+        timeline: {
+          query: {
+            center: 1676443651000,
+            interval: 'month'
+          }
+        }
       }
 
       jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
 
+      const initialState = useEdscStore.getInitialState()
       const getTimelineMock = jest.fn()
       useEdscStore.setState({
+        ...initialState,
         timeline: {
+          ...initialState.timeline,
           getTimeline: getTimelineMock
         }
       })
@@ -268,6 +316,18 @@ describe('updateStore', () => {
       })
 
       expect(getTimelineMock).toHaveBeenCalledTimes(0)
+
+      // Expect the zustand store to be updated
+      const { timeline } = useEdscStore.getState()
+      expect(timeline).toEqual({
+        intervals: {},
+        query: {
+          center: 1676443651000,
+          interval: 'month'
+        },
+        setQuery: expect.any(Function),
+        getTimeline: expect.any(Function)
+      })
     })
   })
 })
