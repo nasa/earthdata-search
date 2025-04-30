@@ -1,9 +1,6 @@
+import nock from 'nock'
 import React from 'react'
-import {
-  render,
-  screen,
-  waitFor
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import configureStore from 'redux-mock-store'
@@ -12,10 +9,7 @@ import DownloadHistoryContainer, {
   mapStateToProps,
   mapDispatchToProps
 } from '../DownloadHistoryContainer'
-import { DownloadHistory } from '../../../components/DownloadHistory/DownloadHistory'
-import RetrievalRequest from '../../../util/request/retrievalRequest'
 
-jest.mock('../../../util/request/retrievalRequest')
 jest.mock('../../../util/addToast', () => ({
   addToast: jest.fn()
 }))
@@ -27,30 +21,32 @@ jest.mock('../../../actions', () => ({
   }))
 }))
 
-jest.mock('../../../components/DownloadHistory/DownloadHistory', () => ({
-  DownloadHistory: jest.fn(() => <div data-testid="download-history" />)
-}))
-
 const mockStore = configureStore([])
 
 describe('DownloadHistoryContainer component', () => {
   beforeEach(() => {
     jest.clearAllMocks()
 
-    RetrievalRequest.mockImplementation(() => ({
-      all: jest.fn().mockResolvedValue({
-        data: [{
-          id: '8069076',
-          jsondata: {},
-          created_at: '2019-08-25T11:58:14.390Z',
-          collections: [{}]
-        }]
-      }),
-      remove: jest.fn().mockResolvedValue({})
-    }))
+    nock(/localhost/)
+      .get(/retrievals/)
+      .reply(200, [{
+        id: '8069076',
+        jsondata: {},
+        created_at: '2019-08-25T11:58:14.390Z',
+        collections: [{}]
+      }])
   })
 
   test('renders the DownloadHistory component and passes correct props', async () => {
+    nock(/localhost/)
+      .get(/retrievals/)
+      .reply(200, {
+        id: '8069076',
+        jsondata: {},
+        created_at: '2019-08-25T11:58:14.390Z',
+        collections: [{}]
+      })
+
     const store = mockStore({
       authToken: 'testToken',
       earthdataEnvironment: 'prod'
@@ -64,29 +60,9 @@ describe('DownloadHistoryContainer component', () => {
       </Provider>
     )
 
-    await waitFor(() => {
-      expect(screen.getByTestId('download-history')).toBeInTheDocument()
-    })
-
-    const expectedProps = {
-      earthdataEnvironment: 'prod',
-      retrievalHistoryLoaded: true,
-      retrievalHistory: [{
-        id: '8069076',
-        jsondata: {},
-        created_at: '2019-08-25T11:58:14.390Z',
-        collections: [{}]
-      }],
-      onDeleteRetrieval: expect.any(Function)
-    }
-
-    const matchingCall = DownloadHistory.mock.calls.find((call) => {
-      const props = call[0]
-
-      return expect.objectContaining(expectedProps).asymmetricMatch(props)
-    })
-
-    expect(matchingCall).toBeTruthy()
+    expect(await screen.findByRole('heading', { name: 'Download Status & History' })).toBeInTheDocument()
+    expect(await screen.findByRole('link', { href: '/downloads/8069076' })).toBeInTheDocument()
+    expect(await screen.findByText('6 years ago')).toBeInTheDocument()
   })
 
   describe('mapStateToProps', () => {
