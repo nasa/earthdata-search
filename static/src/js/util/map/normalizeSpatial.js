@@ -1,15 +1,16 @@
-import { greatCircleArc } from 'ol/geom/flat/geodesic'
-import { distance } from 'ol/coordinate'
 import { dividePolygon } from '@edsc/geo-utils'
 import {
   area,
   booleanContains,
   polygon as turfPolygon,
   simplify,
-  booleanClockwise
+  booleanClockwise,
+  greatCircle,
+  flattenEach,
+  cleanCoords,
+  distance,
+  truncate
 } from '@turf/turf'
-
-import { crsProjections } from './crs'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
@@ -28,22 +29,53 @@ export const interpolatePolygon = (coordinates) => {
 
   // Iterate over the coordinates and add the original point and the interpolated points
   for (let i = 0; i < coordinates.length - 1; i += 1) {
-    const { lng, lat } = coordinates[i]
-    const { lng: lng2, lat: lat2 } = coordinates[i + 1]
+    const coordinate = [coordinates[i].lng, coordinates[i].lat]
+    const nextCoordinate = [coordinates[i + 1].lng, coordinates[i + 1].lat]
 
-    // `greatCircleArc` sometimes changes the first point slightly. We want to keep the original point to ensure the polygon is closed
-    interpolatedCoordinates.push([lng, lat])
+    // `greatCircle` sometimes changes the first point slightly. We want to keep the original point to ensure the polygon is closed
+    interpolatedCoordinates.push(coordinate)
+
+    // Calculate the number of points to interpolate between the two coordinates
+    // To do this, we find the distance between the two points relative to the circumference of the Earth, then take that percentage of our maximum number of points
+    const distanceBetweenPoints = distance(coordinate, nextCoordinate)
+
+    // The circumference of the Earth is approximately 40,000 km
+    const distancePercentage = distanceBetweenPoints / 40000
+
+    // We want to use a maximum of 50 points to interpolate between the two coordinates, so take the
+    // `distancePercentage` and multiply it by 50 to get the number of points to interpolate.
+    // Set to 40 here, will add 10 points next. 50 was choosen through trial and error
+    const maxPoints = 40
+
+    // Add 10 points to the total to ensure there are always a good number of points for smooth curves
+    const numberOfPoints = Math.floor(distancePercentage * maxPoints) + 10
 
     // Interpolate the points between the two coordinates
-    const interpolated = greatCircleArc(lng, lat, lng2, lat2, crsProjections.epsg4326, 0.00001)
+    const turfInterpolated = greatCircle(
+      coordinate,
+      nextCoordinate,
+      { npoints: numberOfPoints }
+    )
 
-    // Pair the interpolated coordinates before pushing them to the array
-    for (let j = 2; j < interpolated.length - 3; j += 2) {
-      interpolatedCoordinates.push([interpolated[j], interpolated[j + 1]])
-    }
+    flattenEach(turfInterpolated, (currentFeature) => {
+      const flattenedCoords = currentFeature.geometry.coordinates
+
+      flattenedCoords.forEach((flattenedCoord, index) => {
+        // The first and last points are the same as the original points, don't add them again
+        if (index === 0 || index === flattenedCoords.length - 1) return
+
+        const nextFlattenedCoord = flattenedCoords[index + 1]
+
+        // If the next point is too close (< 100km) to the current point, don't add it
+        const pointDistance = distance(flattenedCoord, nextFlattenedCoord)
+        if (pointDistance < 100) return
+
+        interpolatedCoordinates.push(flattenedCoord)
+      })
+    })
   }
 
-  // `greatCircleArc` sometimes changes the last point slightly. We want to keep the original point to ensure the polygon is closed
+  // `greatCircle` sometimes changes the last point slightly. We want to keep the original point to ensure the polygon is closed
   interpolatedCoordinates.push([coordinates[0].lng, coordinates[0].lat])
 
   return [interpolatedCoordinates]
@@ -186,7 +218,7 @@ const normalizeSpatial = (metadata) => {
       ])
 
       // Interpolate the polygon to add points between each point
-      const interpolatedPolygon = interpolateBoxPolygon(polygonCoordinates, 2, 6)
+      const interpolatedPolygon = interpolateBoxPolygon(polygonCoordinates, 250, 6)
 
       multiPolygons.push(interpolatedPolygon)
     })
@@ -380,14 +412,19 @@ const normalizeSpatial = (metadata) => {
     })
 
     // Return the polygons as GeoJSON MultiPolygon (to simplify drawing on the map)
-    const json = {
-      type: 'Feature',
-      properties: {},
-      geometry: {
-        type: 'MultiPolygon',
-        coordinates: polygonsArray
+    const json = truncate(
+      cleanCoords({
+        type: 'Feature',
+        properties: {},
+        geometry: {
+          type: 'MultiPolygon',
+          coordinates: polygonsArray
+        }
+      }),
+      {
+        precision: 10
       }
-    }
+    )
 
     const numPoints = json.geometry.coordinates.reduce((acc, polygon) => acc + polygon[0].length, 0)
 
