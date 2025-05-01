@@ -451,7 +451,8 @@ const Map = ({
       })
 
       // If there was no granule highlighted, check for a shapefile feature to highlight
-      if (!wasFeatureHighlighted) {
+      // If on the project page, don't interact with shapefiles
+      if (!isProjectPage && !wasFeatureHighlighted) {
         highlightShapefile({
           coordinate,
           map,
@@ -704,7 +705,8 @@ const Map = ({
     })
 
     // If a granule was not clicked, call onClickShapefile
-    if (!granuleClicked) {
+    // If on the project page, don't interact with shapefiles
+    if (!isProjectPage && !granuleClicked) {
       onClickShapefile({
         coordinate,
         map,
