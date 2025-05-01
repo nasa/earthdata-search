@@ -2,7 +2,6 @@ import { push } from 'connected-react-router'
 
 import { SET_RETRIEVAL_LOADING, UPDATE_RETRIEVAL } from '../constants/actionTypes'
 
-import { addToast } from '../util/addToast'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
@@ -10,7 +9,6 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { prepareRetrievalParams } from '../util/retrievals'
-import { removeRetrievalHistory } from './retrievalHistory'
 import { submittingProject, submittedProject } from './project'
 
 export const setRetrievalLoading = () => ({
@@ -170,42 +168,4 @@ export const fetchRetrieval = (id) => (dispatch, getState) => {
     })
 
   return response
-}
-
-/**
- * Delete a retrieval from the database
- * @param {Integer} id Database ID of the retrieval to lookup
- */
-export const deleteRetrieval = (id) => (dispatch, getState) => {
-  const state = getState()
-
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-
-  const { authToken } = state
-
-  try {
-    const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
-    const response = requestObject.remove(id)
-      .then(() => {
-        dispatch(removeRetrievalHistory(id))
-        addToast('Retrieval removed', {
-          appearance: 'success',
-          autoDismiss: true
-        })
-      })
-      .catch((error) => {
-        dispatch(handleError({
-          error,
-          action: 'deleteRetrieval',
-          resource: 'retrieval',
-          verb: 'deleting',
-          requestObject
-        }))
-      })
-
-    return response
-  } catch {
-    return null
-  }
 }

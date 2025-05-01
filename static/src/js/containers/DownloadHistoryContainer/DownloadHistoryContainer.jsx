@@ -1,69 +1,106 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, {
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
+
 import { DownloadHistory } from '../../components/DownloadHistory/DownloadHistory'
+import RetrievalRequest from '../../util/request/retrievalRequest'
+import { addToast } from '../../util/addToast'
 
 export const mapStateToProps = (state) => ({
-  earthdataEnvironment: state.earthdataEnvironment,
-  retrievalHistory: state.retrievalHistory.history,
-  retrievalHistoryLoading: state.retrievalHistory.isLoading,
-  retrievalHistoryLoaded: state.retrievalHistory.isLoaded
+  authToken: state.authToken,
+  earthdataEnvironment: state.earthdataEnvironment
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onFetchRetrievalHistory: (earthdataEnvironment) => {
-    dispatch(actions.fetchRetrievalHistory(earthdataEnvironment))
-  },
-  onDeleteRetrieval:
-    (retrievalId) => dispatch(actions.deleteRetrieval(retrievalId))
+  dispatchHandleError: (errorConfig) => dispatch(actions.handleError(errorConfig))
 })
 
-export class DownloadHistoryContainer extends Component {
-  componentDidMount() {
-    const {
-      onFetchRetrievalHistory
-    } = this.props
+export const DownloadHistoryContainer = ({
+  authToken,
+  earthdataEnvironment,
+  dispatchHandleError
+}) => {
+  const [retrievalHistory, setRetrievalHistory] = useState([])
+  const [retrievalHistoryLoading, setRetrievalHistoryLoading] = useState(false)
+  const [retrievalHistoryLoaded, setRetrievalHistoryLoaded] = useState(false)
 
-    onFetchRetrievalHistory()
-  }
+  const fetchRetrievalHistory = useCallback(async () => {
+    if (!authToken) return
 
-  render() {
-    const {
-      earthdataEnvironment,
-      retrievalHistory,
-      onDeleteRetrieval,
-      retrievalHistoryLoading,
-      retrievalHistoryLoaded
-    } = this.props
+    setRetrievalHistoryLoading(true)
 
-    return (
-      <DownloadHistory
-        earthdataEnvironment={earthdataEnvironment}
-        retrievalHistory={retrievalHistory}
-        retrievalHistoryLoading={retrievalHistoryLoading}
-        retrievalHistoryLoaded={retrievalHistoryLoaded}
-        onDeleteRetrieval={onDeleteRetrieval}
-      />
-    )
-  }
-}
+    try {
+      const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+      const response = await requestObject.all()
+      const { data } = response
 
-DownloadHistoryContainer.defaultProps = {
-  retrievalHistory: []
+      setRetrievalHistory(data)
+      setRetrievalHistoryLoaded(true)
+    } catch (error) {
+      dispatchHandleError({
+        error,
+        action: 'fetchRetrievalHistory',
+        resource: 'retrieval history',
+        verb: 'fetching',
+        notificationType: 'banner'
+      })
+    } finally {
+      setRetrievalHistoryLoading(false)
+    }
+  }, [authToken, earthdataEnvironment, dispatchHandleError])
+
+  const handleDeleteRetrieval = useCallback(async (retrievalId) => {
+    if (!authToken) return
+
+    try {
+      const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+      await requestObject.remove(retrievalId)
+
+      setRetrievalHistory((prevHistory) => prevHistory.filter((item) => item.id !== retrievalId))
+
+      addToast('Retrieval removed', {
+        appearance: 'success',
+        autoDismiss: true
+      })
+    } catch (error) {
+      dispatchHandleError({
+        error,
+        action: 'handleDeleteRetrieval',
+        resource: 'retrieval',
+        verb: 'deleting',
+        notificationType: 'banner'
+      })
+    }
+  }, [authToken, earthdataEnvironment, dispatchHandleError])
+
+  useEffect(() => {
+    if (authToken) {
+      fetchRetrievalHistory()
+    }
+  }, [fetchRetrievalHistory])
+
+  return (
+    <DownloadHistory
+      earthdataEnvironment={earthdataEnvironment}
+      retrievalHistory={retrievalHistory}
+      retrievalHistoryLoading={retrievalHistoryLoading}
+      retrievalHistoryLoaded={retrievalHistoryLoaded}
+      onDeleteRetrieval={handleDeleteRetrieval}
+    />
+  )
 }
 
 DownloadHistoryContainer.propTypes = {
+  authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
-  retrievalHistory: PropTypes.arrayOf(
-    PropTypes.shape({})
-  ),
-  retrievalHistoryLoading: PropTypes.bool.isRequired,
-  retrievalHistoryLoaded: PropTypes.bool.isRequired,
-  onFetchRetrievalHistory: PropTypes.func.isRequired,
-  onDeleteRetrieval: PropTypes.func.isRequired
+  dispatchHandleError: PropTypes.func.isRequired
 }
 
 export default withRouter(
