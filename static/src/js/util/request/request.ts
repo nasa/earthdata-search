@@ -23,7 +23,6 @@ const defaultTransformRequest = Array.isArray(axios.defaults.transformRequest)
 /**
  * Parent class for the application API layer to communicate with external services
  */
-// export default class Request implements RequestInterface {
 export default class Request {
   /** If the request is for an authenticated user */
   authenticated: boolean
