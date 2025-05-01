@@ -1,5 +1,9 @@
 import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import {
+  act,
+  render,
+  waitFor
+} from '@testing-library/react'
 
 import actions from '../../../actions'
 import {
@@ -10,6 +14,7 @@ import {
 import * as encodeUrlQuery from '../../../util/url/url'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 const setup = () => {
   const props = {
@@ -40,7 +45,6 @@ const setup = () => {
     },
     scienceKeywordFacets: {},
     temporalSearch: {},
-    timeline: {},
     twoDCoordinateSystemNameFacets: [],
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
@@ -331,8 +335,8 @@ describe('mapStateToProps', () => {
 })
 
 describe('UrlQueryContainer', () => {
-  describe('componentDidMount', () => {
-    test('calls onChangePath on page load', async () => {
+  describe('when the component mounts', () => {
+    test('calls onChangePath', async () => {
       jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC')
 
       const { props } = setup()
@@ -345,7 +349,7 @@ describe('UrlQueryContainer', () => {
     })
   })
 
-  describe('componentWillReceiveProps', () => {
+  describe('when the redux props change', () => {
     test('calls onChangeUrl if the search params are the same', () => {
       jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC&q=test')
 
@@ -383,6 +387,40 @@ describe('UrlQueryContainer', () => {
       )
 
       expect(props.onChangeUrl).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('when the zustand values change', () => {
+    test('calls onChangeUrl if the search params are the same', () => {
+      const encodeUrlQuerySpy = jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC&q=test&tl=1571306772.712!5!!')
+
+      const { props } = setup()
+
+      act(() => {
+        useEdscStore.setState({
+          timeline: {
+            query: {
+              center: 1571306737483,
+              interval: 'decade',
+              endDate: '2310-01-01T00:00:00.000Z',
+              startDate: '1710-01-01T00:00:00.000Z'
+            }
+          }
+        })
+      })
+
+      expect(encodeUrlQuerySpy).toHaveBeenCalledTimes(3)
+      expect(encodeUrlQuerySpy).toHaveBeenLastCalledWith(expect.objectContaining({
+        timelineQuery: {
+          center: 1571306737483,
+          interval: 'decade',
+          endDate: '2310-01-01T00:00:00.000Z',
+          startDate: '1710-01-01T00:00:00.000Z'
+        }
+      }))
+
+      expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+      expect(props.onChangeUrl).toHaveBeenCalledWith('?p=C00001-EDSC&q=test&tl=1571306772.712!5!!')
     })
   })
 })

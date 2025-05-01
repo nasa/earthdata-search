@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand'
+import { TimelineIntervals } from '../types/sharedTypes'
 
 export type HomeSlice = {
   /** The Home Slice of the store */
@@ -34,8 +35,6 @@ export enum TimelineInterval {
   'minute' = 'minute',
   'second' = 'second',
 }
-
-export type TimelineIntervals = ((number)[])[]
 
 type TimelineQuery = {
   /** The center timestamp of the timeline */

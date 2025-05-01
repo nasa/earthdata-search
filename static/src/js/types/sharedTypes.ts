@@ -1,4 +1,8 @@
-import { AxiosHeaderValue, HttpStatusCode } from 'axios'
+import {
+  AxiosHeaderValue,
+  AxiosResponseHeaders,
+  HttpStatusCode
+} from 'axios'
 
 /** A email address string. This does not check the format of the string but is used to signify that the string should follow a valid datetime string format. */
 export type EmailAddressString = string
@@ -46,7 +50,9 @@ export interface UrsProfile {
 
 /** The Collection Metadata */
 export interface CollectionMetadata {
-  [key: string]: unknown
+  // Will flush out Collection types in the future
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
 }
 
 /** The collections metadata object, by collection concept id */
@@ -57,7 +63,9 @@ export interface CollectionsMetadata {
 
 /** The query object */
 export interface Query {
-  [key: string]: unknown
+  // Will flush out query types when implementing the querySlice
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
 }
 
 /** CMR specific headers */
@@ -72,16 +80,52 @@ export interface CmrHeaders {
   'Authorization'?: string | AxiosHeaderValue
 }
 
+export type TimelineIntervals = ((number)[])[]
+
+/** The response data for the timeline */
+export type TimelineResponseData = {
+  /** The collection concept id */
+  'concept-id': string
+  /** The timeline intervals for the collection */
+  intervals: TimelineIntervals
+}
+
+/** The response data for our request classes */
+export type RequestResponseData = TimelineResponseData[]
+
+/** The request parameters for the timeline */
+export type TimelineRequestParams = {
+  /** The bounding box search */
+  boundingBox?: BoundingBoxString[]
+  /** The circle search */
+  circle?: CircleString[]
+  /** The collection concept ids */
+  conceptId: string[]
+  /** The end date of the timeline */
+  endDate: DateTimeString
+  /** The point search */
+  point?: PointString[]
+  /** The polygon search */
+  polygon?: PolygonString[]
+  /** The start date of the timeline */
+  startDate: DateTimeString
+  /** The timeline zoom level */
+  interval: string
+}
+
+/** The request parameters for our request classes */
+export type RequestParams = TimelineRequestParams
+
 /** A response received from an Axios request */
-export type AxiosResponse = {
+export type Response = {
   /** The response data */
-  data: unknown
+  data: RequestResponseData
   /** The response status */
-  statusCode: HttpStatusCode
+  statusCode?: HttpStatusCode
   /** The response status text */
-  message: string
+  message?: string
   /** The response headers */
-  headers: CmrHeaders
+  headers: CmrHeaders & AxiosResponseHeaders
 }
 
 /** Redux state types */

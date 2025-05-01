@@ -9,7 +9,7 @@ import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 // @ts-expect-error Types are not defined for this module
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
-import { CmrHeaders } from '../../types/sharedTypes'
+import { CmrHeaders, RequestParams } from '../../types/sharedTypes'
 
 /**
  * Parent class for the application API layer to communicate with external services
@@ -35,7 +35,7 @@ export default class CmrRequest extends Request {
    * Filter out any unwanted or non-permitted data
    * @param {Objet} data - An object representing an HTTP request payload
    */
-  filterData(data: unknown) {
+  filterData(data: RequestParams) {
     if (data) {
       // Converts javascript compliant keys to snake cased keys for use
       // in URLs and request payloads
@@ -45,7 +45,7 @@ export default class CmrRequest extends Request {
         ]
       })
 
-      return pick(snakeKeyData, this.permittedCmrKeys())
+      return pick(snakeKeyData, this.permittedCmrKeys()) as RequestParams
     }
 
     return data
@@ -55,7 +55,7 @@ export default class CmrRequest extends Request {
    * Transforms data before sending it as a payload to an HTTP endpoint
    * @param {Object} data - An object representing an HTTP request payload
    */
-  transformData(data: unknown) {
+  transformData(data: RequestParams) {
     return prepKeysForCmr(
       super.transformData(data),
       this.nonIndexedKeys()
@@ -67,7 +67,7 @@ export default class CmrRequest extends Request {
    * @param {Object} data - An object representing an HTTP request payload.
    * @return {Object} A modified object.
    */
-  transformRequest(data: unknown, headers: CmrHeaders) {
+  transformRequest(data: RequestParams, headers: CmrHeaders) {
     // If this request is not going to lambda, add headers that lambda would add for us
     if (
       !this.authenticated

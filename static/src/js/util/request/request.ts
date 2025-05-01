@@ -7,7 +7,11 @@ import configureStore from '../../store/configureStore'
 import { metricsTiming } from '../../middleware/metrics/actions'
 // @ts-expect-error Types are not defined for this module
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { AxiosResponse, CmrHeaders } from '../../types/sharedTypes'
+import {
+  AxiosResponse,
+  CmrHeaders,
+  RequestParams
+} from '../../types/sharedTypes'
 
 const defaultTransformResponse = Array.isArray(axios.defaults.transformResponse)
   ? axios.defaults.transformResponse
@@ -19,28 +23,38 @@ const defaultTransformRequest = Array.isArray(axios.defaults.transformRequest)
 /**
  * Parent class for the application API layer to communicate with external services
  */
-// export default class Request implements RequestInterface {
 export default class Request {
+  /** If the request is for an authenticated user */
   authenticated: boolean
 
+  /** The user's authToken */
   authToken: string | undefined
 
+  /** The base URL for the request */
   baseUrl: string
 
+  /** The cancel token for the request */
   cancelToken: CancelTokenSource
 
+  /** The Earthdata environment */
   earthdataEnvironment: string
 
+  /** If the request will go to one of our lambdas */
   lambda: boolean
 
+  /** If the request is optionally authenticated, or not required to be authenticated */
   optionallyAuthenticated: boolean
 
+  /** The path to the search endpoint */
   searchPath: string
 
+  /** The start time of the request */
   startTime: number | null
 
+  /** The request ID for the request */
   requestId: string | undefined
 
+  /** The full URL for the request */
   fullUrl: string | undefined
 
   constructor(baseUrl: string, earthdataEnvironment: string) {
@@ -83,7 +97,7 @@ export default class Request {
    * Filter out any unwanted or non-permitted data
    * @param {Objet} data - An object representing an HTTP request payload
    */
-  filterData(data: unknown) {
+  filterData(data: RequestParams) {
     return data
   }
 
@@ -91,7 +105,7 @@ export default class Request {
    * Transforms data before sending it as a payload to an HTTP endpoint
    * @param {Object} data - An object representing an HTTP request payload
    */
-  transformData(data: unknown) {
+  transformData(data: RequestParams) {
     return data
   }
 
@@ -100,7 +114,7 @@ export default class Request {
    * @param {Object} data - An object representing an HTTP request payload.
    * @return {Object} A modified object.
    */
-  transformRequest(data: unknown, headers: CmrHeaders) {
+  transformRequest(data: RequestParams, headers: CmrHeaders) {
     // Filter out an unwanted data
     const filteredData = this.filterData(data)
 
@@ -158,7 +172,7 @@ export default class Request {
    * @param {Object} data - Data to be sent with the request.
    * @return {Promise} A Promise object representing the request that was made
    */
-  post(url: string, data: unknown) {
+  post(url: string, data: RequestParams) {
     this.startTimer()
     this.setFullUrl(url)
 
@@ -184,7 +198,7 @@ export default class Request {
    * @param {Object} params URL parameters
    * @return {Promise} A Promise object representing the request that was made
    */
-  get(url: string, params: unknown) {
+  get(url: string, params: RequestParams) {
     this.startTimer()
     this.setFullUrl(url)
 
@@ -275,7 +289,7 @@ export default class Request {
   /*
    * Makes a POST request to this.searchPath
    */
-  search(params: unknown) {
+  search(params: RequestParams) {
     // We pass the ext here as a param so we can intercept and send to lambda.
     // Unauthenticated requests will ignore this key.
     return this.post(this.searchPath, params)

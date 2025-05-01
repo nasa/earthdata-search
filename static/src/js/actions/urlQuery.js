@@ -80,8 +80,7 @@ export const updateStore = ({
         ...query,
         collectionSortPreference
       },
-      shapefile,
-      timeline
+      shapefile
     }))
 
     useEdscStore.setState((zustandState) => ({

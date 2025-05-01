@@ -1,9 +1,12 @@
-import { CancelTokenSource, isCancel } from 'axios'
+import {
+  AxiosResponse,
+  CancelTokenSource,
+  isCancel
+} from 'axios'
 
 import {
   ImmerStateCreator,
   TimelineIntervalData,
-  TimelineIntervals,
   TimelineSlice
 } from '../types'
 
@@ -18,16 +21,7 @@ import configureStore from '../../store/configureStore'
 // @ts-expect-error Types are not defined for this module
 import actions from '../../actions'
 
-/** Timeline Response from CMR */
-type TimelineResponse = {
-  /** Data of the response */
-  data: {
-    /** The concept ID of the collection */
-    'concept-id': string
-    /** The timeline intervals for the collection */
-    intervals: TimelineIntervals
-  }[]
-}
+import { TimelineResponseData } from '../../types/sharedTypes'
 
 let cancelToken: CancelTokenSource
 
@@ -98,12 +92,12 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
         polygon,
         startDate
       })
-        .then((responseObject: TimelineResponse) => {
+        .then((responseObject: AxiosResponse) => {
           const { data } = responseObject
 
           const newIntervals = {} as TimelineIntervalData
 
-          data.forEach((responseData) => {
+          data.forEach((responseData: TimelineResponseData) => {
             const { 'concept-id': responseConceptId, intervals } = responseData
 
             newIntervals[responseConceptId] = intervals
