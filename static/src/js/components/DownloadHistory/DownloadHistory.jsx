@@ -62,7 +62,7 @@ export const DownloadHistory = ({
   const handleRemoveClick = useCallback((id) => () => handleRemove(id), [handleRemove])
 
   // Memoize the descriptions for all items in the history
-  const memoizedDescriptions = useMemo(() => retrievalHistory.reduce((acc, retrieval) => {
+  const retrievalDescriptions = useMemo(() => retrievalHistory.reduce((acc, retrieval) => {
     acc[retrieval.id] = retrievalDescription(retrieval.collections)
 
     return acc
@@ -120,7 +120,7 @@ export const DownloadHistory = ({
                             }
                           }
                         >
-                          {memoizedDescriptions[id]}
+                          {retrievalDescriptions[id]}
                         </PortalLinkContainer>
                       </td>
                       <td className="download-history-table__ago">
