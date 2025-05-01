@@ -1,0 +1,139 @@
+{
+  "feed": {
+    "updated": "2025-04-29T13:20:19.115Z",
+    "id": "https://cmr.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&temporal=2025-02-07T01:54:36.010Z,2025-02-08T23:45:22.052Z&polygon[]=44.1875,0.40647,58.25,-14.46517,58.25,0.40647,44.1875,0.40647",
+    "title": "ECHO granule metadata",
+    "entry": [
+      {
+        "producer_granule_id": "S1A_IW_SLC__1SDV_20250207T023854_20250207T023921_057784_072005_8C25",
+        "time_start": "2025-02-07T02:38:54.167Z",
+        "updated": "2025-02-07T06:41:26.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "orbit_number": "57784"
+          }
+        ],
+        "dataset_id": "SENTINEL-1A_SLC",
+        "data_center": "ASF",
+        "title": "S1A_IW_SLC__1SDV_20250207T023854_20250207T023921_057784_072005_8C25-SLC",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2025-02-07T02:39:21.121Z",
+        "id": "G3396184657-ASF",
+        "original_format": "ECHO10",
+        "granule_size": "3508.1975049972534",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "1.257404 47.452568 1.730159 45.232441 0.105003 44.891407 -0.372892 47.111233 1.257404 47.452568"
+          ]
+        ],
+        "collection_concept_id": "C1214470488-ASF",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "This link provides direct download access to the granule.",
+            "hreflang": "en-US",
+            "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20250207T023854_20250207T023921_057784_072005_8C25.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access to the granule.",
+            "hreflang": "en-US",
+            "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20250207T023854_20250207T023921_057784_072005_8C25.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.asf.alaska.edu/ "
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://webdocs.asf.alaska.edu/Sentinel-1/Sentinel-1-User-Guide.pdf"
+          }
+        ]
+      },
+      {
+        "producer_granule_id": "S1A_IW_SLC__1SDV_20250207T023918_20250207T023944_057784_072005_E363",
+        "time_start": "2025-02-07T02:39:18.994Z",
+        "updated": "2025-02-07T06:41:24.000Z",
+        "orbit_calculated_spatial_domains": [
+          {
+            "orbit_number": "57784"
+          }
+        ],
+        "dataset_id": "SENTINEL-1A_SLC",
+        "data_center": "ASF",
+        "title": "S1A_IW_SLC__1SDV_20250207T023918_20250207T023944_057784_072005_E363-SLC",
+        "coordinate_system": "GEODETIC",
+        "day_night_flag": "UNSPECIFIED",
+        "time_end": "2025-02-07T02:39:44.154Z",
+        "id": "G3396187562-ASF",
+        "original_format": "ECHO10",
+        "granule_size": "3211.04132270813",
+        "browse_flag": false,
+        "polygons": [
+          [
+            "-0.244221 47.138256 0.233262 44.918476 -1.283373 44.596642 -1.765789 46.817734 -0.244221 47.138256"
+          ]
+        ],
+        "collection_concept_id": "C1214470488-ASF",
+        "online_access_flag": true,
+        "links": [
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "title": "This link provides direct download access to the granule.",
+            "hreflang": "en-US",
+            "href": "https://datapool.asf.alaska.edu/SLC/SA/S1A_IW_SLC__1SDV_20250207T023918_20250207T023944_057784_072005_E363.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/s3#",
+            "title": "This link provides direct download access to the granule.",
+            "hreflang": "en-US",
+            "href": "s3://asf-ngap2w-p-s1-slc-7b420b89/S1A_IW_SLC__1SDV_20250207T023918_20250207T023944_057784_072005_E363.zip"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "ASF DAAC Sentinel-1 data set landing page (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "www.asf.alaska.edu/sar-data-sets/sentinel-1"
+          },
+          {
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/metadata#",
+            "title": "ASF DAAC Sentinel-1 User Guide and Technical Documentation (VIEW RELATED INFORMATION)",
+            "hreflang": "en-US",
+            "href": "www.asf.alaska.edu/sar-information/sentinel-1-documents-tools"
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/data#",
+            "hreflang": "en-US",
+            "href": "https://search.asf.alaska.edu/ "
+          },
+          {
+            "inherited": true,
+            "rel": "http://esipfed.org/ns/fedsearch/1.1/documentation#",
+            "hreflang": "en-US",
+            "href": "https://webdocs.asf.alaska.edu/Sentinel-1/Sentinel-1-User-Guide.pdf"
+          }
+        ]
+      }
+    ]
+  }
+}
