@@ -4,6 +4,9 @@ import {
   HttpStatusCode
 } from 'axios'
 
+/** A type for an empty object */
+export type EmptyObject = Record<string, never>
+
 /** A email address string. This does not check the format of the string but is used to signify that the string should follow a valid datetime string format. */
 export type EmailAddressString = string
 
@@ -91,9 +94,15 @@ export type TimelineResponseData = {
 }
 
 /** The response data for our request classes */
-export type RequestResponseData = TimelineResponseData[]
+export type RequestResponseData = EmptyObject | [] | TimelineResponseData[]
 
-/** The request parameters for the timeline */
+/** The request parameters for a collection request */
+export type CollectionRequestParams = {
+  /** The collection concept id */
+  conceptId: string
+}
+
+/** The request parameters for a timeline request */
 export type TimelineRequestParams = {
   /** The bounding box search */
   boundingBox?: BoundingBoxString[]
@@ -114,7 +123,7 @@ export type TimelineRequestParams = {
 }
 
 /** The request parameters for our request classes */
-export type RequestParams = TimelineRequestParams
+export type RequestParams = TimelineRequestParams | CollectionRequestParams
 
 /** A response received from an Axios request */
 export type Response = {
@@ -125,7 +134,7 @@ export type Response = {
   /** The response status text */
   message?: string
   /** The response headers */
-  headers: CmrHeaders & AxiosResponseHeaders
+  headers: CmrHeaders | AxiosResponseHeaders
 }
 
 /** Redux state types */

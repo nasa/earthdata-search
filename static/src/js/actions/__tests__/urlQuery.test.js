@@ -75,7 +75,8 @@ describe('updateStore', () => {
         query: {
           ...params.query,
           collectionSortPreference: 'default'
-        }
+        },
+        timeline: undefined
       },
       type: RESTORE_FROM_URL
     })
@@ -164,7 +165,8 @@ describe('updateStore', () => {
           query: {
             ...params.query,
             collectionSortPreference: 'default'
-          }
+          },
+          timeline: undefined
         },
         type: RESTORE_FROM_URL
       })
@@ -310,7 +312,8 @@ describe('updateStore', () => {
               showOnlyGranulesCheckbox: false,
               showTophat: true
             }
-          }
+          },
+          timeline: undefined
         },
         type: RESTORE_FROM_URL
       })

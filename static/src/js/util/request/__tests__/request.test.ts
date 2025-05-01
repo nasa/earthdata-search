@@ -50,7 +50,7 @@ describe('Request#transformRequest', () => {
     request.authenticated = true
     request.authToken = token
 
-    const data = { param1: 123 }
+    const data = { conceptId: 'C123456-EDSC' }
     const headers = {}
 
     request.transformRequest(data, headers)
@@ -68,9 +68,12 @@ describe('Request#transformResponse', () => {
     const handleUnauthorizedMock = jest.spyOn(Request.prototype, 'handleUnauthorized').mockImplementation()
 
     const data = {
-      data: {
-        param1: 123
-      },
+      data: [{
+        'concept-id': 'C123456-EDSC',
+        intervals: [
+          [123, 456]
+        ]
+      }],
       statusCode: 200,
       message: 'OK',
       headers: {}
@@ -78,9 +81,12 @@ describe('Request#transformResponse', () => {
     const result = request.transformResponse(data)
 
     expect(result).toEqual({
-      data: {
-        param1: 123
-      },
+      data: [{
+        'concept-id': 'C123456-EDSC',
+        intervals: [
+          [123, 456]
+        ]
+      }],
       statusCode: 200,
       message: 'OK',
       headers: {}
@@ -98,8 +104,7 @@ describe('Request#search', () => {
     const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
 
     const params = {
-      param1: 12,
-      ext: 'json'
+      conceptId: 'C123456-EDSC'
     }
     request.search(params)
 

@@ -8,9 +8,9 @@ import { metricsTiming } from '../../middleware/metrics/actions'
 // @ts-expect-error Types are not defined for this module
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import {
-  AxiosResponse,
   CmrHeaders,
-  RequestParams
+  RequestParams,
+  Response
 } from '../../types/sharedTypes'
 
 const defaultTransformResponse = Array.isArray(axios.defaults.transformResponse)
@@ -152,7 +152,7 @@ export default class Request {
    * @param {Object} data - Response object from the request.
    * @return {Object} The transformed response.
    */
-  transformResponse(data: AxiosResponse) {
+  transformResponse(data: Response) {
     const timing = Date.now() - this.startTime!
 
     const store = configureStore()
@@ -186,7 +186,7 @@ export default class Request {
         ...defaultTransformRequest
       ],
       transformResponse: defaultTransformResponse.concat(
-        (responseData: AxiosResponse) => this.transformResponse(responseData)
+        (responseData: Response) => this.transformResponse(responseData)
       ),
       cancelToken: this.cancelToken.token
     })
@@ -208,7 +208,7 @@ export default class Request {
       url,
       params,
       transformResponse: defaultTransformResponse.concat(
-        (data: AxiosResponse) => this.transformResponse(data)
+        (data: Response) => this.transformResponse(data)
       ),
       cancelToken: this.cancelToken.token,
       headers: {}
@@ -254,7 +254,7 @@ export default class Request {
       baseURL: this.baseUrl,
       url,
       transformResponse: defaultTransformResponse.concat(
-        (data: AxiosResponse) => this.transformResponse(data)
+        (data: Response) => this.transformResponse(data)
       ),
       headers: {}
     }
@@ -298,7 +298,7 @@ export default class Request {
   /**
    * Handle an unauthorized response
    */
-  handleUnauthorized(data: AxiosResponse) {
+  handleUnauthorized(data: Response) {
     if (data.statusCode === 401 || data.message === 'Unauthorized') {
       const { href, pathname } = window.location
       // Determine the path to redirect to for logging in
