@@ -21,28 +21,21 @@ import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils
 // Routes
 import Home from './routes/Home/Home'
 
-// Components and Containers
+// Components
+import ErrorBoundary from './components/Errors/ErrorBoundary'
+import NotFound from './components/Errors/NotFound'
+import Spinner from './components/Spinner/Spinner'
+
+// Containers
 import SecondaryToolbarContainer from './containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
-import AboutCSDAModalContainer from './containers/AboutCSDAModalContainer/AboutCSDAModalContainer'
-import AboutCwicModalContainer from './containers/AboutCwicModalContainer/AboutCwicModalContainer'
 import AuthCallbackContainer from './containers/AuthCallbackContainer/AuthCallbackContainer'
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
-import ChunkedOrderModalContainer from './containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'
-import DeprecatedParameterModalContainer from './containers/DeprecatedParameterModalContainer/DeprecatedParameterModalContainer'
-import EditSubscriptionModalContainer from './containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
-import ErrorBoundary from './components/Errors/ErrorBoundary'
 import FooterContainer from './containers/FooterContainer/FooterContainer'
 import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
-import KeyboardShortcutsModalContainer from './containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
-import NotFound from './components/Errors/NotFound'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
-import ShapefileDropzoneContainer from './containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'
-import ShapefileUploadModalContainer from './containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'
-import Spinner from './components/Spinner/Spinner'
-import TooManyPointsModalContainer from './containers/TooManyPointsModalContainer/TooManyPointsModalContainer'
 import UrlQueryContainer from './containers/UrlQueryContainer/UrlQueryContainer'
 import WrappingContainer from './containers/WrappingContainer/WrappingContainer'
 
@@ -60,15 +53,24 @@ window.reactToastProvider = React.createRef()
 // }
 
 // Lazy loaded routes
+const AboutCSDAModalContainer = lazy(() => import('./containers/AboutCSDAModalContainer/AboutCSDAModalContainer'))
+const AboutCwicModalContainer = lazy(() => import('./containers/AboutCwicModalContainer/AboutCwicModalContainer'))
 const Admin = lazy(() => import('./routes/Admin/Admin'))
-const Search = lazy(() => import('./routes/Search/Search'))
-const SearchTour = lazy(() => import('./components/SearchTour/SearchTour'))
+const ChunkedOrderModalContainer = lazy(() => import('./containers/ChunkedOrderModalContainer/ChunkedOrderModalContainer'))
 const ContactInfo = lazy(() => import('./routes/ContactInfo/ContactInfo'))
+const DeprecatedParameterModalContainer = lazy(() => import('./containers/DeprecatedParameterModalContainer/DeprecatedParameterModalContainer'))
 const Downloads = lazy(() => import('./routes/Downloads/Downloads'))
 const EarthdataDownloadRedirect = lazy(() => import('./routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect'))
+const EditSubscriptionModalContainer = lazy(() => import('./containers/EditSubscriptionModalContainer/EditSubscriptionModalContainer'))
+const KeyboardShortcutsModalContainer = lazy(() => import('./containers/KeyboardShortcutsModalContainer/KeyboardShortcutsModalContainer'))
 const Preferences = lazy(() => import('./routes/Preferences/Preferences'))
 const Project = lazy(() => import('./routes/Project/Project'))
+const Search = lazy(() => import('./routes/Search/Search'))
+const SearchTour = lazy(() => import('./components/SearchTour/SearchTour'))
+const ShapefileDropzoneContainer = lazy(() => import('./containers/ShapefileDropzoneContainer/ShapefileDropzoneContainer'))
+const ShapefileUploadModalContainer = lazy(() => import('./containers/ShapefileUploadModalContainer/ShapefileUploadModalContainer'))
 const Subscriptions = lazy(() => import('./routes/Subscriptions/Subscriptions'))
+const TooManyPointsModalContainer = lazy(() => import('./containers/TooManyPointsModalContainer/TooManyPointsModalContainer'))
 
 // Create the root App component
 class App extends Component {
@@ -241,22 +243,28 @@ class App extends Component {
                       <Route component={NotFound} />
                     </Switch>
                     <Switch>
-                      <Route path={this.portalPaths('/')}>
-                        <AboutCSDAModalContainer />
-                        <AboutCwicModalContainer />
-                        <EditSubscriptionModalContainer />
-                        <ChunkedOrderModalContainer />
-                        <DeprecatedParameterModalContainer />
-                        <KeyboardShortcutsModalContainer />
-                        <ShapefileDropzoneContainer />
-                        <ShapefileUploadModalContainer />
-                        <TooManyPointsModalContainer />
+                      <Route path={this.portalPaths('/search')}>
+                        <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                          <AboutCSDAModalContainer />
+                          <AboutCwicModalContainer />
+                          <EditSubscriptionModalContainer />
+                          <ChunkedOrderModalContainer />
+                          <DeprecatedParameterModalContainer />
+                          <KeyboardShortcutsModalContainer />
+                          <ShapefileDropzoneContainer />
+                          <ShapefileUploadModalContainer />
+                          <TooManyPointsModalContainer />
+                        </Suspense>
                       </Route>
                       <Route path={this.portalPaths('/projects')}>
-                        <AboutCSDAModalContainer />
+                        <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                          <AboutCSDAModalContainer />
+                        </Suspense>
                       </Route>
                       <Route path={this.portalPaths('/downloads')}>
-                        <AboutCSDAModalContainer />
+                        <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
+                          <AboutCSDAModalContainer />
+                        </Suspense>
                       </Route>
                     </Switch>
                   </WrappingContainer>

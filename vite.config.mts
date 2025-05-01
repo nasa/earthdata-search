@@ -81,7 +81,21 @@ export default defineConfig({
     }
   },
   build: {
-    outDir: 'static/dist'
+    outDir: 'static/dist',
+    rollupOptions: {
+      output: {
+        // These manual chunks are used to split the code into separate files
+        // to reduce the size of the main bundle and improve loading times
+        // These libraries are some of the largest in the app and are rarely updated
+        // so the browser can cache them to further improve loading times for returning users
+        manualChunks: {
+          edscUtils: ['@edsc/timeline', '@edsc/geo-utils'],
+          lodash: ['lodash-es'],
+          moment: ['moment'],
+          react: ['react', 'react-dom', 'react-router-dom']
+        }
+      }
+    }
   },
   // TODO: vitest is currently blocked by enzyme removal ticket EDSC-4201
   // @ts-expect-error: configuring vitest causes overload error
