@@ -70,7 +70,6 @@ const preloadRoutes = () => {
   import('../Search/Search')
   // @ts-expect-error: Types are not defined in this file
   import('../../components/SearchTour/SearchTour')
-  // @ts-expect-error: Types are not defined in this file
   import('../../containers/MapContainer/MapContainer')
 }
 

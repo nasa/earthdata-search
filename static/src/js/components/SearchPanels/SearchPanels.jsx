@@ -159,7 +159,6 @@ class SearchPanels extends PureComponent {
       granuleSearchResults,
       isExportRunning,
       location,
-      map,
       match,
       onApplyGranuleFilters,
       onChangeQuery,
@@ -172,8 +171,9 @@ class SearchPanels extends PureComponent {
     } = this.props
 
     const zustandState = useEdscStore.getState()
-    const { home } = zustandState
+    const { home, map } = zustandState
     const { startDrawing } = home
+    const { mapView } = map
 
     const loggedIn = isLoggedIn(authToken)
 
@@ -221,7 +221,7 @@ class SearchPanels extends PureComponent {
     const handoffLinks = getHandoffLinks({
       collectionMetadata,
       collectionQuery,
-      map
+      map: mapView
     })
     const {
       allIds: allGranuleIds = [],
@@ -915,7 +915,6 @@ SearchPanels.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string
   }).isRequired,
-  map: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({
     url: PropTypes.string,
     params: PropTypes.shape({})

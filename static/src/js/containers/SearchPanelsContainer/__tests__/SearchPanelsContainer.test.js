@@ -43,7 +43,6 @@ function setup() {
     match: {
       url: '/search'
     },
-    map: {},
     onApplyGranuleFilters: mockOnApplyGranuleFilters,
     onChangeQuery: mockOnChangeQuery,
     onChangePath: mockOnChangePath,
@@ -187,9 +186,6 @@ describe('mapStateToProps', () => {
         collections: {}
       },
       focusedCollection: 'collectionId',
-      map: {
-        projection: ''
-      },
       panels: {},
       preferences: {
         preferences: {}
@@ -223,9 +219,6 @@ describe('mapStateToProps', () => {
       isExportRunning: {
         csv: false,
         json: false
-      },
-      map: {
-        projection: ''
       },
       panels: {},
       preferences: {},

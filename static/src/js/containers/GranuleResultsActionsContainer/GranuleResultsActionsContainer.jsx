@@ -22,6 +22,7 @@ import { locationPropType } from '../../util/propTypes/location'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   onAddProjectCollection:
@@ -47,7 +48,6 @@ export const mapStateToProps = (state) => ({
   focusedProjectCollection: getFocusedProjectCollection(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
-  map: state.map,
   project: state.project,
   subscriptions: getFocusedCollectionSubscriptions(state)
 })
@@ -68,10 +68,13 @@ export const GranuleResultsActionsContainer = (props) => {
     onMetricsAddCollectionProject,
     onRemoveCollectionFromProject,
     onSetActivePanelSection,
-    map,
     project,
     subscriptions
   } = props
+
+  const { mapView } = useEdscStore((state) => ({
+    mapView: state.map.mapView
+  }))
 
   const {
     collections
@@ -108,7 +111,7 @@ export const GranuleResultsActionsContainer = (props) => {
   const handoffLinks = getHandoffLinks({
     collectionMetadata,
     collectionQuery,
-    map
+    map: mapView
   })
 
   return (
@@ -155,7 +158,6 @@ GranuleResultsActionsContainer.propTypes = {
     isLoading: PropTypes.bool
   }).isRequired,
   location: locationPropType.isRequired,
-  map: PropTypes.shape({}).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,

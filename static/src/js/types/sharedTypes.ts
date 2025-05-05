@@ -3,6 +3,9 @@ import {
   AxiosResponseHeaders,
   HttpStatusCode
 } from 'axios'
+import { GeoJsonObject } from 'geojson'
+import { Style } from 'ol/style'
+import { crsProjections } from '../util/map/crs'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>
@@ -18,6 +21,9 @@ export type BoundingBoxString = string
 
 /** A circle string following the CMR format This does not check the format of the string but is used to signify that the string should follow a valid datetime string format. */
 export type CircleString = string
+
+/** A line string following the CMR format This does not check the format of the string but is used to signify that the string should follow a valid datetime string format. */
+export type LineString = string
 
 /** A point string following the CMR format This does not check the format of the string but is used to signify that the string should follow a valid datetime string format. */
 export type PointString = string
@@ -35,6 +41,51 @@ export interface Spatial {
   point?: PointString[]
   /** The polygon coordinates, if applied */
   polygon?: PolygonString[]
+}
+
+/** The spatial object */
+export interface SpatialSearch {
+  advancedSearch?: {
+    /** The region search object */
+    regionSearch?: {
+      /** The selected region object */
+      selectedRegion?: {
+        /** The spatial coordinates */
+        spatial?: string
+        /** The spatial type */
+        type?: 'reach' | 'huc'
+      }
+    }
+  }
+  /** The bounding box coordinates, if applied */
+  boundingBoxSearch?: BoundingBoxString[]
+  /** The circle coordinates, if applied */
+  circleSearch?: CircleString[]
+  /** The drawing new layer flag */
+  drawingNewLayer: boolean | string
+  /** The line coordinates, if applied */
+  lineSearch?: LineString[]
+  /** The point coordinates, if applied */
+  pointSearch?: PointString[]
+  /** The polygon coordinates, if applied */
+  polygonSearch?: PolygonString[]
+  /** The MBR (Minimum Bounding Rectangle) flag */
+  showMbr: boolean
+}
+
+/** The spatial query types */
+export type SpatialQueryType =
+  | 'boundingBox'
+  | 'circle'
+  | 'line'
+  | 'point'
+  | 'polygon'
+
+export type Coordinate = {
+  /** The latitude of the coordinate */
+  lat: number
+  /** The longitude of the coordinate */
+  lng: number
 }
 
 /** The temporal object */
@@ -63,6 +114,55 @@ export interface CollectionsMetadata {
   /** The collection concept id */
   [key: string]: CollectionMetadata
 }
+
+export type GranuleMetadata = {
+  // Will flush out Granule types in the future
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
+}
+
+export type GranulesMetadata = {
+  /** The granule concept id */
+  [key: string]: GranuleMetadata
+}
+
+export type GibsData = {
+  /** The format of the GIBS product */
+  format?: string
+  /** The GIBS layer period value */
+  layerPeriod?: string
+  /** The GIBS layer name */
+  product: string
+  /** The GIBS layer resolution */
+  resolution: string
+  /** The opacity of the granule */
+  opacity: number
+  /** The GIBS layer time */
+  time?: string
+  /** The GIBS layer URL */
+  url?: string
+}
+
+export type MapGranule = {
+  /** The background granule style */
+  backgroundGranuleStyle: Style
+  /** The collection id */
+  collectionId: string
+  /** The temporal value formatted for display */
+  formattedTemporal: string
+  /** The GIBS metadata */
+  gibsData: GibsData
+  /** The granule id */
+  granuleId: string
+  /** The granule style */
+  granuleStyle: Style
+  /** The highlighted granule style */
+  highlightedStyle: Style
+  /** The spatial value for the granule */
+  spatial: GeoJsonObject
+}
+
+export type ProjectionCode = keyof typeof crsProjections
 
 /** The query object */
 export interface Query {
@@ -135,6 +235,20 @@ export type Response = {
   message?: string
   /** The response headers */
   headers: CmrHeaders | AxiosResponseHeaders
+}
+
+/** The shapefile data */
+export type Shapefile = {
+  /** The shapefile file contents */
+  file: File
+  /** Is the shapefile loaded */
+  isLoaded: boolean
+  /** Is the shapefile loading */
+  isLoading: boolean
+  /** The shapefile id */
+  shapefileId: string
+  /** The selected features of the shapefile */
+  selectedFeatures: string[]
 }
 
 /** Redux state types */

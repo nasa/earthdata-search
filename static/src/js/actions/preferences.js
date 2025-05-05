@@ -1,8 +1,6 @@
 import { isEmpty, isEqual } from 'lodash-es'
 import jwt from 'jsonwebtoken'
 
-import { initialState } from '../reducers/map'
-
 import { SET_PREFERENCES, SET_PREFERENCES_IS_SUBMITTING } from '../constants/actionTypes'
 
 import { addToast } from '../util/addToast'
@@ -13,8 +11,9 @@ import { updateAuthTokenFromHeaders } from './authToken'
 import PreferencesRequest from '../util/request/preferencesRequest'
 
 import actions from './index'
-import { changeMap } from './map'
 import mapLayers from '../constants/mapLayers'
+
+import useEdscStore from '../zustand/useEdscStore'
 
 export const setIsSubmitting = (payload) => ({
   type: SET_PREFERENCES_IS_SUBMITTING,
@@ -26,9 +25,7 @@ export const setPreferences = (payload) => ({
   payload
 })
 
-export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
-  const { map: mapState = {} } = getState()
-
+export const setPreferencesFromJwt = (jwtToken) => (dispatch) => {
   if (!jwtToken) return
 
   const decoded = jwt.decode(jwtToken)
@@ -55,7 +52,15 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
   const { mapView: preferencesMapView = {} } = preferences
 
   if (!isEmpty(preferencesMapView)) {
-    if (isEqual(mapState, initialState)) {
+    const {
+      mapView: initialMapState
+    } = useEdscStore.getInitialState().map
+    const {
+      mapView,
+      setMapView
+    } = useEdscStore.getState().map
+
+    if (isEqual(mapView, initialMapState)) {
       const {
         baseLayer,
         latitude,
@@ -73,14 +78,14 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch, getState) => {
         overlays[layer] = true
       })
 
-      dispatch(changeMap({
+      setMapView({
         base,
         latitude,
         longitude,
         overlays,
         projection,
         zoom
-      }))
+      })
     }
   }
 }

@@ -21,7 +21,7 @@ export const emptyDecodedResult = {
   },
   focusedCollection: undefined,
   focusedGranule: undefined,
-  map: {},
+  mapView: {},
   metadata: undefined,
   portalId: 'default',
   project: {},

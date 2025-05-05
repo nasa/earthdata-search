@@ -12,7 +12,6 @@ import { ArrowFilledDown, Map } from '@edsc/earthdata-react-icons/horizon-design
 // @ts-expect-error: This file does not have types
 import SpatialOutline from '~Images/icons/spatial-outline.svg?react'
 
-// @ts-expect-error: This file does not have types
 import { eventEmitter } from '../../events/events'
 
 // @ts-expect-error: This file does not have types

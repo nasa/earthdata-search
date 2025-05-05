@@ -28,7 +28,7 @@ describe('updateStore', () => {
         nearRealTime: false
       },
       focusedCollection: 'C00001-EDSC',
-      map: {},
+      mapView: {},
       portal: {},
       project: {
         collections: {
@@ -76,13 +76,17 @@ describe('updateStore', () => {
           ...params.query,
           collectionSortPreference: 'default'
         },
+        mapView: undefined,
         timeline: undefined
       },
       type: RESTORE_FROM_URL
     })
 
     // Expect the zustand store to be updated
-    const { timeline } = useEdscStore.getState()
+    const initialState = useEdscStore.getInitialState()
+    const { map, timeline } = useEdscStore.getState()
+    expect(map).toEqual(initialState.map)
+
     expect(timeline).toEqual({
       intervals: {},
       query: {
@@ -106,7 +110,7 @@ describe('updateStore', () => {
           nearRealTime: false
         },
         focusedCollection: 'C00001-EDSC',
-        map: {},
+        mapView: {},
         portal: {},
         project: {
           collections: {
@@ -166,6 +170,7 @@ describe('updateStore', () => {
             ...params.query,
             collectionSortPreference: 'default'
           },
+          mapView: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -174,7 +179,8 @@ describe('updateStore', () => {
       expect(getTimelineMock).toHaveBeenCalledTimes(0)
 
       // Expect the zustand store to be updated
-      const { timeline } = useEdscStore.getState()
+      const { map, timeline } = useEdscStore.getState()
+      expect(map).toEqual(initialState.map)
       expect(timeline).toEqual({
         intervals: {},
         query: {
@@ -204,7 +210,7 @@ describe('updateStore', () => {
           nearRealTime: false
         },
         focusedCollection: '',
-        map: {},
+        mapView: {},
         portalId: 'testPortal',
         project: {},
         query: {
@@ -313,6 +319,7 @@ describe('updateStore', () => {
               showTophat: true
             }
           },
+          mapView: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -321,7 +328,8 @@ describe('updateStore', () => {
       expect(getTimelineMock).toHaveBeenCalledTimes(0)
 
       // Expect the zustand store to be updated
-      const { timeline } = useEdscStore.getState()
+      const { map, timeline } = useEdscStore.getState()
+      expect(map).toEqual(initialState.map)
       expect(timeline).toEqual({
         intervals: {},
         query: {
@@ -405,7 +413,6 @@ describe('changePath', () => {
           },
           deprecatedUrlParams: [],
           focusedCollection: 'C00001-EDSC',
-          map: {},
           project: {
             collections: {
               allIds: ['C00001-EDSC'],
@@ -493,7 +500,6 @@ describe('changePath', () => {
         nearRealTime: false
       },
       focusedCollection: 'C00001-EDSC',
-      map: {},
       query: {
         collection: {
           byId: {

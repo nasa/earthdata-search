@@ -73,7 +73,6 @@ import {
   updateGranuleSearchQuery,
   updateRegionQuery
 } from './search'
-import { changeMap } from './map'
 import {
   changeUrl,
   changePath,
@@ -213,7 +212,6 @@ const actions = {
   changeFocusedCollection,
   changeFocusedGranule,
   changeGranulePageNum,
-  changeMap,
   changePath,
   changeProjectGranulePageNum,
   changeProjectQuery,

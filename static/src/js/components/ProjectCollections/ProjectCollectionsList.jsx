@@ -23,7 +23,6 @@ export const ProjectCollectionsList = (props) => {
     collectionsMetadata,
     collectionsQuery,
     location,
-    map,
     onRemoveCollectionFromProject,
     onSetActivePanel,
     onSetActivePanelSection,
@@ -68,7 +67,6 @@ export const ProjectCollectionsList = (props) => {
         index={index}
         isPanelActive={isPanelActive}
         key={collectionId}
-        map={map}
         onRemoveCollectionFromProject={onRemoveCollectionFromProject}
         onSetActivePanel={onSetActivePanel}
         onSetActivePanelSection={onSetActivePanelSection}
@@ -121,7 +119,6 @@ ProjectCollectionsList.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsQuery: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
-  map: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,

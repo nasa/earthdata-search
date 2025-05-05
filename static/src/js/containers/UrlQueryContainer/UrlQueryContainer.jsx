@@ -44,7 +44,6 @@ export const mapStateToProps = (state) => ({
   keywordSearch: state.query.collection.keyword,
   lineSearch: state.query.collection.spatial.line,
   location: state.router.location,
-  map: state.map,
   mapPreferences: getMapPreferences(state),
   onlyEosdisCollections: state.query.collection.onlyEosdisCollections,
   organizationFacets: state.facetsParams.cmr.data_center_h,
@@ -84,6 +83,7 @@ export const UrlQueryContainer = (props) => {
 
   // Pull out values we have migrated to Zustand that are no longer passed as props
   const zustandValues = useEdscStore((state) => ({
+    mapView: state.map.mapView,
     timelineQuery: state.timeline.query
   }))
 

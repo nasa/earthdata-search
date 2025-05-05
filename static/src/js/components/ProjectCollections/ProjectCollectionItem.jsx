@@ -27,6 +27,8 @@ import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import Skeleton from '../Skeleton/Skeleton'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './ProjectCollectionItem.scss'
 
 /**
@@ -52,7 +54,6 @@ const ProjectCollectionItem = ({
   color,
   index,
   isPanelActive,
-  map,
   onRemoveCollectionFromProject,
   onSetActivePanel,
   onSetActivePanelSection,
@@ -67,6 +68,10 @@ const ProjectCollectionItem = ({
     onToggleCollectionVisibility(collectionId)
     event.preventDefault()
   }
+
+  const { mapView } = useEdscStore((state) => ({
+    mapView: state.map.mapView
+  }))
 
   const {
     granules,
@@ -98,7 +103,7 @@ const ProjectCollectionItem = ({
   const handoffLinks = getHandoffLinks({
     collectionMetadata,
     collectionQuery: collectionsQuery,
-    map
+    map: mapView
   })
 
   return (
@@ -252,7 +257,6 @@ ProjectCollectionItem.propTypes = {
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,
-  map: PropTypes.shape({}).isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,

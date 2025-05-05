@@ -5,8 +5,7 @@ import nock from 'nock'
 import {
   SET_PREFERENCES_IS_SUBMITTING,
   SET_PREFERENCES,
-  UPDATE_AUTH,
-  UPDATE_MAP
+  UPDATE_AUTH
 } from '../../constants/actionTypes'
 
 import {
@@ -22,11 +21,21 @@ import * as addToast from '../../util/addToast'
 import { testJwtToken } from './mocks'
 import mapLayers from '../../constants/mapLayers'
 import projectionCodes from '../../constants/projectionCodes'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  const initialState = useEdscStore.getInitialState()
+  useEdscStore.setState({
+    ...initialState,
+    map: {
+      ...initialState.map,
+      setMapView: jest.fn()
+    }
+  })
 })
 
 describe('setIsSubmitting', () => {
@@ -93,7 +102,7 @@ describe('setPreferencesFromJwt', () => {
   })
 
   describe('when setting map preferences', () => {
-    test('calls changeMap if map preferences exist and the map state equals the initial state', () => {
+    test('calls setMapView if map preferences exist and the map state equals the initial state', () => {
       const preferences = {
         mapView: {
           zoom: 4,
@@ -113,39 +122,21 @@ describe('setPreferencesFromJwt', () => {
         collectionListView: 'default'
       }
 
-      const store = mockStore({
-        map: {
-          base: {
-            worldImagery: true,
-            trueColor: false,
-            landWaterMap: false
-          },
-          latitude: 0,
-          longitude: 0,
-          overlays: {
-            bordersRoads: true,
-            coastlines: false,
-            placeLabels: true
-          },
-          projection: projectionCodes.geographic,
-          rotation: 0,
-          zoom: 3
-        }
-      })
+      const store = mockStore()
 
       store.dispatch(setPreferencesFromJwt(testJwtToken))
 
       const storeActions = store.getActions()
-      expect(storeActions.length).toBe(2)
+      expect(storeActions.length).toBe(1)
 
       expect(storeActions[0]).toEqual({
         type: SET_PREFERENCES,
         payload: preferences
       })
 
-      expect(storeActions[1]).toEqual({
-        type: UPDATE_MAP,
-        payload: {
+      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledTimes(1)
+      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledWith(
+        {
           base: {
             worldImagery: true
           },
@@ -158,10 +149,10 @@ describe('setPreferencesFromJwt', () => {
           projection: projectionCodes.geographic,
           zoom: 4
         }
-      })
+      )
     })
 
-    test('does not call changeMap if map preferences exist and the map state does not equal the initial state', () => {
+    test('does not call setMapView if map preferences exist and the map state does not equal the initial state', () => {
       const preferences = {
         mapView: {
           zoom: 4,
@@ -181,25 +172,30 @@ describe('setPreferencesFromJwt', () => {
         collectionListView: 'default'
       }
 
-      const store = mockStore({
+      useEdscStore.setState({
         map: {
-          base: {
-            worldImagery: true,
-            trueColor: false,
-            landWaterMap: false
+          mapView: {
+            base: {
+              worldImagery: true,
+              trueColor: false,
+              landWaterMap: false
+            },
+            latitude: -120,
+            longitude: 47,
+            overlays: {
+              bordersRoads: true,
+              coastlines: false,
+              placeLabels: true
+            },
+            projection: projectionCodes.geographic,
+            rotation: 0,
+            zoom: 3
           },
-          latitude: -120,
-          longitude: 47,
-          overlays: {
-            bordersRoads: true,
-            coastlines: false,
-            placeLabels: true
-          },
-          projection: projectionCodes.geographic,
-          rotation: 0,
-          zoom: 3
+          setMapView: jest.fn()
         }
       })
+
+      const store = mockStore()
 
       store.dispatch(setPreferencesFromJwt(testJwtToken))
 
@@ -212,6 +208,8 @@ describe('setPreferencesFromJwt', () => {
         type: SET_PREFERENCES,
         payload: preferences
       })
+
+      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -240,28 +238,34 @@ describe('setPreferencesFromJwt', () => {
         granuleListView: 'default',
         collectionListView: 'default'
       }
-      const store = mockStore({
+
+      useEdscStore.setState({
         map: {
-          base: {
-            worldImagery: true,
-            trueColor: false,
-            landWaterMap: false
+          mapView: {
+            base: {
+              worldImagery: true,
+              trueColor: false,
+              landWaterMap: false
+            },
+            latitude: 0,
+            longitude: 0,
+            overlays: {
+              bordersRoads: true,
+              coastlines: false,
+              placeLabels: true
+            },
+            projection: projectionCodes.geographic,
+            rotation: 0,
+            zoom: 3
           },
-          latitude: 0,
-          longitude: 0,
-          overlays: {
-            bordersRoads: true,
-            coastlines: false,
-            placeLabels: true
-          },
-          projection: projectionCodes.geographic,
-          rotation: 0,
-          zoom: 3
+          setMapView: jest.fn()
         }
       })
+
+      const store = mockStore()
       store.dispatch(setPreferencesFromJwt(testJwtToken))
       const storeActions = store.getActions()
-      expect(storeActions.length).toBe(2)
+      expect(storeActions.length).toBe(1)
       expect(storeActions[0]).toEqual({
         type: SET_PREFERENCES,
         payload: {
@@ -276,6 +280,23 @@ describe('setPreferencesFromJwt', () => {
           }
         }
       })
+
+      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledTimes(1)
+      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledWith(
+        {
+          base: {
+            worldImagery: true
+          },
+          latitude: 39,
+          longitude: -95,
+          overlays: {
+            bordersRoads: true,
+            placeLabels: true
+          },
+          projection: projectionCodes.geographic,
+          zoom: 4
+        }
+      )
     })
   })
 })
