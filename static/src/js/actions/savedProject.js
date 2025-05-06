@@ -7,7 +7,6 @@ import { addToast } from '../util/addToast'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
-import { removeSavedProject } from './savedProjects'
 
 export const updateSavedProject = (payload) => ({
   type: UPDATE_SAVED_PROJECT,
@@ -96,7 +95,6 @@ export const deleteSavedProject = (projectId) => (dispatch, getState) => {
   try {
     const response = requestObject.remove(projectId)
       .then(() => {
-        dispatch(removeSavedProject(projectId))
         addToast('Project removed', {
           appearance: 'success',
           autoDismiss: true

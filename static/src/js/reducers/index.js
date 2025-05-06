@@ -36,7 +36,6 @@ import queryReducer from './query'
 import regionResultsReducer from './regionResults'
 import retrievalReducer from './retrieval'
 import savedProjectReducer from './savedProject'
-import savedProjectsReducer from './savedProjects'
 import shapefileReducer from './shapefile'
 import subscriptionsReducer from './subscriptions'
 import timelineReducer from './timeline'
@@ -82,7 +81,6 @@ export default (history) => combineReducers({
   retrieval: retrievalReducer,
   router: connectRouter(history),
   savedProject: savedProjectReducer,
-  savedProjects: savedProjectsReducer,
   searchResults: combineReducers({
     collections: collectionsResultsReducer,
     facets: facetsReducer,

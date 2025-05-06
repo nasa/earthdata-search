@@ -1,61 +1,45 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 import { SavedProjects } from '../../components/SavedProjects/SavedProjects'
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
 export const mapStateToProps = (state) => ({
-  savedProjects: state.savedProjects.projects,
-  savedProjectsIsLoading: state.savedProjects.isLoading,
-  savedProjectsIsLoaded: state.savedProjects.isLoaded
+  authToken: state.authToken,
+  earthdataEnvironment: getEarthdataEnvironment(state)
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onDeleteSavedProject: (projectId) => dispatch(actions.deleteSavedProject(projectId)),
-  onFetchSavedProjects: () => dispatch(actions.fetchSavedProjects()),
   onChangePath: (path) => dispatch(actions.changePath(path))
 })
 
 export const SavedProjectsContainer = (props) => {
   const {
-    onFetchSavedProjects,
-    savedProjects,
-    savedProjectsIsLoading,
-    savedProjectsIsLoaded,
     onChangePath,
-    onDeleteSavedProject
+    authToken,
+    earthdataEnvironment
   } = props
-
-  useEffect(() => {
-    onFetchSavedProjects()
-  }, [onFetchSavedProjects])
 
   return (
     <SavedProjects
-      savedProjects={savedProjects}
-      savedProjectsIsLoading={savedProjectsIsLoading}
-      savedProjectsIsLoaded={savedProjectsIsLoaded}
+      authToken={authToken}
+      earthdataEnvironment={earthdataEnvironment}
       onChangePath={onChangePath}
-      onDeleteSavedProject={onDeleteSavedProject}
     />
   )
 }
 
 SavedProjectsContainer.defaultProps = {
-  savedProjects: []
+  authToken: null
 }
 
 SavedProjectsContainer.propTypes = {
-  savedProjects: PropTypes.arrayOf(
-    PropTypes.shape({})
-  ),
-  savedProjectsIsLoading: PropTypes.bool.isRequired,
-  savedProjectsIsLoaded: PropTypes.bool.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onDeleteSavedProject: PropTypes.func.isRequired,
-  onFetchSavedProjects: PropTypes.func.isRequired
+  authToken: PropTypes.string,
+  earthdataEnvironment: PropTypes.string.isRequired
 }
 
 export default withRouter(

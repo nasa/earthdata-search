@@ -156,7 +156,6 @@ import {
   updateProjectName,
   updateSavedProject
 } from './savedProject'
-import { fetchSavedProjects, setSavedProjects } from './savedProjects'
 import { handleAlert } from './alerts'
 import { handleError, removeError } from './errors'
 import { collectionRelevancyMetrics } from './relevancy'
@@ -247,7 +246,6 @@ const actions = {
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
-  fetchSavedProjects,
   fetchShapefile,
   generateNotebook,
   getCollections,
@@ -292,7 +290,6 @@ const actions = {
   setIsSubmitting,
   setPreferences,
   setPreferencesFromJwt,
-  setSavedProjects,
   setUserFromJwt,
   shapefileErrored,
   shapefileLoading,
