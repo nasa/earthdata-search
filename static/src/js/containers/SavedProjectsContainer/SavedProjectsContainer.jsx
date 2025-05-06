@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
@@ -18,34 +18,29 @@ export const mapDispatchToProps = (dispatch) => ({
   onChangePath: (path) => dispatch(actions.changePath(path))
 })
 
-export class SavedProjectsContainer extends Component {
-  componentDidMount() {
-    const {
-      onFetchSavedProjects
-    } = this.props
+export const SavedProjectsContainer = (props) => {
+  const {
+    onFetchSavedProjects,
+    savedProjects,
+    savedProjectsIsLoading,
+    savedProjectsIsLoaded,
+    onChangePath,
+    onDeleteSavedProject
+  } = props
 
+  useEffect(() => {
     onFetchSavedProjects()
-  }
+  }, [onFetchSavedProjects])
 
-  render() {
-    const {
-      savedProjects,
-      savedProjectsIsLoading,
-      savedProjectsIsLoaded,
-      onChangePath,
-      onDeleteSavedProject
-    } = this.props
-
-    return (
-      <SavedProjects
-        savedProjects={savedProjects}
-        savedProjectsIsLoading={savedProjectsIsLoading}
-        savedProjectsIsLoaded={savedProjectsIsLoaded}
-        onChangePath={onChangePath}
-        onDeleteSavedProject={onDeleteSavedProject}
-      />
-    )
-  }
+  return (
+    <SavedProjects
+      savedProjects={savedProjects}
+      savedProjectsIsLoading={savedProjectsIsLoading}
+      savedProjectsIsLoaded={savedProjectsIsLoaded}
+      onChangePath={onChangePath}
+      onDeleteSavedProject={onDeleteSavedProject}
+    />
+  )
 }
 
 SavedProjectsContainer.defaultProps = {
