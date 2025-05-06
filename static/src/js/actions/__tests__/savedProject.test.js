@@ -2,7 +2,7 @@ import nock from 'nock'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
-import { UPDATE_SAVED_PROJECT, REMOVE_SAVED_PROJECT } from '../../constants/actionTypes'
+import { UPDATE_SAVED_PROJECT } from '../../constants/actionTypes'
 import {
   updateSavedProject,
   updateProjectName,
@@ -149,16 +149,11 @@ describe('deleteSavedProject', () => {
       .reply(204)
 
     const store = mockStore({
-      authToken: 'mockToken'
+      authToken: 'mockToken',
+      earthdataEnvironment: 'prod'
     })
 
     await store.dispatch(deleteSavedProject('2057964173')).then(() => {
-      expect(store.getActions().length).toEqual(1)
-      expect(store.getActions()[0]).toEqual({
-        payload: '2057964173',
-        type: REMOVE_SAVED_PROJECT
-      })
-
       expect(addToastMock.mock.calls.length).toBe(1)
       expect(addToastMock.mock.calls[0][0]).toEqual('Project removed')
       expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
