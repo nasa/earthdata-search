@@ -27,13 +27,13 @@ export type MapSlice = {
 
 /** The accepted timeline interval values in CMR */
 export enum TimelineInterval {
-  'decade' = 'decade',
-  'year' = 'year',
-  'month' = 'month',
-  'day' = 'day',
-  'hour' = 'hour',
-  'minute' = 'minute',
-  'second' = 'second',
+  Decade = 'decade',
+  Year = 'year',
+  Month = 'month',
+  Day = 'day',
+  Hour = 'hour',
+  Minute = 'minute',
+  Second = 'second'
 }
 
 type TimelineQuery = {

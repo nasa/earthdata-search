@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from '@testing-library/react'
 
 import actions from '../../../actions'
 import {
@@ -8,11 +7,13 @@ import {
   SubscriptionsBodyContainer
 } from '../SubscriptionsBodyContainer'
 import SubscriptionsBody from '../../../components/Subscriptions/SubscriptionsBody'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/Subscriptions/SubscriptionsBody', () => jest.fn(() => <div />))
 
-const setup = (overrideProps) => {
-  const props = {
+const setup = setupTest({
+  Component: SubscriptionsBodyContainer,
+  defaultProps: {
     collectionQueryObj: {},
     collectionSubscriptions: [],
     collectionSubscriptionDisabledFields: {},
@@ -25,16 +26,9 @@ const setup = (overrideProps) => {
     onFetchCollectionSubscriptions: jest.fn(),
     onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
-    onUpdateSubscriptionDisabledFields: jest.fn(),
-    ...overrideProps
+    onUpdateSubscriptionDisabledFields: jest.fn()
   }
-
-  render(<SubscriptionsBodyContainer {...props} />)
-
-  return {
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onCreateSubscription calls actions.createSubscription', () => {
@@ -146,10 +140,12 @@ describe('SubscriptionsBodyContainer component', () => {
 
   test('passes its props and renders a single SubscriptionsBody component for collection subscriptions', () => {
     const { props } = setup({
-      subscriptionType: 'collection'
+      overrideProps: {
+        subscriptionType: 'collection'
+      }
     })
 
-    expect(SubscriptionsBody).toHaveBeenCalledTimes(2)
+    expect(SubscriptionsBody).toHaveBeenCalledTimes(1)
     expect(SubscriptionsBody).toHaveBeenCalledWith({
       disabledFields: {},
       onCreateSubscription: expect.any(Function),

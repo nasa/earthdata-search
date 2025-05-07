@@ -16,9 +16,10 @@ jest.mock('../../../store/configureStore', () => jest.fn())
 
 describe('createTimelineSlice', () => {
   test('sets the default state', () => {
-    const state = useEdscStore.getState().timeline
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
 
-    expect(state).toEqual({
+    expect(timeline).toEqual({
       intervals: {},
       query: {},
       setQuery: expect.any(Function),
@@ -38,18 +39,21 @@ describe('createTimelineSlice', () => {
         }
       })
 
-      const { setQuery } = useEdscStore.getState().timeline
+      const zustandState = useEdscStore.getState()
+      const { timeline } = zustandState
+      const { setQuery } = timeline
       setQuery({
         center: 1298937600,
-        interval: TimelineInterval.day,
+        interval: TimelineInterval.Day,
         endDate: '2011-05-01T00:00:00Z',
         startDate: '2011-01-01T00:00:00Z'
       })
 
-      const state = useEdscStore.getState().timeline
-      expect(state.query).toEqual({
+      const updatedState = useEdscStore.getState()
+      const { timeline: updatedTimeline } = updatedState
+      expect(updatedTimeline.query).toEqual({
         center: 1298937600,
-        interval: TimelineInterval.day,
+        interval: TimelineInterval.Day,
         endDate: '2011-05-01T00:00:00Z',
         startDate: '2011-01-01T00:00:00Z'
       })
@@ -69,24 +73,27 @@ describe('createTimelineSlice', () => {
             getTimeline: mockGetTimeline,
             query: {
               center: 1298937600,
-              interval: TimelineInterval.day,
+              interval: TimelineInterval.Day,
               endDate: '2011-05-01T00:00:00Z',
               startDate: '2011-01-01T00:00:00Z'
             }
           }
         })
 
-        const { setQuery } = useEdscStore.getState().timeline
+        const zustandState = useEdscStore.getState()
+        const { timeline } = zustandState
+        const { setQuery } = timeline
         setQuery({
           center: 1298937600,
           end: 1893455999999,
           start: 1577836800000
         })
 
-        const state = useEdscStore.getState().timeline
-        expect(state.query).toEqual({
+        const updatedState = useEdscStore.getState()
+        const { timeline: updatedTimeline } = updatedState
+        expect(updatedTimeline.query).toEqual({
           center: 1298937600,
-          interval: TimelineInterval.day,
+          interval: TimelineInterval.Day,
           endDate: '2011-05-01T00:00:00Z',
           startDate: '2011-01-01T00:00:00Z',
           end: 1893455999999,
@@ -142,19 +149,22 @@ describe('createTimelineSlice', () => {
             ...initialState.timeline,
             query: {
               endDate: '2009-12-01T23:59:59.000Z',
-              interval: TimelineInterval.day,
+              interval: TimelineInterval.Day,
               startDate: '1979-01-01T00:00:00.000Z'
             }
           }
         })
 
-        const { getTimeline } = useEdscStore.getState().timeline
+        const zustandState = useEdscStore.getState()
+        const { timeline } = zustandState
+        const { getTimeline } = timeline
 
         await getTimeline()
 
         await waitFor(() => {
-          const state = useEdscStore.getState().timeline
-          expect(state.intervals).toEqual({
+          const updatedState = useEdscStore.getState()
+          const { timeline: updatedTimeline } = updatedState
+          expect(updatedTimeline.intervals).toEqual({
             collectionId: [
               [
                 1298937600,
@@ -218,19 +228,22 @@ describe('createTimelineSlice', () => {
             ...initialState.timeline,
             query: {
               endDate: '2009-12-01T23:59:59.000Z',
-              interval: TimelineInterval.day,
+              interval: TimelineInterval.Day,
               startDate: '1979-01-01T00:00:00.000Z'
             }
           }
         })
 
-        const { getTimeline } = useEdscStore.getState().timeline
+        const zustandState = useEdscStore.getState()
+        const { timeline } = zustandState
+        const { getTimeline } = timeline
 
         await getTimeline()
 
         await waitFor(() => {
-          const state = useEdscStore.getState().timeline
-          expect(state.intervals).toEqual({
+          const updatedState = useEdscStore.getState()
+          const { timeline: updatedTimeline } = updatedState
+          expect(updatedTimeline.intervals).toEqual({
             collectionId: [
               [
                 1298937600,
@@ -291,13 +304,16 @@ describe('createTimelineSlice', () => {
           }
         })
 
-        const { getTimeline } = useEdscStore.getState().timeline
+        const zustandState = useEdscStore.getState()
+        const { timeline } = zustandState
+        const { getTimeline } = timeline
 
         await getTimeline()
 
         await waitFor(() => {
-          const state = useEdscStore.getState().timeline
-          expect(state.intervals).toEqual({})
+          const updatedState = useEdscStore.getState()
+          const { timeline: updatedTimeline } = updatedState
+          expect(updatedTimeline.intervals).toEqual({})
         })
 
         expect(mockDispatch).toHaveBeenCalledTimes(0)
@@ -339,13 +355,15 @@ describe('createTimelineSlice', () => {
             ...initialState.timeline,
             query: {
               endDate: '2009-12-01T23:59:59.000Z',
-              interval: TimelineInterval.day,
+              interval: TimelineInterval.Day,
               startDate: '1979-01-01T00:00:00.000Z'
             }
           }
         })
 
-        const { getTimeline } = useEdscStore.getState().timeline
+        const zustandState = useEdscStore.getState()
+        const { timeline } = zustandState
+        const { getTimeline } = timeline
 
         await getTimeline()
 
@@ -371,8 +389,9 @@ describe('createTimelineSlice', () => {
           requestObject: expect.any(TimelineRequest)
         })
 
-        const state = useEdscStore.getState().timeline
-        expect(state.intervals).toEqual({})
+        const updatedState = useEdscStore.getState()
+        const { timeline: updatedTimeline } = updatedState
+        expect(updatedTimeline.intervals).toEqual({})
       })
     })
   })

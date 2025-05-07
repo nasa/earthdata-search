@@ -25,6 +25,7 @@ export const squareMetersToSquareKilometers = (squareMeters) => parseInt(squareM
 
 // This function adds points to the polygon so that the polygon follows the curvature of the Earth
 export const interpolatePolygon = (coordinates) => {
+  console.log('🚀 ~ normalizeSpatial.js:28 ~ interpolatePolygon ~ coordinates:', coordinates)
   const interpolatedCoordinates = []
 
   // Iterate over the coordinates and add the original point and the interpolated points

@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from '@testing-library/react'
 
 // @ts-expect-error The file does not have types
 import actions from '../../../actions'
@@ -14,14 +13,13 @@ import Timeline from '../../../components/Timeline/Timeline'
 
 // @ts-expect-error The file does not have types
 import * as metricsTimeline from '../../../middleware/metrics/actions'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/Timeline/Timeline', () => jest.fn(() => <div />))
 
-const setup = (overrideProps = {}) => {
-  const props = {
-    browser: {
-      name: 'browser name'
-    },
+const setup = setupTest({
+  Component: TimelineContainer,
+  defaultProps: {
     collectionsMetadata: {
       projectCollectionId: {
         title: 'project'
@@ -39,16 +37,9 @@ const setup = (overrideProps = {}) => {
     pathname: '/search',
     temporalSearch: {},
     isOpen: true,
-    search: '?p=C123456-EDSC',
-    ...overrideProps
+    search: '?p=C123456-EDSC'
   }
-
-  render(<TimelineContainer {...props} />)
-
-  return {
-    props
-  }
-}
+})
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -142,7 +133,9 @@ describe('TimelineContainer component', () => {
 
   test('passes its props and renders a single Timeline component on the search page', () => {
     setup({
-      pathname: '/search/granules'
+      overrideProps: {
+        pathname: '/search/granules'
+      }
     })
 
     expect(Timeline).toHaveBeenCalledTimes(1)
@@ -169,7 +162,9 @@ describe('TimelineContainer component', () => {
 
   test('passes its props and renders a single Timeline component on the project page', () => {
     setup({
-      pathname: '/projects'
+      overrideProps: {
+        pathname: '/projects'
+      }
     })
 
     expect(Timeline).toHaveBeenCalledTimes(1)
@@ -196,8 +191,10 @@ describe('TimelineContainer component', () => {
 
   test('Does not show the timeline if it is on the saved projects page', () => {
     setup({
-      pathname: '/projects',
-      search: ''
+      overrideProps: {
+        pathname: '/projects',
+        search: ''
+      }
     })
 
     expect(Timeline).toHaveBeenCalledTimes(0)

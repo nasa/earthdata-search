@@ -216,7 +216,10 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     await dispatch(actions.getProjectGranules())
   }
 
-  useEdscStore.getState().timeline.getTimeline()
+  const zustandState = useEdscStore.getState()
+  const { timeline } = zustandState
+  const { getTimeline } = timeline
+  getTimeline()
 
   return null
 }

@@ -97,6 +97,7 @@ export const Timeline = ({
       setCenter(newCenter)
       setZoomLevel(numericZoom)
       setIsInitialSetup(false)
+
       onChangeTimelineQuery({
         ...timelineQuery,
         center: newCenter,

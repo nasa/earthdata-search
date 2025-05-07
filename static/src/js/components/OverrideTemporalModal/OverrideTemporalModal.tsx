@@ -45,7 +45,9 @@ const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
    * Called when the user selects the focused date
    */
   const onFocusedClick = () => {
-    const { query } = useEdscStore.getState().timeline
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
+    const { query } = timeline
     const { end, start } = query
 
     onChangeQuery({

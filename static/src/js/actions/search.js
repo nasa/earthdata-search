@@ -160,6 +160,10 @@ export const clearFilters = () => (dispatch, getState) => {
   // Don't request granules unless we are viewing granules
   if (isPath(pathname, ['/search/granules'])) {
     dispatch(actions.getSearchGranules())
-    useEdscStore.getState().timeline.getTimeline()
+
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
+    const { getTimeline } = timeline
+    getTimeline()
   }
 }

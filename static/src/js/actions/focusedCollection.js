@@ -460,7 +460,10 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     dispatch(actions.getFocusedCollection())
 
     // Fetch timeline data for the focused collection
-    useEdscStore.getState().timeline.getTimeline()
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
+    const { getTimeline } = timeline
+    getTimeline()
   }
 }
 

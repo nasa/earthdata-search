@@ -1,14 +1,12 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen } from '@testing-library/react'
 
 import OverrideTemporalModal from '../OverrideTemporalModal'
-import useEdscStore from '../../../zustand/useEdscStore'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-const setup = () => {
-  const user = userEvent.setup()
-
-  const props = {
+const setup = setupTest({
+  Component: OverrideTemporalModal as React.FC,
+  defaultProps: {
     isOpen: true,
     temporalSearch: {
       endDate: '2019-06-17T23:59:59.999Z',
@@ -16,26 +14,16 @@ const setup = () => {
     },
     onChangeQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn()
-  }
-
-  const state = useEdscStore.getState()
-  useEdscStore.setState({
+  },
+  defaultZustandState: {
     timeline: {
-      ...state.timeline,
       query: {
         end: 1548979199999,
         start: 1546300800000
       }
     }
-  })
-
-  render(<OverrideTemporalModal {...props} />)
-
-  return {
-    props,
-    user
   }
-}
+})
 
 describe('OverrideTemporalModal component', () => {
   describe('when the temporal search is selected', () => {

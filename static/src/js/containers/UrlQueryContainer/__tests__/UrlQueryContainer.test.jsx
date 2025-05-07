@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  act,
-  render,
-  waitFor
-} from '@testing-library/react'
+import { act, waitFor } from '@testing-library/react'
 
 import actions from '../../../actions'
 import {
@@ -15,9 +11,12 @@ import * as encodeUrlQuery from '../../../util/url/url'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import useEdscStore from '../../../zustand/useEdscStore'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-const setup = () => {
-  const props = {
+const setup = setupTest({
+  Component: UrlQueryContainer,
+  defaultProps: {
+    children: 'stuff',
     boundingBoxSearch: '',
     collectionsMetadata: {},
     gridCoords: '',
@@ -49,16 +48,7 @@ const setup = () => {
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
   }
-
-  const { rerender } = render(
-    <UrlQueryContainer {...props}>stuff</UrlQueryContainer>
-  )
-
-  return {
-    props,
-    rerender
-  }
-}
+})
 
 beforeEach(() => {
   jest.resetAllMocks()

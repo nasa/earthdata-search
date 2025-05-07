@@ -11,6 +11,7 @@ const esModulesToIgnore = [
 ].join('|')
 
 module.exports = {
+  clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
     'serverless/src/**/*.js,ts',
@@ -36,8 +37,7 @@ module.exports = {
     'package-lock.json'
   ],
   setupFilesAfterEnv: [
-    '<rootDir>/jestConfigs/test-env.ts',
-    '<rootDir>/jestConfigs/setup-zustand.ts'
+    '<rootDir>/jestConfigs/test-env.ts'
   ],
   // Skips files from running tests
   testPathIgnorePatterns: [

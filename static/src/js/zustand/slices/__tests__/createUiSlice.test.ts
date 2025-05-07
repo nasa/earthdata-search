@@ -2,9 +2,10 @@ import useEdscStore from '../../useEdscStore'
 
 describe('createUiSlice', () => {
   test('sets the default state', () => {
-    const state = useEdscStore.getState().ui
+    const zustandState = useEdscStore.getState()
+    const { ui } = zustandState
 
-    expect(state).toEqual({
+    expect(ui).toEqual({
       panels: {
         panelsWidth: 0,
         setPanelsWidth: expect.any(Function)
@@ -20,11 +21,16 @@ describe('createUiSlice', () => {
   describe('panels', () => {
     describe('setPanelsWidth', () => {
       test('updates panelsWidth', () => {
-        const { setPanelsWidth } = useEdscStore.getState().ui.panels
+        const zustandState = useEdscStore.getState()
+        const { ui } = zustandState
+        const { panels } = ui
+        const { setPanelsWidth } = panels
         setPanelsWidth(100)
 
-        const state = useEdscStore.getState().ui.panels
-        expect(state.panelsWidth).toBe(100)
+        const updatedState = useEdscStore.getState()
+        const { ui: updatedUi } = updatedState
+        const { panels: updatedPanels } = updatedUi
+        expect(updatedPanels.panelsWidth).toBe(100)
       })
     })
   })
@@ -32,11 +38,16 @@ describe('createUiSlice', () => {
   describe('tour', () => {
     describe('setRunTour', () => {
       test('updates runTour', () => {
-        const { setRunTour } = useEdscStore.getState().ui.tour
+        const zustandState = useEdscStore.getState()
+        const { ui } = zustandState
+        const { tour } = ui
+        const { setRunTour } = tour
         setRunTour(true)
 
-        const state = useEdscStore.getState().ui.tour
-        expect(state.runTour).toBe(true)
+        const updatedState = useEdscStore.getState()
+        const { ui: updatedUi } = updatedState
+        const { tour: updatedTour } = updatedUi
+        expect(updatedTour.runTour).toBe(true)
       })
     })
 
@@ -45,12 +56,17 @@ describe('createUiSlice', () => {
         test('sets runTour to false', () => {
           jest.spyOn(Storage.prototype, 'getItem').mockReturnValue('true')
 
-          const { onSearchLoaded } = useEdscStore.getState().ui.tour
+          const zustandState = useEdscStore.getState()
+          const { ui } = zustandState
+          const { tour } = ui
+          const { onSearchLoaded } = tour
 
           onSearchLoaded()
 
-          const state = useEdscStore.getState().ui.tour
-          expect(state.runTour).toBe(false)
+          const updatedState = useEdscStore.getState()
+          const { ui: updatedUi } = updatedState
+          const { tour: updatedTour } = updatedUi
+          expect(updatedTour.runTour).toBe(false)
         })
       })
 
@@ -58,12 +74,17 @@ describe('createUiSlice', () => {
         test('sets runTour to true', () => {
           jest.spyOn(Storage.prototype, 'getItem').mockReturnValue('false')
 
-          const { onSearchLoaded } = useEdscStore.getState().ui.tour
+          const zustandState = useEdscStore.getState()
+          const { ui } = zustandState
+          const { tour } = ui
+          const { onSearchLoaded } = tour
 
           onSearchLoaded()
 
-          const state = useEdscStore.getState().ui.tour
-          expect(state.runTour).toBe(true)
+          const updatedState = useEdscStore.getState()
+          const { ui: updatedUi } = updatedState
+          const { tour: updatedTour } = updatedUi
+          expect(updatedTour.runTour).toBe(true)
         })
       })
     })

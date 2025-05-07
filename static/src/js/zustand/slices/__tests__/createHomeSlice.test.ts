@@ -2,9 +2,10 @@ import useEdscStore from '../../useEdscStore'
 
 describe('createHomeSlice', () => {
   test('sets the default state', () => {
-    const state = useEdscStore.getState().home
+    const zustandState = useEdscStore.getState()
+    const { home } = zustandState
 
-    expect(state).toEqual({
+    expect(home).toEqual({
       startDrawing: false,
       setStartDrawing: expect.any(Function),
       openKeywordFacet: false,
@@ -14,21 +15,27 @@ describe('createHomeSlice', () => {
 
   describe('setStartDrawing', () => {
     test('updates startDrawing', () => {
-      const { setStartDrawing } = useEdscStore.getState().home
+      const zustandState = useEdscStore.getState()
+      const { home } = zustandState
+      const { setStartDrawing } = home
       setStartDrawing(true)
 
-      const state = useEdscStore.getState().home
-      expect(state.startDrawing).toBe(true)
+      const updatedState = useEdscStore.getState()
+      const { home: updatedHome } = updatedState
+      expect(updatedHome.startDrawing).toBe(true)
     })
   })
 
   describe('setOpenKeywordFacet', () => {
     test('updates openKeywordFacet', () => {
-      const { setOpenKeywordFacet } = useEdscStore.getState().home
+      const zustandState = useEdscStore.getState()
+      const { home } = zustandState
+      const { setOpenKeywordFacet } = home
       setOpenKeywordFacet(true)
 
-      const state = useEdscStore.getState().home
-      expect(state.openKeywordFacet).toBe(true)
+      const updatedState = useEdscStore.getState()
+      const { home: updatedHome } = updatedState
+      expect(updatedHome.openKeywordFacet).toBe(true)
     })
   })
 })
