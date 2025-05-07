@@ -52,15 +52,22 @@ export const setPreferencesFromJwt = (jwtToken) => (dispatch) => {
   const { mapView: preferencesMapView = {} } = preferences
 
   if (!isEmpty(preferencesMapView)) {
+    const initialZustandState = useEdscStore.getInitialState()
+    const { map: initialMap } = initialZustandState
     const {
-      mapView: initialMapState
-    } = useEdscStore.getInitialState().map
+      mapView: initialMapView
+    } = initialMap
+
+    const zustandState = useEdscStore.getState()
+    const {
+      map: currentMap
+    } = zustandState
     const {
       mapView,
       setMapView
-    } = useEdscStore.getState().map
+    } = currentMap
 
-    if (isEqual(mapView, initialMapState)) {
+    if (isEqual(mapView, initialMapView)) {
       const {
         baseLayer,
         latitude,

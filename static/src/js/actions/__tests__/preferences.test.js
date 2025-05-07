@@ -134,8 +134,11 @@ describe('setPreferencesFromJwt', () => {
         payload: preferences
       })
 
-      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledTimes(1)
-      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledWith(
+      const zustandState = useEdscStore.getState()
+      const { map } = zustandState
+      const { setMapView } = map
+      expect(setMapView).toHaveBeenCalledTimes(1)
+      expect(setMapView).toHaveBeenCalledWith(
         {
           base: {
             worldImagery: true
@@ -209,7 +212,10 @@ describe('setPreferencesFromJwt', () => {
         payload: preferences
       })
 
-      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledTimes(0)
+      const zustandState = useEdscStore.getState()
+      const { map } = zustandState
+      const { setMapView } = map
+      expect(setMapView).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -281,8 +287,11 @@ describe('setPreferencesFromJwt', () => {
         }
       })
 
-      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledTimes(1)
-      expect(useEdscStore.getState().map.setMapView).toHaveBeenCalledWith(
+      const zustandState = useEdscStore.getState()
+      const { map } = zustandState
+      const { setMapView } = map
+      expect(setMapView).toHaveBeenCalledTimes(1)
+      expect(setMapView).toHaveBeenCalledWith(
         {
           base: {
             worldImagery: true

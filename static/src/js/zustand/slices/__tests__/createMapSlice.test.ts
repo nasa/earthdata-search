@@ -32,7 +32,9 @@ describe('createMapSlice', () => {
 
   describe('setMapView', () => {
     test('updates mapView', () => {
-      const { setMapView } = useEdscStore.getState().map
+      const zustandState = useEdscStore.getState()
+      const { map } = zustandState
+      const { mapView: originalMapView, setMapView } = map
       const newMapView = {
         latitude: 10,
         longitude: 20,
@@ -41,9 +43,10 @@ describe('createMapSlice', () => {
 
       setMapView(newMapView)
 
-      const state = useEdscStore.getState().map
-      expect(state.mapView).toEqual({
-        ...state.mapView,
+      const updatedState = useEdscStore.getState()
+      const { map: updatedMap } = updatedState
+      expect(updatedMap.mapView).toEqual({
+        ...originalMapView,
         ...newMapView
       })
     })
