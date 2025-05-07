@@ -12,7 +12,14 @@ import { SavedProjects } from '../../../components/SavedProjects/SavedProjects'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-function setup(props) {
+function setup(overrideProps) {
+  const props = {
+    onChangePath: jest.fn(),
+    authToken: 'default-token',
+    earthdataEnvironment: 'default-env',
+    ...overrideProps
+  }
+
   const enzymeWrapper = shallow(<SavedProjectsContainer {...props} />)
 
   return {
@@ -22,25 +29,6 @@ function setup(props) {
 }
 
 describe('mapDispatchToProps', () => {
-  test('onDeleteSavedProject calls actions.deleteSavedProject', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'deleteSavedProject')
-
-    mapDispatchToProps(dispatch).onDeleteSavedProject('projectId')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('projectId')
-  })
-
-  test('onFetchSavedProjects calls actions.fetchSavedProjects', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchSavedProjects')
-
-    mapDispatchToProps(dispatch).onFetchSavedProjects()
-
-    expect(spy).toBeCalledTimes(1)
-  })
-
   test('onChangePath calls actions.changePath', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changePath')
@@ -55,17 +43,13 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      savedProjects: {
-        projects: {},
-        isLoading: false,
-        isLoaded: false
-      }
+      authToken: 'mock-auth-token',
+      earthdataEnvironment: 'prod'
     }
 
     const expectedState = {
-      savedProjects: {},
-      savedProjectsIsLoading: false,
-      savedProjectsIsLoaded: false
+      authToken: 'mock-auth-token',
+      earthdataEnvironment: 'prod'
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -74,30 +58,20 @@ describe('mapStateToProps', () => {
 
 describe('SavedProjectsContainer component', () => {
   describe('when passed the correct props', () => {
-    test('renders a table when a retrieval exists with one collection that has no title', () => {
+    test('renders SavedProjects and passes authToken, earthdataEnvironment, and onChangePath', () => {
+      const mockOnChangePath = jest.fn()
       const { enzymeWrapper } = setup({
-        savedProjects: [
-          {
-            id: '4517239960',
-            name: 'project 1',
-            path: '/search?p=!C123456-EDSC',
-            created_at: '2019-09-05 00:00:00.000'
-          },
-          {
-            id: '2057964173',
-            name: 'project 3',
-            path: '/search?p=!C123456-EDSC',
-            created_at: '2019-09-05 00:00:00.000'
-          }
-        ],
-        savedProjectsIsLoading: false,
-        savedProjectsIsLoaded: true,
-        onChangePath: jest.fn(),
-        onDeleteSavedProject: jest.fn(),
-        onFetchSavedProjects: jest.fn()
+        onChangePath: mockOnChangePath,
+        authToken: 'test-token-123',
+        earthdataEnvironment: 'uat'
       })
 
       expect(enzymeWrapper.find(SavedProjects).length).toBe(1)
+      const savedProjectsComponent = enzymeWrapper.find(SavedProjects)
+
+      expect(savedProjectsComponent.props().authToken).toEqual('test-token-123')
+      expect(savedProjectsComponent.props().earthdataEnvironment).toEqual('uat')
+      expect(savedProjectsComponent.props().onChangePath).toEqual(mockOnChangePath)
     })
   })
 })
