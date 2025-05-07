@@ -17,6 +17,7 @@ import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { retrieveVariablesRequest } from '../util/retrieveVariablesRequest'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
+import useEdscStore from '../zustand/useEdscStore'
 
 /**
  * Sets the focused collection value in redux
@@ -459,7 +460,10 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     dispatch(actions.getFocusedCollection())
 
     // Fetch timeline data for the focused collection
-    dispatch(actions.getTimeline())
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
+    const { getTimeline } = timeline
+    getTimeline()
   }
 }
 

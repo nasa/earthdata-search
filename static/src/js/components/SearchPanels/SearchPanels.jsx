@@ -171,7 +171,9 @@ class SearchPanels extends PureComponent {
       preferences
     } = this.props
 
-    const { startDrawing } = useEdscStore.getState().home
+    const zustandState = useEdscStore.getState()
+    const { home } = zustandState
+    const { startDrawing } = home
 
     const loggedIn = isLoggedIn(authToken)
 

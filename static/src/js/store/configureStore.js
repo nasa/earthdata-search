@@ -9,11 +9,11 @@ import { metricsMiddleware } from '../middleware/metrics'
 import history from '../util/history'
 
 // Set up the initial state
-const initialState = {}
+// const initialState = {}
 
 let store
 
-export const configureStore = () => {
+export const configureStore = (initialState = {}) => {
   // If we already have a redux store defined, return it
   if (store) return store
 

@@ -1,24 +1,70 @@
-import axios, { CancelToken } from 'axios'
+import axios, { CancelTokenSource } from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
+// @ts-expect-error Types are not defined for this module
 import configureStore from '../../store/configureStore'
+// @ts-expect-error Types are not defined for this module
 import { metricsTiming } from '../../middleware/metrics/actions'
+// @ts-expect-error Types are not defined for this module
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
+import {
+  CmrHeaders,
+  RequestParams,
+  Response
+} from '../../types/sharedTypes'
 
-const store = configureStore()
+const defaultTransformResponse = Array.isArray(axios.defaults.transformResponse)
+  ? axios.defaults.transformResponse
+  : []
+const defaultTransformRequest = Array.isArray(axios.defaults.transformRequest)
+  ? axios.defaults.transformRequest
+  : []
 
 /**
  * Parent class for the application API layer to communicate with external services
  */
 export default class Request {
-  constructor(baseUrl, earthdataEnvironment) {
+  /** If the request is for an authenticated user */
+  authenticated: boolean
+
+  /** The user's authToken */
+  authToken: string | undefined
+
+  /** The base URL for the request */
+  baseUrl: string
+
+  /** The cancel token for the request */
+  cancelToken: CancelTokenSource
+
+  /** The Earthdata environment */
+  earthdataEnvironment: string
+
+  /** If the request will go to one of our lambdas */
+  lambda: boolean
+
+  /** If the request is optionally authenticated, or not required to be authenticated */
+  optionallyAuthenticated: boolean
+
+  /** The path to the search endpoint */
+  searchPath: string
+
+  /** The start time of the request */
+  startTime: number | null
+
+  /** The request ID for the request */
+  requestId: string | undefined
+
+  /** The full URL for the request */
+  fullUrl: string | undefined
+
+  constructor(baseUrl: string, earthdataEnvironment: string) {
     if (!baseUrl) {
       throw new Error('A baseUrl must be provided.')
     }
 
     this.authenticated = false
     this.baseUrl = baseUrl
-    this.cancelToken = CancelToken.source()
+    this.cancelToken = axios.CancelToken.source()
     this.earthdataEnvironment = earthdataEnvironment
     this.lambda = false
     this.optionallyAuthenticated = false
@@ -51,7 +97,7 @@ export default class Request {
    * Filter out any unwanted or non-permitted data
    * @param {Objet} data - An object representing an HTTP request payload
    */
-  filterData(data) {
+  filterData(data: RequestParams) {
     return data
   }
 
@@ -59,7 +105,7 @@ export default class Request {
    * Transforms data before sending it as a payload to an HTTP endpoint
    * @param {Object} data - An object representing an HTTP request payload
    */
-  transformData(data) {
+  transformData(data: RequestParams) {
     return data
   }
 
@@ -68,7 +114,7 @@ export default class Request {
    * @param {Object} data - An object representing an HTTP request payload.
    * @return {Object} A modified object.
    */
-  transformRequest(data, headers) {
+  transformRequest(data: RequestParams, headers: CmrHeaders) {
     // Filter out an unwanted data
     const filteredData = this.filterData(data)
 
@@ -106,8 +152,10 @@ export default class Request {
    * @param {Object} data - Response object from the request.
    * @return {Object} The transformed response.
    */
-  transformResponse(data) {
-    const timing = Date.now() - this.startTime
+  transformResponse(data: Response) {
+    const timing = Date.now() - this.startTime!
+
+    const store = configureStore()
     store.dispatch(metricsTiming({
       url: this.fullUrl,
       timing
@@ -124,7 +172,7 @@ export default class Request {
    * @param {Object} data - Data to be sent with the request.
    * @return {Promise} A Promise object representing the request that was made
    */
-  post(url, data) {
+  post(url: string, data: RequestParams) {
     this.startTimer()
     this.setFullUrl(url)
 
@@ -135,10 +183,10 @@ export default class Request {
       data,
       transformRequest: [
         (requestData, headers) => this.transformRequest(requestData, headers),
-        ...axios.defaults.transformRequest
+        ...defaultTransformRequest
       ],
-      transformResponse: axios.defaults.transformResponse.concat(
-        (responseData, headers) => this.transformResponse(responseData, headers)
+      transformResponse: defaultTransformResponse.concat(
+        (responseData: Response) => this.transformResponse(responseData)
       ),
       cancelToken: this.cancelToken.token
     })
@@ -150,7 +198,7 @@ export default class Request {
    * @param {Object} params URL parameters
    * @return {Promise} A Promise object representing the request that was made
    */
-  get(url, params) {
+  get(url: string, params: RequestParams) {
     this.startTimer()
     this.setFullUrl(url)
 
@@ -159,10 +207,11 @@ export default class Request {
       baseURL: this.baseUrl,
       url,
       params,
-      transformResponse: axios.defaults.transformResponse.concat(
-        (data, headers) => this.transformResponse(data, headers)
+      transformResponse: defaultTransformResponse.concat(
+        (data: Response) => this.transformResponse(data)
       ),
-      cancelToken: this.cancelToken.token
+      cancelToken: this.cancelToken.token,
+      headers: {}
     }
 
     // TransformRequest which adds authentication headers is only
@@ -196,7 +245,7 @@ export default class Request {
    * Makes a DELETE request to the provided url
    * @param {url} url URL to send the request to
    */
-  delete(url) {
+  delete(url: string) {
     this.startTimer()
     this.setFullUrl(url)
 
@@ -204,9 +253,10 @@ export default class Request {
       method: 'delete',
       baseURL: this.baseUrl,
       url,
-      transformResponse: axios.defaults.transformResponse.concat(
-        (data, headers) => this.transformResponse(data, headers)
-      )
+      transformResponse: defaultTransformResponse.concat(
+        (data: Response) => this.transformResponse(data)
+      ),
+      headers: {}
     }
 
     // TransformRequest which adds authentication headers is only
@@ -239,7 +289,7 @@ export default class Request {
   /*
    * Makes a POST request to this.searchPath
    */
-  search(params) {
+  search(params: RequestParams) {
     // We pass the ext here as a param so we can intercept and send to lambda.
     // Unauthenticated requests will ignore this key.
     return this.post(this.searchPath, params)
@@ -248,7 +298,7 @@ export default class Request {
   /**
    * Handle an unauthorized response
    */
-  handleUnauthorized(data) {
+  handleUnauthorized(data: Response) {
     if (data.statusCode === 401 || data.message === 'Unauthorized') {
       const { href, pathname } = window.location
       // Determine the path to redirect to for logging in
@@ -274,7 +324,7 @@ export default class Request {
     this.startTime = Date.now()
   }
 
-  setFullUrl(url) {
+  setFullUrl(url: string) {
     this.fullUrl = `${this.baseUrl}/${url}`
   }
 }

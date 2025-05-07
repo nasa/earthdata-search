@@ -4,19 +4,19 @@
 // underlying third-party EDSCTimeline component functionality.
 
 import React from 'react'
-import {
-  render,
-  screen,
-  act
-} from '@testing-library/react'
+import { screen, act } from '@testing-library/react'
 import MockDate from 'mockdate'
 import EDSCTimeline from '@edsc/timeline'
-import userEvent from '@testing-library/user-event'
-import Timeline from '../Timeline'
 
-function setup(overrideProps) {
-  const user = userEvent.setup()
-  const props = {
+import Timeline from '../Timeline'
+import useEdscStore from '../../../zustand/useEdscStore'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
+jest.mock('@edsc/timeline', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: Timeline,
+  defaultProps: {
     browser: {
       name: 'browser name'
     },
@@ -28,31 +28,16 @@ function setup(overrideProps) {
       }
     },
     temporalSearch: {},
-    timeline: {
-      intervals: {},
-      query: {}
-    },
     showOverrideModal: false,
     pathname: '/search/granules',
     projectCollectionsIds: ['collectionId'],
     onChangeQuery: jest.fn(),
-    onChangeTimelineQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
     onMetricsTimeline: jest.fn(),
     onToggleTimeline: jest.fn(),
-    isOpen: true,
-    ...overrideProps
+    isOpen: true
   }
-
-  render(<Timeline {...props} />)
-
-  return {
-    props,
-    user
-  }
-}
-
-jest.mock('@edsc/timeline', () => jest.fn(() => <div data-testid="mock-timeline" />))
+})
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -70,6 +55,7 @@ afterEach(() => {
 describe('Timeline component', () => {
   test('should render an EDSCTimeline component with the correct props', () => {
     setup()
+
     expect(EDSCTimeline).toHaveBeenCalledTimes(1)
     expect(EDSCTimeline).toHaveBeenCalledWith(expect.objectContaining({
       center: 1609416000000,
@@ -84,21 +70,25 @@ describe('Timeline component', () => {
 
   test('calls onToggleOverrideTemporalModal on page load if spatial and focus both exist', async () => {
     const { props } = setup({
-      pathname: '/projects',
-      showOverrideModal: true,
-      temporalSearch: {
-        endDate: '2019-06-21T19:34:23.865Z',
-        startDate: '2018-12-28T15:56:46.870Z'
+      overrideProps: {
+        pathname: '/projects',
+        showOverrideModal: true,
+        temporalSearch: {
+          endDate: '2019-06-21T19:34:23.865Z',
+          startDate: '2018-12-28T15:56:46.870Z'
+        }
       },
-      timeline: {
-        intervals: {},
-        query: {
-          center: 1552425382,
-          end: 1556668799.999,
-          interval: 'day',
-          start: 1554076800,
-          endDate: '2020-09-11T21:16:22.000Z',
-          startDate: '2017-09-09T21:16:22.000Z'
+      overrideZustandState: {
+        timeline: {
+          intervals: {},
+          query: {
+            center: 1552425382,
+            end: 1556668799.999,
+            interval: 'day',
+            start: 1554076800,
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
         }
       }
     })
@@ -108,18 +98,22 @@ describe('Timeline component', () => {
 
   test('does not call onToggleOverrideTemporalModal on page load if spatial and focus don\'t both exist', () => {
     const { props } = setup({
-      pathname: '/projects',
-      showOverrideModal: true,
-      temporalSearch: {},
-      timeline: {
-        intervals: {},
-        query: {
-          center: 1552425382,
-          end: 1556668799.999,
-          interval: 'day',
-          start: 1554076800,
-          endDate: '2020-09-11T21:16:22.000Z',
-          startDate: '2017-09-09T21:16:22.000Z'
+      overrideProps: {
+        pathname: '/projects',
+        showOverrideModal: true,
+        temporalSearch: {}
+      },
+      overrideZustandState: {
+        timeline: {
+          intervals: {},
+          query: {
+            center: 1552425382,
+            end: 1556668799.999,
+            interval: 'day',
+            start: 1554076800,
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
         }
       }
     })
@@ -129,28 +123,33 @@ describe('Timeline component', () => {
 
   test('converts timeline intervals into the correct format for EDSCTimeline', () => {
     setup({
-      pathname: '/search/granules',
-      collectionMetadata: {
-        collectionId: {
-          title: 'Test Collection',
-          timeStart: '2017-09-09'
+      overrideProps: {
+        pathname: '/search/granules',
+        collectionMetadata: {
+          collectionId: {
+            title: 'Test Collection',
+            timeStart: '2017-09-09'
+          }
         }
       },
-      timeline: {
-        intervals: {
-          collectionId: [
-            [
-              1525132800,
-              1618185600,
-              582637
+      overrideZustandState: {
+        timeline: {
+          getTimeline: jest.fn(),
+          intervals: {
+            collectionId: [
+              [
+                1525132800,
+                1618185600,
+                582637
+              ]
             ]
-          ]
-        },
-        query: {
-          center: 1552425382,
-          interval: 'day',
-          endDate: '2020-09-11T21:16:22.000Z',
-          startDate: '2017-09-09T21:16:22.000Z'
+          },
+          query: {
+            center: 1552425382,
+            interval: 'day',
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
         }
       }
     })
@@ -167,25 +166,30 @@ describe('Timeline component', () => {
 
   test('timeline displays on focused collection even when projectCollectionsIds is empty', () => {
     setup({
-      pathname: '/search/granules', // Indicating it's not a project page
-      collectionMetadata: {
-        someCollection: {
-          title: 'Some Collection',
-          timeStart: '2017-09-09'
-        }
-      },
-      projectCollectionsIds: [], // Empty project collections
-      timeline: {
-        intervals: {
-          someCollection: [
-            [1525132800, 1618185600]
-          ]
+      overrideProps: {
+        pathname: '/search/granules', // Indicating it's not a project page
+        collectionMetadata: {
+          someCollection: {
+            title: 'Some Collection',
+            timeStart: '2017-09-09'
+          }
         },
-        query: {
-          center: 1552425382,
-          interval: 'day',
-          endDate: '2020-09-11T21:16:22.000Z',
-          startDate: '2017-09-09T21:16:22.000Z'
+        projectCollectionsIds: [] // Empty project collections
+      },
+      overrideZustandState: {
+        timeline: {
+          getTimeline: jest.fn(),
+          intervals: {
+            someCollection: [
+              [1525132800, 1618185600]
+            ]
+          },
+          query: {
+            center: 1552425382,
+            interval: 'day',
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
         }
       }
     })
@@ -204,51 +208,56 @@ describe('Timeline component', () => {
 
   test('setup data creates the correct intervals in the correct order for EDSCTimeline', () => {
     setup({
-      pathname: '/projects',
-      collectionMetadata: {
-        firstCollection: {
-          title: '1st Collection',
-          timeStart: '2017-09-09'
+      overrideProps: {
+        pathname: '/projects',
+        collectionMetadata: {
+          firstCollection: {
+            title: '1st Collection',
+            timeStart: '2017-09-09'
+          },
+          secondCollection: {
+            title: '2nd Collection',
+            timeStart: '2017-09-09'
+          },
+          thirdCollection: {
+            title: '3rd Collection',
+            timeStart: '2017-09-09'
+          }
         },
-        secondCollection: {
-          title: '2nd Collection',
-          timeStart: '2017-09-09'
-        },
-        thirdCollection: {
-          title: '3rd Collection',
-          timeStart: '2017-09-09'
-        }
+        projectCollectionsIds: ['firstCollection', 'secondCollection', 'thirdCollection']
       },
-      projectCollectionsIds: ['firstCollection', 'secondCollection', 'thirdCollection'],
-      timeline: {
-        intervals: {
-          firstCollection: [
-            [
-              1525132800,
-              1618185600,
-              582637
+      overrideZustandState: {
+        timeline: {
+          getTimeline: jest.fn(),
+          intervals: {
+            firstCollection: [
+              [
+                1525132800,
+                1618185600,
+                582637
+              ]
+            ],
+            thirdCollection: [
+              [
+                1525132800,
+                1618185600,
+                582637
+              ]
+            ],
+            secondCollection: [
+              [
+                1525132800,
+                1618185600,
+                582637
+              ]
             ]
-          ],
-          thirdCollection: [
-            [
-              1525132800,
-              1618185600,
-              582637
-            ]
-          ],
-          secondCollection: [
-            [
-              1525132800,
-              1618185600,
-              582637
-            ]
-          ]
-        },
-        query: {
-          center: 1552425382,
-          interval: 'day',
-          endDate: '2020-09-11T21:16:22.000Z',
-          startDate: '2017-09-09T21:16:22.000Z'
+          },
+          query: {
+            center: 1552425382,
+            interval: 'day',
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
         }
       }
     })
@@ -277,8 +286,16 @@ describe('Timeline component', () => {
 })
 
 describe('handleTimelineMoveEnd', () => {
-  test('calls onChangeTimelineQuery with new values', () => {
-    const { props } = setup()
+  test('calls timeline.setQuery with new values', () => {
+    setup({
+      overrideZustandState: {
+        timeline: {
+          setQuery: jest.fn(),
+          intervals: {},
+          query: {}
+        }
+      }
+    })
 
     const timelineEnd = '1970-01-01T00:00:00.000Z'
     const timelineStart = '1970-01-31T00:00:00.000Z'
@@ -293,8 +310,11 @@ describe('handleTimelineMoveEnd', () => {
       })
     })
 
-    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
-    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
+    const { setQuery } = timeline
+    expect(setQuery).toHaveBeenCalledTimes(2)
+    expect(setQuery).toHaveBeenNthCalledWith(
       1,
       {
         center: 1609416000000,
@@ -302,7 +322,7 @@ describe('handleTimelineMoveEnd', () => {
       }
     )
 
-    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(
+    expect(setQuery).toHaveBeenNthCalledWith(
       2,
       {
         center: 123456789000,
@@ -360,17 +380,21 @@ describe('handleTemporalSet', () => {
 
   test('calls onToggleOverrideTemporalModal when setting temporal and focus already exists', () => {
     const { props } = setup({
-      pathname: '/projects',
-      showOverrideModal: true,
-      timeline: {
-        intervals: {},
-        query: {
-          center: 1552425382,
-          end: 1556668799.999,
-          interval: 'day',
-          start: 1554076800,
-          endDate: '2020-09-11T21:16:22.000Z',
-          startDate: '2017-09-09T21:16:22.000Z'
+      overrideProps: {
+        pathname: '/projects',
+        showOverrideModal: true
+      },
+      overrideZustandState: {
+        timeline: {
+          intervals: {},
+          query: {
+            center: 1552425382,
+            end: 1556668799.999,
+            interval: 'day',
+            start: 1554076800,
+            endDate: '2020-09-11T21:16:22.000Z',
+            startDate: '2017-09-09T21:16:22.000Z'
+          }
         }
       }
     })
@@ -392,6 +416,8 @@ describe('handleTemporalSet', () => {
     const { props } = setup({
       pathname: '/projects',
       showOverrideModal: true
+    }, {
+      timeline: {}
     })
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
@@ -410,7 +436,8 @@ describe('handleTemporalSet', () => {
   test('does not call onToggleOverrideTemporalModal when setting temporal and focus exists on the granules page', () => {
     const { props } = setup({
       pathname: '/search/granules',
-      showOverrideModal: false,
+      showOverrideModal: false
+    }, {
       timeline: {
         intervals: {},
         query: {
@@ -440,7 +467,14 @@ describe('handleTemporalSet', () => {
 
 describe('handleFocusedSet', () => {
   test('when focus is added query is updated', () => {
-    const { props } = setup()
+    setup({
+      overrideZustandState: {
+        timeline: {
+          setQuery: jest.fn()
+        }
+      }
+    })
+
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
@@ -452,8 +486,11 @@ describe('handleFocusedSet', () => {
       })
     })
 
-    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
-    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(2, {
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
+    const { setQuery } = timeline
+    expect(setQuery).toHaveBeenCalledTimes(2)
+    expect(setQuery).toHaveBeenNthCalledWith(2, {
       center: 1609416000000,
       end: focusedEnd,
       start: focusedStart
@@ -461,15 +498,25 @@ describe('handleFocusedSet', () => {
   })
 
   test('when focus is removed query is updated', () => {
-    const { props } = setup()
+    setup({
+      overrideZustandState: {
+        timeline: {
+          setQuery: jest.fn()
+        }
+      }
+    })
+
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
     act(() => {
       timelineProps.onFocusedSet({})
     })
 
-    expect(props.onChangeTimelineQuery).toHaveBeenCalledTimes(2)
-    expect(props.onChangeTimelineQuery).toHaveBeenNthCalledWith(2, {
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
+    const { setQuery } = timeline
+    expect(setQuery).toHaveBeenCalledTimes(2)
+    expect(setQuery).toHaveBeenNthCalledWith(2, {
       end: undefined,
       start: undefined
     })
@@ -477,11 +524,13 @@ describe('handleFocusedSet', () => {
 
   test('calls onToggleOverrideTemporalModal when setting focus and temporal already exists', () => {
     const { props } = setup({
-      pathname: '/projects',
-      showOverrideModal: true,
-      temporalSearch: {
-        endDate: '2019-06-21T19:34:23.865Z',
-        startDate: '2018-12-28T15:56:46.870Z'
+      overrideProps: {
+        pathname: '/projects',
+        showOverrideModal: true,
+        temporalSearch: {
+          endDate: '2019-06-21T19:34:23.865Z',
+          startDate: '2018-12-28T15:56:46.870Z'
+        }
       }
     })
     const timelineProps = EDSCTimeline.mock.calls[0][0]
@@ -557,7 +606,9 @@ describe('handle toggleTimeline', () => {
 
     test('open timeline by pressing t', async () => {
       const { props, user } = setup({
-        isOpen: false
+        overrideProps: {
+          isOpen: false
+        }
       })
 
       const timelineSection = screen.getByRole('region', { name: 'Timeline' })
@@ -581,7 +632,9 @@ describe('handle toggleTimeline', () => {
 
     test('opens the timeline with the open button', async () => {
       const { props, user } = setup({
-        isOpen: false
+        overrideProps: {
+          isOpen: false
+        }
       })
 
       const button = screen.getByLabelText('Show Timeline')
@@ -595,7 +648,9 @@ describe('handle toggleTimeline', () => {
   describe('when on the project page', () => {
     test('does not close timeline by pressing t', async () => {
       const { props, user } = setup({
-        pathname: '/projects'
+        overrideProps: {
+          pathname: '/projects'
+        }
       })
 
       await user.keyboard('{t}')
@@ -605,7 +660,9 @@ describe('handle toggleTimeline', () => {
 
     test('does not open timeline by pressing t', async () => {
       const { props, user } = setup({
-        pathname: '/projects'
+        overrideProps: {
+          pathname: '/projects'
+        }
       })
 
       await user.keyboard('{t}')
@@ -615,7 +672,9 @@ describe('handle toggleTimeline', () => {
 
     test('does not show the close button', () => {
       setup({
-        pathname: '/projects'
+        overrideProps: {
+          pathname: '/projects'
+        }
       })
 
       const closeButton = screen.queryByLabelText('Hide Timeline')

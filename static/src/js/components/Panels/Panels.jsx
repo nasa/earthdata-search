@@ -93,7 +93,10 @@ export class Panels extends PureComponent {
     this.updateResponsiveClassNames()
 
     // When the component mounts call setPanelsWidth to set the initial width
-    const { setPanelsWidth } = useEdscStore.getState().ui.panels
+    const zustandState = useEdscStore.getState()
+    const { ui } = zustandState
+    const { panels } = ui
+    const { setPanelsWidth } = panels
     setPanelsWidth(this.width + getSidebarWidth())
   }
 
@@ -195,7 +198,10 @@ export class Panels extends PureComponent {
       const currentWidth = this.width
       const panelWidth = show ? 0 : currentWidth
 
-      const { setPanelsWidth } = useEdscStore.getState().ui.panels
+      const zustandState = useEdscStore.getState()
+      const { ui } = zustandState
+      const { panels } = ui
+      const { setPanelsWidth } = panels
       setPanelsWidth(getSidebarWidth() + panelWidth)
     }
 
@@ -236,7 +242,11 @@ export class Panels extends PureComponent {
   }
 
   onPanelHandleClickOrKeypress(event) {
-    const { setPanelsWidth } = useEdscStore.getState().ui.panels
+    const zustandState = useEdscStore.getState()
+    const { ui } = zustandState
+    const { panels } = ui
+    const { setPanelsWidth } = panels
+
     const { show } = this.state
     const {
       type,
@@ -414,7 +424,10 @@ export class Panels extends PureComponent {
       clickStartWidth
     } = this
 
-    const { setPanelsWidth } = useEdscStore.getState().ui.panels
+    const zustandState = useEdscStore.getState()
+    const { ui } = zustandState
+    const { panels } = ui
+    const { setPanelsWidth } = panels
 
     // Only change the state when the user finishes a drag. Click events
     // will fire this function, but they should not fire the dragend events.

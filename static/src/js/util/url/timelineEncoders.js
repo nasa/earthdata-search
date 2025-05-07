@@ -1,4 +1,4 @@
-import { timelineIntervals } from '../timeline'
+import { timelineIntervalZooms } from '../timeline'
 import getObjectKeyByValue from '../object'
 
 /**
@@ -23,7 +23,7 @@ export const encodeTimeline = (timelineQuery, pathname) => {
   const encodedStart = start ? start / 1000 : ''
   const encodedEnd = end ? end / 1000 : ''
 
-  const encodedString = [center / 1000, timelineIntervals[interval], encodedStart, encodedEnd].join('!')
+  const encodedString = [center / 1000, timelineIntervalZooms[interval], encodedStart, encodedEnd].join('!')
   // If there is no center, return an empty string
   if (encodedString[0] === '!') return ''
 
@@ -44,7 +44,7 @@ export const decodeTimeline = (params) => {
 
   const [center, intervalNum, start, end] = timeline.split('!')
   const parsedIntervalNum = parseInt(intervalNum, 10)
-  const interval = getObjectKeyByValue(timelineIntervals, parsedIntervalNum)
+  const interval = getObjectKeyByValue(timelineIntervalZooms, parsedIntervalNum)
   const query = {
     center: parseInt(center, 10) * 1000 || undefined,
     end: parseInt(end, 10) * 1000 || undefined,

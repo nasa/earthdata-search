@@ -125,7 +125,10 @@ class SecondaryToolbar extends Component {
       ursProfile
     } = this.props
 
-    const { setRunTour } = useEdscStore.getState().ui.tour
+    const zustandState = useEdscStore.getState()
+    const { ui } = zustandState
+    const { tour } = ui
+    const { setRunTour } = tour
 
     const { first_name: firstName = '' } = ursProfile
 

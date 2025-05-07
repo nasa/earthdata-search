@@ -12,6 +12,7 @@ import {
   UPDATE_GRANULE_SEARCH_QUERY,
   UPDATE_REGION_QUERY
 } from '../../constants/actionTypes'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -558,8 +559,12 @@ describe('clearFilters', () => {
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
-    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
-    getTimelineMock.mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.fn()
+    useEdscStore.setState({
+      timeline: {
+        getTimeline: getTimelineMock
+      }
+    })
 
     // Call the dispatch
     store.dispatch(actions.clearFilters())
@@ -596,8 +601,12 @@ describe('clearFilters', () => {
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
-    const getTimelineMock = jest.spyOn(actions, 'getTimeline')
-    getTimelineMock.mockImplementation(() => jest.fn())
+    const getTimelineMock = jest.fn()
+    useEdscStore.setState({
+      timeline: {
+        getTimeline: getTimelineMock
+      }
+    })
 
     // Call the dispatch
     store.dispatch(actions.clearFilters())

@@ -9,7 +9,7 @@ beforeEach(() => {
 
 describe('Request#constructor', () => {
   test('sets the default values', () => {
-    const request = new Request(baseUrl)
+    const request = new Request(baseUrl, 'prod')
 
     expect(request.authenticated).toBeFalsy()
     expect(request.baseUrl).toEqual(baseUrl)
@@ -19,6 +19,7 @@ describe('Request#constructor', () => {
 
   test('throws an error when no baseUrl value is provided', () => {
     expect(() => {
+      // @ts-expect-error Not enough arguments
       Request()
     }).toThrow()
   })
@@ -26,14 +27,14 @@ describe('Request#constructor', () => {
 
 describe('Request#getAuthToken', () => {
   test('returns the auth token', () => {
-    const request = new Request(baseUrl)
+    const request = new Request(baseUrl, 'prod')
     request.authToken = 'test auth token'
 
     expect(request.getAuthToken()).toEqual('test auth token')
   })
 
   test('returns an empty string if optionallyAuthenticated', () => {
-    const request = new Request(baseUrl)
+    const request = new Request(baseUrl, 'prod')
 
     request.optionallyAuthenticated = true
 
@@ -43,13 +44,13 @@ describe('Request#getAuthToken', () => {
 
 describe('Request#transformRequest', () => {
   test('adds authorization header when authenticated', () => {
-    const request = new Request(baseUrl)
+    const request = new Request(baseUrl, 'prod')
     const token = '123'
 
     request.authenticated = true
     request.authToken = token
 
-    const data = { param1: 123 }
+    const data = { conceptId: 'C123456-EDSC' }
     const headers = {}
 
     request.transformRequest(data, headers)
@@ -62,57 +63,86 @@ describe('Request#transformRequest', () => {
 
 describe('Request#transformResponse', () => {
   test('calls handleUnauthorized and returns data', () => {
-    const request = new Request(baseUrl)
+    const request = new Request(baseUrl, 'prod')
 
     const handleUnauthorizedMock = jest.spyOn(Request.prototype, 'handleUnauthorized').mockImplementation()
 
-    const data = { param1: 123 }
+    const data = {
+      data: [{
+        'concept-id': 'C123456-EDSC',
+        intervals: [
+          [123, 456]
+        ]
+      }],
+      statusCode: 200,
+      message: 'OK',
+      headers: {}
+    }
     const result = request.transformResponse(data)
 
-    expect(result).toEqual({ param1: 123 })
+    expect(result).toEqual({
+      data: [{
+        'concept-id': 'C123456-EDSC',
+        intervals: [
+          [123, 456]
+        ]
+      }],
+      statusCode: 200,
+      message: 'OK',
+      headers: {}
+    })
 
-    expect(handleUnauthorizedMock).toBeCalledTimes(1)
-    expect(handleUnauthorizedMock).toBeCalledWith(data)
+    expect(handleUnauthorizedMock).toHaveBeenCalledTimes(1)
+    expect(handleUnauthorizedMock).toHaveBeenCalledWith(data)
   })
 })
 
 describe('Request#search', () => {
   test('calls Request#post', () => {
-    const request = new Request(baseUrl)
+    const request = new Request(baseUrl, 'prod')
 
     const postMock = jest.spyOn(Request.prototype, 'post').mockImplementation()
 
     const params = {
-      param1: 12,
-      ext: 'json'
+      conceptId: 'C123456-EDSC'
     }
     request.search(params)
 
-    expect(postMock).toBeCalledTimes(1)
-    expect(postMock).toBeCalledWith('', params)
+    expect(postMock).toHaveBeenCalledTimes(1)
+    expect(postMock).toHaveBeenCalledWith('', params)
   })
 })
 
 describe('Request#handleUnauthorized', () => {
-  const { href } = window.location
+  const originalWindowLocation = window.location
+
+  beforeEach(() => {
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      enumerable: true,
+      value: new URL(window.location.href)
+    })
+  })
 
   afterEach(() => {
-    jest.clearAllMocks()
-    window.location.href = href
+    Object.defineProperty(window, 'location', {
+      configurable: true,
+      enumerable: true,
+      value: originalWindowLocation
+    })
   })
 
   test('redirects if the response is unauthorized', () => {
     const request = new Request(baseUrl, 'prod')
     const data = {
-      statusCode: 401
+      data: {},
+      statusCode: 401,
+      message: 'Unauthorized',
+      headers: {}
     }
     const returnPath = 'http://example.com/test/path'
 
-    delete window.location
-    window.location = {
-      href: returnPath,
-      pathname: ''
-    }
+    window.location.href = returnPath
 
     request.handleUnauthorized(data)
     expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
@@ -121,11 +151,15 @@ describe('Request#handleUnauthorized', () => {
   test('does not redirect if the response is valid', () => {
     const request = new Request(baseUrl, 'prod')
 
-    delete window.location
-    window.location = { href: jest.fn() }
+    const beforeHref = window.location.href
 
-    request.handleUnauthorized({})
+    request.handleUnauthorized({
+      data: {},
+      statusCode: 200,
+      message: 'OK',
+      headers: {}
+    })
 
-    expect(window.location.href.mock.calls.length).toBe(0)
+    expect(window.location.href).toEqual(beforeHref)
   })
 })

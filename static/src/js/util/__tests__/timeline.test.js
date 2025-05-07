@@ -2,7 +2,7 @@ import MockDate from 'mockdate'
 import {
   calculateTimelineParams,
   prepareTimelineParams,
-  timelineIntervals,
+  timelineIntervalZooms,
   zoomLevelDifference
 } from '../timeline'
 
@@ -83,7 +83,7 @@ describe('calculateTimelineParams', () => {
     const expectedEnd = new Date(props.collectionMetadata['C100002-EDSC'].timeEnd).getTime()
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: timelineIntervals.decade,
+      zoomLevel: timelineIntervalZooms.decade,
       initialCenter: (expectedStart + expectedEnd) / 2
     })
   })
@@ -105,7 +105,7 @@ describe('calculateTimelineParams', () => {
     const expectedEnd = new Date(props.collectionMetadata['C100000-EDSC'].timeEnd).getTime()
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: timelineIntervals.month,
+      zoomLevel: timelineIntervalZooms.month,
       initialCenter: (expectedStart + expectedEnd) / 2
     })
   })
@@ -126,7 +126,7 @@ describe('calculateTimelineParams', () => {
     const expectedEnd = currentDate
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: timelineIntervals.year,
+      zoomLevel: timelineIntervalZooms.year,
       initialCenter: (expectedStart + expectedEnd) / 2
     })
   })
@@ -140,7 +140,7 @@ describe('calculateTimelineParams', () => {
     }
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: timelineIntervals.day,
+      zoomLevel: timelineIntervalZooms.day,
       initialCenter: (currentDate + currentDate - (24 * 60 * 60 * 1000)) / 2
     })
   })
@@ -159,7 +159,7 @@ describe('calculateTimelineParams', () => {
     }
     const result = calculateTimelineParams(props)
     expect(result).toEqual({
-      zoomLevel: timelineIntervals.day,
+      zoomLevel: timelineIntervalZooms.day,
       initialCenter: (currentDate + currentDate - (24 * 60 * 60 * 1000)) / 2
     })
   })
