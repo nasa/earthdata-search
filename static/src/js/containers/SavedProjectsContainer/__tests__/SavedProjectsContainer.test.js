@@ -1,77 +1,66 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { render, screen } from '@testing-library/react'
 
 import actions from '../../../actions'
 import {
-  mapDispatchToProps,
   mapStateToProps,
+  mapDispatchToProps,
   SavedProjectsContainer
 } from '../SavedProjectsContainer'
 import { SavedProjects } from '../../../components/SavedProjects/SavedProjects'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    onChangePath: jest.fn(),
-    authToken: 'default-token',
-    earthdataEnvironment: 'default-env',
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<SavedProjectsContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+jest.mock('../../../components/SavedProjects/SavedProjects', () => ({
+  SavedProjects: jest.fn(() => (
+    <div data-testid="saved-projects">Saved Projects</div>
+  ))
+}))
 
 describe('mapDispatchToProps', () => {
-  test('onChangePath calls actions.changePath', () => {
+  it('onChangePath calls actions.changePath', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changePath')
-
     mapDispatchToProps(dispatch).onChangePath('path')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('path')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('path')
   })
 })
 
 describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
+  it('returns the correct state', () => {
     const store = {
-      authToken: 'mock-auth-token',
-      earthdataEnvironment: 'prod'
+      authToken: 'mock-token',
+      earthdataEnvironment: 'prod-env'
     }
 
-    const expectedState = {
-      authToken: 'mock-auth-token',
-      earthdataEnvironment: 'prod'
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
+    expect(mapStateToProps(store)).toEqual({
+      authToken: 'mock-token',
+      earthdataEnvironment: 'prod-env'
+    })
   })
 })
 
-describe('SavedProjectsContainer component', () => {
-  describe('when passed the correct props', () => {
-    test('renders SavedProjects and passes authToken, earthdataEnvironment, and onChangePath', () => {
-      const mockOnChangePath = jest.fn()
-      const { enzymeWrapper } = setup({
-        onChangePath: mockOnChangePath,
-        authToken: 'test-token-123',
-        earthdataEnvironment: 'uat'
-      })
+describe('SavedProjectsContainer', () => {
+  it('renders SavedProjects and passes authToken, environment, and onChangePath', () => {
+    const mockOnChange = jest.fn()
 
-      expect(enzymeWrapper.find(SavedProjects).length).toBe(1)
-      const savedProjectsComponent = enzymeWrapper.find(SavedProjects)
+    render(
+      <SavedProjectsContainer
+        authToken="TEST123"
+        earthdataEnvironment="uat"
+        onChangePath={mockOnChange}
+      />
+    )
 
-      expect(savedProjectsComponent.props().authToken).toEqual('test-token-123')
-      expect(savedProjectsComponent.props().earthdataEnvironment).toEqual('uat')
-      expect(savedProjectsComponent.props().onChangePath).toEqual(mockOnChangePath)
-    })
+    expect(screen.getByTestId('saved-projects')).toBeInTheDocument()
+
+    expect(SavedProjects).toHaveBeenCalledTimes(1)
+    expect(SavedProjects).toHaveBeenCalledWith(
+      expect.objectContaining({
+        authToken: 'TEST123',
+        earthdataEnvironment: 'uat',
+        onChangePath: mockOnChange
+      }),
+      {}
+    )
   })
 })
