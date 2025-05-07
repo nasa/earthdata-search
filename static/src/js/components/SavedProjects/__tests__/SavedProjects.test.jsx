@@ -2,7 +2,6 @@ import React from 'react'
 import {
   render,
   screen,
-  fireEvent,
   waitFor
 } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
@@ -28,7 +27,7 @@ jest.mock(
 )
 
 describe('SavedProjects component', () => {
-  const baseProps = {
+  const props = {
     authToken: 'fake‑token',
     earthdataEnvironment: 'uat',
     onChangePath: jest.fn()
@@ -45,10 +44,9 @@ describe('SavedProjects component', () => {
         remove: jest.fn()
       }))
 
-      const { container } = render(<SavedProjects {...baseProps} />)
-      expect(
-        container.querySelector('.saved-projects__spinner')
-      ).toBeInTheDocument()
+      render(<SavedProjects {...props} />)
+      expect(screen.getByRole('status')).toBeInTheDocument()
+      expect(screen.getByRole('status')).toHaveClass('saved-projects__spinner')
     })
   })
 
@@ -59,7 +57,7 @@ describe('SavedProjects component', () => {
         remove: jest.fn()
       }))
 
-      render(<SavedProjects {...baseProps} />)
+      render(<SavedProjects {...props} />)
 
       expect(
         await screen.findByText('No saved projects to display.')
@@ -85,7 +83,7 @@ describe('SavedProjects component', () => {
     })
 
     test('renders a table when a saved project exists with one collection', async () => {
-      render(<SavedProjects {...baseProps} />)
+      render(<SavedProjects {...props} />)
 
       const link = await screen.findByTestId('portal-link')
       expect(link).toHaveTextContent('test project')
@@ -96,7 +94,7 @@ describe('SavedProjects component', () => {
     })
 
     test('renders the correct collection count and time-created cell', async () => {
-      render(<SavedProjects {...baseProps} />)
+      render(<SavedProjects {...props} />)
 
       await screen.findByTestId('portal-link')
       expect(screen.getByText('1 Collection')).toBeInTheDocument()
@@ -121,16 +119,18 @@ describe('SavedProjects component', () => {
       }))
 
       window.confirm = jest.fn(() => true)
-
-      render(<SavedProjects {...baseProps} />)
-      await screen.findByTestId('portal-link')
     })
 
     test('calls onDeleteSavedProject', async () => {
-      const btn = document.querySelector(
-        '.saved-projects__button--remove'
-      )
-      fireEvent.click(btn)
+      const view = userEvent.setup()
+      render(<SavedProjects {...props} />)
+      await screen.findByTestId('portal-link')
+
+      const deleteButton = screen.getByRole('button', {
+        name: /remove project/i
+      })
+
+      view.click(deleteButton)
 
       await waitFor(() => expect(removeMock).toHaveBeenCalledWith('8069076'))
 

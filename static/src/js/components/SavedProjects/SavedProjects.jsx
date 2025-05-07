@@ -132,6 +132,7 @@ export const SavedProjects = (props) => {
             type="dots"
             color="gray"
             size="small"
+            role="status"
           />
         )
       }
