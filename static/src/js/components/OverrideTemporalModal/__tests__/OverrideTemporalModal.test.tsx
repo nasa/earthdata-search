@@ -1,11 +1,10 @@
-import React from 'react'
 import { screen } from '@testing-library/react'
 
 import OverrideTemporalModal from '../OverrideTemporalModal'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const setup = setupTest({
-  Component: OverrideTemporalModal as React.FC,
+  Component: OverrideTemporalModal,
   defaultProps: {
     isOpen: true,
     temporalSearch: {

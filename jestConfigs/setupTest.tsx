@@ -97,26 +97,26 @@ const setupTest = ({
 }: SetupTestOverrides = {}): SetupTestReturnType => {
   const user = userEvent.setup()
 
-  const props = {
+  let props = {
     ...defaultProps,
     ...overrideProps
   }
 
   // Get the initial Zustand state
-  let zustantState = cloneDeep(useEdscStore.getInitialState())
+  let zustandState = cloneDeep(useEdscStore.getInitialState())
 
   // Merge the Zustand state with the initial state if available
   if (defaultZustandState) {
-    zustantState = merge(zustantState, defaultZustandState)
+    zustandState = merge(zustandState, defaultZustandState)
   }
 
   // Merge the Zustand state with the override Zustand state if available
   if (overrideZustandState) {
-    zustantState = merge(zustantState, overrideZustandState)
+    zustandState = merge(zustandState, overrideZustandState)
   }
 
   // Set the Zustand state
-  useEdscStore.setState(zustantState, true)
+  useEdscStore.setState(zustandState, true)
 
   let RenderedComponent = Component ? (<Component {...props} />) : null
 
@@ -134,9 +134,11 @@ const setupTest = ({
                 const ComponentByRoute = ComponentsByRoute[route] as React.FC
 
                 const defaultPropsForRoute = defaultPropsByRoute[route] || {}
-                const propsForRoute = {
+                const overridePropsForRoute = overridePropsByRoute[route] || {}
+
+                props = {
                   ...defaultPropsForRoute,
-                  ...overridePropsByRoute[route]
+                  ...overridePropsForRoute
                 }
 
                 return (
@@ -144,7 +146,7 @@ const setupTest = ({
                     {typeof ComponentByRoute !== 'function' && ComponentByRoute}
                     {
                       typeof ComponentByRoute === 'function' && (
-                        <ComponentByRoute {...propsForRoute} />
+                        <ComponentByRoute {...props} />
                       )
                     }
                   </Route>

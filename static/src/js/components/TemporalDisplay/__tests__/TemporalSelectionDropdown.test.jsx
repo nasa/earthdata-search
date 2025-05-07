@@ -2,25 +2,21 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {
   act,
-  render,
   screen,
   waitFor
 } from '@testing-library/react'
 import MockDate from 'mockdate'
-import userEvent from '@testing-library/user-event'
-import { Provider } from 'react-redux'
-import configureMockStore from 'redux-mock-store'
 import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
-import { Router } from 'react-router'
 import { useLocation } from 'react-router-dom'
-import { createMemoryHistory } from 'history'
+
 import * as metricsActions from '../../../middleware/metrics/actions'
 
 import TemporalSelectionDropdown from '../TemporalSelectionDropdown'
 import TemporalSelectionDropdownMenu from '../TemporalSelectionDropdownMenu'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'), // Preserve other exports
@@ -32,6 +28,8 @@ jest.mock('react-router-dom', () => ({
     key: 'testKey'
   })
 }))
+
+jest.mock('../TemporalSelectionDropdownMenu')
 
 const MockTemporalMenu = ({ setStartDate, setEndDate }) => {
   const newStartDate = moment.utc('2020-06-15')
@@ -72,54 +70,33 @@ MockTemporalMenu.propTypes = {
   setEndDate: PropTypes.func.isRequired
 }
 
-jest.mock('../TemporalSelectionDropdownMenu')
-
-const mockStore = configureMockStore()
-const store = mockStore({})
-
-const history = createMemoryHistory()
-
-const setup = (overrideProps) => {
-  const user = userEvent.setup()
-  const props = {
-    searchParams: {},
-    temporalSearch: {
-      endDate: '',
-      startDate: '',
-      isRecurring: false
-    },
-    onChangeQuery: jest.fn(),
-    onMetricsTemporalFilter: jest.fn(),
-    ...overrideProps
-  }
-
-  // Wrapping this in a Redux provider because DatepickerContainer has to be connected to Redux
-  render(
-    <Provider store={store}>
-      <Router
-        history={history}
-        location={
-          {
-            search: '',
-            pathname: '/'
-          }
-        }
-      >
-        <TemporalSelectionDropdown {...props} />
-      </Router>
-    </Provider>
-  )
-
-  return { user }
-}
+const setup = setupTest({
+  ComponentsByRoute: {
+    '/': TemporalSelectionDropdown
+  },
+  defaultPropsByRoute: {
+    '/': {
+      searchParams: {},
+      temporalSearch: {
+        endDate: '',
+        startDate: '',
+        isRecurring: false
+      },
+      onChangeQuery: jest.fn(),
+      onMetricsTemporalFilter: jest.fn()
+    }
+  },
+  withRedux: true,
+  withRouter: true
+})
 
 beforeAll(() => {
-  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
-  window.console.warn = jest.fn()
 })
 
 beforeEach(() => {
   TemporalSelectionDropdownMenu.mockImplementation(jest.requireActual('../TemporalSelectionDropdownMenu').default)
+  ReactDOM.createPortal = jest.fn((dropdown) => dropdown)
+  window.console.warn = jest.fn()
 })
 
 afterEach(() => {
@@ -136,7 +113,7 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('when clicked toggles the state of show ', async () => {
-    const { user } = setup({})
+    const { user } = setup()
 
     const btn = screen.getByRole('button', { name: 'Open temporal filters' })
     expect(btn).toBeInTheDocument()
@@ -151,7 +128,7 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the start date correctly when an valid date is passed', async () => {
-    const { user } = setup({})
+    const { user } = setup()
 
     await waitFor(async () => {
       await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -173,7 +150,7 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the end date correctly when an valid date is passed', async () => {
-    const { user } = setup({})
+    const { user } = setup()
 
     await waitFor(async () => {
       await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -195,7 +172,7 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('sets the state correctly with an invalid start date', async () => {
-    const { user } = setup({})
+    const { user } = setup()
 
     await waitFor(async () => {
       await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -227,14 +204,17 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('clears the values onClearClick and converts full utc datetime format to expected format', async () => {
-    const onChangeQueryMock = jest.fn()
     const validStartDate = '2019-03-29T00:00:00.000Z'
     const validEndDate = '2019-03-30T00:00:00.000Z'
-    const { user } = setup({
-      onChangeQuery: onChangeQueryMock,
-      temporalSearch: {
-        endDate: validEndDate,
-        startDate: validStartDate
+
+    const { props, user } = setup({
+      overridePropsByRoute: {
+        '/': {
+          temporalSearch: {
+            endDate: validEndDate,
+            startDate: validStartDate
+          }
+        }
       }
     })
 
@@ -263,14 +243,16 @@ describe('TemporalSelectionDropdown component', () => {
     expect(updatedStartDateInput).toHaveValue('')
     expect(updatedEndtDateInput).toHaveValue('')
 
-    expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
+    expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+    expect(props.onChangeQuery).toHaveBeenCalledWith({
+      collection: {
+        temporal: {}
+      }
+    })
   })
 
   test('applies the values onApplyClick', async () => {
-    const onChangeQueryMock = jest.fn()
-    const { user } = setup({
-      onChangeQuery: onChangeQueryMock
-    })
+    const { props, user } = setup()
 
     const validStartDate = '2019-03-29 00:00:00'
     const validEndDate = '2019-03-30 00:00:00'
@@ -303,7 +285,7 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(applyBtn)
     })
 
-    expect(onChangeQueryMock).toHaveBeenCalledWith({
+    expect(props.onChangeQuery).toHaveBeenCalledWith({
       collection: {
         temporal: {
           isRecurring: false,
@@ -313,14 +295,11 @@ describe('TemporalSelectionDropdown component', () => {
       }
     })
 
-    expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
+    expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
   })
 
   test('applies the values for leap years onApplyUser.click', async () => {
-    const onChangeQueryMock = jest.fn()
-    const { user } = setup({
-      onChangeQuery: onChangeQueryMock
-    })
+    const { props, user } = setup()
 
     const validStartDate = '2021-06-15 00:00:00'
     const validEndDate = '2024-06-15 23:59:59'
@@ -352,7 +331,7 @@ describe('TemporalSelectionDropdown component', () => {
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
     await user.click(applyBtn)
 
-    expect(onChangeQueryMock).toHaveBeenCalledWith({
+    expect(props.onChangeQuery).toHaveBeenCalledWith({
       collection: {
         temporal: {
           isRecurring: true,
@@ -364,16 +343,11 @@ describe('TemporalSelectionDropdown component', () => {
       }
     })
 
-    expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
+    expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
   })
 
   test('onMetricsTemporalFilter is called on Apply', async () => {
-    const onMetricsTemporalFilterMock = jest.fn()
-    const onChangeQueryMock = jest.fn()
-    const { user } = setup({
-      onMetricsTemporalFilter: onMetricsTemporalFilterMock,
-      onChangeQuery: onChangeQueryMock
-    })
+    const { props, user } = setup()
 
     const validStartDate = '2019-03-29 00:00:00'
     const validEndDate = '2019-03-30 00:00:00'
@@ -396,15 +370,14 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(applyBtn)
     })
 
-    expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
+    expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
       type: 'Apply Temporal Filter',
       value: '{"startDate":"2019-03-29T00:00:00.000Z","endDate":"2019-03-30T23:59:59.999Z","isRecurring":false}'
     })
   })
 
   test('onMetricsTemporalFilter is called on Clear', async () => {
-    const onMetricsTemporalFilterMock = jest.fn()
-    const { user } = setup({ onMetricsTemporalFilter: onMetricsTemporalFilterMock })
+    const { props, user } = setup()
 
     await waitFor(async () => {
       await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -415,8 +388,8 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(clearBtn)
     })
 
-    expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(1)
-    expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
+    expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(1)
+    expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
       type: 'Clear Temporal Filter',
       value: {}
     })
@@ -439,8 +412,7 @@ describe('TemporalSelectionDropdown component', () => {
   })
 
   test('onMetricsTemporalFilter is called when toggling recurring', async () => {
-    const onMetricsTemporalFilterMock = jest.fn()
-    const { user } = setup({ onMetricsTemporalFilter: onMetricsTemporalFilterMock })
+    const { props, user } = setup()
 
     await waitFor(async () => {
       await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -452,8 +424,8 @@ describe('TemporalSelectionDropdown component', () => {
       await user.click(recurringCheckbox)
     })
 
-    expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(1)
-    expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
+    expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(1)
+    expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
       type: 'Set Recurring',
       value: true
     })
@@ -483,10 +455,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     describe('when metrics should be submitted', () => {
       test('calls onMetricsTemporalFilter', async () => {
-        const onMetricsTemporalFilterMock = jest.fn()
-        const { user } = setup({
-          onMetricsTemporalFilter: onMetricsTemporalFilterMock
-        })
+        const { props, user } = setup()
 
         await waitFor(async () => {
           await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -494,8 +463,8 @@ describe('TemporalSelectionDropdown component', () => {
 
         await user.click(screen.getByRole('button', { name: 'Set Start Date With Metrics' }))
 
-        expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(1)
-        expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
           type: 'Set Start Date - Typed',
           value: '2020-06-15T00:00:00.000Z'
         })
@@ -504,10 +473,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     describe('when metrics should not be submitted', () => {
       test('does not call onMetricsTemporalFilter', async () => {
-        const onMetricsTemporalFilterMock = jest.fn()
-        const { user } = setup({
-          onMetricsTemporalFilter: onMetricsTemporalFilterMock
-        })
+        const { props, user } = setup()
 
         await waitFor(async () => {
           await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -515,7 +481,7 @@ describe('TemporalSelectionDropdown component', () => {
 
         await user.click(screen.getByRole('button', { name: 'Set Start Date Without Metrics' }))
 
-        expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(0)
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(0)
       })
     })
   })
@@ -527,10 +493,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     describe('when metrics should be submitted', () => {
       test('calls onMetricsTemporalFilter', async () => {
-        const onMetricsTemporalFilterMock = jest.fn()
-        const { user } = setup({
-          onMetricsTemporalFilter: onMetricsTemporalFilterMock
-        })
+        const { props, user } = setup()
 
         await waitFor(async () => {
           await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -538,8 +501,8 @@ describe('TemporalSelectionDropdown component', () => {
 
         await user.click(screen.getByRole('button', { name: 'Set End Date With Metrics' }))
 
-        expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(1)
-        expect(onMetricsTemporalFilterMock).toHaveBeenCalledWith({
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
           type: 'Set End Date - Typed',
           value: '2020-08-30T00:00:00.000Z'
         })
@@ -548,10 +511,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     describe('when metrics should not be submitted', () => {
       test('does not call onMetricsTemporalFilter', async () => {
-        const onMetricsTemporalFilterMock = jest.fn()
-        const { user } = setup({
-          onMetricsTemporalFilter: onMetricsTemporalFilterMock
-        })
+        const { props, user } = setup()
 
         await waitFor(async () => {
           await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
@@ -559,22 +519,22 @@ describe('TemporalSelectionDropdown component', () => {
 
         await user.click(screen.getByRole('button', { name: 'Set End Date Without Metrics' }))
 
-        expect(onMetricsTemporalFilterMock).toHaveBeenCalledTimes(0)
+        expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(0)
       })
     })
   })
 
   describe('TemporalSelectionDropdown recurring and slider behavior', () => {
     test('handles recurring toggle and slider interactions correctly', async () => {
-      const onChangeQueryMock = jest.fn()
-      const user = userEvent.setup()
-
-      setup({
-        onChangeQuery: onChangeQueryMock,
-        temporalSearch: {
-          startDate: '2022-03-29T00:00:00.000Z',
-          endDate: '2024-03-30T00:00:00.000Z',
-          isRecurring: true
+      const { props, user } = setup({
+        overridePropsByRoute: {
+          '/': {
+            temporalSearch: {
+              startDate: '2022-03-29T00:00:00.000Z',
+              endDate: '2024-03-30T00:00:00.000Z',
+              isRecurring: true
+            }
+          }
         }
       })
 
@@ -597,7 +557,8 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
-      expect(onChangeQueryMock).toHaveBeenCalledWith({
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {
             isRecurring: true,
@@ -608,8 +569,24 @@ describe('TemporalSelectionDropdown component', () => {
           }
         }
       })
+    })
 
-      // Reopen dropdown
+    test('handles unchecking isRecurring', async () => {
+      const { props, user } = setup({
+        overridePropsByRoute: {
+          '/': {
+            temporalSearch: {
+              isRecurring: true,
+              startDate: '2022-03-29 00:00:00',
+              endDate: '2024-03-30 00:00:00',
+              recurringDayStart: '88',
+              recurringDayEnd: '89'
+            }
+          }
+        }
+      })
+
+      // Open dropdown
       await act(async () => {
         await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
       })
@@ -628,7 +605,8 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
-      expect(onChangeQueryMock).toHaveBeenLastCalledWith({
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenLastCalledWith({
         collection: {
           temporal: {
             isRecurring: false,
@@ -640,15 +618,15 @@ describe('TemporalSelectionDropdown component', () => {
     })
 
     test('handles recurring toggle with same year dates', async () => {
-      const onChangeQueryMock = jest.fn()
-      const user = userEvent.setup()
-
-      setup({
-        onChangeQuery: onChangeQueryMock,
-        temporalSearch: {
-          startDate: '2024-03-29T00:00:00.000Z',
-          endDate: '2024-03-30T00:00:00.000Z',
-          isRecurring: false
+      const { props, user } = setup({
+        overridePropsByRoute: {
+          '/': {
+            temporalSearch: {
+              startDate: '2024-03-29T00:00:00.000Z',
+              endDate: '2024-03-30T00:00:00.000Z',
+              isRecurring: false
+            }
+          }
         }
       })
 
@@ -683,7 +661,7 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
-      expect(onChangeQueryMock).toHaveBeenCalledWith({
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {
             isRecurring: true,
@@ -700,15 +678,16 @@ describe('TemporalSelectionDropdown component', () => {
   describe('TemporalSelectionDropdown when dates aren\'t set', () => {
     test('handles recurring toggle with only start date set', async () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
-      const onChangeQueryMock = jest.fn()
-      const user = userEvent.setup()
 
-      setup({
-        onChangeQuery: onChangeQueryMock,
-        temporalSearch: {
-          startDate: '2024-01-01T00:00:00.000Z',
-          endDate: '',
-          isRecurring: false
+      const { props, user } = setup({
+        overridePropsByRoute: {
+          '/': {
+            temporalSearch: {
+              startDate: '2024-01-01T00:00:00.000Z',
+              endDate: '',
+              isRecurring: false
+            }
+          }
         }
       })
 
@@ -738,7 +717,7 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
-      expect(onChangeQueryMock).toHaveBeenCalledWith({
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {
             isRecurring: true,
@@ -755,15 +734,16 @@ describe('TemporalSelectionDropdown component', () => {
 
     test('handles recurring toggle with unset dates', async () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
-      const onChangeQueryMock = jest.fn()
-      const user = userEvent.setup()
 
-      setup({
-        onChangeQuery: onChangeQueryMock,
-        temporalSearch: {
-          startDate: '',
-          endDate: '',
-          isRecurring: false
+      const { props, user } = setup({
+        overridePropsByRoute: {
+          '/': {
+            temporalSearch: {
+              startDate: '',
+              endDate: '',
+              isRecurring: false
+            }
+          }
         }
       })
 
@@ -793,7 +773,7 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
-      expect(onChangeQueryMock).toHaveBeenCalledWith({
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {
             isRecurring: true,
@@ -810,15 +790,16 @@ describe('TemporalSelectionDropdown component', () => {
 
     test('handles recurring toggle with only end date set', async () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
-      const onChangeQueryMock = jest.fn()
-      const user = userEvent.setup()
 
-      setup({
-        onChangeQuery: onChangeQueryMock,
-        temporalSearch: {
-          startDate: '',
-          endDate: '2020-01-25T00:00:00.000Z',
-          isRecurring: false
+      const { props, user } = setup({
+        overridePropsByRoute: {
+          '/': {
+            temporalSearch: {
+              startDate: '',
+              endDate: '2020-01-25T00:00:00.000Z',
+              isRecurring: false
+            }
+          }
         }
       })
 
@@ -848,7 +829,7 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
-      expect(onChangeQueryMock).toHaveBeenCalledWith({
+      expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {
             isRecurring: true,
@@ -867,12 +848,14 @@ describe('TemporalSelectionDropdown component', () => {
   describe('when applying with search params are present', () => {
     describe('when on the landing page', () => {
       test('adds the search keyword to the params', async () => {
-        const onChangeQueryMock = jest.fn()
-        const { user } = setup({
-          searchParams: {
-            q: 'test'
-          },
-          onChangeQuery: onChangeQueryMock
+        const { props, user } = setup({
+          overridePropsByRoute: {
+            '/': {
+              searchParams: {
+                q: 'test'
+              }
+            }
+          }
         })
 
         const validStartDate = '2019-03-29 00:00:00'
@@ -906,7 +889,7 @@ describe('TemporalSelectionDropdown component', () => {
           await user.click(applyBtn)
         })
 
-        expect(onChangeQueryMock).toHaveBeenCalledWith({
+        expect(props.onChangeQuery).toHaveBeenCalledWith({
           collection: {
             keyword: 'test',
             temporal: {
@@ -917,7 +900,7 @@ describe('TemporalSelectionDropdown component', () => {
           }
         })
 
-        expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
+        expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       })
     })
 
@@ -931,12 +914,14 @@ describe('TemporalSelectionDropdown component', () => {
           key: 'testKey'
         })
 
-        const onChangeQueryMock = jest.fn()
-        const { user } = setup({
-          searchParams: {
-            q: 'test'
-          },
-          onChangeQuery: onChangeQueryMock
+        const { props, user } = setup({
+          overridePropsByRoute: {
+            '/': {
+              searchParams: {
+                q: 'test'
+              }
+            }
+          }
         })
 
         const validStartDate = '2019-03-29 00:00:00'
@@ -970,7 +955,7 @@ describe('TemporalSelectionDropdown component', () => {
           await user.click(applyBtn)
         })
 
-        expect(onChangeQueryMock).toHaveBeenCalledWith({
+        expect(props.onChangeQuery).toHaveBeenCalledWith({
           collection: {
             temporal: {
               isRecurring: false,
@@ -980,7 +965,7 @@ describe('TemporalSelectionDropdown component', () => {
           }
         })
 
-        expect(onChangeQueryMock).toHaveBeenCalledTimes(1)
+        expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       })
     })
   })
