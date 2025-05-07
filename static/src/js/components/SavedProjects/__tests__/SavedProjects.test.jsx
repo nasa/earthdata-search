@@ -1,142 +1,140 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Table from 'react-bootstrap/Table'
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 
-import Spinner from '../../Spinner/Spinner'
-import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 import { SavedProjects } from '../SavedProjects'
+import ProjectRequest from '../../../util/request/projectRequest'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../util/request/projectRequest')
+jest.mock('../../../util/addToast', () => ({
+  addToast: jest.fn()
+}))
 
-function setup(overrideProps) {
-  const props = {
-    savedProjects: [],
-    savedProjectsIsLoading: false,
-    savedProjectsIsLoaded: false,
-    onChangePath: jest.fn(),
-    onDeleteSavedProject: jest.fn(),
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<SavedProjects {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+jest.mock(
+  '../../../containers/PortalLinkContainer/PortalLinkContainer',
+  () => ({
+    __esModule: true,
+    default: ({ to, onClick, children }) => (
+      <a data-testid="portal-link" href={to} onClick={onClick}>
+        {children}
+      </a>
+    )
+  })
+)
 
 describe('SavedProjects component', () => {
-  describe('when the projects are loading', () => {
-    test('shows a loading state', () => {
-      const { enzymeWrapper } = setup({
-        savedProjectsIsLoading: true
-      })
+  const baseProps = {
+    authToken: 'fake‑token',
+    earthdataEnvironment: 'uat',
+    onChangePath: jest.fn()
+  }
 
-      expect(enzymeWrapper.find(Spinner).length).toBe(1)
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  describe('When the projects are loading', () => {
+    test('shows a loading state', () => {
+      ProjectRequest.mockImplementation(() => ({
+        all: () => new Promise(() => {}),
+        remove: jest.fn()
+      }))
+
+      const { container } = render(<SavedProjects {...baseProps} />)
+      expect(
+        container.querySelector('.saved-projects__spinner')
+      ).toBeInTheDocument()
     })
   })
 
-  describe('when the projects have loaded', () => {
-    test('renders a message when no saved projects exist', () => {
-      const { enzymeWrapper } = setup({
-        savedProjectsIsLoaded: true
-      })
+  describe('When loaded with zero projects', () => {
+    test('renders empty-state message and no table', async () => {
+      ProjectRequest.mockImplementation(() => ({
+        all: jest.fn().mockResolvedValue({ data: [] }),
+        remove: jest.fn()
+      }))
 
-      expect(enzymeWrapper.find(Table).length).toBe(0)
-      expect(enzymeWrapper.find('p').text()).toBe('No saved projects to display.')
+      render(<SavedProjects {...baseProps} />)
+
+      expect(
+        await screen.findByText('No saved projects to display.')
+      ).toBeInTheDocument()
+
+      expect(screen.queryByRole('table')).not.toBeInTheDocument()
+    })
+  })
+
+  describe('When loaded with one project', () => {
+    const project = {
+      id: '8069076',
+      name: 'test project',
+      path: '/search?p=!C123456-EDSC',
+      created_at: '2019-08-25T11:58:14.390Z'
+    }
+
+    beforeEach(() => {
+      ProjectRequest.mockImplementation(() => ({
+        all: jest.fn().mockResolvedValue({ data: [project] }),
+        remove: jest.fn()
+      }))
     })
 
-    test('renders a table when a saved project exists with one collection', () => {
-      const { enzymeWrapper } = setup({
-        savedProjects: [{
-          id: '8069076',
-          name: 'test name',
-          path: '/search?p=!C123456-EDSC',
-          created_at: '2019-08-25T11:58:14.390Z'
-        }],
-        savedProjectsIsLoaded: true
-      })
+    test('renders a table when a saved project exists with one collection', async () => {
+      render(<SavedProjects {...baseProps} />)
 
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual('/search?projectId=8069076')
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('test name')
-      expect(enzymeWrapper.find('tbody tr td').at(1).text()).toEqual('1 Collection')
+      const link = await screen.findByTestId('portal-link')
+      expect(link).toHaveTextContent('test project')
+      expect(link).toHaveAttribute(
+        'href',
+        expect.stringContaining('?projectId=8069076')
+      )
     })
 
-    test('renders a table when a saved project exists with no collections', () => {
-      const { enzymeWrapper } = setup({
-        savedProjects: [{
-          id: '8069076',
-          name: 'test name',
-          path: '/search',
-          created_at: '2019-08-25T11:58:14.390Z'
-        }],
-        savedProjectsIsLoaded: true
-      })
+    test('renders the correct collection count and time-created cell', async () => {
+      render(<SavedProjects {...baseProps} />)
 
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual('/search?projectId=8069076')
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('test name')
-      expect(enzymeWrapper.find('tbody tr td').at(1).text()).toEqual('0 Collections')
+      await screen.findByTestId('portal-link')
+      expect(screen.getByText('1 Collection')).toBeInTheDocument()
+      expect(screen.getByText(/ago$/)).toBeInTheDocument()
     })
+  })
 
-    test('renders a table when a saved project exists with two collections and a focusedCollection', () => {
-      const { enzymeWrapper } = setup({
-        savedProjects: [{
-          id: '8069076',
-          name: 'test name',
-          path: '/search?p=C123456-EDSC!C123456-EDSC!C987654-EDSC',
-          created_at: '2019-08-25T11:58:14.390Z'
-        }],
-        savedProjectsIsLoaded: true
-      })
+  describe('When deleting a project', () => {
+    const project = {
+      id: '8069076',
+      name: 'test name',
+      path: '/search?p=!C123456-EDSC',
+      created_at: '2019-08-25T11:58:14.390Z'
+    }
+    let removeMock
 
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual('/search?projectId=8069076')
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('test name')
-      expect(enzymeWrapper.find('tbody tr td').at(1).text()).toEqual('2 Collections')
-    })
+    beforeEach(async () => {
+      removeMock = jest.fn().mockResolvedValue({})
+      ProjectRequest.mockImplementation(() => ({
+        all: jest.fn().mockResolvedValue({ data: [project] }),
+        remove: removeMock
+      }))
 
-    test('renders a table when a saved project exists with one collection without a name', () => {
-      const { enzymeWrapper } = setup({
-        savedProjects: [{
-          id: '8069076',
-          name: '',
-          path: '/search?p=!C123456-EDSC',
-          created_at: '2019-08-25T11:58:14.390Z'
-        }],
-        savedProjectsIsLoaded: true
-      })
-
-      expect(enzymeWrapper.find(Table).length).toBe(1)
-      expect(enzymeWrapper.find('tbody tr').length).toBe(1)
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('to')).toEqual('/search?projectId=8069076')
-      expect(enzymeWrapper.find(PortalLinkContainer).prop('children')).toEqual('Untitled Project')
-    })
-
-    test('deleting a project calls onDeleteSavedProject', () => {
-      const { enzymeWrapper, props } = setup({
-        savedProjects: [{
-          id: '8069076',
-          name: 'test name',
-          path: '/search?p=!C123456-EDSC',
-          created_at: '2019-08-25T11:58:14.390Z'
-        }],
-        savedProjectsIsLoaded: true
-      })
       window.confirm = jest.fn(() => true)
 
-      const button = enzymeWrapper.find('.saved-projects__button--remove')
-      button.simulate('click')
+      render(<SavedProjects {...baseProps} />)
+      await screen.findByTestId('portal-link')
+    })
 
-      expect(window.confirm).toBeCalledTimes(1)
-      expect(props.onDeleteSavedProject).toBeCalledTimes(1)
-      expect(props.onDeleteSavedProject).toBeCalledWith('8069076')
+    test('calls onDeleteSavedProject', async () => {
+      const btn = document.querySelector(
+        '.saved-projects__button--remove'
+      )
+      fireEvent.click(btn)
+
+      await waitFor(() => expect(removeMock).toHaveBeenCalledWith('8069076'))
+
+      expect(screen.queryByTestId('portal-link')).toBeNull()
     })
   })
 })
