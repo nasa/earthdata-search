@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from '@testing-library/react'
 
 import actions from '../../../actions'
 
@@ -12,14 +11,14 @@ import {
 } from '../GranuleResultsActionsContainer'
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 jest.mock('../../../components/GranuleResults/GranuleResultsActions', () => jest.fn(() => <div />))
 
-const setup = () => {
-  const props = {
+const setup = setupTest({
+  Component: GranuleResultsActionsContainer,
+  defaultProps: {
     authToken: 'token',
-    location: {
-      search: 'value'
-    },
     collectionMetadata: {
       mock: 'data'
     },
@@ -28,67 +27,64 @@ const setup = () => {
     focusedCollectionId: 'focusedCollection',
     focusedProjectCollection: {
       accessMethods: {},
-      selectedAccessMethod: '',
       granules: {
+        addedIds: [],
+        allIds: [],
+        hits: 100,
+        isLoaded: true,
+        isLoading: false,
         params: {
           pageNum: 1
         },
-        isLoaded: true,
-        isLoading: false,
-        hits: 100,
-        totalSize: '',
-        allIds: [],
-        addedIds: [],
-        removedIds: []
-      }
+        removedIds: [],
+        totalSize: ''
+      },
+      selectedAccessMethod: ''
     },
     granuleQuery: {
       pageNum: 1
     },
     granuleSearchResults: {
-      isLoaded: true,
-      isLoading: false,
-      hits: 100,
       allIds: [],
-      excludledGranuleIds: []
+      excludledGranuleIds: [],
+      hits: 100,
+      isLoaded: true,
+      isLoading: false
     },
+    location: {
+      search: 'value'
+    },
+    onAddProjectCollection: jest.fn(),
+    onChangePath: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
+    onRemoveCollectionFromProject: jest.fn(),
+    onSetActivePanelSection: jest.fn(),
     project: {
       collections: {
         allIds: ['focusedCollection'],
         byId: {
           focusedCollection: {
             accessMethods: {},
-            selectedAccessMethod: '',
             granules: {
+              addedIds: [],
+              allIds: [],
+              hits: 100,
+              isLoaded: true,
+              isLoading: false,
               params: {
                 pageNum: 1
               },
-              isLoaded: true,
-              isLoading: false,
-              hits: 100,
-              totalSize: '',
-              allIds: [],
-              addedIds: [],
-              removedIds: []
-            }
+              removedIds: [],
+              totalSize: ''
+            },
+            selectedAccessMethod: ''
           }
         }
       }
     },
-    onAddProjectCollection: jest.fn(),
-    onMetricsAddCollectionProject: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
-    onChangePath: jest.fn(),
     subscriptions: []
   }
-
-  render(<GranuleResultsActionsContainer {...props} />)
-
-  return {
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onAddProjectCollection calls actions.addProjectCollection', () => {

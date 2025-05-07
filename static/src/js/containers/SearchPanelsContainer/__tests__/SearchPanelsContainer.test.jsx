@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import actions from '../../../actions'
 import * as metricsCollectionSortChange from '../../../middleware/metrics/actions'
@@ -11,6 +11,7 @@ import {
   mapStateToProps,
   SearchPanelsContainer
 } from '../SearchPanelsContainer'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
 
@@ -25,8 +26,9 @@ const mockOnTogglePanels = jest.fn
 const mockOnSetActivePanel = jest.fn
 const mockOnExport = jest.fn
 
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: SearchPanelsContainer,
+  defaultProps: {
     authToken: '',
     collectionMetadata: {},
     collectionQuery: {},
@@ -66,15 +68,7 @@ function setup() {
       test: 'portal'
     }
   }
-
-  render(
-    <SearchPanelsContainer {...props} />
-  )
-
-  return {
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onApplyGranuleFilters calls actions.applyGranuleFilters', () => {

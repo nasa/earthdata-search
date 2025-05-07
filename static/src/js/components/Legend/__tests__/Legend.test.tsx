@@ -1,8 +1,8 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import 'jest-canvas-mock'
 
 import Legend from '../Legend'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const quantitativeColorMap = {
   scale: {
@@ -42,16 +42,17 @@ const qualitativeColorMap = {
   }
 }
 
+const setup = setupTest({
+  Component: Legend,
+  defaultProps: {
+    colorMap: quantitativeColorMap
+  }
+})
+
 describe('Legend', () => {
   describe('if the scale property exists', () => {
-    test('renders the component', () => {
-      const { container } = render(<Legend colorMap={quantitativeColorMap} />)
-
-      expect(container).not.toBeEmptyDOMElement()
-    })
-
     test('renders the min label', () => {
-      render(<Legend colorMap={quantitativeColorMap} />)
+      setup()
 
       const minLabel = screen.queryByText('0.004 – 0.008 mm')
 
@@ -59,7 +60,7 @@ describe('Legend', () => {
     })
 
     test('renders and encodes the max label', () => {
-      render(<Legend colorMap={quantitativeColorMap} />)
+      setup()
 
       const maxLabel = screen.queryByText('≥ 0.025 mm')
 
@@ -68,14 +69,12 @@ describe('Legend', () => {
   })
 
   describe('if the class property exists', () => {
-    test('renders the component', () => {
-      const { container } = render(<Legend colorMap={qualitativeColorMap} />)
-
-      expect(container).not.toBeEmptyDOMElement()
-    })
-
     test('renders the hover prompt', () => {
-      render(<Legend colorMap={qualitativeColorMap} />)
+      setup({
+        overrideProps: {
+          colorMap: qualitativeColorMap
+        }
+      })
 
       const hoverPrompt = screen.queryByText('Hover for class names')
 
@@ -83,7 +82,11 @@ describe('Legend', () => {
     })
 
     test('does not render the max label', () => {
-      render(<Legend colorMap={qualitativeColorMap} />)
+      setup({
+        overrideProps: {
+          colorMap: qualitativeColorMap
+        }
+      })
 
       const maxLabel = screen.queryByText('Cloud')
 

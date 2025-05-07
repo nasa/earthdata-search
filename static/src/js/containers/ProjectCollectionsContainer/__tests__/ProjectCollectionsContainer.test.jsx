@@ -1,5 +1,4 @@
 import React from 'react'
-import { render } from '@testing-library/react'
 
 import actions from '../../../actions'
 import {
@@ -9,11 +8,13 @@ import {
 } from '../ProjectCollectionsContainer'
 import ProjectCollections from '../../../components/ProjectCollections/ProjectCollections'
 import * as metricsDataAccess from '../../../middleware/metrics/actions'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/ProjectCollections/ProjectCollections', () => jest.fn(() => <div />))
 
-const setup = () => {
-  const props = {
+const setup = setupTest({
+  Component: ProjectCollectionsContainer,
+  defaultProps: {
     collectionsQuery: {},
     project: {
       collections: {
@@ -48,13 +49,7 @@ const setup = () => {
     onViewCollectionDetails: jest.fn(),
     onViewCollectionGranules: jest.fn()
   }
-
-  render(<ProjectCollectionsContainer {...props} />)
-
-  return {
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onRemoveCollectionFromProject calls actions.removeCollectionFromProject', () => {
