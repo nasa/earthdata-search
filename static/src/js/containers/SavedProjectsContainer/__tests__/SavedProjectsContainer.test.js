@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  render,
-  act,
-  waitFor
-} from '@testing-library/react'
+import { waitFor, act } from '@testing-library/react'
 import nock from 'nock'
 
 import actions from '../../../actions'
@@ -15,6 +11,7 @@ import {
   mapDispatchToProps,
   SavedProjectsContainer
 } from '../SavedProjectsContainer'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/SavedProjects/SavedProjects', () => ({
   SavedProjects: jest.fn(() => (
@@ -29,6 +26,16 @@ jest.mock('../../../util/addToast', () => ({
 jest.mock('../../../selectors/earthdataEnvironment', () => ({
   getEarthdataEnvironment: jest.fn()
 }))
+
+const setup = setupTest({
+  Component: SavedProjectsContainer,
+  defaultProps: {
+    authToken: 'TEST_TOKEN_DEFAULT',
+    earthdataEnvironment: 'uat',
+    onChangePath: jest.fn(),
+    dispatchHandleError: jest.fn()
+  }
+})
 
 describe('mapDispatchToProps', () => {
   test('onChangePath calls actions.changePath', () => {
@@ -68,31 +75,6 @@ describe('mapStateToProps', () => {
 })
 
 describe('SavedProjectsContainer', () => {
-  const setup = (propsOverride = {}) => {
-    const mockOnChangePath = jest.fn()
-    const mockDispatchHandleError = jest.fn()
-
-    const defaultProps = {
-      authToken: 'TEST_TOKEN_DEFAULT',
-      earthdataEnvironment: 'uat',
-      onChangePath: mockOnChangePath,
-      dispatchHandleError: mockDispatchHandleError
-    }
-
-    const finalProps = {
-      ...defaultProps,
-      ...propsOverride
-    }
-
-    render(<SavedProjectsContainer {...finalProps} />)
-
-    return {
-      mockOnChangePath,
-      mockDispatchHandleError,
-      props: finalProps
-    }
-  }
-
   beforeEach(() => {
     jest.clearAllMocks()
     SavedProjects.mockClear()
@@ -100,8 +82,8 @@ describe('SavedProjectsContainer', () => {
     nock.disableNetConnect()
   })
 
-  describe('When the component mounts successfully with a valid authToken', () => {
-    test('fetches projects and renders SavedProjects with project data', async () => {
+  describe('When the component mounts with a valid authToken', () => {
+    test('fetches the projects and renders SavedProjects with projects', async () => {
       const mockProjects = [
         {
           id: '123',
@@ -137,8 +119,12 @@ describe('SavedProjectsContainer', () => {
   })
 
   describe('When the authToken is null', () => {
-    test('renders SavedProjects with no projects and appropriate loading states', async () => {
-      setup({ authToken: null })
+    test('renders SavedProjects with no projects', async () => {
+      setup({
+        overrideProps: {
+          authToken: null
+        }
+      })
 
       await waitFor(() => {
         expect(SavedProjects).toHaveBeenCalled()
@@ -205,7 +191,7 @@ describe('SavedProjectsContainer', () => {
         .delete(`/projects/${projectIdToDelete}`)
         .replyWithError('Failed to delete')
 
-      const { mockDispatchHandleError } = setup()
+      const { props } = setup()
 
       let onDeleteProjectCallback
       await waitFor(() => {
@@ -222,7 +208,7 @@ describe('SavedProjectsContainer', () => {
       })
 
       await waitFor(() => {
-        expect(mockDispatchHandleError).toHaveBeenCalledWith(
+        expect(props.dispatchHandleError).toHaveBeenCalledWith(
           expect.objectContaining({
             error: expect.any(Error),
             action: 'handleDeleteSavedProject',
@@ -248,10 +234,10 @@ describe('SavedProjectsContainer', () => {
         .get(/projects/)
         .replyWithError('Failed to fetch')
 
-      const { mockDispatchHandleError } = setup()
+      const { props } = setup()
 
       await waitFor(() => {
-        expect(mockDispatchHandleError).toHaveBeenCalledWith(
+        expect(props.dispatchHandleError).toHaveBeenCalledWith(
           expect.objectContaining({
             error: expect.any(Error),
             action: 'fetchProjects',

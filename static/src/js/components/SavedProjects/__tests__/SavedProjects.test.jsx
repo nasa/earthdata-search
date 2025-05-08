@@ -1,8 +1,8 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen } from '@testing-library/react'
 
 import { SavedProjects } from '../SavedProjects'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../util/addToast', () => ({
   addToast: jest.fn()
@@ -20,8 +20,9 @@ jest.mock(
   })
 )
 
-describe('SavedProjects component', () => {
-  const defaultProps = {
+const setup = setupTest({
+  Component: SavedProjects,
+  defaultProps: {
     projects: [],
     isLoading: false,
     isLoaded: false,
@@ -29,17 +30,20 @@ describe('SavedProjects component', () => {
     onChangePath: jest.fn(),
     onDeleteProject: jest.fn()
   }
+})
 
+describe('SavedProjects component', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
   describe('When the projects are loading', () => {
     test('shows a loading state', () => {
-      render(<SavedProjects
-        {...defaultProps}
-        isLoading
-      />)
+      setup({
+        overrideProps: {
+          isLoading: true
+        }
+      })
 
       expect(screen.getByRole('status')).toBeInTheDocument()
       expect(screen.getByRole('status')).toHaveClass('saved-projects__spinner')
@@ -48,10 +52,11 @@ describe('SavedProjects component', () => {
 
   describe('When loaded with zero projects', () => {
     test('renders empty-state message and no table', () => {
-      render(<SavedProjects
-        {...defaultProps}
-        isLoaded
-      />)
+      setup({
+        overrideProps: {
+          isLoaded: true
+        }
+      })
 
       expect(screen.getByText('No saved projects to display.')).toBeInTheDocument()
       expect(screen.queryByRole('table')).not.toBeInTheDocument()
@@ -66,14 +71,13 @@ describe('SavedProjects component', () => {
       created_at: '2019-08-25T11:58:14.390Z'
     }
 
-    const propsWithProject = {
-      ...defaultProps,
-      isLoaded: true,
-      projects: [project]
-    }
-
     test('renders a table when a saved project exists with one collection', () => {
-      render(<SavedProjects {...propsWithProject} />)
+      setup({
+        overrideProps: {
+          isLoaded: true,
+          projects: [project]
+        }
+      })
 
       const link = screen.getByRole('link', { name: 'test project' })
       expect(link).toHaveTextContent('test project')
@@ -84,7 +88,12 @@ describe('SavedProjects component', () => {
     })
 
     test('renders the correct collection count and time-created cell', () => {
-      render(<SavedProjects {...propsWithProject} />)
+      setup({
+        overrideProps: {
+          isLoaded: true,
+          projects: [project]
+        }
+      })
 
       expect(screen.getByText('1 Collection')).toBeInTheDocument()
       expect(screen.getByText(/ago$/)).toBeInTheDocument()
@@ -99,28 +108,22 @@ describe('SavedProjects component', () => {
       created_at: '2019-08-25T11:58:14.390Z'
     }
 
-    const propsWithProject = {
-      ...defaultProps,
-      isLoaded: true,
-      projects: [project]
-    }
-
     test('calls onDeleteProject when delete button is clicked', async () => {
       const mockOnDeleteProject = jest.fn()
-      const view = userEvent.setup()
 
-      render(
-        <SavedProjects
-          {...propsWithProject}
-          onDeleteProject={mockOnDeleteProject}
-        />
-      )
+      const { user } = setup({
+        overrideProps: {
+          isLoaded: true,
+          projects: [project],
+          onDeleteProject: mockOnDeleteProject
+        }
+      })
 
       const deleteButton = screen.getByRole('button', {
         name: /remove project/i
       })
 
-      await view.click(deleteButton)
+      await user.click(deleteButton)
       expect(mockOnDeleteProject).toHaveBeenCalledWith('8069076')
     })
   })
