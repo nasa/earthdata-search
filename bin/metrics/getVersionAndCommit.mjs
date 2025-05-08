@@ -15,11 +15,10 @@ const getVersionAndCommit = async (url) => {
   // TODO Won't need puppeteer once the version in the fallback footer makes it to prod
   // Request the URL directly to scrape the version from the footer (classname `footer__ver-pill`)
   // Set the executable path if not on a Mac
-  // const executablePath = process.platform === 'darwin' ? undefined : '/usr/local/share/chromedriver-linux64'
-  // const browser = await puppeteer.launch({
-  //   executablePath
-  // })
-  const browser = await puppeteer.launch()
+  const executablePath = process.platform === 'darwin' ? undefined : '/usr/local/share/chromedriver-linux64'
+  const browser = await puppeteer.launch({
+    executablePath
+  })
   const page = await browser.newPage()
   await page.goto(url, { waitUntil: 'networkidle2' })
   const version = await page.evaluate(() => {
