@@ -151,11 +151,7 @@ import {
   updateShapefile
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
-import {
-  deleteSavedProject,
-  updateProjectName,
-  updateSavedProject
-} from './savedProject'
+import { updateProjectName, updateSavedProject } from './savedProject'
 import { handleAlert } from './alerts'
 import { handleError, removeError } from './errors'
 import { collectionRelevancyMetrics } from './relevancy'
@@ -232,7 +228,6 @@ const actions = {
   createSubscription,
   deleteAutocompleteValue,
   deleteCollectionSubscription,
-  deleteSavedProject,
   deleteSubscription,
   excludeGranule,
   exportSearch,

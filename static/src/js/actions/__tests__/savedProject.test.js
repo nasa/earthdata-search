@@ -3,13 +3,7 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import { UPDATE_SAVED_PROJECT } from '../../constants/actionTypes'
-import {
-  updateSavedProject,
-  updateProjectName,
-  deleteSavedProject
-} from '../savedProject'
-
-import * as addToast from '../../util/addToast'
+import { updateSavedProject, updateProjectName } from '../savedProject'
 
 const mockStore = configureMockStore([thunk])
 
@@ -135,51 +129,6 @@ describe('updateProjectName', () => {
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
     await store.dispatch(updateProjectName(name)).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
-    })
-  })
-})
-
-describe('deleteSavedProject', () => {
-  test('calls lambda to delete a project', async () => {
-    const addToastMock = jest.spyOn(addToast, 'addToast')
-
-    nock(/localhost/)
-      .delete(/2057964173/)
-      .reply(204)
-
-    const store = mockStore({
-      authToken: 'mockToken',
-      earthdataEnvironment: 'prod'
-    })
-
-    await store.dispatch(deleteSavedProject('2057964173')).then(() => {
-      expect(addToastMock.mock.calls.length).toBe(1)
-      expect(addToastMock.mock.calls[0][0]).toEqual('Project removed')
-      expect(addToastMock.mock.calls[0][1].appearance).toEqual('success')
-      expect(addToastMock.mock.calls[0][1].autoDismiss).toEqual(true)
-    })
-  })
-
-  test('does not call removeSavedProject on error', async () => {
-    nock(/localhost/)
-      .delete(/2057964173/)
-      .reply(500, {
-        errors: ['An error occured.']
-      })
-
-    nock(/localhost/)
-      .post(/error_logger/)
-      .reply(200)
-
-    const store = mockStore({
-      authToken: 'mockToken',
-      retrievalHistory: []
-    })
-
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
-    await store.dispatch(deleteSavedProject('2057964173')).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
