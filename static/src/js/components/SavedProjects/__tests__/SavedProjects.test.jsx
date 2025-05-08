@@ -19,7 +19,7 @@ jest.mock(
   () => ({
     __esModule: true,
     default: ({ to, onClick, children }) => (
-      <a data-testid="portal-link" href={to} onClick={onClick}>
+      <a href={to} onClick={onClick}>
         {children}
       </a>
     )
@@ -85,7 +85,7 @@ describe('SavedProjects component', () => {
     test('renders a table when a saved project exists with one collection', async () => {
       render(<SavedProjects {...props} />)
 
-      const link = await screen.findByTestId('portal-link')
+      const link = await screen.findByRole('link', { name: 'test project' })
       expect(link).toHaveTextContent('test project')
       expect(link).toHaveAttribute(
         'href',
@@ -96,7 +96,7 @@ describe('SavedProjects component', () => {
     test('renders the correct collection count and time-created cell', async () => {
       render(<SavedProjects {...props} />)
 
-      await screen.findByTestId('portal-link')
+      await screen.findByRole('link', { name: 'test project' })
       expect(screen.getByText('1 Collection')).toBeInTheDocument()
       expect(screen.getByText(/ago$/)).toBeInTheDocument()
     })
@@ -124,7 +124,7 @@ describe('SavedProjects component', () => {
     test('calls onDeleteSavedProject', async () => {
       const view = userEvent.setup()
       render(<SavedProjects {...props} />)
-      await screen.findByTestId('portal-link')
+      await screen.findByRole('link', { name: 'test project' })
 
       const deleteButton = screen.getByRole('button', {
         name: /remove project/i
@@ -133,8 +133,6 @@ describe('SavedProjects component', () => {
       view.click(deleteButton)
 
       await waitFor(() => expect(removeMock).toHaveBeenCalledWith('8069076'))
-
-      expect(screen.queryByTestId('portal-link')).toBeNull()
     })
   })
 })

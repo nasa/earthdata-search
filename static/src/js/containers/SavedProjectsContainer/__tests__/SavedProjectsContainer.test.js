@@ -11,12 +11,12 @@ import { SavedProjects } from '../../../components/SavedProjects/SavedProjects'
 
 jest.mock('../../../components/SavedProjects/SavedProjects', () => ({
   SavedProjects: jest.fn(() => (
-    <div data-testid="saved-projects">Saved Projects</div>
+    <div aria-label="Saved Projects">Saved Projects</div>
   ))
 }))
 
 describe('mapDispatchToProps', () => {
-  it('onChangePath calls actions.changePath', () => {
+  test('onChangePath calls actions.changePath', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changePath')
     mapDispatchToProps(dispatch).onChangePath('path')
@@ -26,7 +26,7 @@ describe('mapDispatchToProps', () => {
 })
 
 describe('mapStateToProps', () => {
-  it('returns the correct state', () => {
+  test('returns the correct state', () => {
     const store = {
       authToken: 'mock-token',
       earthdataEnvironment: 'prod-env'
@@ -40,7 +40,7 @@ describe('mapStateToProps', () => {
 })
 
 describe('SavedProjectsContainer', () => {
-  it('renders SavedProjects and passes authToken, environment, and onChangePath', () => {
+  test('renders SavedProjects and passes authToken, environment, and onChangePath', () => {
     const mockOnChange = jest.fn()
 
     render(
@@ -51,7 +51,7 @@ describe('SavedProjectsContainer', () => {
       />
     )
 
-    expect(screen.getByTestId('saved-projects')).toBeInTheDocument()
+    expect(screen.getByText('Saved Projects')).toBeInTheDocument()
 
     expect(SavedProjects).toHaveBeenCalledTimes(1)
     expect(SavedProjects).toHaveBeenCalledWith(
