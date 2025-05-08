@@ -1,15 +1,9 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  waitFor
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { SavedProjects } from '../SavedProjects'
-import ProjectRequest from '../../../util/request/projectRequest'
 
-jest.mock('../../../util/request/projectRequest')
 jest.mock('../../../util/addToast', () => ({
   addToast: jest.fn()
 }))
@@ -27,10 +21,13 @@ jest.mock(
 )
 
 describe('SavedProjects component', () => {
-  const props = {
-    authToken: 'fake‑token',
+  const defaultProps = {
+    projects: [],
+    isLoading: false,
+    isLoaded: false,
     earthdataEnvironment: 'uat',
-    onChangePath: jest.fn()
+    onChangePath: jest.fn(),
+    onDeleteProject: jest.fn()
   }
 
   beforeEach(() => {
@@ -39,30 +36,24 @@ describe('SavedProjects component', () => {
 
   describe('When the projects are loading', () => {
     test('shows a loading state', () => {
-      ProjectRequest.mockImplementation(() => ({
-        all: () => new Promise(() => {}),
-        remove: jest.fn()
-      }))
+      render(<SavedProjects
+        {...defaultProps}
+        isLoading
+      />)
 
-      render(<SavedProjects {...props} />)
       expect(screen.getByRole('status')).toBeInTheDocument()
       expect(screen.getByRole('status')).toHaveClass('saved-projects__spinner')
     })
   })
 
   describe('When loaded with zero projects', () => {
-    test('renders empty-state message and no table', async () => {
-      ProjectRequest.mockImplementation(() => ({
-        all: jest.fn().mockResolvedValue({ data: [] }),
-        remove: jest.fn()
-      }))
+    test('renders empty-state message and no table', () => {
+      render(<SavedProjects
+        {...defaultProps}
+        isLoaded
+      />)
 
-      render(<SavedProjects {...props} />)
-
-      expect(
-        await screen.findByText('No saved projects to display.')
-      ).toBeInTheDocument()
-
+      expect(screen.getByText('No saved projects to display.')).toBeInTheDocument()
       expect(screen.queryByRole('table')).not.toBeInTheDocument()
     })
   })
@@ -75,17 +66,16 @@ describe('SavedProjects component', () => {
       created_at: '2019-08-25T11:58:14.390Z'
     }
 
-    beforeEach(() => {
-      ProjectRequest.mockImplementation(() => ({
-        all: jest.fn().mockResolvedValue({ data: [project] }),
-        remove: jest.fn()
-      }))
-    })
+    const propsWithProject = {
+      ...defaultProps,
+      isLoaded: true,
+      projects: [project]
+    }
 
-    test('renders a table when a saved project exists with one collection', async () => {
-      render(<SavedProjects {...props} />)
+    test('renders a table when a saved project exists with one collection', () => {
+      render(<SavedProjects {...propsWithProject} />)
 
-      const link = await screen.findByRole('link', { name: 'test project' })
+      const link = screen.getByRole('link', { name: 'test project' })
       expect(link).toHaveTextContent('test project')
       expect(link).toHaveAttribute(
         'href',
@@ -93,10 +83,9 @@ describe('SavedProjects component', () => {
       )
     })
 
-    test('renders the correct collection count and time-created cell', async () => {
-      render(<SavedProjects {...props} />)
+    test('renders the correct collection count and time-created cell', () => {
+      render(<SavedProjects {...propsWithProject} />)
 
-      await screen.findByRole('link', { name: 'test project' })
       expect(screen.getByText('1 Collection')).toBeInTheDocument()
       expect(screen.getByText(/ago$/)).toBeInTheDocument()
     })
@@ -105,34 +94,34 @@ describe('SavedProjects component', () => {
   describe('When deleting a project', () => {
     const project = {
       id: '8069076',
-      name: 'test name',
+      name: 'test project',
       path: '/search?p=!C123456-EDSC',
       created_at: '2019-08-25T11:58:14.390Z'
     }
-    let removeMock
 
-    beforeEach(async () => {
-      removeMock = jest.fn().mockResolvedValue({})
-      ProjectRequest.mockImplementation(() => ({
-        all: jest.fn().mockResolvedValue({ data: [project] }),
-        remove: removeMock
-      }))
+    const propsWithProject = {
+      ...defaultProps,
+      isLoaded: true,
+      projects: [project]
+    }
 
-      window.confirm = jest.fn(() => true)
-    })
-
-    test('calls onDeleteSavedProject', async () => {
+    test('calls onDeleteProject when delete button is clicked', async () => {
+      const mockOnDeleteProject = jest.fn()
       const view = userEvent.setup()
-      render(<SavedProjects {...props} />)
-      await screen.findByRole('link', { name: 'test project' })
+
+      render(
+        <SavedProjects
+          {...propsWithProject}
+          onDeleteProject={mockOnDeleteProject}
+        />
+      )
 
       const deleteButton = screen.getByRole('button', {
         name: /remove project/i
       })
 
-      view.click(deleteButton)
-
-      await waitFor(() => expect(removeMock).toHaveBeenCalledWith('8069076'))
+      await view.click(deleteButton)
+      expect(mockOnDeleteProject).toHaveBeenCalledWith('8069076')
     })
   })
 })

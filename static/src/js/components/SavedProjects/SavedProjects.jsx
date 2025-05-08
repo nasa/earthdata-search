@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
@@ -10,8 +10,6 @@ import { XCircled, Share } from '@edsc/earthdata-react-icons/horizon-design-syst
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../util/pluralize'
-import ProjectRequest from '../../util/request/projectRequest'
-import { addToast } from '../../util/addToast'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
@@ -22,71 +20,13 @@ import './SavedProjects.scss'
 export const SavedProjects = (props) => {
   const {
     onChangePath,
-    authToken,
-    earthdataEnvironment
+    projects,
+    isLoading,
+    isLoaded,
+    onDeleteProject
   } = props
 
-  const [projects, setProjects] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [isLoaded, setIsLoaded] = useState(false)
-  const [error, setError] = useState(null)
-
   const { edscHost } = getEnvironmentConfig()
-
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setIsLoading(true)
-      setIsLoaded(false)
-      setError(null)
-
-      if (!authToken) {
-        setIsLoading(false)
-        setProjects([])
-
-        return
-      }
-
-      const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
-
-      try {
-        const response = await requestObject.all()
-        setProjects(response.data)
-        setIsLoaded(true)
-      } catch (e) {
-        console.error('Error fetching saved projects: ', e)
-        setError(e)
-        addToast('Error fetching saved projects. Please try again.', {
-          appearance: 'error',
-          autoDismiss: true
-        })
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchProjects()
-  }, [authToken, earthdataEnvironment])
-
-  const handleDeleteSavedProject = async (projectId) => {
-    // eslint-disable-next-line no-alert
-    if (window.confirm('Are you sure you want to remove this project? This action cannot be undone.')) {
-      const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
-      try {
-        await requestObject.remove(projectId)
-        setProjects((prevProjects) => prevProjects.filter((p) => p.id !== projectId))
-        addToast('Project removed', {
-          appearance: 'success',
-          autoDismiss: true
-        })
-      } catch (e) {
-        console.error('Error deleting project: ', e)
-        addToast('Error deleting project. Please try again.', {
-          appearance: 'error',
-          autoDismiss: true
-        })
-      }
-    }
-  }
 
   /**
    * Determines the number of collections saved in the project path
@@ -109,15 +49,6 @@ export const SavedProjects = (props) => {
     const [pathname] = path.split('?')
 
     return `${pathname}?projectId=${id}`
-  }
-
-  if (error && !isLoading) {
-    return (
-      <div className="saved-projects">
-        <h2 className="route-wrapper__page-heading">Saved Projects</h2>
-        <p>There was an error loading your projects. Please try refreshing the page.</p>
-      </div>
-    )
   }
 
   return (
@@ -228,7 +159,7 @@ export const SavedProjects = (props) => {
                               label="Remove project"
                               variant="naked"
                               icon={XCircled}
-                              onClick={() => handleDeleteSavedProject(id)}
+                              onClick={() => onDeleteProject(id)}
                             />
                           </div>
                         </td>
@@ -249,12 +180,21 @@ export const SavedProjects = (props) => {
 
 SavedProjects.propTypes = {
   onChangePath: PropTypes.func.isRequired,
-  authToken: PropTypes.string,
-  earthdataEnvironment: PropTypes.string.isRequired
+  projects: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string,
+      path: PropTypes.string.isRequired,
+      created_at: PropTypes.string.isRequired
+    })
+  ),
+  isLoading: PropTypes.bool.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
+  onDeleteProject: PropTypes.func.isRequired
 }
 
 SavedProjects.defaultProps = {
-  authToken: null
+  projects: []
 }
 
 export default SavedProjects
