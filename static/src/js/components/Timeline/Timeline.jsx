@@ -11,9 +11,11 @@ import { FaAngleDoubleDown, FaAngleDoubleUp } from 'react-icons/fa'
 import Button from '../Button/Button'
 
 import { getColorByIndex } from '../../util/colors'
-import { timelineIntervals, calculateTimelineParams } from '../../util/timeline'
+import { timelineIntervalZooms, calculateTimelineParams } from '../../util/timeline'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import getObjectKeyByValue from '../../util/object'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './Timeline.scss'
 
@@ -23,16 +25,24 @@ export const Timeline = ({
   collectionMetadata,
   isOpen,
   onChangeQuery,
-  onChangeTimelineQuery,
   onMetricsTimeline,
   onToggleOverrideTemporalModal,
   onToggleTimeline,
   pathname,
   projectCollectionsIds,
   showOverrideModal,
-  temporalSearch,
-  timeline
+  temporalSearch
 }) => {
+  const {
+    timelineIntervals,
+    timelineQuery,
+    onChangeTimelineQuery
+  } = useEdscStore((state) => ({
+    timelineIntervals: state.timeline.intervals,
+    timelineQuery: state.timeline.query,
+    onChangeTimelineQuery: state.timeline.setQuery
+  }))
+
   const currentDate = new Date().getTime()
   const collectionConceptId = Object.keys(collectionMetadata)[0]
   const isProjectPage = pathname.indexOf('projects') > -1
@@ -87,10 +97,11 @@ export const Timeline = ({
       setCenter(newCenter)
       setZoomLevel(numericZoom)
       setIsInitialSetup(false)
+
       onChangeTimelineQuery({
-        ...timeline.query,
+        ...timelineQuery,
         center: newCenter,
-        interval: getObjectKeyByValue(timelineIntervals, numericZoom)
+        interval: getObjectKeyByValue(timelineIntervalZooms, numericZoom)
       })
     }
   }, [isMetadataLoaded, isInitialSetup])
@@ -101,11 +112,11 @@ export const Timeline = ({
       endDate: temporalEnd,
       startDate: temporalStart
     } = temporalSearch
-    const { query: newQuery } = timeline
     const {
       end: focusedEnd,
       start: focusedStart
-    } = newQuery
+    } = timelineQuery
+
     if (
       showOverrideModal
       && temporalStart
@@ -177,7 +188,7 @@ export const Timeline = ({
     const newQuery = {
       center: newCenter,
       endDate: endDate.toISOString(),
-      interval: getObjectKeyByValue(timelineIntervals, zoom),
+      interval: getObjectKeyByValue(timelineIntervalZooms, zoom),
       startDate: startDate.toISOString()
     }
 
@@ -194,7 +205,6 @@ export const Timeline = ({
     if (temporalStart && temporalEnd) {
       // If focused exists and we are on the project page, show the modal
       if (showOverrideModal) {
-        const { query: timelineQuery } = timeline
         const {
           start: focusStart,
           end: focusEnd
@@ -226,7 +236,7 @@ export const Timeline = ({
    * Handles a focused interval being set by the timeline, updates the query and timeline query in redux
    */
   const handleFocusedSet = ({ focusedEnd, focusedStart }) => {
-    const timelineQuery = {
+    const newTimelineQuery = {
       end: focusedEnd,
       start: focusedStart
     }
@@ -241,7 +251,7 @@ export const Timeline = ({
     }
 
     if (focusedStart && focusedEnd) {
-      timelineQuery.center = center
+      newTimelineQuery.center = center
 
       // If temporalSearch exists and we are on the project page, show the modal
       if (showOverrideModal) {
@@ -255,11 +265,10 @@ export const Timeline = ({
     }
 
     if (!showOverrideModal || !focusedStart || !focusedEnd) {
-      const { query: existingQuery } = timeline
       const {
         end: oldEnd,
         start: oldStart
-      } = existingQuery
+      } = timelineQuery
 
       // If the timeline doesn't have focus, don't bother trying to remove focus
       let shouldUpdateQuery = true
@@ -270,13 +279,13 @@ export const Timeline = ({
       }
     }
 
-    onChangeTimelineQuery(timelineQuery)
+    onChangeTimelineQuery(newTimelineQuery)
   }
 
   /**
    * Converts redux timeline data (from CMR) into data usable by the timeline
    */
-  const setupData = ({ intervals }) => {
+  const setupData = (intervals) => {
     const data = []
 
     // Render the Collection Timelines in the same order they were added
@@ -333,9 +342,7 @@ export const Timeline = ({
   /**
    * Pulls the focused interval out of the timeline query
    */
-  const setupFocused = ({ query: timelineQuery }) => {
-    const { end, start } = timelineQuery
-
+  const setupFocused = ({ end, start }) => {
     if (!end && !start) return {}
 
     return {
@@ -407,8 +414,8 @@ export const Timeline = ({
           isMetadataLoaded && !isInitialSetup && (
             <EDSCTimeline
               center={center}
-              data={setupData(timeline)}
-              focusedInterval={setupFocused(timeline)}
+              data={setupData(timelineIntervals)}
+              focusedInterval={setupFocused(timelineQuery)}
               maxZoom={5}
               minZoom={1}
               temporalRange={setupTemporal(temporalSearch)}
@@ -435,7 +442,6 @@ Timeline.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
-  onChangeTimelineQuery: PropTypes.func.isRequired,
   onMetricsTimeline: PropTypes.func.isRequired,
   onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onToggleTimeline: PropTypes.func.isRequired,
@@ -445,14 +451,6 @@ Timeline.propTypes = {
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
     startDate: PropTypes.string
-  }).isRequired,
-  timeline: PropTypes.shape({
-    query: PropTypes.shape({
-      center: PropTypes.number,
-      interval: PropTypes.string,
-      start: PropTypes.number,
-      end: PropTypes.number
-    })
   }).isRequired
 }
 

@@ -1,8 +1,8 @@
 // Mock Zustand for tests
 // https://zustand.docs.pmnd.rs/guides/testing#jest
 
-// __mocks__/zustand.ts
 import { act } from '@testing-library/react'
+import { cloneDeep } from 'lodash-es'
 import type * as ZustandExportedTypes from 'zustand'
 
 export * from 'zustand'
@@ -16,7 +16,7 @@ const createUncurried = <T>(
   stateCreator: ZustandExportedTypes.StateCreator<T>
 ) => {
   const store = actualCreate(stateCreator)
-  const initialState = store.getInitialState()
+  const initialState = cloneDeep(store.getInitialState())
   storeResetFns.add(() => {
     store.setState(initialState, true)
   })
@@ -37,7 +37,7 @@ const createStoreUncurried = <T>(
   stateCreator: ZustandExportedTypes.StateCreator<T>
 ) => {
   const store = actualCreateStore(stateCreator)
-  const initialState = store.getInitialState()
+  const initialState = cloneDeep(store.getInitialState())
   storeResetFns.add(() => {
     store.setState(initialState, true)
   })

@@ -6,6 +6,7 @@ import { EdscStore } from './types'
 
 import createHomeSlice from './slices/createHomeSlice'
 import createMapSlice from './slices/createMapSlice'
+import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
 
 const useEdscStore = create<EdscStore>()(
@@ -14,6 +15,7 @@ const useEdscStore = create<EdscStore>()(
       (...args) => ({
         ...createHomeSlice(...args),
         ...createMapSlice(...args),
+        ...createTimelineSlice(...args),
         ...createUiSlice(...args)
       }),
       {

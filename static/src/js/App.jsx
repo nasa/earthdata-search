@@ -248,7 +248,6 @@ class App extends Component {
                           <AboutCSDAModalContainer />
                           <AboutCwicModalContainer />
                           <EditSubscriptionModalContainer />
-                          <ChunkedOrderModalContainer />
                           <DeprecatedParameterModalContainer />
                           <KeyboardShortcutsModalContainer />
                           <ShapefileDropzoneContainer />
@@ -259,6 +258,7 @@ class App extends Component {
                       <Route path={this.portalPaths('/projects')}>
                         <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>
                           <AboutCSDAModalContainer />
+                          <ChunkedOrderModalContainer />
                         </Suspense>
                       </Route>
                       <Route path={this.portalPaths('/downloads')}>

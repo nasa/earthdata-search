@@ -24,6 +24,7 @@ import {
 
 import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -880,8 +881,12 @@ describe('changeFocusedCollection', () => {
       const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
       getFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
 
-      const getTimelineMock = jest.spyOn(actions, 'getTimeline')
-      getTimelineMock.mockImplementationOnce(() => jest.fn())
+      const getTimelineMock = jest.fn()
+      useEdscStore.setState({
+        timeline: {
+          getTimeline: getTimelineMock
+        }
+      })
 
       const store = mockStore({
         preferences: {

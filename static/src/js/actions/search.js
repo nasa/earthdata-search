@@ -10,6 +10,7 @@ import { getFocusedCollectionGranuleQuery } from '../selectors/query'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../selectors/project'
 import isPath from '../util/isPath'
+import useEdscStore from '../zustand/useEdscStore'
 
 export const updateCollectionQuery = (payload) => ({
   type: UPDATE_COLLECTION_QUERY,
@@ -159,6 +160,10 @@ export const clearFilters = () => (dispatch, getState) => {
   // Don't request granules unless we are viewing granules
   if (isPath(pathname, ['/search/granules'])) {
     dispatch(actions.getSearchGranules())
-    dispatch(actions.getTimeline())
+
+    const zustandState = useEdscStore.getState()
+    const { timeline } = zustandState
+    const { getTimeline } = timeline
+    getTimeline()
   }
 }

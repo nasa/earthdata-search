@@ -1,21 +1,22 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { act, waitFor } from '@testing-library/react'
 
 import actions from '../../../actions'
 import {
+  UrlQueryContainer,
   mapDispatchToProps,
-  mapStateToProps,
-  UrlQueryContainer
+  mapStateToProps
 } from '../UrlQueryContainer'
 import * as encodeUrlQuery from '../../../util/url/url'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import useEdscStore from '../../../zustand/useEdscStore'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: UrlQueryContainer,
+  defaultProps: {
+    children: 'stuff',
     boundingBoxSearch: '',
     collectionsMetadata: {},
     gridCoords: '',
@@ -43,19 +44,11 @@ function setup() {
     },
     scienceKeywordFacets: {},
     temporalSearch: {},
-    timeline: {},
     twoDCoordinateSystemNameFacets: [],
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<UrlQueryContainer {...props}>stuff</UrlQueryContainer>)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 beforeEach(() => {
   jest.resetAllMocks()
@@ -146,9 +139,6 @@ describe('mapStateToProps', () => {
       shapefile: {
         selectedFeatures: [],
         shapefileId: ''
-      },
-      timeline: {
-        query: {}
       }
     }
 
@@ -206,8 +196,7 @@ describe('mapStateToProps', () => {
       paramCollectionSortKey: undefined,
       tagKey: '',
       temporalSearch: {},
-      twoDCoordinateSystemNameFacets: [],
-      timelineQuery: {}
+      twoDCoordinateSystemNameFacets: []
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -270,9 +259,6 @@ describe('mapStateToProps', () => {
       shapefile: {
         selectedFeatures: [],
         shapefileId: ''
-      },
-      timeline: {
-        query: {}
       }
     }
 
@@ -331,8 +317,7 @@ describe('mapStateToProps', () => {
       paramCollectionSortKey: collectionSortKeys.endDateDescending,
       tagKey: '',
       temporalSearch: {},
-      twoDCoordinateSystemNameFacets: [],
-      timelineQuery: {}
+      twoDCoordinateSystemNameFacets: []
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -340,41 +325,92 @@ describe('mapStateToProps', () => {
 })
 
 describe('UrlQueryContainer', () => {
-  describe('componentDidMount', () => {
-    test('calls onChangePath on page load', () => {
+  describe('when the component mounts', () => {
+    test('calls onChangePath', async () => {
+      jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC')
+
       const { props } = setup()
 
-      expect(props.onChangePath.mock.calls.length).toBe(1)
-      expect(props.onChangePath.mock.calls[0]).toEqual(['?p=C00001-EDSC'])
+      await waitFor(async () => {
+        expect(props.onChangePath).toHaveBeenCalledTimes(1)
+      })
+
+      expect(props.onChangePath).toHaveBeenCalledWith('?p=C00001-EDSC')
     })
   })
 
-  describe('componentWillReceiveProps', () => {
+  describe('when the redux props change', () => {
     test('calls onChangeUrl if the search params are the same', () => {
       jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC&q=test')
 
-      const { enzymeWrapper, props } = setup()
+      const { props, rerender } = setup()
 
-      enzymeWrapper.setProps({
-        ...props,
-        keywordSearch: 'test'
-      })
+      rerender(
+        <UrlQueryContainer
+          {...props}
+          keywordSearch="test"
+        >
+          stuff
+        </UrlQueryContainer>
+      )
 
-      expect(props.onChangeUrl.mock.calls.length).toBe(1)
-      expect(props.onChangeUrl.mock.calls[0]).toEqual(['?p=C00001-EDSC&q=test'])
+      expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+      expect(props.onChangeUrl).toHaveBeenCalledWith('?p=C00001-EDSC&q=test')
     })
 
     test('does not call onChangeUrl if the search params are different', () => {
-      const { enzymeWrapper, props } = setup()
+      const { props, rerender } = setup()
 
-      enzymeWrapper.setProps({
-        ...props,
-        location: {
-          search: '?p=C00001-EDSC&q=test'
-        }
+      jest.clearAllMocks()
+
+      rerender(
+        <UrlQueryContainer
+          {...props}
+          location={
+            {
+              search: '?p=C00001-EDSC&q=test'
+            }
+          }
+        >
+          stuff
+        </UrlQueryContainer>
+      )
+
+      expect(props.onChangeUrl).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('when the zustand values change', () => {
+    test('calls onChangeUrl if the search params are the same', () => {
+      const encodeUrlQuerySpy = jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC&q=test&tl=1571306772.712!5!!')
+
+      const { props } = setup()
+
+      act(() => {
+        useEdscStore.setState({
+          timeline: {
+            query: {
+              center: 1571306737483,
+              interval: 'decade',
+              endDate: '2310-01-01T00:00:00.000Z',
+              startDate: '1710-01-01T00:00:00.000Z'
+            }
+          }
+        })
       })
 
-      expect(props.onChangeUrl.mock.calls.length).toBe(0)
+      expect(encodeUrlQuerySpy).toHaveBeenCalledTimes(3)
+      expect(encodeUrlQuerySpy).toHaveBeenLastCalledWith(expect.objectContaining({
+        timelineQuery: {
+          center: 1571306737483,
+          interval: 'decade',
+          endDate: '2310-01-01T00:00:00.000Z',
+          startDate: '1710-01-01T00:00:00.000Z'
+        }
+      }))
+
+      expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+      expect(props.onChangeUrl).toHaveBeenCalledWith('?p=C00001-EDSC&q=test&tl=1571306772.712!5!!')
     })
   })
 })

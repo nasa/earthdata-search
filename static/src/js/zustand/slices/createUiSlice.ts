@@ -4,7 +4,7 @@ const createUiSlice: ImmerStateCreator<UiSlice> = (set) => ({
   ui: {
     panels: {
       panelsWidth: 0,
-      setPanelsWidth: (panelsWidth: number) => {
+      setPanelsWidth: (panelsWidth) => {
         set((state) => {
           state.ui.panels.panelsWidth = panelsWidth
         })
@@ -12,7 +12,7 @@ const createUiSlice: ImmerStateCreator<UiSlice> = (set) => ({
     },
     tour: {
       runTour: false,
-      setRunTour: (runTour: boolean) => {
+      setRunTour: (runTour) => {
         set((state) => {
           state.ui.tour.runTour = runTour
         })

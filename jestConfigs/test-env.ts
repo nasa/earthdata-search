@@ -3,7 +3,6 @@
  * Set up globals
  */
 import nock from 'nock'
-import enableHooks from 'jest-react-hooks-shallow'
 
 import '@testing-library/jest-dom'
 
@@ -42,5 +41,3 @@ nock.disableNetConnect();
     add: jest.fn()
   }
 }
-
-enableHooks(jest, { dontMockByDefault: true })

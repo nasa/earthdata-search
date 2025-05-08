@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand'
+import { TimelineIntervals } from '../types/sharedTypes'
 
 export type HomeSlice = {
   /** The Home Slice of the store */
@@ -21,6 +22,51 @@ export type MapSlice = {
     showMbr: boolean
     /** Function to set the showMbr value */
     setShowMbr: (showMbr: boolean) => void
+  }
+}
+
+/** The accepted timeline interval values in CMR */
+export enum TimelineInterval {
+  Decade = 'decade',
+  Year = 'year',
+  Month = 'month',
+  Day = 'day',
+  Hour = 'hour',
+  Minute = 'minute',
+  Second = 'second'
+}
+
+type TimelineQuery = {
+  /** The center timestamp of the timeline */
+  center?: number,
+  /** The interval of the timeline */
+  interval?: TimelineInterval,
+  /** The end date of the timeline */
+  endDate?: string,
+  /** The start date of the timeline */
+  startDate?: string,
+  /** The end of the focused timespan */
+  end?: number,
+  /** The start of the focused timespan */
+  start?: number,
+}
+
+export type TimelineIntervalData = {
+  /** The intervals of the timeline per concept-id */
+  [key: string]: TimelineIntervals
+}
+
+export type TimelineSlice = {
+  /** The Timeline Slice of the store */
+  timeline: {
+    /** The intervals of the timeline */
+    intervals: TimelineIntervalData,
+    /** The query of the timeline */
+    query: TimelineQuery,
+    /** Function to set the query value */
+    setQuery: (query: TimelineQuery) => void
+    /** Function to get the timeline */
+    getTimeline: () => Promise<void>
   }
 }
 
@@ -47,6 +93,7 @@ export type UiSlice = {
 export type EdscStore =
   HomeSlice
   & MapSlice
+  & TimelineSlice
   & UiSlice
 
 export type ImmerStateCreator<T> = StateCreator<EdscStore, [['zustand/immer', never], never], [], T>

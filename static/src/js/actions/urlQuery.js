@@ -21,6 +21,7 @@ import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../portals/availablePortals.json'
+import useEdscStore from '../zustand/useEdscStore'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -79,8 +80,15 @@ export const updateStore = ({
         ...query,
         collectionSortPreference
       },
-      shapefile,
-      timeline
+      shapefile
+    }))
+
+    useEdscStore.setState((zustandState) => ({
+      ...zustandState,
+      timeline: {
+        ...zustandState.timeline,
+        ...timeline
+      }
     }))
   } else {
     // We always need to load the portal config
@@ -208,7 +216,10 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     await dispatch(actions.getProjectGranules())
   }
 
-  dispatch(actions.getTimeline())
+  const zustandState = useEdscStore.getState()
+  const { timeline } = zustandState
+  const { getTimeline } = timeline
+  getTimeline()
 
   return null
 }

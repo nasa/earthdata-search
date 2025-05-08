@@ -1,73 +1,36 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import { render, screen } from '@testing-library/react'
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import {
-  MemoryRouter,
-  Switch,
-  Route,
-  Link
-} from 'react-router-dom'
-
-import userEvent from '@testing-library/user-event'
+import { screen } from '@testing-library/react'
+import { Link } from 'react-router-dom'
 
 import HomeTopicCard from '../HomeTopicCard'
 import useEdscStore from '../../../zustand/useEdscStore'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ children, to, onClick }) => (<Link to={to} onClick={onClick}>{ children }</Link>)))
 
-const mockStore = configureMockStore([thunk])
-
-const store = mockStore({
-  router: {
-    location: {
-      pathname: ''
+const setup = setupTest({
+  ComponentsByRoute: {
+    '/': HomeTopicCard,
+    '/search': <div>Search</div>
+  },
+  defaultPropsByRoute: {
+    '/': {
+      title: 'Test Topic',
+      image: 'mock-image-src',
+      url: '/search?fst0=Test+Topic',
+      color: '#123456'
     }
-  }
+  },
+  defaultReduxState: {
+    router: {
+      location: {
+        pathname: '/'
+      }
+    }
+  },
+  withRedux: true,
+  withRouter: true
 })
-
-const setup = () => {
-  const user = userEvent.setup()
-
-  const mockSetOpenKeywordFacet = jest.fn()
-  const state = useEdscStore.getState()
-  useEdscStore.setState({
-    ...state,
-    home: {
-      ...state.home,
-      setOpenKeywordFacet: mockSetOpenKeywordFacet,
-      openKeywordFacet: true
-    }
-  })
-
-  const mockProps = {
-    title: 'Test Topic',
-    image: 'mock-image-src',
-    url: '/search?fst0=Test+Topic',
-    color: '#123456'
-  }
-
-  render(
-    <Provider store={store}>
-      <MemoryRouter>
-        <Switch>
-          <Route exact path="/">
-            <HomeTopicCard {...mockProps} />
-          </Route>
-          <Route path="/search">
-            <div>Search</div>
-          </Route>
-        </Switch>
-      </MemoryRouter>
-    </Provider>
-  )
-
-  return {
-    mockSetOpenKeywordFacet,
-    user
-  }
-}
 
 describe('HomeTopicCard', () => {
   beforeEach(() => {
@@ -100,13 +63,23 @@ describe('HomeTopicCard', () => {
   })
 
   test('calls setOpenKeywordFacet when clicked', async () => {
-    const { mockSetOpenKeywordFacet, user } = setup()
+    const { user } = setup({
+      overrideZustandState: {
+        home: {
+          setOpenKeywordFacet: jest.fn()
+        }
+      }
+    })
 
     const portalLinkContainer = screen.getByRole('link')
 
     await user.click(portalLinkContainer)
 
-    expect(mockSetOpenKeywordFacet).toHaveBeenCalledTimes(1)
-    expect(mockSetOpenKeywordFacet).toHaveBeenCalledWith(true)
+    const state = useEdscStore.getState()
+    const { home } = state
+    const { setOpenKeywordFacet } = home
+
+    expect(setOpenKeywordFacet).toHaveBeenCalledTimes(1)
+    expect(setOpenKeywordFacet).toHaveBeenCalledWith(true)
   })
 })

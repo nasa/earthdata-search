@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render, screen } from '@testing-library/react'
+// @ts-expect-error The file does not have types
 import actions from '../../../actions'
 import {
   mapDispatchToProps,
@@ -8,15 +8,18 @@ import {
   TimelineContainer
 } from '../TimelineContainer'
 
+// @ts-expect-error The file does not have types
+import Timeline from '../../../components/Timeline/Timeline'
+
+// @ts-expect-error The file does not have types
 import * as metricsTimeline from '../../../middleware/metrics/actions'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-jest.mock('../../../components/Timeline/Timeline', () => jest.fn(() => <div data-testid="mock-timeline" />))
+jest.mock('../../../components/Timeline/Timeline', () => jest.fn(() => <div />))
 
-const setup = (overrideProps) => {
-  const props = {
-    browser: {
-      name: 'browser name'
-    },
+const setup = setupTest({
+  Component: TimelineContainer,
+  defaultProps: {
     collectionsMetadata: {
       projectCollectionId: {
         title: 'project'
@@ -28,27 +31,19 @@ const setup = (overrideProps) => {
     projectCollectionsIds: ['projectCollectionId'],
     focusedCollectionId: 'focusedCollectionId',
     onChangeQuery: jest.fn(),
-    onChangeTimelineQuery: jest.fn(),
     onMetricsTimeline: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
     onToggleTimeline: jest.fn(),
     pathname: '/search',
     temporalSearch: {},
-    timeline: {
-      query: {},
-      state: {}
-    },
     isOpen: true,
-    search: '?p=C123456-EDSC',
-    ...overrideProps
+    search: '?p=C123456-EDSC'
   }
+})
 
-  render(<TimelineContainer {...props} />)
-
-  return {
-    props
-  }
-}
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
 describe('mapDispatchToProps', () => {
   test('onChangeQuery calls actions.changeQuery', () => {
@@ -57,18 +52,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
-  })
-
-  test('onChangeTimelineQuery calls actions.changeTimelineQuery', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeTimelineQuery')
-
-    mapDispatchToProps(dispatch).onChangeTimelineQuery({ mock: 'data' })
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onToggleOverrideTemporalModal calls actions.toggleOverrideTemporalModal', () => {
@@ -77,18 +62,18 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleOverrideTemporalModal(false)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(false)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(false)
   })
 
   test('onMetricsTimeline calls metricsTimeline', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsTimeline, 'metricsTimeline')
 
-    mapDispatchToProps(dispatch).onMetricsTimeline(false)
+    mapDispatchToProps(dispatch).onMetricsTimeline('mock-type')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(false)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('mock-type')
   })
 
   test('onToggleTimeline calls actions.toggleTimeline', () => {
@@ -97,8 +82,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleTimeline(false)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(false)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(false)
   })
 })
 
@@ -119,7 +104,6 @@ describe('mapStateToProps', () => {
           pathname: ''
         }
       },
-      timeline: {},
       ui: {
         timeline: {
           isOpen: false
@@ -133,7 +117,6 @@ describe('mapStateToProps', () => {
       pathname: '',
       projectCollectionsIds: [],
       temporalSearch: {},
-      timeline: {},
       isOpen: false
     }
 
@@ -144,31 +127,76 @@ describe('mapStateToProps', () => {
 describe('TimelineContainer component', () => {
   test('does not render a timeline if no timeline should be rendered', () => {
     setup()
-    expect(screen.queryByTestId('mock-timeline')).not.toBeInTheDocument()
+
+    expect(Timeline).toHaveBeenCalledTimes(0)
   })
 
   test('passes its props and renders a single Timeline component on the search page', () => {
     setup({
-      pathname: '/search/granules'
+      overrideProps: {
+        pathname: '/search/granules'
+      }
     })
 
-    expect(screen.getByTestId('mock-timeline')).toBeInTheDocument()
+    expect(Timeline).toHaveBeenCalledTimes(1)
+    expect(Timeline).toHaveBeenCalledWith(
+      expect.objectContaining({
+        collectionMetadata: {
+          focusedCollectionId: {
+            title: 'focused'
+          }
+        },
+        isOpen: true,
+        onChangeQuery: expect.any(Function),
+        onMetricsTimeline: expect.any(Function),
+        onToggleOverrideTemporalModal: expect.any(Function),
+        onToggleTimeline: expect.any(Function),
+        pathname: '/search/granules',
+        projectCollectionsIds: ['projectCollectionId'],
+        showOverrideModal: false,
+        temporalSearch: {}
+      }),
+      {}
+    )
   })
 
   test('passes its props and renders a single Timeline component on the project page', () => {
     setup({
-      pathname: '/projects'
+      overrideProps: {
+        pathname: '/projects'
+      }
     })
 
-    expect(screen.getByTestId('mock-timeline')).toBeInTheDocument()
+    expect(Timeline).toHaveBeenCalledTimes(1)
+    expect(Timeline).toHaveBeenCalledWith(
+      expect.objectContaining({
+        collectionMetadata: {
+          projectCollectionId: {
+            title: 'project'
+          }
+        },
+        isOpen: true,
+        onChangeQuery: expect.any(Function),
+        onMetricsTimeline: expect.any(Function),
+        onToggleOverrideTemporalModal: expect.any(Function),
+        onToggleTimeline: expect.any(Function),
+        pathname: '/projects',
+        projectCollectionsIds: ['projectCollectionId'],
+        showOverrideModal: true,
+        temporalSearch: {}
+      }),
+      {}
+    )
   })
 
   test('Does not show the timeline if it is on the saved projects page', () => {
     setup({
-      pathname: '/projects',
-      search: ''
+      overrideProps: {
+        pathname: '/projects',
+        search: ''
+      }
     })
 
-    expect(screen.queryByTestId('mock-timeline')).not.toBeInTheDocument()
+    expect(Timeline).toHaveBeenCalledTimes(0)
   })
 })

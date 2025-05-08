@@ -1,7 +1,4 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { withHooks } from 'jest-react-hooks-shallow'
 
 import actions from '../../../actions'
 import {
@@ -10,11 +7,13 @@ import {
   SubscriptionsBodyContainer
 } from '../SubscriptionsBodyContainer'
 import SubscriptionsBody from '../../../components/Subscriptions/SubscriptionsBody'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/Subscriptions/SubscriptionsBody', () => jest.fn(() => <div />))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: SubscriptionsBodyContainer,
+  defaultProps: {
     collectionQueryObj: {},
     collectionSubscriptions: [],
     collectionSubscriptionDisabledFields: {},
@@ -27,17 +26,9 @@ function setup(overrideProps) {
     onFetchCollectionSubscriptions: jest.fn(),
     onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
-    onUpdateSubscriptionDisabledFields: jest.fn(),
-    ...overrideProps
+    onUpdateSubscriptionDisabledFields: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<SubscriptionsBodyContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onCreateSubscription calls actions.createSubscription', () => {
@@ -46,7 +37,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onCreateSubscription()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onUpdateSubscription calls actions.updateSubscription', () => {
@@ -58,7 +49,7 @@ describe('mapDispatchToProps', () => {
       shouldUpdateQuery: false
     })
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onDeleteSubscription calls actions.deleteSubscription', () => {
@@ -67,7 +58,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onDeleteSubscription()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onFetchCollectionSubscriptions calls actions.getSubscriptions', () => {
@@ -76,7 +67,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchCollectionSubscriptions()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onUpdateSubscriptionDisabledFields calls actions.updateSubscriptionDisabledFields', () => {
@@ -85,7 +76,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateSubscriptionDisabledFields()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onToggleEditSubscriptionModal calls actions.updateSubscriptionDisabledFields', () => {
@@ -94,7 +85,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleEditSubscriptionModal()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -131,48 +122,42 @@ describe('mapStateToProps', () => {
 
 describe('SubscriptionsBodyContainer component', () => {
   test('passes its props and renders a single SubscriptionsBody component for granule subscriptions', () => {
-    const { enzymeWrapper, props } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(SubscriptionsBody).length).toBe(1)
-    expect(enzymeWrapper.find(SubscriptionsBody).props().queryString)
-      .toEqual(props.granuleQueryString)
-
-    expect(enzymeWrapper.find(SubscriptionsBody).props().subscriptions)
-      .toEqual(props.granuleSubscriptions)
-
-    expect(enzymeWrapper.find(SubscriptionsBody).props().onCreateSubscription)
-      .toEqual(props.onCreateSubscription)
-
-    expect(enzymeWrapper.find(SubscriptionsBody).props().onUpdateSubscription)
-      .toEqual(props.onUpdateSubscription)
-
-    expect(enzymeWrapper.find(SubscriptionsBody).props().onDeleteSubscription)
-      .toEqual(props.onDeleteSubscription)
+    expect(SubscriptionsBody).toHaveBeenCalledTimes(1)
+    expect(SubscriptionsBody).toHaveBeenCalledWith({
+      disabledFields: {},
+      onCreateSubscription: expect.any(Function),
+      onDeleteSubscription: expect.any(Function),
+      onToggleEditSubscriptionModal: expect.any(Function),
+      onUpdateSubscription: expect.any(Function),
+      onUpdateSubscriptionDisabledFields: expect.any(Function),
+      query: {},
+      subscriptionType: 'granule',
+      subscriptions: []
+    }, {})
   })
 
   test('passes its props and renders a single SubscriptionsBody component for collection subscriptions', () => {
-    withHooks(() => {
-      const { enzymeWrapper, props } = setup({
+    const { props } = setup({
+      overrideProps: {
         subscriptionType: 'collection'
-      })
-
-      expect(enzymeWrapper.find(SubscriptionsBody).length).toBe(1)
-      expect(enzymeWrapper.find(SubscriptionsBody).props().queryString)
-        .toEqual(props.collectionQueryString)
-
-      expect(enzymeWrapper.find(SubscriptionsBody).props().subscriptions)
-        .toEqual(props.collectionSubscriptions)
-
-      expect(enzymeWrapper.find(SubscriptionsBody).props().onCreateSubscription)
-        .toEqual(props.onCreateSubscription)
-
-      expect(enzymeWrapper.find(SubscriptionsBody).props().onUpdateSubscription)
-        .toEqual(props.onUpdateSubscription)
-
-      expect(enzymeWrapper.find(SubscriptionsBody).props().onDeleteSubscription)
-        .toEqual(props.onDeleteSubscription)
-
-      expect(props.onFetchCollectionSubscriptions).toHaveBeenCalledTimes(1)
+      }
     })
+
+    expect(SubscriptionsBody).toHaveBeenCalledTimes(1)
+    expect(SubscriptionsBody).toHaveBeenCalledWith({
+      disabledFields: {},
+      onCreateSubscription: expect.any(Function),
+      onDeleteSubscription: expect.any(Function),
+      onToggleEditSubscriptionModal: expect.any(Function),
+      onUpdateSubscription: expect.any(Function),
+      onUpdateSubscriptionDisabledFields: expect.any(Function),
+      query: {},
+      subscriptionType: 'collection',
+      subscriptions: []
+    }, {})
+
+    expect(props.onFetchCollectionSubscriptions).toHaveBeenCalledTimes(1)
   })
 })

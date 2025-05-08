@@ -3,7 +3,7 @@ import getObjectKeyByValue from './object'
 /**
  * Mapping of timeline zoom levels. The Timeline (sometimes) and URL use numbers, CMR uses words
  */
-export const timelineIntervals = {
+export const timelineIntervalZooms = {
   minute: 0,
   hour: 1,
   day: 2,
@@ -94,8 +94,8 @@ export const prepareTimelineParams = (state) => {
   let { interval } = timelineQuery
   // Use one level lower than current interval when requesting timeline from CMR
   // I.e., request day intervals when viewing the timeline at the month level
-  const index = timelineIntervals[interval]
-  interval = getObjectKeyByValue(timelineIntervals, (index - 1))
+  const index = timelineIntervalZooms[interval]
+  interval = getObjectKeyByValue(timelineIntervalZooms, (index - 1))
 
   if (!startDate) {
     return null
@@ -168,9 +168,9 @@ export const calculateTimelineParams = ({
   }
 
   return {
-    zoomLevel: timelineIntervals[calculatedInterval]
-      ? timelineIntervals[calculatedInterval]
-      : timelineIntervals.decade,
+    zoomLevel: timelineIntervalZooms[calculatedInterval]
+      ? timelineIntervalZooms[calculatedInterval]
+      : timelineIntervalZooms.decade,
     initialCenter: timeStart && timeEnd
       ? (timeStart + timeEnd) / 2
       : currentDate
