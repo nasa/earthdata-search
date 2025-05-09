@@ -12,15 +12,24 @@ const commitArg = args.find((arg) => arg.startsWith('--commit='))
 const commit = commitArg ? commitArg.split('=')[1] : null
 
 // Get each file from metrics-reports
-const reportsDirectory = 'metrics-reports'
-const reportsFiles = fs.readdirSync(reportsDirectory)
 const reports = {}
-reportsFiles.forEach((file) => {
-  const filePath = `${reportsDirectory}/${file}`
-  const fileContent = fs.readFileSync(filePath, 'utf8')
-  const fileName = file.replace('.json', '')
-  reports[fileName] = JSON.parse(fileContent)
-})
+
+try {
+  const reportsDirectory = 'metrics-reports'
+  const reportsFiles = fs.readdirSync(reportsDirectory)
+
+  reportsFiles.forEach((file) => {
+    const filePath = `${reportsDirectory}/${file}`
+    const fileContent = fs.readFileSync(filePath, 'utf8')
+    const fileName = file.replace('.json', '')
+    reports[fileName] = JSON.parse(fileContent)
+  })
+} catch (error) {
+  console.log('No reports found in metrics-reports directory.', error)
+
+  // If no reports are found, exit the script
+  process.exit(0)
+}
 
 // Add each value in reports to the metrics-branch/metrics.json file
 const metricsFilePath = 'metrics-branch/metrics.json'
