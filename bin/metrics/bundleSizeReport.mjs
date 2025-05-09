@@ -3,8 +3,6 @@ import fs from 'fs'
 
 import parseBuildFile from './parseBuildFile.mjs'
 
-console.log('## Bundle Size Report')
-
 // Get the `--file` path from the command line arguments
 const args = process.argv.slice(2)
 const fileArg = args.find((arg) => arg.startsWith('--file='))

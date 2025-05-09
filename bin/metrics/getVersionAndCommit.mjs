@@ -26,13 +26,9 @@ const getVersionAndCommit = async (url) => {
 
   const version = versionMatch[1]
 
-  // const { GITHUB_TOKEN } = process.env
   // Get the commit hash for the git tag that matches the version
-  const gitTagResponse = await fetch('https://api.github.com/repos/nasa/earthdata-search/tags?per_page=50', {
-    // headers: {
-    //   authorization: `Bearer ${GITHUB_TOKEN}`
-    // }
-  })
+  const gitTagResponse = await fetch('https://api.github.com/repos/nasa/earthdata-search/tags?per_page=50')
+
   if (!gitTagResponse.ok) {
     throw new Error(`Error fetching GitHub tags: ${gitTagResponse.statusText}`)
   }

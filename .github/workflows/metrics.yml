@@ -8,10 +8,10 @@ on:
     # Ryn every Monday at 01:00 UTC
     - cron: '0 1 * * 1'
 
+  # TODO remove before merging the PR
   push:
     branches:
       - EDSC-4489
-
 
 jobs:
   determineEnv:
@@ -21,19 +21,16 @@ jobs:
     steps:
       # If on the first cron job, set the env to uat
       - name: Set env to uat
-        # id: setEnv
         if: github.event.schedule == '0 0 * * 1'
         run: |
           echo "env=uat" >> $GITHUB_ENV
       # If on the second cron job, set the env to prod
       - name: Set env to prod
-        # id: setEnv
         if: github.event.schedule == '0 1 * * 1'
         run: |
           echo "env=prod" >> $GITHUB_ENV
       # If on the second cron job, set the env to prod
       - name: Default env to prod
-        # id: setEnv
         if: github.event.schedule != '0 0 * * 1' && github.event.schedule != '0 1 * * 1'
         run: |
           echo "env=prod" >> $GITHUB_ENV
@@ -44,6 +41,7 @@ jobs:
         run: |
           echo 'env=["${{ env.env }}"]' >> $GITHUB_OUTPUT
 
+  # Get the version from the page footer, and the commit hash from the git tag
   getVersion:
     runs-on: ubuntu-latest
     needs: [determineEnv]
@@ -56,10 +54,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Use Node.js 22
+      - name: Use Node.js lts/jod
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: lts/jod
 
       - name: Get version
         id: getVersion
@@ -67,7 +65,7 @@ jobs:
           node bin/metrics/getVersionAndCommit.mjs --env=${{ matrix.env }} >> temp_env
           cat temp_env >> $GITHUB_OUTPUT
 
-  # If the version has already been recorded, skip the rest of the workflow
+  # Check which reports are needed for the given version
   versionCheck:
     runs-on: ubuntu-latest
     needs: [
@@ -88,7 +86,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # TODO Put this back in to checkout the real branch
       # Checkout the reports branch in a new directory
       - name: Checkout metrics branch
         uses: actions/checkout@v4
@@ -96,10 +93,10 @@ jobs:
           ref: metrics
           path: metrics-branch
 
-      - name: Use Node.js 22
+      - name: Use Node.js lts/jod
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: lts/jod
 
       - name: Version check
         id: versionCheck
@@ -107,6 +104,7 @@ jobs:
           node bin/metrics/versionCheck.mjs --env=${{ matrix.env }} --version=${{ needs.getVersion.outputs.version }} >> temp_env
           cat temp_env >> $GITHUB_OUTPUT
 
+  # Generate the bundle size report if needed
   bundleSizeReport:
     if: needs.versionCheck.outputs.needs_bundle_size == 'true'
     runs-on: ubuntu-latest
@@ -124,10 +122,10 @@ jobs:
         with:
           path: commit-branch
           ref: ${{ needs.getVersion.outputs.commit }}
-      - name: Use Node.js 22
+      - name: Use Node.js lts/jod
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: lts/jod
       - name: Cache node modules
         uses: actions/cache@v4
         env:
@@ -163,6 +161,7 @@ jobs:
           name: bundleSizeReport
           path: bundleSizeReport.json
 
+  # Generate the cloc report if needed
   clocReport:
     if: needs.versionCheck.outputs.needs_cloc == 'true'
     runs-on: ubuntu-latest
@@ -189,6 +188,7 @@ jobs:
           name: clocReport
           path: clocReport.json
 
+  # Generate the test coverage report if needed
   testCoverageReport:
     if: needs.versionCheck.outputs.needs_test_coverage == 'true'
     runs-on: ubuntu-latest
@@ -200,10 +200,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js 22
+      - name: Use Node.js lts/jod
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: lts/jod
 
       # Generate the test coverage report
       - name: Run test coverage report
@@ -216,6 +216,7 @@ jobs:
           name: testCoverageReport
           path: testCoverageReport.json
 
+  # Generate the performance report if needed
   performanceReport:
     if: needs.versionCheck.outputs.needs_performance_uat == 'true' || needs.versionCheck.outputs.needs_performance_prod == 'true'
     runs-on: ubuntu-latest
@@ -230,10 +231,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Use Node.js 22
+      - name: Use Node.js lts/jod
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: lts/jod
 
       # Generate the performance report
       - name: Run performance report
@@ -248,6 +249,7 @@ jobs:
           name: performanceReport
           path: '*PerformanceReport.json'
 
+  # Update the report with the new data
   updateReport:
     runs-on: ubuntu-latest
     needs: [
@@ -262,7 +264,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # TODO Put this back in to checkout the real branch
       # Checkout the reports branch in a new directory
       - name: Checkout metrics branch
         uses: actions/checkout@v4
@@ -270,10 +271,10 @@ jobs:
           ref: metrics
           path: metrics-branch
 
-      - name: Use Node.js 22
+      - name: Use Node.js lts/jod
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: lts/jod
 
       - name: Download reports
         uses: actions/download-artifact@v4
@@ -292,7 +293,6 @@ jobs:
           name: metricsReport
           path: metrics-branch/metrics.json
 
-      # TODO Put this back in to checkout the real branch
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
