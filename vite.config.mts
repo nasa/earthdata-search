@@ -14,7 +14,8 @@ const {
   analytics,
   defaultPortal,
   env,
-  feedbackApp
+  feedbackApp,
+  version
 } = getApplicationConfig()
 
 // @ts-expect-error: this is a workaround for the issue with the types
@@ -47,7 +48,8 @@ export default defineConfig({
       gaPropertyId: analytics.localIdentifier.propertyId,
       gtmPropertyId: analytics.gtmPropertyId,
       includeDevGoogleAnalytics: analytics.localIdentifier.enabled,
-      showTophat
+      showTophat,
+      version
     }),
     react(),
     nodePolyfills(),
