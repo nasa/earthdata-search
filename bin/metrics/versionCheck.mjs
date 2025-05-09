@@ -33,10 +33,10 @@ const { [env]: performanceByEnv } = performance
 
 // These console logs will set env variables for the next job in the workflow
 // If the report is not found, the `needs_*` variable will be `true`, indicating that the report is needed
-console.log(`needs_bundle_size=${!bundleSize}`)
-console.log(`needs_cloc=${!cloc}`)
-console.log(`needs_performance_${env}=${!performanceByEnv}`)
-console.log(`needs_test_coverage=${!testCoverage}`)
+console.log(`needs_bundle_size=${!!bundleSize}`)
+console.log(`needs_cloc=${!!cloc}`)
+console.log(`needs_performance_${env}=${!!performanceByEnv}`)
+console.log(`needs_test_coverage=${!!testCoverage}`)
 
 const performanceMatrix = []
 if (!performanceByEnv) {
