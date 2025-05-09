@@ -1,5 +1,10 @@
 import React from 'react'
-import { screen, waitFor } from '@testing-library/react'
+import {
+  render,
+  screen,
+  waitFor,
+  act
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import nock from 'nock'
 
@@ -137,7 +142,11 @@ describe('SavedProjectsContainer', () => {
       setup()
 
       const removeBtn = await screen.findByRole('button', { name: /remove project/i })
-      await userEvent.click(removeBtn)
+
+      // eslint-disable-next-line testing-library/no-unnecessary-act
+      await act(async () => {
+        await userEvent.click(removeBtn)
+      })
 
       await waitFor(() => {
         expect(addToast).toHaveBeenCalledWith('Project removed', {
