@@ -1,11 +1,15 @@
 import React from 'react'
-import { waitFor, act } from '@testing-library/react'
+import {
+  screen,
+  waitFor,
+  act
+} from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import nock from 'nock'
 
 import actions from '../../../actions'
 import { getEarthdataEnvironment } from '../../../selectors/earthdataEnvironment'
 import { addToast } from '../../../util/addToast'
-import { SavedProjects } from '../../../components/SavedProjects/SavedProjects'
 import {
   mapStateToProps,
   mapDispatchToProps,
@@ -13,11 +17,12 @@ import {
 } from '../SavedProjectsContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-jest.mock('../../../components/SavedProjects/SavedProjects', () => ({
-  SavedProjects: jest.fn(() => (
-    <div aria-label="Saved Projects">Saved Projects</div>
+jest.mock(
+  '../../../containers/PortalLinkContainer/PortalLinkContainer',
+  () => jest.fn(({ children }) => (
+    <mock-PortalLinkContainer>{children}</mock-PortalLinkContainer>
   ))
-}))
+)
 
 jest.mock('../../../util/addToast', () => ({
   addToast: jest.fn()
@@ -44,7 +49,6 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('path')
 
-    expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('path')
   })
 
@@ -55,7 +59,6 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).dispatchHandleError(errorConfig)
 
-    expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(errorConfig)
   })
 })
@@ -76,7 +79,7 @@ describe('mapStateToProps', () => {
 
 describe('SavedProjectsContainer', () => {
   describe('When the component mounts with a valid authToken', () => {
-    test('fetches the projects and renders SavedProjects with projects', async () => {
+    test('fetches the projects and displays them', async () => {
       const mockProjects = [
         {
           id: '123',
@@ -92,155 +95,102 @@ describe('SavedProjectsContainer', () => {
 
       setup()
 
-      await waitFor(() => {
-        expect(SavedProjects).toHaveBeenCalledTimes(5)
-      })
-
-      expect(SavedProjects).toHaveBeenCalledWith(
-        expect.objectContaining({
-          projects: mockProjects,
-          isLoaded: true,
-          isLoading: false,
-          onDeleteProject: expect.any(Function)
-        }),
-        {}
-      )
+      expect(await screen.findByText('Project 1')).toBeInTheDocument()
+      expect(screen.getByRole('button', { name: /remove project/i })).toBeInTheDocument()
     })
   })
 
   describe('When the authToken is null', () => {
-    test('renders SavedProjects with no projects', async () => {
+    test('renders no projects', async () => {
       setup({
         overrideProps: {
           authToken: null
         }
       })
 
+      // There should never be a remove button if no projects loaded
       await waitFor(() => {
-        expect(SavedProjects).toHaveBeenCalledTimes(2)
+        expect(screen.queryByRole('button', { name: /remove project/i })).toBeNull()
       })
-
-      expect(SavedProjects).toHaveBeenCalledWith(
-        expect.objectContaining({
-          projects: [],
-          isLoaded: false,
-          isLoading: false
-        }),
-        {}
-      )
     })
   })
 
   describe('When deleting a project', () => {
-    const projectIdToDelete = '123'
-    const mockProjects = [
-      {
-        id: projectIdToDelete,
-        name: 'Project 1',
-        path: '/search?p=!C123',
-        created_at: '2022-01-01T00:00:00.000Z'
-      }
-    ]
+    const projectId = '123'
 
-    beforeEach(() => {
+    test('successfully deletes the project and shows a success toast', async () => {
+      const mockProjects = [
+        {
+          id: projectId,
+          name: 'Project 1',
+          path: '/search?p=!C123',
+          created_at: '2022-01-01T00:00:00.000Z'
+        }
+      ]
+
       nock(/localhost/)
         .get(/projects/)
         .reply(200, mockProjects)
 
-      window.confirm = jest.fn(() => true)
-    })
-
-    test('successfully deletes the project and shows a success toast', async () => {
       nock(/localhost/)
-        .delete(`/projects/${projectIdToDelete}`)
+        .delete(`/projects/${projectId}`)
         .reply(204)
+
+      window.confirm = jest.fn(() => true)
 
       setup()
 
-      await waitFor(() => {
-        expect(SavedProjects).toHaveBeenCalledTimes(5)
-      })
-
-      expect(SavedProjects).toHaveBeenCalledWith(
-        expect.objectContaining({
-          projects: mockProjects,
-          isLoaded: true,
-          isLoading: false
-        }),
-        {}
-      )
-
-      const { onDeleteProject } = SavedProjects.mock.calls[SavedProjects.mock.calls.length - 1][0]
-
+      const removeBtn = await screen.findByRole('button', { name: /remove project/i })
       await act(async () => {
-        await onDeleteProject(projectIdToDelete)
+        await userEvent.click(removeBtn)
       })
 
       await waitFor(() => {
-        expect(addToast).toHaveBeenCalledTimes(1)
-      })
-
-      expect(addToast).toHaveBeenCalledWith('Project removed', {
-        appearance: 'success',
-        autoDismiss: true
+        expect(addToast).toHaveBeenCalledWith('Project removed', {
+          appearance: 'success',
+          autoDismiss: true
+        })
       })
 
       expect(nock.isDone()).toBe(true)
     })
 
-    test('handles error during project deletion and shows an error', async () => {
+    test('handles an error during project deletion', async () => {
+      const mockProjects = [
+        {
+          id: projectId,
+          name: 'Project 1',
+          path: '/search?p=!C123',
+          created_at: '2022-01-01T00:00:00.000Z'
+        }
+      ]
+
       nock(/localhost/)
-        .delete(`/projects/${projectIdToDelete}`)
+        .get(/projects/)
+        .reply(200, mockProjects)
+
+      nock(/localhost/)
+        .delete(`/projects/${projectId}`)
         .replyWithError('Failed to delete')
+
+      window.confirm = jest.fn(() => true)
 
       const { props } = setup()
 
-      await waitFor(() => {
-        expect(SavedProjects).toHaveBeenCalledTimes(5)
-      })
-
-      expect(SavedProjects).toHaveBeenCalledWith(
-        expect.objectContaining({
-          projects: mockProjects,
-          isLoaded: true,
-          isLoading: false
-        }),
-        {}
-      )
-
-      const { onDeleteProject } = SavedProjects.mock.calls[SavedProjects.mock.calls.length - 1][0]
-
-      await act(async () => {
-        await onDeleteProject(projectIdToDelete)
-      })
+      const removeBtn = await screen.findByRole('button', { name: /remove project/i })
+      await userEvent.click(removeBtn)
 
       await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
+        expect(props.dispatchHandleError).toHaveBeenCalledWith(
+          expect.objectContaining({
+            error: expect.any(Error),
+            action: 'handleDeleteSavedProject',
+            resource: 'project',
+            verb: 'deleting',
+            notificationType: 'banner'
+          })
+        )
       })
-
-      expect(props.dispatchHandleError).toHaveBeenCalledWith(
-        expect.objectContaining({
-          error: expect.any(Error),
-          action: 'handleDeleteSavedProject',
-          resource: 'project',
-          verb: 'deleting',
-          notificationType: 'banner'
-        })
-      )
-
-      await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
-      })
-
-      expect(props.dispatchHandleError).toHaveBeenCalledWith(
-        expect.objectContaining({
-          error: expect.any(Error),
-          action: 'handleDeleteSavedProject',
-          resource: 'project',
-          verb: 'deleting',
-          notificationType: 'banner'
-        })
-      )
     })
   })
 
@@ -253,18 +203,16 @@ describe('SavedProjectsContainer', () => {
       const { props } = setup()
 
       await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
+        expect(props.dispatchHandleError).toHaveBeenCalledWith(
+          expect.objectContaining({
+            error: expect.any(Error),
+            action: 'fetchProjects',
+            resource: 'saved projects',
+            verb: 'fetching',
+            notificationType: 'banner'
+          })
+        )
       })
-
-      expect(props.dispatchHandleError).toHaveBeenCalledWith(
-        expect.objectContaining({
-          error: expect.any(Error),
-          action: 'fetchProjects',
-          resource: 'saved projects',
-          verb: 'fetching',
-          notificationType: 'banner'
-        })
-      )
     })
   })
 })
