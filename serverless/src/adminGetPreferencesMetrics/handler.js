@@ -3,6 +3,7 @@ import { getApplicationConfig } from '../../../sharedUtils/config'
 import { parseError } from '../../../sharedUtils/parseError'
 import projectionCodes from '../../../static/src/js/constants/projectionCodes'
 import mapLayers from '../../../static/src/js/constants/mapLayers'
+import { projectionConfigs } from '../../../static/src/js/util/map/crs'
 
 /**
  * Sort the values for each key and pull out the top 5 values
@@ -52,7 +53,7 @@ const adminGetPreferencesMetrics = async (event, context) => {
       } = sitePreferences
 
       const {
-        zoom = 'not set (2)',
+        zoom = `not set (${projectionConfigs[projectionCodes.geographic].zoom})`,
         latitude = 'not set (0)',
         longitude = 'not set (0)',
         projection = `not set (${projectionCodes.geographic})`,

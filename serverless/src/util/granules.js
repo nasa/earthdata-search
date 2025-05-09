@@ -1,3 +1,9 @@
+/**
+ * This function takes an array of objects and returns an array of pairs
+ * where each pair consists of two consecutive elements from the input array.
+ * @param {Array} array - The array to be paired
+ * @returns {Array} - An array of pairs
+ */
 const pairs = (array) => {
   const len = array.length
 

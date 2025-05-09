@@ -1,6 +1,7 @@
 import { ImmerStateCreator, MapSlice } from '../types'
 
 import projectionCodes from '../../constants/projectionCodes'
+import { projectionConfigs } from '../../util/map/crs'
 
 const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
   map: {
@@ -19,7 +20,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
       },
       projection: projectionCodes.geographic,
       rotation: 0,
-      zoom: 3
+      zoom: projectionConfigs[projectionCodes.geographic].zoom
     },
     setMapView: (mapView) => {
       set((state) => {

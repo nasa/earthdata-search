@@ -35,7 +35,6 @@ import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
 
-// TODO convert this file to typescript? lambda code needs to work with it
 // @ts-expect-error The file does not have types
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 
