@@ -75,13 +75,6 @@ describe('mapStateToProps', () => {
 })
 
 describe('SavedProjectsContainer', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-    SavedProjects.mockClear()
-    nock.cleanAll()
-    nock.disableNetConnect()
-  })
-
   describe('When the component mounts with a valid authToken', () => {
     test('fetches the projects and renders SavedProjects with projects', async () => {
       const mockProjects = [
@@ -100,21 +93,18 @@ describe('SavedProjectsContainer', () => {
       setup()
 
       await waitFor(() => {
-        const callWithLoadedData = SavedProjects.mock.calls.find(
-          (call) => call[0].isLoaded === true
-                     && call[0].isLoading === false
-                     && call[0].projects.length > 0
-        )
-        expect(callWithLoadedData).toBeTruthy()
-
-        if (callWithLoadedData) {
-          const [propsInCall] = callWithLoadedData
-          expect(propsInCall.isLoaded).toBe(true)
-          expect(propsInCall.isLoading).toBe(false)
-          expect(propsInCall.projects).toEqual(mockProjects)
-          expect(typeof propsInCall.onDeleteProject).toBe('function')
-        }
+        expect(SavedProjects).toHaveBeenCalledTimes(5)
       })
+
+      expect(SavedProjects).toHaveBeenCalledWith(
+        expect.objectContaining({
+          projects: mockProjects,
+          isLoaded: true,
+          isLoading: false,
+          onDeleteProject: expect.any(Function)
+        }),
+        {}
+      )
     })
   })
 
@@ -127,12 +117,17 @@ describe('SavedProjectsContainer', () => {
       })
 
       await waitFor(() => {
-        expect(SavedProjects).toHaveBeenCalled()
-        const lastCall = SavedProjects.mock.calls[SavedProjects.mock.calls.length - 1]
-        expect(lastCall[0].isLoading).toBe(false)
-        expect(lastCall[0].isLoaded).toBe(false)
-        expect(lastCall[0].projects).toEqual([])
+        expect(SavedProjects).toHaveBeenCalledTimes(2)
       })
+
+      expect(SavedProjects).toHaveBeenCalledWith(
+        expect.objectContaining({
+          projects: [],
+          isLoaded: false,
+          isLoading: false
+        }),
+        {}
+      )
     })
   })
 
@@ -162,74 +157,95 @@ describe('SavedProjectsContainer', () => {
 
       setup()
 
-      let onDeleteProjectCallback
       await waitFor(() => {
-        const callWithLoadedData = SavedProjects.mock.calls.find(
-          (call) => call[0].isLoaded === true && call[0].projects.length > 0
-        )
-        expect(callWithLoadedData).toBeTruthy()
-        onDeleteProjectCallback = callWithLoadedData[0].onDeleteProject
-        expect(typeof onDeleteProjectCallback).toBe('function')
+        expect(SavedProjects).toHaveBeenCalledTimes(5)
       })
+
+      expect(SavedProjects).toHaveBeenCalledWith(
+        expect.objectContaining({
+          projects: mockProjects,
+          isLoaded: true,
+          isLoading: false
+        }),
+        {}
+      )
+
+      const { onDeleteProject } = SavedProjects.mock.calls[SavedProjects.mock.calls.length - 1][0]
 
       await act(async () => {
-        await onDeleteProjectCallback(projectIdToDelete)
+        await onDeleteProject(projectIdToDelete)
       })
 
       await waitFor(() => {
-        expect(addToast).toHaveBeenCalledWith('Project removed', {
-          appearance: 'success',
-          autoDismiss: true
-        })
+        expect(addToast).toHaveBeenCalledTimes(1)
+      })
+
+      expect(addToast).toHaveBeenCalledWith('Project removed', {
+        appearance: 'success',
+        autoDismiss: true
       })
 
       expect(nock.isDone()).toBe(true)
     })
 
-    test('handles error during project deletion and shows an error toast', async () => {
+    test('handles error during project deletion and shows an error', async () => {
       nock(/localhost/)
         .delete(`/projects/${projectIdToDelete}`)
         .replyWithError('Failed to delete')
 
       const { props } = setup()
 
-      let onDeleteProjectCallback
       await waitFor(() => {
-        const callWithLoadedData = SavedProjects.mock.calls.find(
-          (call) => call[0].isLoaded === true && call[0].projects.length > 0
-        )
-        expect(callWithLoadedData).toBeTruthy()
-        onDeleteProjectCallback = callWithLoadedData[0].onDeleteProject
-        expect(typeof onDeleteProjectCallback).toBe('function')
+        expect(SavedProjects).toHaveBeenCalledTimes(5)
       })
+
+      expect(SavedProjects).toHaveBeenCalledWith(
+        expect.objectContaining({
+          projects: mockProjects,
+          isLoaded: true,
+          isLoading: false
+        }),
+        {}
+      )
+
+      const { onDeleteProject } = SavedProjects.mock.calls[SavedProjects.mock.calls.length - 1][0]
 
       await act(async () => {
-        await onDeleteProjectCallback(projectIdToDelete)
+        await onDeleteProject(projectIdToDelete)
       })
 
       await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledWith(
-          expect.objectContaining({
-            error: expect.any(Error),
-            action: 'handleDeleteSavedProject',
-            resource: 'project',
-            verb: 'deleting',
-            notificationType: 'banner'
-          })
-        )
+        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
       })
 
-      await waitFor(() => {
-        expect(addToast).toHaveBeenCalledWith('Error deleting project. Please try again.', {
-          appearance: 'error',
-          autoDismiss: true
+      expect(props.dispatchHandleError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: expect.any(Error),
+          action: 'handleDeleteSavedProject',
+          resource: 'project',
+          verb: 'deleting',
+          notificationType: 'banner'
         })
+      )
+
+      await waitFor(() => {
+        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
       })
+
+      expect(props.dispatchHandleError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: expect.any(Error),
+          action: 'handleDeleteSavedProject',
+          resource: 'project',
+          verb: 'deleting',
+          notificationType: 'banner'
+        })
+      )
     })
   })
 
   describe('When fetching projects fails', () => {
-    test('calls dispatchHandleError and shows an error toast', async () => {
+    test('calls dispatchHandleError with the correct error data', async () => {
       nock(/localhost/)
         .get(/projects/)
         .replyWithError('Failed to fetch')
@@ -237,23 +253,18 @@ describe('SavedProjectsContainer', () => {
       const { props } = setup()
 
       await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledWith(
-          expect.objectContaining({
-            error: expect.any(Error),
-            action: 'fetchProjects',
-            resource: 'saved projects',
-            verb: 'fetching',
-            notificationType: 'banner'
-          })
-        )
+        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
       })
 
-      await waitFor(() => {
-        expect(addToast).toHaveBeenCalledWith('Error fetching saved projects. Please try again.', {
-          appearance: 'error',
-          autoDismiss: true
+      expect(props.dispatchHandleError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: expect.any(Error),
+          action: 'fetchProjects',
+          resource: 'saved projects',
+          verb: 'fetching',
+          notificationType: 'banner'
         })
-      })
+      )
     })
   })
 })

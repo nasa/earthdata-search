@@ -8,17 +8,11 @@ jest.mock('../../../util/addToast', () => ({
   addToast: jest.fn()
 }))
 
-jest.mock(
-  '../../../containers/PortalLinkContainer/PortalLinkContainer',
-  () => ({
-    __esModule: true,
-    default: ({ to, onClick, children }) => (
-      <a href={to} onClick={onClick}>
-        {children}
-      </a>
-    )
-  })
-)
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(({ to, onClick, children }) => (
+  <a href={to} onClick={onClick}>
+    {children}
+  </a>
+)))
 
 const setup = setupTest({
   Component: SavedProjects,
@@ -33,10 +27,6 @@ const setup = setupTest({
 })
 
 describe('SavedProjects component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   describe('When the projects are loading', () => {
     test('shows a loading state', () => {
       setup({
@@ -124,6 +114,7 @@ describe('SavedProjects component', () => {
       })
 
       await user.click(deleteButton)
+      expect(mockOnDeleteProject).toHaveBeenCalledTimes(1)
       expect(mockOnDeleteProject).toHaveBeenCalledWith('8069076')
     })
   })

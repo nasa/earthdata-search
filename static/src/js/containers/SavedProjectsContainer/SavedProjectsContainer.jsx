@@ -58,11 +58,6 @@ export const SavedProjectsContainer = ({
         verb: 'fetching',
         notificationType: 'banner'
       })
-
-      addToast('Error fetching saved projects. Please try again.', {
-        appearance: 'error',
-        autoDismiss: true
-      })
     } finally {
       setIsLoading(false)
     }
@@ -86,11 +81,6 @@ export const SavedProjectsContainer = ({
           resource: 'project',
           verb: 'deleting',
           notificationType: 'banner'
-        })
-
-        addToast('Error deleting project. Please try again.', {
-          appearance: 'error',
-          autoDismiss: true
         })
       }
     }
