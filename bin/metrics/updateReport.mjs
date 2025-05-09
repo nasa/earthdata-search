@@ -37,7 +37,7 @@ const updatedMetricsFile = {
     clocReport: reports.clocReport,
     ...(reports.testCoverageReport || {}),
     performanceReport: {
-      ...(metricsFile[version].performanceReport || {}),
+      ...(metricsFile[version]?.performanceReport || {}),
       ...(reports.uatPerformanceReport || {}),
       ...(reports.prodPerformanceReport || {})
     }
