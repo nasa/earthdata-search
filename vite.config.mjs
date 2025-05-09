@@ -13,7 +13,8 @@ const {
   analytics,
   defaultPortal,
   env,
-  feedbackApp
+  feedbackApp,
+  version
 } = getApplicationConfig()
 
 const { [defaultPortal]: portalConfig } = availablePortals
@@ -44,7 +45,8 @@ export default defineConfig({
       gaPropertyId: analytics.localIdentifier.propertyId,
       gtmPropertyId: analytics.gtmPropertyId,
       includeDevGoogleAnalytics: analytics.localIdentifier.enabled,
-      showTophat
+      showTophat,
+      version
     }),
     react(),
     nodePolyfills(),
