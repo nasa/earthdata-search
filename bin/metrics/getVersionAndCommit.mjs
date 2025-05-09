@@ -19,7 +19,6 @@ const getVersionAndCommit = async (url) => {
   }
 
   const text = await response.text()
-  console.log('🚀 ~ getVersionAndCommit.mjs:47 ~ getVersionAndCommit ~ text:', text)
   const versionMatch = text.match(/<span class="footer__ver-pill">v(\d+\.\d+\.\d+-\d+)<\/span>/)
   if (!versionMatch) {
     throw new Error('Version not found in the footer')
