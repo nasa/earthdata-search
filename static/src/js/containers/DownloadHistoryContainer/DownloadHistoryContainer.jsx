@@ -59,24 +59,27 @@ export const DownloadHistoryContainer = ({
   const handleDeleteRetrieval = useCallback(async (retrievalId) => {
     if (!authToken) return
 
-    try {
-      const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
-      await requestObject.remove(retrievalId)
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure you want to remove this download from your history? This action cannot be undone.')) {
+      try {
+        const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+        await requestObject.remove(retrievalId)
 
-      setRetrievalHistory((prevHistory) => prevHistory.filter((item) => item.id !== retrievalId))
+        setRetrievalHistory((prevHistory) => prevHistory.filter((item) => item.id !== retrievalId))
 
-      addToast('Retrieval removed', {
-        appearance: 'success',
-        autoDismiss: true
-      })
-    } catch (error) {
-      dispatchHandleError({
-        error,
-        action: 'handleDeleteRetrieval',
-        resource: 'retrieval',
-        verb: 'deleting',
-        notificationType: 'banner'
-      })
+        addToast('Retrieval removed', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+      } catch (error) {
+        dispatchHandleError({
+          error,
+          action: 'handleDeleteRetrieval',
+          resource: 'retrieval',
+          verb: 'deleting',
+          notificationType: 'banner'
+        })
+      }
     }
   }, [authToken, earthdataEnvironment, dispatchHandleError])
 

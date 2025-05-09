@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import Table from 'react-bootstrap/Table'
 import TimeAgo from 'react-timeago'
@@ -49,17 +49,6 @@ export const DownloadHistory = ({
   onDeleteRetrieval
 }) => {
   const { edscHost } = getEnvironmentConfig()
-
-  const handleRemove = useCallback((id) => {
-    // eslint-disable-next-line no-alert
-    const confirmDeletion = window.confirm('Are you sure you want to remove this download from your history? This action cannot be undone.')
-
-    if (confirmDeletion) {
-      onDeleteRetrieval(id)
-    }
-  }, [onDeleteRetrieval])
-
-  const handleRemoveClick = useCallback((id) => () => handleRemove(id), [handleRemove])
 
   // Memoize the descriptions for all items in the history
   const retrievalDescriptions = useMemo(() => retrievalHistory.reduce((acc, retrieval) => {
@@ -129,7 +118,7 @@ export const DownloadHistory = ({
                       <td className="download-history-table__actions">
                         <Button
                           className="download-history__button download-history__button--remove"
-                          onClick={handleRemoveClick(id)}
+                          onClick={() => onDeleteRetrieval(id)}
                           variant="naked"
                           icon={XCircled}
                           label="Delete Download"
