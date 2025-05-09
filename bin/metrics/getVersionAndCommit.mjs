@@ -1,5 +1,3 @@
-import puppeteer from 'puppeteer'
-
 // Get the `--env` argument from the command line
 const args = process.argv.slice(2)
 const envArg = args.find((arg) => arg.startsWith('--env='))
@@ -12,29 +10,22 @@ const urlWithEnv = `https://search${urlEnv}.earthdata.nasa.gov`
  * Get the current version of the app
  */
 const getVersionAndCommit = async (url) => {
-  // TODO Won't need puppeteer once the version in the fallback footer makes it to prod
-  // Request the URL directly to scrape the version from the footer (classname `footer__ver-pill`)
-  // Set the executable path if not on a Mac
-  const executablePath = process.platform === 'darwin' ? undefined : '/usr/local/share/chromedriver-linux64'
-  const browser = await puppeteer.launch({
-    executablePath
-  })
-  const page = await browser.newPage()
-  await page.goto(url, { waitUntil: 'networkidle2' })
-  const version = await page.evaluate(() => {
-    const versionElement = document.querySelector('.footer__ver-pill')
+  // Request the URL to scrape the version from the footer (classname `footer__ver-pill`)
 
-    // Remove the `v` prefix from the version string
-    if (versionElement) {
-      const versionText = versionElement.innerText
-      const [, versionWithoutV] = versionText.split('v')
+  // Use fetch to get the version from the URL
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`Error fetching URL: ${response.statusText}`)
+  }
 
-      return versionWithoutV
-    }
+  const text = await response.text()
+  console.log('🚀 ~ getVersionAndCommit.mjs:47 ~ getVersionAndCommit ~ text:', text)
+  const versionMatch = text.match(/<span class="footer__ver-pill">v(\d+\.\d+\.\d+-\d+)<\/span>/)
+  if (!versionMatch) {
+    throw new Error('Version not found in the footer')
+  }
 
-    return null
-  })
-  await browser.close()
+  const version = versionMatch[1]
 
   const { GITHUB_TOKEN } = process.env
   // Get the commit hash for the git tag that matches the version
@@ -47,10 +38,14 @@ const getVersionAndCommit = async (url) => {
     throw new Error(`Error fetching GitHub tags: ${gitTagResponse.statusText}`)
   }
 
+  // Incase we forget to push a tag for a backport, grab the latest tag that matches the sprint (e.g., v25.2.2*)
+  // Strip the -<build number> from the version string
+  const versionWithoutBuild = version.split('-')[0]
+
   const gitTagData = await gitTagResponse.json()
-  const gitTag = gitTagData.find((tag) => tag.name === `v${version}`)
+  const gitTag = gitTagData.find((tag) => tag.name.startsWith(`v${versionWithoutBuild}`))
   if (!gitTag) {
-    throw new Error(`Git tag not found for version: ${version}`)
+    throw new Error(`Git tag not found for version: ${versionWithoutBuild}`)
   }
 
   const { commit } = gitTag
