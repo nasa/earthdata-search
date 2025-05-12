@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import PropTypes from 'prop-types'
 import Form from 'react-bootstrap/Form'
 import Table from 'react-bootstrap/Table'
@@ -51,6 +51,15 @@ export const SavedProjects = (props) => {
     return `${pathname}?projectId=${id}`
   }
 
+  const handleProjectPathChange = useCallback((path, id) => {
+    const finalPath = projectTo(path, id)
+    onChangePath(finalPath)
+  }, [onChangePath])
+
+  const handleDeleteProject = useCallback((id) => {
+    onDeleteProject(id)
+  }, [onDeleteProject])
+
   return (
     <div className="saved-projects">
       <h2 className="route-wrapper__page-heading">
@@ -100,7 +109,7 @@ export const SavedProjects = (props) => {
                         <td className="saved-projects-table__project-name">
                           <PortalLinkContainer
                             to={finalProjectPath}
-                            onClick={() => { onChangePath(finalProjectPath) }}
+                            onClick={() => handleProjectPathChange(projectPathValue, id)}
                           >
                             {projectName}
                           </PortalLinkContainer>
@@ -159,7 +168,7 @@ export const SavedProjects = (props) => {
                               label="Remove project"
                               variant="naked"
                               icon={XCircled}
-                              onClick={() => onDeleteProject(id)}
+                              onClick={() => handleDeleteProject(id)}
                             />
                           </div>
                         </td>
