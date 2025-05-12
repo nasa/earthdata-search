@@ -23,7 +23,6 @@ export const mapStateToProps = (state) => ({
   granuleMetadata: getFocusedGranuleMetadata(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
-  map: state.map,
   panels: state.panels,
   preferences: state.preferences.preferences,
   portal: state.portal,
@@ -63,7 +62,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.granuleSearchResults - Granule search results state
  * @param {Object} props.granuleQuery - Granule query state
  * @param {Object} props.location - Browser location state
- * @param {String} props.map - Map projection state
  * @param {Function} props.onApplyGranuleFilters - Callback to apply granule filters
  * @param {Function} props.onChangeQuery - Callback to change the query
  * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection
@@ -87,7 +85,6 @@ export const SearchPanelsContainer = ({
   granuleQuery,
   isExportRunning,
   location,
-  map,
   onApplyGranuleFilters,
   onFocusedCollectionChange,
   onChangePath,
@@ -114,7 +111,6 @@ export const SearchPanelsContainer = ({
     granuleQuery={granuleQuery}
     isExportRunning={isExportRunning}
     location={location}
-    map={map}
     onApplyGranuleFilters={onApplyGranuleFilters}
     onFocusedCollectionChange={onFocusedCollectionChange}
     onChangePath={onChangePath}
@@ -144,7 +140,6 @@ SearchPanelsContainer.propTypes = {
   isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
-  map: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,

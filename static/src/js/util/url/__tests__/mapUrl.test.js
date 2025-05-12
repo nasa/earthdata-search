@@ -19,7 +19,7 @@ describe('decodes base correctly', () => {
   test('when the result is valid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: {
           worldImagery: false,
           trueColor: true,
@@ -39,7 +39,7 @@ describe('decodes base correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: {
           worldImagery: true,
           trueColor: false,
@@ -61,7 +61,7 @@ describe('decodes latitude correctly', () => {
   test('when the result is valid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: 1,
         longitude: undefined,
@@ -77,7 +77,7 @@ describe('decodes latitude correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -95,7 +95,7 @@ describe('decodes longitude correctly', () => {
   test('when the result is valid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: 1,
@@ -111,7 +111,7 @@ describe('decodes longitude correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -129,7 +129,7 @@ describe('decodes overlays correctly', () => {
   test('when the result is valid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -149,7 +149,7 @@ describe('decodes overlays correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -171,7 +171,7 @@ describe('decodes projection correctly', () => {
   test('when the result is valid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -187,7 +187,7 @@ describe('decodes projection correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -205,7 +205,7 @@ describe('decodes rotation correctly', () => {
   test('when the result is valid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -221,7 +221,7 @@ describe('decodes rotation correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -239,7 +239,7 @@ describe('decodes zoom correctly', () => {
   test('when the result is valid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -255,7 +255,7 @@ describe('decodes zoom correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      map: {
+      mapView: {
         base: undefined,
         latitude: undefined,
         longitude: undefined,
@@ -274,7 +274,7 @@ describe('url#encodeUrlQuery', () => {
     const defaultProps = {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      map: {
+      mapView: {
         base: {
           worldImagery: true,
           trueColor: false,
@@ -300,7 +300,7 @@ describe('url#encodeUrlQuery', () => {
     test('encodes map correctly', () => {
       const props = {
         ...defaultProps,
-        map: {
+        mapView: {
           ...defaultProps.map,
           base: {
             worldImagery: false,
@@ -324,7 +324,7 @@ describe('url#encodeUrlQuery', () => {
     test('encodes map correctly when map preferences exist', () => {
       const props = {
         ...defaultProps,
-        map: {
+        mapView: {
           ...defaultProps.map,
           base: {
             worldImagery: false,
@@ -360,7 +360,7 @@ describe('url#encodeUrlQuery', () => {
     test('does not encode the map when it matches the map preferences', () => {
       const props = {
         ...defaultProps,
-        map: {
+        mapView: {
           ...defaultProps.map,
           base: {
             worldImagery: false,

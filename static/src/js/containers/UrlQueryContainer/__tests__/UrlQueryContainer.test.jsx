@@ -27,7 +27,6 @@ const setup = setupTest({
     instrumentFacets: {},
     granuleDataFormatFacets: {},
     keywordSearch: '',
-    map: {},
     mapPreferences: {},
     organizationFacets: {},
     overrideTemporalSearch: {},
@@ -106,7 +105,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
-      map: {},
       metadata: {
         collections: {}
       },
@@ -161,7 +159,6 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      map: {},
       mapPreferences: {},
       organizationFacets: [],
       overrideTemporalSearch: {},
@@ -225,7 +222,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
-      map: {},
       metadata: {
         collections: {}
       },
@@ -281,7 +277,6 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      map: {},
       mapPreferences: {},
       organizationFacets: [],
       overrideTemporalSearch: {},

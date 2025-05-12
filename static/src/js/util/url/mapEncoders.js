@@ -180,14 +180,16 @@ export const decodeMap = (params) => {
     }
   }
 
-  // Values that are not set will return undefined and will not be set in the state
-  return {
-    base: decodedBase,
-    latitude: decodedLatitude,
-    longitude: decodedLongitude,
-    overlays: decodedOverlays,
-    projection: decodedProjection,
-    rotation: decodedRotation,
-    zoom: decodedZoom
-  }
+  const returnValue = {}
+
+  // If a value is set, add it to the return object
+  if (decodedBase) returnValue.base = decodedBase
+  if (decodedLatitude) returnValue.latitude = decodedLatitude
+  if (decodedLongitude) returnValue.longitude = decodedLongitude
+  if (decodedOverlays) returnValue.overlays = decodedOverlays
+  if (decodedProjection) returnValue.projection = decodedProjection
+  if (decodedRotation) returnValue.rotation = decodedRotation
+  if (decodedZoom) returnValue.zoom = decodedZoom
+
+  return returnValue
 }
