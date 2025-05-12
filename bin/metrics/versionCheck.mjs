@@ -59,9 +59,5 @@ console.log(`needs_cloc=${needsCloc}`)
 console.log(`needs_performance=${needsPerformance}`)
 console.log(`needs_test_coverage=${needsTestCoverage}`)
 
-const performanceMatrix = []
-if (!performanceByEnv) {
-  performanceMatrix.push(env)
-}
-
+const performanceMatrix = [env]
 console.log(`performance_matrix=${JSON.stringify(performanceMatrix)}`)
