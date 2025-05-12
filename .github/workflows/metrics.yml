@@ -7,11 +7,6 @@ on:
     # Run every Monday at 01:00 UTC, this will check PROD
     - cron: '0 1 * * 1'
 
-  # TODO remove before merging the PR
-  push:
-    branches:
-      - EDSC-4489
-
 jobs:
   determineEnv:
     runs-on: ubuntu-latest
