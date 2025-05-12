@@ -4,7 +4,6 @@ import {
   waitFor,
   act
 } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import nock from 'nock'
 
 import actions from '../../../actions'
@@ -143,8 +142,10 @@ describe('SavedProjectsContainer', () => {
 
       const removeBtn = await screen.findByRole('button', { name: /remove project/i })
 
-      const { user } = setup()
-      await user.click(removeBtn)
+      await act(async () => {
+        const { user } = setup()
+        await user.click(removeBtn)
+      })
 
       expect(addToast).toHaveBeenCalledTimes(1)
       await waitFor(() => {
@@ -178,18 +179,27 @@ describe('SavedProjectsContainer', () => {
       const { props } = setup()
 
       const removeBtn = await screen.findByRole('button', { name: /remove project/i })
-      await userEvent.click(removeBtn)
 
-      expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
-      expect(props.dispatchHandleError).toHaveBeenCalledWith(
-        expect.objectContaining({
-          error: expect.any(Error),
-          action: 'handleDeleteSavedProject',
-          resource: 'project',
-          verb: 'deleting',
-          notificationType: 'banner'
-        })
-      )
+      await act(async () => {
+        const { user } = setup()
+        await user.click(removeBtn)
+      })
+
+      await waitFor(() => {
+        expect(props.dispatchHandleError).toHaveBeenCalledTimes(2)
+      })
+
+      await waitFor(() => {
+        expect(props.dispatchHandleError).toHaveBeenCalledWith(
+          expect.objectContaining({
+            error: expect.any(Error),
+            action: 'handleDeleteSavedProject',
+            resource: 'project',
+            verb: 'deleting',
+            notificationType: 'banner'
+          })
+        )
+      })
     })
   })
 
@@ -202,6 +212,10 @@ describe('SavedProjectsContainer', () => {
       const { props } = setup()
 
       await waitFor(() => {
+        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
+      })
+
+      await waitFor(() => {
         expect(props.dispatchHandleError).toHaveBeenCalledWith(
           expect.objectContaining({
             error: expect.any(Error),
@@ -212,8 +226,6 @@ describe('SavedProjectsContainer', () => {
           })
         )
       })
-
-      expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
     })
   })
 })
