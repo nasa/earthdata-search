@@ -36,9 +36,12 @@ const metricsFilePath = 'metrics-branch/metrics.json'
 const metricsFileContent = fs.readFileSync(metricsFilePath, 'utf8')
 const metricsFile = JSON.parse(metricsFileContent)
 
+const versionWithoutBuild = version.split('-')[0]
+
 const updatedMetricsFile = {
   ...metricsFile,
-  [version]: {
+  [versionWithoutBuild]: {
+    version,
     date: new Date().toISOString().split('T')[0],
     ...metricsFile[version],
     commit,

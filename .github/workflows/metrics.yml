@@ -1,11 +1,10 @@
 name: Generate Metrics
 
-# Run every Monday at 00:00 UTC
 on:
   schedule:
-    # Run every Monday at 00:00 UTC
+    # Run every Monday at 00:00 UTC, this will check UAT
     - cron: '0 0 * * 1'
-    # Ryn every Monday at 01:00 UTC
+    # Run every Monday at 01:00 UTC, this will check PROD
     - cron: '0 1 * * 1'
 
   # TODO remove before merging the PR
@@ -29,11 +28,11 @@ jobs:
         if: github.event.schedule == '0 1 * * 1'
         run: |
           echo "env=prod" >> $GITHUB_ENV
-      # If on the second cron job, set the env to prod
-      - name: Default env to prod
+      # If not on a cron job, set the env to uat
+      - name: Default env to uat
         if: github.event.schedule != '0 0 * * 1' && github.event.schedule != '0 1 * * 1'
         run: |
-          echo "env=prod" >> $GITHUB_ENV
+          echo "env=uat" >> $GITHUB_ENV
 
       # Set the `env` value to an output
       - name: Set env output
@@ -79,8 +78,7 @@ jobs:
       needs_bundle_size: ${{ steps.versionCheck.outputs.needs_bundle_size }}
       needs_cloc: ${{ steps.versionCheck.outputs.needs_cloc }}
       needs_test_coverage: ${{ steps.versionCheck.outputs.needs_test_coverage }}
-      needs_performance_uat: ${{ steps.versionCheck.outputs.needs_performance_uat }}
-      needs_performance_prod: ${{ steps.versionCheck.outputs.needs_performance_prod }}
+      needs_performance: ${{ steps.versionCheck.outputs.needs_performance }}
       performance_matrix: ${{ steps.versionCheck.outputs.performance_matrix }}
     steps:
       - name: Checkout code
@@ -218,7 +216,7 @@ jobs:
 
   # Generate the performance report if needed
   performanceReport:
-    if: needs.versionCheck.outputs.needs_performance_uat == 'true' || needs.versionCheck.outputs.needs_performance_prod == 'true'
+    if: needs.versionCheck.outputs.needs_performance == 'true'
     runs-on: ubuntu-latest
     needs: [
       getVersion,
@@ -282,16 +280,6 @@ jobs:
           path: metrics-reports
           pattern: '*Report'
           merge-multiple: true
-
-      - name: Update report
-        run: |
-          node bin/metrics/updateReport.mjs --version=${{ needs.getVersion.outputs.version }} --commit=${{ needs.getVersion.outputs.commit }}
-
-      - name: Upload test coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: metricsReport
-          path: metrics-branch/metrics.json
 
       - name: Commit changes
         uses: EndBug/add-and-commit@v9

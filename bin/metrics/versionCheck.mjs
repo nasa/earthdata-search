@@ -18,8 +18,12 @@ const reportsFilePath = './metrics-branch/metrics.json'
 const reportsFileContent = fs.readFileSync(reportsFilePath, 'utf8')
 const reportsFile = JSON.parse(reportsFileContent)
 
+// The metrics file is keyed by the version without the build number.
+// Strip the -<build number> from the version string
+const versionWithoutBuild = version.split('-')[0]
+
 // Get the report for the version
-const versionReport = reportsFile[version]
+const versionReport = reportsFile[versionWithoutBuild]
 
 // Reach each report from the versionReport
 const {
@@ -31,11 +35,12 @@ const {
 
 const { [env]: performanceByEnv } = performance
 
-// These console logs will set env variables for the next job in the workflow
+// These console logs will be set to Github Actions outputs to be used by jobs later in the workflow.
+// Any additional console logs in this file will break the workflow.
 // If the report is not found, the `needs_*` variable will be `true`, indicating that the report is needed
 console.log(`needs_bundle_size=${!!bundleSize}`)
 console.log(`needs_cloc=${!!cloc}`)
-console.log(`needs_performance_${env}=${!!performanceByEnv}`)
+console.log(`needs_performance=${!!performanceByEnv}`)
 console.log(`needs_test_coverage=${!!testCoverage}`)
 
 const performanceMatrix = []

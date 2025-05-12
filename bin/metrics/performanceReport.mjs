@@ -1,5 +1,6 @@
 import fs from 'fs'
 
+// This is a free PageSpeed Insights API key from https://developers.google.com/speed/docs/insights/v5/get-started.
 const { env } = process
 const { GOOGLE_TOKEN } = env
 

@@ -46,6 +46,8 @@ const getVersionAndCommit = async (url) => {
   const { commit } = gitTag
   const { sha: commitHash } = commit
 
+  // These console logs will be set to Github Actions outputs to be used by jobs later in the workflow.
+  // Any additional console logs in this file will break the workflow.
   console.log(`version=${version}`)
   console.log(`commit=${commitHash}`)
 }
