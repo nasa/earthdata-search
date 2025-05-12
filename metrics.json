@@ -109,5 +109,110 @@
         }
       }
     }
+  },
+  "25.1.6": {
+    "version": "25.1.6-3",
+    "date": "2025-05-12",
+    "commit": "b21d728e43ec829b1439fa470631aae82bfd3a69",
+    "bundleSizeReport": {
+      "buildDetails": "\n> earthdata-search@1.0.0 build\n> vite build\n\nvite v6.2.5 building for production...\ntransforming...\n✓ 4044 modules transformed.\nrendering chunks...\ncomputing gzip size...\nstatic/dist/assets/logo-Bbl3mFh1.png                                      4.74 kB\nstatic/dist/assets/orange-bars-circle-Dv91mTXe.png                        6.21 kB\nstatic/dist/assets/logo-Caj-8pKX.png                                     10.40 kB\nstatic/dist/index.html                                                   12.04 kB │ gzip:   2.78 kB\nstatic/dist/assets/logo-B0XgzUx6.png                                     16.71 kB\nstatic/dist/assets/blue-bars-circle-BnwbAiRm.png                         17.43 kB\nstatic/dist/assets/plate_carree_earth_scaled-RfqGhO39.png                18.14 kB\nstatic/dist/assets/logo-DJkM1oZm.png                                     18.46 kB\nstatic/dist/assets/logo-DV4XbSnR.png                                     19.40 kB\nstatic/dist/assets/logo-BzPAKkwn.png                                     19.52 kB\nstatic/dist/assets/logo-CiiGKrme.png                                     22.18 kB\nstatic/dist/assets/logo-9zKL5_dX.png                                     26.10 kB\nstatic/dist/assets/logo-BQ2w-_9p.png                                     37.37 kB\nstatic/dist/assets/plate_carree_earth_scaled@2x-BIj0Wstc.png             45.03 kB\nstatic/dist/assets/image-unavailable-CcXgOtQr.svg                        52.20 kB │ gzip:  20.77 kB\nstatic/dist/assets/logo-Dcyqcuvp.png                                     85.17 kB\nstatic/dist/assets/logo-ypkTnNcY.png                                    116.54 kB\nstatic/dist/assets/logo-CeuXi2Mj.png                                    140.06 kB\nstatic/dist/assets/tour-video-thumbnail-Dp_EYCVz.png                    163.50 kB\nstatic/dist/assets/earthdata-search-og-image-NnlQJae1.jpg               669.27 kB\nstatic/dist/assets/Preferences-CYv3T8NS.css                               0.17 kB │ gzip:   0.15 kB\nstatic/dist/assets/Card-4Z2ojUmq.css                                      0.24 kB │ gzip:   0.14 kB\nstatic/dist/assets/ContactInfo-C7Pr11wu.css                               0.28 kB │ gzip:   0.18 kB\nstatic/dist/assets/GranuleFiltersContainer-CfwvM6Mp.css                   0.59 kB │ gzip:   0.27 kB\nstatic/dist/assets/PreferencesForm-CNfW6AJC.css                           0.67 kB │ gzip:   0.24 kB\nstatic/dist/assets/TextWindowActions-DJ3-SObR.css                         0.85 kB │ gzip:   0.37 kB\nstatic/dist/assets/Subscriptions-whcrpTXZ.css                             1.20 kB │ gzip:   0.38 kB\nstatic/dist/assets/CollectionDetailsHighlightsContainer-CHDYEfjF.css      1.24 kB │ gzip:   0.44 kB\nstatic/dist/assets/GranuleResultsHighlightsContainer-BIY0O9bb.css         1.24 kB │ gzip:   0.41 kB\nstatic/dist/assets/EchoForm-VVUehB8V.css                                  3.47 kB │ gzip:   1.06 kB\nstatic/dist/assets/CollectionDetailsBody-U5XswgWv.css                     6.42 kB │ gzip:   1.43 kB\nstatic/dist/assets/Downloads-DqmON7i8.css                                 8.86 kB │ gzip:   2.02 kB\nstatic/dist/assets/Admin-DUdnaYcU.css                                    12.83 kB │ gzip:   2.12 kB\nstatic/dist/assets/MapContainer-DvYOR6B2.css                             15.35 kB │ gzip:   5.53 kB\nstatic/dist/assets/Project-D_Afhulk.css                                  20.31 kB │ gzip:   4.10 kB\nstatic/dist/assets/index-CHwHMS1i.css                                   410.95 kB │ gzip: 120.50 kB\nstatic/dist/assets/logo-kIfxR0kt.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-wNST2Htl.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-CCmqYjka.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-DrPA0kJR.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-Ckt66ggc.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-B3er5AlO.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-BWTFBqRn.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-BPTx5Aq2.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-Ci-dnVwS.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-Bw50Xt1w.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-DWpcBQbn.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-BVv-1ePi.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-DJCGC4Zf.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-Bf2AJzFF.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-BcKojMYq.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-D7UOcUuS.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/logo-BE1QrLrG.js                                       0.06 kB │ gzip:   0.08 kB\nstatic/dist/assets/Table-Ckg0MVGE.js                                      0.54 kB │ gzip:   0.35 kB\nstatic/dist/assets/RelatedCollection-BxmBi-JN.js                          1.02 kB │ gzip:   0.53 kB\nstatic/dist/assets/logo-CxSOswgE.js                                       3.08 kB │ gzip:   2.37 kB\nstatic/dist/assets/Preferences-BNigtlLY.js                                4.51 kB │ gzip:   0.87 kB\nstatic/dist/assets/Card-C5IrH8tS.js                                       6.36 kB │ gzip:   2.03 kB\nstatic/dist/assets/EarthdataDownloadRedirect-FuESVanh.js                  6.39 kB │ gzip:   1.13 kB\nstatic/dist/assets/GranuleResultsHighlightsContainer-PnDLPPZ7.js          8.86 kB │ gzip:   1.56 kB\nstatic/dist/assets/CollectionDetailsHighlightsContainer-C3PvGgqo.js      11.26 kB │ gzip:   1.39 kB\nstatic/dist/assets/ContactInfo-CN8DHdOR.js                               14.83 kB │ gzip:   1.94 kB\nstatic/dist/assets/Subscriptions-BRxt_Ua-.js                             14.99 kB │ gzip:   2.15 kB\nstatic/dist/assets/index-N_dvx7SC.js                                     15.14 kB │ gzip:   6.30 kB\nstatic/dist/assets/styles-DhEFSVkm.js                                    31.70 kB │ gzip:  10.42 kB\nstatic/dist/assets/GranuleFiltersContainer-BJDxF1A8.js                   40.91 kB │ gzip:   6.50 kB\nstatic/dist/assets/CollectionDetailsBody-Gmm6GV57.js                     48.58 kB │ gzip:   6.09 kB\nstatic/dist/assets/Downloads-CvlgyPTu.js                                 98.02 kB │ gzip:  15.64 kB\nstatic/dist/assets/EchoForm-BG1lVHeE.js                                 109.00 kB │ gzip:  33.74 kB\nstatic/dist/assets/Admin-DQAN8Y4M.js                                    113.08 kB │ gzip:  20.35 kB\nstatic/dist/assets/PreferencesForm-D_v9J6O9.js                          382.87 kB │ gzip: 121.68 kB\nstatic/dist/assets/Project-DHB3WV31.js                                  417.03 kB │ gzip: 119.33 kB\nstatic/dist/assets/MapContainer-ChfwUBYX.js                             661.70 kB │ gzip: 193.45 kB\nstatic/dist/assets/index-6E37LtIh.js                                  3,656.54 kB │ gzip: 979.57 kB\n✓ built in 38.64s\n",
+      "buildTime": 38.64,
+      "numFiles": 74,
+      "totalSize": 7632.57,
+      "indexJsSize": 3671.68,
+      "indexJsGzipSize": 985.87,
+      "indexCssSize": 410.95,
+      "indexCssGzipSize": 120.5
+    },
+    "clocReport": {
+      "header": {
+        "cloc_url": "github.com/AlDanial/cloc",
+        "cloc_version": "2.04",
+        "elapsed_seconds": 1.02846693992615,
+        "n_files": 1646,
+        "n_lines": 210080,
+        "files_per_second": 1600.44036040497,
+        "lines_per_second": 204265.194965903
+      },
+      "JavaScript": {
+        "nFiles": 972,
+        "blank": 15479,
+        "comment": 5065,
+        "code": 97614
+      },
+      "JSX": {
+        "nFiles": 469,
+        "blank": 10468,
+        "comment": 2751,
+        "code": 66423
+      },
+      "SCSS": {
+        "nFiles": 198,
+        "blank": 1703,
+        "comment": 82,
+        "code": 9346
+      },
+      "JSON": {
+        "nFiles": 2,
+        "blank": 0,
+        "comment": 0,
+        "code": 715
+      },
+      "Jupyter Notebook": {
+        "nFiles": 1,
+        "blank": 0,
+        "comment": 344,
+        "code": 43
+      },
+      "SVG": {
+        "nFiles": 3,
+        "blank": 0,
+        "comment": 1,
+        "code": 38
+      },
+      "Text": {
+        "nFiles": 1,
+        "blank": 0,
+        "comment": 0,
+        "code": 8
+      },
+      "SUM": {
+        "blank": 27650,
+        "comment": 8243,
+        "code": 174187,
+        "nFiles": 1646
+      }
+    },
+    "testCoverageReport": 94.07,
+    "performanceReport": {
+      "prod": {
+        "desktop": {
+          "accessibilityScore": 92,
+          "bestPracticesScore": 96,
+          "cls": 0.03,
+          "date": "2025-05-12",
+          "fcp": 1786.29,
+          "inp": "No value",
+          "lcp": 3362.06,
+          "performanceScore": 36,
+          "seoScore": 77,
+          "strategy": "desktop",
+          "ttfb": 340
+        },
+        "mobile": {
+          "accessibilityScore": 0,
+          "bestPracticesScore": 96,
+          "cls": 0.1,
+          "date": "2025-05-12",
+          "fcp": 8094.94,
+          "inp": "No value",
+          "lcp": 13872.26,
+          "performanceScore": 33,
+          "seoScore": 77,
+          "strategy": "mobile",
+          "ttfb": 21
+        }
+      }
+    }
   }
 }
