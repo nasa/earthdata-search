@@ -27,6 +27,7 @@ const versionReport = reportsFile[versionWithoutBuild]
 
 // Reach each report from the versionReport
 const {
+  version: versionFromReport,
   bundleSizeReport,
   clocReport,
   performanceReport = {},
@@ -35,13 +36,28 @@ const {
 
 const { [env]: performanceByEnv } = performanceReport
 
+let needsBundleSize = !bundleSizeReport
+let needsCloc = !clocReport
+let needsPerformance = !performanceByEnv
+let needsTestCoverage = !testCoverageReport
+
+// If the version is not the same as the one in the report, we need to run all reports
+// This would happen if the version argument is from a backported release after we initially
+// created the report
+if (version !== versionFromReport) {
+  needsBundleSize = true
+  needsCloc = true
+  needsPerformance = true
+  needsTestCoverage = true
+}
+
 // These console logs will be set to Github Actions outputs to be used by jobs later in the workflow.
 // Any additional console logs in this file will break the workflow.
 // If the report is not found, the `needs_*` variable will be `true`, indicating that the report is needed
-console.log(`needs_bundle_size=${!bundleSizeReport}`)
-console.log(`needs_cloc=${!clocReport}`)
-console.log(`needs_performance=${!performanceByEnv}`)
-console.log(`needs_test_coverage=${!testCoverageReport}`)
+console.log(`needs_bundle_size=${needsBundleSize}`)
+console.log(`needs_cloc=${needsCloc}`)
+console.log(`needs_performance=${needsPerformance}`)
+console.log(`needs_test_coverage=${needsTestCoverage}`)
 
 const performanceMatrix = []
 if (!performanceByEnv) {
