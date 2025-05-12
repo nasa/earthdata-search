@@ -28,11 +28,11 @@ jobs:
         if: github.event.schedule == '0 1 * * 1'
         run: |
           echo "env=prod" >> $GITHUB_ENV
-      # If not on a cron job, set the env to uat
-      - name: Default env to uat
+      # If not on a cron job, set the env to prod
+      - name: Default env to prod
         if: github.event.schedule != '0 0 * * 1' && github.event.schedule != '0 1 * * 1'
         run: |
-          echo "env=uat" >> $GITHUB_ENV
+          echo "env=prod" >> $GITHUB_ENV
 
       # Set the `env` value to an output
       - name: Set env output
