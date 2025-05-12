@@ -36,6 +36,8 @@ const metricsFilePath = 'metrics-branch/metrics.json'
 const metricsFileContent = fs.readFileSync(metricsFilePath, 'utf8')
 const metricsFile = JSON.parse(metricsFileContent)
 
+// The metrics file is keyed by the version without the build number.
+// Strip the -<build number> from the version string
 const versionWithoutBuild = version.split('-')[0]
 
 const updatedMetricsFile = {

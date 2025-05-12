@@ -27,21 +27,21 @@ const versionReport = reportsFile[versionWithoutBuild]
 
 // Reach each report from the versionReport
 const {
-  bundleSize,
-  cloc,
-  performance = {},
-  testCoverage
+  bundleSizeReport,
+  clocReport,
+  performanceReport = {},
+  testCoverageReport
 } = versionReport || {}
 
-const { [env]: performanceByEnv } = performance
+const { [env]: performanceByEnv } = performanceReport
 
 // These console logs will be set to Github Actions outputs to be used by jobs later in the workflow.
 // Any additional console logs in this file will break the workflow.
 // If the report is not found, the `needs_*` variable will be `true`, indicating that the report is needed
-console.log(`needs_bundle_size=${!!bundleSize}`)
-console.log(`needs_cloc=${!!cloc}`)
-console.log(`needs_performance=${!!performanceByEnv}`)
-console.log(`needs_test_coverage=${!!testCoverage}`)
+console.log(`needs_bundle_size=${!bundleSizeReport}`)
+console.log(`needs_cloc=${!clocReport}`)
+console.log(`needs_performance=${!performanceByEnv}`)
+console.log(`needs_test_coverage=${!testCoverageReport}`)
 
 const performanceMatrix = []
 if (!performanceByEnv) {
