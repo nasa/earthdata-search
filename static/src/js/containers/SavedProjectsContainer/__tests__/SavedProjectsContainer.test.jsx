@@ -143,10 +143,8 @@ describe('SavedProjectsContainer', () => {
 
       const removeBtn = await screen.findByRole('button', { name: /remove project/i })
 
-      // eslint-disable-next-line testing-library/no-unnecessary-act
-      await act(async () => {
-        await userEvent.click(removeBtn)
-      })
+      const { user } = setup()
+      await user.click(removeBtn)
 
       expect(addToast).toHaveBeenCalledTimes(1)
       await waitFor(() => {
@@ -182,21 +180,16 @@ describe('SavedProjectsContainer', () => {
       const removeBtn = await screen.findByRole('button', { name: /remove project/i })
       await userEvent.click(removeBtn)
 
-      await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
-      })
-
-      await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledWith(
-          expect.objectContaining({
-            error: expect.any(Error),
-            action: 'handleDeleteSavedProject',
-            resource: 'project',
-            verb: 'deleting',
-            notificationType: 'banner'
-          })
-        )
-      })
+      expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
+      expect(props.dispatchHandleError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          error: expect.any(Error),
+          action: 'handleDeleteSavedProject',
+          resource: 'project',
+          verb: 'deleting',
+          notificationType: 'banner'
+        })
+      )
     })
   })
 
@@ -209,10 +202,6 @@ describe('SavedProjectsContainer', () => {
       const { props } = setup()
 
       await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
-      })
-
-      await waitFor(() => {
         expect(props.dispatchHandleError).toHaveBeenCalledWith(
           expect.objectContaining({
             error: expect.any(Error),
@@ -223,6 +212,8 @@ describe('SavedProjectsContainer', () => {
           })
         )
       })
+
+      expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
     })
   })
 })
