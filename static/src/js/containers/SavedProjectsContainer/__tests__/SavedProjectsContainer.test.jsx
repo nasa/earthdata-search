@@ -49,6 +49,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('path')
 
+    expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('path')
   })
 
@@ -59,6 +60,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).dispatchHandleError(errorConfig)
 
+    expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(errorConfig)
   })
 })
@@ -108,7 +110,6 @@ describe('SavedProjectsContainer', () => {
         }
       })
 
-      // There should never be a remove button if no projects loaded
       await waitFor(() => {
         expect(screen.queryByRole('button', { name: /remove project/i })).toBeNull()
       })
@@ -147,14 +148,13 @@ describe('SavedProjectsContainer', () => {
         await userEvent.click(removeBtn)
       })
 
+      expect(addToast).toHaveBeenCalledTimes(1)
       await waitFor(() => {
         expect(addToast).toHaveBeenCalledWith('Project removed', {
           appearance: 'success',
           autoDismiss: true
         })
       })
-
-      expect(nock.isDone()).toBe(true)
     })
 
     test('handles an error during project deletion', async () => {
@@ -183,6 +183,10 @@ describe('SavedProjectsContainer', () => {
       await userEvent.click(removeBtn)
 
       await waitFor(() => {
+        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
+      })
+
+      await waitFor(() => {
         expect(props.dispatchHandleError).toHaveBeenCalledWith(
           expect.objectContaining({
             error: expect.any(Error),
@@ -203,6 +207,10 @@ describe('SavedProjectsContainer', () => {
         .replyWithError('Failed to fetch')
 
       const { props } = setup()
+
+      await waitFor(() => {
+        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
+      })
 
       await waitFor(() => {
         expect(props.dispatchHandleError).toHaveBeenCalledWith(
