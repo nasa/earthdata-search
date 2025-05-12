@@ -138,12 +138,11 @@ describe('SavedProjectsContainer', () => {
 
       window.confirm = jest.fn(() => true)
 
-      setup()
+      const { user } = setup()
 
       const removeBtn = await screen.findByRole('button', { name: /remove project/i })
 
       await act(async () => {
-        const { user } = setup()
         await user.click(removeBtn)
       })
 
@@ -176,17 +175,12 @@ describe('SavedProjectsContainer', () => {
 
       window.confirm = jest.fn(() => true)
 
-      const { props } = setup()
+      const { user, props } = setup()
 
       const removeBtn = await screen.findByRole('button', { name: /remove project/i })
 
       await act(async () => {
-        const { user } = setup()
         await user.click(removeBtn)
-      })
-
-      await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledTimes(2)
       })
 
       await waitFor(() => {
@@ -200,6 +194,8 @@ describe('SavedProjectsContainer', () => {
           })
         )
       })
+
+      expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -212,10 +208,6 @@ describe('SavedProjectsContainer', () => {
       const { props } = setup()
 
       await waitFor(() => {
-        expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
-      })
-
-      await waitFor(() => {
         expect(props.dispatchHandleError).toHaveBeenCalledWith(
           expect.objectContaining({
             error: expect.any(Error),
@@ -226,6 +218,8 @@ describe('SavedProjectsContainer', () => {
           })
         )
       })
+
+      expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
     })
   })
 })
