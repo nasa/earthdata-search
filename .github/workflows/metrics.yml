@@ -281,6 +281,10 @@ jobs:
           pattern: '*Report'
           merge-multiple: true
 
+      - name: Update report
+        run: |
+          node bin/metrics/updateReport.mjs --version=${{ needs.getVersion.outputs.version }} --commit=${{ needs.getVersion.outputs.commit }}
+
       - name: Commit changes
         uses: EndBug/add-and-commit@v9
         with:
