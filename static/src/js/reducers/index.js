@@ -27,7 +27,6 @@ import focusedCollectionReducer from './focusedCollection'
 import focusedGranuleReducer from './focusedGranule'
 import granuleDownloadReducer from './granuleDownload'
 import granuleMetadataReducer from './granuleMetadata'
-import mapReducer from './map'
 import panelsReducer from './panels'
 import portalsReducer from './portals'
 import preferencesReducer from './preferences'
@@ -66,7 +65,6 @@ export default (history) => combineReducers({
   focusedCollection: focusedCollectionReducer,
   focusedGranule: focusedGranuleReducer,
   granuleDownload: granuleDownloadReducer,
-  map: mapReducer,
   metadata: combineReducers({
     collections: collectionMetadataReducer,
     granules: granuleMetadataReducer,

@@ -73,7 +73,6 @@ export class ProjectCollections extends Component {
   render() {
     const {
       collectionsQuery,
-      map,
       onMetricsDataAccess,
       onRemoveCollectionFromProject,
       onSetActivePanel,
@@ -120,7 +119,6 @@ export class ProjectCollections extends Component {
         <ProjectCollectionsList
           collectionsMetadata={projectCollectionsMetadata}
           collectionsQuery={collectionsQuery}
-          map={map}
           onMetricsDataAccess={onMetricsDataAccess}
           onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onSetActivePanel={onSetActivePanel}
@@ -188,7 +186,6 @@ ProjectCollections.propTypes = {
   collectionsQuery: PropTypes.shape({
     byId: PropTypes.shape({})
   }).isRequired,
-  map: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,

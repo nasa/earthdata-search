@@ -222,7 +222,7 @@ describe('adminGetPreferencesMetrics', () => {
           ],
           zoom: [
             ['2', '50.0% (2)'],
-            ['not set (2)', '50.0% (2)']
+            ['not set (3)', '50.0% (2)']
           ],
           latitude: [
             ['0', '50.0% (2)'],
@@ -409,7 +409,7 @@ describe('adminGetPreferencesMetrics', () => {
           ],
           zoom: [
             ['2', '75.0% (6)'],
-            ['not set (2)', '25.0% (2)']
+            ['not set (3)', '25.0% (2)']
           ],
           latitude: [
             ['not set (0)', '25.0% (2)'],

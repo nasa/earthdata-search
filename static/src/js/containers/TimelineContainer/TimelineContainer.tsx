@@ -14,7 +14,6 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 // @ts-expect-error The file does not have types
 import { getProjectCollectionsIds } from '../../selectors/project'
-// @ts-expect-error The file does not have types
 import { isPath } from '../../util/isPath'
 
 // @ts-expect-error The file does not have types

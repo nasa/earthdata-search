@@ -41,10 +41,6 @@ const setup = setupTest({
   }
 })
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('mapDispatchToProps', () => {
   test('onChangeQuery calls actions.changeQuery', () => {
     const dispatch = jest.fn()

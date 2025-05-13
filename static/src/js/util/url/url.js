@@ -218,7 +218,7 @@ export const decodeUrlParams = (paramString) => {
   // e.g. map is store separately from query
   const focusedGranule = decodeHelp(params, 'focusedGranule')
 
-  const map = decodeMap(params)
+  const mapView = decodeMap(params)
 
   const spatial = {}
   spatial.point = decodeHelp(params, 'pointSearch')
@@ -314,7 +314,7 @@ export const decodeUrlParams = (paramString) => {
     focusedCollection,
     focusedGranule,
     deprecatedUrlParams,
-    map,
+    mapView,
     portalId,
     project,
     query: {
@@ -341,7 +341,7 @@ export const encodeUrlQuery = (props) => {
     query[shortKey] = value
   })
 
-  const mapParams = encodeMap(props.map, props.mapPreferences)
+  const mapParams = encodeMap(props.mapView, props.mapPreferences)
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const platformQuery = encodePlatforms(props.platformFacets)
   const collectionsQuery = encodeCollections(props)
@@ -389,5 +389,5 @@ export const urlPathsWithoutUrlParams = [
 export const isSavedProjectsPage = (location) => {
   const { pathname, search } = location
 
-  return isPath(pathname, '/projects') && search === ''
+  return isPath(pathname, ['/projects']) && search === ''
 }

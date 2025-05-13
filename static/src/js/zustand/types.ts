@@ -1,5 +1,5 @@
 import { StateCreator } from 'zustand'
-import { TimelineIntervals } from '../types/sharedTypes'
+import { ProjectionCode, TimelineIntervals } from '../types/sharedTypes'
 
 export type HomeSlice = {
   /** The Home Slice of the store */
@@ -15,9 +15,44 @@ export type HomeSlice = {
   }
 }
 
+export type MapView = {
+  /** The base layer of the map */
+  base: {
+    /** Is the World Imagery base layer applied */
+    worldImagery: boolean
+    /** Is the True Color base layer applied */
+    trueColor: boolean
+    /** Is the Land Water Map base layer applied */
+    landWaterMap: boolean
+  }
+  /** The latitude of the map */
+  latitude: number
+  /** The longitude of the map */
+  longitude: number
+  /** The overlays of the map */
+  overlays: {
+    /** Is the borders and roads overlay applied */
+    bordersRoads: boolean
+    /** Is the coastlines overlay applied */
+    coastlines: boolean
+    /** Is the place labels overlay applied */
+    placeLabels: boolean
+  }
+  /** The projection of the map */
+  projection: ProjectionCode
+  /** The rotation of the map */
+  rotation: number
+  /** The zoom level of the map */
+  zoom: number
+}
+
 export type MapSlice = {
   /** The Map Slice of the store */
   map: {
+    /** The map view */
+    mapView: MapView
+    /** Function to set the map view */
+    setMapView: (mapView: Partial<MapView>) => void
     /** Flag to show the MBR (Minimum Bounding Rectangle) of the applied spatial search */
     showMbr: boolean
     /** Function to set the showMbr value */

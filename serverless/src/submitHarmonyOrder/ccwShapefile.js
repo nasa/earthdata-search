@@ -1,4 +1,4 @@
-import { isClockwiseLatLng } from '../../../static/src/js/util/map/granules'
+import { isClockwiseLatLng } from '../util/granules'
 
 /**
  * Returns the given shapefile, ensuring all polygons are in CCW order

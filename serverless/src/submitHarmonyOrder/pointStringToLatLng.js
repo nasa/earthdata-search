@@ -1,4 +1,4 @@
-import { isClockwiseLatLng } from '../../../static/src/js/util/map/granules'
+import { isClockwiseLatLng } from '../util/granules'
 
 /**
  * Convert a comma separated string into an object representing a shape

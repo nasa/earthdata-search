@@ -73,9 +73,11 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^14.4.3",
+    "@types/bootstrap": "^5.2.10",
     "@types/enzyme": "^3.10.18",
     "@types/jest": "^29.5.14",
     "@types/lodash-es": "^4.17.12",
+    "@types/proj4": "^2.5.6",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
     "@types/react-router-dom": "^5.3.3",
@@ -239,7 +241,9 @@
   "nyc": {
     "include": [
       "static/src/js/**/*.js",
-      "static/src/js/**/*.jsx"
+      "static/src/js/**/*.jsx",
+      "static/src/js/**/*.ts",
+      "static/src/js/**/*.tsx"
     ],
     "excludeAfterRemap": true
   },

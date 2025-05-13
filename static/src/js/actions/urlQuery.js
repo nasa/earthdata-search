@@ -38,7 +38,7 @@ export const updateStore = ({
   focusedCollection,
   focusedGranule,
   deprecatedUrlParams,
-  map,
+  mapView,
   portalId,
   project,
   query,
@@ -73,7 +73,6 @@ export const updateStore = ({
       focusedCollection,
       focusedGranule,
       deprecatedUrlParams,
-      map,
       portal,
       project,
       query: {
@@ -81,6 +80,21 @@ export const updateStore = ({
         collectionSortPreference
       },
       shapefile
+    }))
+
+    useEdscStore.setState((zustandState) => ({
+      ...zustandState,
+      map: {
+        ...zustandState.map,
+        mapView: {
+          ...zustandState.map.mapView,
+          ...mapView
+        }
+      },
+      timeline: {
+        ...zustandState.timeline,
+        ...timeline
+      }
     }))
 
     useEdscStore.setState((zustandState) => ({
