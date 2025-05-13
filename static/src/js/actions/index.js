@@ -149,12 +149,7 @@ import {
   updateShapefile
 } from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
-import {
-  deleteSavedProject,
-  updateProjectName,
-  updateSavedProject
-} from './savedProject'
-import { fetchSavedProjects, setSavedProjects } from './savedProjects'
+import { updateProjectName, updateSavedProject } from './savedProject'
 import { handleAlert } from './alerts'
 import { handleError, removeError } from './errors'
 import { collectionRelevancyMetrics } from './relevancy'
@@ -229,7 +224,6 @@ const actions = {
   createSubscription,
   deleteAutocompleteValue,
   deleteCollectionSubscription,
-  deleteSavedProject,
   deleteSubscription,
   excludeGranule,
   exportSearch,
@@ -243,7 +237,6 @@ const actions = {
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
-  fetchSavedProjects,
   fetchShapefile,
   generateNotebook,
   getCollections,
@@ -287,7 +280,6 @@ const actions = {
   setIsSubmitting,
   setPreferences,
   setPreferencesFromJwt,
-  setSavedProjects,
   setUserFromJwt,
   shapefileErrored,
   shapefileLoading,

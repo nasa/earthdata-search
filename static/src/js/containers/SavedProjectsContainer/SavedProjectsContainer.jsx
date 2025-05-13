@@ -1,66 +1,115 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, {
+  useCallback,
+  useEffect,
+  useState
+} from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
+
 import { SavedProjects } from '../../components/SavedProjects/SavedProjects'
+import ProjectRequest from '../../util/request/projectRequest'
+import { addToast } from '../../util/addToast'
+import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
 export const mapStateToProps = (state) => ({
-  savedProjects: state.savedProjects.projects,
-  savedProjectsIsLoading: state.savedProjects.isLoading,
-  savedProjectsIsLoaded: state.savedProjects.isLoaded
+  authToken: state.authToken,
+  earthdataEnvironment: getEarthdataEnvironment(state)
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onDeleteSavedProject: (projectId) => dispatch(actions.deleteSavedProject(projectId)),
-  onFetchSavedProjects: () => dispatch(actions.fetchSavedProjects()),
-  onChangePath: (path) => dispatch(actions.changePath(path))
+  onChangePath: (path) => dispatch(actions.changePath(path)),
+  dispatchHandleError: (errorConfig) => dispatch(actions.handleError(errorConfig))
 })
 
-export class SavedProjectsContainer extends Component {
-  componentDidMount() {
-    const {
-      onFetchSavedProjects
-    } = this.props
+export const SavedProjectsContainer = ({
+  onChangePath,
+  authToken,
+  earthdataEnvironment,
+  dispatchHandleError
+}) => {
+  const [projects, setProjects] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [isLoaded, setIsLoaded] = useState(false)
 
-    onFetchSavedProjects()
-  }
+  const fetchProjects = useCallback(async () => {
+    setIsLoading(true)
+    setIsLoaded(false)
 
-  render() {
-    const {
-      savedProjects,
-      savedProjectsIsLoading,
-      savedProjectsIsLoaded,
-      onChangePath,
-      onDeleteSavedProject
-    } = this.props
+    if (!authToken) {
+      setIsLoading(false)
+      setProjects([])
 
-    return (
-      <SavedProjects
-        savedProjects={savedProjects}
-        savedProjectsIsLoading={savedProjectsIsLoading}
-        savedProjectsIsLoaded={savedProjectsIsLoaded}
-        onChangePath={onChangePath}
-        onDeleteSavedProject={onDeleteSavedProject}
-      />
-    )
-  }
+      return
+    }
+
+    try {
+      const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
+      const response = await requestObject.all()
+      setProjects(response.data)
+      setIsLoaded(true)
+    } catch (error) {
+      dispatchHandleError({
+        error,
+        action: 'fetchProjects',
+        resource: 'saved projects',
+        verb: 'fetching',
+        notificationType: 'banner'
+      })
+    } finally {
+      setIsLoading(false)
+    }
+  }, [authToken, earthdataEnvironment, dispatchHandleError])
+
+  const handleDeleteSavedProject = useCallback(async (projectId) => {
+    // eslint-disable-next-line no-alert
+    if (window.confirm('Are you sure you want to remove this project? This action cannot be undone.')) {
+      try {
+        const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
+        await requestObject.remove(projectId)
+        setProjects((prevProjects) => prevProjects.filter((p) => p.id !== projectId))
+        addToast('Project removed', {
+          appearance: 'success',
+          autoDismiss: true
+        })
+      } catch (error) {
+        dispatchHandleError({
+          error,
+          action: 'handleDeleteSavedProject',
+          resource: 'project',
+          verb: 'deleting',
+          notificationType: 'banner'
+        })
+      }
+    }
+  }, [authToken, earthdataEnvironment, dispatchHandleError])
+
+  useEffect(() => {
+    fetchProjects()
+  }, [fetchProjects])
+
+  return (
+    <SavedProjects
+      projects={projects}
+      isLoading={isLoading}
+      isLoaded={isLoaded}
+      onChangePath={onChangePath}
+      onDeleteProject={handleDeleteSavedProject}
+    />
+  )
 }
 
 SavedProjectsContainer.defaultProps = {
-  savedProjects: []
+  authToken: null
 }
 
 SavedProjectsContainer.propTypes = {
-  savedProjects: PropTypes.arrayOf(
-    PropTypes.shape({})
-  ),
-  savedProjectsIsLoading: PropTypes.bool.isRequired,
-  savedProjectsIsLoaded: PropTypes.bool.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onDeleteSavedProject: PropTypes.func.isRequired,
-  onFetchSavedProjects: PropTypes.func.isRequired
+  authToken: PropTypes.string,
+  earthdataEnvironment: PropTypes.string.isRequired,
+  dispatchHandleError: PropTypes.func.isRequired
 }
 
 export default withRouter(

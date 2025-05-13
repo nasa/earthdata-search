@@ -3,11 +3,9 @@ import { replace } from 'connected-react-router'
 import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
-import { addToast } from '../util/addToast'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
-import { removeSavedProject } from './savedProjects'
 
 export const updateSavedProject = (payload) => ({
   type: UPDATE_SAVED_PROJECT,
@@ -77,43 +75,4 @@ export const updateProjectName = (name) => (dispatch, getState) => {
     })
 
   return response
-}
-
-/**
- * Action called when deleting a saved project
- * @param {String} projectId Project Id to delete
- */
-export const deleteSavedProject = (projectId) => (dispatch, getState) => {
-  const state = getState()
-
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-
-  const { authToken } = state
-
-  const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
-
-  try {
-    const response = requestObject.remove(projectId)
-      .then(() => {
-        dispatch(removeSavedProject(projectId))
-        addToast('Project removed', {
-          appearance: 'success',
-          autoDismiss: true
-        })
-      })
-      .catch((error) => {
-        dispatch(handleError({
-          error,
-          action: 'deleteSavedProject',
-          resource: 'saved project',
-          verb: 'deleting',
-          requestObject
-        }))
-      })
-
-    return response
-  } catch {
-    return null
-  }
 }
