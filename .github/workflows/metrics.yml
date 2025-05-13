@@ -1,0 +1,289 @@
+name: Generate Metrics
+
+on:
+  schedule:
+    # Run every Monday at 00:00 UTC, this will check UAT
+    - cron: '0 0 * * 1'
+    # Run every Monday at 01:00 UTC, this will check PROD
+    - cron: '0 1 * * 1'
+
+jobs:
+  determineEnv:
+    runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.setEnv.outputs.env }}
+    steps:
+      # If on the first cron job, set the env to uat
+      - name: Set env to uat
+        if: github.event.schedule == '0 0 * * 1'
+        run: |
+          echo "env=uat" >> $GITHUB_ENV
+      # If on the second cron job, set the env to prod
+      - name: Set env to prod
+        if: github.event.schedule == '0 1 * * 1'
+        run: |
+          echo "env=prod" >> $GITHUB_ENV
+      # If not on a cron job, set the env to prod
+      - name: Default env to prod
+        if: github.event.schedule != '0 0 * * 1' && github.event.schedule != '0 1 * * 1'
+        run: |
+          echo "env=prod" >> $GITHUB_ENV
+
+      # Set the `env` value to an output
+      - name: Set env output
+        id: setEnv
+        run: |
+          echo 'env=["${{ env.env }}"]' >> $GITHUB_OUTPUT
+
+  # Get the version from the page footer, and the commit hash from the git tag
+  getVersion:
+    runs-on: ubuntu-latest
+    needs: [determineEnv]
+    strategy:
+      matrix:
+        env: ${{ fromJSON(needs.determineEnv.outputs.env) }}
+    outputs:
+      version: ${{ steps.getVersion.outputs.version }}
+      commit: ${{ steps.getVersion.outputs.commit }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Use Node.js lts/jod
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+
+      - name: Get version
+        id: getVersion
+        run:  |
+          node bin/metrics/getVersionAndCommit.mjs --env=${{ matrix.env }} >> temp_env
+          cat temp_env >> $GITHUB_OUTPUT
+
+  # Check which reports are needed for the given version
+  versionCheck:
+    runs-on: ubuntu-latest
+    needs: [
+      determineEnv,
+      getVersion
+    ]
+    strategy:
+      matrix:
+        env: ${{ fromJSON(needs.determineEnv.outputs.env) }}
+    outputs:
+      needs_bundle_size: ${{ steps.versionCheck.outputs.needs_bundle_size }}
+      needs_cloc: ${{ steps.versionCheck.outputs.needs_cloc }}
+      needs_test_coverage: ${{ steps.versionCheck.outputs.needs_test_coverage }}
+      needs_performance: ${{ steps.versionCheck.outputs.needs_performance }}
+      performance_matrix: ${{ steps.versionCheck.outputs.performance_matrix }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Checkout the reports branch in a new directory
+      - name: Checkout metrics branch
+        uses: actions/checkout@v4
+        with:
+          ref: metrics
+          path: metrics-branch
+
+      - name: Use Node.js lts/jod
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+
+      - name: Version check
+        id: versionCheck
+        run: |
+          node bin/metrics/versionCheck.mjs --env=${{ matrix.env }} --version=${{ needs.getVersion.outputs.version }} >> temp_env
+          cat temp_env >> $GITHUB_OUTPUT
+
+  # Generate the bundle size report if needed
+  bundleSizeReport:
+    if: needs.versionCheck.outputs.needs_bundle_size == 'true'
+    runs-on: ubuntu-latest
+    needs: [
+      getVersion,
+      versionCheck
+    ]
+    steps:
+      - run: echo '${{ toJSON(needs.versionCheck.outputs) }}'
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Checkout code at commit
+        uses: actions/checkout@v4
+        with:
+          path: commit-branch
+          ref: ${{ needs.getVersion.outputs.commit }}
+      - name: Use Node.js lts/jod
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+      - name: Cache node modules
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/macOS
+          # not caching node_modules because `npm ci` removes it
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Install dependencies
+        run: cd commit-branch && npm ci
+      - name: Copy secrets example file
+        run: cd commit-branch && npm run copy-secrets
+      - name: Prepare create overrideStatic.config.json
+        run: cd commit-branch && npm run jest:prepare-ci
+      - name: Run build
+        run: cd commit-branch && npm run build > build-output.txt
+      - name: Remove colors from output
+        run: cd commit-branch && sed -i -e "s/\x1B[^m]*m//g" build-output.txt
+
+      # Generate the bundle size report
+      - name: Run bundle size report
+        run: node bin/metrics/bundleSizeReport.mjs --file=commit-branch/build-output.txt
+
+      # Upload the report
+      - name: Upload bundle size report
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundleSizeReport
+          path: bundleSizeReport.json
+
+  # Generate the cloc report if needed
+  clocReport:
+    if: needs.versionCheck.outputs.needs_cloc == 'true'
+    runs-on: ubuntu-latest
+    needs: [
+      getVersion,
+      versionCheck
+    ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.getVersion.outputs.commit }}
+
+      # Generate the clock report
+      - name: Run clock report
+        run: |
+          npx cloc -y --strip-comments=nc --match-d="/(sharedUtils|sharedConstants|serverless/src|static/src)/" --json $PWD > clocReport.json
+          sed -i "s/'/\"/g" clocReport.json
+
+      # Upload the report
+      - name: Upload clock report
+        uses: actions/upload-artifact@v4
+        with:
+          name: clocReport
+          path: clocReport.json
+
+  # Generate the test coverage report if needed
+  testCoverageReport:
+    if: needs.versionCheck.outputs.needs_test_coverage == 'true'
+    runs-on: ubuntu-latest
+    needs: [
+      getVersion,
+      versionCheck
+    ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js lts/jod
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+
+      # Generate the test coverage report
+      - name: Run test coverage report
+        run: node bin/metrics/testCoverageReport.mjs --version=${{ needs.getVersion.outputs.version }} --commit=${{ needs.getVersion.outputs.commit }}
+
+      # Upload the report
+      - name: Upload test coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: testCoverageReport
+          path: testCoverageReport.json
+
+  # Generate the performance report if needed
+  performanceReport:
+    if: needs.versionCheck.outputs.needs_performance == 'true'
+    runs-on: ubuntu-latest
+    needs: [
+      getVersion,
+      versionCheck
+    ]
+    strategy:
+      matrix:
+        env: ${{ fromJSON(needs.versionCheck.outputs.performance_matrix) }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js lts/jod
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+
+      # Generate the performance report
+      - name: Run performance report
+        run: node bin/metrics/performanceReport.mjs --env=${{ matrix.env }}
+        env:
+          GOOGLE_TOKEN: ${{ secrets.GOOGLE_TOKEN }}
+
+      # Upload the report
+      - name: Upload performance report
+        uses: actions/upload-artifact@v4
+        with:
+          name: performanceReport
+          path: '*PerformanceReport.json'
+
+  # Update the report with the new data
+  updateReport:
+    runs-on: ubuntu-latest
+    needs: [
+      getVersion,
+      bundleSizeReport,
+      clocReport,
+      testCoverageReport,
+      performanceReport
+    ]
+    if: always()
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Checkout the reports branch in a new directory
+      - name: Checkout metrics branch
+        uses: actions/checkout@v4
+        with:
+          ref: metrics
+          path: metrics-branch
+
+      - name: Use Node.js lts/jod
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/jod
+
+      - name: Download reports
+        uses: actions/download-artifact@v4
+        with:
+          path: metrics-reports
+          pattern: '*Report'
+          merge-multiple: true
+
+      - name: Update report
+        run: |
+          node bin/metrics/updateReport.mjs --version=${{ needs.getVersion.outputs.version }} --commit=${{ needs.getVersion.outputs.commit }}
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v9
+        with:
+          cwd: metrics-branch
+          add: "metrics.json"
+          message: "Update metrics for ${{ needs.getVersion.outputs.version }}"
+          default_author: github_actions
