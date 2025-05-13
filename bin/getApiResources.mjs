@@ -28,7 +28,7 @@ const getResourceFromGetAtt = (getAtt, template, templateFilePath) => {
   const nestedStackPath = nestedStackResource.Metadata['aws:asset:path']
   const nestedStack = getNestedStack(path.resolve(path.dirname(templateFilePath), nestedStackPath))
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, outputValue] = attribute.split('.')
 
   // Get the output value from the nested stack
@@ -161,7 +161,11 @@ export const getApiResources = (templateFilePath) => {
       const authorizerRef = authorizerId?.Ref
 
       if (authorizerRef) {
-        const authorizerFunctionName = getReferenceToResource(authorizerRef, template, templateFilePath)
+        const authorizerFunctionName = getReferenceToResource(
+          authorizerRef,
+          template,
+          templateFilePath
+        )
 
         authorizer.functionName = authorizerFunctionName
         authorizer.path = `../serverless/dist/${getLambdaName(authorizerFunctionName)}/handler.js`
@@ -172,7 +176,8 @@ export const getApiResources = (templateFilePath) => {
       if (lambdaIntegration.Type === 'AWS_PROXY' && lambdaIntegration.Uri) {
         const { Uri: uri } = lambdaIntegration
         const { 'Fn::Join': join } = uri
-        // eslint-disable-next-line no-unused-vars
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, parts] = join
         const { 'Fn::GetAtt': functionGetAtt } = parts[1]
         const functionName = functionGetAtt[0]
