@@ -35,7 +35,6 @@ import queryReducer from './query'
 import regionResultsReducer from './regionResults'
 import retrievalReducer from './retrieval'
 import savedProjectReducer from './savedProject'
-import shapefileReducer from './shapefile'
 import subscriptionsReducer from './subscriptions'
 import uiReducer from './ui'
 import userReducer from './user'
@@ -84,7 +83,6 @@ export default (history) => combineReducers({
     regions: regionResultsReducer,
     viewAllFacets: viewAllFacetsRequestReducer
   }),
-  shapefile: shapefileReducer,
   subscriptions: subscriptionsReducer,
   ui: uiReducer,
   user: userReducer

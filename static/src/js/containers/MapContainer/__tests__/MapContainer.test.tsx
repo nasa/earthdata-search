@@ -36,16 +36,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
-  test('onClearShapefile calls actions.clearShapefile', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'clearShapefile')
-
-    mapDispatchToProps(dispatch).onClearShapefile()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith()
-  })
-
   test('onExcludeGranule calls actions.excludeGranule', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'excludeGranule')
@@ -60,16 +50,6 @@ describe('mapDispatchToProps', () => {
       collectionId: 'collectionId',
       granuleId: 'granuleId'
     })
-  })
-
-  test('onFetchShapefile calls actions.fetchShapefile', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchShapefile')
-
-    mapDispatchToProps(dispatch).onFetchShapefile('shapefileId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('shapefileId')
   })
 
   test('onMetricsMap calls metricsMap', () => {
@@ -111,16 +91,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(true)
   })
-
-  test('onUpdateShapefile calls actions.updateShapefile', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateShapefile')
-
-    mapDispatchToProps(dispatch).onUpdateShapefile({ selectedFeatures: ['1'] })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ selectedFeatures: ['1'] })
-  })
 })
 
 describe('mapStateToProps', () => {
@@ -140,7 +110,6 @@ describe('mapStateToProps', () => {
         }
       },
       router: {},
-      shapefile: {},
       ui: {
         map: {
           drawingNewLayer: false
@@ -168,8 +137,7 @@ describe('mapStateToProps', () => {
       pointSearch: undefined,
       polygonSearch: undefined,
       project: {},
-      router: {},
-      shapefile: {}
+      router: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

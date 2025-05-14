@@ -1,6 +1,4 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import {
@@ -10,14 +8,17 @@ import {
 } from '../ProjectPanelsContainer'
 import ProjectPanels from '../../../components/ProjectPanels/ProjectPanels'
 
-Enzyme.configure({ adapter: new Adapter() })
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-function setup() {
-  const props = {
+jest.mock('../../../components/ProjectPanels/ProjectPanels', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: ProjectPanelsContainer,
+  defaultProps: {
     dataQualitySummaries: {},
     focusedCollectionId: '',
     focusedGranuleId: '',
-    granuleQuery: {},
+    granulesQueries: {},
     granulesMetadata: {},
     portal: {},
     onSelectAccessMethod: jest.fn(),
@@ -36,6 +37,7 @@ function setup() {
       search: ''
     },
     onChangePath: jest.fn(),
+    overrideTemporal: {},
     project: {
       collections: {
         allIds: ['collectionId']
@@ -53,14 +55,7 @@ function setup() {
     spatial: {},
     ursProfile: {}
   }
-
-  const enzymeWrapper = shallow(<ProjectPanelsContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onChangePath calls actions.changePath', () => {
@@ -69,8 +64,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('path')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('path')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('path')
   })
 
   test('onSelectAccessMethod calls actions.selectAccessMethod', () => {
@@ -79,8 +74,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onSelectAccessMethod('method')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('method')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('method')
   })
 
   test('onTogglePanels calls actions.togglePanels', () => {
@@ -89,8 +84,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onTogglePanels('data')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('data')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('data')
   })
 
   test('onSetActivePanel calls actions.setActivePanel', () => {
@@ -99,8 +94,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onSetActivePanel('panelId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('panelId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('panelId')
   })
 
   test('onSetActivePanelGroup calls actions.setActivePanelGroup', () => {
@@ -109,8 +104,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onSetActivePanelGroup('panelId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('panelId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('panelId')
   })
 
   test('onUpdateAccessMethod calls actions.updateAccessMethod', () => {
@@ -119,8 +114,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAccessMethod({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onAddGranuleToProjectCollection calls actions.addGranuleToProjectCollection', () => {
@@ -129,8 +124,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onAddGranuleToProjectCollection({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onRemoveGranuleFromProjectCollection calls actions.removeGranuleFromProjectCollection', () => {
@@ -139,8 +134,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onRemoveGranuleFromProjectCollection({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onUpdateFocusedCollection calls actions.updateFocusedCollection', () => {
@@ -149,8 +144,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateFocusedCollection('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
@@ -159,8 +154,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFocusedGranuleChange('granuleId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('granuleId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('granuleId')
   })
 
   test('onChangeProjectGranulePageNum calls actions.changeProjectGranulePageNum', () => {
@@ -169,8 +164,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeProjectGranulePageNum({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onViewCollectionGranules calls actions.viewCollectionGranules', () => {
@@ -179,8 +174,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onViewCollectionGranules('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
@@ -189,8 +184,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(true)
   })
 })
 
@@ -220,9 +215,6 @@ describe('mapStateToProps', () => {
       router: {
         location: {}
       },
-      shapefile: {
-        shapefileId: ''
-      },
       ui: {
         map: {
           drawingNewLayer: false
@@ -239,7 +231,6 @@ describe('mapStateToProps', () => {
       panels: {},
       project: {},
       projectCollectionsMetadata: {},
-      shapefileId: '',
       spatial: {},
       temporal: {},
       ursProfile: {},
@@ -252,26 +243,39 @@ describe('mapStateToProps', () => {
 
 describe('ProjectPanelsContainer component', () => {
   test('passes its props and renders a single ProjectPanels component', () => {
-    const { enzymeWrapper } = setup()
+    const { props } = setup()
 
-    expect(enzymeWrapper.find(ProjectPanels).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectPanels).props().projectCollectionsMetadata).toEqual({
-      collectionId: {
-        mock: 'data'
-      }
-    })
-
-    expect(enzymeWrapper.find(ProjectPanels).props().project).toEqual({
-      collections: {
-        allIds: ['collectionId']
-      }
-    })
-
-    expect(typeof enzymeWrapper.find(ProjectPanels).props().onSetActivePanel).toEqual('function')
-    expect(typeof enzymeWrapper.find(ProjectPanels).props().onTogglePanels).toEqual('function')
-    expect(enzymeWrapper.find(ProjectPanels).props().panels).toEqual({
-      activePanel: '0.0.0',
-      isOpen: false
-    })
+    expect(ProjectPanels).toHaveBeenCalledTimes(1)
+    expect(ProjectPanels).toHaveBeenCalledWith({
+      dataQualitySummaries: props.dataQualitySummaries,
+      focusedCollectionId: props.focusedCollectionId,
+      focusedGranuleId: props.focusedGranuleId,
+      granulesQueries: props.granulesQueries,
+      granulesMetadata: props.granulesMetadata,
+      location: props.location,
+      onAddGranuleToProjectCollection: props.onAddGranuleToProjectCollection,
+      onChangePath: props.onChangePath,
+      onChangeProjectGranulePageNum: props.onChangeProjectGranulePageNum,
+      onFocusedGranuleChange: props.onFocusedGranuleChange,
+      onRemoveGranuleFromProjectCollection: props.onRemoveGranuleFromProjectCollection,
+      onSelectAccessMethod: props.onSelectAccessMethod,
+      onSetActivePanel: props.onSetActivePanel,
+      onSetActivePanelGroup: props.onSetActivePanelGroup,
+      onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
+      onTogglePanels: props.onTogglePanels,
+      onUpdateAccessMethod: props.onUpdateAccessMethod,
+      onUpdateFocusedCollection: props.onUpdateFocusedCollection,
+      onViewCollectionGranules: props.onViewCollectionGranules,
+      overrideTemporal: props.overrideTemporal,
+      panels: {
+        activePanel: '0.0.0',
+        isOpen: false
+      },
+      project: props.project,
+      projectCollectionsMetadata: props.projectCollectionsMetadata,
+      spatial: {},
+      temporal: {},
+      ursProfile: {}
+    }, {})
   })
 })

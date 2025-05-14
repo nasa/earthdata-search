@@ -28,14 +28,7 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
   autocomplete: state.autocomplete,
-  boundingBoxSearch: state.query.collection.spatial.boundingBox,
-  circleSearch: state.query.collection.spatial.circle,
-  drawingNewLayer: state.ui.map.drawingNewLayer,
   keywordSearch: state.query.collection.keyword,
-  lineSearch: state.query.collection.spatial.line,
-  pointSearch: state.query.collection.spatial.point,
-  polygonSearch: state.query.collection.spatial.polygon,
-  shapefile: state.shapefile,
   temporalSearch: state.query.collection.temporal
 })
 
@@ -76,7 +69,6 @@ export const SearchFormContainer = (props) => {
 SearchFormContainer.defaultProps = {
   advancedSearch: {},
   keywordSearch: '',
-  shapefile: {},
   temporalSearch: {}
 }
 
@@ -94,12 +86,6 @@ SearchFormContainer.propTypes = {
   onClearAutocompleteSuggestions: PropTypes.func.isRequired,
   onFetchAutocomplete: PropTypes.func.isRequired,
   onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
-  shapefile: PropTypes.shape({
-    shapefileError: PropTypes.string,
-    shapefileId: PropTypes.string,
-    shapefileLoaded: PropTypes.bool,
-    shapefileLoading: PropTypes.bool
-  }),
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
     startDate: PropTypes.string

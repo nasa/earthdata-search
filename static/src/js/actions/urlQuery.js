@@ -91,6 +91,10 @@ export const updateStore = ({
           ...mapView
         }
       },
+      shapefile: {
+        ...zustandState.shapefile,
+        ...shapefile
+      },
       timeline: {
         ...zustandState.timeline,
         ...timeline
