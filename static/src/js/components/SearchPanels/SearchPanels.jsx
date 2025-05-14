@@ -324,6 +324,11 @@ class SearchPanels extends PureComponent {
         label: 'End Date',
         isActive: activeCollectionsSortKey === collectionSortKeys.endDateDescending,
         onClick: () => setCollectionSort(collectionSortKeys.endDateDescending)
+      },
+      {
+        label: 'Recent Version',
+        isActive: activeCollectionsSortKey === collectionSortKeys.recentVersion,
+        onClick: () => setCollectionSort(collectionSortKeys.recentVersion)
       }
     ]
 

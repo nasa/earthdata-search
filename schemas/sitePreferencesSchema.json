@@ -20,7 +20,8 @@
 				"-score",
 				"-usage_score",
 				"start_date",
-				"-ongoing"
+				"-ongoing",
+        "-create-data-date"
 			]
 		},
 		"granuleSort": {

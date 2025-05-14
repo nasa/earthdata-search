@@ -94,7 +94,8 @@ export const humanizeSortKey = (sortKey, sortsArray) => {
     '-score': 'Relevance',
     '-usage_score': 'Usage',
     '-ongoing': 'End Date',
-    start_date: 'Start Date'
+    start_date: 'Start Date',
+    '-create-data-date': 'Recent Version'
   }
 
   const granuleSortKeyMap = {
