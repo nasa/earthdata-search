@@ -119,7 +119,6 @@ const onClickShapefile = ({
 
     // Remove the feature from the selectedFeatures
     const featuresIndex = updatedSelectedFeatures.indexOf(edscId)
-    console.log('🚀 ~ onClickShapefile.ts:122 ~ featuresIndex:', featuresIndex)
     updatedSelectedFeatures.splice(featuresIndex, 1)
     selectedFeatures = updatedSelectedFeatures
   }
