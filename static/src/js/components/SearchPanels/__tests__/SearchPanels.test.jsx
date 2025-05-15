@@ -161,6 +161,8 @@ describe('SearchPanels component', () => {
       expect(collectionResultsPanelProps.sortsArray[2].isActive).toBe(false)
       expect(collectionResultsPanelProps.sortsArray[3].label).toBe('End Date')
       expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(false)
+      expect(collectionResultsPanelProps.sortsArray[4].label).toBe('Recent Version')
+      expect(collectionResultsPanelProps.sortsArray[4].isActive).toBe(false)
     })
 
     describe('when the collections are loading', () => {
@@ -333,6 +335,8 @@ describe('SearchPanels component', () => {
         expect(collectionResultsPanelProps.sortsArray[2].isActive).toBe(true)
         expect(collectionResultsPanelProps.sortsArray[3].label).toBe('End Date')
         expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(false)
+        expect(collectionResultsPanelProps.sortsArray[4].label).toBe('Recent Version')
+        expect(collectionResultsPanelProps.sortsArray[4].isActive).toBe(false)
       })
     })
   })

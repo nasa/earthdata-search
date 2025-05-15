@@ -244,6 +244,11 @@ describe(('formatFacetHierarchy'), () => {
         expect(result).toBe('Start Date')
       })
 
+      test('returns "Recent Version" for "-create-data-date"', () => {
+        const result = humanizeSortKey('-create-data-date', [{ label: 'Relevance' }])
+        expect(result).toBe('Recent Version')
+      })
+
       // Granules
       test('returns "Start Date Newest " for "-start_date"', () => {
         const result = humanizeSortKey('-start_date', [{ label: 'Start Date, Oldest First' }])
