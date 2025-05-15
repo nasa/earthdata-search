@@ -14,6 +14,11 @@ import {
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
+// @ts-expect-error The file does not have types
+import configureStore from '../../store/configureStore'
+// @ts-expect-error The file does not have types
+import actions from '../../actions'
+
 const { mapPointsSimplifyThreshold } = getApplicationConfig()
 
 /**
@@ -50,29 +55,42 @@ export const interpolatePolygon = (coordinates) => {
     // Add 10 points to the total to ensure there are always a good number of points for smooth curves
     const numberOfPoints = Math.floor(distancePercentage * maxPoints) + 10
 
-    // Interpolate the points between the two coordinates
-    const turfInterpolated = greatCircle(
-      coordinate,
-      nextCoordinate,
-      { npoints: numberOfPoints }
-    )
+    try {
+      // Interpolate the points between the two coordinates
+      const turfInterpolated = greatCircle(
+        coordinate,
+        nextCoordinate,
+        { npoints: numberOfPoints }
+      )
 
-    flattenEach(turfInterpolated, (currentFeature) => {
-      const flattenedCoords = currentFeature.geometry.coordinates
+      flattenEach(turfInterpolated, (currentFeature) => {
+        const flattenedCoords = currentFeature.geometry.coordinates
 
-      flattenedCoords.forEach((flattenedCoord, index) => {
-        // The first and last points are the same as the original points, don't add them again
-        if (index === 0 || index === flattenedCoords.length - 1) return
+        flattenedCoords.forEach((flattenedCoord, index) => {
+          // The first and last points are the same as the original points, don't add them again
+          if (index === 0 || index === flattenedCoords.length - 1) return
 
-        const nextFlattenedCoord = flattenedCoords[index + 1]
+          const nextFlattenedCoord = flattenedCoords[index + 1]
 
-        // If the next point is too close (< 100km) to the current point, don't add it
-        const pointDistance = distance(flattenedCoord, nextFlattenedCoord)
-        if (pointDistance < 100) return
+          // If the next point is too close (< 100km) to the current point, don't add it
+          const pointDistance = distance(flattenedCoord, nextFlattenedCoord)
+          if (pointDistance < 100) return
 
-        interpolatedCoordinates.push(flattenedCoord)
+          interpolatedCoordinates.push(flattenedCoord)
+        })
       })
-    })
+    } catch (error) {
+      const {
+        dispatch: reduxDispatch
+      } = configureStore()
+
+      reduxDispatch(actions.handleError({
+        action: 'interpolatePolygon',
+        error,
+        message: `Error interpolating points: start: ${coordinate}, end: ${nextCoordinate}. All coordiates: ${JSON.stringify(coordinates)}. Full error: ${error}`,
+        notificationType: 'none'
+      }))
+    }
   }
 
   // `greatCircle` sometimes changes the last point slightly. We want to keep the original point to ensure the polygon is closed
