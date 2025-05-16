@@ -198,7 +198,7 @@ export default class Request {
    * @param {Object} params URL parameters
    * @return {Promise} A Promise object representing the request that was made
    */
-  get(url: string, params: RequestParams) {
+  get(url: string, params?: RequestParams) {
     this.startTimer()
     this.setFullUrl(url)
 

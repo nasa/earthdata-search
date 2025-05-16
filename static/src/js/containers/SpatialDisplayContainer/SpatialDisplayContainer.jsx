@@ -18,8 +18,7 @@ export const mapStateToProps = (state) => ({
   drawingNewLayer: state.ui.map.drawingNewLayer,
   lineSearch: state.query.collection.spatial.line,
   pointSearch: state.query.collection.spatial.point,
-  polygonSearch: state.query.collection.spatial.polygon,
-  shapefile: state.shapefile
+  polygonSearch: state.query.collection.spatial.polygon
 })
 
 export const SpatialDisplayContainer = (props) => {
@@ -32,8 +31,7 @@ export const SpatialDisplayContainer = (props) => {
     onChangeQuery,
     onRemoveSpatialFilter,
     pointSearch,
-    polygonSearch,
-    shapefile
+    polygonSearch
   } = props
 
   return (
@@ -47,7 +45,6 @@ export const SpatialDisplayContainer = (props) => {
       onRemoveSpatialFilter={onRemoveSpatialFilter}
       pointSearch={pointSearch}
       polygonSearch={polygonSearch}
-      shapefile={shapefile}
     />
   )
 }
@@ -57,8 +54,7 @@ SpatialDisplayContainer.defaultProps = {
   circleSearch: [],
   lineSearch: [],
   pointSearch: [],
-  polygonSearch: [],
-  shapefile: {}
+  polygonSearch: []
 }
 
 SpatialDisplayContainer.propTypes = {
@@ -73,8 +69,7 @@ SpatialDisplayContainer.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string),
-  polygonSearch: PropTypes.arrayOf(PropTypes.string),
-  shapefile: PropTypes.shape({})
+  polygonSearch: PropTypes.arrayOf(PropTypes.string)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SpatialDisplayContainer)

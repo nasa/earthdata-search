@@ -9,19 +9,13 @@ import { shapefileEventTypes } from '../../constants/eventTypes'
 
 import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 export const mapDispatchToProps = (dispatch) => ({
   onRemoveSpatialFilter:
     () => dispatch(actions.removeSpatialFilter()),
-  onSaveShapefile:
-    (options) => dispatch(actions.saveShapefile(options)),
-  onShapefileErrored:
-    (options) => dispatch(actions.shapefileErrored(options)),
-  onShapefileLoading:
-    (file) => dispatch(actions.shapefileLoading(file)),
   onToggleShapefileUploadModal:
-    (state) => dispatch(actions.toggleShapefileUploadModal(state)),
-  onUpdateShapefile:
-    (options) => dispatch(actions.updateShapefile(options))
+    (state) => dispatch(actions.toggleShapefileUploadModal(state))
 })
 
 export const mapStateToProps = (state) => ({
@@ -68,82 +62,90 @@ const dropzoneOptions = {
 export const ShapefileDropzoneContainer = ({
   authToken,
   onRemoveSpatialFilter,
-  onShapefileErrored,
-  onShapefileLoading,
-  onSaveShapefile,
   onToggleShapefileUploadModal
-}) => (
-  <ShapefileDropzone
-    dropzoneOptions={dropzoneOptions}
-    eventScope="shapefile"
-    onSending={
-      (file) => {
-        // Remove existing spatial from the store
-        onRemoveSpatialFilter()
+}) => {
+  const {
+    onShapefileErrored,
+    onShapefileLoading,
+    onSaveShapefile
+  } = useEdscStore((state) => ({
+    onShapefileErrored: state.shapefile.setErrored,
+    onShapefileLoading: state.shapefile.setLoading,
+    onSaveShapefile: state.shapefile.saveShapefile
+  }))
 
-        onShapefileLoading(file)
-      }
-    }
-    onSuccess={
-      (file, resp, dropzoneEl) => {
-        const { name, size } = file
-        const fileSize = dropzoneEl.filesize(size).replace(/<{1}[^<>]{1,}>{1}/g, '')
+  return (
+    <ShapefileDropzone
+      dropzoneOptions={dropzoneOptions}
+      eventScope="shapefile"
+      onSending={
+        (file) => {
+          // Remove existing spatial from the store
+          onRemoveSpatialFilter()
 
-        dropzoneEl.removeFile(file)
+          const { name } = file
 
-        // Update the name to the original name (ogre puts a hash into this name field)
-        const updatedResponse = resp
-        updatedResponse.name = name
-
-        const fileWithIds = addEdscIdsToShapefile(updatedResponse)
-
-        eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds)
-
-        onToggleShapefileUploadModal(false)
-
-        onSaveShapefile({
-          authToken,
-          file: fileWithIds,
-          filename: name,
-          size: fileSize
-        })
-      }
-    }
-    onError={
-      (file) => {
-        let shapefileError = ''
-
-        onToggleShapefileUploadModal(false)
-        if (file.name.match('.*(zip|shp|dbf|shx)$')) {
-          shapefileError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
-        } else if (file.name.match('.*(kml|kmz)$')) {
-          shapefileError = 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
-        } else if (file.name.match('.*(json|geojson)$')) {
-          shapefileError = 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
-        } else if (file.name.match('.*(rss|georss|xml)$')) {
-          shapefileError = 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
-        } else {
-          shapefileError = 'Invalid file format.'
+          onShapefileLoading(name)
         }
+      }
+      onSuccess={
+        (file, resp, dropzoneEl) => {
+          const { name, size } = file
+          const fileSize = dropzoneEl.filesize(size).replace(/<{1}[^<>]{1,}>{1}/g, '')
 
-        onShapefileErrored({
-          message: shapefileError
-        })
+          dropzoneEl.removeFile(file)
+
+          // Update the name to the original name (ogre puts a hash into this name field)
+          const updatedResponse = resp
+          updatedResponse.name = name
+
+          const fileWithIds = addEdscIdsToShapefile(updatedResponse)
+
+          eventEmitter.emit(shapefileEventTypes.ADDSHAPEFILE, file, fileWithIds)
+
+          onToggleShapefileUploadModal(false)
+
+          onSaveShapefile({
+            authToken,
+            file: fileWithIds,
+            filename: name,
+            size: fileSize
+          })
+        }
       }
-    }
-    onRemovedFile={
-      (file, resp) => {
-        eventEmitter.emit(shapefileEventTypes.REMOVESHAPEFILE, file, resp)
+      onError={
+        (file) => {
+          let shapefileError = ''
+
+          onToggleShapefileUploadModal(false)
+          if (file.name.match('.*(zip|shp|dbf|shx)$')) {
+            shapefileError = 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+          } else if (file.name.match('.*(kml|kmz)$')) {
+            shapefileError = 'To use a Keyhole Markup Language file, please upload a valid .kml or .kmz file.'
+          } else if (file.name.match('.*(json|geojson)$')) {
+            shapefileError = 'To use a GeoJSON file, please upload a valid .json or .geojson file.'
+          } else if (file.name.match('.*(rss|georss|xml)$')) {
+            shapefileError = 'To use a GeoRSS file, please upload a valid .rss, .georss, or .xml file.'
+          } else {
+            shapefileError = 'Invalid file format.'
+          }
+
+          onShapefileErrored({
+            message: shapefileError
+          })
+        }
       }
-    }
-  />
-)
+      onRemovedFile={
+        (file, resp) => {
+          eventEmitter.emit(shapefileEventTypes.REMOVESHAPEFILE, file, resp)
+        }
+      }
+    />
+  )
+}
 
 ShapefileDropzoneContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  onShapefileErrored: PropTypes.func.isRequired,
-  onShapefileLoading: PropTypes.func.isRequired,
-  onSaveShapefile: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }

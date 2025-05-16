@@ -60,8 +60,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('path')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('path')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('path')
   })
 
   test('onChangeUrl calls actions.changeUrl', () => {
@@ -70,8 +70,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeUrl('query')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('query')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('query')
   })
 })
 
@@ -133,10 +133,6 @@ describe('mapStateToProps', () => {
         location: {
           pathname: ''
         }
-      },
-      shapefile: {
-        selectedFeatures: [],
-        shapefileId: ''
       }
     }
 
@@ -188,8 +184,6 @@ describe('mapStateToProps', () => {
         }
       },
       scienceKeywordFacets: [],
-      selectedFeatures: [],
-      shapefileId: '',
       paramCollectionSortKey: undefined,
       tagKey: '',
       temporalSearch: {},
@@ -251,10 +245,6 @@ describe('mapStateToProps', () => {
         location: {
           pathname: ''
         }
-      },
-      shapefile: {
-        selectedFeatures: [],
-        shapefileId: ''
       }
     }
 
@@ -307,8 +297,6 @@ describe('mapStateToProps', () => {
         }
       },
       scienceKeywordFacets: [],
-      selectedFeatures: [],
-      shapefileId: '',
       paramCollectionSortKey: collectionSortKeys.endDateDescending,
       tagKey: '',
       temporalSearch: {},

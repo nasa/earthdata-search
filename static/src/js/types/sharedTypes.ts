@@ -3,7 +3,7 @@ import {
   AxiosResponseHeaders,
   HttpStatusCode
 } from 'axios'
-import { GeoJsonObject } from 'geojson'
+import { FeatureCollection, GeoJsonObject } from 'geojson'
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
 
@@ -202,6 +202,18 @@ export type CollectionRequestParams = {
   conceptId: string
 }
 
+export type ShapefileFile = FeatureCollection & {
+  name: string
+  type: string
+}
+
+export type ShapefileRequestParams = {
+  authToken: string
+  file: ShapefileFile
+  filename: string
+  size: string
+}
+
 /** The request parameters for a timeline request */
 export type TimelineRequestParams = {
   /** The bounding box search */
@@ -223,7 +235,7 @@ export type TimelineRequestParams = {
 }
 
 /** The request parameters for our request classes */
-export type RequestParams = TimelineRequestParams | CollectionRequestParams
+export type RequestParams = TimelineRequestParams | CollectionRequestParams | ShapefileRequestParams
 
 /** A response received from an Axios request */
 export type Response = {

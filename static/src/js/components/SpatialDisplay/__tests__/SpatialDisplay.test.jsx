@@ -1,27 +1,19 @@
-import React from 'react'
-import {
-  act,
-  render,
-  screen
-} from '@testing-library/react'
-
-import userEvent from '@testing-library/user-event'
+import { act, screen } from '@testing-library/react'
 
 import * as EventEmitter from '../../../events/events'
 
 import SpatialDisplay from '../SpatialDisplay'
 import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../../constants/eventTypes'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 beforeEach(() => {
   jest.clearAllMocks()
 })
 
-const setup = (overrides) => {
-  const onChangeQuery = jest.fn()
-  const onRemoveSpatialFilter = jest.fn()
-
-  const props = {
+const setup = setupTest({
+  Component: SpatialDisplay,
+  defaultProps: {
     boundingBoxSearch: [],
     circleSearch: [],
     displaySpatialPolygonWarning: false,
@@ -29,18 +21,11 @@ const setup = (overrides) => {
     lineSearch: [],
     pointSearch: [],
     polygonSearch: [],
-    onChangeQuery,
-    onRemoveSpatialFilter,
-    shapefile: {},
-    ...overrides
+    onChangeQuery: jest.fn(),
+    onRemoveSpatialFilter: jest.fn(),
+    shapefile: {}
   }
-
-  render(<SpatialDisplay {...props} />)
-
-  return {
-    props
-  }
-}
+})
 
 describe('SpatialDisplay component', () => {
   describe('with no props', () => {
@@ -53,7 +38,11 @@ describe('SpatialDisplay component', () => {
   describe('with pointSearch', () => {
     test('should render the spatial info', () => {
       const newPoint = '-77.0418825,38.805869' // Lon,Lat
-      setup({ pointSearch: [newPoint] })
+      setup({
+        overrideProps: {
+          pointSearch: [newPoint]
+        }
+      })
 
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
       expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
@@ -67,7 +56,11 @@ describe('SpatialDisplay component', () => {
   describe('with boundingBoxSearch', () => {
     test('should render the spatial info', () => {
       const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
-      setup({ boundingBoxSearch: [newBoundingBox] })
+      setup({
+        overrideProps: {
+          boundingBoxSearch: [newBoundingBox]
+        }
+      })
 
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
       expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
@@ -92,7 +85,11 @@ describe('SpatialDisplay component', () => {
   describe('with circleSearch', () => {
     test('should render the spatial info', () => {
       const newCircle = '-77.119759,38.791645,20000'
-      setup({ circleSearch: [newCircle] })
+      setup({
+        overrideProps: {
+          circleSearch: [newCircle]
+        }
+      })
 
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
       expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
@@ -118,7 +115,11 @@ describe('SpatialDisplay component', () => {
         + '-76.89415168762207,38.902629947921575,'
         + '-77.04444122314453,38.99228142151045'
 
-      setup({ polygonSearch: [newPolygon] })
+      setup({
+        overrideProps: {
+          polygonSearch: [newPolygon]
+        }
+      })
 
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
       expect(screen.queryAllByText('Spatial')[1]).toBeVisible()
@@ -135,7 +136,11 @@ describe('SpatialDisplay component', () => {
     })
 
     test('should render a hint to draw the polygon on the map', () => {
-      setup({ drawingNewLayer: spatialTypes.POLYGON })
+      setup({
+        overrideProps: {
+          drawingNewLayer: spatialTypes.POLYGON
+        }
+      })
 
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')).toHaveLength(1)
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')[0]).toBeVisible()
@@ -150,8 +155,10 @@ describe('SpatialDisplay component', () => {
         + '-77.04444122314453,38.99228142151045'
 
       setup({
-        displaySpatialPolygonWarning: true,
-        polygonSearch: [newPolygon]
+        overrideProps: {
+          displaySpatialPolygonWarning: true,
+          polygonSearch: [newPolygon]
+        }
       })
 
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
@@ -175,7 +182,12 @@ describe('SpatialDisplay component', () => {
         + '-77.01992797851562,38.79166886339155,'
         + '-76.89415168762207,38.902629947921575'
 
-      setup({ lineSearch: [line] })
+      setup({
+        overrideProps: {
+          lineSearch: [line]
+        }
+      })
+
       expect(screen.queryAllByText('Spatial')).toHaveLength(2)
       // This is hidden and should not show up
       expect(screen.queryAllByText('Line')).toHaveLength(0)
@@ -186,11 +198,13 @@ describe('SpatialDisplay component', () => {
     describe('when the shapefile is loading', () => {
       test('should render with a loading spinner', () => {
         setup({
-          shapefile: {
-            shapefileName: 'test file',
-            shapefileSize: '',
-            isLoaded: false,
-            isLoading: true
+          overrideZustandState: {
+            shapefile: {
+              shapefileName: 'test file',
+              shapefileSize: '',
+              isLoaded: false,
+              isLoading: true
+            }
           }
         })
 
@@ -219,12 +233,16 @@ describe('SpatialDisplay component', () => {
           + '-77.04444122314453,38.99228142151045'
 
         setup({
-          polygonSearch: [newPolygon],
-          shapefile: {
-            shapefileName: 'test file',
-            shapefileSize: '42 KB',
-            isLoaded: true,
-            isLoading: false
+          overrideProps: {
+            polygonSearch: [newPolygon]
+          },
+          overrideZustandState: {
+            shapefile: {
+              shapefileName: 'test file',
+              shapefileSize: '42 KB',
+              isLoaded: true,
+              isLoading: false
+            }
           }
         })
 
@@ -251,13 +269,17 @@ describe('SpatialDisplay component', () => {
             + '-77.04444122314453,38.99228142151045'
 
           setup({
-            polygonSearch: [newPolygon],
-            shapefile: {
-              shapefileName: 'test file',
-              shapefileSize: '42 KB',
-              isLoaded: true,
-              isLoading: false,
-              selectedFeatures: ['1']
+            overrideProps: {
+              polygonSearch: [newPolygon]
+            },
+            overrideZustandState: {
+              shapefile: {
+                shapefileName: 'test file',
+                shapefileSize: '42 KB',
+                isLoaded: true,
+                isLoading: false,
+                selectedFeatures: ['1']
+              }
             }
           })
 
@@ -268,9 +290,11 @@ describe('SpatialDisplay component', () => {
       describe('when an error message is passed into the shapefile', () => {
         test('should render the passed error message', () => {
           setup({
-            shapefile: {
-              isErrored: {
-                message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+            overrideZustandState: {
+              shapefile: {
+                isErrored: {
+                  message: 'To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.'
+                }
               }
             }
           })
@@ -284,9 +308,12 @@ describe('SpatialDisplay component', () => {
   describe('#onSpatialRemove', () => {
     test('calls onRemoveSpatialFilter', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-      userEvent.setup()
 
-      const { props } = setup({ pointSearch: [' '] })
+      const { props, user } = setup({
+        overrideProps: {
+          pointSearch: [' ']
+        }
+      })
 
       const { onRemoveSpatialFilter } = props
 
@@ -296,7 +323,7 @@ describe('SpatialDisplay component', () => {
 
       // eslint-disable-next-line testing-library/no-unnecessary-act
       await act(async () => {
-        await userEvent.click(actionBtn)
+        await user.click(actionBtn)
       })
 
       expect(onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
@@ -308,16 +335,16 @@ describe('SpatialDisplay component', () => {
 
   describe('manual entry of spatial values', () => {
     test('changing point search updates the state', async () => {
-      setup({
-        pointSearch: ['']
+      const { user } = setup({
+        overrideProps: {
+          pointSearch: ['']
+        }
       })
-
-      userEvent.setup()
 
       const input = screen.queryByTestId('spatial-display_point')
 
-      await userEvent.click(input)
-      await userEvent.type(input, '38,-77')
+      await user.click(input)
+      await user.type(input, '38,-77')
 
       const updatedInput = screen.queryByTestId('spatial-display_point')
 
@@ -325,91 +352,93 @@ describe('SpatialDisplay component', () => {
     })
 
     test('submitting point search calls onChangeQuery', async () => {
-      userEvent.setup()
-
-      const { props } = setup({
-        pointSearch: ['']
+      const { props, user } = setup({
+        overrideProps: {
+          pointSearch: ['']
+        }
       })
-      const { onChangeQuery } = props
 
       const input = screen.queryByTestId('spatial-display_point')
 
-      await userEvent.click(input)
-      await userEvent.type(input, '38,-77')
-      await userEvent.tab(input)
+      await user.click(input)
+      await user.type(input, '38,-77')
+      await user.tab(input)
 
-      expect(onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { point: ['-77,38'] } } })
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { point: ['-77,38'] } } })
     })
 
     test('changing bounding box search updates the state', async () => {
-      userEvent.setup()
       const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
 
-      setup({ boundingBoxSearch: [newBoundingBox] })
+      const { user } = setup({
+        overrideProps: {
+          boundingBoxSearch: [newBoundingBox]
+        }
+      })
 
       const swPoint = screen.getByTestId('spatial-display_southwest-point')
 
-      await userEvent.clear(swPoint)
-      await userEvent.click(swPoint)
-      await userEvent.type(swPoint, '10,20')
+      await user.clear(swPoint)
+      await user.click(swPoint)
+      await user.type(swPoint, '10,20')
 
       const updatedSwPoint = screen.getByTestId('spatial-display_southwest-point')
       expect(updatedSwPoint.value).toEqual('10,20')
 
       const nePoint = screen.getByTestId('spatial-display_northeast-point')
 
-      await userEvent.clear(nePoint)
-      await userEvent.click(nePoint)
-      await userEvent.type(nePoint, '30,40')
+      await user.clear(nePoint)
+      await user.click(nePoint)
+      await user.type(nePoint, '30,40')
 
       const updatedNePoint = screen.getByTestId('spatial-display_northeast-point')
       expect(updatedNePoint.value).toEqual('30,40')
     })
 
     test('submitting bounding box search calls onChangeQuery', async () => {
-      userEvent.setup()
-
       const swPoint = '10,20'
       const nePoint = '30,40'
 
       const boundingBox = `${swPoint},${nePoint}` // Lon,Lat,Lon,Lat
 
-      const { props } = setup({
-        boundingBoxSearch: [boundingBox]
+      const { props, user } = setup({
+        overrideProps: {
+          boundingBoxSearch: [boundingBox]
+        }
       })
 
-      const { onChangeQuery } = props
       const swInput = screen.getByTestId('spatial-display_southwest-point')
 
       const newSwPoint = '15,25'
-      await userEvent.clear(swInput)
-      await userEvent.click(swInput)
-      await userEvent.type(swInput, newSwPoint)
+      await user.clear(swInput)
+      await user.click(swInput)
+      await user.type(swInput, newSwPoint)
 
       const neInput = screen.getByTestId('spatial-display_northeast-point')
 
       const newNePoint = '35,45'
-      await userEvent.clear(neInput)
-      await userEvent.click(neInput)
-      await userEvent.type(neInput, newNePoint)
-      await userEvent.type(neInput, '{enter}')
+      await user.clear(neInput)
+      await user.click(neInput)
+      await user.type(neInput, newNePoint)
+      await user.type(neInput, '{enter}')
 
-      expect(onChangeQuery).toHaveBeenCalledTimes(2)
-      expect(onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: ['25,15,45,35'] } } })
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(2)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: ['25,15,45,35'] } } })
     })
 
     test('changing circle search updates the state', async () => {
-      userEvent.setup()
-      setup({
-        circleSearch: ['0,0,0']
+      const { user } = setup({
+        overrideProps: {
+          circleSearch: ['0,0,0']
+        }
       })
 
       const centerInput = screen.getByTestId('spatial-display_circle-center')
 
-      await userEvent.clear(centerInput)
-      await userEvent.click(centerInput)
-      await userEvent.type(centerInput, '38,-77')
+      await user.clear(centerInput)
+      await user.click(centerInput)
+      await user.type(centerInput, '38,-77')
 
       const updatedCenterInput = screen.getByTestId('spatial-display_circle-center')
 
@@ -417,54 +446,58 @@ describe('SpatialDisplay component', () => {
 
       const radiusInput = screen.getByTestId('spatial-display_circle-radius')
 
-      await userEvent.clear(radiusInput)
-      await userEvent.click(radiusInput)
-      await userEvent.type(radiusInput, '10000')
+      await user.clear(radiusInput)
+      await user.click(radiusInput)
+      await user.type(radiusInput, '10000')
 
       const updatedRadiusInput = screen.getByTestId('spatial-display_circle-radius')
       expect(updatedRadiusInput.value).toEqual('10000')
     })
 
     test('submitting circle search calls onChangeQuery', async () => {
-      userEvent.setup()
       const newCircle = '-77.119759,38.791645,20000'
 
       const center = '38,-77'
       const radius = '10000'
 
-      const { props } = setup({ circleSearch: [newCircle] })
+      const { props, user } = setup({
+        overrideProps: {
+          circleSearch: [newCircle]
+        }
+      })
 
-      const { onChangeQuery } = props
       const centerInput = screen.getByTestId('spatial-display_circle-center')
 
-      await userEvent.clear(centerInput)
-      await userEvent.click(centerInput)
-      await userEvent.type(centerInput, center)
+      await user.clear(centerInput)
+      await user.click(centerInput)
+      await user.type(centerInput, center)
 
       const radiusInput = screen.getByTestId('spatial-display_circle-radius')
 
-      await userEvent.clear(radiusInput)
-      await userEvent.click(radiusInput)
-      await userEvent.type(radiusInput, radius)
-      await userEvent.type(radiusInput, '{enter}')
+      await user.clear(radiusInput)
+      await user.click(radiusInput)
+      await user.type(radiusInput, radius)
+      await user.type(radiusInput, '{enter}')
 
-      expect(onChangeQuery).toHaveBeenCalledTimes(2)
-      expect(onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: ['-77,38,10000'] } } })
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(2)
+      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: ['-77,38,10000'] } } })
     })
   })
 
   describe('#trimCoordinate', () => {
     test('returns the input trimmed', async () => {
-      userEvent.setup()
-
-      setup({ pointSearch: [''] })
+      const { user } = setup({
+        overrideProps: {
+          pointSearch: ['']
+        }
+      })
 
       const input = screen.queryByTestId('spatial-display_point')
 
       const inputVal = '45.60161000002, -94.60986000001'
 
-      await userEvent.click(input)
-      await userEvent.type(input, inputVal)
+      await user.click(input)
+      await user.type(input, inputVal)
 
       const updatedInput = screen.queryByTestId('spatial-display_point')
 
@@ -472,16 +505,18 @@ describe('SpatialDisplay component', () => {
     })
 
     test('returns the input if no match was found', async () => {
-      userEvent.setup()
-
-      setup({ pointSearch: [''] })
+      const { user } = setup({
+        overrideProps: {
+          pointSearch: ['']
+        }
+      })
 
       const input = screen.queryByTestId('spatial-display_point')
 
       const inputVal = 'test'
 
-      await userEvent.click(input)
-      await userEvent.type(input, inputVal)
+      await user.click(input)
+      await user.type(input, inputVal)
 
       const updatedInput = screen.queryByTestId('spatial-display_point')
 
@@ -491,18 +526,20 @@ describe('SpatialDisplay component', () => {
 
   describe('#validateCoordinate', () => {
     test('returns an empty string if no coordinate is provided', async () => {
-      userEvent.setup()
-
-      setup({ pointSearch: [''] })
+      const { user } = setup({
+        overrideProps: {
+          pointSearch: ['']
+        }
+      })
 
       const input = screen.queryByTestId('spatial-display_point')
 
       const inputVal = ''
 
-      await userEvent.click(input)
-      await userEvent.type(input, '123')
+      await user.click(input)
+      await user.type(input, '123')
       // Clears the input so that effectively no coordinate is provided
-      await userEvent.clear(input)
+      await user.clear(input)
 
       const updatedInput = screen.queryByTestId('spatial-display_point')
 
@@ -510,16 +547,18 @@ describe('SpatialDisplay component', () => {
     })
 
     test('returns no error with a valid coordinate', async () => {
-      userEvent.setup()
-
-      setup({ pointSearch: [''] })
+      const { user } = setup({
+        overrideProps: {
+          pointSearch: ['']
+        }
+      })
 
       const input = screen.queryByTestId('spatial-display_point')
 
       const inputVal = '0,0'
 
-      await userEvent.click(input)
-      await userEvent.type(input, inputVal)
+      await user.click(input)
+      await user.type(input, inputVal)
       // Clears the input so that effectively no coordinate is provided
 
       const updatedInput = screen.queryByTestId('spatial-display_point')
@@ -531,7 +570,9 @@ describe('SpatialDisplay component', () => {
       const inputVal = '0,0.123456'
 
       setup({
-        pointSearch: [inputVal]
+        overrideProps: {
+          pointSearch: [inputVal]
+        }
       })
 
       const input = screen.queryByTestId('spatial-display_point')
@@ -546,7 +587,9 @@ describe('SpatialDisplay component', () => {
       const inputVal = '0,95'
 
       setup({
-        pointSearch: [inputVal]
+        overrideProps: {
+          pointSearch: [inputVal]
+        }
       })
 
       const input = screen.queryByTestId('spatial-display_point')
@@ -560,7 +603,9 @@ describe('SpatialDisplay component', () => {
       const inputVal = '190,0'
 
       setup({
-        pointSearch: [inputVal]
+        overrideProps: {
+          pointSearch: [inputVal]
+        }
       })
 
       const input = screen.queryByTestId('spatial-display_point')
@@ -573,23 +618,23 @@ describe('SpatialDisplay component', () => {
 
   describe('#validateBoundingBoxCoordinates', () => {
     test('returns an error coordinates match each other.', async () => {
-      userEvent.setup()
-
       const inputVal = '38.791,-77.119'
 
-      setup({
-        boundingBoxSearch: ['0,0,0,0']
+      const { user } = setup({
+        overrideProps: {
+          boundingBoxSearch: ['0,0,0,0']
+        }
       })
 
       const swInput = screen.queryByTestId('spatial-display_southwest-point')
-      await userEvent.clear(swInput)
-      await userEvent.click(swInput)
-      await userEvent.type(swInput, inputVal)
+      await user.clear(swInput)
+      await user.click(swInput)
+      await user.type(swInput, inputVal)
 
       const neInput = screen.queryByTestId('spatial-display_northeast-point')
-      await userEvent.clear(neInput)
-      await userEvent.click(neInput)
-      await userEvent.type(neInput, inputVal)
+      await user.clear(neInput)
+      await user.click(neInput)
+      await user.type(neInput, inputVal)
 
       const updatedSwInput = screen.queryByTestId('spatial-display_southwest-point')
       const updatedNeInput = screen.queryByTestId('spatial-display_northeast-point')
@@ -601,23 +646,23 @@ describe('SpatialDisplay component', () => {
     })
 
     test('returns an error coordinates match each other and are invalid coordinates', async () => {
-      userEvent.setup()
-
       const inputVal = '-91.119,38.791'
 
-      setup({
-        boundingBoxSearch: ['0,0,0,0']
+      const { user } = setup({
+        overrideProps: {
+          boundingBoxSearch: ['0,0,0,0']
+        }
       })
 
       const swInput = screen.queryByTestId('spatial-display_southwest-point')
-      await userEvent.clear(swInput)
-      await userEvent.click(swInput)
-      await userEvent.type(swInput, inputVal)
+      await user.clear(swInput)
+      await user.click(swInput)
+      await user.type(swInput, inputVal)
 
       const neInput = screen.queryByTestId('spatial-display_northeast-point')
-      await userEvent.clear(neInput)
-      await userEvent.click(neInput)
-      await userEvent.type(neInput, inputVal)
+      await user.clear(neInput)
+      await user.click(neInput)
+      await user.type(neInput, inputVal)
 
       const updatedSwInput = screen.queryByTestId('spatial-display_southwest-point')
       const updatedNeInput = screen.queryByTestId('spatial-display_northeast-point')

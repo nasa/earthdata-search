@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Modal from 'react-bootstrap/Modal'
 
 import Button from '../Button/Button'
@@ -140,16 +139,6 @@ const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
       </Modal.Footer>
     </Modal>
   )
-}
-
-OverrideTemporalModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
-  onToggleOverrideTemporalModal: PropTypes.func.isRequired,
-  temporalSearch: PropTypes.shape({
-    endDate: PropTypes.string,
-    startDate: PropTypes.string
-  }).isRequired
 }
 
 export default OverrideTemporalModal

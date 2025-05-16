@@ -93,11 +93,11 @@ import {
   MapGranule,
   ProjectionCode,
   Query,
-  Shapefile,
+  ShapefileFile,
   SpatialSearch
 } from '../../types/sharedTypes'
 import { Colormap } from '../Legend/Legend'
-import { MapView } from '../../zustand/types'
+import { MapView, ShapefileSlice } from '../../zustand/types'
 
 let previousGranulesKey: string
 let previousProjectionCode: ProjectionCode
@@ -308,7 +308,8 @@ interface MapProps {
   /** Function to call when the too many points modal is toggled */
   onToggleTooManyPointsModal: (state: boolean) => void
   /** Function to call when the shapefile is updated */
-  onUpdateShapefile: (data: Partial<Shapefile>) => void
+  // onUpdateShapefile: (data: Partial<Shapefile>) => void
+  onUpdateShapefile: ShapefileSlice['shapefile']['updateShapefile']
   /** The overlays of the map */
   overlays: {
     /** Is the borders and roads overlay applied */
@@ -323,7 +324,7 @@ interface MapProps {
   /** The rotation of the map */
   rotation: number
   /** The shapefile to render on the map */
-  shapefile: Shapefile
+  shapefile: ShapefileSlice['shapefile']
   /** The spatial search object */
   spatialSearch: SpatialSearch
   /** The zoom level of the map */
@@ -621,7 +622,7 @@ const Map: React.FC<MapProps> = ({
     eventEmitter.on(mapEventTypes.MOVEMAP, handleMoveMap)
 
     // Handle the add shapefile event
-    const handleAddShapefile = (_dzFile: unknown, file: File) => {
+    const handleAddShapefile = (_dzFile: unknown, file: ShapefileFile) => {
       const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({

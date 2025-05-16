@@ -30,6 +30,8 @@ import {
 import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './SpatialDisplay.scss'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
@@ -42,10 +44,10 @@ const SpatialDisplay = ({
   lineSearch,
   pointSearch,
   polygonSearch,
-  shapefile,
   onRemoveSpatialFilter,
   onChangeQuery
 }) => {
+  const shapefile = useEdscStore((state) => state.shapefile)
   const [error, setError] = useState('')
   const [manuallyEnteringVal, setManuallyEnteringVal] = useState('')
 
@@ -58,7 +60,6 @@ const SpatialDisplay = ({
   )
   const [currentPolygonSearch, setCurrentPolygonSearch] = useState(polygonSearch)
   const [currentLineSearch, setCurrentLineSearch] = useState(lineSearch)
-  const [currentShapefile, setCurrentShapefile] = useState(shapefile)
 
   const onFocusSpatialSearch = (spatialType) => {
     setManuallyEnteringVal(spatialType)
@@ -351,11 +352,7 @@ const SpatialDisplay = ({
       const tempPoints = transformCircleCoordinates(circleSearch[0])
       setCurrentCircleSearch(tempPoints)
     }
-
-    if (!isEqual(currentShapefile, shapefile)) {
-      setCurrentShapefile(shapefile)
-    }
-  }, [pointSearch, boundingBoxSearch, polygonSearch, lineSearch, circleSearch, shapefile])
+  }, [pointSearch, boundingBoxSearch, polygonSearch, lineSearch, circleSearch])
 
   const onSpatialRemove = () => {
     setManuallyEnteringVal(false)
@@ -381,7 +378,7 @@ const SpatialDisplay = ({
     shapefileName,
     shapefileId,
     shapefileSize
-  } = currentShapefile
+  } = shapefile
 
   let hint = ''
 
@@ -751,8 +748,7 @@ SpatialDisplay.propTypes = {
   onChangeQuery: PropTypes.func.isRequired,
   onRemoveSpatialFilter: PropTypes.func.isRequired,
   pointSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-  polygonSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-  shapefile: PropTypes.shape({}).isRequired
+  polygonSearch: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 
 export default SpatialDisplay

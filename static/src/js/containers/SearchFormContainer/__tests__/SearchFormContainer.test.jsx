@@ -1,6 +1,4 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import {
@@ -10,20 +8,18 @@ import {
 } from '../SearchFormContainer'
 import SearchForm from '../../../components/SearchForm/SearchForm'
 
-Enzyme.configure({ adapter: new Adapter() })
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-function setup() {
-  const props = {
+jest.mock('../../../components/SearchForm/SearchForm', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: SearchFormContainer,
+  defaultProps: {
+    advancedSearch: {},
     autocomplete: {},
     drawingNewLayer: false,
-    boundingBoxSearch: [],
-    circleSearch: [],
     gridCoords: '',
     keywordSearch: 'Test value',
-    lineSearch: [],
-    pointSearch: [],
-    polygonSearch: [],
-    shapefile: {},
     temporalSearch: {},
     temporalSearchordSearch: 'Test value',
     onCancelAutocomplete: jest.fn(),
@@ -35,14 +31,7 @@ function setup() {
     onSelectAutocompleteSuggestion: jest.fn(),
     onClearAutocompleteSuggestions: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<SearchFormContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onChangeQuery calls actions.changeQuery', () => {
@@ -51,8 +40,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onChangeFocusedCollection calls actions.changeFocusedCollection', () => {
@@ -61,8 +50,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeFocusedCollection('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onClearFilters calls actions.clearFilters', () => {
@@ -71,7 +60,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onClearFilters()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onToggleAdvancedSearchModal calls actions.toggleAdvancedSearchModal', () => {
@@ -80,8 +69,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleAdvancedSearchModal(false)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(false)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(false)
   })
 
   test('onCancelAutocomplete calls actions.cancelAutocomplete', () => {
@@ -90,7 +79,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onCancelAutocomplete()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onClearAutocompleteSuggestions calls actions.clearAutocompleteSuggestions', () => {
@@ -99,7 +88,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onClearAutocompleteSuggestions()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onFetchAutocomplete calls actions.fetchAutocomplete', () => {
@@ -108,8 +97,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchAutocomplete({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onSelectAutocompleteSuggestion calls actions.selectAutocompleteSuggestion', () => {
@@ -118,8 +107,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onSelectAutocompleteSuggestion({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 })
 
@@ -142,7 +131,6 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      shapefile: {},
       ui: {
         map: {
           drawingNewLayer: false
@@ -153,14 +141,7 @@ describe('mapStateToProps', () => {
     const expectedState = {
       advancedSearch: {},
       autocomplete: {},
-      boundingBoxSearch: [],
-      circleSearch: [],
-      drawingNewLayer: false,
       keywordSearch: '',
-      lineSearch: [],
-      pointSearch: [],
-      polygonSearch: [],
-      shapefile: {},
       temporalSearch: {}
     }
 
@@ -170,25 +151,21 @@ describe('mapStateToProps', () => {
 
 describe('SearchFormContainer component', () => {
   test('passes its props and renders a single SearchForm component', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
 
-    const searchForm = enzymeWrapper.find(SearchForm)
-    const searchFormProps = searchForm.props()
-
-    expect(searchForm.length).toBe(1)
-    expect(searchFormProps.keywordSearch)
-      .toEqual('Test value')
-
-    expect(searchFormProps.onCancelAutocomplete)
-      .toEqual(props.onCancelAutocomplete)
-
-    expect(searchFormProps.onClearFilters)
-      .toEqual(props.onClearFilters)
-
-    expect(searchFormProps.onChangeQuery)
-      .toEqual(props.onChangeQuery)
-
-    expect(searchFormProps.onToggleAdvancedSearchModal)
-      .toEqual(props.onToggleAdvancedSearchModal)
+    expect(SearchForm).toHaveBeenCalledTimes(1)
+    expect(SearchForm).toHaveBeenCalledWith({
+      advancedSearch: props.advancedSearch,
+      autocomplete: props.autocomplete,
+      keywordSearch: props.keywordSearch,
+      onCancelAutocomplete: props.onCancelAutocomplete,
+      onChangeQuery: props.onChangeQuery,
+      onChangeFocusedCollection: props.onChangeFocusedCollection,
+      onClearFilters: props.onClearFilters,
+      onToggleAdvancedSearchModal: props.onToggleAdvancedSearchModal,
+      onFetchAutocomplete: props.onFetchAutocomplete,
+      onSelectAutocompleteSuggestion: props.onSelectAutocompleteSuggestion,
+      onClearAutocompleteSuggestions: props.onClearAutocompleteSuggestions
+    }, {})
   })
 })

@@ -1,6 +1,4 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
 import actions from '../../../actions'
 import {
@@ -10,10 +8,13 @@ import {
 } from '../SpatialDisplayContainer'
 import SpatialDisplay from '../../../components/SpatialDisplay/SpatialDisplay'
 
-Enzyme.configure({ adapter: new Adapter() })
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-function setup() {
-  const props = {
+jest.mock('../../../components/SpatialDisplay/SpatialDisplay', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: SpatialDisplayContainer,
+  defaultProps: {
     boundingBoxSearch: ['Test Bounding Box'],
     circleSearch: ['Test Circle'],
     displaySpatialPolygonWarning: false,
@@ -25,14 +26,7 @@ function setup() {
     polygonSearch: ['Test Polygon Search'],
     shapefile: {}
   }
-
-  const enzymeWrapper = shallow(<SpatialDisplayContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onChangeQuery calls actions.changeQuery', () => {
@@ -69,7 +63,6 @@ describe('mapStateToProps', () => {
           }
         }
       },
-      shapefile: {},
       ui: {
         map: {
           drawingNewLayer: false
@@ -87,8 +80,7 @@ describe('mapStateToProps', () => {
       drawingNewLayer: false,
       lineSearch: [],
       pointSearch: [],
-      polygonSearch: [],
-      shapefile: {}
+      polygonSearch: []
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -97,20 +89,19 @@ describe('mapStateToProps', () => {
 
 describe('SpatialDisplayContainer component', () => {
   test('passes its props and renders a single SpatialDisplay component', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
 
-    expect(enzymeWrapper.find(SpatialDisplay).length).toBe(1)
-    expect(enzymeWrapper.find(SpatialDisplay).props()).toEqual({
-      boundingBoxSearch: ['Test Bounding Box'],
-      circleSearch: ['Test Circle'],
-      displaySpatialPolygonWarning: false,
-      drawingNewLayer: false,
-      lineSearch: ['Test Line'],
+    expect(SpatialDisplay).toHaveBeenCalledTimes(1)
+    expect(SpatialDisplay).toHaveBeenCalledWith({
+      boundingBoxSearch: props.boundingBoxSearch,
+      circleSearch: props.circleSearch,
+      displaySpatialPolygonWarning: props.displaySpatialPolygonWarning,
+      drawingNewLayer: props.drawingNewLayer,
+      lineSearch: props.lineSearch,
       onChangeQuery: props.onChangeQuery,
       onRemoveSpatialFilter: props.onRemoveSpatialFilter,
-      pointSearch: ['Test Point Search'],
-      polygonSearch: ['Test Polygon Search'],
-      shapefile: {}
-    })
+      pointSearch: props.pointSearch,
+      polygonSearch: props.polygonSearch
+    }, {})
   })
 })

@@ -1,19 +1,20 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 // @ts-expect-error: This file does not have types
 import EDSCEchoform from '@edsc/echoforms'
 
-import EchoForm from '../EchoForm'
-// @ts-expect-error: This file does not have types
+import EchoForm, { EchoFormProps } from '../EchoForm'
+
 import { echoForm } from './mocks'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('@edsc/echoforms', () => jest.fn(() => <div data-testid="edsc-echoforms" />))
 
-const setup = (overrideProps = {}) => {
-  const onUpdateAccessMethod = jest.fn()
-
-  const props = {
+const setup = setupTest({
+  Component: EchoForm,
+  defaultProps: {
     collectionId: '',
     form: '',
     methodKey: '',
@@ -24,24 +25,11 @@ const setup = (overrideProps = {}) => {
     ursProfile: {
       email_address: ''
     },
-    onUpdateAccessMethod,
-    ...overrideProps
+    onUpdateAccessMethod: jest.fn()
   }
-
-  const { rerender } = render(<EchoForm {...props} />)
-
-  return {
-    props,
-    rerender,
-    onUpdateAccessMethod
-  }
-}
+})
 
 describe('EchoForm component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('should render EDSCEchoform component', () => {
     setup()
 
@@ -50,8 +38,10 @@ describe('EchoForm component', () => {
 
   test('renders an EDSCEchoform with spatial prepopulated', () => {
     setup({
-      spatial: {
-        polygon: ['-77,38,-77,38,-76,38,-77,38']
+      overrideProps: {
+        spatial: {
+          polygon: ['-77,38,-77,38,-76,38,-77,38']
+        }
       }
     })
 
@@ -71,9 +61,11 @@ describe('EchoForm component', () => {
   describe('when both startDate and endDate are set', () => {
     test('renders an EDSCEchoform with temporal prepopulated', () => {
       setup({
-        temporal: {
-          endDate: '2020-03-05T17:49:07.369Z',
-          startDate: '2019-12-06T07:34:12.613Z'
+        overrideProps: {
+          temporal: {
+            endDate: '2020-03-05T17:49:07.369Z',
+            startDate: '2019-12-06T07:34:12.613Z'
+          }
         }
       })
 
@@ -92,8 +84,10 @@ describe('EchoForm component', () => {
   describe('when a startDate is set', () => {
     test('renders an EDSCEchoform with temporal prepopulated', () => {
       setup({
-        temporal: {
-          startDate: '2019-12-06T07:34:12.613Z'
+        overrideProps: {
+          temporal: {
+            startDate: '2019-12-06T07:34:12.613Z'
+          }
         }
       })
 
@@ -112,8 +106,10 @@ describe('EchoForm component', () => {
   describe('when a endDate is set', () => {
     test('renders an EDSCEchoform with temporal prepopulated', () => {
       setup({
-        temporal: {
-          endDate: '2020-03-05T17:49:07.369Z'
+        overrideProps: {
+          temporal: {
+            endDate: '2020-03-05T17:49:07.369Z'
+          }
         }
       })
 
@@ -131,8 +127,10 @@ describe('EchoForm component', () => {
 
   test('renders an EDSCEchoform with email prepopulated', () => {
     setup({
-      ursProfile: {
-        email_address: 'test@example.com'
+      overrideProps: {
+        ursProfile: {
+          email_address: 'test@example.com'
+        }
       }
     })
 
@@ -148,7 +146,11 @@ describe('EchoForm component', () => {
 
   test('renders an EDSCEchoform with a shapefile', () => {
     setup({
-      shapefileId: '1234'
+      overrideZustandState: {
+        shapefile: {
+          shapefileId: '1234'
+        }
+      }
     })
 
     expect(EDSCEchoform).toHaveBeenCalledWith(
@@ -162,10 +164,12 @@ describe('EchoForm component', () => {
   test('onFormModelUpdated calls onUpdateAccessMethod', () => {
     const collectionId = 'collectionId'
     const methodKey = 'echoOrder0'
-    const { onUpdateAccessMethod } = setup({
-      collectionId,
-      form: echoForm,
-      methodKey
+    const { props } = setup({
+      overrideProps: {
+        collectionId,
+        form: echoForm,
+        methodKey
+      }
     })
 
     EDSCEchoform.mock.calls[0][0].onFormModelUpdated({
@@ -173,8 +177,8 @@ describe('EchoForm component', () => {
       rawModel: 'new rawModel'
     })
 
-    expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-    expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+    expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+    expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
       collectionId,
       method: {
         echoOrder0: {
@@ -188,16 +192,18 @@ describe('EchoForm component', () => {
   test('onFormIsValidUpdated calls onUpdateAccessMethod', () => {
     const collectionId = 'collectionId'
     const methodKey = 'echoOrder0'
-    const { onUpdateAccessMethod } = setup({
-      collectionId,
-      form: echoForm,
-      methodKey
+    const { props } = setup({
+      overrideProps: {
+        collectionId,
+        form: echoForm,
+        methodKey
+      }
     })
 
     EDSCEchoform.mock.calls[0][0].onFormIsValidUpdated(false)
 
-    expect(onUpdateAccessMethod).toHaveBeenCalledTimes(1)
-    expect(onUpdateAccessMethod).toHaveBeenCalledWith({
+    expect(props.onUpdateAccessMethod).toHaveBeenCalledTimes(1)
+    expect(props.onUpdateAccessMethod).toHaveBeenCalledWith({
       collectionId,
       method: {
         echoOrder0: {
@@ -223,11 +229,13 @@ describe('EchoForm component', () => {
           }
         }
 
-        const { props: overriddenProps, rerender } = setup(props)
+        const { props: overriddenProps, rerender } = setup({
+          overrideProps: props
+        })
 
         expect(EDSCEchoform).toHaveBeenCalledTimes(1)
 
-        rerender(<EchoForm {...overriddenProps} />)
+        rerender(<EchoForm {...overriddenProps as unknown as EchoFormProps} />)
 
         expect(EDSCEchoform).toHaveBeenCalledTimes(2)
         expect(EDSCEchoform).toHaveBeenNthCalledWith(
@@ -263,7 +271,9 @@ describe('EchoForm component', () => {
           }
         }
 
-        const { props: overriddenProps, rerender } = setup(props)
+        const { props: overriddenProps, rerender } = setup({
+          overrideProps: props
+        })
 
         expect(EDSCEchoform).toHaveBeenCalledTimes(1)
 
@@ -274,7 +284,7 @@ describe('EchoForm component', () => {
           }
         }
 
-        rerender(<EchoForm {...newProps} />)
+        rerender(<EchoForm {...newProps as EchoFormProps} />)
 
         expect(EDSCEchoform).toHaveBeenCalledTimes(3)
         expect(EDSCEchoform).toHaveBeenNthCalledWith(

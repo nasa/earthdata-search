@@ -4,6 +4,7 @@ import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
 
 import withDropzone from './withDropzone'
+
 import './ShapefileDropzone.scss'
 
 export class ShapefileDropzone extends Component {
