@@ -16,7 +16,7 @@ export const interceptUnauthenticatedCollections = async ({
   await page.route(/search\/collections.json/, async (route) => {
     const query = route.request().postData()
 
-    if (includeDefault && query === 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score') {
+    if (includeDefault && query === 'has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date') {
       await route.fulfill({
         json: body,
         headers

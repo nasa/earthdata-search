@@ -44,7 +44,7 @@ test.describe('Path /search/granules/granule-details', () => {
 
     await page.route(/collections.json/, (route) => {
       // Check that the request bodies match up
-      expect(route.request().postData()).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+      expect(route.request().postData()).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
       route.fulfill({
         json: collectionsBody,
