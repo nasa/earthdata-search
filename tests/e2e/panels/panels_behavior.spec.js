@@ -49,8 +49,6 @@ test.describe('Panel Behavior', () => {
   })
 
   test('opens and closes when using keyboard shortcuts', async ({ page }) => {
-    await page.waitForTimeout(1000)
-
     await page.keyboard.press(']')
 
     await expect(page.locator('.panels--is-open')).toHaveCount(0)
