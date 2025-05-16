@@ -6,9 +6,9 @@
       "Default",
       "Relevance",
       "Usage",
+      "Recent Version",
       "Start Date",
-      "End Date",
-      "Recent Version"
+      "End Date"
     ]
   },
   "granuleSort": {

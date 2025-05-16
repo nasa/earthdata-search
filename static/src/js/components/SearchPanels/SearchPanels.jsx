@@ -316,6 +316,11 @@ class SearchPanels extends PureComponent {
         onClick: () => setCollectionSort(collectionSortKeys.usageDescending)
       },
       {
+        label: 'Recent Version',
+        isActive: activeCollectionsSortKey === collectionSortKeys.recentVersion,
+        onClick: () => setCollectionSort(collectionSortKeys.recentVersion)
+      },
+      {
         label: 'Start Date',
         isActive: activeCollectionsSortKey === collectionSortKeys.startDateAscending,
         onClick: () => setCollectionSort(collectionSortKeys.startDateAscending)
@@ -324,11 +329,6 @@ class SearchPanels extends PureComponent {
         label: 'End Date',
         isActive: activeCollectionsSortKey === collectionSortKeys.endDateDescending,
         onClick: () => setCollectionSort(collectionSortKeys.endDateDescending)
-      },
-      {
-        label: 'Recent Version',
-        isActive: activeCollectionsSortKey === collectionSortKeys.recentVersion,
-        onClick: () => setCollectionSort(collectionSortKeys.recentVersion)
       }
     ]
 

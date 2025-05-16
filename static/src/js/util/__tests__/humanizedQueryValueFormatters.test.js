@@ -234,6 +234,11 @@ describe(('formatFacetHierarchy'), () => {
         expect(result).toBe('Usage')
       })
 
+      test('returns "Recent Version" for "-create-data-date"', () => {
+        const result = humanizeSortKey('-create-data-date', [{ label: 'Relevance' }])
+        expect(result).toBe('Recent Version')
+      })
+
       test('returns "End Date" for "-ongoing"', () => {
         const result = humanizeSortKey('-ongoing', [{ label: 'Relevance' }])
         expect(result).toBe('End Date')
@@ -242,11 +247,6 @@ describe(('formatFacetHierarchy'), () => {
       test('returns "Start Date" for "start_date"', () => {
         const result = humanizeSortKey('start_date', [{ label: 'Relevance' }])
         expect(result).toBe('Start Date')
-      })
-
-      test('returns "Recent Version" for "-create-data-date"', () => {
-        const result = humanizeSortKey('-create-data-date', [{ label: 'Relevance' }])
-        expect(result).toBe('Recent Version')
       })
 
       // Granules
