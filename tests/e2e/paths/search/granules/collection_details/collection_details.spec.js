@@ -232,7 +232,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/collections.json/, async (route) => {
         const query = route.request().postData()
-        expect(query).toEqual('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-score')
+        expect(query).toEqual('include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=-score&sort_key[]=-create-data-date')
 
         await route.fulfill({
           json: collectionsBody.body,
@@ -315,7 +315,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/collections.json/, async (route) => {
         const query = route.request().postData()
-        expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+        expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
         await route.fulfill({
           json: collectionsBody,
@@ -429,7 +429,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/collections.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
           await route.fulfill({
             json: collectionsBody,
@@ -488,7 +488,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/collections.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
           await route.fulfill({
             json: collectionsBody,
@@ -547,7 +547,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/collections.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
           await route.fulfill({
             json: collectionsBody,
@@ -606,7 +606,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/collections.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
           await route.fulfill({
             json: collectionsBody,
@@ -666,7 +666,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
           await page.route(/collections.json/, async (route) => {
             const query = route.request().postData()
-            expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+            expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
             await route.fulfill({
               json: collectionsBody,
@@ -725,7 +725,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/collections.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+          expect(query).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&sort_key[]=has_granules_or_cwic&sort_key[]=-score&sort_key[]=-create-data-date')
 
           await route.fulfill({
             json: collectionsBody,

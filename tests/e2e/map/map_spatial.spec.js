@@ -930,6 +930,12 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('when drawing advanced search spatial', () => {
       test.beforeEach(async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
         await page.goto('/search')
 
@@ -943,8 +949,6 @@ test.describe('Map: Spatial interactions', () => {
         test.beforeEach(async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
-            body: commonBody,
-            headers: commonHeaders,
             additionalRequests: [{
               body: pointBody, // `body` doesn't matter for this test, we just want to mock a result
               headers: {
@@ -1002,8 +1006,6 @@ test.describe('Map: Spatial interactions', () => {
         test.beforeEach(async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
-            body: commonBody,
-            headers: commonHeaders,
             additionalRequests: [{
               body: pointBody, // `body` doesn't matter for this test, we just want to mock a result
               headers: {
@@ -1636,6 +1638,12 @@ test.describe('Map: Spatial interactions', () => {
 
     test.describe('when drawing advanced search spatial', () => {
       test.beforeEach(async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders
+        })
+
         const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
         await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
@@ -1649,8 +1657,7 @@ test.describe('Map: Spatial interactions', () => {
         test.beforeEach(async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
-            body: commonBody,
-            headers: commonHeaders,
+            includeDefault: false,
             additionalRequests: [{
               body: pointBody, // `body` doesn't matter for this test, we just want to mock a result
               headers: {
@@ -1707,8 +1714,7 @@ test.describe('Map: Spatial interactions', () => {
         test.beforeEach(async ({ page }) => {
           await interceptUnauthenticatedCollections({
             page,
-            body: commonBody,
-            headers: commonHeaders,
+            includeDefault: false,
             additionalRequests: [{
               body: pointBody, // `body` doesn't matter for this test, we just want to mock a result
               headers: {
