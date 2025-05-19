@@ -221,6 +221,7 @@ export const buildCollectionSearchParams = (params) => {
   // Only include has_granules_or_cwic sort key if the parameter is being used
   if (hasGranulesOrCwic) sortKey.unshift('has_granules_or_cwic')
 
+  // Add Recent Version as a secondary sort key for all collection searches
   if (selectedSortKey[0] !== collectionSortKeys.recentVersion) {
     sortKey.push(collectionSortKeys.recentVersion)
   }
