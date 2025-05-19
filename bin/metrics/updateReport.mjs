@@ -45,13 +45,13 @@ const updatedMetricsFile = {
   [versionWithoutBuild]: {
     version,
     date: new Date().toISOString().split('T')[0],
-    ...metricsFile[version],
+    ...metricsFile[versionWithoutBuild],
     commit,
     ...(reports.bundleSizeReport || {}),
     clocReport: reports.clocReport,
     ...(reports.testCoverageReport || {}),
     performanceReport: {
-      ...(metricsFile[version]?.performanceReport || {}),
+      ...(metricsFile[versionWithoutBuild]?.performanceReport || {}),
       ...(reports.uatPerformanceReport || {}),
       ...(reports.prodPerformanceReport || {})
     }

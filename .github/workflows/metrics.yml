@@ -7,6 +7,11 @@ on:
     # Run every Monday at 01:00 UTC, this will check PROD
     - cron: '0 1 * * 1'
 
+# Temp: on pushes to EDSC-4489-3
+  push:
+    branches:
+      - EDSC-4489-3
+
 jobs:
   determineEnv:
     runs-on: ubuntu-latest
