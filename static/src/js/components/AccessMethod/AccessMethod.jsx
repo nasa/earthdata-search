@@ -45,7 +45,6 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {Function} props.onUpdateAccessMethod - Updates an access method.
  * @param {Object} props.projectCollection - The project collection.
  * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
- * @param {String} props.shapefileId - The shapefile id of the uploaded shapefile.
 */
 const AccessMethod = ({
   accessMethods,
@@ -59,7 +58,6 @@ const AccessMethod = ({
   onUpdateAccessMethod,
   projectCollection,
   selectedAccessMethod,
-  shapefileId,
   spatial,
   temporal,
   ursProfile
@@ -737,7 +735,6 @@ const AccessMethod = ({
                         form={form}
                         methodKey={selectedAccessMethod}
                         rawModel={rawModel}
-                        shapefileId={shapefileId}
                         spatial={spatial}
                         temporal={temporal}
                         ursProfile={ursProfile}
@@ -1016,7 +1013,6 @@ AccessMethod.defaultProps = {
   onSetActivePanel: null,
   onTogglePanels: null,
   selectedAccessMethod: null,
-  shapefileId: null,
   spatial: {},
   granuleMetadata: {},
   projectCollection: {
@@ -1038,7 +1034,6 @@ AccessMethod.propTypes = {
   onTogglePanels: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string,
-  shapefileId: PropTypes.string,
   spatial: PropTypes.shape({
     boundingBox: PropTypes.arrayOf(PropTypes.string),
     circle: PropTypes.arrayOf(PropTypes.string),

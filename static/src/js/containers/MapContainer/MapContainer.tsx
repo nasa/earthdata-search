@@ -41,6 +41,8 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 import projectionCodes from '../../constants/projectionCodes'
 
 import Map from '../../components/Map/Map'
+import { Colormap } from '../../components/Legend/Legend'
+
 import {
   backgroundGranulePointStyle,
   backgroundGranuleStyle,
@@ -70,22 +72,17 @@ import {
   PolygonString,
   ProjectionCode,
   Query,
-  Shapefile,
   SpatialSearch
 } from '../../types/sharedTypes'
 
 import './MapContainer.scss'
-import { Colormap } from '../../components/Legend/Legend'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeFocusedGranule:
     (granuleId: string) => dispatch(actions.changeFocusedGranule(granuleId)),
   onChangeQuery: (query: Query) => dispatch(actions.changeQuery(query)),
-  onClearShapefile: () => dispatch(actions.clearShapefile()),
   onExcludeGranule:
     (data: { collectionId: string, granuleId: string }) => dispatch(actions.excludeGranule(data)),
-  onFetchShapefile:
-    (id: string) => dispatch(actions.fetchShapefile(id)),
   onMetricsMap:
     (type: string) => dispatch(metricsMap(type)),
   onToggleDrawingNewLayer:
@@ -93,9 +90,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onToggleShapefileUploadModal:
     (state: boolean) => dispatch(actions.toggleShapefileUploadModal(state)),
   onToggleTooManyPointsModal:
-    (state: boolean) => dispatch(actions.toggleTooManyPointsModal(state)),
-  onUpdateShapefile:
-    (data: Partial<Shapefile>) => dispatch(actions.updateShapefile(data))
+    (state: boolean) => dispatch(actions.toggleTooManyPointsModal(state))
 })
 
 // @ts-expect-error Don't want to define types for all of Redux
@@ -116,8 +111,7 @@ export const mapStateToProps = (state) => ({
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
   project: state.project,
-  router: state.router,
-  shapefile: state.shapefile
+  router: state.router
 })
 
 type ColormapMetadata = {
@@ -187,12 +181,8 @@ interface MapContainerProps {
   onChangeFocusedGranule: (granuleId: string) => void
   /** Function to change the query */
   onChangeQuery: (query: object) => void
-  /** Function to clear the shapefile */
-  onClearShapefile: () => void
   /** Function to exclude a granule */
   onExcludeGranule: (data: { collectionId: string; granuleId: string }) => void
-  /** Function to fetch the shapefile */
-  onFetchShapefile: (id: string) => void
   /** Function to call the metrics map */
   onMetricsMap: (type: string) => void
   /** Function to toggle the drawing new layer */
@@ -201,8 +191,6 @@ interface MapContainerProps {
   onToggleShapefileUploadModal: (state: boolean) => void
   /** Function to toggle the too many points modal */
   onToggleTooManyPointsModal: (state: boolean) => void
-  /** Function to update the shapefile */
-  onUpdateShapefile: (data: Partial<Shapefile>) => void
   /** The point search coordinates */
   pointSearch?: PointString[]
   /** The polygon search coordinates */
@@ -238,8 +226,6 @@ interface MapContainerProps {
       pathname: string
     }
   }
-  /** The shapefile object */
-  shapefile: Shapefile
 }
 
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
@@ -258,19 +244,15 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     lineSearch,
     onChangeFocusedGranule,
     onChangeQuery,
-    onClearShapefile,
     onExcludeGranule,
-    onFetchShapefile,
     onMetricsMap,
     onToggleDrawingNewLayer,
     onToggleShapefileUploadModal,
     onToggleTooManyPointsModal,
-    onUpdateShapefile,
     pointSearch,
     polygonSearch,
     project,
-    router,
-    shapefile
+    router
   } = props
 
   const { location } = router
@@ -284,15 +266,23 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const {
     map: mapProps,
     onChangeMap,
+    onClearShapefile,
+    onFetchShapefile,
+    onUpdateShapefile,
+    setStartDrawing,
+    shapefile,
     showMbr,
-    startDrawing,
-    setStartDrawing
+    startDrawing
   } = useEdscStore((state) => ({
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
+    onClearShapefile: state.shapefile.clearShapefile,
+    onFetchShapefile: state.shapefile.fetchShapefile,
+    onUpdateShapefile: state.shapefile.updateShapefile,
+    setStartDrawing: state.home.setStartDrawing,
+    shapefile: state.shapefile,
     showMbr: state.map.showMbr,
-    startDrawing: state.home.startDrawing,
-    setStartDrawing: state.home.setStartDrawing
+    startDrawing: state.home.startDrawing
   }))
 
   const [mapReady, setMapReady] = useState(false)

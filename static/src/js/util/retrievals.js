@@ -13,6 +13,7 @@ import {
   getProjectCollectionsMetadata
 } from '../selectors/project'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import useEdscStore from '../zustand/useEdscStore'
 
 // Limit the fields we send with the retrieval to save space in the payload
 const permittedCollectionMetadataFields = [
@@ -59,9 +60,10 @@ export const prepareRetrievalParams = (state) => {
   const {
     authToken,
     portal,
-    router,
-    shapefile
+    router
   } = state
+
+  const { shapefile } = useEdscStore.getState()
 
   // Retrieve data from Redux using selectors
   const collectionsMetadata = getProjectCollectionsMetadata(state)

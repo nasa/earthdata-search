@@ -42,6 +42,7 @@ module.exports = {
   // Skips files from running tests
   testPathIgnorePatterns: [
     'mocks.js',
+    'mocks.ts',
     'node_modules',
     '/tests'
   ],

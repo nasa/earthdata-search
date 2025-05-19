@@ -44,7 +44,6 @@ describe('updateStore', () => {
           temporal: {}
         }
       },
-      shapefile: {},
       timeline: {
         query: {
           center: 1676443651000,
@@ -127,7 +126,6 @@ describe('updateStore', () => {
           },
           granule: { pageNum: 1 }
         },
-        shapefile: {},
         timeline: {
           query: {
             center: 1676443651000,
@@ -222,7 +220,6 @@ describe('updateStore', () => {
           },
           granule: { pageNum: 1 }
         },
-        shapefile: {},
         timeline: {
           query: {
             center: 1676443651000,

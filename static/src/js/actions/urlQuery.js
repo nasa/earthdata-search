@@ -78,8 +78,7 @@ export const updateStore = ({
       query: {
         ...query,
         collectionSortPreference
-      },
-      shapefile
+      }
     }))
 
     useEdscStore.setState((zustandState) => ({
@@ -90,6 +89,10 @@ export const updateStore = ({
           ...zustandState.map.mapView,
           ...mapView
         }
+      },
+      shapefile: {
+        ...zustandState.shapefile,
+        ...shapefile
       },
       timeline: {
         ...zustandState.timeline,

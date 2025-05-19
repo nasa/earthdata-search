@@ -58,8 +58,6 @@ export const mapStateToProps = (state) => ({
   projectFacets: state.facetsParams.cmr.project_h,
   query: state.query,
   scienceKeywordFacets: state.facetsParams.cmr.science_keywords_h,
-  selectedFeatures: state.shapefile.selectedFeatures,
-  shapefileId: state.shapefile.shapefileId,
   paramCollectionSortKey: getCollectionSortKeyParameter(state),
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
@@ -84,6 +82,8 @@ export const UrlQueryContainer = (props) => {
   // Pull out values we have migrated to Zustand that are no longer passed as props
   const zustandValues = useEdscStore((state) => ({
     mapView: state.map.mapView,
+    selectedFeatures: state.shapefile.selectedFeatures,
+    shapefileId: state.shapefile.shapefileId,
     timelineQuery: state.timeline.query
   }))
 

@@ -7,6 +7,7 @@ import EDSCEchoform from '@edsc/echoforms'
 // @ts-expect-error: This file does not have types
 import { mbr } from '@edsc/geo-utils'
 
+import useEdscStore from '../../zustand/useEdscStore'
 import {
   Spatial,
   Temporal,
@@ -16,7 +17,7 @@ import {
 import './EchoForm.scss'
 import '@edsc/echoforms/dist/styles.css'
 
-interface EchoFormProps {
+export interface EchoFormProps {
   /** The collection ID */
   collectionId: string
   /** The form xml */
@@ -25,8 +26,6 @@ interface EchoFormProps {
   methodKey: string
   /** The raw EchoForms model */
   rawModel?: string | null
-  /** The shapefile ID, if applied */
-  shapefileId?: string | null
   /** The spatial object, if applied */
   spatial: Spatial
   /** The temporal object, if applied */
@@ -61,7 +60,6 @@ export const EchoForm: React.FC<EchoFormProps> = ({
   form,
   methodKey,
   rawModel = null,
-  shapefileId = null,
   spatial,
   temporal,
   ursProfile,
@@ -176,6 +174,7 @@ export const EchoForm: React.FC<EchoFormProps> = ({
   }, [spatial, temporal])
 
   // EDSCEchoforms doesn't care about the shapefileId, just is there a shapefileId or not
+  const shapefileId = useEdscStore((state) => state.shapefile.shapefileId)
   const hasShapefile = !!shapefileId
 
   return (

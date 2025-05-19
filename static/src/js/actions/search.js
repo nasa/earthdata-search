@@ -135,7 +135,11 @@ export const removeSpatialFilter = () => (dispatch) => {
   }))
 
   dispatch(actions.toggleDrawingNewLayer(false))
-  dispatch(actions.clearShapefile())
+
+  const zustandState = useEdscStore.getState()
+  const { shapefile } = zustandState
+  const { clearShapefile } = shapefile
+  clearShapefile()
 }
 
 export const removeTemporalFilter = () => (dispatch) => {

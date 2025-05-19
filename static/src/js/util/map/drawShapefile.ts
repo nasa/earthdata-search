@@ -22,11 +22,13 @@ import { eventEmitter } from '../../events/events'
 
 import { mapEventTypes } from '../../constants/eventTypes'
 import spatialTypes from '../../constants/spatialTypes'
+
 import {
   ProjectionCode,
   Query,
-  Shapefile
+  ShapefileFile
 } from '../../types/sharedTypes'
+import { ShapefileSlice } from '../../zustand/types'
 
 const MAX_POLYGON_SIZE = 50
 
@@ -126,7 +128,7 @@ const drawShapefile = ({
   /** The currently selected features */
   selectedFeatures?: string[] | null
   /** The shapefile to draw */
-  shapefile: File
+  shapefile: ShapefileFile
   /** Callback to update the query */
   onChangeQuery: (query: Query) => void
   /** Callback to update the map projection */
@@ -137,8 +139,7 @@ const drawShapefile = ({
   /** Callback to toggle the too many points modal */
   onToggleTooManyPointsModal: (isOpen: boolean) => void
   /** Callback to update the shapefile */
-  // eslint-disable-next-line no-shadow
-  onUpdateShapefile: (shapefile: Partial<Shapefile>) => void
+  onUpdateShapefile: ShapefileSlice['shapefile']['updateShapefile']
   /** The current map projection */
   projectionCode: keyof typeof crsProjections
   /** If the shapefile was just added */

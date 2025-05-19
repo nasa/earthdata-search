@@ -12,10 +12,10 @@ import {
 import findShapefileFeature from './findShapefileFeature'
 import {
   Query,
-  Shapefile,
   SpatialQueryType,
   SpatialSearch
 } from '../../../types/sharedTypes'
+import { ShapefileSlice } from '../../../zustand/types'
 
 /**
  * Handle the click event on a shapefile feature
@@ -44,10 +44,9 @@ const onClickShapefile = ({
   /** Function to update the query */
   onChangeQuery: (query: Query) => void
   /** Function to update the shapefile */
-  // eslint-disable-next-line no-shadow
-  onUpdateShapefile: (shapefile: Partial<Shapefile>) => void
+  onUpdateShapefile: ShapefileSlice['shapefile']['updateShapefile']
   /** The current shapefile state */
-  shapefile: Shapefile
+  shapefile: ShapefileSlice['shapefile']
   /** The source of the spatial drawing layer */
   spatialDrawingSource: VectorSource
   /** The current spatial search state */
@@ -83,6 +82,7 @@ const onClickShapefile = ({
   let selectedFeatures
 
   const { selectedFeatures: currentSelectedFeatures = [] } = shapefile
+  const updatedSelectedFeatures = [...currentSelectedFeatures]
 
   const currentQuery = {
     boundingBox: spatialSearch.boundingBoxSearch,
@@ -110,7 +110,7 @@ const onClickShapefile = ({
     }
 
     // Add the feature to the selectedFeatures
-    selectedFeatures = currentSelectedFeatures.concat(edscId)
+    selectedFeatures = updatedSelectedFeatures.concat(edscId)
   } else {
     // Remove the feature from the existing spatial query
     const queryIndex = currentQuery[queryType]?.indexOf(queryValue) || -1
@@ -118,9 +118,9 @@ const onClickShapefile = ({
     query = currentQuery
 
     // Remove the feature from the selectedFeatures
-    const featuresIndex = currentSelectedFeatures.indexOf(edscId)
-    currentSelectedFeatures.splice(featuresIndex, 1)
-    selectedFeatures = currentSelectedFeatures
+    const featuresIndex = updatedSelectedFeatures.indexOf(edscId)
+    updatedSelectedFeatures.splice(featuresIndex, 1)
+    selectedFeatures = updatedSelectedFeatures
   }
 
   onChangeQuery({

@@ -5,7 +5,6 @@ import actions from '../index'
 import { updateCollectionQuery } from '../search'
 import {
   CLEAR_FILTERS,
-  CLEAR_SHAPEFILE,
   REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   TOGGLE_DRAWING_NEW_LAYER,
   UPDATE_COLLECTION_QUERY,
@@ -443,6 +442,13 @@ describe('removeSpatialFilter', () => {
       }
     })
 
+    const clearShapefileMock = jest.fn()
+    useEdscStore.setState({
+      shapefile: {
+        clearShapefile: clearShapefileMock
+      }
+    })
+
     // Call the dispatch
     store.dispatch(actions.removeSpatialFilter())
 
@@ -465,9 +471,8 @@ describe('removeSpatialFilter', () => {
       payload: false
     })
 
-    expect(storeActions[3]).toEqual({
-      type: CLEAR_SHAPEFILE
-    })
+    expect(clearShapefileMock).toHaveBeenCalledTimes(1)
+    expect(clearShapefileMock).toHaveBeenCalledWith()
   })
 })
 

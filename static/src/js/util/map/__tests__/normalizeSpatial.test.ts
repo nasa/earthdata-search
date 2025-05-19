@@ -1,5 +1,12 @@
 import normalizeSpatial from '../normalizeSpatial'
 
+// @ts-expect-error The file does not have types
+import configureStore from '../../../store/configureStore'
+// @ts-expect-error The file does not have types
+import actions from '../../../actions'
+
+jest.mock('../../../store/configureStore', () => jest.fn())
+
 describe('normalizeSpatial', () => {
   describe('when the granule has no spatial information', () => {
     test('returns null', () => {
@@ -524,6 +531,59 @@ describe('normalizeSpatial', () => {
               ]
             ]
           }
+        })
+      })
+    })
+
+    describe('when the polygon has points that can not be interpolated', () => {
+      test('returns a geojson multi polygon of the original points and logs the error', () => {
+        const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => {})
+        const mockDispatch = jest.fn()
+        configureStore.mockReturnValue({
+          dispatch: mockDispatch,
+          getState: () => ({})
+        })
+
+        const granule = {
+          polygons: [
+            ['-90 -180 -90 180 90 180 90 -180 -90 -180']
+          ]
+        }
+
+        const response = normalizeSpatial(granule)
+
+        expect(response).toEqual({
+          geometry: {
+            coordinates: [
+              [
+                [
+                  [-180, -90],
+                  [180, -90],
+                  [180, 90],
+                  [-180, 90],
+                  [-180, -90]
+                ]
+              ]
+            ],
+            type: 'MultiPolygon'
+          },
+          properties: {},
+          type: 'Feature'
+        })
+
+        expect(handleErrorMock).toHaveBeenCalledTimes(2)
+        expect(handleErrorMock).toHaveBeenNthCalledWith(1, {
+          action: 'interpolatePolygon',
+          error: expect.any(Error),
+          message: expect.stringContaining('Error interpolating points: start: 180,-90, end: 180,90. All coordiates: [{"lat":-90,"lng":-180},{"lat":-90,"lng":180},{"lat":90,"lng":180},{"lat":90,"lng":-180},{"lat":-90,"lng":-180}].'),
+          notificationType: 'none'
+        })
+
+        expect(handleErrorMock).toHaveBeenNthCalledWith(2, {
+          action: 'interpolatePolygon',
+          error: expect.any(Error),
+          message: expect.stringContaining('Error interpolating points: start: -180,90, end: -180,-90. All coordiates: [{"lat":-90,"lng":-180},{"lat":-90,"lng":180},{"lat":90,"lng":180},{"lat":90,"lng":-180},{"lat":-90,"lng":-180}].'),
+          notificationType: 'none'
         })
       })
     })

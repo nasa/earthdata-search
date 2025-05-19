@@ -40,7 +40,6 @@ import './ProjectPanels.scss'
  * @param {Object} panels - The current panels state.
  * @param {Object} project - The project from the store.
  * @param {Object} spatial - The spatial from the store.
- * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Object} projectCollection - The project collection.
  * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} onChangePath - Callback to change the path.
@@ -288,7 +287,6 @@ class ProjectPanels extends PureComponent {
       panels,
       project,
       projectCollectionsMetadata,
-      shapefileId,
       spatial,
       temporal,
       ursProfile,
@@ -594,7 +592,6 @@ class ProjectPanels extends PureComponent {
               onTogglePanels={onTogglePanels}
               onUpdateAccessMethod={onUpdateAccessMethod}
               selectedAccessMethod={selectedAccessMethod}
-              shapefileId={shapefileId}
               spatial={spatial}
               temporal={preferredTemporal}
               ursProfile={ursProfile}
@@ -701,10 +698,6 @@ class ProjectPanels extends PureComponent {
   }
 }
 
-ProjectPanels.defaultProps = {
-  shapefileId: null
-}
-
 ProjectPanels.propTypes = {
   dataQualitySummaries: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
@@ -735,7 +728,6 @@ ProjectPanels.propTypes = {
     })
   }).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
-  shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   temporal: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({

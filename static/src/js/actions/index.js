@@ -140,14 +140,6 @@ import {
 } from './project'
 import { getRegions } from './regions'
 import { fetchRetrieval, submitRetrieval } from './retrieval'
-import {
-  clearShapefile,
-  fetchShapefile,
-  saveShapefile,
-  shapefileErrored,
-  shapefileLoading,
-  updateShapefile
-} from './shapefiles'
 import { fetchRetrievalCollection } from './retrievalCollection'
 import { updateProjectName, updateSavedProject } from './savedProject'
 import { handleAlert } from './alerts'
@@ -219,7 +211,6 @@ const actions = {
   clearFilters,
   clearFocusedCollectionGranuleFilters,
   clearGranuleFilters,
-  clearShapefile,
   collectionRelevancyMetrics,
   createSubscription,
   deleteAutocompleteValue,
@@ -237,7 +228,6 @@ const actions = {
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
-  fetchShapefile,
   generateNotebook,
   getCollections,
   getColorMap,
@@ -266,7 +256,6 @@ const actions = {
   removeTemporalFilter,
   requeueOrder,
   restoreProject,
-  saveShapefile,
   selectAccessMethod,
   selectAutocompleteSuggestion,
   setActivePanel,
@@ -281,8 +270,6 @@ const actions = {
   setPreferences,
   setPreferencesFromJwt,
   setUserFromJwt,
-  shapefileErrored,
-  shapefileLoading,
   submitRetrieval,
   toggleAboutCSDAModal,
   toggleAboutCwicModal,
@@ -332,7 +319,6 @@ const actions = {
   updateAdminProjectsSortKey,
   updateRegionQuery,
   updateSavedProject,
-  updateShapefile,
   updateStore,
   updateSubscription,
   updateSubscriptionDisabledFields,

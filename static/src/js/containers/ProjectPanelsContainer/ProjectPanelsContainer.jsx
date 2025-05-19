@@ -23,7 +23,6 @@ export const mapStateToProps = (state) => ({
   panels: state.panels,
   project: state.project,
   projectCollectionsMetadata: getProjectCollectionsMetadata(state),
-  shapefileId: state.shapefile.shapefileId,
   spatial: state.query.collection.spatial,
   temporal: state.query.collection.temporal,
   ursProfile: getUrsProfile(state)
@@ -108,7 +107,6 @@ export const ProjectPanelsContainer = ({
   panels,
   project,
   projectCollectionsMetadata,
-  shapefileId,
   spatial,
   temporal,
   ursProfile,
@@ -137,7 +135,6 @@ export const ProjectPanelsContainer = ({
     panels={panels}
     project={project}
     projectCollectionsMetadata={projectCollectionsMetadata}
-    shapefileId={shapefileId}
     spatial={spatial}
     temporal={temporal}
     ursProfile={ursProfile}
@@ -147,7 +144,6 @@ export const ProjectPanelsContainer = ({
 
 ProjectPanelsContainer.defaultProps = {
   granulesQueries: {},
-  shapefileId: null,
   temporal: {},
   overrideTemporal: {}
 }
@@ -175,7 +171,6 @@ ProjectPanelsContainer.propTypes = {
   panels: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
-  shapefileId: PropTypes.string,
   spatial: PropTypes.shape({}).isRequired,
   temporal: PropTypes.shape({}),
   ursProfile: PropTypes.shape({

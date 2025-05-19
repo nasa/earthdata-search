@@ -1,5 +1,10 @@
 import { StateCreator } from 'zustand'
-import { ProjectionCode, TimelineIntervals } from '../types/sharedTypes'
+
+import {
+  ProjectionCode,
+  ShapefileFile,
+  TimelineIntervals
+} from '../types/sharedTypes'
 
 export type HomeSlice = {
   /** The Home Slice of the store */
@@ -57,6 +62,64 @@ export type MapSlice = {
     showMbr: boolean
     /** Function to set the showMbr value */
     setShowMbr: (showMbr: boolean) => void
+  }
+}
+
+type UpdateShapefileProps = {
+  /** The shapefile id */
+  shapefileId?: string
+  /** The shapefile name */
+  shapefileName?: string
+  /** The shapefile size */
+  shapefileSize?: string
+  /** The selected features of the shapefile */
+  selectedFeatures?: string[]
+  /** The shapefile contents */
+  file?: ShapefileFile
+}
+
+type SaveShapefileProps = {
+  /** The user's authToken */
+  authToken: string
+  /** The shapefile filename */
+  filename: string
+  /** The shapefile size */
+  size: string
+  /** The shapefile contents */
+  file: ShapefileFile
+}
+
+export type ShapefileSlice = {
+  /** The Shapefile Slice of the store */
+  shapefile: {
+    /** Flag to show the shapefile loading */
+    isLoading: boolean
+    /** Flag to show the shapefile loaded */
+    isLoaded: boolean
+    /** Flag to show the shapefile errored */
+    isErrored: boolean | { message: string }
+    /** The shapefile contents */
+    file?: ShapefileFile
+    /** The selected features of the shapefile */
+    selectedFeatures?: string[]
+    /** The shapefile id */
+    shapefileId?: string
+    /** The shapefile name */
+    shapefileName?: string
+    /** The shapefile size */
+    shapefileSize?: string
+    /** Function to set the shapefile loading */
+    setLoading: (shapefileName?: string) => void
+    /** Function to set the shapefile errored */
+    setErrored: (message: string) => void
+    /** Function to update the shapefile */
+    updateShapefile: (data: UpdateShapefileProps) => void
+    /** Function to clear the shapefile */
+    clearShapefile: () => void
+    /** Function to save the shapefile */
+    saveShapefile: (data: SaveShapefileProps) => Promise<void>
+    /** Function to fetch the shapefile */
+    fetchShapefile: (shapefileId: string) => Promise<void>
   }
 }
 
@@ -128,6 +191,7 @@ export type UiSlice = {
 export type EdscStore =
   HomeSlice
   & MapSlice
+  & ShapefileSlice
   & TimelineSlice
   & UiSlice
 
