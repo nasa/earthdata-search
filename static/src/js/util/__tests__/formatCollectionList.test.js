@@ -145,7 +145,7 @@ describe('formatCollectionList', () => {
 
     const expectedResult = {
       temporalEnd: 'ongoing',
-      temporalRange: '2019-01-14 ongoing',
+      temporalRange: '2019-01-14 to Present',
       temporalStart: '2019-01-14'
     }
 
@@ -300,7 +300,7 @@ describe('formatCollectionList', () => {
 
       const expectedResult = {
         temporalEnd: 'ongoing',
-        temporalRange: '2019-01-14 ongoing',
+        temporalRange: '2019-01-14 to Present',
         temporalStart: '2019-01-14'
       }
 
