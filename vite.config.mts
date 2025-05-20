@@ -5,10 +5,12 @@ import { ViteEjsPlugin } from 'vite-plugin-ejs'
 import { nodePolyfills } from 'vite-plugin-node-polyfills'
 import { resolve } from 'path'
 import istanbul from 'vite-plugin-istanbul'
+import { imagetools } from 'vite-imagetools'
 
 import availablePortals from './portals/availablePortals.json'
 
 import { getApplicationConfig } from './sharedUtils/config'
+import { preloadImagePlugin } from './vite_plugins/preloadImagePlugin'
 
 const {
   analytics,
@@ -62,7 +64,9 @@ export default defineConfig({
     }),
     svgr({
       include: '**/*.svg?react'
-    })
+    }),
+    imagetools(),
+    preloadImagePlugin()
   ],
   css: {
     devSourcemap: true,

@@ -225,6 +225,7 @@
     "tiny-cookie": "^2.5.1",
     "uuid": "^8.3.2",
     "vite": "^6.2.5",
+    "vite-imagetools": "^7.1.0",
     "vite-plugin-ejs": "^1.7.0",
     "vite-plugin-istanbul": "^7.0.0",
     "vite-plugin-node-polyfills": "^0.23.0",

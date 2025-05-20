@@ -7,8 +7,8 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 import './OverrideTemporalModal.scss'
 
-import focusedImage from '../../../assets/images/blue-bars-circle.png'
-import temporalImage from '../../../assets/images/orange-bars-circle.png'
+import focusedImage from '../../../assets/images/blue-bars-circle.png?format=webp'
+import temporalImage from '../../../assets/images/orange-bars-circle.png?format=webp'
 import { Query } from '../../types/sharedTypes'
 
 interface OverrideTemporalModalProps {

@@ -49,23 +49,29 @@ import topicIconSolidEarth from '~Images/homepage-topic-icons/solid-earth-icon.s
 import topicIconSunEarthInteractions from '~Images/homepage-topic-icons/sun-earth-interactions-icon.svg'
 import topicIconTerrestrialHydrosphere from '~Images/homepage-topic-icons/terrestrial-hydrosphere-icon.svg'
 
-import heroImg800 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600.jpg'
-import heroImg8002x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600@2x.jpg'
-import heroImg1280 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720.jpg'
-import heroImg12802x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1280x720@2x.jpg'
-import heroImg1920 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080.jpg'
-import heroImg19202x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-1920x1080@2x.jpg'
-import heroImg2560 from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440.jpg'
-import heroImg25602x from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x.jpg'
+// @ts-expect-error: Types do not exist for this file
+import heroImgSourcesSmall from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-800x600@2x.jpg?format=webp&w=800;1600'
+// @ts-expect-error: Types do not exist for this file
+import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In-Atlantic-2560x1440@2x.jpg?format=webp&w=1280;1920;2560;3840;5120'
 
 // @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
+
+import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
 
+const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
+  [...heroImgSourcesSmall, ...heroImgSources]
+)
+
+let preloaded = false
 const preloadRoutes = () => {
+  if (preloaded) return
+  preloaded = true
+
   // @ts-expect-error: Types are not defined in this file
   import('../Search/Search')
   // @ts-expect-error: Types are not defined in this file
@@ -179,10 +185,12 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
     // This event listener is used to load the Search and Map components
     // when the DOM is ready which helps prevent a flash of white when the
     // page loads.
-    document.addEventListener('DOMContentLoaded', preloadRoutes)
+    document.addEventListener('mouseover', preloadRoutes)
+    document.addEventListener('keydown', preloadRoutes)
 
     return () => {
-      document.removeEventListener('DOMContentLoaded', preloadRoutes)
+      document.removeEventListener('mouseover', preloadRoutes)
+      document.removeEventListener('keydown', preloadRoutes)
     }
   }, [])
 
@@ -213,25 +221,10 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
           className="home__hero position-relative w-100 d-flex px-5 flex-column justify-content-center flex-shrink-0 gap-5"
         >
           <picture className="home__hero-image position-absolute">
-            <source
-              srcSet={`${heroImg2560}, ${heroImg25602x} 2x`}
-              media="(min-width: 1200px)"
-            />
-            <source
-              srcSet={`${heroImg1920}, ${heroImg19202x} 2x`}
-              media="(min-width: 992px)"
-            />
-            <source
-              srcSet={`${heroImg1280}, ${heroImg12802x} 2x`}
-              media="(min-width: 768px)"
-            />
-            <source
-              srcSet={`${heroImg800}, ${heroImg8002x} 2x`}
-              media="(max-width: 767px)"
-            />
             {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
             <img
-              src={heroImg800}
+              srcSet={preloadSrcSet}
+              sizes={preloadSizes}
               alt="Swirls of cloud are visible in the Atlantic Ocean near Cabo Verde in this true-color corrected reflectance image from the Moderate Resolution Imaging Spectroradiometer (MODIS) aboard the Terra platform on March 12, 2025"
             />
           </picture>

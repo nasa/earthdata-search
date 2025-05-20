@@ -13,7 +13,7 @@ import {
 import { ToastProvider } from 'react-toast-notifications'
 import { Helmet } from 'react-helmet'
 
-import ogImage from '../assets/images/earthdata-search-og-image.jpg'
+import ogImage from '../assets/images/earthdata-search-og-image.jpg?format=webp'
 import configureStore from './store/configureStore'
 import history from './util/history'
 import { getApplicationConfig, getEnvironmentConfig } from '../../../sharedUtils/config'

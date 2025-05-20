@@ -22,7 +22,7 @@ export const usePortalLogo = (portalId) => {
     try {
       // Attempt to import a portal logo. If one exists, set the state value to
       // to the url for the image.
-      const logo = await import(`../../../../portals/${portalId}/images/logo.png`)
+      const logo = await import(`../../../../portals/${portalId}/images/logo.png?h=56&format=webp`)
       const { default: imgSrc } = logo
       setPortalLogoSrc(imgSrc)
     } catch {
