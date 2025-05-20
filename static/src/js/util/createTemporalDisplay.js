@@ -43,7 +43,7 @@ export const createTemporalDisplay = (temporal) => {
   }
 
   if (startDate && !endDate) {
-    selectedTemporalDisplay = `${startDateDisplay} ongoing`
+    selectedTemporalDisplay = `${startDateDisplay} to Present`
   }
 
   if (endDate && !startDate) {
