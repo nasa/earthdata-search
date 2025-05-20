@@ -374,7 +374,7 @@ test.describe('Path /search/granules/collection-details', () => {
       testGranulesSidebar(page, 5, granuleHits)
 
       // Check temporal time
-      testCollectionTemporal(page, '2003-10-26 ongoing')
+      testCollectionTemporal(page, '2003-10-26 to Present')
 
       // Check native-id
       testCollectionNativeDataFormats(page, 'netCDF-4')

@@ -87,7 +87,7 @@ test.describe('Path /search/granules/granule-details', () => {
 
     // Displays collection info in the sidebar
     await expect(page.getByTestId('collection-details-highlights__version-id')).toHaveText('1')
-    await expect(page.getByTestId('collection-details-highlights__temporal')).toHaveText('2014-04-03 ongoing')
+    await expect(page.getByTestId('collection-details-highlights__temporal')).toHaveText('2014-04-03 to Present')
     await expect(page.getByTestId('collection-details-highlights__description')).toHaveText('Sentinel-1A slant-range product')
   })
 })
