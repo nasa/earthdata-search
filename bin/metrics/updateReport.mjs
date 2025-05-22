@@ -31,6 +31,14 @@ try {
   process.exit(0)
 }
 
+// The cloc report is a different format than the other reports, reformat it to match
+// the other reports if it exists
+if (reports.clocReport) {
+  reports.clocReport = {
+    clocReport: reports.clocReport
+  }
+}
+
 // Add each value in reports to the metrics-branch/metrics.json file
 const metricsFilePath = 'metrics-branch/metrics.json'
 const metricsFileContent = fs.readFileSync(metricsFilePath, 'utf8')
@@ -45,13 +53,13 @@ const updatedMetricsFile = {
   [versionWithoutBuild]: {
     version,
     date: new Date().toISOString().split('T')[0],
-    ...metricsFile[version],
+    ...metricsFile[versionWithoutBuild],
     commit,
     ...(reports.bundleSizeReport || {}),
-    clocReport: reports.clocReport,
+    ...(reports.clocReport || {}),
     ...(reports.testCoverageReport || {}),
     performanceReport: {
-      ...(metricsFile[version]?.performanceReport || {}),
+      ...(metricsFile[versionWithoutBuild]?.performanceReport || {}),
       ...(reports.uatPerformanceReport || {}),
       ...(reports.prodPerformanceReport || {})
     }
