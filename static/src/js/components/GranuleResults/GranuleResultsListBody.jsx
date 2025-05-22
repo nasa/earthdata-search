@@ -114,7 +114,7 @@ export const GranuleResultsListBody = ({
 }) => {
   const infiniteLoaderRef = useRef(null)
   const listRef = useRef(null)
-  const sizeMap = React.useRef({})
+  const sizeMap = useRef({})
 
   // If visibleMiddleIndex is set, that means we want to scroll to a particular item. react-window
   // will immediatly render the items at the default index, which calls setVisibleIndex and resets
