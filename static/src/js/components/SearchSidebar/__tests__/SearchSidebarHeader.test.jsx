@@ -28,8 +28,8 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 )))
 
 // Use virtual mocks of modules that don't exist anywhere in the system
-jest.mock('../../../../../../portals/testPortal/images/logo.png', () => ('testPortal_logo_path'), { virtual: true })
-jest.mock('../../../../../../portals/testPortal2/images/logo.png', () => ('testPortal2_logo_path'), { virtual: true })
+jest.mock('../../../../../../portals/testPortal/images/logo.png?h=56&format=webp', () => ('testPortal_logo_path'), { virtual: true })
+jest.mock('../../../../../../portals/testPortal2/images/logo.png?h=56&format=webp', () => ('testPortal2_logo_path'), { virtual: true })
 
 function setup(overrideProps) {
   const props = {

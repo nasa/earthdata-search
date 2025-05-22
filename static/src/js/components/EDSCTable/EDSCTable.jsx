@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, {
   createContext,
   forwardRef,
@@ -72,6 +71,7 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
                     return (
                       <div
                         key={key}
+                        // eslint-disable-next-line react/jsx-props-no-spreading
                         {...headerGroupRest}
                         style={trStyle}
                         className="edsc-table__tr"
@@ -94,6 +94,7 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
                             return (
                               <div
                                 key={headerKey}
+                                // eslint-disable-next-line react/jsx-props-no-spreading
                                 {...headerRest}
                                 className={thClassNames}
                               >
@@ -109,6 +110,7 @@ const innerElementType = forwardRef(({ children, ...rest }, ref) => {
               </div>
               <div
                 ref={ref}
+                // eslint-disable-next-line react/jsx-props-no-spreading
                 {...tableBodyRest}
                 style={tableBodyStyle}
                 className="edsc-table__tbody"
@@ -379,6 +381,7 @@ const EDSCTable = ({
       return (
         <React.Fragment key={key}>
           <div
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...rowRest}
             style={
               {
@@ -388,7 +391,9 @@ const EDSCTable = ({
             }
             className={rowClasses}
             data-testid={rowTestId}
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...rowEvents}
+            // eslint-disable-next-line react/jsx-props-no-spreading
             {...focusableProps}
             aria-labelledby={rowLabelFromState.ariaLabel}
           >
@@ -410,7 +415,12 @@ const EDSCTable = ({
                 ])
 
                 return (
-                  <div key={cellKey} {...rest} className={tdClassNames}>
+                  <div
+                    key={cellKey}
+                    // eslint-disable-next-line react/jsx-props-no-spreading
+                    {...rest}
+                    className={tdClassNames}
+                  >
                     {cell.render('Cell')}
                   </div>
                 )
@@ -426,7 +436,12 @@ const EDSCTable = ({
   const tableProps = getTableProps()
 
   return (
-    <div {...tableProps} id={id} className={tableClassName}>
+    <div
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...tableProps}
+      id={id}
+      className={tableClassName}
+    >
       <AutoSizer style={
         {
           position: 'relative',
