@@ -63,6 +63,8 @@ jest.mock('../../../actions', () => ({
   })
 }))
 
+jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
+
 jest.spyOn(history, 'push')
 
 const mockProps = {
@@ -87,10 +89,6 @@ const setup = (props = mockProps) => {
 
   return { user }
 }
-
-beforeEach(() => {
-  jest.clearAllMocks()
-})
 
 // TODO: Add tests for the spatial and temporal dropdowns
 
