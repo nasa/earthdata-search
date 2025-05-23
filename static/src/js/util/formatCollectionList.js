@@ -48,7 +48,7 @@ export const formatCollectionList = (collections, metadata, projectIds = []) => 
 
           temporalRange = `${dateStart} to Present`
           temporalStart = dateStart
-          temporalEnd = 'ongoing'
+          temporalEnd = 'Present'
         } catch (error) {
           parseError(error)
         }
