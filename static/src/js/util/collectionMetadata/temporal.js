@@ -26,7 +26,7 @@ export const parseTemporal = (metadata) => {
     return singleDateTimes.map((dateTime) => {
       const date = getDaysFromIsoDate(dateTime)
 
-      return endsAtPresentFlag ? `${date} ongoing` : date
+      return endsAtPresentFlag ? `${date} to Present` : date
     })
   }
 
@@ -44,7 +44,7 @@ export const parseTemporal = (metadata) => {
 
         // If the ending date time is empty, we know that this is an ongoing dataset
         if (endsAtPresentFlag || endingDateTime === '') {
-          return `${beginningDateTime} ongoing`
+          return `${beginningDateTime} to Present`
         }
 
         // Otherwise, we know that this is a range

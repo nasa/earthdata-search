@@ -45,7 +45,7 @@ describe('parseTemporal', () => {
       ]
     }
 
-    expect(parseTemporal(metadata)).toEqual([['2023-01-01 ongoing']])
+    expect(parseTemporal(metadata)).toEqual([['2023-01-01 to Present']])
   })
 
   test('returns "Not available" for invalid temporalRangeType', () => {
@@ -81,12 +81,12 @@ describe('parseTemporal', () => {
         Unit: 'Minute'
       }
     }
-    expect(parseTemporal(json)).toEqual(['1990-07-01 ongoing', '1995-07-01 ongoing', '2000-07-01 ongoing'])
+    expect(parseTemporal(json)).toEqual(['1990-07-01 to Present', '1995-07-01 to Present', '2000-07-01 to Present'])
   })
 })
 
 describe('buildTemporal', () => {
-  test('parses temporalExtents correctly for single date time that is not ongoing', () => {
+  test('parses temporalExtents correctly for single date time that is not to Present', () => {
     const json = {
       temporalExtents: [
         {
@@ -104,7 +104,7 @@ describe('buildTemporal', () => {
     expect(buildTemporal(json)).toEqual(['2018-10-13 to 2020-11-13'])
   })
 
-  test('parses temporalExtents correctly for single date time that is ongoing', () => {
+  test('parses temporalExtents correctly for single date time that is to Present', () => {
     const json = {
       temporalExtents: [
         {
@@ -119,7 +119,7 @@ describe('buildTemporal', () => {
       ]
     }
 
-    expect(buildTemporal(json)).toEqual(['2018-10-13 ongoing'])
+    expect(buildTemporal(json)).toEqual(['2018-10-13 to Present'])
   })
 
   test('parses temporalExtents correctly for multiple entries', () => {
@@ -155,7 +155,7 @@ describe('buildTemporal', () => {
     expect(buildTemporal(json)).toEqual([
       '2018-01-01 to 2022-01-01',
       '2023-01-01 to 2023-12-31',
-      '2024-01-01 ongoing'
+      '2024-01-01 to Present'
     ])
   })
 

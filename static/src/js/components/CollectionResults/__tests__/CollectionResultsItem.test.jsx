@@ -252,12 +252,12 @@ describe('CollectionResultsList component', () => {
         setup({
           collectionMetadata: {
             ...collectionListItemProps.collectionMetadata,
-            temporalRange: '2010-10-10 ongoing'
+            temporalRange: '2010-10-10 to Present'
           }
         })
 
         await waitFor(() => {
-          expect(screen.getByText('2010-10-10 ongoing')).toBeInTheDocument()
+          expect(screen.getByText('2010-10-10 to Present')).toBeInTheDocument()
         })
       })
 

@@ -46,9 +46,9 @@ export const formatCollectionList = (collections, metadata, projectIds = []) => 
         try {
           const dateStart = new Date(timeStart).toISOString().split('T')[0]
 
-          temporalRange = `${dateStart} ongoing`
+          temporalRange = `${dateStart} to Present`
           temporalStart = dateStart
-          temporalEnd = 'ongoing'
+          temporalEnd = 'Present'
         } catch (error) {
           parseError(error)
         }

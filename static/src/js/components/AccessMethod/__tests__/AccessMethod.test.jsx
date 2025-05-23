@@ -940,7 +940,7 @@ describe('AccessMethod component', () => {
               }
             })
 
-            expect(screen.getByText('Selected Range:2008-06-27 00:00:00 ongoing')).toBeInTheDocument()
+            expect(screen.getByText('Selected Range:2008-06-27 00:00:00 to Present')).toBeInTheDocument()
           })
 
           describe('when only an end date is set', () => {
