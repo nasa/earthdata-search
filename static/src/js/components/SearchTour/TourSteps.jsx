@@ -15,7 +15,7 @@ import {
 import ExternalLink from '../ExternalLink/ExternalLink'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Button from '../Button/Button'
-import TourThumbnail from '../../../assets/images/tour-video-thumbnail.png'
+import TourThumbnail from '../../../assets/images/tour-video-thumbnail.png?format=webp'
 
 import './SearchTour.scss'
 

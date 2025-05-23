@@ -94,7 +94,9 @@ test.describe('History', () => {
 
     await login(context)
 
+    const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
     await page.goto('/search')
+    await initialMapPromise
   })
 
   test.describe('when pressing the back button', () => {
@@ -206,13 +208,17 @@ test.describe('History', () => {
       await expect(page).toHaveURL(/projectId=9452013926/)
 
       // Download the data
+      const retrievalsPromise = page.waitForResponse(/retrievals\/\d+/)
       await page.getByRole('button', { name: 'Download project data' }).click()
+      await retrievalsPromise
 
       // Expect the link to be on the download page
       await expect(page.getByRole('link', { name: downloadLinks[0] })).toBeVisible()
 
       // Click the Back to Project button
+      const projectsPromise = page.waitForResponse(/projects\/\d+/)
       await page.getByRole('button', { name: 'Back to Project' }).click()
+      await projectsPromise
 
       // Expect the download button to be enabled (everything was reloaded)
       await expect(page.getByRole('button', { name: 'Download project data' })).toBeEnabled()

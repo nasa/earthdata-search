@@ -1,167 +1,127 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import Enzyme, { mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import axios from 'axios'
-import { act } from 'react-dom/test-utils'
-
-import { VariableSizeList as List } from 'react-window'
+import { waitFor } from '@testing-library/react'
 
 import CollectionResultsList from '../CollectionResultsList'
-import CollectionResultsItem from '../CollectionResultsItem'
 
-import Skeleton from '../../Skeleton/Skeleton'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import CollectionResultsListItem from '../CollectionResultsListItem'
 
-import configureStore from '../../../store/configureStore'
-
-Enzyme.configure({ adapter: new Adapter() })
-jest.mock('../../../../assets/images/image-unavailable.svg', () => 'test-file-stub')
-jest.mock('axios')
-
-const originalOffsetHeight = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetHeight')
-const originalOffsetWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth')
-
-beforeEach(() => {
-  jest.clearAllMocks()
-
-  // The AutoSizer requires that the offsetHeight and offsetWidth properties are set
-  Object.defineProperty(HTMLElement.prototype, 'offsetHeight', {
-    configurable: true,
-    value: 500
-  })
-
-  Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
-    configurable: true,
-    value: 800
-  })
-})
-
-afterEach(() => {
-  Object.defineProperty(HTMLElement.prototype, 'offsetHeight', originalOffsetHeight)
-  Object.defineProperty(HTMLElement.prototype, 'offsetWidth', originalOffsetWidth)
-})
-
-const defaultProps = {
-  collectionsMetadata: [{
-    datasetId: 'Collection Title 1',
-    collectionId: 'collectionId1'
-  }, {
-    datasetId: 'Collection Title 2',
-    collectionId: 'collectionId2'
-  }],
-  itemCount: 2,
-  isItemLoaded: jest.fn(),
-  loadMoreItems: jest.fn(),
-  onAddProjectCollection: jest.fn(),
-  onMetricsAddCollectionProject: jest.fn(),
-  onRemoveCollectionFromProject: jest.fn(),
-  onViewCollectionGranules: jest.fn(),
-  onViewCollectionDetails: jest.fn(),
-  setVisibleMiddleIndex: jest.fn(),
-  visibleMiddleIndex: 1
-}
-
-const store = configureStore()
-
-function setup(propsOverride = {}) {
-  const props = {
-    ...defaultProps,
-    ...propsOverride
+// Mock React.memo, which is wrapping the CollectionResultsListItem. This allows us to mock
+// the component.
+jest.mock('react', () => (
+  {
+    ...(jest.requireActual('react')),
+    memo: (fn) => fn
   }
+))
 
-  const enzymeWrapper = mount(
-    <Provider store={store}>
-      <CollectionResultsList {...props} />
-    </Provider>
-  )
+// Mock the CollectionResultsListItem component to allow us to test props passed to it
+jest.mock('../CollectionResultsListItem', () => jest.fn().mockImplementation(
+  jest.requireActual('../CollectionResultsListItem').CollectionResultsListItem
+))
 
-  return {
-    enzymeWrapper,
-    props
+// Mock AutoSizer to return a fixed height and width (jsdom doesn't have sizes)
+jest.mock('react-virtualized-auto-sizer', () => ({ children }) => children({
+  height: 600,
+  width: 600
+}))
+
+// Mock PortalFeatureContainer to return its children so we don't have to mock Redux
+jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => jest.fn(({ children }) => <div>{children}</div>))
+
+const setup = setupTest({
+  Component: CollectionResultsList,
+  defaultProps: {
+    collectionsMetadata: [{
+      datasetId: 'Collection Title 1',
+      collectionId: 'collectionId1'
+    }, {
+      datasetId: 'Collection Title 2',
+      collectionId: 'collectionId2'
+    }],
+    itemCount: 2,
+    isItemLoaded: jest.fn().mockReturnValue(true),
+    loadMoreItems: jest.fn(),
+    onAddProjectCollection: jest.fn(),
+    onMetricsAddCollectionProject: jest.fn(),
+    onRemoveCollectionFromProject: jest.fn(),
+    onViewCollectionGranules: jest.fn(),
+    onViewCollectionDetails: jest.fn(),
+    setVisibleMiddleIndex: jest.fn(),
+    visibleMiddleIndex: 1
   }
-}
+})
 
 describe('CollectionResultsList component', () => {
-  test('renders its list correctly', () => {
-    const { enzymeWrapper } = setup()
+  test('renders its list correctly', async () => {
+    setup()
 
-    expect(enzymeWrapper.find('.collection-results-list__list').children().length).toEqual(2)
-  })
-
-  test('should pass the height and width', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(List).prop('height')).toEqual(500)
-    expect(enzymeWrapper.find(List).prop('width')).toEqual(800)
-  })
-
-  describe('loading list item', () => {
-    test('shows on first load', () => {
-      defaultProps.isItemLoaded
-        .mockReturnValueOnce(false)
-
-      const { enzymeWrapper } = setup({
-        collectionsMetadata: [],
-        itemCount: 1
-      })
-
-      expect(enzymeWrapper.find('.collection-results-list__list').children().length).toEqual(1)
-      expect(enzymeWrapper.find(Skeleton).length).toEqual(1)
+    await waitFor(() => {
+      // We only have 2 collections results, but `listRef.current.resetAfterIndex` causes
+      // more renders as items are being rendered
+      expect(CollectionResultsListItem).toHaveBeenCalledTimes(6)
     })
 
-    test('shows when additional items are being loaded', async () => {
-      axios.get.mockResolvedValue({
-        data: {
-          base64Image: 'data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg==',
-          'content-type': 'image/png'
-        }
-      })
+    expect(CollectionResultsListItem).toHaveBeenNthCalledWith(1, {
+      data: {
+        collectionsMetadata: [{
+          collectionId: 'collectionId1',
+          datasetId: 'Collection Title 1'
+        }, {
+          collectionId: 'collectionId2',
+          datasetId: 'Collection Title 2'
+        }],
+        isItemLoaded: expect.any(Function),
+        onAddProjectCollection: expect.any(Function),
+        onMetricsAddCollectionProject: expect.any(Function),
+        onRemoveCollectionFromProject: expect.any(Function),
+        onViewCollectionDetails: expect.any(Function),
+        onViewCollectionGranules: expect.any(Function),
+        setSize: expect.any(Function),
+        windowHeight: 600,
+        windowWidth: 600
+      },
+      index: 0,
+      isScrolling: undefined,
+      style: {
+        height: 162,
+        left: 0,
+        position: 'absolute',
+        right: undefined,
+        top: 0,
+        width: '100%'
+      }
+    }, {})
 
-      const isItemLoadedMock = jest.fn((index) => {
-        if (index === 2) return false
-
-        return true
-      })
-      let enzymeWrapperRef
-
-      await act(async () => {
-        const { enzymeWrapper } = setup({
-          itemCount: 3,
-          isItemLoaded: isItemLoadedMock
-        })
-        enzymeWrapperRef = enzymeWrapper
-      })
-
-      enzymeWrapperRef.update()
-      expect(enzymeWrapperRef.find('.collection-results-list__list').children().length).toEqual(3)
-
-      expect(enzymeWrapperRef.find(CollectionResultsItem).length).toEqual(2)
-      expect(enzymeWrapperRef.find('.collection-results-list__list').text()).toContain('Collection Title 1')
-      expect(enzymeWrapperRef.find('.collection-results-list__list').text()).toContain('Collection Title 2')
-      expect(enzymeWrapperRef.find(Skeleton).length).toEqual(1)
-    })
-
-    test('does not show the loading item when items are loaded', async () => {
-      const isItemLoadedMock = jest.fn()
-        .mockReturnValue(true)
-
-      let enzymeWrapperRef
-
-      await act(async () => {
-        const { enzymeWrapper } = setup({
-          itemCount: 2,
-          isItemLoaded: isItemLoadedMock
-        })
-        enzymeWrapperRef = enzymeWrapper
-      })
-
-      enzymeWrapperRef.update()
-
-      expect(enzymeWrapperRef.find('.collection-results-list__list').children().length).toEqual(2)
-      expect(enzymeWrapperRef.find(CollectionResultsItem).length).toEqual(2)
-      expect(enzymeWrapperRef.find('.collection-results-list__list').text()).toContain('Collection Title 1')
-      expect(enzymeWrapperRef.find('.collection-results-list__list').text()).toContain('Collection Title 2')
-      expect(enzymeWrapperRef.find(Skeleton).length).toEqual(0)
-    })
+    expect(CollectionResultsListItem).toHaveBeenNthCalledWith(2, {
+      data: {
+        collectionsMetadata: [{
+          collectionId: 'collectionId1',
+          datasetId: 'Collection Title 1'
+        }, {
+          collectionId: 'collectionId2',
+          datasetId: 'Collection Title 2'
+        }],
+        isItemLoaded: expect.any(Function),
+        onAddProjectCollection: expect.any(Function),
+        onMetricsAddCollectionProject: expect.any(Function),
+        onRemoveCollectionFromProject: expect.any(Function),
+        onViewCollectionDetails: expect.any(Function),
+        onViewCollectionGranules: expect.any(Function),
+        setSize: expect.any(Function),
+        windowHeight: 600,
+        windowWidth: 600
+      },
+      index: 1,
+      isScrolling: undefined,
+      style: {
+        height: 162,
+        left: 0,
+        position: 'absolute',
+        right: undefined,
+        top: 162,
+        width: '100%'
+      }
+    }, {})
   })
 })
