@@ -6,6 +6,18 @@ import {
   TimelineIntervals
 } from '../types/sharedTypes'
 
+export type EarthdataDownloadRedirectSlice = {
+  /** The Earthdata Download Redirect Slice of the store */
+  earthdataDownloadRedirect: {
+    /** The redirect URL for earthdata download */
+    redirect: string
+    /** Function to set the redirect URL */
+    setRedirect: (redirect: string) => void
+    /** Function to clear the redirect URL */
+    clearRedirect: () => void
+  }
+}
+
 export type HomeSlice = {
   /** The Home Slice of the store */
   home: {
@@ -190,6 +202,7 @@ export type UiSlice = {
 
 export type EdscStore =
   HomeSlice
+  & EarthdataDownloadRedirectSlice
   & MapSlice
   & ShapefileSlice
   & TimelineSlice
