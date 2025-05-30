@@ -16,7 +16,6 @@ describe('EarthdataDownloadRedirectContainer', () => {
   const { replace } = window.location
 
   afterEach(() => {
-    jest.clearAllMocks()
     window.location.replace = replace
   })
 
@@ -31,5 +30,23 @@ describe('EarthdataDownloadRedirectContainer', () => {
 
     expect(window.location.replace).toHaveBeenCalledTimes(1)
     expect(window.location.replace).toHaveBeenCalledWith('earthdata-download://authCallback')
+  })
+
+  test('does not redirect if no redirect URL is provided', () => {
+    delete window.location
+    window.location = { replace: jest.fn() }
+
+    setup({
+      overrideZustandState: {
+        earthdataDownloadRedirect: {
+          redirect: ''
+        }
+      }
+    })
+
+    expect(screen.getByText('Opening Earthdata Download to download your files...')).toBeDefined()
+    expect(screen.getByTestId('earthdata-download-redirect-button')).toHaveAttribute('href', '')
+
+    expect(window.location.replace).toHaveBeenCalledTimes(0)
   })
 })

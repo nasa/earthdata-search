@@ -7,8 +7,7 @@ describe('createEarthdataDownloadRedirectSlice', () => {
 
     expect(earthdataDownloadRedirect).toEqual({
       redirect: '',
-      setRedirect: expect.any(Function),
-      clearRedirect: expect.any(Function)
+      setRedirect: expect.any(Function)
     })
   })
 
@@ -51,24 +50,6 @@ describe('createEarthdataDownloadRedirectSlice', () => {
       setRedirect('earthdata-download://eulaCallback')
       updatedState = useEdscStore.getState()
       expect(updatedState.earthdataDownloadRedirect.redirect).toBe('earthdata-download://eulaCallback')
-    })
-  })
-
-  describe('clearRedirect', () => {
-    test('clears the redirect', () => {
-      const zustandState = useEdscStore.getState()
-      const { earthdataDownloadRedirect } = zustandState
-      const { setRedirect, clearRedirect } = earthdataDownloadRedirect
-
-      setRedirect('earthdata-download://authCallback&token=abc123')
-
-      let updatedState = useEdscStore.getState()
-      expect(updatedState.earthdataDownloadRedirect.redirect).toBe('earthdata-download://authCallback&token=abc123')
-
-      clearRedirect()
-
-      updatedState = useEdscStore.getState()
-      expect(updatedState.earthdataDownloadRedirect.redirect).toBe('')
     })
   })
 })

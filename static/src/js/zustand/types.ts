@@ -13,8 +13,6 @@ export type EarthdataDownloadRedirectSlice = {
     redirect: string
     /** Function to set the redirect URL */
     setRedirect: (redirect: string) => void
-    /** Function to clear the redirect URL */
-    clearRedirect: () => void
   }
 }
 
@@ -201,8 +199,8 @@ export type UiSlice = {
 }
 
 export type EdscStore =
-  HomeSlice
-  & EarthdataDownloadRedirectSlice
+  EarthdataDownloadRedirectSlice
+  & HomeSlice
   & MapSlice
   & ShapefileSlice
   & TimelineSlice
