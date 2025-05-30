@@ -14,7 +14,6 @@ import collectionsResultsReducer from './collectionsResults'
 import colorMapsReducer from './colorMaps'
 import contactInfoReducer from './contactInfo'
 import dataQualitySummariesReducer from './dataQualitySummaries'
-import earthdataDownloadRedirectReducer from './earthdataDownloadRedirect'
 import earthdataEnvironmentReducer from './earthdataEnvironment'
 import errorsReducer from './errors'
 import {
@@ -53,7 +52,6 @@ export default (history) => combineReducers({
   autocomplete: autocompleteReducer,
   contactInfo: contactInfoReducer,
   dataQualitySummaries: dataQualitySummariesReducer,
-  earthdataDownloadRedirect: earthdataDownloadRedirectReducer,
   earthdataEnvironment: earthdataEnvironmentReducer,
   errors: errorsReducer,
   facetsParams: combineReducers({

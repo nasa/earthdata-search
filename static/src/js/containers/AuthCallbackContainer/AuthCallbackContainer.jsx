@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
 import { set } from 'tiny-cookie'
 import { connect } from 'react-redux'
 import { parse } from 'qs'
@@ -7,16 +6,10 @@ import { parse } from 'qs'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { locationPropType } from '../../util/propTypes/location'
 import history from '../../util/history'
-
-import actions from '../../actions'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapStateToProps = (state) => ({
   location: state.router.location
-})
-
-export const mapDispatchToProps = (dispatch) => ({
-  onAddEarthdataDownloadRedirect:
-    (data) => dispatch(actions.addEarthdataDownloadRedirect(data))
 })
 
 /**
@@ -26,10 +19,11 @@ export const mapDispatchToProps = (dispatch) => ({
  * in.
  */
 export const AuthCallbackContainer = ({
-  location,
-  onAddEarthdataDownloadRedirect
+  location
 }) => {
   const { edscHost } = getEnvironmentConfig()
+
+  const setRedirectUrl = useEdscStore((state) => state.earthdataDownloadRedirect.setRedirectUrl)
 
   useEffect(() => {
     const { search } = location
@@ -56,9 +50,7 @@ export const AuthCallbackContainer = ({
         if (accessToken) eddRedirectUrl += `&token=${accessToken}`
 
         // Add the redirect information to the store
-        onAddEarthdataDownloadRedirect({
-          redirect: eddRedirectUrl
-        })
+        setRedirectUrl(eddRedirectUrl)
 
         // Redirect to the edd callback
         setTimeout(() => {
@@ -99,8 +91,7 @@ export const AuthCallbackContainer = ({
 }
 
 AuthCallbackContainer.propTypes = {
-  location: locationPropType.isRequired,
-  onAddEarthdataDownloadRedirect: PropTypes.func.isRequired
+  location: locationPropType.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthCallbackContainer)
+export default connect(mapStateToProps)(AuthCallbackContainer)

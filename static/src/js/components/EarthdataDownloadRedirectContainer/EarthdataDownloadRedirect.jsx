@@ -1,26 +1,20 @@
 import React, { useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { ArrowLineDiagonal } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import Button from '../../components/Button/Button'
-import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
-import Spinner from '../../components/Spinner/Spinner'
+import useEdscStore from '../../zustand/useEdscStore'
 
-import '../../components/TextWindowActions/TextWindowActions.scss'
+import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import Spinner from '../Spinner/Spinner'
 
-export const mapStateToProps = (state) => ({
-  earthdataDownloadRedirect: state.earthdataDownloadRedirect
-})
+import '../TextWindowActions/TextWindowActions.scss'
 
-export const EarthdataDownloadRedirectContainer = ({
-  earthdataDownloadRedirect
-}) => {
-  const { redirect } = earthdataDownloadRedirect
+export const EarthdataDownloadRedirectComponent = () => {
+  const redirect = useEdscStore((state) => state.earthdataDownloadRedirect.redirectUrl)
 
   useEffect(() => {
     window.location.replace(redirect)
-  }, [])
+  }, [redirect])
 
   return (
     <div className="container d-flex flex-column align-items-center text-center">
@@ -64,10 +58,4 @@ export const EarthdataDownloadRedirectContainer = ({
   )
 }
 
-EarthdataDownloadRedirectContainer.propTypes = {
-  earthdataDownloadRedirect: PropTypes.shape({
-    redirect: PropTypes.string
-  }).isRequired
-}
-
-export default connect(mapStateToProps)(EarthdataDownloadRedirectContainer)
+export default EarthdataDownloadRedirectComponent
