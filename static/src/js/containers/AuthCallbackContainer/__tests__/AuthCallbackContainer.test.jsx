@@ -18,7 +18,7 @@ const setup = setupTest({
   defaultZustandState: {
     earthdataDownloadRedirect: {
       redirect: '',
-      setRedirect: jest.fn()
+      setRedirectUrl: jest.fn()
     }
   }
 })
@@ -79,10 +79,10 @@ describe('AuthCallbackContainer component', () => {
 
     const zustandState = useEdscStore.getState()
     const { earthdataDownloadRedirect } = zustandState
-    const { setRedirect } = earthdataDownloadRedirect
+    const { setRedirectUrl } = earthdataDownloadRedirect
 
-    expect(setRedirect).toHaveBeenCalledTimes(1)
-    expect(setRedirect).toHaveBeenCalledWith('earthdata-download://authCallback&token=mock-token')
+    expect(setRedirectUrl).toHaveBeenCalledTimes(1)
+    expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://authCallback&token=mock-token')
   })
 
   test('updates zustand and redirects to earthdata-download-callback for eulaCallback', () => {
@@ -103,10 +103,10 @@ describe('AuthCallbackContainer component', () => {
 
     const zustandState = useEdscStore.getState()
     const { earthdataDownloadRedirect } = zustandState
-    const { setRedirect } = earthdataDownloadRedirect
+    const { setRedirectUrl } = earthdataDownloadRedirect
 
-    expect(setRedirect).toHaveBeenCalledTimes(1)
-    expect(setRedirect).toHaveBeenCalledWith('earthdata-download://eulaCallback')
+    expect(setRedirectUrl).toHaveBeenCalledTimes(1)
+    expect(setRedirectUrl).toHaveBeenCalledWith('earthdata-download://eulaCallback')
   })
 
   test('clears the auth cookie and redirects to root path if values are not set', () => {

@@ -7,18 +7,18 @@ describe('createEarthdataDownloadRedirectSlice', () => {
 
     expect(earthdataDownloadRedirect).toEqual({
       redirectUrl: '',
-      setRedirect: expect.any(Function)
+      setRedirectUrl: expect.any(Function)
     })
   })
 
-  describe('setRedirect', () => {
+  describe('setRedirectUrl', () => {
     test('updates redirect', () => {
       const zustandState = useEdscStore.getState()
       const { earthdataDownloadRedirect } = zustandState
-      const { setRedirect } = earthdataDownloadRedirect
+      const { setRedirectUrl } = earthdataDownloadRedirect
       const newRedirect = 'earthdata-download://authCallback&token=abc123'
 
-      setRedirect(newRedirect)
+      setRedirectUrl(newRedirect)
 
       const updatedState = useEdscStore.getState()
       const { earthdataDownloadRedirect: updatedRedirect } = updatedState

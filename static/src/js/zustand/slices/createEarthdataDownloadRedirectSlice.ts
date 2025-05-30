@@ -4,7 +4,7 @@ const createEarthdataDownloadRedirectSlice:
     ImmerStateCreator<EarthdataDownloadRedirectSlice> = (set) => ({
       earthdataDownloadRedirect: {
         redirectUrl: '',
-        setRedirect: (redirect) => {
+        setRedirectUrl: (redirect) => {
           set((state) => {
             state.earthdataDownloadRedirect.redirectUrl = redirect
           })

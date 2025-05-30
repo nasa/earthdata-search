@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react'
 import { ArrowLineDiagonal } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Spinner from '../Spinner/Spinner'
-import useEdscStore from '../../zustand/useEdscStore'
 
 import '../TextWindowActions/TextWindowActions.scss'
 

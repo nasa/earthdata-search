@@ -23,7 +23,7 @@ export const AuthCallbackContainer = ({
 }) => {
   const { edscHost } = getEnvironmentConfig()
 
-  const setRedirect = useEdscStore((state) => state.earthdataDownloadRedirect.setRedirect)
+  const setRedirectUrl = useEdscStore((state) => state.earthdataDownloadRedirect.setRedirectUrl)
 
   useEffect(() => {
     const { search } = location
@@ -50,7 +50,7 @@ export const AuthCallbackContainer = ({
         if (accessToken) eddRedirectUrl += `&token=${accessToken}`
 
         // Add the redirect information to the store
-        setRedirect(eddRedirectUrl)
+        setRedirectUrl(eddRedirectUrl)
 
         // Redirect to the edd callback
         setTimeout(() => {

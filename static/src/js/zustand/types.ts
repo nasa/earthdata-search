@@ -12,7 +12,7 @@ export type EarthdataDownloadRedirectSlice = {
     /** The redirect URL for earthdata download */
     redirectUrl: string
     /** Function to set the redirect URL */
-    setRedirect: (redirect: string) => void
+    setRedirectUrl: (redirect: string) => void
   }
 }
 
