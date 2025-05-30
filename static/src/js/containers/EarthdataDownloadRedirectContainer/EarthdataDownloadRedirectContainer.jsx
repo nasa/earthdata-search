@@ -12,10 +12,8 @@ export const EarthdataDownloadRedirectContainer = () => {
   const redirect = useEdscStore((state) => state.earthdataDownloadRedirect.redirect)
 
   useEffect(() => {
-    if (redirect) {
-      window.location.replace(redirect)
-    }
-  }, [redirect])
+    window.location.replace(redirect)
+  }, [])
 
   return (
     <div className="container d-flex flex-column align-items-center text-center">
