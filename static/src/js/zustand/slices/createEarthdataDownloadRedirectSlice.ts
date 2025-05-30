@@ -3,10 +3,10 @@ import { EarthdataDownloadRedirectSlice, ImmerStateCreator } from '../types'
 const createEarthdataDownloadRedirectSlice:
     ImmerStateCreator<EarthdataDownloadRedirectSlice> = (set) => ({
       earthdataDownloadRedirect: {
-        redirect: '',
+        redirectUrl: '',
         setRedirect: (redirect) => {
           set((state) => {
-            state.earthdataDownloadRedirect.redirect = redirect
+            state.earthdataDownloadRedirect.redirectUrl = redirect
           })
         }
       }
