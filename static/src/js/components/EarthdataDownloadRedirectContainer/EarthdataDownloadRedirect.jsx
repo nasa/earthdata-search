@@ -13,9 +13,7 @@ export const EarthdataDownloadRedirectComponent = () => {
   const redirect = useEdscStore((state) => state.earthdataDownloadRedirect.redirectUrl)
 
   useEffect(() => {
-    if (redirect) {
-      window.location.replace(redirect)
-    }
+    window.location.replace(redirect)
   }, [redirect])
 
   return (
