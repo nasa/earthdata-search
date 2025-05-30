@@ -1,10 +1,10 @@
 import { screen } from '@testing-library/react'
 
-import { EarthdataDownloadRedirectContainer } from '../EarthdataDownloadRedirectContainer'
+import { EarthdataDownloadRedirectComponent } from '../EarthdataDownloadRedirect'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const setup = setupTest({
-  Component: EarthdataDownloadRedirectContainer,
+  Component: EarthdataDownloadRedirectComponent,
   defaultZustandState: {
     earthdataDownloadRedirect: {
       redirectUrl: 'earthdata-download://authCallback'
@@ -12,7 +12,7 @@ const setup = setupTest({
   }
 })
 
-describe('EarthdataDownloadRedirectContainer', () => {
+describe('EarthdataDownloadRedirectComponent', () => {
   const { replace } = window.location
 
   afterEach(() => {

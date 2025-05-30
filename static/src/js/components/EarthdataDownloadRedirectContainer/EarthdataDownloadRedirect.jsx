@@ -9,7 +9,7 @@ import Spinner from '../Spinner/Spinner'
 
 import '../TextWindowActions/TextWindowActions.scss'
 
-export const EarthdataDownloadRedirectContainer = () => {
+export const EarthdataDownloadRedirectComponent = () => {
   const redirect = useEdscStore((state) => state.earthdataDownloadRedirect.redirectUrl)
 
   useEffect(() => {
@@ -60,4 +60,4 @@ export const EarthdataDownloadRedirectContainer = () => {
   )
 }
 
-export default EarthdataDownloadRedirectContainer
+export default EarthdataDownloadRedirectComponent
