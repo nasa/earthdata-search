@@ -6,7 +6,7 @@ describe('createEarthdataDownloadRedirectSlice', () => {
     const { earthdataDownloadRedirect } = zustandState
 
     expect(earthdataDownloadRedirect).toEqual({
-      redirect: '',
+      redirectUrl: '',
       setRedirect: expect.any(Function)
     })
   })
