@@ -2,7 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import EarthdataDownloadRedirectContainer from '../../containers/EarthdataDownloadRedirectContainer/EarthdataDownloadRedirectContainer'
+import EarthdataDownloadRedirectContainer from '../../components/EarthdataDownloadRedirectContainer/EarthdataDownloadRedirectContainer'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
