@@ -1,46 +1,49 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Helmet from 'react-helmet'
+import { Helmet } from 'react-helmet'
+import { waitFor } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as AppConfig from '../../../../../../sharedUtils/config'
 
 import Subscriptions from '../Subscriptions'
 import SubscriptionsListContainer from '../../../containers/SubscriptionsListContainer/SubscriptionsListContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../containers/SubscriptionsListContainer/SubscriptionsListContainer', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: Subscriptions
+})
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
 })
 
-function setup() {
-  const enzymeWrapper = shallow(<Subscriptions.WrappedComponent />)
-
-  return {
-    enzymeWrapper
-  }
-}
-
 describe('Subscriptions component', () => {
-  test('sets the correct Helmet meta information', () => {
-    const { enzymeWrapper } = setup()
+  test('sets the correct Helmet meta information', async () => {
+    setup()
 
-    const helmet = enzymeWrapper.find(Helmet)
-    expect(helmet.childAt(0).type()).toEqual('title')
-    expect(helmet.childAt(0).text()).toEqual('Subscriptions')
-    expect(helmet.childAt(1).props().name).toEqual('title')
-    expect(helmet.childAt(1).props().content).toEqual('Subscriptions')
-    expect(helmet.childAt(2).props().name).toEqual('robots')
-    expect(helmet.childAt(2).props().content).toEqual('noindex, nofollow')
-    expect(helmet.childAt(3).props().rel).toEqual('canonical')
-    expect(helmet.childAt(3).props().href).toEqual('https://search.earthdata.nasa.gov')
+    await waitFor(() => expect(document.title).toEqual('Subscriptions'))
+
+    const helmet = Helmet.peek()
+
+    const title = helmet.metaTags.find((tag) => tag.name === 'title')
+    expect(title).toBeDefined()
+    expect(title.content).toBe('Subscriptions')
+
+    const robots = helmet.metaTags.find((tag) => tag.name === 'robots')
+    expect(robots).toBeDefined()
+    expect(robots.content).toBe('noindex, nofollow')
+
+    const canonicalLink = helmet.linkTags.find((tag) => tag.rel === 'canonical')
+    expect(canonicalLink).toBeDefined()
+    expect(canonicalLink.href).toBe('https://search.earthdata.nasa.gov')
   })
 
   test('displays the subscription list', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(SubscriptionsListContainer).length).toBe(1)
+    expect(SubscriptionsListContainer).toHaveBeenCalledTimes(1)
+    expect(SubscriptionsListContainer).toHaveBeenCalledWith({}, {})
   })
 })

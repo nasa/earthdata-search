@@ -1,7 +1,6 @@
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
 import { metricsRelatedCollection } from '../../middleware/metrics/actions'
@@ -43,7 +42,6 @@ export const mapStateToProps = (state) => ({
 export const CollectionDetailsBodyContainer = ({
   collectionMetadata,
   isActive,
-  location,
   onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleRelatedUrlsModal
@@ -52,7 +50,6 @@ export const CollectionDetailsBodyContainer = ({
     <CollectionDetailsBody
       collectionMetadata={collectionMetadata}
       isActive={isActive}
-      location={location}
       onFocusedCollectionChange={onFocusedCollectionChange}
       onMetricsRelatedCollection={onMetricsRelatedCollection}
       onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
@@ -63,12 +60,9 @@ export const CollectionDetailsBodyContainer = ({
 CollectionDetailsBodyContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   isActive: PropTypes.bool.isRequired,
-  location: PropTypes.shape({}).isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(CollectionDetailsBodyContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionDetailsBodyContainer)

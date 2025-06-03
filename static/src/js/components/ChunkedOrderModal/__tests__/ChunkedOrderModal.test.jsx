@@ -1,17 +1,10 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  waitFor
-} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { Router } from 'react-router'
-import { Provider } from 'react-redux'
-import { createMemoryHistory } from 'history'
+import { screen, waitFor } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import ChunkedOrderModal from '../ChunkedOrderModal'
 import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
-
-import configureStore from '../../../store/configureStore'
 
 const mockOnToggleChunkedOrderModal = jest.fn()
 
@@ -28,14 +21,10 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
   </mock-PortalLinkContainer>
 )))
 
-const store = configureStore()
-
-function setup(overrideProps = {}) {
-  const props = {
+const setup = setupTest({
+  Component: ChunkedOrderModal,
+  defaultProps: {
     isOpen: true,
-    location: {
-      search: '?p=C100005-EDSC!C100005-EDSC&pg[1][v]=t'
-    },
     projectCollectionsMetadata: {
       'C100005-EDSC': {
         title: 'collection title'
@@ -49,26 +38,19 @@ function setup(overrideProps = {}) {
       }
     },
     onSubmitRetrieval: jest.fn(),
-    onToggleChunkedOrderModal: mockOnToggleChunkedOrderModal,
-    ...overrideProps
-  }
-
-  const history = createMemoryHistory()
-
-  render(
-    <Provider store={store}>
-      <Router history={history} location={props.location}>
-        <ChunkedOrderModal {...props} />
-      </Router>
-    </Provider>
-  )
-
-  return {
-    history,
-    onSubmitRetrieval: props.onSubmitRetrieval,
-    onToggleChunkedOrderModal: props.onToggleChunkedOrderModal
-  }
-}
+    onToggleChunkedOrderModal: mockOnToggleChunkedOrderModal
+  },
+  defaultZustandState: {
+    location: {
+      location: {
+        pathname: '/search',
+        search: '?p=C100005-EDSC!C100005-EDSC&pg[1][v]=t'
+      }
+    }
+  },
+  withRedux: true,
+  withRouter: true
+})
 
 describe('ChunkedOrderModal component', () => {
   test('should render a title', () => {
@@ -85,17 +67,19 @@ describe('ChunkedOrderModal component', () => {
 
   test('should render instructions when the maxItemsPerOrder is less than 2000', () => {
     setup({
-      projectCollectionsRequiringChunking: {
-        'C100005-EDSC': {
-          accessMethods: {
-            echoOrder0: {
-              maxItemsPerOrder: 1000
-            }
-          },
-          granules: {
-            hits: 9001
-          },
-          selectedAccessMethod: 'echoOrder0'
+      overrideProps: {
+        projectCollectionsRequiringChunking: {
+          'C100005-EDSC': {
+            accessMethods: {
+              echoOrder0: {
+                maxItemsPerOrder: 1000
+              }
+            },
+            granules: {
+              hits: 9001
+            },
+            selectedAccessMethod: 'echoOrder0'
+          }
         }
       }
     })
@@ -104,8 +88,7 @@ describe('ChunkedOrderModal component', () => {
   })
 
   test('should render a \'Refine your search\' link that keeps the project params intact and removes the focused collection', async () => {
-    const user = userEvent.setup()
-    setup()
+    const { user } = setup()
     await user.click(screen.getByText('Refine your search'))
 
     await waitFor(() => {
@@ -124,14 +107,17 @@ describe('ChunkedOrderModal component', () => {
 
   describe('access methods email notice', () => {
     const emailNotice = 'Note: You will receive a separate set of confirmation emails for each order in collection title.'
+
     test('ordering shows the notice ', () => {
       setup({
-        projectCollectionsRequiringChunking: {
-          'C100005-EDSC': {
-            granules: {
-              hits: 9001
-            },
-            selectedAccessMethod: 'echoOrder0'
+        overrideProps: {
+          projectCollectionsRequiringChunking: {
+            'C100005-EDSC': {
+              granules: {
+                hits: 9001
+              },
+              selectedAccessMethod: 'echoOrder0'
+            }
           }
         }
       })
@@ -141,12 +127,14 @@ describe('ChunkedOrderModal component', () => {
 
     test('esi shows the notice', () => {
       setup({
-        projectCollectionsRequiringChunking: {
-          'C100005-EDSC': {
-            granules: {
-              hits: 9001
-            },
-            selectedAccessMethod: 'esi0'
+        overrideProps: {
+          projectCollectionsRequiringChunking: {
+            'C100005-EDSC': {
+              granules: {
+                hits: 9001
+              },
+              selectedAccessMethod: 'esi0'
+            }
           }
         }
       })
@@ -156,12 +144,14 @@ describe('ChunkedOrderModal component', () => {
 
     test('harmony does no show the notice', () => {
       setup({
-        projectCollectionsRequiringChunking: {
-          'C100005-EDSC': {
-            granules: {
-              hits: 9001
-            },
-            selectedAccessMethod: 'harmony0'
+        overrideProps: {
+          projectCollectionsRequiringChunking: {
+            'C100005-EDSC': {
+              granules: {
+                hits: 9001
+              },
+              selectedAccessMethod: 'harmony0'
+            }
           }
         }
       })
@@ -172,32 +162,32 @@ describe('ChunkedOrderModal component', () => {
 
   describe('modal actions', () => {
     test('\'Refine your search\' button should trigger onToggleChunkedOrderModal', async () => {
-      const user = userEvent.setup()
-      const { onToggleChunkedOrderModal } = setup()
+      const { props, user } = setup()
+
       await user.click(screen.getByText('Refine your search'))
-      expect(onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
+
+      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
     })
 
     test('\'Change access methods\' button should trigger onToggleChunkedOrderModal', async () => {
-      const user = userEvent.setup()
-      const { onToggleChunkedOrderModal } = setup()
+      const { props, user } = setup()
 
       await user.click(screen.getByRole('button', { name: 'Change access methods' }))
 
-      expect(onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
     })
 
     test('\'Continue\' button should trigger onToggleChunkedOrderModal', async () => {
-      const user = userEvent.setup()
-      const { onSubmitRetrieval, onToggleChunkedOrderModal } = setup()
+      const { props, user } = setup()
 
       await user.click(screen.getByRole('button', { name: 'Continue' }))
 
-      expect(onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
-      expect(onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
+      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleChunkedOrderModal).toHaveBeenCalledWith(false)
 
-      expect(onSubmitRetrieval).toHaveBeenCalledTimes(1)
+      expect(props.onSubmitRetrieval).toHaveBeenCalledTimes(1)
+      expect(props.onSubmitRetrieval).toHaveBeenCalledWith()
     })
   })
 })

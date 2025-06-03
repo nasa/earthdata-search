@@ -5,7 +5,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 
 import Button from '../Button/Button'
 
-export class AdminRetrievalsForm extends Component {
+class AdminRetrievalsForm extends Component {
   constructor(props) {
     super(props)
 
@@ -72,3 +72,5 @@ export class AdminRetrievalsForm extends Component {
 AdminRetrievalsForm.propTypes = {
   onAdminViewRetrieval: PropTypes.func.isRequired
 }
+
+export default AdminRetrievalsForm

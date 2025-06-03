@@ -127,7 +127,7 @@ PanelGroup.defaultProps = {
   headerMetaPrimaryLoading: false,
   headerMetaPrimaryText: null,
   isActive: false,
-  isExportRunning: false,
+  isExportRunning: {},
   isOpen: false,
   moreActionsDropdownItems: [],
   onChangePanel: null,
@@ -157,7 +157,10 @@ PanelGroup.propTypes = {
   headerMetaPrimaryLoading: PropTypes.bool,
   headerMetaPrimaryText: PropTypes.string,
   isActive: PropTypes.bool,
-  isExportRunning: PropTypes.bool,
+  isExportRunning: PropTypes.shape({
+    csv: PropTypes.bool,
+    json: PropTypes.bool
+  }),
   isOpen: PropTypes.bool,
   onChangePanel: PropTypes.func,
   moreActionsDropdownItems: PropTypes.arrayOf(

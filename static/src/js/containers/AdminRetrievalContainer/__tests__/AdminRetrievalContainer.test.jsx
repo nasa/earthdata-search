@@ -1,5 +1,6 @@
 import React from 'react'
-import { render } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import AdminRetrieval from '../../../components/AdminRetrieval/AdminRetrieval'
@@ -9,11 +10,27 @@ import {
   mapStateToProps
 } from '../AdminRetrievalContainer'
 
-jest.mock('../../../components/AdminRetrieval/AdminRetrieval', () => jest.fn(({ children }) => (
-  <mock-AdminRetrieval data-testid="AdminRetrieval">
-    {children}
-  </mock-AdminRetrieval>
-)))
+jest.mock('../../../components/AdminRetrieval/AdminRetrieval', () => jest.fn(() => <div />))
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useParams: jest.fn().mockReturnValue({
+    id: '1234'
+  })
+}))
+
+const setup = setupTest({
+  Component: AdminRetrievalContainer,
+  defaultProps: {
+    onFetchAdminRetrieval: jest.fn(),
+    onRequeueOrder: jest.fn(),
+    retrievals: {
+      1234: {
+        mock: 'retrieval'
+      }
+    }
+  }
+})
 
 describe('mapDispatchToProps', () => {
   test('onFetchAdminRetrieval calls actions.fetchAdminRetrieval', () => {
@@ -22,18 +39,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchAdminRetrieval('id')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('id')
-  })
-
-  test('onRequeueOrder calls actions.requeueOrder', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'requeueOrder')
-
-    mapDispatchToProps(dispatch).onRequeueOrder('id')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('id')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('id')
   })
 })
 
@@ -57,35 +64,17 @@ describe('mapStateToProps', () => {
 
 describe('AdminRetrievalContainer component', () => {
   test('render AdminRetrieval with the correct props', () => {
-    const onFetchAdminRetrievalMock = jest.fn()
-    const onRequeueOrderMock = jest.fn()
-    const props = {
-      match: {
-        params: {
-          id: '1'
-        }
-      },
-      onFetchAdminRetrieval: onFetchAdminRetrievalMock,
-      onRequeueOrder: onRequeueOrderMock,
-      retrieval: {}
-    }
+    const { props } = setup()
 
-    const { rerender } = render((<AdminRetrievalContainer {...props} />))
+    expect(props.onFetchAdminRetrieval).toHaveBeenCalledTimes(1)
+    expect(props.onFetchAdminRetrieval).toHaveBeenCalledWith('1234')
 
-    expect(onFetchAdminRetrievalMock).toHaveBeenCalledTimes(1)
-    expect(onFetchAdminRetrievalMock).toHaveBeenCalledWith('1')
-
-    rerender((<AdminRetrievalContainer {...props} retrievals={{ 1: 'mock-retrieval' }} />))
-
-    expect(AdminRetrieval).toHaveBeenCalledTimes(2)
+    expect(AdminRetrieval).toHaveBeenCalledTimes(1)
     expect(AdminRetrieval).toHaveBeenCalledWith({
-      retrieval: undefined,
-      onRequeueOrder: onRequeueOrderMock
-    }, {})
-
-    expect(AdminRetrieval).toHaveBeenCalledWith({
-      retrieval: 'mock-retrieval',
-      onRequeueOrder: onRequeueOrderMock
+      onRequeueOrder: expect.any(Function),
+      retrieval: {
+        mock: 'retrieval'
+      }
     }, {})
   })
 })

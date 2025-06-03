@@ -4,8 +4,8 @@ import userEvent from '@testing-library/user-event'
 import {
   MemoryRouter,
   Route,
-  Switch
-} from 'react-router'
+  Routes
+} from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { cloneDeep, merge } from 'lodash-es'
 
@@ -128,7 +128,7 @@ const setupTest = ({
     if (ComponentsByRoute) {
       RenderedComponent = (
         <MemoryRouter initialEntries={initialEntries}>
-          <Switch>
+          <Routes>
             {
               Object.keys(ComponentsByRoute).map((route) => {
                 const ComponentByRoute = ComponentsByRoute[route] as React.FC
@@ -142,18 +142,15 @@ const setupTest = ({
                 }
 
                 return (
-                  <Route exact path={route} key={route}>
-                    {typeof ComponentByRoute !== 'function' && ComponentByRoute}
-                    {
-                      typeof ComponentByRoute === 'function' && (
-                        <ComponentByRoute {...props} />
-                      )
-                    }
-                  </Route>
+                  <Route
+                    path={route}
+                    key={route}
+                    element={<ComponentByRoute {...props} />}
+                  />
                 )
               })
             }
-          </Switch>
+          </Routes>
         </MemoryRouter>
       )
     }

@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
-import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
 import { metricsAddGranuleProject, metricsDataAccess } from '../../middleware/metrics/actions'
@@ -64,7 +62,6 @@ export const GranuleResultsBodyContainer = (props) => {
     granuleQuery,
     granuleSearchResults,
     granulesMetadata,
-    location,
     onAddGranuleToProjectCollection,
     onChangeGranulePageNum,
     onExcludeGranule,
@@ -107,7 +104,6 @@ export const GranuleResultsBodyContainer = (props) => {
       granuleQuery={granuleQuery}
       isOpenSearch={isOpenSearch}
       loadNextPage={loadNextPage}
-      location={location}
       onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
@@ -137,7 +133,6 @@ GranuleResultsBodyContainer.propTypes = {
   }).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
@@ -151,6 +146,4 @@ GranuleResultsBodyContainer.propTypes = {
   project: PropTypes.shape({}).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(GranuleResultsBodyContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(GranuleResultsBodyContainer)

@@ -5,17 +5,20 @@ import localeInfo from 'rc-pagination/lib/locale/en_US'
 import Table from 'react-bootstrap/Table'
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsList.scss'
 
-export const AdminRetrievalsList = ({
-  historyPush,
+const AdminRetrievalsList = ({
   retrievals,
   onUpdateAdminRetrievalsSortKey,
   onUpdateAdminRetrievalsPageNum
 }) => {
+  const navigate = useEdscStore((state) => state.location.navigate)
+
   const {
     allIds,
     byId,
@@ -125,7 +128,7 @@ export const AdminRetrievalsList = ({
                   key={obfuscatedId}
                   onClick={
                     () => {
-                      historyPush(`/admin/retrievals/${obfuscatedId}`)
+                      navigate(`/admin/retrievals/${obfuscatedId}`)
                     }
                   }
                   role="button"
@@ -163,7 +166,6 @@ AdminRetrievalsList.defaultProps = {
 }
 
 AdminRetrievalsList.propTypes = {
-  historyPush: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),
     byId: PropTypes.shape({}),

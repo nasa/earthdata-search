@@ -5,17 +5,20 @@ import localeInfo from 'rc-pagination/lib/locale/en_US'
 import Table from 'react-bootstrap/Table'
 import { FaCaretUp, FaCaretDown } from 'react-icons/fa'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import 'rc-pagination/assets/index.css'
 import './AdminProjectsList.scss'
 
-export const AdminProjectsList = ({
-  historyPush,
+const AdminProjectsList = ({
   projects,
   onUpdateAdminProjectsSortKey,
   onUpdateAdminProjectsPageNum
 }) => {
+  const navigate = useEdscStore((state) => state.location.navigate)
+
   const {
     allIds,
     byId,
@@ -125,7 +128,7 @@ export const AdminProjectsList = ({
                   key={obfuscatedId}
                   onClick={
                     () => {
-                      historyPush(`/admin/projects/${obfuscatedId}`)
+                      navigate(`/admin/projects/${obfuscatedId}`)
                     }
                   }
                   role="button"
@@ -163,7 +166,6 @@ AdminProjectsList.defaultProps = {
 }
 
 AdminProjectsList.propTypes = {
-  historyPush: PropTypes.func.isRequired,
   projects: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),
     byId: PropTypes.shape({}),

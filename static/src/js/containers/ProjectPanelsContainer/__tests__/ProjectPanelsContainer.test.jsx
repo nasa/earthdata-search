@@ -33,9 +33,6 @@ const setup = setupTest({
     onRemoveGranuleFromProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onViewCollectionGranules: jest.fn(),
-    location: {
-      search: ''
-    },
     onChangePath: jest.fn(),
     overrideTemporal: {},
     project: {
@@ -54,6 +51,14 @@ const setup = setupTest({
     },
     spatial: {},
     ursProfile: {}
+  },
+  defaultZustandState: {
+    location: {
+      location: {
+        pathname: '/project',
+        search: ''
+      }
+    }
   }
 })
 
@@ -212,9 +217,6 @@ describe('mapStateToProps', () => {
           overrideTemporal: {}
         }
       },
-      router: {
-        location: {}
-      },
       ui: {
         map: {
           drawingNewLayer: false
@@ -227,7 +229,6 @@ describe('mapStateToProps', () => {
       focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
       granulesMetadata: {},
-      location: {},
       panels: {},
       project: {},
       projectCollectionsMetadata: {},
@@ -252,7 +253,10 @@ describe('ProjectPanelsContainer component', () => {
       focusedGranuleId: props.focusedGranuleId,
       granulesQueries: props.granulesQueries,
       granulesMetadata: props.granulesMetadata,
-      location: props.location,
+      location: {
+        pathname: '/project',
+        search: ''
+      },
       onAddGranuleToProjectCollection: props.onAddGranuleToProjectCollection,
       onChangePath: props.onChangePath,
       onChangeProjectGranulePageNum: props.onChangeProjectGranulePageNum,

@@ -1,14 +1,16 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import CollectionDetailsHighlights from '../CollectionDetailsHighlights'
 import Skeleton from '../../Skeleton/Skeleton'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: CollectionDetailsHighlights,
+  defaultProps: {
     collectionMetadata: {
       hasAllMetadata: true,
       doi: {
@@ -25,110 +27,133 @@ function setup(overrideProps) {
       isLoaded: false,
       isLoading: true
     },
+    onToggleRelatedUrlsModal: jest.fn()
+  },
+  defaultZustandState: {
     location: {
-      search: ''
-    },
-    onToggleRelatedUrlsModal: jest.fn(),
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<CollectionDetailsHighlights {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+      location: {
+        pathname: '/search',
+        search: ''
+      }
+    }
+  },
+  withRedux: true,
+  withRouter: true
+})
 
 describe('CollectionDetailsHighlights component', () => {
-  test('renders the component', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.type()).toBe('div')
-    expect(enzymeWrapper.prop('className')).toBe('collection-details-highlights')
+  describe('when collection is loading', () => {
+    test('shows the loading state', () => {
+      setup()
+
+      // 4 skeletons on the page
+      expect(Skeleton).toHaveBeenCalledTimes(4)
+    })
   })
 
-  describe('version', () => {
-    describe('when collection is loading', () => {
-      test('shows the loading state', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(0).find(Skeleton).length).toEqual(1)
-      })
-    })
-
-    describe('when collection is loaded', () => {
+  describe('when collection is loaded', () => {
+    describe('version', () => {
       test('shows the version', () => {
-        const { enzymeWrapper } = setup({
-          collectionsSearch: {
-            isLoading: false,
-            isLoaded: true
+        setup({
+          overrideProps: {
+            collectionsSearch: {
+              isLoading: false,
+              isLoaded: true
+            }
           }
         })
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(0).text()).toEqual('5')
-      })
-    })
-  })
 
-  describe('doi', () => {
-    describe('when collection is loading', () => {
-      test('shows the loading state', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(1).find(Skeleton).length).toEqual(1)
+        expect(screen.getByText('5')).toBeInTheDocument()
       })
     })
 
-    describe('when collection is loaded', () => {
+    describe('doi', () => {
       test('shows the doi', () => {
-        const { enzymeWrapper } = setup({
-          collectionsSearch: {
-            isLoading: false,
-            isLoaded: true
+        setup({
+          overrideProps: {
+            collectionsSearch: {
+              isLoading: false,
+              isLoaded: true
+            }
           }
         })
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(1).text()).toEqual('ADFD/DS456SD')
-      })
-    })
-  })
 
-  describe('temporal extent', () => {
-    describe('when collection is loading', () => {
-      test('shows the loading state', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(3).find(Skeleton).length).toEqual(1)
+        expect(screen.getByText('ADFD/DS456SD')).toBeInTheDocument()
       })
     })
 
-    describe('when collection is loaded', () => {
+    describe('temporal extent', () => {
       test('shows the temporal extent', () => {
-        const { enzymeWrapper } = setup({
-          collectionsSearch: {
-            isLoading: false,
-            isLoaded: true
+        setup({
+          overrideProps: {
+            collectionsSearch: {
+              isLoading: false,
+              isLoaded: true
+            }
           }
         })
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(3).text()).toEqual('1860-01-01 to 2050-12-31')
+
+        expect(screen.getByText('1860-01-01 to 2050-12-31')).toBeInTheDocument()
+      })
+    })
+
+    describe('abstract', () => {
+      test('shows the abstract', () => {
+        setup({
+          overrideProps: {
+            collectionsSearch: {
+              isLoading: false,
+              isLoaded: true
+            }
+          }
+        })
+
+        expect(screen.getByText('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.')).toBeInTheDocument()
+      })
+
+      test('truncates the abstract if it is longer than 300 characters', () => {
+        setup({
+          overrideProps: {
+            collectionMetadata: {
+              abstract: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+              hasAllMetadata: true,
+              doi: {
+                doiLink: 'https://dx.doi.org/ADFD/DS456SD',
+                doiText: 'ADFD/DS456SD'
+              },
+              temporal: [
+                '1860-01-01 to 2050-12-31'
+              ],
+              versionId: '5'
+            },
+            collectionsSearch: {
+              isLoading: false,
+              isLoaded: true
+            }
+          }
+        })
+
+        expect(screen.getByText('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo cons...')).toBeInTheDocument()
       })
     })
   })
 
-  describe('abstract', () => {
-    describe('when collection is loading', () => {
-      test('shows the loading state', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(4).find(Skeleton).length).toEqual(1)
-      })
-    })
-
-    describe('when collection is loaded', () => {
-      test('shows the abstract', () => {
-        const { enzymeWrapper } = setup({
+  describe('when clicking `View All Related URLs` button', () => {
+    test('calls the onToggleRelatedUrlsModal prop', async () => {
+      const { props, user } = setup({
+        overrideProps: {
           collectionsSearch: {
             isLoading: false,
             isLoaded: true
           }
-        })
-        expect(enzymeWrapper.find('.collection-details-highlights__item-value').at(4).text())
-          .toEqual('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis gravida ac risus id blandit. In mollis ultricies lorem vel tincidunt.')
+        }
       })
+
+      const button = screen.getByText('View All Related URLs')
+      await user.click(button)
+
+      expect(props.onToggleRelatedUrlsModal).toHaveBeenCalledTimes(1)
+      expect(props.onToggleRelatedUrlsModal).toHaveBeenCalledWith(true)
     })
   })
 })

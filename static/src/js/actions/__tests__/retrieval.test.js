@@ -7,6 +7,7 @@ import { SET_RETRIEVAL_LOADING } from '../../constants/actionTypes'
 import { submitRetrieval, fetchRetrieval } from '../retrieval'
 
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -29,6 +30,16 @@ describe('submitRetrieval', () => {
         id: 7
       })
 
+    const mockNavigate = jest.fn()
+    useEdscStore.setState({
+      location: {
+        location: {
+          search: '?some=testparams'
+        },
+        navigate: mockNavigate
+      }
+    })
+
     // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
@@ -74,17 +85,12 @@ describe('submitRetrieval', () => {
           allIds: ['collectionId']
         }
       },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
       shapefile: {}
     })
 
     // Call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
-      expect(store.getActions().length).toEqual(4)
+      expect(store.getActions().length).toEqual(3)
 
       expect(store.getActions()[0]).toEqual({
         payload: {
@@ -106,13 +112,8 @@ describe('submitRetrieval', () => {
         type: 'SUBMITTED_PROJECT'
       })
 
-      expect(store.getActions()[3]).toEqual({
-        payload: {
-          args: ['/downloads/7'],
-          method: 'push'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(mockNavigate).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).toHaveBeenCalledWith('/downloads/7')
     })
   })
 
@@ -127,6 +128,16 @@ describe('submitRetrieval', () => {
       .reply(200, {
         id: 7
       })
+
+    const mockNavigate = jest.fn()
+    useEdscStore.setState({
+      location: {
+        location: {
+          search: '?some=testparams'
+        },
+        navigate: mockNavigate
+      }
+    })
 
     // MockStore with initialState
     const store = mockStore({
@@ -173,23 +184,13 @@ describe('submitRetrieval', () => {
           allIds: ['collectionId']
         }
       },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
       shapefile: {}
     })
 
     // Call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
-      expect(store.getActions()[3]).toEqual({
-        payload: {
-          args: ['/downloads/7?ee=prod'],
-          method: 'push'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(mockNavigate).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).toHaveBeenCalledWith('/downloads/7?ee=prod')
     })
   })
 
@@ -203,6 +204,14 @@ describe('submitRetrieval', () => {
     nock(/localhost/)
       .post(/error_logger/)
       .reply(200)
+
+    useEdscStore.setState({
+      location: {
+        location: {
+          search: '?some=testparams'
+        }
+      }
+    })
 
     const store = mockStore({
       authToken: 'mockToken',
@@ -239,11 +248,6 @@ describe('submitRetrieval', () => {
           allIds: ['collectionId']
         }
       },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
       shapefile: {}
     })
 
@@ -261,6 +265,14 @@ describe('submitRetrieval', () => {
         .reply(200, {
           id: 7
         })
+
+      useEdscStore.setState({
+        location: {
+          location: {
+            search: '?some=testparams'
+          }
+        }
+      })
 
       // MockStore with initialState
       const store = mockStore({
@@ -307,17 +319,12 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
         shapefile: {}
       })
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(3)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -339,6 +346,14 @@ describe('submitRetrieval', () => {
         .reply(200, {
           id: 7
         })
+
+      useEdscStore.setState({
+        location: {
+          location: {
+            search: '?some=testparams'
+          }
+        }
+      })
 
       // MockStore with initialState
       const store = mockStore({
@@ -388,17 +403,12 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
         shapefile: {}
       })
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(3)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -420,6 +430,14 @@ describe('submitRetrieval', () => {
         .reply(200, {
           id: 7
         })
+
+      useEdscStore.setState({
+        location: {
+          location: {
+            search: '?some=testparams'
+          }
+        }
+      })
 
       // MockStore with initialState
       const store = mockStore({
@@ -469,17 +487,12 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
         shapefile: {}
       })
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(3)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -501,6 +514,14 @@ describe('submitRetrieval', () => {
         .reply(200, {
           id: 7
         })
+
+      useEdscStore.setState({
+        location: {
+          location: {
+            search: '?some=testparams'
+          }
+        }
+      })
 
       // MockStore with initialState
       const store = mockStore({
@@ -547,17 +568,12 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
         shapefile: {}
       })
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(3)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -579,6 +595,14 @@ describe('submitRetrieval', () => {
         .reply(200, {
           id: 7
         })
+
+      useEdscStore.setState({
+        location: {
+          location: {
+            search: '?some=testparams'
+          }
+        }
+      })
 
       // MockStore with initialState
       const store = mockStore({
@@ -626,17 +650,12 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
         shapefile: {}
       })
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(3)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -658,6 +677,14 @@ describe('submitRetrieval', () => {
         .reply(200, {
           id: 7
         })
+
+      useEdscStore.setState({
+        location: {
+          location: {
+            search: '?some=testparams'
+          }
+        }
+      })
 
       // MockStore with initialState
       const store = mockStore({
@@ -705,17 +732,12 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
         shapefile: {}
       })
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(3)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -846,11 +868,6 @@ describe('fetchRetrieval', () => {
           }
         },
         allIds: ['collectionId']
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
       }
     })
 
@@ -988,11 +1005,6 @@ describe('fetchRetrieval', () => {
           }
         },
         allIds: ['collectionId']
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
       }
     })
 

@@ -1,39 +1,28 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen } from '@testing-library/react'
 
+import setupTest from '../../../../../../jestConfigs/setupTest'
 import { AdminProjectDetails } from '../AdminProjectDetails'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: AdminProjectDetails,
+  defaultProps: {
     project: {
-      username: 'edsc-test',
-      name: 'test project',
+      name: 'Test Project Name',
+      obfuscated_id: '06347346',
       path: '/search?ff=Map%20Imagery',
-      obfuscated_id: '06347346'
-    },
-    ...overrideProps
+      username: 'edsc-test'
+    }
   }
-  const enzymeWrapper = shallow(<AdminProjectDetails {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('AdminProjectDetails component', () => {
   test('should render the site AdminProjectDetails', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.admin-project-details__metadata-display-content').at(0).text()).toEqual('test project')
-    expect(enzymeWrapper.find('.admin-project-details__metadata-display-content').at(1).text()).toEqual('edsc-test')
-    expect(enzymeWrapper.find('.admin-project-details__metadata-display-content').at(2).text()).toEqual('06347346')
-    expect(enzymeWrapper.find('.admin-project-details__metadata-display-content').at(3).text()).toEqual('/search?ff=Map%20Imagery')
-    expect(enzymeWrapper.find('.admin-project-details__metadata-display-content').at(4).text()).toEqual(
-      JSON.stringify({ ff: 'Map Imagery' }, null, 2)
-    )
+    expect(screen.getByText('Test Project Name')).toBeInTheDocument()
+    expect(screen.getByText('edsc-test')).toBeInTheDocument()
+    expect(screen.getByText('06347346')).toBeInTheDocument()
+    expect(screen.getByText('/search?ff=Map%20Imagery')).toBeInTheDocument()
+    expect(screen.getByText('{ "ff": "Map Imagery" }')).toBeInTheDocument()
   })
 })

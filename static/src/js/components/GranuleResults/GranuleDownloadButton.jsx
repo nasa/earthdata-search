@@ -11,10 +11,10 @@ import { getApplicationConfig, getEnvironmentConfig } from '../../../../../share
 import { commafy } from '../../util/commafy'
 import { isLoggedIn } from '../../util/isLoggedIn'
 import { stringify } from '../../util/url/url'
-import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const GranuleDownloadButton = (props) => {
   const {
@@ -27,11 +27,12 @@ export const GranuleDownloadButton = (props) => {
     granuleLimit,
     initialLoading,
     isCollectionInProject,
-    location,
     onAddProjectCollection,
     onChangePath,
     tooManyGranules
   } = props
+
+  const location = useEdscStore((state) => state.location.location)
 
   const { disableDatabaseComponents } = getApplicationConfig()
   const { apiHost } = getEnvironmentConfig()
@@ -184,7 +185,6 @@ GranuleDownloadButton.propTypes = {
   granuleLimit: PropTypes.number,
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired,

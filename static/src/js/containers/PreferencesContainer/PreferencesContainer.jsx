@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
@@ -27,6 +26,4 @@ PreferencesContainer.propTypes = {
   onUpdatePreferences: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PreferencesContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(PreferencesContainer)

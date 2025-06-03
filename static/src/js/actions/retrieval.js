@@ -1,5 +1,3 @@
-import { push } from 'connected-react-router'
-
 import { SET_RETRIEVAL_LOADING, UPDATE_RETRIEVAL } from '../constants/actionTypes'
 
 import RetrievalRequest from '../util/request/retrievalRequest'
@@ -10,6 +8,7 @@ import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { prepareRetrievalParams } from '../util/retrievals'
 import { submittingProject, submittedProject } from './project'
+import useEdscStore from '../zustand/useEdscStore'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING
@@ -99,7 +98,8 @@ export const submitRetrieval = () => (dispatch, getState) => {
 
       const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
 
-      dispatch(push(`/downloads/${retrievalId}${eeLink}`))
+      const { navigate } = useEdscStore.getState().location
+      navigate(`/downloads/${retrievalId}${eeLink}`)
     })
     .catch((error) => {
       dispatch(handleError({

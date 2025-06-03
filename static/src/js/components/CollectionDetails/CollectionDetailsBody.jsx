@@ -132,7 +132,6 @@ const buildForDeveloperLink = (linkData, token) => {
 export const CollectionDetailsBody = ({
   collectionMetadata,
   isActive,
-  location,
   onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleRelatedUrlsModal
@@ -557,7 +556,6 @@ export const CollectionDetailsBody = ({
                               <RelatedCollection
                                 key={`related-collection-${id}`}
                                 className="collection-details-body__related-collection-link"
-                                location={location}
                                 onFocusedCollectionChange={onFocusedCollectionChange}
                                 onMetricsRelatedCollection={onMetricsRelatedCollection}
                                 relatedCollection={relatedCollection}
@@ -606,9 +604,6 @@ export const CollectionDetailsBody = ({
 CollectionDetailsBody.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
   isActive: PropTypes.bool.isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string
-  }).isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired

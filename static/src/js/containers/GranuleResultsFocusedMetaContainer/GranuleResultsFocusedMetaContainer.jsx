@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
@@ -48,6 +47,4 @@ GranuleResultsFocusedMetaContainer.propTypes = {
   onMetricsBrowseGranuleImage: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(GranuleResultsFocusedMetaContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(GranuleResultsFocusedMetaContainer)

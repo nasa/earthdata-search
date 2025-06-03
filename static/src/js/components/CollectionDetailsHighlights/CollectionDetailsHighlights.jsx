@@ -8,7 +8,8 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import Skeleton from '../Skeleton/Skeleton'
 
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
-import { locationPropType } from '../../util/propTypes/location'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './CollectionDetailsHighlights.scss'
 
@@ -20,9 +21,10 @@ const granuleListTotalStyle = {
 export const CollectionDetailsHighlights = ({
   collectionMetadata,
   collectionsSearch,
-  location,
   onToggleRelatedUrlsModal
 }) => {
+  const location = useEdscStore((state) => state.location.location)
+
   const {
     abstract,
     doi = {},
@@ -54,7 +56,6 @@ export const CollectionDetailsHighlights = ({
         <div className="collection-details-highlights__item-body">
           <div
             className="collection-details-highlights__item-value"
-            data-testid="collection-details-highlights__version-id"
           >
             {
               (isLoading && !isLoaded) ? (
@@ -119,7 +120,6 @@ export const CollectionDetailsHighlights = ({
         <div className="collection-details-highlights__item-body">
           <div
             className="collection-details-highlights__item-value"
-            data-testid="collection-details-highlights__temporal"
           >
             {
               (isLoading && !isLoaded) ? (
@@ -150,7 +150,6 @@ export const CollectionDetailsHighlights = ({
               <div className="collection-details-highlights__item-body">
                 <div
                   className="collection-details-highlights__item-value collection-details-highlights__item-value--desc"
-                  data-testid="collection-details-highlights__description"
                 >
                   {
                     (isLoading && !isLoaded) ? (
@@ -198,7 +197,6 @@ CollectionDetailsHighlights.propTypes = {
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool
   }).isRequired,
-  location: locationPropType.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 

@@ -30,7 +30,6 @@ const setup = setupTest({
     mapPreferences: {},
     organizationFacets: {},
     overrideTemporalSearch: {},
-    pathname: '',
     platformFacets: {},
     pointSearch: '',
     polygonSearch: '',
@@ -38,14 +37,18 @@ const setup = setupTest({
     processingLevelFacets: {},
     project: {},
     projectFacets: {},
-    location: {
-      search: '?p=C00001-EDSC'
-    },
     scienceKeywordFacets: {},
     temporalSearch: {},
     twoDCoordinateSystemNameFacets: [],
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
+  },
+  defaultZustandState: {
+    location: {
+      location: {
+        search: '?p=C00001-EDSC'
+      }
+    }
   }
 })
 
@@ -128,11 +131,6 @@ describe('mapStateToProps', () => {
           tagKey: '',
           temporal: {}
         }
-      },
-      router: {
-        location: {
-          pathname: ''
-        }
       }
     }
 
@@ -152,13 +150,9 @@ describe('mapStateToProps', () => {
       instrumentFacets: [],
       keywordSearch: '',
       lineSearch: [],
-      location: {
-        pathname: ''
-      },
       mapPreferences: {},
       organizationFacets: [],
       overrideTemporalSearch: {},
-      pathname: '',
       platformFacets: [],
       pointSearch: [],
       polygonSearch: [],
@@ -240,11 +234,6 @@ describe('mapStateToProps', () => {
           tagKey: '',
           temporal: {}
         }
-      },
-      router: {
-        location: {
-          pathname: ''
-        }
       }
     }
 
@@ -264,13 +253,9 @@ describe('mapStateToProps', () => {
       instrumentFacets: [],
       keywordSearch: '',
       lineSearch: [],
-      location: {
-        pathname: ''
-      },
       mapPreferences: {},
       organizationFacets: [],
       overrideTemporalSearch: {},
-      pathname: '',
       platformFacets: [],
       pointSearch: [],
       polygonSearch: [],
@@ -318,7 +303,7 @@ describe('UrlQueryContainer', () => {
         expect(props.onChangePath).toHaveBeenCalledTimes(1)
       })
 
-      expect(props.onChangePath).toHaveBeenCalledWith('?p=C00001-EDSC')
+      expect(props.onChangePath).toHaveBeenCalledWith('/?p=C00001-EDSC')
     })
   })
 

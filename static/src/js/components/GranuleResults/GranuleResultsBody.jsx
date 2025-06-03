@@ -5,7 +5,6 @@ import { CSSTransition } from 'react-transition-group'
 import { getGranuleIds } from '../../util/getGranuleIds'
 import { formatGranulesList } from '../../util/formatGranulesList'
 import { eventEmitter } from '../../events/events'
-import { locationPropType } from '../../util/propTypes/location'
 
 import Spinner from '../Spinner/Spinner'
 import GranuleResultsList from './GranuleResultsList'
@@ -26,7 +25,6 @@ import './GranuleResultsBody.scss'
  * @param {Object} props.granuleQuery - The granule query.
  * @param {Object} props.isOpenSearch - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
- * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onExcludeGranule - Callback exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback change the focused granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
@@ -46,7 +44,6 @@ const GranuleResultsBody = ({
   granuleQuery,
   isOpenSearch,
   loadNextPage,
-  location,
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onGenerateNotebook,
@@ -210,7 +207,6 @@ const GranuleResultsBody = ({
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
-          location={location}
           onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onExcludeGranule={onExcludeGranule}
           onGenerateNotebook={onGenerateNotebook}
@@ -240,7 +236,6 @@ const GranuleResultsBody = ({
           isOpenSearch={isOpenSearch}
           itemCount={itemCount}
           isItemLoaded={isItemLoaded}
-          location={location}
           loadMoreItems={loadMoreItems}
           onExcludeGranule={onExcludeGranule}
           onFocusedGranuleChange={onFocusedGranuleChange}
@@ -325,7 +320,6 @@ GranuleResultsBody.propTypes = {
     })
   ).isRequired,
   isOpenSearch: PropTypes.bool.isRequired,
-  location: locationPropType.isRequired,
   loadNextPage: PropTypes.func.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,

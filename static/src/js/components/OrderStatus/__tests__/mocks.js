@@ -9,14 +9,6 @@ export const retrievalStatusProps = {
   onFocusedCollectionChange: jest.fn(),
   onMetricsRelatedCollection: jest.fn(),
   onToggleAboutCSDAModal: jest.fn(),
-  match: {
-    search: {
-      id: 7
-    },
-    params: {
-      id: '7'
-    }
-  },
   onChangePath: jest.fn(),
   portal: {
     portalId: 'edsc'
@@ -124,9 +116,6 @@ export const retrievalStatusProps = {
         ]
       }
     ]
-  },
-  location: {
-    search: ''
   }
 }
 

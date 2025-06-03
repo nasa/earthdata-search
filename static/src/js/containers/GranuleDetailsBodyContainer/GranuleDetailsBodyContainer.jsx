@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
@@ -32,6 +31,4 @@ GranuleDetailsBodyContainer.propTypes = {
   granuleMetadata: PropTypes.shape({}).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, null)(GranuleDetailsBodyContainer)
-)
+export default connect(mapStateToProps, null)(GranuleDetailsBodyContainer)

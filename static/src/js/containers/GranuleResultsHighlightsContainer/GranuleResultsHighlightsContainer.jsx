@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import { min } from 'lodash-es'
 
 import { getCollectionsQuery } from '../../selectors/query'
@@ -12,7 +11,6 @@ import {
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getGranuleIds } from '../../util/getGranuleIds'
-import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
@@ -29,8 +27,7 @@ export const GranuleResultsHighlightsContainer = ({
   focusedCollectionGranuleSearch,
   focusedCollectionGranuleMetadata,
   focusedCollectionId,
-  focusedCollectionMetadata,
-  location
+  focusedCollectionMetadata
 }) => {
   const {
     isOpenSearch
@@ -70,7 +67,6 @@ export const GranuleResultsHighlightsContainer = ({
       granules={granuleList}
       isLoaded={isLoaded}
       isLoading={isLoading}
-      location={location}
       visibleGranules={visibleGranules}
     />
   )
@@ -88,10 +84,7 @@ GranuleResultsHighlightsContainer.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionMetadata: PropTypes.shape({
     isOpenSearch: PropTypes.bool
-  }).isRequired,
-  location: locationPropType.isRequired
+  }).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps)(GranuleResultsHighlightsContainer)
-)
+export default connect(mapStateToProps)(GranuleResultsHighlightsContainer)

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
@@ -54,6 +53,4 @@ ContactInfoContainer.propTypes = {
   onUpdateNotificationLevel: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(ContactInfoContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(ContactInfoContainer)

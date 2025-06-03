@@ -198,9 +198,24 @@ export type UiSlice = {
   }
 }
 
+export type LocationSlice = {
+  /** The Location Slice of the store */
+  location: {
+    /** The current location */
+    location: Location | Partial<Location>
+    /** Function to set the current location */
+    setLocation: (location: Location | Partial<Location>) => void
+    /** Function to navigate to a new location */
+    navigate: (to: string, options?: { replace?: boolean }) => void
+    /** Function to set the navigate function */
+    setNavigate: (navigate: (to: string, options?: { replace?: boolean }) => void) => void
+  }
+}
+
 export type EdscStore =
   EarthdataDownloadRedirectSlice
   & HomeSlice
+  & LocationSlice
   & MapSlice
   & ShapefileSlice
   & TimelineSlice

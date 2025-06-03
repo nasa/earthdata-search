@@ -11,7 +11,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Row from 'react-bootstrap/Row'
 import { connect, MapDispatchToProps } from 'react-redux'
-import { withRouter, type RouteComponentProps } from 'react-router-dom'
+import { type RouteProps } from 'react-router-dom'
 import { type Dispatch } from 'redux'
 
 import {
@@ -58,6 +58,8 @@ import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 import actions from '../../actions'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
@@ -170,9 +172,10 @@ interface HomeDispatchProps {
   onChangePath: (path: string) => void
 }
 
-type HomeProps = HomeDispatchProps & RouteComponentProps
+type HomeProps = HomeDispatchProps & RouteProps
 
-export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
+export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
+  const navigate = useEdscStore((state) => state.location.navigate)
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
 
@@ -240,7 +243,7 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
                   (e) => {
                     e.preventDefault()
                     onChangePath(`/search?q=${keyword}`)
-                    history.push(`/search?q=${keyword}`)
+                    navigate(`/search?q=${keyword}`)
                   }
                 }
               >
@@ -400,6 +403,4 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
   )
 }
 
-export default withRouter(
-  connect(null, mapDispatchToProps)(Home)
-)
+export default connect(null, mapDispatchToProps)(Home)

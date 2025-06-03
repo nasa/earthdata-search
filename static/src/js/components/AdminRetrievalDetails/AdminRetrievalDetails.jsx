@@ -1,7 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import Alert from 'react-bootstrap/Alert'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
@@ -209,6 +207,4 @@ AdminRetrievalDetails.propTypes = {
   onRequeueOrder: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(null, null)(AdminRetrievalDetails)
-)
+export default AdminRetrievalDetails

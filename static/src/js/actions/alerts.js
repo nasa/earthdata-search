@@ -1,15 +1,15 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import LoggerRequest from '../util/request/loggerRequest'
+import useEdscStore from '../zustand/useEdscStore'
 
 export const handleAlert = ({
   message,
   action,
   resource,
   requestObject
-}) => (dispatch, getState) => {
-  const { router = {} } = getState()
-  const { location } = router
+}) => () => {
+  const { location } = useEdscStore.getState().location
 
   let requestId = uuidv4()
   if (requestObject) {

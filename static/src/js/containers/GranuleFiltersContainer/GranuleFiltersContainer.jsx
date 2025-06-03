@@ -68,7 +68,7 @@ export const GranuleFiltersContainer = (props) => {
     handleChange,
     handleReset,
     handleSubmit,
-    onClearGranuleFilters: onClearGranuleFiltersProp,
+    onClearGranuleFilters,
     onMetricsGranuleFilter,
     onUndoExcludeGranule,
     setFieldTouched,
@@ -78,14 +78,10 @@ export const GranuleFiltersContainer = (props) => {
     values
   } = props
 
-  const onClearGranuleFilters = () => {
-    handleReset()
-    onClearGranuleFiltersProp()
-  }
-
   useEffect(() => {
     if (granuleFiltersNeedsReset) {
       onClearGranuleFilters()
+      handleReset()
       setGranuleFiltersNeedReset(false)
     }
   }, [granuleFiltersNeedsReset])

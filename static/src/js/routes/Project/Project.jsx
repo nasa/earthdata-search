@@ -5,13 +5,11 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
 
-import { locationPropType } from '../../util/propTypes/location'
 import { getProjectCollectionsRequiringChunking } from '../../selectors/project'
 
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
@@ -22,6 +20,7 @@ import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import Spinner from '../../components/Spinner/Spinner'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
@@ -38,6 +37,8 @@ const mapStateToProps = (state) => ({
 })
 
 export const Project = (props) => {
+  const location = useEdscStore((state) => state.location.location)
+
   useEffect(() => {
     document.querySelector('.root__app').classList.add('root__app--fixed-footer')
 
@@ -63,7 +64,6 @@ export const Project = (props) => {
   }
 
   const {
-    location,
     name
   } = props
   const { search } = location
@@ -103,7 +103,7 @@ export const Project = (props) => {
         id="form__project"
         onSubmit={handleSubmit}
         method="post"
-        name="project form"
+        name="Project Form"
         className="route-wrapper route-wrapper--dark"
       >
         <SidebarContainer panels={<ProjectPanelsContainer />}>
@@ -119,13 +119,10 @@ export const Project = (props) => {
 }
 
 Project.propTypes = {
-  location: locationPropType.isRequired,
   name: PropTypes.string.isRequired,
   projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Project)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(Project)

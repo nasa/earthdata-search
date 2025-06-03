@@ -109,7 +109,6 @@ describe('mapStateToProps', () => {
           spatial: {}
         }
       },
-      router: {},
       ui: {
         map: {
           drawingNewLayer: false
@@ -136,8 +135,7 @@ describe('mapStateToProps', () => {
       mapPreferences: {},
       pointSearch: undefined,
       polygonSearch: undefined,
-      project: {},
-      router: {}
+      project: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

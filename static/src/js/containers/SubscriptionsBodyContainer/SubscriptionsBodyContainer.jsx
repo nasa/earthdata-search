@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
@@ -126,6 +125,4 @@ SubscriptionsBodyContainer.propTypes = {
   onUpdateSubscriptionDisabledFields: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SubscriptionsBodyContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionsBodyContainer)

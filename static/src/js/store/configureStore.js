@@ -1,7 +1,6 @@
 // eslint-disable-rule no-unused-vars
 import { applyMiddleware, createStore } from 'redux'
 import thunk from 'redux-thunk'
-import { routerMiddleware } from 'connected-react-router'
 import { composeWithDevTools } from '@redux-devtools/extension'
 import createRootReducer from '../reducers'
 import { metricsMiddleware } from '../middleware/metrics'
@@ -24,7 +23,7 @@ export const configureStore = (initialState = {}) => {
 
     // Build out the Redux middleware
     composeWithDevTools(
-      applyMiddleware(routerMiddleware(history), metricsMiddleware, thunk)
+      applyMiddleware(metricsMiddleware, thunk)
     )
   )
 

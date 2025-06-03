@@ -1,6 +1,5 @@
 /* eslint-disable import/no-dynamic-require, global-require */
 
-import { replace, push } from 'connected-react-router'
 import { parse, stringify } from 'qs'
 
 import actions from './index'
@@ -46,8 +45,7 @@ export const updateStore = ({
   timeline
 }, newPathname) => async (dispatch, getState) => {
   const state = getState()
-  const { router } = state
-  const { location } = router
+  const { location } = useEdscStore.getState().location
   const { pathname } = location
 
   const collectionSortPreference = getCollectionSortPreference(state)
@@ -116,6 +114,7 @@ export const updateStore = ({
 }
 
 export const changePath = (path = '') => async (dispatch, getState) => {
+  console.log('🚀 ~ urlQuery.js:117 ~ changePath ~ path:', path)
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -241,13 +240,21 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   return null
 }
 
-const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
+const updateUrl = ({ options, oldPathname, newPathname }) => () => {
+  const { navigate } = useEdscStore.getState().location
+
+  console.log('🚀 ~ urlQuery.js:245 ~ navigate:', navigate)
+  console.log('🚀 ~ urlQuery.js:253 ~ newPathname:', newPathname)
+  console.log('🚀 ~ urlQuery.js:253 ~ oldPathname:', oldPathname)
+  console.log('🚀 ~ urlQuery.js:255 ~ options:', options)
   // Only replace if the pathname stays the same as the current pathname.
   // Push if the pathname is different
   if (oldPathname === newPathname) {
-    dispatch(replace(options))
+    navigate(options, { replace: true })
   } else {
-    dispatch(push(options))
+    // TODO this isn't working
+    console.log('!!!!!! Navigating to a new pathname, not replacing the current one')
+    navigate(options)
   }
 }
 
@@ -272,12 +279,11 @@ export const changeUrl = (options) => (dispatch, getState) => {
 
   const {
     authToken,
-    router,
     savedProject
   } = state
 
   let newOptions = options
-  const { location } = router
+  const { location, navigate } = useEdscStore.getState().location
   const { pathname: oldPathname } = location
 
   let newPathname
@@ -305,7 +311,7 @@ export const changeUrl = (options) => (dispatch, getState) => {
             newOptions = `${projectPath.split('?')[0]}?projectId=${newProjectId}`
 
             if (projectId !== newProjectId) {
-              dispatch(replace(newOptions))
+              navigate(newOptions, { replace: true })
             }
 
             dispatch(actions.updateSavedProject({

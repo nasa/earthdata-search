@@ -1,4 +1,4 @@
-import { LOCATION_CHANGE } from 'connected-react-router'
+// import { LOCATION_CHANGE } from 'connected-react-router'
 
 import {
   collectionSortChange,
@@ -36,9 +36,10 @@ import {
 } from './constants'
 
 const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
-  if (action.type === LOCATION_CHANGE) {
-    virtualPageview(action, getState())
-  }
+  // TODO how do I create this metrics event without redux connected to the router?
+  // if (action.type === LOCATION_CHANGE) {
+  //   virtualPageview(action, getState())
+  // }
 
   if (action.type === METRICS_DATA_ACCESS) {
     dataAccess(action, getState())

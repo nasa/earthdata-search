@@ -150,15 +150,13 @@ export const removeTemporalFilter = () => (dispatch) => {
   }))
 }
 
-export const clearFilters = () => (dispatch, getState) => {
+export const clearFilters = () => (dispatch) => {
   dispatch({ type: CLEAR_FILTERS })
 
   dispatch(actions.getCollections())
   dispatch(actions.getProjectCollections())
 
-  const state = getState()
-  const { router } = state
-  const { location } = router
+  const { location } = useEdscStore.getState().location
   const { pathname } = location
 
   // Don't request granules unless we are viewing granules

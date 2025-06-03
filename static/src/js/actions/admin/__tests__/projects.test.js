@@ -28,11 +28,11 @@ import {
   UPDATE_ADMIN_PROJECTS_SORT_KEY,
   UPDATE_ADMIN_PROJECTS_PAGE_NUM
 } from '../../../constants/actionTypes'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
 })
 
@@ -226,27 +226,26 @@ describe('fetchAdminProjects', () => {
 
 describe('adminViewProject', () => {
   test('should create an action to change the URL', () => {
-    const store = mockStore({
-      router: {
+    useEdscStore.setState({
+      location: {
         location: {
           pathname: '/admin'
-        }
+        },
+        navigate: jest.fn()
       }
     })
 
+    const store = mockStore()
+
     store.dispatch(adminViewProject(123))
 
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        args: [
-          {
-            pathname: '/admin/projects/123'
-          }
-        ],
-        method: 'push'
-      },
-      type: '@@router/CALL_HISTORY_METHOD'
+    const zustandState = useEdscStore.getState()
+    const { location } = zustandState
+    const { navigate } = location
+
+    expect(navigate).toHaveBeenCalledTimes(1)
+    expect(navigate).toHaveBeenCalledWith({
+      pathname: '/admin/projects/123'
     })
   })
 })

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import actions from '../../actions'
 import AdminRetrieval from '../../components/AdminRetrieval/AdminRetrieval'
@@ -16,21 +16,17 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const AdminRetrievalContainer = ({
-  match,
   retrievals,
   onFetchAdminRetrieval,
   onRequeueOrder
 }) => {
+  const params = useParams()
+  const { id } = params
+
   // On mount call onFetchAdminRetrieval
   useEffect(() => {
-    const { params } = match
-    const { id } = params
-
     onFetchAdminRetrieval(id)
   }, [])
-
-  const { params } = match
-  const { id } = params
 
   const { [id]: selectedRetrieval } = retrievals
 
@@ -47,16 +43,9 @@ AdminRetrievalContainer.defaultProps = {
 }
 
 AdminRetrievalContainer.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string
-    })
-  }).isRequired,
   onFetchAdminRetrieval: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({}),
   onRequeueOrder: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AdminRetrievalContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminRetrievalContainer)

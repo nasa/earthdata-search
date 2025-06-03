@@ -13,7 +13,6 @@ import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds
 import Dropdown from 'react-bootstrap/Dropdown'
 
 import { commafy } from '../../util/commafy'
-import { locationPropType } from '../../util/propTypes/location'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import Button from '../Button/Button'
@@ -24,6 +23,8 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './GranuleResultsActions.scss'
 /**
  * Renders GranuleResultsActions.
@@ -33,7 +34,6 @@ import './GranuleResultsActions.scss'
  * @param {Number} props.granuleLimit - The granule limit.
  * @param {Boolean} props.initialLoading - Flag designating the initial loading state.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
- * @param {Object} props.location - The location from the store.
  * @param {Function} props.onAddProjectCollection - Callback to add the collection from the project.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {Function} props.onChangePath - Callback to change the path.
@@ -49,7 +49,6 @@ const GranuleResultsActions = ({
   handoffLinks,
   initialLoading,
   isCollectionInProject,
-  location,
   onAddProjectCollection,
   onMetricsAddCollectionProject,
   onChangePath,
@@ -59,6 +58,7 @@ const GranuleResultsActions = ({
   searchGranuleCount,
   subscriptions
 }) => {
+  const location = useEdscStore((state) => state.location.location)
   const granuleResultsActionsContainer = useRef(null)
   const addToProjectButton = (
     <Button
@@ -140,7 +140,6 @@ const GranuleResultsActions = ({
       granuleLimit={granuleLimit}
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
-      location={location}
       onAddProjectCollection={onAddProjectCollection}
       onChangePath={onChangePath}
       projectCollection={focusedProjectCollection}
@@ -252,7 +251,6 @@ GranuleResultsActions.propTypes = {
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

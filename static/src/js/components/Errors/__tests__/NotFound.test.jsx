@@ -1,23 +1,27 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import nock from 'nock'
 import { v4 as uuidv4 } from 'uuid'
-import LoggerRequest from '../../../util/request/loggerRequest'
 
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
+import LoggerRequest from '../../../util/request/loggerRequest'
 import NotFound from '../NotFound'
 
 jest.mock('uuid')
 uuidv4.mockImplementation(() => 'mock-request-id')
 
-beforeEach(() => {
-  jest.clearAllMocks()
+const setup = setupTest({
+  Component: NotFound,
+  defaultZustandState: {
+    location: {
+      location: {
+        pathname: '/search',
+        search: ''
+      }
+    }
+  },
+  withRouter: true
 })
-
-const setup = (props) => {
-  render(
-    <NotFound {...props} />
-  )
-}
 
 describe('NotFound component', () => {
   test('should render the NotFound component', () => {
@@ -31,19 +35,17 @@ describe('NotFound component', () => {
 
     const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
 
-    setup({
-      location: {
-        search: ''
-      }
-    })
+    setup()
 
     expect(screen.getByRole('heading', { name: /Sorry! The page you were looking for does not exist./i })).toBeInTheDocument()
-    expect(loggerMock).toBeCalledTimes(1)
+
+    expect(loggerMock).toHaveBeenCalledTimes(1)
     expect(loggerMock).toHaveBeenCalledWith({
       error: {
         guid: 'mock-request-id',
         message: '404 Not Found',
         location: {
+          pathname: '/search',
           search: ''
         }
       }
@@ -60,19 +62,17 @@ describe('NotFound component', () => {
 
       const loggerMock = jest.spyOn(LoggerRequest.prototype, 'log')
 
-      setup({
-        location: {
-          search: ''
-        }
-      })
+      setup()
 
       expect(screen.getByRole('heading', { name: /Sorry! The page you were looking for does not exist./i })).toBeInTheDocument()
-      expect(loggerMock).toBeCalledTimes(1)
+
+      expect(loggerMock).toHaveBeenCalledTimes(1)
       expect(loggerMock).toHaveBeenCalledWith({
         error: {
           guid: 'mock-request-id',
           message: '404 Not Found',
           location: {
+            pathname: '/search',
             search: ''
           }
         }

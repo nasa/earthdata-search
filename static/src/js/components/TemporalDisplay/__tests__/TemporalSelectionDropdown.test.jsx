@@ -10,24 +10,12 @@ import PropTypes from 'prop-types'
 
 import moment from 'moment'
 
-import { useLocation } from 'react-router-dom'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as metricsActions from '../../../middleware/metrics/actions'
 
 import TemporalSelectionDropdown from '../TemporalSelectionDropdown'
 import TemporalSelectionDropdownMenu from '../TemporalSelectionDropdownMenu'
-import setupTest from '../../../../../../jestConfigs/setupTest'
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
-    pathname: '/',
-    search: '',
-    hash: '',
-    state: null,
-    key: 'testKey'
-  })
-}))
 
 jest.mock('../TemporalSelectionDropdownMenu')
 
@@ -71,26 +59,26 @@ MockTemporalMenu.propTypes = {
 }
 
 const setup = setupTest({
-  ComponentsByRoute: {
-    '/': TemporalSelectionDropdown
+  Component: TemporalSelectionDropdown,
+  defaultProps: {
+    searchParams: {},
+    temporalSearch: {
+      endDate: '',
+      startDate: '',
+      isRecurring: false
+    },
+    onChangeQuery: jest.fn(),
+    onMetricsTemporalFilter: jest.fn()
   },
-  defaultPropsByRoute: {
-    '/': {
-      searchParams: {},
-      temporalSearch: {
-        endDate: '',
-        startDate: '',
-        isRecurring: false
-      },
-      onChangeQuery: jest.fn(),
-      onMetricsTemporalFilter: jest.fn()
+  defaultZustandState: {
+    location: {
+      location: {
+        pathname: '/search',
+        search: ''
+      }
     }
   },
-  withRedux: true,
-  withRouter: true
-})
-
-beforeAll(() => {
+  withRedux: true
 })
 
 beforeEach(() => {
@@ -208,12 +196,10 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2019-03-30T00:00:00.000Z'
 
     const { props, user } = setup({
-      overridePropsByRoute: {
-        '/': {
-          temporalSearch: {
-            endDate: validEndDate,
-            startDate: validStartDate
-          }
+      overrideProps: {
+        temporalSearch: {
+          endDate: validEndDate,
+          startDate: validStartDate
         }
       }
     })
@@ -527,13 +513,11 @@ describe('TemporalSelectionDropdown component', () => {
   describe('TemporalSelectionDropdown recurring and slider behavior', () => {
     test('handles recurring toggle and slider interactions correctly', async () => {
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '2022-03-29T00:00:00.000Z',
-              endDate: '2024-03-30T00:00:00.000Z',
-              isRecurring: true
-            }
+        overrideProps: {
+          temporalSearch: {
+            startDate: '2022-03-29T00:00:00.000Z',
+            endDate: '2024-03-30T00:00:00.000Z',
+            isRecurring: true
           }
         }
       })
@@ -573,15 +557,13 @@ describe('TemporalSelectionDropdown component', () => {
 
     test('handles unchecking isRecurring', async () => {
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              isRecurring: true,
-              startDate: '2022-03-29 00:00:00',
-              endDate: '2024-03-30 00:00:00',
-              recurringDayStart: '88',
-              recurringDayEnd: '89'
-            }
+        overrideProps: {
+          temporalSearch: {
+            isRecurring: true,
+            startDate: '2022-03-29 00:00:00',
+            endDate: '2024-03-30 00:00:00',
+            recurringDayStart: '88',
+            recurringDayEnd: '89'
           }
         }
       })
@@ -619,13 +601,11 @@ describe('TemporalSelectionDropdown component', () => {
 
     test('handles recurring toggle with same year dates', async () => {
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '2024-03-29T00:00:00.000Z',
-              endDate: '2024-03-30T00:00:00.000Z',
-              isRecurring: false
-            }
+        overrideProps: {
+          temporalSearch: {
+            startDate: '2024-03-29T00:00:00.000Z',
+            endDate: '2024-03-30T00:00:00.000Z',
+            isRecurring: false
           }
         }
       })
@@ -680,13 +660,11 @@ describe('TemporalSelectionDropdown component', () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
 
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '2024-01-01T00:00:00.000Z',
-              endDate: '',
-              isRecurring: false
-            }
+        overrideProps: {
+          temporalSearch: {
+            startDate: '2024-01-01T00:00:00.000Z',
+            endDate: '',
+            isRecurring: false
           }
         }
       })
@@ -736,13 +714,11 @@ describe('TemporalSelectionDropdown component', () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
 
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '',
-              endDate: '',
-              isRecurring: false
-            }
+        overrideProps: {
+          temporalSearch: {
+            startDate: '',
+            endDate: '',
+            isRecurring: false
           }
         }
       })
@@ -792,13 +768,11 @@ describe('TemporalSelectionDropdown component', () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
 
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '',
-              endDate: '2020-01-25T00:00:00.000Z',
-              isRecurring: false
-            }
+        overrideProps: {
+          temporalSearch: {
+            startDate: '',
+            endDate: '2020-01-25T00:00:00.000Z',
+            isRecurring: false
           }
         }
       })
@@ -849,10 +823,16 @@ describe('TemporalSelectionDropdown component', () => {
     describe('when on the landing page', () => {
       test('adds the search keyword to the params', async () => {
         const { props, user } = setup({
-          overridePropsByRoute: {
-            '/': {
-              searchParams: {
-                q: 'test'
+          overrideProps: {
+            searchParams: {
+              q: 'test'
+            }
+          },
+          overrideZustandState: {
+            location: {
+              location: {
+                pathname: '/',
+                search: ''
               }
             }
           }
@@ -906,20 +886,10 @@ describe('TemporalSelectionDropdown component', () => {
 
     describe('when not on the landing page', () => {
       test('adds the search keyword to the params', async () => {
-        useLocation.mockReturnValue({
-          pathname: '/search',
-          search: '',
-          hash: '',
-          state: null,
-          key: 'testKey'
-        })
-
         const { props, user } = setup({
-          overridePropsByRoute: {
-            '/': {
-              searchParams: {
-                q: 'test'
-              }
+          overrideProps: {
+            searchParams: {
+              q: 'test'
             }
           }
         })

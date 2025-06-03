@@ -21,6 +21,8 @@ import Timeline from '../../components/Timeline/Timeline'
 
 import { CollectionsMetadata, Query } from '../../types/sharedTypes'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeQuery:
     (query: Query) => dispatch(actions.changeQuery(query)),
@@ -37,9 +39,7 @@ export const mapStateToProps = (state) => ({
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollectionId: getFocusedCollectionId(state),
   isOpen: state.ui.timeline.isOpen,
-  pathname: state.router.location.pathname,
   projectCollectionsIds: getProjectCollectionsIds(state),
-  search: state.router.location.search,
   temporalSearch: state.query.collection.temporal
 })
 
@@ -76,6 +76,12 @@ interface TimelineContainerProps {
 }
 
 export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
+  const location = useEdscStore((state) => state.location.location)
+  const {
+    pathname = '',
+    search: searchLocation = ''
+  } = location
+
   const {
     collectionsMetadata,
     focusedCollectionId,
@@ -84,9 +90,7 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
     onMetricsTimeline,
     onToggleOverrideTemporalModal,
     onToggleTimeline,
-    pathname,
     projectCollectionsIds,
-    search: searchLocation,
     temporalSearch = {}
   } = props
 

@@ -52,15 +52,18 @@ describe('updateStore', () => {
       }
     }
 
+    useEdscStore.setState({
+      location: {
+        location: {
+          pathname: '/search'
+        }
+      }
+    })
+
     const store = mockStore({
       preferences: {
         preferences: {
           collectionSort: 'default'
-        }
-      },
-      router: {
-        location: {
-          pathname: '/search'
         }
       }
     })
@@ -143,6 +146,11 @@ describe('updateStore', () => {
         timeline: {
           ...initialState.timeline,
           getTimeline: getTimelineMock
+        },
+        location: {
+          location: {
+            pathname: '/projects'
+          }
         }
       })
 
@@ -150,11 +158,6 @@ describe('updateStore', () => {
         preferences: {
           preferences: {
             collectionSort: 'default'
-          }
-        },
-        router: {
-          location: {
-            pathname: '/projects'
           }
         }
       })
@@ -237,6 +240,11 @@ describe('updateStore', () => {
         timeline: {
           ...initialState.timeline,
           getTimeline: getTimelineMock
+        },
+        location: {
+          location: {
+            pathname: '/projects'
+          }
         }
       })
 
@@ -244,11 +252,6 @@ describe('updateStore', () => {
         preferences: {
           preferences: {
             collectionSort: 'default'
-          }
-        },
-        router: {
-          location: {
-            pathname: '/projects'
           }
         }
       })
@@ -589,6 +592,14 @@ describe('changePath', () => {
 
         const newPath = '/search/granules?p=C00001-EDSC'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
           project: {
@@ -600,11 +611,6 @@ describe('changePath', () => {
           query: {
             collection: {
               spatial: {}
-            }
-          },
-          router: {
-            location: {
-              pathname: '/search'
             }
           },
           timeline: {
@@ -626,6 +632,14 @@ describe('changePath', () => {
 
         const newPath = '/search/granules/collection-details?p=C00001-EDSC'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
           project: {
@@ -637,11 +651,6 @@ describe('changePath', () => {
           query: {
             collection: {
               spatial: {}
-            }
-          },
-          router: {
-            location: {
-              pathname: '/search'
             }
           },
           timeline: {
@@ -663,6 +672,14 @@ describe('changePath', () => {
 
         const newPath = '/search/granules/subscriptions?p=C00001-EDSC'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
           project: {
@@ -674,11 +691,6 @@ describe('changePath', () => {
           query: {
             collection: {
               spatial: {}
-            }
-          },
-          router: {
-            location: {
-              pathname: '/search'
             }
           },
           timeline: {
@@ -701,6 +713,14 @@ describe('changePath', () => {
 
         const newPath = '/search/granules/granule-details?p=C00001-EDSC'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
           focusedGranule: 'G00001-EDSC',
@@ -713,11 +733,6 @@ describe('changePath', () => {
           query: {
             collection: {
               spatial: {}
-            }
-          },
-          router: {
-            location: {
-              pathname: '/search'
             }
           },
           timeline: {
@@ -742,6 +757,14 @@ describe('changePath', () => {
 
         const newPath = '/portal/fakeportal/search/granules?p=C00001-EDSC'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
           project: {
@@ -753,11 +776,6 @@ describe('changePath', () => {
           query: {
             collection: {
               spatial: {}
-            }
-          },
-          router: {
-            location: {
-              pathname: '/search'
             }
           },
           timeline: {
@@ -779,6 +797,14 @@ describe('changePath', () => {
 
         const newPath = '/portal/fakeportal/search/granules/collection-details?p=C00001-EDSC'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
           project: {
@@ -790,11 +816,6 @@ describe('changePath', () => {
           query: {
             collection: {
               spatial: {}
-            }
-          },
-          router: {
-            location: {
-              pathname: '/search'
             }
           },
           timeline: {
@@ -816,6 +837,14 @@ describe('changePath', () => {
 
         const newPath = '/portal/fakeportal/search/granules/subscriptions?p=C00001-EDSC'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
           project: {
@@ -827,11 +856,6 @@ describe('changePath', () => {
           query: {
             collection: {
               spatial: {}
-            }
-          },
-          router: {
-            location: {
-              pathname: '/search'
             }
           },
           timeline: {
@@ -854,6 +878,14 @@ describe('changePath', () => {
 
         const newPath = '/portal/fakeportal/search/granules/granule-details?p=C00001-EDSC'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
           focusedGranule: 'G00001-EDSC',
@@ -866,11 +898,6 @@ describe('changePath', () => {
           query: {
             collection: {
               spatial: {}
-            }
-          },
-          router: {
-            location: {
-              pathname: '/search'
             }
           },
           timeline: {
@@ -894,55 +921,49 @@ describe('changeUrl', () => {
       test('calls replace when the pathname has not changed', () => {
         const newPath = '/search?p=C00001-EDSC'
 
-        const store = mockStore({
-          earthdataEnvironment: 'prod',
-          router: {
+        const mockNavigate = jest.fn()
+        useEdscStore.setState({
+          location: {
             location: {
               pathname: '/search'
-            }
-          },
+            },
+            navigate: mockNavigate
+          }
+        })
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
           savedProject: {}
         })
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
-        const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          payload: {
-            args: [
-              newPath
-            ],
-            method: 'replace'
-          },
-          type: '@@router/CALL_HISTORY_METHOD'
-        })
+        expect(mockNavigate).toHaveBeenCalledTimes(1)
+        expect(mockNavigate).toHaveBeenCalledWith(newPath, { replace: true })
       })
 
       test('calls push when the pathname has changed', () => {
         const newPath = '/search/granules?p=C00001-EDSC'
 
-        const store = mockStore({
-          earthdataEnvironment: 'prod',
-          router: {
+        const mockNavigate = jest.fn()
+        useEdscStore.setState({
+          location: {
             location: {
               pathname: '/search'
-            }
-          },
+            },
+            navigate: mockNavigate
+          }
+        })
+
+        const store = mockStore({
+          earthdataEnvironment: 'prod',
           savedProject: {}
         })
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
-        const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          payload: {
-            args: [
-              newPath
-            ],
-            method: 'push'
-          },
-          type: '@@router/CALL_HISTORY_METHOD'
-        })
+        expect(mockNavigate).toHaveBeenCalledTimes(1)
+        expect(mockNavigate).toHaveBeenCalledWith(newPath)
       })
     })
 
@@ -957,13 +978,17 @@ describe('changeUrl', () => {
 
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search',
+              search: '?projectId=1'
+            }
+          }
+        })
+
         const store = mockStore({
           query: {},
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -992,13 +1017,19 @@ describe('changeUrl', () => {
 
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
+        const mockNavigate = jest.fn()
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search',
+              search: '?projectId=1'
+            },
+            navigate: mockNavigate
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1007,36 +1038,36 @@ describe('changeUrl', () => {
 
         await store.dispatch(urlQuery.changeUrl(newPath)).then(() => {
           const storeActions = store.getActions()
-          expect(storeActions[0]).toEqual({
-            payload: {
-              args: [
-                '/search?projectId=2'
-              ],
-              method: 'replace'
-            },
-            type: '@@router/CALL_HISTORY_METHOD'
-          })
 
-          expect(storeActions[1]).toEqual({
+          expect(storeActions[0]).toEqual({
             payload: {
               projectId: 2,
               path: '/search?p=C00001-EDSC'
             },
             type: UPDATE_SAVED_PROJECT
           })
+
+          expect(mockNavigate).toHaveBeenCalledTimes(1)
+          expect(mockNavigate).toHaveBeenCalledWith('/search?projectId=2', { replace: true })
         })
       })
 
       test('when the path has not changed', () => {
         const newPath = '/search?p=C00001-EDSC'
 
+        const mockNavigate = jest.fn()
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search',
+              search: '?projectId=1'
+            },
+            navigate: mockNavigate
+          }
+        })
+
         const store = mockStore({
           earthdataEnvironment: 'prod',
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1047,6 +1078,8 @@ describe('changeUrl', () => {
 
         const storeActions = store.getActions()
         expect(storeActions.length).toBe(0)
+
+        expect(mockNavigate).toHaveBeenCalledTimes(0)
       })
 
       test('handles an error updating the stored path', async () => {
@@ -1058,13 +1091,19 @@ describe('changeUrl', () => {
 
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
+        const mockNavigate = jest.fn()
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search',
+              search: '?projectId=1'
+            },
+            navigate: mockNavigate
+          }
+        })
+
         const store = mockStore({
           query: {},
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1075,6 +1114,8 @@ describe('changeUrl', () => {
           const storeActions = store.getActions()
           expect(storeActions.length).toEqual(0)
         })
+
+        expect(mockNavigate).toHaveBeenCalledTimes(0)
 
         expect(handleErrorMock).toHaveBeenCalledTimes(1)
         expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
@@ -1094,27 +1135,24 @@ describe('changeUrl', () => {
         search: '?p=C00001-EDSC'
       }
 
-      const store = mockStore({
-        earthdataEnvironment: 'prod',
-        router: {
+      const mockNavigate = jest.fn()
+      useEdscStore.setState({
+        location: {
           location: {
             pathname: '/search'
-          }
+          },
+          navigate: mockNavigate
         }
+      })
+
+      const store = mockStore({
+        earthdataEnvironment: 'prod'
       })
 
       store.dispatch(urlQuery.changeUrl(newPath))
 
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          args: [
-            newPath
-          ],
-          method: 'replace'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(mockNavigate).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).toHaveBeenCalledWith(newPath, { replace: true })
     })
 
     test('calls push when the pathname has changed', () => {
@@ -1123,27 +1161,24 @@ describe('changeUrl', () => {
         search: '?p=C00001-EDSC'
       }
 
-      const store = mockStore({
-        earthdataEnvironment: 'prod',
-        router: {
+      const mockNavigate = jest.fn()
+      useEdscStore.setState({
+        location: {
           location: {
             pathname: '/search'
-          }
+          },
+          navigate: mockNavigate
         }
+      })
+
+      const store = mockStore({
+        earthdataEnvironment: 'prod'
       })
 
       store.dispatch(urlQuery.changeUrl(newPath))
 
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          args: [
-            newPath
-          ],
-          method: 'push'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(mockNavigate).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).toHaveBeenCalledWith(newPath)
     })
   })
 })

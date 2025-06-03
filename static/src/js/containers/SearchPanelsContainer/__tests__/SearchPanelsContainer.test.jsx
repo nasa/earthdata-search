@@ -15,17 +15,6 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
 
-const mockOnApplyGranuleFilters = jest.fn
-const mockOnChangeQuery = jest.fn
-const mockOnChangePath = jest.fn
-const mockOnFocusedCollectionChange = jest.fn
-const mockOnMetricsCollectionSortChange = jest.fn
-const mockOnToggleAboutCSDAModal = jest.fn
-const mockOnToggleAboutCwicModal = jest.fn
-const mockOnTogglePanels = jest.fn
-const mockOnSetActivePanel = jest.fn
-const mockOnExport = jest.fn
-
 const setup = setupTest({
   Component: SearchPanelsContainer,
   defaultProps: {
@@ -45,16 +34,15 @@ const setup = setupTest({
     match: {
       url: '/search'
     },
-    onApplyGranuleFilters: mockOnApplyGranuleFilters,
-    onChangeQuery: mockOnChangeQuery,
-    onChangePath: mockOnChangePath,
-    onFocusedCollectionChange: mockOnFocusedCollectionChange,
-    onMetricsCollectionSortChange: mockOnMetricsCollectionSortChange,
-    onToggleAboutCSDAModal: mockOnToggleAboutCSDAModal,
-    onToggleAboutCwicModal: mockOnToggleAboutCwicModal,
-    onTogglePanels: mockOnTogglePanels,
-    onSetActivePanel: mockOnSetActivePanel,
-    onExport: mockOnExport,
+    onApplyGranuleFilters: jest.fn(),
+    onChangeQuery: jest.fn(),
+    onChangePath: jest.fn(),
+    onFocusedCollectionChange: jest.fn(),
+    onMetricsCollectionSortChange: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
+    onToggleAboutCwicModal: jest.fn(),
+    onTogglePanels: jest.fn(),
+    onExport: jest.fn(),
     panels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -67,7 +55,8 @@ const setup = setupTest({
     portal: {
       test: 'portal'
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('mapDispatchToProps', () => {
@@ -77,8 +66,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onApplyGranuleFilters({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onChangeQuery calls actions.changeQuery', () => {
@@ -87,8 +76,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onChangePath calls actions.changePath', () => {
@@ -97,8 +86,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('/search')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('/search')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('/search')
   })
 
   test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
@@ -107,8 +96,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFocusedCollectionChange('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onMetricsCollectionSortChange calls metricsCollectionSortChange', () => {
@@ -117,18 +106,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onMetricsCollectionSortChange({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
-  })
-
-  test('onSetActivePanel calls actions.setActivePanel', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setActivePanel')
-
-    mapDispatchToProps(dispatch).onSetActivePanel('panelId')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('panelId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
@@ -137,8 +116,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(true)
   })
 
   test('onToggleAboutCwicModal calls actions.toggleAboutCwicModal', () => {
@@ -147,8 +126,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleAboutCwicModal(true)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(true)
   })
 
   test('onTogglePanels calls actions.togglePanels', () => {
@@ -157,8 +136,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onTogglePanels('value')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('value')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('value')
   })
 
   test('onExport calls actions.exportSearch', () => {
@@ -167,8 +146,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onExport('json')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('json')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('json')
   })
 })
 
@@ -232,18 +211,39 @@ describe('SearchPanelsContainer component', () => {
     expect(panels).toBeInTheDocument()
     expect(SearchPanels).toHaveBeenCalledTimes(1)
     expect(SearchPanels).toHaveBeenCalledWith(
-      expect.objectContaining({
-        match: { url: '/search' },
-        onSetActivePanel: mockOnSetActivePanel,
-        onTogglePanels: mockOnTogglePanels,
+      {
+        authToken: '',
+        collectionMetadata: {},
+        collectionQuery: {},
+        collectionSubscriptions: [],
+        collectionsSearch: {},
+        granuleMetadata: {},
+        granuleQuery: {},
+        granuleSearchResults: {},
+        isExportRunning: {
+          csv: false,
+          json: false
+        },
+        onApplyGranuleFilters: expect.any(Function),
+        onChangePath: expect.any(Function),
+        onChangeQuery: expect.any(Function),
+        onExport: expect.any(Function),
+        onFocusedCollectionChange: expect.any(Function),
+        onMetricsCollectionSortChange: expect.any(Function),
+        onToggleAboutCSDAModal: expect.any(Function),
+        onToggleAboutCwicModal: expect.any(Function),
+        onTogglePanels: expect.any(Function),
         panels: {
           activePanel: '0.0.0',
           isOpen: false
         },
-        portal: {
-          test: 'portal'
+        portal: { test: 'portal' },
+        preferences: {
+          collectionListView: 'default',
+          granuleListView: 'default',
+          panelState: 'default'
         }
-      }),
+      },
       {}
     )
   })

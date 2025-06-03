@@ -2,7 +2,6 @@ import React from 'react'
 import { Provider } from 'react-redux'
 import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { useLocation } from 'react-router-dom'
 import Autosuggest from 'react-autosuggest'
 
 import SearchForm from '../SearchForm'
@@ -25,29 +24,8 @@ jest.mock('../../SpatialDisplay/SpatialSelectionDropdown', () => {
   return mockSpatialSelectionDropdown
 })
 
-// Mock react react-router-dom so that the tests do not think we are on the homepage
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
-    pathname: '/',
-    search: '',
-    hash: '',
-    state: null,
-    key: 'testKey'
-  })
-}))
-
-useLocation.mockReturnValue({
-  pathname: '/search',
-  search: '',
-  hash: '',
-  state: null,
-  key: 'testKey'
-})
-
 beforeEach(() => {
   jest.clearAllTimers()
-  jest.clearAllMocks()
 
   window.addEventListener = jest.fn((event, cb) => {
     windowEventMap[event] = cb

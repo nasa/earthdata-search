@@ -6,14 +6,16 @@ import { parse } from 'qs'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { stringify } from '../../util/url/url'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const RelatedCollection = ({
   className,
-  location,
   onFocusedCollectionChange,
   onMetricsRelatedCollection,
   relatedCollection
 }) => {
+  const location = useEdscStore((state) => state.location.location)
+
   const { id, title } = relatedCollection
   const params = parse(
     location.search,
@@ -61,9 +63,6 @@ RelatedCollection.defaultProps = {
 
 RelatedCollection.propTypes = {
   className: PropTypes.string,
-  location: PropTypes.shape({
-    search: PropTypes.string
-  }).isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   relatedCollection: PropTypes.shape({

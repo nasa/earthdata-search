@@ -61,12 +61,7 @@ describe('changeQuery', () => {
           spatial: {}
         }
       },
-      project: {},
-      router: {
-        location: {
-          pathname: ''
-        }
-      }
+      project: {}
     })
 
     // Call the dispatch
@@ -119,12 +114,7 @@ describe('changeQuery', () => {
           spatial: {}
         }
       },
-      project: {},
-      router: {
-        location: {
-          pathname: ''
-        }
-      }
+      project: {}
     })
 
     // Call the dispatch
@@ -192,11 +182,6 @@ describe('changeQuery', () => {
         collections: {
           allIds: ['C10000-EDSC']
         }
-      },
-      router: {
-        location: {
-          pathname: ''
-        }
       }
     })
 
@@ -259,11 +244,6 @@ describe('changeProjectQuery', () => {
         collections: {
           allIds: [],
           byId: {}
-        }
-      },
-      router: {
-        location: {
-          pathname: ''
         }
       }
     })
@@ -432,11 +412,6 @@ describe('removeSpatialFilter', () => {
         }
       },
       project: {},
-      router: {
-        location: {
-          pathname: ''
-        }
-      },
       timeline: {
         query: {}
       }
@@ -490,11 +465,6 @@ describe('removeTemporalFilter', () => {
         }
       },
       project: {},
-      router: {
-        location: {
-          pathname: ''
-        }
-      },
       timeline: {
         query: {}
       }
@@ -544,87 +514,106 @@ describe('changeRegionQuery', () => {
 })
 
 describe('clearFilters', () => {
-  test('clears the query and calls getCollections', () => {
-    // MockStore with initialState
-    const store = mockStore({
-      router: {
+  describe('when on the granules page', () => {
+    test('clears the query and calls getCollections', () => {
+      useEdscStore.setState({
         location: {
-          pathname: '/search/granules'
+          location: {
+            pathname: '/search/granules'
+          }
         }
-      }
+      })
+
+      // MockStore with initialState
+      const store = mockStore()
+
+      // Mock getCollections
+      const getCollectionsMock = jest.spyOn(actions, 'getCollections')
+      getCollectionsMock.mockImplementation(() => jest.fn())
+
+      const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
+      getProjectCollectionsMock.mockImplementation(() => jest.fn())
+
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementation(() => jest.fn())
+
+      const getTimelineMock = jest.fn()
+      useEdscStore.setState({
+        timeline: {
+          getTimeline: getTimelineMock
+        }
+      })
+
+      // Call the dispatch
+      store.dispatch(actions.clearFilters())
+      const storeActions = store.getActions()
+
+      expect(storeActions[0]).toEqual({
+        type: CLEAR_FILTERS
+      })
+
+      // Was getCollections called
+      expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+      expect(getCollectionsMock).toHaveBeenCalledWith()
+
+      expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+      expect(getProjectCollectionsMock).toHaveBeenCalledWith()
+
+      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+      expect(getSearchGranulesMock).toHaveBeenCalledWith()
+
+      expect(getTimelineMock).toHaveBeenCalledTimes(1)
+      expect(getTimelineMock).toHaveBeenCalledWith()
     })
-
-    // Mock getCollections
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections')
-    getCollectionsMock.mockImplementation(() => jest.fn())
-
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-    getProjectCollectionsMock.mockImplementation(() => jest.fn())
-
-    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
-    getSearchGranulesMock.mockImplementation(() => jest.fn())
-
-    const getTimelineMock = jest.fn()
-    useEdscStore.setState({
-      timeline: {
-        getTimeline: getTimelineMock
-      }
-    })
-
-    // Call the dispatch
-    store.dispatch(actions.clearFilters())
-    const storeActions = store.getActions()
-
-    expect(storeActions[0]).toEqual({
-      type: CLEAR_FILTERS
-    })
-
-    // Was getCollections called
-    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
-    expect(getTimelineMock).toHaveBeenCalledTimes(1)
   })
 
-  test('does not call getGranules on the collections page', () => {
-    // MockStore with initialState
-    const store = mockStore({
-      router: {
+  describe('when on the collections page', () => {
+    test('does not call getGranules', () => {
+      useEdscStore.setState({
         location: {
-          pathname: '/search'
+          location: {
+            pathname: '/search'
+          }
         }
-      }
+      })
+
+      // MockStore with initialState
+      const store = mockStore()
+
+      // Mock getCollections
+      const getCollectionsMock = jest.spyOn(actions, 'getCollections')
+      getCollectionsMock.mockImplementation(() => jest.fn())
+
+      const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
+      getProjectCollectionsMock.mockImplementation(() => jest.fn())
+
+      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
+      getSearchGranulesMock.mockImplementation(() => jest.fn())
+
+      const getTimelineMock = jest.fn()
+      useEdscStore.setState({
+        timeline: {
+          getTimeline: getTimelineMock
+        }
+      })
+
+      // Call the dispatch
+      store.dispatch(actions.clearFilters())
+      const storeActions = store.getActions()
+
+      expect(storeActions[0]).toEqual({
+        type: CLEAR_FILTERS
+      })
+
+      // Was getCollections called
+      expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+      expect(getCollectionsMock).toHaveBeenCalledWith()
+
+      expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+      expect(getProjectCollectionsMock).toHaveBeenCalledWith()
+
+      expect(getSearchGranulesMock).toHaveBeenCalledTimes(0)
+      expect(getTimelineMock).toHaveBeenCalledTimes(0)
     })
-
-    // Mock getCollections
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections')
-    getCollectionsMock.mockImplementation(() => jest.fn())
-
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-    getProjectCollectionsMock.mockImplementation(() => jest.fn())
-
-    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
-    getSearchGranulesMock.mockImplementation(() => jest.fn())
-
-    const getTimelineMock = jest.fn()
-    useEdscStore.setState({
-      timeline: {
-        getTimeline: getTimelineMock
-      }
-    })
-
-    // Call the dispatch
-    store.dispatch(actions.clearFilters())
-    const storeActions = store.getActions()
-
-    expect(storeActions[0]).toEqual({
-      type: CLEAR_FILTERS
-    })
-
-    // Was getCollections called
-    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getSearchGranulesMock).toHaveBeenCalledTimes(0)
-    expect(getTimelineMock).toHaveBeenCalledTimes(0)
   })
 })

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Helmet } from 'react-helmet'
 
@@ -13,7 +14,6 @@ import Well from '../Well/Well'
 
 import { deployedEnvironment } from '../../../../../sharedUtils/deployedEnvironment'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { locationPropType } from '../../util/propTypes/location'
 import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
 import { stringify } from '../../util/url/url'
 
@@ -25,8 +25,6 @@ import './OrderStatus.scss'
  * @param {String} props.authToken - The authToken for the logged in user.
  * @param {String} props.earthdataEnvironment - The accessMethods of the current collection.
  * @param {Object} props.granuleDownload - Data pertaining to the status of the granule download for a retrieval collection.
- * @param {Object} props.location - Location passed from react router.
- * @param {Object} props.match - Router match state.
  * @param {Function} props.onChangePath - Selects an access method.
  * @param {Function} props.onFetchRetrieval - Fetches a retrieval from the database.
  * @param {Function} props.onFetchRetrievalCollection - Fetches a retrieval collection from the database.
@@ -36,12 +34,10 @@ import './OrderStatus.scss'
  * @param {Function} props.onToggleAboutCSDAModal - Callback to toggle the About CSDA Modal.
 
  */
-export const OrderStatus = ({
+const OrderStatus = ({
   authToken,
   earthdataEnvironment,
   granuleDownload,
-  location,
-  match,
   onChangePath,
   onFetchRetrieval,
   onFetchRetrievalCollection,
@@ -52,9 +48,10 @@ export const OrderStatus = ({
   onToggleAboutCSDAModal,
   retrieval = {}
 }) => {
+  const params = useParams()
+
   useEffect(() => {
     if (authToken !== '') {
-      const { params } = match
       const { id: retrievalId } = params
 
       onFetchRetrieval(retrievalId, authToken)
@@ -208,7 +205,6 @@ export const OrderStatus = ({
                   collections={allCollections}
                   earthdataEnvironment={earthdataEnvironment}
                   granuleDownload={granuleDownload}
-                  match={match}
                   onChangePath={onChangePath}
                   onFetchRetrieval={onFetchRetrieval}
                   onFetchRetrievalCollection={onFetchRetrievalCollection}
@@ -313,7 +309,6 @@ export const OrderStatus = ({
                                 <RelatedCollection
                                   key={`related-collection-${collectionId}`}
                                   className="collection-body__related-collection-link"
-                                  location={location}
                                   onFocusedCollectionChange={onFocusedCollectionChange}
                                   onMetricsRelatedCollection={onMetricsRelatedCollection}
                                   relatedCollection={relatedCollection}
@@ -388,12 +383,6 @@ OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string
-    })
-  }).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,

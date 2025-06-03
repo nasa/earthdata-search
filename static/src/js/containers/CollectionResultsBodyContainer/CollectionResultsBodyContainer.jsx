@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
-import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
 import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
@@ -39,7 +37,6 @@ export const CollectionResultsBodyContainer = (props) => {
   const {
     collectionsMetadata,
     collectionsSearch,
-    location,
     onAddProjectCollection,
     onChangeCollectionPageNum,
     onMetricsAddCollectionProject,
@@ -63,7 +60,6 @@ export const CollectionResultsBodyContainer = (props) => {
       collectionsMetadata={collectionsMetadata}
       collectionsSearch={collectionsSearch}
       loadNextPage={loadNextPage}
-      location={location}
       onAddProjectCollection={onAddProjectCollection}
       onMetricsAddCollectionProject={onMetricsAddCollectionProject}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
@@ -79,7 +75,6 @@ export const CollectionResultsBodyContainer = (props) => {
 CollectionResultsBodyContainer.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   onChangeCollectionPageNum: PropTypes.func.isRequired,
@@ -94,6 +89,4 @@ CollectionResultsBodyContainer.propTypes = {
   }).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(CollectionResultsBodyContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionResultsBodyContainer)

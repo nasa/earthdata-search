@@ -1,7 +1,7 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
-import { BrowserRouter } from 'react-router-dom'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import AdminPreferencesMetrics from '../../../components/AdminPreferencesMetrics/AdminPreferencesMetrics'
@@ -19,19 +19,13 @@ jest.mock('../../../components/AdminPreferencesMetrics/AdminPreferencesMetrics',
   )
 ))
 
-const setup = () => {
-  const props = {
+const setup = setupTest({
+  Component: AdminPreferencesMetricsContainer,
+  defaultProps: {
     onFetchAdminPreferencesMetrics: jest.fn(),
-    preferences: {}
+    preferencesMetrics: {}
   }
-
-  // https://testing-library.com/docs/example-react-router/
-  render(<AdminPreferencesMetricsContainer {...props} />, { wrapper: BrowserRouter })
-
-  return {
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onFetchAdminPreferencesMetrics calls actions.onFetchAdminPreferencesMetrics', () => {

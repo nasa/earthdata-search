@@ -7,7 +7,7 @@ import history from '../../util/history'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
-    (portalId) => dispatch(actions.changePath(portalId))
+    (path) => dispatch(actions.changePath(path))
 })
 
 export const HistoryContainer = ({ onChangePath }) => {

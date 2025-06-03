@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
@@ -18,7 +17,6 @@ import {
 import { getFocusedProjectCollection } from '../../selectors/project'
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
 
-import { locationPropType } from '../../util/propTypes/location'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
@@ -62,7 +60,6 @@ export const GranuleResultsActionsContainer = (props) => {
     focusedProjectCollection,
     granuleQuery,
     granuleSearchResults,
-    location,
     onAddProjectCollection,
     onChangePath,
     onMetricsAddCollectionProject,
@@ -125,7 +122,6 @@ export const GranuleResultsActionsContainer = (props) => {
       handoffLinks={handoffLinks}
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
-      location={location}
       onAddProjectCollection={onAddProjectCollection}
       onChangePath={onChangePath}
       onMetricsAddCollectionProject={onMetricsAddCollectionProject}
@@ -157,7 +153,6 @@ GranuleResultsActionsContainer.propTypes = {
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool
   }).isRequired,
-  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
@@ -171,6 +166,4 @@ GranuleResultsActionsContainer.propTypes = {
   subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(GranuleResultsActionsContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(GranuleResultsActionsContainer)

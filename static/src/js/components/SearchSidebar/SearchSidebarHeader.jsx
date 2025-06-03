@@ -6,7 +6,6 @@ import { FaDoorOpen } from 'react-icons/fa'
 import classNames from 'classnames'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { locationPropType } from '../../util/propTypes/location'
 import { usePortalLogo } from '../../hooks/usePortalLogo'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -14,18 +13,20 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 import Spinner from '../Spinner/Spinner'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './SearchSidebarHeader.scss'
 
 /**
  * Renders SearchSidebarHeader
  * @prop {Object} props - The props object
  * @prop {Object} props.portal - A portal object from Redux
- * @prop {Object} props.location - A location object from React Router
  */
 export const SearchSidebarHeader = ({
-  portal,
-  location
+  portal
 }) => {
+  const location = useEdscStore((state) => state.location.location)
+
   let logoEl
   const {
     title = {},
@@ -164,7 +165,6 @@ export const SearchSidebarHeader = ({
 }
 
 SearchSidebarHeader.propTypes = {
-  location: locationPropType.isRequired,
   portal: PropTypes.shape({
     title: PropTypes.shape({
       primary: PropTypes.string,

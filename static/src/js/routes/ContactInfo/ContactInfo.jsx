@@ -1,8 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 
-import { withRouter } from 'react-router-dom'
-
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import ContactInfoContainer from '../../containers/ContactInfoContainer/ContactInfoContainer'
@@ -29,4 +27,4 @@ export const ContactInfo = () => (
 
 ContactInfo.propTypes = {}
 
-export default withRouter(ContactInfo)
+export default ContactInfo

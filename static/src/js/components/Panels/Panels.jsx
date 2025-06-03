@@ -11,8 +11,9 @@ import history from '../../util/history'
 import { getPanelSizeMap } from '../../util/getPanelSizeMap'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
-import './Panels.scss'
 import useEdscStore from '../../zustand/useEdscStore'
+
+import './Panels.scss'
 
 // Returns the width of the sidebar
 const getSidebarWidth = () => {

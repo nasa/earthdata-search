@@ -1,13 +1,6 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { Provider } from 'react-redux'
-import { Route } from 'react-router'
-import { MemoryRouter } from 'react-router-dom'
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
+import { screen } from '@testing-library/react'
 
-import { createMemoryHistory } from 'history'
-import userEvent from '@testing-library/user-event'
 import {
   Search,
   mapDispatchToProps,
@@ -15,6 +8,7 @@ import {
 } from '../Search'
 
 import actions from '../../../actions'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const mockClassListAdd = jest.fn()
 const mockClassListRemove = jest.fn()
@@ -29,23 +23,6 @@ jest.spyOn(document, 'querySelector').mockImplementation(() => ({
     remove: mockClassListRemove
   }
 }))
-
-// Needed to get the test to render
-beforeEach(() => {
-  // Create a div with id 'root' for portals
-  const rootDiv = document.createElement('div')
-  rootDiv.id = 'root'
-  document.body.appendChild(rootDiv)
-})
-
-afterEach(() => {
-  // Clean up the DOM
-  // eslint-disable-next-line testing-library/no-node-access
-  const rootDiv = document.getElementById('root')
-  if (rootDiv) {
-    document.body.removeChild(rootDiv)
-  }
-})
 
 // Mock router components
 jest.mock('../../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer', () => {
@@ -102,22 +79,19 @@ jest.mock('../../../containers/SearchPanelsContainer/SearchPanelsContainer', () 
   return SearchPanelsContainer
 })
 
-const history = createMemoryHistory()
-const mockStore = configureMockStore([thunk])
-
-function setup() {
-  const user = userEvent.setup()
-
-  const props = {
-    collectionQuery: {},
-    match: { path: '/search' },
-    advancedSearch: {},
-    onChangeQuery: jest.fn(),
-    onTogglePortalBrowserModal: jest.fn(),
-    onUpdateAdvancedSearch: jest.fn()
-  }
-
-  const store = mockStore({
+const setup = setupTest({
+  ComponentsByRoute: {
+    '/search': Search
+  },
+  defaultPropsByRoute: {
+    '/search': {
+      collectionQuery: {},
+      onChangeQuery: jest.fn(),
+      onUpdateAdvancedSearch: jest.fn()
+    }
+  },
+  withRedux: true,
+  defaultReduxState: {
     portal: {
       ui: {
         showNonEosdisCheckbox: true,
@@ -129,24 +103,27 @@ function setup() {
         isOpen: false
       }
     }
-  })
+  },
+  withRouter: true,
+  defaultRouterEntries: ['/search']
+})
 
-  const { unmount } = render(
-    <Provider store={store}>
-      <MemoryRouter initialEntries={['/search']}>
-        <Route history={history} path="/search">
-          <Search {...props} />
-        </Route>
-      </MemoryRouter>
-    </Provider>
-  )
+// Needed to get the test to render
+beforeEach(() => {
+  // Create a div with id 'root' for portals
+  const rootDiv = document.createElement('div')
+  rootDiv.id = 'root'
+  document.body.appendChild(rootDiv)
+})
 
-  return {
-    props,
-    unmount,
-    user
+afterEach(() => {
+  // Clean up the DOM
+  // eslint-disable-next-line testing-library/no-node-access
+  const rootDiv = document.getElementById('root')
+  if (rootDiv) {
+    document.body.removeChild(rootDiv)
   }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onChangeQuery calls actions.changeQuery', () => {
@@ -197,10 +174,6 @@ describe('mapStateToProps', () => {
 })
 
 describe('Search component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   describe('when on the /search route', () => {
     test('should render search panels', async () => {
       setup()

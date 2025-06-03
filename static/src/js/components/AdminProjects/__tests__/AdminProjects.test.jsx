@@ -1,40 +1,58 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { AdminProjects } from '../AdminProjects'
-import { AdminPage } from '../../AdminPage/AdminPage'
-import { AdminProjectsList } from '../AdminProjectsList'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+import AdminProjects from '../AdminProjects'
 
-function setup() {
-  const props = {
-    historyPush: jest.fn(),
+import AdminPage from '../../AdminPage/AdminPage'
+import AdminProjectsList from '../AdminProjectsList'
+import AdminProjectsForm from '../AdminProjectsForm'
+
+jest.mock('../../AdminPage/AdminPage', () => jest.fn().mockImplementation(
+  jest.requireActual('../../AdminPage/AdminPage').default
+))
+
+jest.mock('../AdminProjectsForm', () => jest.fn(() => <div />))
+jest.mock('../AdminProjectsList', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: AdminProjects,
+  defaultProps: {
     onAdminViewProject: jest.fn(),
     onUpdateAdminProjectsSortKey: jest.fn(),
     onUpdateAdminProjectsPageNum: jest.fn(),
-    retrievals: {
-      allIds: [],
-      byId: {},
-      pagination: {},
-      sortKey: ''
-    }
-  }
-
-  const enzymeWrapper = shallow(<AdminProjects {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+    projects: {}
+  },
+  withRouter: true
+})
 
 describe('AdminProjects component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(AdminPage).length).toBe(1)
-    expect(enzymeWrapper.find(AdminProjectsList).length).toBe(1)
+    expect(AdminPage).toHaveBeenCalledTimes(1)
+    expect(AdminPage).toHaveBeenCalledWith({
+      breadcrumbs: [{
+        href: '/admin',
+        name: 'Admin'
+      }, {
+        active: true,
+        name: 'Projects'
+      }],
+      children: expect.anything(),
+      pageTitle: 'Projects'
+    }, {})
+
+    expect(AdminProjectsForm).toHaveBeenCalledTimes(1)
+    expect(AdminProjectsForm).toHaveBeenCalledWith({
+      onAdminViewProject: expect.any(Function)
+    }, {})
+
+    expect(AdminProjectsList).toHaveBeenCalledTimes(1)
+    expect(AdminProjectsList).toHaveBeenCalledWith({
+      onUpdateAdminProjectsSortKey: expect.any(Function),
+      onUpdateAdminProjectsPageNum: expect.any(Function),
+      projects: {}
+    }, {})
   })
 })

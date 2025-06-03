@@ -7,6 +7,7 @@ import { displayNotificationType } from '../constants/enums'
 import { parseError } from '../../../../sharedUtils/parseError'
 
 import LoggerRequest from '../util/request/loggerRequest'
+import useEdscStore from '../zustand/useEdscStore'
 
 export const addError = (payload) => (dispatch) => {
   // Default the notificationType to none
@@ -42,9 +43,8 @@ export const handleError = ({
   notificationType = displayNotificationType.banner,
   requestObject,
   errorAction
-}) => (dispatch, getState) => {
-  const { router = {} } = getState()
-  const { location } = router
+}) => (dispatch) => {
+  const { location } = useEdscStore.getState().location
 
   let requestId = uuidv4()
   if (requestObject) {

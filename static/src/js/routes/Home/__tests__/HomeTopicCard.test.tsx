@@ -11,7 +11,7 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 const setup = setupTest({
   ComponentsByRoute: {
     '/': HomeTopicCard,
-    '/search': <div>Search</div>
+    '/search': () => <div>Search</div>
   },
   defaultPropsByRoute: {
     '/': {
@@ -21,11 +21,12 @@ const setup = setupTest({
       color: '#123456'
     }
   },
-  defaultReduxState: {
-    router: {
-      location: {
-        pathname: '/'
-      }
+  defaultZustandState: {
+    home: {
+      setOpenKeywordFacet: jest.fn()
+    },
+    location: {
+      navigate: jest.fn()
     }
   },
   withRedux: true,
@@ -33,10 +34,6 @@ const setup = setupTest({
 })
 
 describe('HomeTopicCard', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('renders the topic card with the correct title', () => {
     setup()
 
@@ -52,7 +49,7 @@ describe('HomeTopicCard', () => {
     expect(image).toHaveAttribute('alt', 'Test Topic')
   })
 
-  test('navigates to the correct URL when clicked', async () => {
+  test('navigates to the correct URL', async () => {
     const { user } = setup()
 
     const portalLinkContainer = screen.getByRole('link')
@@ -63,13 +60,7 @@ describe('HomeTopicCard', () => {
   })
 
   test('calls setOpenKeywordFacet when clicked', async () => {
-    const { user } = setup({
-      overrideZustandState: {
-        home: {
-          setOpenKeywordFacet: jest.fn()
-        }
-      }
-    })
+    const { user } = setup()
 
     const portalLinkContainer = screen.getByRole('link')
 

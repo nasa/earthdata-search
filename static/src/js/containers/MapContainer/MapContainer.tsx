@@ -110,8 +110,7 @@ export const mapStateToProps = (state) => ({
   mapPreferences: getMapPreferences(state),
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
-  project: state.project,
-  router: state.router
+  project: state.project
 })
 
 type ColormapMetadata = {
@@ -251,12 +250,11 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onToggleTooManyPointsModal,
     pointSearch,
     polygonSearch,
-    project,
-    router
+    project
   } = props
 
-  const { location } = router
-  const { pathname } = location
+  const location = useEdscStore((state) => state.location.location)
+  const { pathname = '' } = location
   const isProjectPage = isPath(pathname, ['/projects'])
   const isFocusedCollectionPage = isPath(pathname, [
     '/search/granules',

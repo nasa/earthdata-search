@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Route, Routes } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
 
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
@@ -40,8 +40,6 @@ export const mapDispatchToProps = (dispatch) => ({
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onMetricsCollectionSortChange:
     (data) => dispatch(metricsCollectionSortChange(data)),
-  onSetActivePanel:
-    (panelId) => dispatch(actions.setActivePanel(panelId)),
   onToggleAboutCSDAModal:
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onToggleAboutCwicModal:
@@ -66,7 +64,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Function} props.onChangeQuery - Callback to change the query
  * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection
  * @param {Function} props.onMetricsCollectionSortChange - Callback for collection sort metrics
- * @param {Function} props.onSetActivePanel - Callback to set the active panel
  * @param {Function} props.onToggleAboutCwicModal - Callback to toggle the CWIC modal
  * @param {Function} props.onTogglePanels - Callback to toggle the panels
  * @param {Object} props.panels - Panels state
@@ -84,48 +81,52 @@ export const SearchPanelsContainer = ({
   granuleSearchResults,
   granuleQuery,
   isExportRunning,
-  location,
   onApplyGranuleFilters,
   onFocusedCollectionChange,
   onChangePath,
   onChangeQuery,
   onMetricsCollectionSortChange,
-  onSetActivePanel,
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal,
   onTogglePanels,
   onExport,
   panels,
   preferences,
-  match,
   portal
 }) => (
-  <SearchPanels
-    authToken={authToken}
-    collectionMetadata={collectionMetadata}
-    collectionQuery={collectionQuery}
-    collectionsSearch={collectionsSearch}
-    collectionSubscriptions={collectionSubscriptions}
-    granuleMetadata={granuleMetadata}
-    granuleSearchResults={granuleSearchResults}
-    granuleQuery={granuleQuery}
-    isExportRunning={isExportRunning}
-    location={location}
-    onApplyGranuleFilters={onApplyGranuleFilters}
-    onFocusedCollectionChange={onFocusedCollectionChange}
-    onChangePath={onChangePath}
-    onChangeQuery={onChangeQuery}
-    onMetricsCollectionSortChange={onMetricsCollectionSortChange}
-    onSetActivePanel={onSetActivePanel}
-    onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-    onToggleAboutCwicModal={onToggleAboutCwicModal}
-    onTogglePanels={onTogglePanels}
-    onExport={onExport}
-    panels={panels}
-    portal={portal}
-    preferences={preferences}
-    match={match}
-  />
+  <Routes>
+    <Route
+      path="/:activePanel1?/:activePanel2?/*"
+      element={
+        (
+          <SearchPanels
+            authToken={authToken}
+            collectionMetadata={collectionMetadata}
+            collectionQuery={collectionQuery}
+            collectionsSearch={collectionsSearch}
+            collectionSubscriptions={collectionSubscriptions}
+            granuleMetadata={granuleMetadata}
+            granuleSearchResults={granuleSearchResults}
+            granuleQuery={granuleQuery}
+            isExportRunning={isExportRunning}
+            onApplyGranuleFilters={onApplyGranuleFilters}
+            onFocusedCollectionChange={onFocusedCollectionChange}
+            onChangePath={onChangePath}
+            onChangeQuery={onChangeQuery}
+            onMetricsCollectionSortChange={onMetricsCollectionSortChange}
+            onToggleAboutCSDAModal={onToggleAboutCSDAModal}
+            onToggleAboutCwicModal={onToggleAboutCwicModal}
+            onTogglePanels={onTogglePanels}
+            onExport={onExport}
+            panels={panels}
+            portal={portal}
+            preferences={preferences}
+          />
+        )
+      }
+    />
+
+  </Routes>
 )
 
 SearchPanelsContainer.propTypes = {
@@ -138,8 +139,6 @@ SearchPanelsContainer.propTypes = {
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granuleQuery: PropTypes.shape({}).isRequired,
   isExportRunning: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
@@ -149,12 +148,9 @@ SearchPanelsContainer.propTypes = {
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   preferences: PropTypes.shape({}).isRequired,
   portal: PropTypes.shape({}).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)

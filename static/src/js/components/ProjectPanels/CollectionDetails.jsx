@@ -7,10 +7,11 @@ import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-sys
 import { Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { eventEmitter } from '../../events/events'
-import { locationPropType } from '../../util/propTypes/location'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './CollectionDetails.scss'
 
@@ -19,23 +20,23 @@ import './CollectionDetails.scss'
  * @param {String} collectionId - The current collection ID.
  * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} granulesMetadata - The metadata in the store for granules.
- * @param {Object} location - The location from the store.
  * @param {Function} onChangeProjectGranulePageNum - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - The callback to change the focused granule.
  * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
  * @param {Object} portal - The portal from the store.
  * @param {Object} projectCollection - The project collection.
  */
-export const CollectionDetails = ({
+const CollectionDetails = ({
   collectionId,
   focusedGranuleId,
   granulesMetadata,
-  location,
   onChangeProjectGranulePageNum,
   onFocusedGranuleChange,
   onRemoveGranuleFromProjectCollection,
   projectCollection
 }) => {
+  const location = useEdscStore((state) => state.location.location)
+
   const {
     granules: projectCollectionGranules = {}
   } = projectCollection
@@ -102,7 +103,7 @@ export const CollectionDetails = ({
                         onFocusedGranuleChange(id)
                       }
                     }
-                    onKeyPress={
+                    onKeyDown={
                       () => {
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, { granule: granuleMetadata })
                         onFocusedGranuleChange(granuleMetadata.id)
@@ -190,7 +191,6 @@ CollectionDetails.propTypes = {
   collectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,

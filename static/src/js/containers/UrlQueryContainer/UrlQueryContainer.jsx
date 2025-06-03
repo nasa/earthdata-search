@@ -9,7 +9,6 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
 import { encodeUrlQuery } from '../../util/url/url'
-import { locationPropType } from '../../util/propTypes/location'
 
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
@@ -43,12 +42,10 @@ export const mapStateToProps = (state) => ({
   instrumentFacets: state.facetsParams.cmr.instrument_h,
   keywordSearch: state.query.collection.keyword,
   lineSearch: state.query.collection.spatial.line,
-  location: state.router.location,
   mapPreferences: getMapPreferences(state),
   onlyEosdisCollections: state.query.collection.onlyEosdisCollections,
   organizationFacets: state.facetsParams.cmr.data_center_h,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
-  pathname: state.router.location.pathname,
   platformFacets: state.facetsParams.cmr.platforms_h,
   portalId: state.portal.portalId,
   pointSearch: state.query.collection.spatial.point,
@@ -65,27 +62,29 @@ export const mapStateToProps = (state) => ({
 })
 
 export const UrlQueryContainer = (props) => {
-  const {
-    children,
-    location,
-    onChangePath,
-    onChangeUrl
-  } = props
-  const {
-    pathname,
-    search
-  } = location
-
-  const [currentPath, setCurrentPath] = useState('')
-  const previousSearch = useRef(search)
-
   // Pull out values we have migrated to Zustand that are no longer passed as props
   const zustandValues = useEdscStore((state) => ({
+    location: state.location.location,
     mapView: state.map.mapView,
     selectedFeatures: state.shapefile.selectedFeatures,
     shapefileId: state.shapefile.shapefileId,
     timelineQuery: state.timeline.query
   }))
+
+  const { location } = zustandValues
+  const {
+    pathname,
+    search
+  } = location
+
+  const {
+    children,
+    onChangePath,
+    onChangeUrl
+  } = props
+
+  const [currentPath, setCurrentPath] = useState('')
+  const previousSearch = useRef(search)
 
   useEffect(() => {
     onChangePath([pathname, search].filter(Boolean).join(''))
@@ -99,6 +98,7 @@ export const UrlQueryContainer = (props) => {
       previousSearch.current === search
     ) {
       const nextPath = encodeUrlQuery({
+        pathname,
         ...props,
         ...zustandValues
       })
@@ -120,7 +120,6 @@ export const UrlQueryContainer = (props) => {
 
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired,
   project: PropTypes.shape({}).isRequired

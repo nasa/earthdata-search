@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
@@ -11,6 +10,7 @@ import { getProjectCollectionsMetadata } from '../../selectors/project'
 import { getUrsProfile } from '../../selectors/contactInfo'
 
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapStateToProps = (state) => ({
   dataQualitySummaries: state.dataQualitySummaries,
@@ -18,7 +18,6 @@ export const mapStateToProps = (state) => ({
   focusedGranuleId: getFocusedGranuleId(state),
   granulesMetadata: state.metadata.granules,
   granulesQueries: state.query.collection.byId,
-  location: state.router.location,
   overrideTemporal: state.query.collection.overrideTemporal,
   panels: state.panels,
   project: state.project,
@@ -64,7 +63,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
- * @param {Object} location - The location from the store.
  * @param {Object} panels - The current panels state.
  * @param {Object} project - The project from the store.
  * @param {Object} spatial - The spatial from the store.
@@ -90,7 +88,6 @@ export const ProjectPanelsContainer = ({
   focusedGranuleId,
   granulesMetadata,
   granulesQueries,
-  location,
   onAddGranuleToProjectCollection,
   onChangePath,
   onChangeProjectGranulePageNum,
@@ -111,36 +108,40 @@ export const ProjectPanelsContainer = ({
   temporal,
   ursProfile,
   overrideTemporal
-}) => (
-  <ProjectPanels
-    dataQualitySummaries={dataQualitySummaries}
-    focusedCollectionId={focusedCollectionId}
-    focusedGranuleId={focusedGranuleId}
-    granulesMetadata={granulesMetadata}
-    granulesQueries={granulesQueries}
-    location={location}
-    onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-    onChangePath={onChangePath}
-    onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
-    onFocusedGranuleChange={onFocusedGranuleChange}
-    onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
-    onSelectAccessMethod={onSelectAccessMethod}
-    onSetActivePanel={onSetActivePanel}
-    onSetActivePanelGroup={onSetActivePanelGroup}
-    onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-    onTogglePanels={onTogglePanels}
-    onUpdateAccessMethod={onUpdateAccessMethod}
-    onUpdateFocusedCollection={onUpdateFocusedCollection}
-    onViewCollectionGranules={onViewCollectionGranules}
-    panels={panels}
-    project={project}
-    projectCollectionsMetadata={projectCollectionsMetadata}
-    spatial={spatial}
-    temporal={temporal}
-    ursProfile={ursProfile}
-    overrideTemporal={overrideTemporal}
-  />
-)
+}) => {
+  const location = useEdscStore((state) => state.location.location)
+
+  return (
+    <ProjectPanels
+      dataQualitySummaries={dataQualitySummaries}
+      focusedCollectionId={focusedCollectionId}
+      focusedGranuleId={focusedGranuleId}
+      granulesMetadata={granulesMetadata}
+      granulesQueries={granulesQueries}
+      location={location}
+      onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
+      onChangePath={onChangePath}
+      onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
+      onFocusedGranuleChange={onFocusedGranuleChange}
+      onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
+      onSelectAccessMethod={onSelectAccessMethod}
+      onSetActivePanel={onSetActivePanel}
+      onSetActivePanelGroup={onSetActivePanelGroup}
+      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
+      onTogglePanels={onTogglePanels}
+      onUpdateAccessMethod={onUpdateAccessMethod}
+      onUpdateFocusedCollection={onUpdateFocusedCollection}
+      onViewCollectionGranules={onViewCollectionGranules}
+      panels={panels}
+      project={project}
+      projectCollectionsMetadata={projectCollectionsMetadata}
+      spatial={spatial}
+      temporal={temporal}
+      ursProfile={ursProfile}
+      overrideTemporal={overrideTemporal}
+    />
+  )
+}
 
 ProjectPanelsContainer.defaultProps = {
   granulesQueries: {},
@@ -154,7 +155,6 @@ ProjectPanelsContainer.propTypes = {
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   granulesQueries: PropTypes.shape({}),
-  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeProjectGranulePageNum: PropTypes.func.isRequired,

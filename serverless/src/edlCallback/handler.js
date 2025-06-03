@@ -147,6 +147,7 @@ const edlCallback = async (event, context) => {
 
   const location = `${edscHost}/auth_callback?${stringify(queryParams)}`
 
+  console.log('🚀 ~ handler.js:150 ~ edlCallback ~ location:', location)
   return {
     statusCode: 307,
     headers: {

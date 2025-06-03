@@ -1,5 +1,6 @@
-import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { waitFor } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import {
@@ -9,27 +10,33 @@ import {
 } from '../PortalContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-function setup(overrideProps) {
-  const props = {
-    match: {
-      params: {}
-    },
-    location: {},
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useParams: jest.fn().mockReturnValue({
+    portalId: 'example'
+  })
+}))
+
+const setup = setupTest({
+  Component: PortalContainer,
+  defaultProps: {
     portal: {
       portalId: 'edsc'
     },
     onChangePath: jest.fn(),
-    onChangeUrl: jest.fn(),
-    ...overrideProps
+    onChangeUrl: jest.fn()
+  },
+  defaultZustandState: {
+    location: {
+      location: {
+        pathname: '/search',
+        search: '?q=modis'
+      }
+    }
   }
-
-  render(<PortalContainer {...props} />)
-
-  return { props }
-}
+})
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
 })
 
@@ -40,8 +47,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('portalId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('portalId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('portalId')
   })
 
   test('onChangeUrl calls actions.changeUrl', () => {
@@ -50,8 +57,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeUrl('portalId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('portalId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('portalId')
   })
 })
 
@@ -88,10 +95,12 @@ describe('PortalContainer component', () => {
     }))
 
     setup({
-      portal: {
-        portalId: 'example',
-        title: {
-          primary: 'example'
+      overrideProps: {
+        portal: {
+          portalId: 'example',
+          title: {
+            primary: 'example'
+          }
         }
       }
     })
@@ -106,14 +115,13 @@ describe('PortalContainer component', () => {
     }))
 
     const { props } = setup({
-      match: {
-        params: {
-          portalId: 'example'
+      overrideZustandState: {
+        location: {
+          location: {
+            pathname: '/portal/example/search',
+            search: '?q=modis'
+          }
         }
-      },
-      location: {
-        pathname: '/portal/example/search',
-        search: '?q=modis'
       }
     })
 
@@ -134,14 +142,13 @@ describe('PortalContainer component', () => {
     }))
 
     const { props } = setup({
-      match: {
-        params: {
-          portalId: 'example'
+      overrideZustandState: {
+        location: {
+          location: {
+            pathname: '/portal/example',
+            search: '?q=modis'
+          }
         }
-      },
-      location: {
-        pathname: '/portal/example',
-        search: '?q=modis'
       }
     })
 

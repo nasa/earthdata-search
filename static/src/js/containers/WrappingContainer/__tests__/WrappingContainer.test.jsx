@@ -1,29 +1,27 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import WrappingContainer from '../WrappingContainer'
 
-const setup = (initialEntries, overrideProps) => {
-  const props = {
+const setup = setupTest({
+  Component: WrappingContainer,
+  defaultProps: {
+    children: <div data-testid="test-child">Im a child!</div>
+  },
+  defaultZustandState: {
     location: {
-      pathname: '',
-      search: ''
-    },
-    children: <div data-testid="test-child">Im a child!</div>,
-    ...overrideProps
-  }
-
-  render(
-    <MemoryRouter initialEntries={initialEntries}>
-      <WrappingContainer {...props} />
-    </MemoryRouter>
-  )
-
-  return { props }
-}
+      location: {
+        pathname: '/search',
+        search: ''
+      }
+    }
+  },
+  withRouter: true
+})
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
 })
 
@@ -36,7 +34,10 @@ describe('WrappingContainer component', () => {
 
   describe('when in a route that does not include the map', () => {
     test('does not render classname on saved projects', async () => {
-      setup(['/contact-info'])
+      setup({
+        overrideRouterEntries: ['/contact-info']
+      })
+
       expect(screen.getByTestId('parent-container')).toHaveClass('wrapping-container')
     })
   })
@@ -44,18 +45,24 @@ describe('WrappingContainer component', () => {
   describe('when in a route that includes the map', () => {
     describe('project page', () => {
       test('does not include map classname on saved projects', async () => {
-        setup(['/projects'])
+        setup({
+          overrideRouterEntries: ['/projects']
+        })
 
         expect(screen.getByTestId('parent-container')).toHaveClass('wrapping-container')
       })
 
       test('includes map classname on project page', async () => {
-        const mockLocation = [{
-          pathname: '/projects',
-          search: '?projectid=1'
-        }]
-
-        setup(mockLocation)
+        setup({
+          overrideZustandState: {
+            location: {
+              location: {
+                pathname: '/projects',
+                search: '?projectid=1'
+              }
+            }
+          }
+        })
 
         expect(screen.getByTestId('parent-container'))
           .toHaveClass('wrapping-container', 'wrapping-container--map-page')
@@ -64,7 +71,9 @@ describe('WrappingContainer component', () => {
 
     describe('search page', () => {
       test('includes map classname on search route', async () => {
-        setup(['/search'])
+        setup({
+          overrideRouterEntries: ['/search']
+        })
 
         expect(screen.getByTestId('parent-container'))
           .toHaveClass('wrapping-container', 'wrapping-container--map-page')

@@ -6,11 +6,7 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import {
-  Route,
-  Switch,
-  withRouter
-} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 
 import { FaFilter, FaMap } from 'react-icons/fa'
@@ -68,11 +64,9 @@ export const mapStateToProps = (state) => ({
  */
 export const Search = ({
   collectionQuery,
-  match,
   onChangeQuery,
   onUpdateAdvancedSearch
 }) => {
-  const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
 
   const onSearchLoaded = useEdscStore((state) => state.ui.tour.onSearchLoaded)
@@ -146,79 +140,96 @@ export const Search = ({
           )}
           panels={<SearchPanelsContainer />}
         >
-          <Switch>
-            <Route exact path={`${path}/granules/collection-details`}>
-              <SidebarSection
-                sectionTitle="Granules"
-                titleIcon={FaMap}
-              >
-                <Suspense fallback={<div />}>
-                  <GranuleResultsHighlightsContainer />
-                </Suspense>
-              </SidebarSection>
-            </Route>
-            <Route exact path={`${path}/granules`}>
-              {granuleFiltersSidebar}
-            </Route>
-            <Route exact path={`${path}/granules/granule-details`}>
-              <SidebarSection
-                sectionTitle="Collection Details"
-                titleIcon={AlertInformation}
-              >
-                <Suspense fallback={<div />}>
-                  <CollectionDetailsHighlightsContainer />
-                </Suspense>
-              </SidebarSection>
-            </Route>
-            <Route exact path={`${path}/granules/subscriptions`}>
-              {granuleFiltersSidebar}
-            </Route>
-            <Route path={path}>
-              <div className="sidebar-section-body">
-                <SidebarSection
-                  sectionTitle="Filter Collections"
-                  titleIcon={FaFilter}
-                >
-                  <SidebarFiltersList>
-                    <SidebarFiltersItem
-                      hasPadding={false}
+          <Routes>
+            <Route
+              path="/granules/collection-details"
+              element={
+                (
+                  <SidebarSection
+                    sectionTitle="Granules"
+                    titleIcon={FaMap}
+                  >
+                    <Suspense fallback={<div />}>
+                      <GranuleResultsHighlightsContainer />
+                    </Suspense>
+                  </SidebarSection>
+                )
+              }
+            />
+            <Route
+              path="/granules"
+              element={granuleFiltersSidebar}
+            />
+            <Route
+              path="/granules/granule-details"
+              element={
+                (
+                  <SidebarSection
+                    sectionTitle="Collection Details"
+                    titleIcon={AlertInformation}
+                  >
+                    <Suspense fallback={<div />}>
+                      <CollectionDetailsHighlightsContainer />
+                    </Suspense>
+                  </SidebarSection>
+                )
+              }
+            />
+            <Route
+              path="/granules/subscriptions"
+              element={granuleFiltersSidebar}
+            />
+            <Route
+              index
+              element={
+                (
+                  <div className="sidebar-section-body">
+                    <SidebarSection
+                      sectionTitle="Filter Collections"
+                      titleIcon={FaFilter}
                     >
-                      <FacetsContainer />
-                    </SidebarFiltersItem>
-                    <PortalFeatureContainer
-                      onlyGranulesCheckbox
-                      nonEosdisCheckbox
-                    >
-                      <SidebarFiltersItem
-                        heading="Additional Filters"
-                      >
-                        <Form.Group controlId="collection-filters__has-no-granules">
-                          <PortalFeatureContainer onlyGranulesCheckbox>
-                            <Form.Check
-                              checked={isHasNoGranulesChecked}
-                              id="input__only-granules"
-                              data-testid="input_only-granules"
-                              label="Include collections without granules"
-                              onChange={(event) => handleCheckboxCheck(event)}
-                            />
-                          </PortalFeatureContainer>
-                          <PortalFeatureContainer nonEosdisCheckbox>
-                            <Form.Check
-                              checked={isEosdisChecked}
-                              id="input__non-eosdis"
-                              data-testid="input_non-eosdis"
-                              label="Include only EOSDIS collections"
-                              onChange={(event) => handleCheckboxCheck(event)}
-                            />
-                          </PortalFeatureContainer>
-                        </Form.Group>
-                      </SidebarFiltersItem>
-                    </PortalFeatureContainer>
-                  </SidebarFiltersList>
-                </SidebarSection>
-              </div>
-            </Route>
-          </Switch>
+                      <SidebarFiltersList>
+                        <SidebarFiltersItem
+                          hasPadding={false}
+                        >
+                          <FacetsContainer />
+                        </SidebarFiltersItem>
+                        <PortalFeatureContainer
+                          onlyGranulesCheckbox
+                          nonEosdisCheckbox
+                        >
+                          <SidebarFiltersItem
+                            heading="Additional Filters"
+                          >
+                            <Form.Group controlId="collection-filters__has-no-granules">
+                              <PortalFeatureContainer onlyGranulesCheckbox>
+                                <Form.Check
+                                  checked={isHasNoGranulesChecked}
+                                  id="input__only-granules"
+                                  data-testid="input_only-granules"
+                                  label="Include collections without granules"
+                                  onChange={(event) => handleCheckboxCheck(event)}
+                                />
+                              </PortalFeatureContainer>
+                              <PortalFeatureContainer nonEosdisCheckbox>
+                                <Form.Check
+                                  checked={isEosdisChecked}
+                                  id="input__non-eosdis"
+                                  data-testid="input_non-eosdis"
+                                  label="Include only EOSDIS collections"
+                                  onChange={(event) => handleCheckboxCheck(event)}
+                                />
+                              </PortalFeatureContainer>
+                            </Form.Group>
+                          </SidebarFiltersItem>
+                        </PortalFeatureContainer>
+                      </SidebarFiltersList>
+                    </SidebarSection>
+                  </div>
+                )
+              }
+            />
+          </Routes>
         </SidebarContainer>
         <div className="route-wrapper__content route-wrapper__content--dark">
           <RelatedUrlsModalContainer />
@@ -244,13 +255,8 @@ Search.propTypes = {
     hasGranulesOrCwic: PropTypes.bool,
     onlyEosdisCollections: PropTypes.bool
   }).isRequired,
-  match: PropTypes.shape({
-    path: PropTypes.string
-  }).isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Search)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(Search)

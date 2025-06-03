@@ -13,9 +13,10 @@ import { isEmpty } from 'lodash-es'
 import { getActivePanelSize } from '../../util/getActivePanelSize'
 import { itemToRowColumnIndicies } from '../../util/itemToRowColumnIndicies'
 import { useRemsToPixels } from '../../hooks/useRemsToPixels'
-import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsListItem from './GranuleResultsListItem'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './GranuleResultsList.scss'
 
@@ -70,7 +71,6 @@ innerElementType.propTypes = {
  * @param {Function} props.isItemLoaded - Callback to determine if a granule has been loaded.
  * @param {Number} props.itemCount - Number of total granule list items.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
- * @param {Object} props.location - Location passed from react router.
  * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
@@ -99,7 +99,6 @@ export const GranuleResultsListBody = ({
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  location,
   onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
@@ -112,6 +111,7 @@ export const GranuleResultsListBody = ({
   visibleMiddleIndex,
   width
 }) => {
+  const location = useEdscStore((state) => state.location.location)
   const infiniteLoaderRef = useRef(null)
   const listRef = useRef(null)
   const sizeMap = useRef({})
@@ -312,7 +312,6 @@ GranuleResultsListBody.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,

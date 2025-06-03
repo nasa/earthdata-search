@@ -59,8 +59,7 @@ const permittedAccessMethodFields = [
 export const prepareRetrievalParams = (state) => {
   const {
     authToken,
-    portal,
-    router
+    portal
   } = state
 
   const { shapefile } = useEdscStore.getState()
@@ -176,7 +175,8 @@ export const prepareRetrievalParams = (state) => {
     retrievalCollections.push(returnValue)
   })
 
-  const { search } = router.location
+  const { location } = useEdscStore.getState().location
+  const { search } = location
   const { shapefileId, selectedFeatures } = shapefile
 
   const { portalId } = portal

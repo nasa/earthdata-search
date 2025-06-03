@@ -5,7 +5,6 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
@@ -28,13 +27,18 @@ export const DownloadHistoryContainer = ({
   dispatchHandleError
 }) => {
   const [retrievalHistory, setRetrievalHistory] = useState([])
-  const [retrievalHistoryLoading, setRetrievalHistoryLoading] = useState(false)
-  const [retrievalHistoryLoaded, setRetrievalHistoryLoaded] = useState(false)
+  const [retrievalHistoryLoadingState, setRetrievalHistoryLoadingState] = useState({
+    isLoading: false,
+    isLoaded: false
+  })
 
   const fetchRetrievalHistory = useCallback(async () => {
     if (!authToken) return
 
-    setRetrievalHistoryLoading(true)
+    setRetrievalHistoryLoadingState({
+      isLoading: true,
+      isLoaded: false
+    })
 
     try {
       const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
@@ -42,8 +46,16 @@ export const DownloadHistoryContainer = ({
       const { data } = response
 
       setRetrievalHistory(data)
-      setRetrievalHistoryLoaded(true)
+      setRetrievalHistoryLoadingState({
+        isLoading: false,
+        isLoaded: true
+      })
     } catch (error) {
+      setRetrievalHistoryLoadingState({
+        isLoading: false,
+        isLoaded: false
+      })
+
       dispatchHandleError({
         error,
         action: 'fetchRetrievalHistory',
@@ -51,8 +63,6 @@ export const DownloadHistoryContainer = ({
         verb: 'fetching',
         notificationType: 'banner'
       })
-    } finally {
-      setRetrievalHistoryLoading(false)
     }
   }, [authToken, earthdataEnvironment, dispatchHandleError])
 
@@ -93,8 +103,8 @@ export const DownloadHistoryContainer = ({
     <DownloadHistory
       earthdataEnvironment={earthdataEnvironment}
       retrievalHistory={retrievalHistory}
-      retrievalHistoryLoading={retrievalHistoryLoading}
-      retrievalHistoryLoaded={retrievalHistoryLoaded}
+      retrievalHistoryLoading={retrievalHistoryLoadingState.isLoading}
+      retrievalHistoryLoaded={retrievalHistoryLoadingState.isLoaded}
       onDeleteRetrieval={handleDeleteRetrieval}
     />
   )
@@ -106,6 +116,4 @@ DownloadHistoryContainer.propTypes = {
   dispatchHandleError: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(DownloadHistoryContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(DownloadHistoryContainer)

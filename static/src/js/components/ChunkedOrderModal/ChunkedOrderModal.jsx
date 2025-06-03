@@ -9,17 +9,20 @@ import { stringify } from '../../util/url/url'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import { locationPropType } from '../../util/propTypes/location'
+
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './ChunkedOrderModal.scss'
 
 const ChunkedOrderModal = ({
   isOpen,
-  location,
   onToggleChunkedOrderModal,
   onSubmitRetrieval,
   projectCollectionsMetadata,
   projectCollectionsRequiringChunking
 }) => {
+  const location = useEdscStore((state) => state.location.location)
+
   const onModalClose = () => {
     onToggleChunkedOrderModal(false)
   }
@@ -158,7 +161,6 @@ const ChunkedOrderModal = ({
 
 ChunkedOrderModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  location: locationPropType.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,

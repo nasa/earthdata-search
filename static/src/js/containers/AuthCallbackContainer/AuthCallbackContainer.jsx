@@ -1,16 +1,11 @@
 import React, { useEffect } from 'react'
 import { set } from 'tiny-cookie'
-import { connect } from 'react-redux'
 import { parse } from 'qs'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { locationPropType } from '../../util/propTypes/location'
 import history from '../../util/history'
-import useEdscStore from '../../zustand/useEdscStore'
 
-export const mapStateToProps = (state) => ({
-  location: state.router.location
-})
+import useEdscStore from '../../zustand/useEdscStore'
 
 /**
  * This class handles the authenticated redirect from our edlCallback lambda function.
@@ -18,16 +13,18 @@ export const mapStateToProps = (state) => ({
  * the user to the correct location based on where they were trying to get before logging
  * in.
  */
-export const AuthCallbackContainer = ({
-  location
-}) => {
+export const AuthCallbackContainer = () => {
   const { edscHost } = getEnvironmentConfig()
-
-  const setRedirectUrl = useEdscStore((state) => state.earthdataDownloadRedirect.setRedirectUrl)
+  const {
+    location,
+    setRedirectUrl
+  } = useEdscStore((state) => ({
+    location: state.location.location,
+    setRedirectUrl: state.earthdataDownloadRedirect.setRedirectUrl
+  }))
+  const { search } = location
 
   useEffect(() => {
-    const { search } = location
-
     const params = parse(search, { ignoreQueryPrefix: true })
     const {
       eddRedirect,
@@ -35,6 +32,7 @@ export const AuthCallbackContainer = ({
       accessToken,
       redirect = '/'
     } = params
+    console.log('🚀 ~ AuthCallbackContainer.jsx:85 ~ useEffect ~ params:', params)
 
     let eddRedirectUrl = eddRedirect
 
@@ -78,20 +76,18 @@ export const AuthCallbackContainer = ({
       return
     }
 
+    console.log('🚀 ~ AuthCallbackContainer.jsx:75 ~ useEffect ~ jwt:', jwt)
     // Set the authToken cookie
-    set('authToken', jwt)
+    // TODO don't want this if
+    if (jwt) set('authToken', jwt)
 
     // Redirect the user to the correct location
     window.location.replace(redirect)
-  }, [])
+  }, [search])
 
   return (
     <div className="route-wrapper" />
   )
 }
 
-AuthCallbackContainer.propTypes = {
-  location: locationPropType.isRequired
-}
-
-export default connect(mapStateToProps)(AuthCallbackContainer)
+export default AuthCallbackContainer

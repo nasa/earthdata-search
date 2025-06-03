@@ -1,7 +1,6 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
 
-import { BrowserRouter } from 'react-router-dom'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import AdminRetrievalsMetrics from '../../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
@@ -11,23 +10,17 @@ import {
   mapStateToProps
 } from '../AdminRetrievalsMetricsContainer'
 
-jest.mock('../../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics', () => jest.fn(
-  () => <mock-Admin-Retrievals-Metrics>Mock Admin Retrievals Metrics</mock-Admin-Retrievals-Metrics>
-))
+jest.mock('../../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics', () => jest.fn(() => <div />))
 
-const setup = () => {
-  const props = {
+const setup = setupTest({
+  Component: AdminRetrievalsMetricsContainer,
+  defaultProps: {
     onFetchAdminRetrievalsMetrics: jest.fn(),
     onUpdateAdminRetrievalsMetricsStartDate: jest.fn(),
     onUpdateAdminRetrievalsMetricsEndDate: jest.fn(),
     retrievals: {}
   }
-
-  // https://testing-library.com/docs/example-react-router/
-  render(<AdminRetrievalsMetricsContainer {...props} />, { wrapper: BrowserRouter })
-
-  return props
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onFetchAdminRetrievalsMetrics calls actions.onFetchAdminRetrievalsMetrics', () => {
@@ -36,7 +29,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchAdminRetrievalsMetrics()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onUpdateAdminRetrievalsMetricsStartDate calls actions.updateAdminRetrievalsMetricsStartDate', () => {
@@ -45,8 +38,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAdminRetrievalsMetricsStartDate('start-date')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('start-date')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('start-date')
   })
 
   test('onUpdateAdminRetrievalsEndDate calls actions.updateAdminRetrievalsMetricsEndDate', () => {
@@ -55,8 +48,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAdminRetrievalsMetricsEndDate('end-date')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('end-date')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('end-date')
   })
 
   describe('mapStateToProps', () => {
@@ -86,24 +79,17 @@ describe('mapDispatchToProps', () => {
 
 describe('AdminRetrievalsMetricsContainer component', () => {
   test('render AdminRetrievalsMetrics with the correct props', () => {
-    const {
-      onFetchAdminRetrievalsMetrics,
-      onUpdateAdminRetrievalsMetricsStartDate,
-      onUpdateAdminRetrievalsMetricsEndDate,
-      retrievals
-    } = setup()
+    setup()
 
     expect(AdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
     expect(AdminRetrievalsMetrics).toHaveBeenCalledWith(
       {
-        onFetchAdminRetrievalsMetrics,
-        onUpdateAdminRetrievalsMetricsStartDate,
-        onUpdateAdminRetrievalsMetricsEndDate,
-        retrievalsMetrics: retrievals
+        onFetchAdminRetrievalsMetrics: expect.any(Function),
+        onUpdateAdminRetrievalsMetricsStartDate: expect.any(Function),
+        onUpdateAdminRetrievalsMetricsEndDate: expect.any(Function),
+        retrievalsMetrics: {}
       },
       {}
     )
-
-    expect(screen.getByText('Mock Admin Retrievals Metrics')).toBeInTheDocument()
   })
 })

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
+
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { startCase } from 'lodash-es'
@@ -9,10 +10,11 @@ import { parse, stringify } from 'qs'
 import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isDefaultPortal, buildConfig } from '../../util/portals'
-import { locationPropType } from '../../util/propTypes/location'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../../portals/availablePortals.json'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -26,19 +28,21 @@ export const mapStateToProps = (state) => ({
 })
 
 export const PortalContainer = ({
-  match,
   portal,
-  location,
   onChangePath,
   onChangeUrl
 }) => {
+  const params = useParams()
+  console.log('🚀 ~ PortalContainer.jsx:36 ~ params:', params)
   const defaultPortalId = getApplicationConfig().defaultPortal
+  const location = useEdscStore((state) => state.location.location)
 
   useEffect(() => {
-    const { params } = match
     const { portalId } = params
+    console.log('🚀 ~ PortalContainer.jsx:42 ~ useEffect ~ portalId:', portalId)
 
     const { pathname, search } = location
+    console.log('🚀 ~ PortalContainer.jsx:45 ~ useEffect ~ location:', location)
 
     let newPathname = pathname
     let newSearch = search
@@ -63,6 +67,8 @@ export const PortalContainer = ({
       })
     }
 
+    console.log('🚀 ~ PortalContainer.jsx:71 ~ useEffect ~ newPathname:', newPathname)
+    console.log('🚀 ~ PortalContainer.jsx:72 ~ useEffect ~ newSearch:', newSearch)
     if (newPathname !== pathname || newSearch !== search) {
       // Update the URL with the new value
       onChangeUrl({
@@ -102,12 +108,6 @@ export const PortalContainer = ({
 }
 
 PortalContainer.propTypes = {
-  location: locationPropType.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      portalId: PropTypes.string
-    })
-  }).isRequired,
   portal: PropTypes.shape({
     title: PropTypes.shape({
       primary: PropTypes.string
@@ -118,6 +118,4 @@ PortalContainer.propTypes = {
   onChangeUrl: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PortalContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(PortalContainer)

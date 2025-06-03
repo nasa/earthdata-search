@@ -1,17 +1,12 @@
-import React from 'react'
-import { Router } from 'react-router'
-import { Provider } from 'react-redux'
-import { createMemoryHistory } from 'history'
 import { withFormik } from 'formik'
 
 import {
   act,
-  render,
   screen,
   waitFor
 } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import configureStore from '../../../store/configureStore'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import * as metrics from '../../../middleware/metrics/actions'
@@ -27,24 +22,19 @@ import handleFormSubmit from '../handleFormSubmit'
 
 jest.mock('../handleFormSubmit')
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
+const EnhancedGranuleFiltersContainer = withFormik({
+  enableReinitialize: true,
+  validationSchema,
+  mapPropsToValues: () => ({ granuleQuery: {} }),
+  handleSubmit: handleFormSubmit
+})(GranuleFiltersContainer)
 
-const setup = (overrideProps) => {
-  const onApplyGranuleFilters = jest.fn()
-  const onUndoExcludeGranule = jest.fn()
-  const setFieldTouched = jest.fn()
-  const setFieldValue = jest.fn()
-  const setGranuleFiltersNeedReset = jest.fn()
-  const handleBlur = jest.fn()
-  const handleChange = jest.fn()
-  const handleReset = jest.fn()
-  const handleSubmit = jest.fn()
-  const onClearGranuleFilters = jest.fn()
-  const onMetricsGranuleFilter = jest.fn()
+const handleReset = jest.fn()
+const handleSubmit = jest.fn()
 
-  const props = {
+const setup = setupTest({
+  Component: EnhancedGranuleFiltersContainer,
+  defaultProps: {
     cmrFacetParams: {},
     collectionMetadata: {
       title: 'Test Collection'
@@ -56,57 +46,22 @@ const setup = (overrideProps) => {
       excludedGranuleIds: []
     },
     errors: {},
-    handleBlur,
-    handleChange,
+    handleBlur: jest.fn(),
+    handleChange: jest.fn(),
     handleReset,
     handleSubmit,
     isValid: true,
-    onApplyGranuleFilters,
-    onClearGranuleFilters,
-    onMetricsGranuleFilter,
-    onUndoExcludeGranule,
-    setFieldTouched,
-    setFieldValue,
-    setGranuleFiltersNeedReset,
+    onApplyGranuleFilters: jest.fn(),
+    onClearGranuleFilters: jest.fn(),
+    onMetricsGranuleFilter: jest.fn(),
+    onUndoExcludeGranule: jest.fn(),
+    setFieldTouched: jest.fn(),
+    setFieldValue: jest.fn(),
+    setGranuleFiltersNeedReset: jest.fn(),
     touched: {},
-    values: {},
-    ...overrideProps
-
+    values: {}
   }
-
-  const user = userEvent.setup()
-
-  const store = configureStore()
-
-  const history = createMemoryHistory()
-
-  // `Formik` wrapper mock around component to set context
-  // `Validation schema` and `handleSubmit` are not needed for mock but, used here for better mock to the real component
-  const EnhancedGranuleFiltersContainer = withFormik({
-    enableReinitialize: true,
-    validationSchema,
-    mapPropsToValues: () => ({ granuleQuery: {} }),
-    handleSubmit: handleFormSubmit
-  })(GranuleFiltersContainer)
-
-  render(
-    <Provider store={store}>
-      <Router history={history}>
-        <EnhancedGranuleFiltersContainer
-          render={() => (<GranuleFiltersContainer {...props} />)}
-        />
-      </Router>
-    </Provider>
-  )
-
-  return {
-    onClearGranuleFilters,
-    handleSubmit,
-    handleReset,
-    setGranuleFiltersNeedReset,
-    user
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onApplyGranuleFilters calls actions.applyGranuleFilters', () => {
@@ -115,8 +70,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onApplyGranuleFilters({ mock: 'data' }, true)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' }, true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' }, true)
   })
 
   test('onClearGranuleFilters calls actions.clearGranuleFilters', () => {
@@ -125,8 +80,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onClearGranuleFilters('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onUndoExcludeGranule calls actions.undoExcludeGranule', () => {
@@ -135,8 +90,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUndoExcludeGranule('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onMetricsGranuleFilter calls metricsGranuleFilter', () => {
@@ -145,8 +100,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onMetricsGranuleFilter('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 })
 
@@ -182,43 +137,46 @@ describe('mapStateToProps', () => {
 describe('GranuleFiltersContainer component', () => {
   test('renders itself correctly', () => {
     setup()
+
     expect(screen.getByRole('heading', { name: 'Granule Search' })).toBeInTheDocument()
   })
 
   describe('GranuleFiltersForm', () => {
     describe('when the component is updated', () => {
       describe('when the granuleFiltersNeedsReset flag is set to true', () => {
-        test('calls onClearGranuleFilters ', () => {
-          const { onClearGranuleFilters } = setup({ granuleFiltersNeedsReset: true })
+        test('calls onClearGranuleFilters and setGranuleFiltersNeedReset', () => {
+          const { props } = setup({
+            overrideProps: {
+              granuleFiltersNeedsReset: true
+            }
+          })
 
-          expect(onClearGranuleFilters).toHaveBeenCalledTimes(1)
-        })
+          expect(props.onClearGranuleFilters).toHaveBeenCalledTimes(1)
+          expect(props.onClearGranuleFilters).toHaveBeenCalledWith()
 
-        test('calls handleReset ', () => {
-          const { handleReset } = setup({ granuleFiltersNeedsReset: true })
-
-          expect(handleReset).toHaveBeenCalledTimes(1)
+          expect(props.setGranuleFiltersNeedReset).toHaveBeenCalledTimes(1)
+          expect(props.setGranuleFiltersNeedReset).toHaveBeenCalledWith(false)
         })
       })
 
       describe('when the granuleFiltersNeedsReset flag is set to false', () => {
-        test('does not run onClearGranuleFilters', () => {
-          const { onClearGranuleFilters } = setup()
-          expect(onClearGranuleFilters).toHaveBeenCalledTimes(0)
-        })
+        test('does not run onClearGranuleFilters or setGranuleFiltersNeedReset', () => {
+          const { props } = setup()
 
-        test('sets the granuleFiltersNeedsReset flag to false', () => {
-          const { setGranuleFiltersNeedReset } = setup({ granuleFiltersNeedsReset: false })
-          expect(setGranuleFiltersNeedReset).toHaveBeenCalledTimes(0)
+          expect(props.onClearGranuleFilters).toHaveBeenCalledTimes(0)
+
+          expect(props.setGranuleFiltersNeedReset).toHaveBeenCalledTimes(0)
         })
       })
     })
 
     describe('when the form is submitted', () => {
       test('handle submit is called', async () => {
-        const { handleSubmit, user } = setup({
-          values: {
-            test: 'test'
+        const { user } = setup({
+          overrideProps: {
+            values: {
+              test: 'test'
+            }
           }
         })
 
@@ -230,7 +188,46 @@ describe('GranuleFiltersContainer component', () => {
         })
 
         await waitFor(() => {
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
+          expect(handleFormSubmit).toHaveBeenCalledTimes(1)
+        })
+
+        expect(handleFormSubmit).toHaveBeenCalledWith({ granuleQuery: {} }, {
+          props: {
+            cmrFacetParams: {},
+            collectionMetadata: { title: 'Test Collection' },
+            collectionQuery: {},
+            dirty: false,
+            errors: {},
+            granuleFiltersNeedsReset: false,
+            granuleQuery: { excludedGranuleIds: [] },
+            handleBlur: expect.any(Function),
+            handleChange: expect.any(Function),
+            handleReset: expect.any(Function),
+            handleSubmit: expect.any(Function),
+            isValid: true,
+            onApplyGranuleFilters: expect.any(Function),
+            onClearGranuleFilters: expect.any(Function),
+            onMetricsGranuleFilter: expect.any(Function),
+            onUndoExcludeGranule: expect.any(Function),
+            setFieldTouched: expect.any(Function),
+            setFieldValue: expect.any(Function),
+            setGranuleFiltersNeedReset: expect.any(Function),
+            touched: {},
+            values: { test: 'test' }
+          },
+          resetForm: expect.any(Function),
+          setErrors: expect.any(Function),
+          setFieldError: expect.any(Function),
+          setFieldTouched: expect.any(Function),
+          setFieldValue: expect.any(Function),
+          setFormikState: expect.any(Function),
+          setStatus: expect.any(Function),
+          setSubmitting: expect.any(Function),
+          setTouched: expect.any(Function),
+          setValues: expect.any(Function),
+          submitForm: expect.any(Function),
+          validateField: expect.any(Function),
+          validateForm: expect.any(Function)
         })
       })
     })
@@ -238,8 +235,10 @@ describe('GranuleFiltersContainer component', () => {
     describe('when hovering over the readable granule name field', () => {
       test('displays tool-tip information', async () => {
         const { user } = setup({
-          values: {
-            test: 'test'
+          overrideProps: {
+            values: {
+              test: 'test'
+            }
           }
         })
 

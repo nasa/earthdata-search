@@ -51,9 +51,6 @@ const setup = setupTest({
       isLoaded: true,
       isLoading: false
     },
-    location: {
-      search: 'value'
-    },
     onAddProjectCollection: jest.fn(),
     onChangePath: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
@@ -216,7 +213,6 @@ describe('GranuleResultsActionsContainer component', () => {
       handoffLinks: [],
       initialLoading: false,
       isCollectionInProject: true,
-      location: { search: 'value' },
       onAddProjectCollection: expect.any(Function),
       onChangePath: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),

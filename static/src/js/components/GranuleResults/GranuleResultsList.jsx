@@ -2,8 +2,6 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 import AutoSizer from 'react-virtualized-auto-sizer'
 
-import { locationPropType } from '../../util/propTypes/location'
-
 import GranuleResultsListBody from './GranuleResultsListBody'
 
 import './GranuleResultsList.scss'
@@ -25,7 +23,6 @@ import './GranuleResultsList.scss'
  * @param {Function} props.isItemLoaded - Callback to detirmine if a granule has been loaded.
  * @param {Number} props.itemCount - Number of total granule list itmes.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
- * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
@@ -51,7 +48,6 @@ export const GranuleResultsList = ({
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  location,
   onAddGranuleToProjectCollection,
   onGenerateNotebook,
   onExcludeGranule,
@@ -90,7 +86,6 @@ export const GranuleResultsList = ({
             isItemLoaded={isItemLoaded}
             itemCount={itemCount}
             loadMoreItems={loadMoreItems}
-            location={location}
             onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
             onExcludeGranule={onExcludeGranule}
             onFocusedGranuleChange={onFocusedGranuleChange}
@@ -129,7 +124,6 @@ GranuleResultsList.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  location: locationPropType.isRequired,
   onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,

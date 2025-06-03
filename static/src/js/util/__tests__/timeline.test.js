@@ -184,10 +184,8 @@ describe('prepareTimelineParams', () => {
           }
         }
       },
-      router: {
-        location: {
-          pathname: '/search'
-        }
+      location: {
+        pathname: '/search'
       },
       timeline: {
         query: {
@@ -234,10 +232,8 @@ describe('prepareTimelineParams', () => {
           allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
         }
       },
-      router: {
-        location: {
-          pathname: '/project/collections'
-        }
+      location: {
+        pathname: '/project/collections'
       }
     })
 
@@ -263,10 +259,8 @@ describe('prepareTimelineParams', () => {
           allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
         }
       },
-      router: {
-        location: {
-          pathname: '/search/granules'
-        }
+      location: {
+        pathname: '/search/granules'
       }
     })
 
@@ -296,10 +290,8 @@ describe('prepareTimelineParams', () => {
           }
         }
       },
-      router: {
-        location: {
-          pathname: '/search/granules'
-        }
+      location: {
+        pathname: '/search/granules'
       }
     })
 

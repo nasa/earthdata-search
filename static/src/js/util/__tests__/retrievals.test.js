@@ -1,7 +1,16 @@
+import useEdscStore from '../../zustand/useEdscStore'
 import { prepareRetrievalParams } from '../retrievals'
 
 describe('retrievals', () => {
   test('prepareRetrievalParams', () => {
+    useEdscStore.setState({
+      location: {
+        location: {
+          search: '?p=C100000-EDSC'
+        }
+      }
+    })
+
     const response = prepareRetrievalParams({
       authToken: 'auth-token',
       earthdataEnvironment: 'prod',
@@ -95,11 +104,6 @@ describe('retrievals', () => {
           }
         }
       },
-      router: {
-        location: {
-          search: '?p=C100000-EDSC'
-        }
-      },
       shapefile: {}
     })
 
@@ -166,6 +170,14 @@ describe('retrievals', () => {
   })
 
   test('when there are no links on the granules', () => {
+    useEdscStore.setState({
+      location: {
+        location: {
+          search: '?p=C100000-EDSC'
+        }
+      }
+    })
+
     const response = prepareRetrievalParams({
       authToken: 'auth-token',
       earthdataEnvironment: 'prod',
@@ -240,11 +252,6 @@ describe('retrievals', () => {
           spatial: {
             point: ['-77, 34']
           }
-        }
-      },
-      router: {
-        location: {
-          search: '?p=C100000-EDSC'
         }
       },
       shapefile: {}

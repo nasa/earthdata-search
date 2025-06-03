@@ -35,8 +35,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   const state = getState()
 
   const {
-    authToken,
-    router
+    authToken
   } = state
 
   // Send the relevency metric event
@@ -324,7 +323,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       // If no data was returned, clear the focused collection and redirect the user back to the search page
       dispatch(actions.updateFocusedCollection(''))
 
-      const { location } = router
+      const { location } = useEdscStore.getState().location
       const { search } = location
 
       dispatch(actions.changeUrl({
@@ -436,8 +435,7 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     // And clear the spatial polygon warning if there is no focused collection
     dispatch(actions.toggleSpatialPolygonWarning(false))
 
-    const { router } = state
-    const { location } = router
+    const { location } = useEdscStore.getState().location
     const { search } = location
 
     // If clearing the focused collection, redirect the user back to the search page
@@ -471,12 +469,11 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
  * Changes the focused collection and redirects the user to the focused collection route
  * @param {String} collectionId The collection id the user has requested to view details of
  */
-export const viewCollectionDetails = (collectionId) => (dispatch, getState) => {
+export const viewCollectionDetails = (collectionId) => (dispatch) => {
   // Update the focused collection in redux and retrieve its metadata
   dispatch(actions.changeFocusedCollection(collectionId))
 
-  const { router } = getState()
-  const { location } = router
+  const { location } = useEdscStore.getState().location
   const { search } = location
 
   dispatch(actions.changeUrl({
@@ -489,12 +486,11 @@ export const viewCollectionDetails = (collectionId) => (dispatch, getState) => {
  * Changes the focused collection and redirects the user to the collection granules route
  * @param {String} collectionId The collection id the user has requested to view granules for
  */
-export const viewCollectionGranules = (collectionId) => (dispatch, getState) => {
+export const viewCollectionGranules = (collectionId) => (dispatch) => {
   // Update the focused collection in redux and retrieve its metadata
   dispatch(actions.changeFocusedCollection(collectionId))
 
-  const { router } = getState()
-  const { location } = router
+  const { location } = useEdscStore.getState().location
   const { search } = location
 
   dispatch(actions.changeUrl({

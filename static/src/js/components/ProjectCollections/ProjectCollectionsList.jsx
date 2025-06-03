@@ -1,14 +1,14 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import SimpleBar from 'simplebar-react'
 
 import { getColorByIndex } from '../../util/colors'
-import { locationPropType } from '../../util/propTypes/location'
 
 import ProjectCollectionItem from './ProjectCollectionItem'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './ProjectCollectionsList.scss'
 
@@ -18,11 +18,12 @@ import './ProjectCollectionsList.scss'
  * @param {object} props.collections - List of collections passed from redux store.
  * @param {function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
  */
-export const ProjectCollectionsList = (props) => {
+const ProjectCollectionsList = (props) => {
+  const location = useEdscStore((state) => state.location.location)
+
   const {
     collectionsMetadata,
     collectionsQuery,
-    location,
     onRemoveCollectionFromProject,
     onSetActivePanel,
     onSetActivePanelSection,
@@ -118,7 +119,6 @@ export const ProjectCollectionsList = (props) => {
 ProjectCollectionsList.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsQuery: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
@@ -138,4 +138,4 @@ ProjectCollectionsList.propTypes = {
   }).isRequired
 }
 
-export default withRouter(ProjectCollectionsList)
+export default ProjectCollectionsList

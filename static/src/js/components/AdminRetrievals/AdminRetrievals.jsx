@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import { AdminPage } from '../AdminPage/AdminPage'
-import { AdminRetrievalsList } from './AdminRetrievalsList'
-import { AdminRetrievalsForm } from './AdminRetrievalsForm'
+import AdminPage from '../AdminPage/AdminPage'
+import AdminRetrievalsList from './AdminRetrievalsList'
+import AdminRetrievalsForm from './AdminRetrievalsForm'
 
-export const AdminRetrievals = ({
-  historyPush,
+const AdminRetrievals = ({
   onAdminViewRetrieval,
   onUpdateAdminRetrievalsSortKey,
   onUpdateAdminRetrievalsPageNum,
@@ -39,7 +38,6 @@ export const AdminRetrievals = ({
     <Row>
       <Col>
         <AdminRetrievalsList
-          historyPush={historyPush}
           onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
           onUpdateAdminRetrievalsPageNum={onUpdateAdminRetrievalsPageNum}
           retrievals={retrievals}
@@ -54,7 +52,6 @@ AdminRetrievals.defaultProps = {
 }
 
 AdminRetrievals.propTypes = {
-  historyPush: PropTypes.func.isRequired,
   onAdminViewRetrieval: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,

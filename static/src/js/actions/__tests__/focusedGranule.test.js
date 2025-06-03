@@ -10,6 +10,7 @@ import { UPDATE_GRANULE_METADATA, UPDATE_FOCUSED_GRANULE } from '../../constants
 
 import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -155,7 +156,7 @@ describe('getFocusedGranule', () => {
       })
     })
 
-    describe('when graphql returns no metadata for the requested collection', () => {
+    describe('when graphql returns no metadata for the requested granule', () => {
       test('should clear the focusedGranule', async () => {
         jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
           cmrHost: 'https://cmr.example.com',
@@ -174,6 +175,15 @@ describe('getFocusedGranule', () => {
         const changeUrlMock = jest.spyOn(actions, 'changeUrl')
         changeUrlMock.mockImplementationOnce(() => jest.fn())
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              pathname: '/search/granules',
+              search: '?some=testparams'
+            }
+          }
+        })
+
         const store = mockStore({
           authToken: '',
           focusedCollection: 'C10000000000-EDSC',
@@ -182,12 +192,6 @@ describe('getFocusedGranule', () => {
             collections: {},
             granules: {
               'G10000000000-EDSC': {}
-            }
-          },
-          router: {
-            location: {
-              search: '?some=testparams',
-              pathname: '/search/granules'
             }
           }
         })
@@ -203,6 +207,10 @@ describe('getFocusedGranule', () => {
         })
 
         expect(changeUrlMock).toHaveBeenCalledTimes(1)
+        expect(changeUrlMock).toHaveBeenCalledWith({
+          pathname: '/search',
+          search: '?some=testparams'
+        })
       })
     })
   })
@@ -240,6 +248,7 @@ describe('getFocusedGranule', () => {
 
     await store.dispatch(actions.getFocusedGranule()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(consoleMock).toHaveBeenCalledWith('Action [getFocusedGranule] failed: Unknown Error')
     })
   })
 })
@@ -263,6 +272,7 @@ describe('changeFocusedGranule', () => {
       })
 
       expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
+      expect(getFocusedGranuleMock).toHaveBeenCalledWith()
     })
   })
 
@@ -271,14 +281,16 @@ describe('changeFocusedGranule', () => {
       const changeUrlMock = jest.spyOn(actions, 'changeUrl')
       changeUrlMock.mockImplementationOnce(() => jest.fn())
 
-      const store = mockStore({
-        router: {
+      useEdscStore.setState({
+        location: {
           location: {
-            search: '?some=testparams',
-            pathname: '/search/granules'
+            pathname: '/search/granules',
+            search: '?some=testparams'
           }
         }
       })
+
+      const store = mockStore()
 
       // Call the dispatch
       store.dispatch(actions.changeFocusedGranule(''))

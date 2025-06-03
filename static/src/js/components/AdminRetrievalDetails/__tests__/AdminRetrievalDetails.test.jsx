@@ -1,36 +1,22 @@
-import React from 'react'
-import {
-  render,
-  screen,
-  within
-} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen, within } from '@testing-library/react'
 
 import { AdminRetrievalDetails } from '../AdminRetrievalDetails'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: AdminRetrievalDetails,
+  defaultProps: {
     retrieval: {
       username: 'edsc-test',
       obfuscated_id: '06347346'
     },
-    onRequeueOrder: jest.fn(),
-    ...overrideProps
+    onRequeueOrder: jest.fn()
   }
-
-  const renderContainer = (renderProps) => render(<AdminRetrievalDetails {...renderProps} />)
-
-  return {
-    renderContainer,
-    props
-  }
-}
+})
 
 describe('AdminRetrievalDetails component', () => {
   test('should render the site AdminRetrievalDetails', () => {
-    const { renderContainer, props } = setup()
-
-    renderContainer(props)
+    setup()
 
     expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(0)).toHaveTextContent('edsc-test')
     expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(1)).toHaveTextContent('06347346')
@@ -38,30 +24,30 @@ describe('AdminRetrievalDetails component', () => {
 
   describe('with collections', () => {
     test('should render collections', () => {
-      const { renderContainer, props } = setup({
-        retrieval: {
-          username: 'edsc-test',
-          jsondata: {
-            portal_id: 'testPortal',
-            source: '?mock-source'
-          },
-          obfuscated_id: '06347346',
-          collections: [{
-            id: 1,
-            collection_id: 'C10000005',
-            data_center: 'EDSC',
-            granule_count: 35,
-            access_method: {
-              type: 'download'
+      setup({
+        overrideProps: {
+          retrieval: {
+            username: 'edsc-test',
+            jsondata: {
+              portal_id: 'testPortal',
+              source: '?mock-source'
             },
-            created_at: '2023-07-18T17:53:49.000Z',
-            updated_at: '2023-07-18T17:54:22.000Z',
-            orders: []
-          }]
+            obfuscated_id: '06347346',
+            collections: [{
+              id: 1,
+              collection_id: 'C10000005',
+              data_center: 'EDSC',
+              granule_count: 35,
+              access_method: {
+                type: 'download'
+              },
+              created_at: '2023-07-18T17:53:49.000Z',
+              updated_at: '2023-07-18T17:54:22.000Z',
+              orders: []
+            }]
+          }
         }
       })
-
-      renderContainer(props)
 
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(0)).toHaveTextContent('edsc-test')
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(1)).toHaveTextContent('06347346')
@@ -81,40 +67,41 @@ describe('AdminRetrievalDetails component', () => {
 
   describe('with orders', () => {
     test('should render collections and the orders table', () => {
-      const { renderContainer, props } = setup({
-        retrieval: {
-          username: 'edsc-test',
-          jsondata: {
-            source: '?mock-source'
-          },
-          obfuscated_id: '06347346',
-          collections: [{
-            id: 1,
-            collection_id: 'C10000005',
-            data_center: 'EDSC',
-            granule_count: 35,
-            access_method: {
-              type: 'download'
+      setup({
+        overrideProps: {
+          retrieval: {
+            username: 'edsc-test',
+            jsondata: {
+              source: '?mock-source'
             },
-            created_at: '2023-07-18T17:53:49.000Z',
-            updated_at: '2023-07-18T17:54:22.000Z',
-            orders: [{
-              id: 5,
-              order_information: {},
-              order_number: '40058',
-              state: 'creating',
-              type: 'ECHO ORDERS'
-            }, {
-              id: 6,
-              order_information: {},
-              order_number: '4005',
-              state: 'creating',
-              type: 'ECHO ORDERS'
+            obfuscated_id: '06347346',
+            collections: [{
+              id: 1,
+              collection_id: 'C10000005',
+              data_center: 'EDSC',
+              granule_count: 35,
+              access_method: {
+                type: 'download'
+              },
+              created_at: '2023-07-18T17:53:49.000Z',
+              updated_at: '2023-07-18T17:54:22.000Z',
+              orders: [{
+                id: 5,
+                order_information: {},
+                order_number: '40058',
+                state: 'creating',
+                type: 'ECHO ORDERS'
+              }, {
+                id: 6,
+                order_information: {},
+                order_number: '4005',
+                state: 'creating',
+                type: 'ECHO ORDERS'
+              }]
             }]
-          }]
+          }
         }
       })
-      renderContainer(props)
 
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(0)).toHaveTextContent('edsc-test')
       expect(screen.getAllByTestId('admin-retrieval-details__metadata-display-content').at(1)).toHaveTextContent('06347346')
@@ -141,36 +128,36 @@ describe('AdminRetrievalDetails component', () => {
     })
 
     test('clicking on the Requeue button calls onRequeueOrder', async () => {
-      const user = userEvent.setup()
-      const { renderContainer, props } = setup({
-        retrieval: {
-          username: 'edsc-test',
-          jsondata: {
-            source: '?mock-source'
-          },
-          obfuscated_id: '06347346',
-          collections: [{
-            id: 1,
-            collection_id: 'C10000005',
-            data_center: 'EDSC',
-            granule_count: 35,
-            access_method: {
-              type: 'download'
+      const { props, user } = setup({
+        overrideProps: {
+          retrieval: {
+            username: 'edsc-test',
+            jsondata: {
+              source: '?mock-source'
             },
-            created_at: '2023-07-18T17:53:49.000Z',
-            updated_at: '2023-07-18T17:54:22.000Z',
-            orders: [{
-              id: 5,
-              order_information: {},
-              order_number: '40058',
-              state: 'creating',
-              type: 'ECHO ORDERS'
+            obfuscated_id: '06347346',
+            collections: [{
+              id: 1,
+              collection_id: 'C10000005',
+              data_center: 'EDSC',
+              granule_count: 35,
+              access_method: {
+                type: 'download'
+              },
+              created_at: '2023-07-18T17:53:49.000Z',
+              updated_at: '2023-07-18T17:54:22.000Z',
+              orders: [{
+                id: 5,
+                order_information: {},
+                order_number: '40058',
+                state: 'creating',
+                type: 'ECHO ORDERS'
+              }]
             }]
-          }]
+          }
         }
       })
 
-      renderContainer(props)
       await user.click(screen.getByRole('button', { name: /Requeue/ }))
 
       expect(props.onRequeueOrder).toHaveBeenCalledTimes(1)

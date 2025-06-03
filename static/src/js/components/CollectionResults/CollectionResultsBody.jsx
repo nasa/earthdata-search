@@ -10,6 +10,8 @@ import CollectionResultsList from './CollectionResultsList'
 import CollectionResultsTable from './CollectionResultsTable'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './CollectionResultsBody.scss'
 
 /**
@@ -29,7 +31,6 @@ const CollectionResultsBody = ({
   collectionsMetadata,
   projectCollectionsIds,
   loadNextPage,
-  location,
   onAddProjectCollection,
   onMetricsAddCollectionProject,
   onRemoveCollectionFromProject,
@@ -38,6 +39,7 @@ const CollectionResultsBody = ({
   panelView,
   portal
 }) => {
+  const location = useEdscStore((state) => state.location.location)
   const {
     allIds: collectionIds,
     hits: collectionHits,
@@ -173,9 +175,6 @@ CollectionResultsBody.propTypes = {
     isLoaded: PropTypes.bool
   }).isRequired,
   loadNextPage: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string
-  }).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,

@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 import AdminPreferencesMetrics from '../../components/AdminPreferencesMetrics/AdminPreferencesMetrics'
@@ -41,6 +40,4 @@ AdminPreferencesMetricsContainer.propTypes = {
   preferencesMetrics: PropTypes.shape({})
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AdminPreferencesMetricsContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminPreferencesMetricsContainer)

@@ -1,8 +1,7 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import EarthdataDownloadRedirectComponent from '../../components/EarthdataDownloadRedirectContainer/EarthdataDownloadRedirect'
+import EarthdataDownloadRedirectComponent from '../../components/EarthdataDownloadRedirect/EarthdataDownloadRedirect'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
@@ -28,4 +27,4 @@ export const EarthdataDownloadRedirect = () => {
   )
 }
 
-export default withRouter(EarthdataDownloadRedirect)
+export default EarthdataDownloadRedirect

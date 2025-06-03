@@ -2,7 +2,7 @@ import React from 'react'
 import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { ProjectCollectionsList } from '../ProjectCollectionsList'
+import ProjectCollectionsList from '../ProjectCollectionsList'
 import ProjectCollectionItem from '../ProjectCollectionItem'
 import projectionCodes from '../../../constants/projectionCodes'
 

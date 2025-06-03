@@ -25,8 +25,9 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
-import './SearchForm.scss'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
+import './SearchForm.scss'
 
 class SearchForm extends Component {
   constructor(props) {

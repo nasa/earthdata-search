@@ -664,7 +664,6 @@ class ProjectPanels extends PureComponent {
               collectionId={collectionId}
               focusedGranuleId={focusedGranuleId}
               granulesMetadata={granulesMetadata}
-              location={location}
               onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
               onFocusedGranuleChange={onFocusedGranuleChange}
               onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}

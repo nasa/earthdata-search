@@ -1,18 +1,20 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
-import { locationPropType } from '../../util/propTypes/location'
 import { pathStartsWith } from '../../util/pathStartsWith'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './WrappingContainer.scss'
 
 export const WrappingContainer = (props) => {
   const {
-    children,
-    location
+    children
   } = props
+
+  const location = useEdscStore((state) => state.location.location)
   const { search, pathname } = location
+
   let isMapPage = ['/search']
 
   // Currently saved projects and a project page share a route as such we must determine if we are on the saved projects page
@@ -37,8 +39,7 @@ export const WrappingContainer = (props) => {
 }
 
 WrappingContainer.propTypes = {
-  children: PropTypes.node.isRequired,
-  location: locationPropType.isRequired
+  children: PropTypes.node.isRequired
 }
 
-export default withRouter(WrappingContainer)
+export default WrappingContainer

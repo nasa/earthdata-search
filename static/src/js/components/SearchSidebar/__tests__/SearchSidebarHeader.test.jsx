@@ -1,7 +1,6 @@
 import React from 'react'
 import {
   fireEvent,
-  render,
   screen,
   waitFor
 } from '@testing-library/react'
@@ -14,6 +13,7 @@ import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalL
 import availablePortals from '../../../../../../portals/availablePortals.json'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../containers/SearchFormContainer/SearchFormContainer', () => jest.fn(({ children }) => (
   <mock-SearchFormContainer data-testid="SearchFormContainer">
@@ -31,27 +31,25 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 jest.mock('../../../../../../portals/testPortal/images/logo.png?h=56&format=webp', () => ('testPortal_logo_path'), { virtual: true })
 jest.mock('../../../../../../portals/testPortal2/images/logo.png?h=56&format=webp', () => ('testPortal2_logo_path'), { virtual: true })
 
-function setup(overrideProps) {
-  const props = {
-    portal: availablePortals.edsc,
+const setup = setupTest({
+  Component: SearchSidebarHeader,
+  defaultProps: {
+    portal: availablePortals.edsc
+  },
+  defaultZustandState: {
     location: {
-      pathname: '/search',
-      search: ''
-    },
-    ...overrideProps
+      location: {
+        pathname: '/search',
+        search: ''
+      }
+    }
   }
-
-  render(<SearchSidebarHeader {...props} />)
-}
+})
 
 beforeEach(() => {
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     defaultPortal: 'edsc'
   }))
-})
-
-afterEach(() => {
-  jest.clearAllMocks()
 })
 
 describe('SearchSidebarHeader component', () => {
@@ -64,10 +62,16 @@ describe('SearchSidebarHeader component', () => {
   describe('when a portal is loaded', () => {
     test('renders the Leave Portal link', async () => {
       setup({
-        portal: availablePortals.testPortal,
-        location: {
-          pathname: '/search',
-          search: '?portal=testPortal'
+        overrideProps: {
+          portal: availablePortals.testPortal
+        },
+        overrideZustandState: {
+          location: {
+            location: {
+              pathname: '/search',
+              search: '?portal=testPortal'
+            }
+          }
         }
       })
 
@@ -89,10 +93,16 @@ describe('SearchSidebarHeader component', () => {
 
     test('renders the portal logo and removes the spinner', async () => {
       setup({
-        portal: availablePortals.testPortal2,
-        location: {
-          pathname: '/search',
-          search: '?portal=testPortal2'
+        overrideProps: {
+          portal: availablePortals.testPortal2
+        },
+        overrideZustandState: {
+          location: {
+            location: {
+              pathname: '/search',
+              search: '?portal=testPortal2'
+            }
+          }
         }
       })
 
@@ -113,10 +123,16 @@ describe('SearchSidebarHeader component', () => {
 
     test('renders the portal logo with a moreInfoUrl', async () => {
       setup({
-        portal: availablePortals.testPortal,
-        location: {
-          pathname: '/search',
-          search: '?portal=testPortal'
+        overrideProps: {
+          portal: availablePortals.testPortal
+        },
+        overrideZustandState: {
+          location: {
+            location: {
+              pathname: '/search',
+              search: '?portal=testPortal'
+            }
+          }
         }
       })
 

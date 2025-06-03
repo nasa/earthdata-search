@@ -3,13 +3,14 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { eventEmitter } from '../../events/events'
 import LoggerRequest from '../../util/request/loggerRequest'
-import { locationPropType } from '../../util/propTypes/location'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './NotFound.scss'
 
-export const NotFound = ({
-  location
-}) => {
+export const NotFound = () => {
+  const location = useEdscStore((state) => state.location.location)
+
   useEffect(() => {
     eventEmitter.emit('error.global', true)
 
@@ -64,10 +65,6 @@ export const NotFound = ({
       </div>
     </div>
   )
-}
-
-NotFound.propTypes = {
-  location: locationPropType.isRequired
 }
 
 export default NotFound

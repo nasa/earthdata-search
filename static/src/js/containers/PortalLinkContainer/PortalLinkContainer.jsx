@@ -1,16 +1,15 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { parse, stringify } from 'qs'
 import { isObject } from 'lodash-es'
-
-import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../../components/Button/Button'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
 import { isDefaultPortal } from '../../util/portals'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -35,6 +34,8 @@ export const PortalLinkContainer = (props) => {
     updatePath,
     onChangePath
   } = props
+
+  const navigate = useEdscStore((state) => state.location.navigate)
 
   // Get the portalId that needs to be used in the link
   const getPortalId = () => {
@@ -105,20 +106,21 @@ export const PortalLinkContainer = (props) => {
   }
 
   if (type === 'button') {
-    // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button#answer-49439893
-    const {
-      history,
-      ...rest
-    } = props
-
     return (
       <Button
         type="button"
-        {...rest}
+        {...props}
         onClick={
           (event) => {
             onClickWithChangePath(event)
-            history.push(newTo)
+
+            // There is a bug in this redirect because UrlQueryContainer is triggering updates from both Redux and Zustand (for now). For some reason that is causing the URL to stay on /auth_callback instead of redirecting to /earthdata-download-callback.
+
+            // This setTimeout should only be temporary, it should be removed once UrlQueryContainer is removed.
+
+            setTimeout(() => {
+              navigate(newTo)
+            }, 0)
           }
         }
       />
@@ -157,11 +159,6 @@ PortalLinkContainer.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   dataTestId: PropTypes.string,
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }).isRequired,
-  location: locationPropType.isRequired,
-  match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.func,
   portal: PropTypes.shape({
     portalId: PropTypes.string
@@ -180,6 +177,4 @@ PortalLinkContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PortalLinkContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(PortalLinkContainer)

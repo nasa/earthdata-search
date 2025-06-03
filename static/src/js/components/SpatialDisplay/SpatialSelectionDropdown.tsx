@@ -2,7 +2,6 @@ import React from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
-import { useLocation } from 'react-router-dom'
 
 import { FaCircle, FaFile } from 'react-icons/fa'
 
@@ -49,7 +48,7 @@ const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
 
   const setStartDrawing = useEdscStore((state) => state.home.setStartDrawing)
 
-  const location = useLocation()
+  const location = useEdscStore((state) => state.location.location)
   const { pathname } = location
   const isHomePage = pathname === '/'
 

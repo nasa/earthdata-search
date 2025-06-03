@@ -3,12 +3,11 @@ import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import { AdminPage } from '../AdminPage/AdminPage'
-import { AdminProjectsList } from './AdminProjectsList'
-import { AdminProjectsForm } from './AdminProjectsForm'
+import AdminPage from '../AdminPage/AdminPage'
+import AdminProjectsList from './AdminProjectsList'
+import AdminProjectsForm from './AdminProjectsForm'
 
-export const AdminProjects = ({
-  historyPush,
+const AdminProjects = ({
   onAdminViewProject,
   onUpdateAdminProjectsSortKey,
   onUpdateAdminProjectsPageNum,
@@ -39,7 +38,6 @@ export const AdminProjects = ({
     <Row>
       <Col>
         <AdminProjectsList
-          historyPush={historyPush}
           onUpdateAdminProjectsSortKey={onUpdateAdminProjectsSortKey}
           onUpdateAdminProjectsPageNum={onUpdateAdminProjectsPageNum}
           projects={projects}
@@ -54,7 +52,6 @@ AdminProjects.defaultProps = {
 }
 
 AdminProjects.propTypes = {
-  historyPush: PropTypes.func.isRequired,
   onAdminViewProject: PropTypes.func.isRequired,
   onUpdateAdminProjectsSortKey: PropTypes.func.isRequired,
   onUpdateAdminProjectsPageNum: PropTypes.func.isRequired,

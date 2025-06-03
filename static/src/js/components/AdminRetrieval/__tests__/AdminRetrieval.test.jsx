@@ -1,58 +1,54 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { AdminRetrieval } from '../AdminRetrieval'
-import { AdminPage } from '../../AdminPage/AdminPage'
-import { AdminRetrievalDetails } from '../../AdminRetrievalDetails/AdminRetrievalDetails'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+import AdminRetrieval from '../AdminRetrieval'
+import AdminPage from '../../AdminPage/AdminPage'
+import AdminRetrievalDetails from '../../AdminRetrievalDetails/AdminRetrievalDetails'
 
-function setup() {
-  const props = {
+jest.mock('../../AdminPage/AdminPage', () => jest.fn().mockImplementation(
+  jest.requireActual('../../AdminPage/AdminPage').default
+))
+
+jest.mock('../../AdminRetrievalDetails/AdminRetrievalDetails', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: AdminRetrieval,
+  defaultProps: {
     retrieval: {
       id: 1
     },
     onRequeueOrder: jest.fn()
-  }
-
-  const enzymeWrapper = shallow(<AdminRetrieval {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+  },
+  withRouter: true
+})
 
 describe('AdminRetrieval component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(AdminPage).length).toBe(1)
-    expect(enzymeWrapper.find(AdminRetrievalDetails).length).toBe(1)
-  })
-
   test('renders its components correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(AdminPage).props().pageTitle).toEqual('Retrieval Details')
-    expect(enzymeWrapper.find(AdminPage).props().breadcrumbs).toEqual([
-      {
-        name: 'Admin',
-        href: '/admin'
-      },
-      {
-        name: 'Retrievals',
-        href: '/admin/retrievals'
-      },
-      {
-        name: 'Retrieval Details',
-        active: true
+    expect(AdminPage).toHaveBeenCalledTimes(1)
+    expect(AdminPage).toHaveBeenCalledWith({
+      breadcrumbs: [{
+        href: '/admin',
+        name: 'Admin'
+      }, {
+        href: '/admin/retrievals',
+        name: 'Retrievals'
+      }, {
+        active: true,
+        name: 'Retrieval Details'
+      }],
+      children: expect.anything(),
+      pageTitle: 'Retrieval Details'
+    }, {})
+
+    expect(AdminRetrievalDetails).toHaveBeenCalledTimes(1)
+    expect(AdminRetrievalDetails).toHaveBeenCalledWith({
+      onRequeueOrder: expect.any(Function),
+      retrieval: {
+        id: 1
       }
-    ])
-
-    expect(enzymeWrapper.find(AdminRetrievalDetails).props().retrieval).toEqual({
-      id: 1
-    })
+    }, {})
   })
 })

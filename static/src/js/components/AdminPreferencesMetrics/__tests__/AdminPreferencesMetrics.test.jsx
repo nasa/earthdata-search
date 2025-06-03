@@ -1,47 +1,59 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
 
-import { MemoryRouter } from 'react-router-dom'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { AdminPreferencesMetrics } from '../AdminPreferencesMetrics'
+import AdminPreferencesMetrics from '../AdminPreferencesMetrics'
+import AdminPreferencesMetricsList from '../AdminPreferencesMetricsList'
 
-const setup = () => {
-  const preferencesMetrics = {
-    isLoaded: true,
-    isLoading: false,
-    preferences: {
-      panelState: [],
-      granuleSort: [],
-      granuleListView: [],
-      collectionSort: [],
-      collectionListView: [],
-      zoom: [],
-      latitude: [],
-      longitude: [],
-      projection: [],
-      overlayLayers: [],
-      baseLayer: []
+jest.mock('../AdminPreferencesMetricsList', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: AdminPreferencesMetrics,
+  defaultProps: {
+    preferencesMetrics: {
+      isLoaded: true,
+      isLoading: false,
+      preferences: {
+        panelState: [],
+        granuleSort: [],
+        granuleListView: [],
+        collectionSort: [],
+        collectionListView: [],
+        zoom: [],
+        latitude: [],
+        longitude: [],
+        projection: [],
+        overlayLayers: [],
+        baseLayer: []
+      }
     }
-  }
-
-  const props = {
-    preferencesMetrics
-  }
-
-  render(
-    <MemoryRouter>
-      <AdminPreferencesMetrics {...props} />
-    </MemoryRouter>
-  )
-
-  return {
-    preferencesMetrics
-  }
-}
+  },
+  withRouter: true
+})
 
 describe('AdminPreferencesMetrics component', () => {
   test('renders itself correctly', () => {
     setup()
-    expect(screen.getByRole('heading', { name: 'Preferences Metrics' })).toBeInTheDocument()
+
+    expect(AdminPreferencesMetricsList).toHaveBeenCalledTimes(1)
+    expect(AdminPreferencesMetricsList).toHaveBeenCalledWith({
+      preferencesMetrics: {
+        isLoaded: true,
+        isLoading: false,
+        preferences: {
+          panelState: [],
+          granuleSort: [],
+          granuleListView: [],
+          collectionSort: [],
+          collectionListView: [],
+          zoom: [],
+          latitude: [],
+          longitude: [],
+          projection: [],
+          overlayLayers: [],
+          baseLayer: []
+        }
+      }
+    }, {})
   })
 })

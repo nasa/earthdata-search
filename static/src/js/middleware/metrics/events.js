@@ -1,3 +1,4 @@
+import configureStore from '../../store/configureStore'
 import {
   computeKeyword,
   computeSpatialType,
@@ -9,18 +10,42 @@ import {
 
 const { dataLayer = [] } = window
 
+// TODO come up with script to follow and count the number of virtualPageView events on main and branch to make sure that we still have the same number of events
+// Landing page
+// Search for C1205428742-ASF
+// spatial point
+// select collection
+// add 2 granules
+// download 2
+// download data
+// had to click download data twice, but 9 VirtualPageView events were fired
+// !! This is the same problem I'm seeing where setTimeout is "fixing" pages trying to load two URLs
+// 6 without double click, (total 113)
+// 1, newUrl: "http://localhost:8080/search?q=",
+// 2, newUrl: "http://localhost:8080/search/granules?q=C1205428742-ASF&sp[0]=-76.3855%2C38.26073",
+// 3, newUrl: "http://localhost:8080/search?p=C1205428742-ASF&pg[0][v]=f&pg[0][gsk]=-start_date&q=C1205428742-ASF&sp[0]=-76.3855%2C38.26073",
+// 4, newUrl: "http://localhost:8080/search/granules?p=C1205428742-ASF&pg[0][v]=f&pg[0][gsk]=-start_date&q=C1205428742-ASF&sp[0]=-76.3855%2C38.26073",
+// 5, newUrl: "http://localhost:8080/projects?p=C1205428742-ASF%21C1205428742-ASF&pg%5B1%5D%5Ba%5D=1257973005%211257782548%21ASF&pg%5B1%5D%5Bv%5D=t&pg%5B1%5D%5Bgsk%5D=-start_date&q=C1205428742-ASF&sp%5B0%5D=-76.3855%2C38.26073&tl=1572731935.208%215%21%21",
+// 6, newUrl: "http://localhost:8080/downloads/5613479020",
+
+// on main, 4 virtualPageView events were fired (total 109)
+// 1, newUrl: "http://localhost:8080/search?q=",
+// 2, newUrl: "http://localhost:8080/search/granules?q=C1205428742-ASF&sp[0]=-76.39511%2C38.05267",
+// 3, newUrl: "http://localhost:8080/projects?p=C1205428742-ASF%21C1205428742-ASF&pg%5B1%5D%5Ba%5D=1257973005%211257782548%21ASF&pg%5B1%5D%5Bv%5D=t&pg%5B1%5D%5Bgsk%5D=-start_date&q=C1205428742-ASF&sp%5B0%5D=-76.39511%2C38.05267&tl=1572731769.723%215%21%21",
+// 4, newUrl: "http://localhost:8080/downloads/0093641925",
+
+
 /**
 * Pushes a virtualPageView event on the dataLayer. Only fires on PUSH events.
 * These `PUSH` events only fire during page transitions
 * @param {Object} action - The action.
-* @param {Object} state - The current state.
 */
-export const virtualPageview = (action, state) => {
-  const { payload } = action
-  const { action: locationChangeType } = payload
-
-  if (locationChangeType === 'PUSH') {
-    dataLayer.push({
+export const virtualPageview = (navigationType) => {
+  if (navigationType === 'PUSH') {
+    const { getState } = configureStore()
+    const state = getState()
+    console.log('🚀 ~ events.js:22 ~ virtualPageview ~ state:', state)
+    const event = {
       event: 'virtualPageView',
       dimension11: computeKeyword(state), // Keyword Search
       dimension12: computeSpatialType(state), // Spatial
@@ -28,7 +53,9 @@ export const virtualPageview = (action, state) => {
       dimension14: computeCollectionsViewed(state), // Collections Viewed
       dimension15: computeCollectionsAdded(state), // Collections Added
       dimension16: computeFacets(state) // Search Facet
-    })
+    }
+    console.log('🚀 ~ events.js:32 ~ virtualPageview ~ event:', event)
+    dataLayer.push(event)
   }
 }
 

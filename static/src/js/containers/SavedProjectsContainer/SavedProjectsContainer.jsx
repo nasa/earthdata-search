@@ -5,7 +5,6 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
@@ -112,6 +111,4 @@ SavedProjectsContainer.propTypes = {
   dispatchHandleError: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SavedProjectsContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SavedProjectsContainer)

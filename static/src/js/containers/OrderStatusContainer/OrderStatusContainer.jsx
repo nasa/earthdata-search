@@ -1,12 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
-import { locationPropType } from '../../util/propTypes/location'
 import { metricsRelatedCollection } from '../../middleware/metrics/actions'
 
 import OrderStatus from '../../components/OrderStatus/OrderStatus'
@@ -47,8 +45,6 @@ export const OrderStatusContainer = ({
   authToken,
   earthdataEnvironment,
   granuleDownload,
-  location,
-  match,
   onChangePath,
   onFetchRetrieval,
   onFetchRetrievalCollection,
@@ -63,8 +59,6 @@ export const OrderStatusContainer = ({
     authToken={authToken}
     earthdataEnvironment={earthdataEnvironment}
     granuleDownload={granuleDownload}
-    location={location}
-    match={match}
     onChangePath={onChangePath}
     onFetchRetrieval={onFetchRetrieval}
     onFetchRetrievalCollection={onFetchRetrievalCollection}
@@ -81,8 +75,6 @@ OrderStatusContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
-  match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
@@ -94,6 +86,4 @@ OrderStatusContainer.propTypes = {
   retrieval: PropTypes.shape({}).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(OrderStatusContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(OrderStatusContainer)

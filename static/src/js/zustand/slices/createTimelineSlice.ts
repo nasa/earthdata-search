@@ -57,6 +57,7 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
 
       const timelineParams = prepareTimelineParams({
         ...reduxState,
+        location: get().location.location,
         timeline: get().timeline
       })
 

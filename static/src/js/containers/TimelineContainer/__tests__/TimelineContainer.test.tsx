@@ -34,10 +34,16 @@ const setup = setupTest({
     onMetricsTimeline: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
     onToggleTimeline: jest.fn(),
-    pathname: '/search',
     temporalSearch: {},
-    isOpen: true,
-    search: '?p=C123456-EDSC'
+    isOpen: true
+  },
+  defaultZustandState: {
+    location: {
+      location: {
+        pathname: '/search',
+        search: '?p=C123456-EDSC'
+      }
+    }
   }
 })
 
@@ -95,11 +101,6 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      router: {
-        location: {
-          pathname: ''
-        }
-      },
       ui: {
         timeline: {
           isOpen: false
@@ -110,7 +111,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionsMetadata: {},
       focusedCollectionId: 'collectionId',
-      pathname: '',
       projectCollectionsIds: [],
       temporalSearch: {},
       isOpen: false
@@ -129,8 +129,13 @@ describe('TimelineContainer component', () => {
 
   test('passes its props and renders a single Timeline component on the search page', () => {
     setup({
-      overrideProps: {
-        pathname: '/search/granules'
+      overrideZustandState: {
+        location: {
+          location: {
+            pathname: '/search/granules',
+            search: '?p=C123456-EDSC'
+          }
+        }
       }
     })
 
@@ -158,8 +163,13 @@ describe('TimelineContainer component', () => {
 
   test('passes its props and renders a single Timeline component on the project page', () => {
     setup({
-      overrideProps: {
-        pathname: '/projects'
+      overrideZustandState: {
+        location: {
+          location: {
+            pathname: '/projects',
+            search: '?p=C123456-EDSC'
+          }
+        }
       }
     })
 

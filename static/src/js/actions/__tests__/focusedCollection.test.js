@@ -459,6 +459,15 @@ describe('getFocusedCollection', () => {
         const changeUrlMock = jest.spyOn(actions, 'changeUrl')
         changeUrlMock.mockImplementationOnce(() => jest.fn())
 
+        useEdscStore.setState({
+          location: {
+            location: {
+              search: '?some=testparams',
+              pathname: '/search/granules'
+            }
+          }
+        })
+
         const store = mockStore({
           authToken: '',
           focusedCollection: 'C10000000000-EDSC',
@@ -467,12 +476,6 @@ describe('getFocusedCollection', () => {
               'C10000000000-EDSC': {}
             },
             granules: {}
-          },
-          router: {
-            location: {
-              search: '?some=testparams',
-              pathname: '/search/granules'
-            }
           },
           query: {
             collection: {
@@ -926,17 +929,19 @@ describe('changeFocusedCollection', () => {
 
   describe('when a collection id is not provided', () => {
     test('should clear the focusedCollection and call ', () => {
-      const changeUrlMock = jest.spyOn(actions, 'changeUrl')
-      changeUrlMock.mockImplementationOnce(() => jest.fn())
-
-      const store = mockStore({
-        router: {
+      useEdscStore.setState({
+        location: {
           location: {
             search: '?some=testparams',
             pathname: '/search/granules'
           }
         }
       })
+
+      const changeUrlMock = jest.spyOn(actions, 'changeUrl')
+      changeUrlMock.mockImplementationOnce(() => jest.fn())
+
+      const store = mockStore()
 
       store.dispatch(actions.changeFocusedCollection(''))
 
@@ -967,6 +972,15 @@ describe('changeFocusedCollection', () => {
 
 describe('viewCollectionDetails', () => {
   test('sets the focused collection and redirects to the collection details', () => {
+    useEdscStore.setState({
+      location: {
+        location: {
+          search: '?some=testparams',
+          pathname: '/search/granules'
+        }
+      }
+    })
+
     const changeFocusedCollectionMock = jest.spyOn(actions, 'changeFocusedCollection')
     changeFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
 
@@ -976,12 +990,6 @@ describe('viewCollectionDetails', () => {
     const store = mockStore({
       authToken: '',
       focusedCollection: 'C10000000000-EDSC',
-      router: {
-        location: {
-          search: '?some=testparams',
-          pathname: '/search/granules'
-        }
-      },
       query: {
         collection: {
           spatial: {}
@@ -998,6 +1006,15 @@ describe('viewCollectionDetails', () => {
 
 describe('viewCollectionGranules', () => {
   test('sets the focused collection and redirects to the collection details', () => {
+    useEdscStore.setState({
+      location: {
+        location: {
+          search: '?some=testparams',
+          pathname: '/search/granules'
+        }
+      }
+    })
+
     const changeFocusedCollectionMock = jest.spyOn(actions, 'changeFocusedCollection')
     changeFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
 
@@ -1007,12 +1024,6 @@ describe('viewCollectionGranules', () => {
     const store = mockStore({
       authToken: '',
       focusedCollection: 'C10000000000-EDSC',
-      router: {
-        location: {
-          search: '?some=testparams',
-          pathname: '/search/granules'
-        }
-      },
       query: {
         collection: {
           spatial: {}

@@ -1,32 +1,19 @@
-import React from 'react'
-import {
-  render,
-  screen,
-  within
-} from '@testing-library/react'
-import { MemoryRouter } from 'react-router'
+import { screen, within } from '@testing-library/react'
 
 import AdminPage from '../AdminPage'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-const setup = (overrideProps = {}) => {
-  const props = {
-    children: null,
+const setup = setupTest({
+  Component: AdminPage,
+  defaultProps: {
     pageTitle: 'Admin Title',
     breadcrumbs: [{
       active: false,
       name: 'Admin Title'
-    }],
-    ...overrideProps
-  }
-
-  render(
-    <MemoryRouter>
-      <AdminPage {...props} />
-    </MemoryRouter>
-  )
-
-  return { props }
-}
+    }]
+  },
+  withRouter: true
+})
 
 describe('AdminPage component', () => {
   test('should render the site AdminPage', () => {
@@ -39,14 +26,16 @@ describe('AdminPage component', () => {
 
   test('should render the admin with breadcrumbs', () => {
     setup({
-      breadcrumbs: [{
-        active: false,
-        name: 'Admin Title',
-        href: '/admin'
-      }, {
-        active: true,
-        name: 'Retrievals'
-      }]
+      overrideProps: {
+        breadcrumbs: [{
+          active: false,
+          name: 'Admin Title',
+          href: '/admin'
+        }, {
+          active: true,
+          name: 'Retrievals'
+        }]
+      }
     })
 
     expect(screen.getByRole('heading')).toBeInTheDocument()

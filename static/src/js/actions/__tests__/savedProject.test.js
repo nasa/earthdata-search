@@ -4,6 +4,7 @@ import thunk from 'redux-thunk'
 
 import { UPDATE_SAVED_PROJECT } from '../../constants/actionTypes'
 import { updateSavedProject, updateProjectName } from '../savedProject'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -40,13 +41,18 @@ describe('updateProjectName', () => {
         path: '/search?p=C00001-EDSC'
       })
 
-    const store = mockStore({
-      router: {
+    const mockNavigate = jest.fn()
+    useEdscStore.setState({
+      location: {
         location: {
-          pathname: '/projectId=1',
-          search: ''
-        }
-      },
+          pathname: '/search',
+          search: 'projectId=1'
+        },
+        navigate: mockNavigate
+      }
+    })
+
+    const store = mockStore({
       savedProject: {
         projectId: 1,
         path: '/search?p=C00001-EDSC'
@@ -63,6 +69,9 @@ describe('updateProjectName', () => {
         },
         type: UPDATE_SAVED_PROJECT
       })
+
+      expect(mockNavigate).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).toHaveBeenCalledWith('/search?projectId=1', { replace: true })
     })
   })
 
@@ -77,13 +86,18 @@ describe('updateProjectName', () => {
         path: '/search?p=C00001-EDSC'
       })
 
-    const store = mockStore({
-      router: {
+    const mockNavigate = jest.fn()
+    useEdscStore.setState({
+      location: {
         location: {
           pathname: '/search',
           search: '?p=C00001-EDSC'
-        }
-      },
+        },
+        navigate: mockNavigate
+      }
+    })
+
+    const store = mockStore({
       savedProject: {}
     })
 
@@ -97,6 +111,9 @@ describe('updateProjectName', () => {
         },
         type: UPDATE_SAVED_PROJECT
       })
+
+      expect(mockNavigate).toHaveBeenCalledTimes(1)
+      expect(mockNavigate).toHaveBeenCalledWith('/search?projectId=1', { replace: true })
     })
   })
 
@@ -113,13 +130,18 @@ describe('updateProjectName', () => {
       .post(/error_logger/)
       .reply(200)
 
-    const store = mockStore({
-      router: {
+    const mockNavigate = jest.fn()
+    useEdscStore.setState({
+      location: {
         location: {
           pathname: '/projectId=1',
           search: ''
-        }
-      },
+        },
+        navigate: mockNavigate
+      }
+    })
+
+    const store = mockStore({
       savedProject: {
         projectId: 1,
         path: '/search?p=C00001-EDSC'
@@ -130,6 +152,8 @@ describe('updateProjectName', () => {
 
     await store.dispatch(updateProjectName(name)).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
+
+      expect(mockNavigate).toHaveBeenCalledTimes(0)
     })
   })
 })

@@ -1,70 +1,53 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  within
-} from '@testing-library/react'
 
-import { MemoryRouter } from 'react-router'
-import { AdminProject } from '../AdminProject'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
+import AdminProject from '../AdminProject'
+import AdminPage from '../../AdminPage/AdminPage'
 // @ts-expect-error: This file does not have types
 import AdminProjectDetails from '../../AdminProjectDetails/AdminProjectDetails'
 
+jest.mock('../../AdminPage/AdminPage', () => jest.fn().mockImplementation(
+  jest.requireActual('../../AdminPage/AdminPage').default
+))
+
 jest.mock('../../AdminProjectDetails/AdminProjectDetails', () => jest.fn(() => <div />))
 
-const setup = (overrideProps = {}) => {
-  const props = {
+const setup = setupTest({
+  Component: AdminProject,
+  defaultProps: {
     project: {
       id: 1
-    },
-    ...overrideProps
-  }
-
-  render(
-    <MemoryRouter initialEntries={['/admin/projects/1']}>
-      <AdminProject {...props} />
-    </MemoryRouter>
-  )
-
-  return { props }
-}
+    }
+  },
+  withRouter: true
+})
 
 describe('AdminProject component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
-  test('renders itself correctly', () => {
+  test('renders its components correctly', () => {
     setup()
 
-    expect(screen.getByRole('heading')).toBeInTheDocument()
-    expect(screen.getByRole('heading')).toHaveTextContent('Project Details')
-    expect(screen.getByRole('list')).toBeInTheDocument()
-  })
-
-  test('renders its breadcrumbs correctly', () => {
-    setup()
-
-    const breadcrumbs = screen.getByLabelText('Breadcrumb')
-
-    expect(within(breadcrumbs).getAllByRole('listitem').length).toEqual(3)
-    expect(within(breadcrumbs).getAllByRole('listitem')[0]).toHaveTextContent('Admin')
-    expect(within(within(breadcrumbs).getAllByRole('listitem')[0]).getByRole('link')).toHaveAttribute('href', '/admin')
-    expect(within(breadcrumbs).getAllByRole('listitem')[1]).toHaveTextContent('Projects')
-    expect(within(within(breadcrumbs).getAllByRole('listitem')[1]).getByRole('link')).toHaveAttribute('href', '/admin/projects')
-    expect(within(breadcrumbs).getByRole('listitem', { current: 'page' })).toHaveTextContent('Project Details')
-  })
-
-  test('passes the correct props to AdminProjectDetails', () => {
-    const { props } = setup()
+    expect(AdminPage).toHaveBeenCalledTimes(1)
+    expect(AdminPage).toHaveBeenCalledWith({
+      breadcrumbs: [{
+        href: '/admin',
+        name: 'Admin'
+      }, {
+        href: '/admin/projects',
+        name: 'Projects'
+      }, {
+        active: true,
+        name: 'Project Details'
+      }],
+      children: expect.anything(),
+      pageTitle: 'Project Details'
+    }, {})
 
     expect(AdminProjectDetails).toHaveBeenCalledTimes(1)
-    expect(AdminProjectDetails).toHaveBeenCalledWith(
-      expect.objectContaining({
-        project: props.project
-      }),
-      {}
-    )
+    expect(AdminProjectDetails).toHaveBeenCalledWith({
+      project: {
+        id: 1
+      }
+    }, {})
   })
 })

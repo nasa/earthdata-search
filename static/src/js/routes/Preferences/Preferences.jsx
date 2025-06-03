@@ -1,12 +1,11 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import PreferencesContainer from '../../containers/PreferencesContainer/PreferencesContainer'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
-export const Preferences = () => {
+const Preferences = () => {
   const { edscHost } = getEnvironmentConfig()
 
   return (
@@ -28,4 +27,4 @@ export const Preferences = () => {
   )
 }
 
-export default withRouter(Preferences)
+export default Preferences

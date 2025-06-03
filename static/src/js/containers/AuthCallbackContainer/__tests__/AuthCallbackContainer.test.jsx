@@ -1,6 +1,6 @@
 import * as tinyCookie from 'tiny-cookie'
 
-import { AuthCallbackContainer, mapStateToProps } from '../AuthCallbackContainer'
+import { AuthCallbackContainer } from '../AuthCallbackContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import useEdscStore from '../../../zustand/useEdscStore'
 
@@ -10,66 +10,52 @@ jest.mock('tiny-cookie', () => ({
 
 const setup = setupTest({
   Component: AuthCallbackContainer,
-  defaultProps: {
-    location: {
-      search: '?jwt=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
-    }
-  },
   defaultZustandState: {
     earthdataDownloadRedirect: {
       redirect: '',
       setRedirectUrl: jest.fn()
-    }
-  }
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      router: {
-        location: {}
+    },
+    location: {
+      location: {
+        search: '?jwt=mockjwttoken&redirect=http%3A%2F%2Flocalhost%3A8080%2Fsearch'
       }
     }
-
-    const expectedState = {
-      location: {}
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
+  }
 })
 
 describe('AuthCallbackContainer component', () => {
   const { replace } = window.location
 
+  beforeEach(() => {
+    delete window.location
+    window.location = { replace: jest.fn() }
+  })
+
   afterEach(() => {
-    jest.clearAllMocks()
     window.location.replace = replace
   })
 
   test('sets the auth cookie and redirects', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: jest.fn() }
 
     setup()
 
-    expect(setSpy).toBeCalledTimes(1)
-    expect(setSpy).toBeCalledWith('authToken', 'mockjwttoken')
+    expect(setSpy).toHaveBeenCalledTimes(1)
+    expect(setSpy).toHaveBeenCalledWith('authToken', 'mockjwttoken')
 
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['http://localhost:8080/search'])
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
+    expect(window.location.replace).toHaveBeenCalledWith('http://localhost:8080/search')
   })
 
   test('updates zustand and redirects to earthdata-download-callback for authCallback', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: jest.fn() }
 
     setup({
-      overrideProps: {
+      overrideZustandState: {
         location: {
-          search: '?jwt=mockjwttoken&accessToken=mock-token&redirect=earthdata-download%3A%2F%2FauthCallback'
+          location: {
+            search: '?jwt=mockjwttoken&accessToken=mock-token&redirect=earthdata-download%3A%2F%2FauthCallback'
+          }
         }
       }
     })
@@ -87,13 +73,13 @@ describe('AuthCallbackContainer component', () => {
 
   test('updates zustand and redirects to earthdata-download-callback for eulaCallback', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: jest.fn() }
 
     setup({
-      overrideProps: {
+      overrideZustandState: {
         location: {
-          search: 'eddRedirect=earthdata-download%3A%2F%2FeulaCallback'
+          location: {
+            search: 'eddRedirect=earthdata-download%3A%2F%2FeulaCallback'
+          }
         }
       }
     })
@@ -111,97 +97,97 @@ describe('AuthCallbackContainer component', () => {
 
   test('clears the auth cookie and redirects to root path if values are not set', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: jest.fn() }
 
     setup({
-      overrideProps: {
+      overrideZustandState: {
         location: {
-          search: ''
+          location: {
+            search: ''
+          }
         }
       }
     })
 
-    expect(setSpy).toBeCalledTimes(1)
-    expect(setSpy).toBeCalledWith('authToken', '')
+    expect(setSpy).toHaveBeenCalledTimes(1)
+    expect(setSpy).toHaveBeenCalledWith('authToken', '')
 
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/'])
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
+    expect(window.location.replace).toHaveBeenCalledWith('/')
   })
 
   test('does not follow the redirect if the redirect param is not valid', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: jest.fn() }
 
     setup({
-      overrideProps: {
+      overrideZustandState: {
         location: {
-          search: '?redirect=javascript:alert(document.domain);'
+          location: {
+            search: '?redirect=javascript:alert(document.domain);'
+          }
         }
       }
     })
 
-    expect(setSpy).toBeCalledTimes(0)
+    expect(setSpy).toHaveBeenCalledTimes(0)
 
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
+    expect(window.location.replace).toHaveBeenCalledWith('/not-found')
   })
 
   test('does not follow the redirect if the redirect param is not relative to earthdata-search', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: jest.fn() }
 
     setup({
-      overrideProps: {
+      overrideZustandState: {
         location: {
-          search: '?redirect=https://evil.com'
+          location: {
+            search: '?redirect=https://evil.com'
+          }
         }
       }
     })
 
-    expect(setSpy).toBeCalledTimes(0)
+    expect(setSpy).toHaveBeenCalledTimes(0)
 
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
+    expect(window.location.replace).toHaveBeenCalledWith('/not-found')
   })
 
   test('does not follow the eddRedirect it is not a valid earthdata-download redirect', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: jest.fn() }
 
     setup({
-      overrideProps: {
+      overrideZustandState: {
         location: {
-          search: '?eddRedirect=https://evil.com'
+          location: {
+            search: '?eddRedirect=https://evil.com'
+          }
         }
       }
     })
 
-    expect(setSpy).toBeCalledTimes(0)
+    expect(setSpy).toHaveBeenCalledTimes(0)
 
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
+    expect(window.location.replace).toHaveBeenCalledWith('/not-found')
   })
 
   test('does not follow the redirect if the eddRedirect param is not valid', () => {
     const setSpy = jest.spyOn(tinyCookie, 'set')
-    delete window.location
-    window.location = { replace: jest.fn() }
 
     setup({
-      overrideProps: {
+      overrideZustandState: {
         location: {
-          search: '?eddRedirect=javascript:alert(document.domain);'
+          location: {
+            search: '?eddRedirect=javascript:alert(document.domain);'
+          }
         }
       }
     })
 
-    expect(setSpy).toBeCalledTimes(0)
+    expect(setSpy).toHaveBeenCalledTimes(0)
 
-    expect(window.location.replace.mock.calls.length).toBe(1)
-    expect(window.location.replace.mock.calls[0]).toEqual(['/not-found'])
+    expect(window.location.replace).toHaveBeenCalledTimes(1)
+    expect(window.location.replace).toHaveBeenCalledWith('/not-found')
   })
 })
