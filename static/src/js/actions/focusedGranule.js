@@ -8,7 +8,6 @@ import { getFocusedGranuleId } from '../selectors/focusedGranule'
 import { getFocusedGranuleMetadata } from '../selectors/granuleMetadata'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
-import useEdscStore from '../zustand/useEdscStore'
 
 /**
  * Sets the focused granule value in redux
@@ -141,7 +140,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
         // If no data was returned, clear the focused granule and redirect the user back to the search page
         dispatch(actions.updateFocusedGranule(''))
 
-        const { location } = useEdscStore.getState().location
+        const { location } = window
         const { search } = location
 
         dispatch(actions.changeUrl({

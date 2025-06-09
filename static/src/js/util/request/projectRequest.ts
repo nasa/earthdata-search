@@ -1,8 +1,12 @@
 import Request from './request'
+
+// @ts-expect-error Types are not defined for this module
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
+import { RequestParams } from '../../types/sharedTypes'
+
 export default class ProjectRequest extends Request {
-  constructor(authToken, earthdataEnvironment) {
+  constructor(authToken: string, earthdataEnvironment: string) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
     this.lambda = true
@@ -13,11 +17,11 @@ export default class ProjectRequest extends Request {
     }
   }
 
-  adminFetch(projectId) {
+  adminFetch(projectId: string) {
     return this.get(`admin/projects/${projectId}`)
   }
 
-  adminAll(params) {
+  adminAll(params: RequestParams) {
     this.authenticated = true
 
     return this.get('admin/projects', params)
@@ -29,15 +33,15 @@ export default class ProjectRequest extends Request {
     return this.get('projects')
   }
 
-  save(params) {
+  save(params: RequestParams) {
     return this.post('projects', params)
   }
 
-  fetch(projectId) {
+  fetch(projectId: string) {
     return this.get(`projects/${projectId}`)
   }
 
-  remove(projectId) {
+  remove(projectId: string) {
     return this.delete(`projects/${projectId}`)
   }
 }

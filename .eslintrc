@@ -100,20 +100,20 @@
         "react/require-default-props": "off"
       }
     },
-    {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "rules": {
-        "no-restricted-imports": ["error", {
-          "paths": [
-            {
-              "name": "react-router-dom",
-              "importNames": ["useLocation", "useNavigate"],
-              "message": "Please use the Zustand `location` slice."
-            }
-          ]
-        }]
-      }
-    },
+    // {
+    //   "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+    //   "rules": {
+    //     "no-restricted-imports": ["error", {
+    //       "paths": [
+    //         {
+    //           "name": "react-router-dom",
+    //           "importNames": ["useLocation", "useNavigate"],
+    //           "message": "Please use the Zustand `location` slice."
+    //         }
+    //       ]
+    //     }]
+    //   }
+    // },
     {
       // Allow param reassignment in the zustand/slices files (this is handled correctly by immer)
       "files": [

@@ -48,7 +48,7 @@ describe('url#encodeUrlQuery', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
+    expect(encodeUrlQuery(props)).toEqual('')
   })
 
   test('encodes the value if undefined', () => {
@@ -56,6 +56,6 @@ describe('url#encodeUrlQuery', () => {
       hasGranulesOrCwic: undefined,
       pathname: '/path/here'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?ac=true')
+    expect(encodeUrlQuery(props)).toEqual('?ac=true')
   })
 })

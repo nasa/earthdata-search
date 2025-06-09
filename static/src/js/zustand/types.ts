@@ -201,14 +201,24 @@ export type UiSlice = {
 export type LocationSlice = {
   /** The Location Slice of the store */
   location: {
-    /** The current location */
-    location: Location | Partial<Location>
-    /** Function to set the current location */
-    setLocation: (location: Location | Partial<Location>) => void
+    // /** The current location */
+    // location: Location | Partial<Location>
+    // /** Function to set the current location */
+    // setLocation: (location: Location | Partial<Location>) => void
     /** Function to navigate to a new location */
     navigate: (to: string, options?: { replace?: boolean }) => void
     /** Function to set the navigate function */
     setNavigate: (navigate: (to: string, options?: { replace?: boolean }) => void) => void
+  }
+}
+
+export type ReduxUpdatedSlice = {
+  /** The Redux Updated Slice of the store */
+  reduxUpdated: {
+    /** Flag to indicate if the Redux store has been updated */
+    lastUpdated: number
+    /** Function to set the reduxUpdated value */
+    setLastUpdated: (lastUpdated: number) => void
   }
 }
 
@@ -220,5 +230,6 @@ export type EdscStore =
   & ShapefileSlice
   & TimelineSlice
   & UiSlice
+  & ReduxUpdatedSlice
 
 export type ImmerStateCreator<T> = StateCreator<EdscStore, [['zustand/immer', never], never], [], T>

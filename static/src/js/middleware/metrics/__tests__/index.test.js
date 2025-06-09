@@ -1,5 +1,3 @@
-// import { LOCATION_CHANGE } from 'connected-react-router'
-
 import {
   METRICS_CLICK,
   METRICS_COLLECTION_SORT_CHANGE,
@@ -61,17 +59,6 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(next).toHaveBeenCalledWith(action)
   })
-
-  // test('calls virtualPageview on react-router location change', () => {
-  //   const { store, invoke } = createStore()
-
-  //   const action = {
-  //     type: LOCATION_CHANGE
-  //   }
-  //   invoke(action)
-  //   expect(events.virtualPageview).toHaveBeenCalledTimes(1)
-  //   expect(events.virtualPageview).toHaveBeenCalledWith(action, store.getState())
-  // })
 
   test('calls dataAccess event', () => {
     const { store, invoke } = createStore()

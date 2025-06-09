@@ -145,7 +145,7 @@ const urlDefs = {
   shapefileId: {
     shortKey: 'sf',
     encode: encodeString,
-    decode: encodeString
+    decode: decodeString
   },
   selectedFeatures: {
     shortKey: 'sfs',
@@ -362,11 +362,13 @@ export const encodeUrlQuery = (props) => {
 
   const paramString = stringify(encodedQuery)
 
-  // Return the full pathname + paramString
-  const { pathname } = props
-  const fullPath = pathname + paramString
+  return paramString
 
-  return fullPath
+  // // Return the full pathname + paramString
+  // const { pathname } = props
+  // const fullPath = pathname + paramString
+
+  // return fullPath
 }
 
 /**

@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import { FaDoorOpen } from 'react-icons/fa'
@@ -13,8 +14,6 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 import Spinner from '../Spinner/Spinner'
 
-import useEdscStore from '../../zustand/useEdscStore'
-
 import './SearchSidebarHeader.scss'
 
 /**
@@ -25,8 +24,6 @@ import './SearchSidebarHeader.scss'
 export const SearchSidebarHeader = ({
   portal
 }) => {
-  const location = useEdscStore((state) => state.location.location)
-
   let logoEl
   const {
     title = {},
@@ -41,6 +38,8 @@ export const SearchSidebarHeader = ({
       </header>
     )
   }
+
+  const location = useLocation()
 
   const portalLogoSrc = usePortalLogo(portalId)
 

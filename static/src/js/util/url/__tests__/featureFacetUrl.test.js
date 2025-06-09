@@ -39,7 +39,7 @@ describe('url#encodeUrlQuery', () => {
         nearRealTime: false
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
+    expect(encodeUrlQuery(props)).toEqual('')
   })
 
   test('encodes featureFacets correctly', () => {
@@ -53,6 +53,6 @@ describe('url#encodeUrlQuery', () => {
         nearRealTime: true
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Available%20in%20Earthdata%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')
+    expect(encodeUrlQuery(props)).toEqual('?ff=Available%20in%20Earthdata%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')
   })
 })

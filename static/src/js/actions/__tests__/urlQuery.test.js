@@ -383,12 +383,7 @@ describe('changePath', () => {
           byId: {}
         }
       },
-      query: {},
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
+      query: {}
     })
 
     await store.dispatch(urlQuery.changePath(newPath)).then(() => {
@@ -439,9 +434,6 @@ describe('changePath', () => {
               spatial: {},
               temporal: {}
             }
-          },
-          shapefile: {
-            shapefileId: ''
           }
         })
       )
@@ -479,11 +471,6 @@ describe('changePath', () => {
           spatial: {}
         }
       },
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      },
       timeline: {
         query: {}
       }
@@ -515,9 +502,6 @@ describe('changePath', () => {
           spatial: {},
           temporal: {}
         }
-      },
-      shapefile: {
-        shapefileId: ''
       }
     }), '/search')
 
@@ -559,12 +543,7 @@ describe('changePath', () => {
         }
       },
       providers: [],
-      query: {},
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
+      query: {}
     })
 
     await store.dispatch(urlQuery.changePath(newPath)).then(() => {

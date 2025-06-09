@@ -32,7 +32,10 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
 
     setQuery: (query) => {
       set((state) => {
-        Object.assign(state.timeline.query, query)
+        // Object.assign(state.timeline.query, query)
+        if (state.timeline.query !== query) {
+          state.timeline.query = query
+        }
       })
 
       // Fetch new timeline intervals
@@ -57,7 +60,6 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
 
       const timelineParams = prepareTimelineParams({
         ...reduxState,
-        location: get().location.location,
         timeline: get().timeline
       })
 

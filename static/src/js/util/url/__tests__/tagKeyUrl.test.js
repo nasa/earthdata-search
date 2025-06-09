@@ -35,6 +35,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       tagKey: 'test.key'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?tag_key=test.key')
+    expect(encodeUrlQuery(props)).toEqual('?tag_key=test.key')
   })
 })

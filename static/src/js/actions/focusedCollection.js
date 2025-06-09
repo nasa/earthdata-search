@@ -323,7 +323,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
       // If no data was returned, clear the focused collection and redirect the user back to the search page
       dispatch(actions.updateFocusedCollection(''))
 
-      const { location } = useEdscStore.getState().location
+      const { location } = window
       const { search } = location
 
       dispatch(actions.changeUrl({
@@ -435,7 +435,7 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     // And clear the spatial polygon warning if there is no focused collection
     dispatch(actions.toggleSpatialPolygonWarning(false))
 
-    const { location } = useEdscStore.getState().location
+    const { location } = window
     const { search } = location
 
     // If clearing the focused collection, redirect the user back to the search page
@@ -473,7 +473,7 @@ export const viewCollectionDetails = (collectionId) => (dispatch) => {
   // Update the focused collection in redux and retrieve its metadata
   dispatch(actions.changeFocusedCollection(collectionId))
 
-  const { location } = useEdscStore.getState().location
+  const { location } = window
   const { search } = location
 
   dispatch(actions.changeUrl({
@@ -490,7 +490,7 @@ export const viewCollectionGranules = (collectionId) => (dispatch) => {
   // Update the focused collection in redux and retrieve its metadata
   dispatch(actions.changeFocusedCollection(collectionId))
 
-  const { location } = useEdscStore.getState().location
+  const { location } = window
   const { search } = location
 
   dispatch(actions.changeUrl({

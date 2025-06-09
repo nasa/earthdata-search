@@ -1,14 +1,8 @@
-import {
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
-
-import { encodeUrlQuery } from '../../util/url/url'
 
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
@@ -58,62 +52,26 @@ export const mapStateToProps = (state) => ({
   paramCollectionSortKey: getCollectionSortKeyParameter(state),
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal,
-  twoDCoordinateSystemNameFacets: state.facetsParams.cmr.two_d_coordinate_system_name
+  twoDCoordinateSystemNameFacets: state.facetsParams.cmr.two_d_coordinate_system_name,
+  savedProject: state.savedProject
 })
 
 export const UrlQueryContainer = (props) => {
-  // Pull out values we have migrated to Zustand that are no longer passed as props
-  const zustandValues = useEdscStore((state) => ({
-    location: state.location.location,
-    mapView: state.map.mapView,
-    selectedFeatures: state.shapefile.selectedFeatures,
-    shapefileId: state.shapefile.shapefileId,
-    timelineQuery: state.timeline.query
-  }))
-
-  const { location } = zustandValues
-  const {
-    pathname,
-    search
-  } = location
+  const setLastUpdated = useEdscStore((state) => state.reduxUpdated.setLastUpdated)
 
   const {
     children,
-    onChangePath,
-    onChangeUrl
+    onChangePath
   } = props
 
-  const [currentPath, setCurrentPath] = useState('')
-  const previousSearch = useRef(search)
-
   useEffect(() => {
+    const { pathname, search } = window.location
     onChangePath([pathname, search].filter(Boolean).join(''))
   }, [])
 
-  useEffect(() => {
-    // The only time the search prop changes is after the URL has been updated
-    // So we only need to worry about encoding the query and updating the URL
-    // if the previous search and next search are the same
-    if (
-      previousSearch.current === search
-    ) {
-      const nextPath = encodeUrlQuery({
-        pathname,
-        ...props,
-        ...zustandValues
-      })
-
-      if (currentPath !== nextPath) {
-        setCurrentPath(nextPath)
-
-        if (nextPath !== '') {
-          onChangeUrl(nextPath)
-        }
-      }
-    }
-
-    previousSearch.current = search
-  }, [props, search, zustandValues])
+  // useEffect(() => {
+  //   setLastUpdated(new Date().getTime())
+  // }, [props])
 
   return children
 }

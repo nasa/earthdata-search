@@ -49,12 +49,12 @@ export const prepareTimelineParams = (state) => {
   const {
     authToken,
     focusedCollection,
-    location,
     project,
     query,
     timeline
   } = state
 
+  const { location } = window
   const { pathname } = location
   const isProjectPage = pathname.startsWith('/project')
 

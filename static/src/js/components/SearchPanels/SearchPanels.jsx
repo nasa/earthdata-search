@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {
   Route,
   Routes,
+  useLocation,
   useParams
 } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
@@ -98,7 +99,7 @@ const SearchPanels = ({
   onTogglePanels,
   preferences
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const params = useParams()
 
   const {

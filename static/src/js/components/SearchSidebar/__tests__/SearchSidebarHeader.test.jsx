@@ -57,6 +57,9 @@ describe('SearchSidebarHeader component', () => {
     setup()
 
     expect(SearchFormContainer).toHaveBeenCalledTimes(1)
+    expect(SearchFormContainer).toHaveBeenCalledWith({}, {})
+
+    expect(PortalLinkContainer).toHaveBeenCalledTimes(0)
   })
 
   describe('when a portal is loaded', () => {

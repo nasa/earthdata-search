@@ -93,7 +93,7 @@ describe('url#encodeUrlQuery', () => {
       focusedCollection: 'collectionId'
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
+    expect(encodeUrlQuery(props)).toEqual('?p=collectionId')
   })
 
   test('does not encode collections if no focusedCollection exist', () => {
@@ -103,7 +103,7 @@ describe('url#encodeUrlQuery', () => {
       focusedCollection: ''
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
+    expect(encodeUrlQuery(props)).toEqual('')
   })
 
   describe('focusedCollection added granules', () => {
@@ -115,7 +115,7 @@ describe('url#encodeUrlQuery', () => {
           focusedCollection: 'collectionId'
         }
 
-        expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
+        expect(encodeUrlQuery(props)).toEqual('?p=collectionId')
       })
 
       test('encodes added granules correctly', () => {
@@ -142,7 +142,7 @@ describe('url#encodeUrlQuery', () => {
           }
         }
 
-        expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId!collectionId&pg[1][a]=12345!56789!MOCK&pg[1][v]=f')
+        expect(encodeUrlQuery(props)).toEqual('?p=collectionId!collectionId&pg[1][a]=12345!56789!MOCK&pg[1][v]=f')
       })
     })
 
@@ -154,7 +154,7 @@ describe('url#encodeUrlQuery', () => {
           focusedCollection: 'collectionId'
         }
 
-        expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
+        expect(encodeUrlQuery(props)).toEqual('?p=collectionId')
       })
 
       test('encodes added granules correctly', () => {
@@ -181,7 +181,7 @@ describe('url#encodeUrlQuery', () => {
           }
         }
 
-        expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId!collectionId&pg[1][ca]=12345!56789&pg[1][v]=f')
+        expect(encodeUrlQuery(props)).toEqual('?p=collectionId!collectionId&pg[1][ca]=12345!56789&pg[1][v]=f')
       })
     })
   })
@@ -211,7 +211,7 @@ describe('url#encodeUrlQuery', () => {
         }
       }
 
-      expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId&pg[1][a]=12345!56789!MOCK&pg[1][v]=f')
+      expect(encodeUrlQuery(props)).toEqual('?p=!collectionId&pg[1][a]=12345!56789!MOCK&pg[1][v]=f')
     })
   })
 
@@ -240,7 +240,7 @@ describe('url#encodeUrlQuery', () => {
         }
       }
 
-      expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId!collectionId&pg[1][a]=12345!56789!MOCK&pg[1][v]=f')
+      expect(encodeUrlQuery(props)).toEqual('?p=collectionId!collectionId&pg[1][a]=12345!56789!MOCK&pg[1][v]=f')
     })
   })
 })

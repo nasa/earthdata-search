@@ -1,17 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import { isPath } from '../../util/isPath'
 
 import Sidebar from '../../components/Sidebar/Sidebar'
-import useEdscStore from '../../zustand/useEdscStore'
 
 export const SidebarContainer = ({
   children,
   panels,
   headerChildren
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const { pathname } = location
 
   const sidebarVisible = isPath(pathname, [

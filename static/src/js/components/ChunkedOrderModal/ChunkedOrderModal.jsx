@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import { parse } from 'qs'
 import { ArrowCircleLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
@@ -10,8 +11,6 @@ import { stringify } from '../../util/url/url'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
-import useEdscStore from '../../zustand/useEdscStore'
-
 import './ChunkedOrderModal.scss'
 
 const ChunkedOrderModal = ({
@@ -21,7 +20,7 @@ const ChunkedOrderModal = ({
   projectCollectionsMetadata,
   projectCollectionsRequiringChunking
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   const onModalClose = () => {
     onToggleChunkedOrderModal(false)

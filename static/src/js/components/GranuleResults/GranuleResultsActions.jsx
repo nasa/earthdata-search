@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import classNames from 'classnames'
 import {
   FaFolder,
@@ -23,9 +24,8 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
-import useEdscStore from '../../zustand/useEdscStore'
-
 import './GranuleResultsActions.scss'
+
 /**
  * Renders GranuleResultsActions.
  * @param {Object} props - The props passed into the component.
@@ -58,7 +58,7 @@ const GranuleResultsActions = ({
   searchGranuleCount,
   subscriptions
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const granuleResultsActionsContainer = useRef(null)
   const addToProjectButton = (
     <Button

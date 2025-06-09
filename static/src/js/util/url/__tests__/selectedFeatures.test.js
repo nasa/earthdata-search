@@ -32,6 +32,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       selectedFeatures: ['123']
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?sfs[0]=123')
+    expect(encodeUrlQuery(props)).toEqual('?sfs[0]=123')
   })
 })

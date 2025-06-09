@@ -6,6 +6,8 @@ import React, {
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
+// eslint-disable-next-line no-restricted-imports
+import { useLocation } from 'react-router-dom'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
@@ -20,7 +22,6 @@ import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import Spinner from '../../components/Spinner/Spinner'
-import useEdscStore from '../../zustand/useEdscStore'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
@@ -37,7 +38,7 @@ const mapStateToProps = (state) => ({
 })
 
 export const Project = (props) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   useEffect(() => {
     document.querySelector('.root__app').classList.add('root__app--fixed-footer')

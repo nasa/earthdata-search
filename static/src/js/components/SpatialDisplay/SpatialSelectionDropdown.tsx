@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import Dropdown from 'react-bootstrap/Dropdown'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
@@ -48,7 +49,7 @@ const SpatialSelectionDropdown = (props: SpatialSelectionDropdownProps) => {
 
   const setStartDrawing = useEdscStore((state) => state.home.setStartDrawing)
 
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const { pathname } = location
   const isHomePage = pathname === '/'
 

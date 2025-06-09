@@ -51,7 +51,7 @@ describe('url#encodeUrlQuery', () => {
           interval: 'day'
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?tl=1534577879!2!!')
+      expect(encodeUrlQuery(props)).toEqual('?tl=1534577879!2!!')
     })
 
     test('encodes timelineQuery correctly when the timeline has no center state', () => {
@@ -62,19 +62,19 @@ describe('url#encodeUrlQuery', () => {
           interval: 'day'
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here')
+      expect(encodeUrlQuery(props)).toEqual('')
     })
 
     test('does not encode timelineQuery when timeline is not visible', () => {
       const props = {
         hasGranulesOrCwic: true,
-        pathname: '/search',
+        pathname: '/path/here',
         timelineQuery: {
           center: 1534577879,
           interval: 'day'
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/search')
+      expect(encodeUrlQuery(props)).toEqual('')
     })
   })
 })

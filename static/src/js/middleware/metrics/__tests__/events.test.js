@@ -1,5 +1,3 @@
-// import { LOCATION_CHANGE } from 'connected-react-router'
-
 import * as helpers from '../helpers'
 import {
   virtualPageview,
@@ -42,72 +40,50 @@ describe('events', () => {
     jest.clearAllMocks()
   })
 
-  // describe('virtualPageview', () => {
-  //   describe('on a PUSH event', () => {
-  //     test('pushes to the dataLayer', () => {
-  //       /* eslint-disable no-import-assign */
-  //       helpers.computeKeyword = jest.fn(() => 'Keyword')
-  //       helpers.computeSpatialType = jest.fn(() => 'Spatial Type')
-  //       helpers.computeTemporalType = jest.fn(() => 'Temporal Type')
-  //       helpers.computeCollectionsViewed = jest.fn(() => 'Collections Viewed')
-  //       helpers.computeCollectionsAdded = jest.fn(() => 'Collections Added')
-  //       helpers.computeFacets = jest.fn(() => 'Facets')
-  //       /* eslint-enable */
+  describe('virtualPageview', () => {
+    describe('on a PUSH event', () => {
+      test('pushes to the dataLayer', () => {
+        /* eslint-disable no-import-assign */
+        helpers.computeKeyword = jest.fn(() => 'Keyword')
+        helpers.computeSpatialType = jest.fn(() => 'Spatial Type')
+        helpers.computeTemporalType = jest.fn(() => 'Temporal Type')
+        helpers.computeCollectionsViewed = jest.fn(() => 'Collections Viewed')
+        helpers.computeCollectionsAdded = jest.fn(() => 'Collections Added')
+        helpers.computeFacets = jest.fn(() => 'Facets')
+        /* eslint-enable */
 
-  //       const action = {
-  //         type: LOCATION_CHANGE,
-  //         payload: {
-  //           action: 'PUSH'
-  //         }
-  //       }
+        virtualPageview('PUSH')
 
-  //       const state = {
-  //         test: 'test'
-  //       }
+        expect(dataLayerMock).toHaveBeenCalledTimes(1)
+        expect(dataLayerMock).toHaveBeenCalledWith({
+          dimension11: 'Keyword',
+          dimension12: 'Spatial Type',
+          dimension13: 'Temporal Type',
+          dimension14: 'Collections Viewed',
+          dimension15: 'Collections Added',
+          dimension16: 'Facets',
+          event: 'virtualPageView'
+        })
+      })
+    })
 
-  //       virtualPageview(action, state)
+    describe('on a non-PUSH event', () => {
+      test('does not push to the dataLayer', () => {
+        /* eslint-disable no-import-assign */
+        helpers.computeKeyword = jest.fn(() => 'Keyword')
+        helpers.computeSpatialType = jest.fn(() => 'Spatial Type')
+        helpers.computeTemporalType = jest.fn(() => 'Temporal Type')
+        helpers.computeCollectionsViewed = jest.fn(() => 'Collections Viewed')
+        helpers.computeCollectionsAdded = jest.fn(() => 'Collections Added')
+        helpers.computeFacets = jest.fn(() => 'Facets')
+        /* eslint-enable */
 
-  //       expect(dataLayerMock).toHaveBeenCalledTimes(1)
-  //       expect(dataLayerMock).toHaveBeenCalledWith({
-  //         dimension11: 'Keyword',
-  //         dimension12: 'Spatial Type',
-  //         dimension13: 'Temporal Type',
-  //         dimension14: 'Collections Viewed',
-  //         dimension15: 'Collections Added',
-  //         dimension16: 'Facets',
-  //         event: 'virtualPageView'
-  //       })
-  //     })
-  //   })
+        virtualPageview('POP')
 
-  //   describe('on a non-PUSH event', () => {
-  //     test('does not push to the dataLayer', () => {
-  //       /* eslint-disable no-import-assign */
-  //       helpers.computeKeyword = jest.fn(() => 'Keyword')
-  //       helpers.computeSpatialType = jest.fn(() => 'Spatial Type')
-  //       helpers.computeTemporalType = jest.fn(() => 'Temporal Type')
-  //       helpers.computeCollectionsViewed = jest.fn(() => 'Collections Viewed')
-  //       helpers.computeCollectionsAdded = jest.fn(() => 'Collections Added')
-  //       helpers.computeFacets = jest.fn(() => 'Facets')
-  //       /* eslint-enable */
-
-  //       const action = {
-  //         type: LOCATION_CHANGE,
-  //         payload: {
-  //           action: 'POP'
-  //         }
-  //       }
-
-  //       const state = {
-  //         test: 'test'
-  //       }
-
-  //       virtualPageview(action, state)
-
-  //       expect(dataLayerMock).toHaveBeenCalledTimes(0)
-  //     })
-  //   })
-  // })
+        expect(dataLayerMock).toHaveBeenCalledTimes(0)
+      })
+    })
+  })
 
   describe('dataAccess', () => {
     describe('data access init', () => {

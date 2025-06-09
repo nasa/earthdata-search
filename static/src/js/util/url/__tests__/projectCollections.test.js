@@ -473,7 +473,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
+    expect(encodeUrlQuery(props)).toEqual('')
   })
 
   test('correctly encodes project collections', () => {
@@ -493,7 +493,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2')
+    expect(encodeUrlQuery(props)).toEqual('?p=!collectionId1!collectionId2')
   })
 
   test('correctly encodes focusedCollection and project collections', () => {
@@ -509,7 +509,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId1!collectionId1!collectionId2')
+    expect(encodeUrlQuery(props)).toEqual('?p=collectionId1!collectionId1!collectionId2')
   })
 
   test('correctly encodes project collections visibility', () => {
@@ -536,7 +536,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[2][v]=t')
+    expect(encodeUrlQuery(props)).toEqual('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[2][v]=t')
   })
 
   test('correctly encodes selected variables', () => {
@@ -566,7 +566,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC&pg[1][cd]=f&pg[2][v]=f')
+    expect(encodeUrlQuery(props)).toEqual('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC&pg[1][cd]=f&pg[2][v]=f')
   })
 
   test('correctly encodes enable temporal subsetting', () => {
@@ -596,7 +596,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
+    expect(encodeUrlQuery(props)).toEqual('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
   })
 
   test('correctly encodes enable spatial subsetting', () => {
@@ -628,7 +628,7 @@ describe('url#encodeUrlQuery', () => {
       }
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
+    expect(encodeUrlQuery(props)).toEqual('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
   })
 })
 
@@ -781,7 +781,7 @@ describe('enable concatenate download flag', () => {
           }
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod][params][rasterResolution]=90&pg[1][swod][params][outputSamplingGridType]=UTM&pg[1][swod][params][outputGranuleExtentFlag]=false&pg[1][swod][custom_params][G3225437730-POCLOUD][utmZoneAdjust]=1&pg[1][swod][custom_params][G3225437730-POCLOUD][mgrsBandAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][utmZoneAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][mgrsBandAdjust]=-1&pg[1][cd]=f&pg[2][v]=f')
+      expect(encodeUrlQuery(props)).toEqual('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod][params][rasterResolution]=90&pg[1][swod][params][outputSamplingGridType]=UTM&pg[1][swod][params][outputGranuleExtentFlag]=false&pg[1][swod][custom_params][G3225437730-POCLOUD][utmZoneAdjust]=1&pg[1][swod][custom_params][G3225437730-POCLOUD][mgrsBandAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][utmZoneAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][mgrsBandAdjust]=-1&pg[1][cd]=f&pg[2][v]=f')
     })
 
     test('correctly decodes swodlr access method', () => {

@@ -44,7 +44,7 @@ describe('url#encodeUrlQuery', () => {
         startDate: '2019-01-01T00:00:00.000Z'
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?qt=2019-01-01T00%3A00%3A00.000Z%2C2019-02-01T00%3A00%3A00.000Z')
+    expect(encodeUrlQuery(props)).toEqual('?qt=2019-01-01T00%3A00%3A00.000Z%2C2019-02-01T00%3A00%3A00.000Z')
   })
 
   test('encodes temporalSearch correctly when isRecurring is provided', () => {
@@ -59,6 +59,6 @@ describe('url#encodeUrlQuery', () => {
         isRecurring: true
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?qt=2019-01-01T00%3A00%3A00.000Z%2C2019-02-01T00%3A00%3A00.000Z%2C199%2C302')
+    expect(encodeUrlQuery(props)).toEqual('?qt=2019-01-01T00%3A00%3A00.000Z%2C2019-02-01T00%3A00%3A00.000Z%2C199%2C302')
   })
 })

@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import classNames from 'classnames'
 import { pathStartsWith } from '../../util/pathStartsWith'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './WrappingContainer.scss'
 
@@ -12,7 +11,7 @@ export const WrappingContainer = (props) => {
     children
   } = props
 
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const { search, pathname } = location
 
   let isMapPage = ['/search']

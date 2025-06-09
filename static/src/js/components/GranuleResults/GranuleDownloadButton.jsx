@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { parse } from 'qs'
@@ -14,7 +15,6 @@ import { stringify } from '../../util/url/url'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import useEdscStore from '../../zustand/useEdscStore'
 
 export const GranuleDownloadButton = (props) => {
   const {
@@ -32,7 +32,7 @@ export const GranuleDownloadButton = (props) => {
     tooManyGranules
   } = props
 
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   const { disableDatabaseComponents } = getApplicationConfig()
   const { apiHost } = getEnvironmentConfig()
@@ -77,11 +77,13 @@ export const GranuleDownloadButton = (props) => {
     )
   }
 
+  console.log('🚀 ~ GranuleDownloadButton.jsx:84 ~ GranuleDownloadButton ~ location:', location)
   const params = parse(location.search, {
     ignoreQueryPrefix: true,
     parseArrays: false
   })
   let { p = '', pg = {} } = params
+  console.log('🚀 ~ GranuleDownloadButton.jsx:85 ~ GranuleDownloadButton ~ params:', params)
 
   // If the collection is not already in the project we need to add it to the project and update the url to represent that
   if (!isCollectionInProject) {
@@ -115,6 +117,7 @@ export const GranuleDownloadButton = (props) => {
     p,
     pg
   })
+  console.log('🚀 ~ GranuleDownloadButton.jsx:118 ~ GranuleDownloadButton ~ stringifiedProjectParams:', stringifiedProjectParams)
 
   const downloadButtonProps = {
     badge,

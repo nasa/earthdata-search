@@ -45,7 +45,7 @@ export const updateStore = ({
   timeline
 }, newPathname) => async (dispatch, getState) => {
   const state = getState()
-  const { location } = useEdscStore.getState().location
+  const { location } = window
   const { pathname } = location
 
   const collectionSortPreference = getCollectionSortPreference(state)
@@ -97,14 +97,6 @@ export const updateStore = ({
         ...timeline
       }
     }))
-
-    useEdscStore.setState((zustandState) => ({
-      ...zustandState,
-      timeline: {
-        ...zustandState.timeline,
-        ...timeline
-      }
-    }))
   } else {
     // We always need to load the portal config
     await dispatch(restoreFromUrl({
@@ -121,6 +113,7 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
   const [pathname, queryString] = path.split('?')
+  console.log('🚀 ~ urlQuery.js:116 ~ changePath ~ queryString:', queryString)
 
   let decodedParams
 
@@ -129,11 +122,13 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     const requestObject = new ProjectRequest(undefined, earthdataEnvironment)
 
     const { projectId } = parse(queryString)
+    console.log('🚀 ~ urlQuery.js:125 ~ changePath ~ projectId:', projectId)
 
     try {
       const projectResponse = await requestObject.fetch(projectId)
 
       const { data } = projectResponse
+      console.log('🚀 ~ urlQuery.js:131 ~ changePath ~ data:', data)
       const {
         name,
         path: projectPath
@@ -283,7 +278,8 @@ export const changeUrl = (options) => (dispatch, getState) => {
   } = state
 
   let newOptions = options
-  const { location, navigate } = useEdscStore.getState().location
+  const { navigate } = useEdscStore.getState().location
+  const { location } = window
   const { pathname: oldPathname } = location
 
   let newPathname

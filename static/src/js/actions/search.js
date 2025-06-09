@@ -156,7 +156,7 @@ export const clearFilters = () => (dispatch) => {
   dispatch(actions.getCollections())
   dispatch(actions.getProjectCollections())
 
-  const { location } = useEdscStore.getState().location
+  const { location } = window
   const { pathname } = location
 
   // Don't request granules unless we are viewing granules

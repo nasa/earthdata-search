@@ -45,7 +45,7 @@ describe('url#encodeAutocomplete', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
+    expect(encodeUrlQuery(props)).toEqual('')
   })
 
   test('encodes autocompleteSelected correctly', () => {
@@ -70,6 +70,6 @@ describe('url#encodeAutocomplete', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?as[platform][0]=aqua&as[platform][1]=terra&as[instrument][0]=modis')
+    expect(encodeUrlQuery(props)).toEqual('?as[platform][0]=aqua&as[platform][1]=terra&as[instrument][0]=modis')
   })
 })

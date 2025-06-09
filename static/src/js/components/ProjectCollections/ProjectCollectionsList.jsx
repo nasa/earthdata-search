@@ -1,5 +1,6 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import SimpleBar from 'simplebar-react'
 
@@ -7,8 +8,6 @@ import { getColorByIndex } from '../../util/colors'
 
 import ProjectCollectionItem from './ProjectCollectionItem'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './ProjectCollectionsList.scss'
 
@@ -19,7 +18,7 @@ import './ProjectCollectionsList.scss'
  * @param {function} props.onRemoveCollectionFromProject - Fired when the remove button is clicked
  */
 const ProjectCollectionsList = (props) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   const {
     collectionsMetadata,

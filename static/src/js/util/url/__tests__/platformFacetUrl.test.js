@@ -48,6 +48,6 @@ describe('url#encodeUrlQuery', () => {
         basis: 'Air-based Platforms'
       }]
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fpc0=Jet&fpsc0=Not%20Provided&fps0=NASA%20DC-8&fpb0=Air-based%20Platforms')
+    expect(encodeUrlQuery(props)).toEqual('?fpc0=Jet&fpsc0=Not%20Provided&fps0=NASA%20DC-8&fpb0=Air-based%20Platforms')
   })
 })

@@ -121,11 +121,6 @@ describe('createTimelineSlice', () => {
               collection: {
                 spatial: {}
               }
-            },
-            router: {
-              location: {
-                pathname: ''
-              }
             }
           })
         })
@@ -199,11 +194,6 @@ describe('createTimelineSlice', () => {
             query: {
               collection: {
                 spatial: {}
-              }
-            },
-            router: {
-              location: {
-                pathname: ''
               }
             }
           })
@@ -279,11 +269,6 @@ describe('createTimelineSlice', () => {
               collection: {
                 spatial: {}
               }
-            },
-            router: {
-              location: {
-                pathname: ''
-              }
             }
           })
         })
@@ -335,11 +320,6 @@ describe('createTimelineSlice', () => {
             query: {
               collection: {
                 spatial: {}
-              }
-            },
-            router: {
-              location: {
-                pathname: ''
               }
             }
           })

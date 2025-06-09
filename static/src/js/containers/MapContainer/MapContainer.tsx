@@ -5,6 +5,7 @@ import React, {
   useMemo,
   useLayoutEffect
 } from 'react'
+import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { difference } from 'lodash-es'
@@ -217,14 +218,6 @@ interface MapContainerProps {
       }
     }
   }
-  /** The router values */
-  router: {
-    /** The router location */
-    location: {
-      /** The pathname of the router */
-      pathname: string
-    }
-  }
 }
 
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
@@ -253,7 +246,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     project
   } = props
 
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const { pathname = '' } = location
   const isProjectPage = isPath(pathname, ['/projects'])
   const isFocusedCollectionPage = isPath(pathname, [

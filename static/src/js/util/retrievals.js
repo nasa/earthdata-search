@@ -175,7 +175,7 @@ export const prepareRetrievalParams = (state) => {
     retrievalCollections.push(returnValue)
   })
 
-  const { location } = useEdscStore.getState().location
+  const { location } = window
   const { search } = location
   const { shapefileId, selectedFeatures } = shapefile
 

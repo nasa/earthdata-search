@@ -42,7 +42,7 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       scienceKeywordFacets: []
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
+    expect(encodeUrlQuery(props)).toEqual('')
   })
 
   test('encodes scienceKeywordFacets correctly', () => {
@@ -62,6 +62,6 @@ describe('url#encodeUrlQuery', () => {
         term: 'term2'
       }]
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fst0=topic1&fsm0=term1&fs10=level1&fs20=level2&fs30=level3&fsd0=detailed&fst1=topic2&fsm1=term2')
+    expect(encodeUrlQuery(props)).toEqual('?fst0=topic1&fsm0=term1&fs10=level1&fs20=level2&fs30=level3&fsd0=detailed&fst1=topic2&fsm1=term2')
   })
 })

@@ -17,6 +17,7 @@ export const HistoryContainer = ({ onChangePath }) => {
       // with the new location values
       if (action === 'POP') {
         const { pathname, search } = location
+        console.log('🚀 ~ HistoryContainer.jsx:20 ~ unlisten ~ location:', location)
 
         onChangePath(`${pathname}${search}`)
       }

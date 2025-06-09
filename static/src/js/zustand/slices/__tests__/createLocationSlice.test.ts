@@ -6,34 +6,34 @@ describe('createLocationSlice', () => {
     const { location } = zustandState
 
     expect(location).toEqual({
-      location: {
-        pathname: '/',
-        search: ''
-      },
-      setLocation: expect.any(Function),
+      // location: {
+      //   pathname: '/',
+      //   search: ''
+      // },
+      // setLocation: expect.any(Function),
       navigate: expect.any(Function),
       setNavigate: expect.any(Function)
     })
   })
 
-  describe('setLocation', () => {
-    test('updates startDrawing', () => {
-      const zustandState = useEdscStore.getState()
-      const { location } = zustandState
-      const { setLocation } = location
-      setLocation({
-        pathname: '/new-path',
-        search: '?query=example'
-      })
+  // describe('setLocation', () => {
+  //   test('updates startDrawing', () => {
+  //     const zustandState = useEdscStore.getState()
+  //     const { location } = zustandState
+  //     const { setLocation } = location
+  //     setLocation({
+  //       pathname: '/new-path',
+  //       search: '?query=example'
+  //     })
 
-      const updatedState = useEdscStore.getState()
-      const { location: updatedlocation } = updatedState
-      expect(updatedlocation.location).toEqual({
-        pathname: '/new-path',
-        search: '?query=example'
-      })
-    })
-  })
+  //     const updatedState = useEdscStore.getState()
+  //     const { location: updatedlocation } = updatedState
+  //     expect(updatedlocation.location).toEqual({
+  //       pathname: '/new-path',
+  //       search: '?query=example'
+  //     })
+  //   })
+  // })
 
   describe('setNavigate', () => {
     test('updates openKeywordFacet', () => {

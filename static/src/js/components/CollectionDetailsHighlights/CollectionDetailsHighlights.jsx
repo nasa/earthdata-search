@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import { collectionDetailsParagraph, collectionDetailsRow } from './skeleton'
 
@@ -8,8 +9,6 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import Skeleton from '../Skeleton/Skeleton'
 
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './CollectionDetailsHighlights.scss'
 
@@ -23,7 +22,7 @@ export const CollectionDetailsHighlights = ({
   collectionsSearch,
   onToggleRelatedUrlsModal
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   const {
     abstract,

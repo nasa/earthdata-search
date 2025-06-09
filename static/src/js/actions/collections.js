@@ -139,7 +139,6 @@ let cancelToken
  */
 export const getCollections = () => (dispatch, getState) => {
   const state = getState()
-  console.log('🚀 ~ collections.js:142 ~ state:', state)
 
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)

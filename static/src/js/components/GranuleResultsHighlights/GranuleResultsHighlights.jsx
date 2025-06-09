@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import { FaMap } from 'react-icons/fa'
 
 import { commafy } from '../../util/commafy'
@@ -9,8 +10,6 @@ import { pluralize } from '../../util/pluralize'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './GranuleResultsHighlights.scss'
 
@@ -29,7 +28,7 @@ export const GranuleResultsHighlights = ({
   isLoading,
   visibleGranules
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   return (
     <div className="granule-results-highlights">

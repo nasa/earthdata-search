@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
@@ -10,7 +11,6 @@ import { getProjectCollectionsMetadata } from '../../selectors/project'
 import { getUrsProfile } from '../../selectors/contactInfo'
 
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
-import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapStateToProps = (state) => ({
   dataQualitySummaries: state.dataQualitySummaries,
@@ -109,7 +109,7 @@ export const ProjectPanelsContainer = ({
   ursProfile,
   overrideTemporal
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   return (
     <ProjectPanels

@@ -31,6 +31,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       projectFacets: ['facet 1', 'facet 2']
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fpj=facet%201!facet%202')
+    expect(encodeUrlQuery(props)).toEqual('?fpj=facet%201!facet%202')
   })
 })

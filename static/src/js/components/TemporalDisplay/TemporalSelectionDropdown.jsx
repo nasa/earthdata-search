@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import moment from 'moment'
 
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -8,8 +9,6 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import TemporalSelectionDropdownMenu from './TemporalSelectionDropdownMenu'
 import TemporalSelectionDropdownToggle from './TemporalSelectionDropdownToggle'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './TemporalSelectionDropdown.scss'
 
@@ -50,7 +49,7 @@ const TemporalSelectionDropdown = ({
     end: false
   })
 
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const { pathname } = location
   const isHomePage = pathname === '/'
 

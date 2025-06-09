@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import actions from '../../actions/index'
 import { getUrsProfile } from '../../selectors/contactInfo'
@@ -10,7 +11,6 @@ import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
-import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   onLogout: () => dispatch(actions.logout()),
@@ -28,7 +28,7 @@ export const mapStateToProps = (state) => ({
 })
 
 export const SecondaryToolbarContainer = (props) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   const { disableDatabaseComponents } = getApplicationConfig()
   let secondaryToolbarEnabled = true

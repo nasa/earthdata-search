@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group'
 import { FaDoorOpen } from 'react-icons/fa'
 
@@ -9,8 +10,6 @@ import { isDefaultPortal } from '../../util/portals'
 import CollectionResultsList from './CollectionResultsList'
 import CollectionResultsTable from './CollectionResultsTable'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './CollectionResultsBody.scss'
 
@@ -39,7 +38,7 @@ const CollectionResultsBody = ({
   panelView,
   portal
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const {
     allIds: collectionIds,
     hits: collectionHits,

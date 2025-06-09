@@ -6,6 +6,7 @@ import React, {
   useState
 } from 'react'
 import { PropTypes } from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import { VariableSizeGrid as Grid } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
 import { isEmpty } from 'lodash-es'
@@ -15,8 +16,6 @@ import { itemToRowColumnIndicies } from '../../util/itemToRowColumnIndicies'
 import { useRemsToPixels } from '../../hooks/useRemsToPixels'
 
 import GranuleResultsListItem from './GranuleResultsListItem'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './GranuleResultsList.scss'
 
@@ -111,7 +110,7 @@ export const GranuleResultsListBody = ({
   visibleMiddleIndex,
   width
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const infiniteLoaderRef = useRef(null)
   const listRef = useRef(null)
   const sizeMap = useRef({})

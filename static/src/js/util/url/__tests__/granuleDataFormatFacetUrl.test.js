@@ -31,6 +31,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       granuleDataFormatFacets: ['Binary']
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?gdf=Binary')
+    expect(encodeUrlQuery(props)).toEqual('?gdf=Binary')
   })
 })

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import classNames from 'classnames'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -8,8 +9,6 @@ import { isPath } from '../../util/isPath'
 
 import TimelineContainer from '../TimelineContainer/TimelineContainer'
 import { FooterLink } from '../../components/FooterLink/FooterLink'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './FooterContainer.scss'
 
@@ -19,7 +18,7 @@ export const mapStateToProps = (state) => ({
 })
 
 export const FooterContainer = (props) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const { pathname } = location
 
   const {

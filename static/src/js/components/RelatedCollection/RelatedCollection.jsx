@@ -1,12 +1,11 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-
+import { useLocation } from 'react-router-dom'
 import { parse } from 'qs'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { stringify } from '../../util/url/url'
-import useEdscStore from '../../zustand/useEdscStore'
 
 export const RelatedCollection = ({
   className,
@@ -14,7 +13,7 @@ export const RelatedCollection = ({
   onMetricsRelatedCollection,
   relatedCollection
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   const { id, title } = relatedCollection
   const params = parse(

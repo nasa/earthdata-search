@@ -31,6 +31,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       processingLevelFacets: ['facet 1', 'facet 2']
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?fl=facet%201!facet%202')
+    expect(encodeUrlQuery(props)).toEqual('?fl=facet%201!facet%202')
   })
 })

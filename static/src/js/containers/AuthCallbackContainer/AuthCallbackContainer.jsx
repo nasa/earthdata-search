@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { set } from 'tiny-cookie'
 import { parse } from 'qs'
 
@@ -15,13 +16,8 @@ import useEdscStore from '../../zustand/useEdscStore'
  */
 export const AuthCallbackContainer = () => {
   const { edscHost } = getEnvironmentConfig()
-  const {
-    location,
-    setRedirectUrl
-  } = useEdscStore((state) => ({
-    location: state.location.location,
-    setRedirectUrl: state.earthdataDownloadRedirect.setRedirectUrl
-  }))
+  const setRedirectUrl = useEdscStore((state) => state.earthdataDownloadRedirect.setRedirectUrl)
+  const location = useLocation()
   const { search } = location
 
   useEffect(() => {
@@ -76,10 +72,8 @@ export const AuthCallbackContainer = () => {
       return
     }
 
-    console.log('🚀 ~ AuthCallbackContainer.jsx:75 ~ useEffect ~ jwt:', jwt)
     // Set the authToken cookie
-    // TODO don't want this if
-    if (jwt) set('authToken', jwt)
+    set('authToken', jwt)
 
     // Redirect the user to the correct location
     window.location.replace(redirect)

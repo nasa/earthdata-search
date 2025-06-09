@@ -19,7 +19,8 @@ export const updateSavedProject = (payload) => ({
 export const updateProjectName = (name) => (dispatch, getState) => {
   const state = getState()
 
-  const { location, navigate } = useEdscStore.getState().location
+  const { navigate } = useEdscStore.getState().location
+  const { location } = window
 
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)

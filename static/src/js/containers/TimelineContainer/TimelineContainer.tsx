@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
@@ -20,8 +21,6 @@ import { isPath } from '../../util/isPath'
 import Timeline from '../../components/Timeline/Timeline'
 
 import { CollectionsMetadata, Query } from '../../types/sharedTypes'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeQuery:
@@ -76,7 +75,7 @@ interface TimelineContainerProps {
 }
 
 export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const {
     pathname = '',
     search: searchLocation = ''

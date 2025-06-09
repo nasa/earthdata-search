@@ -36,6 +36,6 @@ describe('url#encodeUrlQuery', () => {
       onlyEosdisCollections: true
     }
 
-    expect(encodeUrlQuery(props)).toEqual('/path/here?oe=t')
+    expect(encodeUrlQuery(props)).toEqual('?oe=t')
   })
 })

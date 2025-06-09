@@ -41,6 +41,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       focusedCollection: 'collectionId'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
+    expect(encodeUrlQuery(props)).toEqual('?p=collectionId')
   })
 })

@@ -34,6 +34,8 @@ const { dataLayer = [] } = window
 // 3, newUrl: "http://localhost:8080/projects?p=C1205428742-ASF%21C1205428742-ASF&pg%5B1%5D%5Ba%5D=1257973005%211257782548%21ASF&pg%5B1%5D%5Bv%5D=t&pg%5B1%5D%5Bgsk%5D=-start_date&q=C1205428742-ASF&sp%5B0%5D=-76.39511%2C38.05267&tl=1572731769.723%215%21%21",
 // 4, newUrl: "http://localhost:8080/downloads/0093641925",
 
+// TODO Wednesday
+// I have to figure out what is going on with URLQueryContainer, with redux and zustand both triggering onChangeUrl to be called and updating the URL
 
 /**
 * Pushes a virtualPageView event on the dataLayer. Only fires on PUSH events.
@@ -55,6 +57,7 @@ export const virtualPageview = (navigationType) => {
       dimension16: computeFacets(state) // Search Facet
     }
     console.log('🚀 ~ events.js:32 ~ virtualPageview ~ event:', event)
+
     dataLayer.push(event)
   }
 }

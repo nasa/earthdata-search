@@ -32,6 +32,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       shapefileId: '123'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?sf=123')
+    expect(encodeUrlQuery(props)).toEqual('?sf=123')
   })
 })

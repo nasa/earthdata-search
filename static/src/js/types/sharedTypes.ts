@@ -234,8 +234,22 @@ export type TimelineRequestParams = {
   interval: string
 }
 
+export type ProjectRequestParams = {
+  /** The user's authToken */
+  authToken: string
+  /** The project name */
+  name: string
+  /** The full path of the project */
+  path: string
+  /** The project id */
+  projectId: string
+}
+
 /** The request parameters for our request classes */
-export type RequestParams = TimelineRequestParams | CollectionRequestParams | ShapefileRequestParams
+export type RequestParams = CollectionRequestParams
+| ProjectRequestParams
+| ShapefileRequestParams
+| TimelineRequestParams
 
 /** A response received from an Axios request */
 export type Response = {

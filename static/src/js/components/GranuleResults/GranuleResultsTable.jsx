@@ -1,12 +1,11 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import Cell from '../EDSCTable/EDSCTableCell'
 import GranuleResultsTableHeaderCell from './GranuleResultsTableHeaderCell'
 import GranuleResultsBrowseImageCell from './GranuleResultsBrowseImageCell'
 import EDSCTable from '../EDSCTable/EDSCTable'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './GranuleResultsTable.scss'
 
@@ -58,7 +57,7 @@ export const GranuleResultsTable = ({
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
   const columns = useMemo(() => [
     {
       Header: 'Granule',

@@ -35,6 +35,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       keywordSearch: 'keyword'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?q=keyword')
+    expect(encodeUrlQuery(props)).toEqual('?q=keyword')
   })
 })

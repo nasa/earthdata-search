@@ -259,11 +259,7 @@ const App = () => {
     },
     {
       path: '*',
-      element: (
-        <ErrorBoundary>
-          <NotFound />
-        </ErrorBoundary>
-      )
+      element: <NotFound />
     }
   ])
 

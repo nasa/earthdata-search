@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
@@ -13,8 +13,6 @@ import { isDefaultPortal, buildConfig } from '../../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../../portals/availablePortals.json'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -35,7 +33,7 @@ export const PortalContainer = ({
   const params = useParams()
   console.log('🚀 ~ PortalContainer.jsx:36 ~ params:', params)
   const defaultPortalId = getApplicationConfig().defaultPortal
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   useEffect(() => {
     const { portalId } = params

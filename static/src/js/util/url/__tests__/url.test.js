@@ -27,6 +27,6 @@ describe('url#encodeUrlQuery', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
+    expect(encodeUrlQuery(props)).toEqual('')
   })
 })

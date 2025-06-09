@@ -185,6 +185,7 @@ class SecondaryToolbar extends Component {
       </PortalLinkContainer>
     )
 
+    console.log('🚀 ~ SecondaryToolbar.jsx:189 ~ SecondaryToolbar ~ render ~ retrieval:', retrieval)
     const { jsondata = {} } = retrieval
     const { source } = jsondata
     const backToProjectLink = (

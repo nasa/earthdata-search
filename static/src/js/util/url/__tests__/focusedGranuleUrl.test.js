@@ -29,6 +29,6 @@ describe('url#encodeUrlQuery', () => {
       pathname: '/path/here',
       focusedGranule: 'granuleId'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?g=granuleId')
+    expect(encodeUrlQuery(props)).toEqual('?g=granuleId')
   })
 })

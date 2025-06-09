@@ -37,7 +37,7 @@ describe('url#encodeAdvancedSearch', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
+    expect(encodeUrlQuery(props)).toEqual('')
   })
 
   test('encodes advancedSearch correctly', () => {
@@ -55,6 +55,6 @@ describe('url#encodeAdvancedSearch', () => {
       hasGranulesOrCwic: true,
       pathname: '/path/here'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?sr[id]=1234&sr[name]=Test%20HUC&sr[spatial]=-77%2C38%2C-77%2C38%2C-76%2C38%2C-77%2C38&sr[type]=huc')
+    expect(encodeUrlQuery(props)).toEqual('?sr[id]=1234&sr[name]=Test%20HUC&sr[spatial]=-77%2C38%2C-77%2C38%2C-76%2C38%2C-77%2C38&sr[type]=huc')
   })
 })

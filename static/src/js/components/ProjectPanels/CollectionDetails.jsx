@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 import { difference } from 'lodash-es'
 import classNames from 'classnames'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
@@ -10,8 +11,6 @@ import { eventEmitter } from '../../events/events'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
-
-import useEdscStore from '../../zustand/useEdscStore'
 
 import './CollectionDetails.scss'
 
@@ -35,7 +34,7 @@ const CollectionDetails = ({
   onRemoveGranuleFromProjectCollection,
   projectCollection
 }) => {
-  const location = useEdscStore((state) => state.location.location)
+  const location = useLocation()
 
   const {
     granules: projectCollectionGranules = {}

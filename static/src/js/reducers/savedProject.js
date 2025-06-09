@@ -1,4 +1,4 @@
-import { UPDATE_SAVED_PROJECT, LOCATION_CHANGE } from '../constants/actionTypes'
+import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 
 import { isPath } from '../util/isPath'
 import { urlPathsWithoutUrlParams, isSavedProjectsPage } from '../util/url/url'
@@ -26,20 +26,21 @@ const savedProjectReducer = (state = initialState, action = {}) => {
       }
     }
 
-    case LOCATION_CHANGE: {
-      // If we are navigating to downloads, contact info, or saved projects,
-      // forget about the current saved project
-      const { payload } = action
-      const { isFirstRendering, location } = payload
-      if (isFirstRendering) return state
+    // TODO figure this out without redux
+    // case LOCATION_CHANGE: {
+    //   // If we are navigating to downloads, contact info, or saved projects,
+    //   // forget about the current saved project
+    //   const { payload } = action
+    //   const { isFirstRendering, location } = payload
+    //   if (isFirstRendering) return state
 
-      const { pathname } = location
-      if (isPath(pathname, urlPathsWithoutUrlParams) || isSavedProjectsPage(location)) {
-        return initialState
-      }
+    //   const { pathname } = location
+    //   if (isPath(pathname, urlPathsWithoutUrlParams) || isSavedProjectsPage(location)) {
+    //     return initialState
+    //   }
 
-      return state
-    }
+    //   return state
+    // }
 
     default:
       return state
