@@ -63,9 +63,6 @@ const setup = setupTest({
       panelState: 'default',
       collectionListView: 'default',
       granuleListView: 'default'
-    },
-    portal: {
-      test: 'portal'
     }
   }
 })
@@ -77,8 +74,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onApplyGranuleFilters({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onChangeQuery calls actions.changeQuery', () => {
@@ -87,8 +84,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onChangePath calls actions.changePath', () => {
@@ -97,8 +94,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('/search')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('/search')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('/search')
   })
 
   test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
@@ -107,8 +104,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFocusedCollectionChange('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onMetricsCollectionSortChange calls metricsCollectionSortChange', () => {
@@ -117,8 +114,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onMetricsCollectionSortChange({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onSetActivePanel calls actions.setActivePanel', () => {
@@ -127,8 +124,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onSetActivePanel('panelId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('panelId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('panelId')
   })
 
   test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
@@ -137,8 +134,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(true)
   })
 
   test('onToggleAboutCwicModal calls actions.toggleAboutCwicModal', () => {
@@ -147,8 +144,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleAboutCwicModal(true)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(true)
   })
 
   test('onTogglePanels calls actions.togglePanels', () => {
@@ -157,8 +154,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onTogglePanels('value')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('value')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('value')
   })
 
   test('onExport calls actions.exportSearch', () => {
@@ -167,8 +164,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onExport('json')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('json')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('json')
   })
 })
 
@@ -184,7 +181,6 @@ describe('mapStateToProps', () => {
       preferences: {
         preferences: {}
       },
-      portal: {},
       query: {
         collection: {}
       },
@@ -215,8 +211,7 @@ describe('mapStateToProps', () => {
         json: false
       },
       panels: {},
-      preferences: {},
-      portal: {}
+      preferences: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -239,9 +234,6 @@ describe('SearchPanelsContainer component', () => {
         panels: {
           activePanel: '0.0.0',
           isOpen: false
-        },
-        portal: {
-          test: 'portal'
         }
       }),
       {}

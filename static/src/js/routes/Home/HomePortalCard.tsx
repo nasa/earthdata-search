@@ -5,7 +5,6 @@ import {
   Tooltip
 } from 'react-bootstrap'
 
-import { type Portal } from './Home'
 // @ts-expect-error: Types do not exist for this file
 import { usePortalLogo } from '../../hooks/usePortalLogo'
 // @ts-expect-error: Types do not exist for this file
@@ -13,9 +12,11 @@ import ExternalLink from '../../components/ExternalLink/ExternalLink'
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import { type PortalConfig } from '../../types/sharedTypes'
+
 import './HomePortalCard.scss'
 
-const HomePortalCard: React.FC<Portal> = (portal) => {
+const HomePortalCard: React.FC<PortalConfig> = (portal) => {
   const {
     portalId,
     title: {

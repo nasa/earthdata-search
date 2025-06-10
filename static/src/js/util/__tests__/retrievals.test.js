@@ -1,7 +1,14 @@
+import useEdscStore from '../../zustand/useEdscStore'
 import { prepareRetrievalParams } from '../retrievals'
 
 describe('retrievals', () => {
   test('prepareRetrievalParams', () => {
+    useEdscStore.setState({
+      portal: {
+        portalId: 'edsc'
+      }
+    })
+
     const response = prepareRetrievalParams({
       authToken: 'auth-token',
       earthdataEnvironment: 'prod',
@@ -17,9 +24,6 @@ describe('retrievals', () => {
             versionId: 'mock version'
           }
         }
-      },
-      portal: {
-        portalId: 'edsc'
       },
       project: {
         collections: {
@@ -166,6 +170,12 @@ describe('retrievals', () => {
   })
 
   test('when there are no links on the granules', () => {
+    useEdscStore.setState({
+      portal: {
+        portalId: 'edsc'
+      }
+    })
+
     const response = prepareRetrievalParams({
       authToken: 'auth-token',
       earthdataEnvironment: 'prod',
@@ -181,9 +191,6 @@ describe('retrievals', () => {
             versionId: 'mock version'
           }
         }
-      },
-      portal: {
-        portalId: 'edsc'
       },
       project: {
         collections: {

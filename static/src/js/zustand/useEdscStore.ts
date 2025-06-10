@@ -10,6 +10,7 @@ import createMapSlice from './slices/createMapSlice'
 import createShapefileSlice from './slices/createShapefileSlice'
 import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
+import createPortalSlice from './slices/createPortalSlice'
 
 const useEdscStore = create<EdscStore>()(
   immer(
@@ -18,6 +19,7 @@ const useEdscStore = create<EdscStore>()(
         ...createEarthdataDownloadRedirectSlice(...args),
         ...createHomeSlice(...args),
         ...createMapSlice(...args),
+        ...createPortalSlice(...args),
         ...createShapefileSlice(...args),
         ...createTimelineSlice(...args),
         ...createUiSlice(...args)

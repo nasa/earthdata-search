@@ -1,35 +1,29 @@
-import React from 'react'
-import { render, waitFor } from '@testing-library/react'
+import { waitFor } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
-import {
-  mapDispatchToProps,
-  mapStateToProps,
-  PortalContainer
-} from '../PortalContainer'
+import { mapDispatchToProps, PortalContainer } from '../PortalContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: PortalContainer,
+  defaultProps: {
     match: {
       params: {}
     },
     location: {},
+    onChangePath: jest.fn(),
+    onChangeUrl: jest.fn()
+  },
+  defaultZustandState: {
     portal: {
       portalId: 'edsc'
-    },
-    onChangePath: jest.fn(),
-    onChangeUrl: jest.fn(),
-    ...overrideProps
+    }
   }
-
-  render(<PortalContainer {...props} />)
-
-  return { props }
-}
+})
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
 })
 
@@ -40,8 +34,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('portalId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('portalId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('portalId')
   })
 
   test('onChangeUrl calls actions.changeUrl', () => {
@@ -50,22 +44,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeUrl('portalId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('portalId')
-  })
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      portal: {}
-    }
-
-    const expectedState = {
-      portal: {}
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('portalId')
   })
 })
 
@@ -88,10 +68,12 @@ describe('PortalContainer component', () => {
     }))
 
     setup({
-      portal: {
-        portalId: 'example',
-        title: {
-          primary: 'example'
+      overrideZustandState: {
+        portal: {
+          portalId: 'example',
+          title: {
+            primary: 'example'
+          }
         }
       }
     })
@@ -106,18 +88,23 @@ describe('PortalContainer component', () => {
     }))
 
     const { props } = setup({
-      match: {
-        params: {
-          portalId: 'example'
+      overrideProps: {
+        match: {
+          params: {
+            portalId: 'example'
+          }
+        },
+        location: {
+          pathname: '/portal/example/search',
+          search: '?q=modis'
         }
-      },
-      location: {
-        pathname: '/portal/example/search',
-        search: '?q=modis'
       }
     })
 
-    expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+    })
+
     expect(props.onChangeUrl).toHaveBeenCalledWith({
       pathname: '/search',
       search: '?q=modis&portal=example'
@@ -134,18 +121,23 @@ describe('PortalContainer component', () => {
     }))
 
     const { props } = setup({
-      match: {
-        params: {
-          portalId: 'example'
+      overrideProps: {
+        match: {
+          params: {
+            portalId: 'example'
+          }
+        },
+        location: {
+          pathname: '/portal/example',
+          search: '?q=modis'
         }
-      },
-      location: {
-        pathname: '/portal/example',
-        search: '?q=modis'
       }
     })
 
-    expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
+    })
+
     expect(props.onChangeUrl).toHaveBeenCalledWith({
       pathname: '/search',
       search: '?q=modis&portal=example'

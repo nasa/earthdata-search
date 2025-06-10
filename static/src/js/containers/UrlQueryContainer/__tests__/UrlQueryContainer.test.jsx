@@ -34,7 +34,6 @@ const setup = setupTest({
     platformFacets: {},
     pointSearch: '',
     polygonSearch: '',
-    portalId: '',
     processingLevelFacets: {},
     project: {},
     projectFacets: {},
@@ -108,9 +107,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      portal: {
-        portalId: 'edsc'
-      },
       project: {},
       query: {
         collection: {
@@ -162,7 +158,6 @@ describe('mapStateToProps', () => {
       platformFacets: [],
       pointSearch: [],
       polygonSearch: [],
-      portalId: 'edsc',
       processingLevelFacets: [],
       project: {},
       projectFacets: [],
@@ -219,9 +214,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      portal: {
-        portalId: 'edsc'
-      },
       project: {},
       query: {
         collection: {
@@ -274,7 +266,6 @@ describe('mapStateToProps', () => {
       platformFacets: [],
       pointSearch: [],
       polygonSearch: [],
-      portalId: 'edsc',
       processingLevelFacets: [],
       project: {},
       projectFacets: [],

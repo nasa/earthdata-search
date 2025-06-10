@@ -50,7 +50,6 @@ export const mapStateToProps = (state) => ({
   overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,
   platformFacets: state.facetsParams.cmr.platforms_h,
-  portalId: state.portal.portalId,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
   processingLevelFacets: state.facetsParams.cmr.processing_level_id_h,
@@ -82,6 +81,7 @@ export const UrlQueryContainer = (props) => {
   // Pull out values we have migrated to Zustand that are no longer passed as props
   const zustandValues = useEdscStore((state) => ({
     mapView: state.map.mapView,
+    portalId: state.portal.portalId,
     selectedFeatures: state.shapefile.selectedFeatures,
     shapefileId: state.shapefile.shapefileId,
     timelineQuery: state.timeline.query

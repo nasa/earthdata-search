@@ -73,7 +73,6 @@ export const updateStore = ({
       focusedCollection,
       focusedGranule,
       deprecatedUrlParams,
-      portal,
       project,
       query: {
         ...query,
@@ -90,6 +89,7 @@ export const updateStore = ({
           ...mapView
         }
       },
+      portal,
       shapefile: {
         ...zustandState.shapefile,
         ...shapefile
@@ -99,17 +99,10 @@ export const updateStore = ({
         ...timeline
       }
     }))
-
-    useEdscStore.setState((zustandState) => ({
-      ...zustandState,
-      timeline: {
-        ...zustandState.timeline,
-        ...timeline
-      }
-    }))
   } else {
     // We always need to load the portal config
-    await dispatch(restoreFromUrl({
+    useEdscStore.setState((zustandState) => ({
+      ...zustandState,
       portal
     }))
   }

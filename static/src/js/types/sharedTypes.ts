@@ -162,14 +162,76 @@ export type MapGranule = {
   spatial: GeoJsonObject
 }
 
-export type ProjectionCode = keyof typeof crsProjections
-
 /** The query object */
 export interface Query {
   // Will flush out query types when implementing the querySlice
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
+
+export type PortalConfig = {
+  /** The portal configuration for visible features */
+  features: {
+    /** Flag to show the advanced search */
+    advancedSearch: boolean
+    /** Flag to show the features behind authentication */
+    authentication: boolean
+    /** Flags for the feature facets */
+    featureFacets: {
+      /** Flag to show the Available in Earthdata Cloud facet */
+      showAvailableInEarthdataCloud: boolean
+      /** Flag to show the Customizable facet */
+      showCustomizable: boolean
+      /** Flag to show the Map Imagery facet */
+      showMapImagery: boolean
+    }
+  }
+  /** The portal configuration for the footer */
+  footer: {
+    /** The footer attribution text */
+    attributionText: string
+    /** Flag to show the application version */
+    displayVersion: boolean
+    /** The footer's primary links */
+    primaryLinks: Array<{
+      href: string
+      title: string
+    }>
+    /** The footer's secondary links */
+    secondaryLinks: Array<{
+      href: string
+      title: string
+    }>
+  }
+  /** The URL to navigate to when the portal is clicked */
+  moreInfoUrl?: string
+  /** The portal's page title */
+  pageTitle: string
+  /** Flag to show the portal in the portal browser */
+  portalBrowser: boolean
+  /** The portal ID */
+  portalId: string
+  /** The portal's query */
+  query: Query
+  /** The title of the portal */
+  title: {
+    /** The primary title of the portal */
+    primary: string
+    /** The secondary title of the portal */
+    secondary?: string
+  }
+  /** The UI Configuration of the portal */
+  ui: {
+    /** Flag to show the `Include only EOSDIS collections` Checkbox */
+    showNonEosdisCheckbox: boolean
+    /** Flag to show the `Include collections without granules` checkbox */
+    showOnlyGranulesCheckbox: boolean
+    /** Flag to show Tophat */
+    showTophat: boolean
+  }
+}
+
+export type ProjectionCode = keyof typeof crsProjections
 
 /** CMR specific headers */
 export interface CmrHeaders {

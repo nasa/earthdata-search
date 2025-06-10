@@ -12,13 +12,11 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
 import { isDefaultPortal } from '../../util/portals'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
     (path) => dispatch(actions.changePath(path))
-})
-
-export const mapStateToProps = (state) => ({
-  portal: state.portal
 })
 
 export const PortalLinkContainer = (props) => {
@@ -27,7 +25,6 @@ export const PortalLinkContainer = (props) => {
     className,
     dataTestId,
     onClick,
-    portal: currentPortal,
     newPortal,
     to,
     type,
@@ -35,6 +32,8 @@ export const PortalLinkContainer = (props) => {
     updatePath,
     onChangePath
   } = props
+
+  const currentPortalId = useEdscStore((state) => state.portal.portalId)
 
   // Get the portalId that needs to be used in the link
   const getPortalId = () => {
@@ -48,10 +47,8 @@ export const PortalLinkContainer = (props) => {
       return portalId
     }
 
-    // Use the current portal from the redux store
-    const { portalId } = currentPortal
-
-    return portalId
+    // Use the current portal from the store
+    return currentPortalId
   }
 
   let objectTo = to
@@ -144,7 +141,6 @@ PortalLinkContainer.defaultProps = {
   className: '',
   dataTestId: null,
   onClick: null,
-  portal: {},
   newPortal: null,
   staticContext: null,
   type: '',
@@ -163,9 +159,6 @@ PortalLinkContainer.propTypes = {
   location: locationPropType.isRequired,
   match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.func,
-  portal: PropTypes.shape({
-    portalId: PropTypes.string
-  }),
   newPortal: PropTypes.shape({
     portalId: PropTypes.string
   }),
@@ -181,5 +174,5 @@ PortalLinkContainer.propTypes = {
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PortalLinkContainer)
+  connect(undefined, mapDispatchToProps)(PortalLinkContainer)
 )

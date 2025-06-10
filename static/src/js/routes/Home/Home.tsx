@@ -59,6 +59,8 @@ import actions from '../../actions'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
+import { PortalConfig } from '../../types/sharedTypes'
+
 import './Home.scss'
 // TODO: Clean up css so preloading this file is not necessary
 import '../../components/SearchForm/SearchForm.scss'
@@ -145,26 +147,6 @@ const topics: HomeTopic[] = [
   }
 ]
 
-interface PortalTitle {
-  /** The primary title of the portal */
-  primary: string
-  /** The secondary title of the portal */
-  secondary?: string
-}
-
-export interface Portal {
-  /** A flag that denotes if the portal should be included in the portal browser */
-  portalBrowser?: boolean
-  /** The image URL for the portal logo */
-  portalLogoSrc?: string
-  /** The ID of the portal */
-  portalId: string
-  /** The title of the portal */
-  title: PortalTitle
-/** The URL to navigate to when the portal is clicked */
-  moreInfoUrl?: string
-}
-
 interface HomeDispatchProps {
   /** The Redux action to change the path */
   onChangePath: (path: string) => void
@@ -198,8 +180,10 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
     setShowAllPortals(!showAllPortals)
   }
 
-  const sortedPortals: Portal[] = sortBy(availablePortals, (portal: Portal) => portal.title.primary)
-    .filter((portal: Portal) => portal.portalBrowser)
+  const sortedPortals: PortalConfig[] = sortBy(
+    availablePortals as unknown as PortalConfig[],
+    (portal: PortalConfig) => portal.title.primary
+  ).filter((portal: PortalConfig) => portal.portalBrowser)
 
   const visiblePortals = sortedPortals.slice(0, 10)
   const hiddenPortals = sortedPortals.slice(10)

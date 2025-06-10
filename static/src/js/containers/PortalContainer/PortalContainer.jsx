@@ -13,6 +13,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../../portals/availablePortals.json'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -21,18 +22,14 @@ export const mapDispatchToProps = (dispatch) => ({
     (data) => dispatch(actions.changeUrl(data))
 })
 
-export const mapStateToProps = (state) => ({
-  portal: state.portal
-})
-
 export const PortalContainer = ({
   match,
-  portal,
   location,
   onChangePath,
   onChangeUrl
 }) => {
   const defaultPortalId = getApplicationConfig().defaultPortal
+  const portal = useEdscStore((state) => state.portal)
 
   useEffect(() => {
     const { params } = match
@@ -64,14 +61,16 @@ export const PortalContainer = ({
     }
 
     if (newPathname !== pathname || newSearch !== search) {
-      // Update the URL with the new value
-      onChangeUrl({
-        pathname: newPathname,
-        search: newSearch
-      })
+      setTimeout(() => {
+        // Update the URL with the new value
+        onChangeUrl({
+          pathname: newPathname,
+          search: newSearch
+        })
 
-      // Reset the store based on the new URL
-      onChangePath(`${newPathname}${newSearch}`)
+        // Reset the store based on the new URL
+        onChangePath(`${newPathname}${newSearch}`)
+      }, 0)
     }
   }, [])
 
@@ -108,16 +107,10 @@ PortalContainer.propTypes = {
       portalId: PropTypes.string
     })
   }).isRequired,
-  portal: PropTypes.shape({
-    title: PropTypes.shape({
-      primary: PropTypes.string
-    }),
-    portalId: PropTypes.string
-  }).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PortalContainer)
+  connect(undefined, mapDispatchToProps)(PortalContainer)
 )

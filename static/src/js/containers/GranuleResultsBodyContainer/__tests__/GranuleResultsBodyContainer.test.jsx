@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import {
@@ -11,10 +11,11 @@ import {
 import GranuleResultsBody from '../../../components/GranuleResults/GranuleResultsBody'
 import * as metricsActions from '../../../middleware/metrics/actions'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/GranuleResults/GranuleResultsBody', () => jest.fn(() => <div />))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: GranuleResultsBodyContainer,
+  defaultProps: {
     collectionMetadata: {},
     collectionQuerySpatial: {},
     collectionTags: {},
@@ -34,21 +35,8 @@ function setup(overrideProps) {
     onMetricsAddGranuleProject: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     panelView: 'list',
-    portal: {},
-    project: {},
-    ...overrideProps
+    project: {}
   }
-
-  const enzymeWrapper = shallow(<GranuleResultsBodyContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-beforeEach(() => {
-  jest.clearAllMocks()
 })
 
 describe('mapDispatchToProps', () => {
@@ -58,8 +46,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeGranulePageNum({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onExcludeGranule calls actions.excludeGranule', () => {
@@ -68,8 +56,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onExcludeGranule({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
@@ -78,8 +66,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFocusedGranuleChange('granuleId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('granuleId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('granuleId')
   })
 
   test('onGenerateNotebook calls actions.generateNotebook', () => {
@@ -88,8 +76,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onGenerateNotebook({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onMetricsDataAccess calls metricsActions.metricsDataAccess', () => {
@@ -98,8 +86,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onMetricsDataAccess({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onMetricsAddGranuleProject calls metricsActions.metricsAddGranuleProject', () => {
@@ -108,8 +96,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onMetricsAddGranuleProject({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onAddGranuleToProjectCollection calls actions.addGranuleToProjectCollection', () => {
@@ -118,8 +106,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onAddGranuleToProjectCollection({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onRemoveGranuleFromProjectCollection calls actions.removeGranuleFromProjectCollection', () => {
@@ -128,8 +116,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onRemoveGranuleFromProjectCollection({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 })
 
@@ -152,7 +140,6 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      portal: {},
       project: {},
       ui: {
         generateNotebook: {}
@@ -169,7 +156,6 @@ describe('mapStateToProps', () => {
       granuleQuery: {},
       granuleSearchResults: {},
       granulesMetadata: {},
-      portal: {},
       project: {}
     }
 
@@ -179,33 +165,43 @@ describe('mapStateToProps', () => {
 
 describe('GranuleResultsBodyContainer component', () => {
   test('passes its props and renders a single GranuleResultsBody component', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(GranuleResultsBody).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsBody).props().collectionId).toEqual('focusedCollection')
-    expect(enzymeWrapper.find(GranuleResultsBody).props().focusedGranuleId).toEqual('')
-    expect(enzymeWrapper.find(GranuleResultsBody).props().granuleQuery).toEqual({
-      pageNum: 1
-    })
-
-    expect(enzymeWrapper.find(GranuleResultsBody).props().granulesMetadata).toEqual({})
-    expect(enzymeWrapper.find(GranuleResultsBody).props().granuleSearchResults).toEqual({})
-    expect(enzymeWrapper.find(GranuleResultsBody).props().isOpenSearch).toEqual(false)
-    expect(enzymeWrapper.find(GranuleResultsBody).props().portal).toEqual({})
-    expect(enzymeWrapper.find(GranuleResultsBody).props().project).toEqual({})
+    expect(GranuleResultsBody).toHaveBeenCalledTimes(1)
+    expect(GranuleResultsBody).toHaveBeenCalledWith({
+      collectionId: 'focusedCollection',
+      collectionQuerySpatial: {},
+      collectionTags: {},
+      directDistributionInformation: {},
+      focusedGranuleId: '',
+      generateNotebook: {},
+      granuleQuery: { pageNum: 1 },
+      granuleSearchResults: {},
+      granulesMetadata: {},
+      isOpenSearch: false,
+      loadNextPage: expect.any(Function),
+      location: { search: 'value' },
+      onAddGranuleToProjectCollection: expect.any(Function),
+      onExcludeGranule: expect.any(Function),
+      onFocusedGranuleChange: expect.any(Function),
+      onGenerateNotebook: expect.any(Function),
+      onMetricsAddGranuleProject: expect.any(Function),
+      onMetricsDataAccess: expect.any(Function),
+      onRemoveGranuleFromProjectCollection: expect.any(Function),
+      panelView: 'list',
+      project: {}
+    }, {})
   })
 
   test('loadNextPage calls onChangeGranulePageNum', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
 
-    const granuleResultsBody = enzymeWrapper.find(GranuleResultsBody)
+    GranuleResultsBody.mock.calls[0][0].loadNextPage()
 
-    granuleResultsBody.prop('loadNextPage')()
-
-    expect(props.onChangeGranulePageNum.mock.calls.length).toBe(1)
-    expect(props.onChangeGranulePageNum.mock.calls[0]).toEqual([{
+    expect(props.onChangeGranulePageNum).toHaveBeenCalledTimes(1)
+    expect(props.onChangeGranulePageNum).toHaveBeenCalledWith({
       collectionId: 'focusedCollection',
       pageNum: 2
-    }])
+    })
   })
 })

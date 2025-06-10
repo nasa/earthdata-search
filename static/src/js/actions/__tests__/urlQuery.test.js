@@ -12,7 +12,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
 })
 
@@ -76,6 +75,7 @@ describe('updateStore', () => {
           collectionSortPreference: 'default'
         },
         mapView: undefined,
+        portal: undefined,
         timeline: undefined
       },
       type: RESTORE_FROM_URL
@@ -83,8 +83,14 @@ describe('updateStore', () => {
 
     // Expect the zustand store to be updated
     const initialState = useEdscStore.getInitialState()
-    const { map, timeline } = useEdscStore.getState()
+    const {
+      map,
+      portal,
+      timeline
+    } = useEdscStore.getState()
     expect(map).toEqual(initialState.map)
+
+    expect(portal).toEqual({})
 
     expect(timeline).toEqual({
       intervals: {},
@@ -169,6 +175,7 @@ describe('updateStore', () => {
             collectionSortPreference: 'default'
           },
           mapView: undefined,
+          portal: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -177,8 +184,16 @@ describe('updateStore', () => {
       expect(getTimelineMock).toHaveBeenCalledTimes(0)
 
       // Expect the zustand store to be updated
-      const { map, timeline } = useEdscStore.getState()
+      const {
+        map,
+        portal,
+        timeline
+      } = useEdscStore.getState()
+
       expect(map).toEqual(initialState.map)
+
+      expect(portal).toEqual({})
+
       expect(timeline).toEqual({
         intervals: {},
         query: {
@@ -262,61 +277,9 @@ describe('updateStore', () => {
             ...params.query,
             collectionSortPreference: 'default'
           },
-          portalId: undefined,
-          portal: {
-            features: {
-              advancedSearch: true,
-              authentication: true,
-              featureFacets: {
-                showAvailableInEarthdataCloud: true,
-                showCustomizable: true,
-                showMapImagery: true
-              }
-            },
-            footer: {
-              attributionText: 'NASA Official: Test Official',
-              displayVersion: true,
-              primaryLinks: [
-                {
-                  href: 'http://www.nasa.gov/FOIA/index.html',
-                  title: 'FOIA'
-                },
-                {
-                  href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
-                  title: 'NASA Privacy Policy'
-                },
-                {
-                  href: 'http://www.usa.gov',
-                  title: 'USA.gov'
-                }
-              ],
-              secondaryLinks: [
-                {
-                  href: 'https://access.earthdata.nasa.gov/',
-                  title: 'Earthdata Access: A Section 508 accessible alternative'
-                }
-              ]
-            },
-            moreInfoUrl: 'https://test.gov',
-            pageTitle: 'TEST',
-            parentConfig: 'edsc',
-            portalBrowser: true,
-            portalId: 'testPortal',
-            query: {
-              hasGranulesOrCwic: null,
-              project: 'testProject'
-            },
-            title: {
-              primary: 'test',
-              secondary: 'test secondary title'
-            },
-            ui: {
-              showNonEosdisCheckbox: false,
-              showOnlyGranulesCheckbox: false,
-              showTophat: true
-            }
-          },
           mapView: undefined,
+          portalId: undefined,
+          portal: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -325,8 +288,62 @@ describe('updateStore', () => {
       expect(getTimelineMock).toHaveBeenCalledTimes(0)
 
       // Expect the zustand store to be updated
-      const { map, timeline } = useEdscStore.getState()
+      const {
+        map,
+        portal,
+        timeline
+      } = useEdscStore.getState()
+
       expect(map).toEqual(initialState.map)
+
+      expect(portal).toEqual({
+        features: {
+          advancedSearch: true,
+          authentication: true,
+          featureFacets: {
+            showAvailableInEarthdataCloud: true,
+            showCustomizable: true,
+            showMapImagery: true
+          }
+        },
+        footer: {
+          attributionText: 'NASA Official: Test Official',
+          displayVersion: true,
+          primaryLinks: [{
+            href: 'http://www.nasa.gov/FOIA/index.html',
+            title: 'FOIA'
+          }, {
+            href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+            title: 'NASA Privacy Policy'
+          }, {
+            href: 'http://www.usa.gov',
+            title: 'USA.gov'
+          }],
+          secondaryLinks: [{
+            href: 'https://access.earthdata.nasa.gov/',
+            title: 'Earthdata Access: A Section 508 accessible alternative'
+          }]
+        },
+        moreInfoUrl: 'https://test.gov',
+        pageTitle: 'TEST',
+        parentConfig: 'edsc',
+        portalBrowser: true,
+        portalId: 'testPortal',
+        query: {
+          hasGranulesOrCwic: null,
+          project: 'testProject'
+        },
+        title: {
+          primary: 'test',
+          secondary: 'test secondary title'
+        },
+        ui: {
+          showNonEosdisCheckbox: false,
+          showOnlyGranulesCheckbox: false,
+          showTophat: true
+        }
+      })
+
       expect(timeline).toEqual({
         intervals: {},
         query: {
