@@ -18,8 +18,7 @@ function setup() {
         id: 1
       },
       path: '/downloads/1'
-    },
-    portal: {}
+    }
   }
 
   const enzymeWrapper = shallow(<Downloads.WrappedComponent {...props} />)

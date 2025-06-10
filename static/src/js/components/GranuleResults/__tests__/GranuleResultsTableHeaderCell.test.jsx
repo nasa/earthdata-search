@@ -19,11 +19,6 @@ function setup(overrideProps, columnOverrideProps) {
         generateNotebook: {},
         location: {},
         isGranuleInProject: jest.fn(),
-        portal: {
-          features: {
-            authentication: true
-          }
-        },
         onAddGranuleToProjectCollection: jest.fn(),
         onExcludeGranule: jest.fn(),
         onFocusedGranuleChange: jest.fn(),

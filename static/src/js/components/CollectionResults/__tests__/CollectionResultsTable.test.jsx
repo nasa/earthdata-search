@@ -19,11 +19,6 @@ function setup(overrideProps) {
     onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),
-    portal: {
-      features: {
-        authentication: true
-      }
-    },
     setVisibleMiddleIndex: jest.fn(),
     visibleMiddleIndex: 1,
     ...overrideProps

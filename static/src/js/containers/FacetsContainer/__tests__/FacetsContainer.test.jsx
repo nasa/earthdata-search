@@ -18,7 +18,6 @@ const setup = setupTest({
   defaultProps: {
     facetsById: {},
     featureFacets: {},
-    portal: {},
     onChangeCmrFacet: jest.fn(),
     onChangeFeatureFacet: jest.fn(),
     onTriggerViewAllFacets: jest.fn()

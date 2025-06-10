@@ -15,8 +15,7 @@ import useEdscStore from '../../zustand/useEdscStore'
 import './FooterContainer.scss'
 
 export const mapStateToProps = (state) => ({
-  loadTime: state.searchResults.collections.loadTime,
-  portal: state.portal
+  loadTime: state.searchResults.collections.loadTime
 })
 
 export const FooterContainer = (props) => {

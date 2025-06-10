@@ -33,7 +33,6 @@ function setup(overrideProps) {
     onRemoveGranuleFromProjectCollection: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
     visibleMiddleIndex: 1,
-    portal: {},
     ...overrideProps
   }
 

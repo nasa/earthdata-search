@@ -27,7 +27,6 @@ const setup = setupTest({
       }
     },
     collectionsSearch: {},
-    portal: {},
     projectCollectionsIds: [],
     onAddProjectCollection: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),

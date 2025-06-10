@@ -20,23 +20,7 @@ jest.mock('react-router-dom', () => ({
 const setup = setupTest({
   Component: FooterContainer,
   defaultProps: {
-    earthdataEnvironment: 'prod',
-    loadTime: 2.2,
-    portal: {
-      footer: {
-        attributionText: 'Mock text',
-        displayVersion: true,
-        primaryLinks: [{
-          href: 'http://primary.example.com',
-          title: 'Primary Example'
-        }],
-        secondaryLinks: [{
-          href: 'http://secondary.example.com',
-          title: 'Secondary Example',
-          secondary: true
-        }]
-      }
-    }
+    loadTime: 2.2
   },
   defaultZustandState: {
     portal: {

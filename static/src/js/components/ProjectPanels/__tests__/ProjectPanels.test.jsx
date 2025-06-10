@@ -58,7 +58,6 @@ function setup(overrideProps) {
     focusedGranuleId: '',
     granulesMetadata: {},
     granulesQueries: {},
-    portal: {},
     project: {
       collections: {
         allIds: ['collectionId'],

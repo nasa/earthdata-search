@@ -88,7 +88,6 @@ const setup = (overrideProps) => {
     name: 'Test Project',
     onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn(),
-    portal: {},
     projectCollectionsRequiringChunking: {},
     ...overrideProps
   }
@@ -124,7 +123,6 @@ describe('Project component', () => {
             isSubmitting: false
           }
         },
-        portal: { portalId: 'edsc' },
         router: {
           location: {
             search: ''
@@ -166,7 +164,6 @@ describe('Project component', () => {
           isSubmitting: false
         }
         },
-        portal: { portalId: 'edsc' },
         router: {
           location: {
             search: ''
@@ -217,7 +214,6 @@ describe('Project component', () => {
         isSubmitting: false
       }
         },
-        portal: { portalId: 'edsc' },
         router: {
           location: {
             search: ''
@@ -263,7 +259,6 @@ describe('Project component', () => {
         isSubmitting: false
       }
         },
-        portal: { portalId: 'edsc' },
         router: {
           location: {
             search: ''
@@ -316,7 +311,6 @@ describe('Project component', () => {
             isSubmitting: false
           }
         },
-        portal: { portalId: 'edsc' },
         router: {
           location: {
             search: ''

@@ -43,7 +43,6 @@ const setup = setupTest({
     onMetricsDataAccess: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
-    portal: {},
     itemCount: 2,
     isItemLoaded: jest.fn().mockReturnValue(true),
     loadMoreItems: jest.fn(),

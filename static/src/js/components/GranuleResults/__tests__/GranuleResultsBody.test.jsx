@@ -8,10 +8,6 @@ import GranuleResultsTable from '../GranuleResultsTable'
 
 Enzyme.configure({ adapter: new Adapter() })
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 function setup(options = {
   mount: false
 }, overrideProps = {}) {
@@ -82,7 +78,6 @@ function setup(options = {
     onMetricsAddGranuleProject: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
     panelView: 'list',
-    portal: {},
     project: {},
     ...overrideProps
   }

@@ -43,9 +43,6 @@ const setup = (state, overrideProps) => {
     location: {
       pathname: '/search'
     },
-    portal: {
-      portalId: 'edsc'
-    },
     projectCollectionIds: [],
     savedProject: {},
     retrieval: {},
