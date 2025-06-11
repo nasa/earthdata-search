@@ -1,11 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { parse, stringify } from 'qs'
 import { isObject } from 'lodash-es'
-
-import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../../components/Button/Button'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -32,6 +30,8 @@ export const PortalLinkContainer = (props) => {
     updatePath,
     onChangePath
   } = props
+
+  const history = useHistory()
 
   const currentPortalId = useEdscStore((state) => state.portal.portalId)
 
@@ -103,15 +103,10 @@ export const PortalLinkContainer = (props) => {
 
   if (type === 'button') {
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button#answer-49439893
-    const {
-      history,
-      ...rest
-    } = props
-
     return (
       <Button
         type="button"
-        {...rest}
+        {...props}
         onClick={
           (event) => {
             onClickWithChangePath(event)
@@ -153,11 +148,6 @@ PortalLinkContainer.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   dataTestId: PropTypes.string,
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }).isRequired,
-  location: locationPropType.isRequired,
-  match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.func,
   newPortal: PropTypes.shape({
     portalId: PropTypes.string
@@ -173,6 +163,4 @@ PortalLinkContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(undefined, mapDispatchToProps)(PortalLinkContainer)
-)
+export default connect(undefined, mapDispatchToProps)(PortalLinkContainer)

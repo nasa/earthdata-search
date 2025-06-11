@@ -1,15 +1,14 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { Helmet } from 'react-helmet'
 import { startCase } from 'lodash-es'
 import { parse, stringify } from 'qs'
+import { useLocation, useParams } from 'react-router-dom'
 
 import actions from '../../actions/index'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isDefaultPortal, buildConfig } from '../../util/portals'
-import { locationPropType } from '../../util/propTypes/location'
 
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../../portals/availablePortals.json'
@@ -23,16 +22,15 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const PortalContainer = ({
-  match,
-  location,
   onChangePath,
   onChangeUrl
 }) => {
   const defaultPortalId = getApplicationConfig().defaultPortal
   const portal = useEdscStore((state) => state.portal)
+  const location = useLocation()
+  const params = useParams()
 
   useEffect(() => {
-    const { params } = match
     const { portalId } = params
 
     const { pathname, search } = location
@@ -101,16 +99,8 @@ export const PortalContainer = ({
 }
 
 PortalContainer.propTypes = {
-  location: locationPropType.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      portalId: PropTypes.string
-    })
-  }).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(undefined, mapDispatchToProps)(PortalContainer)
-)
+export default connect(undefined, mapDispatchToProps)(PortalContainer)

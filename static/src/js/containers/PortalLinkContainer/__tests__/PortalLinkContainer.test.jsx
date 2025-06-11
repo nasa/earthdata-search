@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react'
+import { useHistory } from 'react-router-dom'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -7,17 +8,19 @@ import { mapDispatchToProps, PortalLinkContainer } from '../PortalLinkContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import actions from '../../../actions'
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useHistory: jest.fn().mockReturnValue({
+    push: jest.fn()
+  })
+}))
+
 const setup = setupTest({
   Component: PortalLinkContainer,
   defaultProps: {
     children: 'Click Here',
     className: 'test-class',
-    match: {},
     label: '',
-    location: {},
-    history: {
-      push: jest.fn()
-    },
     onClick: jest.fn(),
     newPortal: undefined,
     to: {
@@ -116,7 +119,7 @@ describe('PortalLinkContainer component', () => {
   })
 
   test('should return a button when the type is set', async () => {
-    const { props, user } = setup({
+    const { user } = setup({
       overrideProps: {
         type: 'button'
       }
@@ -127,8 +130,8 @@ describe('PortalLinkContainer component', () => {
 
     await user.click(button)
 
-    expect(props.history.push).toHaveBeenCalledTimes(1)
-    expect(props.history.push).toHaveBeenCalledWith({
+    expect(useHistory().push).toHaveBeenCalledTimes(1)
+    expect(useHistory().push).toHaveBeenCalledWith({
       pathname: '/search',
       search: ''
     })

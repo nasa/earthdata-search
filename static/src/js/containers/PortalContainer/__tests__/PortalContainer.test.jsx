@@ -1,4 +1,5 @@
 import { waitFor } from '@testing-library/react'
+import { useLocation, useParams } from 'react-router-dom'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -6,13 +7,23 @@ import actions from '../../../actions'
 import { mapDispatchToProps, PortalContainer } from '../PortalContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search',
+    search: '',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  }),
+  useParams: jest.fn().mockReturnValue({
+    portalId: 'edsc'
+  })
+}))
+
 const setup = setupTest({
   Component: PortalContainer,
   defaultProps: {
-    match: {
-      params: {}
-    },
-    location: {},
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
   },
@@ -87,19 +98,19 @@ describe('PortalContainer component', () => {
       defaultPortal: 'edsc'
     }))
 
-    const { props } = setup({
-      overrideProps: {
-        match: {
-          params: {
-            portalId: 'example'
-          }
-        },
-        location: {
-          pathname: '/portal/example/search',
-          search: '?q=modis'
-        }
-      }
+    useLocation.mockReturnValue({
+      pathname: '/portal/example/search',
+      search: '?q=modis',
+      hash: '',
+      state: null,
+      key: 'testKey'
     })
+
+    useParams.mockReturnValue({
+      portalId: 'example'
+    })
+
+    const { props } = setup()
 
     await waitFor(() => {
       expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
@@ -120,19 +131,19 @@ describe('PortalContainer component', () => {
       defaultPortal: 'edsc'
     }))
 
-    const { props } = setup({
-      overrideProps: {
-        match: {
-          params: {
-            portalId: 'example'
-          }
-        },
-        location: {
-          pathname: '/portal/example',
-          search: '?q=modis'
-        }
-      }
+    useLocation.mockReturnValue({
+      pathname: '/portal/example',
+      search: '?q=modis',
+      hash: '',
+      state: null,
+      key: 'testKey'
     })
+
+    useParams.mockReturnValue({
+      portalId: 'example'
+    })
+
+    const { props } = setup()
 
     await waitFor(() => {
       expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
