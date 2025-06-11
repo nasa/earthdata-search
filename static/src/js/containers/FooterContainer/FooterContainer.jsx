@@ -18,14 +18,11 @@ export const mapStateToProps = (state) => ({
   loadTime: state.searchResults.collections.loadTime
 })
 
-export const FooterContainer = (props) => {
+export const FooterContainer = ({ loadTime }) => {
   const portal = useEdscStore((state) => state.portal)
   const location = useLocation()
   const { pathname } = location
 
-  const {
-    loadTime
-  } = props
   const { footer = {} } = portal
 
   const searchTimeVisible = isPath(pathname, ['/search', '/projects'])
