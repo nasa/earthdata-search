@@ -1,24 +1,20 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import { act } from 'react-dom/test-utils'
-import userEvent from '@testing-library/user-event'
-import { Router } from 'react-router'
+import { act, screen } from '@testing-library/react'
 import { type Dispatch } from 'redux'
-import { Provider } from 'react-redux'
-import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-import { createMemoryHistory } from 'history'
+import { useHistory } from 'react-router-dom'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
 
-// @ts-expect-error: Types do not exist for this file
-import actions from '../../../actions'
+import { Home } from '../Home'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import Home from '../Home'
-
-const history = createMemoryHistory()
-const mockStore = configureMockStore([thunk])
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useHistory: jest.fn().mockReturnValue({
+    push: jest.fn()
+  })
+}))
 
 jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => {
   const MockSpatialSelectionDropdown = () => <div data-testid="spatial-selection-dropdown">Spatial Selection Dropdown</div>
@@ -65,30 +61,14 @@ jest.mock('../../../actions', () => ({
 
 jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
 
-jest.spyOn(history, 'push')
-
-const mockProps = {
-  onChangePath: actions.onChangePath,
-  history
-}
-
-const store = mockStore({})
-
-const setup = (props = mockProps) => {
-  const user = userEvent.setup()
-
-  render(
-    <Provider store={store}>
-      <Router
-        history={history}
-      >
-        <Home {...props} />
-      </Router>
-    </Provider>
-  )
-
-  return { user }
-}
+const setup = setupTest({
+  Component: Home,
+  defaultProps: {
+    onChangePath: jest.fn()
+  },
+  withRedux: true,
+  withRouter: true
+})
 
 // TODO: Add tests for the spatial and temporal dropdowns
 
@@ -111,7 +91,7 @@ describe('Home', () => {
   })
 
   test('calls onChangePath and history.push when the search form is submitted', async () => {
-    const { user } = setup()
+    const { props, user } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
 
@@ -120,12 +100,15 @@ describe('Home', () => {
       await user.click(screen.getByRole('button', { name: /search/i }))
     })
 
-    expect(actions.changePath).toHaveBeenCalledWith('/search?q=test')
-    expect(history.push).toHaveBeenCalledWith('/search?q=test')
+    expect(props.onChangePath).toHaveBeenCalledTimes(1)
+    expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
+
+    expect(useHistory().push).toHaveBeenCalledTimes(1)
+    expect(useHistory().push).toHaveBeenCalledWith('/search?q=test')
   })
 
   test('calls onChangePath and history.push when the enter key is pressed', async () => {
-    const { user } = setup()
+    const { props, user } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
 
@@ -134,8 +117,8 @@ describe('Home', () => {
       await user.click(screen.getByRole('button', { name: /search/i }))
     })
 
-    expect(actions.changePath).toHaveBeenCalledWith('/search?q=test')
-    expect(history.push).toHaveBeenCalledWith('/search?q=test')
+    expect(props.onChangePath).toHaveBeenCalledTimes(1)
+    expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
   })
 
   test('renders the topic cards', () => {

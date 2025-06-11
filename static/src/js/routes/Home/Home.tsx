@@ -11,7 +11,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Row from 'react-bootstrap/Row'
 import { connect, MapDispatchToProps } from 'react-redux'
-import { withRouter, type RouteComponentProps } from 'react-router-dom'
+import { useHistory, type RouteComponentProps } from 'react-router-dom'
 import { type Dispatch } from 'redux'
 
 import {
@@ -154,7 +154,8 @@ interface HomeDispatchProps {
 
 type HomeProps = HomeDispatchProps & RouteComponentProps
 
-export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
+export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
+  const history = useHistory()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
 
@@ -384,6 +385,4 @@ export const Home: React.FC<HomeProps> = ({ onChangePath, history }) => {
   )
 }
 
-export default withRouter(
-  connect(null, mapDispatchToProps)(Home)
-)
+export default connect(null, mapDispatchToProps)(Home)

@@ -103,4 +103,4 @@ PortalContainer.propTypes = {
   onChangeUrl: PropTypes.func.isRequired
 }
 
-export default connect(undefined, mapDispatchToProps)(PortalContainer)
+export default connect(null, mapDispatchToProps)(PortalContainer)

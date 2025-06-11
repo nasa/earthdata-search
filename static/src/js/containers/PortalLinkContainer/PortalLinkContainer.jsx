@@ -163,4 +163,4 @@ PortalLinkContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired
 }
 
-export default connect(undefined, mapDispatchToProps)(PortalLinkContainer)
+export default connect(null, mapDispatchToProps)(PortalLinkContainer)
