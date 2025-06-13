@@ -419,6 +419,55 @@ test.describe('Map: Shapefile interactions', () => {
       })
     })
 
+    test.describe('When the shapefile has a polygon with altitude in the coordinates', () => {
+      test('renders correctly @screenshot', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          additionalRequests: [{
+            body: tooManyPointsShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '2'
+            },
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '29.6312666109084,11.02035732582157,30.18903160266947,10.23921782354143,31.22854077295004,11.10230637746821,30.71143962083393,11.73679325255558,29.6312666109084,11.02035732582157'
+          }]
+        })
+
+        await page.route(/shapefiles$/, async (route) => {
+          await route.fulfill({
+            json: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+        await page.goto('/search')
+
+        // Wait for the map to load
+        await initialMapPromise
+
+        // Upload the shapefile
+        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
+        await uploadShapefile(page, 'polygon_with_altitude.geojson')
+        await shapefilePromise
+
+        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        await page.waitForURL(/zoom=7/, { timeout: 3000 })
+
+        await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
+
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('polygon_with_altitude.png', {
+          clip: screenshotClip
+        })
+
+        // Updates the URL
+        await expect(page).toHaveURL(/search\?polygon\[0\]=29.6312666109084%2C11.02035732582157%2C30.18903160266947%2C10.23921782354143%2C31.22854077295004%2C11.10230637746821%2C30.71143962083393%2C11.73679325255558%2C29.6312666109084%2C11.02035732582157&sf=1&sfs\[0\]=0&lat=10\.\d+&long=30\.\d+&zoom=7\.\d+/)
+      })
+    })
+
     test.describe('When the shapefile has only arctic latitudes', () => {
       test('renders correctly @screenshot', async ({ page }) => {
         await interceptUnauthenticatedCollections({

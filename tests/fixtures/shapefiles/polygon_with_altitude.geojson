@@ -1,0 +1,47 @@
+{
+    "type": "FeatureCollection",
+    "name": "Polygon With Altitude.kmz",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "Name": "Polygon With Altitude",
+                "tessellate": 1,
+                "extrude": 0,
+                "visibility": -1
+            },
+            "geometry": {
+                "type": "Polygon",
+                "coordinates": [
+                    [
+                        [
+                            29.6312666109084,
+                            11.02035732582157,
+                            0
+                        ],
+                        [
+                            30.18903160266947,
+                            10.23921782354143,
+                            0
+                        ],
+                        [
+                            31.22854077295004,
+                            11.10230637746821,
+                            0
+                        ],
+                        [
+                            30.71143962083393,
+                            11.73679325255558,
+                            0
+                        ],
+                        [
+                            29.6312666109084,
+                            11.02035732582157,
+                            0
+                        ]
+                    ]
+                ]
+            }
+        }
+    ]
+}
