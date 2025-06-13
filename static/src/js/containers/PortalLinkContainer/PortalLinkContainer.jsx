@@ -1,24 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { parse, stringify } from 'qs'
 import { isObject } from 'lodash-es'
-
-import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../../components/Button/Button'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
 import { isDefaultPortal } from '../../util/portals'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
     (path) => dispatch(actions.changePath(path))
-})
-
-export const mapStateToProps = (state) => ({
-  portal: state.portal
 })
 
 export const PortalLinkContainer = (props) => {
@@ -27,7 +23,6 @@ export const PortalLinkContainer = (props) => {
     className,
     dataTestId,
     onClick,
-    portal: currentPortal,
     newPortal,
     to,
     type,
@@ -35,6 +30,10 @@ export const PortalLinkContainer = (props) => {
     updatePath,
     onChangePath
   } = props
+
+  const history = useHistory()
+
+  const currentPortalId = useEdscStore((state) => state.portal.portalId)
 
   // Get the portalId that needs to be used in the link
   const getPortalId = () => {
@@ -48,10 +47,8 @@ export const PortalLinkContainer = (props) => {
       return portalId
     }
 
-    // Use the current portal from the redux store
-    const { portalId } = currentPortal
-
-    return portalId
+    // Use the current portal from the store
+    return currentPortalId
   }
 
   let objectTo = to
@@ -106,15 +103,10 @@ export const PortalLinkContainer = (props) => {
 
   if (type === 'button') {
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button#answer-49439893
-    const {
-      history,
-      ...rest
-    } = props
-
     return (
       <Button
         type="button"
-        {...rest}
+        {...props}
         onClick={
           (event) => {
             onClickWithChangePath(event)
@@ -144,7 +136,6 @@ PortalLinkContainer.defaultProps = {
   className: '',
   dataTestId: null,
   onClick: null,
-  portal: {},
   newPortal: null,
   staticContext: null,
   type: '',
@@ -157,15 +148,7 @@ PortalLinkContainer.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
   dataTestId: PropTypes.string,
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }).isRequired,
-  location: locationPropType.isRequired,
-  match: PropTypes.shape({}).isRequired,
   onClick: PropTypes.func,
-  portal: PropTypes.shape({
-    portalId: PropTypes.string
-  }),
   newPortal: PropTypes.shape({
     portalId: PropTypes.string
   }),
@@ -180,6 +163,4 @@ PortalLinkContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PortalLinkContainer)
-)
+export default connect(null, mapDispatchToProps)(PortalLinkContainer)

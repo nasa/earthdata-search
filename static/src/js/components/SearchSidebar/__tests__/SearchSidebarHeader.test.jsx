@@ -1,10 +1,12 @@
 import React from 'react'
 import {
   fireEvent,
-  render,
   screen,
   waitFor
 } from '@testing-library/react'
+import { useLocation } from 'react-router-dom'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import SearchSidebarHeader from '../SearchSidebarHeader'
 import SearchFormContainer from '../../../containers/SearchFormContainer/SearchFormContainer'
@@ -31,18 +33,23 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => j
 jest.mock('../../../../../../portals/testPortal/images/logo.png?h=56&format=webp', () => ('testPortal_logo_path'), { virtual: true })
 jest.mock('../../../../../../portals/testPortal2/images/logo.png?h=56&format=webp', () => ('testPortal2_logo_path'), { virtual: true })
 
-function setup(overrideProps) {
-  const props = {
-    portal: availablePortals.edsc,
-    location: {
-      pathname: '/search',
-      search: ''
-    },
-    ...overrideProps
-  }
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search',
+    search: '',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
 
-  render(<SearchSidebarHeader {...props} />)
-}
+const setup = setupTest({
+  Component: SearchSidebarHeader,
+  defaultZustandState: {
+    portal: availablePortals.edsc
+  }
+})
 
 beforeEach(() => {
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
@@ -50,24 +57,27 @@ beforeEach(() => {
   }))
 })
 
-afterEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('SearchSidebarHeader component', () => {
-  test('renders the SearchFormContainer', () => {
+  test('renders the SearchFormContainer', async () => {
     setup()
 
-    expect(SearchFormContainer).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(SearchFormContainer).toHaveBeenCalledTimes(1)
+    })
+
+    expect(SearchFormContainer).toHaveBeenCalledWith({}, {})
   })
 
   describe('when a portal is loaded', () => {
     test('renders the Leave Portal link', async () => {
+      useLocation.mockReturnValue({
+        pathname: '/search',
+        search: '?portal=testPortal'
+      })
+
       setup({
-        portal: availablePortals.testPortal,
-        location: {
-          pathname: '/search',
-          search: '?portal=testPortal'
+        overrideZustandState: {
+          portal: availablePortals.testPortal
         }
       })
 
@@ -88,11 +98,14 @@ describe('SearchSidebarHeader component', () => {
     })
 
     test('renders the portal logo and removes the spinner', async () => {
+      useLocation.mockReturnValue({
+        pathname: '/search',
+        search: '?portal=testPortal'
+      })
+
       setup({
-        portal: availablePortals.testPortal2,
-        location: {
-          pathname: '/search',
-          search: '?portal=testPortal2'
+        overrideZustandState: {
+          portal: availablePortals.testPortal2
         }
       })
 
@@ -112,11 +125,14 @@ describe('SearchSidebarHeader component', () => {
     })
 
     test('renders the portal logo with a moreInfoUrl', async () => {
+      useLocation.mockReturnValue({
+        pathname: '/search',
+        search: '?portal=testPortal'
+      })
+
       setup({
-        portal: availablePortals.testPortal,
-        location: {
-          pathname: '/search',
-          search: '?portal=testPortal'
+        overrideZustandState: {
+          portal: availablePortals.testPortal
         }
       })
 

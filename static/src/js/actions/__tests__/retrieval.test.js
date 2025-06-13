@@ -10,10 +10,6 @@ import * as getApplicationConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('submitRetrieval', () => {
   beforeEach(() => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
@@ -52,9 +48,6 @@ describe('submitRetrieval', () => {
         granule: {
           pageNum: 1
         }
-      },
-      portal: {
-        portalId: 'edsc'
       },
       project: {
         collections: {
@@ -152,9 +145,6 @@ describe('submitRetrieval', () => {
           pageNum: 1
         }
       },
-      portal: {
-        portalId: 'edsc'
-      },
       project: {
         collections: {
           byId: {
@@ -217,9 +207,6 @@ describe('submitRetrieval', () => {
           pageNum: 1,
           keyword: 'search keyword'
         }
-      },
-      portal: {
-        portalId: 'edsc'
       },
       project: {
         collections: {
@@ -285,9 +272,6 @@ describe('submitRetrieval', () => {
           granule: {
             pageNum: 1
           }
-        },
-        portal: {
-          portalId: 'edsc'
         },
         project: {
           collections: {
@@ -363,9 +347,6 @@ describe('submitRetrieval', () => {
           granule: {
             pageNum: 1
           }
-        },
-        portal: {
-          portalId: 'edsc'
         },
         project: {
           collections: {
@@ -445,9 +426,6 @@ describe('submitRetrieval', () => {
             pageNum: 1
           }
         },
-        portal: {
-          portalId: 'edsc'
-        },
         project: {
           collections: {
             byId: {
@@ -526,9 +504,6 @@ describe('submitRetrieval', () => {
             pageNum: 1
           }
         },
-        portal: {
-          portalId: 'edsc'
-        },
         project: {
           collections: {
             byId: {
@@ -603,9 +578,6 @@ describe('submitRetrieval', () => {
           granule: {
             pageNum: 1
           }
-        },
-        portal: {
-          portalId: 'edsc'
         },
         project: {
           collections: {
@@ -682,9 +654,6 @@ describe('submitRetrieval', () => {
           granule: {
             pageNum: 1
           }
-        },
-        portal: {
-          portalId: 'edsc'
         },
         project: {
           collections: {

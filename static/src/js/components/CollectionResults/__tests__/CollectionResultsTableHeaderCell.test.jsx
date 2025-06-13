@@ -11,11 +11,6 @@ function setup(overrideProps) {
   const props = {
     column: {
       customProps: {
-        portal: {
-          features: {
-            authentication: true
-          }
-        },
         onViewCollectionGranules: jest.fn(),
         onMetricsAddCollectionProject: jest.fn(),
         onAddProjectCollection: jest.fn(),

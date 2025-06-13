@@ -1,26 +1,18 @@
-import React from 'react'
 import {
   act,
-  render,
   screen,
   within
 } from '@testing-library/react'
-
-import userEvent from '@testing-library/user-event'
-
 import { kebabCase } from 'lodash-es'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import Facets from '../Facets'
 import * as facetUtils from '../../../util/facets'
-import useEdscStore from '../../../zustand/useEdscStore'
 
-function setup(overrideProps = {}) {
-  const onChangeCmrFacet = jest.fn()
-  const onChangeFeatureFacet = jest.fn()
-  const onTriggerViewAllFacets = jest.fn()
-  const setOpenKeywordFacet = jest.fn()
-
-  const props = {
+const setup = setupTest({
+  Component: Facets,
+  defaultProps: {
     facetsById: {
       Keywords: {
         children: [{
@@ -189,6 +181,15 @@ function setup(overrideProps = {}) {
       mapImagery: false,
       nearRealTime: false
     },
+    onChangeCmrFacet: jest.fn(),
+    onChangeFeatureFacet: jest.fn(),
+    onTriggerViewAllFacets: jest.fn()
+  },
+  defaultZustandState: {
+    home: {
+      openKeywordFacet: false,
+      setOpenKeywordFacet: jest.fn()
+    },
     portal: {
       features: {
         featureFacets: {
@@ -197,62 +198,38 @@ function setup(overrideProps = {}) {
           showMapImagery: true
         }
       }
-    },
-    onChangeCmrFacet,
-    onChangeFeatureFacet,
-    onTriggerViewAllFacets,
-    ...overrideProps
+    }
   }
-
-  render(<Facets {...props} />)
-
-  return {
-    props,
-    onChangeCmrFacet,
-    onChangeFeatureFacet,
-    onTriggerViewAllFacets,
-    setOpenKeywordFacet
-  }
-}
+})
 
 describe('Facets Features Map Imagery component', () => {
   test('allows toggling Map Imagery checkbox', async () => {
-    setup({
-      portal: {
-        features: {
-          featureFacets: {
-            showMapImagery: true,
-            availableInEarthdataCloud: false,
-            showCustomizable: false
-          }
-        }
-      }
-    })
-
-    const user = userEvent.setup()
+    const { user } = setup()
 
     const featuresElements = screen.getAllByText('Features')
     expect(featuresElements).toHaveLength(1)
     expect(featuresElements[0]).toBeInTheDocument()
     expect(screen.getByText('Map Imagery')).toBeInTheDocument()
+
     await user.click(screen.getAllByRole('checkbox', { checked: false }).at(0))
+
     expect(screen.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
   })
 
   test('renders feature facets with tooltips and icons', async () => {
-    setup({
-      portal: {
-        features: {
-          featureFacets: {
-            showMapImagery: true,
-            availableInEarthdataCloud: false,
-            showCustomizable: true
+    const { user } = setup({
+      overrideZustandState: {
+        portal: {
+          features: {
+            featureFacets: {
+              showAvailableInEarthdataCloud: false,
+              showCustomizable: true,
+              showMapImagery: true
+            }
           }
         }
       }
     })
-
-    const user = userEvent.setup()
 
     // Check for Map Imagery icon
     const mapImageryIcon = screen.getByLabelText('A map icon')
@@ -286,33 +263,38 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('checkboxes get checked correctly in the feature FacetsGroup', async () => {
-    setup({
-      portal: {
-        features: {
-          featureFacets: {
-            showMapImagery: true,
-            availableInEarthdataCloud: false,
-            showCustomizable: true
+    const { user } = setup({
+      overrideZustandState: {
+        portal: {
+          features: {
+            featureFacets: {
+              showAvailableInEarthdataCloud: false,
+              showCustomizable: true,
+              showMapImagery: true
+            }
           }
         }
       }
     })
 
-    const user = userEvent.setup()
-
     expect(screen.getAllByRole('checkbox', { checked: false })).toHaveLength(2)
+
     await user.click(screen.getAllByRole('checkbox', { checked: false }).at(0))
+
     expect(screen.getAllByRole('checkbox', { checked: true })).toHaveLength(1)
     expect(screen.getAllByRole('checkbox', { checked: false })).toHaveLength(1)
   })
 
   test('does not render features FacetsGroup if all feature facets are disabled', () => {
     setup({
-      portal: {
-        features: {
-          featureFacets: {
-            showMapImagery: false,
-            showCustomizable: false
+      overrideZustandState: {
+        portal: {
+          features: {
+            featureFacets: {
+              showAvailableInEarthdataCloud: false,
+              showCustomizable: false,
+              showMapImagery: false
+            }
           }
         }
       }
@@ -323,13 +305,13 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders keywords FacetsGroup and checks the opening and closing of the dropdown', async () => {
-    setup()
+    const { user } = setup()
+
     const facetGroupText = 'Keywords'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
-    const user = userEvent.setup()
     const facetButton = screen.getByRole('button', { name: /keywords/i })
     await user.click(facetButton)
 
@@ -348,13 +330,13 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders platforms FacetsGroup', async () => {
-    setup()
+    const { user } = setup()
+
     const facetGroupText = 'Platforms'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
-    const user = userEvent.setup()
     const facetButton = screen.getByRole('button', { name: /platforms/i })
     await user.click(facetButton)
 
@@ -372,13 +354,13 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders instruments FacetsGroup', async () => {
-    setup()
+    const { user } = setup()
+
     const facetGroupText = 'Instruments'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
-    const user = userEvent.setup()
     const facetButton = screen.getByRole('button', { name: /instruments/i })
     await user.click(facetButton)
 
@@ -396,13 +378,13 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders organizations FacetsGroup', async () => {
-    setup()
+    const { user } = setup()
+
     const facetGroupText = 'Organizations'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
 
-    const user = userEvent.setup()
     const facetButton = screen.getByRole('button', { name: /organizations/i })
     await user.click(facetButton)
 
@@ -420,14 +402,12 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders projects FacetsGroup', async () => {
-    setup()
+    const { user } = setup()
 
     const facetGroupText = 'Projects'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-
-    const user = userEvent.setup()
 
     const facetButton = screen.getByRole('button', { name: /projects/i })
 
@@ -439,14 +419,12 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders processing levels FacetsGroup', async () => {
-    setup()
+    const { user } = setup()
 
     const facetGroupText = 'Processing Levels'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-
-    const user = userEvent.setup()
 
     const facetButton = screen.getByRole('button', { name: /processing levels/i })
 
@@ -458,14 +436,12 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders data format FacetsGroup', async () => {
-    setup()
+    const { user } = setup()
 
     const facetGroupText = 'Data Format'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-
-    const user = userEvent.setup()
 
     const facetButton = screen.getByRole('button', { name: /data format/i })
 
@@ -477,14 +453,12 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders tiling system FacetsGroup', async () => {
-    setup()
+    const { user } = setup()
 
     const facetGroupText = 'Tiling System'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-
-    const user = userEvent.setup()
 
     const facetButton = screen.getByRole('button', { name: /tiling system/i })
     await user.click(facetButton)
@@ -495,14 +469,12 @@ describe('Facets Features Map Imagery component', () => {
   })
 
   test('renders horizontal data resolution FacetsGroup', async () => {
-    setup()
+    const { user } = setup()
 
     const facetGroupText = 'Horizontal Data Resolution'
     const facetGroup = screen.getByTestId(`facet_group-${kebabCase(facetGroupText)}`)
     expect(facetGroup).toBeInTheDocument()
     expect(screen.queryByTestId(`facet-${kebabCase(facetGroupText)}`)).toBeNull()
-
-    const user = userEvent.setup()
 
     const facetButton = screen.getByRole('button', { name: 'Horizontal Data Resolution Open' })
     expect(facetButton).toHaveAttribute('title', 'Horizontal Data Resolution')
@@ -516,28 +488,24 @@ describe('Facets Features Map Imagery component', () => {
 
   test('featureFacetHandler calls changeFeatureFacet', async () => {
     const mock = jest.spyOn(facetUtils, 'changeFeatureFacet').mockImplementationOnce(() => jest.fn())
-    const { onChangeFeatureFacet } = setup()
-
-    const user = userEvent.setup()
+    const { props, user } = setup()
 
     const facetGroup = screen.getByRole('checkbox', { name: 'Customizable' })
     await user.click(facetGroup)
 
-    expect(mock).toBeCalledWith(
+    expect(mock).toHaveBeenCalledWith(
       expect.anything(),
       {
         destination: null,
         title: 'Customizable'
       },
-      onChangeFeatureFacet
+      props.onChangeFeatureFacet
     )
   })
 
   test('cmrFacetHandler calls changeCmrFacet', async () => {
     const mock = jest.spyOn(facetUtils, 'changeCmrFacet').mockImplementationOnce(() => jest.fn())
-    const { onChangeCmrFacet } = setup()
-
-    const user = userEvent.setup()
+    const { props, user } = setup()
 
     // Look for button by its label attribute
     await user.click(screen.getByRole('button', { name: /Keywords/i }))
@@ -545,13 +513,13 @@ describe('Facets Features Map Imagery component', () => {
     const facetGroup = screen.getByRole('checkbox', { name: 'Mock Keyword Facet' })
     await user.click(facetGroup)
 
-    expect(mock).toBeCalledWith(
+    expect(mock).toHaveBeenCalledWith(
       expect.anything(),
       {
         destination: 'http://example.com/apply_keyword_link',
         title: 'Mock Keyword Facet'
       },
-      onChangeCmrFacet,
+      props.onChangeCmrFacet,
       {
         level: 0,
         type: 'science_keywords',
@@ -576,20 +544,20 @@ describe('Facets Features Map Imagery component', () => {
       })
     }
 
-    const { onTriggerViewAllFacets } = setup({
-      facetsById: {
-        Projects: {
-          applied: false,
-          children,
-          hasChildren: true,
-          title: 'Projects',
-          totalSelected: 0,
-          type: 'filter'
+    const { props, user } = setup({
+      overrideProps: {
+        facetsById: {
+          Projects: {
+            applied: false,
+            children,
+            hasChildren: true,
+            title: 'Projects',
+            totalSelected: 0,
+            type: 'filter'
+          }
         }
       }
     })
-
-    const user = userEvent.setup()
 
     expect(screen.queryByRole('button', { name: /View All/i })).toBeNull()
 
@@ -602,21 +570,20 @@ describe('Facets Features Map Imagery component', () => {
     expect(viewAllButton).toHaveClass('facets-group__view-all')
 
     await user.click(viewAllButton)
-    expect(onTriggerViewAllFacets).toBeCalledWith('Projects')
+
+    expect(props.onTriggerViewAllFacets).toHaveBeenCalledTimes(1)
+    expect(props.onTriggerViewAllFacets).toHaveBeenCalledWith('Projects')
   })
 
   describe('when rendering with openKeywordFacet set to true', () => {
     test('renders the keyword facet group as open', async () => {
-      const state = useEdscStore.getState()
-      useEdscStore.setState({
-        ...state,
-        home: {
-          ...state.home,
-          openKeywordFacet: true
+      setup({
+        overrideZustandState: {
+          home: {
+            openKeywordFacet: true
+          }
         }
       })
-
-      setup()
 
       const keywordsElements = screen.getByText('Mock Keyword Facet')
       expect(keywordsElements).toBeInTheDocument()
@@ -624,17 +591,15 @@ describe('Facets Features Map Imagery component', () => {
 
     test('calls setOpenKeywordFacet to reset the value', () => {
       const mockSetOpenKeywordFacet = jest.fn()
-      const state = useEdscStore.getState()
-      useEdscStore.setState({
-        ...state,
-        home: {
-          ...state.home,
-          setOpenKeywordFacet: mockSetOpenKeywordFacet,
-          openKeywordFacet: true
+
+      setup({
+        overrideZustandState: {
+          home: {
+            openKeywordFacet: true,
+            setOpenKeywordFacet: mockSetOpenKeywordFacet
+          }
         }
       })
-
-      setup()
 
       expect(mockSetOpenKeywordFacet).toHaveBeenCalledTimes(1)
       expect(mockSetOpenKeywordFacet).toHaveBeenCalledWith(false)

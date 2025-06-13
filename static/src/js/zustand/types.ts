@@ -1,6 +1,7 @@
 import { StateCreator } from 'zustand'
 
 import {
+  PortalConfig,
   ProjectionCode,
   ShapefileFile,
   TimelineIntervals
@@ -73,6 +74,11 @@ export type MapSlice = {
     /** Function to set the showMbr value */
     setShowMbr: (showMbr: boolean) => void
   }
+}
+
+export type PortalSlice = {
+  /** The Portal Slice of the store */
+  portal: PortalConfig
 }
 
 type UpdateShapefileProps = {
@@ -202,6 +208,7 @@ export type EdscStore =
   EarthdataDownloadRedirectSlice
   & HomeSlice
   & MapSlice
+  & PortalSlice
   & ShapefileSlice
   & TimelineSlice
   & UiSlice

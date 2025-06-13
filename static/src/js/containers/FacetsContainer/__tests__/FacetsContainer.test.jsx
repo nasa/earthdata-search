@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { render, screen } from '@testing-library/react'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import Facets from '../../../components/Facets/Facets'
 
@@ -11,31 +11,18 @@ import {
   FacetsContainer
 } from '../FacetsContainer'
 
-const mockOnChangeCmrFacet = jest.fn()
-const mockOnChangeFeatureFacet = jest.fn()
-const mockOnTriggerViewAllFacets = jest.fn()
+jest.mock('../../../components/Facets/Facets', () => jest.fn(() => <div />))
 
-jest.mock('../../../components/Facets/Facets', () => jest.fn(() => <div>Facets</div>))
-
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: FacetsContainer,
+  defaultProps: {
     facetsById: {},
     featureFacets: {},
-    portal: {},
-    onChangeCmrFacet: mockOnChangeCmrFacet,
-    onChangeFeatureFacet: mockOnChangeFeatureFacet,
-    onTriggerViewAllFacets: mockOnTriggerViewAllFacets
+    onChangeCmrFacet: jest.fn(),
+    onChangeFeatureFacet: jest.fn(),
+    onTriggerViewAllFacets: jest.fn()
   }
-
-  const { container } = render(
-    <FacetsContainer {...props} />
-  )
-
-  return {
-    container,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onChangeCmrFacet calls actions.changeCmrFacet', () => {
@@ -44,8 +31,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeCmrFacet({ mock: 'event' }, 'facetLinkInfo', 'facet', 'applied')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'event' }, 'facetLinkInfo', 'facet', 'applied')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'event' }, 'facetLinkInfo', 'facet', 'applied')
   })
 
   test('onChangeFeatureFacet calls actions.changeFeatureFacet', () => {
@@ -54,8 +41,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeFeatureFacet({ mock: 'event' }, 'facetLinkInfo')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'event' }, 'facetLinkInfo')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'event' }, 'facetLinkInfo')
   })
 
   test('onTriggerViewAllFacets calls actions.triggerViewAllFacets', () => {
@@ -64,8 +51,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onTriggerViewAllFacets('category')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('category')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('category')
   })
 })
 
@@ -79,14 +66,12 @@ describe('mapStateToProps', () => {
         facets: {
           byId: {}
         }
-      },
-      portal: {}
+      }
     }
 
     const expectedState = {
       facetsById: {},
-      featureFacets: {},
-      portal: {}
+      featureFacets: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -97,18 +82,13 @@ describe('FacetsContainer component', () => {
   test('Renders the facets component with the correct the props', async () => {
     setup()
 
-    expect(await screen.findByText('Facets')).toBeInTheDocument()
     expect(Facets).toHaveBeenCalledTimes(1)
-    expect(Facets).toHaveBeenCalledWith(
-      expect.objectContaining({
-        facetsById: {},
-        featureFacets: {},
-        portal: {},
-        onChangeCmrFacet: mockOnChangeCmrFacet,
-        onChangeFeatureFacet: mockOnChangeFeatureFacet,
-        onTriggerViewAllFacets: mockOnTriggerViewAllFacets
-      }),
-      {}
-    )
+    expect(Facets).toHaveBeenCalledWith({
+      facetsById: {},
+      featureFacets: {},
+      onChangeCmrFacet: expect.any(Function),
+      onChangeFeatureFacet: expect.any(Function),
+      onTriggerViewAllFacets: expect.any(Function)
+    }, {})
   })
 })

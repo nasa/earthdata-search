@@ -203,9 +203,9 @@ test.describe('Home Page', () => {
             ...commonHeaders,
             'cmr-hits': '1'
           },
-          paramCheck: (parsedQuery) => parsedQuery?.keyword === 'MOD02QKM'
-              && parsedQuery?.boundingBox?.[0] === '-29.95172,11.43036,-16.57503,19.31775'
-              && parsedQuery?.temporal?.[0] === '2025-03-12T00:00:00.000Z,2025-03-12T23:59:59.999Z'
+          paramCheck: (parsedQuery) => parsedQuery?.keyword === 'MOD02QKM*'
+              && parsedQuery.bounding_box?.[0] === '-29.95172,11.43036,-16.57503,19.31775'
+              && parsedQuery?.temporal === '2025-03-12T00:00:00.000Z,2025-03-12T23:59:59.999Z'
         }],
         includeDefault: false
       })

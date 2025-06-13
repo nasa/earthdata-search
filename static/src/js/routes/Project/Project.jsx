@@ -5,13 +5,12 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
 
-import { locationPropType } from '../../util/propTypes/location'
 import { getProjectCollectionsRequiringChunking } from '../../selectors/project'
 
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
@@ -38,6 +37,8 @@ const mapStateToProps = (state) => ({
 })
 
 export const Project = (props) => {
+  const location = useLocation()
+
   useEffect(() => {
     document.querySelector('.root__app').classList.add('root__app--fixed-footer')
 
@@ -63,7 +64,6 @@ export const Project = (props) => {
   }
 
   const {
-    location,
     name
   } = props
   const { search } = location
@@ -119,13 +119,10 @@ export const Project = (props) => {
 }
 
 Project.propTypes = {
-  location: locationPropType.isRequired,
   name: PropTypes.string.isRequired,
   projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Project)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(Project)

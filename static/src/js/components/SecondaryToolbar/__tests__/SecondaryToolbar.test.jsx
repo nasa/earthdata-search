@@ -1,16 +1,13 @@
 import React from 'react'
 import {
-  render,
   screen,
   within,
   act
 } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import { Router } from 'react-router'
-import { createMemoryHistory } from 'history'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => {
   const mockPortalFeatureContainer = jest.fn(({ children }) => (
@@ -32,60 +29,42 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   return mockPortalLinkContainer
 })
 
-const setup = (state, overrideProps) => {
-  const user = userEvent.setup()
-  const onLogout = jest.fn()
-  const onUpdateProjectName = jest.fn()
-  const onChangePath = jest.fn()
-  const props = {
+const setup = setupTest({
+  Component: SecondaryToolbar,
+  defaultProps: {
     authToken: '',
     earthdataEnvironment: 'prod',
     location: {
       pathname: '/search'
     },
-    portal: {
-      portalId: 'edsc'
-    },
     projectCollectionIds: [],
     savedProject: {},
     retrieval: {},
-    onLogout,
-    onUpdateProjectName,
-    onChangePath,
+    onLogout: jest.fn(),
+    onUpdateProjectName: jest.fn(),
+    onChangePath: jest.fn(),
     ursProfile: {
       first_name: 'First Name'
-    },
-    secondaryToolbarEnabled: true,
-    ...overrideProps
-  }
+    }
+  },
+  withRouter: true
+})
 
-  if (state === 'loggedIn') props.authToken = 'fakeauthkey'
-
-  const history = createMemoryHistory()
-
-  render(
-    <Router history={history} location={props.location}>
-      <SecondaryToolbar {...props} />
-    </Router>
-  )
-
-  return {
-    onLogout,
-    onUpdateProjectName,
-    onChangePath,
-    user
-  }
-}
+beforeEach(() => {
+  jest.restoreAllMocks()
+})
 
 describe('SecondaryToolbar component', () => {
   describe('when logged out', () => {
     test('should render a login button', () => {
       setup()
+
       expect(screen.getByRole('button', { name: 'Log In' })).toBeInTheDocument()
     })
 
     test('hovering over the login button should show a tool-tip', async () => {
       const { user } = setup()
+
       const loginButton = screen.getByRole('button', { name: 'Log In' })
 
       await act(async () => {
@@ -97,29 +76,15 @@ describe('SecondaryToolbar component', () => {
 
     test('should not render the user dropdown', () => {
       setup()
+
       expect(screen.queryByRole('button', { name: 'First Name' })).not.toBeInTheDocument()
       expect(screen.queryByRole('button', { name: 'Save Project' })).not.toBeInTheDocument()
     })
 
     test('should not render the project dropdown', () => {
       setup()
+
       expect(screen.queryByRole('button', { name: 'Save Project' })).not.toBeInTheDocument()
-    })
-  })
-
-  describe('when the secondary toolbar is meant to be disabled', () => {
-    describe('when the user is logged in', () => {
-      test('secondary toolbar components are not being rendered', () => {
-        setup('loggedIn', { secondaryToolbarEnabled: false })
-        expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
-      })
-    })
-
-    describe('when the user is logged out', () => {
-      test('secondary toolbar components are not being rendered', () => {
-        setup('loggedOut', { secondaryToolbarEnabled: false })
-        expect(screen.queryByRole('navigation')).not.toBeInTheDocument()
-      })
     })
   })
 
@@ -132,7 +97,12 @@ describe('SecondaryToolbar component', () => {
     })
 
     test('should render the user and project name dropdowns', () => {
-      setup('loggedIn')
+      setup({
+        overrideProps: {
+          authToken: 'fakeauthkey'
+        }
+      })
+
       const saveButton = screen.getByRole('button', { name: 'Save Project' })
 
       expect(saveButton).toBeInTheDocument()
@@ -140,12 +110,22 @@ describe('SecondaryToolbar component', () => {
     })
 
     test('should not render the login button', () => {
-      setup('loggedIn')
+      setup({
+        overrideProps: {
+          authToken: 'fakeauthkey'
+        }
+      })
+
       expect(screen.queryByRole('button', { name: 'Log In' })).not.toBeInTheDocument()
     })
 
     test('clicking the logout button should call handleLogout', async () => {
-      const { onLogout, user } = setup('loggedIn')
+      const { props, user } = setup({
+        overrideProps: {
+          authToken: 'fakeauthkey'
+        }
+      })
+
       const usermenuButton = screen.getByRole('button', { name: 'First Name' })
 
       await act(async () => {
@@ -155,12 +135,20 @@ describe('SecondaryToolbar component', () => {
       const logoutButton = screen.getByRole('button', { name: 'Logout' })
 
       await user.click(logoutButton)
-      expect(onLogout).toBeCalledTimes(1)
+
+      expect(props.onLogout).toHaveBeenCalledTimes(1)
+      expect(props.onLogout).toHaveBeenCalledWith()
     })
 
     describe('Download Status and History link', () => {
       test('adds the ee param if the earthdataEnvironment is different than the deployed environment', async () => {
-        const { user } = setup('loggedIn', { earthdataEnvironment: 'uat' })
+        const { user } = setup({
+          overrideProps: {
+            authToken: 'fakeauthkey',
+            earthdataEnvironment: 'uat'
+          }
+        })
+
         const usermenuButton = screen.queryByRole('button', { name: 'First Name' })
 
         await act(async () => {
@@ -172,7 +160,12 @@ describe('SecondaryToolbar component', () => {
       })
 
       test('does not add the ee param if the earthdataEnvironment is the deployed environment', async () => {
-        const { user } = setup('loggedIn')
+        const { user } = setup({
+          overrideProps: {
+            authToken: 'fakeauthkey'
+          }
+        })
+
         const usermenuButton = screen.getByRole('button', { name: 'First Name' })
 
         await act(async () => {
@@ -187,7 +180,11 @@ describe('SecondaryToolbar component', () => {
 
   describe('#handleKeypress', () => {
     test('calls stopPropagation and preventDefault on Enter press', async () => {
-      const { user } = setup('loggedIn')
+      const { user } = setup({
+        overrideProps: {
+          authToken: 'fakeauthkey'
+        }
+      })
 
       const myProjectButton = screen.getByRole('button', { name: 'Save Project' })
       await act(async () => {
@@ -209,14 +206,18 @@ describe('SecondaryToolbar component', () => {
       })
 
       expect(preventDefaultSpy).toHaveBeenCalledTimes(1)
-      expect(stopPropagationSpy).toHaveBeenCalledTimes(1)
+      expect(preventDefaultSpy).toHaveBeenCalledWith()
 
-      preventDefaultSpy.mockRestore()
-      stopPropagationSpy.mockRestore()
+      expect(stopPropagationSpy).toHaveBeenCalledTimes(1)
+      expect(stopPropagationSpy).toHaveBeenCalledWith()
     })
 
     test('does not call stopPropagation and preventDefault on a non-\'Enter\' press', async () => {
-      const { user } = setup('loggedIn')
+      const { user } = setup({
+        overrideProps: {
+          authToken: 'fakeauthkey'
+        }
+      })
 
       const myProjectButton = screen.getByRole('button', { name: 'Save Project' })
       await act(async () => {
@@ -239,9 +240,6 @@ describe('SecondaryToolbar component', () => {
 
       expect(preventDefaultSpy).toHaveBeenCalledTimes(0)
       expect(stopPropagationSpy).toHaveBeenCalledTimes(0)
-
-      preventDefaultSpy.mockRestore()
-      stopPropagationSpy.mockRestore()
     })
   })
 
@@ -249,19 +247,30 @@ describe('SecondaryToolbar component', () => {
     describe('when there are no projectCollectionIds', () => {
       test('does not display the My Project button', () => {
         setup()
+
         expect(screen.queryByRole('button', { name: 'View Project' })).not.toBeInTheDocument()
       })
     })
 
     describe('when there are projectCollectionIds', () => {
       test('displays the My Project button', () => {
-        setup('loggedout', { projectCollectionIds: ['123'] })
+        setup({
+          overrideProps: {
+            projectCollectionIds: ['123']
+          }
+        })
+
         expect(screen.getByRole('button', { name: 'My Project' })).toBeInTheDocument()
       })
     })
 
     test('hovering over My Project renders a tool-tip', async () => {
-      const { user } = setup(undefined, { projectCollectionIds: ['123'] })
+      const { user } = setup({
+        overrideProps: {
+          projectCollectionIds: ['123']
+        }
+      })
+
       await act(async () => {
         await user.hover(screen.getByRole('button', { name: 'My Project' }))
       })
@@ -272,9 +281,11 @@ describe('SecondaryToolbar component', () => {
 
   describe('Project name dropdown', () => {
     test('does not display the project dropdown on the projects page', () => {
-      setup(undefined, {
-        location: {
-          pathname: '/project'
+      setup({
+        overrideProps: {
+          location: {
+            pathname: '/project'
+          }
         }
       })
 
@@ -283,7 +294,11 @@ describe('SecondaryToolbar component', () => {
     })
 
     test('clicking the save project dropdown sets the state', async () => {
-      const { user } = setup('loggedIn')
+      const { user } = setup({
+        overrideProps: {
+          authToken: 'fakeauthkey'
+        }
+      })
 
       const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
       await act(async () => {
@@ -295,7 +310,11 @@ describe('SecondaryToolbar component', () => {
     })
 
     test('hovering over saved project renders the tool-tip', async () => {
-      const { user } = setup('loggedIn')
+      const { user } = setup({
+        overrideProps: {
+          authToken: 'fakeauthkey'
+        }
+      })
       const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
 
       await act(async () => {
@@ -306,7 +325,11 @@ describe('SecondaryToolbar component', () => {
     })
 
     test('clicking the save button sets the state and calls onUpdateProjectName', async () => {
-      const { user, onUpdateProjectName } = setup('loggedIn')
+      const { props, user } = setup({
+        overrideProps: {
+          authToken: 'fakeauthkey'
+        }
+      })
 
       const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
       await act(async () => {
@@ -325,13 +348,13 @@ describe('SecondaryToolbar component', () => {
         await user.click(saveProjectNameButton)
       })
 
-      expect(onUpdateProjectName).toBeCalledTimes(1)
-      expect(onUpdateProjectName).toBeCalledWith('test project name')
+      expect(props.onUpdateProjectName).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateProjectName).toHaveBeenCalledWith('test project name')
     })
   })
 
   test('renders the login button under PortalFeatureContainer', () => {
-    setup(undefined)
+    setup()
 
     const portalContainer = screen.getByTestId('mockPortalFeatureContainer')
     const loginButton = within(portalContainer).getByRole('button', { name: 'Log In' })
@@ -369,22 +392,31 @@ describe('SecondaryToolbar component', () => {
     // Tour functionality is being tested in tour.spec.js
     describe('while the user is logged out', () => {
       test('tour button renders', () => {
-        setup('loggedOut')
+        setup()
+
         const tourButton = screen.getByRole('button', { name: 'Start tour' })
+
         expect(tourButton).toBeInTheDocument()
       })
     })
 
     describe('while the user is logged in', () => {
       test('tour button renders', () => {
-        setup()
+        setup({
+          overrideProps: {
+            authToken: 'fakeauthkey'
+          }
+        })
+
         const tourButton = screen.getByRole('button', { name: 'Start tour' })
+
         expect(tourButton).toBeInTheDocument()
       })
     })
 
     test('hovering over the tour renders a tool-tip', async () => {
       const { user } = setup()
+
       const tourButton = screen.getByRole('button', { name: 'Start tour' })
 
       await act(async () => {

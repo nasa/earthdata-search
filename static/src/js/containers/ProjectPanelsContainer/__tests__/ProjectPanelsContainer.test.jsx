@@ -20,7 +20,6 @@ const setup = setupTest({
     focusedGranuleId: '',
     granulesQueries: {},
     granulesMetadata: {},
-    portal: {},
     onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),

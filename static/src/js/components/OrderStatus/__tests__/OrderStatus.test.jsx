@@ -1,47 +1,31 @@
-import React from 'react'
-import { Provider } from 'react-redux'
 import {
-  render,
   screen,
   waitFor,
   within
 } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { Helmet } from 'react-helmet'
-import { StaticRouter } from 'react-router'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import { retrievalStatusProps } from './mocks'
 import { OrderStatus } from '../OrderStatus'
-import configureStore from '../../../store/configureStore'
 import * as config from '../../../../../../sharedUtils/config'
 
-const store = configureStore()
-
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+const setup = setupTest({
+  Component: OrderStatus,
+  defaultProps: retrievalStatusProps,
+  withRedux: true,
+  withRouter: true
 })
 
-const setup = () => {
-  const props = retrievalStatusProps
-
-  const { onFetchRetrieval, onChangePath } = props
-  render(
-    <Provider store={store}>
-      <StaticRouter>
-        <OrderStatus {...props} />
-      </StaticRouter>
-    </Provider>
-  )
-
-  return {
-    onChangePath,
-    onFetchRetrieval
-  }
-}
+beforeEach(() => {
+  jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
+})
 
 describe('OrderStatus component', () => {
   test('renders itself correctly', () => {
     setup()
+
     expect(screen.getByText('Download Status')).toBeInTheDocument()
   })
 
@@ -66,9 +50,10 @@ describe('OrderStatus component', () => {
   })
 
   test('calls onFetchRetrieval when mounted', () => {
-    const { onFetchRetrieval } = setup()
-    expect(onFetchRetrieval).toHaveBeenCalledTimes(1)
-    expect(onFetchRetrieval).toHaveBeenCalledWith('7', 'testToken')
+    const { props } = setup()
+
+    expect(props.onFetchRetrieval).toHaveBeenCalledTimes(1)
+    expect(props.onFetchRetrieval).toHaveBeenCalledWith('7', 'testToken')
   })
 
   describe('Order Status page', () => {
@@ -82,6 +67,7 @@ describe('OrderStatus component', () => {
 
     test('displays the correct text', () => {
       setup()
+
       expect(screen.getByText(/This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting/))
         .toBeInTheDocument()
 
@@ -92,6 +78,7 @@ describe('OrderStatus component', () => {
 
     test('download status link has correct href', () => {
       setup()
+
       const link = screen.getByRole('link', { name: 'http://localhost/downloads/7' })
       expect(link).toBeInTheDocument()
     })
@@ -103,14 +90,16 @@ describe('OrderStatus component', () => {
       }))
 
       setup()
+
       const link = screen.getByRole('link', { name: 'http://localhost/downloads/7?ee=prod' })
       expect(link).toBeInTheDocument()
     })
 
     test('status link has correct href', () => {
       setup()
+
       const link = screen.getByRole('link', { name: 'Download Status and History' })
-      expect(link.href).toEqual('http://localhost/downloads?portal=')
+      expect(link.href).toEqual('http://localhost/downloads')
     })
 
     test('status link has correct href when earthdataEnvironment is different than the deployed environment', () => {
@@ -120,14 +109,16 @@ describe('OrderStatus component', () => {
       }))
 
       setup()
+
       const link = screen.getByRole('link', { name: 'Download Status and History' })
-      expect(link.href).toEqual('http://localhost/downloads?ee=prod&portal=')
+      expect(link.href).toEqual('http://localhost/downloads?ee=prod')
     })
   })
 
   describe('data links', () => {
     test('renders data links in a list', () => {
       setup()
+
       expect(screen.getByRole('link', { name: 'http://linkurl.com/test' })).toBeInTheDocument()
     })
   })
@@ -135,6 +126,7 @@ describe('OrderStatus component', () => {
   describe('related collection links', () => {
     test('renders related collections', () => {
       setup()
+
       const relatedCollectionsHeading = screen.getByRole('heading', { name: 'You might also be interested in...' })
       expect(relatedCollectionsHeading).toBeInTheDocument()
       const listElements = screen.getAllByRole('list')
@@ -151,17 +143,16 @@ describe('OrderStatus component', () => {
 
   describe('footer links', () => {
     test('calls onChangePath when the search link is clicked', async () => {
-      const user = userEvent.setup()
-      const { onChangePath } = setup()
+      const { props, user } = setup()
 
       const backToSearchLink = screen.getByRole('link', { name: 'Back to Earthdata Search Results' })
       user.click(backToSearchLink)
 
       await waitFor(() => {
-        expect(onChangePath).toHaveBeenCalledTimes(1)
+        expect(props.onChangePath).toHaveBeenCalledTimes(1)
       })
 
-      expect(onChangePath).toHaveBeenCalledWith('/search?test=source_link')
+      expect(props.onChangePath).toHaveBeenCalledWith('/search?test=source_link')
     })
   })
 })

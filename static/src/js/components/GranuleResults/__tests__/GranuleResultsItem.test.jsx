@@ -59,12 +59,7 @@ const setup = (type, overrideProps) => {
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
-    readableGranuleName: [''],
-    portal: {
-      features: {
-        authentication: true
-      }
-    }
+    readableGranuleName: ['']
   }
   let props
 

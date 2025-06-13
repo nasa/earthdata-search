@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import {
@@ -11,16 +11,42 @@ import {
 import OrderStatus from '../../../components/OrderStatus/OrderStatus'
 import * as metricsActions from '../../../middleware/metrics/actions'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/OrderStatus/OrderStatus', () => jest.fn(() => <div />))
 
-function setup(props) {
-  const enzymeWrapper = shallow(<OrderStatusContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
+const setup = setupTest({
+  Component: OrderStatusContainer,
+  defaultProps: {
+    authToken: 'testToken',
+    earthdataEnvironment: 'prod',
+    granuleDownload: {},
+    location: {},
+    match: {
+      search: {
+        id: 7
+      }
+    },
+    onChangePath: jest.fn(),
+    onFetchRetrieval: jest.fn(),
+    onFetchRetrievalCollection: jest.fn(),
+    onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+    onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
+    onFocusedCollectionChange: jest.fn(),
+    onMetricsRelatedCollection: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
+    retrieval: {
+      id: 7,
+      collections: {
+        download: [
+          {
+            collection_id: 'TEST_COLLECTION_111'
+          }
+        ],
+        echoOrder: [],
+        order: []
+      }
+    }
   }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onFetchRetrieval calls actions.fetchRetrieval', () => {
@@ -29,8 +55,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchRetrieval('retrievalId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('retrievalId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('retrievalId')
   })
 
   test('onFetchRetrievalCollection calls actions.fetchRetrievalCollection', () => {
@@ -39,8 +65,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchRetrievalCollection('retrievalCollectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('retrievalCollectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('retrievalCollectionId')
   })
 
   test('onFetchRetrievalCollectionGranuleLinks calls actions.fetchRetrievalCollectionGranuleLinks', () => {
@@ -49,8 +75,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchRetrievalCollectionGranuleLinks({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onFetchRetrievalCollectionGranuleBrowseLinks calls actions.fetchRetrievalCollectionGranuleBrowseLinks', () => {
@@ -59,8 +85,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchRetrievalCollectionGranuleBrowseLinks({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
@@ -69,8 +95,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFocusedCollectionChange('mock-id')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('mock-id')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('mock-id')
   })
 
   test('onMetricsRelatedCollection calls metricsRelatedCollection', () => {
@@ -79,8 +105,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onMetricsRelatedCollection({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onToggleAboutCSDAModal calls actions.onToggleAboutCSDAModal', () => {
@@ -89,8 +115,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleAboutCSDAModal(true)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(true)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(true)
   })
 
   test('onChangePath calls actions.changePath', () => {
@@ -99,8 +125,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangePath('path')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('path')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('path')
   })
 })
 
@@ -127,51 +153,43 @@ describe('mapStateToProps', () => {
 describe('OrderStatusContainer component', () => {
   describe('when passed the correct props', () => {
     test('passes its props and renders a single OrderStatus component', () => {
-      const { enzymeWrapper, props } = setup({
-        authToken: 'testToken',
-        earthdataEnvironment: 'prod',
-        granuleDownload: {},
-        match: {
-          search: {
-            id: 7
+      setup()
+
+      expect(OrderStatus).toHaveBeenCalledTimes(1)
+      expect(OrderStatus).toHaveBeenCalledWith(
+        {
+          authToken: 'testToken',
+          earthdataEnvironment: 'prod',
+          granuleDownload: {},
+          location: {},
+          match: {
+            search: {
+              id: 7
+            }
+          },
+          onChangePath: expect.any(Function),
+          onFetchRetrieval: expect.any(Function),
+          onFetchRetrievalCollection: expect.any(Function),
+          onFetchRetrievalCollectionGranuleLinks: expect.any(Function),
+          onFetchRetrievalCollectionGranuleBrowseLinks: expect.any(Function),
+          onFocusedCollectionChange: expect.any(Function),
+          onMetricsRelatedCollection: expect.any(Function),
+          onToggleAboutCSDAModal: expect.any(Function),
+          retrieval: {
+            id: 7,
+            collections: {
+              download: [
+                {
+                  collection_id: 'TEST_COLLECTION_111'
+                }
+              ],
+              echoOrder: [],
+              order: []
+            }
           }
         },
-        portal: {},
-        onChangePath: jest.fn(),
-        onFetchRetrieval: jest.fn(),
-        onFetchRetrievalCollection: jest.fn(),
-        onFetchRetrievalCollectionGranuleLinks: jest.fn(),
-        onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
-        onFocusedCollectionChange: jest.fn(),
-        onMetricsRelatedCollection: jest.fn(),
-        onToggleAboutCSDAModal: jest.fn(),
-        retrieval: {
-          id: 7,
-          collections: {
-            download: [
-              {
-                collection_id: 'TEST_COLLECTION_111'
-              }
-            ],
-            echoOrder: [],
-            order: []
-          }
-        },
-        location: {
-          search: ''
-        }
-      })
-
-      expect(enzymeWrapper.find(OrderStatus).length).toBe(1)
-      expect(enzymeWrapper.find(OrderStatus).props().authToken).toEqual(props.authToken)
-      expect(enzymeWrapper.find(OrderStatus).props().onFetchRetrieval)
-        .toEqual(props.onFetchRetrieval)
-
-      expect(enzymeWrapper.find(OrderStatus).props().onFetchRetrievalCollection)
-        .toEqual(props.onFetchRetrievalCollection)
-
-      expect(enzymeWrapper.find(OrderStatus).props().onChangePath).toEqual(props.onChangePath)
-      expect(enzymeWrapper.find(OrderStatus).props().retrieval).toEqual(props.retrieval)
+        {}
+      )
     })
   })
 })

@@ -49,7 +49,6 @@ export const mapStateToProps = (state) => ({
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
-  portal: state.portal,
   project: state.project
 })
 
@@ -74,7 +73,6 @@ export const GranuleResultsBodyContainer = (props) => {
     onMetricsDataAccess,
     onRemoveGranuleFromProjectCollection,
     panelView,
-    portal,
     project
   } = props
 
@@ -116,7 +114,6 @@ export const GranuleResultsBodyContainer = (props) => {
       onMetricsAddGranuleProject={onMetricsAddGranuleProject}
       onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
       panelView={panelView}
-      portal={portal}
       project={project}
     />
   )
@@ -147,7 +144,6 @@ GranuleResultsBodyContainer.propTypes = {
   onMetricsDataAccess: PropTypes.func.isRequired,
   onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   project: PropTypes.shape({}).isRequired
 }
 

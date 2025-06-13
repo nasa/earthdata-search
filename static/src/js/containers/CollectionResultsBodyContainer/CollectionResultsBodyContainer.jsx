@@ -1,9 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
-import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
 import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
@@ -15,7 +13,6 @@ import CollectionResultsBody from '../../components/CollectionResults/Collection
 export const mapStateToProps = (state) => ({
   collectionsSearch: state.searchResults.collections,
   collectionsMetadata: state.metadata.collections,
-  portal: state.portal,
   projectCollectionsIds: getProjectCollectionsIds(state),
   query: state.query.collection
 })
@@ -39,7 +36,6 @@ export const CollectionResultsBodyContainer = (props) => {
   const {
     collectionsMetadata,
     collectionsSearch,
-    location,
     onAddProjectCollection,
     onChangeCollectionPageNum,
     onMetricsAddCollectionProject,
@@ -47,7 +43,6 @@ export const CollectionResultsBodyContainer = (props) => {
     onViewCollectionDetails,
     onViewCollectionGranules,
     panelView,
-    portal,
     projectCollectionsIds,
     query
   } = props
@@ -63,14 +58,12 @@ export const CollectionResultsBodyContainer = (props) => {
       collectionsMetadata={collectionsMetadata}
       collectionsSearch={collectionsSearch}
       loadNextPage={loadNextPage}
-      location={location}
       onAddProjectCollection={onAddProjectCollection}
       onMetricsAddCollectionProject={onMetricsAddCollectionProject}
       onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onViewCollectionDetails={onViewCollectionDetails}
       onViewCollectionGranules={onViewCollectionGranules}
       panelView={panelView}
-      portal={portal}
       projectCollectionsIds={projectCollectionsIds}
     />
   )
@@ -79,7 +72,6 @@ export const CollectionResultsBodyContainer = (props) => {
 CollectionResultsBodyContainer.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   onChangeCollectionPageNum: PropTypes.func.isRequired,
@@ -87,13 +79,10 @@ CollectionResultsBodyContainer.propTypes = {
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
-  portal: PropTypes.shape({}).isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   query: PropTypes.shape({
     pageNum: PropTypes.number
   }).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(CollectionResultsBodyContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionResultsBodyContainer)

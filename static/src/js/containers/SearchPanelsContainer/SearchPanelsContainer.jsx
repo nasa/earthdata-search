@@ -25,7 +25,6 @@ export const mapStateToProps = (state) => ({
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   panels: state.panels,
   preferences: state.preferences.preferences,
-  portal: state.portal,
   isExportRunning: state.ui.export.isExportRunning
 })
 
@@ -72,7 +71,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.panels - Panels state
  * @param {Object} props.preferences - Preferences state
  * @param {Object} props.match - Router match state
- * @param {Object} props.portal - Portal state
  */
 export const SearchPanelsContainer = ({
   authToken,
@@ -97,8 +95,7 @@ export const SearchPanelsContainer = ({
   onExport,
   panels,
   preferences,
-  match,
-  portal
+  match
 }) => (
   <SearchPanels
     authToken={authToken}
@@ -122,7 +119,6 @@ export const SearchPanelsContainer = ({
     onTogglePanels={onTogglePanels}
     onExport={onExport}
     panels={panels}
-    portal={portal}
     preferences={preferences}
     match={match}
   />
@@ -151,8 +147,7 @@ SearchPanelsContainer.propTypes = {
   onExport: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
-  preferences: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({}).isRequired
+  preferences: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

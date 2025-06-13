@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 
@@ -13,10 +13,11 @@ import {
 } from '../CollectionResultsBodyContainer'
 import CollectionResultsBody from '../../../components/CollectionResults/CollectionResultsBody'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/CollectionResults/CollectionResultsBody', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: CollectionResultsBodyContainer,
+  defaultProps: {
     collectionsMetadata: {
       id1: {
         title: 'collection 1 title'
@@ -26,11 +27,7 @@ function setup() {
       }
     },
     collectionsSearch: {},
-    portal: {},
     projectCollectionsIds: [],
-    location: {
-      value: 'location'
-    },
     onAddProjectCollection: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
     onRemoveCollectionFromProject: jest.fn(),
@@ -42,14 +39,7 @@ function setup() {
       pageNum: 1
     }
   }
-
-  const enzymeWrapper = shallow(<CollectionResultsBodyContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onAddProjectCollection calls actions.addProjectCollection', () => {
@@ -58,8 +48,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onAddProjectCollection('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onRemoveCollectionFromProject calls actions.removeCollectionFromProject', () => {
@@ -68,8 +58,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onRemoveCollectionFromProject('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onViewCollectionGranules calls actions.viewCollectionGranules', () => {
@@ -78,8 +68,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onViewCollectionGranules('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onViewCollectionDetails calls actions.viewCollectionDetails', () => {
@@ -88,8 +78,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onViewCollectionDetails('collectionId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('collectionId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onChangeCollectionPageNum calls actions.changeCollectionPageNum', () => {
@@ -98,8 +88,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onChangeCollectionPageNum({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
@@ -108,8 +98,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onMetricsAddCollectionProject({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 })
 
@@ -119,7 +109,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      portal: {},
       query: {
         collection: {}
       },
@@ -131,7 +120,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionsSearch: {},
       collectionsMetadata: {},
-      portal: {},
       projectCollectionsIds: [],
       query: {}
     }
@@ -142,40 +130,32 @@ describe('mapStateToProps', () => {
 
 describe('CollectionResultsBodyContainer component', () => {
   test('passes its props and renders a single CollectionResultsBody component', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(CollectionResultsBody).length).toBe(1)
-
-    expect(enzymeWrapper.find(CollectionResultsBody).props().collectionsMetadata).toEqual({
-      id1: {
-        title: 'collection 1 title'
+    expect(CollectionResultsBody).toHaveBeenCalledTimes(1)
+    expect(CollectionResultsBody).toHaveBeenCalledWith({
+      collectionsMetadata: {
+        id1: { title: 'collection 1 title' },
+        id2: { title: 'collection 2 title' }
       },
-      id2: {
-        title: 'collection 2 title'
-      }
-    })
-
-    expect(enzymeWrapper.find(CollectionResultsBody).props().projectCollectionsIds).toEqual([])
-    expect(enzymeWrapper.find(CollectionResultsBody).props().location).toEqual({
-      value: 'location'
-    })
-
-    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onAddProjectCollection).toEqual('function')
-    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onRemoveCollectionFromProject).toEqual('function')
-    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionGranules).toEqual('function')
-    expect(typeof enzymeWrapper.find(CollectionResultsBody).props().onViewCollectionDetails).toEqual('function')
+      collectionsSearch: {},
+      loadNextPage: expect.any(Function),
+      onAddProjectCollection: expect.any(Function),
+      onMetricsAddCollectionProject: expect.any(Function),
+      onRemoveCollectionFromProject: expect.any(Function),
+      onViewCollectionDetails: expect.any(Function),
+      onViewCollectionGranules: expect.any(Function),
+      panelView: 'list',
+      projectCollectionsIds: []
+    }, {})
   })
 
   test('loadNextPage calls onChangeCollectionPageNum', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
 
-    const collectionResultsBody = enzymeWrapper.find(CollectionResultsBody)
+    CollectionResultsBody.mock.calls[0][0].loadNextPage()
 
-    collectionResultsBody.prop('loadNextPage')()
-
-    setTimeout(() => {
-      expect(props.onChangeCollectionPageNum.mock.calls.length).toBe(1)
-      expect(props.onChangeCollectionPageNum.mock.calls[0]).toEqual([2])
-    }, 0)
+    expect(props.onChangeCollectionPageNum).toHaveBeenCalledTimes(1)
+    expect(props.onChangeCollectionPageNum).toHaveBeenCalledWith(2)
   })
 })

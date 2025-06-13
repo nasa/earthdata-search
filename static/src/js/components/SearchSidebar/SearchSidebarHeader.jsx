@@ -1,12 +1,11 @@
 import React, { useCallback, useState } from 'react'
-import PropTypes from 'prop-types'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Tooltip from 'react-bootstrap/Tooltip'
 import { FaDoorOpen } from 'react-icons/fa'
 import classNames from 'classnames'
+import { useLocation } from 'react-router-dom'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import { locationPropType } from '../../util/propTypes/location'
 import { usePortalLogo } from '../../hooks/usePortalLogo'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -14,24 +13,30 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import SearchFormContainer from '../../containers/SearchFormContainer/SearchFormContainer'
 import Spinner from '../Spinner/Spinner'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './SearchSidebarHeader.scss'
 
 /**
  * Renders SearchSidebarHeader
- * @prop {Object} props - The props object
- * @prop {Object} props.portal - A portal object from Redux
- * @prop {Object} props.location - A location object from React Router
  */
-export const SearchSidebarHeader = ({
-  portal,
-  location
-}) => {
-  let logoEl
+export const SearchSidebarHeader = () => {
+  const location = useLocation()
+
+  const portal = useEdscStore((state) => state.portal)
   const {
     title = {},
     portalId,
     moreInfoUrl
   } = portal
+
+  const portalLogoSrc = usePortalLogo(portalId)
+
+  const [thumbnailLoading, setThumbnailLoading] = useState(true)
+
+  const onThumbnailLoaded = useCallback(() => {
+    setThumbnailLoading(false)
+  })
 
   if (portalId === getApplicationConfig().defaultPortal) {
     return (
@@ -41,17 +46,9 @@ export const SearchSidebarHeader = ({
     )
   }
 
-  const portalLogoSrc = usePortalLogo(portalId)
-
-  const [thumbnailLoading, setThumbnailLoading] = useState(true)
-
   const { primary: primaryTitle, secondary: secondaryTitle } = title
 
   const displayTitle = `${primaryTitle}${secondaryTitle && ` (${secondaryTitle})`}`
-
-  const onThumbnailLoaded = useCallback(() => {
-    setThumbnailLoading(false)
-  })
 
   const portalLogoClassNames = classNames(
     'search-sidebar-header__thumbnail',
@@ -59,6 +56,8 @@ export const SearchSidebarHeader = ({
       'search-sidebar-header__thumbnail--is-loaded': !thumbnailLoading
     }
   )
+
+  let logoEl
 
   if (portalLogoSrc === undefined || portalLogoSrc) {
     logoEl = (
@@ -161,18 +160,6 @@ export const SearchSidebarHeader = ({
       <SearchFormContainer />
     </header>
   )
-}
-
-SearchSidebarHeader.propTypes = {
-  location: locationPropType.isRequired,
-  portal: PropTypes.shape({
-    title: PropTypes.shape({
-      primary: PropTypes.string,
-      secondary: PropTypes.string
-    }),
-    moreInfoUrl: PropTypes.string,
-    portalId: PropTypes.string.isRequired
-  }).isRequired
 }
 
 export default SearchSidebarHeader

@@ -54,7 +54,6 @@ import './SearchPanels.scss'
  * Renders SearchPanels.
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.panels - The current panels state.
- * @param {Object} props.portal - The current portal state.
  * @param {Function} props.onTogglePanels - Toggles the panels opened or closed.
  * @param {Function} props.onSetActivePanel - Switches the currently active panel.
  */
@@ -934,13 +933,6 @@ SearchPanels.propTypes = {
   onToggleAboutCwicModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
-  portal: PropTypes.shape({
-    portalId: PropTypes.string,
-    title: PropTypes.shape({
-      primary: PropTypes.string
-    }),
-    pageTitle: PropTypes.string
-  }).isRequired,
   preferences: PropTypes.shape({
     collectionSort: PropTypes.string,
     collectionListView: PropTypes.node,

@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import { CSSTransition } from 'react-transition-group'
 import { FaDoorOpen } from 'react-icons/fa'
+import { useLocation } from 'react-router-dom'
 
 import { formatCollectionList } from '../../util/formatCollectionList'
 import { isDefaultPortal } from '../../util/portals'
@@ -9,6 +10,8 @@ import { isDefaultPortal } from '../../util/portals'
 import CollectionResultsList from './CollectionResultsList'
 import CollectionResultsTable from './CollectionResultsTable'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+
+import useEdscStore from '../../zustand/useEdscStore'
 
 import './CollectionResultsBody.scss'
 
@@ -25,18 +28,16 @@ import './CollectionResultsBody.scss'
  * @param {String} props.panelView - The current active view.
  */
 const CollectionResultsBody = ({
-  collectionsSearch,
   collectionsMetadata,
-  projectCollectionsIds,
+  collectionsSearch,
   loadNextPage,
-  location,
   onAddProjectCollection,
   onMetricsAddCollectionProject,
   onRemoveCollectionFromProject,
-  onViewCollectionGranules,
   onViewCollectionDetails,
+  onViewCollectionGranules,
   panelView,
-  portal
+  projectCollectionsIds
 }) => {
   const {
     allIds: collectionIds,
@@ -57,6 +58,9 @@ const CollectionResultsBody = ({
   ])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
+
+  const portal = useEdscStore((state) => state.portal)
+  const location = useLocation()
 
   // Determine if another page is available by checking if there are more collections to load,
   // or if we have no collections and collections are loading. This controls whether or not the
@@ -173,22 +177,12 @@ CollectionResultsBody.propTypes = {
     isLoaded: PropTypes.bool
   }).isRequired,
   loadNextPage: PropTypes.func.isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string
-  }).isRequired,
   onAddProjectCollection: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired,
-  portal: PropTypes.shape({
-    portalId: PropTypes.string,
-    title: PropTypes.shape({
-      primary: PropTypes.string
-    }),
-    pageTitle: PropTypes.string
-  }).isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 

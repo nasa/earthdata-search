@@ -21,14 +21,13 @@ import Panels from '../../Panels/Panels'
 import PanelGroup from '../../Panels/PanelGroup'
 import PanelGroupHeader from '../../Panels/PanelGroupHeader'
 import GranuleResultsActionsContainer from '../../../containers/GranuleResultsActionsContainer/GranuleResultsActionsContainer'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 const store = configureStore()
 
 Enzyme.configure({ adapter: new Adapter() })
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   jest.spyOn(PortalUtils, 'isDefaultPortal').mockImplementation(() => true)
   jest.spyOn(AppConfig, 'getEnvironmentConfig').mockImplementation(() => ({ edscHost: 'https://search.earthdata.nasa.gov' }))
   jest.spyOn(AppConfig, 'getApplicationConfig').mockImplementation(() => ({
@@ -47,6 +46,22 @@ jest.mock('react-dom', () => (
     createPortal: jest.fn(() => (<div />))
   }
 ))
+
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn(() => <div />))
+jest.mock('../../../containers/CollectionResultsBodyContainer/CollectionResultsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer', () => jest.fn(() => <div />))
+
+useEdscStore.setState({
+  portal: {
+    portalId: 'edsc',
+    title: {
+      primary: 'Earthdata Search'
+    }
+  }
+})
 
 function setup(overrideProps, location = '/search') {
   const props = {
@@ -114,9 +129,6 @@ function setup(overrideProps, location = '/search') {
       panelState: 'default',
       collectionListView: 'default',
       granuleListView: 'default'
-    },
-    portal: {
-      portalId: 'edsc'
     },
     subscriptions: [],
     ...overrideProps

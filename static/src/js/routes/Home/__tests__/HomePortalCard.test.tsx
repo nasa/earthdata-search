@@ -1,6 +1,8 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
+
 import HomePortalCard from '../HomePortalCard'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const assignMock = jest.fn()
 
@@ -22,8 +24,9 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   return MockPortalLinkContainer
 })
 
-describe('HomePortalCard', () => {
-  const mockProps = {
+const setup = setupTest({
+  Component: HomePortalCard,
+  defaultProps: {
     portalId: 'test-portal',
     title: {
       primary: 'Test Portal',
@@ -31,16 +34,18 @@ describe('HomePortalCard', () => {
     },
     moreInfoUrl: 'https://example.com'
   }
+})
 
+describe('HomePortalCard', () => {
   test('renders the portal card with the correct title and subtitle', () => {
-    render(<HomePortalCard {...mockProps} />)
+    setup()
 
     expect(screen.getByText('Test Portal')).toBeInTheDocument()
     expect(screen.getByText('Subtitle')).toBeInTheDocument()
   })
 
   test('renders the portal logo with the correct alt text', () => {
-    render(<HomePortalCard {...mockProps} />)
+    setup()
 
     const logo = screen.getByAltText('A logo for Test Portal (Subtitle)')
     expect(logo).toBeInTheDocument()
@@ -48,7 +53,7 @@ describe('HomePortalCard', () => {
   })
 
   test('renders the "More Info" link when moreInfoUrl is provided', () => {
-    render(<HomePortalCard {...mockProps} />)
+    setup()
 
     const moreInfoLink = screen.getByText('More Info')
     expect(moreInfoLink).toBeInTheDocument()
@@ -56,7 +61,11 @@ describe('HomePortalCard', () => {
   })
 
   test('does not render the "More Info" link when moreInfoUrl is not provided', () => {
-    render(<HomePortalCard {...mockProps} moreInfoUrl={undefined} />)
+    setup({
+      overrideProps: {
+        moreInfoUrl: undefined
+      }
+    })
 
     expect(screen.queryByText('More Info')).not.toBeInTheDocument()
   })
@@ -64,7 +73,7 @@ describe('HomePortalCard', () => {
   test('stops propagation when the "More Info" link is clicked', async () => {
     const stopPropagationMock = jest.fn()
 
-    render(<HomePortalCard {...mockProps} />)
+    setup()
 
     const moreInfoLink = screen.getByText('More Info')
 

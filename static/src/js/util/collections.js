@@ -5,6 +5,7 @@ import { tagName } from '../../../../sharedUtils/tags'
 import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 import { withAdvancedSearch } from './withAdvancedSearch'
 import { collectionSortKeys } from '../constants/collectionSortKeys'
+import useEdscStore from '../zustand/useEdscStore'
 
 /**
  * If sortkey is set to 'default' or is undefined then
@@ -32,7 +33,6 @@ export const prepareCollectionParams = (state) => {
     advancedSearch = {},
     authToken,
     facetsParams = {},
-    portal = {},
     preferences = {},
     query = {
       collection: {}
@@ -110,6 +110,7 @@ export const prepareCollectionParams = (state) => {
     consortium = ['EOSDIS']
   }
 
+  const { portal } = useEdscStore.getState()
   const { query: portalQuery = {} } = portal
   const { consortium: portalConsortium = [] } = portalQuery
 

@@ -40,9 +40,6 @@ function setup(overrideProps) {
     onChangeProjectGranulePageNum: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onRemoveGranuleFromProjectCollection: jest.fn(),
-    portal: {
-      portalId: 'edsc'
-    },
     projectCollection: {
       granules: {
         allIds: ['GRAN-1-PROV', 'GRAN-2-PROV'],

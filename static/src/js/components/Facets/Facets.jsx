@@ -16,7 +16,6 @@ const Facets = (props) => {
   const {
     facetsById,
     featureFacets,
-    portal,
     onChangeCmrFacet,
     onChangeFeatureFacet,
     onTriggerViewAllFacets
@@ -24,9 +23,11 @@ const Facets = (props) => {
 
   const {
     openKeywordFacet,
+    portal,
     setOpenKeywordFacet
   } = useEdscStore((state) => ({
     openKeywordFacet: state.home.openKeywordFacet,
+    portal: state.portal,
     setOpenKeywordFacet: state.home.setOpenKeywordFacet
   }))
 
@@ -46,9 +47,9 @@ const Facets = (props) => {
   const { features = {} } = portal
   const { featureFacets: portalFeatureFacets = {} } = features
   const {
-    showMapImagery,
+    showAvailableInEarthdataCloud,
     showCustomizable,
-    showAvailableInEarthdataCloud
+    showMapImagery
   } = portalFeatureFacets
 
   const featuresFacet = {
@@ -218,9 +219,6 @@ Facets.propTypes = {
     customizable: PropTypes.bool,
     mapImagery: PropTypes.bool,
     nearRealTime: PropTypes.bool
-  }).isRequired,
-  portal: PropTypes.shape({
-    features: PropTypes.shape({})
   }).isRequired,
   onChangeCmrFacet: PropTypes.func.isRequired,
   onChangeFeatureFacet: PropTypes.func.isRequired,
