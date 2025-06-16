@@ -224,7 +224,7 @@
     "snakecase-keys": "^2.1.0",
     "tiny-cookie": "^2.5.1",
     "uuid": "^8.3.2",
-    "vite": "^6.3.5",
+    "vite": "^6.2.5",
     "vite-imagetools": "^7.1.0",
     "vite-plugin-ejs": "^1.7.0",
     "vite-plugin-istanbul": "^7.0.0",
