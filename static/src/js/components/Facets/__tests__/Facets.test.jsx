@@ -9,6 +9,7 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import Facets from '../Facets'
 import * as facetUtils from '../../../util/facets'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 const setup = setupTest({
   Component: Facets,
@@ -174,21 +175,19 @@ const setup = setupTest({
         totalSelected: 0,
         type: 'group'
       }
-    },
-    featureFacets: {
-      availableInEarthdataCloud: false,
-      customizable: false,
-      mapImagery: false,
-      nearRealTime: false
-    },
-    onChangeCmrFacet: jest.fn(),
-    onChangeFeatureFacet: jest.fn(),
-    onTriggerViewAllFacets: jest.fn()
+    }
   },
   defaultZustandState: {
-    home: {
-      openKeywordFacet: false,
-      setOpenKeywordFacet: jest.fn()
+    facetParams: {
+      featureFacets: {
+        availableInEarthdataCloud: false,
+        customizable: false,
+        mapImagery: false,
+        nearRealTime: false
+      },
+      setCmrFacets: jest.fn(),
+      setFeatureFacets: jest.fn(),
+      triggerViewAllFacets: jest.fn()
     },
     portal: {
       features: {
@@ -488,7 +487,9 @@ describe('Facets Features Map Imagery component', () => {
 
   test('featureFacetHandler calls changeFeatureFacet', async () => {
     const mock = jest.spyOn(facetUtils, 'changeFeatureFacet').mockImplementationOnce(() => jest.fn())
-    const { props, user } = setup()
+    const { user } = setup()
+
+    const { setFeatureFacets } = useEdscStore.getState().facetParams
 
     const facetGroup = screen.getByRole('checkbox', { name: 'Customizable' })
     await user.click(facetGroup)
@@ -497,15 +498,18 @@ describe('Facets Features Map Imagery component', () => {
       expect.anything(),
       {
         destination: null,
-        title: 'Customizable'
+        title: 'Customizable',
+        value: 'customizable'
       },
-      props.onChangeFeatureFacet
+      setFeatureFacets
     )
   })
 
   test('cmrFacetHandler calls changeCmrFacet', async () => {
     const mock = jest.spyOn(facetUtils, 'changeCmrFacet').mockImplementationOnce(() => jest.fn())
-    const { props, user } = setup()
+    const { user } = setup()
+
+    const { setCmrFacets } = useEdscStore.getState().facetParams
 
     // Look for button by its label attribute
     await user.click(screen.getByRole('button', { name: /Keywords/i }))
@@ -519,90 +523,7 @@ describe('Facets Features Map Imagery component', () => {
         destination: 'http://example.com/apply_keyword_link',
         title: 'Mock Keyword Facet'
       },
-      props.onChangeCmrFacet,
-      {
-        level: 0,
-        type: 'science_keywords',
-        value: 'Mock Keyword Facet'
-      },
-      true
+      setCmrFacets
     )
-  })
-
-  test('onTriggerViewAllFacets calls triggerViewAllFacets', async () => {
-    const children = []
-    for (let count = 1; count <= 50; count += 1) {
-      children.push({
-        applied: false,
-        count,
-        has_children: false,
-        links: {
-          apply: `http://example.com/apply_project_link_${count}`
-        },
-        title: `Mock Project ${count}`,
-        type: 'filter'
-      })
-    }
-
-    const { props, user } = setup({
-      overrideProps: {
-        facetsById: {
-          Projects: {
-            applied: false,
-            children,
-            hasChildren: true,
-            title: 'Projects',
-            totalSelected: 0,
-            type: 'filter'
-          }
-        }
-      }
-    })
-
-    expect(screen.queryByRole('button', { name: /View All/i })).toBeNull()
-
-    const projectsButton = screen.getByRole('button', { name: /Projects/i })
-    await user.click(projectsButton)
-    expect(projectsButton).toBeInTheDocument()
-
-    const viewAllButton = await screen.findByRole('button', { name: /view all/i })
-    expect(viewAllButton).toBeInTheDocument()
-    expect(viewAllButton).toHaveClass('facets-group__view-all')
-
-    await user.click(viewAllButton)
-
-    expect(props.onTriggerViewAllFacets).toHaveBeenCalledTimes(1)
-    expect(props.onTriggerViewAllFacets).toHaveBeenCalledWith('Projects')
-  })
-
-  describe('when rendering with openKeywordFacet set to true', () => {
-    test('renders the keyword facet group as open', async () => {
-      setup({
-        overrideZustandState: {
-          home: {
-            openKeywordFacet: true
-          }
-        }
-      })
-
-      const keywordsElements = screen.getByText('Mock Keyword Facet')
-      expect(keywordsElements).toBeInTheDocument()
-    })
-
-    test('calls setOpenKeywordFacet to reset the value', () => {
-      const mockSetOpenKeywordFacet = jest.fn()
-
-      setup({
-        overrideZustandState: {
-          home: {
-            openKeywordFacet: true,
-            setOpenKeywordFacet: mockSetOpenKeywordFacet
-          }
-        }
-      })
-
-      expect(mockSetOpenKeywordFacet).toHaveBeenCalledTimes(1)
-      expect(mockSetOpenKeywordFacet).toHaveBeenCalledWith(false)
-    })
   })
 })

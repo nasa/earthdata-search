@@ -13,27 +13,19 @@ export const mapStateToProps = (state) => ({
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onChangeViewAllFacet:
-    (e, facetLinkInfo) => dispatch(actions.changeViewAllFacet(e, facetLinkInfo)),
   onToggleFacetsModal:
-    (state) => dispatch(actions.toggleFacetsModal(state)),
-  onApplyViewAllFacets:
-    () => dispatch(actions.applyViewAllFacets())
+    (state) => dispatch(actions.toggleFacetsModal(state))
 })
 
 export const FacetsModalContainer = ({
   collectionHits,
   isOpen,
-  onApplyViewAllFacets,
-  onChangeViewAllFacet,
   onToggleFacetsModal,
   viewAllFacets
 }) => (
   <FacetsModal
     collectionHits={collectionHits}
     isOpen={isOpen}
-    onApplyViewAllFacets={onApplyViewAllFacets}
-    onChangeViewAllFacet={onChangeViewAllFacet}
     onToggleFacetsModal={onToggleFacetsModal}
     viewAllFacets={viewAllFacets}
   />
@@ -46,8 +38,6 @@ FacetsModalContainer.defaultProps = {
 FacetsModalContainer.propTypes = {
   collectionHits: PropTypes.number,
   isOpen: PropTypes.bool.isRequired,
-  onApplyViewAllFacets: PropTypes.func.isRequired,
-  onChangeViewAllFacet: PropTypes.func.isRequired,
   onToggleFacetsModal: PropTypes.func.isRequired,
   viewAllFacets: PropTypes.shape({}).isRequired
 }

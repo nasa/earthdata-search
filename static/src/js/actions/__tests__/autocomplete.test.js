@@ -7,13 +7,9 @@ import {
   onAutocompleteLoaded,
   clearAutocompleteSuggestions,
   updateAutocompleteSuggestions,
-  updateAutocompleteSelected,
-  deleteAutocompleteValue,
   mapAutocompleteToFacets,
   fetchAutocomplete,
   selectAutocompleteSuggestion,
-  removeAutocompleteValue,
-  clearAutocompleteSelected,
   cancelAutocomplete
 } from '../autocomplete'
 
@@ -21,21 +17,13 @@ import {
   LOADING_AUTOCOMPLETE,
   LOADED_AUTOCOMPLETE,
   CLEAR_AUTOCOMPLETE_SUGGESTIONS,
-  UPDATE_AUTOCOMPLETE_SUGGESTIONS,
-  UPDATE_AUTOCOMPLETE_SELECTED,
-  DELETE_AUTOCOMPLETE_VALUE,
-  CLEAR_AUTOCOMPLETE_SELECTED,
-  ADD_CMR_FACET,
-  REMOVE_CMR_FACET
+  UPDATE_AUTOCOMPLETE_SUGGESTIONS
 } from '../../constants/actionTypes'
 
 import actions from '..'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
-
-beforeEach(() => {
-  jest.clearAllMocks()
-})
 
 describe('onAutocompleteLoading', () => {
   test('should create an action to update the store', () => {
@@ -54,15 +42,6 @@ describe('onAutocompleteLoaded', () => {
       payload
     }
     expect(onAutocompleteLoaded(payload)).toEqual(expectedAction)
-  })
-})
-
-describe('clearAutocompleteSelected', () => {
-  test('should create an action to update the store', () => {
-    const expectedAction = {
-      type: CLEAR_AUTOCOMPLETE_SELECTED
-    }
-    expect(clearAutocompleteSelected()).toEqual(expectedAction)
   })
 })
 
@@ -87,36 +66,6 @@ describe('updateAutocompleteSuggestions', () => {
       payload
     }
     expect(updateAutocompleteSuggestions(payload)).toEqual(expectedAction)
-  })
-})
-
-describe('updateAutocompleteSelected', () => {
-  test('should create an action to update the search query', () => {
-    const payload = {
-      type: 'mock_type',
-      fields: 'mock value',
-      value: 'mock value'
-    }
-    const expectedAction = {
-      type: UPDATE_AUTOCOMPLETE_SELECTED,
-      payload
-    }
-    expect(updateAutocompleteSelected(payload)).toEqual(expectedAction)
-  })
-})
-
-describe('deleteAutocompleteValue', () => {
-  test('should create an action to update the search query', () => {
-    const payload = {
-      type: 'mock_type',
-      fields: 'mock value',
-      value: 'mock value'
-    }
-    const expectedAction = {
-      type: DELETE_AUTOCOMPLETE_VALUE,
-      payload
-    }
-    expect(deleteAutocompleteValue(payload)).toEqual(expectedAction)
   })
 })
 
@@ -309,6 +258,15 @@ describe('selectAutocompleteSuggestion', () => {
     const changeQueryMock = jest.spyOn(actions, 'changeQuery')
     changeQueryMock.mockImplementation(() => jest.fn())
 
+    useEdscStore.setState({
+      home: {
+        setOpenFacetGroup: jest.fn()
+      },
+      facetParams: {
+        addCmrFacetFromAutocomplete: jest.fn()
+      }
+    })
+
     const store = mockStore({
       autocomplete: {
         params: { q: 'mock' }
@@ -325,17 +283,17 @@ describe('selectAutocompleteSuggestion', () => {
 
     store.dispatch(selectAutocompleteSuggestion(data))
 
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: ADD_CMR_FACET,
-      payload: {
-        instrument_h: 'mock value'
-      }
-    })
+    const zustandState = useEdscStore.getState()
+    const { home, facetParams } = zustandState
+    const { setOpenFacetGroup } = home
+    const { addCmrFacetFromAutocomplete } = facetParams
 
-    expect(storeActions[1]).toEqual({
-      type: UPDATE_AUTOCOMPLETE_SELECTED,
-      payload: data
+    expect(setOpenFacetGroup).toHaveBeenCalledTimes(1)
+    expect(setOpenFacetGroup).toHaveBeenCalledWith('instrument')
+
+    expect(addCmrFacetFromAutocomplete).toHaveBeenCalledTimes(1)
+    expect(addCmrFacetFromAutocomplete).toHaveBeenCalledWith({
+      instrument_h: 'mock value'
     })
 
     // Was getCollections called
@@ -346,38 +304,5 @@ describe('selectAutocompleteSuggestion', () => {
         keyword: ''
       }
     })
-  })
-})
-
-describe('removeAutocompleteValue', () => {
-  test('calls deleteAutocompleteValue and getCollections', () => {
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections')
-    getCollectionsMock.mockImplementation(() => jest.fn())
-
-    const store = mockStore({})
-
-    const data = {
-      type: 'instrument',
-      fields: 'mock value',
-      value: 'mock value'
-    }
-
-    store.dispatch(removeAutocompleteValue(data))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      type: REMOVE_CMR_FACET,
-      payload: {
-        instrument_h: 'mock value'
-      }
-    })
-
-    expect(storeActions[1]).toEqual({
-      type: DELETE_AUTOCOMPLETE_VALUE,
-      payload: data
-    })
-
-    // Was getCollections called
-    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
   })
 })

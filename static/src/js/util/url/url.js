@@ -13,7 +13,6 @@ import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
 import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
 import { encodeArray, decodeArray } from './arrayEncoders'
-import { encodeAutocomplete, decodeAutocomplete } from './autocompleteEncoders'
 import { encodeEarthdataEnvironment, decodeEarthdataEnvironment } from './environmentEncoders'
 import { decodeBoolean, encodeBoolean } from './booleanEncoders'
 
@@ -162,11 +161,6 @@ const urlDefs = {
     encode: encodeHasGranulesOrCwic,
     decode: decodeHasGranulesOrCwic
   },
-  autocompleteSelected: {
-    shortKey: 'as',
-    encode: encodeAutocomplete,
-    decode: decodeAutocomplete
-  },
   onlyEosdisCollections: {
     shortKey: 'oe',
     encode: encodeBoolean,
@@ -299,15 +293,12 @@ export const decodeUrlParams = (paramString) => {
 
   const advancedSearch = decodeAdvancedSearch(params)
 
-  const autocompleteSelected = decodeHelp(params, 'autocompleteSelected')
-
   const earthdataEnvironment = decodeHelp(params, 'earthdataEnvironment')
   const portalId = decodePortal(params)
 
   return {
     advancedSearch,
     earthdataEnvironment,
-    autocompleteSelected,
     cmrFacets,
     metadata,
     featureFacets,

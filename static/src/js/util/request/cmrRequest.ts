@@ -9,7 +9,7 @@ import { getClientId } from '../../../../../sharedUtils/getClientId'
 
 // @ts-expect-error Types are not defined for this module
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
-import { CmrHeaders, RequestParams } from '../../types/sharedTypes'
+import type { CmrHeaders, RequestParams } from '../../types/sharedTypes'
 
 /**
  * Parent class for the application API layer to communicate with external services

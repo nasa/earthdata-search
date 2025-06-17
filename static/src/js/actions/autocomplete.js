@@ -5,10 +5,7 @@ import {
   CLEAR_AUTOCOMPLETE_SUGGESTIONS,
   LOADED_AUTOCOMPLETE,
   LOADING_AUTOCOMPLETE,
-  UPDATE_AUTOCOMPLETE_SUGGESTIONS,
-  UPDATE_AUTOCOMPLETE_SELECTED,
-  DELETE_AUTOCOMPLETE_VALUE,
-  CLEAR_AUTOCOMPLETE_SELECTED
+  UPDATE_AUTOCOMPLETE_SUGGESTIONS
 } from '../constants/actionTypes'
 
 import actions from '.'
@@ -20,6 +17,8 @@ import { handleError } from './errors'
 import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
 import { platformTypes } from '../util/platformTypes'
 
+import useEdscStore from '../zustand/useEdscStore'
+
 export const onAutocompleteLoaded = (payload) => ({
   type: LOADED_AUTOCOMPLETE,
   payload
@@ -29,26 +28,12 @@ export const onAutocompleteLoading = () => ({
   type: LOADING_AUTOCOMPLETE
 })
 
-export const clearAutocompleteSelected = () => ({
-  type: CLEAR_AUTOCOMPLETE_SELECTED
-})
-
 export const clearAutocompleteSuggestions = () => ({
   type: CLEAR_AUTOCOMPLETE_SUGGESTIONS
 })
 
 export const updateAutocompleteSuggestions = (payload) => ({
   type: UPDATE_AUTOCOMPLETE_SUGGESTIONS,
-  payload
-})
-
-export const updateAutocompleteSelected = (payload) => ({
-  type: UPDATE_AUTOCOMPLETE_SELECTED,
-  payload
-})
-
-export const deleteAutocompleteValue = (payload) => ({
-  type: DELETE_AUTOCOMPLETE_VALUE,
   payload
 })
 
@@ -190,25 +175,21 @@ export const mapAutocompleteToFacets = (autocomplete) => {
  */
 export const selectAutocompleteSuggestion = (data) => (dispatch) => {
   const cmrFacet = mapAutocompleteToFacets(data)
-  if (cmrFacet) dispatch(actions.addCmrFacet(cmrFacet))
+  if (cmrFacet) {
+    const { home, facetParams } = useEdscStore.getState()
+    const { setOpenFacetGroup } = home
+    const { addCmrFacetFromAutocomplete } = facetParams
+    addCmrFacetFromAutocomplete(cmrFacet)
 
-  dispatch(updateAutocompleteSelected(data))
+    const { suggestion } = data
+    const { type } = suggestion
+    setOpenFacetGroup(type)
+  }
+
   dispatch(actions.changeQuery({
     collection: {
       pageNum: 1,
       keyword: ''
     }
   }))
-}
-
-/**
- * Action for removing an autocomplete suggestion
- * @param {Object} data Autocomplete suggestion
- */
-export const removeAutocompleteValue = (data) => (dispatch) => {
-  const cmrFacet = mapAutocompleteToFacets({ suggestion: data })
-  if (cmrFacet) dispatch(actions.removeCmrFacet(cmrFacet))
-
-  dispatch(deleteAutocompleteValue(data))
-  dispatch(actions.getCollections())
 }

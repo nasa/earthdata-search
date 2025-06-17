@@ -30,7 +30,6 @@ const restoreFromUrl = (payload) => ({
 
 export const updateStore = ({
   advancedSearch,
-  autocompleteSelected,
   cmrFacets,
   collections,
   earthdataEnvironment,
@@ -65,11 +64,8 @@ export const updateStore = ({
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     await dispatch(restoreFromUrl({
       advancedSearch,
-      autocompleteSelected,
-      cmrFacets,
       collections,
       earthdataEnvironment,
-      featureFacets,
       focusedCollection,
       focusedGranule,
       deprecatedUrlParams,
@@ -82,6 +78,11 @@ export const updateStore = ({
 
     useEdscStore.setState((zustandState) => ({
       ...zustandState,
+      facetParams: {
+        ...zustandState.facetParams,
+        featureFacets,
+        cmrFacets
+      },
       map: {
         ...zustandState.map,
         mapView: {

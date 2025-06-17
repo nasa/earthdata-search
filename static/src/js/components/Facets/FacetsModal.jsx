@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { changeViewAllFacet } from '../../util/facets'
@@ -9,93 +9,97 @@ import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalCon
 import FacetsList from './FacetsList'
 import FacetsModalNav from './FacetsModalNav'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './FacetsModal.scss'
 
-export class FacetsModal extends Component {
-  constructor(props) {
-    super(props)
-    this.onApplyClick = this.onApplyClick.bind(this)
-    this.onModalClose = this.onModalClose.bind(this)
-  }
+const FacetsModal = ({
+  collectionHits,
+  isOpen,
+  onToggleFacetsModal,
+  viewAllFacets
+}) => {
+  const {
+    allIds,
+    byId,
+    isLoading,
+    selectedCategory
+  } = viewAllFacets
 
-  onModalClose() {
-    const { onToggleFacetsModal } = this.props
+  const {
+    applyViewAllFacets,
+    setViewAllFacets
+  } = useEdscStore((state) => ({
+    applyViewAllFacets: state.facetParams.applyViewAllFacets,
+    setViewAllFacets: state.facetParams.setViewAllFacets
+  }))
+
+  if (!selectedCategory) return null
+
+  const onModalClose = () => {
     onToggleFacetsModal(false)
   }
 
-  onApplyClick() {
-    const { onApplyViewAllFacets } = this.props
-    onApplyViewAllFacets()
+  const onApplyClick = () => {
+    applyViewAllFacets()
   }
 
-  render() {
-    const {
-      viewAllFacets,
-      collectionHits,
-      isOpen,
-      onChangeViewAllFacet
-    } = this.props
-
-    const {
-      isLoading,
-      selectedCategory
-    } = viewAllFacets
-
-    const { [selectedCategory]: selectedFacet = {} } = viewAllFacets.byId
-
-    const isFirstLoad = isLoading && !viewAllFacets.allIds.length
-
-    const viewAllFacetHandler = (e, facetLinkInfo) => {
-      changeViewAllFacet(e, {
+  const viewAllFacetHandler = (event, facetLinkInfo) => {
+    changeViewAllFacet(
+      event,
+      {
         params: facetLinkInfo,
         selectedCategory
-      }, onChangeViewAllFacet)
-    }
-
-    if (!selectedCategory) return null
-
-    const innerHeader = (
-      <FacetsModalNav
-        activeLetters={selectedFacet.startingLetters}
-      />
-    )
-
-    const body = (
-      <FacetsList
-        sortBy="alpha"
-        facetCategory={selectedCategory}
-        facets={selectedFacet.children}
-        liftSelectedFacets={false}
-        changeHandler={viewAllFacetHandler}
-        variation="light"
-      />
-    )
-
-    const footerMeta = !isFirstLoad && (
-      <span className="facets-modal__hits">{`${commafy(collectionHits)} Matching ${pluralize('Collection', collectionHits)}`}</span>
-    )
-
-    return (
-      <EDSCModalContainer
-        body={body}
-        bodyPadding={false}
-        className="facets-modal"
-        fixedHeight="lg"
-        footerMeta={footerMeta}
-        id="facets"
-        innerHeader={innerHeader}
-        isOpen={isOpen}
-        onClose={this.onModalClose}
-        onPrimaryAction={this.onApplyClick}
-        onSecondaryAction={this.onModalClose}
-        primaryAction="Apply"
-        secondaryAction="Cancel"
-        size="lg"
-        spinner={isFirstLoad}
-        title={`Filter collections by ${selectedCategory}`}
-      />
+      },
+      setViewAllFacets
     )
   }
+
+  const { [selectedCategory]: selectedFacet = {} } = byId
+
+  const isFirstLoad = isLoading && !allIds.length
+
+  const innerHeader = (
+    <FacetsModalNav
+      activeLetters={selectedFacet.startingLetters}
+    />
+  )
+
+  const body = (
+    <FacetsList
+      changeHandler={viewAllFacetHandler}
+      facetCategory={selectedCategory}
+      facets={selectedFacet.children}
+      liftSelectedFacets={false}
+      sortBy="alpha"
+      variation="light"
+    />
+  )
+
+  const footerMeta = !isFirstLoad && (
+    <span className="facets-modal__hits">{`${commafy(collectionHits)} Matching ${pluralize('Collection', collectionHits)}`}</span>
+  )
+
+  return (
+    <EDSCModalContainer
+      body={body}
+      bodyPadding={false}
+      className="facets-modal"
+      fixedHeight="lg"
+      footerMeta={footerMeta}
+      id="facets"
+      innerHeader={innerHeader}
+      isOpen={isOpen}
+      onClose={onModalClose}
+      onPrimaryAction={onApplyClick}
+      onSecondaryAction={onModalClose}
+      primaryAction="Apply"
+      secondaryAction="Cancel"
+      size="lg"
+      spinner={isFirstLoad}
+      title={`Filter collections by ${selectedCategory}`}
+    />
+  )
 }
 
 FacetsModal.defaultProps = {
@@ -105,8 +109,6 @@ FacetsModal.defaultProps = {
 FacetsModal.propTypes = {
   collectionHits: PropTypes.number,
   isOpen: PropTypes.bool.isRequired,
-  onApplyViewAllFacets: PropTypes.func.isRequired,
-  onChangeViewAllFacet: PropTypes.func.isRequired,
   onToggleFacetsModal: PropTypes.func.isRequired,
   viewAllFacets: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),

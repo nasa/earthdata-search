@@ -4,7 +4,6 @@ const baseUrl = 'http://example.com'
 
 beforeEach(() => {
   jest.restoreAllMocks()
-  jest.clearAllMocks()
 })
 
 describe('Request#constructor', () => {
@@ -94,6 +93,14 @@ describe('Request#transformResponse', () => {
 
     expect(handleUnauthorizedMock).toHaveBeenCalledTimes(1)
     expect(handleUnauthorizedMock).toHaveBeenCalledWith(data)
+
+    expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+    expect(window.dataLayer.push).toHaveBeenCalledWith({
+      event: 'timing',
+      timingEventCategory: 'ajax',
+      timingEventValue: expect.any(Number),
+      timingEventVar: undefined
+    })
   })
 })
 

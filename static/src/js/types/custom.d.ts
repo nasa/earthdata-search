@@ -6,3 +6,9 @@ declare module '*.svg' {
   const content: React.FC<React.SVGProps<SVGSVGElement>>
   export default content
 }
+
+declare global {
+  interface Window {
+    dataLayer: Record<string, unknown>[];
+  }
+}

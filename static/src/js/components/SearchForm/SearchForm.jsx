@@ -16,8 +16,6 @@ import SpatialSelectionDropdownContainer
   from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
 import TemporalSelectionDropdownContainer
   from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
-import AutocompleteDisplayContainer
-  from '../../containers/AutocompleteDisplayContainer/AutocompleteDisplayContainer'
 import FilterStack from '../FilterStack/FilterStack'
 import Spinner from '../Spinner/Spinner'
 import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
@@ -25,8 +23,9 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
-import './SearchForm.scss'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
+import './SearchForm.scss'
 
 class SearchForm extends Component {
   constructor(props) {
@@ -387,7 +386,6 @@ class SearchForm extends Component {
             />
           </div>
           <FilterStack isOpen={showFilterStack}>
-            <AutocompleteDisplayContainer />
             <PortalFeatureContainer advancedSearch>
               <AdvancedSearchDisplayContainer />
             </PortalFeatureContainer>
