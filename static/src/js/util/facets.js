@@ -63,7 +63,8 @@ export const getStartingLetters = (facets) => {
 export const generateFacetArgs = (facet) => {
   const link = {
     destination: null,
-    title: facet.title
+    title: facet.title,
+    value: facet.value
   }
 
   if (facet.type === 'group' || facet.type === 'filter') {
@@ -75,24 +76,24 @@ export const generateFacetArgs = (facet) => {
 
 /**
  * The change handler for feature facets.
- * @param {object} e - An event object
+ * @param {object} event - An event object
  * @param {object} facetLinkInfo - The information for the clicked facet.
  * @param {object} onChangeHandler - The change handler to call.
  */
-export const changeFeatureFacet = (e, facetLinkInfo, onChangeHandler) => {
+export const changeFeatureFacet = (event, facetLinkInfo, onChangeHandler) => {
   const { title } = facetLinkInfo
-  const { checked } = e.target
+  const { checked } = event.target
 
   onChangeHandler({ [camelCase(title)]: checked })
 }
 
 /**
  * The change handler for CMR facets.
- * @param {object} e - An event object
+ * @param {object} event - An event object
  * @param {object} facetLinkInfo - The information for the clicked facet.
  * @param {object} onChangeHandler - The change handler to call.
  */
-export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied) => {
+export const changeCmrFacet = (event, facetLinkInfo, onChangeHandler) => {
   const newParams = qs.parse(
     queryParamsFromUrlString(facetLinkInfo.destination),
     {
@@ -120,7 +121,7 @@ export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied
     two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
   }
 
-  onChangeHandler(paramsToSend, facet, applied)
+  onChangeHandler(paramsToSend)
 }
 
 /**
@@ -145,10 +146,7 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
     two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
   }
 
-  onChangeHandler({
-    params: paramsToSend,
-    selectedCategory
-  })
+  onChangeHandler(paramsToSend, selectedCategory)
 }
 
 /**

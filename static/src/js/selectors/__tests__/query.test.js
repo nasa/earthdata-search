@@ -1,3 +1,4 @@
+import useEdscStore from '../../zustand/useEdscStore'
 import {
   getCollectionsQuerySpatial,
   getCollectionSubscriptionQueryString,
@@ -145,21 +146,22 @@ describe('getGranuleSubscriptionQueryString selector', () => {
 
 describe('getCollectionSubscriptionQueryString selector', () => {
   test('returns the collection query string', () => {
-    const state = {
-      facetsParams: {
-        feature: {
+    useEdscStore.setState({
+      facetParams: {
+        featureFacets: {
           availableInEarthdataCloud: true,
           customizable: false,
-          mapImagery: false,
-          nearRealTime: false
+          mapImagery: false
         },
-        cmr: {
+        cmrFacets: {
           data_center_h: [
             'National Snow and Ice Data Center (NSIDC)'
           ]
-        },
-        viewAll: {}
-      },
+        }
+      }
+    })
+
+    const state = {
       query: {
         collection: {
           hasGranulesOrCwic: true,
@@ -180,21 +182,22 @@ describe('getCollectionSubscriptionQueryString selector', () => {
   })
 
   test('returns the collection query string with disabledFields removed', () => {
-    const state = {
-      facetsParams: {
-        feature: {
+    useEdscStore.setState({
+      facetParams: {
+        featureFacets: {
           availableInEarthdataCloud: true,
           customizable: false,
-          mapImagery: false,
-          nearRealTime: false
+          mapImagery: false
         },
-        cmr: {
+        cmrFacets: {
           data_center_h: [
             'National Snow and Ice Data Center (NSIDC)'
           ]
-        },
-        viewAll: {}
-      },
+        }
+      }
+    })
+
+    const state = {
       query: {
         collection: {
           hasGranulesOrCwic: true,

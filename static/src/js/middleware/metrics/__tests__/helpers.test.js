@@ -1,4 +1,5 @@
 import spatialTypes from '../../../constants/spatialTypes'
+import useEdscStore from '../../../zustand/useEdscStore'
 import {
   computeKeyword,
   computeSpatialType,
@@ -225,77 +226,81 @@ describe('helpers', () => {
 
   describe('computeFacets', () => {
     test('returns null when no facets are applied', () => {
-      const state = {
-        facetsParams: {
-          feature: undefined,
-          cmr: undefined
+      useEdscStore.setState({
+        facetParams: {
+          featureFacets: {
+            availableInEarthdataCloud: false,
+            customizable: false,
+            mapImagery: false
+          },
+          cmrFacets: {}
         }
-      }
-      const value = computeFacets(state)
+      })
+
+      const value = computeFacets()
       expect(value).toEqual(null)
     })
 
     describe('feature facets', () => {
       test('returns correctly when Map Imagery is applied', () => {
-        const state = {
-          facetsParams: {
-            feature: {
+        useEdscStore.setState({
+          facetParams: {
+            featureFacets: {
               mapImagery: true
-            },
-            cmr: undefined
+            }
           }
-        }
-        const value = computeFacets(state)
+        })
+
+        const value = computeFacets()
         expect(value).toEqual('features/Map Imagery ')
       })
 
-      test('returns correctly when Near Real Time is applied', () => {
-        const state = {
-          facetsParams: {
-            feature: {
-              nearRealTime: true
-            },
-            cmr: undefined
+      test('returns correctly when Aavailable In Earthdata Cloud is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            featureFacets: {
+              availableInEarthdataCloud: true
+            }
           }
-        }
-        const value = computeFacets(state)
-        expect(value).toEqual('features/Near Real Time ')
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('features/Aavailable In Earthdata Cloud ')
       })
 
       test('returns correctly when Customizable is applied', () => {
-        const state = {
-          facetsParams: {
-            feature: {
+        useEdscStore.setState({
+          facetParams: {
+            featureFacets: {
               customizable: true
-            },
-            cmr: undefined
+            }
           }
-        }
-        const value = computeFacets(state)
+        })
+
+        const value = computeFacets()
         expect(value).toEqual('features/Customizable ')
       })
 
       test('returns correctly when multiple feature facets are applied', () => {
-        const state = {
-          facetsParams: {
-            feature: {
+        useEdscStore.setState({
+          facetParams: {
+            featureFacets: {
               mapImagery: true,
               customizable: true
-            },
-            cmr: undefined
+            }
           }
-        }
-        const value = computeFacets(state)
+        })
+
+        const value = computeFacets()
         expect(value).toEqual('features/Map Imagery features/Customizable ')
       })
     })
 
     describe('cmr facets', () => {
       test('returns correctly when science keyword is applied', () => {
-        const state = {
-          facetsParams: {
-            feature: undefined,
-            cmr: {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
               science_keywords_h: [{
                 variable_level_1: 'Emissions',
                 term: 'Air Quality',
@@ -303,24 +308,132 @@ describe('helpers', () => {
               }]
             }
           }
-        }
+        })
 
-        const value = computeFacets(state)
+        const value = computeFacets()
         expect(value).toEqual('topic/Atmosphere term/Air Quality variable_level_1/Emissions ')
       })
 
-      test('returns correctly when a normal category is applied', () => {
-        const state = {
-          facetsParams: {
-            feature: undefined,
-            cmr: {
+      test('returns correctly when platform is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
+              platforms_h: [{
+                basis: 'Space-based Platforms',
+                category: 'Earth Observation Satellites',
+                sub_category: 'Landsat',
+                short_name: 'LANDSAT-8'
+              }]
+            }
+          }
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('basis/Space-based Platforms category/Earth Observation Satellites sub_category/Landsat short_name/LANDSAT-8 ')
+      })
+
+      test('returns correctly when instrument is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
               instrument_h: ['CHEMILUMINESCENCE']
             }
           }
-        }
+        })
 
-        const value = computeFacets(state)
+        const value = computeFacets()
         expect(value).toEqual('instrument/CHEMILUMINESCENCE ')
+      })
+
+      test('returns correctly when data_center is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
+              data_center_h: ['Alaska+Satellite+Facility']
+            }
+          }
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('data_center/Alaska+Satellite+Facility ')
+      })
+
+      test('returns correctly when project is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
+              project_h: ['ABoVE']
+            }
+          }
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('project/ABoVE ')
+      })
+
+      test('returns correctly when processing_level_id is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
+              processing_level_id_h: ['0+-+Raw+Data']
+            }
+          }
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('processing_level_id/0+-+Raw+Data ')
+      })
+
+      test('returns correctly when granule_data_format is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
+              granule_data_format_h: ['ASCII']
+            }
+          }
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('granule_data_format/ASCII ')
+      })
+
+      test('returns correctly when two_d_coordinate_system_name is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
+              two_d_coordinate_system_name: ['CALIPSO']
+            }
+          }
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('two_d_coordinate_system_name/CALIPSO ')
+      })
+
+      test('returns correctly when horizontal_data_resolution_range is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
+              horizontal_data_resolution_range: ['0+to+1+meter']
+            }
+          }
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('horizontal_data_resolution_range/0+to+1+meter ')
+      })
+
+      test('returns correctly when latency is applied', () => {
+        useEdscStore.setState({
+          facetParams: {
+            cmrFacets: {
+              latency: ['1+to+3+hours']
+            }
+          }
+        })
+
+        const value = computeFacets()
+        expect(value).toEqual('latency/1+to+3+hours ')
       })
     })
   })

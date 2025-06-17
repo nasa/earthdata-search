@@ -564,10 +564,12 @@ describe('clearFilters', () => {
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
-    const getTimelineMock = jest.fn()
     useEdscStore.setState({
+      facetParams: {
+        resetFacetParams: jest.fn()
+      },
       timeline: {
-        getTimeline: getTimelineMock
+        getTimeline: jest.fn()
       }
     })
 
@@ -579,11 +581,20 @@ describe('clearFilters', () => {
       type: CLEAR_FILTERS
     })
 
+    const zustandState = useEdscStore.getState()
+    const { facetParams, timeline } = zustandState
+    const { resetFacetParams } = facetParams
+    const { getTimeline } = timeline
+
+    expect(resetFacetParams).toHaveBeenCalledTimes(1)
+    expect(resetFacetParams).toHaveBeenCalledWith()
+
     // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
-    expect(getTimelineMock).toHaveBeenCalledTimes(1)
+    expect(getTimeline).toHaveBeenCalledTimes(1)
+    expect(getTimeline).toHaveBeenCalledWith()
   })
 
   test('does not call getGranules on the collections page', () => {
@@ -606,10 +617,12 @@ describe('clearFilters', () => {
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
-    const getTimelineMock = jest.fn()
     useEdscStore.setState({
+      facetParams: {
+        resetFacetParams: jest.fn()
+      },
       timeline: {
-        getTimeline: getTimelineMock
+        getTimeline: jest.fn()
       }
     })
 
@@ -621,10 +634,18 @@ describe('clearFilters', () => {
       type: CLEAR_FILTERS
     })
 
+    const zustandState = useEdscStore.getState()
+    const { facetParams, timeline } = zustandState
+    const { resetFacetParams } = facetParams
+    const { getTimeline } = timeline
+
+    expect(resetFacetParams).toHaveBeenCalledTimes(1)
+    expect(resetFacetParams).toHaveBeenCalledWith()
+
     // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(0)
-    expect(getTimelineMock).toHaveBeenCalledTimes(0)
+    expect(getTimeline).toHaveBeenCalledTimes(0)
   })
 })

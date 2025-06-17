@@ -27,7 +27,7 @@ export const virtualPageview = (action, state) => {
       dimension13: computeTemporalType(state), // Temporal
       dimension14: computeCollectionsViewed(state), // Collections Viewed
       dimension15: computeCollectionsAdded(state), // Collections Added
-      dimension16: computeFacets(state) // Search Facet
+      dimension16: computeFacets() // Search Facet
     })
   }
 }

@@ -23,8 +23,7 @@ describe('updateStore', () => {
       featureFacets: {
         availableInEarthdataCloud: false,
         customizable: false,
-        mapImagery: false,
-        nearRealTime: false
+        mapImagery: false
       },
       focusedCollection: 'C00001-EDSC',
       mapView: {},
@@ -74,6 +73,8 @@ describe('updateStore', () => {
           ...params.query,
           collectionSortPreference: 'default'
         },
+        cmrFacets: undefined,
+        featureFacets: undefined,
         mapView: undefined,
         portal: undefined,
         timeline: undefined
@@ -84,10 +85,22 @@ describe('updateStore', () => {
     // Expect the zustand store to be updated
     const initialState = useEdscStore.getInitialState()
     const {
+      facetParams,
       map,
       portal,
       timeline
     } = useEdscStore.getState()
+
+    expect(facetParams).toEqual({
+      ...initialState.facetParams,
+      cmrFacets: {},
+      featureFacets: {
+        availableInEarthdataCloud: false,
+        customizable: false,
+        mapImagery: false
+      }
+    })
+
     expect(map).toEqual(initialState.map)
 
     expect(portal).toEqual({})
@@ -111,8 +124,7 @@ describe('updateStore', () => {
         featureFacets: {
           availableInEarthdataCloud: false,
           customizable: false,
-          mapImagery: false,
-          nearRealTime: false
+          mapImagery: false
         },
         focusedCollection: 'C00001-EDSC',
         mapView: {},
@@ -174,6 +186,8 @@ describe('updateStore', () => {
             ...params.query,
             collectionSortPreference: 'default'
           },
+          cmrFacets: undefined,
+          featureFacets: undefined,
           mapView: undefined,
           portal: undefined,
           timeline: undefined
@@ -185,10 +199,21 @@ describe('updateStore', () => {
 
       // Expect the zustand store to be updated
       const {
+        facetParams,
         map,
         portal,
         timeline
       } = useEdscStore.getState()
+
+      expect(facetParams).toEqual({
+        ...initialState.facetParams,
+        cmrFacets: {},
+        featureFacets: {
+          availableInEarthdataCloud: false,
+          customizable: false,
+          mapImagery: false
+        }
+      })
 
       expect(map).toEqual(initialState.map)
 
@@ -219,8 +244,7 @@ describe('updateStore', () => {
         featureFacets: {
           availableInEarthdataCloud: false,
           customizable: false,
-          mapImagery: false,
-          nearRealTime: false
+          mapImagery: false
         },
         focusedCollection: '',
         mapView: {},
@@ -277,6 +301,8 @@ describe('updateStore', () => {
             ...params.query,
             collectionSortPreference: 'default'
           },
+          cmrFacets: undefined,
+          featureFacets: undefined,
           mapView: undefined,
           portalId: undefined,
           portal: undefined,
@@ -289,10 +315,21 @@ describe('updateStore', () => {
 
       // Expect the zustand store to be updated
       const {
+        facetParams,
         map,
         portal,
         timeline
       } = useEdscStore.getState()
+
+      expect(facetParams).toEqual({
+        ...initialState.facetParams,
+        cmrFacets: {},
+        featureFacets: {
+          availableInEarthdataCloud: false,
+          customizable: false,
+          mapImagery: false
+        }
+      })
 
       expect(map).toEqual(initialState.map)
 
@@ -422,8 +459,7 @@ describe('changePath', () => {
           featureFacets: {
             availableInEarthdataCloud: false,
             customizable: false,
-            mapImagery: false,
-            nearRealTime: false
+            mapImagery: false
           },
           deprecatedUrlParams: [],
           focusedCollection: 'C00001-EDSC',
@@ -510,8 +546,7 @@ describe('changePath', () => {
       featureFacets: {
         availableInEarthdataCloud: false,
         customizable: false,
-        mapImagery: false,
-        nearRealTime: false
+        mapImagery: false
       },
       focusedCollection: 'C00001-EDSC',
       query: {
