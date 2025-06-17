@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { type Dispatch } from 'redux'
 import { useHistory } from 'react-router-dom'
 
@@ -95,10 +95,8 @@ describe('Home', () => {
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
 
-    await act(async () => {
-      await user.type(searchInput, 'test')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-    })
+    await user.type(searchInput, 'test')
+    await user.click(screen.getByRole('button', { name: /search/i }))
 
     expect(props.onChangePath).toHaveBeenCalledTimes(1)
     expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
@@ -112,13 +110,14 @@ describe('Home', () => {
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
 
-    await act(async () => {
-      await user.type(searchInput, 'test')
-      await user.click(screen.getByRole('button', { name: /search/i }))
-    })
+    await user.type(searchInput, 'test')
+    await user.click(screen.getByRole('button', { name: /search/i }))
 
     expect(props.onChangePath).toHaveBeenCalledTimes(1)
     expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
+
+    expect(useHistory().push).toHaveBeenCalledTimes(1)
+    expect(useHistory().push).toHaveBeenCalledWith('/search?q=test')
   })
 
   test('renders the topic cards', () => {
@@ -157,9 +156,7 @@ describe('Home', () => {
     const showAllButton = screen.getByText('Show all portals')
     expect(showAllButton).toBeInTheDocument()
 
-    await act(async () => {
-      await user.click(showAllButton)
-    })
+    await user.click(showAllButton)
 
     const portalCards = screen.getAllByRole('link', { name: 'Home portal card' })
 
