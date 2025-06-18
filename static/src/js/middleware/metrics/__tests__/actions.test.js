@@ -11,7 +11,6 @@ import {
   METRICS_GRANULE_FILTER,
   METRICS_SPATIAL_SELECTION,
   METRICS_TIMELINE,
-  METRICS_TIMING,
   METRICS_TEMPORAL_FILTER
 } from '../constants'
 
@@ -27,7 +26,6 @@ import {
   metricsRelatedCollection,
   metricsSpatialEdit,
   metricsSpatialSelection,
-  metricsTiming,
   metricsCollectionSortChange,
   metricsTemporalFilter
 } from '../actions'
@@ -223,24 +221,6 @@ describe('actions', () => {
       } = action
 
       expect(type).toEqual(METRICS_TEMPORAL_FILTER)
-      expect(payload).toEqual(data)
-    })
-  })
-
-  describe('metricsTiming', () => {
-    test('returns the correct action', () => {
-      const data = {
-        test: 'test payload'
-      }
-
-      const action = metricsTiming(data)
-
-      const {
-        type,
-        payload
-      } = action
-
-      expect(type).toEqual(METRICS_TIMING)
       expect(payload).toEqual(data)
     })
   })

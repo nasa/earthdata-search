@@ -316,25 +316,6 @@ export const browseGranuleImage = (action) => {
 }
 
 /**
-* Pushes a timing event on the dataLayer.
-* @param {Object} action - The action.
-*/
-export const timing = (action) => {
-  const { payload } = action
-  const {
-    url,
-    timing: timingValue
-  } = payload
-
-  dataLayer.push({
-    event: 'timing',
-    timingEventCategory: 'ajax',
-    timingEventVar: url,
-    timingEventValue: timingValue
-  })
-}
-
-/**
 * Pushes a collectionSortChange event on the dataLayer.
 * @param {Object} action - The action.
 */
