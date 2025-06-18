@@ -167,6 +167,75 @@ describe('adminGetRetrievals', () => {
     expect(statusCode).toEqual(200)
   })
 
+  test('correctly retrieves retrievals filtered by user_id', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([{
+        id: 1,
+        jsondata: {},
+        environment: 'prod',
+        created_at: '2019-08-25T11:58:14.390Z',
+        user_id: 1,
+        username: 'edsc-test',
+        total: '1'
+      }])
+    })
+
+    const retrievalResponse = await adminGetRetrievals({
+      queryStringParameters: {
+        user_id: 'edsc-test'
+      }
+    }, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('select')
+    // Ensure the query contains the user filter value
+    expect(queries[0].bindings).toContain('edsc-test')
+
+    const { body, statusCode } = retrievalResponse
+
+    const responseObj = {
+      pagination: {
+        page_num: 1,
+        page_size: 20,
+        page_count: 1,
+        total_results: 1
+      },
+      results: [
+        {
+          id: 1,
+          jsondata: {},
+          environment: 'prod',
+          created_at: '2019-08-25T11:58:14.390Z',
+          user_id: 1,
+          username: 'edsc-test',
+          total: '1',
+          obfuscated_id: '4517239960'
+        }
+      ]
+    }
+    expect(body).toEqual(JSON.stringify(responseObj))
+    expect(statusCode).toEqual(200)
+  })
+
+  test('returns 404 when user_id filter finds no retrievals', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([])
+    })
+
+    const retrievalResponse = await adminGetRetrievals({
+      queryStringParameters: {
+        user_id: 'unknown-user'
+      }
+    }, {})
+
+    const { queries } = dbTracker.queries
+    expect(queries[0].method).toEqual('select')
+
+    const { statusCode } = retrievalResponse
+    expect(statusCode).toEqual(404)
+  })
+
   test('correctly returns an error', async () => {
     dbTracker.on('query', (query) => {
       query.reject('Unknown Error')

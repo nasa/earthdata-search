@@ -11,7 +11,7 @@ const sortKeyMap = {
 }
 
 /**
- * Retrieve all the retrievals for the authenticated user
+ * Retrieve all the retrievals for the authenticated user (optional filter on user_id)
  * @param {Object} event Details about the HTTP request that it received
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
@@ -27,13 +27,14 @@ const adminGetRetrievals = async (event, context) => {
     const {
       page_num: pageNum = 1,
       page_size: pageSize = 20,
-      sort_key: sortKey = '-created_at'
+      sort_key: sortKey = '-created_at',
+      user_id: userId
     } = queryStringParameters || {}
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
-    const retrievalResponse = await dbConnection('retrievals')
+    let query = dbConnection('retrievals')
       .select(
         'retrievals.id',
         'retrievals.jsondata',
@@ -44,13 +45,26 @@ const adminGetRetrievals = async (event, context) => {
       )
       .select(dbConnection.raw('count(*) OVER() as total'))
       .join('users', { 'retrievals.user_id': 'users.id' })
+
+    if (userId) {
+      query = query.whereRaw('LOWER(users.urs_id) = LOWER(?)', [userId])
+    }
+
+    const retrievalResponse = await query
       .orderBy(...sortKeyMap[sortKey])
       .limit(pageSize)
       .offset((pageNum - 1) * pageSize)
 
-    const [firstResponseRow] = retrievalResponse
+    if (userId && retrievalResponse.length === 0) {
+      return {
+        isBase64Encoded: false,
+        statusCode: 404,
+        headers: defaultResponseHeaders,
+        body: JSON.stringify({ errors: [`No retrievals found for user: ${userId}`] })
+      }
+    }
 
-    const { total } = firstResponseRow
+    const { total } = retrievalResponse[0]
 
     const pagination = {
       page_num: parseInt(pageNum, 10),
