@@ -99,6 +99,13 @@ const Facets = (props) => {
     children: []
   }
 
+  /**
+   * NOTE: If these facets are changed in the future (like new groups added), be sure
+   * to update the metrics helper `computeFacets` function to ensure the
+   * metrics are still being collected correctly.
+   * `computeFacets` found here: static/src/js/middleware/metrics/helpers.js
+   */
+
   const keywordsFacet = {
     ...cmrFacetDefaults,
     title: 'Keywords',

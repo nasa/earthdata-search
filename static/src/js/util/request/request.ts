@@ -1,10 +1,6 @@
 import axios, { CancelTokenSource } from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
-// // @ts-expect-error Types are not defined for this module
-// import configureStore from '../../store/configureStore'
-// // @ts-expect-error Types are not defined for this module
-// import { metricsTiming } from '../../middleware/metrics/actions'
 // @ts-expect-error Types are not defined for this module
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import type {
