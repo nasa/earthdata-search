@@ -8,9 +8,6 @@ import { metricsMiddleware } from '../middleware/metrics'
 
 import history from '../util/history'
 
-// Set up the initial state
-// const initialState = {}
-
 let store
 
 export const configureStore = (initialState = {}) => {

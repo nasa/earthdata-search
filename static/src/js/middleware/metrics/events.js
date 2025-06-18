@@ -27,7 +27,7 @@ export const virtualPageview = (action, state) => {
       dimension13: computeTemporalType(state), // Temporal
       dimension14: computeCollectionsViewed(state), // Collections Viewed
       dimension15: computeCollectionsAdded(state), // Collections Added
-      dimension16: computeFacets(state) // Search Facet
+      dimension16: computeFacets() // Search Facet
     })
   }
 }
@@ -312,25 +312,6 @@ export const browseGranuleImage = (action) => {
     browseGranuleImageModalOpen: modalOpen,
     browseGranuleImageGranuleId: granuleId,
     browseGranuleImageValue: value
-  })
-}
-
-/**
-* Pushes a timing event on the dataLayer.
-* @param {Object} action - The action.
-*/
-export const timing = (action) => {
-  const { payload } = action
-  const {
-    url,
-    timing: timingValue
-  } = payload
-
-  dataLayer.push({
-    event: 'timing',
-    timingEventCategory: 'ajax',
-    timingEventVar: url,
-    timingEventValue: timingValue
   })
 }
 

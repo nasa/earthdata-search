@@ -17,6 +17,93 @@ export type EarthdataDownloadRedirectSlice = {
   }
 }
 
+type FeatureFacets = {
+  /** Flag if the facet is available in Earthdata Cloud */
+  availableInEarthdataCloud: boolean
+  /** Flag if the facet is customizable */
+  customizable: boolean
+  /** Flag if the facet is a map imagery */
+  mapImagery: boolean
+}
+
+/** Keys used for CMR Facets */
+export type FacetKeys = 'science_keywords_h'
+  | 'platforms_h'
+  | 'instrument_h'
+  | 'data_center_h'
+  | 'project_h'
+  | 'processing_level_id_h'
+  | 'granule_data_format_h'
+  | 'two_d_coordinate_system_name'
+  | 'horizontal_data_resolution_range'
+  | 'latency'
+
+/** The Platform Facet */
+type PlatformFacet = {
+  basis?: string
+  category?: string
+  short_name?: string
+  sub_category?: string
+}
+
+/** The Science Keyword Facet */
+export type ScienceKeywordFacet = {
+  detailed_variable?: string
+  term?: string
+  topic?: string
+  variable_level_1?: string
+  variable_level_2?: string
+  variable_level_3?: string
+}
+
+/** The CMR Facets */
+export type CMRFacets = {
+  data_center_h?: string[]
+  granule_data_format_h?: string[]
+  horizontal_data_resolution_range?: string[]
+  instrument_h?: string[]
+  latency?: string[]
+  platforms_h?: PlatformFacet[]
+  processing_level_id_h?: string[]
+  project_h?: string[]
+  science_keywords_h?: ScienceKeywordFacet[] | ScienceKeywordFacet
+  two_d_coordinate_system_name?: string[]
+}
+
+/** The View All Facets */
+type ViewAllFacets = {
+  data_center_h?: string[]
+  granule_data_format_h?: string[]
+  instrument_h?: string[]
+  project_h?: string[]
+}
+
+export type FacetParamsSlice = {
+  /** The Facets Slice of the store */
+  facetParams: {
+    /** The feature facets */
+    featureFacets: FeatureFacets
+    /** The CMR facets */
+    cmrFacets: CMRFacets
+    /** The view all facets */
+    viewAllFacets: ViewAllFacets
+    /** Function to add a CMR facet from an autocomplete suggestion */
+    addCmrFacetFromAutocomplete: (facet: CMRFacets) => void
+    /** Function to apply the viewAllFacets params */
+    applyViewAllFacets: () => void
+    /** Function to reset the facet params */
+    resetFacetParams: () => void
+    /** Function to set the feature facets */
+    setFeatureFacets: (featureFacets: Partial<FeatureFacets>) => void
+    /** Function to set the CMR facets */
+    setCmrFacets: (cmrFacets: CMRFacets) => void
+    /** Function to set the view all facets */
+    setViewAllFacets: (viewAllFacets: ViewAllFacets, category: keyof ViewAllFacets) => void
+    /** Function to trigger the View All Facets modal */
+    triggerViewAllFacets: (category: string) => void
+  }
+}
+
 export type HomeSlice = {
   /** The Home Slice of the store */
   home: {
@@ -24,10 +111,10 @@ export type HomeSlice = {
     startDrawing: boolean | string
     /** Function to set the startDrawing value */
     setStartDrawing: (startDrawing: boolean | string) => void
-    /** Flag if the Keyword facet group should be opened */
-    openKeywordFacet: boolean
-    /** Function to set the openKeywordFacet value */
-    setOpenKeywordFacet: (openKeywordFacet: boolean) => void
+    /** Flag if a facet group should be opened */
+    openFacetGroup: string | null
+    /** Function to set the setOpenFacetGroup value */
+    setOpenFacetGroup: (groupName: string | null) => void
   }
 }
 
@@ -206,6 +293,7 @@ export type UiSlice = {
 
 export type EdscStore =
   EarthdataDownloadRedirectSlice
+  & FacetParamsSlice
   & HomeSlice
   & MapSlice
   & PortalSlice

@@ -5,6 +5,7 @@ import {
 } from '../collections'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
+import useEdscStore from '../../zustand/useEdscStore'
 
 describe('#translateDefaultCollectionSortKey', () => {
   beforeEach(() => {
@@ -30,13 +31,15 @@ describe('#translateDefaultCollectionSortKey', () => {
 describe('#prepareCollectionParams', () => {
   describe('when the customize facet is selected', () => {
     test('includes the correct serviceType', () => {
-      const params = prepareCollectionParams({
-        facetsParams: {
-          feature: {
+      useEdscStore.setState({
+        facetParams: {
+          featureFacets: {
             customizable: true
           }
         }
       })
+
+      const params = prepareCollectionParams({})
 
       expect(params).toEqual(
         expect.objectContaining({

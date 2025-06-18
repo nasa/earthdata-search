@@ -13,8 +13,7 @@ import {
   METRICS_SPATIAL_EDIT,
   METRICS_SPATIAL_SELECTION,
   METRICS_TEMPORAL_FILTER,
-  METRICS_TIMELINE,
-  METRICS_TIMING
+  METRICS_TIMELINE
 } from '../constants'
 import * as events from '../events'
 import metricsMiddleware from '../index'
@@ -227,20 +226,6 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(events.temporalFilter).toHaveBeenCalledTimes(1)
     expect(events.temporalFilter).toHaveBeenCalledWith(action)
-  })
-
-  test('calls timing event', () => {
-    const { invoke } = createStore()
-
-    const action = {
-      type: METRICS_TIMING,
-      payload: {
-        type: 'Test'
-      }
-    }
-    invoke(action)
-    expect(events.timing).toHaveBeenCalledTimes(1)
-    expect(events.timing).toHaveBeenCalledWith(action)
   })
 
   test('calls collectionSortChange event', () => {

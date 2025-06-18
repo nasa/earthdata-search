@@ -1,4 +1,5 @@
 import spatialTypes from '../../constants/spatialTypes'
+import useEdscStore from '../../zustand/useEdscStore'
 
 /**
 * Get the current keyword from the state.
@@ -85,30 +86,32 @@ export const computeCollectionsAdded = (state) => {
 
 /**
 * Get the facet information from the state.
-* @param {Object} state - The current Redux state.
 * @returns {String} The currently applied facets.
 */
-export const computeFacets = (state) => {
-  const { facetsParams } = state
+export const computeFacets = () => {
+  const { facetParams } = useEdscStore.getState()
   const {
-    feature: featureParams = {},
-    cmr: cmrParams = {}
-  } = facetsParams
+    featureFacets: featureParams = {},
+    cmrFacets: cmrParams = {}
+  } = facetParams
 
   const facets = []
 
+  if (featureParams.availableInEarthdataCloud) facets.push('features/Aavailable In Earthdata Cloud')
   if (featureParams.mapImagery) facets.push('features/Map Imagery')
-  if (featureParams.nearRealTime) facets.push('features/Near Real Time')
   if (featureParams.customizable) facets.push('features/Customizable')
 
   const cmrFacetKeys = [
-    'category',
-    'data_center',
-    'project',
-    'platform',
-    'instrument',
-    'processing_level_id',
-    'science_keywords'
+    'science_keywords_h',
+    'platforms_h',
+    'instrument_h',
+    'data_center_h',
+    'project_h',
+    'processing_level_id_h',
+    'granule_data_format_h',
+    'two_d_coordinate_system_name',
+    'horizontal_data_resolution_range',
+    'latency'
   ]
 
   const keywordLevels = [
@@ -120,17 +123,32 @@ export const computeFacets = (state) => {
     'detailed_variable'
   ]
 
-  cmrFacetKeys.forEach((cmrFacet) => {
-    const facetName = `${cmrFacet}_h`
-    if (cmrFacet === 'science_keywords' && (cmrParams[facetName] && cmrParams[facetName].length)) {
-      cmrParams[facetName].forEach(((keyword) => {
+  const platformLevels = [
+    'basis',
+    'category',
+    'sub_category',
+    'short_name'
+  ]
+
+  cmrFacetKeys.forEach((cmrFacetName) => {
+    const facetNameWithoutH = cmrFacetName.replace(/_h$/, '')
+    const facetValue = cmrParams[cmrFacetName]
+
+    if (cmrFacetName === 'science_keywords_h' && (facetValue && facetValue.length)) {
+      facetValue.forEach(((keyword) => {
         keywordLevels.forEach((keywordLevel) => {
           if (keyword[keywordLevel]) facets.push(`${keywordLevel}/${keyword[keywordLevel]}`)
         })
       }))
-    } else if (cmrParams[facetName] && cmrParams[facetName].length) {
-      cmrParams[facetName].forEach(((facet) => {
-        facets.push(`${cmrFacet}/${facet}`)
+    } else if (cmrFacetName === 'platforms_h' && (facetValue && facetValue.length)) {
+      facetValue.forEach(((platform) => {
+        platformLevels.forEach((platformLevel) => {
+          if (platform[platformLevel]) facets.push(`${platformLevel}/${platform[platformLevel]}`)
+        })
+      }))
+    } else if (facetValue && facetValue.length) {
+      facetValue.forEach(((facet) => {
+        facets.push(`${facetNameWithoutH}/${facet}`)
       }))
     }
   })

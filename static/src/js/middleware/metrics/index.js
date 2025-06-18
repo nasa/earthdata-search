@@ -14,7 +14,6 @@ import {
   spatialSelection,
   temporalFilter,
   timeline,
-  timing,
   virtualPageview
 } from './events'
 
@@ -31,8 +30,7 @@ import {
   METRICS_SPATIAL_EDIT,
   METRICS_SPATIAL_SELECTION,
   METRICS_TEMPORAL_FILTER,
-  METRICS_TIMELINE,
-  METRICS_TIMING
+  METRICS_TIMELINE
 } from './constants'
 
 const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
@@ -86,10 +84,6 @@ const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
 
   if (action.type === METRICS_SPATIAL_SELECTION) {
     spatialSelection(action)
-  }
-
-  if (action.type === METRICS_TIMING) {
-    timing(action)
   }
 
   if (action.type === METRICS_COLLECTION_SORT_CHANGE) {

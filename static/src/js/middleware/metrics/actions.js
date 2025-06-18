@@ -11,7 +11,6 @@ import {
   METRICS_SPATIAL_SELECTION,
   METRICS_TEMPORAL_FILTER,
   METRICS_TIMELINE,
-  METRICS_TIMING,
   METRICS_COLLECTION_SORT_CHANGE
 } from './constants'
 
@@ -71,11 +70,6 @@ export const metricsTemporalFilter = (payload) => ({
 
 export const metricsSpatialSelection = (payload) => ({
   type: METRICS_SPATIAL_SELECTION,
-  payload
-})
-
-export const metricsTiming = (payload) => ({
-  type: METRICS_TIMING,
   payload
 })
 

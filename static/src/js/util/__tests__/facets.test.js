@@ -29,9 +29,7 @@ describe('changeCmrFacet', () => {
     expect(onChangeHandlerMock).toHaveBeenCalledWith(
       expect.objectContaining({
         granule_data_format_h: ['ASCII']
-      }),
-      {},
-      false
+      })
     )
   })
 
@@ -53,9 +51,7 @@ describe('changeCmrFacet', () => {
       expect(onChangeHandlerMock).toHaveBeenCalledWith(
         expect.objectContaining({
           data_center_h: ['Level-1%2Band%2BAtmosphere%2BArchive%2B%2526%2BDistribution%2BSystem%2B%2528LAADS%2529']
-        }),
-        {},
-        false
+        })
       )
     })
   })
