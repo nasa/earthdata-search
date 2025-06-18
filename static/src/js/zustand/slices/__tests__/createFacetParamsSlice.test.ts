@@ -122,18 +122,18 @@ describe('createFacetParamsSlice', () => {
 
       expect(mockDispatch).toHaveBeenCalledTimes(4)
       expect(mockDispatch).toHaveBeenNthCalledWith(1, {
+        type: TOGGLE_VIEW_ALL_FACETS_MODAL,
+        payload: false
+      })
+
+      expect(mockDispatch).toHaveBeenNthCalledWith(2, {
         payload: { pageNum: 1 },
         type: UPDATE_COLLECTION_QUERY
       })
 
-      expect(mockDispatch).toHaveBeenNthCalledWith(2, expect.any(Function))
-      expect(mockDispatch).toHaveBeenNthCalledWith(3, {
-        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-      })
-
+      expect(mockDispatch).toHaveBeenNthCalledWith(3, expect.any(Function))
       expect(mockDispatch).toHaveBeenNthCalledWith(4, {
-        type: TOGGLE_VIEW_ALL_FACETS_MODAL,
-        payload: false
+        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
       })
     })
   })

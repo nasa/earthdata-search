@@ -111,9 +111,9 @@ export type HomeSlice = {
     startDrawing: boolean | string
     /** Function to set the startDrawing value */
     setStartDrawing: (startDrawing: boolean | string) => void
-    /** Flag if the Keyword facet group should be opened */
+    /** Flag if a facet group should be opened */
     openFacetGroup: string | null
-    /** Function to set the openKeywordFacet value */
+    /** Function to set the setOpenFacetGroup value */
     setOpenFacetGroup: (groupName: string | null) => void
   }
 }

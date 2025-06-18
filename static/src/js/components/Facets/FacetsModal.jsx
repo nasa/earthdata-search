@@ -8,10 +8,22 @@ import { pluralize } from '../../util/pluralize'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import FacetsList from './FacetsList'
 import FacetsModalNav from './FacetsModalNav'
+import Skeleton from '../Skeleton/Skeleton'
 
 import useEdscStore from '../../zustand/useEdscStore'
 
 import './FacetsModal.scss'
+
+const matchingCollectionsSkeleton = [
+  {
+    shape: 'rectangle',
+    left: 2,
+    top: 10,
+    height: 18.5,
+    width: '100%',
+    radius: 2
+  }
+]
 
 const FacetsModal = ({
   collectionHits,
@@ -76,9 +88,21 @@ const FacetsModal = ({
     />
   )
 
-  const footerMeta = !isFirstLoad && (
-    <span className="facets-modal__hits">{`${commafy(collectionHits)} Matching ${pluralize('Collection', collectionHits)}`}</span>
-  )
+  const footerMeta = isLoading
+    ? (
+      <Skeleton
+        containerStyle={
+          {
+            height: '40px',
+            width: '13rem'
+          }
+        }
+        shapes={matchingCollectionsSkeleton}
+      />
+    )
+    : (
+      <span className="facets-modal__hits">{`${commafy(collectionHits)} Matching ${pluralize('Collection', collectionHits)}`}</span>
+    )
 
   return (
     <EDSCModalContainer

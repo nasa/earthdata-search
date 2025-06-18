@@ -1,8 +1,8 @@
 import {
+  CMRFacets,
   FacetKeys,
   FacetParamsSlice,
-  ImmerStateCreator,
-  ScienceKeywordFacet
+  ImmerStateCreator
 } from '../types'
 
 // @ts-expect-error: This file does not have types
@@ -41,23 +41,22 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
         state.facetParams.cmrFacets = {
           ...state.facetParams.cmrFacets,
           [facetType]: [
-            // TODO why does this work with ScienceKeywordFacet[]?
-            ...(state.facetParams.cmrFacets[facetType] as ScienceKeywordFacet[] || []),
+            ...(state.facetParams.cmrFacets[facetType] as CMRFacets[FacetKeys][] || []),
             facetValue
           ]
         }
       })
     },
     applyViewAllFacets: () => {
-      const { setCmrFacets, viewAllFacets } = get().facetParams
-
-      setCmrFacets(viewAllFacets)
-
       const {
         dispatch: reduxDispatch
       } = configureStore()
 
       reduxDispatch(actions.toggleFacetsModal(false))
+
+      const { setCmrFacets, viewAllFacets } = get().facetParams
+
+      setCmrFacets(viewAllFacets)
     },
     setFeatureFacets: (featureFacets) => {
       set((state) => {

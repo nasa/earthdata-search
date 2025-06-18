@@ -6,6 +6,7 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import FacetsModal from '../FacetsModal'
 import FacetsModalNav from '../FacetsModalNav'
 import FacetsList from '../FacetsList'
+import Skeleton from '../../Skeleton/Skeleton'
 
 import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
@@ -21,6 +22,7 @@ jest.mock('../../../containers/EDSCModalContainer/EDSCModalContainer', () => jes
 
 jest.mock('../FacetsList', () => jest.fn(() => <div />))
 jest.mock('../FacetsModalNav', () => jest.fn(() => <div />))
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: FacetsModal,
@@ -178,6 +180,7 @@ describe('FacetsModal component', () => {
         {}
       )
 
+      expect(Skeleton).toHaveBeenCalledTimes(1)
       expect(screen.queryByText('Matching Collection')).not.toBeInTheDocument()
     })
   })
@@ -260,6 +263,7 @@ describe('FacetsModal component', () => {
         {}
       )
 
+      expect(Skeleton).toHaveBeenCalledTimes(0)
       expect(screen.getByText('100 Matching Collections')).toBeInTheDocument()
     })
   })
