@@ -41,6 +41,7 @@ export class AdminRetrievalsContainer extends Component {
       history,
       onAdminViewRetrieval,
       onFetchAdminRetrievals,
+      onUpdateAdminRetrievalsUserId,
       onUpdateAdminRetrievalsSortKey,
       onUpdateAdminRetrievalsPageNum,
       retrievals

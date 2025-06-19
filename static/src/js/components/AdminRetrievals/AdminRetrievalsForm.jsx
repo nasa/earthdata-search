@@ -10,11 +10,13 @@ export class AdminRetrievalsForm extends Component {
     super(props)
 
     this.state = {
-      retrievalId: ''
+      retrievalId: '',
+      userId: ''
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
+    this.onUserIdChange = this.onUserIdChange.bind(this)
   }
 
   onBlur(event) {
@@ -24,19 +26,31 @@ export class AdminRetrievalsForm extends Component {
   onChange({ target }) {
     const { value } = target
     this.setState({ retrievalId: value })
+    console.log('value', value)
+  }
+
+  onUserIdChange({ target }) {
+    const { value } = target
+    console.log('value', value)
+    this.setState({ userId: value })
   }
 
   onFormSubmit(event) {
     event.preventDefault()
 
-    const { retrievalId } = this.state
-    const { onAdminViewRetrieval } = this.props
-
-    onAdminViewRetrieval(retrievalId)
+    const { userId, retrievalId } = this.state
+    const { onAdminViewRetrieval, onFetchAdminRetrievals } = this.props
+    console.log(onFetchAdminRetrievals)
+    console.log(userId)
+    if (userId) {
+      onFetchAdminRetrievals(userId)
+    } else {
+      onAdminViewRetrieval(retrievalId)
+    }
   }
 
   render() {
-    const { retrievalId } = this.state
+    const { retrievalId, userId } = this.state
 
     return (
       <Form onSubmit={this.onFormSubmit}>
@@ -55,6 +69,32 @@ export class AdminRetrievalsForm extends Component {
             onChange={this.onChange}
             onBlur={this.onBlur}
           />
+
+          <Button
+            type="button"
+            bootstrapVariant="primary"
+            label="Go"
+            onClick={this.onFormSubmit}
+          >
+            Go
+          </Button>
+        </InputGroup>
+        <InputGroup>
+          <Form.Label
+            column
+            sm="auto"
+            className="me-3"
+          >
+            Find Retrieval
+          </Form.Label>
+          <Form.Control
+            name="userId"
+            placeholder="Enter User ID"
+            value={userId}
+            onChange={this.onUserIdChange}
+            onBlur={this.onBlur}
+          />
+
           <Button
             type="button"
             bootstrapVariant="primary"
@@ -70,5 +110,6 @@ export class AdminRetrievalsForm extends Component {
 }
 
 AdminRetrievalsForm.propTypes = {
-  onAdminViewRetrieval: PropTypes.func.isRequired
+  onAdminViewRetrieval: PropTypes.func.isRequired,
+  onFetchAdminRetrievals: PropTypes.func.isRequired
 }

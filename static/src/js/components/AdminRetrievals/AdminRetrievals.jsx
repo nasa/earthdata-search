@@ -12,7 +12,8 @@ export const AdminRetrievals = ({
   onAdminViewRetrieval,
   onUpdateAdminRetrievalsSortKey,
   onUpdateAdminRetrievalsPageNum,
-  retrievals
+  retrievals,
+  onFetchAdminRetrievals
 }) => (
   <AdminPage
     pageTitle="Retrievals"
@@ -33,6 +34,7 @@ export const AdminRetrievals = ({
       <Col sm="auto">
         <AdminRetrievalsForm
           onAdminViewRetrieval={onAdminViewRetrieval}
+          onFetchAdminRetrievals={onFetchAdminRetrievals}
         />
       </Col>
     </Row>

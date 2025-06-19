@@ -10,6 +10,7 @@ export default class RetrievalRequest extends Request {
   }
 
   all(params) {
+    console.log('params', params)
     return this.get('admin/retrievals', params)
   }
 
