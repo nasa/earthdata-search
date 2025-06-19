@@ -9,7 +9,8 @@ Enzyme.configure({ adapter: new Adapter() })
 
 function setup() {
   const props = {
-    onAdminViewRetrieval: jest.fn()
+    onAdminViewRetrieval: jest.fn(),
+    onFetchAdminRetrievals: jest.fn()
   }
 
   const enzymeWrapper = shallow(<AdminRetrievalsForm {...props} />)

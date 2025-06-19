@@ -52,6 +52,16 @@ describe('mapDispatchToProps', () => {
     expect(spy).toBeCalledTimes(1)
   })
 
+  test('onFetchAdminRetrievals calls actions.fetchAdminRetrievals with userId', () => {
+    const dispatch = jest.fn()
+    const spy = jest.spyOn(actions, 'fetchAdminRetrievals')
+
+    mapDispatchToProps(dispatch).onFetchAdminRetrievals('testuser')
+
+    expect(spy).toBeCalledTimes(1)
+    expect(spy).toBeCalledWith('testuser')
+  })
+
   test('onUpdateAdminRetrievalsSortKey calls actions.updateAdminRetrievalsSortKey', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateAdminRetrievalsSortKey')

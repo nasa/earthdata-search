@@ -12,6 +12,7 @@ function setup() {
   const props = {
     historyPush: jest.fn(),
     onAdminViewRetrieval: jest.fn(),
+    onFetchAdminRetrievals: jest.fn(),
     onUpdateAdminRetrievalsSortKey: jest.fn(),
     onUpdateAdminRetrievalsPageNum: jest.fn(),
     retrievals: {

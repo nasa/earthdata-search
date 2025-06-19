@@ -137,6 +137,7 @@ export const fetchAdminRetrievals = (userId) => (dispatch, getState) => {
         requestObject
       }))
     })
+
   return response
 }
 

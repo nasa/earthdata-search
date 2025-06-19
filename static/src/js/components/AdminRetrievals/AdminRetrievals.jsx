@@ -58,6 +58,7 @@ AdminRetrievals.defaultProps = {
 AdminRetrievals.propTypes = {
   historyPush: PropTypes.func.isRequired,
   onAdminViewRetrieval: PropTypes.func.isRequired,
+  onFetchAdminRetrievals: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})

@@ -15,25 +15,16 @@ export class AdminRetrievalsForm extends Component {
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
-    this.onChange = this.onChange.bind(this)
-    this.onUserIdChange = this.onUserIdChange.bind(this)
+    this.onInputChange = this.onInputChange.bind(this)
   }
 
   onBlur(event) {
     event.preventDefault()
   }
 
-  onChange({ target }) {
-    const { value } = target
-    this.setState({ retrievalId: value })
-    console.log('value', value)
-  }
-
-  // TODO consolidate these into one function if possible
-  onUserIdChange({ target }) {
-    const { value } = target
-    console.log('value', value)
-    this.setState({ userId: value })
+  onInputChange({ target }) {
+    const { name, value } = target
+    this.setState({ [name]: value })
   }
 
   onFormSubmit(event) {
@@ -41,8 +32,7 @@ export class AdminRetrievalsForm extends Component {
 
     const { userId, retrievalId } = this.state
     const { onAdminViewRetrieval, onFetchAdminRetrievals } = this.props
-    console.log(onFetchAdminRetrievals)
-    console.log(userId)
+
     if (userId) {
       onFetchAdminRetrievals(userId)
     } else {
@@ -55,7 +45,7 @@ export class AdminRetrievalsForm extends Component {
 
     return (
       <Form onSubmit={this.onFormSubmit}>
-        <InputGroup>
+        <InputGroup className="mb-3">
           <Form.Label
             column
             sm="auto"
@@ -67,7 +57,7 @@ export class AdminRetrievalsForm extends Component {
             name="retrievalId"
             placeholder="Obfuscated Retrieval ID"
             value={retrievalId}
-            onChange={this.onChange}
+            onChange={this.onInputChange}
             onBlur={this.onBlur}
           />
 
@@ -92,7 +82,7 @@ export class AdminRetrievalsForm extends Component {
             name="userId"
             placeholder="Enter User ID"
             value={userId}
-            onChange={this.onUserIdChange}
+            onChange={this.onInputChange}
             onBlur={this.onBlur}
           />
 
