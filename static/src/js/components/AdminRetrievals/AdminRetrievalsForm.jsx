@@ -29,6 +29,7 @@ export class AdminRetrievalsForm extends Component {
     console.log('value', value)
   }
 
+  // TODO consolidate these into one function if possible
   onUserIdChange({ target }) {
     const { value } = target
     console.log('value', value)
@@ -85,7 +86,7 @@ export class AdminRetrievalsForm extends Component {
             sm="auto"
             className="me-3"
           >
-            Find Retrieval
+            Find By User Id
           </Form.Label>
           <Form.Control
             name="userId"

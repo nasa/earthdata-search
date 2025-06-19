@@ -16,7 +16,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onAdminViewRetrieval:
     (retrievalId) => dispatch(actions.adminViewRetrieval(retrievalId)),
   onFetchAdminRetrievals:
-    () => dispatch(actions.fetchAdminRetrievals()),
+    (userId) => dispatch(actions.fetchAdminRetrievals(userId)),
   onUpdateAdminRetrievalsSortKey:
     (sortKey) => dispatch(
       actions.updateAdminRetrievalsSortKey(sortKey)
@@ -41,7 +41,6 @@ export class AdminRetrievalsContainer extends Component {
       history,
       onAdminViewRetrieval,
       onFetchAdminRetrievals,
-      onUpdateAdminRetrievalsUserId,
       onUpdateAdminRetrievalsSortKey,
       onUpdateAdminRetrievalsPageNum,
       retrievals

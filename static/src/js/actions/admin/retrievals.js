@@ -87,7 +87,7 @@ export const fetchAdminRetrieval = (id) => (dispatch, getState) => {
 /**
  * Fetch a group of retrievals from the database
  */
-export const fetchAdminRetrievals = () => (dispatch, getState) => {
+export const fetchAdminRetrievals = (userId) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -113,6 +113,8 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
 
   if (sortKey) requestOpts.sort_key = sortKey
 
+  if (userId) requestOpts.user_id = userId
+
   console.log('requestOpts', requestOpts)
 
   const response = requestObject.all(requestOpts)
@@ -135,7 +137,6 @@ export const fetchAdminRetrievals = () => (dispatch, getState) => {
         requestObject
       }))
     })
-
   return response
 }
 
