@@ -12,7 +12,8 @@ export const AdminRetrievals = ({
   onAdminViewRetrieval,
   onUpdateAdminRetrievalsSortKey,
   onUpdateAdminRetrievalsPageNum,
-  retrievals
+  retrievals,
+  onFetchAdminRetrievals
 }) => (
   <AdminPage
     pageTitle="Retrievals"
@@ -33,6 +34,7 @@ export const AdminRetrievals = ({
       <Col sm="auto">
         <AdminRetrievalsForm
           onAdminViewRetrieval={onAdminViewRetrieval}
+          onFetchAdminRetrievals={onFetchAdminRetrievals}
         />
       </Col>
     </Row>
@@ -56,6 +58,7 @@ AdminRetrievals.defaultProps = {
 AdminRetrievals.propTypes = {
   historyPush: PropTypes.func.isRequired,
   onAdminViewRetrieval: PropTypes.func.isRequired,
+  onFetchAdminRetrievals: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
   onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,
   retrievals: PropTypes.shape({})

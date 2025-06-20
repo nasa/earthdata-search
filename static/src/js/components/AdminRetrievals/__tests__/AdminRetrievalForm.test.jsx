@@ -1,29 +1,50 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Form from 'react-bootstrap/Form'
+import { screen } from '@testing-library/react'
 
+import setupTest from '../../../../../../jestConfigs/setupTest'
 import { AdminRetrievalsForm } from '../AdminRetrievalsForm'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
-    onAdminViewRetrieval: jest.fn()
+const setup = setupTest({
+  Component: AdminRetrievalsForm,
+  defaultProps: {
+    onAdminViewRetrieval: jest.fn(),
+    onFetchAdminRetrievals: jest.fn()
   }
+})
 
-  const enzymeWrapper = shallow(<AdminRetrievalsForm {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
-
-describe('AdminRetrievals component', () => {
+describe('AdminRetrievalsForm component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
+  })
 
-    expect(enzymeWrapper.find(Form).length).toBe(1)
+  test('onInputChange updates state', async () => {
+    const { user } = setup()
+
+    const retrievalInput = screen.getByPlaceholderText('Obfuscated Retrieval ID')
+    await user.type(retrievalInput, 'test-retrieval-id')
+    expect(retrievalInput).toHaveValue('test-retrieval-id')
+  })
+
+  test('onFormSubmit calls onFetchAdminRetrievals when userId provided', async () => {
+    const { props, user } = setup()
+
+    const userIdInput = screen.getByPlaceholderText('Enter User ID')
+    const goButtons = screen.getAllByText('Go')
+
+    await user.type(userIdInput, 'test-user-id')
+    await user.click(goButtons[1])
+
+    expect(props.onFetchAdminRetrievals).toHaveBeenCalledWith('test-user-id')
+  })
+
+  test('onFormSubmit calls onAdminViewRetrieval when only retrievalId provided', async () => {
+    const { props, user } = setup()
+
+    const retrievalInput = screen.getByPlaceholderText('Obfuscated Retrieval ID')
+    const goButtons = screen.getAllByText('Go')
+
+    await user.type(retrievalInput, 'test-retrieval-id')
+    await user.click(goButtons[0])
+
+    expect(props.onAdminViewRetrieval).toHaveBeenCalledWith('test-retrieval-id')
   })
 })
