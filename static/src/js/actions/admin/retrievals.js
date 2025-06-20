@@ -115,8 +115,6 @@ export const fetchAdminRetrievals = (userId) => (dispatch, getState) => {
 
   if (userId) requestOpts.user_id = userId
 
-  console.log('requestOpts', requestOpts)
-
   const response = requestObject.all(requestOpts)
     .then((responseObject) => {
       const { data } = responseObject
