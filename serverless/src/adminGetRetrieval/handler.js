@@ -10,7 +10,6 @@ import { parseError } from '../../../sharedUtils/parseError'
  * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
  */
 const adminGetRetrieval = async (event, context) => {
-  console.log('🚀 ~ file: handler.js:13 ~ event:', event)
   // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
   // eslint-disable-next-line no-param-reassign
   context.callbackWaitsForEmptyEventLoop = false
@@ -19,7 +18,6 @@ const adminGetRetrieval = async (event, context) => {
 
   try {
     const { id: providedRetrieval } = event.pathParameters
-    console.log('🚀 ~ file: handler.js:21 ~ providedRetrieval:', providedRetrieval)
 
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()

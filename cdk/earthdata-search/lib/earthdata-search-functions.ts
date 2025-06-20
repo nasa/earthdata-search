@@ -215,27 +215,6 @@ export class Functions extends Construct {
     })
 
     /**
-     * Admin Get Retrieval
-     */
-    const adminGetRetrievalByUserIdNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalByUserIdNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(adminGetRetrievalByUserIdNestedStack, 'AdminGetRetrievalByUserIdLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['GET'],
-        parentId: adminRetrievalsApiGatewayResource?.ref,
-        parentPath: 'admin/retrievals',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/adminGetRetrievalByUserId/handler.js',
-      functionName: 'adminGetRetrievalByUserId',
-      functionNamePrefix
-    })
-
-    /**
      * Admin Get Retrievals Metrics
      */
     const adminGetRetrievalsMetricsNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalsMetricsNestedStack')
