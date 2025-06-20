@@ -5,6 +5,7 @@ import { AdminRetrievals } from '../AdminRetrievals'
 
 const setup = setupTest({
   Component: AdminRetrievals,
+  withRouter: true,
   defaultProps: {
     historyPush: jest.fn(),
     onAdminViewRetrieval: jest.fn(),
@@ -14,7 +15,11 @@ const setup = setupTest({
     retrievals: {
       allIds: [],
       byId: {},
-      pagination: {},
+      pagination: {
+        pageNum: 1,
+        pageSize: 20,
+        totalResults: 0
+      },
       sortKey: ''
     }
   }
@@ -24,7 +29,7 @@ describe('AdminRetrievals component', () => {
   test('renders itself correctly', () => {
     setup()
 
-    expect(screen.getByText('Retrievals')).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /retrievals/i })).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Obfuscated Retrieval ID')).toBeInTheDocument()
     expect(screen.getByPlaceholderText('Enter User ID')).toBeInTheDocument()
   })
