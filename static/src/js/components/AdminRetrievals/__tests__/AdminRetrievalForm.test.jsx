@@ -1,24 +1,15 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen } from '@testing-library/react'
 
+import setupTest from '../../../../../../jestConfigs/setupTest'
 import { AdminRetrievalsForm } from '../AdminRetrievalsForm'
 
-const setup = () => {
-  const user = userEvent.setup()
-
-  const props = {
+const setup = setupTest({
+  Component: AdminRetrievalsForm,
+  defaultProps: {
     onAdminViewRetrieval: jest.fn(),
     onFetchAdminRetrievals: jest.fn()
   }
-
-  render(<AdminRetrievalsForm {...props} />)
-
-  return {
-    props,
-    user
-  }
-}
+})
 
 describe('AdminRetrievalsForm component', () => {
   test('renders itself correctly', () => {
