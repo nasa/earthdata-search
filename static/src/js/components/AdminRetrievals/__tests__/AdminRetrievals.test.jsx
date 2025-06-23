@@ -1,4 +1,3 @@
-import { screen } from '@testing-library/react'
 import React from 'react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import { AdminRetrievals } from '../AdminRetrievals'
@@ -6,11 +5,11 @@ import { AdminRetrievalsList } from '../AdminRetrievalsList'
 import { AdminRetrievalsForm } from '../AdminRetrievalsForm'
 
 jest.mock('../AdminRetrievalsList', () => ({
-  AdminRetrievalsList: jest.fn(() => <div data-testid="admin-retrievals-list" />)
+  AdminRetrievalsList: jest.fn(() => <div />)
 }))
 
 jest.mock('../AdminRetrievalsForm', () => ({
-  AdminRetrievalsForm: jest.fn(() => <div data-testid="admin-retrievals-form" />)
+  AdminRetrievalsForm: jest.fn(() => <div />)
 }))
 
 const mockRetrievals = {
@@ -49,9 +48,6 @@ const setup = setupTest({
 describe('when AdminRetrievals is rendered', () => {
   test('renders child components with correct props', () => {
     const { props } = setup()
-
-    expect(screen.getByTestId('admin-retrievals-form')).toBeInTheDocument()
-    expect(screen.getByTestId('admin-retrievals-list')).toBeInTheDocument()
 
     expect(AdminRetrievalsForm).toHaveBeenCalledTimes(1)
     expect(AdminRetrievalsForm).toHaveBeenCalledWith({
