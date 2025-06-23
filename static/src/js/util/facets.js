@@ -173,44 +173,6 @@ export const categoryNameToCMRParam = (name) => {
 }
 
 /**
- * Takes new CMR facet params from an action and returns an object to be used in a reducer
- * @param {object} newParams - An object containing the next facet params to set.
- * @return {object} An object with the values to be sent to a facets reducer.
- */
-export const prepareCMRFacetPayload = (newParams) => ({
-  data_center_h: newParams.data_center_h
-    ? newParams.data_center_h
-    : undefined,
-  instrument_h: newParams.instrument_h
-    ? newParams.instrument_h
-    : undefined,
-  granule_data_format_h: newParams.granule_data_format_h
-    ? newParams.granule_data_format_h
-    : undefined,
-  platforms_h: newParams.platforms_h
-    ? newParams.platforms_h
-    : undefined,
-  processing_level_id_h: newParams.processing_level_id_h
-    ? newParams.processing_level_id_h
-    : undefined,
-  project_h: newParams.project_h
-    ? newParams.project_h
-    : undefined,
-  science_keywords_h: newParams.science_keywords_h
-    ? newParams.science_keywords_h
-    : undefined,
-  two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
-    ? newParams.two_d_coordinate_system_name
-    : undefined,
-  horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
-    ? newParams.horizontal_data_resolution_range
-    : undefined,
-  latency: newParams.latency
-    ? newParams.latency
-    : undefined
-})
-
-/**
  * Takes a facets object and some options and returns arrays populated with the relevant facets.
  * @param {object} facets - An object containing the facets to sort.
  * @param {object} options - An object containing options to control sorting.
