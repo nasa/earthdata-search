@@ -232,7 +232,19 @@ describe('adminGetRetrievals', () => {
     const { queries } = dbTracker.queries
     expect(queries[0].method).toEqual('select')
 
-    const { statusCode } = retrievalResponse
+    const { body, statusCode } = retrievalResponse
+
+    const responseObj = {
+      pagination: {
+        page_num: 1,
+        page_size: 20,
+        page_count: 0,
+        total_results: 0
+      },
+      results: []
+    }
+
+    expect(body).toEqual(JSON.stringify(responseObj))
     expect(statusCode).toEqual(200)
   })
 

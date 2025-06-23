@@ -1,5 +1,4 @@
 import React from 'react'
-import { screen } from '@testing-library/react'
 
 import actions from '../../../actions'
 import AdminRetrievals from '../../../components/AdminRetrievals/AdminRetrievals'
@@ -10,7 +9,7 @@ import {
 } from '../AdminRetrievalsContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-jest.mock('../../../components/AdminRetrievals/AdminRetrievals', () => jest.fn(() => <div data-testid="admin-retrievals" />))
+jest.mock('../../../components/AdminRetrievals/AdminRetrievals', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: AdminRetrievalsContainer,
@@ -101,11 +100,19 @@ describe('mapStateToProps', () => {
   })
 })
 
-describe('AdminRetrievalsContainer component', () => {
-  test('render AdminRetrievals with the correct props', () => {
-    setup()
+describe('when the container is rendered', () => {
+  test('calls AdminRetrievals with the correct props', () => {
+    const { props } = setup()
 
-    expect(screen.getByTestId('admin-retrievals')).toBeInTheDocument()
     expect(AdminRetrievals).toHaveBeenCalledTimes(1)
+
+    expect(AdminRetrievals).toHaveBeenCalledWith({
+      historyPush: props.history.push,
+      onAdminViewRetrieval: expect.any(Function),
+      onFetchAdminRetrievals: expect.any(Function),
+      onUpdateAdminRetrievalsSortKey: expect.any(Function),
+      onUpdateAdminRetrievalsPageNum: expect.any(Function),
+      retrievals: props.retrievals
+    }, {})
   })
 })

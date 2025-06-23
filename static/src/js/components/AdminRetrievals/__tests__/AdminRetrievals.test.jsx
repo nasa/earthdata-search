@@ -47,10 +47,6 @@ const setup = setupTest({
 })
 
 describe('when AdminRetrievals is rendered', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('renders child components with correct props', () => {
     const { props } = setup()
 
