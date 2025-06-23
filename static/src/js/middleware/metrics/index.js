@@ -35,7 +35,11 @@ import {
 
 const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
   if (action.type === LOCATION_CHANGE) {
-    virtualPageview(action, getState())
+    // This setTimeout is needed to ensure that the zustand store has been updated
+    // before the virtual pageview is sent.
+    setTimeout(() => {
+      virtualPageview(action, getState())
+    }, 0)
   }
 
   if (action.type === METRICS_DATA_ACCESS) {

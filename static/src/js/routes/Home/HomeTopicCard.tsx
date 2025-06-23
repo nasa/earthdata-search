@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
+import Card from 'react-bootstrap/Card'
 
 import { type HomeTopic } from './Home'
 // @ts-expect-error: Types do not exist for this file

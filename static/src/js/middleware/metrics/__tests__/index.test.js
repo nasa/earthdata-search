@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react'
 import { LOCATION_CHANGE } from 'connected-react-router'
 
 import {
@@ -61,14 +62,18 @@ describe('metrics middleware', () => {
     expect(next).toHaveBeenCalledWith(action)
   })
 
-  test('calls virtualPageview on react-router location change', () => {
+  test('calls virtualPageview on react-router location change', async () => {
     const { store, invoke } = createStore()
 
     const action = {
       type: LOCATION_CHANGE
     }
     invoke(action)
-    expect(events.virtualPageview).toHaveBeenCalledTimes(1)
+
+    await waitFor(() => {
+      expect(events.virtualPageview).toHaveBeenCalledTimes(1)
+    })
+
     expect(events.virtualPageview).toHaveBeenCalledWith(action, store.getState())
   })
 
