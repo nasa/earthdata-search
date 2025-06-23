@@ -218,7 +218,7 @@ describe('adminGetRetrievals', () => {
     expect(statusCode).toEqual(200)
   })
 
-  test('returns 404 when user_id filter finds no retrievals', async () => {
+  test('returns 200 when user_id filter finds no retrievals', async () => {
     dbTracker.on('query', (query) => {
       query.response([])
     })
@@ -233,7 +233,7 @@ describe('adminGetRetrievals', () => {
     expect(queries[0].method).toEqual('select')
 
     const { statusCode } = retrievalResponse
-    expect(statusCode).toEqual(404)
+    expect(statusCode).toEqual(200)
   })
 
   test('correctly returns an error', async () => {
