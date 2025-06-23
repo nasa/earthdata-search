@@ -1,6 +1,5 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen } from '@testing-library/react'
 
 import actions from '../../../actions'
 import AdminRetrievals from '../../../components/AdminRetrievals/AdminRetrievals'
@@ -9,11 +8,13 @@ import {
   mapDispatchToProps,
   mapStateToProps
 } from '../AdminRetrievalsContainer'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/AdminRetrievals/AdminRetrievals', () => jest.fn(() => <div data-testid="admin-retrievals" />))
 
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: AdminRetrievalsContainer,
+  defaultProps: {
     history: {
       push: jest.fn()
     },
@@ -23,14 +24,7 @@ function setup() {
     onUpdateAdminRetrievalsPageNum: jest.fn(),
     retrievals: {}
   }
-
-  const enzymeWrapper = shallow(<AdminRetrievalsContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onAdminViewRetrieval calls actions.adminViewRetrieval', () => {
@@ -39,8 +33,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onAdminViewRetrieval('retrievalId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('retrievalId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('retrievalId')
   })
 
   test('onFetchAdminRetrievals calls actions.fetchAdminRetrievals', () => {
@@ -49,7 +43,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchAdminRetrievals()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onFetchAdminRetrievals calls actions.fetchAdminRetrievals with userId', () => {
@@ -58,8 +52,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchAdminRetrievals('testuser')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('testuser')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('testuser')
   })
 
   test('onUpdateAdminRetrievalsSortKey calls actions.updateAdminRetrievalsSortKey', () => {
@@ -68,8 +62,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAdminRetrievalsSortKey('sort-key')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('sort-key')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('sort-key')
   })
 
   test('onUpdateAdminRetrievalsPageNum calls actions.updateAdminRetrievalsPageNum', () => {
@@ -78,8 +72,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAdminRetrievalsPageNum('sort-key')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('sort-key')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('sort-key')
   })
 })
 
@@ -109,8 +103,9 @@ describe('mapStateToProps', () => {
 
 describe('AdminRetrievalsContainer component', () => {
   test('render AdminRetrievals with the correct props', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(AdminRetrievals).length).toBe(1)
+    expect(screen.getByTestId('admin-retrievals')).toBeInTheDocument()
+    expect(AdminRetrievals).toHaveBeenCalledTimes(1)
   })
 })

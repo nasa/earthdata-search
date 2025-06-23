@@ -55,12 +55,22 @@ const adminGetRetrievals = async (event, context) => {
       .limit(pageSize)
       .offset((pageNum - 1) * pageSize)
 
-    if (userId && retrievalResponse.length === 0) {
+    if (retrievalResponse.length === 0) {
+      const pagination = {
+        page_num: parseInt(pageNum, 10),
+        page_size: parseInt(pageSize, 10),
+        page_count: 0,
+        total_results: 0
+      }
+
       return {
         isBase64Encoded: false,
-        statusCode: 404,
+        statusCode: 200,
         headers: defaultResponseHeaders,
-        body: JSON.stringify({ errors: [`No retrievals found for user: ${userId}`] })
+        body: JSON.stringify({
+          pagination,
+          results: []
+        })
       }
     }
 
