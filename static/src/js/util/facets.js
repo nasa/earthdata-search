@@ -136,6 +136,7 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
 
   const paramsToSend = {
     data_center_h: newParams.data_center_h,
+    granule_data_format_h: newParams.granule_data_format_h,
     horizontal_data_resolution_range: newParams.horizontal_data_resolution_range,
     instrument_h: newParams.instrument_h,
     latency: newParams.latency,
@@ -156,14 +157,16 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
  */
 export const categoryNameToCMRParam = (name) => {
   const categoryMap = {
-    Keywords: 'science-keywords',
-    Platforms: 'platform',
+    'Data Format': 'granule-data-format',
+    'Horizontal Data Resolution': 'horizontal-data-resolution-range',
     Instruments: 'instrument',
+    Keywords: 'science-keywords',
+    Latency: 'latency',
     Organizations: 'data-center',
+    Platforms: 'platform',
+    'Processing Levels': 'processing-level-id',
     Projects: 'project',
-    'Processing levels': 'processing-level-id',
-    'Tiling System': 'two-d-coordinate-system-name',
-    Latency: 'latency'
+    'Tiling System': 'two-d-coordinate-system-name'
   }
 
   return categoryMap[name]
