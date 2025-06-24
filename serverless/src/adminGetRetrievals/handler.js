@@ -28,7 +28,8 @@ const adminGetRetrievals = async (event, context) => {
       page_num: pageNum = 1,
       page_size: pageSize = 20,
       sort_key: sortKey = '-created_at',
-      user_id: userId
+      user_id: userId,
+      collections_retrieval_id: retrievalCollectionId
     } = queryStringParameters || {}
 
     // Retrieve a connection to the database
@@ -48,6 +49,37 @@ const adminGetRetrievals = async (event, context) => {
 
     if (userId) {
       query = query.whereRaw('LOWER(users.urs_id) = LOWER(?)', [userId])
+    }
+
+    if (retrievalCollectionId) {
+      const convertedId = Number(retrievalCollectionId)
+
+      // If the id is not a finite number, negative, or exceeds 32-bit signed-int range
+      if (!Number.isFinite(convertedId) || convertedId <= 0 || convertedId > 2147483647) {
+        const pagination = {
+          page_num: parseInt(pageNum, 10),
+          page_size: parseInt(pageSize, 10),
+          page_count: 0,
+          total_results: 0
+        }
+
+        return {
+          isBase64Encoded: false,
+          statusCode: 200,
+          headers: defaultResponseHeaders,
+          body: JSON.stringify({
+            pagination,
+            results: []
+          })
+        }
+      }
+
+      query = query
+        .leftOuterJoin(
+          'retrieval_collections',
+          { 'retrievals.id': 'retrieval_collections.retrieval_id' }
+        )
+        .where({ 'retrieval_collections.id': convertedId })
     }
 
     const retrievalResponse = await query
