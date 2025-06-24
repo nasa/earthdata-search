@@ -19,11 +19,10 @@ describe('url#decodeUrlParams', () => {
       featureFacets: {
         availableInEarthdataCloud: true,
         customizable: true,
-        mapImagery: true,
-        nearRealTime: true
+        mapImagery: true
       }
     }
-    expect(decodeUrlParams('?ff=Available%20in%20Earthdata%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')).toEqual(expectedResult)
+    expect(decodeUrlParams('?ff=Available%20in%20Earthdata%20Cloud!Customizable!Map%20Imagery')).toEqual(expectedResult)
   })
 })
 
@@ -49,10 +48,9 @@ describe('url#encodeUrlQuery', () => {
       featureFacets: {
         availableInEarthdataCloud: true,
         customizable: true,
-        mapImagery: true,
-        nearRealTime: true
+        mapImagery: true
       }
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Available%20in%20Earthdata%20Cloud!Customizable!Map%20Imagery!Near%20Real%20Time')
+    expect(encodeUrlQuery(props)).toEqual('/path/here?ff=Available%20in%20Earthdata%20Cloud!Customizable!Map%20Imagery')
   })
 })

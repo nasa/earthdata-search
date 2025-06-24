@@ -28,15 +28,16 @@ const setup = setupTest({
       }
     }
   },
+  defaultZustandState: {
+    home: {
+      setOpenFacetGroup: jest.fn()
+    }
+  },
   withRedux: true,
   withRouter: true
 })
 
 describe('HomeTopicCard', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('renders the topic card with the correct title', () => {
     setup()
 
@@ -63,13 +64,7 @@ describe('HomeTopicCard', () => {
   })
 
   test('calls setOpenKeywordFacet when clicked', async () => {
-    const { user } = setup({
-      overrideZustandState: {
-        home: {
-          setOpenKeywordFacet: jest.fn()
-        }
-      }
-    })
+    const { user } = setup()
 
     const portalLinkContainer = screen.getByRole('link')
 
@@ -77,9 +72,9 @@ describe('HomeTopicCard', () => {
 
     const state = useEdscStore.getState()
     const { home } = state
-    const { setOpenKeywordFacet } = home
+    const { setOpenFacetGroup } = home
 
-    expect(setOpenKeywordFacet).toHaveBeenCalledTimes(1)
-    expect(setOpenKeywordFacet).toHaveBeenCalledWith(true)
+    expect(setOpenFacetGroup).toHaveBeenCalledTimes(1)
+    expect(setOpenFacetGroup).toHaveBeenCalledWith('science_keywords')
   })
 })

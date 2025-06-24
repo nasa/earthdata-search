@@ -31,10 +31,6 @@ import {
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('updateCollectionResults', () => {
   test('should create an action to update the search query', () => {
     const payload = []
@@ -147,14 +143,6 @@ describe('getCollections', () => {
           pageNum: 1,
           keyword: 'search keyword'
         }
-      },
-      cmr: {},
-      facetsParams: {
-        feature: {
-          customizable: false,
-          mapImagery: false,
-          nearRealTime: false
-        }
       }
     })
 
@@ -234,14 +222,6 @@ describe('getCollections', () => {
         collection: {
           keyword: 'search keyword'
         }
-      },
-      cmr: {},
-      facetsParams: {
-        feature: {
-          customizable: false,
-          mapImagery: false,
-          nearRealTime: false
-        }
       }
     })
 
@@ -302,14 +282,6 @@ describe('getCollections', () => {
       },
       query: {
         collection: {}
-      },
-      cmr: {},
-      facetsParams: {
-        feature: {
-          customizable: false,
-          mapImagery: false,
-          nearRealTime: false
-        }
       }
     })
 

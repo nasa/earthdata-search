@@ -1,230 +1,402 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { act, screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import FacetsModal from '../FacetsModal'
 import FacetsModalNav from '../FacetsModalNav'
 import FacetsList from '../FacetsList'
+import Skeleton from '../../Skeleton/Skeleton'
 
-Enzyme.configure({ adapter: new Adapter() })
+import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
-function setup() {
-  const props = {
+import useEdscStore from '../../../zustand/useEdscStore'
+
+jest.mock('../../../containers/EDSCModalContainer/EDSCModalContainer', () => jest.fn((props) => (
+  <>
+    {props.body}
+    {props.footerMeta}
+    {props.innerHeader}
+  </>
+)))
+
+jest.mock('../FacetsList', () => jest.fn(() => <div />))
+jest.mock('../FacetsModalNav', () => jest.fn(() => <div />))
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: FacetsModal,
+  defaultProps: {
     collectionHits: null,
     viewAllFacets: {
-      allIds: [],
-      byId: {},
+      allIds: ['Test Category'],
+      byId: {
+        'Test Category': {}
+      },
       hits: null,
       isLoaded: false,
-      isLoading: false
+      isLoading: false,
+      selectedCategory: 'Test Category'
     },
     isOpen: false,
     onApplyViewAllFacets: jest.fn(),
     onChangeViewAllFacet: jest.fn(),
     onToggleFacetsModal: jest.fn()
+  },
+  defaultZustandState: {
+    facetParams: {
+      applyViewAllFacets: jest.fn(),
+      setViewAllFacets: jest.fn()
+    }
   }
-
-  const enzymeWrapper = shallow(<FacetsModal {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('FacetsModal component', () => {
   describe('when selected category is not defined', () => {
     test('the modal does not render', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.html()).toEqual(null)
+      setup({
+        overrideProps: {
+          viewAllFacets: {
+            allIds: [],
+            byId: {},
+            hits: null,
+            isLoaded: false,
+            isLoading: false,
+            selectedCategory: null
+          }
+        }
+      })
+
+      expect(EDSCModalContainer).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('when selected category is defined', () => {
     test('the modal is not visible', () => {
-      const { enzymeWrapper } = setup()
-      enzymeWrapper.setProps({
-        viewAllFacets: {
-          allIds: ['Test Category'],
-          byId: {
-            'Test Category': {}
-          },
-          hits: null,
-          isLoaded: false,
-          isLoading: false,
-          selectedCategory: 'Test Category'
-        }
-      })
+      setup()
 
-      expect(enzymeWrapper.prop('isOpen')).toEqual(false)
+      expect(EDSCModalContainer).toHaveBeenCalledTimes(1)
+      expect(EDSCModalContainer).toHaveBeenCalledWith(
+        expect.objectContaining({
+          bodyPadding: false,
+          className: 'facets-modal',
+          fixedHeight: 'lg',
+          id: 'facets',
+          isOpen: false,
+          onClose: expect.any(Function),
+          onPrimaryAction: expect.any(Function),
+          onSecondaryAction: expect.any(Function),
+          primaryAction: 'Apply',
+          secondaryAction: 'Cancel',
+          size: 'lg',
+          spinner: false,
+          title: 'Filter collections by Test Category'
+        }),
+        {}
+      )
+
+      expect(FacetsModalNav).toHaveBeenCalledTimes(1)
+      expect(FacetsModalNav).toHaveBeenCalledWith(
+        {
+          activeLetters: undefined
+        },
+        {}
+      )
+
+      expect(FacetsList).toHaveBeenCalledTimes(1)
+      expect(FacetsList).toHaveBeenCalledWith(
+        {
+          changeHandler: expect.any(Function),
+          facetCategory: 'Test Category',
+          facets: undefined,
+          liftSelectedFacets: false,
+          sortBy: 'alpha',
+          variation: 'light'
+        },
+        {}
+      )
+
+      expect(screen.getByText('null Matching Collection')).toBeInTheDocument()
     })
   })
 
   describe('when modal is open and is loading', () => {
     test('the modal renders correctly', () => {
-      const { enzymeWrapper } = setup()
-      enzymeWrapper.setProps({
-        viewAllFacets: {
-          allIds: [],
-          byId: {
-            'Test Category': {}
+      setup({
+        overrideProps: {
+          collectionHits: null,
+          viewAllFacets: {
+            allIds: [],
+            byId: {
+              'Test Category': {}
+            },
+            hits: null,
+            isLoaded: false,
+            isLoading: true,
+            selectedCategory: 'Test Category'
           },
-          hits: null,
-          isLoaded: false,
-          isLoading: true,
-          selectedCategory: 'Test Category'
-        },
-        isOpen: true
+          isOpen: true
+        }
       })
 
-      expect(enzymeWrapper.prop('isOpen')).toEqual(true)
-      expect(enzymeWrapper.prop('title')).toEqual('Filter collections by Test Category')
-      expect(enzymeWrapper.prop('spinner')).toEqual(true)
-      expect(enzymeWrapper.prop('innerHeader').type).toEqual(FacetsModalNav)
-      expect(enzymeWrapper.prop('body').type).toEqual(FacetsList)
-      expect(enzymeWrapper.prop('footerMeta').type).toEqual(undefined)
+      expect(EDSCModalContainer).toHaveBeenCalledTimes(1)
+      expect(EDSCModalContainer).toHaveBeenCalledWith(
+        expect.objectContaining({
+          bodyPadding: false,
+          className: 'facets-modal',
+          fixedHeight: 'lg',
+          id: 'facets',
+          isOpen: true,
+          onClose: expect.any(Function),
+          onPrimaryAction: expect.any(Function),
+          onSecondaryAction: expect.any(Function),
+          primaryAction: 'Apply',
+          secondaryAction: 'Cancel',
+          size: 'lg',
+          spinner: true,
+          title: 'Filter collections by Test Category'
+        }),
+        {}
+      )
+
+      expect(FacetsModalNav).toHaveBeenCalledTimes(1)
+      expect(FacetsModalNav).toHaveBeenCalledWith(
+        {
+          activeLetters: undefined
+        },
+        {}
+      )
+
+      expect(FacetsList).toHaveBeenCalledTimes(1)
+      expect(FacetsList).toHaveBeenCalledWith(
+        {
+          changeHandler: expect.any(Function),
+          facetCategory: 'Test Category',
+          facets: undefined,
+          liftSelectedFacets: false,
+          sortBy: 'alpha',
+          variation: 'light'
+        },
+        {}
+      )
+
+      expect(Skeleton).toHaveBeenCalledTimes(1)
+      expect(screen.queryByText('Matching Collection')).not.toBeInTheDocument()
     })
   })
 
   describe('when modal is open and has loaded', () => {
     test('the modal renders correctly', () => {
-      const { enzymeWrapper } = setup()
-      enzymeWrapper.setProps({
-        collectionHits: 100,
-        viewAllFacets: {
-          allIds: ['Test Category'],
-          byId: {
-            'Test Category': {
-              title: 'Test Category',
-              children: [
-                {
-                  title: '1234'
-                },
-                {
-                  title: 'Another'
-                }
-              ],
-              startingLetters: ['#', 'A', 'B']
-            }
+      setup({
+        overrideProps: {
+          collectionHits: 100,
+          viewAllFacets: {
+            allIds: ['Test Category'],
+            byId: {
+              'Test Category': {
+                title: 'Test Category',
+                children: [
+                  {
+                    title: '1234'
+                  },
+                  {
+                    title: 'Another'
+                  }
+                ],
+                startingLetters: ['#', 'A', 'B']
+              }
+            },
+            hits: 100,
+            isLoaded: true,
+            isLoading: false,
+            selectedCategory: 'Test Category'
           },
-          hits: 100,
-          isLoaded: true,
-          isLoading: false,
-          selectedCategory: 'Test Category'
-        },
-        isOpen: true
+          isOpen: true
+        }
       })
 
-      expect(enzymeWrapper.prop('isOpen')).toEqual(true)
-      expect(enzymeWrapper.prop('title')).toEqual('Filter collections by Test Category')
-      expect(enzymeWrapper.prop('spinner')).toEqual(false)
-      expect(enzymeWrapper.prop('innerHeader').type).toEqual(FacetsModalNav)
-      expect(enzymeWrapper.prop('body').type).toEqual(FacetsList)
-      expect(enzymeWrapper.prop('footerMeta').type).toEqual('span')
+      expect(EDSCModalContainer).toHaveBeenCalledTimes(1)
+      expect(EDSCModalContainer).toHaveBeenCalledWith(
+        expect.objectContaining({
+          bodyPadding: false,
+          className: 'facets-modal',
+          fixedHeight: 'lg',
+          id: 'facets',
+          isOpen: true,
+          onClose: expect.any(Function),
+          onPrimaryAction: expect.any(Function),
+          onSecondaryAction: expect.any(Function),
+          primaryAction: 'Apply',
+          secondaryAction: 'Cancel',
+          size: 'lg',
+          spinner: false,
+          title: 'Filter collections by Test Category'
+        }),
+        {}
+      )
+
+      expect(FacetsModalNav).toHaveBeenCalledTimes(1)
+      expect(FacetsModalNav).toHaveBeenCalledWith(
+        {
+          activeLetters: ['#', 'A', 'B']
+        },
+        {}
+      )
+
+      expect(FacetsList).toHaveBeenCalledTimes(1)
+      expect(FacetsList).toHaveBeenCalledWith(
+        {
+          changeHandler: expect.any(Function),
+          facetCategory: 'Test Category',
+          facets: [
+            {
+              title: '1234'
+            },
+            {
+              title: 'Another'
+            }
+          ],
+          liftSelectedFacets: false,
+          sortBy: 'alpha',
+          variation: 'light'
+        },
+        {}
+      )
+
+      expect(Skeleton).toHaveBeenCalledTimes(0)
+      expect(screen.getByText('100 Matching Collections')).toBeInTheDocument()
     })
   })
 
   describe('when the close button is clicked', () => {
     test('the callback fires correctly', () => {
-      const { enzymeWrapper, props } = setup()
-      enzymeWrapper.setProps({
-        collectionHits: 100,
-        viewAllFacets: {
-          allIds: ['Test Category'],
-          byId: {
-            'Test Category': {
-              title: 'Test Category',
-              children: [
-                {
-                  title: '1234'
-                },
-                {
-                  title: 'Another'
-                }
-              ],
-              startingLetters: ['#', 'A', 'B']
-            }
+      const { props } = setup({
+        overrideProps: {
+          collectionHits: 100,
+          viewAllFacets: {
+            allIds: ['Test Category'],
+            byId: {
+              'Test Category': {
+                title: 'Test Category',
+                children: [
+                  {
+                    title: '1234'
+                  },
+                  {
+                    title: 'Another'
+                  }
+                ],
+                startingLetters: ['#', 'A', 'B']
+              }
+            },
+            hits: 100,
+            isLoaded: true,
+            isLoading: false,
+            selectedCategory: 'Test Category'
           },
-          hits: 100,
-          isLoaded: true,
-          isLoading: false,
-          selectedCategory: 'Test Category'
-        },
-        isOpen: true
+          isOpen: true
+        }
       })
 
-      enzymeWrapper.instance().onModalClose()
+      EDSCModalContainer.mock.calls[0][0].onClose()
+
       expect(props.onToggleFacetsModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleFacetsModal).toHaveBeenCalledWith(false)
     })
   })
 
   describe('when the apply button is clicked', () => {
-    test('the callback fires correctly', () => {
-      const { enzymeWrapper, props } = setup()
-      enzymeWrapper.setProps({
-        collectionHits: 100,
-        viewAllFacets: {
-          allIds: ['Test Category'],
-          byId: {
-            'Test Category': {
-              title: 'Test Category',
-              children: [
-                {
-                  title: '1234'
-                },
-                {
-                  title: 'Another'
-                }
-              ],
-              startingLetters: ['#', 'A', 'B']
-            }
+    test('the callback fires correctly', async () => {
+      setup({
+        overrideProps: {
+          collectionHits: 100,
+          viewAllFacets: {
+            allIds: ['Test Category'],
+            byId: {
+              'Test Category': {
+                title: 'Test Category',
+                children: [
+                  {
+                    title: '1234'
+                  },
+                  {
+                    title: 'Another'
+                  }
+                ],
+                startingLetters: ['#', 'A', 'B']
+              }
+            },
+            hits: 100,
+            isLoaded: true,
+            isLoading: false,
+            selectedCategory: 'Test Category'
           },
-          hits: 100,
-          isLoaded: true,
-          isLoading: false,
-          selectedCategory: 'Test Category'
-        },
-        isOpen: true
+          isOpen: true
+        }
       })
 
-      enzymeWrapper.instance().onApplyClick()
-      expect(props.onApplyViewAllFacets).toHaveBeenCalledTimes(1)
+      act(() => {
+        EDSCModalContainer.mock.calls[0][0].onPrimaryAction()
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { applyViewAllFacets } = zustandState.facetParams
+
+      expect(applyViewAllFacets).toHaveBeenCalledTimes(1)
+      expect(applyViewAllFacets).toHaveBeenCalledWith()
     })
   })
 
   describe('when the change handler button is fired', () => {
     test('the callback fires correctly', () => {
-      const { enzymeWrapper, props } = setup()
-      enzymeWrapper.setProps({
-        collectionHits: 100,
-        viewAllFacets: {
-          allIds: ['Test Category'],
-          byId: {
-            'Test Category': {
-              title: 'Test Category',
-              children: [
-                {
-                  title: '1234'
-                },
-                {
-                  title: 'Another'
-                }
-              ],
-              startingLetters: ['#', 'A', 'B']
-            }
+      setup({
+        overrideProps: {
+          collectionHits: 100,
+          viewAllFacets: {
+            allIds: ['Test Category'],
+            byId: {
+              'Test Category': {
+                title: 'Test Category',
+                children: [
+                  {
+                    title: '1234'
+                  },
+                  {
+                    title: 'Another'
+                  }
+                ],
+                startingLetters: ['#', 'A', 'B']
+              }
+            },
+            hits: 100,
+            isLoaded: true,
+            isLoading: false,
+            selectedCategory: 'Test Category'
           },
-          hits: 100,
-          isLoaded: true,
-          isLoading: false,
-          selectedCategory: 'Test Category'
-        },
-        isOpen: true
+          isOpen: true
+        }
       })
 
-      const { changeHandler } = enzymeWrapper.prop('body').props
-      changeHandler({}, { destination: '' })
-      expect(props.onChangeViewAllFacet).toHaveBeenCalledTimes(1)
+      FacetsList.mock.calls[0][0].changeHandler({}, {
+        destination: 'https://cmr.earthdata.nasa.gov:443/search/collections.json?page_num=1&include_granule_counts=true&facets_size%5Binstrument%5D=10000&has_granules_or_cwic=true&instrument_h%5B%5D=AIRS&sort_key%5B%5D=has_granules_or_cwic&sort_key%5B%5D=-usage_score&sort_key%5B%5D=-create-data-date&include_tags=edsc.*%2Copensearch.granule.osdd&page_size=20&include_has_granules=true&include_facets=v2',
+        title: 'AIRS'
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { setViewAllFacets } = zustandState.facetParams
+
+      expect(setViewAllFacets).toHaveBeenCalledTimes(1)
+      expect(setViewAllFacets).toHaveBeenCalledWith({
+        data_center_h: undefined,
+        horizontal_data_resolution_range: undefined,
+        instrument_h: ['AIRS'],
+        latency: undefined,
+        platforms_h: undefined,
+        processing_level_id_h: undefined,
+        project_h: undefined,
+        science_keywords_h: undefined,
+        two_d_coordinate_system_name: undefined
+      }, 'Test Category')
     })
   })
 })

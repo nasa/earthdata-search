@@ -151,6 +151,11 @@ export const removeTemporalFilter = () => (dispatch) => {
 }
 
 export const clearFilters = () => (dispatch, getState) => {
+  // TODO EDSC-4514: Create a clearFilters function in zustand that manages clearing everything
+  const { facetParams } = useEdscStore.getState()
+  const { resetFacetParams } = facetParams
+  resetFacetParams()
+
   dispatch({ type: CLEAR_FILTERS })
 
   dispatch(actions.getCollections())

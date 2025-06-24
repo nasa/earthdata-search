@@ -2,12 +2,8 @@ import axios, { CancelTokenSource } from 'axios'
 import { v4 as uuidv4 } from 'uuid'
 
 // @ts-expect-error Types are not defined for this module
-import configureStore from '../../store/configureStore'
-// @ts-expect-error Types are not defined for this module
-import { metricsTiming } from '../../middleware/metrics/actions'
-// @ts-expect-error Types are not defined for this module
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import {
+import type {
   CmrHeaders,
   RequestParams,
   Response
@@ -155,11 +151,14 @@ export default class Request {
   transformResponse(data: Response) {
     const timing = Date.now() - this.startTime!
 
-    const store = configureStore()
-    store.dispatch(metricsTiming({
-      url: this.fullUrl,
-      timing
-    }))
+    const { dataLayer = [] } = window
+
+    dataLayer.push({
+      event: 'timing',
+      timingEventCategory: 'ajax',
+      timingEventVar: this.fullUrl,
+      timingEventValue: timing
+    })
 
     this.handleUnauthorized(data)
 

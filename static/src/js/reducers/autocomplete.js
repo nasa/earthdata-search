@@ -1,14 +1,10 @@
-import { differenceWith, findIndex } from 'lodash-es'
+import { differenceWith } from 'lodash-es'
 
 import {
   LOADED_AUTOCOMPLETE,
   LOADING_AUTOCOMPLETE,
   CLEAR_AUTOCOMPLETE_SUGGESTIONS,
   UPDATE_AUTOCOMPLETE_SUGGESTIONS,
-  UPDATE_AUTOCOMPLETE_SELECTED,
-  DELETE_AUTOCOMPLETE_VALUE,
-  RESTORE_FROM_URL,
-  CLEAR_AUTOCOMPLETE_SELECTED,
   CLEAR_FILTERS
 } from '../constants/actionTypes'
 
@@ -16,8 +12,7 @@ const initialState = {
   isLoaded: false,
   isLoading: false,
   params: null,
-  suggestions: [],
-  selected: []
+  suggestions: []
 }
 
 const autocompleteReducer = (state = initialState, action = {}) => {
@@ -39,13 +34,6 @@ const autocompleteReducer = (state = initialState, action = {}) => {
         ...state,
         isLoaded: false,
         isLoading: true
-      }
-    }
-
-    case CLEAR_AUTOCOMPLETE_SELECTED: {
-      return {
-        ...state,
-        selected: []
       }
     }
 
@@ -71,61 +59,6 @@ const autocompleteReducer = (state = initialState, action = {}) => {
         ...state,
         params,
         suggestions: nonSelectedSuggestions
-      }
-    }
-
-    case UPDATE_AUTOCOMPLETE_SELECTED: {
-      const { suggestion } = payload
-
-      return {
-        ...state,
-        suggestions: [],
-        selected: [
-          ...state.selected,
-          suggestion
-        ]
-      }
-    }
-
-    case DELETE_AUTOCOMPLETE_VALUE: {
-      const {
-        level,
-        type: autocompleteType,
-        value: autocompleteValue
-      } = payload
-
-      const { selected } = state
-      const index = findIndex(selected, (item) => {
-        const {
-          fields,
-          type: itemType,
-          value: itemValue
-        } = item
-        // If the autocompleteType is science_keywords, check the correct level of keyword for the autocomplete
-        if (autocompleteType === 'science_keywords' && level != null) {
-          const parts = fields.split(':')
-
-          return parts[level] === autocompleteValue
-        }
-
-        return itemType === autocompleteType && itemValue === autocompleteValue
-      })
-
-      return {
-        ...state,
-        selected: [
-          ...selected.slice(0, index),
-          ...selected.slice(index + 1)
-        ]
-      }
-    }
-
-    case RESTORE_FROM_URL: {
-      const { autocompleteSelected = [] } = payload
-
-      return {
-        ...initialState,
-        selected: autocompleteSelected
       }
     }
 

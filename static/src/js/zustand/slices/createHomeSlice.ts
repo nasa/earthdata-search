@@ -8,10 +8,10 @@ const createHomeSlice: ImmerStateCreator<HomeSlice> = (set) => ({
         state.home.startDrawing = startDrawing
       })
     },
-    openKeywordFacet: false,
-    setOpenKeywordFacet: (openKeywordFacet) => {
+    openFacetGroup: null,
+    setOpenFacetGroup: (groupName) => {
       set((state) => {
-        state.home.openKeywordFacet = openKeywordFacet
+        state.home.openFacetGroup = groupName
       })
     }
   }

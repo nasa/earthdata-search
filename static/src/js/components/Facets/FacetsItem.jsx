@@ -166,6 +166,7 @@ FacetsItem.propTypes = {
     children: PropTypes.arrayOf(PropTypes.shape({})),
     count: PropTypes.number,
     title: PropTypes.string,
+    value: PropTypes.string,
     description: PropTypes.string,
     iconProps: PropTypes.shape({
       icon: PropTypes.elementType,

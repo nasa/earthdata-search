@@ -14,7 +14,6 @@ import {
   relatedCollection,
   spatialEdit,
   spatialSelection,
-  timing,
   collectionSortChange,
   temporalFilter
 } from '../events'
@@ -31,7 +30,6 @@ import {
   METRICS_RELATED_COLLECTION,
   METRICS_SPATIAL_EDIT,
   METRICS_SPATIAL_SELECTION,
-  METRICS_TIMING,
   METRICS_TEMPORAL_FILTER
 } from '../constants'
 
@@ -501,28 +499,6 @@ describe('events', () => {
         browseGranuleImageCategory: 'Browse Granule Image',
         browseGranuleImageGranuleId: 'TEST_GRAN_ID',
         browseGranuleImageValue: 'Some Value'
-      })
-    })
-  })
-
-  describe('timing', () => {
-    test('pushes to the dataLayer', () => {
-      const action = {
-        type: METRICS_TIMING,
-        payload: {
-          url: 'http://google.com/some/test/url',
-          timing: 1222
-        }
-      }
-
-      timing(action)
-
-      expect(dataLayerMock).toHaveBeenCalledTimes(1)
-      expect(dataLayerMock).toHaveBeenCalledWith({
-        event: 'timing',
-        timingEventCategory: 'ajax',
-        timingEventVar: 'http://google.com/some/test/url',
-        timingEventValue: 1222
       })
     })
   })

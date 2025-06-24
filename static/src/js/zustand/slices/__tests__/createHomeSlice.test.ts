@@ -8,8 +8,8 @@ describe('createHomeSlice', () => {
     expect(home).toEqual({
       startDrawing: false,
       setStartDrawing: expect.any(Function),
-      openKeywordFacet: false,
-      setOpenKeywordFacet: expect.any(Function)
+      openFacetGroup: null,
+      setOpenFacetGroup: expect.any(Function)
     })
   })
 
@@ -26,16 +26,16 @@ describe('createHomeSlice', () => {
     })
   })
 
-  describe('setOpenKeywordFacet', () => {
+  describe('setOpenFacetGroup', () => {
     test('updates openKeywordFacet', () => {
       const zustandState = useEdscStore.getState()
       const { home } = zustandState
-      const { setOpenKeywordFacet } = home
-      setOpenKeywordFacet(true)
+      const { setOpenFacetGroup } = home
+      setOpenFacetGroup('science_keywords')
 
       const updatedState = useEdscStore.getState()
       const { home: updatedHome } = updatedState
-      expect(updatedHome.openKeywordFacet).toBe(true)
+      expect(updatedHome.openFacetGroup).toEqual('science_keywords')
     })
   })
 })

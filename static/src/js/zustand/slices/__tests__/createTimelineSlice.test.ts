@@ -109,9 +109,7 @@ describe('createTimelineSlice', () => {
   describe('getTimeline', () => {
     describe('when the user is not logged in', () => {
       test('calls cmr to set the intervals', async () => {
-        const mockDispatch = jest.fn()
         configureStore.mockReturnValue({
-          dispatch: mockDispatch,
           getState: () => ({
             authToken: '',
             earthdataEnvironment: 'prod',
@@ -175,22 +173,19 @@ describe('createTimelineSlice', () => {
           })
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(1)
-        expect(mockDispatch).toHaveBeenCalledWith({
-          payload: {
-            timing: expect.any(Number),
-            url: 'https://cmr.earthdata.nasa.gov/search/granules/timeline'
-          },
-          type: 'METRICS_TIMING'
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+        expect(window.dataLayer.push).toHaveBeenCalledWith({
+          event: 'timing',
+          timingEventCategory: 'ajax',
+          timingEventValue: expect.any(Number),
+          timingEventVar: 'https://cmr.earthdata.nasa.gov/search/granules/timeline'
         })
       })
     })
 
     describe('when the user is logged in', () => {
       test('calls lambda to set the intervals', async () => {
-        const mockDispatch = jest.fn()
         configureStore.mockReturnValue({
-          dispatch: mockDispatch,
           getState: () => ({
             authToken: 'mock-token',
             earthdataEnvironment: 'prod',
@@ -254,22 +249,19 @@ describe('createTimelineSlice', () => {
           })
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(1)
-        expect(mockDispatch).toHaveBeenCalledWith({
-          payload: {
-            timing: expect.any(Number),
-            url: 'http://localhost:3000/granules/timeline'
-          },
-          type: 'METRICS_TIMING'
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+        expect(window.dataLayer.push).toHaveBeenCalledWith({
+          event: 'timing',
+          timingEventCategory: 'ajax',
+          timingEventValue: expect.any(Number),
+          timingEventVar: 'http://localhost:3000/granules/timeline'
         })
       })
     })
 
     describe('when there is no focusedCollection', () => {
       test('sets intervals to empty', async () => {
-        const mockDispatch = jest.fn()
         configureStore.mockReturnValue({
-          dispatch: mockDispatch,
           getState: () => ({
             authToken: 'mock-token',
             earthdataEnvironment: 'prod',
@@ -316,7 +308,7 @@ describe('createTimelineSlice', () => {
           expect(updatedTimeline.intervals).toEqual({})
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(0)
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -368,18 +360,18 @@ describe('createTimelineSlice', () => {
         await getTimeline()
 
         await waitFor(() => {
-          expect(mockDispatch).toHaveBeenCalledTimes(2)
+          expect(mockDispatch).toHaveBeenCalledTimes(1)
         })
 
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, {
-          payload: {
-            timing: expect.any(Number),
-            url: 'https://cmr.earthdata.nasa.gov/search/granules/timeline'
-          },
-          type: 'METRICS_TIMING'
-        })
+        expect(mockDispatch).toHaveBeenCalledWith(expect.any(Function))
 
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, expect.any(Function))
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+        expect(window.dataLayer.push).toHaveBeenCalledWith({
+          event: 'timing',
+          timingEventCategory: 'ajax',
+          timingEventValue: expect.any(Number),
+          timingEventVar: 'https://cmr.earthdata.nasa.gov/search/granules/timeline'
+        })
 
         expect(handleErrorMock).toHaveBeenCalledTimes(1)
         expect(handleErrorMock).toHaveBeenCalledWith({

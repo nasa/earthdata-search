@@ -1,6 +1,5 @@
 export const emptyDecodedResult = {
   advancedSearch: undefined,
-  autocompleteSelected: undefined,
   cmrFacets: {
     data_center_h: undefined,
     granule_data_format_h: undefined,
@@ -16,8 +15,7 @@ export const emptyDecodedResult = {
   featureFacets: {
     availableInEarthdataCloud: false,
     customizable: false,
-    mapImagery: false,
-    nearRealTime: false
+    mapImagery: false
   },
   focusedCollection: undefined,
   focusedGranule: undefined,

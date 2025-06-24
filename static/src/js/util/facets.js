@@ -63,7 +63,8 @@ export const getStartingLetters = (facets) => {
 export const generateFacetArgs = (facet) => {
   const link = {
     destination: null,
-    title: facet.title
+    title: facet.title,
+    value: facet.value
   }
 
   if (facet.type === 'group' || facet.type === 'filter') {
@@ -75,24 +76,24 @@ export const generateFacetArgs = (facet) => {
 
 /**
  * The change handler for feature facets.
- * @param {object} e - An event object
+ * @param {object} event - An event object
  * @param {object} facetLinkInfo - The information for the clicked facet.
  * @param {object} onChangeHandler - The change handler to call.
  */
-export const changeFeatureFacet = (e, facetLinkInfo, onChangeHandler) => {
+export const changeFeatureFacet = (event, facetLinkInfo, onChangeHandler) => {
   const { title } = facetLinkInfo
-  const { checked } = e.target
+  const { checked } = event.target
 
   onChangeHandler({ [camelCase(title)]: checked })
 }
 
 /**
  * The change handler for CMR facets.
- * @param {object} e - An event object
+ * @param {object} event - An event object
  * @param {object} facetLinkInfo - The information for the clicked facet.
  * @param {object} onChangeHandler - The change handler to call.
  */
-export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied) => {
+export const changeCmrFacet = (event, facetLinkInfo, onChangeHandler) => {
   const newParams = qs.parse(
     queryParamsFromUrlString(facetLinkInfo.destination),
     {
@@ -120,7 +121,7 @@ export const changeCmrFacet = (e, facetLinkInfo, onChangeHandler, facet, applied
     two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
   }
 
-  onChangeHandler(paramsToSend, facet, applied)
+  onChangeHandler(paramsToSend)
 }
 
 /**
@@ -135,6 +136,7 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
 
   const paramsToSend = {
     data_center_h: newParams.data_center_h,
+    granule_data_format_h: newParams.granule_data_format_h,
     horizontal_data_resolution_range: newParams.horizontal_data_resolution_range,
     instrument_h: newParams.instrument_h,
     latency: newParams.latency,
@@ -145,10 +147,7 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
     two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
   }
 
-  onChangeHandler({
-    params: paramsToSend,
-    selectedCategory
-  })
+  onChangeHandler(paramsToSend, selectedCategory)
 }
 
 /**
@@ -158,56 +157,20 @@ export const changeViewAllFacet = (e, facetLinkInfo, onChangeHandler) => {
  */
 export const categoryNameToCMRParam = (name) => {
   const categoryMap = {
-    Keywords: 'science-keywords',
-    Platforms: 'platform',
+    'Data Format': 'granule-data-format',
+    'Horizontal Data Resolution': 'horizontal-data-resolution-range',
     Instruments: 'instrument',
+    Keywords: 'science-keywords',
+    Latency: 'latency',
     Organizations: 'data-center',
+    Platforms: 'platform',
+    'Processing Levels': 'processing-level-id',
     Projects: 'project',
-    'Processing levels': 'processing-level-id',
-    'Tiling System': 'two-d-coordinate-system-name',
-    Latency: 'latency'
+    'Tiling System': 'two-d-coordinate-system-name'
   }
 
   return categoryMap[name]
 }
-
-/**
- * Takes new CMR facet params from an action and returns an object to be used in a reducer
- * @param {object} newParams - An object containing the next facet params to set.
- * @return {object} An object with the values to be sent to a facets reducer.
- */
-export const prepareCMRFacetPayload = (newParams) => ({
-  data_center_h: newParams.data_center_h
-    ? newParams.data_center_h
-    : undefined,
-  instrument_h: newParams.instrument_h
-    ? newParams.instrument_h
-    : undefined,
-  granule_data_format_h: newParams.granule_data_format_h
-    ? newParams.granule_data_format_h
-    : undefined,
-  platforms_h: newParams.platforms_h
-    ? newParams.platforms_h
-    : undefined,
-  processing_level_id_h: newParams.processing_level_id_h
-    ? newParams.processing_level_id_h
-    : undefined,
-  project_h: newParams.project_h
-    ? newParams.project_h
-    : undefined,
-  science_keywords_h: newParams.science_keywords_h
-    ? newParams.science_keywords_h
-    : undefined,
-  two_d_coordinate_system_name: newParams.two_d_coordinate_system_name
-    ? newParams.two_d_coordinate_system_name
-    : undefined,
-  horizontal_data_resolution_range: newParams.horizontal_data_resolution_range
-    ? newParams.horizontal_data_resolution_range
-    : undefined,
-  latency: newParams.latency
-    ? newParams.latency
-    : undefined
-})
 
 /**
  * Takes a facets object and some options and returns arrays populated with the relevant facets.

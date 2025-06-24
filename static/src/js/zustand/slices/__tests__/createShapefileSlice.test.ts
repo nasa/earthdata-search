@@ -86,9 +86,7 @@ describe('createShapefileSlice', () => {
   describe('fetchShapefile', () => {
     describe('when the shapefile is fetched successfully', () => {
       test('fetches the shapefile', async () => {
-        const mockDispatch = jest.fn()
         configureStore.mockReturnValue({
-          dispatch: mockDispatch,
           getState: () => ({
             earthdataEnvironment: 'prod'
           })
@@ -132,13 +130,12 @@ describe('createShapefileSlice', () => {
           })
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(1)
-        expect(mockDispatch).toHaveBeenCalledWith({
-          payload: {
-            timing: expect.any(Number),
-            url: 'http://localhost:3000/shapefiles/12345'
-          },
-          type: 'METRICS_TIMING'
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+        expect(window.dataLayer.push).toHaveBeenCalledWith({
+          event: 'timing',
+          timingEventCategory: 'ajax',
+          timingEventValue: expect.any(Number),
+          timingEventVar: 'http://localhost:3000/shapefiles/12345'
         })
       })
     })
@@ -182,18 +179,18 @@ describe('createShapefileSlice', () => {
         })
 
         await waitFor(() => {
-          expect(mockDispatch).toHaveBeenCalledTimes(2)
+          expect(mockDispatch).toHaveBeenCalledTimes(1)
         })
 
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, {
-          payload: {
-            timing: expect.any(Number),
-            url: 'http://localhost:3000/shapefiles/12345'
-          },
-          type: 'METRICS_TIMING'
-        })
+        expect(mockDispatch).toHaveBeenCalledWith(expect.any(Function))
 
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, expect.any(Function))
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+        expect(window.dataLayer.push).toHaveBeenCalledWith({
+          event: 'timing',
+          timingEventCategory: 'ajax',
+          timingEventValue: expect.any(Number),
+          timingEventVar: 'http://localhost:3000/shapefiles/12345'
+        })
 
         expect(handleErrorMock).toHaveBeenCalledTimes(1)
         expect(handleErrorMock).toHaveBeenCalledWith({
@@ -209,9 +206,7 @@ describe('createShapefileSlice', () => {
   describe('saveShapefile', () => {
     describe('when the shapefile is saved successfully', () => {
       test('saves the shapefile', async () => {
-        const mockDispatch = jest.fn()
         configureStore.mockReturnValue({
-          dispatch: mockDispatch,
           getState: () => ({
             earthdataEnvironment: 'prod'
           })
@@ -249,13 +244,12 @@ describe('createShapefileSlice', () => {
           })
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(1)
-        expect(mockDispatch).toHaveBeenCalledWith({
-          payload: {
-            timing: expect.any(Number),
-            url: 'http://localhost:3000/shapefiles'
-          },
-          type: 'METRICS_TIMING'
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+        expect(window.dataLayer.push).toHaveBeenCalledWith({
+          event: 'timing',
+          timingEventCategory: 'ajax',
+          timingEventValue: expect.any(Number),
+          timingEventVar: 'http://localhost:3000/shapefiles'
         })
       })
     })
@@ -305,18 +299,18 @@ describe('createShapefileSlice', () => {
         })
 
         await waitFor(() => {
-          expect(mockDispatch).toHaveBeenCalledTimes(2)
+          expect(mockDispatch).toHaveBeenCalledTimes(1)
         })
 
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, {
-          payload: {
-            timing: expect.any(Number),
-            url: 'http://localhost:3000/shapefiles'
-          },
-          type: 'METRICS_TIMING'
-        })
+        expect(mockDispatch).toHaveBeenCalledWith(expect.any(Function))
 
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, expect.any(Function))
+        expect(window.dataLayer.push).toHaveBeenCalledTimes(1)
+        expect(window.dataLayer.push).toHaveBeenCalledWith({
+          event: 'timing',
+          timingEventCategory: 'ajax',
+          timingEventValue: expect.any(Number),
+          timingEventVar: 'http://localhost:3000/shapefiles'
+        })
 
         expect(handleErrorMock).toHaveBeenCalledTimes(1)
         expect(handleErrorMock).toHaveBeenCalledWith({

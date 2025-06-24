@@ -32,13 +32,14 @@ export const prepareCollectionParams = (state) => {
     autocomplete = {},
     advancedSearch = {},
     authToken,
-    facetsParams = {},
     preferences = {},
     query = {
       collection: {}
     },
     searchResults = {}
   } = state
+
+  const { portal, facetParams } = useEdscStore.getState()
 
   const { collection: collectionQuery } = query
 
@@ -86,10 +87,10 @@ export const prepareCollectionParams = (state) => {
   }
 
   const {
-    cmr: cmrFacets = {},
-    feature: featureFacets = {},
-    viewAll: viewAllFacets = {}
-  } = facetsParams
+    cmrFacets = {},
+    featureFacets = {},
+    viewAllFacets = {}
+  } = facetParams
 
   const tagKey = []
   if (selectedTag) tagKey.push(selectedTag)
@@ -110,7 +111,6 @@ export const prepareCollectionParams = (state) => {
     consortium = ['EOSDIS']
   }
 
-  const { portal } = useEdscStore.getState()
   const { query: portalQuery = {} } = portal
   const { consortium: portalConsortium = [] } = portalQuery
 

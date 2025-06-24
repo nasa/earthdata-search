@@ -1,16 +1,12 @@
 import { toggleFacetsModal } from './ui'
 import CollectionRequest from '../util/request/collectionRequest'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
-import { prepareCMRFacetPayload } from '../util/facets'
-import { changeCmrFacet } from './facets'
 
 import {
   ERRORED_VIEW_ALL_FACETS,
   LOADED_VIEW_ALL_FACETS,
   LOADING_VIEW_ALL_FACETS,
-  UPDATE_VIEW_ALL_FACETS,
-  UPDATE_SELECTED_VIEW_ALL_FACET,
-  COPY_CMR_FACETS_TO_VIEW_ALL
+  UPDATE_VIEW_ALL_FACETS
 } from '../constants/actionTypes'
 
 import { handleError } from './errors'
@@ -35,24 +31,6 @@ export const onViewAllFacetsLoaded = (payload) => ({
 
 export const onViewAllFacetsErrored = () => ({
   type: ERRORED_VIEW_ALL_FACETS
-})
-
-export const applyViewAllFacets = () => (dispatch, getState) => {
-  const selectedFacets = { ...getState().facetsParams.viewAll }
-  dispatch(toggleFacetsModal(false))
-  dispatch(changeCmrFacet(selectedFacets))
-}
-
-export const copyCMRFacets = () => (dispatch, getState) => {
-  dispatch({
-    type: COPY_CMR_FACETS_TO_VIEW_ALL,
-    payload: getState().facetsParams.cmr
-  })
-}
-
-export const updateViewAllFacet = (newParams) => ({
-  type: UPDATE_SELECTED_VIEW_ALL_FACET,
-  payload: prepareCMRFacetPayload(newParams)
 })
 
 /**
@@ -108,15 +86,4 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
     })
 
   return response
-}
-
-export const triggerViewAllFacets = (category) => (dispatch) => {
-  dispatch(copyCMRFacets())
-  dispatch(getViewAllFacets(category))
-}
-
-export const changeViewAllFacet = (data) => (dispatch) => {
-  const { params, selectedCategory } = data
-  dispatch(updateViewAllFacet(params))
-  dispatch(getViewAllFacets(selectedCategory))
 }
