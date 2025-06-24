@@ -16,7 +16,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onAdminViewRetrieval:
     (retrievalId) => dispatch(actions.adminViewRetrieval(retrievalId)),
   onFetchAdminRetrievals:
-    () => dispatch(actions.fetchAdminRetrievals()),
+    (userId) => dispatch(actions.fetchAdminRetrievals(userId)),
   onUpdateAdminRetrievalsSortKey:
     (sortKey) => dispatch(
       actions.updateAdminRetrievalsSortKey(sortKey)

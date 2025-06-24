@@ -1,40 +1,66 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-
+import setupTest from '../../../../../../jestConfigs/setupTest'
 import { AdminRetrievals } from '../AdminRetrievals'
-import { AdminPage } from '../../AdminPage/AdminPage'
 import { AdminRetrievalsList } from '../AdminRetrievalsList'
+import { AdminRetrievalsForm } from '../AdminRetrievalsForm'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../AdminRetrievalsList', () => ({
+  AdminRetrievalsList: jest.fn(() => <div />)
+}))
 
-function setup() {
-  const props = {
-    historyPush: jest.fn(),
-    onAdminViewRetrieval: jest.fn(),
-    onUpdateAdminRetrievalsSortKey: jest.fn(),
-    onUpdateAdminRetrievalsPageNum: jest.fn(),
-    retrievals: {
-      allIds: [],
-      byId: {},
-      pagination: {},
-      sortKey: ''
+jest.mock('../AdminRetrievalsForm', () => ({
+  AdminRetrievalsForm: jest.fn(() => <div />)
+}))
+
+const mockRetrievals = {
+  allIds: ['retrieval-1', 'retrieval-2'],
+  byId: {
+    'retrieval-1': {
+      id: 'retrieval-1',
+      title: 'Test Retrieval 1'
+    },
+    'retrieval-2': {
+      id: 'retrieval-2',
+      title: 'Test Retrieval 2'
     }
-  }
-
-  const enzymeWrapper = shallow(<AdminRetrievals {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
+  },
+  pagination: {
+    pageNum: 1,
+    pageSize: 20,
+    totalResults: 2
+  },
+  sortKey: 'created_at'
 }
 
-describe('AdminRetrievals component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+const setup = setupTest({
+  Component: AdminRetrievals,
+  withRouter: true,
+  defaultProps: {
+    historyPush: jest.fn(),
+    onAdminViewRetrieval: jest.fn(),
+    onFetchAdminRetrievals: jest.fn(),
+    onUpdateAdminRetrievalsSortKey: jest.fn(),
+    onUpdateAdminRetrievalsPageNum: jest.fn(),
+    retrievals: mockRetrievals
+  }
+})
 
-    expect(enzymeWrapper.find(AdminPage).length).toBe(1)
-    expect(enzymeWrapper.find(AdminRetrievalsList).length).toBe(1)
+describe('when AdminRetrievals is rendered', () => {
+  test('renders child components with correct props', () => {
+    const { props } = setup()
+
+    expect(AdminRetrievalsForm).toHaveBeenCalledTimes(1)
+    expect(AdminRetrievalsForm).toHaveBeenCalledWith({
+      onAdminViewRetrieval: props.onAdminViewRetrieval,
+      onFetchAdminRetrievals: props.onFetchAdminRetrievals
+    }, {})
+
+    expect(AdminRetrievalsList).toHaveBeenCalledTimes(1)
+    expect(AdminRetrievalsList).toHaveBeenCalledWith({
+      historyPush: props.historyPush,
+      onUpdateAdminRetrievalsSortKey: props.onUpdateAdminRetrievalsSortKey,
+      onUpdateAdminRetrievalsPageNum: props.onUpdateAdminRetrievalsPageNum,
+      retrievals: props.retrievals
+    }, {})
   })
 })

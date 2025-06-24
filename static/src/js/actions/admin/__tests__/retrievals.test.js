@@ -263,6 +263,65 @@ describe('fetchAdminRetrievals', () => {
     })
   })
 
+  test('fetches admin retrievals with userId filter', async () => {
+    const data = {
+      pagination: {
+        pageNum: 1,
+        pageSize: 20,
+        pageCount: 1,
+        totalResults: 1
+      },
+      results: [{ mock: 'data' }]
+    }
+
+    const userId = 'test-user-123'
+
+    nock(/localhost/)
+      .get(/admin\/retrieval/)
+      .query({
+        user_id: userId,
+        page_num: 1,
+        page_size: 20,
+        sort_key: '-created_at'
+      })
+      .reply(200, data)
+
+    const store = mockStore({
+      authToken: 'mockToken',
+      admin: {
+        isAuthorized: true,
+        retrievals: {
+          sortKey: '-created_at',
+          pagination: {
+            pageNum: 1,
+            pageSize: 20
+          }
+        }
+      }
+    })
+
+    await store.dispatch(fetchAdminRetrievals(userId)).then(() => {
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: SET_ADMIN_RETRIEVALS_LOADING
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: SET_ADMIN_RETRIEVALS_LOADED
+      })
+
+      expect(storeActions[2]).toEqual({
+        type: SET_ADMIN_RETRIEVALS_PAGINATION,
+        payload: data.pagination
+      })
+
+      expect(storeActions[3]).toEqual({
+        type: SET_ADMIN_RETRIEVALS,
+        payload: data.results
+      })
+    })
+  })
+
   test('calls handleError when there is an error', async () => {
     const handleErrorMock = jest.spyOn(actions, 'handleError')
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
