@@ -11,7 +11,8 @@ export class AdminRetrievalsForm extends Component {
 
     this.state = {
       retrievalId: '',
-      userId: ''
+      userId: '',
+      retrievalCollectionId: ''
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -27,24 +28,27 @@ export class AdminRetrievalsForm extends Component {
     this.setState({ [name]: value })
   }
 
-  onFormSubmit(event) {
+  onFormSubmit(kind, event) {
     event.preventDefault()
 
-    const { userId, retrievalId } = this.state
+    const { userId, retrievalId, retrievalCollectionId } = this.state
+
     const { onAdminViewRetrieval, onFetchAdminRetrievals } = this.props
 
-    if (userId) {
-      onFetchAdminRetrievals(userId)
+    if (kind === 'user') {
+      onFetchAdminRetrievals(userId, undefined)
+    } else if (kind === 'collection') {
+      onFetchAdminRetrievals(undefined, retrievalCollectionId)
     } else {
       onAdminViewRetrieval(retrievalId)
     }
   }
 
   render() {
-    const { retrievalId, userId } = this.state
+    const { retrievalId, userId, retrievalCollectionId } = this.state
 
     return (
-      <Form onSubmit={this.onFormSubmit}>
+      <Form onSubmit={(event) => this.onFormSubmit('retrieval', event)}>
         <InputGroup className="mb-3">
           <Form.Label
             column
@@ -65,12 +69,12 @@ export class AdminRetrievalsForm extends Component {
             type="button"
             bootstrapVariant="primary"
             label="Go"
-            onClick={this.onFormSubmit}
+            onClick={(event) => this.onFormSubmit('retrieval', event)}
           >
             Go
           </Button>
         </InputGroup>
-        <InputGroup>
+        <InputGroup className="mb-3">
           <Form.Label
             column
             sm="auto"
@@ -90,7 +94,33 @@ export class AdminRetrievalsForm extends Component {
             type="button"
             bootstrapVariant="primary"
             label="Go"
-            onClick={this.onFormSubmit}
+            onClick={(event) => this.onFormSubmit('user', event)}
+          >
+            Go
+          </Button>
+        </InputGroup>
+        <InputGroup>
+          <Form.Label
+            column
+            sm="auto"
+            className="me-3"
+          >
+            Find By Retrieval Collection ID
+          </Form.Label>
+          <Form.Control
+            name="retrievalCollectionId"
+            // Unsure about placeholder text because not enough space for full text
+            placeholder="Enter Ret. Collection ID"
+            value={retrievalCollectionId}
+            onChange={this.onInputChange}
+            onBlur={this.onBlur}
+          />
+
+          <Button
+            type="button"
+            bootstrapVariant="primary"
+            label="Go"
+            onClick={(event) => this.onFormSubmit('collection', event)}
           >
             Go
           </Button>
