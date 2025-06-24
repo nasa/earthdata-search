@@ -1,9 +1,7 @@
 import React from 'react'
-import {
-  Card,
-  OverlayTrigger,
-  Tooltip
-} from 'react-bootstrap'
+import Card from 'react-bootstrap/Card'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Tooltip from 'react-bootstrap/Tooltip'
 
 // @ts-expect-error: Types do not exist for this file
 import { usePortalLogo } from '../../hooks/usePortalLogo'

@@ -25,7 +25,7 @@ test.describe('Path /search/granules/granule-details', () => {
     const cmrHits = 8180
     const granuleHits = 1074221
 
-    await page.route(/graphql.earthdata.nasa.gov\/api/, (route) => {
+    await page.route(/graphql/, (route) => {
       // If these requests change and are failing tests, console.log req.body to see the actual request being called
       const postData = route.request().postData()
 

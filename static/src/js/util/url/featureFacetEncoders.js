@@ -9,8 +9,7 @@ export const encodeFeatures = (features) => {
   const {
     availableInEarthdataCloud,
     customizable,
-    mapImagery,
-    nearRealTime
+    mapImagery
   } = features
 
   const encoded = []
@@ -18,7 +17,6 @@ export const encodeFeatures = (features) => {
   if (availableInEarthdataCloud) encoded.push('Available in Earthdata Cloud')
   if (customizable) encoded.push('Customizable')
   if (mapImagery) encoded.push('Map Imagery')
-  if (nearRealTime) encoded.push('Near Real Time')
 
   const encodedString = encoded.join('!')
 
@@ -36,8 +34,7 @@ export const decodeFeatures = (string) => {
   const defaultFeatures = {
     availableInEarthdataCloud: false,
     customizable: false,
-    mapImagery: false,
-    nearRealTime: false
+    mapImagery: false
   }
 
   if (!string) {
@@ -49,8 +46,7 @@ export const decodeFeatures = (string) => {
   const decodedFeatures = {
     availableInEarthdataCloud: decodedValues.indexOf('Available in Earthdata Cloud') !== -1,
     customizable: decodedValues.indexOf('Customizable') !== -1,
-    mapImagery: decodedValues.indexOf('Map Imagery') !== -1,
-    nearRealTime: decodedValues.indexOf('Near Real Time') !== -1
+    mapImagery: decodedValues.indexOf('Map Imagery') !== -1
   }
 
   return {

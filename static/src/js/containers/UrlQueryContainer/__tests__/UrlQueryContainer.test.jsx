@@ -20,29 +20,20 @@ const setup = setupTest({
     boundingBoxSearch: '',
     collectionsMetadata: {},
     gridCoords: '',
-    featureFacets: {},
     focusedCollection: '',
     focusedGranule: '',
-    horizontalDataResolutionRangeFacets: {},
-    instrumentFacets: {},
-    granuleDataFormatFacets: {},
     keywordSearch: '',
     mapPreferences: {},
-    organizationFacets: {},
     overrideTemporalSearch: {},
     pathname: '',
-    platformFacets: {},
     pointSearch: '',
     polygonSearch: '',
-    processingLevelFacets: {},
     project: {},
     projectFacets: {},
     location: {
       search: '?p=C00001-EDSC'
     },
-    scienceKeywordFacets: {},
     temporalSearch: {},
-    twoDCoordinateSystemNameFacets: [],
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
   }
@@ -84,24 +75,7 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      autocomplete: {
-        selected: []
-      },
       earthdataEnvironment: 'prod',
-      facetsParams: {
-        cmr: {
-          granule_data_format_h: [],
-          horizontal_data_resolution_range: [],
-          instrument_h: [],
-          data_center_h: [],
-          platforms_h: [],
-          processing_level_id_h: [],
-          project_h: [],
-          science_keywords_h: [],
-          two_d_coordinate_system_name: []
-        },
-        feature: {}
-      },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
       metadata: {
@@ -134,33 +108,24 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      autocompleteSelected: [],
       boundingBoxSearch: [],
       circleSearch: [],
       collectionsMetadata: {},
       earthdataEnvironment: 'prod',
-      featureFacets: {},
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
-      granuleDataFormatFacets: [],
       hasGranulesOrCwic: false,
-      horizontalDataResolutionRangeFacets: [],
-      instrumentFacets: [],
       keywordSearch: '',
       lineSearch: [],
       location: {
         pathname: ''
       },
       mapPreferences: {},
-      organizationFacets: [],
       overrideTemporalSearch: {},
       pathname: '',
-      platformFacets: [],
       pointSearch: [],
       polygonSearch: [],
-      processingLevelFacets: [],
       project: {},
-      projectFacets: [],
       query: {
         collection: {
           hasGranulesOrCwic: false,
@@ -178,11 +143,9 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      scienceKeywordFacets: [],
       paramCollectionSortKey: undefined,
       tagKey: '',
-      temporalSearch: {},
-      twoDCoordinateSystemNameFacets: []
+      temporalSearch: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -191,24 +154,7 @@ describe('mapStateToProps', () => {
   test('returns the correct state when using collectionSortKeys.endDateDescending', () => {
     const store = {
       advancedSearch: {},
-      autocomplete: {
-        selected: []
-      },
       earthdataEnvironment: 'prod',
-      facetsParams: {
-        cmr: {
-          granule_data_format_h: [],
-          horizontal_data_resolution_range: [],
-          instrument_h: [],
-          data_center_h: [],
-          platforms_h: [],
-          processing_level_id_h: [],
-          project_h: [],
-          science_keywords_h: [],
-          two_d_coordinate_system_name: []
-        },
-        feature: {}
-      },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
       metadata: {
@@ -242,33 +188,24 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      autocompleteSelected: [],
       boundingBoxSearch: [],
       circleSearch: [],
       collectionsMetadata: {},
       earthdataEnvironment: 'prod',
-      featureFacets: {},
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
-      granuleDataFormatFacets: [],
       hasGranulesOrCwic: false,
-      horizontalDataResolutionRangeFacets: [],
-      instrumentFacets: [],
       keywordSearch: '',
       lineSearch: [],
       location: {
         pathname: ''
       },
       mapPreferences: {},
-      organizationFacets: [],
       overrideTemporalSearch: {},
       pathname: '',
-      platformFacets: [],
       pointSearch: [],
       polygonSearch: [],
-      processingLevelFacets: [],
       project: {},
-      projectFacets: [],
       query: {
         collection: {
           hasGranulesOrCwic: false,
@@ -287,11 +224,9 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      scienceKeywordFacets: [],
       paramCollectionSortKey: collectionSortKeys.endDateDescending,
       tagKey: '',
-      temporalSearch: {},
-      twoDCoordinateSystemNameFacets: []
+      temporalSearch: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

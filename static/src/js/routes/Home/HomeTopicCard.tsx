@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from 'react-bootstrap'
+import Card from 'react-bootstrap/Card'
 
 import { type HomeTopic } from './Home'
 // @ts-expect-error: Types do not exist for this file
@@ -14,7 +14,7 @@ const HomeTopicCard: React.FC<HomeTopic> = ({
   url,
   title
 }) => {
-  const setOpenKeywordFacet = useEdscStore((state) => state.home.setOpenKeywordFacet)
+  const setOpenFacetGroup = useEdscStore((state) => state.home.setOpenFacetGroup)
 
   return (
     <Card
@@ -24,7 +24,7 @@ const HomeTopicCard: React.FC<HomeTopic> = ({
       to={url}
       updatePath
       naked
-      onClick={() => setOpenKeywordFacet(true)}
+      onClick={() => setOpenFacetGroup('science_keywords')}
     >
       <Card.Body className="d-flex align-items-center gap-3">
         <Card.Img className="w-auto flex-shrink-0 flex-grow-0" height={50} width={50} src={image} alt={title} />

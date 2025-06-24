@@ -70,6 +70,7 @@ import {
   clearFilters,
   removeSpatialFilter,
   removeTemporalFilter,
+  updateCollectionQuery,
   updateGranuleSearchQuery,
   updateRegionQuery
 } from './search'
@@ -78,14 +79,6 @@ import {
   changePath,
   updateStore
 } from './urlQuery'
-import {
-  addCmrFacet,
-  changeCmrFacet,
-  changeFeatureFacet,
-  removeCmrFacet,
-  updateCmrFacet,
-  updateFeatureFacet
-} from './facets'
 import {
   toggleAdvancedSearchModal,
   toggleAboutCSDAModal,
@@ -105,12 +98,7 @@ import {
   toggleKeyboardShortcutsModal,
   toggleTimeline
 } from './ui'
-import {
-  applyViewAllFacets,
-  getViewAllFacets,
-  changeViewAllFacet,
-  triggerViewAllFacets
-} from './viewAllFacets'
+import { getViewAllFacets } from './viewAllFacets'
 import {
   changeFocusedGranule,
   getFocusedGranule,
@@ -152,11 +140,8 @@ import {
 } from './contactInfo'
 import {
   cancelAutocomplete,
-  clearAutocompleteSelected,
   clearAutocompleteSuggestions,
-  deleteAutocompleteValue,
   fetchAutocomplete,
-  removeAutocompleteValue,
   selectAutocompleteSuggestion
 } from './autocomplete'
 import {
@@ -181,7 +166,6 @@ import { generateNotebook } from './generateNotebook'
 
 const actions = {
   addAccessMethods,
-  addCmrFacet,
   addCollectionToProject,
   addGranuleToProjectCollection,
   addProjectCollection,
@@ -189,11 +173,8 @@ const actions = {
   adminViewProject,
   adminViewRetrieval,
   applyGranuleFilters,
-  applyViewAllFacets,
   cancelAutocomplete,
-  changeCmrFacet,
   changeCollectionPageNum,
-  changeFeatureFacet,
   changeFocusedCollection,
   changeFocusedGranule,
   changeGranulePageNum,
@@ -203,15 +184,12 @@ const actions = {
   changeQuery,
   changeRegionQuery,
   changeUrl,
-  changeViewAllFacet,
-  clearAutocompleteSelected,
   clearAutocompleteSuggestions,
   clearFilters,
   clearFocusedCollectionGranuleFilters,
   clearGranuleFilters,
   collectionRelevancyMetrics,
   createSubscription,
-  deleteAutocompleteValue,
   deleteCollectionSubscription,
   deleteSubscription,
   excludeGranule,
@@ -244,8 +222,6 @@ const actions = {
   initializeCollectionGranulesResults,
   logout,
   onExcludeGranule,
-  removeAutocompleteValue,
-  removeCmrFacet,
   removeCollectionFromProject,
   removeError,
   removeGranuleFromProjectCollection,
@@ -288,7 +264,6 @@ const actions = {
   toggleSpatialPolygonWarning,
   toggleTimeline,
   toggleTooManyPointsModal,
-  triggerViewAllFacets,
   undoExcludeGranule,
   updateAccessMethod,
   updateAdminRetrievalsPageNum,
@@ -299,9 +274,8 @@ const actions = {
   updateAdminRetrievalsMetricsEndDate,
   updateAdvancedSearch,
   updateAuthToken,
-  updateCmrFacet,
   updateCollectionMetadata,
-  updateFeatureFacet,
+  updateCollectionQuery,
   updateFocusedCollection,
   updateFocusedCollectionGranuleFilters,
   updateFocusedGranule,

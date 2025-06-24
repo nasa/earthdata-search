@@ -1,12 +1,8 @@
 import autocompleteReducer from '../autocomplete'
 import {
-  CLEAR_AUTOCOMPLETE_SELECTED,
   CLEAR_AUTOCOMPLETE_SUGGESTIONS,
-  DELETE_AUTOCOMPLETE_VALUE,
   LOADED_AUTOCOMPLETE,
   LOADING_AUTOCOMPLETE,
-  RESTORE_FROM_URL,
-  UPDATE_AUTOCOMPLETE_SELECTED,
   UPDATE_AUTOCOMPLETE_SUGGESTIONS,
   CLEAR_FILTERS
 } from '../../constants/actionTypes'
@@ -15,8 +11,7 @@ const initialState = {
   isLoaded: false,
   isLoading: false,
   params: null,
-  suggestions: [],
-  selected: []
+  suggestions: []
 }
 
 describe('INITIAL_STATE', () => {
@@ -59,26 +54,6 @@ describe('LOADED_AUTOCOMPLETE', () => {
     }
 
     expect(autocompleteReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('CLEAR_AUTOCOMPLETE_SELECTED', () => {
-  test('returns the correct state', () => {
-    const action = {
-      type: CLEAR_AUTOCOMPLETE_SELECTED
-    }
-
-    const expectedState = {
-      ...initialState
-    }
-
-    expect(autocompleteReducer({
-      ...initialState,
-      selected: [{
-        type: 'mock_type',
-        value: 'mock value'
-      }]
-    }, action)).toEqual(expectedState)
   })
 })
 
@@ -152,178 +127,6 @@ describe('UPDATE_AUTOCOMPLETE_SUGGESTIONS', () => {
       suggestions: [{
         type: 'type',
         value: 'value2'
-      }]
-    }
-
-    expect(autocompleteReducer(initial, action)).toEqual(expectedState)
-  })
-})
-
-describe('UPDATE_AUTOCOMPLETE_SELECTED', () => {
-  test('returns the correct state', () => {
-    const payload = {
-      suggestion: {
-        type: 'mock_type',
-        value: 'mock value'
-      }
-    }
-    const action = {
-      type: UPDATE_AUTOCOMPLETE_SELECTED,
-      payload
-    }
-
-    const expectedState = {
-      ...initialState,
-      selected: [{
-        type: 'mock_type',
-        value: 'mock value'
-      }]
-    }
-
-    expect(autocompleteReducer(undefined, action)).toEqual(expectedState)
-  })
-})
-
-describe('DELETE_AUTOCOMPLETE_VALUE', () => {
-  test('returns the correct state', () => {
-    const payload = {
-      type: 'mock_type_2',
-      value: 'mock value 2'
-    }
-    const action = {
-      type: DELETE_AUTOCOMPLETE_VALUE,
-      payload
-    }
-
-    const expectedState = {
-      ...initialState,
-      selected: [{
-        type: 'mock_type_1',
-        value: 'mock value 1'
-      }]
-    }
-
-    expect(autocompleteReducer({
-      ...initialState,
-      selected: [
-        {
-          type: 'mock_type_1',
-          value: 'mock value 1'
-        },
-        {
-          type: 'mock_type_2',
-          value: 'mock value 2'
-        }
-      ]
-    }, action)).toEqual(expectedState)
-  })
-
-  test('returns the correct state for science_keywords', () => {
-    const payload = {
-      level: 1,
-      type: 'science_keywords',
-      value: 'Clouds'
-    }
-    const action = {
-      type: DELETE_AUTOCOMPLETE_VALUE,
-      payload
-    }
-
-    const initial = {
-      ...initialState,
-      selected: [
-        {
-          type: 'science_keywords',
-          fields: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency',
-          value: 'Cloud Frequency'
-        },
-        {
-          type: 'science_keywords',
-          fields: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols',
-          value: 'Stratospheric Aerosols'
-        }
-      ]
-    }
-
-    const expectedState = {
-      ...initialState,
-      selected: [{
-        type: 'science_keywords',
-        fields: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols',
-        value: 'Stratospheric Aerosols'
-      }]
-    }
-
-    expect(autocompleteReducer(initial, action)).toEqual(expectedState)
-  })
-
-  test('returns the correct state for full science_keywords', () => {
-    const payload = {
-      type: 'science_keywords',
-      value: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency'
-    }
-    const action = {
-      type: DELETE_AUTOCOMPLETE_VALUE,
-      payload
-    }
-
-    const initial = {
-      ...initialState,
-      selected: [
-        {
-          type: 'science_keywords',
-          value: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency'
-        },
-        {
-          type: 'science_keywords',
-          value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
-        }
-      ]
-    }
-
-    const expectedState = {
-      ...initialState,
-      selected: [{
-        type: 'science_keywords',
-        value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
-      }]
-    }
-
-    expect(autocompleteReducer(initial, action)).toEqual(expectedState)
-  })
-})
-
-describe('RESTORE_FROM_URL', () => {
-  test('returns the correct state', () => {
-    const payload = {
-      autocompleteSelected: [{
-        type: 'mock_type',
-        value: 'mock value'
-      }]
-    }
-    const action = {
-      type: RESTORE_FROM_URL,
-      payload
-    }
-
-    const initial = {
-      selected: [
-        {
-          type: 'science_keywords',
-          value: 'Atmosphere:Clouds:Cloud Properties:Cloud Frequency:Cloud Frequency'
-        },
-        {
-          type: 'science_keywords',
-          value: 'Atmosphere:Aerosols:Aerosol Backscatter:Stratospheric Aerosols'
-        }
-      ]
-    }
-
-    const expectedState = {
-      ...initialState,
-      selected: [{
-        type: 'mock_type',
-        value: 'mock value'
       }]
     }
 

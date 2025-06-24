@@ -16,11 +16,6 @@ import contactInfoReducer from './contactInfo'
 import dataQualitySummariesReducer from './dataQualitySummaries'
 import earthdataEnvironmentReducer from './earthdataEnvironment'
 import errorsReducer from './errors'
-import {
-  cmrFacetsReducer,
-  featureFacetsReducer,
-  viewAllFacetsReducer
-} from './facetsParams'
 import facetsReducer from './facets'
 import focusedCollectionReducer from './focusedCollection'
 import focusedGranuleReducer from './focusedGranule'
@@ -53,11 +48,6 @@ export default (history) => combineReducers({
   dataQualitySummaries: dataQualitySummariesReducer,
   earthdataEnvironment: earthdataEnvironmentReducer,
   errors: errorsReducer,
-  facetsParams: combineReducers({
-    feature: featureFacetsReducer,
-    cmr: cmrFacetsReducer,
-    viewAll: viewAllFacetsReducer
-  }),
   focusedCollection: focusedCollectionReducer,
   focusedGranule: focusedGranuleReducer,
   granuleDownload: granuleDownloadReducer,

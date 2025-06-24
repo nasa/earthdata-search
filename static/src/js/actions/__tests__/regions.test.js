@@ -23,10 +23,6 @@ import actions from '..'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('updateRegionResults', () => {
   test('should create an action to update the search query', () => {
     const payload = []
@@ -100,14 +96,6 @@ describe('getRegions', () => {
           keyword: 'search keyword',
           exact: false
         }
-      },
-      cmr: {},
-      facetsParams: {
-        feature: {
-          customizable: false,
-          mapImagery: false,
-          nearRealTime: false
-        }
       }
     })
 
@@ -153,14 +141,6 @@ describe('getRegions', () => {
           endpoint: 'huc',
           keyword: '10',
           exact: false
-        }
-      },
-      cmr: {},
-      facetsParams: {
-        feature: {
-          customizable: false,
-          mapImagery: false,
-          nearRealTime: false
         }
       }
     })

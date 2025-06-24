@@ -1202,11 +1202,25 @@ test.describe('Path /search/granules', () => {
 
       await login(context)
 
-      await page.route('**/search/collections.json', async (route) => {
+      await page.route('**/collections', async (route) => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toEqual('has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.*,opensearch.granule.osdd&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key[]=has_granules_or_cwic&sort_key[]=-score')
+        expect(JSON.parse(body).params).toEqual({
+          consortium: [],
+          has_granules_or_cwic: true,
+          include_facets: 'v2',
+          include_granule_counts: true,
+          include_has_granules: true,
+          include_tags: 'edsc.*,opensearch.granule.osdd',
+          options: {},
+          page_num: 1,
+          page_size: 20,
+          point: ['-77.04119,38.80585'],
+          service_type: [],
+          sort_key: ['has_granules_or_cwic', '-score', '-create-data-date'],
+          tag_key: []
+        })
 
         await route.fulfill({
           body: JSON.stringify(commonBody),
@@ -1214,11 +1228,21 @@ test.describe('Path /search/granules', () => {
         })
       })
 
-      await page.route('**/search/granules.json', async (route) => {
+      await page.route('**/granules', async (route) => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toEqual('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&point[]=-77.04119,38.80585&sort_key=-start_date')
+        expect(JSON.parse(body).params).toEqual({
+          concept_id: [],
+          echo_collection_id: 'C1214470488-ASF',
+          exclude: {},
+          options: {},
+          page_num: 1,
+          page_size: 20,
+          point: ['-77.04119,38.80585'],
+          sort_key: '-start_date',
+          two_d_coordinate_system: {}
+        })
 
         await route.fulfill({
           body: JSON.stringify(subscriptionGranulesBody),
@@ -1230,11 +1254,17 @@ test.describe('Path /search/granules', () => {
         })
       })
 
-      await page.route('**/search/granules/timeline', async (route) => {
+      await page.route('**/granules/timeline', async (route) => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toEqual('end_date=2023-12-01T00:00:00.000Z&interval=day&start_date=2018-12-01T00:00:00.000Z&concept_id[]=C1214470488-ASF')
+        expect(JSON.parse(body).params).toEqual({
+          concept_id: ['C1214470488-ASF'],
+          end_date: '2047-01-01T00:00:00.000Z',
+          interval: 'month',
+          point: ['-77.04119,38.80585'],
+          start_date: '1987-01-01T00:00:00.000Z'
+        })
 
         await route.fulfill({
           body: JSON.stringify(subscriptionTimelineBody),

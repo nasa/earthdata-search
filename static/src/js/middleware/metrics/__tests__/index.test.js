@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react'
 import { LOCATION_CHANGE } from 'connected-react-router'
 
 import {
@@ -13,8 +14,7 @@ import {
   METRICS_SPATIAL_EDIT,
   METRICS_SPATIAL_SELECTION,
   METRICS_TEMPORAL_FILTER,
-  METRICS_TIMELINE,
-  METRICS_TIMING
+  METRICS_TIMELINE
 } from '../constants'
 import * as events from '../events'
 import metricsMiddleware from '../index'
@@ -62,14 +62,18 @@ describe('metrics middleware', () => {
     expect(next).toHaveBeenCalledWith(action)
   })
 
-  test('calls virtualPageview on react-router location change', () => {
+  test('calls virtualPageview on react-router location change', async () => {
     const { store, invoke } = createStore()
 
     const action = {
       type: LOCATION_CHANGE
     }
     invoke(action)
-    expect(events.virtualPageview).toHaveBeenCalledTimes(1)
+
+    await waitFor(() => {
+      expect(events.virtualPageview).toHaveBeenCalledTimes(1)
+    })
+
     expect(events.virtualPageview).toHaveBeenCalledWith(action, store.getState())
   })
 
@@ -227,20 +231,6 @@ describe('metrics middleware', () => {
     invoke(action)
     expect(events.temporalFilter).toHaveBeenCalledTimes(1)
     expect(events.temporalFilter).toHaveBeenCalledWith(action)
-  })
-
-  test('calls timing event', () => {
-    const { invoke } = createStore()
-
-    const action = {
-      type: METRICS_TIMING,
-      payload: {
-        type: 'Test'
-      }
-    }
-    invoke(action)
-    expect(events.timing).toHaveBeenCalledTimes(1)
-    expect(events.timing).toHaveBeenCalledWith(action)
   })
 
   test('calls collectionSortChange event', () => {
