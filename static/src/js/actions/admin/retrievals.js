@@ -115,7 +115,7 @@ export const fetchAdminRetrievals = (userId, retrievalCollectionId) => (dispatch
 
   if (userId) requestOpts.user_id = userId
 
-  if (retrievalCollectionId) requestOpts.collections_retrieval_id = retrievalCollectionId
+  if (retrievalCollectionId) requestOpts.retrieval_collection_id = retrievalCollectionId
 
   const response = requestObject.all(requestOpts)
     .then((responseObject) => {

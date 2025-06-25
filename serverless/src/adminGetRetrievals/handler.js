@@ -29,7 +29,7 @@ const adminGetRetrievals = async (event, context) => {
       page_size: pageSize = 20,
       sort_key: sortKey = '-created_at',
       user_id: userId,
-      collections_retrieval_id: retrievalCollectionId
+      retrieval_collection_id: retrievalCollectionId
     } = queryStringParameters || {}
 
     // Retrieve a connection to the database

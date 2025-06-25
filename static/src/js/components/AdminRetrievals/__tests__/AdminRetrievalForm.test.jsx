@@ -34,6 +34,17 @@ describe('AdminRetrievalsForm component', () => {
     })
   })
 
+  describe('when typing into the retrieval collection id field', () => {
+    test('shows the typed text in the input', async () => {
+      const { user } = setup()
+
+      const collectionIdInput = screen.getByPlaceholderText('Enter Ret. Collection ID')
+      await user.type(collectionIdInput, 'test-collection-id')
+
+      expect(collectionIdInput).toHaveValue('test-collection-id')
+    })
+  })
+
   describe('when clicking Go with user id provided', () => {
     test('calls onFetchAdminRetrievals with the user id', async () => {
       const { props, user } = setup()
@@ -45,7 +56,7 @@ describe('AdminRetrievalsForm component', () => {
       await user.click(goButtons[1])
 
       expect(props.onFetchAdminRetrievals).toHaveBeenCalledTimes(1)
-      expect(props.onFetchAdminRetrievals).toHaveBeenCalledWith('test-user-id')
+      expect(props.onFetchAdminRetrievals).toHaveBeenCalledWith('test-user-id', undefined)
       expect(props.onAdminViewRetrieval).not.toHaveBeenCalled()
     })
   })
@@ -63,6 +74,22 @@ describe('AdminRetrievalsForm component', () => {
       expect(props.onAdminViewRetrieval).toHaveBeenCalledTimes(1)
       expect(props.onAdminViewRetrieval).toHaveBeenCalledWith('test-retrieval-id')
       expect(props.onFetchAdminRetrievals).not.toHaveBeenCalled()
+    })
+  })
+
+  describe('when clicking Go with retrieval collection id provided', () => {
+    test('calls onFetchAdminRetrievals with the collection id', async () => {
+      const { props, user } = setup()
+
+      const retrievalCollectionIdInput = screen.getByPlaceholderText('Enter Ret. Collection ID')
+      const goButtons = screen.getAllByText('Go')
+
+      await user.type(retrievalCollectionIdInput, 'test-retrieval-collection-id')
+      await user.click(goButtons[2])
+
+      expect(props.onFetchAdminRetrievals).toHaveBeenCalledTimes(1)
+      expect(props.onFetchAdminRetrievals).toHaveBeenCalledWith(undefined, 'test-retrieval-collection-id')
+      expect(props.onAdminViewRetrieval).not.toHaveBeenCalled()
     })
   })
 })
