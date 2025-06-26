@@ -7,7 +7,8 @@ import {
   SET_ADMIN_RETRIEVALS_LOADING,
   UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
   UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
-  SET_ADMIN_RETRIEVALS_PAGINATION
+  SET_ADMIN_RETRIEVALS_PAGINATION,
+  UPDATE_ADMIN_RETRIEVALS_USER_ID
 } from '../../constants/actionTypes'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
@@ -23,7 +24,8 @@ const initialState = {
     pageSize: defaultCmrPageSize,
     pageNum: 1,
     pageCount: null,
-    totalResults: null
+    totalResults: null,
+    userId: null
   }
 }
 
@@ -156,6 +158,16 @@ const adminRetrievalsReducer = (state = initialState, action = {}) => {
         pagination: {
           ...state.pagination,
           pageNum: action.payload
+        }
+      }
+    }
+
+    case UPDATE_ADMIN_RETRIEVALS_USER_ID: {
+      return {
+        ...state,
+        pagination: {
+          ...state.pagination,
+          userId: action.payload
         }
       }
     }

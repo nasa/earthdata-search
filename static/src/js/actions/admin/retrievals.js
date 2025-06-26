@@ -10,7 +10,8 @@ import {
   SET_ADMIN_RETRIEVALS_LOADING,
   SET_ADMIN_RETRIEVALS_PAGINATION,
   UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
-  UPDATE_ADMIN_RETRIEVALS_PAGE_NUM
+  UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
+  UPDATE_ADMIN_RETRIEVALS_USER_ID
 } from '../../constants/actionTypes'
 
 import actions from '../index'
@@ -104,6 +105,13 @@ export const fetchAdminRetrievals = (userId, retrievalCollectionId) => (dispatch
 
   dispatch(setAdminRetrievalsLoading())
 
+  if (userId) {
+    dispatch({
+      type: UPDATE_ADMIN_RETRIEVALS_USER_ID,
+      payload: userId
+    })
+  }
+
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
   const requestOpts = {
@@ -147,22 +155,22 @@ export const adminViewRetrieval = (retrievalId) => (dispatch) => {
   }))
 }
 
-export const updateAdminRetrievalsSortKey = (sortKey) => (dispatch) => {
+export const updateAdminRetrievalsSortKey = (sortKey, userId) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
     payload: sortKey
   })
 
-  dispatch(actions.fetchAdminRetrievals())
+  dispatch(actions.fetchAdminRetrievals(userId))
 }
 
-export const updateAdminRetrievalsPageNum = (pageNum) => (dispatch) => {
+export const updateAdminRetrievalsPageNum = (pageNum, userId) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
     payload: pageNum
   })
 
-  dispatch(actions.fetchAdminRetrievals())
+  dispatch(actions.fetchAdminRetrievals(userId))
 }
 
 /**

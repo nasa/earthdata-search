@@ -16,14 +16,16 @@ export const mapDispatchToProps = (dispatch) => ({
   onAdminViewRetrieval:
     (retrievalId) => dispatch(actions.adminViewRetrieval(retrievalId)),
   onFetchAdminRetrievals:
-    (userId, retrievalCollectionId) => dispatch(actions.fetchAdminRetrievals(userId, retrievalCollectionId)),
+  (userId, retrievalCollectionId) => dispatch(
+    actions.fetchAdminRetrievals(userId, retrievalCollectionId)
+  ),
   onUpdateAdminRetrievalsSortKey:
-    (sortKey) => dispatch(
-      actions.updateAdminRetrievalsSortKey(sortKey)
+    (sortKey, userId) => dispatch(
+      actions.updateAdminRetrievalsSortKey(sortKey, userId)
     ),
   onUpdateAdminRetrievalsPageNum:
-    (pageNum) => dispatch(
-      actions.updateAdminRetrievalsPageNum(pageNum)
+    (pageNum, userId) => dispatch(
+      actions.updateAdminRetrievalsPageNum(pageNum, userId)
     )
 })
 
