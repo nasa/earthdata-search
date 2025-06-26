@@ -59,20 +59,20 @@ describe('mapDispatchToProps', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateAdminRetrievalsSortKey')
 
-    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsSortKey('sort-key')
+    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsSortKey('sort-key', 'user-id')
 
     expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('sort-key')
+    expect(spy).toHaveBeenCalledWith('sort-key', 'user-id')
   })
 
   test('onUpdateAdminRetrievalsPageNum calls actions.updateAdminRetrievalsPageNum', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateAdminRetrievalsPageNum')
 
-    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsPageNum('sort-key')
+    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsPageNum('page-num', 'user-id')
 
     expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('sort-key')
+    expect(spy).toHaveBeenCalledWith('page-num', 'user-id')
   })
 })
 

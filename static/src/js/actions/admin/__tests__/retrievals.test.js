@@ -28,7 +28,8 @@ import {
   SET_ADMIN_RETRIEVALS_LOADED,
   SET_ADMIN_RETRIEVALS_PAGINATION,
   UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
-  UPDATE_ADMIN_RETRIEVALS_PAGE_NUM
+  UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
+  UPDATE_ADMIN_RETRIEVALS_USER_ID
 } from '../../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -307,15 +308,20 @@ describe('fetchAdminRetrievals', () => {
       })
 
       expect(storeActions[1]).toEqual({
-        type: SET_ADMIN_RETRIEVALS_LOADED
+        type: UPDATE_ADMIN_RETRIEVALS_USER_ID,
+        payload: userId
       })
 
       expect(storeActions[2]).toEqual({
+        type: SET_ADMIN_RETRIEVALS_LOADED
+      })
+
+      expect(storeActions[3]).toEqual({
         type: SET_ADMIN_RETRIEVALS_PAGINATION,
         payload: data.pagination
       })
 
-      expect(storeActions[3]).toEqual({
+      expect(storeActions[4]).toEqual({
         type: SET_ADMIN_RETRIEVALS,
         payload: data.results
       })
@@ -466,8 +472,36 @@ describe('updateAdminRetrievalsSortKey', () => {
       }
     })
 
-    // Call the dispatch
-    store.dispatch(updateAdminRetrievalsSortKey(sortKey))
+    // Call the dispatch, undefined is the userId
+    store.dispatch(updateAdminRetrievalsSortKey(sortKey, undefined))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
+      payload: sortKey
+    })
+
+    expect(fetchAdminRetrievalsMock).toHaveBeenCalledTimes(1)
+    expect(fetchAdminRetrievalsMock).toHaveBeenCalledWith(undefined)
+  })
+
+  test('should create an action to update the sort key and call fetchAdminRetrievals with userId', () => {
+    const sortKey = '+username'
+    const userId = 'test-user-123'
+
+    const fetchAdminRetrievalsMock = jest.spyOn(actions, 'fetchAdminRetrievals')
+    fetchAdminRetrievalsMock.mockImplementation(() => jest.fn())
+
+    const store = mockStore({
+      admin: {
+        retrievals: {
+          sortKey: '-created_at'
+        }
+      }
+    })
+
+    // Call the dispatch with userId
+    store.dispatch(updateAdminRetrievalsSortKey(sortKey, userId))
 
     // Is updateFeatureFacet called with the right payload
     const storeActions = store.getActions()
@@ -477,6 +511,7 @@ describe('updateAdminRetrievalsSortKey', () => {
     })
 
     expect(fetchAdminRetrievalsMock).toHaveBeenCalledTimes(1)
+    expect(fetchAdminRetrievalsMock).toHaveBeenCalledWith(userId)
   })
 })
 
@@ -508,6 +543,36 @@ describe('updateAdminRetrievalsPageNum', () => {
     })
 
     expect(fetchAdminRetrievalsMock).toHaveBeenCalledTimes(1)
+    expect(fetchAdminRetrievalsMock).toHaveBeenCalledWith(undefined)
+  })
+
+  test('should create an action to update the page num and call fetchAdminRetrievals with userId', () => {
+    const pageNum = 2
+    const userId = 'test-user-123'
+
+    const fetchAdminRetrievalsMock = jest.spyOn(actions, 'fetchAdminRetrievals')
+    fetchAdminRetrievalsMock.mockImplementation(() => jest.fn())
+
+    const store = mockStore({
+      admin: {
+        retrievals: {
+          pagination: {
+            pageNum: 1
+          }
+        }
+      }
+    })
+
+    store.dispatch(updateAdminRetrievalsPageNum(pageNum, userId))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
+      payload: pageNum
+    })
+
+    expect(fetchAdminRetrievalsMock).toHaveBeenCalledTimes(1)
+    expect(fetchAdminRetrievalsMock).toHaveBeenCalledWith(userId)
   })
 })
 

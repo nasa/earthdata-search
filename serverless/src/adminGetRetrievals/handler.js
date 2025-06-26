@@ -52,15 +52,9 @@ const adminGetRetrievals = async (event, context) => {
     }
 
     if (retrievalCollectionId) {
-      const id = parseInt(retrievalCollectionId, 10)
-      if (!Number.isFinite(id) || id <= 0 || id > 2147483647) {
-        // Ignore non-numeric or non-positive ids
-        // or ids greater than 2147483647 because they will yield sql errors
-      } else {
-        query = query
-          .leftJoin('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
-          .where({ 'retrieval_collections.id': id })
-      }
+      query = query
+        .leftJoin('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
+        .where({ 'retrieval_collections.id': parseInt(retrievalCollectionId, 10) })
     }
 
     const retrievalResponse = await query
