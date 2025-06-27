@@ -151,7 +151,7 @@ export const AdminRetrievalsList = ({
           current={pageNum}
           total={totalResults}
           pageSize={pageSize}
-          onChange={(newPageNum) => handlePageChange(newPageNum)}
+          onChange={handlePageChange}
           locale={localeInfo}
         />
       </div>
