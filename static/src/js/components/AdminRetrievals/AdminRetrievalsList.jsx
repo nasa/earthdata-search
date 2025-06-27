@@ -26,15 +26,16 @@ export const AdminRetrievalsList = ({
   const {
     pageNum,
     pageSize,
-    totalResults
+    totalResults,
+    userId
   } = pagination
 
   const handleSort = (value) => {
-    onUpdateAdminRetrievalsSortKey(value)
+    onUpdateAdminRetrievalsSortKey(value, userId)
   }
 
   const handlePageChange = (newPageNum) => {
-    onUpdateAdminRetrievalsPageNum(newPageNum)
+    onUpdateAdminRetrievalsPageNum(newPageNum, userId)
   }
 
   const onSetUsernameSort = () => {
@@ -170,7 +171,8 @@ AdminRetrievalsList.propTypes = {
     pagination: PropTypes.shape({
       pageNum: PropTypes.number,
       pageSize: PropTypes.number,
-      totalResults: PropTypes.number
+      totalResults: PropTypes.number,
+      userId: PropTypes.string
     }),
     sortKey: PropTypes.string
   }),

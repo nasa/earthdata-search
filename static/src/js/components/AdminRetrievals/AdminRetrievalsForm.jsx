@@ -10,38 +10,51 @@ export class AdminRetrievalsForm extends Component {
     super(props)
 
     this.state = {
-      retrievalId: '',
-      userId: ''
+      searchType: 'retrievalId',
+      searchValue: ''
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
-    this.onInputChange = this.onInputChange.bind(this)
+    this.onSearchTypeChange = this.onSearchTypeChange.bind(this)
+    this.onSearchValueChange = this.onSearchValueChange.bind(this)
   }
 
   onBlur(event) {
     event.preventDefault()
   }
 
-  onInputChange({ target }) {
-    const { name, value } = target
-    this.setState({ [name]: value })
+  onSearchTypeChange({ target }) {
+    const { value } = target
+    this.setState({
+      searchType: value,
+      searchValue: ''
+    })
+  }
+
+  onSearchValueChange({ target }) {
+    const { value } = target
+    this.setState({ searchValue: value })
   }
 
   onFormSubmit(event) {
     event.preventDefault()
 
-    const { userId, retrievalId } = this.state
+    const { searchType, searchValue } = this.state
     const { onAdminViewRetrieval, onFetchAdminRetrievals } = this.props
 
-    if (userId) {
-      onFetchAdminRetrievals(userId)
-    } else {
-      onAdminViewRetrieval(retrievalId)
+    if (!searchValue.trim()) return
+
+    if (searchType === 'retrievalId') {
+      onAdminViewRetrieval(searchValue)
+    } else if (searchType === 'userId') {
+      onFetchAdminRetrievals(searchValue, undefined)
+    } else if (searchType === 'retrievalCollectionId') {
+      onFetchAdminRetrievals(undefined, searchValue)
     }
   }
 
   render() {
-    const { retrievalId, userId } = this.state
+    const { searchType, searchValue } = this.state
 
     return (
       <Form onSubmit={this.onFormSubmit}>
@@ -51,48 +64,33 @@ export class AdminRetrievalsForm extends Component {
             sm="auto"
             className="me-3"
           >
-            Find Retrieval
+            Search By
           </Form.Label>
-          <Form.Control
-            name="retrievalId"
-            placeholder="Obfuscated Retrieval ID"
-            value={retrievalId}
-            onChange={this.onInputChange}
-            onBlur={this.onBlur}
-          />
-
-          <Button
-            type="button"
-            bootstrapVariant="primary"
-            label="Go"
-            onClick={this.onFormSubmit}
-          >
-            Go
-          </Button>
-        </InputGroup>
-        <InputGroup>
-          <Form.Label
-            column
-            sm="auto"
+          <Form.Select
+            value={searchType}
+            onChange={this.onSearchTypeChange}
             className="me-3"
+            style={
+              {
+              }
+            }
           >
-            Find By User Id
-          </Form.Label>
+            <option value="retrievalId">Retrieval ID</option>
+            <option value="userId">User ID</option>
+            <option value="retrievalCollectionId">Retrieval Collection ID</option>
+          </Form.Select>
           <Form.Control
-            name="userId"
-            placeholder="Enter User ID"
-            value={userId}
-            onChange={this.onInputChange}
+            placeholder="Enter value"
+            value={searchValue}
+            onChange={this.onSearchValueChange}
             onBlur={this.onBlur}
           />
-
           <Button
-            type="button"
+            type="submit"
             bootstrapVariant="primary"
-            label="Go"
-            onClick={this.onFormSubmit}
+            label="Search"
           >
-            Go
+            Search
           </Button>
         </InputGroup>
       </Form>

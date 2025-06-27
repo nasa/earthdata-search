@@ -7,7 +7,8 @@ import {
   SET_ADMIN_RETRIEVALS_LOADING,
   UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
   UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
-  SET_ADMIN_RETRIEVALS_PAGINATION
+  SET_ADMIN_RETRIEVALS_PAGINATION,
+  UPDATE_ADMIN_RETRIEVALS_USER_ID
 } from '../../../constants/actionTypes'
 
 import adminRetrievalsReducer from '../retrievals'
@@ -22,7 +23,8 @@ const initialState = {
     pageSize: 20,
     pageNum: 1,
     pageCount: null,
-    totalResults: null
+    totalResults: null,
+    userId: null
   }
 }
 
@@ -210,7 +212,8 @@ describe('SET_ADMIN_RETRIEVALS_PAGINATION', () => {
         pageNum: 1,
         pageSize: 20,
         pageCount: 2,
-        totalResults: 25
+        totalResults: 25,
+        userId: null
       }
     }
 
@@ -247,7 +250,8 @@ describe('UPDATE_ADMIN_RETRIEVALS_PAGE_NUM', () => {
         pageNum: 1,
         pageSize: 20,
         pageCount: 3,
-        totalResults: 55
+        totalResults: 55,
+        userId: null
       }
     }
 
@@ -260,5 +264,24 @@ describe('UPDATE_ADMIN_RETRIEVALS_PAGE_NUM', () => {
     }
 
     expect(adminRetrievalsReducer(initial, action)).toEqual(expectedState)
+  })
+})
+
+describe('UPDATE_ADMIN_RETRIEVALS_USER_ID', () => {
+  test('returns the correct state', () => {
+    const action = {
+      type: UPDATE_ADMIN_RETRIEVALS_USER_ID,
+      payload: 'test-user-123'
+    }
+
+    const expectedState = {
+      ...initialState,
+      pagination: {
+        ...initialState.pagination,
+        userId: 'test-user-123'
+      }
+    }
+
+    expect(adminRetrievalsReducer(undefined, action)).toEqual(expectedState)
   })
 })

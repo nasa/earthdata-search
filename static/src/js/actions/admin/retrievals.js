@@ -10,7 +10,8 @@ import {
   SET_ADMIN_RETRIEVALS_LOADING,
   SET_ADMIN_RETRIEVALS_PAGINATION,
   UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
-  UPDATE_ADMIN_RETRIEVALS_PAGE_NUM
+  UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
+  UPDATE_ADMIN_RETRIEVALS_USER_ID
 } from '../../constants/actionTypes'
 
 import actions from '../index'
@@ -87,7 +88,7 @@ export const fetchAdminRetrieval = (id) => (dispatch, getState) => {
 /**
  * Fetch a group of retrievals from the database
  */
-export const fetchAdminRetrievals = (userId) => (dispatch, getState) => {
+export const fetchAdminRetrievals = (userId, retrievalCollectionId) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
@@ -104,6 +105,13 @@ export const fetchAdminRetrievals = (userId) => (dispatch, getState) => {
 
   dispatch(setAdminRetrievalsLoading())
 
+  if (userId) {
+    dispatch({
+      type: UPDATE_ADMIN_RETRIEVALS_USER_ID,
+      payload: userId
+    })
+  }
+
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
   const requestOpts = {
@@ -114,6 +122,8 @@ export const fetchAdminRetrievals = (userId) => (dispatch, getState) => {
   if (sortKey) requestOpts.sort_key = sortKey
 
   if (userId) requestOpts.user_id = userId
+
+  if (retrievalCollectionId) requestOpts.retrieval_collection_id = retrievalCollectionId
 
   const response = requestObject.all(requestOpts)
     .then((responseObject) => {
@@ -145,22 +155,22 @@ export const adminViewRetrieval = (retrievalId) => (dispatch) => {
   }))
 }
 
-export const updateAdminRetrievalsSortKey = (sortKey) => (dispatch) => {
+export const updateAdminRetrievalsSortKey = (sortKey, userId) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_RETRIEVALS_SORT_KEY,
     payload: sortKey
   })
 
-  dispatch(actions.fetchAdminRetrievals())
+  dispatch(actions.fetchAdminRetrievals(userId))
 }
 
-export const updateAdminRetrievalsPageNum = (pageNum) => (dispatch) => {
+export const updateAdminRetrievalsPageNum = (pageNum, userId) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_RETRIEVALS_PAGE_NUM,
     payload: pageNum
   })
 
-  dispatch(actions.fetchAdminRetrievals())
+  dispatch(actions.fetchAdminRetrievals(userId))
 }
 
 /**

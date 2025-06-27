@@ -42,6 +42,7 @@ describe('adminGetRetrievals', () => {
         environment: 'prod',
         created_at: '2019-08-25T11:58:14.390Z',
         user_id: 1,
+        retrieval_collection_id: 1,
         username: 'edsc-test',
         total: '3'
       }, {
@@ -50,6 +51,7 @@ describe('adminGetRetrievals', () => {
         environment: 'prod',
         created_at: '2019-08-25T11:59:14.390Z',
         user_id: 1,
+        retrieval_collection_id: 2,
         username: 'edsc-test',
         total: '3'
       }, {
@@ -58,6 +60,7 @@ describe('adminGetRetrievals', () => {
         environment: 'prod',
         created_at: '2019-08-25T12:00:14.390Z',
         user_id: 1,
+        retrieval_collection_id: 3,
         username: 'edsc-test',
         total: '3'
       }])
@@ -87,6 +90,7 @@ describe('adminGetRetrievals', () => {
           environment: 'prod',
           created_at: '2019-08-25T11:58:14.390Z',
           user_id: 1,
+          retrieval_collection_id: 1,
           username: 'edsc-test',
           total: '3',
           obfuscated_id: '4517239960'
@@ -97,6 +101,7 @@ describe('adminGetRetrievals', () => {
           environment: 'prod',
           created_at: '2019-08-25T11:59:14.390Z',
           user_id: 1,
+          retrieval_collection_id: 2,
           username: 'edsc-test',
           total: '3',
           obfuscated_id: '7023641925'
@@ -107,6 +112,7 @@ describe('adminGetRetrievals', () => {
           environment: 'prod',
           created_at: '2019-08-25T12:00:14.390Z',
           user_id: 1,
+          retrieval_collection_id: 3,
           username: 'edsc-test',
           total: '3',
           obfuscated_id: '2057964173'
@@ -218,6 +224,58 @@ describe('adminGetRetrievals', () => {
     expect(statusCode).toEqual(200)
   })
 
+  test('correctly retrieves retrievals filtered by retrieval_collection_id', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([{
+        id: 1,
+        jsondata: {},
+        environment: 'prod',
+        created_at: '2019-08-25T11:58:14.390Z',
+        user_id: 1,
+        username: 'edsc-test',
+        total: '1'
+      }])
+    })
+
+    const retrievalResponse = await adminGetRetrievals({
+      queryStringParameters: {
+        retrieval_collection_id: '1'
+      }
+    }, {})
+
+    const { queries } = dbTracker.queries
+
+    expect(queries[0].method).toEqual('select')
+    // Ensure the query contains the retrieval collection id value
+    expect(queries[0].bindings).toContain(1)
+
+    const { body, statusCode } = retrievalResponse
+
+    const responseObj = {
+      pagination: {
+        page_num: 1,
+        page_size: 20,
+        page_count: 1,
+        total_results: 1
+      },
+      results: [
+        {
+          id: 1,
+          jsondata: {},
+          environment: 'prod',
+          created_at: '2019-08-25T11:58:14.390Z',
+          user_id: 1,
+          username: 'edsc-test',
+          total: '1',
+          obfuscated_id: '4517239960'
+        }
+      ]
+    }
+
+    expect(body).toEqual(JSON.stringify(responseObj))
+    expect(statusCode).toEqual(200)
+  })
+
   test('returns 200 when user_id filter finds no retrievals', async () => {
     dbTracker.on('query', (query) => {
       query.response([])
@@ -226,6 +284,36 @@ describe('adminGetRetrievals', () => {
     const retrievalResponse = await adminGetRetrievals({
       queryStringParameters: {
         user_id: 'unknown-user'
+      }
+    }, {})
+
+    const { queries } = dbTracker.queries
+    expect(queries[0].method).toEqual('select')
+
+    const { body, statusCode } = retrievalResponse
+
+    const responseObj = {
+      pagination: {
+        page_num: 1,
+        page_size: 20,
+        page_count: 0,
+        total_results: 0
+      },
+      results: []
+    }
+
+    expect(body).toEqual(JSON.stringify(responseObj))
+    expect(statusCode).toEqual(200)
+  })
+
+  test('returns 200 when retrieval_collection_id filter finds no retrievals', async () => {
+    dbTracker.on('query', (query) => {
+      query.response([])
+    })
+
+    const retrievalResponse = await adminGetRetrievals({
+      queryStringParameters: {
+        retrieval_collection_id: '1'
       }
     }, {})
 
