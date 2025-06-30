@@ -179,7 +179,7 @@ jobs:
       # Generate the cloc report
       - name: Run cloc report
         run: |
-          ./cloc.pl -y --strip-comments=nc --match-d="/(sharedUtils|sharedConstants|serverless/src|static/src)/" --json $PWD > clocReport.json
+          ./cloc.pl --strip-comments=nc --match-d="/(sharedUtils|sharedConstants|serverless/src|static/src)/" --timeout 0 --json --out=clocReport.json $PWD
         # sed -i "s/'/\"/g" clocReport.json
 
       # Upload the report
