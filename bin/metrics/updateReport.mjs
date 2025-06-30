@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-// This script reads the reports created from previous jobs and updates the metrics-test.json file in the metrics-branch.
+// This script reads the reports created from previous jobs and updates the metrics.json file in the metrics-branch.
 
 // Get the `--version` argument from the command line
 const args = process.argv.slice(2)
@@ -50,8 +50,8 @@ if (reports.clocReport) {
   }
 }
 
-// Add each value in reports to the metrics-branch/metrics-test.json file
-const metricsFilePath = 'metrics-branch/metrics-test.json'
+// Add each value in reports to the metrics-branch/metrics.json file
+const metricsFilePath = 'metrics-branch/metrics.json'
 const metricsFileContent = fs.readFileSync(metricsFilePath, 'utf8')
 const metricsFile = JSON.parse(metricsFileContent)
 
@@ -77,5 +77,5 @@ const updatedMetricsFile = {
   }
 }
 
-// Write the updated metrics file to the metrics-branch/metrics-test.json file
+// Write the updated metrics file to the metrics-branch/metrics.json file
 fs.writeFileSync(metricsFilePath, JSON.stringify(updatedMetricsFile, null, 2), 'utf-8')
