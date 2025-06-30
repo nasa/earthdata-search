@@ -1,6 +1,6 @@
 import fs from 'fs'
 
-// This script reads the reports created from previous jobs and updates the metrics.json file in the metrics-branch.
+// This script reads the reports created from previous jobs and updates the metrics-test.json file in the metrics-branch.
 
 // Get the `--version` argument from the command line
 const args = process.argv.slice(2)
@@ -14,9 +14,20 @@ const commit = commitArg ? commitArg.split('=')[1] : null
 // Get each file from metrics-reports
 const reports = {}
 
+// Create the reports directory if it doesn't exist
+const reportsDirectory = 'metrics-reports'
+if (!fs.existsSync(reportsDirectory)) {
+  fs.mkdirSync(reportsDirectory)
+}
+
 try {
-  const reportsDirectory = 'metrics-reports'
   const reportsFiles = fs.readdirSync(reportsDirectory)
+
+  // If no reports files are found, exit the script
+  if (reportsFiles.length === 0) {
+    console.log('No reports found in metrics-reports directory.')
+    process.exit(0)
+  }
 
   reportsFiles.forEach((file) => {
     const filePath = `${reportsDirectory}/${file}`
@@ -25,10 +36,10 @@ try {
     reports[fileName] = JSON.parse(fileContent)
   })
 } catch (error) {
-  console.log('No reports found in metrics-reports directory.', error)
+  console.error('Error reading reports in metrics-reports directory.', error)
 
   // If no reports are found, exit the script
-  process.exit(0)
+  process.exit(1)
 }
 
 // The cloc report is a different format than the other reports, reformat it to match
@@ -39,8 +50,8 @@ if (reports.clocReport) {
   }
 }
 
-// Add each value in reports to the metrics-branch/metrics.json file
-const metricsFilePath = 'metrics-branch/metrics.json'
+// Add each value in reports to the metrics-branch/metrics-test.json file
+const metricsFilePath = 'metrics-branch/metrics-test.json'
 const metricsFileContent = fs.readFileSync(metricsFilePath, 'utf8')
 const metricsFile = JSON.parse(metricsFileContent)
 
@@ -66,5 +77,5 @@ const updatedMetricsFile = {
   }
 }
 
-// Write the updated metrics file to the metrics-branch/metrics.json file
+// Write the updated metrics file to the metrics-branch/metrics-test.json file
 fs.writeFileSync(metricsFilePath, JSON.stringify(updatedMetricsFile, null, 2), 'utf-8')
