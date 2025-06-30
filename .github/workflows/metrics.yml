@@ -173,7 +173,7 @@ jobs:
 
       - name: Download cloc
         run: |
-          curl https://github.com/AlDanial/cloc/releases/download/v2.06/cloc-2.06.pl -o cloc.pl
+          curl -L -o cloc.pl "https://github.com/AlDanial/cloc/releases/download/v2.06/cloc-2.06.pl"
           chmod +x cloc.pl
 
       # Generate the cloc report
