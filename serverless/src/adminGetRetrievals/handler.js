@@ -28,7 +28,8 @@ const adminGetRetrievals = async (event, context) => {
       page_num: pageNum = 1,
       page_size: pageSize = 20,
       sort_key: sortKey = '-created_at',
-      user_id: userId
+      user_id: userId,
+      retrieval_collection_id: retrievalCollectionId
     } = queryStringParameters || {}
 
     // Retrieve a connection to the database
@@ -48,6 +49,12 @@ const adminGetRetrievals = async (event, context) => {
 
     if (userId) {
       query = query.whereRaw('LOWER(users.urs_id) = LOWER(?)', [userId])
+    }
+
+    if (retrievalCollectionId) {
+      query = query
+        .leftJoin('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
+        .where({ 'retrieval_collections.id': parseInt(retrievalCollectionId, 10) })
     }
 
     const retrievalResponse = await query

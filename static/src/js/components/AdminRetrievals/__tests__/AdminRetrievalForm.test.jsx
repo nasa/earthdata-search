@@ -12,57 +12,54 @@ const setup = setupTest({
 })
 
 describe('AdminRetrievalsForm component', () => {
-  describe('when typing into the retrieval id field', () => {
-    test('shows the typed text in the input', async () => {
-      const { user } = setup()
+  test('shows typed text in the input', async () => {
+    const { user } = setup()
 
-      const retrievalInput = screen.getByPlaceholderText('Obfuscated Retrieval ID')
-      await user.type(retrievalInput, 'test-retrieval-id')
+    const input = screen.getByPlaceholderText('Enter value')
+    await user.type(input, 'some-value')
 
-      expect(retrievalInput).toHaveValue('test-retrieval-id')
-    })
+    expect(input).toHaveValue('some-value')
   })
 
-  describe('when typing into the user id field', () => {
-    test('shows the typed text in the input', async () => {
-      const { user } = setup()
+  test('submits retrievalId search', async () => {
+    const { props, user } = setup()
 
-      const userIdInput = screen.getByPlaceholderText('Enter User ID')
-      await user.type(userIdInput, 'test-user-id')
+    const input = screen.getByPlaceholderText('Enter value')
+    await user.type(input, 'retrieval-123')
 
-      expect(userIdInput).toHaveValue('test-user-id')
-    })
+    await user.click(screen.getByRole('button', { name: 'Search' }))
+
+    expect(props.onAdminViewRetrieval).toHaveBeenCalledTimes(1)
+    expect(props.onAdminViewRetrieval).toHaveBeenCalledWith('retrieval-123')
+    expect(props.onFetchAdminRetrievals).not.toHaveBeenCalled()
   })
 
-  describe('when clicking Go with user id provided', () => {
-    test('calls onFetchAdminRetrievals with the user id', async () => {
-      const { props, user } = setup()
+  test('submits userId search', async () => {
+    const { props, user } = setup()
 
-      const userIdInput = screen.getByPlaceholderText('Enter User ID')
-      const goButtons = screen.getAllByText('Go')
+    await user.selectOptions(screen.getByRole('combobox'), 'userId')
 
-      await user.type(userIdInput, 'test-user-id')
-      await user.click(goButtons[1])
+    const input = screen.getByPlaceholderText('Enter value')
+    await user.type(input, 'test-user')
 
-      expect(props.onFetchAdminRetrievals).toHaveBeenCalledTimes(1)
-      expect(props.onFetchAdminRetrievals).toHaveBeenCalledWith('test-user-id')
-      expect(props.onAdminViewRetrieval).not.toHaveBeenCalled()
-    })
+    await user.click(screen.getByRole('button', { name: 'Search' }))
+
+    expect(props.onFetchAdminRetrievals).toHaveBeenCalledTimes(1)
+    expect(props.onFetchAdminRetrievals).toHaveBeenCalledWith('test-user', undefined)
+    expect(props.onAdminViewRetrieval).not.toHaveBeenCalled()
   })
 
-  describe('when clicking Go with retrieval id provided', () => {
-    test('calls onAdminViewRetrieval with the retrieval id', async () => {
-      const { props, user } = setup()
+  test('submits retrievalCollectionId search', async () => {
+    const { props, user } = setup()
 
-      const retrievalInput = screen.getByPlaceholderText('Obfuscated Retrieval ID')
-      const goButtons = screen.getAllByText('Go')
+    await user.selectOptions(screen.getByRole('combobox'), 'retrievalCollectionId')
+    const input = screen.getByPlaceholderText('Enter value')
+    await user.type(input, '999')
 
-      await user.type(retrievalInput, 'test-retrieval-id')
-      await user.click(goButtons[0])
+    await user.click(screen.getByRole('button', { name: 'Search' }))
 
-      expect(props.onAdminViewRetrieval).toHaveBeenCalledTimes(1)
-      expect(props.onAdminViewRetrieval).toHaveBeenCalledWith('test-retrieval-id')
-      expect(props.onFetchAdminRetrievals).not.toHaveBeenCalled()
-    })
+    expect(props.onFetchAdminRetrievals).toHaveBeenCalledTimes(1)
+    expect(props.onFetchAdminRetrievals).toHaveBeenCalledWith(undefined, '999')
+    expect(props.onAdminViewRetrieval).not.toHaveBeenCalled()
   })
 })

@@ -45,34 +45,34 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
   })
 
-  test('onFetchAdminRetrievals calls actions.fetchAdminRetrievals with userId', () => {
+  test('onFetchAdminRetrievals calls actions.fetchAdminRetrievals with userId and retrievalCollectionId', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'fetchAdminRetrievals')
 
-    mapDispatchToProps(dispatch).onFetchAdminRetrievals('testuser')
+    mapDispatchToProps(dispatch).onFetchAdminRetrievals('testuser', '1')
 
     expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('testuser')
+    expect(spy).toHaveBeenCalledWith('testuser', '1')
   })
 
   test('onUpdateAdminRetrievalsSortKey calls actions.updateAdminRetrievalsSortKey', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateAdminRetrievalsSortKey')
 
-    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsSortKey('sort-key')
+    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsSortKey('sort-key', 'user-id')
 
     expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('sort-key')
+    expect(spy).toHaveBeenCalledWith('sort-key', 'user-id')
   })
 
   test('onUpdateAdminRetrievalsPageNum calls actions.updateAdminRetrievalsPageNum', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateAdminRetrievalsPageNum')
 
-    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsPageNum('sort-key')
+    mapDispatchToProps(dispatch).onUpdateAdminRetrievalsPageNum('page-num', 'user-id')
 
     expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('sort-key')
+    expect(spy).toHaveBeenCalledWith('page-num', 'user-id')
   })
 })
 
