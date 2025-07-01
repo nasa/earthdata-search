@@ -51,7 +51,6 @@ describe('updateStore', () => {
       }
     }
 
-    // Set up Zustand preferences
     useEdscStore.setState((state) => ({
       ...state,
       preferences: {

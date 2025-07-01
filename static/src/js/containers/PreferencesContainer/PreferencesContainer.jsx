@@ -6,14 +6,12 @@ import useEdscStore from '../../zustand/useEdscStore'
 import Preferences from '../../components/Preferences/Preferences'
 
 export const PreferencesContainer = () => {
-  // Get preferences state and actions from Zustand
   const {
     preferencesData,
     isSubmitting,
     isSubmitted,
     updatePreferences
   } = useEdscStore((state) => {
-    // Extract only the data properties, not the action methods
     const {
       panelState,
       collectionListView,
@@ -40,7 +38,6 @@ export const PreferencesContainer = () => {
     }
   })
 
-  // Structure preferences the way the form expects it
   const preferences = {
     preferences: preferencesData,
     isSubmitting,

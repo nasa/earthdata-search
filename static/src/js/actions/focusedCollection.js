@@ -446,7 +446,6 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     }))
   } else {
     // Initialize a nested query element in Redux for the new focused collection
-    // Get granule sort preference from Zustand
     const zustandState = useEdscStore.getState()
     const granuleSortPreference = zustandState.preferences.granuleSort
     dispatch(actions.initializeCollectionGranulesQuery({

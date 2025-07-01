@@ -96,7 +96,6 @@ export const SearchPanelsContainer = ({
   panels,
   match
 }) => {
-  // Get preferences from Zustand
   const preferences = useEdscStore((state) => ({
     panelState: state.preferences.panelState,
     collectionListView: state.preferences.collectionListView,

@@ -1,5 +1,3 @@
-/* eslint-disable import/no-dynamic-require, global-require */
-
 // @ts-expect-error The file does not have types
 import jwt from 'jsonwebtoken'
 
@@ -55,7 +53,6 @@ describe('createPreferencesSlice', () => {
     const updatedState = useEdscStore.getState()
     expect(updatedState.preferences.panelState).toBe('open')
     expect(updatedState.preferences.collectionListView).toBe('table')
-    // Other preferences should remain unchanged
     expect(updatedState.preferences.granuleListView).toBe('default')
   })
 
@@ -159,7 +156,6 @@ describe('createPreferencesSlice', () => {
       const updatedState = useEdscStore.getState().preferences
       expect(updatedState.mapView.zoom).toBe(5)
       expect(updatedState.mapView.latitude).toBe(10)
-      // Should preserve other mapView properties
       expect(updatedState.mapView.longitude).toBe(0)
       expect(updatedState.mapView.baseLayer).toBe(mapLayers.worldImagery)
     })
@@ -268,7 +264,6 @@ describe('createPreferencesSlice', () => {
     })
 
     test('syncs map store when preferences contain map view and current map is at initial state', () => {
-      // Set up initial map state that matches the initial state
       useEdscStore.setState((state) => ({
         ...state,
         map: {
@@ -333,7 +328,6 @@ describe('createPreferencesSlice', () => {
     })
 
     test('does not sync map store when current map state differs from initial', () => {
-      // Set up map state that doesn't match initial state
       useEdscStore.setState((state) => ({
         ...state,
         map: {

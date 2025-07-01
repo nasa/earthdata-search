@@ -46,7 +46,6 @@ const setup = setupTest({
 
 beforeEach(() => {
   jest.resetAllMocks()
-  // Mock getApplicationConfig for all tests since UrlQueryContainer uses it
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     collectionSearchResultsSortKey: collectionSortKeys.usageDescending
   }))
@@ -129,7 +128,6 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      onlyEosdisCollections: undefined,
       overrideTemporalSearch: {},
       pathname: '',
       pointSearch: [],
@@ -209,7 +207,6 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      onlyEosdisCollections: undefined,
       overrideTemporalSearch: {},
       pathname: '',
       pointSearch: [],

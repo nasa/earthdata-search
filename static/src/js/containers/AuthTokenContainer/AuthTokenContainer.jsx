@@ -24,7 +24,6 @@ export const AuthTokenContainer = ({
   onUpdateAuthToken
 }) => {
   const { disableDatabaseComponents } = getApplicationConfig()
-  // Get Zustand preferences action
   const setPreferencesFromJwt = useEdscStore((state) => state.preferences.setPreferencesFromJwt)
 
   useEffect(() => {
@@ -38,13 +37,11 @@ export const AuthTokenContainer = ({
 
     const jwtToken = get('authToken')
 
-    // Use Zustand for preferences
     setPreferencesFromJwt(jwtToken)
-    // Keep Redux for other JWT operations
     onSetContactInfoFromJwt(jwtToken)
     onSetUserFromJwt(jwtToken)
     onUpdateAuthToken(jwtToken || '')
-  }, [setPreferencesFromJwt, onSetContactInfoFromJwt, onSetUserFromJwt, onUpdateAuthToken])
+  }, [])
 
   return children
 }

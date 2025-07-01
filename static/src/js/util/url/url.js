@@ -326,9 +326,6 @@ export const encodeUrlQuery = (props) => {
   const query = {}
 
   Object.keys(urlDefs).forEach((longKey) => {
-    // Skip paramCollectionSortKey as it's handled specially with preference suppression
-    if (longKey === 'paramCollectionSortKey') return
-
     const { shortKey } = urlDefs[longKey]
     const value = urlDefs[longKey].encode(props[longKey])
 
@@ -336,20 +333,19 @@ export const encodeUrlQuery = (props) => {
   })
 
   const mapParams = encodeMap(props.mapView, props.mapPreferences)
-  // Handle collection sort key with preference suppression
   const { paramCollectionSortKey, collectionSortPreference } = props
   let collectionSortKeyValue = paramCollectionSortKey
-  
+
   if (paramCollectionSortKey && collectionSortPreference) {
     const { translateDefaultCollectionSortKey } = require('../collections')
     const translatedUserPrefSortKey = translateDefaultCollectionSortKey(collectionSortPreference)
-    
-    // Suppress the parameter if it matches the user's preference
+
+    // If current mapParams matches user preferences, don't show in URL
     if (paramCollectionSortKey === translatedUserPrefSortKey) {
       collectionSortKeyValue = undefined
     }
   }
-  
+
   const collectionSortParams = { csk: collectionSortKeyValue }
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const platformQuery = encodePlatforms(props.platformFacets)

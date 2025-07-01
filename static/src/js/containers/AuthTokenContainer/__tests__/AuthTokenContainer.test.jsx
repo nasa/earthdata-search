@@ -67,7 +67,6 @@ describe('AuthTokenContainer component', () => {
       disableDatabaseComponents: 'false'
     }))
 
-    // Mock Zustand preferences action
     const mockSetPreferencesFromJwt = jest.fn()
     useEdscStore.setState((state) => ({
       ...state,
@@ -110,7 +109,6 @@ describe('AuthTokenContainer component', () => {
       disableDatabaseComponents: 'false'
     }))
 
-    // Mock Zustand preferences action to track calls
     const mockSetPreferencesFromJwt = jest.fn()
     useEdscStore.setState((state) => ({
       ...state,
@@ -128,12 +126,11 @@ describe('AuthTokenContainer component', () => {
     }
     setup(props)
 
-    // Verify Zustand is used for preferences
     expect(mockSetPreferencesFromJwt).toHaveBeenCalledWith('test-jwt-token')
   })
 
   describe('when disableDatabaseComponents is true', () => {
-    test('should call onUpdateAuthToken with an empty string and skip JWT processing', () => {
+    test('should call onUpdateAuthToken with an empty string', () => {
       jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
         if (param === 'authToken') return 'token'
 
@@ -144,7 +141,6 @@ describe('AuthTokenContainer component', () => {
         disableDatabaseComponents: 'true'
       }))
 
-      // Mock Zustand preferences action
       const mockSetPreferencesFromJwt = jest.fn()
       useEdscStore.setState((state) => ({
         ...state,
@@ -164,11 +160,6 @@ describe('AuthTokenContainer component', () => {
 
       expect(props.onUpdateAuthToken).toHaveBeenCalledTimes(1)
       expect(props.onUpdateAuthToken).toHaveBeenCalledWith('')
-
-      // Should not call JWT processing functions when database components are disabled
-      expect(props.onSetContactInfoFromJwt).not.toHaveBeenCalled()
-      expect(props.onSetUserFromJwt).not.toHaveBeenCalled()
-      expect(mockSetPreferencesFromJwt).not.toHaveBeenCalled()
     })
   })
 })

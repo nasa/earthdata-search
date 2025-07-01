@@ -48,9 +48,8 @@ export const updateStore = ({
   const { location } = router
   const { pathname } = location
 
-  // Get collection sort preference from Zustand
-  const zustandState = useEdscStore.getState()
-  const collectionSortPreference = zustandState.preferences.collectionSort
+  const zustand = useEdscStore.getState()
+  const collectionSortPreference = zustand.preferences.collectionSort
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
@@ -228,8 +227,8 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     await dispatch(actions.getProjectGranules())
   }
 
-  const zustandState = useEdscStore.getState()
-  const { timeline } = zustandState
+  const zustand = useEdscStore.getState()
+  const { timeline } = zustand
   const { getTimeline } = timeline
   getTimeline()
 
