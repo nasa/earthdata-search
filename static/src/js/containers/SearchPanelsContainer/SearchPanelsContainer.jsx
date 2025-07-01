@@ -11,6 +11,7 @@ import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
+import useEdscStore from '../../zustand/useEdscStore'
 
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
@@ -24,7 +25,6 @@ export const mapStateToProps = (state) => ({
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   panels: state.panels,
-  preferences: state.preferences.preferences,
   isExportRunning: state.ui.export.isExportRunning
 })
 
@@ -94,35 +94,46 @@ export const SearchPanelsContainer = ({
   onTogglePanels,
   onExport,
   panels,
-  preferences,
   match
-}) => (
-  <SearchPanels
-    authToken={authToken}
-    collectionMetadata={collectionMetadata}
-    collectionQuery={collectionQuery}
-    collectionsSearch={collectionsSearch}
-    collectionSubscriptions={collectionSubscriptions}
-    granuleMetadata={granuleMetadata}
-    granuleSearchResults={granuleSearchResults}
-    granuleQuery={granuleQuery}
-    isExportRunning={isExportRunning}
-    location={location}
-    onApplyGranuleFilters={onApplyGranuleFilters}
-    onFocusedCollectionChange={onFocusedCollectionChange}
-    onChangePath={onChangePath}
-    onChangeQuery={onChangeQuery}
-    onMetricsCollectionSortChange={onMetricsCollectionSortChange}
-    onSetActivePanel={onSetActivePanel}
-    onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-    onToggleAboutCwicModal={onToggleAboutCwicModal}
-    onTogglePanels={onTogglePanels}
-    onExport={onExport}
-    panels={panels}
-    preferences={preferences}
-    match={match}
-  />
-)
+}) => {
+  // Get preferences from Zustand
+  const preferences = useEdscStore((state) => ({
+    panelState: state.preferences.panelState,
+    collectionListView: state.preferences.collectionListView,
+    granuleListView: state.preferences.granuleListView,
+    collectionSort: state.preferences.collectionSort,
+    granuleSort: state.preferences.granuleSort,
+    mapView: state.preferences.mapView
+  }))
+
+  return (
+    <SearchPanels
+      authToken={authToken}
+      collectionMetadata={collectionMetadata}
+      collectionQuery={collectionQuery}
+      collectionsSearch={collectionsSearch}
+      collectionSubscriptions={collectionSubscriptions}
+      granuleMetadata={granuleMetadata}
+      granuleSearchResults={granuleSearchResults}
+      granuleQuery={granuleQuery}
+      isExportRunning={isExportRunning}
+      location={location}
+      onApplyGranuleFilters={onApplyGranuleFilters}
+      onFocusedCollectionChange={onFocusedCollectionChange}
+      onChangePath={onChangePath}
+      onChangeQuery={onChangeQuery}
+      onMetricsCollectionSortChange={onMetricsCollectionSortChange}
+      onSetActivePanel={onSetActivePanel}
+      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
+      onToggleAboutCwicModal={onToggleAboutCwicModal}
+      onTogglePanels={onTogglePanels}
+      onExport={onExport}
+      panels={panels}
+      preferences={preferences}
+      match={match}
+    />
+  )
+}
 
 SearchPanelsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
@@ -146,8 +157,7 @@ SearchPanelsContainer.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired,
-  preferences: PropTypes.shape({}).isRequired
+  panels: PropTypes.shape({}).isRequired
 }
 
 export default withRouter(

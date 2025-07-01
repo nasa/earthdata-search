@@ -163,6 +163,55 @@ export type MapSlice = {
   }
 }
 
+export type PreferencesState = {
+  panelState: string
+  collectionListView: string
+  granuleListView: string
+  collectionSort: string
+  granuleSort: string
+  mapView: {
+    zoom: number
+    latitude: number
+    baseLayer: string
+    longitude: number
+    projection: string
+    overlayLayers: string[]
+    rotation: number
+  }
+  isSubmitting: boolean
+  isSubmitted: boolean
+}
+
+export type PreferencesSlice = {
+  /** The Preferences Slice of the store */
+  preferences: PreferencesState & {
+    /** Function to set preferences */
+    setPreferences: (preferences: Partial<PreferencesState>) => void
+    /** Function to set the submitting state */
+    setIsSubmitting: (isSubmitting: boolean) => void
+    /** Function to set the submitted state */
+    setIsSubmitted: (isSubmitted: boolean) => void
+    /** Function to reset preferences to initial state */
+    resetPreferences: () => void
+    /** Function to set panel state */
+    setPanelState: (panelState: string) => void
+    /** Function to set collection list view */
+    setCollectionListView: (collectionListView: string) => void
+    /** Function to set granule list view */
+    setGranuleListView: (granuleListView: string) => void
+    /** Function to set collection sort preference */
+    setCollectionSort: (collectionSort: string) => void
+    /** Function to set granule sort preference */
+    setGranuleSort: (granuleSort: string) => void
+    /** Function to set map view preferences */
+    setMapView: (mapView: Partial<PreferencesState['mapView']>) => void
+    /** Function to set preferences from JWT token */
+    setPreferencesFromJwt: (jwtToken: string) => void
+    /** Function to update preferences via API */
+    updatePreferences: (data: { formData: PreferencesState }) => Promise<void>
+  }
+}
+
 export type PortalSlice = {
   /** The Portal Slice of the store */
   portal: PortalConfig
@@ -297,6 +346,7 @@ export type EdscStore =
   & HomeSlice
   & MapSlice
   & PortalSlice
+  & PreferencesSlice
   & ShapefileSlice
   & TimelineSlice
   & UiSlice

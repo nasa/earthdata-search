@@ -11,6 +11,7 @@ import {
   mapStateToProps,
   SearchPanelsContainer
 } from '../SearchPanelsContainer'
+import useEdscStore from '../../../zustand/useEdscStore'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
@@ -58,13 +59,12 @@ const setup = setupTest({
     panels: {
       activePanel: '0.0.0',
       isOpen: false
-    },
-    preferences: {
-      panelState: 'default',
-      collectionListView: 'default',
-      granuleListView: 'default'
     }
   }
+})
+
+beforeEach(() => {
+  useEdscStore.setState(useEdscStore.getInitialState())
 })
 
 describe('mapDispatchToProps', () => {
@@ -178,9 +178,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       panels: {},
-      preferences: {
-        preferences: {}
-      },
       query: {
         collection: {}
       },
@@ -210,8 +207,7 @@ describe('mapStateToProps', () => {
         csv: false,
         json: false
       },
-      panels: {},
-      preferences: {}
+      panels: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

@@ -1,32 +1,58 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
-import actions from '../../actions'
+import useEdscStore from '../../zustand/useEdscStore'
 
 import Preferences from '../../components/Preferences/Preferences'
 
-export const mapStateToProps = (state) => ({
-  preferences: state.preferences
-})
+export const PreferencesContainer = () => {
+  // Get preferences state and actions from Zustand
+  const {
+    preferencesData,
+    isSubmitting,
+    isSubmitted,
+    updatePreferences
+  } = useEdscStore((state) => {
+    // Extract only the data properties, not the action methods
+    const {
+      panelState,
+      collectionListView,
+      granuleListView,
+      collectionSort,
+      granuleSort,
+      mapView,
+      isSubmitting: preferenceIsSubmitting,
+      isSubmitted: preferenceIsSubmitted
+    } = state.preferences
 
-export const mapDispatchToProps = (dispatch) => ({
-  onUpdatePreferences: (data) => dispatch(actions.updatePreferences(data))
-})
+    return {
+      preferencesData: {
+        panelState,
+        collectionListView,
+        granuleListView,
+        collectionSort,
+        granuleSort,
+        mapView
+      },
+      isSubmitting: preferenceIsSubmitting,
+      isSubmitted: preferenceIsSubmitted,
+      updatePreferences: state.preferences.updatePreferences
+    }
+  })
 
-export const PreferencesContainer = ({ preferences, onUpdatePreferences }) => (
-  <Preferences
-    preferences={preferences}
-    onUpdatePreferences={onUpdatePreferences}
-  />
-)
+  // Structure preferences the way the form expects it
+  const preferences = {
+    preferences: preferencesData,
+    isSubmitting,
+    isSubmitted
+  }
 
-PreferencesContainer.propTypes = {
-  preferences: PropTypes.shape({}).isRequired,
-  onUpdatePreferences: PropTypes.func.isRequired
+  return (
+    <Preferences
+      preferences={preferences}
+      onUpdatePreferences={updatePreferences}
+    />
+  )
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(PreferencesContainer)
-)
+export default withRouter(PreferencesContainer)

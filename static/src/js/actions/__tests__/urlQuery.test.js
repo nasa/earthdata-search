@@ -13,6 +13,7 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.restoreAllMocks()
+  useEdscStore.setState(useEdscStore.getInitialState())
 })
 
 describe('updateStore', () => {
@@ -50,12 +51,16 @@ describe('updateStore', () => {
       }
     }
 
-    const store = mockStore({
+    // Set up Zustand preferences
+    useEdscStore.setState((state) => ({
+      ...state,
       preferences: {
-        preferences: {
-          collectionSort: 'default'
-        }
-      },
+        ...state.preferences,
+        collectionSort: 'default'
+      }
+    }))
+
+    const store = mockStore({
       router: {
         location: {
           pathname: '/search'
