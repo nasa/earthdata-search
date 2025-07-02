@@ -58,11 +58,6 @@ const setup = setupTest({
     panels: {
       activePanel: '0.0.0',
       isOpen: false
-    },
-    preferences: {
-      panelState: 'default',
-      collectionListView: 'default',
-      granuleListView: 'default'
     }
   }
 })
@@ -178,9 +173,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       panels: {},
-      preferences: {
-        preferences: {}
-      },
       query: {
         collection: {}
       },
@@ -210,8 +202,7 @@ describe('mapStateToProps', () => {
         csv: false,
         json: false
       },
-      panels: {},
-      preferences: {}
+      panels: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

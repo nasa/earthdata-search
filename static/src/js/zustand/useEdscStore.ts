@@ -7,6 +7,7 @@ import { EdscStore } from './types'
 import createEarthdataDownloadRedirectSlice from './slices/createEarthdataDownloadRedirectSlice'
 import createHomeSlice from './slices/createHomeSlice'
 import createMapSlice from './slices/createMapSlice'
+import createPreferencesSlice from './slices/createPreferencesSlice'
 import createShapefileSlice from './slices/createShapefileSlice'
 import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
@@ -22,6 +23,7 @@ const useEdscStore = create<EdscStore>()(
         ...createHomeSlice(...args),
         ...createMapSlice(...args),
         ...createPortalSlice(...args),
+        ...createPreferencesSlice(...args),
         ...createShapefileSlice(...args),
         ...createTimelineSlice(...args),
         ...createUiSlice(...args)

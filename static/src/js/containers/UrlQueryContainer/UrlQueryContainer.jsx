@@ -15,7 +15,6 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import { getMapPreferences, getCollectionSortKeyParameter } from '../../selectors/preferences'
 
 import useEdscStore from '../../zustand/useEdscStore'
 
@@ -38,7 +37,6 @@ export const mapStateToProps = (state) => ({
   keywordSearch: state.query.collection.keyword,
   lineSearch: state.query.collection.spatial.line,
   location: state.router.location,
-  mapPreferences: getMapPreferences(state),
   onlyEosdisCollections: state.query.collection.onlyEosdisCollections,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,
@@ -46,7 +44,7 @@ export const mapStateToProps = (state) => ({
   polygonSearch: state.query.collection.spatial.polygon,
   project: state.project,
   query: state.query,
-  paramCollectionSortKey: getCollectionSortKeyParameter(state),
+  paramCollectionSortKey: state.query.collection.paramCollectionSortKey,
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal
 })
@@ -66,7 +64,6 @@ export const UrlQueryContainer = (props) => {
   const [currentPath, setCurrentPath] = useState('')
   const previousSearch = useRef(search)
 
-  // Pull out values we have migrated to Zustand that are no longer passed as props
   const zustandValues = useEdscStore((state) => ({
     featureFacets: state.facetParams.featureFacets,
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
@@ -75,6 +72,7 @@ export const UrlQueryContainer = (props) => {
     instrumentFacets: state.facetParams.cmrFacets.instrument_h,
     latency: state.facetParams.cmrFacets.latency,
     mapView: state.map.mapView,
+    mapPreferences: state.preferences.mapView,
     organizationFacets: state.facetParams.cmrFacets.data_center_h,
     platformFacets: state.facetParams.cmrFacets.platforms_h,
     portalId: state.portal.portalId,
@@ -84,7 +82,8 @@ export const UrlQueryContainer = (props) => {
     selectedFeatures: state.shapefile.selectedFeatures,
     shapefileId: state.shapefile.shapefileId,
     timelineQuery: state.timeline.query,
-    twoDCoordinateSystemNameFacets: state.facetParams.cmrFacets.two_d_coordinate_system_name
+    twoDCoordinateSystemNameFacets: state.facetParams.cmrFacets.two_d_coordinate_system_name,
+    collectionSortPreference: state.preferences.collectionSort
   }))
 
   useEffect(() => {

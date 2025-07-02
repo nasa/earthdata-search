@@ -16,7 +16,6 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
-import { getCollectionSortPreference } from '../selectors/preferences'
 import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
@@ -49,7 +48,8 @@ export const updateStore = ({
   const { location } = router
   const { pathname } = location
 
-  const collectionSortPreference = getCollectionSortPreference(state)
+  const zustand = useEdscStore.getState()
+  const collectionSortPreference = zustand.preferences.collectionSort
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
@@ -227,8 +227,8 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     await dispatch(actions.getProjectGranules())
   }
 
-  const zustandState = useEdscStore.getState()
-  const { timeline } = zustandState
+  const zustand = useEdscStore.getState()
+  const { timeline } = zustand
   const { getTimeline } = timeline
   getTimeline()
 

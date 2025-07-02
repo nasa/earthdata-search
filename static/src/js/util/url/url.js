@@ -19,6 +19,7 @@ import { decodeBoolean, encodeBoolean } from './booleanEncoders'
 import { isPath } from '../isPath'
 import { deprecatedURLParameters } from '../../constants/deprecatedURLParameters'
 import { decodePortal, encodePortal } from './portalEncoders'
+import { translateDefaultCollectionSortKey } from '../collections'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -333,6 +334,19 @@ export const encodeUrlQuery = (props) => {
   })
 
   const mapParams = encodeMap(props.mapView, props.mapPreferences)
+  const { paramCollectionSortKey, collectionSortPreference } = props
+  let collectionSortKeyValue = paramCollectionSortKey
+
+  if (paramCollectionSortKey && collectionSortPreference) {
+    const translatedUserPrefSortKey = translateDefaultCollectionSortKey(collectionSortPreference)
+
+    // If current mapParams matches user preferences, don't show in URL
+    if (paramCollectionSortKey === translatedUserPrefSortKey) {
+      collectionSortKeyValue = undefined
+    }
+  }
+
+  const collectionSortParams = { csk: collectionSortKeyValue }
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const platformQuery = encodePlatforms(props.platformFacets)
   const collectionsQuery = encodeCollections(props)
@@ -348,7 +362,8 @@ export const encodeUrlQuery = (props) => {
     ...scienceKeywordQuery,
     ...platformQuery,
     ...advancedQuery,
-    ...mapParams
+    ...mapParams,
+    ...collectionSortParams
   }
 
   const paramString = stringify(encodedQuery)

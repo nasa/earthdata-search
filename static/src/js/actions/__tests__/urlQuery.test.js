@@ -50,12 +50,15 @@ describe('updateStore', () => {
       }
     }
 
-    const store = mockStore({
+    useEdscStore.setState((state) => ({
+      ...state,
       preferences: {
-        preferences: {
-          collectionSort: 'default'
-        }
-      },
+        ...state.preferences,
+        collectionSort: 'default'
+      }
+    }))
+
+    const store = mockStore({
       router: {
         location: {
           pathname: '/search'
