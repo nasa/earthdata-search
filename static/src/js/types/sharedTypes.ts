@@ -297,7 +297,16 @@ export type TimelineRequestParams = {
 }
 
 /** The request parameters for our request classes */
-export type RequestParams = TimelineRequestParams | CollectionRequestParams | ShapefileRequestParams
+/** The request parameters for a preferences request */
+export type PreferencesRequestParams = {
+  /** The preferences data */
+  preferences: Record<string, unknown>
+}
+
+export type RequestParams = TimelineRequestParams
+                              | CollectionRequestParams
+                              | ShapefileRequestParams
+                              | PreferencesRequestParams
 
 /** A response received from an Axios request */
 export type Response = {

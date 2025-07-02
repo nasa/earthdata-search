@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken'
 import { ImmerStateCreator, PreferencesSlice } from '../types'
 // @ts-expect-error The file does not have types
 import configureStore from '../../store/configureStore'
-// @ts-expect-error The file does not have types
 import PreferencesRequest from '../../util/request/preferencesRequest'
 // @ts-expect-error The file does not have types
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
