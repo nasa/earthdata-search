@@ -1,5 +1,9 @@
 import React from 'react'
-import { render, act } from '@testing-library/react'
+import {
+  render,
+  act,
+  screen
+} from '@testing-library/react'
 import { Router } from 'react-router-dom'
 import { createMemoryHistory } from 'history'
 
@@ -7,6 +11,7 @@ import { PreferencesContainer } from '../PreferencesContainer'
 import useEdscStore from '../../../zustand/useEdscStore'
 
 jest.mock('../../../components/Preferences/Preferences', () => {
+  // eslint-disable-next-line react/prop-types
   const MockPreferences = ({ preferences, onUpdatePreferences }) => (
     <div role="region" aria-label="preferences">
       <div role="status" aria-label="preferences data">{JSON.stringify(preferences)}</div>
@@ -38,9 +43,9 @@ describe('PreferencesContainer', () => {
   })
 
   test('renders the Preferences component', () => {
-    const { getByRole } = renderWithRouter(<PreferencesContainer />)
+    renderWithRouter(<PreferencesContainer />)
 
-    expect(getByRole('region', { name: 'preferences' })).toBeInTheDocument()
+    expect(screen.getByRole('region', { name: 'preferences' })).toBeInTheDocument()
   })
 
   test('passes correct preferences data structure to Preferences component', () => {
@@ -69,9 +74,9 @@ describe('PreferencesContainer', () => {
       }))
     })
 
-    const { getByRole } = renderWithRouter(<PreferencesContainer />)
+    renderWithRouter(<PreferencesContainer />)
 
-    const preferencesData = JSON.parse(getByRole('status', { name: 'preferences data' }).textContent)
+    const preferencesData = JSON.parse(screen.getByRole('status', { name: 'preferences data' }).textContent)
 
     expect(preferencesData).toEqual({
       preferences: {
@@ -108,9 +113,9 @@ describe('PreferencesContainer', () => {
       }))
     })
 
-    const { getByRole } = renderWithRouter(<PreferencesContainer />)
+    renderWithRouter(<PreferencesContainer />)
 
-    getByRole('button', { name: 'Update Preferences' }).click()
+    screen.getByRole('button', { name: 'Update Preferences' }).click()
 
     expect(mockUpdatePreferences).toHaveBeenCalledWith({
       formData: { panelState: 'updated' }
@@ -118,9 +123,9 @@ describe('PreferencesContainer', () => {
   })
 
   test('updates when Zustand preferences state changes', () => {
-    const { getByRole, rerender } = renderWithRouter(<PreferencesContainer />)
+    const { rerender } = renderWithRouter(<PreferencesContainer />)
 
-    let preferencesData = JSON.parse(getByRole('status', { name: 'preferences data' }).textContent)
+    let preferencesData = JSON.parse(screen.getByRole('status', { name: 'preferences data' }).textContent)
     expect(preferencesData.preferences.panelState).toBe('default')
     expect(preferencesData.isSubmitting).toBe(false)
 
@@ -138,15 +143,15 @@ describe('PreferencesContainer', () => {
     // Re-render to trigger state update
     rerender(<PreferencesContainer />)
 
-    preferencesData = JSON.parse(getByRole('status', { name: 'preferences data' }).textContent)
+    preferencesData = JSON.parse(screen.getByRole('status', { name: 'preferences data' }).textContent)
     expect(preferencesData.preferences.panelState).toBe('updated')
     expect(preferencesData.isSubmitting).toBe(true)
   })
 
   test('handles default initial preferences correctly', () => {
-    const { getByRole } = renderWithRouter(<PreferencesContainer />)
+    renderWithRouter(<PreferencesContainer />)
 
-    const preferencesData = JSON.parse(getByRole('status', { name: 'preferences data' }).textContent)
+    const preferencesData = JSON.parse(screen.getByRole('status', { name: 'preferences data' }).textContent)
 
     expect(preferencesData.preferences).toEqual({
       panelState: 'default',
