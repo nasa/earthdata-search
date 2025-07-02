@@ -18,11 +18,6 @@ const setup = (props) => {
   )
 }
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  useEdscStore.setState(useEdscStore.getInitialState())
-})
-
 describe('mapDispatchToProps', () => {
   test('onSetContactInfoFromJwt calls actions.setContactInfoFromJwt', () => {
     const dispatch = jest.fn()

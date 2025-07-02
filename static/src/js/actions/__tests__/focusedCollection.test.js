@@ -52,9 +52,7 @@ const createVariableResults = () => [{
 }]
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
-  useEdscStore.setState(useEdscStore.getInitialState())
 })
 
 describe('updateFocusedCollection', () => {

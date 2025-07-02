@@ -13,7 +13,6 @@ const mockStore = configureMockStore([thunk])
 
 beforeEach(() => {
   jest.restoreAllMocks()
-  useEdscStore.setState(useEdscStore.getInitialState())
 })
 
 describe('updateStore', () => {

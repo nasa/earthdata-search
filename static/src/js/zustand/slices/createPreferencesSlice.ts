@@ -2,7 +2,12 @@ import { isEmpty, isEqual } from 'lodash-es'
 // @ts-expect-error The file does not have types
 import jwt from 'jsonwebtoken'
 
-import { ImmerStateCreator, PreferencesSlice } from '../types'
+import {
+  ImmerStateCreator,
+  PreferencesSlice,
+  PreferencesState
+} from '../types'
+import type { ProjectionCode } from '../../types/sharedTypes'
 // @ts-expect-error The file does not have types
 import configureStore from '../../store/configureStore'
 import PreferencesRequest from '../../util/request/preferencesRequest'
@@ -20,6 +25,11 @@ import actions from '../../actions'
 import projectionCodes from '../../constants/projectionCodes'
 import mapLayers from '../../constants/mapLayers'
 import { projectionConfigs } from '../../util/map/crs'
+
+/** Type for JWT token payload containing preferences */
+type JwtTokenPayload = {
+  preferences?: Partial<PreferencesState>
+}
 
 export const initialState = {
   panelState: 'default',
@@ -62,65 +72,10 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
       })
     },
 
-    setIsSubmitted: (isSubmitted) => {
-      set((state) => {
-        state.preferences.isSubmitted = isSubmitted
-      })
-    },
-
-    resetPreferences: () => {
-      set((state) => {
-        state.preferences = {
-          ...state.preferences,
-          ...initialState
-        }
-      })
-    },
-
-    setPanelState: (panelState) => {
-      set((state) => {
-        state.preferences.panelState = panelState
-      })
-    },
-
-    setCollectionListView: (collectionListView) => {
-      set((state) => {
-        state.preferences.collectionListView = collectionListView
-      })
-    },
-
-    setGranuleListView: (granuleListView) => {
-      set((state) => {
-        state.preferences.granuleListView = granuleListView
-      })
-    },
-
-    setCollectionSort: (collectionSort) => {
-      set((state) => {
-        state.preferences.collectionSort = collectionSort
-      })
-    },
-
-    setGranuleSort: (granuleSort) => {
-      set((state) => {
-        state.preferences.granuleSort = granuleSort
-      })
-    },
-
-    setMapView: (mapView) => {
-      set((state) => {
-        state.preferences.mapView = {
-          ...state.preferences.mapView,
-          ...mapView
-        }
-      })
-    },
-
     setPreferencesFromJwt: (jwtToken) => {
       if (!jwtToken) return
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const decoded = jwt.decode(jwtToken) as { preferences?: any }
+      const decoded = jwt.decode(jwtToken) as JwtTokenPayload
       const { preferences = {} } = decoded
 
       // TODO Remove in EDSC-4443 - Legacy layer migration
@@ -181,7 +136,7 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
             overlayLayers,
             projection,
             zoom
-          } = preferencesMapView
+          } = preferencesMapView as PreferencesState['mapView']
 
           const base = {
             worldImagery: false,
@@ -207,14 +162,14 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
             latitude,
             longitude,
             overlays,
-            projection,
+            projection: projection as ProjectionCode,
             zoom
           })
         }
       }
     },
 
-    updatePreferences: async (data) => {
+    submitAndUpdatePreferences: async (data) => {
       const { formData: preferences } = data
 
       get().preferences.setIsSubmitting(true)

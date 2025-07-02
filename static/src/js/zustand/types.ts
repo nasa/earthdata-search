@@ -164,21 +164,36 @@ export type MapSlice = {
 }
 
 export type PreferencesState = {
+  /** The state of the panels */
   panelState: string
+  /** The view mode for collection lists */
   collectionListView: string
+  /** The view mode for granule lists */
   granuleListView: string
+  /** The sort preference for collections */
   collectionSort: string
+  /** The sort preference for granules */
   granuleSort: string
+  /** The map view preferences */
   mapView: {
+    /** The zoom level of the map */
     zoom: number
+    /** The latitude center of the map */
     latitude: number
+    /** The base layer identifier for the map */
     baseLayer: string
+    /** The longitude center of the map */
     longitude: number
+    /** The projection code for the map */
     projection: string
+    /** Array of overlay layer identifiers */
     overlayLayers: string[]
+    /** The rotation of the map in degrees */
     rotation: number
   }
+  /** Flag indicating if preferences are currently being submitted */
   isSubmitting: boolean
+  /** Flag indicating if preferences have been submitted */
   isSubmitted: boolean
 }
 
@@ -189,26 +204,10 @@ export type PreferencesSlice = {
     setPreferences: (preferences: Partial<PreferencesState>) => void
     /** Function to set the submitting state */
     setIsSubmitting: (isSubmitting: boolean) => void
-    /** Function to set the submitted state */
-    setIsSubmitted: (isSubmitted: boolean) => void
-    /** Function to reset preferences to initial state */
-    resetPreferences: () => void
-    /** Function to set panel state */
-    setPanelState: (panelState: string) => void
-    /** Function to set collection list view */
-    setCollectionListView: (collectionListView: string) => void
-    /** Function to set granule list view */
-    setGranuleListView: (granuleListView: string) => void
-    /** Function to set collection sort preference */
-    setCollectionSort: (collectionSort: string) => void
-    /** Function to set granule sort preference */
-    setGranuleSort: (granuleSort: string) => void
-    /** Function to set map view preferences */
-    setMapView: (mapView: Partial<PreferencesState['mapView']>) => void
     /** Function to set preferences from JWT token */
     setPreferencesFromJwt: (jwtToken: string) => void
-    /** Function to update preferences via API */
-    updatePreferences: (data: { formData: PreferencesState }) => Promise<void>
+    /** Function to submit preference form data and save to the server */
+    submitAndUpdatePreferences: (data: { formData: PreferencesState }) => Promise<void>
   }
 }
 

@@ -11,7 +11,6 @@ import {
   mapStateToProps,
   SearchPanelsContainer
 } from '../SearchPanelsContainer'
-import useEdscStore from '../../../zustand/useEdscStore'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
@@ -61,10 +60,6 @@ const setup = setupTest({
       isOpen: false
     }
   }
-})
-
-beforeEach(() => {
-  useEdscStore.setState(useEdscStore.getInitialState())
 })
 
 describe('mapDispatchToProps', () => {
