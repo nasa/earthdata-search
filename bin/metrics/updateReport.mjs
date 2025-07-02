@@ -14,9 +14,20 @@ const commit = commitArg ? commitArg.split('=')[1] : null
 // Get each file from metrics-reports
 const reports = {}
 
+// Create the reports directory if it doesn't exist
+const reportsDirectory = 'metrics-reports'
+if (!fs.existsSync(reportsDirectory)) {
+  fs.mkdirSync(reportsDirectory)
+}
+
 try {
-  const reportsDirectory = 'metrics-reports'
   const reportsFiles = fs.readdirSync(reportsDirectory)
+
+  // If no reports files are found, exit the script
+  if (reportsFiles.length === 0) {
+    console.log('No reports found in metrics-reports directory.')
+    process.exit(0)
+  }
 
   reportsFiles.forEach((file) => {
     const filePath = `${reportsDirectory}/${file}`
@@ -25,10 +36,10 @@ try {
     reports[fileName] = JSON.parse(fileContent)
   })
 } catch (error) {
-  console.log('No reports found in metrics-reports directory.', error)
+  console.error('Error reading reports in metrics-reports directory.', error)
 
   // If no reports are found, exit the script
-  process.exit(0)
+  process.exit(1)
 }
 
 // The cloc report is a different format than the other reports, reformat it to match

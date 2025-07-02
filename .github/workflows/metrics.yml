@@ -168,14 +168,18 @@ jobs:
         with:
           ref: ${{ needs.getVersion.outputs.commit }}
 
-      # Generate the clock report
-      - name: Run clock report
+      - name: Download cloc
         run: |
-          npx cloc -y --strip-comments=nc --match-d="/(sharedUtils|sharedConstants|serverless/src|static/src)/" --json $PWD > clocReport.json
-          sed -i "s/'/\"/g" clocReport.json
+          curl -L -o cloc.pl "https://github.com/AlDanial/cloc/releases/download/v2.06/cloc-2.06.pl"
+          chmod +x cloc.pl
+
+      # Generate the cloc report
+      - name: Run cloc report
+        run: |
+          ./cloc.pl --strip-comments=nc --match-d="/(sharedUtils|sharedConstants|serverless/src|static/src)/" --timeout 0 --json --out=clocReport.json $PWD
 
       # Upload the report
-      - name: Upload clock report
+      - name: Upload cloc report
         uses: actions/upload-artifact@v4
         with:
           name: clocReport
