@@ -90,7 +90,6 @@ describe('AuthTokenContainer component', () => {
     expect(props.onSetContactInfoFromJwt).toHaveBeenCalledTimes(1)
     expect(props.onSetContactInfoFromJwt).toHaveBeenCalledWith('token')
 
-    // Zustand preferences should be called instead of Redux
     expect(mockSetPreferencesFromJwt).toHaveBeenCalledTimes(1)
     expect(mockSetPreferencesFromJwt).toHaveBeenCalledWith('token')
 

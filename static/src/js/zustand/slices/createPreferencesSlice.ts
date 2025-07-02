@@ -124,7 +124,7 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
       const decoded = jwt.decode(jwtToken) as { preferences?: any }
       const { preferences = {} } = decoded
 
-      // If there are map view preferences, ensure they are the new layer names
+      // TODO Remove in EDSC-4443 - Legacy layer migration
       if (preferences.mapView) {
         const { baseLayer, overlayLayers } = preferences.mapView
         if (baseLayer === 'blueMarble') {

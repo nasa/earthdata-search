@@ -6,7 +6,6 @@ import mapLayers from '../../../constants/mapLayers'
 import useEdscStore from '../../useEdscStore'
 import { initialState } from '../createPreferencesSlice'
 
-// Mock external dependencies
 jest.mock('jsonwebtoken')
 jest.mock('../../../store/configureStore')
 jest.mock('../../../util/request/preferencesRequest')
