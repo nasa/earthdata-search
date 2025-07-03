@@ -1,66 +1,42 @@
-import React from 'react'
 import ReactDOM from 'react-dom'
-import {
-  render,
-  screen,
-  waitFor
-} from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 
-import userEvent from '@testing-library/user-event'
-
-import { BrowserRouter } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import configureMockStore from 'redux-mock-store'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import { AdminRetrievalsMetrics } from '../AdminRetrievalsMetrics'
 
-const mockStore = configureMockStore()
-const store = mockStore({})
-
-const setup = () => {
-  const retrievalsMetrics = {
-    isLoaded: true,
-    isLoading: false,
-    accessMethodType: {},
-    allAccessMethodTypes: [
-    ],
-    multCollectionResponse: [],
-    byAccessMethodType: {},
-    startDate: '',
-    endDate: ''
-  }
-  const onFetchAdminRetrievalsMetrics = jest.fn()
-  const onUpdateAdminRetrievalsMetricsStartDate = jest.fn()
-  const onUpdateAdminRetrievalsMetricsEndDate = jest.fn()
-
-  const props = {
-    onFetchAdminRetrievalsMetrics,
-    onUpdateAdminRetrievalsMetricsStartDate,
-    onUpdateAdminRetrievalsMetricsEndDate,
-    retrievalsMetrics
-  }
-
-  // https://testing-library.com/docs/example-react-router/
-  // Wrapping this in a Redux provider because DatepickerContainer has to be connected to Redux
-  render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <AdminRetrievalsMetrics {...props} />
-      </BrowserRouter>
-    </Provider>
-  )
-
-  return {
-    onFetchAdminRetrievalsMetrics,
-    onUpdateAdminRetrievalsMetricsStartDate,
-    onUpdateAdminRetrievalsMetricsEndDate
-  }
+const defaultRetrievalsMetrics = {
+  isLoaded: true,
+  isLoading: false,
+  accessMethodType: {},
+  allAccessMethodTypes: [],
+  multCollectionResponse: [],
+  byAccessMethodType: {},
+  startDate: '',
+  endDate: ''
 }
+// DatepickerContainer connects to redux store and router
+const setup = setupTest({
+  Component: AdminRetrievalsMetrics,
+  defaultProps: {
+    retrievalsMetrics: defaultRetrievalsMetrics,
+    onFetchAdminRetrievalsMetrics: jest.fn(),
+    onUpdateAdminRetrievalsMetricsStartDate: jest.fn(),
+    onUpdateAdminRetrievalsMetricsEndDate: jest.fn()
+  },
+  withRedux: true,
+  withRouter: true
+})
 
-describe('AdminRetrievals component', () => {
-  test('renders itself correctly', () => {
-    setup()
-    expect(screen.getByText('Enter a value for the temporal filter')).toBeInTheDocument()
+describe('AdminRetrievalsMetrics component', () => {
+  describe('when the component loads', () => {
+    test('prompts the user to enter a temporal filter', () => {
+      setup()
+
+      expect(
+        screen.getByText('Enter a value for the temporal filter')
+      ).toBeInTheDocument()
+    })
   })
 
   describe('when filtering temporally', () => {
@@ -73,12 +49,7 @@ describe('AdminRetrievals component', () => {
     })
 
     test('clicking on the temporal filter modal opens it', async () => {
-      const user = userEvent.setup()
-      const {
-        onFetchAdminRetrievalsMetrics,
-        onUpdateAdminRetrievalsMetricsStartDate,
-        onUpdateAdminRetrievalsMetricsEndDate
-      } = setup()
+      const { user, props } = setup()
 
       const temporalFilterButton = screen.getByRole('button')
       await waitFor(async () => {
@@ -93,11 +64,11 @@ describe('AdminRetrievals component', () => {
       const startDate = screen.getByRole('textbox', { name: 'Start Date' })
       const endDate = screen.getByRole('textbox', { name: 'End Date' })
 
-      await userEvent.click(startDate)
-      await userEvent.type(startDate, validStartDate)
+      await user.click(startDate)
+      await user.type(startDate, validStartDate)
 
-      await userEvent.click(endDate)
-      await userEvent.type(endDate, validEndDate)
+      await user.click(endDate)
+      await user.type(endDate, validEndDate)
 
       const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
@@ -106,13 +77,13 @@ describe('AdminRetrievals component', () => {
         await user.click(applyBtn)
       })
 
-      expect(onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledTimes(1)
-      expect(onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledWith(validStartDate)
+      expect(props.onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateAdminRetrievalsMetricsStartDate).toHaveBeenCalledWith(validStartDate)
 
-      expect(onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledTimes(1)
-      expect(onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledWith(updatedEndDate)
+      expect(props.onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateAdminRetrievalsMetricsEndDate).toHaveBeenCalledWith(updatedEndDate)
 
-      expect(onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
+      expect(props.onFetchAdminRetrievalsMetrics).toHaveBeenCalledTimes(1)
 
       const startDateHeader = screen.getAllByRole('heading', { level: 5 })[0]
       const endDateHeader = screen.getAllByRole('heading', { level: 5 })[1]

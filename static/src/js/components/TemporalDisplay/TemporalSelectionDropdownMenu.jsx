@@ -28,7 +28,8 @@ const TemporalSelectionDropdownMenu = ({
   setStartDate,
   temporal,
   displayStartDate,
-  displayEndDate
+  displayEndDate,
+  isHomePage
 }) => {
   const classes = {
     btnApply: classNames(
@@ -45,6 +46,53 @@ const TemporalSelectionDropdownMenu = ({
 
   // For recurring dates we don't show the year, it's displayed on the slider
   const temporalDateFormat = getTemporalDateFormat(isRecurring)
+
+  const homePageActions = (
+    <div className="temporal-selection-dropdown-menu__actions">
+      <PortalLinkContainer
+        className={classes.btnApply}
+        type="button"
+        bootstrapVariant="primary"
+        label="Apply"
+        onClick={onApplyClick}
+        disabled={disabled}
+        to="/search"
+      >
+        Apply
+      </PortalLinkContainer>
+      <Button
+        className={classes.btnCancel}
+        bootstrapVariant="light"
+        label="Clear"
+        onClick={onClearClick}
+      >
+        Clear
+      </Button>
+    </div>
+  )
+
+  const searchPageActions = (
+    <div className="temporal-selection-dropdown-menu__actions">
+      <Button
+        className={classes.btnApply}
+        type="button"
+        bootstrapVariant="primary"
+        label="Apply"
+        onClick={onApplyClick}
+        disabled={disabled}
+      >
+        Apply
+      </Button>
+      <Button
+        className={classes.btnCancel}
+        bootstrapVariant="light"
+        label="Clear"
+        onClick={onClearClick}
+      >
+        Clear
+      </Button>
+    </div>
+  )
 
   return ReactDOM.createPortal(
     <Dropdown.Menu
@@ -74,27 +122,7 @@ const TemporalSelectionDropdownMenu = ({
         displayStartDate={displayStartDate}
         displayEndDate={displayEndDate}
       />
-      <div className="temporal-selection-dropdown-menu__actions">
-        <PortalLinkContainer
-          className={classes.btnApply}
-          type="button"
-          bootstrapVariant="primary"
-          label="Apply"
-          onClick={onApplyClick}
-          disabled={disabled}
-          to="/search"
-        >
-          Apply
-        </PortalLinkContainer>
-        <Button
-          className={classes.btnCancel}
-          bootstrapVariant="light"
-          label="Clear"
-          onClick={onClearClick}
-        >
-          Clear
-        </Button>
-      </div>
+      {isHomePage ? homePageActions : searchPageActions}
     </Dropdown.Menu>,
     document.getElementById('root')
   )

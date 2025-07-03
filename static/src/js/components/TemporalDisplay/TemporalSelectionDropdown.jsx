@@ -377,6 +377,7 @@ const TemporalSelectionDropdown = ({
             temporal={temporal}
             displayStartDate={datesSelected.start ? temporal.startDate : ''}
             displayEndDate={datesSelected.end ? temporal.endDate : ''}
+            isHomePage={isHomePage}
           />
         )
       }
