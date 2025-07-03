@@ -5,7 +5,8 @@ import jwt from 'jsonwebtoken'
 import {
   ImmerStateCreator,
   PreferencesSlice,
-  PreferencesState
+  PreferencesState,
+  PreferencesData
 } from '../types'
 import type { ProjectionCode } from '../../types/sharedTypes'
 // @ts-expect-error The file does not have types
@@ -26,10 +27,10 @@ import { projectionConfigs } from '../../util/map/crs'
 
 /** Type for JWT token payload containing preferences */
 type JwtTokenPayload = {
-  preferences?: Partial<PreferencesState>
+  preferences?: Partial<PreferencesData>
 }
 
-export const initialState = {
+export const initialPreferencesData = {
   panelState: 'default',
   collectionListView: 'default',
   granuleListView: 'default',
@@ -46,7 +47,11 @@ export const initialState = {
       mapLayers.placeLabels
     ],
     rotation: 0
-  },
+  }
+}
+
+export const initialState = {
+  preferences: initialPreferencesData,
   isSubmitting: false,
   isSubmitted: false
 }
@@ -57,8 +62,8 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
 
     setPreferences: (preferences) => {
       set((state) => {
-        state.preferences = {
-          ...state.preferences,
+        state.preferences.preferences = {
+          ...state.preferences.preferences,
           ...preferences
         }
       })
@@ -95,8 +100,8 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
       }
 
       set((state) => {
-        state.preferences = {
-          ...state.preferences,
+        state.preferences.preferences = {
+          ...state.preferences.preferences,
           ...preferences
         }
       })
@@ -134,7 +139,7 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
             overlayLayers,
             projection,
             zoom
-          } = preferencesMapView as PreferencesState['mapView']
+          } = preferencesMapView as PreferencesData['mapView']
 
           const base = {
             worldImagery: false,

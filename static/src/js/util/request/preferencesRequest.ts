@@ -1,15 +1,9 @@
 import Request from './request'
-import type { PreferencesState } from '../../zustand/types'
+import type { PreferencesData } from '../../zustand/types'
 import type { PreferencesRequestParams } from '../../types/sharedTypes'
 
 // @ts-expect-error Types are not defined for this module
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-
-/**
- * Request object for preference related requests
- * Using Partial<PreferencesState> to match the Zustand store expectations
- */
-export type PreferencesData = Partial<PreferencesState>
 
 export interface PreferencesResponse {
   data: {

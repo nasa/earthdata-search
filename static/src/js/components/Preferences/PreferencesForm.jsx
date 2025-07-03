@@ -21,30 +21,11 @@ const PreferencesForm = () => {
     preferencesData,
     isSubmitting,
     submitAndUpdatePreferences
-  } = useEdscStore((state) => {
-    const {
-      panelState,
-      collectionListView,
-      granuleListView,
-      collectionSort,
-      granuleSort,
-      mapView,
-      isSubmitting: preferenceIsSubmitting
-    } = state.preferences
-
-    return {
-      preferencesData: {
-        panelState,
-        collectionListView,
-        granuleListView,
-        collectionSort,
-        granuleSort,
-        mapView
-      },
-      isSubmitting: preferenceIsSubmitting,
-      submitAndUpdatePreferences: state.preferences.submitAndUpdatePreferences
-    }
-  })
+  } = useEdscStore((state) => ({
+    preferencesData: state.preferences.preferences,
+    isSubmitting: state.preferences.isSubmitting,
+    submitAndUpdatePreferences: state.preferences.submitAndUpdatePreferences
+  }))
 
   const [formData, setFormData] = useState(preferencesData)
 

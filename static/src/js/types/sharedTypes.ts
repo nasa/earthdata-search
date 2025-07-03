@@ -6,7 +6,7 @@ import {
 import { FeatureCollection, GeoJsonObject } from 'geojson'
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
-import { PreferencesState } from '../zustand/types'
+import { PreferencesData } from '../zustand/types'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>
@@ -300,7 +300,7 @@ export type TimelineRequestParams = {
 /** The request parameters for a preferences request */
 export type PreferencesRequestParams = {
   /** The preferences data */
-  preferences: Partial<PreferencesState>
+  preferences: Partial<PreferencesData>
 }
 
 /** The request parameters for our request classes */

@@ -163,7 +163,7 @@ export type MapSlice = {
   }
 }
 
-export type PreferencesState = {
+export type PreferencesData = {
   /** The state of the panels */
   panelState: string
   /** The view mode for collection lists */
@@ -191,6 +191,11 @@ export type PreferencesState = {
     /** The rotation of the map in degrees */
     rotation: number
   }
+}
+
+export type PreferencesState = {
+  /** The preference settings values */
+  preferences: PreferencesData
   /** Flag indicating if preferences are currently being submitted */
   isSubmitting: boolean
   /** Flag indicating if preferences have been submitted */
@@ -201,13 +206,13 @@ export type PreferencesSlice = {
   /** The Preferences Slice of the store */
   preferences: PreferencesState & {
     /** Function to set preferences */
-    setPreferences: (preferences: Partial<PreferencesState>) => void
+    setPreferences: (preferences: Partial<PreferencesData>) => void
     /** Function to set the submitting state */
     setIsSubmitting: (isSubmitting: boolean) => void
     /** Function to set preferences from JWT token */
     setPreferencesFromJwt: (jwtToken: string) => void
     /** Function to submit preference form data and save to the server */
-    submitAndUpdatePreferences: (data: { formData: PreferencesState }) => Promise<void>
+    submitAndUpdatePreferences: (data: { formData: PreferencesData }) => Promise<void>
   }
 }
 
