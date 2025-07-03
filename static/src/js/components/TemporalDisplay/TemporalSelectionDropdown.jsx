@@ -23,9 +23,9 @@ import './TemporalSelectionDropdown.scss'
 const TemporalSelectionDropdown = ({
   allowRecurring,
   onChangeQuery,
+  onMetricsTemporalFilter,
   searchParams,
-  temporalSearch,
-  onMetricsTemporalFilter
+  temporalSearch
 }) => {
   const {
     startDate = '',
@@ -371,13 +371,13 @@ const TemporalSelectionDropdown = ({
                 })
               }
             }
+            displayStartDate={datesSelected.start ? temporal.startDate : ''}
+            displayEndDate={datesSelected.end ? temporal.endDate : ''}
+            isHomePage={isHomePage}
             onValid={onValid}
             setEndDate={setEndDate}
             setStartDate={setStartDate}
             temporal={temporal}
-            displayStartDate={datesSelected.start ? temporal.startDate : ''}
-            displayEndDate={datesSelected.end ? temporal.endDate : ''}
-            isHomePage={isHomePage}
           />
         )
       }
