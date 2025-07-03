@@ -39,7 +39,7 @@ describe('createPreferencesSlice', () => {
   })
 
   test('mapView preferences have correct initial structure', () => {
-    const { mapView } = useEdscStore.getState().preferences
+    const { mapView } = useEdscStore.getState().preferences.preferences
 
     expect(mapView).toEqual({
       zoom: 3,
@@ -58,11 +58,11 @@ describe('createPreferencesSlice', () => {
   describe('setPreferencesFromJwt', () => {
     test('does nothing when no token provided', () => {
       const { setPreferencesFromJwt } = useEdscStore.getState().preferences
-      const initialPreferences = useEdscStore.getState().preferences
+      const initialPreferences = useEdscStore.getState().preferences.preferences
 
       setPreferencesFromJwt('')
 
-      const updatedPreferences = useEdscStore.getState().preferences
+      const updatedPreferences = useEdscStore.getState().preferences.preferences
       expect(updatedPreferences.panelState).toBe(initialPreferences.panelState)
     })
 
@@ -87,7 +87,7 @@ describe('createPreferencesSlice', () => {
 
       setPreferencesFromJwt('valid-jwt-token')
 
-      const updatedPreferences = useEdscStore.getState().preferences
+      const updatedPreferences = useEdscStore.getState().preferences.preferences
       expect(updatedPreferences.panelState).toBe('jwt-panel')
       expect(updatedPreferences.collectionListView).toBe('jwt-view')
       expect(updatedPreferences.mapView.zoom).toBe(10)
@@ -113,7 +113,7 @@ describe('createPreferencesSlice', () => {
 
       setPreferencesFromJwt('legacy-jwt-token')
 
-      const updatedPreferences = useEdscStore.getState().preferences
+      const updatedPreferences = useEdscStore.getState().preferences.preferences
       expect(updatedPreferences.mapView.baseLayer).toBe(mapLayers.worldImagery)
       expect(updatedPreferences.mapView.overlayLayers).toEqual([
         mapLayers.bordersRoads,

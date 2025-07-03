@@ -5,7 +5,6 @@ import jwt from 'jsonwebtoken'
 import {
   ImmerStateCreator,
   PreferencesSlice,
-  PreferencesState,
   PreferencesData
 } from '../types'
 import type { ProjectionCode } from '../../types/sharedTypes'
@@ -175,7 +174,9 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
     submitAndUpdatePreferences: async (data) => {
       const { formData: preferences } = data
 
-      get().preferences.setIsSubmitting(true)
+      set((state) => {
+        state.preferences.isSubmitting = true
+      })
 
       try {
         const { getState: reduxGetState, dispatch: reduxDispatch } = configureStore()
@@ -199,8 +200,13 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
           preferences: newPreferences
         } = dataObject
 
-        get().preferences.setPreferences(newPreferences)
-        get().preferences.setIsSubmitting(false)
+        set((state) => {
+          state.preferences.preferences = {
+            ...state.preferences.preferences,
+            ...newPreferences
+          }
+          state.preferences.isSubmitting = false
+        })
 
         reduxDispatch(updateAuthTokenFromHeaders(headers))
 
@@ -209,7 +215,9 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
           autoDismiss: true
         })
       } catch (error) {
-        get().preferences.setIsSubmitting(false)
+        set((state) => {
+          state.preferences.isSubmitting = false
+        })
 
         const { dispatch: reduxDispatch } = configureStore()
 
