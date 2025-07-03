@@ -12,8 +12,6 @@ import type { ProjectionCode } from '../../types/sharedTypes'
 import configureStore from '../../store/configureStore'
 import PreferencesRequest from '../../util/request/preferencesRequest'
 // @ts-expect-error The file does not have types
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
-// @ts-expect-error The file does not have types
 import { updateAuthTokenFromHeaders } from '../../actions/authToken'
 // @ts-expect-error The file does not have types
 import { addToast } from '../../util/addToast'
@@ -178,8 +176,10 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
         const { getState: reduxGetState, dispatch: reduxDispatch } = configureStore()
         const reduxState = reduxGetState()
 
-        const earthdataEnvironment = getEarthdataEnvironment(reduxState)
-        const { authToken } = reduxState
+        const {
+          authToken,
+          earthdataEnvironment
+        } = reduxState
 
         const requestObject = new PreferencesRequest(authToken, earthdataEnvironment)
 
