@@ -11,48 +11,66 @@ import uiSchema from '../../../../../../schemas/sitePreferencesUISchema.json'
 import mapLayers from '../../../constants/mapLayers'
 import projectionCodes from '../../../constants/projectionCodes'
 
+import mockUseEdscStore from '../../../zustand/useEdscStore'
+
 Enzyme.configure({ adapter: new Adapter() })
 
-const defaultProps = {
-  preferences: {
-    preferences: {
-      panelState: 'default',
-      collectionListView: 'default',
-      granuleListView: 'default'
-    },
-    isSubmitting: false
+jest.mock('../../../zustand/useEdscStore')
+
+const defaultStoreData = {
+  preferencesData: {
+    panelState: 'default',
+    collectionListView: 'default',
+    granuleListView: 'default',
+    collectionSort: 'default',
+    granuleSort: 'default',
+    mapView: {
+      baseLayer: 'worldImagery',
+      latitude: 0,
+      longitude: 0,
+      overlayLayers: [
+        'bordersRoads',
+        'placeLabels'
+      ],
+      projection: 'epsg4326',
+      rotation: 0,
+      zoom: 3
+    }
   },
-  onUpdatePreferences: jest.fn()
+  isSubmitting: false,
+  submitAndUpdatePreferences: jest.fn()
 }
 
-function setup() {
-  const enzymeWrapper = shallow(<PreferencesForm {...defaultProps} />)
+function setup(storeData = defaultStoreData) {
+  mockUseEdscStore.mockReturnValue(storeData)
+  const enzymeWrapper = shallow(<PreferencesForm />)
 
   return {
     enzymeWrapper,
-    props: defaultProps
+    storeData
   }
 }
 
-function setupMount() {
-  const enzymeWrapper = mount(<PreferencesForm {...defaultProps} />)
+function setupMount(storeData = defaultStoreData) {
+  mockUseEdscStore.mockReturnValue(storeData)
+  const enzymeWrapper = mount(<PreferencesForm />)
 
   return {
     enzymeWrapper,
-    props: defaultProps
+    storeData
   }
 }
 
 describe('PreferencesForm component', () => {
   test('renders a Form component', () => {
-    const { enzymeWrapper, props } = setup()
+    const { enzymeWrapper, storeData } = setup()
 
     const form = enzymeWrapper.find(Form)
 
     expect(form.props().schema).toEqual(schema)
     expect(form.props().uiSchema).toEqual(uiSchema)
-    expect(form.props().formData).toEqual(props.preferences.preferences)
-    expect(form.props().onSubmit).toEqual(props.onUpdatePreferences)
+    expect(form.props().formData).toEqual(storeData.preferencesData)
+    expect(form.props().onSubmit).toEqual(storeData.submitAndUpdatePreferences)
   })
 
   test('onChange sets the state', () => {
@@ -103,18 +121,21 @@ describe('PreferencesForm component', () => {
     })
   })
 
-  test('updating props updates the state', () => {
+  test('updating store data updates the state', () => {
     const { enzymeWrapper } = setup()
 
-    enzymeWrapper.setProps({
-      preferences: {
-        preferences: {
-          panelState: 'collapsed',
-          collectionListView: 'list',
-          granuleListView: 'table'
-        }
+    const newStoreData = {
+      ...defaultStoreData,
+      preferencesData: {
+        ...defaultStoreData.preferencesData,
+        panelState: 'collapsed',
+        collectionListView: 'list',
+        granuleListView: 'table'
       }
-    })
+    }
+
+    mockUseEdscStore.mockReturnValue(newStoreData)
+    enzymeWrapper.setProps({})
 
     const form = enzymeWrapper.find(Form)
 
@@ -122,14 +143,42 @@ describe('PreferencesForm component', () => {
       formData: {
         panelState: 'collapsed',
         collectionListView: 'list',
-        granuleListView: 'table'
+        granuleListView: 'table',
+        collectionSort: 'default',
+        granuleSort: 'default',
+        mapView: {
+          baseLayer: 'worldImagery',
+          latitude: 0,
+          longitude: 0,
+          overlayLayers: [
+            'bordersRoads',
+            'placeLabels'
+          ],
+          projection: 'epsg4326',
+          rotation: 0,
+          zoom: 3
+        }
       }
     })
 
     expect(enzymeWrapper.find(Form).props().formData).toEqual({
       panelState: 'collapsed',
       collectionListView: 'list',
-      granuleListView: 'table'
+      granuleListView: 'table',
+      collectionSort: 'default',
+      granuleSort: 'default',
+      mapView: {
+        baseLayer: 'worldImagery',
+        latitude: 0,
+        longitude: 0,
+        overlayLayers: [
+          'bordersRoads',
+          'placeLabels'
+        ],
+        projection: 'epsg4326',
+        rotation: 0,
+        zoom: 3
+      }
     })
   })
 })

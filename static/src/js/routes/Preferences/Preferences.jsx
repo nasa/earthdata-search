@@ -2,51 +2,12 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import useEdscStore from '../../zustand/useEdscStore'
-import PreferencesComponent from '../../components/Preferences/Preferences'
+import PreferencesForm from '../../components/Preferences/PreferencesForm'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 export const Preferences = () => {
   const { edscHost } = getEnvironmentConfig()
-
-  const {
-    preferencesData,
-    isSubmitting,
-    isSubmitted,
-    submitAndUpdatePreferences
-  } = useEdscStore((state) => {
-    const {
-      panelState,
-      collectionListView,
-      granuleListView,
-      collectionSort,
-      granuleSort,
-      mapView,
-      isSubmitting: preferenceIsSubmitting,
-      isSubmitted: preferenceIsSubmitted
-    } = state.preferences
-
-    return {
-      preferencesData: {
-        panelState,
-        collectionListView,
-        granuleListView,
-        collectionSort,
-        granuleSort,
-        mapView
-      },
-      isSubmitting: preferenceIsSubmitting,
-      isSubmitted: preferenceIsSubmitted,
-      submitAndUpdatePreferences: state.preferences.submitAndUpdatePreferences
-    }
-  })
-
-  const preferences = {
-    preferences: preferencesData,
-    isSubmitting,
-    isSubmitted
-  }
 
   return (
     <>
@@ -59,10 +20,9 @@ export const Preferences = () => {
       <div className="route-wrapper route-wrapper--light route-wrapper--content-page">
         <div className="route-wrapper__content">
           <div className="route-wrapper__content-inner">
-            <PreferencesComponent
-              preferences={preferences}
-              onUpdatePreferences={submitAndUpdatePreferences}
-            />
+            <div className="preferences">
+              <PreferencesForm />
+            </div>
           </div>
         </div>
       </div>
