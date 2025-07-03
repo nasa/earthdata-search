@@ -205,6 +205,7 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
             ...state.preferences.preferences,
             ...newPreferences
           }
+
           state.preferences.isSubmitting = false
         })
 
