@@ -120,6 +120,7 @@ describe('AuthTokenContainer component', () => {
     }
     setup(props)
 
+    expect(mockSetPreferencesFromJwt).toHaveBeenCalledTimes(1)
     expect(mockSetPreferencesFromJwt).toHaveBeenCalledWith('test-jwt-token')
   })
 
@@ -135,12 +136,10 @@ describe('AuthTokenContainer component', () => {
         disableDatabaseComponents: 'true'
       }))
 
-      const mockSetPreferencesFromJwt = jest.fn()
       useEdscStore.setState((state) => ({
         ...state,
         preferences: {
-          ...state.preferences,
-          setPreferencesFromJwt: mockSetPreferencesFromJwt
+          ...state.preferences
         }
       }))
 
