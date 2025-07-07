@@ -58,8 +58,8 @@ describe('TemporalSelectionDropdownMenu component', () => {
 
       expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
       expect(PortalLinkContainer).toHaveBeenCalledWith(
-        expect.objectContaining({
-          className: expect.stringContaining('temporal-selection-dropdown-menu__button--apply'),
+        {
+          className: 'temporal-selection-dropdown-menu__button temporal-selection-dropdown-menu__button--apply',
           type: 'button',
           bootstrapVariant: 'primary',
           label: 'Apply',
@@ -67,9 +67,18 @@ describe('TemporalSelectionDropdownMenu component', () => {
           disabled: false,
           to: '/search',
           children: 'Apply'
-        }),
+        },
         {}
       )
+
+      expect(Button).toHaveBeenCalledTimes(1)
+      expect(Button).toHaveBeenCalledWith({
+        className: 'temporal-selection-dropdown-menu__button temporal-selection-dropdown-menu__button--cancel',
+        bootstrapVariant: 'light',
+        label: 'Clear',
+        onClick: props.onClearClick,
+        children: 'Clear'
+      }, {})
     })
   })
 
@@ -84,27 +93,27 @@ describe('TemporalSelectionDropdownMenu component', () => {
       expect(Button).toHaveBeenCalledTimes(2)
       expect(Button).toHaveBeenNthCalledWith(
         1,
-        expect.objectContaining({
-          className: expect.stringContaining('temporal-selection-dropdown-menu__button--apply'),
+        {
+          className: 'temporal-selection-dropdown-menu__button temporal-selection-dropdown-menu__button--apply',
           type: 'button',
           bootstrapVariant: 'primary',
           label: 'Apply',
           onClick: props.onApplyClick,
           disabled: false,
           children: 'Apply'
-        }),
+        },
         {}
       )
 
       expect(Button).toHaveBeenNthCalledWith(
         2,
-        expect.objectContaining({
-          className: expect.stringContaining('temporal-selection-dropdown-menu__button--cancel'),
+        {
+          className: 'temporal-selection-dropdown-menu__button temporal-selection-dropdown-menu__button--cancel',
           bootstrapVariant: 'light',
           label: 'Clear',
           onClick: props.onClearClick,
           children: 'Clear'
-        }),
+        },
         {}
       )
     })
