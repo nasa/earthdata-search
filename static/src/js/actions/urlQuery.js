@@ -48,8 +48,11 @@ export const updateStore = ({
   const { location } = router
   const { pathname } = location
 
-  const zustand = useEdscStore.getState()
-  const collectionSortPreference = zustand.preferences.collectionSort
+  const {
+    preferences: {
+      collectionSort: collectionSortPreference
+    }
+  } = useEdscStore.getState()
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
@@ -76,6 +79,7 @@ export const updateStore = ({
       }
     }))
 
+    // eslint-disable-next-line no-shadow
     useEdscStore.setState((zustandState) => ({
       ...zustandState,
       facetParams: {
@@ -102,6 +106,7 @@ export const updateStore = ({
     }))
   } else {
     // We always need to load the portal config
+    // eslint-disable-next-line no-shadow
     useEdscStore.setState((zustandState) => ({
       ...zustandState,
       portal
@@ -227,8 +232,8 @@ export const changePath = (path = '') => async (dispatch, getState) => {
     await dispatch(actions.getProjectGranules())
   }
 
-  const zustand = useEdscStore.getState()
-  const { timeline } = zustand
+  const zustandState = useEdscStore.getState()
+  const { timeline } = zustandState
   const { getTimeline } = timeline
   getTimeline()
 

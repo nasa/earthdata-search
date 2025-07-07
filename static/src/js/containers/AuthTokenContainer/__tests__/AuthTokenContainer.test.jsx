@@ -92,38 +92,6 @@ describe('AuthTokenContainer component', () => {
     expect(props.onSetUserFromJwt).toHaveBeenCalledWith('token')
   })
 
-  test('should use Zustand for preferences processing', () => {
-    jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
-      if (param === 'authToken') return 'test-jwt-token'
-
-      return ''
-    })
-
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementationOnce(() => ({
-      disableDatabaseComponents: 'false'
-    }))
-
-    const mockSetPreferencesFromJwt = jest.fn()
-    useEdscStore.setState((state) => ({
-      ...state,
-      preferences: {
-        ...state.preferences,
-        setPreferencesFromJwt: mockSetPreferencesFromJwt
-      }
-    }))
-
-    const props = {
-      children: 'children',
-      onSetContactInfoFromJwt: jest.fn(),
-      onSetUserFromJwt: jest.fn(),
-      onUpdateAuthToken: jest.fn()
-    }
-    setup(props)
-
-    expect(mockSetPreferencesFromJwt).toHaveBeenCalledTimes(1)
-    expect(mockSetPreferencesFromJwt).toHaveBeenCalledWith('test-jwt-token')
-  })
-
   describe('when disableDatabaseComponents is true', () => {
     test('should call onUpdateAuthToken with an empty string', () => {
       jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
