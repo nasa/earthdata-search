@@ -184,16 +184,28 @@ describe('updateStore', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         payload: {
-          ...params,
-          query: {
-            ...params.query,
-            collectionSortPreference: 'default'
+          advancedSearch: undefined,
+          collections: undefined,
+          earthdataEnvironment: 'prod',
+          focusedCollection: 'C00001-EDSC',
+          focusedGranule: undefined,
+          deprecatedUrlParams: undefined,
+          project: {
+            collections: {
+              allIds: ['C00001-EDSC'],
+              byId: {}
+            }
           },
-          cmrFacets: undefined,
-          featureFacets: undefined,
-          mapView: undefined,
-          portal: undefined,
-          timeline: undefined
+          query: {
+            collection: {
+              overrideTemporal: {},
+              pageNum: 1,
+              spatial: {},
+              temporal: {}
+            },
+            granule: { pageNum: 1 },
+            collectionSortPreference: undefined
+          }
         },
         type: RESTORE_FROM_URL
       })
@@ -299,17 +311,23 @@ describe('updateStore', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         payload: {
-          ...params,
+          advancedSearch: undefined,
+          collections: undefined,
+          earthdataEnvironment: 'prod',
+          focusedCollection: '',
+          focusedGranule: undefined,
+          deprecatedUrlParams: undefined,
+          project: {},
           query: {
-            ...params.query,
-            collectionSortPreference: 'default'
-          },
-          cmrFacets: undefined,
-          featureFacets: undefined,
-          mapView: undefined,
-          portalId: undefined,
-          portal: undefined,
-          timeline: undefined
+            collection: {
+              overrideTemporal: {},
+              pageNum: 1,
+              spatial: {},
+              temporal: {}
+            },
+            granule: { pageNum: 1 },
+            collectionSortPreference: undefined
+          }
         },
         type: RESTORE_FROM_URL
       })
