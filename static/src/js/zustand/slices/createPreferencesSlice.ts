@@ -61,7 +61,10 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
 
     setPreferences: (preferences) => {
       set((state) => {
-        state.preferences.preferences = preferences
+        state.preferences.preferences = {
+          ...state.preferences.preferences,
+          ...preferences
+        }
       })
     },
 
@@ -96,7 +99,10 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
       }
 
       set((state) => {
-        state.preferences.preferences = preferences
+        state.preferences.preferences = {
+          ...state.preferences.preferences,
+          ...preferences
+        }
       })
 
       const { mapView: preferencesMapView = {} } = preferences
@@ -195,7 +201,10 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
         } = dataObject
 
         set((state) => {
-          state.preferences.preferences = newPreferences
+          state.preferences.preferences = {
+            ...state.preferences.preferences,
+            ...newPreferences
+          }
 
           state.preferences.isSubmitting = false
         })
