@@ -96,14 +96,7 @@ export const SearchPanelsContainer = ({
   panels,
   match
 }) => {
-  const preferences = useEdscStore((state) => ({
-    panelState: state.preferences.panelState,
-    collectionListView: state.preferences.collectionListView,
-    granuleListView: state.preferences.granuleListView,
-    collectionSort: state.preferences.collectionSort,
-    granuleSort: state.preferences.granuleSort,
-    mapView: state.preferences.mapView
-  }))
+  const preferences = useEdscStore((state) => state.preferences.preferences)
 
   return (
     <SearchPanels
