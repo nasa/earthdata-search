@@ -57,9 +57,8 @@ export default defineConfig({
     nodePolyfills({
       include: [
         'buffer',
-        'fs',
-        'path',
-        'stream'
+        'stream',
+        'util'
       ]
     }),
     istanbul({
