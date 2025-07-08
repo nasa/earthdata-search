@@ -158,7 +158,6 @@
     "classnames": "^2.3.1",
     "clean-deep": "^3.4.0",
     "connected-react-router": "^6.9.3",
-    "crypto-browserify": "^3.12.0",
     "dropzone": "^5.9.3",
     "esbuild": "^0.24.2",
     "events": "^3.3.0",
