@@ -16,6 +16,9 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 const TemporalSelectionDropdownMenu = ({
   allowRecurring,
   disabled,
+  displayStartDate,
+  displayEndDate,
+  isHomePage,
   onApplyClick,
   onClearClick,
   onChangeQuery,
@@ -26,9 +29,7 @@ const TemporalSelectionDropdownMenu = ({
   onValid,
   setEndDate,
   setStartDate,
-  temporal,
-  displayStartDate,
-  displayEndDate
+  temporal
 }) => {
   const classes = {
     btnApply: classNames(
@@ -46,6 +47,50 @@ const TemporalSelectionDropdownMenu = ({
   // For recurring dates we don't show the year, it's displayed on the slider
   const temporalDateFormat = getTemporalDateFormat(isRecurring)
 
+  const clearButton = (
+    <Button
+      className={classes.btnCancel}
+      bootstrapVariant="light"
+      label="Clear"
+      onClick={onClearClick}
+    >
+      Clear
+    </Button>
+  )
+
+  const homePageActions = (
+    <div className="temporal-selection-dropdown-menu__actions">
+      <PortalLinkContainer
+        className={classes.btnApply}
+        type="button"
+        bootstrapVariant="primary"
+        label="Apply"
+        onClick={onApplyClick}
+        disabled={disabled}
+        to="/search"
+      >
+        Apply
+      </PortalLinkContainer>
+      {clearButton}
+    </div>
+  )
+
+  const searchPageActions = (
+    <div className="temporal-selection-dropdown-menu__actions">
+      <Button
+        className={classes.btnApply}
+        type="button"
+        bootstrapVariant="primary"
+        label="Apply"
+        onClick={onApplyClick}
+        disabled={disabled}
+      >
+        Apply
+      </Button>
+      {clearButton}
+    </div>
+  )
+
   return ReactDOM.createPortal(
     <Dropdown.Menu
       className="temporal-selection-dropdown-menu"
@@ -60,7 +105,8 @@ const TemporalSelectionDropdownMenu = ({
       <TemporalSelection
         allowRecurring={allowRecurring}
         controlId="temporal-selection-dropdown"
-        temporal={temporal}
+        displayStartDate={displayStartDate}
+        displayEndDate={displayEndDate}
         format={temporalDateFormat}
         filterType="collection"
         onRecurringToggle={onRecurringToggle}
@@ -71,30 +117,9 @@ const TemporalSelectionDropdownMenu = ({
         onSliderChange={onSliderChange}
         onValid={onValid}
         onInvalid={onInvalid}
-        displayStartDate={displayStartDate}
-        displayEndDate={displayEndDate}
+        temporal={temporal}
       />
-      <div className="temporal-selection-dropdown-menu__actions">
-        <PortalLinkContainer
-          className={classes.btnApply}
-          type="button"
-          bootstrapVariant="primary"
-          label="Apply"
-          onClick={onApplyClick}
-          disabled={disabled}
-          to="/search"
-        >
-          Apply
-        </PortalLinkContainer>
-        <Button
-          className={classes.btnCancel}
-          bootstrapVariant="light"
-          label="Clear"
-          onClick={onClearClick}
-        >
-          Clear
-        </Button>
-      </div>
+      {isHomePage ? homePageActions : searchPageActions}
     </Dropdown.Menu>,
     document.getElementById('root')
   )
