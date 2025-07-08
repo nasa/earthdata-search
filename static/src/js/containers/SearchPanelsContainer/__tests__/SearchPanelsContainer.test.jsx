@@ -59,6 +59,26 @@ const setup = setupTest({
       activePanel: '0.0.0',
       isOpen: false
     }
+  },
+  defaultZustandState: {
+    preferences: {
+      preferences: {
+        panelState: 'default',
+        collectionListView: 'default',
+        granuleListView: 'default',
+        collectionSort: 'default',
+        granuleSort: 'default',
+        mapView: {
+          zoom: 3,
+          latitude: 0,
+          longitude: 0,
+          projection: 'epsg4326',
+          baseLayer: 'worldImagery',
+          overlayLayers: ['bordersRoads', 'placeLabels'],
+          rotation: 0
+        }
+      }
+    }
   }
 })
 
@@ -225,6 +245,22 @@ describe('SearchPanelsContainer component', () => {
         panels: {
           activePanel: '0.0.0',
           isOpen: false
+        },
+        preferences: {
+          panelState: 'default',
+          collectionListView: 'default',
+          granuleListView: 'default',
+          collectionSort: 'default',
+          granuleSort: 'default',
+          mapView: {
+            zoom: 3,
+            latitude: 0,
+            longitude: 0,
+            projection: 'epsg4326',
+            baseLayer: 'worldImagery',
+            overlayLayers: ['bordersRoads', 'placeLabels'],
+            rotation: 0
+          }
         }
       }),
       {}
