@@ -128,18 +128,6 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      mapPreferences: {
-        baseLayer: 'worldImagery',
-        latitude: 0,
-        longitude: 0,
-        overlayLayers: [
-          'bordersRoads',
-          'placeLabels'
-        ],
-        projection: 'epsg4326',
-        rotation: 0,
-        zoom: 3
-      },
       onlyEosdisCollections: undefined,
       overrideTemporalSearch: {},
       pathname: '',
@@ -219,18 +207,6 @@ describe('mapStateToProps', () => {
       lineSearch: [],
       location: {
         pathname: ''
-      },
-      mapPreferences: {
-        baseLayer: 'worldImagery',
-        latitude: 0,
-        longitude: 0,
-        overlayLayers: [
-          'bordersRoads',
-          'placeLabels'
-        ],
-        projection: 'epsg4326',
-        rotation: 0,
-        zoom: 3
       },
       onlyEosdisCollections: undefined,
       overrideTemporalSearch: {},

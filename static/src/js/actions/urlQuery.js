@@ -79,7 +79,6 @@ export const updateStore = ({
       }
     }))
 
-    // eslint-disable-next-line no-shadow
     useEdscStore.setState((zustandState) => ({
       ...zustandState,
       facetParams: {
@@ -106,7 +105,6 @@ export const updateStore = ({
     }))
   } else {
     // We always need to load the portal config
-    // eslint-disable-next-line no-shadow
     useEdscStore.setState((zustandState) => ({
       ...zustandState,
       portal

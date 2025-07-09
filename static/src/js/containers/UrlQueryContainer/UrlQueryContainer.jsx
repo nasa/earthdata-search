@@ -48,8 +48,10 @@ export const mapStateToProps = (state) => ({
   polygonSearch: state.query.collection.spatial.polygon,
   project: state.project,
   query: state.query,
-  mapPreferences: getMapPreferences(),
-  paramCollectionSortKey: getCollectionSortKeyParameter(state),
+  paramCollectionSortKey: getCollectionSortKeyParameter(
+    state.query.collection.paramCollectionSortKey,
+    useEdscStore.getState()
+  ),
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal
 })
@@ -76,6 +78,7 @@ export const UrlQueryContainer = (props) => {
       state.facetParams.cmrFacets.horizontal_data_resolution_range,
     instrumentFacets: state.facetParams.cmrFacets.instrument_h,
     latency: state.facetParams.cmrFacets.latency,
+    mapPreferences: getMapPreferences(state),
     mapView: state.map.mapView,
     organizationFacets: state.facetParams.cmrFacets.data_center_h,
     platformFacets: state.facetParams.cmrFacets.platforms_h,

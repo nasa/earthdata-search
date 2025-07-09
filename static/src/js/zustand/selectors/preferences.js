@@ -1,29 +1,26 @@
 import { translateDefaultCollectionSortKey } from '../../util/collections'
-import useEdscStore from '../useEdscStore'
 
 /**
  * Get map preferences from Zustand store
  */
-export const getMapPreferences = () => {
-  const preferences = useEdscStore.getState().preferences?.preferences
+export const getMapPreferences = (state) => {
+  const { preferences } = state.preferences
 
-  return preferences?.mapView || {}
+  return preferences?.mapView
 }
 
 /**
  * Get collection sort key parameter with preference comparison
  * Returns null if the sort key matches user preference (to hide from URL)
  */
-export const getCollectionSortKeyParameter = (state) => {
-  const paramCollectionSortKey = state?.query?.collection?.paramCollectionSortKey
-
+export const getCollectionSortKeyParameter = (paramCollectionSortKey, zustandState) => {
   if (!paramCollectionSortKey) {
     return null
   }
 
-  // Get user preference from Zustand store
-  const preferences = useEdscStore.getState().preferences?.preferences
-  const userPrefSortKey = preferences?.collectionSort || 'default'
+  // Get user preference from Zustand state
+  const { preferences } = zustandState.preferences || {}
+  const userPrefSortKey = preferences?.collectionSort
 
   const translatedUserPrefSortKey = translateDefaultCollectionSortKey(userPrefSortKey)
 

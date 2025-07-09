@@ -333,7 +333,6 @@ export const encodeUrlQuery = (props) => {
   })
 
   const mapParams = encodeMap(props.mapView, props.mapPreferences)
-  const collectionSortParams = { csk: props.paramCollectionSortKey }
   const scienceKeywordQuery = encodeScienceKeywords(props.scienceKeywordFacets)
   const platformQuery = encodePlatforms(props.platformFacets)
   const collectionsQuery = encodeCollections(props)
@@ -349,8 +348,7 @@ export const encodeUrlQuery = (props) => {
     ...scienceKeywordQuery,
     ...platformQuery,
     ...advancedQuery,
-    ...mapParams,
-    ...collectionSortParams
+    ...mapParams
   }
 
   const paramString = stringify(encodedQuery)
