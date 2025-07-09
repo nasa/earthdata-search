@@ -68,7 +68,6 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
       })
     },
 
-
     setPreferencesFromJwt: (jwtToken) => {
       if (!jwtToken) return
 

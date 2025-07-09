@@ -27,7 +27,6 @@ describe('createPreferencesSlice', () => {
     })
   })
 
-
   test('mapView preferences have correct initial structure', () => {
     const { mapView } = useEdscStore.getState().preferences.preferences
 

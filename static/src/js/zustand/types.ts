@@ -193,18 +193,15 @@ export type PreferencesData = {
   }
 }
 
-export type PreferencesState = {
-  /** The preference settings values */
-  preferences: PreferencesData
-  /** Flag indicating if preferences are currently being submitted */
-  isSubmitting: boolean
-  /** Flag indicating if preferences have been submitted */
-  isSubmitted: boolean
-}
-
 export type PreferencesSlice = {
   /** The Preferences Slice of the store */
-  preferences: PreferencesState & {
+  preferences: {
+    /** The preference settings values */
+    preferences: PreferencesData
+    /** Flag indicating if preferences are currently being submitted */
+    isSubmitting: boolean
+    /** Flag indicating if preferences have been submitted */
+    isSubmitted: boolean
     /** Function to set preferences */
     setPreferences: (preferences: Partial<PreferencesData>) => void
     /** Function to set preferences from JWT token */

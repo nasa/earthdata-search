@@ -207,7 +207,7 @@ describe('updateStore', () => {
               temporal: {}
             },
             granule: { pageNum: 1 },
-            collectionSortPreference: undefined
+            collectionSortPreference: 'default'
           }
         },
         type: RESTORE_FROM_URL
@@ -329,7 +329,7 @@ describe('updateStore', () => {
               temporal: {}
             },
             granule: { pageNum: 1 },
-            collectionSortPreference: undefined
+            collectionSortPreference: 'default'
           }
         },
         type: RESTORE_FROM_URL
