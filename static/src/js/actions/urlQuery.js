@@ -12,6 +12,7 @@ import {
   urlPathsWithoutUrlParams
 } from '../util/url/url'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getCollectionSortPreference } from '../zustand/selectors/preferences'
 
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
@@ -48,11 +49,7 @@ export const updateStore = ({
   const { location } = router
   const { pathname } = location
 
-  const {
-    preferences: {
-      collectionSort: collectionSortPreference
-    }
-  } = useEdscStore.getState()
+  const collectionSortPreference = getCollectionSortPreference(useEdscStore.getState())
 
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (

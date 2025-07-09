@@ -10,6 +10,15 @@ export const getMapPreferences = (state) => {
 }
 
 /**
+ * Get collection sort preference from Zustand store
+ */
+export const getCollectionSortPreference = (state) => {
+  const { preferences } = state.preferences || {}
+
+  return preferences?.collectionSort
+}
+
+/**
  * Get collection sort key parameter with preference comparison
  * Returns null if the sort key matches user preference (to hide from URL)
  */

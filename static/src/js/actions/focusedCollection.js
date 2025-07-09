@@ -446,11 +446,9 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     }))
   } else {
     // Initialize a nested query element in Redux for the new focused collection
-    const {
-      preferences: {
-        granuleSort: granuleSortPreference
-      }
-    } = useEdscStore.getState()
+    const { preferences, timeline } = useEdscStore.getState()
+    const { preferences: preferencesValues } = preferences
+    const { granuleSort: granuleSortPreference } = preferencesValues
     dispatch(actions.initializeCollectionGranulesQuery({
       collectionId,
       granuleSortPreference
@@ -463,7 +461,7 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     dispatch(actions.getFocusedCollection())
 
     // Fetch timeline data for the focused collection
-    const { timeline: { getTimeline } } = useEdscStore.getState()
+    const { getTimeline } = timeline
     getTimeline()
   }
 }

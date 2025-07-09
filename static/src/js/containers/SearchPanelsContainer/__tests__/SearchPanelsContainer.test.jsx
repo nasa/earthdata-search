@@ -238,9 +238,30 @@ describe('SearchPanelsContainer component', () => {
     expect(panels).toBeInTheDocument()
     expect(SearchPanels).toHaveBeenCalledTimes(1)
     expect(SearchPanels).toHaveBeenCalledWith(
-      expect.objectContaining({
+      {
+        authToken: '',
+        collectionMetadata: {},
+        collectionQuery: {},
+        collectionSubscriptions: [],
+        collectionsSearch: {},
+        granuleMetadata: {},
+        granuleQuery: {},
+        granuleSearchResults: {},
+        isExportRunning: {
+          csv: false,
+          json: false
+        },
+        location: {},
         match: { url: '/search' },
+        onApplyGranuleFilters: mockOnApplyGranuleFilters,
+        onChangePath: mockOnChangePath,
+        onChangeQuery: mockOnChangeQuery,
+        onExport: mockOnExport,
+        onFocusedCollectionChange: mockOnFocusedCollectionChange,
+        onMetricsCollectionSortChange: mockOnMetricsCollectionSortChange,
         onSetActivePanel: mockOnSetActivePanel,
+        onToggleAboutCSDAModal: mockOnToggleAboutCSDAModal,
+        onToggleAboutCwicModal: mockOnToggleAboutCwicModal,
         onTogglePanels: mockOnTogglePanels,
         panels: {
           activePanel: '0.0.0',
@@ -262,7 +283,7 @@ describe('SearchPanelsContainer component', () => {
             rotation: 0
           }
         }
-      }),
+      },
       {}
     )
   })
