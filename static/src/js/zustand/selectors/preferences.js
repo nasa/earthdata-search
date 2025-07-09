@@ -13,13 +13,13 @@ export const getMapPreferences = (state) => {
  * Get collection sort key parameter with preference comparison
  * Returns null if the sort key matches user preference (to hide from URL)
  */
-export const getCollectionSortKeyParameter = (paramCollectionSortKey, zustandState) => {
+export const getCollectionSortKeyParameter = (paramCollectionSortKey, state) => {
   if (!paramCollectionSortKey) {
     return null
   }
 
   // Get user preference from Zustand state
-  const { preferences } = zustandState.preferences || {}
+  const { preferences } = state.preferences || {}
   const userPrefSortKey = preferences?.collectionSort
 
   const translatedUserPrefSortKey = translateDefaultCollectionSortKey(userPrefSortKey)
