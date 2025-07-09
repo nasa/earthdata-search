@@ -887,7 +887,10 @@ describe('changeFocusedCollection', () => {
         },
         preferences: {
           ...useEdscStore.getInitialState().preferences,
-          granuleSort: 'default'
+          preferences: {
+            ...useEdscStore.getInitialState().preferences.preferences,
+            granuleSort: 'default'
+          }
         }
       })
 

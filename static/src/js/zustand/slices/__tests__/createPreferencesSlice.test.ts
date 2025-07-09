@@ -22,21 +22,11 @@ describe('createPreferencesSlice', () => {
     expect(preferences).toEqual({
       ...initialState,
       setPreferences: expect.any(Function),
-      setIsSubmitting: expect.any(Function),
       setPreferencesFromJwt: expect.any(Function),
       submitAndUpdatePreferences: expect.any(Function)
     })
   })
 
-  test('setIsSubmitting updates the submitting state', () => {
-    const { setIsSubmitting } = useEdscStore.getState().preferences
-
-    expect(useEdscStore.getState().preferences.isSubmitting).toBe(false)
-
-    setIsSubmitting(true)
-
-    expect(useEdscStore.getState().preferences.isSubmitting).toBe(true)
-  })
 
   test('mapView preferences have correct initial structure', () => {
     const { mapView } = useEdscStore.getState().preferences.preferences

@@ -4,6 +4,7 @@ import validator from '@rjsf/validator-ajv8'
 import Form from '@rjsf/core'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getPreferences } from '../../zustand/selectors/preferences'
 import schema from '../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../schemas/sitePreferencesUISchema.json'
 import Button from '../Button/Button'
@@ -22,7 +23,7 @@ const PreferencesForm = () => {
     isSubmitting,
     submitAndUpdatePreferences
   } = useEdscStore((state) => ({
-    preferencesData: state.preferences.preferences,
+    preferencesData: getPreferences(state),
     isSubmitting: state.preferences.isSubmitting,
     submitAndUpdatePreferences: state.preferences.submitAndUpdatePreferences
   }))

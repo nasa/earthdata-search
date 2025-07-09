@@ -54,7 +54,10 @@ describe('updateStore', () => {
       ...state,
       preferences: {
         ...state.preferences,
-        collectionSort: 'default'
+        preferences: {
+          ...state.preferences.preferences,
+          collectionSort: 'default'
+        }
       }
     }))
 

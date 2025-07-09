@@ -1,10 +1,15 @@
 import { translateDefaultCollectionSortKey } from '../../util/collections'
 
 /**
+ * Get preferences from Zustand store
+ */
+export const getPreferences = (state) => state.preferences.preferences
+
+/**
  * Get map preferences from Zustand store
  */
 export const getMapPreferences = (state) => {
-  const { preferences } = state.preferences
+  const preferences = getPreferences(state)
 
   return preferences?.mapView
 }
@@ -13,7 +18,7 @@ export const getMapPreferences = (state) => {
  * Get collection sort preference from Zustand store
  */
 export const getCollectionSortPreference = (state) => {
-  const { preferences } = state.preferences || {}
+  const preferences = getPreferences(state)
 
   return preferences?.collectionSort
 }
@@ -28,7 +33,7 @@ export const getCollectionSortKeyParameter = (paramCollectionSortKey, state) => 
   }
 
   // Get user preference from Zustand state
-  const { preferences } = state.preferences || {}
+  const preferences = getPreferences(state)
   const userPrefSortKey = preferences?.collectionSort
 
   const translatedUserPrefSortKey = translateDefaultCollectionSortKey(userPrefSortKey)

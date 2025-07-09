@@ -12,6 +12,7 @@ import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
 import useEdscStore from '../../zustand/useEdscStore'
+import { getPreferences } from '../../zustand/selectors/preferences'
 
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
@@ -96,7 +97,7 @@ export const SearchPanelsContainer = ({
   panels,
   match
 }) => {
-  const preferences = useEdscStore((state) => state.preferences.preferences)
+  const preferences = useEdscStore((state) => getPreferences(state))
 
   return (
     <SearchPanels

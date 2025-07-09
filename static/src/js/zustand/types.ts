@@ -207,8 +207,6 @@ export type PreferencesSlice = {
   preferences: PreferencesState & {
     /** Function to set preferences */
     setPreferences: (preferences: Partial<PreferencesData>) => void
-    /** Function to set the submitting state */
-    setIsSubmitting: (isSubmitting: boolean) => void
     /** Function to set preferences from JWT token */
     setPreferencesFromJwt: (jwtToken: string) => void
     /** Function to submit preference form data and save to the server */

@@ -29,7 +29,7 @@ type JwtTokenPayload = {
   preferences?: Partial<PreferencesData>
 }
 
-export const initialPreferencesData = {
+const initialPreferencesData = {
   panelState: 'default',
   collectionListView: 'default',
   granuleListView: 'default',
@@ -68,11 +68,6 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
       })
     },
 
-    setIsSubmitting: (isSubmitting) => {
-      set((state) => {
-        state.preferences.isSubmitting = isSubmitting
-      })
-    },
 
     setPreferencesFromJwt: (jwtToken) => {
       if (!jwtToken) return
