@@ -163,6 +163,54 @@ export type MapSlice = {
   }
 }
 
+export type PreferencesData = {
+  /** The state of the panels */
+  panelState: string
+  /** The view mode for collection lists */
+  collectionListView: string
+  /** The view mode for granule lists */
+  granuleListView: string
+  /** The sort preference for collections */
+  collectionSort: string
+  /** The sort preference for granules */
+  granuleSort: string
+  /** The map view preferences */
+  mapView: {
+    /** The zoom level of the map */
+    zoom: number
+    /** The latitude center of the map */
+    latitude: number
+    /** The base layer identifier for the map */
+    baseLayer: string
+    /** The longitude center of the map */
+    longitude: number
+    /** The projection code for the map */
+    projection: string
+    /** Array of overlay layer identifiers */
+    overlayLayers: string[]
+    /** The rotation of the map in degrees */
+    rotation: number
+  }
+}
+
+export type PreferencesSlice = {
+  /** The Preferences Slice of the store */
+  preferences: {
+    /** The preference settings values */
+    preferences: PreferencesData
+    /** Flag indicating if preferences are currently being submitted */
+    isSubmitting: boolean
+    /** Flag indicating if preferences have been submitted */
+    isSubmitted: boolean
+    /** Function to set preferences */
+    setPreferences: (preferences: Partial<PreferencesData>) => void
+    /** Function to set preferences from JWT token */
+    setPreferencesFromJwt: (jwtToken: string) => void
+    /** Function to submit preference form data and save to the server */
+    submitAndUpdatePreferences: (data: { formData: PreferencesData }) => Promise<void>
+  }
+}
+
 export type PortalSlice = {
   /** The Portal Slice of the store */
   portal: PortalConfig
@@ -297,6 +345,7 @@ export type EdscStore =
   & HomeSlice
   & MapSlice
   & PortalSlice
+  & PreferencesSlice
   & ShapefileSlice
   & TimelineSlice
   & UiSlice

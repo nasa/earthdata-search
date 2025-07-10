@@ -58,11 +58,26 @@ const setup = setupTest({
     panels: {
       activePanel: '0.0.0',
       isOpen: false
-    },
+    }
+  },
+  defaultZustandState: {
     preferences: {
-      panelState: 'default',
-      collectionListView: 'default',
-      granuleListView: 'default'
+      preferences: {
+        panelState: 'default',
+        collectionListView: 'default',
+        granuleListView: 'default',
+        collectionSort: 'default',
+        granuleSort: 'default',
+        mapView: {
+          zoom: 3,
+          latitude: 0,
+          longitude: 0,
+          projection: 'epsg4326',
+          baseLayer: 'worldImagery',
+          overlayLayers: ['bordersRoads', 'placeLabels'],
+          rotation: 0
+        }
+      }
     }
   }
 })
@@ -178,9 +193,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       panels: {},
-      preferences: {
-        preferences: {}
-      },
       query: {
         collection: {}
       },
@@ -210,8 +222,7 @@ describe('mapStateToProps', () => {
         csv: false,
         json: false
       },
-      panels: {},
-      preferences: {}
+      panels: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -227,15 +238,52 @@ describe('SearchPanelsContainer component', () => {
     expect(panels).toBeInTheDocument()
     expect(SearchPanels).toHaveBeenCalledTimes(1)
     expect(SearchPanels).toHaveBeenCalledWith(
-      expect.objectContaining({
+      {
+        authToken: '',
+        collectionMetadata: {},
+        collectionQuery: {},
+        collectionSubscriptions: [],
+        collectionsSearch: {},
+        granuleMetadata: {},
+        granuleQuery: {},
+        granuleSearchResults: {},
+        isExportRunning: {
+          csv: false,
+          json: false
+        },
+        location: {},
         match: { url: '/search' },
+        onApplyGranuleFilters: mockOnApplyGranuleFilters,
+        onChangePath: mockOnChangePath,
+        onChangeQuery: mockOnChangeQuery,
+        onExport: mockOnExport,
+        onFocusedCollectionChange: mockOnFocusedCollectionChange,
+        onMetricsCollectionSortChange: mockOnMetricsCollectionSortChange,
         onSetActivePanel: mockOnSetActivePanel,
+        onToggleAboutCSDAModal: mockOnToggleAboutCSDAModal,
+        onToggleAboutCwicModal: mockOnToggleAboutCwicModal,
         onTogglePanels: mockOnTogglePanels,
         panels: {
           activePanel: '0.0.0',
           isOpen: false
+        },
+        preferences: {
+          panelState: 'default',
+          collectionListView: 'default',
+          granuleListView: 'default',
+          collectionSort: 'default',
+          granuleSort: 'default',
+          mapView: {
+            zoom: 3,
+            latitude: 0,
+            longitude: 0,
+            projection: 'epsg4326',
+            baseLayer: 'worldImagery',
+            overlayLayers: ['bordersRoads', 'placeLabels'],
+            rotation: 0
+          }
         }
-      }),
+      },
       {}
     )
   })

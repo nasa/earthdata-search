@@ -9,7 +9,6 @@ import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
-import { getGranuleSortPreference } from '../selectors/preferences'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 import { getUsername } from '../selectors/user'
 import { isCSDACollection } from '../util/isCSDACollection'
@@ -447,7 +446,9 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     }))
   } else {
     // Initialize a nested query element in Redux for the new focused collection
-    const granuleSortPreference = getGranuleSortPreference(state)
+    const { preferences, timeline } = useEdscStore.getState()
+    const { preferences: preferencesValues } = preferences
+    const { granuleSort: granuleSortPreference } = preferencesValues
     dispatch(actions.initializeCollectionGranulesQuery({
       collectionId,
       granuleSortPreference
@@ -460,8 +461,6 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     dispatch(actions.getFocusedCollection())
 
     // Fetch timeline data for the focused collection
-    const zustandState = useEdscStore.getState()
-    const { timeline } = zustandState
     const { getTimeline } = timeline
     getTimeline()
   }

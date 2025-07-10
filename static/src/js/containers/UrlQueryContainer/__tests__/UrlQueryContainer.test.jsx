@@ -36,11 +36,19 @@ const setup = setupTest({
     temporalSearch: {},
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
+  },
+  defaultZustandState: {
+    preferences: {
+      collectionSort: 'default'
+    }
   }
 })
 
 beforeEach(() => {
   jest.resetAllMocks()
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+  }))
 })
 
 describe('mapDispatchToProps', () => {
@@ -120,7 +128,7 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      mapPreferences: {},
+      onlyEosdisCollections: undefined,
       overrideTemporalSearch: {},
       pathname: '',
       pointSearch: [],
@@ -143,7 +151,7 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      paramCollectionSortKey: undefined,
+      paramCollectionSortKey: null,
       tagKey: '',
       temporalSearch: {}
     }
@@ -200,7 +208,7 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      mapPreferences: {},
+      onlyEosdisCollections: undefined,
       overrideTemporalSearch: {},
       pathname: '',
       pointSearch: [],

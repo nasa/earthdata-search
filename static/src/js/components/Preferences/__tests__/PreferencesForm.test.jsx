@@ -1,70 +1,79 @@
-import React from 'react'
-import Enzyme, { shallow, mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Form from '@rjsf/core'
-import { act } from 'react-dom/test-utils'
+import { screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
 
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import PreferencesForm from '../PreferencesForm'
-import schema from '../../../../../../schemas/sitePreferencesSchema.json'
-import uiSchema from '../../../../../../schemas/sitePreferencesUISchema.json'
 import mapLayers from '../../../constants/mapLayers'
 import projectionCodes from '../../../constants/projectionCodes'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import useEdscStore from '../../../zustand/useEdscStore'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-const defaultProps = {
+const defaultZustandState = {
   preferences: {
     preferences: {
       panelState: 'default',
       collectionListView: 'default',
-      granuleListView: 'default'
+      granuleListView: 'default',
+      collectionSort: 'default',
+      granuleSort: 'default',
+      mapView: {
+        baseLayer: 'worldImagery',
+        latitude: 0,
+        longitude: 0,
+        overlayLayers: [
+          'bordersRoads',
+          'placeLabels'
+        ],
+        projection: 'epsg4326',
+        rotation: 0,
+        zoom: 3
+      }
     },
-    isSubmitting: false
-  },
-  onUpdatePreferences: jest.fn()
-}
-
-function setup() {
-  const enzymeWrapper = shallow(<PreferencesForm {...defaultProps} />)
-
-  return {
-    enzymeWrapper,
-    props: defaultProps
+    isSubmitting: false,
+    submitAndUpdatePreferences: jest.fn()
   }
 }
 
-function setupMount() {
-  const enzymeWrapper = mount(<PreferencesForm {...defaultProps} />)
-
-  return {
-    enzymeWrapper,
-    props: defaultProps
-  }
-}
+const setup = setupTest({
+  Component: PreferencesForm,
+  defaultZustandState
+})
 
 describe('PreferencesForm component', () => {
-  test('renders a Form component', () => {
-    const { enzymeWrapper, props } = setup()
-
-    const form = enzymeWrapper.find(Form)
-
-    expect(form.props().schema).toEqual(schema)
-    expect(form.props().uiSchema).toEqual(uiSchema)
-    expect(form.props().formData).toEqual(props.preferences.preferences)
-    expect(form.props().onSubmit).toEqual(props.onUpdatePreferences)
+  beforeEach(() => {
+    useEdscStore.setState(useEdscStore.getInitialState(), true)
   })
 
-  test('onChange sets the state', () => {
-    const { enzymeWrapper } = setupMount()
+  test('renders a Form component', () => {
+    setup()
 
-    act(() => {
-      enzymeWrapper.find(Form).props().onChange({
-        formData: {
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument()
+    expect(screen.getByText(/Panel State/i)).toBeInTheDocument()
+    expect(screen.getByText(/Collection.*Sort/i)).toBeInTheDocument()
+    expect(screen.getByText(/Granule.*Sort/i)).toBeInTheDocument()
+  })
+
+  test('onChange sets the state', async () => {
+    setup()
+
+    const submitButton = screen.getByRole('button', { name: /submit/i })
+
+    expect(submitButton).toBeInTheDocument()
+    expect(screen.getByText(/Panel State/i)).toBeInTheDocument()
+    expect(screen.getByText(/Collection.*Sort/i)).toBeInTheDocument()
+    expect(screen.getByText(/Granule.*Sort/i)).toBeInTheDocument()
+
+    expect(submitButton).not.toBeDisabled()
+  })
+
+  test('updating store data updates the state', () => {
+    const updatedState = {
+      preferences: {
+        preferences: {
           panelState: 'collapsed',
           collectionListView: 'list',
-          collectionSort: collectionSortKeys.scoreDescending,
           granuleListView: 'table',
+          collectionSort: collectionSortKeys.scoreDescending,
           granuleSort: 'end_date',
           mapView: {
             zoom: 4,
@@ -77,59 +86,19 @@ describe('PreferencesForm component', () => {
             ],
             projection: projectionCodes.geographic
           }
-        }
-      })
-    })
-
-    enzymeWrapper.update()
-
-    expect(enzymeWrapper.find(Form).props().formData).toEqual({
-      panelState: 'collapsed',
-      collectionListView: 'list',
-      collectionSort: collectionSortKeys.scoreDescending,
-      granuleListView: 'table',
-      granuleSort: 'end_date',
-      mapView: {
-        zoom: 4,
-        baseLayer: mapLayers.worldImagery,
-        latitude: 39,
-        longitude: -95,
-        overlayLayers: [
-          mapLayers.bordersRoads,
-          mapLayers.placeLabels
-        ],
-        projection: projectionCodes.geographic
+        },
+        isSubmitting: false,
+        submitAndUpdatePreferences: jest.fn()
       }
-    })
-  })
+    }
 
-  test('updating props updates the state', () => {
-    const { enzymeWrapper } = setup()
-
-    enzymeWrapper.setProps({
-      preferences: {
-        preferences: {
-          panelState: 'collapsed',
-          collectionListView: 'list',
-          granuleListView: 'table'
-        }
-      }
+    setup({
+      overrideZustandState: updatedState
     })
 
-    const form = enzymeWrapper.find(Form)
-
-    form.simulate('change', {
-      formData: {
-        panelState: 'collapsed',
-        collectionListView: 'list',
-        granuleListView: 'table'
-      }
-    })
-
-    expect(enzymeWrapper.find(Form).props().formData).toEqual({
-      panelState: 'collapsed',
-      collectionListView: 'list',
-      granuleListView: 'table'
-    })
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument()
+    expect(screen.getByText(/Panel State/i)).toBeInTheDocument()
+    expect(screen.getByText(/Collection.*Sort/i)).toBeInTheDocument()
+    expect(screen.getByText(/Granule.*Sort/i)).toBeInTheDocument()
   })
 })
