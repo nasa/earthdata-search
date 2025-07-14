@@ -1,10 +1,7 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import PreferencesForm from '../PreferencesForm'
-import mapLayers from '../../../constants/mapLayers'
-import projectionCodes from '../../../constants/projectionCodes'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const defaultZustandState = {
@@ -44,7 +41,6 @@ describe('PreferencesForm component', () => {
 
     expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument()
 
-    // Test form section headings exist
     expect(screen.getByText(/Panel State/i)).toBeInTheDocument()
     expect(screen.getByText(/Collection.*Sort/i)).toBeInTheDocument()
     expect(screen.getByText(/Granule.*Sort/i)).toBeInTheDocument()
@@ -131,5 +127,4 @@ describe('PreferencesForm component', () => {
     const submitButton = screen.getByRole('button', { name: /submit/i })
     expect(submitButton).not.toBeDisabled()
   })
-
 })
