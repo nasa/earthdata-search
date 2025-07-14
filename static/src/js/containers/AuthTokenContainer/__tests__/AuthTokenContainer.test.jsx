@@ -104,13 +104,6 @@ describe('AuthTokenContainer component', () => {
         disableDatabaseComponents: 'true'
       }))
 
-      useEdscStore.setState((state) => ({
-        ...state,
-        preferences: {
-          ...state.preferences
-        }
-      }))
-
       const props = {
         children: 'children',
         onSetContactInfoFromJwt: jest.fn(),

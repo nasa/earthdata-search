@@ -97,7 +97,7 @@ export const SearchPanelsContainer = ({
   panels,
   match
 }) => {
-  const preferences = useEdscStore((state) => getPreferences(state))
+  const preferences = useEdscStore(getPreferences)
 
   return (
     <SearchPanels

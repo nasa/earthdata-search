@@ -881,18 +881,20 @@ describe('changeFocusedCollection', () => {
       getFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
 
       const getTimelineMock = jest.fn()
-      useEdscStore.setState({
+      useEdscStore.setState((state) => ({
+        ...state,
         timeline: {
+          ...state.timeline,
           getTimeline: getTimelineMock
         },
         preferences: {
-          ...useEdscStore.getInitialState().preferences,
+          ...state.preferences,
           preferences: {
-            ...useEdscStore.getInitialState().preferences.preferences,
+            ...state.preferences.preferences,
             granuleSort: 'default'
           }
         }
-      })
+      }))
 
       const store = mockStore({})
 

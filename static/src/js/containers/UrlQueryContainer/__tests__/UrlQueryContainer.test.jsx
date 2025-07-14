@@ -151,7 +151,6 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      paramCollectionSortKey: null,
       tagKey: '',
       temporalSearch: {}
     }
@@ -232,7 +231,6 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      paramCollectionSortKey: collectionSortKeys.endDateDescending,
       tagKey: '',
       temporalSearch: {}
     }
