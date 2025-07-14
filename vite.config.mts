@@ -54,7 +54,13 @@ export default defineConfig({
       version
     }),
     react(),
-    nodePolyfills(),
+    nodePolyfills({
+      include: [
+        'buffer',
+        'stream',
+        'util'
+      ]
+    }),
     istanbul({
       include: 'static/src/*',
       exclude: ['node_modules', 'test/'],
