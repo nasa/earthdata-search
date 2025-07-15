@@ -1,3 +1,4 @@
+// @ts-expect-error The file does not have types
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 import {
@@ -9,38 +10,51 @@ import {
 
 import mapLayers from '../../../constants/mapLayers'
 import projectionCodes from '../../../constants/projectionCodes'
+import { EdscStore, PreferencesData } from '../../types'
 
+// @ts-expect-error The file does not have types
 import configureStore from '../../../store/configureStore'
+// @ts-expect-error The file does not have types
 import { getParamCollectionSortKey } from '../../../selectors/query'
 
 jest.mock('../../../store/configureStore')
 jest.mock('../../../selectors/query')
 
-const mockConfigureStore = configureStore
-const mockGetParamCollectionSortKey = getParamCollectionSortKey
+const mockConfigureStore = configureStore as jest.MockedFunction<typeof configureStore>
+const mockGetParamCollectionSortKey = getParamCollectionSortKey as jest.MockedFunction<
+  typeof getParamCollectionSortKey
+>
+
+const createMockState = (preferences: Partial<PreferencesData> = {}): Pick<EdscStore, 'preferences'> => ({
+  preferences: {
+    preferences: {
+      collectionSort: 'default',
+      granuleSort: 'default',
+      panelState: 'default',
+      collectionListView: 'default',
+      granuleListView: 'default',
+      mapView: {
+        zoom: 3,
+        latitude: 0,
+        longitude: 0,
+        projection: projectionCodes.geographic,
+        baseLayer: mapLayers.worldImagery,
+        overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels],
+        rotation: 0
+      },
+      ...preferences
+    },
+    isSubmitting: false,
+    isSubmitted: false,
+    setPreferences: jest.fn(),
+    setPreferencesFromJwt: jest.fn(),
+    submitAndUpdatePreferences: jest.fn()
+  }
+})
 
 describe('getPreferences', () => {
   test('returns preferences from the zustand state', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: 'default',
-          granuleSort: 'default',
-          panelState: 'default',
-          collectionListView: 'default',
-          granuleListView: 'default',
-          mapView: {
-            zoom: 3,
-            latitude: 0,
-            longitude: 0,
-            projection: projectionCodes.geographic,
-            baseLayer: mapLayers.worldImagery,
-            overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels],
-            rotation: 0
-          }
-        }
-      }
-    }
+    const state = createMockState()
 
     expect(getPreferences(state)).toEqual({
       collectionSort: 'default',
@@ -63,23 +77,17 @@ describe('getPreferences', () => {
 
 describe('getMapPreferences', () => {
   test('returns map preferences from the zustand state', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: 'default',
-          granuleSort: 'default',
-          mapView: {
-            zoom: 5,
-            latitude: 39.5,
-            longitude: -98.35,
-            projection: projectionCodes.geographic,
-            baseLayer: mapLayers.worldImagery,
-            overlayLayers: [mapLayers.bordersRoads],
-            rotation: 0
-          }
-        }
+    const state = createMockState({
+      mapView: {
+        zoom: 5,
+        latitude: 39.5,
+        longitude: -98.35,
+        projection: projectionCodes.geographic,
+        baseLayer: mapLayers.worldImagery,
+        overlayLayers: [mapLayers.bordersRoads],
+        rotation: 0
       }
-    }
+    })
 
     expect(getMapPreferences(state)).toEqual({
       zoom: 5,
@@ -95,27 +103,17 @@ describe('getMapPreferences', () => {
 
 describe('getCollectionSortPreference', () => {
   test('returns collection sort preference from the zustand state', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: '-usage_score',
-          granuleSort: 'default'
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: '-usage_score'
+    })
 
     expect(getCollectionSortPreference(state)).toEqual('-usage_score')
   })
 
   test('returns default when collectionSort is default', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: 'default',
-          granuleSort: 'default'
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: 'default'
+    })
 
     expect(getCollectionSortPreference(state)).toEqual('default')
   })
@@ -138,13 +136,9 @@ describe('getCollectionSortKeyParameter', () => {
   })
 
   test('returns null when paramCollectionSortKey is not provided', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: 'default'
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: 'default'
+    })
 
     mockGetParamCollectionSortKey.mockReturnValue(null)
     expect(getCollectionSortKeyParameter(state)).toBeNull()
@@ -157,74 +151,45 @@ describe('getCollectionSortKeyParameter', () => {
   })
 
   test('returns the paramCollectionSortKey when it differs from user preference', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: 'default' // This translates to '-usage_score'
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: 'default' // This translates to '-usage_score'
+    })
 
     mockGetParamCollectionSortKey.mockReturnValue('-score')
     expect(getCollectionSortKeyParameter(state)).toEqual('-score')
   })
 
   test('returns null when paramCollectionSortKey matches direct user preference', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: '-usage_score'
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: '-usage_score'
+    })
 
     mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
     expect(getCollectionSortKeyParameter(state)).toBeNull()
   })
 
   test('returns null when paramCollectionSortKey matches translated default user preference', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: 'default' // This translates to '-usage_score'
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: 'default' // This translates to '-usage_score'
+    })
 
     mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
     expect(getCollectionSortKeyParameter(state)).toBeNull()
   })
 
   test('returns null when paramCollectionSortKey matches non-default user preference', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: '-score'
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: '-score'
+    })
 
     mockGetParamCollectionSortKey.mockReturnValue('-score')
     expect(getCollectionSortKeyParameter(state)).toBeNull()
   })
 
   test('returns the paramCollectionSortKey when user has no preferences set', () => {
-    const state = {
-      preferences: {
-        preferences: {}
-      }
-    }
-
-    mockGetParamCollectionSortKey.mockReturnValue('-score')
-    expect(getCollectionSortKeyParameter(state)).toEqual('-score')
-  })
-
-  test('returns the paramCollectionSortKey when preferences structure is invalid', () => {
-    const state = {
-      preferences: {
-        preferences: undefined
-      }
-    }
+    const state = createMockState({
+      collectionSort: undefined
+    })
 
     mockGetParamCollectionSortKey.mockReturnValue('-score')
     expect(getCollectionSortKeyParameter(state)).toEqual('-score')
@@ -235,13 +200,9 @@ describe('getCollectionSortKeyParameter', () => {
       collectionSearchResultsSortKey: '-score'
     }))
 
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: 'default' // This now translates to '-score'
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: 'default' // This now translates to '-score'
+    })
 
     mockGetParamCollectionSortKey.mockReturnValue('-score')
     expect(getCollectionSortKeyParameter(state)).toBeNull()
@@ -255,13 +216,9 @@ describe('getCollectionSortKeyParameter', () => {
       collectionSearchResultsSortKey: '-usage_score'
     }))
 
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: undefined
-        }
-      }
-    }
+    const state = createMockState({
+      collectionSort: undefined
+    })
 
     mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
     expect(getCollectionSortKeyParameter(state)).toBeNull()

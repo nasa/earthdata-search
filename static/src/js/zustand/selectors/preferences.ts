@@ -1,17 +1,20 @@
+import { EdscStore } from '../types'
+// @ts-expect-error The file does not have types
 import { translateDefaultCollectionSortKey } from '../../util/collections'
 // @ts-expect-error The file does not have types
 import configureStore from '../../store/configureStore'
+// @ts-expect-error The file does not have types
 import { getParamCollectionSortKey } from '../../selectors/query'
 
 /**
  * Get preferences from Zustand store
  */
-export const getPreferences = (state) => state.preferences.preferences
+export const getPreferences = (state: Pick<EdscStore, 'preferences'>) => state.preferences.preferences
 
 /**
  * Get map preferences from Zustand store
  */
-export const getMapPreferences = (state) => {
+export const getMapPreferences = (state: Pick<EdscStore, 'preferences'>) => {
   const preferences = getPreferences(state)
 
   return preferences?.mapView
@@ -20,7 +23,7 @@ export const getMapPreferences = (state) => {
 /**
  * Get collection sort preference from Zustand store
  */
-export const getCollectionSortPreference = (state) => {
+export const getCollectionSortPreference = (state: Pick<EdscStore, 'preferences'>) => {
   const preferences = getPreferences(state)
 
   return preferences?.collectionSort
@@ -30,7 +33,7 @@ export const getCollectionSortPreference = (state) => {
  * Get collection sort key parameter from URL compared against user preferences
  * Fetches paramCollectionSortKey from Redux and compares with Zustand preferences
  */
-export const getCollectionSortKeyParameter = (state) => {
+export const getCollectionSortKeyParameter = (state: Pick<EdscStore, 'preferences'>): string | null => {
   // Fetch paramCollectionSortKey from Redux
   const { getState: reduxGetState } = configureStore()
   const reduxState = reduxGetState()

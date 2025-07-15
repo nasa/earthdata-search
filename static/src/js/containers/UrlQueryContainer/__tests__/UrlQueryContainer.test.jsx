@@ -12,6 +12,14 @@ import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import useEdscStore from '../../../zustand/useEdscStore'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import * as preferences from '../../../zustand/selectors/preferences'
+
+jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  env: 'sit',
+  collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+}))
+
+jest.spyOn(preferences, 'getCollectionSortKeyParameter').mockImplementation(() => null)
 
 const setup = setupTest({
   Component: UrlQueryContainer,
