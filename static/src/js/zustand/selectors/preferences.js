@@ -25,24 +25,22 @@ export const getCollectionSortPreference = (state) => {
 
 /**
  * Creates a selector function for collection sort key parameter with preference comparison
- * Returns a function that takes paramCollectionSortKey and returns null if it matches user preference
+ * Returns a selector function that only takes Zustand state
  */
-export const getCollectionSortKeyParameterSelector = (state) => {
+export const createCollectionSortKeyParameter = (paramCollectionSortKey) => (state) => {
+  if (!paramCollectionSortKey) {
+    return null
+  }
+
+  // Get user preference from Zustand state
   const preferences = getPreferences(state)
   const userPrefSortKey = preferences?.collectionSort
   const translatedUserPrefSortKey = translateDefaultCollectionSortKey(userPrefSortKey)
 
-  // Return a function that can be used to compare against paramCollectionSortKey
-  return (paramCollectionSortKey) => {
-    if (!paramCollectionSortKey) {
-      return null
-    }
-
-    // Do not show url parameter if preference matches the current query
-    if (paramCollectionSortKey === translatedUserPrefSortKey) {
-      return null
-    }
-
-    return paramCollectionSortKey
+  // Do not show url parameter if preference matches the current query
+  if (paramCollectionSortKey === translatedUserPrefSortKey) {
+    return null
   }
+
+  return paramCollectionSortKey
 }

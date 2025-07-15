@@ -18,7 +18,7 @@ import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getParamCollectionSortKey } from '../../selectors/query'
 import {
   getMapPreferences,
-  getCollectionSortKeyParameterSelector
+  createCollectionSortKeyParameter
 } from '../../zustand/selectors/preferences'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -68,12 +68,12 @@ export const UrlQueryContainer = (props) => {
   const [currentPath, setCurrentPath] = useState('')
   const previousSearch = useRef(search)
 
-  const zustandValues = useEdscStore((state) => {
-    // Get paramCollectionSortKey from Redux state
-    const paramCollectionSortKeyFromRedux = getParamCollectionSortKey(props)
+  const paramCollectionSortKeyFromRedux = getParamCollectionSortKey(props)
 
-    // Get the selector function and apply it to the parameter
-    const collectionSortKeyParameterSelector = getCollectionSortKeyParameterSelector(state)
+  const zustandValues = useEdscStore((state) => {
+    const collectionSortKeyParameter = createCollectionSortKeyParameter(
+      paramCollectionSortKeyFromRedux
+    )
 
     return {
       featureFacets: state.facetParams.featureFacets,
@@ -85,7 +85,7 @@ export const UrlQueryContainer = (props) => {
       mapPreferences: getMapPreferences(state),
       mapView: state.map.mapView,
       organizationFacets: state.facetParams.cmrFacets.data_center_h,
-      paramCollectionSortKey: collectionSortKeyParameterSelector(paramCollectionSortKeyFromRedux),
+      paramCollectionSortKey: collectionSortKeyParameter(state),
       platformFacets: state.facetParams.cmrFacets.platforms_h,
       portalId: state.portal.portalId,
       processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,
