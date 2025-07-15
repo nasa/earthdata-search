@@ -4,7 +4,7 @@ import {
   getPreferences,
   getMapPreferences,
   getCollectionSortPreference,
-  getCollectionSortKeyParameter
+  getCollectionSortKeyParameterSelector
 } from '../preferences'
 
 describe('getPreferences', () => {
@@ -170,7 +170,7 @@ describe('getCollectionSortPreference', () => {
   })
 })
 
-describe('getCollectionSortKeyParameter', () => {
+describe('getCollectionSortKeyParameterSelector', () => {
   beforeEach(() => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       collectionSearchResultsSortKey: '-usage_score'
@@ -190,9 +190,10 @@ describe('getCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(getCollectionSortKeyParameter(null, state)).toBeNull()
-    expect(getCollectionSortKeyParameter(undefined, state)).toBeNull()
-    expect(getCollectionSortKeyParameter('', state)).toBeNull()
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector(null)).toBeNull()
+    expect(selector(undefined)).toBeNull()
+    expect(selector('')).toBeNull()
   })
 
   test('returns the paramCollectionSortKey when it differs from user preference', () => {
@@ -204,10 +205,24 @@ describe('getCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(getCollectionSortKeyParameter('-score', state)).toEqual('-score')
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector('-score')).toEqual('-score')
   })
 
-  test('returns null when paramCollectionSortKey matches translated user preference', () => {
+  test('returns null when paramCollectionSortKey matches direct user preference', () => {
+    const state = {
+      preferences: {
+        preferences: {
+          collectionSort: '-usage_score'
+        }
+      }
+    }
+
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector('-usage_score')).toBeNull()
+  })
+
+  test('returns null when paramCollectionSortKey matches translated default user preference', () => {
     const state = {
       preferences: {
         preferences: {
@@ -216,7 +231,8 @@ describe('getCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(getCollectionSortKeyParameter('-usage_score', state)).toBeNull()
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector('-usage_score')).toBeNull()
   })
 
   test('returns null when paramCollectionSortKey matches non-default user preference', () => {
@@ -228,7 +244,8 @@ describe('getCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(getCollectionSortKeyParameter('-score', state)).toBeNull()
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector('-score')).toBeNull()
   })
 
   test('returns the paramCollectionSortKey when user has no preferences set', () => {
@@ -238,7 +255,8 @@ describe('getCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(getCollectionSortKeyParameter('-score', state)).toEqual('-score')
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector('-score')).toEqual('-score')
   })
 
   test('returns the paramCollectionSortKey when preferences are undefined', () => {
@@ -248,7 +266,8 @@ describe('getCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(getCollectionSortKeyParameter('-score', state)).toEqual('-score')
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector('-score')).toEqual('-score')
   })
 
   test('handles different default sort key configuration', () => {
@@ -264,8 +283,9 @@ describe('getCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(getCollectionSortKeyParameter('-score', state)).toBeNull()
-    expect(getCollectionSortKeyParameter('-usage_score', state)).toEqual('-usage_score')
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector('-score')).toBeNull()
+    expect(selector('-usage_score')).toEqual('-usage_score')
   })
 
   test('handles undefined collectionSort preference by defaulting to usage_score', () => {
@@ -281,7 +301,8 @@ describe('getCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(getCollectionSortKeyParameter('-usage_score', state)).toBeNull()
-    expect(getCollectionSortKeyParameter('-score', state)).toEqual('-score')
+    const selector = getCollectionSortKeyParameterSelector(state)
+    expect(selector('-usage_score')).toBeNull()
+    expect(selector('-score')).toEqual('-score')
   })
 })

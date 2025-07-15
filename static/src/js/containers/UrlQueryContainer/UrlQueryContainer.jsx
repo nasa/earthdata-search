@@ -18,7 +18,7 @@ import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getParamCollectionSortKey } from '../../selectors/query'
 import {
   getMapPreferences,
-  getCollectionSortKeyParameter
+  getCollectionSortKeyParameterSelector
 } from '../../zustand/selectors/preferences'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -72,6 +72,9 @@ export const UrlQueryContainer = (props) => {
     // Get paramCollectionSortKey from Redux state
     const paramCollectionSortKeyFromRedux = getParamCollectionSortKey(props)
 
+    // Get the selector function and apply it to the parameter
+    const collectionSortKeyParameterSelector = getCollectionSortKeyParameterSelector(state)
+
     return {
       featureFacets: state.facetParams.featureFacets,
       granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
@@ -82,7 +85,7 @@ export const UrlQueryContainer = (props) => {
       mapPreferences: getMapPreferences(state),
       mapView: state.map.mapView,
       organizationFacets: state.facetParams.cmrFacets.data_center_h,
-      paramCollectionSortKey: getCollectionSortKeyParameter(paramCollectionSortKeyFromRedux, state),
+      paramCollectionSortKey: collectionSortKeyParameterSelector(paramCollectionSortKeyFromRedux),
       platformFacets: state.facetParams.cmrFacets.platforms_h,
       portalId: state.portal.portalId,
       processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,

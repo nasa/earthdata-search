@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 import PreferencesForm from '../PreferencesForm'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -84,8 +83,7 @@ describe('PreferencesForm component', () => {
   })
 
   test('allows user to change form values', async () => {
-    const user = userEvent.setup()
-    setup()
+    const { user } = setup()
 
     const collapsedPanelOption = screen.getByLabelText('Collapsed', { selector: '[name="panelState"]' })
     expect(collapsedPanelOption).not.toBeChecked()
