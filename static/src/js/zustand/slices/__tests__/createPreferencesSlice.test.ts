@@ -338,16 +338,14 @@ describe('createPreferencesSlice', () => {
         earthdataEnvironment: mockEarthdataEnvironment
       })
 
-      let resolvePromise: (value: {
-        data: Record<string, unknown>
-        headers: Record<string, unknown>
-      }) => void = () => {}
-
-      const controlledPromise = new Promise((resolve) => {
-        resolvePromise = resolve
-      })
-
-      mockPreferencesRequestInstance.update.mockReturnValue(controlledPromise)
+      mockPreferencesRequestInstance.update.mockImplementation(
+        () => new Promise((resolve) => {
+          resolve({
+            data: { preferences: mockPreferencesData },
+            headers: {}
+          })
+        })
+      )
 
       const { submitAndUpdatePreferences } = useEdscStore.getState().preferences
 
@@ -355,11 +353,6 @@ describe('createPreferencesSlice', () => {
 
       const stateWhileSubmitting = useEdscStore.getState().preferences
       expect(stateWhileSubmitting.isSubmitting).toBe(true)
-
-      resolvePromise({
-        data: { preferences: mockPreferencesData },
-        headers: {}
-      })
 
       await submitPromise
 

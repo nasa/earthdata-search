@@ -15,10 +15,9 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import { getParamCollectionSortKey } from '../../selectors/query'
 import {
   getMapPreferences,
-  createCollectionSortKeyParameter
+  getCollectionSortKeyParameter
 } from '../../zustand/selectors/preferences'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -68,35 +67,27 @@ export const UrlQueryContainer = (props) => {
   const [currentPath, setCurrentPath] = useState('')
   const previousSearch = useRef(search)
 
-  const paramCollectionSortKeyFromRedux = getParamCollectionSortKey(props)
-
-  const zustandValues = useEdscStore((state) => {
-    const collectionSortKeyParameter = createCollectionSortKeyParameter(
-      paramCollectionSortKeyFromRedux
-    )
-
-    return {
-      featureFacets: state.facetParams.featureFacets,
-      granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
-      horizontalDataResolutionRangeFacets:
-        state.facetParams.cmrFacets.horizontal_data_resolution_range,
-      instrumentFacets: state.facetParams.cmrFacets.instrument_h,
-      latency: state.facetParams.cmrFacets.latency,
-      mapPreferences: getMapPreferences(state),
-      mapView: state.map.mapView,
-      organizationFacets: state.facetParams.cmrFacets.data_center_h,
-      paramCollectionSortKey: collectionSortKeyParameter(state),
-      platformFacets: state.facetParams.cmrFacets.platforms_h,
-      portalId: state.portal.portalId,
-      processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,
-      projectFacets: state.facetParams.cmrFacets.project_h,
-      scienceKeywordFacets: state.facetParams.cmrFacets.science_keywords_h,
-      selectedFeatures: state.shapefile.selectedFeatures,
-      shapefileId: state.shapefile.shapefileId,
-      timelineQuery: state.timeline.query,
-      twoDCoordinateSystemNameFacets: state.facetParams.cmrFacets.two_d_coordinate_system_name
-    }
-  })
+  const zustandValues = useEdscStore((state) => ({
+    featureFacets: state.facetParams.featureFacets,
+    granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
+    horizontalDataResolutionRangeFacets:
+      state.facetParams.cmrFacets.horizontal_data_resolution_range,
+    instrumentFacets: state.facetParams.cmrFacets.instrument_h,
+    latency: state.facetParams.cmrFacets.latency,
+    mapPreferences: getMapPreferences(state),
+    mapView: state.map.mapView,
+    organizationFacets: state.facetParams.cmrFacets.data_center_h,
+    paramCollectionSortKey: getCollectionSortKeyParameter(state),
+    platformFacets: state.facetParams.cmrFacets.platforms_h,
+    portalId: state.portal.portalId,
+    processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,
+    projectFacets: state.facetParams.cmrFacets.project_h,
+    scienceKeywordFacets: state.facetParams.cmrFacets.science_keywords_h,
+    selectedFeatures: state.shapefile.selectedFeatures,
+    shapefileId: state.shapefile.shapefileId,
+    timelineQuery: state.timeline.query,
+    twoDCoordinateSystemNameFacets: state.facetParams.cmrFacets.two_d_coordinate_system_name
+  }))
 
   useEffect(() => {
     onChangePath([pathname, search].filter(Boolean).join(''))

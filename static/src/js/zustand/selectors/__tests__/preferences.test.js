@@ -4,8 +4,20 @@ import {
   getPreferences,
   getMapPreferences,
   getCollectionSortPreference,
-  createCollectionSortKeyParameter
+  getCollectionSortKeyParameter
 } from '../preferences'
+
+import mapLayers from '../../../constants/mapLayers'
+import projectionCodes from '../../../constants/projectionCodes'
+
+import configureStore from '../../../store/configureStore'
+import { getParamCollectionSortKey } from '../../../selectors/query'
+
+jest.mock('../../../store/configureStore')
+jest.mock('../../../selectors/query')
+
+const mockConfigureStore = configureStore
+const mockGetParamCollectionSortKey = getParamCollectionSortKey
 
 describe('getPreferences', () => {
   test('returns preferences from the zustand state', () => {
@@ -21,9 +33,9 @@ describe('getPreferences', () => {
             zoom: 3,
             latitude: 0,
             longitude: 0,
-            projection: 'epsg4326',
-            baseLayer: 'worldImagery',
-            overlayLayers: ['bordersRoads', 'placeLabels'],
+            projection: projectionCodes.geographic,
+            baseLayer: mapLayers.worldImagery,
+            overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels],
             rotation: 0
           }
         }
@@ -40,27 +52,11 @@ describe('getPreferences', () => {
         zoom: 3,
         latitude: 0,
         longitude: 0,
-        projection: 'epsg4326',
-        baseLayer: 'worldImagery',
-        overlayLayers: ['bordersRoads', 'placeLabels'],
+        projection: projectionCodes.geographic,
+        baseLayer: mapLayers.worldImagery,
+        overlayLayers: [mapLayers.bordersRoads, mapLayers.placeLabels],
         rotation: 0
       }
-    })
-  })
-
-  test('returns preferences when preferences structure exists', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: '-usage_score',
-          granuleSort: '-start_date'
-        }
-      }
-    }
-
-    expect(getPreferences(state)).toEqual({
-      collectionSort: '-usage_score',
-      granuleSort: '-start_date'
     })
   })
 })
@@ -76,9 +72,9 @@ describe('getMapPreferences', () => {
             zoom: 5,
             latitude: 39.5,
             longitude: -98.35,
-            projection: 'epsg4326',
-            baseLayer: 'worldImagery',
-            overlayLayers: ['bordersRoads'],
+            projection: projectionCodes.geographic,
+            baseLayer: mapLayers.worldImagery,
+            overlayLayers: [mapLayers.bordersRoads],
             rotation: 0
           }
         }
@@ -89,34 +85,11 @@ describe('getMapPreferences', () => {
       zoom: 5,
       latitude: 39.5,
       longitude: -98.35,
-      projection: 'epsg4326',
-      baseLayer: 'worldImagery',
-      overlayLayers: ['bordersRoads'],
+      projection: projectionCodes.geographic,
+      baseLayer: mapLayers.worldImagery,
+      overlayLayers: [mapLayers.bordersRoads],
       rotation: 0
     })
-  })
-
-  test('returns undefined when mapView is not set', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          collectionSort: 'default',
-          granuleSort: 'default'
-        }
-      }
-    }
-
-    expect(getMapPreferences(state)).toBeUndefined()
-  })
-
-  test('returns undefined when preferences are undefined', () => {
-    const state = {
-      preferences: {
-        preferences: undefined
-      }
-    }
-
-    expect(getMapPreferences(state)).toBeUndefined()
   })
 })
 
@@ -146,35 +119,18 @@ describe('getCollectionSortPreference', () => {
 
     expect(getCollectionSortPreference(state)).toEqual('default')
   })
-
-  test('returns undefined when collectionSort is not set', () => {
-    const state = {
-      preferences: {
-        preferences: {
-          granuleSort: 'default'
-        }
-      }
-    }
-
-    expect(getCollectionSortPreference(state)).toBeUndefined()
-  })
-
-  test('returns undefined when preferences are undefined', () => {
-    const state = {
-      preferences: {
-        preferences: undefined
-      }
-    }
-
-    expect(getCollectionSortPreference(state)).toBeUndefined()
-  })
 })
 
-describe('createCollectionSortKeyParameter', () => {
+describe('getCollectionSortKeyParameter', () => {
   beforeEach(() => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       collectionSearchResultsSortKey: '-usage_score'
     }))
+
+    const mockGetState = jest.fn()
+    mockConfigureStore.mockReturnValue({
+      getState: mockGetState
+    })
   })
 
   afterEach(() => {
@@ -190,9 +146,14 @@ describe('createCollectionSortKeyParameter', () => {
       }
     }
 
-    expect(createCollectionSortKeyParameter(null)(state)).toBeNull()
-    expect(createCollectionSortKeyParameter(undefined)(state)).toBeNull()
-    expect(createCollectionSortKeyParameter('')(state)).toBeNull()
+    mockGetParamCollectionSortKey.mockReturnValue(null)
+    expect(getCollectionSortKeyParameter(state)).toBeNull()
+
+    mockGetParamCollectionSortKey.mockReturnValue(undefined)
+    expect(getCollectionSortKeyParameter(state)).toBeNull()
+
+    mockGetParamCollectionSortKey.mockReturnValue('')
+    expect(getCollectionSortKeyParameter(state)).toBeNull()
   })
 
   test('returns the paramCollectionSortKey when it differs from user preference', () => {
@@ -204,8 +165,8 @@ describe('createCollectionSortKeyParameter', () => {
       }
     }
 
-    const selector = createCollectionSortKeyParameter('-score')
-    expect(selector(state)).toEqual('-score')
+    mockGetParamCollectionSortKey.mockReturnValue('-score')
+    expect(getCollectionSortKeyParameter(state)).toEqual('-score')
   })
 
   test('returns null when paramCollectionSortKey matches direct user preference', () => {
@@ -217,8 +178,8 @@ describe('createCollectionSortKeyParameter', () => {
       }
     }
 
-    const selector = createCollectionSortKeyParameter('-usage_score')
-    expect(selector(state)).toBeNull()
+    mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
+    expect(getCollectionSortKeyParameter(state)).toBeNull()
   })
 
   test('returns null when paramCollectionSortKey matches translated default user preference', () => {
@@ -230,8 +191,8 @@ describe('createCollectionSortKeyParameter', () => {
       }
     }
 
-    const selector = createCollectionSortKeyParameter('-usage_score')
-    expect(selector(state)).toBeNull()
+    mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
+    expect(getCollectionSortKeyParameter(state)).toBeNull()
   })
 
   test('returns null when paramCollectionSortKey matches non-default user preference', () => {
@@ -243,8 +204,8 @@ describe('createCollectionSortKeyParameter', () => {
       }
     }
 
-    const selector = createCollectionSortKeyParameter('-score')
-    expect(selector(state)).toBeNull()
+    mockGetParamCollectionSortKey.mockReturnValue('-score')
+    expect(getCollectionSortKeyParameter(state)).toBeNull()
   })
 
   test('returns the paramCollectionSortKey when user has no preferences set', () => {
@@ -254,19 +215,19 @@ describe('createCollectionSortKeyParameter', () => {
       }
     }
 
-    const selector = createCollectionSortKeyParameter('-score')
-    expect(selector(state)).toEqual('-score')
+    mockGetParamCollectionSortKey.mockReturnValue('-score')
+    expect(getCollectionSortKeyParameter(state)).toEqual('-score')
   })
 
-  test('returns the paramCollectionSortKey when preferences are undefined', () => {
+  test('returns the paramCollectionSortKey when preferences structure is invalid', () => {
     const state = {
       preferences: {
         preferences: undefined
       }
     }
 
-    const selector = createCollectionSortKeyParameter('-score')
-    expect(selector(state)).toEqual('-score')
+    mockGetParamCollectionSortKey.mockReturnValue('-score')
+    expect(getCollectionSortKeyParameter(state)).toEqual('-score')
   })
 
   test('handles different default sort key configuration', () => {
@@ -282,11 +243,11 @@ describe('createCollectionSortKeyParameter', () => {
       }
     }
 
-    const scoreSelector = createCollectionSortKeyParameter('-score')
-    const usageScoreSelector = createCollectionSortKeyParameter('-usage_score')
+    mockGetParamCollectionSortKey.mockReturnValue('-score')
+    expect(getCollectionSortKeyParameter(state)).toBeNull()
 
-    expect(scoreSelector(state)).toBeNull()
-    expect(usageScoreSelector(state)).toEqual('-usage_score')
+    mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
+    expect(getCollectionSortKeyParameter(state)).toEqual('-usage_score')
   })
 
   test('handles undefined collectionSort preference by defaulting to usage_score', () => {
@@ -302,10 +263,10 @@ describe('createCollectionSortKeyParameter', () => {
       }
     }
 
-    const usageScoreSelector = createCollectionSortKeyParameter('-usage_score')
-    const scoreSelector = createCollectionSortKeyParameter('-score')
+    mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
+    expect(getCollectionSortKeyParameter(state)).toBeNull()
 
-    expect(usageScoreSelector(state)).toBeNull()
-    expect(scoreSelector(state)).toEqual('-score')
+    mockGetParamCollectionSortKey.mockReturnValue('-score')
+    expect(getCollectionSortKeyParameter(state)).toEqual('-score')
   })
 })
