@@ -903,6 +903,7 @@ export class Functions extends Construct {
       functionNamePrefix
     })
 
+    // TODO Going to try and use this stack for the new endpoint and create a new one for the proxy "GraphQlProxyNestedStack".
     /**
      * GraphQL
      */
@@ -913,12 +914,35 @@ export class Functions extends Construct {
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
-        authorizer: authorizers.edlOptionalAuthorizer,
-        methods: ['POST'],
+        // TODO use the optional authorizer, with graphql-shield to protect the admin queries. Need to check the token and user against to make sure they can see the page. Look at cmr-ordering
+        // authorizer: authorizers.edlOptionalAuthorizer,
+        // TODO check if we need to do GET and POST here
+        // TODO Look at disabling introspection
+        // TODO Try to deploy this to SIT once we have the endpoint swapped
+        methods: ['GET', 'POST'],
         path: 'graphql'
       },
       entry: '../../serverless/src/graphQl/handler.js',
       functionName: 'graphql',
+      functionNamePrefix
+    })
+
+    /**
+     * CMR GraphQL Proxy
+     */
+    const cmrGraphQlProxyNestedStack = new cdk.NestedStack(scope, 'CmrGraphQlProxyNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(cmrGraphQlProxyNestedStack, 'GraphQlLambda', {
+      ...defaultLambdaConfig,
+      api: {
+        apiGatewayDeployment,
+        apiGatewayRestApi,
+        authorizer: authorizers.edlOptionalAuthorizer,
+        methods: ['POST'],
+        path: 'cmr-graphql-proxy'
+      },
+      entry: '../../serverless/src/cmrGraphQlProxy/handler.js',
+      functionName: 'cmrGraphQlProxy',
       functionNamePrefix
     })
 
