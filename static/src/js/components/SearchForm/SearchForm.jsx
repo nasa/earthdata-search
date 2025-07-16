@@ -37,7 +37,6 @@ class SearchForm extends Component {
     }
 
     this.inputRef = React.createRef()
-    this.autocompleteRef = React.createRef()
     this.keyboardShortcuts = {
       focusSearchInput: '/'
     }
@@ -200,7 +199,7 @@ class SearchForm extends Component {
       <section className="search-form">
         <div className="search-form__primary">
           <SearchAutocomplete
-            ref={this.autocompleteRef}
+            ref={this.inputRef}
             keywordSearch={keywordSearch}
             keywordSearchFromProps={keywordSearchFromProps}
             selectedSuggestion={selectedSuggestion}

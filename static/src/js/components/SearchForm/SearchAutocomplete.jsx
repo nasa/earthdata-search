@@ -90,8 +90,6 @@ class SearchAutocomplete extends Component {
       selected: []
     }
 
-    this.inputRef = React.createRef()
-
     // Bind methods
     this.fetchAutocomplete = this.fetchAutocomplete.bind(this)
     this.clearAutocompleteSuggestions = this.clearAutocompleteSuggestions.bind(this)
@@ -145,9 +143,6 @@ class SearchAutocomplete extends Component {
     })
   }
 
-  /**
-   * Clears autocomplete suggestions
-   */
   clearAutocompleteSuggestions() {
     this.setState({
       isLoaded: false,
@@ -155,10 +150,6 @@ class SearchAutocomplete extends Component {
     })
   }
 
-  /**
-   * Updates autocomplete suggestions with filtering
-   * @param {Object} payload Contains params and suggestions
-   */
   updateAutocompleteSuggestions(payload) {
     const { suggestions } = payload
     const { selected } = this.state
@@ -175,10 +166,6 @@ class SearchAutocomplete extends Component {
     })
   }
 
-  /**
-   * Fetches autocomplete suggestions
-   * @param {Object} data Object with 'value' property
-   */
   async fetchAutocomplete(data) {
     if (!data) return
 
@@ -269,7 +256,7 @@ class SearchAutocomplete extends Component {
       }
     })
 
-    // Call the parent's callback to clear the local state (this does not exist) create it
+    // Call the parent's callback to clear the local state
     if (onSuggestionSelected) {
       onSuggestionSelected()
     }
