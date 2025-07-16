@@ -257,4 +257,29 @@ describe('regionSearch', () => {
       errors: ['Cras justo odio, dapibus ac facilisis in, egestas eget quam.']
     }))
   })
+
+  test('returns error when a page not found is encountered', async () => {
+    nock(/region/)
+      .get(/huc/)
+      .reply(200, "<!doctype html><html><head><title>Page not found</title></head></html>")
+
+    const regionResponse = await regionSearch({
+      queryStringParameters: {
+        endpoint: 'hucs',
+        exact: false,
+        query: 'two'
+      }
+    })
+
+    const {
+      body,
+      statusCode
+    } = regionResponse
+
+    expect(statusCode).toBe(500)
+    expect(body).toBe(JSON.stringify({
+      statusCode: 500,
+      errors: ['Unknown Error']
+    }))
+  })
 })
