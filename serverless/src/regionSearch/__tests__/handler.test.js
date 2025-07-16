@@ -261,7 +261,7 @@ describe('regionSearch', () => {
   test('returns error when a page not found is encountered', async () => {
     nock(/region/)
       .get(/huc/)
-      .reply(200, "<!doctype html><html><head><title>Page not found</title></head></html>")
+      .reply(200, '<!doctype html><html><head><title>Page not found</title></head></html>')
 
     const regionResponse = await regionSearch({
       queryStringParameters: {
