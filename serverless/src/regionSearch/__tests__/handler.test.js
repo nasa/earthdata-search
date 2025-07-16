@@ -261,7 +261,9 @@ describe('regionSearch', () => {
   test('returns error when a page not found is encountered', async () => {
     nock(/region/)
       .get(/huc/)
-      .reply(200, '<!doctype html><html><head><title>Page not found</title></head></html>')
+      .reply(200, '<!doctype html><html><head><title>Page not found</title></head></html>', {
+        'Content-Type': 'text/html'
+      })
 
     const regionResponse = await regionSearch({
       queryStringParameters: {
@@ -279,7 +281,7 @@ describe('regionSearch', () => {
     expect(statusCode).toBe(500)
     expect(body).toBe(JSON.stringify({
       statusCode: 500,
-      errors: ['Unknown Error']
+      errors: ['Error: Not Found']
     }))
   })
 })

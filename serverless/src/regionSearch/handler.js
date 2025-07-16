@@ -42,7 +42,7 @@ const regionSearch = async (event) => {
       && contentType.includes('text/html')
       && /page not found/i.test(responseBody)
     ) {
-      throw new Error('Received 200 OK with HTML "Page not found" message')
+      throw new Error('Not Found')
     }
 
     const {
