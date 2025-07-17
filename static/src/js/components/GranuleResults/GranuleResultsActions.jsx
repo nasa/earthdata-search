@@ -24,7 +24,10 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './GranuleResultsActions.scss'
+
 /**
  * Renders GranuleResultsActions.
  * @param {Object} props - The props passed into the component.
@@ -34,10 +37,8 @@ import './GranuleResultsActions.scss'
  * @param {Boolean} props.initialLoading - Flag designating the initial loading state.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Object} props.location - The location from the store.
- * @param {Function} props.onAddProjectCollection - Callback to add the collection from the project.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {Function} props.onChangePath - Callback to change the path.
- * @param {Function} props.onRemoveCollectionFromProject - Callback to remove the collection from the project.
  */
 const GranuleResultsActions = ({
   authToken,
@@ -50,22 +51,28 @@ const GranuleResultsActions = ({
   initialLoading,
   isCollectionInProject,
   location,
-  onAddProjectCollection,
   onMetricsAddCollectionProject,
   onChangePath,
-  onRemoveCollectionFromProject,
   projectGranuleCount,
   removedGranuleIds,
   searchGranuleCount,
   subscriptions
 }) => {
+  const {
+    addProjectCollection,
+    removeProjectCollection
+  } = useEdscStore((state) => ({
+    addProjectCollection: state.project.addProjectCollection,
+    removeProjectCollection: state.project.removeProjectCollection
+  }))
+
   const granuleResultsActionsContainer = useRef(null)
   const addToProjectButton = (
     <Button
       className="granule-results-actions__action granule-results-actions__action--add"
       onClick={
         () => {
-          onAddProjectCollection(focusedCollectionId)
+          addProjectCollection(focusedCollectionId)
           onMetricsAddCollectionProject({
             collectionConceptId: focusedCollectionId,
             page: 'granules',
@@ -85,7 +92,7 @@ const GranuleResultsActions = ({
     <Button
       className="granule-results-actions__action granule-results-actions__action--remove"
       dataTestId="granule-results-actions__proj-action--remove"
-      onClick={() => onRemoveCollectionFromProject(focusedCollectionId)}
+      onClick={() => removeProjectCollection(focusedCollectionId)}
       icon={FaFolderMinus}
       label="Remove collection from the current project"
       title="Remove collection from the current project"
@@ -141,7 +148,6 @@ const GranuleResultsActions = ({
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
       location={location}
-      onAddProjectCollection={onAddProjectCollection}
       onChangePath={onChangePath}
       projectCollection={focusedProjectCollection}
       tooManyGranules={tooManyGranules}
@@ -253,9 +259,7 @@ GranuleResultsActions.propTypes = {
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   location: locationPropType.isRequired,
-  onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   projectGranuleCount: PropTypes.number,
   removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,

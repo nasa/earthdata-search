@@ -1,125 +1,163 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import CollectionResultsTable from '../CollectionResultsTable'
 import EDSCTable from '../../EDSCTable/EDSCTable'
 import { collectionData } from './mocks'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCTable/EDSCTable', () => jest.fn(() => <div />))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: CollectionResultsTable,
+  defaultProps: {
     collectionsMetadata: collectionData,
     isItemLoaded: jest.fn(),
     itemCount: 1,
     loadMoreItems: jest.fn(),
-    onAddProjectCollection: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
-    visibleMiddleIndex: 1,
-    ...overrideProps
+    visibleMiddleIndex: 1
   }
-
-  const enzymeWrapper = shallow(<CollectionResultsTable {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('CollectionResultsTable component', () => {
   test('renders EDSCTable', () => {
-    const { enzymeWrapper, props } = setup()
-    const table = enzymeWrapper.find(EDSCTable)
+    setup()
 
-    const { columns } = table.props()
-    expect(columns[0]).toEqual(expect.objectContaining({
-      Header: 'Collection',
-      accessor: 'datasetId'
-    }))
-
-    expect(columns[1]).toEqual(expect.objectContaining({
-      Header: 'Version',
-      accessor: 'versionId'
-    }))
-
-    expect(columns[2]).toEqual(expect.objectContaining({
-      Header: 'Start',
-      accessor: 'temporalStart'
-    }))
-
-    expect(columns[3]).toEqual(expect.objectContaining({
-      Header: 'End',
-      accessor: 'temporalEnd'
-    }))
-
-    expect(columns[4]).toEqual(expect.objectContaining({
-      Header: 'Granules',
-      accessor: 'granuleCount'
-    }))
-
-    expect(columns[5]).toEqual(expect.objectContaining({
-      Header: 'Provider',
-      accessor: 'displayOrganization'
-    }))
-
-    expect(columns[6]).toEqual(expect.objectContaining({
-      Header: 'Short Name',
-      accessor: 'shortName'
-    }))
-
-    expect(columns[7]).toEqual(expect.objectContaining({
-      accessor: 'cloudHosted'
-    }))
-
-    expect(columns[8]).toEqual(expect.objectContaining({
-      accessor: 'hasMapImagery'
-    }))
-
-    expect(columns[9]).toEqual(expect.objectContaining({
-      accessor: 'isNrt'
-    }))
-
-    expect(columns[10]).toEqual(expect.objectContaining({
-      Header: 'Spatial Subsetting',
-      accessor: 'hasSpatialSubsetting'
-    }))
-
-    expect(columns[11]).toEqual(expect.objectContaining({
-      Header: 'Temporal Subsetting',
-      accessor: 'hasTemporalSubsetting'
-    }))
-
-    expect(columns[12]).toEqual(expect.objectContaining({
-      Header: 'Variable Subsetting',
-      accessor: 'hasVariables'
-    }))
-
-    expect(columns[13]).toEqual(expect.objectContaining({
-      Header: 'Transformation',
-      accessor: 'hasTransforms'
-    }))
-
-    expect(columns[14]).toEqual(expect.objectContaining({
-      Header: 'Reformatting',
-      accessor: 'hasFormats'
-    }))
-
-    expect(columns[15]).toEqual(expect.objectContaining({
-      Header: 'Combine',
-      accessor: 'hasCombine'
-    }))
-
-    expect(table.props().data).toEqual(collectionData)
-    expect(table.props().itemCount).toEqual(props.itemCount)
-    expect(table.props().loadMoreItems).toEqual(props.loadMoreItems)
-    expect(table.props().isItemLoaded).toEqual(props.isItemLoaded)
-    expect(table.props().visibleMiddleIndex).toEqual(props.visibleMiddleIndex)
-    expect(table.props().setVisibleMiddleIndex).toEqual(props.setVisibleMiddleIndex)
+    expect(EDSCTable).toHaveBeenCalledTimes(1)
+    expect(EDSCTable).toHaveBeenCalledWith({
+      id: 'collection-results-table',
+      rowTestId: 'collection-results-table__item',
+      visibleMiddleIndex: 1,
+      columns: [
+        {
+          Header: 'Collection',
+          Cell: expect.any(Function),
+          accessor: 'datasetId',
+          sticky: 'left',
+          width: '300',
+          customProps: {
+            cellClassName: 'collection-results-table__cell--collection',
+            collectionId: '1234',
+            onViewCollectionGranules: expect.any(Function),
+            onMetricsAddCollectionProject: expect.any(Function),
+            onViewCollectionDetails: expect.any(Function)
+          }
+        },
+        {
+          Header: 'Version',
+          Cell: expect.any(Function),
+          accessor: 'versionId',
+          width: '100',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Start',
+          Cell: expect.any(Function),
+          accessor: 'temporalStart',
+          width: '100',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'End',
+          Cell: expect.any(Function),
+          accessor: 'temporalEnd',
+          width: '100',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Granules',
+          Cell: expect.any(Function),
+          accessor: 'granuleCount',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Provider',
+          Cell: expect.any(Function),
+          accessor: 'displayOrganization',
+          width: '150',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Short Name',
+          Cell: expect.any(Function),
+          accessor: 'shortName',
+          width: '150',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: expect.any(Function),
+          Cell: expect.any(Function),
+          accessor: 'cloudHosted',
+          width: '130',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: expect.any(Function),
+          Cell: expect.any(Function),
+          accessor: 'hasMapImagery',
+          width: '110',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: expect.any(Function),
+          Cell: expect.any(Function),
+          accessor: 'isNrt',
+          width: '120',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Spatial Subsetting',
+          Cell: expect.any(Function),
+          accessor: 'hasSpatialSubsetting',
+          width: '130',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Temporal Subsetting',
+          Cell: expect.any(Function),
+          accessor: 'hasTemporalSubsetting',
+          width: '140',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Variable Subsetting',
+          Cell: expect.any(Function),
+          accessor: 'hasVariables',
+          width: '130',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Transformation',
+          Cell: expect.any(Function),
+          accessor: 'hasTransforms',
+          width: '120',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Reformatting',
+          Cell: expect.any(Function),
+          accessor: 'hasFormats',
+          width: '120',
+          customProps: { centerContent: true }
+        },
+        {
+          Header: 'Combine',
+          Cell: expect.any(Function),
+          accessor: 'hasCombine',
+          width: '120',
+          customProps: { centerContent: true }
+        }
+      ],
+      data: collectionData,
+      itemCount: 1,
+      loadMoreItems: expect.any(Function),
+      isItemLoaded: expect.any(Function),
+      setVisibleMiddleIndex: expect.any(Function),
+      striped: true
+    }, {})
   })
 })

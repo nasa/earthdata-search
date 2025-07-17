@@ -29,6 +29,8 @@ import MoreActionsDropdown from '../MoreActionsDropdown/MoreActionsDropdown'
 import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownItem'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './GranuleResultsItem.scss'
 
 /**
@@ -62,15 +64,20 @@ const GranuleResultsItem = forwardRef(({
   isCollectionInProject,
   isGranuleInProject,
   location,
-  onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsDataAccess,
   onMetricsAddGranuleProject,
   onGenerateNotebook,
-  onRemoveGranuleFromProjectCollection,
   readableGranuleName
 }, ref) => {
+  const {
+    addGranuleToProjectCollection,
+    removeGranuleFromProjectCollection
+  } = useEdscStore((state) => ({
+    addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
+    removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection
+  }))
   const generateNotebookTag = getValueForTag('notebook_generation', collectionTags)
   const { thumbnailSize } = getApplicationConfig()
   const {
@@ -196,7 +203,6 @@ const GranuleResultsItem = forwardRef(({
       ref={ref}
       role="button"
       tabIndex={0}
-      // eslint-disable-next-line react/jsx-props-no-spreading
     >
       <header
         className="granule-results-item__header"
@@ -263,7 +269,7 @@ const GranuleResultsItem = forwardRef(({
                         disabled={isOpenSearch}
                         onClick={
                           (event) => {
-                            onAddGranuleToProjectCollection({
+                            addGranuleToProjectCollection({
                               collectionId,
                               granuleId: id
                             })
@@ -291,7 +297,7 @@ const GranuleResultsItem = forwardRef(({
                         ariaLabel="Remove granule from project"
                         onClick={
                           (event) => {
-                            onRemoveGranuleFromProjectCollection({
+                            removeGranuleFromProjectCollection({
                               collectionId,
                               granuleId: id
                             })
@@ -370,13 +376,11 @@ GranuleResultsItem.propTypes = {
   isCollectionInProject: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
   location: locationPropType.isRequired,
-  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired
 }
 

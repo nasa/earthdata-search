@@ -4,6 +4,7 @@ import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig, getEarthdataConfig } from '../../../../sharedUtils/config'
 import { withAdvancedSearch } from './withAdvancedSearch'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
+import useEdscStore from '../zustand/useEdscStore'
 
 /**
  * Populate granule payload used to update the store
@@ -137,9 +138,7 @@ export const extractGranuleSearchParams = (state, collectionId) => {
  * @param {String} collectionId The collection id the user has requested to view granules for
  */
 export const extractProjectCollectionGranuleParams = (state, collectionId) => {
-  const {
-    project
-  } = state
+  const { project } = useEdscStore.getState()
 
   const { collections } = project
   const { byId } = collections

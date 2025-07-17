@@ -1,20 +1,21 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen } from '@testing-library/react'
 
-import Button from '../../Button/Button'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import ProjectCollections from '../ProjectCollections'
 import ProjectCollectionsList from '../ProjectCollectionsList'
 import ProjectHeader from '../ProjectHeader'
 
 import * as isProjectValid from '../../../util/isProjectValid'
 import { validAccessMethod } from '../../../util/accessMethods'
-import projectionCodes from '../../../constants/projectionCodes'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../ProjectCollectionsList', () => jest.fn(() => <div />))
+jest.mock('../ProjectHeader', () => jest.fn(() => <div />))
 
-function setup(overrideProps = {}) {
-  const props = {
+const setup = setupTest({
+  Component: ProjectCollections,
+  defaultProps: {
     collectionsQuery: {
       byId: {
         collectionId1: {
@@ -26,9 +27,36 @@ function setup(overrideProps = {}) {
       },
       pageNum: 1
     },
-    map: {
-      projection: projectionCodes.geographic
+    panels: {
+      activePanel: '0.0.0',
+      isOpen: false
     },
+    savedProject: {
+      projectId: 1,
+      name: 'test name'
+    },
+    onMetricsDataAccess: jest.fn(),
+    onTogglePanels: jest.fn(),
+    onSetActivePanel: jest.fn(),
+    onUpdateProjectName: jest.fn(),
+    onSetActivePanelSection: jest.fn(),
+    onUpdateFocusedCollection: jest.fn(),
+    onViewCollectionDetails: jest.fn(),
+    onViewCollectionGranules: jest.fn()
+  },
+  defaultReduxState: {
+    metadata: {
+      collections: {
+        collectionId1: {
+          mock: 'data 1'
+        },
+        collectionId2: {
+          mock: 'data 2'
+        }
+      }
+    }
+  },
+  defaultZustandState: {
     project: {
       collections: {
         allIds: ['collectionId1', 'collectionId2'],
@@ -46,113 +74,65 @@ function setup(overrideProps = {}) {
             }
           }
         }
-      }
-    },
-    projectCollectionsMetadata: {
-      collectionId1: {
-        mock: 'data 1'
       },
-      collectionId2: {
-        mock: 'data 2'
-      }
-    },
-    projectCollectionsIds: ['collectionId1', 'collectionId2'],
-    panels: {
-      activePanel: '0.0.0',
-      isOpen: false
-    },
-    savedProject: {
-      projectId: 1,
-      name: 'test name'
-    },
-    onMetricsDataAccess: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
-    onTogglePanels: jest.fn(),
-    onSetActivePanel: jest.fn(),
-    onToggleCollectionVisibility: jest.fn(),
-    onUpdateProjectName: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
-    onUpdateFocusedCollection: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<ProjectCollections {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+      isSubmitting: false,
+      getProjectGranules: jest.fn(),
+      removeProjectCollection: jest.fn(),
+      toggleCollectionVisibility: jest.fn()
+    }
+  },
+  withRedux: true
+})
 
 describe('ProjectCollectionsList component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper, props } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(ProjectHeader).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectHeader).props().collectionsQuery)
-      .toEqual(props.collectionsQuery)
-
-    expect(enzymeWrapper.find(ProjectHeader).props().project).toEqual({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
+    expect(ProjectHeader).toHaveBeenCalledTimes(1)
+    expect(ProjectHeader).toHaveBeenCalledWith({
+      collectionsQuery: {
         byId: {
-          collectionId1: {
-            isValid: false,
-            granules: {
-              hits: 1
-            }
-          },
-          collectionId2: {
-            isValid: false,
-            granules: {
-              hits: 1
-            }
-          }
-        }
-      }
-    })
-
-    expect(enzymeWrapper.find(ProjectHeader).props().savedProject).toEqual({
-      projectId: 1,
-      name: 'test name'
-    })
-
-    expect(enzymeWrapper.find(ProjectCollectionsList).length).toBe(1)
-    expect(enzymeWrapper.find(ProjectCollectionsList).props().collectionsMetadata).toEqual({
-      collectionId1: {
-        mock: 'data 1'
+          collectionId1: { granules: {} },
+          collectionId2: { granules: {} }
+        },
+        pageNum: 1
       },
-      collectionId2: {
-        mock: 'data 2'
+      onUpdateProjectName: expect.any(Function),
+      savedProject: {
+        name: 'test name',
+        projectId: 1
       }
-    })
+    }, {})
 
-    expect(enzymeWrapper.find(ProjectCollectionsList).props().project).toEqual({
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
+    expect(ProjectCollectionsList).toHaveBeenCalledTimes(1)
+    expect(ProjectCollectionsList).toHaveBeenCalledWith({
+      collectionsMetadata: {
+        collectionId1: { mock: 'data 1' },
+        collectionId2: { mock: 'data 2' }
+      },
+      collectionsQuery: {
         byId: {
-          collectionId1: {
-            isValid: false,
-            granules: {
-              hits: 1
-            }
-          },
-          collectionId2: {
-            isValid: false,
-            granules: {
-              hits: 1
-            }
-          }
-        }
+          collectionId1: { granules: {} },
+          collectionId2: { granules: {} }
+        },
+        pageNum: 1
+      },
+      onMetricsDataAccess: expect.any(Function),
+      onSetActivePanel: expect.any(Function),
+      onSetActivePanelSection: expect.any(Function),
+      onTogglePanels: expect.any(Function),
+      onUpdateFocusedCollection: expect.any(Function),
+      onViewCollectionDetails: expect.any(Function),
+      onViewCollectionGranules: expect.any(Function),
+      panels: {
+        activePanel: '0.0.0',
+        isOpen: false
       }
-    })
+    }, {})
 
-    expect(enzymeWrapper.find(ProjectCollectionsList).props().onMetricsDataAccess)
-      .toEqual(props.onMetricsDataAccess)
-
-    expect(enzymeWrapper.find('.project-collections__footer').length).toBe(1)
+    const downloadButton = screen.getByRole('button', { name: 'Download project data' })
+    expect(downloadButton).toBeInTheDocument()
+    expect(downloadButton).toHaveAttribute('disabled')
   })
 
   describe('help text', () => {
@@ -162,11 +142,11 @@ describe('ProjectCollectionsList component', () => {
           ...validAccessMethod
         }))
 
-        const { enzymeWrapper } = setup()
+        setup()
 
-        const message = enzymeWrapper.find('.project-collections__footer-message')
+        const message = screen.getByText(`Click ${String.fromCharCode(8220)}Edit Options${String.fromCharCode(8221)} above to customize the output for each project.`)
 
-        expect(message.text()).toEqual(`Click ${String.fromCharCode(8220)}Edit Options${String.fromCharCode(8221)} above to customize the output for each project.`)
+        expect(message).toBeInTheDocument()
       })
     })
 
@@ -177,11 +157,11 @@ describe('ProjectCollectionsList component', () => {
           valid: false
         }))
 
-        const { enzymeWrapper } = setup()
+        setup()
 
-        const message = enzymeWrapper.find('.project-collections__footer-message')
+        const message = screen.getByText('Select a data access method for each collection in your project before downloading.')
 
-        expect(message.text()).toEqual('Select a data access method for each collection in your project before downloading.')
+        expect(message).toBeInTheDocument()
       })
     })
 
@@ -193,11 +173,11 @@ describe('ProjectCollectionsList component', () => {
           needsCustomization: true
         }))
 
-        const { enzymeWrapper } = setup()
+        setup()
 
-        const message = enzymeWrapper.find('.project-collections__footer-message')
+        const message = screen.getByText('One or more collections in your project have an access method selected that requires customization options. Please select a customization option or choose a different access method.')
 
-        expect(message.text()).toEqual('One or more collections in your project have an access method selected that requires customization options. Please select a customization option or choose a different access method.')
+        expect(message).toBeInTheDocument()
       })
     })
 
@@ -209,11 +189,11 @@ describe('ProjectCollectionsList component', () => {
           tooManyGranules: true
         }))
 
-        const { enzymeWrapper } = setup()
+        setup()
 
-        const message = enzymeWrapper.find('.project-collections__footer-message')
+        const message = screen.getByText('One or more collections in your project contains too many granules. Adjust temporal constraints or remove the collections before downloading.')
 
-        expect(message.text()).toEqual('One or more collections in your project contains too many granules. Adjust temporal constraints or remove the collections before downloading.')
+        expect(message).toBeInTheDocument()
       })
     })
 
@@ -225,11 +205,11 @@ describe('ProjectCollectionsList component', () => {
           noGranules: true
         }))
 
-        const { enzymeWrapper } = setup()
+        setup()
 
-        const message = enzymeWrapper.find('.project-collections__footer-message')
+        const message = screen.getByText('One or more collections in your project does not contain granules. Adjust temporal constraints or remove the collections before downloading.')
 
-        expect(message.text()).toEqual('One or more collections in your project does not contain granules. Adjust temporal constraints or remove the collections before downloading.')
+        expect(message).toBeInTheDocument()
       })
     })
   })
@@ -240,11 +220,12 @@ describe('ProjectCollectionsList component', () => {
         ...validAccessMethod
       }))
 
-      const { enzymeWrapper } = setup()
+      setup()
 
-      const button = enzymeWrapper.find(Button)
+      const button = screen.getByRole('button', { name: 'Download project data' })
 
-      expect(button.props().disabled).toBeFalsy()
+      expect(button).toBeInTheDocument()
+      expect(button).not.toHaveAttribute('disabled')
     })
 
     test('is disabled when the project is invalid', () => {
@@ -253,33 +234,34 @@ describe('ProjectCollectionsList component', () => {
         valid: false
       }))
 
-      const { enzymeWrapper } = setup()
+      setup()
 
-      const button = enzymeWrapper.find(Button)
+      const button = screen.getByRole('button', { name: 'Download project data' })
 
-      expect(button.props().disabled).toBeTruthy()
+      expect(button).toBeInTheDocument()
+      expect(button).toHaveAttribute('disabled')
     })
   })
 
   describe('componentDidUpdate', () => {
     test('calls onMetricsDataAccess and sets this.sentDataAccessMetrics', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.setProps({
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                isValid: true,
-                granules: {
-                  hits: 1
-                }
-              },
-              collectionId2: {
-                isValid: true,
-                granules: {
-                  hits: 1
+      const { props } = setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1', 'collectionId2'],
+              byId: {
+                collectionId1: {
+                  isValid: true,
+                  granules: {
+                    hits: 1
+                  }
+                },
+                collectionId2: {
+                  isValid: true,
+                  granules: {
+                    hits: 1
+                  }
                 }
               }
             }
@@ -287,58 +269,16 @@ describe('ProjectCollectionsList component', () => {
         }
       })
 
-      expect(props.onMetricsDataAccess).toBeCalledTimes(2) // 2 collections
-      expect(props.onMetricsDataAccess).toBeCalledWith({
+      expect(props.onMetricsDataAccess).toHaveBeenCalledTimes(2) // 2 collections
+      expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
         collections: [{ collectionId: 'collectionId1' }],
         type: 'data_access_init'
       })
 
-      expect(props.onMetricsDataAccess).toBeCalledWith({
+      expect(props.onMetricsDataAccess).toHaveBeenCalledWith({
         collections: [{ collectionId: 'collectionId2' }],
         type: 'data_access_init'
       })
-
-      expect(enzymeWrapper.instance().sentDataAccessMetrics).toBeTruthy()
-    })
-
-    test('does not call onMetricsDataAccess if this.sentDataAccessMetrics is true', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.instance().sentDataAccessMetrics = true
-
-      enzymeWrapper.setProps({
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                isValid: true,
-                granules: {
-                  hits: 1
-                }
-              },
-              collectionId2: {
-                isValid: true,
-                granules: {
-                  hits: 1
-                }
-              }
-            }
-          }
-        }
-      })
-
-      expect(props.onMetricsDataAccess).toBeCalledTimes(0)
-    })
-  })
-
-  describe('componentWillUnmount', () => {
-    test('sets this.sentDataAccessMetrics', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.instance().componentWillUnmount()
-
-      expect(enzymeWrapper.instance().sentDataAccessMetrics).toBeFalsy()
     })
   })
 })

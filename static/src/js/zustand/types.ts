@@ -3,8 +3,10 @@ import { StateCreator } from 'zustand'
 import {
   PortalConfig,
   ProjectionCode,
+  ScienceKeyword,
   ShapefileFile,
-  TimelineIntervals
+  TimelineIntervals,
+  VariableMetadata
 } from '../types/sharedTypes'
 
 export type EarthdataDownloadRedirectSlice = {
@@ -47,14 +49,7 @@ type PlatformFacet = {
 }
 
 /** The Science Keyword Facet */
-export type ScienceKeywordFacet = {
-  detailed_variable?: string
-  term?: string
-  topic?: string
-  variable_level_1?: string
-  variable_level_2?: string
-  variable_level_3?: string
-}
+export type ScienceKeywordFacet = ScienceKeyword
 
 /** The CMR Facets */
 export type CMRFacets = {
@@ -216,6 +211,397 @@ export type PortalSlice = {
   portal: PortalConfig
 }
 
+/** Project Granules */
+export type ProjectGranules = {
+  /** The granule IDs that have been added to the project */
+  addedGranuleIds: string[]
+  /** All granule IDs in the project */
+  allIds: string[]
+  /** The granules in the project */
+  byId: {
+    /** The granule concept ID */
+    [key: string]: {
+      id: string
+    }
+  }
+  /** The number of granules in the project */
+  hits: number
+  /** Flag to indicate if the granules are errored */
+  isErrored: boolean
+  /** Flag to indicate if the granules are loaded */
+  isLoaded: boolean
+  /** Flag to indicate if the granules are loading */
+  isLoading: boolean
+  /** Flag to indicate if the granules are OpenSearch granules */
+  isOpenSearch: boolean
+  /** The granule request parameters */
+  params: {
+    /** The page number */
+    pageNum: number
+  }
+  /** The start time of the granules request timer */
+  timerStart: number | null
+  /** The total size of the granules */
+  totalSize?: {
+    /** The total size of the granules */
+    size: string
+    /** The units of the total size */
+    units: string
+  }
+  /** The single granule size */
+  singleGranuleSize: number
+  /** The total load time of the granules request */
+  loadTime: number | null
+  /** The granule IDs that have been removed from the project */
+  removedGranuleIds: string[]
+}
+
+/** The download access method */
+type DownloadAccessMethod = {
+  /** Is the access method valid */
+  isValid: boolean
+  /** The type of access method */
+  type: 'download'
+}
+
+type OptionDefinition = {
+  /** The option name */
+  name: string
+  /** The option concept ID */
+  conceptId: string
+  /** The option revision ID */
+  revisionId: string
+}
+
+/** The ESI access method */
+type EsiAccessMethod = {
+  /** The ECHO Form XML */
+  form: string
+  /** A hash of the form */
+  formDigest: string
+  /** Has the access method changed */
+  hasChanged: boolean
+  /** Is the access method valid */
+  isValid: boolean
+  /** The maximum number of items per order */
+  maxItemsPerOrder: number
+  /** The ECHO Form model */
+  model: string
+  /** The option definition for the ESI access method */
+  optionDefinition: OptionDefinition
+  /** The ECHO Form raw model */
+  rawModel: string
+  /** The type of access method */
+  type: 'ESI'
+  /** The ESI access method URL */
+  url: string
+}
+
+/** The Echo Orders access method */
+export type EchoOrderAccessMethod = {
+  /** The ECHO Form XML */
+  form: string
+  /** A hash of the form */
+  formDigest: string
+  /** Has the access method changed */
+  hasChanged: boolean
+  /** Is the access method valid */
+  isValid: boolean
+  /** The maximum number of items per order */
+  maxItemsPerOrder: number
+  /** The ECHO Form model */
+  model: string
+  /** The option definition for the ECHO Orders access method */
+  optionDefinition: OptionDefinition
+  /** The ECHO Form raw model */
+  rawModel: string
+  /** The type of access method */
+  type: 'ECHO ORDERS'
+  /** The ECHO Orders access method URL */
+  url: string
+}
+
+type HierarchyMappings = {
+  /** The variable concept IDs */
+  children: {
+    /** The variable concept id */
+    id: string
+  }[]
+  // The hierarchical name
+  label: string
+}
+
+type KeywordMapping = {
+  /** The variable concept IDs */
+  children: {
+    /** The variable concept id */
+    id: string
+  }[]
+  // The science keyword name
+  label: string
+}
+
+/** The Harmony access method */
+type HarmonyAccessMethod = {
+  /** The default value for concatenation */
+  defaultConcatenation: boolean
+  /** The Harmony access method description */
+  description: string
+  /** Flag to indicate if concatenation download is enabled */
+  enableConcatenateDownload: boolean
+  /** Flag to indicate if spatial subsetting is enabled */
+  enableSpatialSubsetting: boolean
+  /** Flag to indicate if temporal subsetting is enabled */
+  enableTemporalSubsetting: boolean
+  /** Variable ids grouped by their hierarchical names */
+  hierarchyMappings: HierarchyMappings[]
+  /** The Harmony access method ID */
+  id: string
+  /** Is the access method valid */
+  isValid: boolean
+  /** Variable ids grouped by their scienceKeywords */
+  keywordMappings: KeywordMapping[]
+  /** The access method long name */
+  longName: string
+  /** The access method name */
+  name: string
+  /** The supported output formats */
+  supportedOutputFormats: string[]
+  /** The supported output projections */
+  supportedOutputProjections: string[]
+  /** Flag to indicate if bounding box subsetting is supported */
+  supportsBoundingBoxSubsetting: boolean
+  /** Flag to indicate if concatenation is supported */
+  supportsConcatenation: boolean
+  /** Flag to indicate if shapefile subsetting is supported */
+  supportsShapefileSubsetting: boolean
+  /** Flag to indicate if temporal subsetting is supported */
+  supportsTemporalSubsetting: boolean
+  /** Flag to indicate if variable subsetting is supported */
+  supportsVariableSubsetting: boolean
+  /** The type of access method */
+  type: 'Harmony'
+  /** The Harmony access method URL */
+  url: string
+  /** The Harmony access method variables */
+  variables: {
+    /** The variable ID */
+    [variableId: string]: VariableMetadata
+  }
+}
+
+/** The OPeNDAP access method */
+type OpendapAccessMethod = {
+  /** The OPeNDAP access method description */
+  description?: string
+  /** Variable ids grouped by their hierarchical names */
+  hierarchyMappings: HierarchyMappings[]
+  /** The OPeNDAP access method ID */
+  id?: string
+  /** Is the access method valid */
+  isValid: boolean
+  /** Variable ids grouped by their scienceKeywords */
+  keywordMappings: KeywordMapping[]
+  /** The OPeNDAP access method long name */
+  longName?: string
+  /** The OPeNDAP access method name */
+  name?: string
+  /** The selected output format */
+  selectedOutputFormat?: string
+  /** The supported output formats */
+  supportedOutputFormats?: string[]
+  /** Flag to indicate if variable subsetting is supported */
+  supportsVariableSubsetting?: boolean
+  /** The type of access method */
+  type: string
+  /** The OPeNDAP access method URL */
+  url?: string
+  /** The OPeNDAP access method variables */
+  variables: {
+    /** The variable ID */
+    [variableId: string]: VariableMetadata
+  }
+}
+
+/** The SWODLR access method */
+type SwodlrAccessMethod = {
+  /** The SWODLR access method ID */
+  id: string
+  /** Is the access method valid */
+  isValid: boolean
+  /** The SWODLR access method long name */
+  longName: string
+  /** The SWODLR access method name */
+  name: string
+  /** Flag to indicate if SWODLR is supported */
+  supportsSwodlr: boolean
+  /** The SWODLR data */
+  swodlrData: {
+    /** The SWODLR data custom parameters */
+    custom_params: {
+      /** The granule ID */
+      [granuleId: string]: {
+        /** The MGRS band adjustment */
+        mgrsBandAdjust: number
+        /** The UTM zone adjustment */
+        utmZoneAdjust: number
+      }
+    }
+    /** The SWODLR data parameters */
+    params: {
+      /** The output granule extent flag */
+      outputGranuleExtentFlag: boolean
+      /** The output sampling grid type */
+      outputSamplingGridType: string
+      /** The output sampling grid resolution */
+      rasterResolution: number
+    }
+  }
+  /** The type of access method */
+  type: 'SWODLR'
+  /** The SWODLR access method URL */
+  url: string
+}
+
+/** The access method types */
+export type AccessMethodTypes = DownloadAccessMethod
+  | EchoOrderAccessMethod
+  | EsiAccessMethod
+  | HarmonyAccessMethod
+  | OpendapAccessMethod
+  | SwodlrAccessMethod
+
+/** The access methods for a project collection */
+type AccessMethods = {
+  [key: string]: AccessMethodTypes
+}
+
+/** The project collection */
+export type ProjectCollection = {
+  /** The access methods for the project collection */
+  accessMethods?: AccessMethods
+  /** The project collection's granules */
+  granules: ProjectGranules
+  /** Flag to indicate if the project collection is visible */
+  isVisible: boolean
+  /** The selected access method for the project collection */
+  selectedAccessMethod?: string
+}
+
+/** The project collections */
+export type ProjectCollections = {
+  /** The project collection IDs */
+  allIds: string[]
+  /** The project collections by ID */
+  byId: {
+    /** The project collection ID */
+    [key: string]: ProjectCollection
+  }
+}
+
+/** The project granule results */
+export type ProjectGranuleResults = {
+  /** The collection ID */
+  collectionId: string
+  /** The number of granule results */
+  hits: number
+  /** Flag to indicate if the granules are OpenSearch */
+  isOpenSearch: boolean
+  /** The page number of the results */
+  pageNum: number
+  /** The granule results */
+  results: {
+    /** The granule concept ID */
+    id: string
+  }[]
+  /** The single granule size */
+  singleGranuleSize: number
+  /** The total size of the granules */
+  totalSize?: {
+    /** The total size of the granules */
+    size: string
+    /** The units of the total size */
+    units: string
+  }
+}
+
+type AddRemoveGranuleToProjectCollectionParams = {
+  /** The collection id */
+  collectionId: string
+  /** The granule id */
+  granuleId: string
+}
+
+type SelectAccessMethodParams = {
+  /** The collection id */
+  collectionId: string
+  /** The selected access method */
+  selectedAccessMethod: string
+}
+
+/** The updated access method */
+type UpdatedAccessMethod = {
+  [key: string]: Partial<AccessMethodTypes>
+}
+
+type UpdateAccessMethodParams = {
+  /** The collection id */
+  collectionId: string
+  /** The updated access method */
+  method: UpdatedAccessMethod
+}
+
+type UpdateProjectGranuleParams = {
+  /** The collection id */
+  collectionId: string,
+  /** The page number */
+  pageNum: number
+}
+
+export type ProjectSlice = {
+  /** The Project Slice of the store */
+  project: {
+    /** The project collections */
+    collections: ProjectCollections
+    /** Flag to indicate if the project is submitted */
+    isSubmitted: boolean
+    /** Flag to indicate if the project is submitting */
+    isSubmitting: boolean
+    /** Function to add a granule to the project collection */
+    addGranuleToProjectCollection: (data: AddRemoveGranuleToProjectCollectionParams) => void
+    /** Function to add a project collection */
+    addProjectCollection: (collectionId: string) => void
+    /** Function to set the errored state of granules for a project collection */
+    erroredProjectGranules: (collectionId: string) => void
+    /** Function to get project collections */
+    getProjectCollections: () => Promise<void>
+    /** Function to get project granules */
+    getProjectGranules: () => Promise<void>
+    /** Function to remove a granule from the project collection */
+    removeGranuleFromProjectCollection: (data: AddRemoveGranuleToProjectCollectionParams) => void
+    /** Function to remove a project collection */
+    removeProjectCollection: (collectionId: string) => void
+    /** Function to select an access method */
+    selectAccessMethod: ({ collectionId, selectedAccessMethod }: SelectAccessMethodParams) => void
+    /** Function to start the project granules timer */
+    startProjectGranulesTimer: (collectionId: string) => void
+    /** Function to stop the project granules timer */
+    stopProjectGranulesTimer: (collectionId: string) => void
+    /** Function to set the project as submitting */
+    submittingProject: () => void
+    /** Function to set the project as submitted */
+    submittedProject: () => void
+    /** Function to toggle the visibility of a project collection */
+    toggleCollectionVisibility: (collectionId: string) => void
+    /** Function to update the access method for a project collection */
+    updateAccessMethod: ({ collectionId, method }: UpdateAccessMethodParams) => void
+    /** Function to update the granule params for a project collection */
+    updateProjectGranuleParams: ({ collectionId, pageNum }: UpdateProjectGranuleParams) => void
+    /** Function to update the project granule results */
+    updateProjectGranuleResults: (data: ProjectGranuleResults) => void
+  }
+}
+
 type UpdateShapefileProps = {
   /** The shapefile id */
   shapefileId?: string
@@ -287,17 +673,17 @@ export enum TimelineInterval {
 
 type TimelineQuery = {
   /** The center timestamp of the timeline */
-  center?: number,
+  center?: number
   /** The interval of the timeline */
-  interval?: TimelineInterval,
+  interval?: TimelineInterval
   /** The end date of the timeline */
-  endDate?: string,
+  endDate?: string
   /** The start date of the timeline */
-  startDate?: string,
+  startDate?: string
   /** The end of the focused timespan */
-  end?: number,
+  end?: number
   /** The start of the focused timespan */
-  start?: number,
+  start?: number
 }
 
 export type TimelineIntervalData = {
@@ -309,9 +695,9 @@ export type TimelineSlice = {
   /** The Timeline Slice of the store */
   timeline: {
     /** The intervals of the timeline */
-    intervals: TimelineIntervalData,
+    intervals: TimelineIntervalData
     /** The query of the timeline */
-    query: TimelineQuery,
+    query: TimelineQuery
     /** Function to set the query value */
     setQuery: (query: TimelineQuery) => void
     /** Function to get the timeline */
@@ -346,6 +732,7 @@ export type EdscStore =
   & MapSlice
   & PortalSlice
   & PreferencesSlice
+  & ProjectSlice
   & ShapefileSlice
   & TimelineSlice
   & UiSlice

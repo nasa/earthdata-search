@@ -7,7 +7,6 @@ import actions from '../index'
 import {
   excludeGranule,
   fetchGranuleLinks,
-  getProjectGranules,
   getSearchGranules,
   undoExcludeGranule,
   updateGranuleLinks,
@@ -18,31 +17,22 @@ import {
   ADD_GRANULE_METADATA,
   EXCLUDE_GRANULE_ID,
   FINISHED_GRANULES_TIMER,
-  FINISHED_PROJECT_GRANULES_TIMER,
   LOADED_GRANULES,
   LOADING_GRANULES,
-  PROJECT_GRANULES_LOADED,
-  PROJECT_GRANULES_LOADING,
   REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   STARTED_GRANULES_TIMER,
-  STARTED_PROJECT_GRANULES_TIMER,
   TOGGLE_SPATIAL_POLYGON_WARNING,
   UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_FILTERS,
   UPDATE_GRANULE_LINKS,
-  UPDATE_GRANULE_RESULTS,
-  UPDATE_PROJECT_GRANULE_RESULTS
+  UPDATE_GRANULE_RESULTS
 } from '../../constants/actionTypes'
 
 import OpenSearchGranuleRequest from '../../util/request/openSearchGranuleRequest'
 import * as EventEmitter from '../../events/events'
-import * as applicationConfig from '../../../../../sharedUtils/config'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
-
-beforeEach(() => {
-  jest.clearAllMocks()
-})
 
 describe('updateGranuleResults', () => {
   test('should create an action to update the search query', () => {
@@ -80,16 +70,12 @@ describe('getSearchGranules', () => {
           mock: 'data'
         }
       },
-      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
           temporal: {},
           spatial: {}
         }
-      },
-      timeline: {
-        query: {}
       }
     })
 
@@ -190,16 +176,12 @@ describe('getSearchGranules', () => {
           }
         }
       },
-      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
           temporal: {},
           spatial: {}
         }
-      },
-      timeline: {
-        query: {}
       }
     })
 
@@ -295,7 +277,6 @@ describe('getSearchGranules', () => {
           }
         }
       },
-      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -304,9 +285,6 @@ describe('getSearchGranules', () => {
             polygon: ['-77,38,-77,38,-76,38,-77,38']
           }
         }
-      },
-      timeline: {
-        query: {}
       }
     })
 
@@ -412,7 +390,6 @@ describe('getSearchGranules', () => {
           }
         }
       },
-      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -421,9 +398,6 @@ describe('getSearchGranules', () => {
             polygon: ['-77,38,-77,38,-76,38,-77,38']
           }
         }
-      },
-      timeline: {
-        query: {}
       }
     })
 
@@ -540,16 +514,12 @@ describe('getSearchGranules', () => {
           }
         }
       },
-      project: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
           temporal: {},
           spatial: {}
         }
-      },
-      timeline: {
-        query: {}
       }
     })
 
@@ -557,529 +527,6 @@ describe('getSearchGranules', () => {
 
     await store.dispatch(getSearchGranules()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
-    })
-  })
-})
-
-describe('getProjectGranules', () => {
-  test('calls the API to get granules', async () => {
-    nock(/cmr/)
-      .post(/granules/)
-      .reply(200, {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
-          title: 'ECHO granule metadata',
-          entry: [{
-            mockGranuleData: 'goes here'
-          }]
-        }
-      }, {
-        'cmr-hits': 1
-      })
-
-    const store = mockStore({
-      authToken: '',
-      metadata: {
-        collections: {
-          'C10000000000-EDSC': {
-            mock: 'data'
-          }
-        }
-      },
-      project: {
-        collections: {
-          allIds: ['C10000000000-EDSC'],
-          byId: {
-            'C10000000000-EDSC': {
-              granules: {
-                addedGranuleIds: [],
-                removedGranuleIds: []
-              }
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        }
-      },
-      timeline: {
-        query: {}
-      }
-    })
-
-    await store.dispatch(getProjectGranules()).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: STARTED_PROJECT_GRANULES_TIMER,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[1]).toEqual({
-        type: PROJECT_GRANULES_LOADING,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[2]).toEqual({
-        type: TOGGLE_SPATIAL_POLYGON_WARNING,
-        payload: false
-      })
-
-      expect(storeActions[3]).toEqual({
-        type: FINISHED_PROJECT_GRANULES_TIMER,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[4]).toEqual({
-        type: PROJECT_GRANULES_LOADED,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          loaded: true
-        }
-      })
-
-      expect(storeActions[5]).toEqual({
-        type: ADD_GRANULE_METADATA,
-        payload: [
-          {
-            mockGranuleData: 'goes here',
-            isOpenSearch: false,
-            spatial: null
-          }
-        ]
-      })
-
-      expect(storeActions[6]).toEqual({
-        type: UPDATE_PROJECT_GRANULE_RESULTS,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          results: [{
-            mockGranuleData: 'goes here',
-            isOpenSearch: false,
-            spatial: null
-          }],
-          isOpenSearch: false,
-          hits: 1,
-          singleGranuleSize: 0,
-          totalSize: {
-            size: '0.0',
-            unit: 'MB'
-          }
-        }
-      })
-    })
-  })
-
-  test('calls lambda to get authenticated granules', async () => {
-    nock(/localhost/)
-      .post(/granules/)
-      .reply(200, {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
-          title: 'ECHO granule metadata',
-          entry: [{
-            mockGranuleData: 'goes here'
-          }]
-        }
-      }, {
-        'cmr-hits': 1,
-        'jwt-token': 'token'
-      })
-
-    const store = mockStore({
-      authToken: 'token',
-      earthdataEnvironment: 'prod',
-      metadata: {
-        collections: {
-          'C10000000000-EDSC': {
-            mock: 'data'
-          }
-        }
-      },
-      project: {
-        collections: {
-          allIds: ['C10000000000-EDSC'],
-          byId: {
-            'C10000000000-EDSC': {
-              granules: {
-                addedGranuleIds: [],
-                removedGranuleIds: []
-              }
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        }
-      },
-      timeline: {
-        query: {}
-      }
-    })
-
-    await store.dispatch(getProjectGranules()).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: STARTED_PROJECT_GRANULES_TIMER,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[1]).toEqual({
-        type: PROJECT_GRANULES_LOADING,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[2]).toEqual({
-        type: TOGGLE_SPATIAL_POLYGON_WARNING,
-        payload: false
-      })
-
-      expect(storeActions[3]).toEqual({
-        type: FINISHED_PROJECT_GRANULES_TIMER,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[4]).toEqual({
-        type: PROJECT_GRANULES_LOADED,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          loaded: true
-        }
-      })
-
-      expect(storeActions[5]).toEqual({
-        type: ADD_GRANULE_METADATA,
-        payload: [
-          {
-            mockGranuleData: 'goes here',
-            isOpenSearch: false,
-            spatial: null
-          }
-        ]
-      })
-
-      expect(storeActions[6]).toEqual({
-        type: UPDATE_PROJECT_GRANULE_RESULTS,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          results: [{
-            mockGranuleData: 'goes here',
-            isOpenSearch: false,
-            spatial: null
-          }],
-          isOpenSearch: false,
-          hits: 1,
-          singleGranuleSize: 0,
-          totalSize: {
-            size: '0.0',
-            unit: 'MB'
-          }
-        }
-      })
-    })
-  })
-
-  test('substitutes MBR for polygon in opensearch granule searches', async () => {
-    const cwicRequestMock = jest.spyOn(OpenSearchGranuleRequest.prototype, 'search')
-
-    nock(/localhost/)
-      .post(/opensearch\/granules/)
-      .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><title>CWIC Granule</title></entry></feed>')
-
-    const store = mockStore({
-      authToken: 'token',
-      earthdataEnvironment: 'prod',
-      metadata: {
-        collections: {
-          'C10000000000-EDSC': {
-            links: [{
-              length: '0.0KB',
-              rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
-              hreflang: 'en-US',
-              href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
-            }]
-          }
-        }
-      },
-      project: {
-        collections: {
-          allIds: ['C10000000000-EDSC'],
-          byId: {
-            'C10000000000-EDSC': {
-              granules: {
-                addedGranuleIds: [],
-                removedGranuleIds: []
-              }
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {
-            polygon: '-77,38,-77,38,-76,38,-77,38'
-          }
-        }
-      },
-      timeline: {
-        query: {}
-      }
-    })
-
-    await store.dispatch(getProjectGranules()).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: STARTED_PROJECT_GRANULES_TIMER,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[1]).toEqual({
-        type: PROJECT_GRANULES_LOADING,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[2]).toEqual({
-        type: TOGGLE_SPATIAL_POLYGON_WARNING,
-        payload: false
-      })
-
-      expect(storeActions[3]).toEqual({
-        type: TOGGLE_SPATIAL_POLYGON_WARNING,
-        payload: true
-      })
-
-      expect(storeActions[4]).toEqual({
-        type: FINISHED_PROJECT_GRANULES_TIMER,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[5]).toEqual({
-        type: PROJECT_GRANULES_LOADED,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          loaded: true
-        }
-      })
-
-      expect(storeActions[6]).toEqual({
-        type: ADD_GRANULE_METADATA,
-        payload: [{
-          browse_flag: false,
-          collectionConceptId: 'C10000000000-EDSC',
-          isOpenSearch: true,
-          spatial: null,
-          title: 'CWIC Granule'
-        }]
-      })
-
-      expect(storeActions[7]).toEqual({
-        type: UPDATE_PROJECT_GRANULE_RESULTS,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          results: [{
-            browse_flag: false,
-            collectionConceptId: 'C10000000000-EDSC',
-            isOpenSearch: true,
-            spatial: null,
-            title: 'CWIC Granule'
-          }],
-          isOpenSearch: true,
-          hits: 1,
-          singleGranuleSize: 0,
-          totalSize: {
-            size: '0.0',
-            unit: 'MB'
-          }
-        }
-      })
-
-      expect(cwicRequestMock).toHaveBeenCalledTimes(1)
-      expect(cwicRequestMock.mock.calls[0][0].boundingBox).toEqual('-77,37.99999999999998,-76,38.00105844675541')
-    })
-  })
-
-  test('does not call updateGranuleResults on error', async () => {
-    nock(/cmr/)
-      .post(/granules/)
-      .reply(500)
-
-    nock(/localhost/)
-      .post(/error_logger/)
-      .reply(200)
-
-    const store = mockStore({
-      authToken: '',
-      earthdataEnvironment: 'prod',
-      metadata: {
-        collections: {
-          'C10000000000-EDSC': {}
-        }
-      },
-      project: {
-        collections: {
-          allIds: ['C10000000000-EDSC'],
-          byId: {
-            'C10000000000-EDSC': {
-              granules: {
-                addedGranuleIds: [],
-                removedGranuleIds: []
-              }
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        }
-      },
-      timeline: {
-        query: {}
-      }
-    })
-
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
-    await store.dispatch(getProjectGranules()).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  test('logs alert if the user adds more granules than the maxCmrPageSize', async () => {
-    jest.spyOn(applicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-      maxCmrPageSize: '1',
-      thumbnailSize: {
-        height: 85,
-        width: 85
-      }
-    }))
-
-    nock(/localhost/)
-      .post(/granules/)
-      .reply(200, {
-        feed: {
-          updated: '2019-03-27T20:21:14.705Z',
-          id: 'https://cmr.sit.earthdata.nasa.gov:443/search/granules.json?echo_collection_id=collectionId',
-          title: 'ECHO granule metadata',
-          entry: [{
-            mockGranuleData: 'goes here'
-          }]
-        }
-      }, {
-        'cmr-hits': 1,
-        'jwt-token': 'token'
-      })
-
-    nock(/localhost/)
-      .post(/alert_logger/)
-      .reply(200)
-
-    const store = mockStore({
-      authToken: 'token',
-      earthdataEnvironment: 'prod',
-      metadata: {
-        collections: {
-          'C10000000000-EDSC': {
-            mock: 'data'
-          }
-        },
-        granules: {
-          'G100000-EDSC': {},
-          'G100002-EDSC': {}
-        }
-      },
-      project: {
-        collections: {
-          allIds: ['C10000000000-EDSC'],
-          byId: {
-            'C10000000000-EDSC': {
-              granules: {
-                addedGranuleIds: ['G100000-EDSC', 'G100002-EDSC'],
-                removedGranuleIds: []
-              }
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        }
-      },
-      timeline: {
-        query: {}
-      }
-    })
-
-    await store.dispatch(getProjectGranules()).then(() => {
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: STARTED_PROJECT_GRANULES_TIMER,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[1]).toEqual({
-        type: PROJECT_GRANULES_LOADING,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[2]).toEqual({
-        type: TOGGLE_SPATIAL_POLYGON_WARNING,
-        payload: false
-      })
-
-      expect(storeActions[3]).toEqual({
-        type: FINISHED_PROJECT_GRANULES_TIMER,
-        payload: 'C10000000000-EDSC'
-      })
-
-      expect(storeActions[4]).toEqual({
-        type: PROJECT_GRANULES_LOADED,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          loaded: true
-        }
-      })
-
-      expect(storeActions[5]).toEqual({
-        type: ADD_GRANULE_METADATA,
-        payload: [
-          {
-            mockGranuleData: 'goes here',
-            isOpenSearch: false,
-            spatial: null
-          }
-        ]
-      })
-
-      expect(storeActions[6]).toEqual({
-        type: UPDATE_PROJECT_GRANULE_RESULTS,
-        payload: {
-          collectionId: 'C10000000000-EDSC',
-          results: [{
-            mockGranuleData: 'goes here',
-            isOpenSearch: false,
-            spatial: null
-          }],
-          isOpenSearch: false,
-          hits: 1,
-          singleGranuleSize: 0,
-          totalSize: {
-            size: '0.0',
-            unit: 'MB'
-          }
-        }
-      })
     })
   })
 })
@@ -1136,7 +583,7 @@ describe('undoExcludeGranule', () => {
     const storeActions = store.getActions()
     expect(storeActions[0]).toEqual(expectedAction)
 
-    expect(getSearchGranulesMock).toBeCalledTimes(1)
+    expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -1157,10 +604,6 @@ describe('updateGranuleLinks', () => {
 })
 
 describe('fetchGranuleLinks', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('calls lambda to get the granules links from cmr', async () => {
     nock(/localhost/)
       .get(/granule_links/)
@@ -1530,7 +973,7 @@ describe('fetchGranuleLinks', () => {
 
     await store.dispatch(fetchGranuleLinks(params, ['data', 's3'])).then(() => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
-      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+      expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchGranuleLinks',
         resource: 'granule links'
       }))
@@ -1546,8 +989,14 @@ describe('applyGranuleFilters', () => {
       const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
       getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
-      const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
-      getProjectGranulesMock.mockImplementationOnce(() => jest.fn())
+      useEdscStore.setState({
+        project: {
+          collections: {
+            allIds: []
+          },
+          getProjectGranules: jest.fn()
+        }
+      })
 
       const store = mockStore({
         authToken: 'token',
@@ -1580,8 +1029,13 @@ describe('applyGranuleFilters', () => {
         type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
       })
 
-      expect(getSearchGranulesMock).toBeCalledTimes(1)
-      expect(getProjectGranulesMock).toBeCalledTimes(0)
+      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+      expect(getSearchGranulesMock).toHaveBeenCalledWith()
+
+      const zustandState = useEdscStore.getState()
+      const { project } = zustandState
+      const { getProjectGranules } = project
+      expect(getProjectGranules).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -1590,19 +1044,7 @@ describe('applyGranuleFilters', () => {
       const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
       getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
 
-      const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
-      getProjectGranulesMock.mockImplementationOnce(() => jest.fn())
-
-      const store = mockStore({
-        authToken: 'token',
-        focusedCollection: 'C100000-EDSC',
-        metadata: {
-          collections: {
-            'C100000-EDSC': {
-              hasGranules: true
-            }
-          }
-        },
+      useEdscStore.setState({
         project: {
           collections: {
             allIds: ['C100000-EDSC'],
@@ -1614,6 +1056,19 @@ describe('applyGranuleFilters', () => {
                 }
               }
             }
+          },
+          getProjectGranules: jest.fn()
+        }
+      })
+
+      const store = mockStore({
+        authToken: 'token',
+        focusedCollection: 'C100000-EDSC',
+        metadata: {
+          collections: {
+            'C100000-EDSC': {
+              hasGranules: true
+            }
           }
         },
         query: {
@@ -1644,8 +1099,14 @@ describe('applyGranuleFilters', () => {
         type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
       })
 
-      expect(getSearchGranulesMock).toBeCalledTimes(1)
-      expect(getProjectGranulesMock).toBeCalledTimes(1)
+      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+      expect(getSearchGranulesMock).toHaveBeenCalledWith()
+
+      const zustandState = useEdscStore.getState()
+      const { project } = zustandState
+      const { getProjectGranules } = project
+      expect(getProjectGranules).toHaveBeenCalledTimes(1)
+      expect(getProjectGranules).toHaveBeenCalledWith()
     })
   })
 })

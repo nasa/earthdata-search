@@ -82,13 +82,10 @@ const setup = setupTest({
       timerStart: null
     },
     loadNextPage: jest.fn(),
-    onAddProjectCollection: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     onViewCollectionGranules: jest.fn(),
-    panelView: 'list',
-    projectCollectionsIds: []
+    panelView: 'list'
   },
   defaultZustandState: {
     portal: {
@@ -116,9 +113,7 @@ describe('CollectionResultsBody component', () => {
       isItemLoaded: expect.any(Function),
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      onAddProjectCollection: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onRemoveCollectionFromProject: expect.any(Function),
       onViewCollectionDetails: expect.any(Function),
       onViewCollectionGranules: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),
@@ -141,9 +136,7 @@ describe('CollectionResultsBody component', () => {
       isItemLoaded: expect.any(Function),
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      onAddProjectCollection: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onRemoveCollectionFromProject: expect.any(Function),
       onViewCollectionDetails: expect.any(Function),
       onViewCollectionGranules: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),
@@ -168,9 +161,7 @@ describe('CollectionResultsBody component', () => {
       isItemLoaded: expect.any(Function),
       itemCount: 1,
       loadMoreItems: expect.any(Function),
-      onAddProjectCollection: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onRemoveCollectionFromProject: expect.any(Function),
       onViewCollectionDetails: expect.any(Function),
       onViewCollectionGranules: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),

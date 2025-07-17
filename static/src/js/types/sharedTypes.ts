@@ -108,6 +108,8 @@ export interface CollectionMetadata {
   // Will flush out Collection types in the future
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
+  /** The collection concept id */
+  conceptId: string
 }
 
 /** The collections metadata object, by collection concept id */
@@ -120,6 +122,21 @@ export type GranuleMetadata = {
   // Will flush out Granule types in the future
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
+  /** The links associated with the granule */
+  links?: {
+    /** The link href */
+    href: string
+    /** The link rel */
+    rel: string
+  }[],
+  /** The granule spatial coordinates in boxes */
+  boxes?: BoundingBoxString[]
+  /** The granule spatial coordinates in lines */
+  lines?: LineString[]
+  /** The granule spatial coordinates in points */
+  points?: PointString[]
+  /** The granule spatial coordinates in polygons */
+  polygons?: PolygonString[][]
 }
 
 export type GranulesMetadata = {
@@ -246,6 +263,13 @@ export interface CmrHeaders {
   'Authorization'?: string | AxiosHeaderValue
 }
 
+/** The response data for granules */
+export type GranuleResponseData = {
+  feed: {
+    entry: GranuleMetadata[]
+  }
+}
+
 export type TimelineIntervals = ((number)[])[]
 
 /** The response data for the timeline */
@@ -257,7 +281,7 @@ export type TimelineResponseData = {
 }
 
 /** The response data for our request classes */
-export type RequestResponseData = EmptyObject | [] | TimelineResponseData[]
+export type RequestResponseData = EmptyObject | [] | TimelineResponseData[] | GranuleResponseData
 
 /** The request parameters for a collection request */
 export type CollectionRequestParams = {
@@ -303,11 +327,27 @@ export type PreferencesRequestParams = {
   preferences: Partial<PreferencesData>
 }
 
+/** The request parameters for saved access configurations */
+export type SavedAccessConfigsParams = {
+  /** The collection IDs to retrieve */
+  collectionIds: string[]
+}
+
 /** The request parameters for our request classes */
 export type RequestParams = TimelineRequestParams
-                              | CollectionRequestParams
-                              | ShapefileRequestParams
-                              | PreferencesRequestParams
+  | CollectionRequestParams
+  | PreferencesRequestParams
+  | SavedAccessConfigsParams
+  | ShapefileRequestParams
+
+/** The saved access configurations */
+export type SavedAccessConfigs = {
+  /** The collection ID */
+  [key: string]: {
+    /** The type of access method */
+    type: string
+  }
+}
 
 /** A response received from an Axios request */
 export type Response = {
@@ -341,4 +381,40 @@ export type ReduxState = {
   authToken: string
   /** The Earthdata Environment */
   earthdataEnvironment: string
+}
+
+export type ScienceKeyword = {
+  detailed_variable?: string
+  term?: string
+  topic?: string
+  variable_level_1?: string
+  variable_level_2?: string
+  variable_level_3?: string
+}
+
+export type VariableMetadata = {
+  /** The variable concept ID */
+  conceptId: string
+  /** The variable definition */
+  definition: string
+  /** Describes a store (zarr) where a variable has been separated from its original data files and saved as its own entity */
+  instanceInformation: {
+    /** The internet location of the variable instance store */
+    url: string
+    /** Describes the format of the URL's data content */
+    format: string
+    /** Brief description of the store or any other useful information about the store */
+    description?: string
+    directDistributionInformation?: Record<string, unknown>
+    /** Description of the chunking strategy for the store */
+    chunkingInformation?: string
+  }
+  /** The variable long name */
+  longName: string
+  /** The variable name */
+  name: string
+  /** The variable native ID */
+  nativeId: string
+  /** The variable science keywords */
+  scienceKeywords: ScienceKeyword[]
 }

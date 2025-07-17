@@ -12,6 +12,8 @@ import { locationPropType } from '../../util/propTypes/location'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './CollectionDetails.scss'
 
 /**
@@ -20,10 +22,7 @@ import './CollectionDetails.scss'
  * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} granulesMetadata - The metadata in the store for granules.
  * @param {Object} location - The location from the store.
- * @param {Function} onChangeProjectGranulePageNum - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - The callback to change the focused granule.
- * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
- * @param {Object} portal - The portal from the store.
  * @param {Object} projectCollection - The project collection.
  */
 export const CollectionDetails = ({
@@ -31,11 +30,17 @@ export const CollectionDetails = ({
   focusedGranuleId,
   granulesMetadata,
   location,
-  onChangeProjectGranulePageNum,
   onFocusedGranuleChange,
-  onRemoveGranuleFromProjectCollection,
   projectCollection
 }) => {
+  const {
+    removeGranuleFromProjectCollection,
+    updateProjectGranuleParams
+  } = useEdscStore((state) => ({
+    removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
+    updateProjectGranuleParams: state.project.updateProjectGranuleParams
+  }))
+
   const {
     granules: projectCollectionGranules = {}
   } = projectCollection
@@ -47,7 +52,7 @@ export const CollectionDetails = ({
     removedGranuleIds = []
   } = projectCollectionGranules
 
-  const { params: projectCollectionGranulesParams } = projectCollectionGranules
+  const { params: projectCollectionGranulesParams = {} } = projectCollectionGranules
 
   // TODO: Should be able to remove the checks here and just show allIds
   let granulesToDisplay = granulesAllIds
@@ -102,7 +107,7 @@ export const CollectionDetails = ({
                         onFocusedGranuleChange(id)
                       }
                     }
-                    onKeyPress={
+                    onKeyDown={
                       () => {
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, { granule: granuleMetadata })
                         onFocusedGranuleChange(granuleMetadata.id)
@@ -142,7 +147,7 @@ export const CollectionDetails = ({
                         iconSize="14"
                         onClick={
                           (event) => {
-                            onRemoveGranuleFromProjectCollection({
+                            removeGranuleFromProjectCollection({
                               collectionId,
                               granuleId: id
                             })
@@ -159,7 +164,7 @@ export const CollectionDetails = ({
           }
         </ul>
         {
-          granulesToDisplay.length < granuleCount && (
+          granulesToDisplay.length > 0 && granulesToDisplay.length < granuleCount && (
             <div className="collection-details__more-granules">
               <Button
                 className="collection-details__more-granules-button"
@@ -167,9 +172,9 @@ export const CollectionDetails = ({
                 bootstrapVariant="link"
                 onClick={
                   () => {
-                    const { pageNum } = projectCollectionGranulesParams
+                    const { pageNum = 1 } = projectCollectionGranulesParams
 
-                    onChangeProjectGranulePageNum({
+                    updateProjectGranuleParams({
                       collectionId,
                       pageNum: pageNum + 1
                     })
@@ -191,9 +196,7 @@ CollectionDetails.propTypes = {
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
-  onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})
   }).isRequired

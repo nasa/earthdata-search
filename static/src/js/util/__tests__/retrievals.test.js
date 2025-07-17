@@ -1,29 +1,14 @@
+import configureStore from '../../store/configureStore'
 import useEdscStore from '../../zustand/useEdscStore'
 import { prepareRetrievalParams } from '../retrievals'
+
+jest.mock('../../store/configureStore', () => jest.fn())
 
 describe('retrievals', () => {
   test('prepareRetrievalParams', () => {
     useEdscStore.setState({
       portal: {
         portalId: 'edsc'
-      }
-    })
-
-    const response = prepareRetrievalParams({
-      authToken: 'auth-token',
-      earthdataEnvironment: 'prod',
-      metadata: {
-        collections: {
-          'C100000-EDSC': {
-            conceptId: 'C100000-EDSC',
-            dataCenter: 'EDSC',
-            directDistributionInformation: {},
-            isCSDA: false,
-            shortName: 'mock shortName',
-            title: 'Vestibulum id ligula porta felis euismod semper.',
-            versionId: 'mock version'
-          }
-        }
       },
       project: {
         collections: {
@@ -90,6 +75,24 @@ describe('retrievals', () => {
             }
           }
         }
+      }
+    })
+
+    const reduxState = {
+      authToken: 'auth-token',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {
+          'C100000-EDSC': {
+            conceptId: 'C100000-EDSC',
+            dataCenter: 'EDSC',
+            directDistributionInformation: {},
+            isCSDA: false,
+            shortName: 'mock shortName',
+            title: 'Vestibulum id ligula porta felis euismod semper.',
+            versionId: 'mock version'
+          }
+        }
       },
       query: {
         collection: {
@@ -105,7 +108,13 @@ describe('retrievals', () => {
         }
       },
       shapefile: {}
+    }
+
+    configureStore.mockReturnValue({
+      getState: () => reduxState
     })
+
+    const response = prepareRetrievalParams(reduxState)
 
     expect(response).toEqual({
       authToken: 'auth-token',
@@ -173,24 +182,6 @@ describe('retrievals', () => {
     useEdscStore.setState({
       portal: {
         portalId: 'edsc'
-      }
-    })
-
-    const response = prepareRetrievalParams({
-      authToken: 'auth-token',
-      earthdataEnvironment: 'prod',
-      metadata: {
-        collections: {
-          'C100000-EDSC': {
-            conceptId: 'C100000-EDSC',
-            dataCenter: 'EDSC',
-            directDistributionInformation: {},
-            isCSDA: false,
-            shortName: 'mock shortName',
-            title: 'Vestibulum id ligula porta felis euismod semper.',
-            versionId: 'mock version'
-          }
-        }
       },
       project: {
         collections: {
@@ -240,6 +231,24 @@ describe('retrievals', () => {
             }
           }
         }
+      }
+    })
+
+    const reduxState = {
+      authToken: 'auth-token',
+      earthdataEnvironment: 'prod',
+      metadata: {
+        collections: {
+          'C100000-EDSC': {
+            conceptId: 'C100000-EDSC',
+            dataCenter: 'EDSC',
+            directDistributionInformation: {},
+            isCSDA: false,
+            shortName: 'mock shortName',
+            title: 'Vestibulum id ligula porta felis euismod semper.',
+            versionId: 'mock version'
+          }
+        }
       },
       query: {
         collection: {
@@ -255,7 +264,13 @@ describe('retrievals', () => {
         }
       },
       shapefile: {}
+    }
+
+    configureStore.mockReturnValue({
+      getState: () => reduxState
     })
+
+    const response = prepareRetrievalParams(reduxState)
 
     expect(response).toEqual({
       authToken: 'auth-token',

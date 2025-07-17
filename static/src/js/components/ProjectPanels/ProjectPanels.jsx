@@ -41,11 +41,8 @@ import './ProjectPanels.scss'
  * @param {Object} project - The project from the store.
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} projectCollection - The project collection.
- * @param {Function} onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} onChangePath - Callback to change the path.
- * @param {Function} onChangeProjectGranulePageNum - Callback to set the page number.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
- * @param {Function} onRemoveGranuleFromProjectCollection - Callback to remove a granule from the project.
  * @param {Function} onSelectAccessMethod - Selects an access method.
  * @param {Function} onSetActivePanel - Switches the currently active panel.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
@@ -276,9 +273,7 @@ class ProjectPanels extends PureComponent {
       granulesQueries,
       location,
       onChangePath,
-      onChangeProjectGranulePageNum,
       onFocusedGranuleChange,
-      onRemoveGranuleFromProjectCollection,
       onSelectAccessMethod,
       onSetActivePanel,
       onToggleAboutCSDAModal,
@@ -665,9 +660,7 @@ class ProjectPanels extends PureComponent {
               focusedGranuleId={focusedGranuleId}
               granulesMetadata={granulesMetadata}
               location={location}
-              onChangeProjectGranulePageNum={onChangeProjectGranulePageNum}
               onFocusedGranuleChange={onFocusedGranuleChange}
-              onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
               projectCollection={projectCollection}
             />
           </PanelItem>
@@ -706,9 +699,7 @@ ProjectPanels.propTypes = {
   granulesQueries: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onChangeProjectGranulePageNum: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelGroup: PropTypes.func.isRequired,
