@@ -8,7 +8,6 @@ import adminRetrievalsMetricsReducer from './admin/retrievalsMetrics'
 import adminRetrievalsReducer from './admin/retrievals'
 import advancedSearchReducer from './advancedSearch'
 import authTokenReducer from './authToken'
-import autocompleteReducer from './autocomplete'
 import collectionMetadataReducer from './collectionMetadata'
 import collectionsResultsReducer from './collectionsResults'
 import colorMapsReducer from './colorMaps'
@@ -43,7 +42,6 @@ export default (history) => combineReducers({
   }),
   advancedSearch: advancedSearchReducer,
   authToken: authTokenReducer,
-  autocomplete: autocompleteReducer,
   contactInfo: contactInfoReducer,
   dataQualitySummaries: dataQualitySummariesReducer,
   earthdataEnvironment: earthdataEnvironmentReducer,

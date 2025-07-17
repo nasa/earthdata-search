@@ -139,12 +139,6 @@ import {
   updateNotificationLevel
 } from './contactInfo'
 import {
-  cancelAutocomplete,
-  clearAutocompleteSuggestions,
-  fetchAutocomplete,
-  selectAutocompleteSuggestion
-} from './autocomplete'
-import {
   setIsSubmitting,
   setPreferences,
   setPreferencesFromJwt,
@@ -173,7 +167,6 @@ const actions = {
   adminViewProject,
   adminViewRetrieval,
   applyGranuleFilters,
-  cancelAutocomplete,
   changeCollectionPageNum,
   changeFocusedCollection,
   changeFocusedGranule,
@@ -184,7 +177,6 @@ const actions = {
   changeQuery,
   changeRegionQuery,
   changeUrl,
-  clearAutocompleteSuggestions,
   clearFilters,
   clearFocusedCollectionGranuleFilters,
   clearGranuleFilters,
@@ -196,7 +188,6 @@ const actions = {
   exportSearch,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
-  fetchAutocomplete,
   fetchContactInfo,
   fetchAdminProject,
   fetchAdminProjects,
@@ -231,7 +222,6 @@ const actions = {
   requeueOrder,
   restoreProject,
   selectAccessMethod,
-  selectAutocompleteSuggestion,
   setActivePanel,
   setActivePanelGroup,
   setActivePanelSection,
