@@ -1,176 +1,114 @@
-import React, { Component } from 'react'
+import React, {
+  useState,
+  useRef,
+  useCallback,
+  useEffect
+} from 'react'
 import PropTypes from 'prop-types'
 import { isCancel } from 'axios'
-import { differenceWith } from 'lodash-es'
+import { differenceWith, isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
+import { Search } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import AutocompleteRequest from '../../util/request/autocompleteRequest'
-import { autocompleteFacetsMap } from '../../util/autocompleteFacetsMap'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { handleError } from '../../actions/errors'
-import { scienceKeywordTypes } from '../../util/scienceKeywordTypes'
-import { platformTypes } from '../../util/platformTypes'
 import Spinner from '../Spinner/Spinner'
+import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import Button from '../Button/Button'
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+import { mapAutocompleteToFacets } from '../../util/mapAutocompleteToFacets'
 
 import configureStore from '../../store/configureStore'
 import useEdscStore from '../../zustand/useEdscStore'
-import Button from '../Button/Button'
 
-let cancelToken
+const SearchAutocomplete = ({
+  initialKeyword,
+  onChangeQuery,
+  onChangeFocusedCollection,
+  onKeywordChange
+}) => {
+  const [keywordSearch, setKeywordSearch] = useState(initialKeyword || '')
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [suggestions, setSuggestions] = useState([])
+  const [selected] = useState([])
+  const [selectedSuggestion, setSelectedSuggestion] = useState(null)
 
-/**
- * Maps a science keyword string into individual parts
- * @param {String} value Colon-separated string of a science keyword
- */
-const mapScienceKeywords = (value) => {
-  const values = value.split(':')
-  const returnValue = {}
+  const inputRef = useRef(null)
+  const cancelTokenRef = useRef(null)
 
-  values.forEach((keywordValue, index) => {
-    if (keywordValue) {
-      returnValue[scienceKeywordTypes[index]] = keywordValue
+  // Update local state when initial keyword changes
+  useEffect(() => {
+    setKeywordSearch(initialKeyword || '')
+  }, [initialKeyword])
+
+  // Cancel any pending requests on unmount
+  useEffect(() => () => {
+    if (cancelTokenRef.current) {
+      cancelTokenRef.current.cancel()
     }
-  })
+  }, [])
 
-  return returnValue
-}
-
-/**
- * Maps a platform string into individual parts
- * @param {String} value Colon-separated string of a science keyword
- */
-const mapPlatforms = (value) => {
-  const values = value.split(':')
-  const returnValue = {}
-
-  values.forEach((keywordValue, index) => {
-    if (keywordValue) {
-      returnValue[platformTypes[index]] = keywordValue
-    }
-  })
-
-  return returnValue
-}
-
-/**
- * Map an autocomplete suggestion into a CMR Facet
- * @param {Object} autocomplete autocomplete suggestion
- */
-export const mapAutocompleteToFacets = (autocomplete) => {
-  const { suggestion } = autocomplete
-  const { fields, type } = suggestion
-
-  const mappedType = autocompleteFacetsMap[type]
-
-  if (!mappedType) return null
-
-  const facets = {
-    [mappedType]: fields
-  }
-
-  if (mappedType === 'science_keywords_h') {
-    facets.science_keywords_h = mapScienceKeywords(fields)
-  }
-
-  if (mappedType === 'platforms_h') {
-    facets.platforms_h = mapPlatforms(fields)
-  }
-
-  return facets
-}
-
-class SearchAutocomplete extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      isLoaded: false,
-      isLoading: false,
-      suggestions: [],
-      selected: []
-    }
-
-    // Bind methods
-    this.fetchAutocomplete = this.fetchAutocomplete.bind(this)
-    this.clearAutocompleteSuggestions = this.clearAutocompleteSuggestions.bind(this)
-    this.cancelAutocomplete = this.cancelAutocomplete.bind(this)
-    this.selectAutocompleteSuggestion = this.selectAutocompleteSuggestion.bind(this)
-    this.renderSuggestionsContainer = this.renderSuggestionsContainer.bind(this)
-    this.updateAutocompleteSuggestions = this.updateAutocompleteSuggestions.bind(this)
-    this.onFormSubmit = this.onFormSubmit.bind(this)
-  }
-
-  componentWillUnmount() {
-    this.cancelAutocomplete()
-  }
-
-  onFormSubmit(event) {
-    event.preventDefault()
-
-    const {
-      keywordSearchFromProps,
-      keywordSearch,
-      onChangeQuery,
-      onChangeFocusedCollection
-    } = this.props
-
-    if (keywordSearchFromProps !== keywordSearch) {
-      // Cancel any in-flight autocomplete requests
-      this.cancelAutocomplete()
-
-      onChangeFocusedCollection('')
-      onChangeQuery({
-        collection: {
-          keyword: keywordSearch
+  // Add keyboard shortcut listener
+  useEffect(() => {
+    const handleWindowKeyUp = (event) => {
+      const focusElement = () => {
+        if (inputRef.current && inputRef.current.input) {
+          inputRef.current.input.focus()
         }
+      }
+
+      triggerKeyboardShortcut({
+        event,
+        shortcutKey: '/',
+        shortcutCallback: focusElement
       })
     }
-  }
+
+    window.addEventListener('keyup', handleWindowKeyUp)
+
+    return () => window.removeEventListener('keyup', handleWindowKeyUp)
+  }, [])
 
   /**
    * When a user submits the search form before an autocomplete response comes back
    * this action is called to cancel any requests that are in flight and update the
    * store to inform the ui that we're no longer loading suggestions
    */
-  cancelAutocomplete() {
-    if (cancelToken) {
-      cancelToken.cancel()
+  const cancelAutocomplete = useCallback(() => {
+    if (cancelTokenRef.current) {
+      cancelTokenRef.current.cancel()
     }
 
-    this.setState({
-      isLoaded: true,
-      isLoading: false
-    })
-  }
+    setIsLoaded(true)
+    setIsLoading(false)
+  }, [])
 
-  clearAutocompleteSuggestions() {
-    this.setState({
-      isLoaded: false,
-      suggestions: []
-    })
-  }
+  const clearAutocompleteSuggestions = useCallback(() => {
+    setIsLoaded(false)
+    setSuggestions([])
+  }, [])
 
-  updateAutocompleteSuggestions(payload) {
-    const { suggestions } = payload
-    const { selected } = this.state
+  const updateAutocompleteSuggestions = useCallback((payload) => {
+    const { suggestions: newSuggestions } = payload
 
     // Removes any selected values from the list of selections
     const nonSelectedSuggestions = differenceWith(
-      suggestions,
+      newSuggestions,
       selected,
       (a, b) => a.type === b.type && a.value === b.value
     )
 
-    this.setState({
-      suggestions: nonSelectedSuggestions
-    })
-  }
+    setSuggestions(nonSelectedSuggestions)
+  }, [selected])
 
-  async fetchAutocomplete(data) {
+  const fetchAutocomplete = useCallback(async (data) => {
     if (!data) return
 
-    if (cancelToken) {
-      cancelToken.cancel()
+    if (cancelTokenRef.current) {
+      cancelTokenRef.current.cancel()
     }
 
     const { value } = data
@@ -185,14 +123,12 @@ class SearchAutocomplete extends Component {
 
     const { authToken } = reduxState
 
-    this.setState({
-      isLoading: true,
-      isLoaded: false
-    })
+    setIsLoading(true)
+    setIsLoaded(false)
 
     const requestObject = new AutocompleteRequest(authToken, earthdataEnvironment)
 
-    cancelToken = requestObject.getCancelToken()
+    cancelTokenRef.current = requestObject.getCancelToken()
 
     const params = {
       q: value
@@ -204,21 +140,17 @@ class SearchAutocomplete extends Component {
       const { feed } = dataObject
       const { entry } = feed
 
-      this.setState({
-        isLoaded: true,
-        isLoading: false
-      })
+      setIsLoaded(true)
+      setIsLoading(false)
 
-      this.updateAutocompleteSuggestions({
+      updateAutocompleteSuggestions({
         suggestions: entry
       })
     } catch (error) {
       if (isCancel(error)) return
 
-      this.setState({
-        isLoaded: false,
-        isLoading: false
-      })
+      setIsLoaded(false)
+      setIsLoading(false)
 
       reduxDispatch(handleError({
         error,
@@ -227,15 +159,14 @@ class SearchAutocomplete extends Component {
         requestObject
       }))
     }
-  }
+  }, [updateAutocompleteSuggestions])
 
   /**
    * Action for selecting an autocomplete suggestion
    * @param {Object} event Event object
    * @param {Object} data Autocomplete suggestion
    */
-  selectAutocompleteSuggestion(event, data) {
-    const { onChangeQuery, onSuggestionSelected } = this.props
+  const selectAutocompleteSuggestion = useCallback((event, data) => {
     const cmrFacet = mapAutocompleteToFacets(data)
 
     if (cmrFacet) {
@@ -256,30 +187,100 @@ class SearchAutocomplete extends Component {
       }
     })
 
-    // Call the parent's callback to clear the local state
-    if (onSuggestionSelected) {
-      onSuggestionSelected()
+    // Clear the local keyword state
+    setKeywordSearch('')
+  }, [onChangeQuery])
+
+  const onFormSubmit = useCallback((event) => {
+    event.preventDefault()
+
+    if (initialKeyword !== keywordSearch) {
+      // Cancel any in-flight autocomplete requests
+      cancelAutocomplete()
+
+      onChangeFocusedCollection('')
+      onChangeQuery({
+        collection: {
+          keyword: keywordSearch
+        }
+      })
     }
-  }
+  }, [
+    initialKeyword,
+    keywordSearch,
+    cancelAutocomplete,
+    onChangeFocusedCollection,
+    onChangeQuery
+  ])
+
+  /**
+   * AutoSuggest callback when the input value is changed
+   * @param {Object} event event object
+   * @param {Object} data object with the new value of the input
+   */
+  const onAutoSuggestChange = useCallback((event, { newValue }) => {
+    setKeywordSearch(newValue)
+    // Call optional parent callback
+    if (onKeywordChange) {
+      onKeywordChange(newValue)
+    }
+  }, [onKeywordChange])
+
+  /**
+   * AutoSuggest callback when a suggestion is selected
+   * @param {Object} data object with info about the selected suggestion. Value
+   * is null when no suggestion is highlighted
+   */
+  const onSuggestionHighlighted = useCallback((data) => {
+    const { suggestion: newSuggestion } = data
+
+    if (!isEqual(selectedSuggestion, newSuggestion)) {
+      setSelectedSuggestion(newSuggestion)
+    }
+  }, [selectedSuggestion])
+
+  /**
+   * AutoSuggest callback to retrieve the suggestion value, used when scrolling through suggestions with keyboard arrows
+   * @param {Object} suggestion
+   */
+  const getSuggestionValue = useCallback((suggestion) => suggestion.value, [])
+
+  /**
+   * AutoSuggest callback to determine if suggestions should be rendered
+   * @param {String} value text entered
+   */
+  const shouldRenderSuggestions = useCallback((value) => value.trim().length > 2, [])
+
+  /**
+   * AutoSuggest method to render the input component
+   */
+  const renderInputComponent = useCallback((inputProps) => (
+    <div className="position-relative">
+      <EDSCIcon className="search-form__search-icon position-absolute" icon={Search} />
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <input {...inputProps} />
+    </div>
+  ), [])
+
+  /**
+   * AutoSuggest method to render each suggestion
+   * @param {Object} suggestion
+   */
+  const renderSuggestion = useCallback((data) => (
+    <AutocompleteSuggestion
+      suggestion={data}
+    />
+  ), [])
 
   /**
    * AutoSuggest method to render the suggestions container
    */
-  renderSuggestionsContainer(opts) {
+  const renderSuggestionsContainer = useCallback((opts) => {
     const {
       containerProps,
       children,
       query
     } = opts
-
-    const {
-      selectedSuggestion
-    } = this.props
-
-    const {
-      isLoading,
-      isLoaded
-    } = this.state
 
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
@@ -338,84 +339,58 @@ class SearchAutocomplete extends Component {
         }
       </div>
     )
-  }
+  }, [isLoading, isLoaded, selectedSuggestion])
 
-  render() {
-    const {
-      keywordSearch,
-      onAutoSuggestChange,
-      getSuggestionValue,
-      renderInputComponent,
-      renderSuggestion,
-      shouldRenderSuggestions,
-      onSuggestionHighlighted
-    } = this.props
-
-    const {
-      suggestions
-    } = this.state
-
-    return (
-      <>
-        <form className="search-form__form" onSubmit={this.onFormSubmit}>
-          <Autosuggest
-            ref={this.inputRef}
-            className="search-form__autocomplete"
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={this.fetchAutocomplete}
-            onSuggestionsClearRequested={this.clearAutocompleteSuggestions}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestionsContainer={this.renderSuggestionsContainer}
-            renderSuggestion={renderSuggestion}
-            renderInputComponent={renderInputComponent}
-            onSuggestionSelected={this.selectAutocompleteSuggestion}
-            onSuggestionHighlighted={onSuggestionHighlighted}
-            shouldRenderSuggestions={shouldRenderSuggestions}
-            inputProps={
-              {
-                name: 'keywordSearch',
-                'data-testid': 'keyword-search-input',
-                className: 'search-form__input form-control',
-                placeholder: 'Type to search for data',
-                value: keywordSearch,
-                onChange: onAutoSuggestChange
-              }
+  return (
+    <>
+      <form className="search-form__form" onSubmit={onFormSubmit}>
+        <Autosuggest
+          ref={inputRef}
+          className="search-form__autocomplete"
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={fetchAutocomplete}
+          onSuggestionsClearRequested={clearAutocompleteSuggestions}
+          getSuggestionValue={getSuggestionValue}
+          renderSuggestionsContainer={renderSuggestionsContainer}
+          renderSuggestion={renderSuggestion}
+          renderInputComponent={renderInputComponent}
+          onSuggestionSelected={selectAutocompleteSuggestion}
+          onSuggestionHighlighted={onSuggestionHighlighted}
+          shouldRenderSuggestions={shouldRenderSuggestions}
+          inputProps={
+            {
+              name: 'keywordSearch',
+              'data-testid': 'keyword-search-input',
+              className: 'search-form__input form-control',
+              placeholder: 'Type to search for data',
+              value: keywordSearch,
+              onChange: onAutoSuggestChange
             }
-          />
-        </form>
-        <Button
-          bootstrapVariant="inline-block"
-          className="search-form__button search-form__button--submit"
-          label="Search"
-          onClick={this.onFormSubmit}
-        >
-          Search
-        </Button>
-      </>
-    )
-  }
+          }
+        />
+      </form>
+      <Button
+        bootstrapVariant="inline-block"
+        className="search-form__button search-form__button--submit"
+        label="Search"
+        onClick={onFormSubmit}
+      >
+        Search
+      </Button>
+    </>
+  )
 }
 
 SearchAutocomplete.propTypes = {
-  keywordSearch: PropTypes.string.isRequired,
-  keywordSearchFromProps: PropTypes.string.isRequired,
-  selectedSuggestion: PropTypes.shape({
-    value: PropTypes.string
-  }),
-  onAutoSuggestChange: PropTypes.func.isRequired,
+  initialKeyword: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
-  getSuggestionValue: PropTypes.func.isRequired,
-  renderInputComponent: PropTypes.func.isRequired,
-  renderSuggestion: PropTypes.func.isRequired,
-  shouldRenderSuggestions: PropTypes.func.isRequired,
-  onSuggestionHighlighted: PropTypes.func.isRequired,
-  onSuggestionSelected: PropTypes.func
+  onKeywordChange: PropTypes.func
 }
 
 SearchAutocomplete.defaultProps = {
-  selectedSuggestion: null,
-  onSuggestionSelected: null
+  initialKeyword: '',
+  onKeywordChange: null
 }
 
 export default SearchAutocomplete
