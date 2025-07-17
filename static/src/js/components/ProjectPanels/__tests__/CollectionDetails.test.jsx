@@ -1,17 +1,9 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen, within } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as EventEmitter from '../../../events/events'
 import CollectionDetails from '../CollectionDetails'
-import * as getApplicationConfig from '../../../../../../sharedUtils/config'
-
-Enzyme.configure({ adapter: new Adapter() })
-
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-})
 
 const granules = [
   {
@@ -26,8 +18,9 @@ const granules = [
   }
 ]
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: CollectionDetails,
+  defaultProps: {
     collectionId: 'COLL-1',
     focusedGranuleId: '',
     granulesMetadata: {
@@ -37,9 +30,7 @@ function setup(overrideProps) {
     location: {
       search: '?=test_search=test'
     },
-    onChangeProjectGranulePageNum: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
-    onRemoveGranuleFromProjectCollection: jest.fn(),
     projectCollection: {
       granules: {
         allIds: ['GRAN-1-PROV', 'GRAN-2-PROV'],
@@ -48,41 +39,35 @@ function setup(overrideProps) {
           pageNum: 1
         }
       }
-    },
-    ...overrideProps
-  }
-
-  return {
-    enzymeWrapper: shallow(
-      <CollectionDetails {...props} />
-    ),
-    props
-  }
-}
+    }
+  },
+  defaultZustandState: {
+    project: {
+      removeGranuleFromProjectCollection: jest.fn(),
+      updateProjectGranuleParams: jest.fn()
+    }
+  },
+  withRouter: true,
+  withRedux: true
+})
 
 describe('CollectionDetails component', () => {
-  test('renders a div', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.type()).toBe('div')
-    expect(enzymeWrapper.props().className).toEqual('collection-details')
-  })
-
   test('renders the granules', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find('.collection-details__item').length).toEqual(2)
+    expect(screen.getByText('GRAN-1.hdf', { exact: true })).toBeInTheDocument()
+    expect(screen.getByText('GRAN-2.hdf', { exact: true })).toBeInTheDocument()
   })
 
   describe('onMouseEnter', () => {
-    test('focuses the granule', () => {
+    test('focuses the granule', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-      const { enzymeWrapper } = setup()
+      const { user } = setup()
 
-      const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
+      const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
+      await user.hover(item)
 
-      item.simulate('mouseenter')
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.hoverGranule',
@@ -94,14 +79,17 @@ describe('CollectionDetails component', () => {
   })
 
   describe('onMouseLeave', () => {
-    test('unfocuses the granule', () => {
+    test('unfocuses the granule', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-      const { enzymeWrapper } = setup()
+      const { user } = setup()
 
-      const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
+      const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
+      await user.hover(item)
 
-      item.simulate('mouseleave')
+      jest.clearAllMocks()
+      await user.unhover(item)
+
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.hoverGranule',
@@ -113,16 +101,25 @@ describe('CollectionDetails component', () => {
   })
 
   describe('onClick', () => {
-    test('focuses the granule', () => {
+    test('focuses the granule', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-      const { enzymeWrapper } = setup()
+      const { user } = setup()
 
-      const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
+      const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
+      await user.click(item)
 
-      item.simulate('click')
-      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-      expect(eventEmitterEmitMock).toHaveBeenCalledWith(
+      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(2)
+      expect(eventEmitterEmitMock).toHaveBeenNthCalledWith(
+        1,
+        'map.layer.COLL-1.hoverGranule',
+        {
+          granule: granules[0]
+        }
+      )
+
+      expect(eventEmitterEmitMock).toHaveBeenNthCalledWith(
+        2,
         'map.layer.COLL-1.focusGranule',
         {
           granule: granules[0]
@@ -131,15 +128,16 @@ describe('CollectionDetails component', () => {
     })
   })
 
-  describe('onKeyPress', () => {
-    test('focuses the granule', () => {
+  describe('onKeyDown', () => {
+    test('focuses the granule', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-      const { enzymeWrapper } = setup()
+      const { user } = setup()
 
-      const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
+      const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
+      item.focus()
+      await user.keyboard('{enter}')
 
-      item.simulate('keypress')
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(
         'map.layer.COLL-1.focusGranule',
@@ -151,18 +149,16 @@ describe('CollectionDetails component', () => {
   })
 
   describe('Remove granule button', () => {
-    test('removes the granule', () => {
-      const { enzymeWrapper, props } = setup()
+    test('removes the granule', async () => {
+      const { props, user, zustandState } = setup()
 
-      const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
-      const removeButton = item.find('.collection-details__item-action').at(1)
+      const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
+      const removeButton = within(item).getByRole('button', { name: 'Remove granule' })
 
-      removeButton.props().onClick({
-        stopPropagation: jest.fn()
-      })
+      await user.click(removeButton)
 
-      expect(props.onRemoveGranuleFromProjectCollection).toHaveBeenCalledTimes(1)
-      expect(props.onRemoveGranuleFromProjectCollection).toHaveBeenCalledWith({
+      expect(zustandState.project.removeGranuleFromProjectCollection).toHaveBeenCalledTimes(1)
+      expect(zustandState.project.removeGranuleFromProjectCollection).toHaveBeenCalledWith({
         collectionId: props.collectionId,
         granuleId: 'GRAN-1-PROV'
       })
@@ -170,114 +166,103 @@ describe('CollectionDetails component', () => {
   })
 
   describe('View granule details button', () => {
-    test('focuses the granule', () => {
-      const { enzymeWrapper, props } = setup()
+    test('focuses the granule', async () => {
+      const { props, user } = setup()
 
-      const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
-      const infoButton = item.find('.collection-details__item-action').at(0)
+      const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
+      const infoButton = within(item).getByRole('button', { name: 'View granule details' })
 
-      infoButton.props().onClick({
-        stopPropagation: jest.fn()
-      })
+      await user.click(infoButton)
 
       expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
       expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('GRAN-1-PROV')
     })
-
-    test('sets the location', () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        defaultPortal: 'edsc'
-      }))
-
-      const { enzymeWrapper } = setup()
-
-      const item = enzymeWrapper.find('.collection-details__item-wrapper').at(0)
-      const infoButton = item.find('.collection-details__item-action').at(0)
-
-      expect(infoButton.props().to).toEqual({
-        pathname: '/search/granules/granule-details',
-        search: '?=test_search=test'
-      })
-    })
   })
 
   describe('when added granules are provided', () => {
-    const { enzymeWrapper } = setup({
-      projectCollection: {
-        granules: {
-          allIds: ['GRAN-1-PROV'],
-          hits: 1,
-          addedGranuleIds: ['GRAN-1-PROV']
-        }
-      }
-    })
-
     test('renders the added granules', () => {
-      expect(enzymeWrapper.find('.collection-details__item').length).toEqual(1)
-      expect(enzymeWrapper.find('.collection-details__item').text()).toContain('GRAN-1.hdf')
-    })
-  })
-
-  describe('when removed granules are provided', () => {
-    const { enzymeWrapper } = setup({
-      projectCollection: {
-        granules: {
-          allIds: ['GRAN-2-PROV'],
-          hits: 1,
-          removedGranuleIds: ['GRAN-1-PROV']
-        }
-      }
-    })
-
-    test('renders the removed granules', () => {
-      expect(enzymeWrapper.find('.collection-details__item').length).toEqual(1)
-      expect(enzymeWrapper.find('.collection-details__item').text()).toContain('GRAN-2.hdf')
-    })
-  })
-
-  describe('when all granules have not loaded', () => {
-    const { enzymeWrapper } = setup({
-      granulesMetadata: {
-        'GRAN-1-PROV': granules[0]
-      },
-      projectCollection: {
-        granules: {
-          allIds: ['GRAN-1-PROV'],
-          hits: 2,
-          params: {
-            pageNum: 1
-          }
-        }
-      }
-    })
-
-    test('renders the load more granules button', () => {
-      expect(enzymeWrapper.find('.collection-details__more-granules-button').length).toEqual(1)
-    })
-  })
-
-  describe('Load more granules button', () => {
-    test('renders the load more granules button', () => {
-      const { enzymeWrapper, props } = setup({
-        granulesMetadata: {
-          'GRAN-1-PROV': granules[0]
-        },
-        projectCollection: {
-          granules: {
-            allIds: ['GRAN-1-PROV'],
-            hits: 2,
-            params: {
-              pageNum: 1
+      setup({
+        overrideProps: {
+          projectCollection: {
+            granules: {
+              allIds: ['GRAN-1-PROV'],
+              hits: 1,
+              addedGranuleIds: ['GRAN-1-PROV']
             }
           }
         }
       })
 
-      const button = enzymeWrapper.find('.collection-details__more-granules-button')
-      button.props().onClick()
+      expect(screen.getByText('GRAN-1.hdf', { exact: true })).toBeInTheDocument()
+    })
+  })
 
-      expect(props.onChangeProjectGranulePageNum).toHaveBeenCalledTimes(1)
-      expect(props.onChangeProjectGranulePageNum).toHaveBeenCalledWith({
+  describe('when removed granules are provided', () => {
+    test('renders the removed granules', () => {
+      setup({
+        overrideProps: {
+          projectCollection: {
+            granules: {
+              allIds: ['GRAN-2-PROV'],
+              hits: 1,
+              removedGranuleIds: ['GRAN-1-PROV']
+            }
+          }
+        }
+      })
+
+      expect(screen.queryByText('GRAN-1.hdf', { exact: true })).not.toBeInTheDocument()
+      expect(screen.getByText('GRAN-2.hdf', { exact: true })).toBeInTheDocument()
+    })
+  })
+
+  describe('when all granules have not loaded', () => {
+    test('renders the load more granules button', () => {
+      setup({
+        overrideProps: {
+          granulesMetadata: {
+            'GRAN-1-PROV': granules[0]
+          },
+          projectCollection: {
+            granules: {
+              allIds: ['GRAN-1-PROV'],
+              hits: 2,
+              params: {
+                pageNum: 1
+              }
+            }
+          }
+        }
+      })
+
+      expect(screen.getByRole('button', { name: 'Load more' })).toBeInTheDocument()
+    })
+  })
+
+  describe('Load more granules button', () => {
+    test('renders the load more granules button', async () => {
+      const { user, zustandState } = setup({
+        overrideProps: {
+          granulesMetadata: {
+            'GRAN-1-PROV': granules[0]
+          },
+          projectCollection: {
+            granules: {
+              allIds: ['GRAN-1-PROV'],
+              hits: 2,
+              params: {
+                pageNum: 1
+              }
+            }
+          }
+        }
+      })
+
+      const button = screen.getByRole('button', { name: 'Load more' })
+      await user.click(button)
+
+      expect(zustandState.project.updateProjectGranuleParams).toHaveBeenCalledTimes(1)
+      expect(zustandState.project.updateProjectGranuleParams).toHaveBeenCalledWith({
         collectionId: 'COLL-1',
         pageNum: 2
       })

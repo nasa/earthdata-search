@@ -26,16 +26,13 @@ const setup = setupTest({
     granuleSearchResults: {},
     granulesMetadata: {},
     location: { search: 'value' },
-    onAddGranuleToProjectCollection: jest.fn(),
     onChangeGranulePageNum: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
-    onRemoveGranuleFromProjectCollection: jest.fn(),
-    panelView: 'list',
-    project: {}
+    panelView: 'list'
   }
 })
 
@@ -99,26 +96,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
-
-  test('onAddGranuleToProjectCollection calls actions.addGranuleToProjectCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'addGranuleToProjectCollection')
-
-    mapDispatchToProps(dispatch).onAddGranuleToProjectCollection({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onRemoveGranuleFromProjectCollection calls actions.removeGranuleFromProjectCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'removeGranuleFromProjectCollection')
-
-    mapDispatchToProps(dispatch).onRemoveGranuleFromProjectCollection({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
 })
 
 describe('mapStateToProps', () => {
@@ -140,7 +117,6 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      project: {},
       ui: {
         generateNotebook: {}
       }
@@ -155,8 +131,7 @@ describe('mapStateToProps', () => {
       generateNotebook: {},
       granuleQuery: {},
       granuleSearchResults: {},
-      granulesMetadata: {},
-      project: {}
+      granulesMetadata: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -181,15 +156,12 @@ describe('GranuleResultsBodyContainer component', () => {
       isOpenSearch: false,
       loadNextPage: expect.any(Function),
       location: { search: 'value' },
-      onAddGranuleToProjectCollection: expect.any(Function),
       onExcludeGranule: expect.any(Function),
       onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),
-      onRemoveGranuleFromProjectCollection: expect.any(Function),
-      panelView: 'list',
-      project: {}
+      panelView: 'list'
     }, {})
   })
 

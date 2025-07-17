@@ -11,8 +11,6 @@ import { Helmet } from 'react-helmet'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import actions from '../../actions'
 
-import { getProjectCollectionsRequiringChunking } from '../../selectors/project'
-
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 import ProjectCollectionsContainer
   from '../../containers/ProjectCollectionsContainer/ProjectCollectionsContainer'
@@ -21,6 +19,8 @@ import OverrideTemporalModalContainer
   from '../../containers/OverrideTemporalModalContainer/OverrideTemporalModalContainer'
 import SavedProjectsContainer from '../../containers/SavedProjectsContainer/SavedProjectsContainer'
 import Spinner from '../../components/Spinner/Spinner'
+import useEdscStore from '../../zustand/useEdscStore'
+import { getProjectCollectionsRequiringChunking } from '../../zustand/selectors/project'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 
@@ -32,12 +32,13 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 const mapStateToProps = (state) => ({
-  projectCollectionsRequiringChunking: getProjectCollectionsRequiringChunking(state),
   name: state.savedProject.name
 })
 
 export const Project = (props) => {
   const location = useLocation()
+
+  const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
 
   useEffect(() => {
     document.querySelector('.root__app').classList.add('root__app--fixed-footer')
@@ -49,8 +50,7 @@ export const Project = (props) => {
 
   const {
     onSubmitRetrieval,
-    onToggleChunkedOrderModal,
-    projectCollectionsRequiringChunking
+    onToggleChunkedOrderModal
   } = props
 
   const handleSubmit = (event) => {
@@ -120,7 +120,6 @@ export const Project = (props) => {
 
 Project.propTypes = {
   name: PropTypes.string.isRequired,
-  projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired,
   onToggleChunkedOrderModal: PropTypes.func.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired
 }

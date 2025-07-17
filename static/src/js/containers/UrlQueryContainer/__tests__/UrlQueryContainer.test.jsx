@@ -99,7 +99,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      project: {},
       query: {
         collection: {
           hasGranulesOrCwic: false,
@@ -143,7 +142,6 @@ describe('mapStateToProps', () => {
       pathname: '',
       pointSearch: [],
       polygonSearch: [],
-      project: {},
       query: {
         collection: {
           hasGranulesOrCwic: false,
@@ -177,7 +175,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      project: {},
       query: {
         collection: {
           hasGranulesOrCwic: false,
@@ -222,7 +219,6 @@ describe('mapStateToProps', () => {
       pathname: '',
       pointSearch: [],
       polygonSearch: [],
-      project: {},
       query: {
         collection: {
           hasGranulesOrCwic: false,

@@ -15,8 +15,10 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const GranuleDownloadButton = (props) => {
+  const addProjectCollection = useEdscStore((state) => state.project.addProjectCollection)
   const {
     authToken,
     badge,
@@ -28,7 +30,6 @@ export const GranuleDownloadButton = (props) => {
     initialLoading,
     isCollectionInProject,
     location,
-    onAddProjectCollection,
     onChangePath,
     tooManyGranules
   } = props
@@ -149,7 +150,7 @@ export const GranuleDownloadButton = (props) => {
       {...downloadButtonProps}
       onClick={
         () => {
-          onAddProjectCollection(focusedCollectionId)
+          addProjectCollection(focusedCollectionId)
           onChangePath(`/projects${stringifiedProjectParams}`)
         }
       }
@@ -185,7 +186,6 @@ GranuleDownloadButton.propTypes = {
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   location: locationPropType.isRequired,
-  onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired,
   tooManyGranules: PropTypes.bool.isRequired

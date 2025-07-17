@@ -15,14 +15,18 @@ import {
   getFocusedCollectionMetadata,
   getFocusedCollectionSubscriptions
 } from '../../selectors/collectionMetadata'
-import { getFocusedProjectCollection } from '../../selectors/project'
 import { getGranuleLimit } from '../../util/collectionMetadata/granuleLimit'
 
 import { locationPropType } from '../../util/propTypes/location'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
+
 import useEdscStore from '../../zustand/useEdscStore'
+import {
+  getFocusedProjectCollection,
+  getProjectCollectionsIds
+} from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch) => ({
   onAddProjectCollection:
@@ -45,10 +49,8 @@ export const mapStateToProps = (state) => ({
   collectionQuery: state.query.collection,
   earthdataEnvironment: getEarthdataEnvironment(state),
   focusedCollectionId: getFocusedCollectionId(state),
-  focusedProjectCollection: getFocusedProjectCollection(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
-  project: state.project,
   subscriptions: getFocusedCollectionSubscriptions(state)
 })
 
@@ -59,16 +61,12 @@ export const GranuleResultsActionsContainer = (props) => {
     collectionQuery,
     earthdataEnvironment,
     focusedCollectionId,
-    focusedProjectCollection,
     granuleQuery,
     granuleSearchResults,
     location,
-    onAddProjectCollection,
     onChangePath,
     onMetricsAddCollectionProject,
-    onRemoveCollectionFromProject,
     onSetActivePanelSection,
-    project,
     subscriptions
   } = props
 
@@ -76,13 +74,8 @@ export const GranuleResultsActionsContainer = (props) => {
     mapView: state.map.mapView
   }))
 
-  const {
-    collections
-  } = project
-
-  const {
-    allIds: projectCollectionIds = []
-  } = collections
+  const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
+  const projectCollectionIds = useEdscStore(getProjectCollectionsIds)
 
   // Determine if the current collection is in the project
   const isCollectionInProject = projectCollectionIds.indexOf(focusedCollectionId) > -1
@@ -126,10 +119,8 @@ export const GranuleResultsActionsContainer = (props) => {
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
       location={location}
-      onAddProjectCollection={onAddProjectCollection}
       onChangePath={onChangePath}
       onMetricsAddCollectionProject={onMetricsAddCollectionProject}
-      onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onSetActivePanelSection={onSetActivePanelSection}
       projectCollectionIds={projectCollectionIds}
       projectGranuleCount={projectGranuleCount}
@@ -146,9 +137,6 @@ GranuleResultsActionsContainer.propTypes = {
   collectionQuery: PropTypes.shape({}).isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
-  focusedProjectCollection: PropTypes.shape({
-    granules: PropTypes.shape({})
-  }).isRequired,
   granuleQuery: PropTypes.shape({
     pageNum: PropTypes.number
   }).isRequired,
@@ -158,16 +146,9 @@ GranuleResultsActionsContainer.propTypes = {
     isLoading: PropTypes.bool
   }).isRequired,
   location: locationPropType.isRequired,
-  onAddProjectCollection: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
-  project: PropTypes.shape({
-    collections: PropTypes.shape({
-      allIds: PropTypes.arrayOf(PropTypes.string)
-    })
-  }).isRequired,
   subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 

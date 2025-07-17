@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import actions from '../../actions/index'
 import { getUrsProfile } from '../../selectors/contactInfo'
 
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
-import { locationPropType } from '../../util/propTypes/location'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch) => ({
   onLogout: () => dispatch(actions.logout()),
@@ -22,13 +24,13 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   earthdataEnvironment: getEarthdataEnvironment(state),
-  projectCollectionIds: state.project.collections.allIds,
   savedProject: state.savedProject,
   retrieval: state.retrieval,
   ursProfile: getUrsProfile(state)
 })
 
 export const SecondaryToolbarContainer = (props) => {
+  const location = useLocation()
   const { disableDatabaseComponents } = getApplicationConfig()
   let secondaryToolbarEnabled = true
 
@@ -37,15 +39,15 @@ export const SecondaryToolbarContainer = (props) => {
   const {
     authToken,
     earthdataEnvironment,
-    location,
+    onFetchContactInfo,
     onLogout,
     onUpdateProjectName,
-    projectCollectionIds,
-    savedProject,
     retrieval,
-    ursProfile,
-    onFetchContactInfo
+    savedProject,
+    ursProfile
   } = props
+
+  const projectCollectionIds = useEdscStore(getProjectCollectionsIds)
 
   useEffect(() => {
     // If we have a authToken, but no ursProfile, request the contact info
@@ -62,8 +64,8 @@ export const SecondaryToolbarContainer = (props) => {
       onLogout={onLogout}
       onUpdateProjectName={onUpdateProjectName}
       projectCollectionIds={projectCollectionIds}
-      savedProject={savedProject}
       retrieval={retrieval}
+      savedProject={savedProject}
       secondaryToolbarEnabled={secondaryToolbarEnabled}
       ursProfile={ursProfile}
     />
@@ -73,11 +75,9 @@ export const SecondaryToolbarContainer = (props) => {
 SecondaryToolbarContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   earthdataEnvironment: PropTypes.string.isRequired,
-  location: locationPropType.isRequired,
   onFetchContactInfo: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   retrieval: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({
@@ -85,6 +85,4 @@ SecondaryToolbarContainer.propTypes = {
   }).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SecondaryToolbarContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SecondaryToolbarContainer)

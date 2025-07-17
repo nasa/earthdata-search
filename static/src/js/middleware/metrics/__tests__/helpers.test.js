@@ -200,26 +200,28 @@ describe('helpers', () => {
 
   describe('computeCollectionsAdded', () => {
     test('returns null when no collection is added', () => {
-      const state = {
+      useEdscStore.setState({
         project: {
           collections: {
             allIds: []
           }
         }
-      }
-      const value = computeCollectionsAdded(state)
+      })
+
+      const value = computeCollectionsAdded()
       expect(value).toEqual(null)
     })
 
     test('returns the last collection added', () => {
-      const state = {
+      useEdscStore.setState({
         project: {
           collections: {
             allIds: ['COLL_ID_1', 'COLL_ID_2']
           }
         }
-      }
-      const value = computeCollectionsAdded(state)
+      })
+
+      const value = computeCollectionsAdded()
       expect(value).toEqual('COLL_ID_2')
     })
   })

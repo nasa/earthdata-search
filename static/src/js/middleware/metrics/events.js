@@ -26,7 +26,7 @@ export const virtualPageview = (action, state) => {
       dimension12: computeSpatialType(state), // Spatial
       dimension13: computeTemporalType(state), // Temporal
       dimension14: computeCollectionsViewed(state), // Collections Viewed
-      dimension15: computeCollectionsAdded(state), // Collections Added
+      dimension15: computeCollectionsAdded(), // Collections Added
       dimension16: computeFacets() // Search Facet
     })
   }
@@ -47,7 +47,6 @@ export const virtualPageview = (action, state) => {
 *  method,
 *  type
 * }]
-
 */
 export const dataAccess = (action) => {
   const { payload } = action

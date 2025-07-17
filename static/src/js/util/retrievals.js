@@ -7,13 +7,14 @@ import {
   extractProjectCollectionGranuleParams
 } from './granules'
 
-import {
-  getProjectCollections,
-  getProjectCollectionsIds,
-  getProjectCollectionsMetadata
-} from '../selectors/project'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+
 import useEdscStore from '../zustand/useEdscStore'
+import {
+  getProjectCollectionsIds,
+  getProjectCollections,
+  getProjectCollectionsMetadata
+} from '../zustand/selectors/project'
 
 // Limit the fields we send with the retrieval to save space in the payload
 const permittedCollectionMetadataFields = [
@@ -65,10 +66,13 @@ export const prepareRetrievalParams = (state) => {
   const { shapefile } = useEdscStore.getState()
 
   // Retrieve data from Redux using selectors
-  const collectionsMetadata = getProjectCollectionsMetadata(state)
   const earthdataEnvironment = getEarthdataEnvironment(state)
-  const projectCollections = getProjectCollections(state)
-  const projectCollectionsIds = getProjectCollectionsIds(state)
+
+  // Retrieve data from Zustand
+  const zustandState = useEdscStore.getState()
+  const collectionsMetadata = getProjectCollectionsMetadata(zustandState)
+  const projectCollections = getProjectCollections(zustandState)
+  const projectCollectionsIds = getProjectCollectionsIds(zustandState)
 
   const retrievalCollections = []
 

@@ -41,13 +41,11 @@ export const GranuleResultsListItem = memo(({
     isItemLoaded,
     location,
     numColumns,
-    onAddGranuleToProjectCollection,
     onExcludeGranule,
     onFocusedGranuleChange,
     onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
-    onRemoveGranuleFromProjectCollection,
     readableGranuleName,
     setRowHeight,
     windowWidth
@@ -116,13 +114,11 @@ export const GranuleResultsListItem = memo(({
           isCollectionInProject={isCollectionInProject}
           isGranuleInProject={isGranuleInProject}
           location={location}
-          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onExcludeGranule={onExcludeGranule}
           onGenerateNotebook={onGenerateNotebook}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
-          onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
           readableGranuleName={readableGranuleName}
           ref={element}
         />
@@ -147,13 +143,11 @@ GranuleResultsListItem.propTypes = {
     isItemLoaded: PropTypes.func,
     location: PropTypes.shape({}),
     numColumns: PropTypes.number,
-    onAddGranuleToProjectCollection: PropTypes.func,
     onExcludeGranule: PropTypes.func,
     onFocusedGranuleChange: PropTypes.func,
     onGenerateNotebook: PropTypes.func,
     onMetricsAddGranuleProject: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,
-    onRemoveGranuleFromProjectCollection: PropTypes.func,
     readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
     setRowHeight: PropTypes.func,
     windowWidth: PropTypes.number

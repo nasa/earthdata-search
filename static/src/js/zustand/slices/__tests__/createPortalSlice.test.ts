@@ -1,6 +1,6 @@
 import useEdscStore from '../../useEdscStore'
 
-describe('createHomeSlice', () => {
+describe('createPortalSlice', () => {
   test('sets the default state', () => {
     const zustandState = useEdscStore.getState()
     const { portal } = zustandState

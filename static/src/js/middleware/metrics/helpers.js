@@ -1,4 +1,5 @@
 import spatialTypes from '../../constants/spatialTypes'
+import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 import useEdscStore from '../../zustand/useEdscStore'
 
 /**
@@ -71,15 +72,12 @@ export const computeCollectionsViewed = (state) => {
 
 /**
 * Get the last collection added from the state.
-* @param {Object} state - The current Redux state.
 * @returns {String} The id of the last collection added.
 */
-export const computeCollectionsAdded = (state) => {
-  const { project } = state
-  const { collections: projectCollections } = project
-  const { allIds } = projectCollections
+export const computeCollectionsAdded = () => {
+  const projectCollectionsIds = getProjectCollectionsIds(useEdscStore.getState())
 
-  if (allIds.length) return allIds[allIds.length - 1]
+  if (projectCollectionsIds.length) return projectCollectionsIds[projectCollectionsIds.length - 1]
 
   return null
 }

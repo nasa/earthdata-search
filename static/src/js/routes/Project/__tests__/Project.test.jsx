@@ -52,8 +52,7 @@ const setup = setupTest({
   defaultProps: {
     name: 'Test Project',
     onSubmitRetrieval: jest.fn(),
-    onToggleChunkedOrderModal: jest.fn(),
-    projectCollectionsRequiringChunking: {}
+    onToggleChunkedOrderModal: jest.fn()
   }
 })
 
@@ -122,9 +121,19 @@ describe('Project component', () => {
 
     test('calls onToggleChunkedOrderModal when any collections require chunking', async () => {
       const { props } = setup({
-        overrideProps: {
-          projectCollectionsRequiringChunking: {
-            collectionId: {}
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collection1'],
+              byId: {
+                collection1: {
+                  granules: {
+                    hits: 3000
+                  },
+                  selectedAccessMethod: 'esi0'
+                }
+              }
+            }
           }
         }
       })

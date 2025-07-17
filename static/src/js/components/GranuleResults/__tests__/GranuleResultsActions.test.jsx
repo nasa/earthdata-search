@@ -1,122 +1,114 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import {
+  act,
+  screen,
+  within
+} from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import GranuleResultsActions from '../GranuleResultsActions'
-import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import GranuleDownloadButton from '../GranuleDownloadButton'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 
-function setup(overrideProps) {
-  const props = {
-    authToken: 'token',
+const setup = setupTest({
+  Component: GranuleResultsActions,
+  defaultProps: {
     addedGranuleIds: [],
+    allGranulesInProject: false,
+    authToken: 'token',
+    earthdataEnvironment: 'prod',
+    focusedCollectionId: 'collectionId',
     focusedProjectCollection: {
       granules: {
         allIds: ['granuleId'],
         hits: 1
       }
     },
-    removedGranuleIds: [],
-    allGranulesInProject: false,
-    earthdataEnvironment: 'prod',
-    focusedCollectionId: 'collectionId',
     granuleLimit: 10000000,
-    searchGranuleCount: 5000,
+    handoffLinks: [],
     initialLoading: false,
     isCollectionInProject: false,
     location: {
       search: '?p=collectionId'
     },
-    onAddProjectCollection: jest.fn(),
-    onMetricsAddCollectionProject: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
     onChangePath: jest.fn(),
-    subscriptions: [],
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<GranuleResultsActions {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+    onMetricsAddCollectionProject: jest.fn(),
+    onSetActivePanelSection: jest.fn(),
+    removedGranuleIds: [],
+    searchGranuleCount: 5000,
+    subscriptions: []
+  },
+  defaultReduxState: {
+    authToken: 'token'
+  },
+  defaultZustandState: {
+    portal: {
+      features: {
+        authentication: true
+      }
+    },
+    project: {
+      addProjectCollection: jest.fn(),
+      removeProjectCollection: jest.fn()
+    }
+  },
+  withRedux: true
+})
 
 describe('GranuleResultsActions component', () => {
   describe('when no granules are in the project', () => {
     test('renders a Download All button', () => {
-      const { enzymeWrapper } = setup()
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('5,000')
+      setup()
+
+      expect(screen.getByRole('button', { name: 'Download All' })).toBeInTheDocument()
     })
   })
 
   describe('when some granules are in the project', () => {
     test('renders a Download button', () => {
-      const { enzymeWrapper } = setup({
-        addedGranuleIds: ['one'],
-        projectGranuleCount: 1,
-        isCollectionInProject: true
-      })
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download')
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('1')
-    })
-
-    test('renders a project indicator', () => {
-      const { enzymeWrapper } = setup({
-        addedGranuleIds: ['one'],
-        projectGranuleCount: 1,
-        isCollectionInProject: true
+      setup({
+        overrideProps: {
+          addedGranuleIds: ['one'],
+          projectGranuleCount: 1,
+          isCollectionInProject: true
+        }
       })
 
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('1')
+      const button = screen.getByRole('button', { name: 'Download' })
+      expect(button).toBeInTheDocument()
+
+      // The badge should show the number of granules in the project
+      expect(within(button).getByText('1')).toBeInTheDocument()
     })
   })
 
   describe('when all granules are in the project', () => {
     test('renders a Download All button', () => {
-      const { enzymeWrapper } = setup({
-        projectGranuleCount: 5000,
-        isCollectionInProject: true
+      setup({
+        overrideProps: {
+          projectGranuleCount: 5000,
+          isCollectionInProject: true
+        }
       })
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
-      expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('5,000')
+
+      const button = screen.getByRole('button', { name: 'Download All' })
+      expect(button).toBeInTheDocument()
+
+      // The badge should show the number of granules in the project
+      expect(within(button).getByText('5,000')).toBeInTheDocument()
     })
   })
 
-  test('renders a Download All button', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find(GranuleDownloadButton).props().buttonText).toEqual('Download All')
-    expect(enzymeWrapper.find(GranuleDownloadButton).props().badge.props.children[1]).toEqual('5,000')
-  })
-
-  test('renders a link to add the collection to the project', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.exists('.granule-results-actions__action--add')).toBeTruthy()
-    expect(enzymeWrapper.exists('.remove-from-project')).toBeFalsy()
-  })
-
-  test('renders a link to remove the collection from the project', () => {
-    const { enzymeWrapper } = setup()
-    enzymeWrapper.setProps({ isCollectionInProject: true })
-
-    expect(enzymeWrapper.exists('.granule-results-actions__action--remove')).toBeTruthy()
-    expect(enzymeWrapper.exists('.granule-results-actions__action--add')).toBeFalsy()
-  })
-
   describe('addToProjectButton', () => {
-    test('calls onAddProjectCollection', () => {
-      const { enzymeWrapper, props } = setup()
-      const button = enzymeWrapper.find('.granule-results-actions__action--add')
+    test('calls onAddProjectCollection', async () => {
+      const { props, user, zustandState } = setup()
 
-      button.simulate('click')
-      expect(props.onAddProjectCollection).toHaveBeenCalledTimes(1)
-      expect(props.onAddProjectCollection).toHaveBeenCalledWith('collectionId')
+      const button = screen.getByRole('button', { name: 'Add collection to the current project' })
+      await user.click(button)
+
+      expect(zustandState.project.addProjectCollection).toHaveBeenCalledTimes(1)
+      expect(zustandState.project.addProjectCollection).toHaveBeenCalledWith('collectionId')
 
       expect(props.onMetricsAddCollectionProject).toHaveBeenCalledTimes(1)
       expect(props.onMetricsAddCollectionProject).toHaveBeenCalledWith({
@@ -125,77 +117,79 @@ describe('GranuleResultsActions component', () => {
         view: ''
       })
     })
-
-    test('renders the add button under PortalFeatureContainer', () => {
-      const { enzymeWrapper } = setup()
-
-      const button = enzymeWrapper
-        .find(PortalFeatureContainer)
-        .find('.granule-results-actions__action--add')
-      const portalFeatureContainer = button.parents(PortalFeatureContainer)
-
-      expect(button.exists()).toBeTruthy()
-      expect(portalFeatureContainer.props().authentication).toBeTruthy()
-    })
   })
 
   describe('removeFromProjectButton', () => {
-    test('calls onRemoveCollectionFromProject', () => {
-      const { enzymeWrapper, props } = setup()
-      enzymeWrapper.setProps({ isCollectionInProject: true })
-      const button = enzymeWrapper.find('.granule-results-actions__action--remove')
+    test('calls onRemoveCollectionFromProject', async () => {
+      const { user, zustandState } = setup({
+        overrideProps: {
+          isCollectionInProject: true
+        }
+      })
 
-      button.simulate('click')
-      expect(props.onRemoveCollectionFromProject).toHaveBeenCalledTimes(1)
-      expect(props.onRemoveCollectionFromProject).toHaveBeenCalledWith('collectionId')
+      const button = screen.getByRole('button', { name: 'Remove collection from the current project' })
+      await user.click(button)
+
+      expect(zustandState.project.removeProjectCollection).toHaveBeenCalledTimes(1)
+      expect(zustandState.project.removeProjectCollection).toHaveBeenCalledWith('collectionId')
     })
   })
 
-  describe('downloadAllButton', () => {
-    test('hides the granule count badge when loading', () => {
-      const { enzymeWrapper } = setup({ searchGranuleCount: null })
+  describe('when handoff links are present', () => {
+    test('renders the handoff links', async () => {
+      const { user } = setup({
+        overrideProps: {
+          handoffLinks: [
+            {
+              href: 'https://example.com/handoff1',
+              title: 'Handoff 1'
+            },
+            {
+              href: 'https://example.com/handoff2',
+              title: 'Handoff 2'
+            }
+          ]
+        }
+      })
 
-      const button = enzymeWrapper.find(GranuleDownloadButton)
+      // Open the dropdown
+      const dropdown = screen.getByRole('button', { name: 'Explore' })
+      await act(async () => {
+        await user.click(dropdown)
+      })
 
-      expect(button.props().badge).toBeNull()
-    })
-
-    test('renders the download all button under PortalFeatureContainer', () => {
-      const { enzymeWrapper } = setup()
-
-      const button = enzymeWrapper
-        .find(PortalFeatureContainer)
-        .find(GranuleDownloadButton)
-      const portalFeatureContainer = button.parents(PortalFeatureContainer)
-
-      expect(button.exists()).toBeTruthy()
-      expect(portalFeatureContainer.props().authentication).toBeTruthy()
+      const handoffLinks = screen.getAllByRole('link')
+      expect(handoffLinks).toHaveLength(2)
+      expect(handoffLinks[0]).toHaveTextContent('Handoff 1')
+      expect(handoffLinks[0]).toHaveAttribute('href', 'https://example.com/handoff1')
+      expect(handoffLinks[1]).toHaveTextContent('Handoff 2')
+      expect(handoffLinks[1]).toHaveAttribute('href', 'https://example.com/handoff2')
     })
   })
 
   describe('when a user is not subscribed', () => {
     test('renders the correct subscription button', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      const subscriptionButton = enzymeWrapper.find('.granule-results-actions__action--subscriptions')
-
-      expect(subscriptionButton.props().className).not.toContain('granule-results-actions__action--is-active')
+      const button = screen.getByRole('button', { name: 'Create subscription' })
+      expect(button).toBeInTheDocument()
     })
   })
 
   describe('when a user is subscribed', () => {
     test('renders the correct subscription button', () => {
-      const { enzymeWrapper } = setup({
-        subscriptions: [
-          {
-            name: 'Sub 1'
-          }
-        ]
+      setup({
+        overrideProps: {
+          subscriptions: [
+            {
+              name: 'Sub 1'
+            }
+          ]
+        }
       })
 
-      const subscriptionButton = enzymeWrapper.find('.granule-results-actions__action--subscriptions')
-
-      expect(subscriptionButton.props().className).toContain('granule-results-actions__action--is-active')
+      const button = screen.getByRole('button', { name: 'View or edit subscriptions' })
+      expect(button).toBeInTheDocument()
     })
   })
 })

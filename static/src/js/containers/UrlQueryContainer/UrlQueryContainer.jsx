@@ -46,7 +46,6 @@ export const mapStateToProps = (state) => ({
   pathname: state.router.location.pathname,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
-  project: state.project,
   query: state.query,
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal
@@ -81,6 +80,7 @@ export const UrlQueryContainer = (props) => {
     platformFacets: state.facetParams.cmrFacets.platforms_h,
     portalId: state.portal.portalId,
     processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,
+    project: state.project,
     projectFacets: state.facetParams.cmrFacets.project_h,
     scienceKeywordFacets: state.facetParams.cmrFacets.science_keywords_h,
     selectedFeatures: state.shapefile.selectedFeatures,
@@ -124,8 +124,7 @@ UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onChangeUrl: PropTypes.func.isRequired,
-  project: PropTypes.shape({}).isRequired
+  onChangeUrl: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UrlQueryContainer)

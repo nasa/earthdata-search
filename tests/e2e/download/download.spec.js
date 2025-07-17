@@ -99,6 +99,7 @@ test.describe('Download spec', () => {
         json: granules.body,
         headers: {
           ...authHeaders,
+          'access-control-expose-headers': 'cmr-hits',
           'cmr-hits': '42'
         }
       })

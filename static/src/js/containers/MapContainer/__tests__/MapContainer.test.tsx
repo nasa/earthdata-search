@@ -103,7 +103,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
-      project: {},
       query: {
         collection: {
           spatial: {}
@@ -135,7 +134,6 @@ describe('mapStateToProps', () => {
       lineSearch: undefined,
       pointSearch: undefined,
       polygonSearch: undefined,
-      project: {},
       router: {}
     }
 

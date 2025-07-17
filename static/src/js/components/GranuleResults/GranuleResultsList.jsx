@@ -26,12 +26,10 @@ import './GranuleResultsList.scss'
  * @param {Number} props.itemCount - Number of total granule list itmes.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
  * @param {Object} props.location - Location passed from react router.
- * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
- * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
  * @param {Array} props.readableGranuleName - The readableGranuleName filter value
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the visible middle index.
  * @param {Number} props.visibleMiddleIndex - The current visible middle index.
@@ -52,13 +50,11 @@ export const GranuleResultsList = ({
   itemCount,
   loadMoreItems,
   location,
-  onAddGranuleToProjectCollection,
   onGenerateNotebook,
   onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
-  onRemoveGranuleFromProjectCollection,
   readableGranuleName,
   setVisibleMiddleIndex,
   visibleMiddleIndex
@@ -91,13 +87,11 @@ export const GranuleResultsList = ({
             itemCount={itemCount}
             loadMoreItems={loadMoreItems}
             location={location}
-            onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
             onExcludeGranule={onExcludeGranule}
             onFocusedGranuleChange={onFocusedGranuleChange}
             onGenerateNotebook={onGenerateNotebook}
             onMetricsAddGranuleProject={onMetricsAddGranuleProject}
             onMetricsDataAccess={onMetricsDataAccess}
-            onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
             readableGranuleName={readableGranuleName}
             setVisibleMiddleIndex={setVisibleMiddleIndex}
             visibleMiddleIndex={visibleMiddleIndex}
@@ -130,13 +124,11 @@ GranuleResultsList.propTypes = {
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
   location: locationPropType.isRequired,
-  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   readableGranuleName: PropTypes.arrayOf(PropTypes.string).isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number

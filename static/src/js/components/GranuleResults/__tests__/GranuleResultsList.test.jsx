@@ -36,12 +36,10 @@ const setup = setupTest({
     isGranuleInProject: jest.fn(),
     isProjectGranulesLoading: false,
     location: { search: 'value' },
-    onAddGranuleToProjectCollection: jest.fn(),
     onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
-    onRemoveGranuleFromProjectCollection: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     itemCount: 2,
     isItemLoaded: jest.fn().mockReturnValue(true),
@@ -57,5 +55,32 @@ describe('GranuleResultsList component', () => {
     setup()
 
     expect(GranuleResultsListBody).toHaveBeenCalledTimes(1)
+    expect(GranuleResultsListBody).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      collectionQuerySpatial: {},
+      collectionTags: {},
+      directDistributionInformation: {},
+      excludedGranuleIds: [],
+      focusedGranuleId: '',
+      generateNotebook: {},
+      granules: [{ title: '123' }, { title: '456' }],
+      height: 600,
+      isCollectionInProject: true,
+      isGranuleInProject: expect.any(Function),
+      isItemLoaded: expect.any(Function),
+      isOpenSearch: false,
+      itemCount: 2,
+      loadMoreItems: expect.any(Function),
+      location: { search: 'value' },
+      onExcludeGranule: expect.any(Function),
+      onFocusedGranuleChange: expect.any(Function),
+      onGenerateNotebook: expect.any(Function),
+      onMetricsAddGranuleProject: expect.any(Function),
+      onMetricsDataAccess: expect.any(Function),
+      readableGranuleName: [''],
+      setVisibleMiddleIndex: expect.any(Function),
+      visibleMiddleIndex: 1,
+      width: 600
+    }, {})
   })
 })

@@ -1,15 +1,26 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import { ProjectCollectionsList } from '../ProjectCollectionsList'
 import ProjectCollectionItem from '../ProjectCollectionItem'
-import projectionCodes from '../../../constants/projectionCodes'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../ProjectCollectionItem', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/projects',
+    search: '?p=!C1205428742-ASF&pg[1][v]=t&pg[1][m]=download&pg[1][cd]=f&tl=1574502188.065!5!!',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
+
+const setup = setupTest({
+  Component: ProjectCollectionsList,
+  defaultProps: {
     collectionsMetadata: {
       collectionId1: {
         mock: 'data 1'
@@ -19,18 +30,18 @@ function setup() {
       }
     },
     collectionsQuery: {},
-    location: {},
-    map: {
-      projection: projectionCodes.geographic
-    },
-    onRemoveCollectionFromProject: jest.fn(),
-    onToggleCollectionVisibility: jest.fn(),
-    onTogglePanels: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
     onSetActivePanel: jest.fn(),
     onSetActivePanelSection: jest.fn(),
+    onTogglePanels: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
+    onViewCollectionDetails: jest.fn(),
+    onViewCollectionGranules: jest.fn(),
+    panels: {
+      activePanel: '0.0.0',
+      isOpen: true
+    }
+  },
+  defaultZustandState: {
     project: {
       collections: {
         allIds: ['collectionId1', 'collectionId2'],
@@ -43,38 +54,49 @@ function setup() {
           }
         }
       }
-    },
-    panels: {
-      activePanel: '0.0.0',
-      isOpen: true
-    },
-    collectionSearch: {}
+    }
   }
-
-  const enzymeWrapper = shallow(<ProjectCollectionsList {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('ProjectCollectionsList component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.find(ProjectCollectionItem).length).toBe(2)
-    expect(enzymeWrapper.find(ProjectCollectionItem).first().props().collectionId).toEqual('collectionId1')
-    expect(enzymeWrapper.find(ProjectCollectionItem).first().props().collectionMetadata).toEqual({
-      mock: 'data 1'
-    })
+    setup()
 
-    expect(typeof enzymeWrapper.find(ProjectCollectionItem).first().props().onRemoveCollectionFromProject).toEqual('function')
+    expect(ProjectCollectionItem).toHaveBeenCalledTimes(2)
+    expect(ProjectCollectionItem).toHaveBeenNthCalledWith(1, {
+      activePanelSection: '0',
+      collectionCount: 2,
+      collectionId: 'collectionId1',
+      collectionMetadata: { mock: 'data 1' },
+      collectionsQuery: {},
+      color: 'rgb(46, 204, 113, 1)',
+      index: 0,
+      isPanelActive: true,
+      onSetActivePanel: expect.any(Function),
+      onSetActivePanelSection: expect.any(Function),
+      onTogglePanels: expect.any(Function),
+      onUpdateFocusedCollection: expect.any(Function),
+      onViewCollectionDetails: expect.any(Function),
+      onViewCollectionGranules: expect.any(Function),
+      projectCollection: { isValid: false }
+    }, {})
 
-    expect(enzymeWrapper.find(ProjectCollectionItem).last().props().collectionId).toEqual('collectionId2')
-    expect(enzymeWrapper.find(ProjectCollectionItem).last().props().collectionMetadata).toEqual({
-      mock: 'data 2'
-    })
-
-    expect(typeof enzymeWrapper.find(ProjectCollectionItem).last().props().onRemoveCollectionFromProject).toEqual('function')
+    expect(ProjectCollectionItem).toHaveBeenNthCalledWith(2, {
+      activePanelSection: '0',
+      collectionCount: 2,
+      collectionId: 'collectionId2',
+      collectionMetadata: { mock: 'data 2' },
+      collectionsQuery: {},
+      color: 'rgb(52, 152, 219, 1)',
+      index: 1,
+      isPanelActive: false,
+      onSetActivePanel: expect.any(Function),
+      onSetActivePanelSection: expect.any(Function),
+      onTogglePanels: expect.any(Function),
+      onUpdateFocusedCollection: expect.any(Function),
+      onViewCollectionDetails: expect.any(Function),
+      onViewCollectionGranules: expect.any(Function),
+      projectCollection: { isValid: false }
+    }, {})
   })
 })
