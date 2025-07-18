@@ -11,6 +11,8 @@ import Spinner from '../Spinner/Spinner'
 import GranuleResultsList from './GranuleResultsList'
 import GranuleResultsTable from './GranuleResultsTable'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './GranuleResultsBody.scss'
 
 /**
@@ -47,15 +49,12 @@ const GranuleResultsBody = ({
   isOpenSearch,
   loadNextPage,
   location,
-  onAddGranuleToProjectCollection,
   onExcludeGranule,
   onGenerateNotebook,
   onFocusedGranuleChange,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
-  onRemoveGranuleFromProjectCollection,
-  panelView,
-  project
+  panelView
 }) => {
   const [hoveredGranuleId, setHoveredGranuleId] = useState(null)
 
@@ -93,7 +92,7 @@ const GranuleResultsBody = ({
     limit: false
   })
 
-  const { collections: projectCollections = {} } = project
+  const projectCollections = useEdscStore((state) => state.project.collections)
 
   const {
     byId: projectCollectionsById = {},
@@ -211,13 +210,11 @@ const GranuleResultsBody = ({
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
           location={location}
-          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
           onExcludeGranule={onExcludeGranule}
           onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
-          onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           visibleMiddleIndex={visibleMiddleIndex}
         />
@@ -249,8 +246,6 @@ const GranuleResultsBody = ({
           onMetricsDataAccess={onMetricsDataAccess}
           visibleMiddleIndex={visibleMiddleIndex}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
-          onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
-          onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
           isGranuleInProject={isGranuleInProject}
           isCollectionInProject={isCollectionInProject}
         />
@@ -327,17 +322,12 @@ GranuleResultsBody.propTypes = {
   isOpenSearch: PropTypes.bool.isRequired,
   location: locationPropType.isRequired,
   loadNextPage: PropTypes.func.isRequired,
-  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired,
-  project: PropTypes.shape({
-    collections: PropTypes.shape({})
-  }).isRequired
+  panelView: PropTypes.string.isRequired
 }
 
 export default GranuleResultsBody

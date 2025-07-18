@@ -8,9 +8,9 @@ import {
 
 import { getFocusedCollectionGranuleQuery } from '../selectors/query'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import { getProjectCollectionsIds } from '../selectors/project'
 import isPath from '../util/isPath'
 import useEdscStore from '../zustand/useEdscStore'
+import { getProjectCollectionsIds } from '../zustand/selectors/project'
 
 export const updateCollectionQuery = (payload) => ({
   type: UPDATE_COLLECTION_QUERY,
@@ -31,10 +31,12 @@ export const updateRegionQuery = (payload) => ({
 export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => {
   const state = getState()
 
+  const zustandState = useEdscStore.getState()
+
   // Retrieve data from Redux using selectors
   const focusedCollectionGranuleQuery = getFocusedCollectionGranuleQuery(state)
   const focusedCollectionId = getFocusedCollectionId(state)
-  const projectCollectionsIds = getProjectCollectionsIds(state)
+  const projectCollectionsIds = getProjectCollectionsIds(zustandState)
 
   const newQuery = queryOptions
 
@@ -60,7 +62,9 @@ export const changeQuery = (queryOptions = {}) => async (dispatch, getState) => 
 
     // If there are collections in the project, update their respective granule results
     if (projectCollectionsIds.length > 0) {
-      dispatch(actions.getProjectGranules())
+      const { project } = zustandState
+      const { getProjectGranules } = project
+      getProjectGranules()
     }
   }
 
@@ -73,7 +77,9 @@ export const changeProjectQuery = (query) => async (dispatch) => {
 
   dispatch(updateCollectionQuery(collection))
 
-  dispatch(actions.getProjectGranules())
+  const { project } = useEdscStore.getState()
+  const { getProjectGranules } = project
+  getProjectGranules()
 }
 
 export const changeRegionQuery = (query) => (dispatch) => {
@@ -152,14 +158,15 @@ export const removeTemporalFilter = () => (dispatch) => {
 
 export const clearFilters = () => (dispatch, getState) => {
   // TODO EDSC-4514: Create a clearFilters function in zustand that manages clearing everything
-  const { facetParams } = useEdscStore.getState()
+  const { facetParams, project } = useEdscStore.getState()
   const { resetFacetParams } = facetParams
   resetFacetParams()
 
   dispatch({ type: CLEAR_FILTERS })
 
   dispatch(actions.getCollections())
-  dispatch(actions.getProjectCollections())
+  const { getProjectCollections } = project
+  getProjectCollections()
 
   const state = getState()
   const { router } = state

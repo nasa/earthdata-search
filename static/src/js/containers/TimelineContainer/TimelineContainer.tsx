@@ -12,14 +12,19 @@ import { metricsTimeline } from '../../middleware/metrics/actions'
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 // @ts-expect-error The file does not have types
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
-// @ts-expect-error The file does not have types
-import { getProjectCollectionsIds } from '../../selectors/project'
 import { isPath } from '../../util/isPath'
 
 // @ts-expect-error The file does not have types
 import Timeline from '../../components/Timeline/Timeline'
 
-import { CollectionsMetadata, Query } from '../../types/sharedTypes'
+import type {
+  CollectionMetadata,
+  CollectionsMetadata,
+  Query
+} from '../../types/sharedTypes'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeQuery:
@@ -38,7 +43,6 @@ export const mapStateToProps = (state) => ({
   focusedCollectionId: getFocusedCollectionId(state),
   isOpen: state.ui.timeline.isOpen,
   pathname: state.router.location.pathname,
-  projectCollectionsIds: getProjectCollectionsIds(state),
   search: state.router.location.search,
   temporalSearch: state.query.collection.temporal
 })
@@ -67,8 +71,6 @@ interface TimelineContainerProps {
   onToggleTimeline: (open: boolean) => void
   /** The pathname of the current location */
   pathname: string
-  /** The project collections IDs */
-  projectCollectionsIds: string[]
   /** The search string from the location */
   search: string
   /** The temporal search object */
@@ -85,10 +87,11 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
     onToggleOverrideTemporalModal,
     onToggleTimeline,
     pathname,
-    projectCollectionsIds,
     search: searchLocation,
     temporalSearch = {}
   } = props
+
+  const projectCollectionsIds = useEdscStore(getProjectCollectionsIds)
 
   // Determine the collectionMetadata the timeline should be displaying
   // Ensure that timeline does not appear on the `Saved Projects` page
@@ -108,7 +111,7 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
   collectionsToRender.slice(0, 3).forEach((collectionId) => {
     const { [collectionId]: visibleCollectionMetadata = {} } = collectionsMetadata
 
-    collectionMetadata[collectionId] = visibleCollectionMetadata
+    collectionMetadata[collectionId] = visibleCollectionMetadata as CollectionMetadata
   })
 
   if (collectionsToRender.length === 0) return null

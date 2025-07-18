@@ -2,12 +2,11 @@ import { isAccessMethodValid, validAccessMethod } from './accessMethods'
 
 /**
  * Returns true if every project collection can be downloaded
- * @param {Object} project - Project object from the redux store
+ * @param {Object} projectCollections - Project collections from the store
  * @param {Object} collections - Collections object from the redux store
  * @return {Object}
  */
-export const isProjectValid = (project, collectionsMetadata) => {
-  const { collections: projectCollections = {} } = project
+export const isProjectValid = (projectCollections, collectionsMetadata) => {
   const {
     byId: projectCollectionsById = {},
     allIds = []

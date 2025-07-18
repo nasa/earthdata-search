@@ -20,16 +20,11 @@ const setup = setupTest({
     focusedGranuleId: '',
     granulesQueries: {},
     granulesMetadata: {},
-    onSelectAccessMethod: jest.fn(),
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
-    onUpdateAccessMethod: jest.fn(),
-    onChangeProjectGranulePageNum: jest.fn(),
     onSetActivePanelGroup: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
-    onAddGranuleToProjectCollection: jest.fn(),
-    onRemoveGranuleFromProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     location: {
@@ -37,22 +32,23 @@ const setup = setupTest({
     },
     onChangePath: jest.fn(),
     overrideTemporal: {},
-    project: {
-      collections: {
-        allIds: ['collectionId']
-      }
-    },
-    projectCollectionsMetadata: {
-      collectionId: {
-        mock: 'data'
-      }
-    },
     panels: {
       activePanel: '0.0.0',
       isOpen: false
     },
     spatial: {},
     ursProfile: {}
+  },
+  defaultZustandState: {
+    project: {
+      collections: {
+        allIds: ['collectionId']
+      },
+      addGranuleToProjectCollection: jest.fn(),
+      removeGranuleFromProjectCollection: jest.fn(),
+      selectAccessMethod: jest.fn(),
+      updateAccessMethod: jest.fn()
+    }
   }
 })
 
@@ -65,16 +61,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('path')
-  })
-
-  test('onSelectAccessMethod calls actions.selectAccessMethod', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'selectAccessMethod')
-
-    mapDispatchToProps(dispatch).onSelectAccessMethod('method')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('method')
   })
 
   test('onTogglePanels calls actions.togglePanels', () => {
@@ -107,36 +93,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledWith('panelId')
   })
 
-  test('onUpdateAccessMethod calls actions.updateAccessMethod', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateAccessMethod')
-
-    mapDispatchToProps(dispatch).onUpdateAccessMethod({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onAddGranuleToProjectCollection calls actions.addGranuleToProjectCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'addGranuleToProjectCollection')
-
-    mapDispatchToProps(dispatch).onAddGranuleToProjectCollection({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onRemoveGranuleFromProjectCollection calls actions.removeGranuleFromProjectCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'removeGranuleFromProjectCollection')
-
-    mapDispatchToProps(dispatch).onRemoveGranuleFromProjectCollection({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onUpdateFocusedCollection calls actions.updateFocusedCollection', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateFocusedCollection')
@@ -155,16 +111,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('granuleId')
-  })
-
-  test('onChangeProjectGranulePageNum calls actions.changeProjectGranulePageNum', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeProjectGranulePageNum')
-
-    mapDispatchToProps(dispatch).onChangeProjectGranulePageNum({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
   test('onViewCollectionGranules calls actions.viewCollectionGranules', () => {
@@ -203,7 +149,6 @@ describe('mapStateToProps', () => {
       focusedGranule: 'granuleId',
       map: {},
       panels: {},
-      project: {},
       query: {
         collection: {
           spatial: {},
@@ -228,8 +173,6 @@ describe('mapStateToProps', () => {
       granulesMetadata: {},
       location: {},
       panels: {},
-      project: {},
-      projectCollectionsMetadata: {},
       spatial: {},
       temporal: {},
       ursProfile: {},
@@ -252,17 +195,16 @@ describe('ProjectPanelsContainer component', () => {
       granulesQueries: props.granulesQueries,
       granulesMetadata: props.granulesMetadata,
       location: props.location,
-      onAddGranuleToProjectCollection: props.onAddGranuleToProjectCollection,
+      onAddGranuleToProjectCollection: expect.any(Function),
       onChangePath: props.onChangePath,
-      onChangeProjectGranulePageNum: props.onChangeProjectGranulePageNum,
       onFocusedGranuleChange: props.onFocusedGranuleChange,
-      onRemoveGranuleFromProjectCollection: props.onRemoveGranuleFromProjectCollection,
-      onSelectAccessMethod: props.onSelectAccessMethod,
+      onRemoveGranuleFromProjectCollection: expect.any(Function),
+      onSelectAccessMethod: expect.any(Function),
       onSetActivePanel: props.onSetActivePanel,
       onSetActivePanelGroup: props.onSetActivePanelGroup,
       onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
       onTogglePanels: props.onTogglePanels,
-      onUpdateAccessMethod: props.onUpdateAccessMethod,
+      onUpdateAccessMethod: expect.any(Function),
       onUpdateFocusedCollection: props.onUpdateFocusedCollection,
       onViewCollectionGranules: props.onViewCollectionGranules,
       overrideTemporal: props.overrideTemporal,
@@ -270,8 +212,13 @@ describe('ProjectPanelsContainer component', () => {
         activePanel: '0.0.0',
         isOpen: false
       },
-      project: props.project,
-      projectCollectionsMetadata: props.projectCollectionsMetadata,
+      project: expect.objectContaining({
+        collections: {
+          allIds: ['collectionId'],
+          byId: {}
+        }
+      }),
+      projectCollectionsMetadata: {},
       spatial: {},
       temporal: {},
       ursProfile: {}

@@ -9,7 +9,8 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { prepareRetrievalParams } from '../util/retrievals'
-import { submittingProject, submittedProject } from './project'
+
+import useEdscStore from '../zustand/useEdscStore'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING
@@ -29,11 +30,15 @@ export const submitRetrieval = () => (dispatch, getState) => {
   // Retrieve data from Redux using selectors
   const earthdataEnvironment = getEarthdataEnvironment(state)
 
-  const { authToken, project } = state
+  const { authToken } = state
 
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
 
-  const { collections: projectCollections } = project
+  const {
+    collections: projectCollections,
+    submittedProject,
+    submittingProject
+  } = useEdscStore.getState().project
   const {
     allIds: projectCollectionsIds,
     byId: projectCollectionsById
@@ -86,7 +91,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
     collections: metricsCollections
   }))
 
-  dispatch(submittingProject())
+  submittingProject()
 
   const orderParams = prepareRetrievalParams(state)
 
@@ -95,7 +100,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
       const { data } = responseObject
       const { id: retrievalId } = data
 
-      dispatch(submittedProject())
+      submittedProject()
 
       const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
 

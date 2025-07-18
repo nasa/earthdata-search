@@ -39,39 +39,24 @@ const setup = setupTest({
     },
     savedProject: {},
     onMetricsDataAccess: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
     onTogglePanels: jest.fn(),
-    onToggleCollectionVisibility: jest.fn(),
     onUpdateProjectName: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
     onSetActivePanel: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     onViewCollectionGranules: jest.fn()
+  },
+  defaultZustandState: {
+    project: {
+      collections: {
+        allIds: ['collectionId']
+      }
+    }
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onRemoveCollectionFromProject calls actions.removeCollectionFromProject', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'removeCollectionFromProject')
-
-    mapDispatchToProps(dispatch).onRemoveCollectionFromProject('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
-  test('onToggleCollectionVisibility calls actions.toggleCollectionVisibility', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'toggleCollectionVisibility')
-
-    mapDispatchToProps(dispatch).onToggleCollectionVisibility('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
   test('onSetActivePanel calls actions.setActivePanel', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'setActivePanel')
@@ -160,7 +145,6 @@ describe('mapStateToProps', () => {
         collections: {}
       },
       panels: {},
-      project: {},
       query: {
         collection: {}
       },
@@ -170,9 +154,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionsQuery: {},
       panels: {},
-      project: {},
-      projectCollectionsIds: [],
-      projectCollectionsMetadata: {},
       savedProject: {}
     }
 
@@ -188,10 +169,8 @@ describe('ProjectCollectionsContainer component', () => {
     expect(ProjectCollections).toHaveBeenCalledWith({
       collectionsQuery: {},
       onMetricsDataAccess: expect.any(Function),
-      onRemoveCollectionFromProject: expect.any(Function),
       onSetActivePanel: expect.any(Function),
       onSetActivePanelSection: expect.any(Function),
-      onToggleCollectionVisibility: expect.any(Function),
       onTogglePanels: expect.any(Function),
       onUpdateFocusedCollection: expect.any(Function),
       onUpdateProjectName: expect.any(Function),
@@ -201,19 +180,6 @@ describe('ProjectCollectionsContainer component', () => {
         activePanel: '0.0.0',
         isOpen: false
       },
-      project: {
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              accessMethods: {},
-              selectedAccessMethod: ''
-            }
-          }
-        }
-      },
-      projectCollectionsIds: ['collectionId'],
-      projectCollectionsMetadata: { collectionId: { mock: 'data' } },
       savedProject: {}
     }, {})
   })

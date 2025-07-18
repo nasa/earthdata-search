@@ -6,15 +6,9 @@ import actions from '../../actions/index'
 
 import { metricsDataAccess } from '../../middleware/metrics/actions'
 
-import { getProjectCollectionsMetadata, getProjectCollectionsIds } from '../../selectors/project'
-
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onRemoveCollectionFromProject:
-    (collectionId) => dispatch(actions.removeCollectionFromProject(collectionId)),
-  onToggleCollectionVisibility:
-    (collectionId) => dispatch(actions.toggleCollectionVisibility(collectionId)),
   onSetActivePanel:
     (panelId) => dispatch(actions.setActivePanel(panelId)),
   onTogglePanels:
@@ -36,9 +30,6 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   collectionsQuery: state.query.collection,
   panels: state.panels,
-  project: state.project,
-  projectCollectionsIds: getProjectCollectionsIds(state),
-  projectCollectionsMetadata: getProjectCollectionsMetadata(state),
   savedProject: state.savedProject
 })
 
@@ -46,19 +37,14 @@ export const ProjectCollectionsContainer = (props) => {
   const {
     collectionsQuery,
     onMetricsDataAccess,
-    onRemoveCollectionFromProject,
     onSetActivePanel,
     onSetActivePanelSection,
-    onToggleCollectionVisibility,
     onTogglePanels,
     onUpdateFocusedCollection,
     onUpdateProjectName,
     onViewCollectionDetails,
     onViewCollectionGranules,
     panels,
-    project,
-    projectCollectionsIds,
-    projectCollectionsMetadata,
     savedProject
   } = props
 
@@ -66,19 +52,14 @@ export const ProjectCollectionsContainer = (props) => {
     <ProjectCollections
       collectionsQuery={collectionsQuery}
       onMetricsDataAccess={onMetricsDataAccess}
-      onRemoveCollectionFromProject={onRemoveCollectionFromProject}
       onSetActivePanel={onSetActivePanel}
       onSetActivePanelSection={onSetActivePanelSection}
-      onToggleCollectionVisibility={onToggleCollectionVisibility}
       onTogglePanels={onTogglePanels}
       onUpdateFocusedCollection={onUpdateFocusedCollection}
       onUpdateProjectName={onUpdateProjectName}
       onViewCollectionDetails={onViewCollectionDetails}
       onViewCollectionGranules={onViewCollectionGranules}
       panels={panels}
-      project={project}
-      projectCollectionsIds={projectCollectionsIds}
-      projectCollectionsMetadata={projectCollectionsMetadata}
       savedProject={savedProject}
     />
   )
@@ -87,19 +68,14 @@ export const ProjectCollectionsContainer = (props) => {
 ProjectCollectionsContainer.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
-  project: PropTypes.shape({}).isRequired,
-  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }
 

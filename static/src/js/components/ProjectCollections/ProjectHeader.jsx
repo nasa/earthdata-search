@@ -21,20 +21,21 @@ import { projectHeader } from './skeleton'
 import Skeleton from '../Skeleton/Skeleton'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './ProjectHeader.scss'
 
 /**
  * Renders ProjectHeader.
  * @param {function} onUpdateProjectName - Function to updated the saved project name
- * @param {object} project - Project collections passed from redux store.
  * @param {object} savedProject - Saved Project information (name) passed from redux store
  */
 
 export const ProjectHeader = memo(({
   onUpdateProjectName,
-  project,
   savedProject
 }) => {
+  const projectCollections = useEdscStore((state) => state.project.collections)
   const projectTitleInput = useRef()
   const projectTitleText = useRef()
 
@@ -99,7 +100,6 @@ export const ProjectHeader = memo(({
     renderInput()
   })
 
-  const { collections: projectCollections } = project
   const {
     allIds: projectCollectionIds,
     byId: projectCollectionById
@@ -253,7 +253,6 @@ export const ProjectHeader = memo(({
           </ul>
         ) : (
           <Skeleton
-            dataTestId="project-header__skeleton"
             containerStyle={
               {
                 height: '21px',
@@ -273,12 +272,6 @@ ProjectHeader.displayName = 'ProjectHeader'
 
 ProjectHeader.propTypes = {
   onUpdateProjectName: PropTypes.func.isRequired,
-  project: PropTypes.shape({
-    collections: PropTypes.shape({
-      allIds: PropTypes.arrayOf(PropTypes.string),
-      byId: PropTypes.shape({})
-    })
-  }).isRequired,
   savedProject: PropTypes.shape({
     name: PropTypes.string
   }).isRequired
