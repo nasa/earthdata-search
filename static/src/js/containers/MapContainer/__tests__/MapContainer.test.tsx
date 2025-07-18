@@ -133,7 +133,6 @@ describe('mapStateToProps', () => {
       granuleSearchResults: {},
       granulesMetadata: {},
       lineSearch: undefined,
-      mapPreferences: {},
       pointSearch: undefined,
       polygonSearch: undefined,
       project: {},

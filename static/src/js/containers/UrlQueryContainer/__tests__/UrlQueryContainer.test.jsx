@@ -12,6 +12,14 @@ import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import useEdscStore from '../../../zustand/useEdscStore'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import * as preferences from '../../../zustand/selectors/preferences'
+
+jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+  env: 'sit',
+  collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+}))
+
+jest.spyOn(preferences, 'getCollectionSortKeyParameter').mockImplementation(() => null)
 
 const setup = setupTest({
   Component: UrlQueryContainer,
@@ -36,11 +44,21 @@ const setup = setupTest({
     temporalSearch: {},
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
+  },
+  defaultZustandState: {
+    preferences: {
+      preferences: {
+        collectionSort: 'default'
+      }
+    }
   }
 })
 
 beforeEach(() => {
   jest.resetAllMocks()
+  jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
+    collectionSearchResultsSortKey: collectionSortKeys.usageDescending
+  }))
 })
 
 describe('mapDispatchToProps', () => {
@@ -120,7 +138,7 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      mapPreferences: {},
+      onlyEosdisCollections: undefined,
       overrideTemporalSearch: {},
       pathname: '',
       pointSearch: [],
@@ -143,7 +161,6 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      paramCollectionSortKey: undefined,
       tagKey: '',
       temporalSearch: {}
     }
@@ -200,7 +217,7 @@ describe('mapStateToProps', () => {
       location: {
         pathname: ''
       },
-      mapPreferences: {},
+      onlyEosdisCollections: undefined,
       overrideTemporalSearch: {},
       pathname: '',
       pointSearch: [],
@@ -224,7 +241,6 @@ describe('mapStateToProps', () => {
           temporal: {}
         }
       },
-      paramCollectionSortKey: collectionSortKeys.endDateDescending,
       tagKey: '',
       temporalSearch: {}
     }
