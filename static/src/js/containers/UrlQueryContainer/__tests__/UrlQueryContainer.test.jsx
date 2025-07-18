@@ -47,7 +47,9 @@ const setup = setupTest({
   },
   defaultZustandState: {
     preferences: {
-      collectionSort: 'default'
+      preferences: {
+        collectionSort: 'default'
+      }
     }
   }
 })

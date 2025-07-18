@@ -239,14 +239,12 @@ describe('createPreferencesSlice', () => {
         dispatch: mockDispatch
       })
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      mockPreferencesRequest.mockImplementation(() => mockPreferencesRequestInstance as any)
+      mockPreferencesRequest.mockImplementation(
+        () => mockPreferencesRequestInstance as unknown as PreferencesRequest
+      )
+
       mockActions.handleError = mockHandleError
       mockAddToast.mockClear()
-    })
-
-    afterEach(() => {
-      jest.clearAllMocks()
     })
 
     test('successfully submits and updates preferences', async () => {

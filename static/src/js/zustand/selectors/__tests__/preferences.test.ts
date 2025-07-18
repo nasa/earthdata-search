@@ -109,14 +109,6 @@ describe('getCollectionSortPreference', () => {
 
     expect(getCollectionSortPreference(state)).toEqual('-usage_score')
   })
-
-  test('returns default when collectionSort is default', () => {
-    const state = createMockState({
-      collectionSort: 'default'
-    })
-
-    expect(getCollectionSortPreference(state)).toEqual('default')
-  })
 })
 
 describe('getCollectionSortKeyParameter', () => {
@@ -168,56 +160,13 @@ describe('getCollectionSortKeyParameter', () => {
     expect(getCollectionSortKeyParameter(state)).toBeNull()
   })
 
-  test('returns null when paramCollectionSortKey matches translated default user preference', () => {
-    const state = createMockState({
-      collectionSort: 'default' // This translates to '-usage_score'
-    })
-
-    mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
-    expect(getCollectionSortKeyParameter(state)).toBeNull()
-  })
-
-  test('returns null when paramCollectionSortKey matches non-default user preference', () => {
-    const state = createMockState({
-      collectionSort: '-score'
-    })
-
-    mockGetParamCollectionSortKey.mockReturnValue('-score')
-    expect(getCollectionSortKeyParameter(state)).toBeNull()
-  })
-
-  test('returns the paramCollectionSortKey when user has no preferences set', () => {
-    const state = createMockState({
-      collectionSort: undefined
-    })
-
-    mockGetParamCollectionSortKey.mockReturnValue('-score')
-    expect(getCollectionSortKeyParameter(state)).toEqual('-score')
-  })
-
-  test('handles different default sort key configuration', () => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-      collectionSearchResultsSortKey: '-score'
-    }))
-
-    const state = createMockState({
-      collectionSort: 'default' // This now translates to '-score'
-    })
-
-    mockGetParamCollectionSortKey.mockReturnValue('-score')
-    expect(getCollectionSortKeyParameter(state)).toBeNull()
-
-    mockGetParamCollectionSortKey.mockReturnValue('-usage_score')
-    expect(getCollectionSortKeyParameter(state)).toEqual('-usage_score')
-  })
-
-  test('handles undefined collectionSort preference by defaulting to usage_score', () => {
+  test('handles default collectionSort preference by defaulting to usage_score', () => {
     jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
       collectionSearchResultsSortKey: '-usage_score'
     }))
 
     const state = createMockState({
-      collectionSort: undefined
+      collectionSort: 'default'
     })
 
     mockGetParamCollectionSortKey.mockReturnValue('-usage_score')

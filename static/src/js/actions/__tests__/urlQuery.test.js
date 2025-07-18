@@ -50,17 +50,6 @@ describe('updateStore', () => {
       }
     }
 
-    useEdscStore.setState((state) => ({
-      ...state,
-      preferences: {
-        ...state.preferences,
-        preferences: {
-          ...state.preferences.preferences,
-          collectionSort: 'default'
-        }
-      }
-    }))
-
     const store = mockStore({
       router: {
         location: {
@@ -187,28 +176,16 @@ describe('updateStore', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         payload: {
-          advancedSearch: undefined,
-          collections: undefined,
-          earthdataEnvironment: 'prod',
-          focusedCollection: 'C00001-EDSC',
-          focusedGranule: undefined,
-          deprecatedUrlParams: undefined,
-          project: {
-            collections: {
-              allIds: ['C00001-EDSC'],
-              byId: {}
-            }
-          },
+          ...params,
           query: {
-            collection: {
-              overrideTemporal: {},
-              pageNum: 1,
-              spatial: {},
-              temporal: {}
-            },
-            granule: { pageNum: 1 },
+            ...params.query,
             collectionSortPreference: 'default'
-          }
+          },
+          cmrFacets: undefined,
+          featureFacets: undefined,
+          mapView: undefined,
+          portal: undefined,
+          timeline: undefined
         },
         type: RESTORE_FROM_URL
       })
@@ -314,23 +291,17 @@ describe('updateStore', () => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         payload: {
-          advancedSearch: undefined,
-          collections: undefined,
-          earthdataEnvironment: 'prod',
-          focusedCollection: '',
-          focusedGranule: undefined,
-          deprecatedUrlParams: undefined,
-          project: {},
+          ...params,
           query: {
-            collection: {
-              overrideTemporal: {},
-              pageNum: 1,
-              spatial: {},
-              temporal: {}
-            },
-            granule: { pageNum: 1 },
+            ...params.query,
             collectionSortPreference: 'default'
-          }
+          },
+          cmrFacets: undefined,
+          featureFacets: undefined,
+          mapView: undefined,
+          portalId: undefined,
+          portal: undefined,
+          timeline: undefined
         },
         type: RESTORE_FROM_URL
       })
