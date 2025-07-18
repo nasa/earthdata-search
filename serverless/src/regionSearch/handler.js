@@ -35,6 +35,16 @@ const regionSearch = async (event) => {
     const { config, data } = regionResponse
     const { elapsedTime } = config
 
+    const contentType = regionResponse.headers?.['content-type'] || ''
+    const responseBody = typeof regionResponse.data === 'string' ? regionResponse.data : ''
+    if (
+      regionResponse.status === 200
+      && contentType.includes('text/html')
+      && /page not found/i.test(responseBody)
+    ) {
+      throw new Error('Not Found')
+    }
+
     const {
       hits,
       time,
