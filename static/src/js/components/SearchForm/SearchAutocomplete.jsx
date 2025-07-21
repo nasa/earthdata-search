@@ -26,8 +26,7 @@ import useEdscStore from '../../zustand/useEdscStore'
 const SearchAutocomplete = ({
   initialKeyword,
   onChangeQuery,
-  onChangeFocusedCollection,
-  onKeywordChange
+  onChangeFocusedCollection
 }) => {
   const [keywordSearch, setKeywordSearch] = useState(initialKeyword || '')
   const [isLoaded, setIsLoaded] = useState(false)
@@ -220,11 +219,7 @@ const SearchAutocomplete = ({
    */
   const onAutoSuggestChange = useCallback((event, { newValue }) => {
     setKeywordSearch(newValue)
-    // Call optional parent callback
-    if (onKeywordChange) {
-      onKeywordChange(newValue)
-    }
-  }, [onKeywordChange])
+  }, [])
 
   /**
    * AutoSuggest callback when a suggestion is selected
@@ -384,13 +379,11 @@ const SearchAutocomplete = ({
 SearchAutocomplete.propTypes = {
   initialKeyword: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
-  onChangeFocusedCollection: PropTypes.func.isRequired,
-  onKeywordChange: PropTypes.func
+  onChangeFocusedCollection: PropTypes.func.isRequired
 }
 
 SearchAutocomplete.defaultProps = {
-  initialKeyword: '',
-  onKeywordChange: null
+  initialKeyword: ''
 }
 
 export default SearchAutocomplete

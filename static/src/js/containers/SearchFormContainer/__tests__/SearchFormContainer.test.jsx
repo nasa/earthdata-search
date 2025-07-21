@@ -16,20 +16,12 @@ const setup = setupTest({
   Component: SearchFormContainer,
   defaultProps: {
     advancedSearch: {},
-    autocomplete: {},
-    drawingNewLayer: false,
-    gridCoords: '',
     keywordSearch: 'Test value',
     temporalSearch: {},
-    temporalSearchordSearch: 'Test value',
-    onCancelAutocomplete: jest.fn(),
     onClearFilters: jest.fn(),
     onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn(),
-    onFetchAutocomplete: jest.fn(),
-    onSelectAutocompleteSuggestion: jest.fn(),
-    onClearAutocompleteSuggestions: jest.fn()
+    onToggleAdvancedSearchModal: jest.fn()
   }
 })
 
@@ -72,51 +64,12 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(false)
   })
-
-  test('onCancelAutocomplete calls actions.cancelAutocomplete', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'cancelAutocomplete')
-
-    mapDispatchToProps(dispatch).onCancelAutocomplete()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-  })
-
-  test('onClearAutocompleteSuggestions calls actions.clearAutocompleteSuggestions', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'clearAutocompleteSuggestions')
-
-    mapDispatchToProps(dispatch).onClearAutocompleteSuggestions()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-  })
-
-  test('onFetchAutocomplete calls actions.fetchAutocomplete', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'fetchAutocomplete')
-
-    mapDispatchToProps(dispatch).onFetchAutocomplete({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onSelectAutocompleteSuggestion calls actions.selectAutocompleteSuggestion', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'selectAutocompleteSuggestion')
-
-    mapDispatchToProps(dispatch).onSelectAutocompleteSuggestion({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
 })
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      autocomplete: {},
       focusedCollection: 'collectionId',
       query: {
         collection: {
@@ -140,7 +93,6 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      autocomplete: {},
       keywordSearch: '',
       temporalSearch: {}
     }
@@ -156,16 +108,11 @@ describe('SearchFormContainer component', () => {
     expect(SearchForm).toHaveBeenCalledTimes(1)
     expect(SearchForm).toHaveBeenCalledWith({
       advancedSearch: props.advancedSearch,
-      autocomplete: props.autocomplete,
       keywordSearch: props.keywordSearch,
-      onCancelAutocomplete: props.onCancelAutocomplete,
       onChangeQuery: props.onChangeQuery,
       onChangeFocusedCollection: props.onChangeFocusedCollection,
       onClearFilters: props.onClearFilters,
-      onToggleAdvancedSearchModal: props.onToggleAdvancedSearchModal,
-      onFetchAutocomplete: props.onFetchAutocomplete,
-      onSelectAutocompleteSuggestion: props.onSelectAutocompleteSuggestion,
-      onClearAutocompleteSuggestions: props.onClearAutocompleteSuggestions
+      onToggleAdvancedSearchModal: props.onToggleAdvancedSearchModal
     }, {})
   })
 })
