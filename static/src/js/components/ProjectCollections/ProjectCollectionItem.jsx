@@ -125,11 +125,11 @@ const ProjectCollectionItem = ({
               <Button
                 className="project-collections-item__title-button"
                 variant="naked"
-                bootstrapVariant="link"
                 label={`${title} Collection Details`}
                 onClick={
                   () => {
                     onTogglePanels(true)
+                    console.log('I am being clicked')
                     onUpdateFocusedCollection(conceptId)
                     onSetActivePanelSection('1')
                   }
@@ -222,9 +222,10 @@ const ProjectCollectionItem = ({
                 label="Edit options"
                 onClick={
                   () => {
+                    console.log('🚀 ~ file: ProjectCollectionItem.jsx:229 ~ onTogglePanels:', onTogglePanels)
                     onUpdateFocusedCollection(conceptId)
                     onSetActivePanelSection('0')
-                    onTogglePanels(true)
+                    // onTogglePanels(true)
                   }
                 }
               >

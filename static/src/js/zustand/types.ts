@@ -339,6 +339,24 @@ export type UiSlice = {
   }
 }
 
+export type PanelsSlice = {
+  /** The Panels Slice of the store */
+  panels: {
+    /** Whether the panels are open */
+    isOpen: boolean
+    /** The currently active panel, e.g., '0.0.0' */
+    activePanel: string
+    /** Function to toggle the panels open/closed */
+    setIsOpen: (isOpen: boolean) => void
+    /** Function to set the active panel */
+    setActivePanel: (activePanel: string) => void
+    /** Function to set the panel group (updates the middle part of activePanel) */
+    setPanelGroup: (group: string) => void
+    /** Function to set the panel section (updates the first part of activePanel) */
+    setPanelSection: (section: string) => void
+  }
+}
+
 export type EdscStore =
   EarthdataDownloadRedirectSlice
   & FacetParamsSlice
@@ -349,5 +367,6 @@ export type EdscStore =
   & ShapefileSlice
   & TimelineSlice
   & UiSlice
+  & PanelsSlice
 
 export type ImmerStateCreator<T> = StateCreator<EdscStore, [['zustand/immer', never], never], [], T>

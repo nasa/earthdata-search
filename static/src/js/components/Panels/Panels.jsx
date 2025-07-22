@@ -189,6 +189,7 @@ export class Panels extends PureComponent {
     const { keyboardShortcuts } = this
 
     const togglePanels = () => {
+      console.log('Custom togglePanels only on this component 🧠')
       this.setState({
         show: !show,
         willMinimize: show

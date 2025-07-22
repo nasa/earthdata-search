@@ -5,10 +5,14 @@ import {
   PANELS_SET_PANEL_SECTION
 } from '../constants/actionTypes'
 
-export const togglePanels = (value) => ({
-  type: PANELS_TOGGLE,
-  payload: value
-})
+export const togglePanels = (value) => {
+  console.log('🚀 ~ file: panels.js:9 ~ value:', value)
+
+  return {
+    type: PANELS_TOGGLE,
+    payload: value
+  }
+}
 
 export const setActivePanel = (panelId) => ({
   type: PANELS_SET_PANEL,

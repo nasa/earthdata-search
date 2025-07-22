@@ -916,7 +916,7 @@ const AccessMethod = ({
                             onClick={
                               () => {
                                 onSetActivePanel(`0.${index}.1`)
-                                onTogglePanels(true)
+                                // onTogglePanels(true)
                               }
                             }
                           >

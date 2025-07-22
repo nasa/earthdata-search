@@ -11,6 +11,7 @@ import createPreferencesSlice from './slices/createPreferencesSlice'
 import createShapefileSlice from './slices/createShapefileSlice'
 import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
+import createPanelsSlice from './slices/createPanelsSlice'
 import createPortalSlice from './slices/createPortalSlice'
 import createFacetParamsSlice from './slices/createFacetParamsSlice'
 
@@ -22,6 +23,7 @@ const useEdscStore = create<EdscStore>()(
         ...createFacetParamsSlice(...args),
         ...createHomeSlice(...args),
         ...createMapSlice(...args),
+        ...createPanelsSlice(...args),
         ...createPortalSlice(...args),
         ...createPreferencesSlice(...args),
         ...createShapefileSlice(...args),

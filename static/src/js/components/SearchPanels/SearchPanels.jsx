@@ -107,11 +107,13 @@ class SearchPanels extends PureComponent {
 
   onPanelClose() {
     const { onTogglePanels } = this.props
+    console.log('Im collapsing the onPanelClose')
     onTogglePanels(false)
   }
 
   onChangePanel(panelId) {
     const { onSetActivePanel, onTogglePanels } = this.props
+    console.log('Im collapsing the onChangePanel')
     onSetActivePanel(panelId)
     onTogglePanels(true)
   }

@@ -1677,6 +1677,7 @@ describe('AccessMethod component', () => {
           expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
           expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
 
+          // TODO I don't think we need this at all
           expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
           expect(props.onTogglePanels).toHaveBeenCalledWith(true)
         })
