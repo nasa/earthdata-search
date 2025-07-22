@@ -11,10 +11,6 @@ import * as metricsMap from '../../../middleware/metrics/actions'
 // Mock Map because openlayers causes errors
 jest.mock('../../../components/Map/Map', () => <div />)
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('mapDispatchToProps', () => {
   test('onChangeFocusedGranule calls actions.changeFocusedGranule', () => {
     const dispatch = jest.fn()

@@ -327,7 +327,7 @@ type HierarchyMappings = {
     /** The variable concept id */
     id: string
   }[]
-  // The hierarchical name
+  /** The hierarchical name */
   label: string
 }
 
@@ -337,7 +337,7 @@ type KeywordMapping = {
     /** The variable concept id */
     id: string
   }[]
-  // The science keyword name
+  /** The science keyword name */
   label: string
 }
 

@@ -384,11 +384,17 @@ export type ReduxState = {
 }
 
 export type ScienceKeyword = {
+  /** The science keyword detailed variable name */
   detailed_variable?: string
+  /** The science keyword term */
   term?: string
+  /** The science keyword topic */
   topic?: string
+  /** The science keyword variable level 1 name */
   variable_level_1?: string
+  /** The science keyword variable level 2 name */
   variable_level_2?: string
+  /** The science keyword variable level 3 name */
   variable_level_3?: string
 }
 
@@ -405,6 +411,7 @@ export type VariableMetadata = {
     format: string
     /** Brief description of the store or any other useful information about the store */
     description?: string
+    /** The variable's direct distribution information, if available */
     directDistributionInformation?: Record<string, unknown>
     /** Description of the chunking strategy for the store */
     chunkingInformation?: string

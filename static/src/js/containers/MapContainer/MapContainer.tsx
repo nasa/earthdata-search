@@ -330,10 +330,11 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
     projectIds.forEach((collectionId, index) => {
       const {
-        granules: projectCollectionGranules
+        granules: projectCollectionGranules,
+        isVisible: projectCollectionIsVisible
       } = projectById[collectionId] || {}
 
-      if (!projectCollectionGranules) return
+      if (!projectCollectionGranules || !projectCollectionIsVisible) return
 
       const { allIds = [] } = projectCollectionGranules
 
