@@ -3,7 +3,8 @@ import {
   getCollectionsQuerySpatial,
   getCollectionSubscriptionQueryString,
   getFocusedCollectionGranuleQuery,
-  getGranuleSubscriptionQueryString
+  getGranuleSubscriptionQueryString,
+  getParamCollectionSortKey
 } from '../query'
 
 describe('getFocusedCollectionGranuleQuery selector', () => {
@@ -217,5 +218,19 @@ describe('getCollectionSubscriptionQueryString selector', () => {
     }
 
     expect(getCollectionSubscriptionQueryString(state)).toEqual('cloud_hosted=true&has_granules_or_cwic=true&data_center_h[]=National Snow and Ice Data Center (NSIDC)&point=0,0')
+  })
+})
+
+describe('getParamCollectionSortKey selector', () => {
+  test('returns the paramCollectionSortKey from collections query', () => {
+    const state = {
+      query: {
+        collection: {
+          paramCollectionSortKey: '-usage_score'
+        }
+      }
+    }
+
+    expect(getParamCollectionSortKey(state)).toBe('-usage_score')
   })
 })

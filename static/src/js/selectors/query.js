@@ -33,6 +33,16 @@ export const getCollectionsQuery = (state) => {
 }
 
 /**
+ * Retrieve the paramCollectionSortKey from Redux
+ * @param {Object} state Current state of Redux
+ */
+export const getParamCollectionSortKey = (state) => {
+  const collectionsQuery = getCollectionsQuery(state)
+
+  return collectionsQuery.paramCollectionSortKey
+}
+
+/**
  * Retrieve current collection spatial information from Redux
  * @param {Object} state Current state of Redux
  */

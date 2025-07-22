@@ -52,7 +52,6 @@ const createVariableResults = () => [{
 }]
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
 })
 
@@ -882,19 +881,22 @@ describe('changeFocusedCollection', () => {
       getFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
 
       const getTimelineMock = jest.fn()
-      useEdscStore.setState({
+      useEdscStore.setState((state) => ({
+        ...state,
         timeline: {
+          ...state.timeline,
           getTimeline: getTimelineMock
-        }
-      })
-
-      const store = mockStore({
+        },
         preferences: {
+          ...state.preferences,
           preferences: {
+            ...state.preferences.preferences,
             granuleSort: 'default'
           }
         }
-      })
+      }))
+
+      const store = mockStore({})
 
       const collectionId = 'C1000000000-EDSC'
 

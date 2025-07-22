@@ -4,6 +4,7 @@ import * as tinyCookie from 'tiny-cookie'
 
 import actions from '../../../actions'
 import { AuthTokenContainer, mapDispatchToProps } from '../AuthTokenContainer'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
@@ -17,26 +18,12 @@ const setup = (props) => {
   )
 }
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('mapDispatchToProps', () => {
   test('onSetContactInfoFromJwt calls actions.setContactInfoFromJwt', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'setContactInfoFromJwt')
 
     mapDispatchToProps(dispatch).onSetContactInfoFromJwt('mock-token')
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('mock-token')
-  })
-
-  test('onSetPreferencesFromJwt calls actions.setPreferencesFromJwt', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setPreferencesFromJwt')
-
-    mapDispatchToProps(dispatch).onSetPreferencesFromJwt('mock-token')
 
     expect(spy).toBeCalledTimes(1)
     expect(spy).toBeCalledWith('mock-token')
@@ -64,7 +51,7 @@ describe('mapDispatchToProps', () => {
 })
 
 describe('AuthTokenContainer component', () => {
-  test('should call onUpdateAuthToken when mounted', () => {
+  test('should call JWT processing functions when mounted', () => {
     jest.spyOn(tinyCookie, 'get').mockImplementation((param) => {
       if (param === 'authToken') return 'token'
 
@@ -75,10 +62,18 @@ describe('AuthTokenContainer component', () => {
       disableDatabaseComponents: 'false'
     }))
 
+    const mockSetPreferencesFromJwt = jest.fn()
+    useEdscStore.setState((state) => ({
+      ...state,
+      preferences: {
+        ...state.preferences,
+        setPreferencesFromJwt: mockSetPreferencesFromJwt
+      }
+    }))
+
     const props = {
       children: 'children',
       onSetContactInfoFromJwt: jest.fn(),
-      onSetPreferencesFromJwt: jest.fn(),
       onSetUserFromJwt: jest.fn(),
       onUpdateAuthToken: jest.fn()
     }
@@ -90,8 +85,8 @@ describe('AuthTokenContainer component', () => {
     expect(props.onSetContactInfoFromJwt).toHaveBeenCalledTimes(1)
     expect(props.onSetContactInfoFromJwt).toHaveBeenCalledWith('token')
 
-    expect(props.onSetPreferencesFromJwt).toHaveBeenCalledTimes(1)
-    expect(props.onSetPreferencesFromJwt).toHaveBeenCalledWith('token')
+    expect(mockSetPreferencesFromJwt).toHaveBeenCalledTimes(1)
+    expect(mockSetPreferencesFromJwt).toHaveBeenCalledWith('token')
 
     expect(props.onSetUserFromJwt).toHaveBeenCalledTimes(1)
     expect(props.onSetUserFromJwt).toHaveBeenCalledWith('token')
@@ -112,7 +107,6 @@ describe('AuthTokenContainer component', () => {
       const props = {
         children: 'children',
         onSetContactInfoFromJwt: jest.fn(),
-        onSetPreferencesFromJwt: jest.fn(),
         onSetUserFromJwt: jest.fn(),
         onUpdateAuthToken: jest.fn()
       }

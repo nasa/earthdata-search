@@ -6,6 +6,7 @@ import {
 import { FeatureCollection, GeoJsonObject } from 'geojson'
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
+import { PreferencesData } from '../zustand/types'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>
@@ -296,8 +297,17 @@ export type TimelineRequestParams = {
   interval: string
 }
 
+/** The request parameters for a preferences request */
+export type PreferencesRequestParams = {
+  /** The preferences data */
+  preferences: Partial<PreferencesData>
+}
+
 /** The request parameters for our request classes */
-export type RequestParams = TimelineRequestParams | CollectionRequestParams | ShapefileRequestParams
+export type RequestParams = TimelineRequestParams
+                              | CollectionRequestParams
+                              | ShapefileRequestParams
+                              | PreferencesRequestParams
 
 /** A response received from an Axios request */
 export type Response = {

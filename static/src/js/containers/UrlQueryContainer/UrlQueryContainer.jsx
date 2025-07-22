@@ -15,7 +15,10 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import { getMapPreferences, getCollectionSortKeyParameter } from '../../selectors/preferences'
+import {
+  getMapPreferences,
+  getCollectionSortKeyParameter
+} from '../../zustand/selectors/preferences'
 
 import useEdscStore from '../../zustand/useEdscStore'
 
@@ -38,7 +41,6 @@ export const mapStateToProps = (state) => ({
   keywordSearch: state.query.collection.keyword,
   lineSearch: state.query.collection.spatial.line,
   location: state.router.location,
-  mapPreferences: getMapPreferences(state),
   onlyEosdisCollections: state.query.collection.onlyEosdisCollections,
   overrideTemporalSearch: state.query.collection.overrideTemporal,
   pathname: state.router.location.pathname,
@@ -46,7 +48,6 @@ export const mapStateToProps = (state) => ({
   polygonSearch: state.query.collection.spatial.polygon,
   project: state.project,
   query: state.query,
-  paramCollectionSortKey: getCollectionSortKeyParameter(state),
   tagKey: state.query.collection.tagKey,
   temporalSearch: state.query.collection.temporal
 })
@@ -66,7 +67,6 @@ export const UrlQueryContainer = (props) => {
   const [currentPath, setCurrentPath] = useState('')
   const previousSearch = useRef(search)
 
-  // Pull out values we have migrated to Zustand that are no longer passed as props
   const zustandValues = useEdscStore((state) => ({
     featureFacets: state.facetParams.featureFacets,
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
@@ -74,8 +74,10 @@ export const UrlQueryContainer = (props) => {
       state.facetParams.cmrFacets.horizontal_data_resolution_range,
     instrumentFacets: state.facetParams.cmrFacets.instrument_h,
     latency: state.facetParams.cmrFacets.latency,
+    mapPreferences: getMapPreferences(state),
     mapView: state.map.mapView,
     organizationFacets: state.facetParams.cmrFacets.data_center_h,
+    paramCollectionSortKey: getCollectionSortKeyParameter(state),
     platformFacets: state.facetParams.cmrFacets.platforms_h,
     portalId: state.portal.portalId,
     processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,

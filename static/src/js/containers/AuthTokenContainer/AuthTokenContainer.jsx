@@ -4,14 +4,13 @@ import { get } from 'tiny-cookie'
 import { connect } from 'react-redux'
 
 import actions from '../../actions/index'
+import useEdscStore from '../../zustand/useEdscStore'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 export const mapDispatchToProps = (dispatch) => ({
   onSetContactInfoFromJwt:
     (token) => dispatch(actions.setContactInfoFromJwt(token)),
-  onSetPreferencesFromJwt:
-    (token) => dispatch(actions.setPreferencesFromJwt(token)),
   onSetUserFromJwt:
     (token) => dispatch(actions.setUserFromJwt(token)),
   onUpdateAuthToken:
@@ -21,11 +20,11 @@ export const mapDispatchToProps = (dispatch) => ({
 export const AuthTokenContainer = ({
   children,
   onSetContactInfoFromJwt,
-  onSetPreferencesFromJwt,
   onSetUserFromJwt,
   onUpdateAuthToken
 }) => {
   const { disableDatabaseComponents } = getApplicationConfig()
+  const setPreferencesFromJwt = useEdscStore((state) => state.preferences.setPreferencesFromJwt)
 
   useEffect(() => {
     if (disableDatabaseComponents === 'true') {
@@ -38,7 +37,7 @@ export const AuthTokenContainer = ({
 
     const jwtToken = get('authToken')
 
-    onSetPreferencesFromJwt(jwtToken)
+    setPreferencesFromJwt(jwtToken)
     onSetContactInfoFromJwt(jwtToken)
     onSetUserFromJwt(jwtToken)
     onUpdateAuthToken(jwtToken || '')
@@ -50,7 +49,6 @@ export const AuthTokenContainer = ({
 AuthTokenContainer.propTypes = {
   children: PropTypes.node.isRequired,
   onSetContactInfoFromJwt: PropTypes.func.isRequired,
-  onSetPreferencesFromJwt: PropTypes.func.isRequired,
   onSetUserFromJwt: PropTypes.func.isRequired,
   onUpdateAuthToken: PropTypes.func.isRequired
 }

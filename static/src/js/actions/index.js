@@ -139,12 +139,6 @@ import {
   updateNotificationLevel
 } from './contactInfo'
 import {
-  setIsSubmitting,
-  setPreferences,
-  setPreferencesFromJwt,
-  updatePreferences
-} from './preferences'
-import {
   createSubscription,
   getSubscriptions,
   deleteSubscription,
@@ -230,9 +224,6 @@ const actions = {
   setColorMapsLoading,
   setContactInfoFromJwt,
   setDataQualitySummaries,
-  setIsSubmitting,
-  setPreferences,
-  setPreferencesFromJwt,
   setUserFromJwt,
   submitRetrieval,
   toggleAboutCSDAModal,
@@ -274,7 +265,6 @@ const actions = {
   updateGranuleSearchQuery,
   updateGranuleSubscription,
   updateNotificationLevel,
-  updatePreferences,
   updateProjectGranuleParams,
   updateProjectName,
   updateAdminProjectsPageNum,

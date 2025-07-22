@@ -21,7 +21,6 @@ import focusedGranuleReducer from './focusedGranule'
 import granuleDownloadReducer from './granuleDownload'
 import granuleMetadataReducer from './granuleMetadata'
 import panelsReducer from './panels'
-import preferencesReducer from './preferences'
 import projectReducer from './project'
 import queryReducer from './query'
 import regionResultsReducer from './regionResults'
@@ -56,7 +55,6 @@ export default (history) => combineReducers({
   }),
   project: projectReducer,
   panels: panelsReducer,
-  preferences: preferencesReducer,
   query: queryReducer,
   retrieval: retrievalReducer,
   router: connectRouter(history),
