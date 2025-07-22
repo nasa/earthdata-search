@@ -16,6 +16,7 @@ import createProjectSlice from './slices/createProjectSlice'
 import createShapefileSlice from './slices/createShapefileSlice'
 import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
+import createPanelsSlice from './slices/createPanelsSlice'
 
 const useEdscStore = create<EdscStore>()(
   immer(
@@ -27,6 +28,7 @@ const useEdscStore = create<EdscStore>()(
         ...createFacetParamsSlice(...args),
         ...createHomeSlice(...args),
         ...createMapSlice(...args),
+        ...createPanelsSlice(...args),
         ...createPortalSlice(...args),
         ...createPreferencesSlice(...args),
         ...createProjectSlice(...args),

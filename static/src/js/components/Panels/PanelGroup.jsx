@@ -6,7 +6,7 @@ import PanelGroupHeader from './PanelGroupHeader'
 import { PanelItem } from './PanelItem'
 
 import './PanelGroup.scss'
-
+// TODO we should refactor this component
 /**
  * Renders PanelGroup.
  * @param {Object} props - The props passed into the component
@@ -58,6 +58,7 @@ export const PanelGroup = ({
   viewsArray
 }) => {
   const renderPanels = (child, index) => {
+    console.log('🚀 ~ file: PanelGroup.jsx:61 ~ index:', index)
     if (!child) return null
 
     const childProps = { ...child.props }

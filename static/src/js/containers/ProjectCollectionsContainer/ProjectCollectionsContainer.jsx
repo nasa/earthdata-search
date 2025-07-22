@@ -9,12 +9,6 @@ import { metricsDataAccess } from '../../middleware/metrics/actions'
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onSetActivePanel:
-    (panelId) => dispatch(actions.setActivePanel(panelId)),
-  onTogglePanels:
-    (isOpen) => dispatch(actions.togglePanels(isOpen)),
-  onSetActivePanelSection:
-    (sectionId) => dispatch(actions.setActivePanelSection(sectionId)),
   onUpdateProjectName:
     (name) => dispatch(actions.updateProjectName(name)),
   onMetricsDataAccess:
@@ -37,14 +31,14 @@ export const ProjectCollectionsContainer = (props) => {
   const {
     collectionsQuery,
     onMetricsDataAccess,
-    onSetActivePanel,
-    onSetActivePanelSection,
-    onTogglePanels,
+    // OnSetActivePanel,
+    // onSetActivePanelSection,
+    // onTogglePanels,
     onUpdateFocusedCollection,
     onUpdateProjectName,
     onViewCollectionDetails,
     onViewCollectionGranules,
-    panels,
+    // Panels,
     savedProject
   } = props
 
@@ -52,14 +46,10 @@ export const ProjectCollectionsContainer = (props) => {
     <ProjectCollections
       collectionsQuery={collectionsQuery}
       onMetricsDataAccess={onMetricsDataAccess}
-      onSetActivePanel={onSetActivePanel}
-      onSetActivePanelSection={onSetActivePanelSection}
-      onTogglePanels={onTogglePanels}
       onUpdateFocusedCollection={onUpdateFocusedCollection}
       onUpdateProjectName={onUpdateProjectName}
       onViewCollectionDetails={onViewCollectionDetails}
       onViewCollectionGranules={onViewCollectionGranules}
-      panels={panels}
       savedProject={savedProject}
     />
   )
@@ -68,9 +58,6 @@ export const ProjectCollectionsContainer = (props) => {
 ProjectCollectionsContainer.propTypes = {
   collectionsQuery: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,

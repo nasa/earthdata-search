@@ -29,6 +29,7 @@ import { stringify } from '../../util/url/url'
 
 import './ProjectPanels.scss'
 
+// TODO once eveything it working rewrite this to be functional component
 /**
  * Renders ProjectPanels.
  * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
@@ -80,6 +81,7 @@ class ProjectPanels extends PureComponent {
       onTogglePanels,
       panels
     } = this.props
+    console.log('🚀 ~ file: ProjectPanels.jsx:84 ~ ProjectPanels ~ panels:', panels)
 
     const {
       projectCollections: nextProjectCollections,
@@ -91,6 +93,7 @@ class ProjectPanels extends PureComponent {
     const {
       activePanel
     } = panels
+    console.log('🚀 ~ file: ProjectPanels.jsx:95 ~ ProjectPanels ~ activePanel:', activePanel)
 
     const selectedVariables = {}
 
@@ -136,10 +139,12 @@ class ProjectPanels extends PureComponent {
   onPanelClose() {
     const { onTogglePanels, onUpdateFocusedCollection } = this.props
     onUpdateFocusedCollection('')
+    // Close the panel once the user is done
     onTogglePanels(false)
   }
 
   onChangePanel(activePanel) {
+    console.log('🚀 ~ file: ProjectPanels.jsx:146 ~ ProjectPanels ~ activePanel:', activePanel)
     const {
       onSetActivePanel,
       onTogglePanels,
@@ -153,6 +158,7 @@ class ProjectPanels extends PureComponent {
     const newFocusedCollectionId = allIds[newFocusedCollectionIndex]
 
     onUpdateFocusedCollection(newFocusedCollectionId)
+    console.log('🚀 ~ file: ProjectPanels.jsx:159 ~ ProjectPanels ~ activePanel:', activePanel)
     onSetActivePanel(activePanel)
     onTogglePanels(true)
   }

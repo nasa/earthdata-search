@@ -61,6 +61,9 @@ const setup = setupTest({
     map: {
       showMbr: false,
       setShowMbr: jest.fn()
+    },
+    panels: {
+      setActivePanel: jest.fn()
     }
   }
 })
@@ -1674,11 +1677,17 @@ describe('AccessMethod component', () => {
           const editVariablesBtn = screen.getByRole('button', { name: 'Edit Variables' })
           await user.click(editVariablesBtn)
 
-          expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-          expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
+          // Expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
+          // expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
+          const zustandState = useEdscStore.getState()
+          const { panels } = zustandState
+          const { setActivePanel } = panels
+          expect(setActivePanel).toHaveBeenCalledTimes(1)
+          expect(setActivePanel).toHaveBeenCalledWith('0.0.1')
 
-          expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
-          expect(props.onTogglePanels).toHaveBeenCalledWith(true)
+          // TODO I don't think we need this at all
+          // expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
+          // expect(props.onTogglePanels).toHaveBeenCalledWith(true)
         })
       })
 

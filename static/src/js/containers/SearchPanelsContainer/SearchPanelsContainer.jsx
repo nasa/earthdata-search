@@ -40,14 +40,12 @@ export const mapDispatchToProps = (dispatch) => ({
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onMetricsCollectionSortChange:
     (data) => dispatch(metricsCollectionSortChange(data)),
-  onSetActivePanel:
-    (panelId) => dispatch(actions.setActivePanel(panelId)),
   onToggleAboutCSDAModal:
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onToggleAboutCwicModal:
     (state) => dispatch(actions.toggleAboutCwicModal(state)),
-  onTogglePanels:
-    (value) => dispatch(actions.togglePanels(value)),
+  // OnTogglePanels:
+  //   (value) => dispatch(actions.togglePanels(value)),
   onExport: (format) => dispatch(actions.exportSearch(format))
 })
 
@@ -89,15 +87,22 @@ export const SearchPanelsContainer = ({
   onChangePath,
   onChangeQuery,
   onMetricsCollectionSortChange,
-  onSetActivePanel,
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal,
-  onTogglePanels,
   onExport,
-  panels,
   match
 }) => {
   const preferences = useEdscStore(getPreferences)
+
+  const {
+    panels: panelsData,
+    setActivePanel,
+    setIsOpen
+  } = useEdscStore((state) => ({
+    panels: state.panels,
+    setIsOpen: state.panels.setIsOpen,
+    setActivePanel: state.panels.setActivePanel
+  }))
 
   return (
     <SearchPanels
@@ -116,12 +121,12 @@ export const SearchPanelsContainer = ({
       onChangePath={onChangePath}
       onChangeQuery={onChangeQuery}
       onMetricsCollectionSortChange={onMetricsCollectionSortChange}
-      onSetActivePanel={onSetActivePanel}
+      onSetActivePanel={setActivePanel}
       onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       onToggleAboutCwicModal={onToggleAboutCwicModal}
-      onTogglePanels={onTogglePanels}
+      onTogglePanels={setIsOpen}
       onExport={onExport}
-      panels={panels}
+      panels={panelsData}
       preferences={preferences}
       match={match}
     />
@@ -147,10 +152,7 @@ SearchPanelsContainer.propTypes = {
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired
+  onExport: PropTypes.func.isRequired
 }
 
 export default withRouter(

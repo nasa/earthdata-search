@@ -32,14 +32,12 @@ export const mapDispatchToProps = (dispatch) => ({
     (path) => dispatch(actions.changePath(path)),
   onFocusedGranuleChange:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
-  onSetActivePanel:
-    (panelId) => dispatch(actions.setActivePanel(panelId)),
   onSetActivePanelGroup:
     (panelId) => dispatch(actions.setActivePanelGroup(panelId)),
   onToggleAboutCSDAModal:
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
-  onTogglePanels:
-    (value) => dispatch(actions.togglePanels(value)),
+  // onTogglePanels:
+  //   (value) => dispatch(actions.togglePanels(value)),
   onUpdateFocusedCollection:
     (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
   onViewCollectionGranules:
@@ -80,7 +78,6 @@ export const ProjectPanelsContainer = ({
   onTogglePanels,
   onUpdateFocusedCollection,
   onViewCollectionGranules,
-  panels,
   spatial,
   temporal,
   ursProfile,
@@ -92,16 +89,26 @@ export const ProjectPanelsContainer = ({
     projectCollections,
     removeGranuleFromProjectCollection,
     selectAccessMethod,
-    updateAccessMethod
+    updateAccessMethod,
+    setActivePanel,
+    setPanelGroup,
+    togglePanels,
+    panels
   } = useEdscStore((state) => ({
     addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
     dataQualitySummaries: state.dataQualitySummaries.byCollectionId,
     projectCollections: state.project.collections,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     selectAccessMethod: state.project.selectAccessMethod,
-    updateAccessMethod: state.project.updateAccessMethod
+    updateAccessMethod: state.project.updateAccessMethod,
+    panels: state.panels,
+    setActivePanel: state.panels.setActivePanel,
+    togglePanels: state.panels.setIsOpen,
+    setPanelGroup: state.panels.setPanelGroup
   }))
+  // TODO why do we do it up here and not further down?
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
+  console.log('🚀 ~ file: ProjectPanelsContainer.jsx:108 ~ panels:', panels)
 
   return (
     <ProjectPanels
@@ -116,10 +123,10 @@ export const ProjectPanelsContainer = ({
       onFocusedGranuleChange={onFocusedGranuleChange}
       onRemoveGranuleFromProjectCollection={removeGranuleFromProjectCollection}
       onSelectAccessMethod={selectAccessMethod}
-      onSetActivePanel={onSetActivePanel}
-      onSetActivePanelGroup={onSetActivePanelGroup}
+      onSetActivePanel={setActivePanel}
+      onSetActivePanelGroup={setPanelGroup}
       onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-      onTogglePanels={onTogglePanels}
+      onTogglePanels={togglePanels}
       onUpdateAccessMethod={updateAccessMethod}
       onUpdateFocusedCollection={onUpdateFocusedCollection}
       onViewCollectionGranules={onViewCollectionGranules}

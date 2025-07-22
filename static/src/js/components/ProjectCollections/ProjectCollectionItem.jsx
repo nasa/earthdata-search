@@ -126,11 +126,11 @@ const ProjectCollectionItem = ({
               <Button
                 className="project-collections-item__title-button"
                 variant="naked"
-                bootstrapVariant="link"
                 label={`${title} Collection Details`}
                 onClick={
                   () => {
-                    onTogglePanels(true)
+                    // If the panel is closed open it when user selects a collection in project
+                    // onTogglePanels(true)
                     onUpdateFocusedCollection(collectionId)
                     onSetActivePanelSection('1')
                   }
@@ -223,6 +223,7 @@ const ProjectCollectionItem = ({
                 label="Edit options"
                 onClick={
                   () => {
+                    console.log('🚀 ~ file: ProjectCollectionItem.jsx:229 ~ onTogglePanels:', onTogglePanels)
                     onUpdateFocusedCollection(collectionId)
                     onSetActivePanelSection('0')
                     onTogglePanels(true)
