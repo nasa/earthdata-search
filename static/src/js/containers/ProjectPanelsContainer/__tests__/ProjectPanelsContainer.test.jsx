@@ -18,10 +18,7 @@ const setup = setupTest({
     focusedCollectionId: 'collectionId',
     focusedGranuleId: '',
     granulesMetadata: {},
-    onSetActivePanel: jest.fn(),
-    onTogglePanels: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
-    onSetActivePanelGroup: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onViewCollectionGranules: jest.fn(),
@@ -56,6 +53,19 @@ const setup = setupTest({
             granules: {}
           }
         }
+      },
+      dataQualitySummaries: {
+        byCollectionId: {},
+        setDataQualitySummaries: jest.fn()
+      },
+      projectPanels: {
+        panels: {
+          activePanel: '0.0.0',
+          isOpen: false
+        },
+        setActivePanel: jest.fn(),
+        setIsOpen: jest.fn(),
+        setPanelGroup: jest.fn()
       }
     }
   }
@@ -70,36 +80,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('path')
-  })
-
-  test('onTogglePanels calls actions.togglePanels', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'togglePanels')
-
-    mapDispatchToProps(dispatch).onTogglePanels('data')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('data')
-  })
-
-  test('onSetActivePanel calls actions.setActivePanel', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setActivePanel')
-
-    mapDispatchToProps(dispatch).onSetActivePanel('panelId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('panelId')
-  })
-
-  test('onSetActivePanelGroup calls actions.setActivePanelGroup', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setActivePanelGroup')
-
-    mapDispatchToProps(dispatch).onSetActivePanelGroup('panelId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('panelId')
   })
 
   test('onUpdateFocusedCollection calls actions.updateFocusedCollection', () => {
@@ -157,6 +137,13 @@ describe('mapStateToProps', () => {
       focusedGranule: 'granuleId',
       map: {},
       panels: {},
+      query: {
+        collection: {
+          spatial: {},
+          temporal: {},
+          overrideTemporal: {}
+        }
+      },
       router: {
         location: {}
       },
@@ -172,7 +159,6 @@ describe('mapStateToProps', () => {
       focusedGranuleId: 'granuleId',
       granulesMetadata: {},
       location: {},
-      panels: {},
       ursProfile: {}
     }
 
@@ -197,10 +183,10 @@ describe('ProjectPanelsContainer component', () => {
       onFocusedGranuleChange: props.onFocusedGranuleChange,
       onRemoveGranuleFromProjectCollection: expect.any(Function),
       onSelectAccessMethod: expect.any(Function),
-      onSetActivePanel: props.onSetActivePanel,
-      onSetActivePanelGroup: props.onSetActivePanelGroup,
+      onSetActivePanel: expect.any(Function),
+      onSetActivePanelGroup: expect.any(Function),
       onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
-      onTogglePanels: props.onTogglePanels,
+      onTogglePanels: expect.any(Function),
       onUpdateAccessMethod: expect.any(Function),
       onUpdateFocusedCollection: props.onUpdateFocusedCollection,
       onViewCollectionGranules: props.onViewCollectionGranules,

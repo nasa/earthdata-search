@@ -38,7 +38,6 @@ const setup = setupTest({
     },
     onChangePath: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
     subscriptions: []
   },
   defaultZustandState: {
@@ -69,16 +68,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onSetActivePanelSection calls actions.setActivePanelSection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setActivePanelSection')
-
-    mapDispatchToProps(dispatch).onSetActivePanelSection('panelId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('panelId')
-  })
-
   test('onUpdateFocusedCollection calls actions.updateFocusedCollection', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateFocusedCollection')
@@ -175,7 +164,6 @@ describe('GranuleResultsActionsContainer component', () => {
       location: { search: 'value' },
       onChangePath: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onSetActivePanelSection: expect.any(Function),
       projectCollectionIds: ['focusedCollection'],
       projectGranuleCount: 100,
       removedGranuleIds: [],

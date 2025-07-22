@@ -52,9 +52,25 @@ import './SearchPanels.scss'
 /**
  * Renders SearchPanels.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.panels - The current panels state.
- * @param {Function} props.onTogglePanels - Toggles the panels opened or closed.
- * @param {Function} props.onSetActivePanel - Switches the currently active panel.
+ * @param {string} props.authToken - The authentication token for the user.
+ * @param {Object} props.collectionMetadata - Metadata for the currently focused collection.
+ * @param {Object} props.collectionQuery - Query parameters for collections.
+ * @param {Object} props.collectionsSearch - Search results and state for collections.
+ * @param {Array} props.collectionSubscriptions - List of subscriptions for the current collection.
+ * @param {Object} props.granuleMetadata - Metadata for the currently focused granule.
+ * @param {Object} props.granuleQuery - Query parameters for granules.
+ * @param {Object} props.granuleSearchResults - Search results and state for granules.
+ * @param {Object} props.isExportRunning - State indicating if export is running for CSV or JSON.
+ * @param {Object} props.location - The current browser location object.
+ * @param {Object} props.match - React Router match object.
+ * @param {Function} props.onApplyGranuleFilters - Callback to apply granule filters.
+ * @param {Function} props.onChangeQuery - Callback to change the search query.
+ * @param {Function} props.onExport - Callback to export search results.
+ * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection.
+ * @param {Function} props.onMetricsCollectionSortChange - Callback for collection sort metrics.
+ * @param {Function} props.onToggleAboutCSDAModal - Callback to toggle the CSDA modal.
+ * @param {Function} props.onToggleAboutCwicModal - Callback to toggle the CWIC modal.
+ * @param {Object} props.preferences - User preferences for panel state, list views, and sorting.
  */
 class SearchPanels extends PureComponent {
   constructor(props) {
@@ -74,8 +90,6 @@ class SearchPanels extends PureComponent {
       granulePanelView: this.defaultPanelStateFromProps(granuleListView)
     }
 
-    this.onPanelClose = this.onPanelClose.bind(this)
-    this.onChangePanel = this.onChangePanel.bind(this)
     this.onChangeCollectionsPanelView = this.onChangeCollectionsPanelView.bind(this)
     this.onChangeGranulePanelView = this.onChangeGranulePanelView.bind(this)
     this.updatePanelViewState = this.updatePanelViewState.bind(this)
@@ -102,17 +116,6 @@ class SearchPanels extends PureComponent {
         granulePanelView
       })
     }
-  }
-
-  onPanelClose() {
-    const { onTogglePanels } = this.props
-    onTogglePanels(false)
-  }
-
-  onChangePanel(panelId) {
-    const { onSetActivePanel, onTogglePanels } = this.props
-    onSetActivePanel(panelId)
-    onTogglePanels(true)
   }
 
   onChangeCollectionsPanelView(view) {
@@ -447,7 +450,6 @@ class SearchPanels extends PureComponent {
         activeView={collectionPanelView}
         sortsArray={collectionsSortsArray}
         footer={buildCollectionResultsBodyFooter()}
-        onPanelClose={this.onPanelClose}
         moreActionsDropdownItems={exportsArray}
       >
         <PanelItem scrollable={false}>
@@ -563,7 +565,6 @@ class SearchPanels extends PureComponent {
             ...subscriptionsMoreActionsItem
           ]
         }
-        onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
           <GranuleResultsBodyContainer panelView={granulePanelView} />
@@ -604,7 +605,6 @@ class SearchPanels extends PureComponent {
             ...subscriptionsMoreActionsItem
           ]
         }
-        onPanelClose={this.onPanelClose}
       >
         <PanelItem scrollable={false}>
           <CollectionDetailsBodyContainer />
@@ -661,7 +661,6 @@ class SearchPanels extends PureComponent {
             }
           ]
         }
-        onPanelClose={this.onPanelClose}
       >
         <PanelItem>
           <GranuleDetailsBodyContainer />
@@ -716,7 +715,6 @@ class SearchPanels extends PureComponent {
             }
           ]
         }
-        onPanelClose={this.onPanelClose}
       >
         <PanelItem>
           <PortalFeatureContainer authentication>
@@ -745,7 +743,7 @@ class SearchPanels extends PureComponent {
             }
           ]
         }
-        onPanelClose={this.onPanelClose}
+
       >
         <PanelItem>
           <PortalFeatureContainer authentication>
@@ -788,13 +786,13 @@ class SearchPanels extends PureComponent {
                 case 'subscriptions':
                   activePanel = '0.5.0'
                   appTitle = 'Dataset Search Subscriptions'
-                  appDescription = 'Subscribe to be notifed when new datasets become available'
+                  appDescription = 'Subscribe to be notified when new datasets become available'
                   appUrl = `${edscHost}/search/subscriptions`
                   break
                 case 'granules/subscriptions':
                   activePanel = '0.4.0'
                   if (collectionTitle) appTitle = `${collectionTitle} Subscriptions`
-                  if (collectionTitle) appDescription = `Subscribe to be notifed when new ${collectionTitle} data is available`
+                  if (collectionTitle) appDescription = `Subscribe to be notified when new ${collectionTitle} data is available`
                   if (conceptId) appUrl = `${edscHost}/search/granules/subscriptions?p=${conceptId}`
                   break
                 case 'granules/granule-details':
@@ -934,10 +932,8 @@ SearchPanels.propTypes = {
   onExport: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   preferences: PropTypes.shape({
     collectionSort: PropTypes.string,

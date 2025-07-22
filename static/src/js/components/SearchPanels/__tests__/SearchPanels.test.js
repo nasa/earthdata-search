@@ -118,8 +118,6 @@ function setup(overrideProps, location = '/search') {
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
-    onTogglePanels: jest.fn(),
-    onSetActivePanel: jest.fn(),
     onExport: jest.fn(),
     panels: {
       activePanel: '0.0.0',
@@ -1108,12 +1106,12 @@ describe('SearchPanels component', () => {
 
       expect(helmet.metaTags[2]).toEqual({
         name: 'description',
-        content: 'Subscribe to be notifed when new Collection Title data is available'
+        content: 'Subscribe to be notified when new Collection Title data is available'
       })
 
       expect(helmet.metaTags[3]).toEqual({
         property: 'og:description',
-        content: 'Subscribe to be notifed when new Collection Title data is available'
+        content: 'Subscribe to be notified when new Collection Title data is available'
       })
 
       expect(helmet.metaTags[4]).toEqual({
@@ -1198,12 +1196,12 @@ describe('SearchPanels component', () => {
 
       expect(helmet.metaTags[2]).toEqual({
         name: 'description',
-        content: 'Subscribe to be notifed when new datasets become available'
+        content: 'Subscribe to be notified when new datasets become available'
       })
 
       expect(helmet.metaTags[3]).toEqual({
         property: 'og:description',
-        content: 'Subscribe to be notifed when new datasets become available'
+        content: 'Subscribe to be notified when new datasets become available'
       })
 
       expect(helmet.metaTags[4]).toEqual({
@@ -1269,22 +1267,6 @@ describe('SearchPanels component', () => {
     })
 
     expect(enzymeWrapper.find(SearchPanels).instance().state.collectionPanelView).toEqual('table')
-  })
-
-  test('onPanelClose calls onTogglePanels', () => {
-    const { enzymeWrapper, props } = setup()
-
-    enzymeWrapper.find(SearchPanels).instance().onPanelClose()
-    expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
-    expect(props.onTogglePanels).toHaveBeenCalledWith(false)
-  })
-
-  test('onChangePanel calls onSetActivePanel', () => {
-    const { enzymeWrapper, props } = setup()
-
-    enzymeWrapper.find(SearchPanels).instance().onChangePanel('0.1.0')
-    expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-    expect(props.onSetActivePanel).toHaveBeenCalledWith('0.1.0')
   })
 
   test('onChangeCollectionPanelView sets the state', () => {

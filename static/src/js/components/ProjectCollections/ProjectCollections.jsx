@@ -15,36 +15,39 @@ import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 import './ProjectCollections.scss'
 
 /**
+/**
  * Renders ProjectCollections.
  * @param {Object} collections - List of collections passed from redux store.
  * @param {String} map - The current map configuration.
  * @param {Function} onMetricsDataAccess - Callback to log metrics events.
- * @param {Function} onSetActivePanel - Callback to set the active panel.
- * @param {Function} onSetActivePanelSection - Callback to set the active panel section.
- * @param {Function} onTogglePanels - Callback to toggle the visibility of the panels.
+ * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
  * @param {Function} onUpdateProjectName - Callback to update the project name.
- * @param {Object} panels - The panels state.
- * @param {Object} project - The project state.
+ * @param {Function} onViewCollectionDetails - Callback to view collection details.
+ * @param {Function} onViewCollectionGranules - Callback to view collection granules.
  * @param {Object} savedProject - The saved project state.
  */
 const ProjectCollections = ({
   onMetricsDataAccess,
-  onSetActivePanel,
-  onSetActivePanelSection,
-  onTogglePanels,
   onUpdateFocusedCollection,
   onUpdateProjectName,
   onViewCollectionDetails,
   onViewCollectionGranules,
-  panels,
   savedProject
 }) => {
   const {
+    panels: panelsData,
+    setActivePanel,
+    togglePanels,
+    setPanelSection,
     collections: projectCollections,
     isSubmitting
   } = useEdscStore((state) => ({
     collections: state.project.collections,
-    isSubmitting: state.project.isSubmitting
+    isSubmitting: state.project.isSubmitting,
+    panels: state.projectPanels.panels,
+    setActivePanel: state.projectPanels.setActivePanel,
+    togglePanels: state.projectPanels.setIsOpen,
+    setPanelSection: state.projectPanels.setPanelSection
   }))
   const { allIds: projectCollectionsIds } = projectCollections
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
@@ -89,13 +92,13 @@ const ProjectCollections = ({
       <ProjectCollectionsList
         collectionsMetadata={projectCollectionsMetadata}
         onMetricsDataAccess={onMetricsDataAccess}
-        onSetActivePanel={onSetActivePanel}
-        onSetActivePanelSection={onSetActivePanelSection}
-        onTogglePanels={onTogglePanels}
+        onSetActivePanel={setActivePanel}
+        onSetActivePanelSection={setPanelSection}
+        onTogglePanels={togglePanels}
         onUpdateFocusedCollection={onUpdateFocusedCollection}
         onViewCollectionDetails={onViewCollectionDetails}
         onViewCollectionGranules={onViewCollectionGranules}
-        panels={panels}
+        panels={panelsData}
       />
       <div className="project-collections__footer">
         {
@@ -149,14 +152,10 @@ const ProjectCollections = ({
 
 ProjectCollections.propTypes = {
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }
 

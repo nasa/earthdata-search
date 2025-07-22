@@ -28,7 +28,6 @@ import { pluralize } from '../../util/pluralize'
 import { stringify } from '../../util/url/url'
 
 import './ProjectPanels.scss'
-
 /**
  * Renders ProjectPanels.
  * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
@@ -46,7 +45,6 @@ import './ProjectPanels.scss'
  * @param {Function} onSelectAccessMethod - Selects an access method.
  * @param {Function} onSetActivePanel - Switches the currently active panel.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
- * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  * @param {Function} onTogglePanels - Toggles the panels opened or closed.
  * @param {Function} onUpdateAccessMethod - Callback to update the access method.
@@ -80,7 +78,6 @@ class ProjectPanels extends PureComponent {
       onTogglePanels,
       panels
     } = this.props
-
     const {
       projectCollections: nextProjectCollections,
       focusedCollectionId: nextFocusedCollection
@@ -91,7 +88,6 @@ class ProjectPanels extends PureComponent {
     const {
       activePanel
     } = panels
-
     const selectedVariables = {}
 
     allIds.forEach((collectionId) => {
@@ -136,6 +132,7 @@ class ProjectPanels extends PureComponent {
   onPanelClose() {
     const { onTogglePanels, onUpdateFocusedCollection } = this.props
     onUpdateFocusedCollection('')
+    // Close the panel
     onTogglePanels(false)
   }
 
@@ -487,8 +484,11 @@ class ProjectPanels extends PureComponent {
                 className="project-panels__action"
                 label="Done"
                 bootstrapVariant="primary"
-                onClick={() => this.onPanelClose()}
-                dataTestId="project-panels-done"
+                onClick={
+                  () => {
+                    this.onPanelClose()
+                  }
+                }
               >
                 Done
               </Button>

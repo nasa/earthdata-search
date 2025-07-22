@@ -40,7 +40,6 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {Number} props.index - The index of the current collection.
  * @param {Object} props.metadata - The metadata of the current collection.
  * @param {Function} props.onSelectAccessMethod - Selects an access method.
- * @param {Function} props.onSetActivePanel - Switches the currently active panel.
  * @param {Function} props.onTogglePanels - Toggles the panels.
  * @param {Function} props.onUpdateAccessMethod - Updates an access method.
  * @param {Object} props.projectCollection - The project collection.
@@ -53,8 +52,6 @@ const AccessMethod = ({
   isActive,
   metadata,
   onSelectAccessMethod,
-  onSetActivePanel,
-  onTogglePanels,
   onUpdateAccessMethod,
   projectCollection,
   selectedAccessMethod,
@@ -62,7 +59,13 @@ const AccessMethod = ({
   temporal,
   ursProfile
 }) => {
-  const setShowMbr = useEdscStore((state) => state.map.setShowMbr)
+  const {
+    setShowMbr,
+    setActivePanel
+  } = useEdscStore((state) => ({
+    setShowMbr: state.map.setShowMbr,
+    setActivePanel: state.projectPanels.setActivePanel
+  }))
 
   const { [selectedAccessMethod]: selectedMethod = {} } = accessMethods
 
@@ -903,8 +906,7 @@ const AccessMethod = ({
                             bootstrapSize="sm"
                             onClick={
                               () => {
-                                onSetActivePanel(`0.${index}.1`)
-                                onTogglePanels(true)
+                                setActivePanel(`0.${index}.1`)
                               }
                             }
                           >
@@ -998,8 +1000,6 @@ AccessMethod.defaultProps = {
   index: null,
   isActive: false,
   metadata: {},
-  onSetActivePanel: null,
-  onTogglePanels: null,
   selectedAccessMethod: null,
   spatial: {},
   granuleMetadata: {},
@@ -1018,8 +1018,6 @@ AccessMethod.propTypes = {
     startDate: PropTypes.string
   }),
   onSelectAccessMethod: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func,
-  onTogglePanels: PropTypes.func,
   onUpdateAccessMethod: PropTypes.func.isRequired,
   selectedAccessMethod: PropTypes.string,
   spatial: PropTypes.shape({

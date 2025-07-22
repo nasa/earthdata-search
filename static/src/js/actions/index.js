@@ -78,12 +78,6 @@ import {
   getFocusedGranule,
   updateFocusedGranule
 } from './focusedGranule'
-import {
-  togglePanels,
-  setActivePanel,
-  setActivePanelGroup,
-  setActivePanelSection
-} from './panels'
 import { getRegions } from './regions'
 import { fetchRetrieval, submitRetrieval } from './retrieval'
 import { fetchRetrievalCollection } from './retrievalCollection'
@@ -150,9 +144,6 @@ const actions = {
   removeError,
   removeSubscriptionDisabledFields,
   requeueOrder,
-  setActivePanel,
-  setActivePanelGroup,
-  setActivePanelSection,
   setColorMapsErrored,
   setColorMapsLoaded,
   setColorMapsLoading,
@@ -169,7 +160,6 @@ const actions = {
   toggleFacetsModal,
   toggleKeyboardShortcutsModal,
   toggleOverrideTemporalModal,
-  togglePanels,
   togglePortalBrowserModal,
   toggleRelatedUrlsModal,
   toggleSecondaryOverlayPanel,
