@@ -63,9 +63,7 @@ describe('SearchAutocomplete', () => {
         defaultProps: {
           ...defaultProps,
           initialKeyword: 'Test value'
-        },
-        withRedux: true,
-        defaultReduxState
+        }
       })()
 
       const input = screen.getByRole('textbox')
@@ -98,9 +96,7 @@ describe('SearchAutocomplete', () => {
     test('updates the input value', async () => {
       const { user } = setupTest({
         Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
+        defaultProps
       })()
 
       const input = screen.getByRole('textbox')
@@ -114,9 +110,7 @@ describe('SearchAutocomplete', () => {
     test('fetches autocomplete suggestions after 3 characters', async () => {
       const { user } = setupTest({
         Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
+        defaultProps
       })()
 
       nock(/localhost/)
@@ -140,9 +134,7 @@ describe('SearchAutocomplete', () => {
     test('does not fetch suggestions with less than 3 characters', async () => {
       const { user } = setupTest({
         Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
+        defaultProps
       })()
 
       const input = screen.getByRole('textbox')
@@ -154,9 +146,7 @@ describe('SearchAutocomplete', () => {
     test('shows loading state while fetching', async () => {
       const { user } = setupTest({
         Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
+        defaultProps
       })()
 
       nock(/localhost/)
@@ -308,9 +298,7 @@ describe('SearchAutocomplete', () => {
     test('clears the input after selection', async () => {
       const { user } = setupTest({
         Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
+        defaultProps
       })()
 
       nock(/localhost/)
@@ -405,7 +393,7 @@ describe('SearchAutocomplete', () => {
         })
 
       const input = screen.getByRole('textbox')
-      await user.type(input, 'landsat')
+      await user.type(input, 'lan')
 
       await screen.findByText('LANDSAT-8')
 
@@ -449,7 +437,7 @@ describe('SearchAutocomplete', () => {
         })
 
       const input = screen.getByRole('textbox')
-      await user.type(input, 'land')
+      await user.type(input, 'lan')
 
       await screen.findByText('Landsat')
 
@@ -466,9 +454,7 @@ describe('SearchAutocomplete', () => {
 
       const { unmount } = setupTest({
         Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
+        defaultProps
       })()
 
       unmount()
@@ -479,9 +465,7 @@ describe('SearchAutocomplete', () => {
     test('cancels pending requests on unmount', async () => {
       const { user, unmount } = setupTest({
         Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
+        defaultProps
       })()
 
       // Create a delayed response
@@ -509,12 +493,12 @@ describe('SearchAutocomplete', () => {
       })()
 
       const input = screen.getByRole('textbox')
-      input.blur() // Prove it starts unfocused
-      expect(document.activeElement).not.toBe(input)
+      input.blur()
+      expect(input).not.toHaveFocus()
 
-      fireEvent.keyUp(window, { key: '/' }) // RTL helper
+      fireEvent.keyUp(window, { key: '/' })
 
-      expect(document.activeElement).toBe(input)
+      expect(input).toHaveFocus()
     })
 
     test('does not focus search input when "/" is pressed while already in an input', () => {
@@ -525,20 +509,17 @@ describe('SearchAutocomplete', () => {
 
       const searchInput = screen.getByRole('textbox')
 
-      // Create another input to test the behavior
       const otherInput = document.createElement('input')
       otherInput.type = 'text'
       document.body.appendChild(otherInput)
 
       otherInput.focus()
-      expect(document.activeElement).toBe(otherInput)
+      expect(otherInput).toHaveFocus()
 
-      // Fire keyup from the other input so event.target is the input
       fireEvent.keyUp(otherInput, { key: '/' })
 
-      // Focus should remain on the other input
-      expect(document.activeElement).toBe(otherInput)
-      expect(document.activeElement).not.toBe(searchInput)
+      expect(otherInput).toHaveFocus()
+      expect(searchInput).not.toHaveFocus()
 
       // Cleanup
       document.body.removeChild(otherInput)
