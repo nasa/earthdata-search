@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  screen,
-  waitFor,
-  fireEvent
-} from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 
 import SearchAutocomplete from '../SearchAutocomplete'
@@ -16,74 +12,62 @@ beforeEach(() => {
   // Mock console.error to prevent test failures from React warnings
   jest.spyOn(console, 'error').mockImplementation(() => {})
 
-  // Always mock the error logger endpoint
   nock(/localhost/)
     .post(/error_logger/)
     .reply(200)
     .persist()
 
-  // Always mock the autocomplete logger endpoint
   nock(/localhost/)
     .post(/autocomplete_logger/)
     .reply(200)
     .persist()
 })
 
-afterEach(() => {
-  nock.cleanAll()
-})
-
 describe('SearchAutocomplete', () => {
-  const defaultProps = {
-    initialKeyword: '',
-    onChangeQuery: jest.fn(),
-    onChangeFocusedCollection: jest.fn()
-  }
-
-  // Default Redux state needed by the component
-  const defaultReduxState = {
-    authToken: '',
-    earthdataEnvironment: 'prod'
-  }
+  const setup = setupTest({
+    Component: SearchAutocomplete,
+    defaultProps: {
+      initialKeyword: '',
+      onChangeQuery: jest.fn(),
+      onChangeFocusedCollection: jest.fn()
+    },
+    defaultReduxState: {
+      authToken: '',
+      earthdataEnvironment: 'prod'
+    }
+  })
 
   describe('when rendering the component', () => {
     test('renders correctly', () => {
-      setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+      setup()
 
       expect(screen.getByRole('textbox')).toBeInTheDocument()
       expect(screen.getByText('Search')).toBeInTheDocument()
     })
 
     test('renders with initial keyword value', () => {
-      setupTest({
-        Component: SearchAutocomplete,
-        defaultProps: {
-          ...defaultProps,
+      setup({
+        overrideProps: {
           initialKeyword: 'Test value'
         }
-      })()
+      })
 
       const input = screen.getByRole('textbox')
       expect(input).toHaveValue('Test value')
     })
 
     test('updates input when initialKeyword prop changes', () => {
-      const { rerender } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps: {
-          ...defaultProps,
+      const { rerender, props } = setup({
+        overrideProps: {
           initialKeyword: 'initial value'
         }
-      })()
+      })
 
       expect(screen.getByRole('textbox')).toHaveValue('initial value')
 
       rerender(
         <SearchAutocomplete
-          {...defaultProps}
+          {...props}
           initialKeyword="new value"
         />
       )
@@ -94,10 +78,7 @@ describe('SearchAutocomplete', () => {
 
   describe('when typing in the search input', () => {
     test('updates the input value', async () => {
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+      const { user } = setup()
 
       const input = screen.getByRole('textbox')
       await user.type(input, 'MODIS')
@@ -108,10 +89,7 @@ describe('SearchAutocomplete', () => {
     })
 
     test('fetches autocomplete suggestions after 3 characters', async () => {
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+      const { user } = setup()
 
       nock(/localhost/)
         .post(/autocomplete/)
@@ -132,10 +110,7 @@ describe('SearchAutocomplete', () => {
     })
 
     test('does not fetch suggestions with less than 3 characters', async () => {
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+      const { user } = setup()
 
       const input = screen.getByRole('textbox')
       await user.type(input, 'te')
@@ -144,10 +119,7 @@ describe('SearchAutocomplete', () => {
     })
 
     test('shows loading state while fetching', async () => {
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+      const { user } = setup()
 
       nock(/localhost/)
         .post(/autocomplete/)
@@ -163,14 +135,12 @@ describe('SearchAutocomplete', () => {
 
     test('calls handleError when autocomplete API returns an error', async () => {
       const handleErrorMock = jest.spyOn(actions, 'handleError')
-      const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => {})
 
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
-      })()
+      const { user } = setup({
+        overrideProps: {
+          withRedux: true
+        }
+      })
 
       nock(/localhost/)
         .post(/autocomplete/)
@@ -197,19 +167,16 @@ describe('SearchAutocomplete', () => {
 
       // Cleanup
       handleErrorMock.mockRestore()
-      consoleMock.mockRestore()
     })
   })
 
   describe('when submitting the form', () => {
     test('calls onChangeQuery and onChangeFocusedCollection when keyword has changed', async () => {
-      const { user, props } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps: {
-          ...defaultProps,
+      const { user, props } = setup({
+        overrideProps: {
           initialKeyword: 'initial'
         }
-      })()
+      })
 
       const input = screen.getByRole('textbox')
       await user.clear(input)
@@ -229,13 +196,11 @@ describe('SearchAutocomplete', () => {
     })
 
     test('cancels inflight autocomplete requests', async () => {
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps: {
-          ...defaultProps,
+      const { user } = setup({
+        overrideProps: {
           initialKeyword: 'initial'
         }
-      })()
+      })
 
       // Create a delayed response
       nock(/localhost/)
@@ -259,12 +224,11 @@ describe('SearchAutocomplete', () => {
 
   describe('when selecting a suggestion', () => {
     test('calls onChangeQuery with empty keyword and resets page', async () => {
-      const { user, props } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps,
-        withRedux: true,
-        defaultReduxState
-      })()
+      const { user, props } = setup({
+        overrideProps: {
+          withRedux: true
+        }
+      })
 
       nock(/localhost/)
         .post(/autocomplete/)
@@ -296,10 +260,7 @@ describe('SearchAutocomplete', () => {
     })
 
     test('clears the input after selection', async () => {
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+      const { user } = setup()
 
       nock(/localhost/)
         .post(/autocomplete/)
@@ -327,14 +288,12 @@ describe('SearchAutocomplete', () => {
       const addCmrFacetFromAutocomplete = jest.fn()
       const setOpenFacetGroup = jest.fn()
 
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps,
-        defaultZustandState: {
+      const { user } = setup({
+        overrideZustandState: {
           home: { setOpenFacetGroup },
           facetParams: { addCmrFacetFromAutocomplete }
         }
-      })()
+      })
 
       nock(/localhost/)
         .post(/autocomplete/)
@@ -349,7 +308,7 @@ describe('SearchAutocomplete', () => {
         })
 
       const input = screen.getByRole('textbox')
-      await user.type(input, 'laser')
+      await user.type(input, 'las')
 
       await screen.findByText('Laser Reflectance')
 
@@ -371,14 +330,12 @@ describe('SearchAutocomplete', () => {
       const addCmrFacetFromAutocomplete = jest.fn()
       const setOpenFacetGroup = jest.fn()
 
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps,
-        defaultZustandState: {
+      const { user } = setup({
+        overrideZustandState: {
           home: { setOpenFacetGroup },
           facetParams: { addCmrFacetFromAutocomplete }
         }
-      })()
+      })
 
       nock(/localhost/)
         .post(/autocomplete/)
@@ -415,14 +372,12 @@ describe('SearchAutocomplete', () => {
       const addCmrFacetFromAutocomplete = jest.fn()
       const setOpenFacetGroup = jest.fn()
 
-      const { user } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps,
-        defaultZustandState: {
+      const { user } = setup({
+        overrideZustandState: {
           home: { setOpenFacetGroup },
           facetParams: { addCmrFacetFromAutocomplete }
         }
-      })()
+      })
 
       nock(/localhost/)
         .post(/autocomplete/)
@@ -452,10 +407,7 @@ describe('SearchAutocomplete', () => {
     test('removes event listener on unmount', () => {
       const removeEventListenerSpy = jest.spyOn(window, 'removeEventListener')
 
-      const { unmount } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+      const { unmount } = setup()
 
       unmount()
 
@@ -463,10 +415,7 @@ describe('SearchAutocomplete', () => {
     })
 
     test('cancels pending requests on unmount', async () => {
-      const { user, unmount } = setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+      const { user, unmount } = setup()
 
       // Create a delayed response
       nock(/localhost/)
@@ -486,26 +435,20 @@ describe('SearchAutocomplete', () => {
   })
 
   describe('keyboard shortcuts', () => {
-    test('focuses input on "/"', () => {
-      setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+    test('focuses input on "/"', async () => {
+      const { user } = setup()
 
       const input = screen.getByRole('textbox')
       input.blur()
       expect(input).not.toHaveFocus()
 
-      fireEvent.keyUp(window, { key: '/' })
+      await user.keyboard('/')
 
       expect(input).toHaveFocus()
     })
 
-    test('does not focus search input when "/" is pressed while already in an input', () => {
-      setupTest({
-        Component: SearchAutocomplete,
-        defaultProps
-      })()
+    test('does not focus search input when "/" is pressed while already in an input', async () => {
+      const { user } = setup()
 
       const searchInput = screen.getByRole('textbox')
 
@@ -516,7 +459,7 @@ describe('SearchAutocomplete', () => {
       otherInput.focus()
       expect(otherInput).toHaveFocus()
 
-      fireEvent.keyUp(otherInput, { key: '/' })
+      await user.keyboard('/')
 
       expect(otherInput).toHaveFocus()
       expect(searchInput).not.toHaveFocus()
