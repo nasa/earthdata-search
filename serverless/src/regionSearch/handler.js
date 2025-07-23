@@ -35,6 +35,23 @@ const regionSearch = async (event) => {
     const { config, data } = regionResponse
     const { elapsedTime } = config
 
+    const contentType = regionResponse.headers?.['content-type'] || ''
+    const responseBody = typeof regionResponse.data === 'string' ? regionResponse.data : ''
+    if (
+      regionResponse.status === 200
+      && contentType.includes('text/html')
+      && /page not found/i.test(responseBody)
+    ) {
+      return {
+        isBase64Encoded: false,
+        headers: defaultResponseHeaders,
+        statusCode: 404,
+        body: JSON.stringify({
+          errors: [`404: Results with the query ${query} were not found.`]
+        })
+      }
+    }
+
     const {
       hits,
       time,
