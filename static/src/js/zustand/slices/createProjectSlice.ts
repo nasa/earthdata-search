@@ -117,9 +117,6 @@ export const initialGranuleState = {
   removedGranuleIds: []
 }
 
-// Cancel token to cancel pending project granule requests
-const projectGranuleCancelTokens = {} as Record<string, { cancel: () => void } | undefined>
-
 const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
   project: {
     ...initialState,
@@ -509,12 +506,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           extractedGranuleParams
         )
 
-        // If cancel token is set, cancel the previous request(s)
-        if (projectGranuleCancelTokens[collectionId]) {
-          projectGranuleCancelTokens[collectionId].cancel()
-          projectGranuleCancelTokens[collectionId] = undefined
-        }
-
         const {
           isOpenSearch
         } = granuleParams
@@ -577,8 +568,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         }
 
         searchParams.pageSize = pageSize
-
-        projectGranuleCancelTokens[collectionId] = requestObject.getCancelToken()
 
         const response = requestObject.search(searchParams)
           .then((responseObject: Response) => {
