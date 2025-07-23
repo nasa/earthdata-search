@@ -15,7 +15,6 @@ jest.mock('../../../components/ProjectPanels/ProjectPanels', () => jest.fn(() =>
 const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
-    dataQualitySummaries: {},
     focusedCollectionId: '',
     focusedGranuleId: '',
     granulesQueries: {},
@@ -48,6 +47,10 @@ const setup = setupTest({
       removeGranuleFromProjectCollection: jest.fn(),
       selectAccessMethod: jest.fn(),
       updateAccessMethod: jest.fn()
+    },
+    dataQualitySummaries: {
+      byCollectionId: {},
+      setDataQualitySummaries: jest.fn()
     }
   }
 })
@@ -140,7 +143,6 @@ describe('mapStateToProps', () => {
       contactInfo: {
         ursProfile: {}
       },
-      dataQualitySummaries: {},
       metadata: {
         collections: {},
         granules: {}
@@ -167,7 +169,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      dataQualitySummaries: {},
       focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
       granulesMetadata: {},
@@ -189,7 +190,7 @@ describe('ProjectPanelsContainer component', () => {
 
     expect(ProjectPanels).toHaveBeenCalledTimes(1)
     expect(ProjectPanels).toHaveBeenCalledWith({
-      dataQualitySummaries: props.dataQualitySummaries,
+      dataQualitySummaries: {},
       focusedCollectionId: props.focusedCollectionId,
       focusedGranuleId: props.focusedGranuleId,
       granulesQueries: props.granulesQueries,

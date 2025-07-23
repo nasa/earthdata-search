@@ -32,7 +32,6 @@ jest.mock('../../../actions', () => ({
   addGranuleMetadata: jest.fn(),
   handleAlert: jest.fn(),
   handleError: jest.fn(),
-  setDataQualitySummaries: jest.fn(),
   toggleSpatialPolygonWarning: jest.fn(),
   updateCollectionMetadata: jest.fn()
 }))
@@ -394,8 +393,6 @@ describe('createProjectSlice', () => {
             type: 'download'
           }
         })
-
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(2)
         expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([{
@@ -884,8 +881,6 @@ describe('createProjectSlice', () => {
           }
         })
 
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(0)
-
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([
           expect.objectContaining({
@@ -921,7 +916,6 @@ describe('createProjectSlice', () => {
         expect(byId).toEqual({})
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(0)
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -1001,8 +995,6 @@ describe('createProjectSlice', () => {
             type: 'download'
           }
         })
-
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
 
@@ -1115,14 +1107,11 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(1)
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledWith({
-          catalogItemId: 'collectionId1',
-          dataQualitySummaries: [{
-            conceptId: 'DQS1000000-EDSC',
-            title: 'Data Quality Summary 1'
-          }]
-        })
+        const updatedState = useEdscStore.getState()
+        expect(updatedState.dataQualitySummaries.byCollectionId.collectionId1).toEqual([{
+          conceptId: 'DQS1000000-EDSC',
+          title: 'Data Quality Summary 1'
+        }])
       })
     })
   })

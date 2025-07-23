@@ -19,6 +19,24 @@ export type EarthdataDownloadRedirectSlice = {
   }
 }
 
+/** Data Quality Summary item structure */
+type DataQualitySummaryItem = {
+  /** Unique identifier for the data quality summary */
+  id: string
+  /** HTML content of the summary */
+  summary: string
+}
+
+export type DataQualitySummariesSlice = {
+  /** The Data Quality Summaries Slice of the store */
+  dataQualitySummaries: {
+    /** Object storing data quality summaries by collection ID */
+    byCollectionId: Record<string, DataQualitySummaryItem[]>
+    /** Function to set data quality summaries for a collection */
+    setDataQualitySummaries: (catalogItemId: string, summaries: DataQualitySummaryItem[]) => void
+  }
+}
+
 type FeatureFacets = {
   /** Flag if the facet is available in Earthdata Cloud */
   availableInEarthdataCloud: boolean
@@ -727,6 +745,7 @@ export type UiSlice = {
 
 export type EdscStore =
   EarthdataDownloadRedirectSlice
+  & DataQualitySummariesSlice
   & FacetParamsSlice
   & HomeSlice
   & MapSlice

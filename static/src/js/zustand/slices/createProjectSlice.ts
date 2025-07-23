@@ -447,10 +447,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           if (dataQualitySummaries) {
             const { items: dqsItems = [] } = dataQualitySummaries
             if (dqsItems && dqsItems.length > 0) {
-              reduxDispatch(actions.setDataQualitySummaries({
-                catalogItemId: conceptId,
-                dataQualitySummaries: dqsItems
-              }))
+              get().dataQualitySummaries.setDataQualitySummaries(conceptId, dqsItems)
             }
           }
 
