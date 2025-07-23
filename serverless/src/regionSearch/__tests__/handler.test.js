@@ -278,10 +278,9 @@ describe('regionSearch', () => {
       statusCode
     } = regionResponse
 
-    expect(statusCode).toBe(500)
+    expect(statusCode).toBe(404)
     expect(body).toBe(JSON.stringify({
-      statusCode: 500,
-      errors: ['Error: Not Found']
+      errors: ['404: Results with the query two were not found.']
     }))
   })
 })

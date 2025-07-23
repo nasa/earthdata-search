@@ -42,7 +42,14 @@ const regionSearch = async (event) => {
       && contentType.includes('text/html')
       && /page not found/i.test(responseBody)
     ) {
-      throw new Error('Not Found')
+      return {
+        isBase64Encoded: false,
+        headers: defaultResponseHeaders,
+        statusCode: 404,
+        body: JSON.stringify({
+          errors: [`404: Results with the query ${query} were not found.`]
+        })
+      }
     }
 
     const {
