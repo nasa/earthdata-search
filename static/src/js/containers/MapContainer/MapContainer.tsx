@@ -448,8 +448,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const allAddedGranuleIds: string[] = []
   const allRemovedGranuleIds: string[] = []
 
-  // If the focusedCollectionId is set, get the added and removed granule ids
-  if (focusedCollectionId && focusedCollectionId !== '') {
+  // If on the focusedCollectionPage and the focusedCollectionId is set, get the added and removed granule ids
+  if (isFocusedCollectionPage && focusedCollectionId && focusedCollectionId !== '') {
     const { granules = {} } = focusedProjectCollection as ProjectCollection
     const { addedGranuleIds = [], removedGranuleIds = [] } = granules as ProjectGranules
 
