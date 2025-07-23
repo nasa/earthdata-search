@@ -26,8 +26,6 @@ import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 // @ts-expect-error The file does not have types
 import { getGranulesMetadata } from '../../selectors/granuleMetadata'
-// @ts-expect-error The file does not have types
-import { getMapPreferences } from '../../selectors/preferences'
 
 import { isPath } from '../../util/isPath'
 import { projectionConfigs } from '../../util/map/crs'
@@ -107,7 +105,6 @@ export const mapStateToProps = (state) => ({
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
   lineSearch: state.query.collection.spatial.line,
-  mapPreferences: getMapPreferences(state),
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
   project: state.project,
@@ -160,23 +157,6 @@ interface MapContainerProps {
   granulesMetadata: GranulesMetadata
   /** The line search coordinates */
   lineSearch?: LineString[]
-  /** The map preferences */
-  mapPreferences: {
-    /** The base layer */
-    baseLayer: string
-    /** Latitude */
-    latitude: number
-    /** Longitude */
-    longitude: number
-    /** The overlays */
-    overlayLayers: string[]
-    /** The map projection */
-    projection: string
-    /** The map rotation */
-    rotation: number
-    /** The map zoom level */
-    zoom: number
-  }
   /** Function to change the focused granule */
   onChangeFocusedGranule: (granuleId: string) => void
   /** Function to change the query */

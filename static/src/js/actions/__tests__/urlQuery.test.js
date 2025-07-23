@@ -51,11 +51,6 @@ describe('updateStore', () => {
     }
 
     const store = mockStore({
-      preferences: {
-        preferences: {
-          collectionSort: 'default'
-        }
-      },
       router: {
         location: {
           pathname: '/search'

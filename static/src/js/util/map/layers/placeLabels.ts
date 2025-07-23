@@ -1,10 +1,8 @@
 import vectorTileLayer from './vectorTileLayer'
 
-// @ts-expect-error The file does not have types
-import { getApplicationConfig } from '../../../../../../sharedUtils/config'
 import { ProjectionCode } from '../../../types/sharedTypes'
 
-const { placeLabelsStyleUrl } = getApplicationConfig()
+import placeLabelsStyleConfig from './placeLabelsStyleConfig.json'
 
 /**
  * Builds the place labels layer
@@ -25,7 +23,7 @@ const placeLabels = async ({
   attributions: 'Sources: Esri, TomTom, Garmin, FAO, NOAA, USGS, © OpenStreetMap contributors, and the GIS User Community',
   className: 'place-labels-layer',
   projectionCode,
-  style: placeLabelsStyleUrl,
+  style: placeLabelsStyleConfig,
   visible,
   zIndex: 5
 })

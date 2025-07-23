@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
 
 import validator from '@rjsf/validator-ajv8'
 import Form from '@rjsf/core'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getPreferences } from '../../zustand/selectors/preferences'
 import schema from '../../../../../schemas/sitePreferencesSchema.json'
 import uiSchema from '../../../../../schemas/sitePreferencesUISchema.json'
 import Button from '../Button/Button'
@@ -16,18 +17,22 @@ import './PreferencesForm.scss'
 /**
  * Renders the Preferences form
  */
-const PreferencesForm = (props) => {
-  const { preferences, onUpdatePreferences } = props
+const PreferencesForm = () => {
   const {
+    preferencesData,
     isSubmitting,
-    preferences: formDataProps
-  } = preferences
+    submitAndUpdatePreferences
+  } = useEdscStore((state) => ({
+    preferencesData: getPreferences(state),
+    isSubmitting: state.preferences.isSubmitting,
+    submitAndUpdatePreferences: state.preferences.submitAndUpdatePreferences
+  }))
 
-  const [formData, setFormData] = useState(formDataProps)
+  const [formData, setFormData] = useState(preferencesData)
 
   useEffect(() => {
-    setFormData(formDataProps)
-  }, [formDataProps])
+    setFormData(preferencesData)
+  }, [preferencesData])
 
   const onChange = (data) => {
     const { formData: newFormData } = data
@@ -58,7 +63,7 @@ const PreferencesForm = (props) => {
         formData={formData}
         liveValidate
         onChange={onChange}
-        onSubmit={onUpdatePreferences}
+        onSubmit={submitAndUpdatePreferences}
         schema={schema}
         transformErrors={transformErrors}
         uiSchema={uiSchema}
@@ -78,14 +83,6 @@ const PreferencesForm = (props) => {
       </Form>
     </div>
   )
-}
-
-PreferencesForm.propTypes = {
-  onUpdatePreferences: PropTypes.func.isRequired,
-  preferences: PropTypes.shape({
-    isSubmitting: PropTypes.bool,
-    preferences: PropTypes.shape({})
-  }).isRequired
 }
 
 export default PreferencesForm

@@ -1,135 +1,128 @@
-import React from 'react'
-import Enzyme, { shallow, mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Form from '@rjsf/core'
-import { act } from 'react-dom/test-utils'
+import { screen } from '@testing-library/react'
 
-import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import PreferencesForm from '../PreferencesForm'
-import schema from '../../../../../../schemas/sitePreferencesSchema.json'
-import uiSchema from '../../../../../../schemas/sitePreferencesUISchema.json'
-import mapLayers from '../../../constants/mapLayers'
-import projectionCodes from '../../../constants/projectionCodes'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-const defaultProps = {
+const defaultZustandState = {
   preferences: {
     preferences: {
       panelState: 'default',
       collectionListView: 'default',
-      granuleListView: 'default'
+      granuleListView: 'default',
+      collectionSort: 'default',
+      granuleSort: 'default',
+      mapView: {
+        baseLayer: 'worldImagery',
+        latitude: 0,
+        longitude: 0,
+        overlayLayers: [
+          'bordersRoads',
+          'placeLabels'
+        ],
+        projection: 'epsg4326',
+        rotation: 0,
+        zoom: 3
+      }
     },
-    isSubmitting: false
-  },
-  onUpdatePreferences: jest.fn()
-}
-
-function setup() {
-  const enzymeWrapper = shallow(<PreferencesForm {...defaultProps} />)
-
-  return {
-    enzymeWrapper,
-    props: defaultProps
+    isSubmitting: false,
+    submitAndUpdatePreferences: jest.fn()
   }
 }
 
-function setupMount() {
-  const enzymeWrapper = mount(<PreferencesForm {...defaultProps} />)
-
-  return {
-    enzymeWrapper,
-    props: defaultProps
-  }
-}
+const setup = setupTest({
+  Component: PreferencesForm,
+  defaultZustandState
+})
 
 describe('PreferencesForm component', () => {
   test('renders a Form component', () => {
-    const { enzymeWrapper, props } = setup()
+    setup()
 
-    const form = enzymeWrapper.find(Form)
+    expect(screen.getByRole('button', { name: /submit/i })).toBeInTheDocument()
 
-    expect(form.props().schema).toEqual(schema)
-    expect(form.props().uiSchema).toEqual(uiSchema)
-    expect(form.props().formData).toEqual(props.preferences.preferences)
-    expect(form.props().onSubmit).toEqual(props.onUpdatePreferences)
+    expect(screen.getByText(/Panel State/i)).toBeInTheDocument()
+    expect(screen.getByText(/Collection.*Sort/i)).toBeInTheDocument()
+    expect(screen.getByText(/Granule.*Sort/i)).toBeInTheDocument()
+    expect(screen.getByText(/Collection List View/i)).toBeInTheDocument()
+    expect(screen.getByText(/Granule List View/i)).toBeInTheDocument()
+    expect(screen.getByText(/Map View/i)).toBeInTheDocument()
+
+    const panelStateDefault = screen.getByLabelText('Default', { selector: '[name="panelState"]' })
+    expect(panelStateDefault).toBeChecked()
+
+    const collectionSortDefault = screen.getByLabelText('Default', { selector: '[name="collectionSort"]' })
+    expect(collectionSortDefault).toBeChecked()
+
+    const granuleSortDefault = screen.getByLabelText('Default', { selector: '[name="granuleSort"]' })
+    expect(granuleSortDefault).toBeChecked()
+
+    const collectionListViewDefault = screen.getByLabelText('Default', { selector: '[name="collectionListView"]' })
+    expect(collectionListViewDefault).toBeChecked()
+
+    const granuleListViewDefault = screen.getByLabelText('Default', { selector: '[name="granuleListView"]' })
+    expect(granuleListViewDefault).toBeChecked()
+
+    const numberInputs = screen.getAllByRole('spinbutton')
+
+    const latitudeInput = numberInputs.find((input) => input.name === 'latitude')
+    expect(latitudeInput).toHaveValue(0)
+
+    const longitudeInput = numberInputs.find((input) => input.name === 'longitude')
+    expect(longitudeInput).toHaveValue(0)
+
+    const zoomInput = numberInputs.find((input) => input.name === 'zoom')
+    expect(zoomInput).toHaveValue(3)
+
+    const geographicProjection = screen.getByLabelText('Geographic (Equirectangular)', { selector: '[name="projection"]' })
+    expect(geographicProjection).toBeChecked()
+
+    const worldImageryLayer = screen.getByLabelText('World Imagery', { selector: '[name="baseLayer"]' })
+    expect(worldImageryLayer).toBeChecked()
+
+    expect(screen.getByText(/Overlay Layers/i)).toBeInTheDocument()
   })
 
-  test('onChange sets the state', () => {
-    const { enzymeWrapper } = setupMount()
+  test('allows user to change form values', async () => {
+    const { user } = setup()
 
-    act(() => {
-      enzymeWrapper.find(Form).props().onChange({
-        formData: {
-          panelState: 'collapsed',
-          collectionListView: 'list',
-          collectionSort: collectionSortKeys.scoreDescending,
-          granuleListView: 'table',
-          granuleSort: 'end_date',
-          mapView: {
-            zoom: 4,
-            baseLayer: mapLayers.worldImagery,
-            latitude: 39,
-            longitude: -95,
-            overlayLayers: [
-              mapLayers.bordersRoads,
-              mapLayers.placeLabels
-            ],
-            projection: projectionCodes.geographic
-          }
-        }
-      })
-    })
+    const collapsedPanelOption = screen.getByLabelText('Collapsed', { selector: '[name="panelState"]' })
+    expect(collapsedPanelOption).not.toBeChecked()
 
-    enzymeWrapper.update()
+    await user.click(collapsedPanelOption)
+    expect(collapsedPanelOption).toBeChecked()
 
-    expect(enzymeWrapper.find(Form).props().formData).toEqual({
-      panelState: 'collapsed',
-      collectionListView: 'list',
-      collectionSort: collectionSortKeys.scoreDescending,
-      granuleListView: 'table',
-      granuleSort: 'end_date',
-      mapView: {
-        zoom: 4,
-        baseLayer: mapLayers.worldImagery,
-        latitude: 39,
-        longitude: -95,
-        overlayLayers: [
-          mapLayers.bordersRoads,
-          mapLayers.placeLabels
-        ],
-        projection: projectionCodes.geographic
-      }
-    })
-  })
+    const relevanceOption = screen.getByLabelText('Relevance', { selector: '[name="collectionSort"]' })
+    expect(relevanceOption).not.toBeChecked()
 
-  test('updating props updates the state', () => {
-    const { enzymeWrapper } = setup()
+    await user.click(relevanceOption)
+    expect(relevanceOption).toBeChecked()
 
-    enzymeWrapper.setProps({
-      preferences: {
-        preferences: {
-          panelState: 'collapsed',
-          collectionListView: 'list',
-          granuleListView: 'table'
-        }
-      }
-    })
+    const newestFirstOption = screen.getByLabelText('Start Date, Newest First', { selector: '[name="granuleSort"]' })
+    expect(newestFirstOption).not.toBeChecked()
 
-    const form = enzymeWrapper.find(Form)
+    await user.click(newestFirstOption)
+    expect(newestFirstOption).toBeChecked()
 
-    form.simulate('change', {
-      formData: {
-        panelState: 'collapsed',
-        collectionListView: 'list',
-        granuleListView: 'table'
-      }
-    })
+    const numberInputs = screen.getAllByRole('spinbutton')
+    const latitudeInput = numberInputs.find((input) => input.name === 'latitude')
 
-    expect(enzymeWrapper.find(Form).props().formData).toEqual({
-      panelState: 'collapsed',
-      collectionListView: 'list',
-      granuleListView: 'table'
-    })
+    await user.clear(latitudeInput)
+    await user.type(latitudeInput, '45')
+    expect(latitudeInput).toHaveValue(45)
+
+    const longitudeInput = numberInputs.find((input) => input.name === 'longitude')
+
+    await user.clear(longitudeInput)
+    await user.type(longitudeInput, '-95')
+    expect(longitudeInput).toHaveValue(-95)
+
+    const polarProjection = screen.getByLabelText('North Polar Stereographic', { selector: '[name="projection"]' })
+    expect(polarProjection).not.toBeChecked()
+
+    await user.click(polarProjection)
+    expect(polarProjection).toBeChecked()
+
+    const submitButton = screen.getByRole('button', { name: /submit/i })
+    expect(submitButton).not.toBeDisabled()
   })
 })
