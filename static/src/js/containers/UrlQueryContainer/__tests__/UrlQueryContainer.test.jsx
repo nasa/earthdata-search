@@ -93,7 +93,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      earthdataEnvironment: 'prod',
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
       metadata: {
@@ -128,7 +127,6 @@ describe('mapStateToProps', () => {
       boundingBoxSearch: [],
       circleSearch: [],
       collectionsMetadata: {},
-      earthdataEnvironment: 'prod',
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
       hasGranulesOrCwic: false,
@@ -169,7 +167,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state when using collectionSortKeys.endDateDescending', () => {
     const store = {
       advancedSearch: {},
-      earthdataEnvironment: 'prod',
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
       metadata: {
@@ -205,7 +202,6 @@ describe('mapStateToProps', () => {
       boundingBoxSearch: [],
       circleSearch: [],
       collectionsMetadata: {},
-      earthdataEnvironment: 'prod',
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
       hasGranulesOrCwic: false,

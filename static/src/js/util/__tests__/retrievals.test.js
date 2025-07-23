@@ -80,7 +80,6 @@ describe('retrievals', () => {
 
     const reduxState = {
       authToken: 'auth-token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           'C100000-EDSC': {
@@ -236,7 +235,6 @@ describe('retrievals', () => {
 
     const reduxState = {
       authToken: 'auth-token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           'C100000-EDSC': {

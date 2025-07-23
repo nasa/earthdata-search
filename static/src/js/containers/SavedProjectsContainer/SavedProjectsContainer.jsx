@@ -12,11 +12,12 @@ import actions from '../../actions'
 import { SavedProjects } from '../../components/SavedProjects/SavedProjects'
 import ProjectRequest from '../../util/request/projectRequest'
 import { addToast } from '../../util/addToast'
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 export const mapStateToProps = (state) => ({
-  authToken: state.authToken,
-  earthdataEnvironment: getEarthdataEnvironment(state)
+  authToken: state.authToken
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -27,9 +28,10 @@ export const mapDispatchToProps = (dispatch) => ({
 export const SavedProjectsContainer = ({
   onChangePath,
   authToken,
-  earthdataEnvironment,
   dispatchHandleError
 }) => {
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+
   const [projects, setProjects] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -108,7 +110,6 @@ SavedProjectsContainer.defaultProps = {
 SavedProjectsContainer.propTypes = {
   onChangePath: PropTypes.func.isRequired,
   authToken: PropTypes.string,
-  earthdataEnvironment: PropTypes.string.isRequired,
   dispatchHandleError: PropTypes.func.isRequired
 }
 

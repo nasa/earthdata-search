@@ -16,7 +16,6 @@ import './GranuleDetailsBody.scss'
  */
 const GranuleDetailsBody = ({
   authToken,
-  earthdataEnvironment,
   granuleMetadata
 }) => {
   const { metadataUrls } = granuleMetadata
@@ -33,7 +32,6 @@ const GranuleDetailsBody = ({
         <Tab eventKey="metadata" title="Metadata">
           <GranuleDetailsMetadata
             authToken={authToken}
-            earthdataEnvironment={earthdataEnvironment}
             metadataUrls={metadataUrls}
           />
         </Tab>
@@ -48,7 +46,6 @@ GranuleDetailsBody.defaultProps = {
 
 GranuleDetailsBody.propTypes = {
   authToken: PropTypes.string,
-  earthdataEnvironment: PropTypes.string.isRequired,
   granuleMetadata: PropTypes.shape({
     metadataUrls: PropTypes.shape({})
   }).isRequired

@@ -65,6 +65,7 @@ describe('updateStore', () => {
           collectionSortPreference: 'default'
         },
         cmrFacets: undefined,
+        earthdataEnvironment: undefined,
         featureFacets: undefined,
         mapView: undefined,
         portal: undefined,
@@ -77,12 +78,17 @@ describe('updateStore', () => {
     // Expect the zustand store to be updated
     const initialState = useEdscStore.getInitialState()
     const {
+      earthdataEnvironment,
       facetParams,
       map,
       portal,
       project,
       timeline
     } = useEdscStore.getState()
+
+    expect(earthdataEnvironment).toEqual({
+      currentEnvironment: 'prod'
+    })
 
     expect(facetParams).toEqual({
       ...initialState.facetParams,
@@ -188,6 +194,7 @@ describe('updateStore', () => {
             collectionSortPreference: 'default'
           },
           cmrFacets: undefined,
+          earthdataEnvironment: undefined,
           featureFacets: undefined,
           mapView: undefined,
           portal: undefined,
@@ -201,12 +208,17 @@ describe('updateStore', () => {
 
       // Expect the zustand store to be updated
       const {
+        earthdataEnvironment,
         facetParams,
         map,
         portal,
         project,
         timeline
       } = useEdscStore.getState()
+
+      expect(earthdataEnvironment).toEqual({
+        currentEnvironment: 'prod'
+      })
 
       expect(facetParams).toEqual({
         ...initialState.facetParams,
@@ -313,6 +325,7 @@ describe('updateStore', () => {
             collectionSortPreference: 'default'
           },
           cmrFacets: undefined,
+          earthdataEnvironment: undefined,
           featureFacets: undefined,
           mapView: undefined,
           portalId: undefined,
@@ -327,12 +340,17 @@ describe('updateStore', () => {
 
       // Expect the zustand store to be updated
       const {
+        earthdataEnvironment,
         facetParams,
         map,
         portal,
         project,
         timeline
       } = useEdscStore.getState()
+
+      expect(earthdataEnvironment).toEqual({
+        currentEnvironment: 'prod'
+      })
 
       expect(facetParams).toEqual({
         ...initialState.facetParams,
@@ -440,7 +458,6 @@ describe('changePath', () => {
     const newPath = '/search?projectId=1'
 
     const store = mockStore({
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           'C00001-EDSC': {
@@ -544,7 +561,6 @@ describe('changePath', () => {
     const newPath = '/search?p=C00001-EDSC'
 
     const store = mockStore({
-      earthdataEnvironment: 'prod',
       query: {
         collection: {
           spatial: {}
@@ -609,7 +625,6 @@ describe('changePath', () => {
     const newPath = '/search?projectId=1'
 
     const store = mockStore({
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           'C00001-EDSC': {
@@ -654,7 +669,6 @@ describe('changePath', () => {
         const newPath = '/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           query: {
             collection: {
               spatial: {}
@@ -682,7 +696,6 @@ describe('changePath', () => {
         const newPath = '/search/granules/collection-details?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           query: {
             collection: {
               spatial: {}
@@ -710,7 +723,6 @@ describe('changePath', () => {
         const newPath = '/search/granules/subscriptions?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           query: {
             collection: {
               spatial: {}
@@ -739,7 +751,6 @@ describe('changePath', () => {
         const newPath = '/search/granules/granule-details?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           focusedGranule: 'G00001-EDSC',
           query: {
             collection: {
@@ -771,7 +782,6 @@ describe('changePath', () => {
         const newPath = '/portal/fakeportal/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           query: {
             collection: {
               spatial: {}
@@ -799,7 +809,6 @@ describe('changePath', () => {
         const newPath = '/portal/fakeportal/search/granules/collection-details?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           query: {
             collection: {
               spatial: {}
@@ -827,7 +836,6 @@ describe('changePath', () => {
         const newPath = '/portal/fakeportal/search/granules/subscriptions?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           query: {
             collection: {
               spatial: {}
@@ -856,7 +864,6 @@ describe('changePath', () => {
         const newPath = '/portal/fakeportal/search/granules/granule-details?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           focusedGranule: 'G00001-EDSC',
           query: {
             collection: {
@@ -887,7 +894,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           router: {
             location: {
               pathname: '/search'
@@ -914,7 +920,6 @@ describe('changeUrl', () => {
         const newPath = '/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           router: {
             location: {
               pathname: '/search'
@@ -985,7 +990,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           router: {
             location: {
               pathname: '/projectId=1'
@@ -1023,7 +1027,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC'
 
         const store = mockStore({
-          earthdataEnvironment: 'prod',
           router: {
             location: {
               pathname: '/projectId=1'
@@ -1087,7 +1090,6 @@ describe('changeUrl', () => {
       }
 
       const store = mockStore({
-        earthdataEnvironment: 'prod',
         router: {
           location: {
             pathname: '/search'
@@ -1116,7 +1118,6 @@ describe('changeUrl', () => {
       }
 
       const store = mockStore({
-        earthdataEnvironment: 'prod',
         router: {
           location: {
             pathname: '/search'

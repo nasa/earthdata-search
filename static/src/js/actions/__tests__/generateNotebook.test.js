@@ -12,10 +12,6 @@ import { GENERATE_NOTEBOOK_FINISHED, GENERATE_NOTEBOOK_STARTED } from '../../con
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('onGenerateNotebookStarted', () => {
   test('should create an action to update the store', () => {
     const payload = 'json'

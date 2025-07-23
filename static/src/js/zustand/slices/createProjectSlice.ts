@@ -72,6 +72,7 @@ import type {
   Response,
   SavedAccessConfigs
 } from '../../types/sharedTypes'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
@@ -202,9 +203,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const reduxState = reduxGetState()
 
       const {
-        authToken,
-        earthdataEnvironment
+        authToken
       } = reduxState
+      const earthdataEnvironment = getEarthdataEnvironment(get())
 
       // If the user isn't logged in, return null
       if (!authToken) return null
@@ -477,9 +478,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const reduxState = reduxGetState()
 
       const {
-        authToken,
-        earthdataEnvironment
+        authToken
       } = reduxState
+      const earthdataEnvironment = getEarthdataEnvironment(get())
 
       // Get a redux selector to fetch collection metadata from the store
       const collectionsMetadata = getCollectionsMetadata(reduxState)

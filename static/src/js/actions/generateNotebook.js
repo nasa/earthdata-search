@@ -1,7 +1,9 @@
 import { GENERATE_NOTEBOOK_FINISHED, GENERATE_NOTEBOOK_STARTED } from '../constants/actionTypes'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import GenerateNotebookRequest from '../util/request/generateNotebookRequest'
 import { handleError } from './errors'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const onGenerateNotebookStarted = (payload) => ({
   type: GENERATE_NOTEBOOK_STARTED,
@@ -23,8 +25,7 @@ export const generateNotebook = (params) => (dispatch, getState) => {
 
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const {
     authToken

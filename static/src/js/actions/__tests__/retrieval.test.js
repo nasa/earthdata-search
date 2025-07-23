@@ -29,7 +29,6 @@ describe('submitRetrieval', () => {
     // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           allIds: ['collectionId'],
@@ -132,7 +131,6 @@ describe('submitRetrieval', () => {
     // MockStore with initialState
     const store = mockStore({
       authToken: 'mockToken',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           allIds: ['collectionId'],
@@ -272,7 +270,6 @@ describe('submitRetrieval', () => {
       // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
-        earthdataEnvironment: 'prod',
         metadata: {
           collections: {
             allIds: ['collectionId'],
@@ -353,7 +350,6 @@ describe('submitRetrieval', () => {
       // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
-        earthdataEnvironment: 'prod',
         metadata: {
           collections: {
             allIds: ['collectionId'],
@@ -437,7 +433,6 @@ describe('submitRetrieval', () => {
       // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
-        earthdataEnvironment: 'prod',
         metadata: {
           collections: {
             allIds: ['collectionId'],
@@ -521,7 +516,6 @@ describe('submitRetrieval', () => {
       // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
-        earthdataEnvironment: 'prod',
         metadata: {
           collections: {
             allIds: ['collectionId'],
@@ -602,7 +596,6 @@ describe('submitRetrieval', () => {
       // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
-        earthdataEnvironment: 'prod',
         metadata: {
           collections: {
             allIds: ['collectionId'],
@@ -684,7 +677,6 @@ describe('submitRetrieval', () => {
       // MockStore with initialState
       const store = mockStore({
         authToken: 'mockToken',
-        earthdataEnvironment: 'prod',
         metadata: {
           collections: {
             allIds: ['collectionId'],

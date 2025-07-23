@@ -7,6 +7,7 @@ import actions from '../../actions'
 
 // @ts-expect-error Types are not defined for this module
 import configureStore from '../../store/configureStore'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 export const initialState = {
   isErrored: false,
@@ -34,16 +35,12 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
 
     fetchShapefile: async (shapefileId) => {
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
-      const reduxState = reduxGetState()
 
       get().shapefile.setLoading()
 
-      const {
-        earthdataEnvironment
-      } = reduxState
+      const earthdataEnvironment = getEarthdataEnvironment(get())
 
       const requestObject = new ShapefileRequest(earthdataEnvironment)
 
@@ -75,14 +72,10 @@ const createShapefileSlice: ImmerStateCreator<ShapefileSlice> = (set, get) => ({
       })
 
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
-      const reduxState = reduxGetState()
 
-      const {
-        earthdataEnvironment
-      } = reduxState
+      const earthdataEnvironment = getEarthdataEnvironment(get())
 
       const requestObject = new ShapefileRequest(earthdataEnvironment)
 

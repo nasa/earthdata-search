@@ -31,7 +31,6 @@ const setup = setupTest({
   Component: SecondaryToolbarContainer,
   defaultProps: {
     authToken: '',
-    earthdataEnvironment: 'prod',
     onFetchContactInfo: jest.fn(),
     onLogout: jest.fn(),
     onUpdateProjectName: jest.fn(),
@@ -87,14 +86,12 @@ describe('mapStateToProps', () => {
       contactInfo: {
         ursProfile: {}
       },
-      earthdataEnvironment: 'prod',
       savedProject: {},
       retrieval: {}
     }
 
     const expectedState = {
       authToken: 'mock-token',
-      earthdataEnvironment: 'prod',
       savedProject: {},
       retrieval: {},
       ursProfile: {}
@@ -111,7 +108,6 @@ describe('SecondaryToolbarContainer component', () => {
     expect(SecondaryToolbar).toHaveBeenCalledTimes(1)
     expect(SecondaryToolbar).toHaveBeenCalledWith({
       authToken: '',
-      earthdataEnvironment: 'prod',
       location: locationObject,
       onLogout: expect.any(Function),
       onUpdateProjectName: expect.any(Function),
@@ -147,7 +143,6 @@ describe('if the secondaryToolbar should be disabled', () => {
     expect(SecondaryToolbar).toHaveBeenCalledTimes(1)
     expect(SecondaryToolbar).toHaveBeenCalledWith({
       authToken: '',
-      earthdataEnvironment: 'prod',
       location: locationObject,
       onLogout: expect.any(Function),
       onUpdateProjectName: expect.any(Function),

@@ -12,12 +12,12 @@ import actions from '.'
 
 import { autocompleteFacetsMap } from '../util/autocompleteFacetsMap'
 import { buildPromise } from '../util/buildPromise'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { scienceKeywordTypes } from '../util/scienceKeywordTypes'
 import { platformTypes } from '../util/platformTypes'
 
 import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const onAutocompleteLoaded = (payload) => ({
   type: LOADED_AUTOCOMPLETE,
@@ -66,7 +66,7 @@ export const fetchAutocomplete = (data) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 

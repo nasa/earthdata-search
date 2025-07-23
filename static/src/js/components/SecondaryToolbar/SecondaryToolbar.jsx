@@ -34,6 +34,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import useEdscStore from '../../zustand/useEdscStore'
 
 import './SecondaryToolbar.scss'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 class SecondaryToolbar extends Component {
   constructor(props) {
@@ -117,7 +118,6 @@ class SecondaryToolbar extends Component {
 
     const {
       authToken,
-      earthdataEnvironment,
       projectCollectionIds,
       location,
       retrieval = {},
@@ -129,6 +129,8 @@ class SecondaryToolbar extends Component {
     const { ui } = zustandState
     const { tour } = ui
     const { setRunTour } = tour
+
+    const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
     const { first_name: firstName = '' } = ursProfile
 
@@ -457,7 +459,6 @@ SecondaryToolbar.defaultProps = { secondaryToolbarEnabled: true }
 
 SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired,
   location: locationPropType.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,

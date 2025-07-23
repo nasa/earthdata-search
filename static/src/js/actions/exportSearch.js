@@ -1,8 +1,10 @@
 import { EXPORT_FINISHED, EXPORT_STARTED } from '../constants/actionTypes'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import ExportSearchRequest from '../util/request/exportSearchRequest'
 import { handleError } from './errors'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const onExportStarted = (payload) => ({
   type: EXPORT_STARTED,
@@ -23,8 +25,7 @@ export const exportSearch = (format) => (dispatch, getState) => {
 
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const collectionParams = prepareCollectionParams(state)
 
@@ -121,7 +122,7 @@ export const exportSearchAsStac = (format) => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const collectionParams = prepareCollectionParams(state)
 

@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { locationPropType } from '../../util/propTypes/location'
 import { metricsRelatedCollection } from '../../middleware/metrics/actions'
 
@@ -13,7 +12,6 @@ import OrderStatus from '../../components/OrderStatus/OrderStatus'
 
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
-  earthdataEnvironment: getEarthdataEnvironment(state),
   granuleDownload: state.granuleDownload,
   retrieval: state.retrieval
 })
@@ -45,7 +43,6 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const OrderStatusContainer = ({
   authToken,
-  earthdataEnvironment,
   granuleDownload,
   location,
   match,
@@ -61,7 +58,6 @@ export const OrderStatusContainer = ({
 }) => (
   <OrderStatus
     authToken={authToken}
-    earthdataEnvironment={earthdataEnvironment}
     granuleDownload={granuleDownload}
     location={location}
     match={match}
@@ -79,7 +75,6 @@ export const OrderStatusContainer = ({
 
 OrderStatusContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   match: PropTypes.shape({}).isRequired,

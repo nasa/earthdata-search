@@ -22,6 +22,7 @@ import configureStore from '../../store/configureStore'
 import actions from '../../actions'
 
 import { TimelineResponseData } from '../../types/sharedTypes'
+import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 let cancelToken: CancelTokenSource
 
@@ -51,9 +52,9 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
       const reduxState = reduxGetState()
 
       const {
-        authToken,
-        earthdataEnvironment
+        authToken
       } = reduxState
+      const earthdataEnvironment = getEarthdataEnvironment(get())
 
       const timelineParams = prepareTimelineParams({
         ...reduxState,

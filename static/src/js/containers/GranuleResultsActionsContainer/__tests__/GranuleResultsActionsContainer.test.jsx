@@ -26,7 +26,6 @@ const setup = setupTest({
       mock: 'data'
     },
     collectionQuery: {},
-    earthdataEnvironment: 'prod',
     focusedCollectionId: 'focusedCollection',
     granuleQuery: {
       pageNum: 1
@@ -126,7 +125,6 @@ describe('mapStateToProps', () => {
           }
         }
       },
-      earthdataEnvironment: 'prod',
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
       query: {
@@ -141,7 +139,6 @@ describe('mapStateToProps', () => {
         subscriptions: []
       },
       collectionQuery: {},
-      earthdataEnvironment: 'prod',
       focusedCollectionId: 'collectionId',
       granuleQuery: {},
       granuleSearchResults: {},
@@ -166,7 +163,6 @@ describe('GranuleResultsActionsContainer component', () => {
     expect(GranuleResultsActions).toHaveBeenCalledWith({
       addedGranuleIds: [],
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       focusedCollectionId: 'focusedCollection',
       focusedProjectCollection: {
         accessMethods: {},

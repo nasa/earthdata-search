@@ -4,7 +4,8 @@ import { UPDATE_AUTH } from '../constants/actionTypes'
 
 import LogoutRequest from '../util/request/logoutRequest'
 
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const updateAuthToken = (payload) => ({
   type: UPDATE_AUTH,
@@ -26,7 +27,7 @@ export const logout = () => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 

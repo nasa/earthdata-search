@@ -17,7 +17,6 @@ const setup = setupTest({
     addedGranuleIds: [],
     allGranulesInProject: false,
     authToken: 'token',
-    earthdataEnvironment: 'prod',
     focusedCollectionId: 'collectionId',
     focusedProjectCollection: {
       granules: {

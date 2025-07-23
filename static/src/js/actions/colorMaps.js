@@ -1,5 +1,3 @@
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-
 import {
   ERRORED_COLOR_MAPS,
   SET_COLOR_MAPS_LOADED,
@@ -7,6 +5,9 @@ import {
 } from '../constants/actionTypes'
 
 import ColorMapRequest from '../util/request/colorMapRequest'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const setColorMapsErrored = (payload) => ({
   type: ERRORED_COLOR_MAPS,
@@ -23,13 +24,11 @@ export const setColorMapsLoading = (payload) => ({
   payload
 })
 
-export const getColorMap = (payload) => async (dispatch, getState) => {
+export const getColorMap = (payload) => async (dispatch) => {
   const { product } = payload
-
-  const state = getState()
-
-  const earthdataEnvironment = getEarthdataEnvironment(state)
   dispatch(setColorMapsLoading({ product }))
+
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const requestObject = new ColorMapRequest(earthdataEnvironment)
 
