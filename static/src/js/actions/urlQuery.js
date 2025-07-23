@@ -69,7 +69,6 @@ export const updateStore = ({
       focusedCollection,
       focusedGranule,
       deprecatedUrlParams,
-      project,
       query: {
         ...query,
         collectionSortPreference
@@ -91,6 +90,10 @@ export const updateStore = ({
         }
       },
       portal,
+      project: {
+        ...zustandState.project,
+        ...project
+      },
       shapefile: {
         ...zustandState.shapefile,
         ...shapefile
@@ -220,15 +223,19 @@ export const changePath = (path = '') => async (dispatch, getState) => {
   const { collections: projectCollections = {} } = project
   const { allIds = [] } = projectCollections
 
+  const zustandState = useEdscStore.getState()
+  const {
+    project: zustandProject,
+    timeline
+  } = zustandState
+
   if (allIds.length > 0) {
     // Project collection metadata needs to exist before calling retrieving access methods
-    await dispatch(actions.getProjectCollections())
+    await zustandProject.getProjectCollections()
 
-    await dispatch(actions.getProjectGranules())
+    await zustandProject.getProjectGranules()
   }
 
-  const zustandState = useEdscStore.getState()
-  const { timeline } = zustandState
   const { getTimeline } = timeline
   getTimeline()
 

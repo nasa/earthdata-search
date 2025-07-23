@@ -37,8 +37,6 @@ import './ProjectCollectionItem.scss'
  * @param {Object} props.collection - CMR metadata of the collection.
  * @param {Object} props.color - Color assigned to the collection based on its location in the project list.
  * @param {Object} props.isPanelActive - Whether or not the panel for the collection is active.
- * @param {Function} props.onRemoveCollectionFromProject - Function called when a collection is removed from the project.
- * @param {Function} props.onToggleCollectionVisibility - Function called when visibility of the collection is toggled.
  * @param {Function} props.onSetActivePanel - Function called when an active panel is set.
  * @param {Function} props.onSetActivePanelSection - Callback to set the active panel.
  * @param {Function} props.onUpdateFocusedCollection - Callback to set the focused collection ID.
@@ -47,31 +45,35 @@ import './ProjectCollectionItem.scss'
  */
 const ProjectCollectionItem = ({
   activePanelSection,
-  collectionMetadata,
   collectionCount,
   collectionId,
+  collectionMetadata,
   collectionsQuery,
   color,
   index,
   isPanelActive,
-  onRemoveCollectionFromProject,
   onSetActivePanel,
   onSetActivePanelSection,
-  onToggleCollectionVisibility,
   onTogglePanels,
   onUpdateFocusedCollection,
   onViewCollectionDetails,
   onViewCollectionGranules,
   projectCollection
 }) => {
+  const {
+    mapView,
+    removeProjectCollection,
+    toggleCollectionVisibility
+  } = useEdscStore((state) => ({
+    mapView: state.map.mapView,
+    removeProjectCollection: state.project.removeProjectCollection,
+    toggleCollectionVisibility: state.project.toggleCollectionVisibility
+  }))
+
   const handleToggleCollectionVisibility = (event) => {
-    onToggleCollectionVisibility(collectionId)
+    toggleCollectionVisibility(collectionId)
     event.preventDefault()
   }
-
-  const { mapView } = useEdscStore((state) => ({
-    mapView: state.map.mapView
-  }))
 
   const {
     granules,
@@ -80,8 +82,7 @@ const ProjectCollectionItem = ({
 
   const {
     isOpenSearch,
-    title,
-    id: conceptId
+    title
   } = collectionMetadata
 
   const { hits: granuleCount, isLoaded, singleGranuleSize } = granules
@@ -130,7 +131,7 @@ const ProjectCollectionItem = ({
                 onClick={
                   () => {
                     onTogglePanels(true)
-                    onUpdateFocusedCollection(conceptId)
+                    onUpdateFocusedCollection(collectionId)
                     onSetActivePanelSection('1')
                   }
                 }
@@ -149,7 +150,7 @@ const ProjectCollectionItem = ({
                   title="Remove"
                   onClick={
                     () => {
-                      onRemoveCollectionFromProject(collectionId)
+                      removeProjectCollection(collectionId)
 
                       // If removing the first collection in the list
                       if (index === 0) {
@@ -222,7 +223,7 @@ const ProjectCollectionItem = ({
                 label="Edit options"
                 onClick={
                   () => {
-                    onUpdateFocusedCollection(conceptId)
+                    onUpdateFocusedCollection(collectionId)
                     onSetActivePanelSection('0')
                     onTogglePanels(true)
                   }
@@ -257,10 +258,8 @@ ProjectCollectionItem.propTypes = {
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
-  onToggleCollectionVisibility: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,

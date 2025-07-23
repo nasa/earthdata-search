@@ -70,8 +70,11 @@ const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
 )
 
 let preloaded = false
+
 const preloadRoutes = () => {
-  if (preloaded) return
+  const { NODE_ENV } = process.env
+  // Don't preload routes if the app is preloaded or in test mode
+  if (preloaded || NODE_ENV === 'test') return
   preloaded = true
 
   // @ts-expect-error: Types are not defined in this file

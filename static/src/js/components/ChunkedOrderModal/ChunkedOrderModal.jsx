@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import { ArrowCircleLeft } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { useLocation } from 'react-router-dom'
 
 import { calculateGranulesPerOrder, calculateOrderCount } from '../../util/orderCount'
 import { commafy } from '../../util/commafy'
@@ -9,17 +10,24 @@ import { stringify } from '../../util/url/url'
 
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import { locationPropType } from '../../util/propTypes/location'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import {
+  getProjectCollectionsMetadata,
+  getProjectCollectionsRequiringChunking
+} from '../../zustand/selectors/project'
+
 import './ChunkedOrderModal.scss'
 
 const ChunkedOrderModal = ({
   isOpen,
-  location,
   onToggleChunkedOrderModal,
-  onSubmitRetrieval,
-  projectCollectionsMetadata,
-  projectCollectionsRequiringChunking
+  onSubmitRetrieval
 }) => {
+  const location = useLocation()
+  const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
+  const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
+
   const onModalClose = () => {
     onToggleChunkedOrderModal(false)
   }
@@ -158,11 +166,8 @@ const ChunkedOrderModal = ({
 
 ChunkedOrderModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  location: locationPropType.isRequired,
   onSubmitRetrieval: PropTypes.func.isRequired,
-  onToggleChunkedOrderModal: PropTypes.func.isRequired,
-  projectCollectionsMetadata: PropTypes.shape({}).isRequired,
-  projectCollectionsRequiringChunking: PropTypes.shape({}).isRequired
+  onToggleChunkedOrderModal: PropTypes.func.isRequired
 }
 
 export default ChunkedOrderModal

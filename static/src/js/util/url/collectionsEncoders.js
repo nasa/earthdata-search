@@ -87,6 +87,7 @@ const encodeSwodlrDownload = (projectCollection) => {
     accessMethods,
     selectedAccessMethod
   } = projectCollection
+
   if (!accessMethods || !selectedAccessMethod) {
     return null
   }
@@ -275,11 +276,9 @@ export const encodeCollections = (props) => {
   const {
     collectionsMetadata = {},
     focusedCollection,
-    project = {},
+    projectCollections = {},
     query = {}
   } = props
-
-  const { collections: projectCollections = {} } = project
 
   const {
     byId: projectById = {},
@@ -388,6 +387,7 @@ export const encodeCollections = (props) => {
 
     // Encode swodlr form variables
     pg.swod = encodeSwodlrDownload(projectCollection)
+
     // Encode concatenation selection
     pg.cd = encodeConcatenateDownload(projectCollection)
 

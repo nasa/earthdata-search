@@ -13,9 +13,6 @@ import timeline from './__mocks__/timeline.json'
 
 import { setupTests } from '../../support/setupTests'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
-import { graphQlGetSubscriptionsQuery } from '../../support/graphQlGetSubscriptionsQuery'
-import { graphQlGetCollection } from '../../support/graphQlGetCollection'
-import { graphQlGetProjectCollections } from '../../support/graphQlProjectGetCollections'
 import { login } from '../../support/login'
 
 const conceptId = 'C1214470488-ASF'
@@ -33,8 +30,6 @@ test.describe('History', () => {
       context
     })
 
-    const granuleHits = 1
-
     await page.route(/collections$/, async (route) => {
       await route.fulfill({
         json: collectionsSearchBody,
@@ -50,7 +45,7 @@ test.describe('History', () => {
         json: granulesBody,
         headers: {
           ...commonHeaders,
-          'cmr-hits': granuleHits.toString()
+          'cmr-hits': '1'
         }
       })
     })
@@ -64,21 +59,21 @@ test.describe('History', () => {
     await page.route(/graphql/, async (route) => {
       const { query } = JSON.parse(route.request().postData()).data
 
-      if (query === graphQlGetSubscriptionsQuery) {
+      if (query.includes('query GetSubscriptions')) {
         await route.fulfill({
           json: getSubscriptionsGraphQlBody,
           headers: graphQlHeaders
         })
       }
 
-      if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+      if (query.includes('query GetCollection')) {
         await route.fulfill({
           json: granulesGraphQlBody,
           headers: graphQlHeaders
         })
       }
 
-      if (query === JSON.parse(graphQlGetProjectCollections(conceptId)).query) {
+      if (query.includes('query GetProjectCollections')) {
         await route.fulfill({
           json: getCollectionsGraphQlBody,
           headers: graphQlHeaders
@@ -106,6 +101,7 @@ test.describe('History', () => {
       await page.getByRole('button', { name: 'Download All' }).click()
 
       await expect(page.getByRole('button', { name: 'Download project data' })).toBeVisible()
+      await expect(page.getByRole('button', { name: 'Download project data' })).toBeEnabled()
 
       await page.goBack()
     })

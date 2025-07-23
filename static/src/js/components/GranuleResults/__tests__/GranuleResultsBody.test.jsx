@@ -1,17 +1,21 @@
 import React from 'react'
-import Enzyme, { shallow, mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
 
 import GranuleResultsBody from '../GranuleResultsBody'
 import GranuleResultsList from '../GranuleResultsList'
 import GranuleResultsTable from '../GranuleResultsTable'
+import Spinner from '../../Spinner/Spinner'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../GranuleResultsList', () => jest.fn(() => <div />))
+jest.mock('../GranuleResultsTable', () => jest.fn(() => <div />))
+jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
 
-function setup(options = {
-  mount: false
-}, overrideProps = {}) {
-  const props = {
+const setup = setupTest({
+  Component: GranuleResultsBody,
+  defaultProps: {
     collectionId: 'collectionId',
     collectionQuerySpatial: {},
     collectionTags: {},
@@ -70,310 +74,487 @@ function setup(options = {
     isOpenSearch: false,
     loadNextPage: jest.fn(),
     location: { search: 'value' },
-    onAddGranuleToProjectCollection: jest.fn(),
     onExcludeGranule: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
-    onRemoveGranuleFromProjectCollection: jest.fn(),
     panelView: 'list',
-    project: {},
-    ...overrideProps
+    project: {}
   }
-
-  let enzymeWrapper
-
-  if (options.mount) {
-    enzymeWrapper = mount(<GranuleResultsBody {...props} />)
-  } else {
-    enzymeWrapper = shallow(<GranuleResultsBody {...props} />)
-  }
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('GranuleResultsBody component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper, props } = setup()
+    setup()
 
-    const {
-      collectionId,
-      loadNextPage,
-      onExcludeGranule,
-      onFocusedGranuleChange,
-      onMetricsDataAccess
-    } = props
-
-    const resultsList = enzymeWrapper.find(GranuleResultsList)
-
-    expect(enzymeWrapper.exists()).toEqual(true)
-    expect(enzymeWrapper.prop('className')).toBe('granule-results-body')
-
-    expect(resultsList.props()).toEqual(expect.objectContaining({
-      collectionId,
+    expect(GranuleResultsList).toHaveBeenCalledTimes(1)
+    expect(GranuleResultsList).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      collectionQuerySpatial: {},
+      collectionTags: {},
+      directDistributionInformation: {},
+      excludedGranuleIds: [],
+      focusedGranuleId: '',
+      generateNotebook: {},
+      granules: [{
+        browseFlag: true,
+        browseUrl: undefined,
+        dataLinks: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        dayNightFlag: 'DAY',
+        formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        granuleThumbnail: '/fake/path/image.jpg',
+        handleClick: expect.any(Function),
+        handleMouseEnter: expect.any(Function),
+        handleMouseLeave: expect.any(Function),
+        id: 'two',
+        isCollectionInProject: false,
+        isFocusedGranule: false,
+        isHoveredGranule: false,
+        isInProject: false,
+        isOpenSearch: undefined,
+        links: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        onlineAccessFlag: true,
+        original: {
+          browseFlag: true,
+          dayNightFlag: 'DAY',
+          formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+          id: 'two',
+          links: [{
+            href: 'http://linkhref',
+            rel: 'http://linkrel/data#',
+            title: 'linktitle'
+          }],
+          onlineAccessFlag: true,
+          thumbnail: '/fake/path/image.jpg',
+          title: 'Granule title one'
+        },
+        s3Links: [],
+        temporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        thumbnail: '/fake/path/image.jpg',
+        timeEnd: '2019-04-29 23:59:59',
+        timeStart: '2019-04-28 00:00:00',
+        title: 'Granule title one'
+      }, {
+        browseFlag: true,
+        browseUrl: undefined,
+        dataLinks: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        dayNightFlag: 'DAY',
+        formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        granuleThumbnail: '/fake/path/image.jpg',
+        handleClick: expect.any(Function),
+        handleMouseEnter: expect.any(Function),
+        handleMouseLeave: expect.any(Function),
+        id: 'two',
+        isCollectionInProject: false,
+        isFocusedGranule: false,
+        isHoveredGranule: false,
+        isInProject: false,
+        isOpenSearch: undefined,
+        links: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        onlineAccessFlag: true,
+        original: {
+          browseFlag: true,
+          dayNightFlag: 'DAY',
+          formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+          id: 'two',
+          links: [{
+            href: 'http://linkhref',
+            rel: 'http://linkrel/data#',
+            title: 'linktitle'
+          }],
+          onlineAccessFlag: true,
+          thumbnail: '/fake/path/image.jpg',
+          title: 'Granule title two'
+        },
+        s3Links: [],
+        temporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        thumbnail: '/fake/path/image.jpg',
+        timeEnd: '2019-04-29 23:59:59',
+        timeStart: '2019-04-28 00:00:00',
+        title: 'Granule title two'
+      }],
+      isCollectionInProject: false,
+      isGranuleInProject: expect.any(Function),
+      isItemLoaded: expect.any(Function),
+      isOpenSearch: false,
       itemCount: 2,
-      loadMoreItems: loadNextPage,
-      onExcludeGranule,
-      onFocusedGranuleChange,
-      onMetricsDataAccess,
+      loadMoreItems: expect.any(Function),
+      location: { search: 'value' },
+      onExcludeGranule: expect.any(Function),
+      onFocusedGranuleChange: expect.any(Function),
+      onGenerateNotebook: expect.any(Function),
+      onMetricsAddGranuleProject: expect.any(Function),
+      onMetricsDataAccess: expect.any(Function),
+      readableGranuleName: [''],
+      setVisibleMiddleIndex: expect.any(Function),
       visibleMiddleIndex: null
-    }))
+    }, {})
   })
 
   test('renders GranuleResultsTable', () => {
-    const { enzymeWrapper, props } = setup({
-      panelView: 'table'
-    })
-
-    const {
-      collectionId,
-      loadNextPage,
-      onExcludeGranule,
-      onFocusedGranuleChange,
-      onMetricsDataAccess
-    } = props
-
-    const resultsTable = enzymeWrapper.find(GranuleResultsTable)
-
-    expect(resultsTable.props()).toEqual(expect.objectContaining({
-      collectionId,
-      itemCount: 2,
-      loadMoreItems: loadNextPage,
-      onExcludeGranule,
-      onFocusedGranuleChange,
-      onMetricsDataAccess,
-      visibleMiddleIndex: null
-    }))
-  })
-
-  test('adds a dummy item when the first granules are loading', () => {
-    const { enzymeWrapper, props } = setup(true, {
-      granuleSearchResults: {
-        allIds: [],
-        isLoading: true
+    setup({
+      overrideProps: {
+        panelView: 'table'
       }
     })
 
-    const resultsList = enzymeWrapper.find(GranuleResultsList)
-
-    expect(resultsList.props()).toEqual(expect.objectContaining({
-      granules: [],
-      itemCount: 1
-    }))
-
-    resultsList.props().loadMoreItems()
-
-    expect(props.loadNextPage).toHaveBeenCalledTimes(0)
-  })
-
-  test('adds a dummy item when new granules are loading', () => {
-    const { enzymeWrapper, props } = setup()
-
-    const resultsList = enzymeWrapper.find(GranuleResultsList)
-
-    expect(resultsList.props()).toEqual(expect.objectContaining({
-      itemCount: 2
-    }))
-
-    resultsList.props().loadMoreItems()
-
-    expect(props.loadNextPage).toHaveBeenCalledTimes(1)
-  })
-
-  test('does not add a dummy item when all collections are loaded', () => {
-    const { enzymeWrapper, props } = setup(true, {
-      granulesMetadata: {
-        one: {
-          id: 'two',
+    expect(GranuleResultsTable).toHaveBeenCalledTimes(1)
+    expect(GranuleResultsTable).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      collectionQuerySpatial: {},
+      collectionTags: {},
+      directDistributionInformation: {},
+      excludedGranuleIds: [],
+      focusedGranuleId: '',
+      generateNotebook: {},
+      granules: [{
+        browseFlag: true,
+        browseUrl: undefined,
+        dataLinks: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        dayNightFlag: 'DAY',
+        formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        granuleThumbnail: '/fake/path/image.jpg',
+        handleClick: expect.any(Function),
+        handleMouseEnter: expect.any(Function),
+        handleMouseLeave: expect.any(Function),
+        id: 'two',
+        isCollectionInProject: false,
+        isFocusedGranule: false,
+        isHoveredGranule: false,
+        isInProject: false,
+        isOpenSearch: undefined,
+        links: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        onlineAccessFlag: true,
+        original: {
           browseFlag: true,
-          onlineAccessFlag: true,
           dayNightFlag: 'DAY',
-          formattedTemporal: [
-            '2019-04-28 00:00:00',
-            '2019-04-29 23:59:59'
-          ],
+          formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+          id: 'two',
+          links: [{
+            href: 'http://linkhref',
+            rel: 'http://linkrel/data#',
+            title: 'linktitle'
+          }],
+          onlineAccessFlag: true,
           thumbnail: '/fake/path/image.jpg',
-          title: 'Granule title one',
-          links: [
-            {
-              rel: 'http://linkrel/data#',
-              title: 'linktitle',
-              href: 'http://linkhref'
-            }
-          ]
-        }
-      },
-      granuleQuery: {},
-      granuleSearchResults: {
-        allIds: ['one'],
-        hits: 1,
-        isLoaded: true,
-        isLoading: false,
-        loadTime: 1123,
-        timerStart: null
-      }
-    })
-
-    const resultsList = enzymeWrapper.find(GranuleResultsList)
-
-    expect(resultsList.props()).toEqual(expect.objectContaining({
-      itemCount: 1
-    }))
-
-    resultsList.props().loadMoreItems()
-
-    expect(props.loadNextPage).toHaveBeenCalledTimes(1)
-  })
-
-  test('passes the granules to a single GranuleResultsList component', () => {
-    const { enzymeWrapper } = setup()
-
-    expect(enzymeWrapper.find(GranuleResultsList).length).toEqual(1)
-    expect(enzymeWrapper.find(GranuleResultsList).props().granules[0]).toEqual(
-      expect.objectContaining({
+          title: 'Granule title one'
+        },
+        s3Links: [],
+        temporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        thumbnail: '/fake/path/image.jpg',
+        timeEnd: '2019-04-29 23:59:59',
+        timeStart: '2019-04-28 00:00:00',
         title: 'Granule title one'
-      })
-    )
-
-    expect(enzymeWrapper.find(GranuleResultsList).props().granules[1]).toEqual(
-      expect.objectContaining({
+      }, {
+        browseFlag: true,
+        browseUrl: undefined,
+        dataLinks: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        dayNightFlag: 'DAY',
+        formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        granuleThumbnail: '/fake/path/image.jpg',
+        handleClick: expect.any(Function),
+        handleMouseEnter: expect.any(Function),
+        handleMouseLeave: expect.any(Function),
+        id: 'two',
+        isCollectionInProject: false,
+        isFocusedGranule: false,
+        isHoveredGranule: false,
+        isInProject: false,
+        isOpenSearch: undefined,
+        links: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        onlineAccessFlag: true,
+        original: {
+          browseFlag: true,
+          dayNightFlag: 'DAY',
+          formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+          id: 'two',
+          links: [{
+            href: 'http://linkhref',
+            rel: 'http://linkrel/data#',
+            title: 'linktitle'
+          }],
+          onlineAccessFlag: true,
+          thumbnail: '/fake/path/image.jpg',
+          title: 'Granule title two'
+        },
+        s3Links: [],
+        temporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        thumbnail: '/fake/path/image.jpg',
+        timeEnd: '2019-04-29 23:59:59',
+        timeStart: '2019-04-28 00:00:00',
         title: 'Granule title two'
-      })
-    )
+      }],
+      isCollectionInProject: false,
+      isGranuleInProject: expect.any(Function),
+      isItemLoaded: expect.any(Function),
+      isOpenSearch: false,
+      itemCount: 2,
+      loadMoreItems: expect.any(Function),
+      location: { search: 'value' },
+      onExcludeGranule: expect.any(Function),
+      onFocusedGranuleChange: expect.any(Function),
+      onGenerateNotebook: expect.any(Function),
+      onMetricsAddGranuleProject: expect.any(Function),
+      onMetricsDataAccess: expect.any(Function),
+      setVisibleMiddleIndex: expect.any(Function),
+      visibleMiddleIndex: null
+    }, {})
   })
 
-  test('passes the onMetricsDataAccess callback to the GranuleResultsList component', () => {
-    const { enzymeWrapper, props } = setup()
+  describe('when the first granules are loading', () => {
+    test('adds a dummy item to the list', () => {
+      setup({
+        overrideProps: {
+          granuleSearchResults: {
+            allIds: [],
+            isLoading: true
+          }
+        }
+      })
 
-    expect(enzymeWrapper.find(GranuleResultsList).length).toEqual(1)
-    expect(enzymeWrapper.find(GranuleResultsList).props().onMetricsDataAccess)
-      .toEqual(props.onMetricsDataAccess)
+      expect(GranuleResultsList).toHaveBeenCalledTimes(1)
+      expect(GranuleResultsList).toHaveBeenCalledWith(expect.objectContaining({
+        granules: [],
+        itemCount: 1
+      }), {})
+    })
+  })
+
+  describe('when there are more pages to be loaded', () => {
+    test('adds a dummy item to the list', () => {
+      setup({
+        overrideProps: {
+          granuleSearchResults: {
+            allIds: ['one', 'two'],
+            granuleHits: 10
+          }
+        }
+      })
+
+      expect(GranuleResultsList).toHaveBeenCalledTimes(1)
+      expect(GranuleResultsList).toHaveBeenCalledWith(expect.objectContaining({
+        itemCount: 3
+      }), {})
+    })
+  })
+
+  describe('when all collections are loaded', () => {
+    test('does not add a dummy item ', () => {
+      setup({
+        overrideProps: {
+          granulesMetadata: {
+            one: {
+              id: 'two',
+              browseFlag: true,
+              onlineAccessFlag: true,
+              dayNightFlag: 'DAY',
+              formattedTemporal: [
+                '2019-04-28 00:00:00',
+                '2019-04-29 23:59:59'
+              ],
+              thumbnail: '/fake/path/image.jpg',
+              title: 'Granule title one',
+              links: [
+                {
+                  rel: 'http://linkrel/data#',
+                  title: 'linktitle',
+                  href: 'http://linkhref'
+                }
+              ]
+            }
+          },
+          granuleQuery: {},
+          granuleSearchResults: {
+            allIds: ['one'],
+            hits: 1,
+            isLoaded: true,
+            isLoading: false,
+            loadTime: 1123,
+            timerStart: null
+          }
+        }
+      })
+
+      expect(GranuleResultsList).toHaveBeenCalledTimes(1)
+      expect(GranuleResultsList).toHaveBeenCalledWith(expect.objectContaining({
+        itemCount: 1
+      }), {})
+    })
   })
 
   describe('search time', () => {
     test('renders the correct search time', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('1.1s')
+      expect(getByTextWithMarkup('Search Time: 1.1s')).toBeInTheDocument()
     })
 
     test('renders a spinner when the page is loading', () => {
-      const { enzymeWrapper } = setup({}, {
-        granuleSearchResults: {
-          loadTime: undefined,
-          isLoading: true,
-          isLoaded: false
+      setup({
+        overrideProps: {
+          granuleSearchResults: {
+            loadTime: undefined,
+            isLoading: true,
+            isLoaded: false
+          }
         }
       })
 
-      expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('<Spinner />')
+      expect(Spinner).toHaveBeenCalledTimes(1)
+      expect(Spinner).toHaveBeenCalledWith({
+        type: 'dots',
+        size: 'x-tiny'
+      }, {})
+
+      expect(screen.getByText('Search Time:')).toBeInTheDocument()
     })
 
     test('renders a spinner before the page has started loading', () => {
-      const { enzymeWrapper } = setup({}, {
-        granuleSearchResults: {}
+      setup({
+        overrideProps: {
+          granuleSearchResults: {}
+        }
       })
 
-      expect(enzymeWrapper.find('.granule-results-body__search-time-value').text()).toEqual('<Spinner />')
+      expect(Spinner).toHaveBeenCalledTimes(1)
+      expect(Spinner).toHaveBeenCalledWith({
+        type: 'dots',
+        size: 'x-tiny'
+      }, {})
+
+      expect(screen.getByText('Search Time:')).toBeInTheDocument()
     })
   })
 
   describe('isItemLoaded', () => {
     describe('when there is no next page', () => {
       test('returns true', () => {
-        const { enzymeWrapper } = setup(true, {
-          granulesMetadata: {
-            one: {
-              id: 'one',
-              browseFlag: true,
-              onlineAccessFlag: true,
-              dayNightFlag: 'DAY',
-              formattedTemporal: [
-                '2019-04-28 00:00:00',
-                '2019-04-29 23:59:59'
-              ],
-              thumbnail: '/fake/path/image.jpg',
-              title: 'Granule title one',
-              links: [
-                {
-                  rel: 'http://linkrel/data#',
-                  title: 'linktitle',
-                  href: 'http://linkhref'
-                }
-              ]
+        setup({
+          overrideProps: {
+            granulesMetadata: {
+              one: {
+                id: 'one',
+                browseFlag: true,
+                onlineAccessFlag: true,
+                dayNightFlag: 'DAY',
+                formattedTemporal: [
+                  '2019-04-28 00:00:00',
+                  '2019-04-29 23:59:59'
+                ],
+                thumbnail: '/fake/path/image.jpg',
+                title: 'Granule title one',
+                links: [
+                  {
+                    rel: 'http://linkrel/data#',
+                    title: 'linktitle',
+                    href: 'http://linkhref'
+                  }
+                ]
+              }
+            },
+            granuleSearchResults: {
+              allIds: ['one'],
+              hits: 1,
+              isLoading: false,
+              isLoaded: true,
+              loadTime: 1150,
+              timerStart: null
             }
-          },
-          granuleSearchResults: {
-            allIds: ['one'],
-            hits: 1,
-            isLoading: false,
-            isLoaded: true,
-            loadTime: 1150,
-            timerStart: null
           }
         })
 
-        const resultsList = enzymeWrapper.find(GranuleResultsList)
-
-        expect(resultsList.props().isItemLoaded(1)).toEqual(true)
+        const result = GranuleResultsList.mock.calls[0][0].isItemLoaded(1)
+        expect(result).toEqual(true)
       })
     })
 
-    describe('when there is a next page and the item is loaded', () => {
+    describe('when there is a next page and the item is not loaded', () => {
       test('returns false', () => {
-        const { enzymeWrapper } = setup(true, {
-          granulesMetadata: {
-            one: {
-              id: 'one',
-              browseFlag: true,
-              onlineAccessFlag: true,
-              dayNightFlag: 'DAY',
-              formattedTemporal: [
-                '2019-04-28 00:00:00',
-                '2019-04-29 23:59:59'
-              ],
-              thumbnail: '/fake/path/image.jpg',
-              title: 'Granule title one',
-              links: [
-                {
-                  rel: 'http://linkrel/data#',
-                  title: 'linktitle',
-                  href: 'http://linkhref'
-                }
-              ]
+        setup({
+          overrideProps: {
+            granulesMetadata: {
+              one: {
+                id: 'one',
+                browseFlag: true,
+                onlineAccessFlag: true,
+                dayNightFlag: 'DAY',
+                formattedTemporal: [
+                  '2019-04-28 00:00:00',
+                  '2019-04-29 23:59:59'
+                ],
+                thumbnail: '/fake/path/image.jpg',
+                title: 'Granule title one',
+                links: [
+                  {
+                    rel: 'http://linkrel/data#',
+                    title: 'linktitle',
+                    href: 'http://linkhref'
+                  }
+                ]
+              }
+            },
+            granuleSearchResults: {
+              allIds: ['one'],
+              hits: 2,
+              isLoading: false,
+              isLoaded: true,
+              loadTime: 1150,
+              timerStart: null
             }
-          },
-          granuleSearchResults: {
-            allIds: ['one'],
-            hits: 2,
-            isLoading: false,
-            isLoaded: true,
-            loadTime: 1150,
-            timerStart: null
           }
         })
 
-        const resultsList = enzymeWrapper.find(GranuleResultsList)
-
-        expect(resultsList.props().isItemLoaded(2)).toEqual(false)
+        const result = GranuleResultsList.mock.calls[0][0].isItemLoaded(2)
+        expect(result).toEqual(false)
       })
     })
   })
 
   describe('isGranuleInProject', () => {
     test('when the granule is added to the project', () => {
-      const { enzymeWrapper } = setup({}, {
-        project: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {
-                  addedGranuleIds: ['one']
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  granules: {
+                    addedGranuleIds: ['one']
+                  }
                 }
               }
             }
@@ -381,37 +562,45 @@ describe('GranuleResultsBody component', () => {
         }
       })
 
-      const resultsList = enzymeWrapper.find(GranuleResultsList)
-      expect(resultsList.prop('isGranuleInProject')('one')).toBe(true)
-      expect(resultsList.prop('isGranuleInProject')('two')).toBe(false)
+      const one = GranuleResultsList.mock.calls[0][0].isGranuleInProject('one')
+      expect(one).toEqual(true)
+
+      const two = GranuleResultsList.mock.calls[0][0].isGranuleInProject('two')
+      expect(two).toEqual(false)
     })
 
     test('when all granules are added to the project', () => {
-      const { enzymeWrapper } = setup({}, {
-        project: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {}
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {}
+              }
             }
           }
         }
       })
 
-      const resultsList = enzymeWrapper.find(GranuleResultsList)
-      expect(resultsList.prop('isGranuleInProject')('one')).toBe(true)
-      expect(resultsList.prop('isGranuleInProject')('two')).toBe(true)
+      const one = GranuleResultsList.mock.calls[0][0].isGranuleInProject('one')
+      expect(one).toEqual(true)
+
+      const two = GranuleResultsList.mock.calls[0][0].isGranuleInProject('two')
+      expect(two).toEqual(true)
     })
 
     test('when granules are removed from the project', () => {
-      const { enzymeWrapper } = setup({}, {
-        project: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {
-                  removedGranuleIds: ['one']
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId'],
+              byId: {
+                collectionId: {
+                  granules: {
+                    removedGranuleIds: ['one']
+                  }
                 }
               }
             }
@@ -419,9 +608,11 @@ describe('GranuleResultsBody component', () => {
         }
       })
 
-      const resultsList = enzymeWrapper.find(GranuleResultsList)
-      expect(resultsList.prop('isGranuleInProject')('one')).toBe(false)
-      expect(resultsList.prop('isGranuleInProject')('two')).toBe(true)
+      const one = GranuleResultsList.mock.calls[0][0].isGranuleInProject('one')
+      expect(one).toEqual(false)
+
+      const two = GranuleResultsList.mock.calls[0][0].isGranuleInProject('two')
+      expect(two).toEqual(true)
     })
   })
 })

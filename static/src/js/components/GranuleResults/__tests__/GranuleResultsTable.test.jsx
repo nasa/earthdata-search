@@ -1,15 +1,16 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import GranuleResultsTable from '../GranuleResultsTable'
 import EDSCTable from '../../EDSCTable/EDSCTable'
 import { granuleData } from './mocks'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../EDSCTable/EDSCTable', () => jest.fn(() => <div />))
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: GranuleResultsTable,
+  defaultProps: {
     collectionId: 'collectionId',
     collectionQuerySpatial: {},
     collectionTags: {},
@@ -25,71 +26,124 @@ function setup(overrideProps) {
     loadMoreItems: jest.fn(),
     location: {},
     onExcludeGranule: jest.fn(),
-    onAddGranuleToProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
-    onRemoveGranuleFromProjectCollection: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
-    visibleMiddleIndex: 1,
-    ...overrideProps
+    visibleMiddleIndex: 1
   }
-
-  const enzymeWrapper = shallow(<GranuleResultsTable {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('GranuleResultsTable component', () => {
   test('renders EDSCTable', () => {
-    const { enzymeWrapper, props } = setup()
-    const table = enzymeWrapper.find(EDSCTable)
+    setup()
 
-    const { columns } = table.props()
-    expect(columns[0]).toEqual(expect.objectContaining({
-      Header: 'Granule',
-      accessor: 'title'
-    }))
-
-    expect(columns[1]).toEqual(expect.objectContaining({
-      Header: 'Image',
-      accessor: 'granuleThumbnail'
-    }))
-
-    expect(columns[2]).toEqual(expect.objectContaining({
-      Header: 'Start',
-      accessor: 'timeStart'
-    }))
-
-    expect(columns[3]).toEqual(expect.objectContaining({
-      Header: 'End',
-      accessor: 'timeEnd'
-    }))
-
-    expect(columns[4]).toEqual(expect.objectContaining({
-      Header: 'Day/Night',
-      accessor: 'dayNightFlag'
-    }))
-
-    expect(table.props().data).toEqual(granuleData)
-    expect(table.props().itemCount).toEqual(props.itemCount)
-    expect(table.props().loadMoreItems).toEqual(props.loadMoreItems)
-    expect(table.props().isItemLoaded).toEqual(props.isItemLoaded)
-    expect(table.props().visibleMiddleIndex).toEqual(props.visibleMiddleIndex)
-    expect(table.props().setVisibleMiddleIndex).toEqual(props.setVisibleMiddleIndex)
+    expect(EDSCTable).toHaveBeenCalledTimes(1)
+    expect(EDSCTable).toHaveBeenCalledWith({
+      columns: [{
+        Cell: expect.any(Function),
+        Header: 'Granule',
+        accessor: 'title',
+        customProps: {
+          addGranuleToProjectCollection: expect.any(Function),
+          cellClassName: 'granule-results-table__cell--granule',
+          collectionId: 'collectionId',
+          collectionQuerySpatial: {},
+          collectionTags: {},
+          directDistributionInformation: {},
+          generateNotebook: {},
+          GranuleResultsTableHeaderCell: expect.any(Function),
+          isGranuleInProject: expect.any(Function),
+          location: {},
+          onExcludeGranule: expect.any(Function),
+          onFocusedGranuleChange: expect.any(Function),
+          onGenerateNotebook: expect.any(Function),
+          onMetricsAddGranuleProject: expect.any(Function),
+          onMetricsDataAccess: expect.any(Function),
+          removeGranuleFromProjectCollection: expect.any(Function)
+        },
+        sticky: 'left',
+        width: '325'
+      }, {
+        Cell: expect.any(Function),
+        Header: 'Image',
+        accessor: 'granuleThumbnail',
+        customProps: {},
+        width: '60'
+      }, {
+        Cell: expect.any(Function),
+        Header: 'Start',
+        accessor: 'timeStart',
+        customProps: { centerContent: true },
+        width: '175'
+      }, {
+        Cell: expect.any(Function),
+        Header: 'End',
+        accessor: 'timeEnd',
+        customProps: { centerContent: true },
+        width: '175'
+      }, {
+        Cell: expect.any(Function),
+        Header: 'Day/Night',
+        accessor: 'dayNightFlag',
+        customProps: { centerContent: true },
+        width: '100'
+      }],
+      data: [{
+        browseFlag: true,
+        dayNightFlag: 'DAY',
+        formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        handleMouseEnter: expect.any(Function),
+        id: 'one',
+        links: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        onlineAccessFlag: true,
+        thumbnail: '/fake/path/image.jpg',
+        title: 'Granule title one'
+      }, {
+        browseFlag: true,
+        dayNightFlag: 'DAY',
+        formattedTemporal: ['2019-04-28 00:00:00', '2019-04-29 23:59:59'],
+        handleMouseEnter: expect.any(Function),
+        id: 'two',
+        links: [{
+          href: 'http://linkhref',
+          rel: 'http://linkrel/data#',
+          title: 'linktitle'
+        }],
+        onlineAccessFlag: true,
+        thumbnail: '/fake/path/image.jpg',
+        title: 'Granule title two'
+      }],
+      focusedItem: 'one',
+      id: 'granule-results-table',
+      initialRowStateAccessor: expect.any(Function),
+      initialTableState: { hiddenColumns: ['granuleThumbnail'] },
+      isItemLoaded: expect.any(Function),
+      itemCount: 1,
+      loadMoreItems: expect.any(Function),
+      onRowClick: expect.any(Function),
+      onRowMouseEnter: expect.any(Function),
+      onRowMouseLeave: expect.any(Function),
+      rowClassNamesFromRowState: expect.any(Function),
+      rowLabelFromRowState: expect.any(Function),
+      rowTestId: 'granule-results-table__item',
+      setVisibleMiddleIndex: expect.any(Function),
+      striped: true,
+      visibleMiddleIndex: 1
+    }, {})
   })
 
   describe('onRowClick', () => {
     test('fires the callback with the correct values', () => {
       const handleClickMock = jest.fn()
-      const { enzymeWrapper } = setup()
-      const table = enzymeWrapper.find(EDSCTable)
+      setup()
 
-      table.props().onRowClick({ event: 'event' }, {
+      EDSCTable.mock.calls[0][0].onRowClick({ event: 'event' }, {
         original: {
           handleClick: handleClickMock
         }
@@ -112,10 +166,9 @@ describe('GranuleResultsTable component', () => {
   describe('onRowMouseEnter', () => {
     test('fires the callback with the correct values', () => {
       const handleMouseEnterMock = jest.fn()
-      const { enzymeWrapper } = setup()
-      const table = enzymeWrapper.find(EDSCTable)
+      setup()
 
-      table.props().onRowMouseEnter({ event: 'event' }, {
+      EDSCTable.mock.calls[0][0].onRowMouseEnter({ event: 'event' }, {
         original: {
           handleMouseEnter: handleMouseEnterMock
         }
@@ -138,10 +191,9 @@ describe('GranuleResultsTable component', () => {
   describe('onRowMouseLeave', () => {
     test('fires the callback with the correct values', () => {
       const handleMouseEnterLeave = jest.fn()
-      const { enzymeWrapper } = setup()
-      const table = enzymeWrapper.find(EDSCTable)
+      setup()
 
-      table.props().onRowMouseLeave({ event: 'event' }, {
+      EDSCTable.mock.calls[0][0].onRowMouseLeave({ event: 'event' }, {
         original: {
           handleMouseLeave: handleMouseEnterLeave
         }
@@ -161,13 +213,38 @@ describe('GranuleResultsTable component', () => {
     })
   })
 
+  describe('rowLabelFromRowState', () => {
+    describe('when the granule is focused', () => {
+      test('fires the callback with the correct values', () => {
+        setup()
+
+        const result = EDSCTable.mock.calls[0][0].rowLabelFromRowState({
+          isFocusedGranule: true
+        })
+
+        expect(result).toBe('Unfocus granule on map')
+      })
+    })
+
+    describe('when the granule is not focused', () => {
+      test('fires the callback with the correct values', () => {
+        setup()
+
+        const result = EDSCTable.mock.calls[0][0].rowLabelFromRowState({
+          isFocusedGranule: false
+        })
+
+        expect(result).toBe('Focus granule on map')
+      })
+    })
+  })
+
   describe('rowClassNamesFromRowState', () => {
     describe('when the granule is focused', () => {
       test('fires the callback with the correct values', () => {
-        const { enzymeWrapper } = setup()
-        const table = enzymeWrapper.find(EDSCTable)
+        setup()
 
-        const result = table.props().rowClassNamesFromRowState({
+        const result = EDSCTable.mock.calls[0][0].rowClassNamesFromRowState({
           isFocusedGranule: true
         })
 
@@ -180,12 +257,9 @@ describe('GranuleResultsTable component', () => {
 
     describe('when the granule is hovered', () => {
       test('fires the callback with the correct values', () => {
-        const {
-          enzymeWrapper
-        } = setup()
-        const table = enzymeWrapper.find(EDSCTable)
+        setup()
 
-        const result = table.props().rowClassNamesFromRowState({
+        const result = EDSCTable.mock.calls[0][0].rowClassNamesFromRowState({
           isHoveredGranule: true
         })
 
@@ -198,10 +272,9 @@ describe('GranuleResultsTable component', () => {
 
     describe('when the granule is not focused', () => {
       test('fires the callback with the correct values', () => {
-        const { enzymeWrapper } = setup()
-        const table = enzymeWrapper.find(EDSCTable)
+        setup()
 
-        const result = table.props().rowClassNamesFromRowState({
+        const result = EDSCTable.mock.calls[0][0].rowClassNamesFromRowState({
           isFocusedGranule: false
         })
 
@@ -213,10 +286,9 @@ describe('GranuleResultsTable component', () => {
 
     describe('initialRowStateAccessor', () => {
       test('fires the callback with the correct values', () => {
-        const { enzymeWrapper } = setup()
-        const table = enzymeWrapper.find(EDSCTable)
+        setup()
 
-        const result = table.props().initialRowStateAccessor({
+        const result = EDSCTable.mock.calls[0][0].initialRowStateAccessor({
           original: {
             isFocusedGranule: true,
             isCollectionInProject: true,
@@ -234,10 +306,9 @@ describe('GranuleResultsTable component', () => {
 
     describe('when the granule is added to the project', () => {
       test('fires the callback with the correct values', () => {
-        const { enzymeWrapper } = setup()
-        const table = enzymeWrapper.find(EDSCTable)
+        setup()
 
-        const result = table.props().rowClassNamesFromRowState({
+        const result = EDSCTable.mock.calls[0][0].rowClassNamesFromRowState({
           isCollectionInProject: true,
           isInProject: true
         })
@@ -251,10 +322,9 @@ describe('GranuleResultsTable component', () => {
 
     describe('when the granule is removed to the project', () => {
       test('fires the callback with the correct values', () => {
-        const { enzymeWrapper } = setup()
-        const table = enzymeWrapper.find(EDSCTable)
+        setup()
 
-        const result = table.props().rowClassNamesFromRowState({
+        const result = EDSCTable.mock.calls[0][0].rowClassNamesFromRowState({
           isCollectionInProject: true,
           isInProject: false
         })

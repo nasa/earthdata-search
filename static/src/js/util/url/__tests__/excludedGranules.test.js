@@ -205,10 +205,7 @@ describe('url#encodeUrlQuery', () => {
               }
             }
           },
-          focusedCollection: 'collectionId',
-          project: {
-            collectionIds: []
-          }
+          focusedCollection: 'collectionId'
         }
 
         expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
@@ -253,10 +250,8 @@ describe('url#encodeUrlQuery', () => {
         hasGranulesOrCwic: true,
         pathname: '/path/here',
         focusedCollection: '',
-        project: {
-          collections: {
-            allIds: ['collectionId']
-          }
+        projectCollections: {
+          allIds: ['collectionId']
         },
         query: {
           collection: {
@@ -286,10 +281,8 @@ describe('url#encodeUrlQuery', () => {
         hasGranulesOrCwic: true,
         pathname: '/path/here',
         focusedCollection: 'collectionId',
-        project: {
-          collections: {
-            allIds: ['collectionId']
-          }
+        projectCollections: {
+          allIds: ['collectionId']
         },
         query: {
           collection: {

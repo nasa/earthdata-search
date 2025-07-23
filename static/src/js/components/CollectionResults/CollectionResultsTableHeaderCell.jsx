@@ -5,12 +5,21 @@ import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-sys
 
 import Button from '../Button/Button'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
+import useEdscStore from '../../zustand/useEdscStore'
 
 /**
  * Renders CollectionResultsTableHeaderCell.
  * @param {Object} props - The props passed into the component from react-table.
  */
 const CollectionResultsTableHeaderCell = (props) => {
+  const {
+    addProjectCollection,
+    removeProjectCollection
+  } = useEdscStore((state) => ({
+    addProjectCollection: state.project.addProjectCollection,
+    removeProjectCollection: state.project.removeProjectCollection
+  }))
+
   const { column, cell, row } = props
   const { customProps } = column
   const { original: rowProps } = row
@@ -18,9 +27,7 @@ const CollectionResultsTableHeaderCell = (props) => {
 
   const {
     onViewCollectionGranules,
-    onAddProjectCollection,
     onMetricsAddCollectionProject,
-    onRemoveCollectionFromProject,
     onViewCollectionDetails
   } = customProps
 
@@ -71,7 +78,7 @@ const CollectionResultsTableHeaderCell = (props) => {
                   title="Add collection to the current project"
                   onClick={
                     (event) => {
-                      onAddProjectCollection(collectionId)
+                      addProjectCollection(collectionId)
                       onMetricsAddCollectionProject({
                         collectionConceptId: collectionId,
                         view: 'table',
@@ -91,7 +98,8 @@ const CollectionResultsTableHeaderCell = (props) => {
                   title="Remove collection from the current project"
                   onClick={
                     (event) => {
-                      onRemoveCollectionFromProject(collectionId)
+                      removeProjectCollection(collectionId)
+
                       event.stopPropagation()
                     }
                   }
@@ -111,9 +119,7 @@ CollectionResultsTableHeaderCell.propTypes = {
   column: PropTypes.shape({
     customProps: PropTypes.shape({
       onViewCollectionGranules: PropTypes.func,
-      onAddProjectCollection: PropTypes.func,
       onMetricsAddCollectionProject: PropTypes.func,
-      onRemoveCollectionFromProject: PropTypes.func,
       onViewCollectionDetails: PropTypes.func
     })
   }).isRequired,

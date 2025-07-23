@@ -1,10 +1,22 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import ProjectHeader from '../ProjectHeader'
+import { screen } from '@testing-library/react'
 
-const setup = (overrideProps) => {
-  const props = {
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
+import ProjectHeader from '../ProjectHeader'
+import Skeleton from '../../Skeleton/Skeleton'
+
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: ProjectHeader,
+  defaultProps: {
+    onUpdateProjectName: jest.fn(),
+    savedProject: {
+      name: 'test project'
+    }
+  },
+  defaultZustandState: {
     project: {
       collections: {
         allIds: ['collectionId1'],
@@ -23,17 +35,9 @@ const setup = (overrideProps) => {
           }
         }
       }
-    },
-    savedProject: {
-      name: 'test project'
-    },
-    onUpdateProjectName: jest.fn(),
-    ...overrideProps
+    }
   }
-  render(
-    <ProjectHeader {...props} />
-  )
-}
+})
 
 describe('ProjectHeader component', () => {
   test('renders its title correctly', () => {
@@ -44,12 +48,13 @@ describe('ProjectHeader component', () => {
   })
 
   test('renders title correctly when a name value is not defined', () => {
-    const overrideProps = {
-      savedProject: {
-        name: undefined
+    setup({
+      overrideProps: {
+        savedProject: {
+          name: undefined
+        }
       }
-    }
-    setup(overrideProps)
+    })
 
     expect(screen.getByRole('heading', { name: /untitled project/i })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: /untitled project/i })).toHaveTextContent('Untitled Project')
@@ -57,26 +62,57 @@ describe('ProjectHeader component', () => {
 
   describe('when the collections are loading', () => {
     test('renders project metadata loading state', () => {
-      const overrideProps = {
-        project: {
-          collections: {
-            allIds: ['collectionId1'],
-            byId: {
-              collectionId1: {
-                granules: {}
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1'],
+              byId: {
+                collectionId1: {
+                  granules: {
+                    isLoading: true,
+                    isLoaded: false
+                  }
+                }
               }
             }
           }
         }
-      }
-      setup(overrideProps)
+      })
 
       // Check for the skeleton container
-      expect(screen.getByTestId('project-header__skeleton')).toBeInTheDocument()
-
-      // Check for all skeleton items
-      const skeletonItems = screen.getAllByTestId('skeleton-item')
-      expect(skeletonItems).toHaveLength(3) // Updated to match the actual number of skeleton items
+      expect(Skeleton).toHaveBeenCalledTimes(1)
+      expect(Skeleton).toHaveBeenCalledWith({
+        containerStyle: {
+          height: '21px',
+          width: '100%'
+        },
+        shapes: [{
+          'data-testid': 'skeleton-item',
+          height: 12,
+          left: 2,
+          radius: 2,
+          shape: 'rectangle',
+          top: 6,
+          width: 80
+        }, {
+          'data-testid': 'skeleton-item',
+          height: 12,
+          left: 90,
+          radius: 2,
+          shape: 'rectangle',
+          top: 6,
+          width: 50
+        }, {
+          'data-testid': 'skeleton-item',
+          height: 12,
+          left: 150,
+          radius: 2,
+          shape: 'rectangle',
+          top: 6,
+          width: 55
+        }]
+      }, {})
     })
   })
 
@@ -96,40 +132,41 @@ describe('ProjectHeader component', () => {
 
   describe('with multiple collections', () => {
     test('renders collection count and size correctly', () => {
-      const overrideProps = {
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 1,
-                  totalSize: {
-                    size: '4.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 4
-                }
-              },
-              collectionId2: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 5,
-                  totalSize: {
-                    size: '5.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 5
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1', 'collectionId2'],
+              byId: {
+                collectionId1: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 1,
+                    totalSize: {
+                      size: '4.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 4
+                  }
+                },
+                collectionId2: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 5,
+                    totalSize: {
+                      size: '5.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 5
+                  }
                 }
               }
             }
           }
         }
-      }
-      setup(overrideProps)
+      })
 
       expect(screen.getByText(/collection/i)).toHaveTextContent('2 Collections')
       expect(screen.getByText(/mb/i)).toHaveTextContent('9.0 MB')
@@ -146,40 +183,41 @@ describe('ProjectHeader component', () => {
 
   describe('with multiple granules', () => {
     test('renders granule count correctly', () => {
-      const overrideProps = {
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 1,
-                  totalSize: {
-                    size: '4.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 4
-                }
-              },
-              collectionId2: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 5,
-                  totalSize: {
-                    size: '5.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 5
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1', 'collectionId2'],
+              byId: {
+                collectionId1: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 1,
+                    totalSize: {
+                      size: '4.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 4
+                  }
+                },
+                collectionId2: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 5,
+                    totalSize: {
+                      size: '5.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 5
+                  }
                 }
               }
             }
           }
         }
-      }
-      setup(overrideProps)
+      })
 
       expect(screen.getByText(/granules/i)).toHaveTextContent('6 Granules')
     })
@@ -187,41 +225,42 @@ describe('ProjectHeader component', () => {
 
   describe('with added granules', () => {
     test('renders granule count and size correctly', () => {
-      const overrideProps = {
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 1,
-                  totalSize: {
-                    size: '4.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 4
-                }
-              },
-              collectionId2: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 3,
-                  totalSize: {
-                    size: '5.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 5,
-                  addedGranuleIds: [1, 2, 3]
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1', 'collectionId2'],
+              byId: {
+                collectionId1: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 1,
+                    totalSize: {
+                      size: '4.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 4
+                  }
+                },
+                collectionId2: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 3,
+                    totalSize: {
+                      size: '5.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 5,
+                    addedGranuleIds: [1, 2, 3]
+                  }
                 }
               }
             }
           }
         }
-      }
-      setup(overrideProps)
+      })
 
       expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
       expect(screen.getByText(/mb/i)).toHaveTextContent('19.0 MB') // 3 * 5MB + 1 * 4MB
@@ -230,40 +269,41 @@ describe('ProjectHeader component', () => {
 
   describe('with excluded granules', () => {
     test('renders granule count and size correctly', () => {
-      const overrideProps = {
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 1,
-                  totalSize: {
-                    size: '4.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 4
-                }
-              },
-              collectionId2: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 3,
-                  totalSize: {
-                    size: '5.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 5
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1', 'collectionId2'],
+              byId: {
+                collectionId1: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 1,
+                    totalSize: {
+                      size: '4.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 4
+                  }
+                },
+                collectionId2: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 3,
+                    totalSize: {
+                      size: '5.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 5
+                  }
                 }
               }
             }
           }
         }
-      }
-      setup(overrideProps)
+      })
 
       expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
       expect(screen.getByText(/mb/i)).toHaveTextContent('19.0 MB') // 3 * 5MB + 1 * 4MB
@@ -272,41 +312,42 @@ describe('ProjectHeader component', () => {
 
   describe('with excluded and removed granules', () => {
     test('renders granule count and size correctly', () => {
-      const overrideProps = {
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 1,
-                  totalSize: {
-                    size: '4.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 4
-                }
-              },
-              collectionId2: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 3,
-                  totalSize: {
-                    size: '5.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 5,
-                  removedGranuleIds: [2]
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1', 'collectionId2'],
+              byId: {
+                collectionId1: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 1,
+                    totalSize: {
+                      size: '4.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 4
+                  }
+                },
+                collectionId2: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 3,
+                    totalSize: {
+                      size: '5.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 5,
+                    removedGranuleIds: [2]
+                  }
                 }
               }
             }
           }
         }
-      }
-      setup(overrideProps)
+      })
 
       expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
       expect(screen.getByText(/mb/i)).toHaveTextContent('19.0 MB') // 3 * 5MB + 1 * 4MB
@@ -315,41 +356,42 @@ describe('ProjectHeader component', () => {
 
   describe('with duplicate excluded and removed granules', () => {
     test('renders granule count and size correctly', () => {
-      const overrideProps = {
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 1,
-                  totalSize: {
-                    size: '4.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 4
-                }
-              },
-              collectionId2: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 3,
-                  totalSize: {
-                    size: '5.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 5,
-                  removedGranuleIds: [1, 2]
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1', 'collectionId2'],
+              byId: {
+                collectionId1: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 1,
+                    totalSize: {
+                      size: '4.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 4
+                  }
+                },
+                collectionId2: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 3,
+                    totalSize: {
+                      size: '5.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 5,
+                    removedGranuleIds: [1, 2]
+                  }
                 }
               }
             }
           }
         }
-      }
-      setup(overrideProps)
+      })
 
       expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
       expect(screen.getByText(/mb/i)).toHaveTextContent('19.0 MB') // 3 * 5MB + 1 * 4MB
@@ -358,40 +400,41 @@ describe('ProjectHeader component', () => {
 
   describe('with multiple granule, some of which being excluded', () => {
     test('renders granule count correctly', () => {
-      const overrideProps = {
-        project: {
-          collections: {
-            allIds: ['collectionId1', 'collectionId2'],
-            byId: {
-              collectionId1: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 1,
-                  totalSize: {
-                    size: '4.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 4
-                }
-              },
-              collectionId2: {
-                granules: {
-                  isLoading: false,
-                  isLoaded: true,
-                  hits: 3,
-                  totalSize: {
-                    size: '5.0',
-                    unit: 'MB'
-                  },
-                  singleGranuleSize: 5
+      setup({
+        overrideZustandState: {
+          project: {
+            collections: {
+              allIds: ['collectionId1', 'collectionId2'],
+              byId: {
+                collectionId1: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 1,
+                    totalSize: {
+                      size: '4.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 4
+                  }
+                },
+                collectionId2: {
+                  granules: {
+                    isLoading: false,
+                    isLoaded: true,
+                    hits: 3,
+                    totalSize: {
+                      size: '5.0',
+                      unit: 'MB'
+                    },
+                    singleGranuleSize: 5
+                  }
                 }
               }
             }
           }
         }
-      }
-      setup(overrideProps)
+      })
 
       expect(screen.getByText(/granules/i)).toHaveTextContent('4 Granules')
     })
@@ -399,8 +442,8 @@ describe('ProjectHeader component', () => {
 
   describe('editing project name', () => {
     test('when the state is editing the submit button is visible', async () => {
-      setup()
-      const user = userEvent.setup()
+      const { user } = setup()
+
       await user.click(screen.getByRole('textbox'))
 
       expect(screen.getByTestId('submit_button')).toBeInTheDocument()
@@ -409,13 +452,13 @@ describe('ProjectHeader component', () => {
 
     test('when the state is not editing the edit button is visible', async () => {
       setup()
+
       expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
       expect(screen.getByTestId('edit_button')).toBeInTheDocument()
     })
 
     test('focusing on project name and pressing enter enables editing', async () => {
-      setup()
-      const user = userEvent.setup()
+      const { user } = setup()
 
       expect(screen.getByTestId('project-header__span')).toBeInTheDocument()
 
@@ -427,8 +470,7 @@ describe('ProjectHeader component', () => {
     })
 
     test('focusing on project name and pressing a non-enter key does not enable editing', async () => {
-      setup()
-      const user = userEvent.setup()
+      const { user } = setup()
 
       expect(screen.getByTestId('project-header__span')).toBeInTheDocument()
 
@@ -440,8 +482,7 @@ describe('ProjectHeader component', () => {
     })
 
     test('clicking on the project name enables editing', async () => {
-      setup()
-      const user = userEvent.setup()
+      const { user } = setup()
 
       expect(screen.queryByTestId('submit_button')).not.toBeInTheDocument()
       expect(screen.getByTestId('edit_button')).toBeInTheDocument()
@@ -459,8 +500,8 @@ describe('ProjectHeader component', () => {
     })
 
     test('editing the text field changes the project name', async () => {
-      setup()
-      const user = userEvent.setup()
+      const { user } = setup()
+
       const textbox = screen.getByRole('textbox')
       await user.click(textbox)
 
@@ -473,8 +514,8 @@ describe('ProjectHeader component', () => {
     })
 
     test('clicking the edit button enables editing in the text field', async () => {
-      setup()
-      const user = userEvent.setup()
+      const { user } = setup()
+
       await user.click(screen.getByTestId('edit_button'))
       const textbox = screen.getByRole('textbox')
 
@@ -487,29 +528,23 @@ describe('ProjectHeader component', () => {
     })
 
     test('clicking the submit button calls onUpdateProjectName', async () => {
-      const overrideProps = {
-        onUpdateProjectName: jest.fn()
-      }
-      setup(overrideProps)
-      const user = userEvent.setup()
+      const { props, user } = setup()
+
       await user.click(screen.getByTestId('edit_button'))
       await user.click(screen.getByTestId('submit_button'))
 
-      expect(overrideProps.onUpdateProjectName).toBeCalledTimes(1)
-      expect(overrideProps.onUpdateProjectName).toBeCalledWith('test project')
+      expect(props.onUpdateProjectName).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateProjectName).toHaveBeenCalledWith('test project')
     })
 
     test('pressing enter while editing calls onUpdateProjectName', async () => {
-      const overrideProps = {
-        onUpdateProjectName: jest.fn()
-      }
-      setup(overrideProps)
-      const user = userEvent.setup()
+      const { props, user } = setup()
+
       await user.click(screen.getByTestId('edit_button'))
       await user.keyboard('{Enter}')
 
-      expect(overrideProps.onUpdateProjectName).toBeCalledTimes(1)
-      expect(overrideProps.onUpdateProjectName).toBeCalledWith('test project')
+      expect(props.onUpdateProjectName).toHaveBeenCalledTimes(1)
+      expect(props.onUpdateProjectName).toHaveBeenCalledWith('test project')
     })
   })
 })

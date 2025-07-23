@@ -7,6 +7,7 @@ import { SET_RETRIEVAL_LOADING } from '../../constants/actionTypes'
 import { submitRetrieval, fetchRetrieval } from '../retrieval'
 
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -49,7 +50,17 @@ describe('submitRetrieval', () => {
           pageNum: 1
         }
       },
+      router: {
+        location: {
+          search: '?some=testparams'
+        }
+      },
+      shapefile: {}
+    })
+
+    useEdscStore.setState((state) => ({
       project: {
+        ...state.project,
         collections: {
           byId: {
             collectionId: {
@@ -65,19 +76,15 @@ describe('submitRetrieval', () => {
             }
           },
           allIds: ['collectionId']
-        }
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
-      shapefile: {}
-    })
+        },
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }
+    }))
 
     // Call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
-      expect(store.getActions().length).toEqual(4)
+      expect(store.getActions().length).toEqual(2)
 
       expect(store.getActions()[0]).toEqual({
         payload: {
@@ -92,20 +99,21 @@ describe('submitRetrieval', () => {
       })
 
       expect(store.getActions()[1]).toEqual({
-        type: 'SUBMITTING_PROJECT'
-      })
-
-      expect(store.getActions()[2]).toEqual({
-        type: 'SUBMITTED_PROJECT'
-      })
-
-      expect(store.getActions()[3]).toEqual({
         payload: {
           args: ['/downloads/7'],
           method: 'push'
         },
         type: '@@router/CALL_HISTORY_METHOD'
       })
+
+      const { project } = useEdscStore.getState()
+      const { submittedProject, submittingProject } = project
+
+      expect(submittingProject).toHaveBeenCalledTimes(1)
+      expect(submittingProject).toHaveBeenCalledWith()
+
+      expect(submittedProject).toHaveBeenCalledTimes(1)
+      expect(submittedProject).toHaveBeenCalledWith()
     })
   })
 
@@ -145,7 +153,17 @@ describe('submitRetrieval', () => {
           pageNum: 1
         }
       },
+      router: {
+        location: {
+          search: '?some=testparams'
+        }
+      },
+      shapefile: {}
+    })
+
+    useEdscStore.setState((state) => ({
       project: {
+        ...state.project,
         collections: {
           byId: {
             collectionId: {
@@ -161,19 +179,15 @@ describe('submitRetrieval', () => {
             }
           },
           allIds: ['collectionId']
-        }
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
-      shapefile: {}
-    })
+        },
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }
+    }))
 
     // Call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
-      expect(store.getActions()[3]).toEqual({
+      expect(store.getActions()[1]).toEqual({
         payload: {
           args: ['/downloads/7?ee=prod'],
           method: 'push'
@@ -208,7 +222,17 @@ describe('submitRetrieval', () => {
           keyword: 'search keyword'
         }
       },
+      router: {
+        location: {
+          search: '?some=testparams'
+        }
+      },
+      shapefile: {}
+    })
+
+    useEdscStore.setState((state) => ({
       project: {
+        ...state.project,
         collections: {
           byId: {
             collectionId: {
@@ -224,15 +248,11 @@ describe('submitRetrieval', () => {
             }
           },
           allIds: ['collectionId']
-        }
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
-      shapefile: {}
-    })
+        },
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }
+    }))
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
@@ -273,7 +293,17 @@ describe('submitRetrieval', () => {
             pageNum: 1
           }
         },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      useEdscStore.setState((state) => ({
         project: {
+          ...state.project,
           collections: {
             byId: {
               collectionId: {
@@ -289,19 +319,15 @@ describe('submitRetrieval', () => {
               }
             },
             allIds: ['collectionId']
-          }
-        },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
-      })
+          },
+          submittedProject: jest.fn(),
+          submittingProject: jest.fn()
+        }
+      }))
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(2)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -348,7 +374,17 @@ describe('submitRetrieval', () => {
             pageNum: 1
           }
         },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      useEdscStore.setState((state) => ({
         project: {
+          ...state.project,
           collections: {
             byId: {
               collectionId: {
@@ -367,19 +403,15 @@ describe('submitRetrieval', () => {
               }
             },
             allIds: ['collectionId']
-          }
-        },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
-      })
+          },
+          submittedProject: jest.fn(),
+          submittingProject: jest.fn()
+        }
+      }))
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(2)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -426,7 +458,17 @@ describe('submitRetrieval', () => {
             pageNum: 1
           }
         },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      useEdscStore.setState((state) => ({
         project: {
+          ...state.project,
           collections: {
             byId: {
               collectionId: {
@@ -447,17 +489,13 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
-      })
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }))
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(2)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -504,7 +542,17 @@ describe('submitRetrieval', () => {
             pageNum: 1
           }
         },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      useEdscStore.setState((state) => ({
         project: {
+          ...state.project,
           collections: {
             byId: {
               collectionId: {
@@ -522,17 +570,13 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
-      })
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }))
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(2)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -579,7 +623,17 @@ describe('submitRetrieval', () => {
             pageNum: 1
           }
         },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      useEdscStore.setState((state) => ({
         project: {
+          ...state.project,
           collections: {
             byId: {
               collectionId: {
@@ -598,17 +652,13 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
-      })
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }))
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(2)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -655,7 +705,17 @@ describe('submitRetrieval', () => {
             pageNum: 1
           }
         },
+        router: {
+          location: {
+            search: '?some=testparams'
+          }
+        },
+        shapefile: {}
+      })
+
+      useEdscStore.setState((state) => ({
         project: {
+          ...state.project,
           collections: {
             byId: {
               collectionId: {
@@ -674,17 +734,13 @@ describe('submitRetrieval', () => {
             allIds: ['collectionId']
           }
         },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
-      })
+        submittedProject: jest.fn(),
+        submittingProject: jest.fn()
+      }))
 
       // Call the dispatch
       store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(4)
+        expect(store.getActions().length).toEqual(2)
 
         expect(store.getActions()[0]).toEqual({
           payload: {
@@ -803,25 +859,33 @@ describe('fetchRetrieval', () => {
           pageNum: 1
         }
       },
-      project: {
-        byId: {
-          collectionId: {
-            accessMethods: {
-              download: {
-                type: 'download'
-              }
-            },
-            selectedAccessMethod: 'download'
-          }
-        },
-        allIds: ['collectionId']
-      },
       router: {
         location: {
           search: '?some=testparams'
         }
       }
     })
+
+    useEdscStore.setState((state) => ({
+      project: {
+        ...state.project,
+        collections: {
+          byId: {
+            collectionId: {
+              accessMethods: {
+                download: {
+                  type: 'download'
+                }
+              },
+              selectedAccessMethod: 'download'
+            }
+          },
+          allIds: ['collectionId']
+        }
+      },
+      submittedProject: jest.fn(),
+      submittingProject: jest.fn()
+    }))
 
     // Call the dispatch
     await store.dispatch(fetchRetrieval(7)).then(() => {
@@ -945,25 +1009,33 @@ describe('fetchRetrieval', () => {
           pageNum: 1
         }
       },
-      project: {
-        byId: {
-          collectionId: {
-            accessMethods: {
-              download: {
-                type: 'download'
-              }
-            },
-            selectedAccessMethod: 'download'
-          }
-        },
-        allIds: ['collectionId']
-      },
       router: {
         location: {
           search: '?some=testparams'
         }
       }
     })
+
+    useEdscStore.setState((state) => ({
+      project: {
+        ...state.project,
+        collections: {
+          byId: {
+            collectionId: {
+              accessMethods: {
+                download: {
+                  type: 'download'
+                }
+              },
+              selectedAccessMethod: 'download'
+            }
+          },
+          allIds: ['collectionId']
+        }
+      },
+      submittedProject: jest.fn(),
+      submittingProject: jest.fn()
+    }))
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 

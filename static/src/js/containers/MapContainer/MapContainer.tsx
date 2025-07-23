@@ -57,8 +57,9 @@ import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 
-import {
+import type {
   BoundingBoxString,
   CircleString,
   CollectionsMetadata,
@@ -72,6 +73,8 @@ import {
   Query,
   SpatialSearch
 } from '../../types/sharedTypes'
+
+import type { ProjectCollection, ProjectGranules } from '../../zustand/types'
 
 import './MapContainer.scss'
 
@@ -107,7 +110,6 @@ export const mapStateToProps = (state) => ({
   lineSearch: state.query.collection.spatial.line,
   pointSearch: state.query.collection.spatial.point,
   polygonSearch: state.query.collection.spatial.polygon,
-  project: state.project,
   router: state.router
 })
 
@@ -175,29 +177,6 @@ interface MapContainerProps {
   pointSearch?: PointString[]
   /** The polygon search coordinates */
   polygonSearch?: PolygonString[]
-  /** The project values */
-  project: {
-    /** The project collections */
-    collections: {
-      /** The IDs of the project collections */
-      allIds: string[]
-      /** The project collections by ID */
-      byId: {
-        /** The project collection ID */
-        [key: string]: {
-          /** The granules for the project collection */
-          granules?: {
-            /** The IDs of the granules */
-            allIds?: string[]
-            /** The added granule IDs */
-            addedGranuleIds?: string[]
-            /** The removed granule IDs */
-            removedGranuleIds?: string[]
-          }
-        }
-      }
-    }
-  }
   /** The router values */
   router: {
     /** The router location */
@@ -231,7 +210,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onToggleTooManyPointsModal,
     pointSearch,
     polygonSearch,
-    project,
     router
   } = props
 
@@ -249,6 +227,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onClearShapefile,
     onFetchShapefile,
     onUpdateShapefile,
+    projectCollections,
     setStartDrawing,
     shapefile,
     showMbr,
@@ -259,11 +238,13 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onClearShapefile: state.shapefile.clearShapefile,
     onFetchShapefile: state.shapefile.fetchShapefile,
     onUpdateShapefile: state.shapefile.updateShapefile,
+    projectCollections: state.project.collections,
     setStartDrawing: state.home.setStartDrawing,
     shapefile: state.shapefile,
     showMbr: state.map.showMbr,
     startDrawing: state.home.startDrawing
   }))
+  const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
 
   const [mapReady, setMapReady] = useState(false)
 
@@ -342,7 +323,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   // If on the project page, get the granules from the projectCollections
   if (isProjectPage) {
-    const { collections: projectCollections } = project
     const {
       allIds: projectIds,
       byId: projectById
@@ -350,10 +330,11 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
     projectIds.forEach((collectionId, index) => {
       const {
-        granules: projectCollectionGranules
+        granules: projectCollectionGranules,
+        isVisible: projectCollectionIsVisible
       } = projectById[collectionId] || {}
 
-      if (!projectCollectionGranules) return
+      if (!projectCollectionGranules || !projectCollectionIsVisible) return
 
       const { allIds = [] } = projectCollectionGranules
 
@@ -467,14 +448,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const allAddedGranuleIds: string[] = []
   const allRemovedGranuleIds: string[] = []
 
-  // If the focusedCollectionId is set, get the added and removed granule ids
-  if (focusedCollectionId && focusedCollectionId !== '') {
-    const { collections } = project
-    const { byId: projectById } = collections
-    const { [focusedCollectionId]: focusedProjectCollection = {} } = projectById
-
-    const { granules = {} } = focusedProjectCollection
-    const { addedGranuleIds = [], removedGranuleIds = [] } = granules
+  // If on the focusedCollectionPage and the focusedCollectionId is set, get the added and removed granule ids
+  if (isFocusedCollectionPage && focusedCollectionId && focusedCollectionId !== '') {
+    const { granules = {} } = focusedProjectCollection as ProjectCollection
+    const { addedGranuleIds = [], removedGranuleIds = [] } = granules as ProjectGranules
 
     allAddedGranuleIds.push(...addedGranuleIds)
     allRemovedGranuleIds.push(...removedGranuleIds)

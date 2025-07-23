@@ -35,26 +35,32 @@ import MetaIcon from '../MetaIcon/MetaIcon'
 import Spinner from '../Spinner/Spinner'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './CollectionResultsItem.scss'
 
 /**
  * Renders CollectionResultsItem.
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collection - The collection metadata.
- * @param {Function} props.onAddProjectCollection - Callback to add a collection to a project.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
- * @param {Function} props.onRemoveCollectionFromProject - Callback to remove a collection to a project.
  * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
  * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
  */
 export const CollectionResultsItem = forwardRef(({
   collectionMetadata,
-  onAddProjectCollection,
   onMetricsAddCollectionProject,
-  onRemoveCollectionFromProject,
   onViewCollectionDetails,
   onViewCollectionGranules
 }, ref) => {
+  const {
+    addProjectCollection,
+    removeProjectCollection
+  } = useEdscStore((state) => ({
+    addProjectCollection: state.project.addProjectCollection,
+    removeProjectCollection: state.project.removeProjectCollection
+  }))
+
   const {
     collectionId,
     consortiums = [],
@@ -137,7 +143,7 @@ export const CollectionResultsItem = forwardRef(({
       className="collection-results-item__action collection-results-item__action--add"
       onClick={
         (event) => {
-          onAddProjectCollection(collectionId)
+          addProjectCollection(collectionId)
           onMetricsAddCollectionProject({
             collectionConceptId: collectionId,
             view: 'list',
@@ -161,7 +167,7 @@ export const CollectionResultsItem = forwardRef(({
       className="collection-results-item__action collection-results-item__action--remove"
       onClick={
         (event) => {
-          onRemoveCollectionFromProject(collectionId)
+          removeProjectCollection(collectionId)
           event.stopPropagation()
         }
       }
@@ -494,9 +500,7 @@ CollectionResultsItem.displayName = 'CollectionResultsItem'
 
 CollectionResultsItem.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
-  onAddProjectCollection: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired
 }

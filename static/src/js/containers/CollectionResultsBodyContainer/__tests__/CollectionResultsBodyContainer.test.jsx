@@ -28,9 +28,7 @@ const setup = setupTest({
     },
     collectionsSearch: {},
     projectCollectionsIds: [],
-    onAddProjectCollection: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
     onChangeCollectionPageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),
@@ -42,26 +40,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onAddProjectCollection calls actions.addProjectCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'addProjectCollection')
-
-    mapDispatchToProps(dispatch).onAddProjectCollection('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
-  test('onRemoveCollectionFromProject calls actions.removeCollectionFromProject', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'removeCollectionFromProject')
-
-    mapDispatchToProps(dispatch).onRemoveCollectionFromProject('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
   test('onViewCollectionGranules calls actions.viewCollectionGranules', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'viewCollectionGranules')
@@ -120,7 +98,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionsSearch: {},
       collectionsMetadata: {},
-      projectCollectionsIds: [],
       query: {}
     }
 
@@ -140,13 +117,10 @@ describe('CollectionResultsBodyContainer component', () => {
       },
       collectionsSearch: {},
       loadNextPage: expect.any(Function),
-      onAddProjectCollection: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onRemoveCollectionFromProject: expect.any(Function),
       onViewCollectionDetails: expect.any(Function),
       onViewCollectionGranules: expect.any(Function),
-      panelView: 'list',
-      projectCollectionsIds: []
+      panelView: 'list'
     }, {})
   })
 

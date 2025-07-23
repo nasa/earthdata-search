@@ -32,6 +32,7 @@ const GranuleResultsTableHeaderCell = (props) => {
   } = rowProps
 
   const {
+    addGranuleToProjectCollection,
     collectionId,
     collectionQuerySpatial,
     collectionTags,
@@ -39,13 +40,12 @@ const GranuleResultsTableHeaderCell = (props) => {
     generateNotebook,
     isGranuleInProject,
     location,
-    onAddGranuleToProjectCollection,
     onExcludeGranule,
     onFocusedGranuleChange,
     onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
-    onRemoveGranuleFromProjectCollection
+    removeGranuleFromProjectCollection
   } = customProps
 
   const generateNotebookTag = getValueForTag('notebook_generation', collectionTags)
@@ -88,7 +88,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                   iconSize="12"
                   onClick={
                     (event) => {
-                      onAddGranuleToProjectCollection({
+                      addGranuleToProjectCollection({
                         collectionId,
                         granuleId: id
                       })
@@ -117,7 +117,7 @@ const GranuleResultsTableHeaderCell = (props) => {
                   iconSize="12"
                   onClick={
                     (event) => {
-                      onRemoveGranuleFromProjectCollection({
+                      removeGranuleFromProjectCollection({
                         collectionId,
                         granuleId: id
                       })
@@ -197,6 +197,7 @@ GranuleResultsTableHeaderCell.propTypes = {
   }).isRequired,
   column: PropTypes.shape({
     customProps: PropTypes.shape({
+      addGranuleToProjectCollection: PropTypes.func,
       collectionId: PropTypes.string,
       collectionQuerySpatial: PropTypes.shape({}).isRequired,
       collectionTags: PropTypes.shape({}).isRequired,
@@ -206,13 +207,12 @@ GranuleResultsTableHeaderCell.propTypes = {
       location: PropTypes.shape({
         search: PropTypes.string
       }),
-      onAddGranuleToProjectCollection: PropTypes.func,
       onExcludeGranule: PropTypes.func,
       onFocusedGranuleChange: PropTypes.func,
       onGenerateNotebook: PropTypes.func.isRequired,
       onMetricsAddGranuleProject: PropTypes.func,
       onMetricsDataAccess: PropTypes.func,
-      onRemoveGranuleFromProjectCollection: PropTypes.func
+      removeGranuleFromProjectCollection: PropTypes.func
     })
   }).isRequired,
   row: PropTypes.shape({
