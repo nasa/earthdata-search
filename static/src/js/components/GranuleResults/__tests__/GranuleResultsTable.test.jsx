@@ -46,20 +46,22 @@ describe('GranuleResultsTable component', () => {
         Header: 'Granule',
         accessor: 'title',
         customProps: {
-          GranuleResultsTableHeaderCell: expect.any(Function),
+          addGranuleToProjectCollection: expect.any(Function),
           cellClassName: 'granule-results-table__cell--granule',
           collectionId: 'collectionId',
           collectionQuerySpatial: {},
           collectionTags: {},
           directDistributionInformation: {},
           generateNotebook: {},
+          GranuleResultsTableHeaderCell: expect.any(Function),
           isGranuleInProject: expect.any(Function),
           location: {},
           onExcludeGranule: expect.any(Function),
           onFocusedGranuleChange: expect.any(Function),
           onGenerateNotebook: expect.any(Function),
           onMetricsAddGranuleProject: expect.any(Function),
-          onMetricsDataAccess: expect.any(Function)
+          onMetricsDataAccess: expect.any(Function),
+          removeGranuleFromProjectCollection: expect.any(Function)
         },
         sticky: 'left',
         width: '325'

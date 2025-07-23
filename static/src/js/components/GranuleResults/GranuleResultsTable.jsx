@@ -8,6 +8,8 @@ import GranuleResultsTableHeaderCell from './GranuleResultsTableHeaderCell'
 import GranuleResultsBrowseImageCell from './GranuleResultsBrowseImageCell'
 import EDSCTable from '../EDSCTable/EDSCTable'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './GranuleResultsTable.scss'
 
 /**
@@ -56,6 +58,14 @@ export const GranuleResultsTable = ({
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => {
+  const {
+    addGranuleToProjectCollection,
+    removeGranuleFromProjectCollection
+  } = useEdscStore((state) => ({
+    addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
+    removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection
+  }))
+
   const columns = useMemo(() => [
     {
       Header: 'Granule',
@@ -64,20 +74,22 @@ export const GranuleResultsTable = ({
       sticky: 'left',
       width: '325',
       customProps: {
+        addGranuleToProjectCollection,
         cellClassName: 'granule-results-table__cell--granule',
         collectionId,
         collectionQuerySpatial,
         collectionTags,
         directDistributionInformation,
-        isGranuleInProject,
         generateNotebook,
         GranuleResultsTableHeaderCell,
+        isGranuleInProject,
         location,
         onExcludeGranule,
         onFocusedGranuleChange,
         onGenerateNotebook,
         onMetricsAddGranuleProject,
-        onMetricsDataAccess
+        onMetricsDataAccess,
+        removeGranuleFromProjectCollection
       }
     },
     {

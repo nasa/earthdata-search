@@ -1,33 +1,31 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { act, screen } from '@testing-library/react'
 
-import MoreActionsDropdownItem from '../../MoreActionsDropdown/MoreActionsDropdownItem'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import GranuleResultsTableHeaderCell from '../GranuleResultsTableHeaderCell'
-import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+const defaultCustomProps = {
+  addGranuleToProjectCollection: jest.fn(),
+  collectionId: 'collectionId',
+  collectionQuerySpatial: {},
+  collectionTags: {},
+  directDistributionInformation: {},
+  generateNotebook: {},
+  isGranuleInProject: jest.fn().mockReturnValue(false),
+  location: {},
+  onExcludeGranule: jest.fn(),
+  onFocusedGranuleChange: jest.fn(),
+  onGenerateNotebook: jest.fn(),
+  onMetricsAddGranuleProject: jest.fn(),
+  onMetricsDataAccess: jest.fn(),
+  removeGranuleFromProjectCollection: jest.fn()
+}
 
-function setup(overrideProps, columnOverrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: GranuleResultsTableHeaderCell,
+  defaultProps: {
     column: {
-      customProps: {
-        collectionId: 'collectionId',
-        collectionQuerySpatial: {},
-        collectionTags: {},
-        directDistributionInformation: {},
-        generateNotebook: {},
-        location: {},
-        isGranuleInProject: jest.fn(),
-        onAddGranuleToProjectCollection: jest.fn(),
-        onExcludeGranule: jest.fn(),
-        onFocusedGranuleChange: jest.fn(),
-        onGenerateNotebook: jest.fn(),
-        onMetricsDataAccess: jest.fn(),
-        onMetricsAddGranuleProject: jest.fn(),
-        onRemoveGranuleFromProjectCollection: jest.fn(),
-        ...columnOverrideProps
-      }
+      customProps: defaultCustomProps
     },
     cell: {
       value: 'test value'
@@ -41,44 +39,61 @@ function setup(overrideProps, columnOverrideProps) {
         onlineAccessFlag: true,
         handleClick: jest.fn()
       }
-    },
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<GranuleResultsTableHeaderCell {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+    }
+  },
+  defaultZustandState: {
+    portal: {
+      features: {
+        authentication: true
+      }
+    }
+  },
+  withRouter: true
+})
 
 describe('GranuleResultsTableHeaderCell component', () => {
   test('renders correctly', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    const titleElement = enzymeWrapper.find('.granule-results-table__granule-name')
-    expect(titleElement.text()).toEqual('test value')
+    expect(screen.getByRole('heading', {
+      name: 'test value',
+      level: 4
+    })).toBeInTheDocument()
   })
 
-  test('clicking the details button calls onViewCollectionDetails', () => {
-    const { enzymeWrapper, props } = setup()
+  test('clicking the details button calls onFocusedGranuleChange', async () => {
+    const { props, user } = setup()
 
-    const detailsButton = enzymeWrapper.find('MoreActionsDropdown').childAt(0)
-    detailsButton.simulate('click', { stopPropagation: jest.fn() })
+    const dropdownButton = screen.getByRole('button', {
+      name: 'More actions'
+    })
+    await act(async () => {
+      await user.click(dropdownButton)
+    })
+
+    const detailsButton = screen.getByRole('button', {
+      name: 'View details'
+    })
+    await user.click(detailsButton)
 
     expect(props.column.customProps.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onFocusedGranuleChange).toHaveBeenCalledWith('one')
   })
 
-  test('clicking the remove from granule button calls onExcludeGranule', () => {
-    const { enzymeWrapper, props } = setup()
+  test('clicking the filter button calls onExcludeGranule', async () => {
+    const { props, user } = setup()
 
-    const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
-
-    removeButton.props().onClick({
-      stopPropagation: () => {}
+    const dropdownButton = screen.getByRole('button', {
+      name: 'More actions'
     })
+    await act(async () => {
+      await user.click(dropdownButton)
+    })
+
+    const removeButton = screen.getByRole('button', {
+      name: 'Filter granule'
+    })
+    await user.click(removeButton)
 
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({
@@ -87,25 +102,33 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })
   })
 
-  test('clicking the remove from granule button calls onExcludeGranule with a hashed id for CWIC collections', () => {
-    const { enzymeWrapper, props } = setup({
-      row: {
-        original: {
-          id: 'one',
-          isOpenSearch: true,
-          dataLinks: [],
-          s3Links: [],
-          onlineAccessFlag: true,
-          handleClick: jest.fn()
+  test('clicking the filter button calls onExcludeGranule with a hashed id for CWIC collections', async () => {
+    const { props, user } = setup({
+      overrideProps: {
+        row: {
+          original: {
+            id: 'one',
+            isOpenSearch: true,
+            dataLinks: [],
+            s3Links: [],
+            onlineAccessFlag: true,
+            handleClick: jest.fn()
+          }
         }
       }
     })
 
-    const removeButton = enzymeWrapper.find(MoreActionsDropdownItem).at(1)
-
-    removeButton.props().onClick({
-      stopPropagation: () => {}
+    const dropdownButton = screen.getByRole('button', {
+      name: 'More actions'
     })
+    await act(async () => {
+      await user.click(dropdownButton)
+    })
+
+    const removeButton = screen.getByRole('button', {
+      name: 'Filter granule'
+    })
+    await user.click(removeButton)
 
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onExcludeGranule).toHaveBeenCalledWith({
@@ -114,30 +137,21 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })
   })
 
-  test('renders the add button under PortalFeatureContainer', () => {
-    const { enzymeWrapper } = setup(undefined)
+  test('clicking the add button calls addGranuleToProjectCollection and onMetricsAddGranuleProject', async () => {
+    const { props, user } = setup()
 
-    const button = enzymeWrapper
-      .find(PortalFeatureContainer)
-      .find('.granule-results-table__granule-action--add')
-    const portalFeatureContainer = button.parents(PortalFeatureContainer)
-
-    expect(button.exists()).toBeTruthy()
-    expect(portalFeatureContainer.props().authentication).toBeTruthy()
-  })
-
-  test('clicking the add button under calls onAddGranuleToProjectCollection and onMetricsAddGranuleProject', () => {
-    const { props, enzymeWrapper } = setup(undefined)
-
-    const addGranuleButton = enzymeWrapper
-      .find(PortalFeatureContainer)
-      .find('.granule-results-table__granule-action--add')
-
-    addGranuleButton.props().onClick({
-      stopPropagation: () => {}
+    const addGranuleButton = screen.getByRole('button', {
+      name: 'Add granule to project'
+    })
+    await act(async () => {
+      await user.click(addGranuleButton)
     })
 
-    expect(props.column.customProps.onAddGranuleToProjectCollection).toHaveBeenCalledTimes(1)
+    expect(props.column.customProps.addGranuleToProjectCollection).toHaveBeenCalledTimes(1)
+    expect(props.column.customProps.addGranuleToProjectCollection).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      granuleId: 'one'
+    })
 
     expect(props.column.customProps.onMetricsAddGranuleProject).toHaveBeenCalledTimes(1)
     expect(props.column.customProps.onMetricsAddGranuleProject).toHaveBeenCalledWith({
@@ -148,21 +162,54 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })
   })
 
+  test('clicking the remove button calls removeGranuleFromProjectCollection', async () => {
+    const { props, user } = setup({
+      overrideProps: {
+        column: {
+          customProps: {
+            ...defaultCustomProps,
+            isGranuleInProject: jest.fn().mockReturnValue(true)
+          }
+        }
+      }
+    })
+
+    const removeGranuleButton = screen.getByRole('button', {
+      name: 'Remove granule from project'
+    })
+    await act(async () => {
+      await user.click(removeGranuleButton)
+    })
+
+    expect(props.column.customProps.removeGranuleFromProjectCollection).toHaveBeenCalledTimes(1)
+    expect(props.column.customProps.removeGranuleFromProjectCollection).toHaveBeenCalledWith({
+      collectionId: 'collectionId',
+      granuleId: 'one'
+    })
+  })
+
   describe('when the generate notebook tag is added', () => {
     test('renders the generate notebook dropdown', () => {
-      const { enzymeWrapper } = setup({}, {
-        collectionQuerySpatial: {},
-        collectionTags: {
-          'edsc.extra.serverless.notebook_generation': {
-            data: {
-              variable_concept_id: 'V123456789-TESTPROV'
+      setup({
+        overrideProps: {
+          column: {
+            customProps: {
+              ...defaultCustomProps,
+              collectionTags: {
+                'edsc.extra.serverless.notebook_generation': {
+                  data: {
+                    variable_concept_id: 'V123456789-TESTPROV'
+                  }
+                }
+              }
             }
           }
-        },
-        generateNotebook: {}
+        }
       })
 
-      expect(enzymeWrapper.find({ 'aria-label': 'Download sample notebook' })).toBeDefined()
+      expect(screen.getByRole('button', {
+        name: 'Download sample notebook'
+      })).toBeInTheDocument()
     })
   })
 })
