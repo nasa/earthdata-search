@@ -80,7 +80,7 @@ export const UrlQueryContainer = (props) => {
     platformFacets: state.facetParams.cmrFacets.platforms_h,
     portalId: state.portal.portalId,
     processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,
-    project: state.project,
+    projectCollections: state.project.collections,
     projectFacets: state.facetParams.cmrFacets.project_h,
     scienceKeywordFacets: state.facetParams.cmrFacets.science_keywords_h,
     selectedFeatures: state.shapefile.selectedFeatures,

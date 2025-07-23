@@ -82,11 +82,10 @@ class ProjectPanels extends PureComponent {
     } = this.props
 
     const {
-      project: nextProject,
+      projectCollections: nextProjectCollections,
       focusedCollectionId: nextFocusedCollection
     } = nextProps
 
-    const { collections: nextProjectCollections } = nextProject
     const { byId, allIds } = nextProjectCollections
 
     const {
@@ -145,10 +144,9 @@ class ProjectPanels extends PureComponent {
       onSetActivePanel,
       onTogglePanels,
       onUpdateFocusedCollection,
-      project
+      projectCollections
     } = this.props
 
-    const { collections: projectCollections } = project
     const { allIds } = projectCollections
 
     const newFocusedCollectionIndex = activePanel.split('.')[1]
@@ -203,9 +201,8 @@ class ProjectPanels extends PureComponent {
       }
     })
 
-    const { project, onUpdateAccessMethod } = this.props
+    const { projectCollections, onUpdateAccessMethod } = this.props
 
-    const { collections: projectCollections } = project
     const { byId: projectCollectionsById } = projectCollections
     const projectCollection = projectCollectionsById[collectionId]
     const {
@@ -280,7 +277,7 @@ class ProjectPanels extends PureComponent {
       onTogglePanels,
       onUpdateAccessMethod,
       panels,
-      project,
+      projectCollections,
       projectCollectionsMetadata,
       spatial,
       temporal,
@@ -289,10 +286,6 @@ class ProjectPanels extends PureComponent {
     } = this.props
 
     const { selectedVariable } = this.state
-
-    const {
-      collections: projectCollections
-    } = project
 
     const {
       allIds: projectIds,
@@ -712,11 +705,9 @@ ProjectPanels.propTypes = {
     activePanel: PropTypes.string,
     isOpen: PropTypes.bool
   }).isRequired,
-  project: PropTypes.shape({
-    collections: PropTypes.shape({
-      allIds: PropTypes.arrayOf(PropTypes.string),
-      byId: PropTypes.shape({})
-    })
+  projectCollections: PropTypes.shape({
+    allIds: PropTypes.arrayOf(PropTypes.string),
+    byId: PropTypes.shape({})
   }).isRequired,
   projectCollectionsMetadata: PropTypes.shape({}).isRequired,
   spatial: PropTypes.shape({}).isRequired,

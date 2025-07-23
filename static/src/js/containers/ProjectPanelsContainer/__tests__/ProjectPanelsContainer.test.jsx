@@ -212,12 +212,10 @@ describe('ProjectPanelsContainer component', () => {
         activePanel: '0.0.0',
         isOpen: false
       },
-      project: expect.objectContaining({
-        collections: {
-          allIds: ['collectionId'],
-          byId: {}
-        }
-      }),
+      projectCollections: {
+        allIds: ['collectionId'],
+        byId: {}
+      },
       projectCollectionsMetadata: {},
       spatial: {},
       temporal: {},

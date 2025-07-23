@@ -91,13 +91,13 @@ export const ProjectPanelsContainer = ({
 }) => {
   const {
     addGranuleToProjectCollection,
-    project,
+    projectCollections,
     removeGranuleFromProjectCollection,
     selectAccessMethod,
     updateAccessMethod
   } = useEdscStore((state) => ({
     addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
-    project: state.project,
+    projectCollections: state.project.collections,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     selectAccessMethod: state.project.selectAccessMethod,
     updateAccessMethod: state.project.updateAccessMethod
@@ -125,7 +125,7 @@ export const ProjectPanelsContainer = ({
       onUpdateFocusedCollection={onUpdateFocusedCollection}
       onViewCollectionGranules={onViewCollectionGranules}
       panels={panels}
-      project={project}
+      projectCollections={projectCollections}
       projectCollectionsMetadata={projectCollectionsMetadata}
       spatial={spatial}
       temporal={temporal}

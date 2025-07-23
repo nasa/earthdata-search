@@ -128,14 +128,12 @@ describe('url#encodeUrlQuery', () => {
           hasGranulesOrCwic: true,
           pathname: '/path/here',
           focusedCollection: 'collectionId',
-          project: {
-            collections: {
-              allIds: ['collectionId'],
-              byId: {
-                collectionId: {
-                  granules: {
-                    addedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
-                  }
+          projectCollections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {
+                  addedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
                 }
               }
             }
@@ -167,14 +165,12 @@ describe('url#encodeUrlQuery', () => {
           hasGranulesOrCwic: true,
           pathname: '/path/here',
           focusedCollection: 'collectionId',
-          project: {
-            collections: {
-              allIds: ['collectionId'],
-              byId: {
-                collectionId: {
-                  granules: {
-                    addedGranuleIds: ['12345', '56789']
-                  }
+          projectCollections: {
+            allIds: ['collectionId'],
+            byId: {
+              collectionId: {
+                granules: {
+                  addedGranuleIds: ['12345', '56789']
                 }
               }
             }
@@ -197,14 +193,12 @@ describe('url#encodeUrlQuery', () => {
         hasGranulesOrCwic: true,
         pathname: '/path/here',
         focusedCollection: '',
-        project: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {
-                  addedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
-                }
+        projectCollections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                addedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
               }
             }
           }
@@ -226,14 +220,12 @@ describe('url#encodeUrlQuery', () => {
         hasGranulesOrCwic: true,
         pathname: '/path/here',
         focusedCollection: 'collectionId',
-        project: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {
-                  addedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
-                }
+        projectCollections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {
+                addedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
               }
             }
           }
