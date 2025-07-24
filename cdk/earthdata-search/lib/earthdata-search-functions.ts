@@ -881,7 +881,6 @@ export class Functions extends Construct {
       functionNamePrefix
     })
 
-    // TODO Going to try and use this stack for the new endpoint and create a new one for the proxy "GraphQlProxyNestedStack".
     /**
      * GraphQL
      */
