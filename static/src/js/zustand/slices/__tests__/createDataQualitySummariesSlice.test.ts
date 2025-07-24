@@ -1,18 +1,9 @@
 import useEdscStore from '../../useEdscStore'
 
 describe('createDataQualitySummariesSlice', () => {
-  beforeEach(() => {
-    useEdscStore.setState({
-      dataQualitySummaries: {
-        byCollectionId: {},
-        setDataQualitySummaries: useEdscStore.getState()
-          .dataQualitySummaries.setDataQualitySummaries
-      }
-    })
-  })
-
   test('sets the default state', () => {
-    const { dataQualitySummaries } = useEdscStore.getState()
+    const zustandState = useEdscStore.getState()
+    const { dataQualitySummaries } = zustandState
 
     expect(dataQualitySummaries).toEqual({
       byCollectionId: {},
@@ -22,7 +13,9 @@ describe('createDataQualitySummariesSlice', () => {
 
   describe('setDataQualitySummaries', () => {
     test('sets data quality summaries for a collection', () => {
-      const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+      const zustandState = useEdscStore.getState()
+      const { dataQualitySummaries } = zustandState
+      const { setDataQualitySummaries } = dataQualitySummaries
       const catalogItemId = 'C10000001-EDSC'
       const summaries = [
         {
@@ -33,12 +26,15 @@ describe('createDataQualitySummariesSlice', () => {
 
       setDataQualitySummaries(catalogItemId, summaries)
 
-      const updatedState = useEdscStore.getState().dataQualitySummaries
-      expect(updatedState.byCollectionId[catalogItemId]).toEqual(summaries)
+      const updatedState = useEdscStore.getState()
+      const { dataQualitySummaries: updatedDataQualitySummaries } = updatedState
+      expect(updatedDataQualitySummaries.byCollectionId[catalogItemId]).toEqual(summaries)
     })
 
     test('overwrites existing data quality summaries for a collection', () => {
-      const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+      const zustandState = useEdscStore.getState()
+      const { dataQualitySummaries } = zustandState
+      const { setDataQualitySummaries } = dataQualitySummaries
       const catalogItemId = 'C10000001-EDSC'
       const initialSummaries = [
         {
@@ -55,17 +51,21 @@ describe('createDataQualitySummariesSlice', () => {
 
       setDataQualitySummaries(catalogItemId, initialSummaries)
 
-      const initialState = useEdscStore.getState().dataQualitySummaries
-      expect(initialState.byCollectionId[catalogItemId]).toEqual(initialSummaries)
+      const initialState = useEdscStore.getState()
+      const { dataQualitySummaries: initialDataQualitySummaries } = initialState
+      expect(initialDataQualitySummaries.byCollectionId[catalogItemId]).toEqual(initialSummaries)
 
       setDataQualitySummaries(catalogItemId, newSummaries)
 
-      const updatedState = useEdscStore.getState().dataQualitySummaries
-      expect(updatedState.byCollectionId[catalogItemId]).toEqual(newSummaries)
+      const updatedState = useEdscStore.getState()
+      const { dataQualitySummaries: updatedDataQualitySummaries } = updatedState
+      expect(updatedDataQualitySummaries.byCollectionId[catalogItemId]).toEqual(newSummaries)
     })
 
     test('handles multiple collections independently', () => {
-      const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+      const zustandState = useEdscStore.getState()
+      const { dataQualitySummaries } = zustandState
+      const { setDataQualitySummaries } = dataQualitySummaries
       const catalogItemId1 = 'C10000001-EDSC'
       const catalogItemId2 = 'C10000002-EDSC'
       const summaries1 = [
@@ -84,24 +84,30 @@ describe('createDataQualitySummariesSlice', () => {
       setDataQualitySummaries(catalogItemId1, summaries1)
       setDataQualitySummaries(catalogItemId2, summaries2)
 
-      const updatedState = useEdscStore.getState().dataQualitySummaries
-      expect(updatedState.byCollectionId[catalogItemId1]).toEqual(summaries1)
-      expect(updatedState.byCollectionId[catalogItemId2]).toEqual(summaries2)
+      const updatedState = useEdscStore.getState()
+      const { dataQualitySummaries: updatedDataQualitySummaries } = updatedState
+      expect(updatedDataQualitySummaries.byCollectionId[catalogItemId1]).toEqual(summaries1)
+      expect(updatedDataQualitySummaries.byCollectionId[catalogItemId2]).toEqual(summaries2)
     })
 
     test('handles empty summaries array', () => {
-      const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+      const zustandState = useEdscStore.getState()
+      const { dataQualitySummaries } = zustandState
+      const { setDataQualitySummaries } = dataQualitySummaries
       const catalogItemId = 'C10000001-EDSC'
       const emptySummaries: Array<{id: string, summary: string}> = []
 
       setDataQualitySummaries(catalogItemId, emptySummaries)
 
-      const updatedState = useEdscStore.getState().dataQualitySummaries
-      expect(updatedState.byCollectionId[catalogItemId]).toEqual([])
+      const updatedState = useEdscStore.getState()
+      const { dataQualitySummaries: updatedDataQualitySummaries } = updatedState
+      expect(updatedDataQualitySummaries.byCollectionId[catalogItemId]).toEqual([])
     })
 
     test('handles summaries with HTML content', () => {
-      const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+      const zustandState = useEdscStore.getState()
+      const { dataQualitySummaries } = zustandState
+      const { setDataQualitySummaries } = dataQualitySummaries
       const catalogItemId = 'C10000001-EDSC'
       const summaries = [
         {
@@ -112,8 +118,9 @@ describe('createDataQualitySummariesSlice', () => {
 
       setDataQualitySummaries(catalogItemId, summaries)
 
-      const updatedState = useEdscStore.getState().dataQualitySummaries
-      expect(updatedState.byCollectionId[catalogItemId]).toEqual(summaries)
+      const updatedState = useEdscStore.getState()
+      const { dataQualitySummaries: updatedDataQualitySummaries } = updatedState
+      expect(updatedDataQualitySummaries.byCollectionId[catalogItemId]).toEqual(summaries)
     })
   })
 })
