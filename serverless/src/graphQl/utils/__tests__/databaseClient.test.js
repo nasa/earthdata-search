@@ -2,7 +2,6 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 import * as getDbConnection from '../../../util/database/getDbConnection'
 import DatabaseClient from '../databaseClient'
-import * as config from '../../../../../sharedUtils/config'
 
 let dbTracker
 
