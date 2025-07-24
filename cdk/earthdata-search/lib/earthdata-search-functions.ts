@@ -894,9 +894,6 @@ export class Functions extends Construct {
         apiGatewayRestApi,
         // TODO use the optional authorizer, with graphql-shield to protect the admin queries. Need to check the token and user against to make sure they can see the page. Look at cmr-ordering
         // authorizer: authorizers.edlOptionalAuthorizer,
-        // TODO check if we need to do GET and POST here
-        // TODO Look at disabling introspection
-        // TODO Try to deploy this to SIT once we have the endpoint swapped
         methods: ['GET', 'POST'],
         path: 'graphql'
       },
