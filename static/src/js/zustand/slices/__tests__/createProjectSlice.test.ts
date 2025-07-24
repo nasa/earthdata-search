@@ -997,7 +997,6 @@ describe('createProjectSlice', () => {
         })
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
-
         expect(actions.handleError).toHaveBeenCalledTimes(1)
         expect(actions.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',

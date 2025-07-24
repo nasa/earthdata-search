@@ -141,6 +141,7 @@ import {
 import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
 import { generateNotebook } from './generateNotebook'
+import { setDataQualitySummaries } from './dataQualitySummaries'
 
 const actions = {
   addGranuleMetadata,
