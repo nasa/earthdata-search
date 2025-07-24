@@ -39,14 +39,8 @@ jest.mock('../../../actions', () => ({
 beforeEach(() => {
   MockDate.set(new Date('2025-01-01T00:00:00Z'))
 
-  const mockSetDataQualitySummaries = jest.fn((catalogItemId, summaries) => {
-    useEdscStore.setState((state) => {
-      state.dataQualitySummaries.byCollectionId[catalogItemId] = summaries
-    })
-  })
-
   useEdscStore.setState((state) => {
-    state.dataQualitySummaries.setDataQualitySummaries = mockSetDataQualitySummaries
+    state.dataQualitySummaries.setDataQualitySummaries = jest.fn()
   })
 })
 
