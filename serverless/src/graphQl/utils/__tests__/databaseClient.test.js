@@ -2,8 +2,15 @@ import knex from 'knex'
 import mockKnex from 'mock-knex'
 import * as getDbConnection from '../../../util/database/getDbConnection'
 import DatabaseClient from '../databaseClient'
+import * as config from '../../../../../sharedUtils/config'
 
 let dbTracker
+
+jest.mock('../../../../../sharedUtils/config', () => ({
+  getApplicationConfig: jest.fn().mockImplementation(() => ({
+    env: 'testenv'
+  }))
+}))
 
 describe('DatabaseClient', () => {
   let databaseClient
@@ -144,7 +151,7 @@ describe('DatabaseClient', () => {
       const { queries } = dbTracker.queries
 
       expect(queries[0].sql).toEqual('select "users"."site_preferences" from "users" where "users"."environment" = $1')
-      expect(queries[0].bindings).toEqual(['prod'])
+      expect(queries[0].bindings).toEqual(['testenv'])
       expect(queries[0].method).toEqual('select')
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
