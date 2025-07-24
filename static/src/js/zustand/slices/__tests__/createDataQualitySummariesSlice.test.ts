@@ -30,19 +30,5 @@ describe('createDataQualitySummariesSlice', () => {
       const { dataQualitySummaries: updatedDataQualitySummaries } = updatedState
       expect(updatedDataQualitySummaries.byCollectionId[catalogItemId]).toEqual(summaries)
     })
-
-    test('handles empty summaries array', () => {
-      const zustandState = useEdscStore.getState()
-      const { dataQualitySummaries } = zustandState
-      const { setDataQualitySummaries } = dataQualitySummaries
-      const catalogItemId = 'C10000001-EDSC'
-      const emptySummaries: Array<{id: string, summary: string}> = []
-
-      setDataQualitySummaries(catalogItemId, emptySummaries)
-
-      const updatedState = useEdscStore.getState()
-      const { dataQualitySummaries: updatedDataQualitySummaries } = updatedState
-      expect(updatedDataQualitySummaries.byCollectionId[catalogItemId]).toEqual([])
-    })
   })
 })

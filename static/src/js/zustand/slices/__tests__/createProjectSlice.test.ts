@@ -38,6 +38,16 @@ jest.mock('../../../actions', () => ({
 
 beforeEach(() => {
   MockDate.set(new Date('2025-01-01T00:00:00Z'))
+
+  const mockSetDataQualitySummaries = jest.fn((catalogItemId, summaries) => {
+    useEdscStore.setState((state) => {
+      state.dataQualitySummaries.byCollectionId[catalogItemId] = summaries
+    })
+  })
+
+  useEdscStore.setState((state) => {
+    state.dataQualitySummaries.setDataQualitySummaries = mockSetDataQualitySummaries
+  })
 })
 
 afterEach(() => {
@@ -393,6 +403,9 @@ describe('createProjectSlice', () => {
             type: 'download'
           }
         })
+
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(2)
         expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([{
@@ -881,6 +894,9 @@ describe('createProjectSlice', () => {
           }
         })
 
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
+
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([
           expect.objectContaining({
@@ -915,6 +931,8 @@ describe('createProjectSlice', () => {
 
         expect(byId).toEqual({})
 
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(0)
       })
     })
@@ -995,6 +1013,9 @@ describe('createProjectSlice', () => {
             type: 'download'
           }
         })
+
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(actions.handleError).toHaveBeenCalledTimes(1)
@@ -1106,8 +1127,9 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
-        const updatedState = useEdscStore.getState()
-        expect(updatedState.dataQualitySummaries.byCollectionId.collectionId1).toEqual([{
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(1)
+        expect(setDataQualitySummaries).toHaveBeenCalledWith('collectionId1', [{
           conceptId: 'DQS1000000-EDSC',
           title: 'Data Quality Summary 1'
         }])
