@@ -9,7 +9,6 @@ import {
   VariableMetadata
 } from '../types/sharedTypes'
 
-
 /** Data Quality Summary item structure */
 type DataQualitySummaryItem = {
   /** Unique identifier for the data quality summary */

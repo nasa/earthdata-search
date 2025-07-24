@@ -5,7 +5,7 @@ import {
   SET_RETRIEVAL_COLLECTION_LOADING
 } from '../constants/actionTypes'
 
-import { handleError } from './errors'
+import actions from './index'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
@@ -45,7 +45,7 @@ export const fetchRetrievalCollection = (id) => (dispatch, getState) => {
       }))
     })
     .catch((error) => {
-      dispatch(handleError({
+      dispatch(actions.handleError({
         error,
         action: 'fetchRetrievalCollection',
         resource: 'collection',
