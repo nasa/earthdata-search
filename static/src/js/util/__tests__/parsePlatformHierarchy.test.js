@@ -1,10 +1,10 @@
-import { mapPlatforms } from '../mapPlatforms'
+import { parsePlatformHierarchy } from '../parsePlatformHierarchy'
 
-describe('mapPlatforms', () => {
+describe('parsePlatformHierarchy', () => {
   test('maps full platform string with all levels', () => {
     const input = 'Space-based Platforms:Earth Observation Satellites:Landsat:LANDSAT-8'
 
-    const result = mapPlatforms(input)
+    const result = parsePlatformHierarchy(input)
 
     expect(result).toEqual({
       basis: 'Space-based Platforms',
@@ -17,7 +17,7 @@ describe('mapPlatforms', () => {
   test('maps partial platform string', () => {
     const input = 'Space-based Platforms:Earth Observation Satellites'
 
-    const result = mapPlatforms(input)
+    const result = parsePlatformHierarchy(input)
 
     expect(result).toEqual({
       basis: 'Space-based Platforms',
@@ -28,7 +28,7 @@ describe('mapPlatforms', () => {
   test('handles empty values in the string', () => {
     const input = 'Space-based Platforms::LANDSAT-8'
 
-    const result = mapPlatforms(input)
+    const result = parsePlatformHierarchy(input)
 
     expect(result).toEqual({
       basis: 'Space-based Platforms',
@@ -39,7 +39,7 @@ describe('mapPlatforms', () => {
   test('handles single value', () => {
     const input = 'Space-based Platforms'
 
-    const result = mapPlatforms(input)
+    const result = parsePlatformHierarchy(input)
 
     expect(result).toEqual({
       basis: 'Space-based Platforms'
@@ -49,7 +49,7 @@ describe('mapPlatforms', () => {
   test('handles empty string', () => {
     const input = ''
 
-    const result = mapPlatforms(input)
+    const result = parsePlatformHierarchy(input)
 
     expect(result).toEqual({})
   })
@@ -57,7 +57,7 @@ describe('mapPlatforms', () => {
   test('handles string with only colons', () => {
     const input = ':::'
 
-    const result = mapPlatforms(input)
+    const result = parsePlatformHierarchy(input)
 
     expect(result).toEqual({})
   })
@@ -65,7 +65,7 @@ describe('mapPlatforms', () => {
   test('maps aircraft platform', () => {
     const input = 'Air-based Platforms:Aircraft:DC-8'
 
-    const result = mapPlatforms(input)
+    const result = parsePlatformHierarchy(input)
 
     expect(result).toEqual({
       basis: 'Air-based Platforms',

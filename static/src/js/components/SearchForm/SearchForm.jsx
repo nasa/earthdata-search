@@ -5,7 +5,7 @@ import { FaRegTrashAlt } from 'react-icons/fa'
 import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../Button/Button'
-import SearchAutocomplete from './SearchAutocomplete'
+import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete'
 import AdvancedSearchDisplayContainer
   from '../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
 import SpatialDisplayContainer

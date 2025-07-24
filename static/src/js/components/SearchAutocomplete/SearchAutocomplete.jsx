@@ -23,6 +23,8 @@ import { mapAutocompleteToFacets } from '../../util/mapAutocompleteToFacets'
 import configureStore from '../../store/configureStore'
 import useEdscStore from '../../zustand/useEdscStore'
 
+import './SearchAutocomplete.scss'
+
 const SearchAutocomplete = ({
   initialKeyword,
   onChangeQuery,
@@ -36,6 +38,14 @@ const SearchAutocomplete = ({
 
   const inputRef = useRef(null)
   const cancelTokenRef = useRef(null)
+
+  const {
+    addCmrFacetFromAutocomplete,
+    setOpenFacetGroup
+  } = useEdscStore((state) => ({
+    addCmrFacetFromAutocomplete: state.facetParams.addCmrFacetFromAutocomplete,
+    setOpenFacetGroup: state.home.setOpenFacetGroup
+  }))
 
   // Update local state when initial keyword changes
   useEffect(() => {
@@ -153,9 +163,6 @@ const SearchAutocomplete = ({
     const cmrFacet = mapAutocompleteToFacets(data)
 
     if (cmrFacet) {
-      const { home, facetParams } = useEdscStore.getState()
-      const { setOpenFacetGroup } = home
-      const { addCmrFacetFromAutocomplete } = facetParams
       addCmrFacetFromAutocomplete(cmrFacet)
 
       const { suggestion } = data
@@ -235,7 +242,7 @@ const SearchAutocomplete = ({
    */
   const renderInputComponent = useCallback((inputProps) => (
     <div className="position-relative">
-      <EDSCIcon className="search-form__search-icon position-absolute" icon={Search} />
+      <EDSCIcon className="search-autocomplete__search-icon position-absolute" icon={Search} />
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <input {...inputProps} />
     </div>
@@ -263,14 +270,14 @@ const SearchAutocomplete = ({
 
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-      <div {...containerProps} className="search-form__suggestions-container">
+      <div {...containerProps} className="search-autocomplete__suggestions-container">
         {
           query && query.length > 2 && (
             <>
               {
                 (isLoading && !isLoaded) && (
-                  <div className="search-form__loading-suggestions">
-                    <Spinner className="search-form__spinner" type="dots" size="tiny" inline />
+                  <div className="search-autocomplete__loading-suggestions">
+                    <Spinner className="search-autocomplete__spinner" type="dots" size="tiny" inline />
                     <span className="visually-hidden">
                       Loading collections...
                     </span>
@@ -280,7 +287,7 @@ const SearchAutocomplete = ({
               { children }
               {
                 (isLoading || (children && Object.keys(children).length)) && (
-                  <div className="search-form__query-hint">
+                  <div className="search-autocomplete__query-hint">
                     {
                       selectedSuggestion
                         ? (
@@ -322,10 +329,10 @@ const SearchAutocomplete = ({
 
   return (
     <>
-      <form className="search-form__form" onSubmit={onFormSubmit}>
+      <form className="search-autocomplete__form" onSubmit={onFormSubmit}>
         <Autosuggest
           ref={inputRef}
-          className="search-form__autocomplete"
+          className="search-autocomplete__autocomplete"
           suggestions={suggestions}
           onSuggestionsFetchRequested={fetchAutocomplete}
           onSuggestionsClearRequested={clearAutocompleteSuggestions}
@@ -339,8 +346,7 @@ const SearchAutocomplete = ({
           inputProps={
             {
               name: 'keywordSearch',
-              'data-testid': 'keyword-search-input',
-              className: 'search-form__input form-control',
+              className: 'search-autocomplete__input form-control',
               placeholder: 'Type to search for data',
               value: keywordSearch,
               onChange: onAutoSuggestChange
@@ -350,7 +356,7 @@ const SearchAutocomplete = ({
       </form>
       <Button
         bootstrapVariant="inline-block"
-        className="search-form__button search-form__button--submit"
+        className="search-autocomplete__button search-autocomplete__button--submit"
         label="Search"
         onClick={onFormSubmit}
       >

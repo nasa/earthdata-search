@@ -1,10 +1,10 @@
 import { scienceKeywordTypes } from './scienceKeywordTypes'
 
 /**
- * Maps a science keyword string into individual parts
- * @param {String} value Colon-separated string of a science keyword
+ * Parses a science keyword hierarchy string into individual parts
+ * @param {String} value Colon-separated string of a science keyword hierarchy
  */
-export const mapScienceKeywords = (value) => {
+export const parseScienceKeywordHierarchy = (value) => {
   const values = value.split(':')
   const returnValue = {}
 

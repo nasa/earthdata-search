@@ -1,6 +1,6 @@
 import { autocompleteFacetsMap } from './autocompleteFacetsMap'
-import { mapScienceKeywords } from './mapScienceKeywords'
-import { mapPlatforms } from './mapPlatforms'
+import { parseScienceKeywordHierarchy } from './parseScienceKeywordHierarchy'
+import { parsePlatformHierarchy } from './parsePlatformHierarchy'
 
 /**
  * Map an autocomplete suggestion into a CMR Facet
@@ -19,11 +19,11 @@ export const mapAutocompleteToFacets = (autocomplete) => {
   }
 
   if (mappedType === 'science_keywords_h') {
-    facets.science_keywords_h = mapScienceKeywords(fields)
+    facets.science_keywords_h = parseScienceKeywordHierarchy(fields)
   }
 
   if (mappedType === 'platforms_h') {
-    facets.platforms_h = mapPlatforms(fields)
+    facets.platforms_h = parsePlatformHierarchy(fields)
   }
 
   return facets

@@ -1,10 +1,10 @@
-import { mapScienceKeywords } from '../mapScienceKeywords'
+import { parseScienceKeywordHierarchy } from '../parseScienceKeywordHierarchy'
 
-describe('mapScienceKeywords', () => {
+describe('parseScienceKeywordHierarchy', () => {
   test('maps full science keyword string with all levels', () => {
     const input = 'Land Surface:Surface Radiative Properties:Reflectance:Laser Reflectance:Detail Level:Extra Detail'
 
-    const result = mapScienceKeywords(input)
+    const result = parseScienceKeywordHierarchy(input)
 
     expect(result).toEqual({
       topic: 'Land Surface',
@@ -19,7 +19,7 @@ describe('mapScienceKeywords', () => {
   test('maps partial science keyword string', () => {
     const input = 'Land Surface:Surface Radiative Properties:Reflectance'
 
-    const result = mapScienceKeywords(input)
+    const result = parseScienceKeywordHierarchy(input)
 
     expect(result).toEqual({
       topic: 'Land Surface',
@@ -31,7 +31,7 @@ describe('mapScienceKeywords', () => {
   test('handles empty values in the string', () => {
     const input = 'Land Surface::Reflectance'
 
-    const result = mapScienceKeywords(input)
+    const result = parseScienceKeywordHierarchy(input)
 
     expect(result).toEqual({
       topic: 'Land Surface',
@@ -42,7 +42,7 @@ describe('mapScienceKeywords', () => {
   test('handles single value', () => {
     const input = 'Land Surface'
 
-    const result = mapScienceKeywords(input)
+    const result = parseScienceKeywordHierarchy(input)
 
     expect(result).toEqual({
       topic: 'Land Surface'
@@ -52,7 +52,7 @@ describe('mapScienceKeywords', () => {
   test('handles empty string', () => {
     const input = ''
 
-    const result = mapScienceKeywords(input)
+    const result = parseScienceKeywordHierarchy(input)
 
     expect(result).toEqual({})
   })
@@ -60,7 +60,7 @@ describe('mapScienceKeywords', () => {
   test('handles string with only colons', () => {
     const input = ':::'
 
-    const result = mapScienceKeywords(input)
+    const result = parseScienceKeywordHierarchy(input)
 
     expect(result).toEqual({})
   })

@@ -1,10 +1,10 @@
 import { platformTypes } from './platformTypes'
 
 /**
- * Maps a platform string into individual parts
- * @param {String} value Colon-separated string of a platform
+ * Parses a platform hierarchy string into individual parts
+ * @param {String} value Colon-separated string of a platform hierarchy
  */
-export const mapPlatforms = (value) => {
+export const parsePlatformHierarchy = (value) => {
   const values = value.split(':')
   const returnValue = {}
 

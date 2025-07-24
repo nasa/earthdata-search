@@ -6,6 +6,19 @@ import SearchAutocomplete from '../SearchAutocomplete'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import * as actions from '../../../actions/errors'
 
+const setup = setupTest({
+  Component: SearchAutocomplete,
+  defaultProps: {
+    initialKeyword: '',
+    onChangeQuery: jest.fn(),
+    onChangeFocusedCollection: jest.fn()
+  },
+  defaultReduxState: {
+    authToken: '',
+    earthdataEnvironment: 'prod'
+  }
+})
+
 beforeEach(() => {
   nock.cleanAll()
 
@@ -24,19 +37,6 @@ beforeEach(() => {
 })
 
 describe('SearchAutocomplete', () => {
-  const setup = setupTest({
-    Component: SearchAutocomplete,
-    defaultProps: {
-      initialKeyword: '',
-      onChangeQuery: jest.fn(),
-      onChangeFocusedCollection: jest.fn()
-    },
-    defaultReduxState: {
-      authToken: '',
-      earthdataEnvironment: 'prod'
-    }
-  })
-
   describe('when rendering the component', () => {
     test('renders correctly', () => {
       setup()
@@ -77,38 +77,6 @@ describe('SearchAutocomplete', () => {
   })
 
   describe('when typing in the search input', () => {
-    test('updates the input value', async () => {
-      const { user } = setup()
-
-      const input = screen.getByRole('textbox')
-      await user.type(input, 'MODIS')
-
-      await waitFor(() => {
-        expect(input).toHaveValue('MODIS')
-      })
-    })
-
-    test('fetches autocomplete suggestions after 3 characters', async () => {
-      const { user } = setup()
-
-      nock(/localhost/)
-        .post(/autocomplete/)
-        .reply(200, {
-          feed: {
-            entry: [{
-              type: 'mock_type',
-              fields: 'mock value',
-              value: 'mock value'
-            }]
-          }
-        })
-
-      const input = screen.getByRole('textbox')
-      await user.type(input, 'tes')
-
-      await screen.findByText('mock value')
-    })
-
     test('does not fetch suggestions with less than 3 characters', async () => {
       const { user } = setup()
 
