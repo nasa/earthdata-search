@@ -198,7 +198,10 @@ const setupTest = ({
   }
 
   if (withApolloClient) {
-    const apolloClientMocks = overrideApolloClientMocks.length > 0 ? overrideApolloClientMocks : defaultApolloClientMocks
+    const apolloClientMocks = overrideApolloClientMocks.length > 0
+      ? overrideApolloClientMocks
+      : defaultApolloClientMocks
+
     RenderedComponent = (
       <MockedProvider mocks={apolloClientMocks} addTypename={false}>
         {RenderedComponent}
