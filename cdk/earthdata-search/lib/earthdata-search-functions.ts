@@ -109,28 +109,6 @@ export class Functions extends Construct {
     } = sharedResources
 
     /**
-     * Admin Get Preferences Metrics
-     */
-    const adminGetPreferencesMetricsNestedStack = new cdk.NestedStack(scope, 'AdminGetPreferencesMetricsNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(adminGetPreferencesMetricsNestedStack, 'AdminGetPreferencesMetricsLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['GET'],
-        parentId: adminApiGatewayResource.ref,
-        parentPath: 'admin',
-        path: 'preferences_metrics'
-      },
-      entry: '../../serverless/src/adminGetPreferencesMetrics/handler.js',
-      functionName: 'adminGetPreferencesMetrics',
-      functionNamePrefix,
-      memorySize: 1024
-    })
-
-    /**
      * Admin Get Projects
      */
     const adminGetProjectsNestedStack = new cdk.NestedStack(scope, 'AdminGetProjectsNestedStack')

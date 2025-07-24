@@ -1,0 +1,314 @@
+import { ApolloServer } from '@apollo/server'
+import gql from 'graphql-tag'
+
+import resolvers from '../index'
+import typeDefs from '../../types'
+import DatabaseClient from '../../utils/databaseClient'
+
+jest.mock('../../utils/databaseClient', () => jest.fn().mockImplementation(() => ({
+  getSitePreferences: jest.fn().mockResolvedValue([
+    {
+      site_preferences: {
+        mapView: {
+          baseLayer: 'trueColor',
+          latitude: 90,
+          longitude: 135,
+          overlayLayers: [
+            'bordersRoads',
+            'coastlines'
+          ],
+          projection: 'epsg3413',
+          zoom: 2
+        },
+        collectionListView: 'list',
+        collectionSort: '-score',
+        granuleListView: 'list',
+        granuleSort: '-start_date',
+        panelState: 'full_width'
+      }
+    }
+  ])
+})))
+
+const databaseClient = new DatabaseClient()
+
+const setupServer = () => (
+  new ApolloServer({
+    typeDefs,
+    resolvers,
+    datasources: () => ({
+      databaseClient
+    })
+  })
+)
+
+const contextValue = {
+  dataSources: { databaseClient },
+  requestId: 'mock-request-id',
+  user: { ursId: 'testuser' }
+}
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+describe('Admin Resolver', () => {
+  describe('Query', () => {
+    describe('adminPreferencesMetrics', () => {
+      test('returns results with all fields', async () => {
+        const server = setupServer()
+
+        const response = await server.executeOperation({
+          query: gql`
+            query AdminPreferencesMetrics {
+              adminPreferencesMetrics {
+                baseLayer {
+                  count
+                  percentage
+                  value
+                }
+                collectionListView {
+                  value
+                  percentage
+                  count
+                }
+                collectionSort {
+                  value
+                  percentage
+                  count
+                }
+                granuleListView {
+                  count
+                  percentage
+                  value
+                }
+                granuleSort {
+                  value
+                  percentage
+                  count
+                }
+                latitude {
+                  value
+                  percentage
+                  count
+                }
+                longitude {
+                  value
+                  percentage
+                  count
+                }
+                overlayLayers {
+                  value
+                  percentage
+                  count
+                }
+                panelState {
+                  value
+                  percentage
+                  count
+                }
+                projection {
+                  value
+                  percentage
+                  count
+                }
+                zoom {
+                  value
+                  percentage
+                  count
+                }
+              }
+            }
+          `
+        }, {
+          contextValue: {
+            ...contextValue,
+            databaseClient
+          }
+        })
+
+        const { data } = response.body.singleResult
+
+        expect(data).toEqual({
+          adminPreferencesMetrics: {
+            baseLayer: [
+              {
+                value: 'trueColor',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            collectionListView: [
+              {
+                value: 'list',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            collectionSort: [
+              {
+                value: '-score',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            granuleListView: [
+              {
+                value: 'list',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            granuleSort: [
+              {
+                value: '-start_date',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            latitude: [
+              {
+                value: '90',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            longitude: [
+              {
+                value: '135',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            overlayLayers: [
+              {
+                value: 'bordersRoads',
+                percentage: '100',
+                count: '1'
+              },
+              {
+                value: 'coastlines',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            panelState: [
+              {
+                value: 'full_width',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            projection: [
+              {
+                value: 'epsg3413',
+                percentage: '100',
+                count: '1'
+              }
+            ],
+            zoom: [
+              {
+                value: '2',
+                percentage: '100',
+                count: '1'
+              }
+            ]
+          }
+        })
+      })
+
+      test('throws an error when the query fails', async () => {
+        const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => {})
+
+        databaseClient.getSitePreferences.mockImplementation(() => {
+          // Console.log('mocked stuff')
+          throw new Error('mock error')
+        })
+
+        const server = setupServer()
+
+        const response = await server.executeOperation({
+          query: gql`
+            query AdminPreferencesMetrics {
+              adminPreferencesMetrics {
+                baseLayer {
+                  count
+                  percentage
+                  value
+                }
+                collectionListView {
+                  value
+                  percentage
+                  count
+                }
+                collectionSort {
+                  value
+                  percentage
+                  count
+                }
+                granuleListView {
+                  count
+                  percentage
+                  value
+                }
+                granuleSort {
+                  value
+                  percentage
+                  count
+                }
+                latitude {
+                  value
+                  percentage
+                  count
+                }
+                longitude {
+                  value
+                  percentage
+                  count
+                }
+                overlayLayers {
+                  value
+                  percentage
+                  count
+                }
+                panelState {
+                  value
+                  percentage
+                  count
+                }
+                projection {
+                  value
+                  percentage
+                  count
+                }
+                zoom {
+                  value
+                  percentage
+                  count
+                }
+              }
+            }
+          `
+        }, {
+          contextValue: {
+            ...contextValue,
+            databaseClient
+          }
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        const errorMessage = 'mock-request-id - adminPreferencesMetrics Query - Error: mock error'
+
+        expect(data).toEqual({
+          adminPreferencesMetrics: null
+        })
+
+        expect(errors[0].message).toEqual(errorMessage)
+
+        expect(consoleMock).toHaveBeenCalledTimes(1)
+        expect(consoleMock).toHaveBeenCalledWith(errorMessage)
+      })
+    })
+  })
+})

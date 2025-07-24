@@ -1,12 +1,9 @@
 import { mergeTypeDefs } from '@graphql-tools/merge'
 
-import example from './example.graphql'
+import admin from './admin.graphql'
 
 export default mergeTypeDefs(
   [
-    example
+    admin
   ]
-  // {
-  //   all: true
-  // }
 )

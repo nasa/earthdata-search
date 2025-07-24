@@ -75,9 +75,9 @@ describe('validateToken', () => {
         }
       })
 
-      const response = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.0WJdf_c93ZCIzFSchcKMzIRgwaL2HhihXGg0y9pDm2M', 'test')
+      const { username } = await validateToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ0ZXN0dXNlciIsImlhdCI6MTU3ODQzMzQ3NiwiZWFydGhkYXRhRW52aXJvbm1lbnQiOiJ0ZXN0In0.0WJdf_c93ZCIzFSchcKMzIRgwaL2HhihXGg0y9pDm2M', 'test')
 
-      expect(response).toEqual(false)
+      expect(username).toEqual(undefined)
 
       expect(consoleMock).toBeCalledTimes(1)
       expect(consoleMock.mock.calls[0]).toEqual(['JWT Token Invalid. JsonWebTokenError: invalid signature'])
@@ -117,9 +117,9 @@ describe('validateToken', () => {
 
       const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
 
-      const response = await validateToken(jwtToken, 'test')
+      const { username } = await validateToken(jwtToken, 'test')
 
-      expect(response).toEqual('testuser')
+      expect(username).toEqual('testuser')
     })
   })
 
@@ -166,7 +166,7 @@ describe('validateToken', () => {
 
       const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
 
-      const response = await validateToken(jwtToken, 'test')
+      const { username } = await validateToken(jwtToken, 'test')
 
       const { queries } = dbTracker.queries
 
@@ -181,7 +181,7 @@ describe('validateToken', () => {
         1
       ])
 
-      expect(response).toEqual('testuser')
+      expect(username).toEqual('testuser')
     })
   })
 
@@ -215,9 +215,9 @@ describe('validateToken', () => {
 
       const { jwtToken } = getEarthdataConfig.getEnvironmentConfig('test')
 
-      const response = await validateToken(jwtToken, 'test')
+      const { username } = await validateToken(jwtToken, 'test')
 
-      expect(response).toEqual(false)
+      expect(username).toEqual(undefined)
 
       expect(consoleMock).toBeCalledTimes(0)
     })

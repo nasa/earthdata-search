@@ -1,9 +1,9 @@
 import { mergeResolvers } from '@graphql-tools/merge'
 
-import exampleResolver from './example'
+import adminResolver from './admin'
 
 const resolvers = [
-  exampleResolver
+  adminResolver
 ]
 
 export default mergeResolvers(resolvers)

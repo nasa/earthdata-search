@@ -1,9 +1,0 @@
-type Example {
-  "This is an example type"
-  message: String
-}
-
-type Query {
-  "This is an example query"
-  example: Example
-}

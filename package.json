@@ -120,6 +120,7 @@
     "vite-plugin-graphql-loader": "^4.0.4"
   },
   "dependencies": {
+    "@apollo/client": "^3.13.8",
     "@apollo/server": "^4.10.2",
     "@as-integrations/aws-lambda": "^3.1.0",
     "@aws-sdk/client-s3": "^3.352.0",
@@ -139,6 +140,7 @@
     "@edsc/geo-utils": "^1.0.7",
     "@edsc/smart-handoffs": "^1.0.6",
     "@edsc/timeline": "^1.1.8",
+    "@graphql-tools/jest-transform": "^2.0.1",
     "@graphql-tools/merge": "^9.0.24",
     "@graphql-tools/schema": "^10.0.23",
     "@luckycatfactory/esbuild-graphql-loader": "^3.8.1",
@@ -174,6 +176,8 @@
     "geojson": "^0.5.0",
     "graphql": "^16.11.0",
     "graphql-middleware": "^6.1.35",
+    "graphql-shield": "^7.6.5",
+    "graphql-tag": "^2.12.6",
     "handlebars": "^4.7.8",
     "hex-to-rgba": "^2.0.1",
     "history": "^4.10.1",

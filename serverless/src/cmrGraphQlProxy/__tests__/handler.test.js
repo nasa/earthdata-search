@@ -18,7 +18,7 @@ beforeEach(() => {
 describe('graphQlProxy', () => {
   describe('when graphQl returns a successful 200', () => {
     test('returns the result', async () => {
-      nock(/graphql-proxy/)
+      nock(/graphql/)
         .post(/api/)
         .reply(200, {
           collection: {
@@ -56,7 +56,7 @@ describe('graphQlProxy', () => {
 
   describe('when graphQl returns a 200 containing an error', () => {
     test('returns the errors', async () => {
-      nock(/graphql-proxy/)
+      nock(/graphql/)
         .post(/api/)
         .reply(200, {
           errors: [
@@ -153,7 +153,7 @@ describe('graphQlProxy', () => {
   })
 
   test('responds correctly on http error', async () => {
-    nock(/graphql-proxy/)
+    nock(/graphql/)
       .post(/api/)
       .reply(500, {
         errors: [

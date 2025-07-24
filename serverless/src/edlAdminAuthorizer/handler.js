@@ -27,7 +27,7 @@ const edlAdminAuthorizer = async (event, context) => {
   const tokenParts = authorizationToken.split(' ')
   const jwtToken = tokenParts[1]
 
-  const username = await validateToken(jwtToken, earthdataEnvironment)
+  const { username } = await validateToken(jwtToken, earthdataEnvironment)
 
   if (username) {
     let adminUsers
