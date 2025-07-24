@@ -1,7 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
+import setupTest from '../../../../../../jestConfigs/setupTest'
 import actions from '../../../actions'
 import {
   ChunkedOrderModalContainer,
@@ -10,25 +9,16 @@ import {
 } from '../ChunkedOrderModalContainer'
 import ChunkedOrderModal from '../../../components/ChunkedOrderModal/ChunkedOrderModal'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/ChunkedOrderModal/ChunkedOrderModal', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
-    projectCollectionsMetadata: {},
-    projectCollectionsRequiringChunking: {},
-    location: {},
+const setup = setupTest({
+  Component: ChunkedOrderModalContainer,
+  defaultProps: {
     isOpen: true,
     onSubmitRetrieval: jest.fn(),
     onToggleChunkedOrderModal: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<ChunkedOrderModalContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onToggleChunkedOrderModal calls actions.toggleChunkedOrderModal', () => {
@@ -37,8 +27,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleChunkedOrderModal(false)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(false)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(false)
   })
 
   test('onSubmitRetrieval calls actions.submitRetrieval', () => {
@@ -47,17 +37,14 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onSubmitRetrieval()
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith()
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith()
   })
 })
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      router: {
-        location: {}
-      },
       ui: {
         chunkedOrderModal: {
           isOpen: false
@@ -66,10 +53,7 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      isOpen: false,
-      location: {},
-      projectCollectionsMetadata: {},
-      projectCollectionsRequiringChunking: {}
+      isOpen: false
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -78,10 +62,13 @@ describe('mapStateToProps', () => {
 
 describe('ChunkedOrderModalContainer component', () => {
   test('passes its props and renders a single FacetsModal component', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(ChunkedOrderModal).length).toBe(1)
-    expect(enzymeWrapper.find(ChunkedOrderModal).props().isOpen).toEqual(true)
-    expect(typeof enzymeWrapper.find(ChunkedOrderModal).props().onToggleChunkedOrderModal).toEqual('function')
+    expect(ChunkedOrderModal).toHaveBeenCalledTimes(1)
+    expect(ChunkedOrderModal).toHaveBeenCalledWith({
+      isOpen: true,
+      onSubmitRetrieval: expect.any(Function),
+      onToggleChunkedOrderModal: expect.any(Function)
+    }, {})
   })
 })

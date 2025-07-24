@@ -5,14 +5,15 @@ import { immer } from 'zustand/middleware/immer'
 import { EdscStore } from './types'
 
 import createEarthdataDownloadRedirectSlice from './slices/createEarthdataDownloadRedirectSlice'
+import createFacetParamsSlice from './slices/createFacetParamsSlice'
 import createHomeSlice from './slices/createHomeSlice'
 import createMapSlice from './slices/createMapSlice'
+import createPortalSlice from './slices/createPortalSlice'
 import createPreferencesSlice from './slices/createPreferencesSlice'
+import createProjectSlice from './slices/createProjectSlice'
 import createShapefileSlice from './slices/createShapefileSlice'
 import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
-import createPortalSlice from './slices/createPortalSlice'
-import createFacetParamsSlice from './slices/createFacetParamsSlice'
 
 const useEdscStore = create<EdscStore>()(
   immer(
@@ -24,6 +25,7 @@ const useEdscStore = create<EdscStore>()(
         ...createMapSlice(...args),
         ...createPortalSlice(...args),
         ...createPreferencesSlice(...args),
+        ...createProjectSlice(...args),
         ...createShapefileSlice(...args),
         ...createTimelineSlice(...args),
         ...createUiSlice(...args)

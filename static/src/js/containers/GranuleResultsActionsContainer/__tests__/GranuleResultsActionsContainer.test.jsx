@@ -12,6 +12,9 @@ import {
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import configureStore from '../../../store/configureStore'
+
+jest.mock('../../../store/configureStore', () => jest.fn())
 
 jest.mock('../../../components/GranuleResults/GranuleResultsActions', () => jest.fn(() => <div />))
 
@@ -25,22 +28,6 @@ const setup = setupTest({
     collectionQuery: {},
     earthdataEnvironment: 'prod',
     focusedCollectionId: 'focusedCollection',
-    focusedProjectCollection: {
-      accessMethods: {},
-      granules: {
-        addedIds: [],
-        allIds: [],
-        hits: 100,
-        isLoaded: true,
-        isLoading: false,
-        params: {
-          pageNum: 1
-        },
-        removedIds: [],
-        totalSize: ''
-      },
-      selectedAccessMethod: ''
-    },
     granuleQuery: {
       pageNum: 1
     },
@@ -54,11 +41,12 @@ const setup = setupTest({
     location: {
       search: 'value'
     },
-    onAddProjectCollection: jest.fn(),
     onChangePath: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onRemoveCollectionFromProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
+    subscriptions: []
+  },
+  defaultZustandState: {
     project: {
       collections: {
         allIds: ['focusedCollection'],
@@ -81,32 +69,11 @@ const setup = setupTest({
           }
         }
       }
-    },
-    subscriptions: []
+    }
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onAddProjectCollection calls actions.addProjectCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'addProjectCollection')
-
-    mapDispatchToProps(dispatch).onAddProjectCollection('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
-  test('onRemoveCollectionFromProject calls actions.removeCollectionFromProject', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'removeCollectionFromProject')
-
-    mapDispatchToProps(dispatch).onRemoveCollectionFromProject('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
   test('onSetActivePanelSection calls actions.setActivePanelSection', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'setActivePanelSection')
@@ -165,7 +132,6 @@ describe('mapStateToProps', () => {
       query: {
         collection: {}
       },
-      project: {},
       shapefile: {}
     }
 
@@ -177,10 +143,8 @@ describe('mapStateToProps', () => {
       collectionQuery: {},
       earthdataEnvironment: 'prod',
       focusedCollectionId: 'collectionId',
-      focusedProjectCollection: {},
       granuleQuery: {},
       granuleSearchResults: {},
-      project: {},
       subscriptions: []
     }
 
@@ -190,6 +154,12 @@ describe('mapStateToProps', () => {
 
 describe('GranuleResultsActionsContainer component', () => {
   test('passes its props and renders a single GranuleResultsActions component', () => {
+    configureStore.mockReturnValue({
+      getState: () => ({
+        focusedCollection: 'focusedCollection'
+      })
+    })
+
     setup()
 
     expect(GranuleResultsActions).toHaveBeenCalledTimes(1)
@@ -217,10 +187,8 @@ describe('GranuleResultsActionsContainer component', () => {
       initialLoading: false,
       isCollectionInProject: true,
       location: { search: 'value' },
-      onAddProjectCollection: expect.any(Function),
       onChangePath: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onRemoveCollectionFromProject: expect.any(Function),
       onSetActivePanelSection: expect.any(Function),
       projectCollectionIds: ['focusedCollection'],
       projectGranuleCount: 100,

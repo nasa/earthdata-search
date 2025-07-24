@@ -11,10 +11,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.restoreAllMocks()
-})
-
 describe('updateStore', () => {
   test('calls restoreFromUrl and gets new search results', async () => {
     const params = {
@@ -72,6 +68,7 @@ describe('updateStore', () => {
         featureFacets: undefined,
         mapView: undefined,
         portal: undefined,
+        project: undefined,
         timeline: undefined
       },
       type: RESTORE_FROM_URL
@@ -83,6 +80,7 @@ describe('updateStore', () => {
       facetParams,
       map,
       portal,
+      project,
       timeline
     } = useEdscStore.getState()
 
@@ -99,6 +97,13 @@ describe('updateStore', () => {
     expect(map).toEqual(initialState.map)
 
     expect(portal).toEqual({})
+
+    expect(project).toEqual(expect.objectContaining({
+      collections: {
+        allIds: [],
+        byId: {}
+      }
+    }))
 
     expect(timeline).toEqual({
       intervals: {},
@@ -147,12 +152,13 @@ describe('updateStore', () => {
         }
       }
 
-      jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
-
       const initialState = useEdscStore.getInitialState()
       const getTimelineMock = jest.fn()
       useEdscStore.setState({
         ...initialState,
+        project: {
+          getProjectCollections: jest.fn()
+        },
         timeline: {
           ...initialState.timeline,
           getTimeline: getTimelineMock
@@ -185,6 +191,7 @@ describe('updateStore', () => {
           featureFacets: undefined,
           mapView: undefined,
           portal: undefined,
+          project: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -197,6 +204,7 @@ describe('updateStore', () => {
         facetParams,
         map,
         portal,
+        project,
         timeline
       } = useEdscStore.getState()
 
@@ -213,6 +221,13 @@ describe('updateStore', () => {
       expect(map).toEqual(initialState.map)
 
       expect(portal).toEqual({})
+
+      expect(project).toEqual(expect.objectContaining({
+        collections: {
+          allIds: ['C00001-EDSC'],
+          byId: {}
+        }
+      }))
 
       expect(timeline).toEqual({
         intervals: {},
@@ -262,12 +277,13 @@ describe('updateStore', () => {
         }
       }
 
-      jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
-
       const initialState = useEdscStore.getInitialState()
       const getTimelineMock = jest.fn()
       useEdscStore.setState({
         ...initialState,
+        project: {
+          getProjectCollections: jest.fn()
+        },
         timeline: {
           ...initialState.timeline,
           getTimeline: getTimelineMock
@@ -301,6 +317,7 @@ describe('updateStore', () => {
           mapView: undefined,
           portalId: undefined,
           portal: undefined,
+          project: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -313,6 +330,7 @@ describe('updateStore', () => {
         facetParams,
         map,
         portal,
+        project,
         timeline
       } = useEdscStore.getState()
 
@@ -376,6 +394,10 @@ describe('updateStore', () => {
         }
       })
 
+      expect(project).toEqual({
+        getProjectCollections: expect.any(Function)
+      })
+
       expect(timeline).toEqual({
         intervals: {},
         query: {
@@ -400,11 +422,16 @@ describe('changePath', () => {
 
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
     const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections').mockImplementation(() => jest.fn())
-    const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules').mockImplementation(() => jest.fn())
 
     const getTimelineMock = jest.fn()
     useEdscStore.setState({
+      project: {
+        collections: {
+          allIds: ['C00001-EDSC']
+        },
+        getProjectCollections: jest.fn(),
+        getProjectGranules: jest.fn()
+      },
       timeline: {
         getTimeline: getTimelineMock
       }
@@ -422,12 +449,6 @@ describe('changePath', () => {
           }
         },
         granules: {}
-      },
-      project: {
-        collections: {
-          allIds: ['C00001-EDSC'],
-          byId: {}
-        }
       },
       query: {},
       router: {
@@ -492,9 +513,20 @@ describe('changePath', () => {
       )
 
       expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-      expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
-      expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)
+      expect(getCollectionsMock).toHaveBeenCalledWith()
+
+      const zustandState = useEdscStore.getState()
+      const { project } = zustandState
+      const { getProjectCollections, getProjectGranules } = project
+
+      expect(getProjectCollections).toHaveBeenCalledTimes(1)
+      expect(getProjectCollections).toHaveBeenCalledWith()
+
+      expect(getProjectGranules).toHaveBeenCalledTimes(1)
+      expect(getProjectGranules).toHaveBeenCalledWith()
+
       expect(getTimelineMock).toHaveBeenCalledTimes(1)
+      expect(getTimelineMock).toHaveBeenCalledWith()
     })
   })
 
@@ -513,12 +545,6 @@ describe('changePath', () => {
 
     const store = mockStore({
       earthdataEnvironment: 'prod',
-      project: {
-        collections: {
-          allIds: [],
-          byId: {}
-        }
-      },
       query: {
         collection: {
           spatial: {}
@@ -528,9 +554,6 @@ describe('changePath', () => {
         location: {
           pathname: '/search'
         }
-      },
-      timeline: {
-        query: {}
       }
     })
 
@@ -596,12 +619,6 @@ describe('changePath', () => {
         },
         granules: {}
       },
-      project: {
-        collections: {
-          allIds: ['C00001-EDSC'],
-          byId: {}
-        }
-      },
       providers: [],
       query: {},
       router: {
@@ -638,12 +655,6 @@ describe('changePath', () => {
 
         const store = mockStore({
           earthdataEnvironment: 'prod',
-          project: {
-            collections: {
-              allIds: [],
-              byId: {}
-            }
-          },
           query: {
             collection: {
               spatial: {}
@@ -653,9 +664,6 @@ describe('changePath', () => {
             location: {
               pathname: '/search'
             }
-          },
-          timeline: {
-            query: {}
           }
         })
 
@@ -675,12 +683,6 @@ describe('changePath', () => {
 
         const store = mockStore({
           earthdataEnvironment: 'prod',
-          project: {
-            collections: {
-              allIds: [],
-              byId: {}
-            }
-          },
           query: {
             collection: {
               spatial: {}
@@ -690,9 +692,6 @@ describe('changePath', () => {
             location: {
               pathname: '/search'
             }
-          },
-          timeline: {
-            query: {}
           }
         })
 
@@ -712,12 +711,6 @@ describe('changePath', () => {
 
         const store = mockStore({
           earthdataEnvironment: 'prod',
-          project: {
-            collections: {
-              allIds: [],
-              byId: {}
-            }
-          },
           query: {
             collection: {
               spatial: {}
@@ -727,9 +720,6 @@ describe('changePath', () => {
             location: {
               pathname: '/search'
             }
-          },
-          timeline: {
-            query: {}
           }
         })
 
@@ -751,12 +741,6 @@ describe('changePath', () => {
         const store = mockStore({
           earthdataEnvironment: 'prod',
           focusedGranule: 'G00001-EDSC',
-          project: {
-            collections: {
-              allIds: [],
-              byId: {}
-            }
-          },
           query: {
             collection: {
               spatial: {}
@@ -766,9 +750,6 @@ describe('changePath', () => {
             location: {
               pathname: '/search'
             }
-          },
-          timeline: {
-            query: {}
           }
         })
 
@@ -791,12 +772,6 @@ describe('changePath', () => {
 
         const store = mockStore({
           earthdataEnvironment: 'prod',
-          project: {
-            collections: {
-              allIds: [],
-              byId: {}
-            }
-          },
           query: {
             collection: {
               spatial: {}
@@ -806,9 +781,6 @@ describe('changePath', () => {
             location: {
               pathname: '/search'
             }
-          },
-          timeline: {
-            query: {}
           }
         })
 
@@ -828,12 +800,6 @@ describe('changePath', () => {
 
         const store = mockStore({
           earthdataEnvironment: 'prod',
-          project: {
-            collections: {
-              allIds: [],
-              byId: {}
-            }
-          },
           query: {
             collection: {
               spatial: {}
@@ -843,9 +809,6 @@ describe('changePath', () => {
             location: {
               pathname: '/search'
             }
-          },
-          timeline: {
-            query: {}
           }
         })
 
@@ -865,12 +828,6 @@ describe('changePath', () => {
 
         const store = mockStore({
           earthdataEnvironment: 'prod',
-          project: {
-            collections: {
-              allIds: [],
-              byId: {}
-            }
-          },
           query: {
             collection: {
               spatial: {}
@@ -880,9 +837,6 @@ describe('changePath', () => {
             location: {
               pathname: '/search'
             }
-          },
-          timeline: {
-            query: {}
           }
         })
 
@@ -904,12 +858,6 @@ describe('changePath', () => {
         const store = mockStore({
           earthdataEnvironment: 'prod',
           focusedGranule: 'G00001-EDSC',
-          project: {
-            collections: {
-              allIds: [],
-              byId: {}
-            }
-          },
           query: {
             collection: {
               spatial: {}
@@ -919,9 +867,6 @@ describe('changePath', () => {
             location: {
               pathname: '/search'
             }
-          },
-          timeline: {
-            query: {}
           }
         })
 

@@ -11,10 +11,6 @@ import * as metricsMap from '../../../middleware/metrics/actions'
 // Mock Map because openlayers causes errors
 jest.mock('../../../components/Map/Map', () => <div />)
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('mapDispatchToProps', () => {
   test('onChangeFocusedGranule calls actions.changeFocusedGranule', () => {
     const dispatch = jest.fn()
@@ -103,7 +99,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
-      project: {},
       query: {
         collection: {
           spatial: {}
@@ -135,7 +130,6 @@ describe('mapStateToProps', () => {
       lineSearch: undefined,
       pointSearch: undefined,
       polygonSearch: undefined,
-      project: {},
       router: {}
     }
 

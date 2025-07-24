@@ -8,6 +8,8 @@ import GranuleResultsTableHeaderCell from './GranuleResultsTableHeaderCell'
 import GranuleResultsBrowseImageCell from './GranuleResultsBrowseImageCell'
 import EDSCTable from '../EDSCTable/EDSCTable'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './GranuleResultsTable.scss'
 
 /**
@@ -26,13 +28,11 @@ import './GranuleResultsTable.scss'
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
  * @param {Object} props.location - Location passed from react router.
- * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
- * @param {Function} props.onRemoveGranuleFromProjectCollection - Callback to remove a granule to the project.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
  * @param {String} props.visibleMiddleIndex - The current middle item.
  */
@@ -50,16 +50,22 @@ export const GranuleResultsTable = ({
   itemCount,
   loadMoreItems,
   location,
-  onAddGranuleToProjectCollection,
   onExcludeGranule,
   onFocusedGranuleChange,
   onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
-  onRemoveGranuleFromProjectCollection,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => {
+  const {
+    addGranuleToProjectCollection,
+    removeGranuleFromProjectCollection
+  } = useEdscStore((state) => ({
+    addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
+    removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection
+  }))
+
   const columns = useMemo(() => [
     {
       Header: 'Granule',
@@ -68,22 +74,22 @@ export const GranuleResultsTable = ({
       sticky: 'left',
       width: '325',
       customProps: {
+        addGranuleToProjectCollection,
         cellClassName: 'granule-results-table__cell--granule',
         collectionId,
         collectionQuerySpatial,
         collectionTags,
         directDistributionInformation,
-        isGranuleInProject,
         generateNotebook,
         GranuleResultsTableHeaderCell,
+        isGranuleInProject,
         location,
-        onAddGranuleToProjectCollection,
         onExcludeGranule,
         onFocusedGranuleChange,
         onGenerateNotebook,
         onMetricsAddGranuleProject,
         onMetricsDataAccess,
-        onRemoveGranuleFromProjectCollection
+        removeGranuleFromProjectCollection
       }
     },
     {
@@ -237,13 +243,11 @@ GranuleResultsTable.propTypes = {
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
   location: locationPropType.isRequired,
-  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }

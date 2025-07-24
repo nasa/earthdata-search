@@ -38,6 +38,13 @@ const setup = setupTest({
     temporalSearch: {},
     isOpen: true,
     search: '?p=C123456-EDSC'
+  },
+  defaultZustandState: {
+    project: {
+      collections: {
+        allIds: ['projectCollectionId']
+      }
+    }
   }
 })
 
@@ -111,7 +118,6 @@ describe('mapStateToProps', () => {
       collectionsMetadata: {},
       focusedCollectionId: 'collectionId',
       pathname: '',
-      projectCollectionsIds: [],
       temporalSearch: {},
       isOpen: false
     }
@@ -136,7 +142,7 @@ describe('TimelineContainer component', () => {
 
     expect(Timeline).toHaveBeenCalledTimes(1)
     expect(Timeline).toHaveBeenCalledWith(
-      expect.objectContaining({
+      {
         collectionMetadata: {
           focusedCollectionId: {
             title: 'focused'
@@ -151,7 +157,7 @@ describe('TimelineContainer component', () => {
         projectCollectionsIds: ['projectCollectionId'],
         showOverrideModal: false,
         temporalSearch: {}
-      }),
+      },
       {}
     )
   })
@@ -165,7 +171,7 @@ describe('TimelineContainer component', () => {
 
     expect(Timeline).toHaveBeenCalledTimes(1)
     expect(Timeline).toHaveBeenCalledWith(
-      expect.objectContaining({
+      {
         collectionMetadata: {
           projectCollectionId: {
             title: 'project'
@@ -180,7 +186,7 @@ describe('TimelineContainer component', () => {
         projectCollectionsIds: ['projectCollectionId'],
         showOverrideModal: true,
         temporalSearch: {}
-      }),
+      },
       {}
     )
   })

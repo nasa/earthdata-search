@@ -15,10 +15,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('updateCollectionQuery', () => {
   test('should create an action to update the search query', () => {
     const payload = {
@@ -61,7 +57,6 @@ describe('changeQuery', () => {
           spatial: {}
         }
       },
-      project: {},
       router: {
         location: {
           pathname: ''
@@ -119,7 +114,6 @@ describe('changeQuery', () => {
           spatial: {}
         }
       },
-      project: {},
       router: {
         location: {
           pathname: ''
@@ -176,8 +170,15 @@ describe('changeQuery', () => {
     getCollectionsMock.mockImplementation(() => jest.fn())
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
-    const getProjectGranulesMock = jest.spyOn(actions, 'getProjectGranules')
-    getProjectGranulesMock.mockImplementation(() => jest.fn())
+
+    useEdscStore.setState({
+      project: {
+        collections: {
+          allIds: ['C10000-EDSC']
+        },
+        getProjectGranules: jest.fn()
+      }
+    })
 
     // MockStore with initialState
     const store = mockStore({
@@ -186,11 +187,6 @@ describe('changeQuery', () => {
         collection: {
           keyword: 'old stuff',
           spatial: {}
-        }
-      },
-      project: {
-        collections: {
-          allIds: ['C10000-EDSC']
         }
       },
       router: {
@@ -230,8 +226,17 @@ describe('changeQuery', () => {
 
     // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getCollectionsMock).toHaveBeenCalledWith()
+
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
-    expect(getProjectGranulesMock).toHaveBeenCalledTimes(1)
+    expect(getSearchGranulesMock).toHaveBeenCalledWith()
+
+    const zustandState = useEdscStore.getState()
+    const { project } = zustandState
+    const { getProjectGranules } = project
+
+    expect(getProjectGranules).toHaveBeenCalledTimes(1)
+    expect(getProjectGranules).toHaveBeenCalledWith()
   })
 })
 
@@ -253,12 +258,6 @@ describe('changeProjectQuery', () => {
       query: {
         collection: {
           keyword: 'old stuff'
-        }
-      },
-      project: {
-        collections: {
-          allIds: [],
-          byId: {}
         }
       },
       router: {
@@ -431,14 +430,10 @@ describe('removeSpatialFilter', () => {
           temporal: {}
         }
       },
-      project: {},
       router: {
         location: {
           pathname: ''
         }
-      },
-      timeline: {
-        query: {}
       }
     })
 
@@ -489,14 +484,10 @@ describe('removeTemporalFilter', () => {
           }
         }
       },
-      project: {},
       router: {
         location: {
           pathname: ''
         }
-      },
-      timeline: {
-        query: {}
       }
     })
 
@@ -558,15 +549,15 @@ describe('clearFilters', () => {
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
 
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-    getProjectCollectionsMock.mockImplementation(() => jest.fn())
-
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
     useEdscStore.setState({
       facetParams: {
         resetFacetParams: jest.fn()
+      },
+      project: {
+        getProjectCollections: jest.fn()
       },
       timeline: {
         getTimeline: jest.fn()
@@ -582,8 +573,13 @@ describe('clearFilters', () => {
     })
 
     const zustandState = useEdscStore.getState()
-    const { facetParams, timeline } = zustandState
+    const {
+      facetParams,
+      project,
+      timeline
+    } = zustandState
     const { resetFacetParams } = facetParams
+    const { getProjectCollections } = project
     const { getTimeline } = timeline
 
     expect(resetFacetParams).toHaveBeenCalledTimes(1)
@@ -591,8 +587,14 @@ describe('clearFilters', () => {
 
     // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getCollectionsMock).toHaveBeenCalledWith()
+
+    expect(getProjectCollections).toHaveBeenCalledTimes(1)
+    expect(getProjectCollections).toHaveBeenCalledWith()
+
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
+    expect(getSearchGranulesMock).toHaveBeenCalledWith()
+
     expect(getTimeline).toHaveBeenCalledTimes(1)
     expect(getTimeline).toHaveBeenCalledWith()
   })
@@ -611,15 +613,15 @@ describe('clearFilters', () => {
     const getCollectionsMock = jest.spyOn(actions, 'getCollections')
     getCollectionsMock.mockImplementation(() => jest.fn())
 
-    const getProjectCollectionsMock = jest.spyOn(actions, 'getProjectCollections')
-    getProjectCollectionsMock.mockImplementation(() => jest.fn())
-
     const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
     getSearchGranulesMock.mockImplementation(() => jest.fn())
 
     useEdscStore.setState({
       facetParams: {
         resetFacetParams: jest.fn()
+      },
+      project: {
+        getProjectCollections: jest.fn()
       },
       timeline: {
         getTimeline: jest.fn()
@@ -635,8 +637,13 @@ describe('clearFilters', () => {
     })
 
     const zustandState = useEdscStore.getState()
-    const { facetParams, timeline } = zustandState
+    const {
+      facetParams,
+      project,
+      timeline
+    } = zustandState
     const { resetFacetParams } = facetParams
+    const { getProjectCollections } = project
     const { getTimeline } = timeline
 
     expect(resetFacetParams).toHaveBeenCalledTimes(1)
@@ -644,7 +651,11 @@ describe('clearFilters', () => {
 
     // Was getCollections called
     expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getProjectCollectionsMock).toHaveBeenCalledTimes(1)
+    expect(getCollectionsMock).toHaveBeenCalledWith()
+
+    expect(getProjectCollections).toHaveBeenCalledTimes(1)
+    expect(getProjectCollections).toHaveBeenCalledWith()
+
     expect(getSearchGranulesMock).toHaveBeenCalledTimes(0)
     expect(getTimeline).toHaveBeenCalledTimes(0)
   })

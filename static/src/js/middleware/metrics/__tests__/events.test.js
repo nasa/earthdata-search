@@ -281,6 +281,44 @@ describe('events', () => {
         })
       })
     })
+
+    describe('single granule s3 access', () => {
+      test('pushes to the dataLayer', () => {
+        const action = {
+          type: METRICS_DATA_ACCESS,
+          payload: {
+            type: 'single_granule_s3_access',
+            collections: [{
+              collectionId: 'TEST_COL_ID'
+            }]
+          }
+        }
+
+        dataAccess(action)
+
+        expect(dataLayerMock).toHaveBeenCalledTimes(2)
+        expect(dataLayerMock).toHaveBeenNthCalledWith(1, {
+          event: 'dataAccess',
+          dimension17: 'TEST_COL_ID',
+          dimension18: 'S3 Single Granule',
+          dimension19: 's3_single_granule',
+          dataAccessCategory: 'Data Access',
+          dataAccessAction: 'Completion',
+          dataAccessLabel: 'Data Access Completion',
+          dataAccessValue: 1
+        })
+
+        expect(dataLayerMock).toHaveBeenNthCalledWith(2, {
+          dimension17: null,
+          dimension18: null,
+          dimension19: null,
+          dataAccessCategory: null,
+          dataAccessAction: null,
+          dataAccessLabel: null,
+          dataAccessValue: null
+        })
+      })
+    })
   })
 
   describe('defaultClick', () => {

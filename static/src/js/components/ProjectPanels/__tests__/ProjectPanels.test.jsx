@@ -11,36 +11,33 @@ import AccessMethod from '../../AccessMethod/AccessMethod'
 Enzyme.configure({ adapter: new Adapter() })
 
 beforeEach(() => {
-  jest.clearAllMocks()
   jest.restoreAllMocks()
 })
 
 const opendapProps = {
-  project: {
-    collections: {
-      allIds: ['collectionId'],
-      byId: {
-        collectionId: {
-          granules: {},
-          accessMethods: {
-            opendap: {
-              variables: {
-                variableId1: {
-                  meta: {},
-                  umm: {},
-                  associations: {}
-                },
-                variableId2: {
-                  meta: {},
-                  umm: {},
-                  associations: {}
-                }
+  projectCollections: {
+    allIds: ['collectionId'],
+    byId: {
+      collectionId: {
+        granules: {},
+        accessMethods: {
+          opendap: {
+            variables: {
+              variableId1: {
+                meta: {},
+                umm: {},
+                associations: {}
               },
-              selectedVariables: []
-            }
-          },
-          selectedAccessMethod: 'opendap'
-        }
+              variableId2: {
+                meta: {},
+                umm: {},
+                associations: {}
+              }
+            },
+            selectedVariables: []
+          }
+        },
+        selectedAccessMethod: 'opendap'
       }
     }
   }
@@ -58,20 +55,18 @@ function setup(overrideProps) {
     focusedGranuleId: '',
     granulesMetadata: {},
     granulesQueries: {},
-    project: {
-      collections: {
-        allIds: ['collectionId'],
-        byId: {
-          collectionId: {
-            granules: {},
-            accessMethods: {
-              download: {
-                isValid: true,
-                type: 'download'
-              }
-            },
-            selectedAccessMethod: 'download'
-          }
+    projectCollections: {
+      allIds: ['collectionId'],
+      byId: {
+        collectionId: {
+          granules: {},
+          accessMethods: {
+            download: {
+              isValid: true,
+              type: 'download'
+            }
+          },
+          selectedAccessMethod: 'download'
         }
       }
     },
@@ -93,11 +88,8 @@ function setup(overrideProps) {
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
-    onChangeGranulePageNum: jest.fn(),
     onSetActivePanelGroup: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
-    onAddGranuleToProjectCollection: jest.fn(),
-    onRemoveGranuleFromProjectCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onChangeProjectGranulePageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),
@@ -118,19 +110,17 @@ describe('ProjectPanels component', () => {
       const { enzymeWrapper } = setup(opendapProps)
 
       enzymeWrapper.setProps({
-        project: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {},
-                accessMethods: {
-                  opendap: {
-                    selectedVariables: ['variableId1']
-                  }
-                },
-                selectedAccessMethod: 'opendap'
-              }
+        projectCollections: {
+          allIds: ['collectionId'],
+          byId: {
+            collectionId: {
+              granules: {},
+              accessMethods: {
+                opendap: {
+                  selectedVariables: ['variableId1']
+                }
+              },
+              selectedAccessMethod: 'opendap'
             }
           }
         }
@@ -427,20 +417,18 @@ describe('ProjectPanels component', () => {
 
   test('resetForm calls onUpdateAccessMethod', () => {
     const { enzymeWrapper, props } = setup({
-      project: {
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              granules: {},
-              accessMethods: {
-                esi0: {
-                  model: 'mock model',
-                  rawModel: 'mock rawModel'
-                }
-              },
-              selectedAccessMethod: 'esi0'
-            }
+      projectCollections: {
+        allIds: ['collectionId'],
+        byId: {
+          collectionId: {
+            granules: {},
+            accessMethods: {
+              esi0: {
+                model: 'mock model',
+                rawModel: 'mock rawModel'
+              }
+            },
+            selectedAccessMethod: 'esi0'
           }
         }
       }
@@ -599,20 +587,18 @@ describe('ProjectPanels component', () => {
   describe('when viewing a cloud-hosted collection', () => {
     test('an on-prem duplicate collection notice appears', () => {
       const { enzymeWrapper, props } = setup({
-        project: {
-          collections: {
-            allIds: ['C2208418228-POCLOUD'],
-            byId: {
-              'C2208418228-POCLOUD': {
-                accessMethods: {
-                  download: {
-                    isValid: true,
-                    type: 'download'
-                  }
-                },
-                granules: {},
-                isVisible: true
-              }
+        projectCollections: {
+          allIds: ['C2208418228-POCLOUD'],
+          byId: {
+            'C2208418228-POCLOUD': {
+              accessMethods: {
+                download: {
+                  isValid: true,
+                  type: 'download'
+                }
+              },
+              granules: {},
+              isVisible: true
             }
           }
         },
@@ -655,20 +641,18 @@ describe('ProjectPanels component', () => {
   describe('when viewing an on-prem collection', () => {
     test('a cloud-hosted duplicate collection notice appears', () => {
       const { enzymeWrapper, props } = setup({
-        project: {
-          collections: {
-            allIds: ['C1972954180-PODAAC'],
-            byId: {
-              'C1972954180-PODAAC': {
-                accessMethods: {
-                  download: {
-                    isValid: true,
-                    type: 'download'
-                  }
-                },
-                granules: {},
-                isVisible: true
-              }
+        projectCollections: {
+          allIds: ['C1972954180-PODAAC'],
+          byId: {
+            'C1972954180-PODAAC': {
+              accessMethods: {
+                download: {
+                  isValid: true,
+                  type: 'download'
+                }
+              },
+              granules: {},
+              isVisible: true
             }
           }
         },

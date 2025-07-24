@@ -12,6 +12,7 @@ import CollectionResultsTable from './CollectionResultsTable'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 import './CollectionResultsBody.scss'
 
@@ -20,9 +21,7 @@ import './CollectionResultsBody.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Array} props.collections - Collections passed from redux store.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
- * @param {Function} props.onAddProjectCollection - Callback to add a collection to a project.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
- * @param {Function} props.onRemoveCollectionFromProject - Callback to remove a collection to a project.
  * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
  * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
  * @param {String} props.panelView - The current active view.
@@ -31,13 +30,10 @@ const CollectionResultsBody = ({
   collectionsMetadata,
   collectionsSearch,
   loadNextPage,
-  onAddProjectCollection,
   onMetricsAddCollectionProject,
-  onRemoveCollectionFromProject,
   onViewCollectionDetails,
   onViewCollectionGranules,
-  panelView,
-  projectCollectionsIds
+  panelView
 }) => {
   const {
     allIds: collectionIds,
@@ -46,15 +42,17 @@ const CollectionResultsBody = ({
     isLoaded
   } = collectionsSearch
 
+  const projectCollectionIds = useEdscStore(getProjectCollectionsIds)
+
   const collectionList = useMemo(() => formatCollectionList(
     collectionsSearch,
     collectionsMetadata,
-    projectCollectionsIds
+    projectCollectionIds
   ), [
     isLoading,
     collectionsMetadata,
     collectionIds,
-    projectCollectionsIds
+    projectCollectionIds
   ])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
@@ -107,8 +105,6 @@ const CollectionResultsBody = ({
         <CollectionResultsList
           visibleMiddleIndex={visibleMiddleIndex}
           collectionsMetadata={collectionList}
-          onAddProjectCollection={onAddProjectCollection}
-          onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onViewCollectionGranules={onViewCollectionGranules}
           onViewCollectionDetails={onViewCollectionDetails}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
@@ -129,9 +125,7 @@ const CollectionResultsBody = ({
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
-          onAddProjectCollection={onAddProjectCollection}
           onMetricsAddCollectionProject={onMetricsAddCollectionProject}
-          onRemoveCollectionFromProject={onRemoveCollectionFromProject}
           onViewCollectionDetails={onViewCollectionDetails}
           onViewCollectionGranules={onViewCollectionGranules}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
@@ -177,13 +171,10 @@ CollectionResultsBody.propTypes = {
     isLoaded: PropTypes.bool
   }).isRequired,
   loadNextPage: PropTypes.func.isRequired,
-  onAddProjectCollection: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
-  onRemoveCollectionFromProject: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired,
-  projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired
+  panelView: PropTypes.string.isRequired
 }
 
 export default CollectionResultsBody

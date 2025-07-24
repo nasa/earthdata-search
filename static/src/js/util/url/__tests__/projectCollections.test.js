@@ -453,337 +453,108 @@ describe('url#decodeUrlParams', () => {
 
     expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony')).toEqual(expectedResult)
   })
-})
 
-describe('url#encodeUrlQuery', () => {
-  test('does not encode project collections if no collections exist', () => {
-    const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      collections: {
-        allIds: [],
-        byId: {}
-      },
-      focusedCollection: '',
-      project: {
-        collections: {
-          allIds: [],
-          byId: {}
-        }
-      }
-    }
-
-    expect(encodeUrlQuery(props)).toEqual('/path/here')
-  })
-
-  test('correctly encodes project collections', () => {
-    const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      collections: {
-        allIds: ['collectionId1', 'collectionId2'],
-        byId: {}
-      },
-      focusedCollection: '',
-      project: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {}
-        }
-      }
-    }
-
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2')
-  })
-
-  test('correctly encodes focusedCollection and project collections', () => {
-    const props = {
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      focusedCollection: 'collectionId1',
-      project: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {}
-        }
-      }
-    }
-
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId1!collectionId1!collectionId2')
-  })
-
-  test('correctly encodes project collections visibility', () => {
-    const props = {
-      collectionsMetadata: {
-        collectionId1: {},
-        collectionId2: {}
-      },
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      focusedCollection: '',
-      project: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {
-            collectionId1: {
-              isVisible: false
-            },
-            collectionId2: {
-              isVisible: true
-            }
-          }
-        }
-      }
-    }
-
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[2][v]=t')
-  })
-
-  test('correctly encodes selected variables', () => {
-    const props = {
-      collectionsMetadata: {
-        collectionId1: {},
-        collectionId2: {}
-      },
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      focusedCollection: '',
-      project: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {
-            collectionId1: {
-              accessMethods: {
-                opendap: {
-                  selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
-                }
-              },
-              selectedAccessMethod: 'opendap'
-            },
-            collectionId2: {}
-          }
-        }
-      }
-    }
-
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC&pg[1][cd]=f&pg[2][v]=f')
-  })
-
-  test('correctly encodes enable temporal subsetting', () => {
-    const props = {
-      collectionsMetadata: {
-        collectionId1: {},
-        collectionId2: {}
-      },
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      focusedCollection: '',
-      project: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {
-            collectionId1: {
-              accessMethods: {
-                harmony: {
-                  enableTemporalSubsetting: false
-                }
-              },
-              selectedAccessMethod: 'harmony'
-            },
-            collectionId2: {}
-          }
-        }
-      }
-    }
-
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
-  })
-
-  test('correctly encodes enable spatial subsetting', () => {
-    const props = {
-      collectionsMetadata: {
-        collectionId1: {},
-        collectionId2: {}
-      },
-      hasGranulesOrCwic: true,
-      pathname: '/path/here',
-      focusedCollection: '',
-      project: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {
-            collectionId1: {
-              accessMethods: {
-                harmony: {
-                  enableTemporalSubsetting: false,
-                  enableSpatialSubsetting: false,
-                  enableConcatenateDownload: false
-                }
-              },
-              selectedAccessMethod: 'harmony'
-            },
-            collectionId2: {}
-          }
-        }
-      }
-    }
-
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
-  })
-})
-
-describe('enable concatenate download flag', () => {
-  test('decodes enable concatenate download correctly when false', () => {
-    const expectedResult = {
-      ...emptyDecodedResult,
-      focusedCollection: '',
-      project: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {
-            collectionId1: {
-              granules: {},
-              isVisible: true,
-              accessMethods: {
-                harmony: {
-                  enableSpatialSubsetting: true,
-                  enableConcatenateDownload: false,
-                  enableTemporalSubsetting: false,
-                  selectedOutputFormat: undefined,
-                  selectedOutputProjection: undefined,
-                  selectedVariables: undefined
-                }
-              },
-              selectedAccessMethod: 'harmony'
-            },
-            collectionId2: {
-              granules: {},
-              isVisible: true,
-              selectedAccessMethod: undefined
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          ...emptyDecodedResult.query.collection,
-          byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
-          }
-        }
-      }
-    }
-
-    expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f')).toEqual(expectedResult)
-  })
-
-  test('decodes enable concatenate download correctly when true', () => {
-    const expectedResult = {
-      ...emptyDecodedResult,
-      focusedCollection: '',
-      project: {
-        collections: {
-          allIds: ['collectionId1', 'collectionId2'],
-          byId: {
-            collectionId1: {
-              granules: {},
-              isVisible: true,
-              accessMethods: {
-                harmony: {
-                  enableSpatialSubsetting: true,
-                  enableConcatenateDownload: true,
-                  enableTemporalSubsetting: false,
-                  selectedOutputFormat: undefined,
-                  selectedOutputProjection: undefined,
-                  selectedVariables: undefined
-                }
-              },
-              selectedAccessMethod: 'harmony'
-            },
-            collectionId2: {
-              granules: {},
-              isVisible: true,
-              selectedAccessMethod: undefined
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          ...emptyDecodedResult.query.collection,
-          byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
-          }
-        }
-      }
-    }
-
-    expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][cd]=t')).toEqual(expectedResult)
-  })
-
-  describe('swodlr project parameters', () => {
-    test('correctly encodes swodlr access method', () => {
-      const props = {
-        collectionsMetadata: {
-          collectionId1: {},
-          collectionId2: {}
-        },
-        hasGranulesOrCwic: true,
-        pathname: '/path/here',
+  describe('enable concatenate download flag', () => {
+    test('decodes enable concatenate download correctly when false', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
         focusedCollection: '',
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
             byId: {
               collectionId1: {
+                granules: {},
+                isVisible: true,
                 accessMethods: {
-                  swodlr: {
-                    id: 'S3084748458-POCLOUD',
-                    isValid: true,
-                    longName: 'PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
-                    name: 'PODAAC_SWODLR',
-                    type: 'SWODLR',
-                    supportsSwodlr: true,
-                    url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
-                    swodlrData: {
-                      params: {
-                        rasterResolution: 90,
-                        outputSamplingGridType: 'UTM',
-                        outputGranuleExtentFlag: false
-                      },
-                      custom_params: {
-                        'G3225437730-POCLOUD': {
-                          utmZoneAdjust: 1,
-                          mgrsBandAdjust: 0
-                        },
-                        'G3225437639-POCLOUD': {
-                          utmZoneAdjust: 0,
-                          mgrsBandAdjust: -1
-                        }
-                      }
-                    }
+                  harmony: {
+                    enableSpatialSubsetting: true,
+                    enableConcatenateDownload: false,
+                    enableTemporalSubsetting: false,
+                    selectedOutputFormat: undefined,
+                    selectedOutputProjection: undefined,
+                    selectedVariables: undefined
                   }
                 },
-                selectedAccessMethod: 'swodlr'
+                selectedAccessMethod: 'harmony'
               },
-              collectionId2: {}
+              collectionId2: {
+                granules: {},
+                isVisible: true,
+                selectedAccessMethod: undefined
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
+              }
             }
           }
         }
       }
-      expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod][params][rasterResolution]=90&pg[1][swod][params][outputSamplingGridType]=UTM&pg[1][swod][params][outputGranuleExtentFlag]=false&pg[1][swod][custom_params][G3225437730-POCLOUD][utmZoneAdjust]=1&pg[1][swod][custom_params][G3225437730-POCLOUD][mgrsBandAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][utmZoneAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][mgrsBandAdjust]=-1&pg[1][cd]=f&pg[2][v]=f')
+
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f')).toEqual(expectedResult)
     })
 
+    test('decodes enable concatenate download correctly when true', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {},
+                isVisible: true,
+                accessMethods: {
+                  harmony: {
+                    enableSpatialSubsetting: true,
+                    enableConcatenateDownload: true,
+                    enableTemporalSubsetting: false,
+                    selectedOutputFormat: undefined,
+                    selectedOutputProjection: undefined,
+                    selectedVariables: undefined
+                  }
+                },
+                selectedAccessMethod: 'harmony'
+              },
+              collectionId2: {
+                granules: {},
+                isVisible: true,
+                selectedAccessMethod: undefined
+              }
+            }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
+              }
+            }
+          }
+        }
+      }
+
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][m]=harmony&pg[1][ets]=f&pg[1][cd]=t')).toEqual(expectedResult)
+    })
+  })
+
+  describe('swodlr project parameters', () => {
     test('correctly decodes swodlr access method', () => {
       const expectedResult = {
         ...emptyDecodedResult,
@@ -840,47 +611,261 @@ describe('enable concatenate download flag', () => {
           }
         }
       }
+
       expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod][params][rasterResolution]=90&pg[1][swod][params][outputSamplingGridType]=UTM&pg[1][swod][params][outputGranuleExtentFlag]=false&pg[1][swod][custom_params][G3225437730-POCLOUD][utmZoneAdjust]=1&pg[1][swod][custom_params][G3225437730-POCLOUD][mgrsBandAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][utmZoneAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][mgrsBandAdjust]=-1&pg[1][cd]=f&pg[2][v]=f')).toEqual(expectedResult)
     })
 
-    describe('when swodlrData is null', () => {
-      test('returns undefined', () => {
-        const expectedResult = {
-          ...emptyDecodedResult,
-          focusedCollection: '',
-          project: {
-            collections: {
-              allIds: ['collectionId1', 'collectionId2'],
-              byId: {
-                collectionId1: {
-                  granules: {},
-                  isVisible: false,
-                  selectedAccessMethod: 'swodlr'
-                },
-                collectionId2: {
-                  granules: {},
-                  isVisible: false,
-                  selectedAccessMethod: undefined
-                }
+    test('returns undefined when swodlrData is null', () => {
+      const expectedResult = {
+        ...emptyDecodedResult,
+        focusedCollection: '',
+        project: {
+          collections: {
+            allIds: ['collectionId1', 'collectionId2'],
+            byId: {
+              collectionId1: {
+                granules: {},
+                isVisible: false,
+                selectedAccessMethod: 'swodlr'
+              },
+              collectionId2: {
+                granules: {},
+                isVisible: false,
+                selectedAccessMethod: undefined
               }
             }
-          },
-          query: {
-            collection: {
-              ...emptyDecodedResult.query.collection,
-              byId: {
-                collectionId1: {
-                  granules: {}
-                },
-                collectionId2: {
-                  granules: {}
-                }
+          }
+        },
+        query: {
+          collection: {
+            ...emptyDecodedResult.query.collection,
+            byId: {
+              collectionId1: {
+                granules: {}
+              },
+              collectionId2: {
+                granules: {}
               }
             }
           }
         }
-        expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod]&pg[1]&pg[1][cd]=f&pg[2][v]=f')).toEqual(expectedResult)
-      })
+      }
+
+      expect(decodeUrlParams('?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod]&pg[1]&pg[1][cd]=f&pg[2][v]=f')).toEqual(expectedResult)
     })
+  })
+})
+
+describe('url#encodeUrlQuery', () => {
+  test('does not encode project collections if no collections exist', () => {
+    const props = {
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      collections: {
+        allIds: [],
+        byId: {}
+      },
+      focusedCollection: '',
+      projectCollections: {
+        allIds: [],
+        byId: {}
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here')
+  })
+
+  test('correctly encodes project collections', () => {
+    const props = {
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      collections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {}
+      },
+      focusedCollection: '',
+      projectCollections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {}
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2')
+  })
+
+  test('correctly encodes focusedCollection and project collections', () => {
+    const props = {
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      focusedCollection: 'collectionId1',
+      projectCollections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {}
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId1!collectionId1!collectionId2')
+  })
+
+  test('correctly encodes project collections visibility', () => {
+    const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      focusedCollection: '',
+      projectCollections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            isVisible: false
+          },
+          collectionId2: {
+            isVisible: true
+          }
+        }
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[2][v]=t')
+  })
+
+  test('correctly encodes selected variables', () => {
+    const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      focusedCollection: '',
+      projectCollections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            accessMethods: {
+              opendap: {
+                selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
+              }
+            },
+            selectedAccessMethod: 'opendap'
+          },
+          collectionId2: {}
+        }
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=opendap&pg[1][uv]=V123456-EDSC!V987654-EDSC&pg[1][cd]=f&pg[2][v]=f')
+  })
+
+  test('correctly encodes enable temporal subsetting', () => {
+    const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      focusedCollection: '',
+      projectCollections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            accessMethods: {
+              harmony: {
+                enableTemporalSubsetting: false
+              }
+            },
+            selectedAccessMethod: 'harmony'
+          },
+          collectionId2: {}
+        }
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
+  })
+
+  test('correctly encodes enable spatial subsetting', () => {
+    const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      focusedCollection: '',
+      projectCollections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            accessMethods: {
+              harmony: {
+                enableTemporalSubsetting: false,
+                enableSpatialSubsetting: false,
+                enableConcatenateDownload: false
+              }
+            },
+            selectedAccessMethod: 'harmony'
+          },
+          collectionId2: {}
+        }
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=harmony&pg[1][cd]=f&pg[1][ets]=f&pg[1][ess]=f&pg[2][v]=f')
+  })
+
+  test('correctly encodes swodlr access method', () => {
+    const props = {
+      collectionsMetadata: {
+        collectionId1: {},
+        collectionId2: {}
+      },
+      hasGranulesOrCwic: true,
+      pathname: '/path/here',
+      focusedCollection: '',
+      projectCollections: {
+        allIds: ['collectionId1', 'collectionId2'],
+        byId: {
+          collectionId1: {
+            accessMethods: {
+              swodlr: {
+                id: 'S3084748458-POCLOUD',
+                isValid: true,
+                longName: 'PODAAC SWOT On-Demand Level 2 Raster Generation (SWODLR)',
+                name: 'PODAAC_SWODLR',
+                type: 'SWODLR',
+                supportsSwodlr: true,
+                url: 'https://swodlr.podaac.earthdatacloud.nasa.gov',
+                swodlrData: {
+                  params: {
+                    rasterResolution: 90,
+                    outputSamplingGridType: 'UTM',
+                    outputGranuleExtentFlag: false
+                  },
+                  custom_params: {
+                    'G3225437730-POCLOUD': {
+                      utmZoneAdjust: 1,
+                      mgrsBandAdjust: 0
+                    },
+                    'G3225437639-POCLOUD': {
+                      utmZoneAdjust: 0,
+                      mgrsBandAdjust: -1
+                    }
+                  }
+                }
+              }
+            },
+            selectedAccessMethod: 'swodlr'
+          },
+          collectionId2: {}
+        }
+      }
+    }
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?p=!collectionId1!collectionId2&pg[1][v]=f&pg[1][m]=swodlr&pg[1][swod][params][rasterResolution]=90&pg[1][swod][params][outputSamplingGridType]=UTM&pg[1][swod][params][outputGranuleExtentFlag]=false&pg[1][swod][custom_params][G3225437730-POCLOUD][utmZoneAdjust]=1&pg[1][swod][custom_params][G3225437730-POCLOUD][mgrsBandAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][utmZoneAdjust]=0&pg[1][swod][custom_params][G3225437639-POCLOUD][mgrsBandAdjust]=-1&pg[1][cd]=f&pg[2][v]=f')
   })
 })

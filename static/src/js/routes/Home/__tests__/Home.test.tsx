@@ -72,6 +72,20 @@ const setup = setupTest({
 
 // TODO: Add tests for the spatial and temporal dropdowns
 
+const OLD_ENV = process.env
+
+beforeEach(() => {
+  process.env = { ...OLD_ENV }
+
+  // Set the NODE_ENV to 'test' to avoid preloading routes in test mode
+  // We want to avoid preloading routes in tests to avoid flaky tests
+  process.env.NODE_ENV = 'test'
+})
+
+afterEach(() => {
+  process.env = OLD_ENV
+})
+
 describe('Home', () => {
   test('renders the hero section with the correct text', () => {
     setup()

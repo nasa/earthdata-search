@@ -46,12 +46,12 @@ import {
   setColorMapsLoading
 } from './colorMaps'
 import {
+  addGranuleMetadata,
   applyGranuleFilters,
   clearGranuleFilters,
   excludeGranule,
-  fetchRetrievalCollectionGranuleLinks,
   fetchRetrievalCollectionGranuleBrowseLinks,
-  getProjectGranules,
+  fetchRetrievalCollectionGranuleLinks,
   getSearchGranules,
   initializeCollectionGranulesQuery,
   initializeCollectionGranulesResults,
@@ -110,22 +110,6 @@ import {
   setActivePanelGroup,
   setActivePanelSection
 } from './panels'
-import {
-  addAccessMethods,
-  addCollectionToProject,
-  addGranuleToProjectCollection,
-  addProjectCollection,
-  changeProjectGranulePageNum,
-  getProjectCollections,
-  removeCollectionFromProject,
-  removeGranuleFromProjectCollection,
-  restoreProject,
-  selectAccessMethod,
-  toggleCollectionVisibility,
-  updateAccessMethod,
-  updateProjectGranuleParams,
-  setDataQualitySummaries
-} from './project'
 import { getRegions } from './regions'
 import { fetchRetrieval, submitRetrieval } from './retrieval'
 import { fetchRetrievalCollection } from './retrievalCollection'
@@ -151,12 +135,10 @@ import {
 import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
 import { generateNotebook } from './generateNotebook'
+import { setDataQualitySummaries } from './dataQualitySummaries'
 
 const actions = {
-  addAccessMethods,
-  addCollectionToProject,
-  addGranuleToProjectCollection,
-  addProjectCollection,
+  addGranuleMetadata,
   adminIsAuthorized,
   adminViewProject,
   adminViewRetrieval,
@@ -166,7 +148,6 @@ const actions = {
   changeFocusedGranule,
   changeGranulePageNum,
   changePath,
-  changeProjectGranulePageNum,
   changeProjectQuery,
   changeQuery,
   changeRegionQuery,
@@ -195,8 +176,6 @@ const actions = {
   getFocusedCollection,
   getFocusedGranule,
   getGranuleSubscriptions,
-  getProjectCollections,
-  getProjectGranules,
   getRegions,
   getSearchGranules,
   getSubscriptions,
@@ -207,15 +186,11 @@ const actions = {
   initializeCollectionGranulesResults,
   logout,
   onExcludeGranule,
-  removeCollectionFromProject,
   removeError,
-  removeGranuleFromProjectCollection,
   removeSpatialFilter,
   removeSubscriptionDisabledFields,
   removeTemporalFilter,
   requeueOrder,
-  restoreProject,
-  selectAccessMethod,
   setActivePanel,
   setActivePanelGroup,
   setActivePanelSection,
@@ -230,7 +205,6 @@ const actions = {
   toggleAboutCwicModal,
   toggleAdvancedSearchModal,
   toggleChunkedOrderModal,
-  toggleCollectionVisibility,
   toggleDeprecatedParameterModal,
   toggleDrawingNewLayer,
   toggleEditSubscriptionModal,
@@ -246,7 +220,6 @@ const actions = {
   toggleTimeline,
   toggleTooManyPointsModal,
   undoExcludeGranule,
-  updateAccessMethod,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
   fetchAdminPreferencesMetrics,
@@ -265,7 +238,6 @@ const actions = {
   updateGranuleSearchQuery,
   updateGranuleSubscription,
   updateNotificationLevel,
-  updateProjectGranuleParams,
   updateProjectName,
   updateAdminProjectsPageNum,
   updateAdminProjectsSortKey,

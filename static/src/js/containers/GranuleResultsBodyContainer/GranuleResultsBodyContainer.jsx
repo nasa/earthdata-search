@@ -32,11 +32,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onMetricsAddGranuleProject:
       (data) => dispatch(metricsAddGranuleProject(data)),
   onMetricsDataAccess:
-    (data) => dispatch(metricsDataAccess(data)),
-  onAddGranuleToProjectCollection:
-    (data) => dispatch(actions.addGranuleToProjectCollection(data)),
-  onRemoveGranuleFromProjectCollection:
-    (data) => dispatch(actions.removeGranuleFromProjectCollection(data))
+    (data) => dispatch(metricsDataAccess(data))
 })
 
 export const mapStateToProps = (state) => ({
@@ -48,8 +44,7 @@ export const mapStateToProps = (state) => ({
   generateNotebook: state.ui.generateNotebook,
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
-  granulesMetadata: getGranulesMetadata(state),
-  project: state.project
+  granulesMetadata: getGranulesMetadata(state)
 })
 
 export const GranuleResultsBodyContainer = (props) => {
@@ -64,16 +59,13 @@ export const GranuleResultsBodyContainer = (props) => {
     granuleSearchResults,
     granulesMetadata,
     location,
-    onAddGranuleToProjectCollection,
     onChangeGranulePageNum,
     onExcludeGranule,
     onFocusedGranuleChange,
     onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
-    onRemoveGranuleFromProjectCollection,
-    panelView,
-    project
+    panelView
   } = props
 
   const {
@@ -106,15 +98,12 @@ export const GranuleResultsBodyContainer = (props) => {
       isOpenSearch={isOpenSearch}
       loadNextPage={loadNextPage}
       location={location}
-      onAddGranuleToProjectCollection={onAddGranuleToProjectCollection}
       onExcludeGranule={onExcludeGranule}
       onFocusedGranuleChange={onFocusedGranuleChange}
       onGenerateNotebook={onGenerateNotebook}
       onMetricsDataAccess={onMetricsDataAccess}
       onMetricsAddGranuleProject={onMetricsAddGranuleProject}
-      onRemoveGranuleFromProjectCollection={onRemoveGranuleFromProjectCollection}
       panelView={panelView}
-      project={project}
     />
   )
 }
@@ -135,16 +124,13 @@ GranuleResultsBodyContainer.propTypes = {
   granuleSearchResults: PropTypes.shape({}).isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
-  onAddGranuleToProjectCollection: PropTypes.func.isRequired,
   onChangeGranulePageNum: PropTypes.func.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onRemoveGranuleFromProjectCollection: PropTypes.func.isRequired,
-  panelView: PropTypes.string.isRequired,
-  project: PropTypes.shape({}).isRequired
+  panelView: PropTypes.string.isRequired
 }
 
 export default withRouter(

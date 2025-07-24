@@ -76,6 +76,8 @@ export type SetupTestReturnType = {
   unmount: () => void
   /** User event object for simulating user interactions */
   user: ReturnType<typeof userEvent.setup>
+  /** Zustand state after the test setup */
+  zustandState: Record<string, unknown>
 }
 
 const setupTest = ({
@@ -191,7 +193,8 @@ const setupTest = ({
     props,
     rerender,
     unmount,
-    user
+    user,
+    zustandState: useEdscStore.getState()
   }
 }
 
