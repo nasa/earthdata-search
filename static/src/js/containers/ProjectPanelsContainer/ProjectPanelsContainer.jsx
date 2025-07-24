@@ -15,7 +15,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 
 export const mapStateToProps = (state) => ({
-  dataQualitySummaries: state.dataQualitySummaries,
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granulesMetadata: state.metadata.granules,
@@ -49,7 +48,6 @@ export const mapDispatchToProps = (dispatch) => ({
 
 /**
  * Renders ProjectPanelsContainer.
- * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
  * @param {String} focusedCollectionId - The focused collection ID.
  * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} collection - The current collection.
@@ -69,7 +67,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Function} onViewCollectionGranules - Views the collection granules.
  */
 export const ProjectPanelsContainer = ({
-  dataQualitySummaries,
   focusedCollectionId,
   focusedGranuleId,
   granulesMetadata,
@@ -91,12 +88,14 @@ export const ProjectPanelsContainer = ({
 }) => {
   const {
     addGranuleToProjectCollection,
+    dataQualitySummaries,
     projectCollections,
     removeGranuleFromProjectCollection,
     selectAccessMethod,
     updateAccessMethod
   } = useEdscStore((state) => ({
     addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
+    dataQualitySummaries: state.dataQualitySummaries.byCollectionId,
     projectCollections: state.project.collections,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     selectAccessMethod: state.project.selectAccessMethod,
@@ -142,7 +141,6 @@ ProjectPanelsContainer.defaultProps = {
 }
 
 ProjectPanelsContainer.propTypes = {
-  dataQualitySummaries: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
