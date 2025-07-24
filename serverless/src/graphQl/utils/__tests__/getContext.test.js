@@ -6,6 +6,12 @@ jest.mock('../../../util/authorizer/validateToken', () => ({
   validateToken: jest.fn().mockResolvedValue({ userId: 1 })
 }))
 
+jest.mock('../../../../../sharedUtils/config', () => ({
+  getApplicationConfig: jest.fn().mockImplementation(() => ({
+    env: 'testenv'
+  }))
+}))
+
 describe('getContext', () => {
   it('should return the correct context', async () => {
     const getUserByIdSpy = jest.spyOn(DatabaseClient.prototype, 'getUserById')
@@ -29,7 +35,7 @@ describe('getContext', () => {
       name: 'John Doe'
     })
 
-    expect(validateToken).toHaveBeenCalledWith('token', 'prod')
+    expect(validateToken).toHaveBeenCalledWith('token', 'testenv')
     expect(getUserByIdSpy).toHaveBeenCalledWith(1)
   })
 
