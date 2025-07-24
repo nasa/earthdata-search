@@ -6,7 +6,7 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import { isCancel } from 'axios'
-import { differenceWith, isEqual } from 'lodash-es'
+import { isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
 import { Search } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
@@ -32,7 +32,6 @@ const SearchAutocomplete = ({
   const [isLoaded, setIsLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [suggestions, setSuggestions] = useState([])
-  const [selected] = useState([])
   const [selectedSuggestion, setSelectedSuggestion] = useState(null)
 
   const inputRef = useRef(null)
@@ -90,19 +89,6 @@ const SearchAutocomplete = ({
     setSuggestions([])
   }, [])
 
-  const updateAutocompleteSuggestions = useCallback((payload) => {
-    const { suggestions: newSuggestions } = payload
-
-    // Removes any selected values from the list of selections
-    const nonSelectedSuggestions = differenceWith(
-      newSuggestions,
-      selected,
-      (a, b) => a.type === b.type && a.value === b.value
-    )
-
-    setSuggestions(nonSelectedSuggestions)
-  }, [selected])
-
   const fetchAutocomplete = useCallback(async (data) => {
     if (!data) return
 
@@ -142,9 +128,7 @@ const SearchAutocomplete = ({
       setIsLoaded(true)
       setIsLoading(false)
 
-      updateAutocompleteSuggestions({
-        suggestions: entry
-      })
+      setSuggestions(entry)
     } catch (error) {
       if (isCancel(error)) return
 
@@ -158,7 +142,7 @@ const SearchAutocomplete = ({
         requestObject
       }))
     }
-  }, [updateAutocompleteSuggestions])
+  }, [])
 
   /**
    * Action for selecting an autocomplete suggestion
