@@ -4,9 +4,10 @@ import {
   ApolloLink,
   ApolloProvider,
   createHttpLink,
-  InMemoryCache,
-  setContext
+  InMemoryCache
 } from '@apollo/client'
+
+import { setContext } from '@apollo/client/link/context'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 

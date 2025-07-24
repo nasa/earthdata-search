@@ -15,10 +15,13 @@ jest.mock('@apollo/client', () => ({
   ApolloClient: jest.fn().mockImplementation(),
   InMemoryCache: jest.fn().mockImplementation(),
   createHttpLink: jest.fn().mockReturnValue('httpLink'),
-  setContext: jest.fn().mockReturnValue('authLink'),
   ApolloLink: {
     from: jest.fn().mockImplementation((links) => links)
   }
+}))
+
+jest.mock('@apollo/client/link/context', () => ({
+  setContext: jest.fn().mockReturnValue('authLink')
 }))
 
 jest.spyOn(config, 'getEnvironmentConfig').mockImplementation(() => ({
