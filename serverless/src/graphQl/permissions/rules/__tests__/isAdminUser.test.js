@@ -6,10 +6,6 @@ jest.mock('../../../../util/getAdminUsers', () => ({
 }))
 
 describe('isAdminUser', () => {
-  beforeEach(() => {
-    jest.resetAllMocks()
-  })
-
   test('returns false if the user is empty', async () => {
     const result = await isAdminUser.resolve(
       null,
