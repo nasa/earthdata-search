@@ -1,4 +1,8 @@
-import { and, shield } from 'graphql-shield'
+import {
+  and,
+  deny,
+  shield
+} from 'graphql-shield'
 
 import isValidUser from '../rules/isValidUser'
 import isAdminUser from '../rules/isAdminUser'
@@ -18,13 +22,13 @@ describe('permissions', () => {
     expect(shield).toHaveBeenCalledWith(
       {
         Query: {
+          '*': deny,
           adminPreferencesMetrics: and(
             isValidUser,
             isAdminUser
           )
         }
-      },
-      expect.anything()
+      }
     )
   })
 })

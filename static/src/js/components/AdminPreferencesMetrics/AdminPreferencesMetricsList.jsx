@@ -1,10 +1,10 @@
 import React from 'react'
 import { startCase } from 'lodash-es'
-import { useQuery } from '@apollo/client'
+import { gql, useQuery } from '@apollo/client'
 
 import Table from 'react-bootstrap/Table'
 
-import ADMIN_PREFERENCES_METRICS from '../../queries/adminPreferencesMetrics'
+import ADMIN_PREFERENCES_METRICS from '../../operations/queries/adminPreferencesMetrics'
 
 import Spinner from '../Spinner/Spinner'
 
@@ -75,7 +75,7 @@ const createPreferencesTable = (preferences) => {
 }
 
 export const AdminPreferencesMetricsList = () => {
-  const { data, error, loading } = useQuery(ADMIN_PREFERENCES_METRICS)
+  const { data, error, loading } = useQuery(gql(ADMIN_PREFERENCES_METRICS))
 
   return (
     <div>

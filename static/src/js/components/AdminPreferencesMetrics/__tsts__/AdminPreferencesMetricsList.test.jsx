@@ -3,11 +3,12 @@ import {
   waitFor,
   within
 } from '@testing-library/react'
+import { gql } from '@apollo/client'
 
 import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
+import ADMIN_PREFERENCES_METRICS from '../../../operations/queries/adminPreferencesMetrics'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import ADMIN_PREFERENCES_METRICS from '../../../queries/adminPreferencesMetrics'
 
 const setup = setupTest({
   Component: AdminPreferencesMetricsList,
@@ -15,7 +16,7 @@ const setup = setupTest({
   defaultApolloClientMocks: [
     {
       request: {
-        query: ADMIN_PREFERENCES_METRICS
+        query: gql(ADMIN_PREFERENCES_METRICS)
       },
       result: {
         data: {

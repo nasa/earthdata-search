@@ -16,7 +16,7 @@ jest.mock('../routes/Home/Home', () => {
 
 // Mock the GraphQlProvider
 jest.mock('../providers/GraphQlProvider', () => jest.fn(({ children }) => (
-  <div data-testid="mocked-graphql-provider">{children}</div>
+  <div>{children}</div>
 )))
 
 // Mock App components routes and containers

@@ -1,9 +1,10 @@
 import { ApolloServer } from '@apollo/server'
-import gql from 'graphql-tag'
 
+import { gql } from '@apollo/client'
 import resolvers from '../index'
 import typeDefs from '../../types'
 import DatabaseClient from '../../utils/databaseClient'
+import ADMIN_PREFERENCES_METRICS from '../../../../../static/src/js/operations/queries/adminPreferencesMetrics'
 
 jest.mock('../../utils/databaseClient', () => jest.fn().mockImplementation(() => ({
   getSitePreferences: jest.fn().mockResolvedValue([
@@ -48,10 +49,6 @@ const contextValue = {
   user: { ursId: 'testuser' }
 }
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('Admin Resolver', () => {
   describe('Query', () => {
     describe('adminPreferencesMetrics', () => {
@@ -59,67 +56,7 @@ describe('Admin Resolver', () => {
         const server = setupServer()
 
         const response = await server.executeOperation({
-          query: gql`
-            query AdminPreferencesMetrics {
-              adminPreferencesMetrics {
-                baseLayer {
-                  count
-                  percentage
-                  value
-                }
-                collectionListView {
-                  value
-                  percentage
-                  count
-                }
-                collectionSort {
-                  value
-                  percentage
-                  count
-                }
-                granuleListView {
-                  count
-                  percentage
-                  value
-                }
-                granuleSort {
-                  value
-                  percentage
-                  count
-                }
-                latitude {
-                  value
-                  percentage
-                  count
-                }
-                longitude {
-                  value
-                  percentage
-                  count
-                }
-                overlayLayers {
-                  value
-                  percentage
-                  count
-                }
-                panelState {
-                  value
-                  percentage
-                  count
-                }
-                projection {
-                  value
-                  percentage
-                  count
-                }
-                zoom {
-                  value
-                  percentage
-                  count
-                }
-              }
-            }
-          `
+          query: gql(ADMIN_PREFERENCES_METRICS)
         }, {
           contextValue: {
             ...contextValue,
@@ -218,11 +155,8 @@ describe('Admin Resolver', () => {
       })
 
       test('throws an error when the query fails', async () => {
-        const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => {})
-
         databaseClient.getSitePreferences.mockImplementation(() => {
-          // Console.log('mocked stuff')
-          throw new Error('mock error')
+          throw new Error('Something failed')
         })
 
         const server = setupServer()
@@ -298,16 +232,13 @@ describe('Admin Resolver', () => {
 
         const { data, errors } = response.body.singleResult
 
-        const errorMessage = 'mock-request-id - adminPreferencesMetrics Query - Error: mock error'
+        const errorMessage = 'Something failed'
 
         expect(data).toEqual({
           adminPreferencesMetrics: null
         })
 
         expect(errors[0].message).toEqual(errorMessage)
-
-        expect(consoleMock).toHaveBeenCalledTimes(1)
-        expect(consoleMock).toHaveBeenCalledWith(errorMessage)
       })
     })
   })

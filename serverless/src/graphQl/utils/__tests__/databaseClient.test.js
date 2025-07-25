@@ -145,7 +145,7 @@ describe('DatabaseClient', () => {
         query.reject('Unknown Error')
       })
 
-      await expect(databaseClient.getSitePreferences()).rejects.toThrow('Failed to retrieve user preferences')
+      await expect(databaseClient.getSitePreferences()).rejects.toThrow('Failed to retrieve site preferences')
 
       const { queries } = dbTracker.queries
 
@@ -154,7 +154,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].method).toEqual('select')
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user preferences')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve site preferences')
     })
   })
 })

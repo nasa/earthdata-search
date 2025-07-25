@@ -22,8 +22,9 @@ export default class DatabaseClient {
       try {
         this.dbConnection = await getDbConnection()
       } catch {
-        console.log('Error establishing database connection')
-        // Throw new Error('Failed to connect to the database')
+        const errorMessage = 'Failed to connect to the database'
+        console.log(errorMessage)
+        throw new Error(errorMessage)
       }
     }
 
@@ -44,8 +45,9 @@ export default class DatabaseClient {
         .where({ 'users.id': userId })
         .first()
     } catch {
-      console.log('Failed to retrieve user by ID')
-      throw new Error('Failed to retrieve user by ID')
+      const errorMessage = 'Failed to retrieve user by ID'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
     }
   }
 
@@ -61,8 +63,9 @@ export default class DatabaseClient {
         .select('users.site_preferences')
         .where({ 'users.environment': env })
     } catch {
-      console.log('Failed to retrieve user preferences')
-      throw new Error('Failed to retrieve user preferences')
+      const errorMessage = 'Failed to retrieve site preferences'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
     }
   }
 }

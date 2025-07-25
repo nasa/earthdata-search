@@ -1,6 +1,4 @@
-import gql from 'graphql-tag'
-
-const ADMIN_PREFERENCES_METRICS = gql`
+const ADMIN_PREFERENCES_METRICS = `
     query AdminPreferencesMetrics {
       adminPreferencesMetrics {
         baseLayer {

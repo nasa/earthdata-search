@@ -11,7 +11,6 @@ export default class GraphQlRequest extends Request {
 
       this.authenticated = true
       this.authToken = authToken
-      // TODO this endpoint will need to change
       this.searchPath = 'cmr-graphql-proxy'
     } else {
       super(getEarthdataConfig(earthdataEnvironment).graphQlHost, earthdataEnvironment)
