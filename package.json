@@ -41,7 +41,7 @@
     "lint": "eslint . --ext .jsx,.js,.ts,.tsx",
     "preinvoke-local": "npm run build:api",
     "invoke-local": "dotenvx run node bin/invokeLocal.mjs --",
-    "jest:prepare-ci": "bin/jest-prenpmpare-ci",
+    "jest:prepare-ci": "bin/jest-prepare-ci",
     "playwright:prepare-ci": "bin/playwright-prepare-ci",
     "preplaywright": "rm -rf playwright-coverage/ .nyc_output/",
     "playwright": "NODE_ENV=playwright nyc playwright test --reporter=list",
