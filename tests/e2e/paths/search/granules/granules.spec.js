@@ -1272,7 +1272,7 @@ test.describe('Path /search/granules', () => {
         })
       })
 
-      await page.route('**/graphql', async (route) => {
+      await page.route('**/cmr-graphql-proxy', async (route) => {
         const request = route.request()
         const body = JSON.parse(request.postData())
 
