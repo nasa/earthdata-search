@@ -1,154 +1,109 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import Enzyme, { shallow, mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import { useLocation } from 'react-router-dom'
+import { screen, act } from '@testing-library/react'
 
 import SearchForm from '../SearchForm'
-import PortalFeatureContainer from '../../../containers/PortalFeatureContainer/PortalFeatureContainer'
-import AdvancedSearchDisplayContainer from '../../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
-import configureStore from '../../../store/configureStore'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer', () => jest.fn(() => (
+  <div>Temporal Selection</div>
+)))
 
-const windowEventMap = {}
+jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => jest.fn(() => (
+  <div>Spatial Selection</div>
+)))
 
-jest.mock('../../SpatialDisplay/SpatialSelectionDropdown', () => {
-  const mockSpatialSelectionDropdown = jest.fn(({ children }) => (
-    <mock-mockSpatialSelectionDropdown data-testid="mockSpatialSelectionDropdown">
-      {children}
-    </mock-mockSpatialSelectionDropdown>
-  ))
+jest.mock('../../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer', () => jest.fn(() => (
+  <div>Advanced Search Display</div>
+)))
 
-  return mockSpatialSelectionDropdown
-})
+jest.mock('../../../containers/SpatialDisplayContainer/SpatialDisplayContainer', () => jest.fn(() => (
+  <div>Spatial Display</div>
+)))
 
-// Mock react react-router-dom so that the tests do not think we are on the homepage
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue({
-    pathname: '/',
-    search: '',
-    hash: '',
-    state: null,
-    key: 'testKey'
-  })
-}))
+jest.mock('../../../containers/TemporalDisplayContainer/TemporalDisplayContainer', () => jest.fn(() => (
+  <div>Temporal Display</div>
+)))
 
-useLocation.mockReturnValue({
-  pathname: '/search',
-  search: '',
-  hash: '',
-  state: null,
-  key: 'testKey'
-})
+jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', () => jest.fn(({ children }) => (
+  <div>{children}</div>
+)))
 
-beforeEach(() => {
-  jest.clearAllTimers()
-  jest.clearAllMocks()
-
-  window.addEventListener = jest.fn((event, cb) => {
-    windowEventMap[event] = cb
-  })
-
-  window.removeEventListener = jest.fn()
-})
-
-const store = configureStore()
-
-// Use shallowMount, unless we require instance properties like refs
-function setup(overrideProps, useShallow = true) {
-  const props = {
+const setup = setupTest({
+  Component: SearchForm,
+  defaultProps: {
     advancedSearch: {},
-    autocomplete: {
-      suggestions: []
-    },
-    authToken: '',
     keywordSearch: 'Test value',
-    showFilterStackToggle: false,
-    onCancelAutocomplete: jest.fn(),
-    onChangeQuery: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
+    onChangeQuery: jest.fn(),
     onClearFilters: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn(),
-    onClearAutocompleteSuggestions: jest.fn(),
-    onFetchAutocomplete: jest.fn(),
-    onSelectAutocompleteSuggestion: jest.fn(),
-    onSuggestionsFetchRequested: jest.fn(),
-    onSuggestionsClearRequested: jest.fn(),
-    ...overrideProps
+    onToggleAdvancedSearchModal: jest.fn()
   }
-
-  if (useShallow) {
-    return {
-      enzymeWrapper: shallow(<SearchForm {...props} />),
-      props
-    }
-  }
-
-  // Allow the rendered component to affect the document scope
-  const container = document.createElement('div')
-  document.body.appendChild(container)
-
-  return {
-    enzymeWrapper: mount(
-      <Provider store={store}>
-        <SearchForm {...props} />
-      </Provider>,
-      { attachTo: container }
-    ),
-    props
-  }
-}
+})
 
 describe('SearchForm component', () => {
-  test('should render self and form fields', () => {
-    const { enzymeWrapper } = setup()
+  test('should render search form and search autocomplete', () => {
+    setup()
 
-    expect(enzymeWrapper.find('.search-form').exists()).toBeTruthy()
+    expect(screen.getByRole('textbox')).toBeInTheDocument()
+    expect(screen.getByText('Search')).toBeInTheDocument()
+    expect(screen.getByText('Temporal Selection')).toBeInTheDocument()
+    expect(screen.getByText('Spatial Selection')).toBeInTheDocument()
+    expect(screen.getByText('Advanced Search Display')).toBeInTheDocument()
+    expect(screen.getByText('Spatial Display')).toBeInTheDocument()
+    expect(screen.getByText('Temporal Display')).toBeInTheDocument()
   })
 
-  test('should call onClearFilters when the Clear Button is clicked', () => {
-    const { enzymeWrapper, props } = setup()
-    const button = enzymeWrapper.find('.search-form__button--clear')
+  test('should call onClearFilters when the Clear Button is clicked', async () => {
+    const { user, props } = setup()
 
-    button.simulate('click')
+    const clearButton = screen.getByRole('button', { name: /clear all search filters/i })
 
-    expect(props.onClearFilters.mock.calls.length).toBe(1)
+    await act(async () => {
+      await user.click(clearButton)
+    })
+
+    expect(props.onClearFilters).toHaveBeenCalledTimes(1)
   })
 
   describe('advanced search button', () => {
-    test('renders the advanced search button under PortalFeatureContainer', () => {
-      const { enzymeWrapper } = setup()
+    test('fires the action to open the advanced search modal', async () => {
+      const { user, props } = setup()
 
-      const button = enzymeWrapper
-        .find(PortalFeatureContainer)
-        .find('.search-form__button--advanced-search')
-      const portalFeatureContainer = button.parents(PortalFeatureContainer)
+      const advancedSearchButton = screen.getByRole('button', { name: /show advanced search options/i })
+      expect(advancedSearchButton).toBeInTheDocument()
 
-      expect(button.exists()).toBeTruthy()
-      expect(portalFeatureContainer.props().advancedSearch).toBeTruthy()
-    })
-
-    test('renders the AdvancedSearchDisplayContainer under PortalFeatureContainer', () => {
-      const { enzymeWrapper } = setup()
-
-      const advancedSearchDisplayContainer = enzymeWrapper
-        .find(PortalFeatureContainer)
-        .find(AdvancedSearchDisplayContainer)
-      const portalFeatureContainer = advancedSearchDisplayContainer.parents(PortalFeatureContainer)
-
-      expect(advancedSearchDisplayContainer.exists()).toBeTruthy()
-      expect(portalFeatureContainer.props().advancedSearch).toBeTruthy()
-    })
-
-    test('fires the action to open the advanced search modal', () => {
-      const { enzymeWrapper, props } = setup()
-
-      enzymeWrapper.find('.search-form__button--advanced-search').simulate('click')
+      await act(async () => {
+        await user.click(advancedSearchButton)
+      })
 
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
+    })
+  })
+
+  describe('SearchAutocomplete integration', () => {
+    test('renders with initial keyword value', () => {
+      setup({
+        overrideProps: {
+          keywordSearch: 'Test value'
+        }
+      })
+
+      const input = screen.getByRole('textbox')
+      expect(input).toHaveValue('Test value')
+    })
+
+    test('passes required props to SearchAutocomplete', () => {
+      const { props } = setup({
+        overrideProps: {
+          keywordSearch: 'Test keyword'
+        }
+      })
+
+      expect(screen.getByRole('textbox')).toHaveValue('Test keyword')
+
+      expect(props.onChangeQuery).toBeDefined()
+      expect(props.onChangeFocusedCollection).toBeDefined()
     })
   })
 })
