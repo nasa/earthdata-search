@@ -32,7 +32,7 @@ test.describe('Authentication', () => {
       })
     })
 
-    await page.route(/cmr-graphql-proxy/, async (route) => {
+    await page.route(/graphql/, async (route) => {
       await route.fulfill({
         json: getSubscriptionsGraphQlBody,
         headers: graphQlHeaders
