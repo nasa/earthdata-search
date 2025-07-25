@@ -64,6 +64,12 @@ describe('DatabaseClient', () => {
         created_at: '2025-01-01T00:00:00.000Z',
         environment: 'prod'
       })
+
+      const { queries } = dbTracker.queries
+
+      expect(queries[0].sql).toEqual('select "users".* from "users" where "users"."id" = $1 limit $2')
+      expect(queries[0].bindings).toEqual([1, 1])
+      expect(queries[0].method).toEqual('first')
     })
 
     test('returns an error', async () => {
