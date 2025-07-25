@@ -123,12 +123,6 @@ import {
   updateNotificationLevel
 } from './contactInfo'
 import {
-  cancelAutocomplete,
-  clearAutocompleteSuggestions,
-  fetchAutocomplete,
-  selectAutocompleteSuggestion
-} from './autocomplete'
-import {
   createSubscription,
   getSubscriptions,
   deleteSubscription,
@@ -148,7 +142,6 @@ const actions = {
   adminViewProject,
   adminViewRetrieval,
   applyGranuleFilters,
-  cancelAutocomplete,
   changeCollectionPageNum,
   changeFocusedCollection,
   changeFocusedGranule,
@@ -158,7 +151,6 @@ const actions = {
   changeQuery,
   changeRegionQuery,
   changeUrl,
-  clearAutocompleteSuggestions,
   clearFilters,
   clearFocusedCollectionGranuleFilters,
   clearGranuleFilters,
@@ -170,7 +162,6 @@ const actions = {
   exportSearch,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
-  fetchAutocomplete,
   fetchContactInfo,
   fetchAdminProject,
   fetchAdminProjects,
@@ -199,7 +190,6 @@ const actions = {
   removeSubscriptionDisabledFields,
   removeTemporalFilter,
   requeueOrder,
-  selectAutocompleteSuggestion,
   setActivePanel,
   setActivePanelGroup,
   setActivePanelSection,
