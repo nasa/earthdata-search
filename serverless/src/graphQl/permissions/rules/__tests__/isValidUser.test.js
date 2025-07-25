@@ -6,7 +6,7 @@ describe('isValidUser', () => {
       null,
       {},
       {
-        user: {}
+        user: undefined
       }
     )
 

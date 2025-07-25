@@ -40,9 +40,9 @@ describe('getContext', () => {
   })
 
   describe('when the user does not exist in the database', () => {
-    it('should return the correct context with null user', async () => {
+    it('should return the correct context with an undefined user', async () => {
       const getUserByIdSpy = jest.spyOn(DatabaseClient.prototype, 'getUserById')
-      getUserByIdSpy.mockResolvedValue(null)
+      getUserByIdSpy.mockResolvedValue(undefined)
 
       const event = {
         headers: {
@@ -52,7 +52,7 @@ describe('getContext', () => {
 
       const { user } = await getContext({ event })
 
-      expect(user).toEqual({})
+      expect(user).toEqual(undefined)
     })
   })
 })

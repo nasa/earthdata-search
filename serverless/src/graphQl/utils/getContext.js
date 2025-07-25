@@ -16,7 +16,7 @@ const getContext = async ({ event }) => {
 
   const { userId } = await validateToken(bearerToken.split(' ')[1], env)
 
-  const user = await databaseClient.getUserById(userId) || {}
+  const user = await databaseClient.getUserById(userId)
 
   return {
     databaseClient,
