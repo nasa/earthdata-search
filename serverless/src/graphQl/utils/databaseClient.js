@@ -3,8 +3,6 @@ import { getDbConnection } from '../../util/database/getDbConnection'
 
 const { env } = getApplicationConfig()
 
-// TODO Should I use parseError here?
-
 /**
  * Class that generates a client and handles database operations
  */
