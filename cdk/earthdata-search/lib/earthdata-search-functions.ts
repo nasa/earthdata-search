@@ -892,7 +892,7 @@ export class Functions extends Construct {
         apiGatewayDeployment,
         apiGatewayRestApi,
         // Only allow POST in production
-        methods: stageName === 'prod' ? ['POST'] : ['GET', 'POST'],
+        methods: stageName === 'dev' ? ['GET', 'POST'] : ['POST'],
         path: 'graphql'
       },
       entry: '../../serverless/src/graphQl/handler.js',
