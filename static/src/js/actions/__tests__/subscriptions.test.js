@@ -36,10 +36,6 @@ import * as addToast from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('updateSubscriptionResults', () => {
   test('should create an action to update the search query', () => {
     const payload = []
@@ -143,7 +139,6 @@ describe('createSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           collectionId: {
@@ -255,7 +250,6 @@ describe('createSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {}
       },
@@ -350,7 +344,6 @@ describe('createSubscription', () => {
 
       const store = mockStore({
         authToken: 'token',
-        earthdataEnvironment: 'prod',
         metadata: {
           collections: {
             collectionId: {
@@ -438,7 +431,6 @@ describe('createSubscription', () => {
 
       const store = mockStore({
         authToken: 'token',
-        earthdataEnvironment: 'prod',
         metadata: {
           collections: {
             collectionId: {
@@ -871,7 +863,6 @@ describe('updateSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           collectionId: {
@@ -962,7 +953,6 @@ describe('updateSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {}
       },
@@ -1034,7 +1024,6 @@ describe('updateSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {}
       },
@@ -1107,7 +1096,6 @@ describe('updateSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           collectionId: {

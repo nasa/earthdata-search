@@ -17,11 +17,6 @@ import {
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-})
-
 describe('setAdminPreferencesMetrics', () => {
   test('should create an action to set the admin preferences metrics data', () => {
     const payload = {

@@ -1,6 +1,5 @@
 export const retrievalStatusProps = {
   authToken: 'testToken',
-  earthdataEnvironment: 'prod',
   granuleDownload: {},
   onFetchRetrieval: jest.fn(),
   onFetchRetrievalCollection: jest.fn(),

@@ -7,7 +7,6 @@ import {
 import nock from 'nock'
 
 import actions from '../../../actions'
-import { getEarthdataEnvironment } from '../../../selectors/earthdataEnvironment'
 import { addToast } from '../../../util/addToast'
 import {
   mapStateToProps,
@@ -25,10 +24,6 @@ jest.mock(
 
 jest.mock('../../../util/addToast', () => ({
   addToast: jest.fn()
-}))
-
-jest.mock('../../../selectors/earthdataEnvironment', () => ({
-  getEarthdataEnvironment: jest.fn()
 }))
 
 const setup = setupTest({
@@ -66,14 +61,12 @@ describe('mapDispatchToProps', () => {
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
-    getEarthdataEnvironment.mockReturnValue('prod-env')
     const store = {
       authToken: 'mock-token'
     }
 
     expect(mapStateToProps(store)).toEqual({
-      authToken: 'mock-token',
-      earthdataEnvironment: 'prod-env'
+      authToken: 'mock-token'
     })
   })
 })

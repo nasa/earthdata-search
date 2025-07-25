@@ -16,8 +16,10 @@ import {
 
 import actions from '../index'
 
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { displayNotificationType } from '../../constants/enums'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 export const setAdminRetrieval = (payload) => ({
   type: SET_ADMIN_RETRIEVAL,
@@ -58,8 +60,7 @@ export const setAdminRetrievalsPagination = (data) => ({
 export const fetchAdminRetrieval = (id) => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 
@@ -91,8 +92,7 @@ export const fetchAdminRetrieval = (id) => (dispatch, getState) => {
 export const fetchAdminRetrievals = (userId, retrievalCollectionId) => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { admin, authToken } = state
 
@@ -180,8 +180,7 @@ export const updateAdminRetrievalsPageNum = (pageNum, userId) => (dispatch) => {
 export const requeueOrder = (orderId) => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 

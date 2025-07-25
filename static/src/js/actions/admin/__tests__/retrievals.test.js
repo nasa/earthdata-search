@@ -34,11 +34,6 @@ import {
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-})
-
 describe('setAdminRetrieval', () => {
   test('should create an action to set the admin retrieval data', () => {
     const payload = {

@@ -17,10 +17,6 @@ import {
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('updateAuthToken', () => {
   test('should create an action to update the authToken', () => {
     const payload = 'authToken-token'
@@ -42,8 +38,7 @@ describe('updateAuthTokenFromHeaders', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: '',
-      earthdataEnvironment: 'prod'
+      authToken: ''
     })
 
     // Call the dispatch
@@ -59,8 +54,7 @@ describe('updateAuthTokenFromHeaders', () => {
   test('should not remove the authToken if a header token is not available', () => {
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'authToken-token',
-      earthdataEnvironment: 'prod'
+      authToken: 'authToken-token'
     })
 
     // Call the dispatch
@@ -76,7 +70,6 @@ describe('logout', () => {
   const { assign } = window.location
 
   afterEach(() => {
-    jest.clearAllMocks()
     window.location.assign = assign
   })
 
@@ -86,8 +79,7 @@ describe('logout', () => {
       .reply(204)
 
     const store = mockStore({
-      authToken: 'mockToken',
-      earthdataEnvironment: 'prod'
+      authToken: 'mockToken'
     })
 
     delete window.location
@@ -96,9 +88,11 @@ describe('logout', () => {
     const removeMock = jest.spyOn(tinyCookie, 'remove')
 
     await store.dispatch(logout()).then(() => {
-      expect(removeMock).toBeCalledTimes(1)
-      expect(window.location.assign).toBeCalledTimes(1)
-      expect(window.location.assign).toBeCalledWith('/search?ee=prod')
+      expect(removeMock).toHaveBeenCalledTimes(1)
+      expect(removeMock).toHaveBeenCalledWith('authToken')
+
+      expect(window.location.assign).toHaveBeenCalledTimes(1)
+      expect(window.location.assign).toHaveBeenCalledWith('/search?ee=prod')
     })
   })
 })

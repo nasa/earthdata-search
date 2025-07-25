@@ -64,7 +64,6 @@ describe('getSearchGranules', () => {
 
     const store = mockStore({
       authToken: '',
-      earthdataEnvironment: 'prod',
       metadata: {
         collectionId: {
           mock: 'data'
@@ -168,7 +167,6 @@ describe('getSearchGranules', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           collectionId: {
@@ -264,7 +262,6 @@ describe('getSearchGranules', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           collectionId: {
@@ -377,7 +374,6 @@ describe('getSearchGranules', () => {
 
     const store = mockStore({
       authToken: 'token',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           collectionId: {
@@ -506,7 +502,6 @@ describe('getSearchGranules', () => {
 
     const store = mockStore({
       authToken: '',
-      earthdataEnvironment: 'prod',
       metadata: {
         collections: {
           collectionId: {

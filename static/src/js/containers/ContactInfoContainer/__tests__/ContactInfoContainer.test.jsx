@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import {
@@ -10,26 +10,19 @@ import {
 } from '../ContactInfoContainer'
 import ContactInfo from '../../../components/ContactInfo/ContactInfo'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/ContactInfo/ContactInfo', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: ContactInfoContainer,
+  defaultProps: {
     contactInfo: {
       cmrPreferences: { mock: 'cmr' },
       ursProfile: { mock: 'urs' }
     },
-    earthdataEnvironment: 'prod',
     onFetchContactInfo: jest.fn(),
     onUpdateNotificationLevel: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<ContactInfoContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onFetchContactInfo calls actions.fetchContactInfo', () => {
@@ -38,7 +31,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchContactInfo()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith()
   })
 
   test('onUpdateNotificationLevel calls actions.updateNotificationLevel', () => {
@@ -47,21 +41,19 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateNotificationLevel('level')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('level')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('level')
   })
 })
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      contactInfo: {},
-      earthdataEnvironment: 'prod'
+      contactInfo: {}
     }
 
     const expectedState = {
-      contactInfo: {},
-      earthdataEnvironment: 'prod'
+      contactInfo: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -70,14 +62,18 @@ describe('mapStateToProps', () => {
 
 describe('ContactInfoContainer component', () => {
   test('passes its props and renders ContactInfo component', () => {
-    const { enzymeWrapper } = setup()
+    const { props } = setup()
 
-    expect(enzymeWrapper.find(ContactInfo).length).toBe(1)
-    expect(enzymeWrapper.find(ContactInfo).props().contactInfo).toEqual({
-      cmrPreferences: { mock: 'cmr' },
-      ursProfile: { mock: 'urs' }
-    })
+    expect(props.onFetchContactInfo).toHaveBeenCalledTimes(1)
+    expect(props.onFetchContactInfo).toHaveBeenCalledWith()
 
-    expect(typeof enzymeWrapper.find(ContactInfo).props().onUpdateNotificationLevel).toEqual('function')
+    expect(ContactInfo).toHaveBeenCalledTimes(1)
+    expect(ContactInfo).toHaveBeenCalledWith({
+      contactInfo: {
+        cmrPreferences: { mock: 'cmr' },
+        ursProfile: { mock: 'urs' }
+      },
+      onUpdateNotificationLevel: expect.any(Function)
+    }, {})
   })
 })

@@ -10,7 +10,8 @@ import {
 
 import actions from '../index'
 
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 export const setAdminRetrievalsMetrics = (retrievalsMetrics) => ({
   type: SET_ADMIN_RETRIEVALS_METRICS,
@@ -31,8 +32,7 @@ export const setAdminRetrievalsMetricsLoaded = () => ({
 export const fetchAdminRetrievalsMetrics = () => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { admin, authToken } = state
 

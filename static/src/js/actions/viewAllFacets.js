@@ -10,7 +10,9 @@ import {
 } from '../constants/actionTypes'
 
 import { handleError } from './errors'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const updateViewAllFacets = (payload) => ({
   type: UPDATE_VIEW_ALL_FACETS,
@@ -46,7 +48,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
   const { authToken } = state
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   dispatch(onViewAllFacetsLoading(category))
   dispatch(toggleFacetsModal(true))

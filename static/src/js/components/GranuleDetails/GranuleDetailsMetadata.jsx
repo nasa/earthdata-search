@@ -4,14 +4,19 @@ import { isEmpty } from 'lodash-es'
 
 import Spinner from '../Spinner/Spinner'
 
-import './GranuleDetailsMetadata.scss'
 import { buildAuthenticatedRedirectUrl } from '../../util/url/buildAuthenticatedRedirectUrl'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+
+import './GranuleDetailsMetadata.scss'
 
 export const GranuleDetailsMetadata = ({
   authToken,
-  earthdataEnvironment,
   metadataUrls
 }) => {
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+
   const metdataUrlKeys = [
     'native',
     'umm_json',
@@ -82,7 +87,6 @@ GranuleDetailsMetadata.defaultProps = {
 
 GranuleDetailsMetadata.propTypes = {
   authToken: PropTypes.string,
-  earthdataEnvironment: PropTypes.string.isRequired,
   metadataUrls: PropTypes.shape({})
 }
 

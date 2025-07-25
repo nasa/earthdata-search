@@ -4,8 +4,9 @@ import { immer } from 'zustand/middleware/immer'
 
 import { EdscStore } from './types'
 
-import createEarthdataDownloadRedirectSlice from './slices/createEarthdataDownloadRedirectSlice'
 import createDataQualitySummariesSlice from './slices/createDataQualitySummariesSlice'
+import createEarthdataDownloadRedirectSlice from './slices/createEarthdataDownloadRedirectSlice'
+import createEarthdataEnvironmentSlice from './slices/createEarthdataEnvironmentSlice'
 import createFacetParamsSlice from './slices/createFacetParamsSlice'
 import createHomeSlice from './slices/createHomeSlice'
 import createMapSlice from './slices/createMapSlice'
@@ -20,8 +21,9 @@ const useEdscStore = create<EdscStore>()(
   immer(
     devtools(
       (...args) => ({
-        ...createEarthdataDownloadRedirectSlice(...args),
         ...createDataQualitySummariesSlice(...args),
+        ...createEarthdataDownloadRedirectSlice(...args),
+        ...createEarthdataEnvironmentSlice(...args),
         ...createFacetParamsSlice(...args),
         ...createHomeSlice(...args),
         ...createMapSlice(...args),

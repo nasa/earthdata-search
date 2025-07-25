@@ -11,7 +11,6 @@ const setup = setupTest({
   Component: GranuleDetailsBodyContainer,
   defaultProps: {
     authToken: '',
-    earthdataEnvironment: 'prod',
     granuleMetadata: {
       metadataUrls: {
         atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
@@ -24,7 +23,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       authToken: 'mock-token',
-      earthdataEnvironment: 'prod',
       metadata: {
         granules: {}
       }
@@ -32,7 +30,6 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       authToken: 'mock-token',
-      earthdataEnvironment: 'prod',
       granuleMetadata: {}
     }
 
@@ -49,7 +46,6 @@ describe('GranuleResultsBodyContainer component', () => {
       expect(GranuleDetailsBody).toHaveBeenCalledWith(
         expect.objectContaining({
           authToken: '',
-          earthdataEnvironment: 'prod',
           granuleMetadata: {
             metadataUrls: {
               atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'

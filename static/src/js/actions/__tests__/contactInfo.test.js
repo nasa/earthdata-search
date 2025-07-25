@@ -15,10 +15,6 @@ import { testJwtToken } from './mocks'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('updateContactInfo', () => {
   test('should create an action to update the contact info', () => {
     const payload = { mock: 'payload' }

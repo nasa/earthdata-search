@@ -6,8 +6,6 @@ import { useLocation } from 'react-router-dom'
 import actions from '../../actions/index'
 import { getUrsProfile } from '../../selectors/contactInfo'
 
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
-
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import SecondaryToolbar from '../../components/SecondaryToolbar/SecondaryToolbar'
@@ -23,7 +21,6 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
-  earthdataEnvironment: getEarthdataEnvironment(state),
   savedProject: state.savedProject,
   retrieval: state.retrieval,
   ursProfile: getUrsProfile(state)
@@ -38,7 +35,6 @@ export const SecondaryToolbarContainer = (props) => {
 
   const {
     authToken,
-    earthdataEnvironment,
     onFetchContactInfo,
     onLogout,
     onUpdateProjectName,
@@ -59,7 +55,6 @@ export const SecondaryToolbarContainer = (props) => {
   return (
     <SecondaryToolbar
       authToken={authToken}
-      earthdataEnvironment={earthdataEnvironment}
       location={location}
       onLogout={onLogout}
       onUpdateProjectName={onUpdateProjectName}
@@ -74,7 +69,6 @@ export const SecondaryToolbarContainer = (props) => {
 
 SecondaryToolbarContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired,
   onFetchContactInfo: PropTypes.func.isRequired,
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,

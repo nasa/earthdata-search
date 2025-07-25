@@ -6,7 +6,6 @@ import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { getValueForTag } from '../../../../sharedUtils/tags'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { getCollectionsQuery } from '../selectors/query'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
@@ -16,7 +15,9 @@ import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import { retrieveVariablesRequest } from '../util/retrieveVariablesRequest'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
+
 import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 /**
  * Sets the focused collection value in redux
@@ -43,7 +44,7 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
 
   // Retrieve data from Redux using selectors
   const collectionsQuery = getCollectionsQuery(state)
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
   const focusedCollectionId = getFocusedCollectionId(state)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(state)
   const username = getUsername(state)
@@ -358,7 +359,7 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
   let collectionConceptId = collectionId
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
   if (collectionId == null) {
     collectionConceptId = getFocusedCollectionId(state)
   }

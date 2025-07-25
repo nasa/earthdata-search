@@ -15,24 +15,25 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-import useEdscStore from '../../zustand/useEdscStore'
 
-export const GranuleDownloadButton = (props) => {
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+
+export const GranuleDownloadButton = ({
+  authToken,
+  badge,
+  buttonText,
+  focusedCollectionId,
+  granuleCount,
+  granuleLimit,
+  initialLoading,
+  isCollectionInProject,
+  location,
+  onChangePath,
+  tooManyGranules
+}) => {
   const addProjectCollection = useEdscStore((state) => state.project.addProjectCollection)
-  const {
-    authToken,
-    badge,
-    buttonText,
-    earthdataEnvironment,
-    focusedCollectionId,
-    granuleCount,
-    granuleLimit,
-    initialLoading,
-    isCollectionInProject,
-    location,
-    onChangePath,
-    tooManyGranules
-  } = props
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   const { disableDatabaseComponents } = getApplicationConfig()
   const { apiHost } = getEnvironmentConfig()
@@ -179,7 +180,6 @@ GranuleDownloadButton.propTypes = {
     PropTypes.node
   ]),
   buttonText: PropTypes.string.isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   granuleCount: PropTypes.number,
   granuleLimit: PropTypes.number,

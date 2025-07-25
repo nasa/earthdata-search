@@ -16,7 +16,6 @@ import {
 } from '../constants/actionTypes'
 
 import { displayNotificationType } from '../constants/enums'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
@@ -28,6 +27,9 @@ import {
 import { addToast } from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
 import GraphQlRequest from '../util/request/graphQlRequest'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -95,7 +97,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
     authToken
   } = state
 
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
   const username = getUsername(state)
 
   let subscriptionQuery
@@ -179,7 +181,7 @@ export const getSubscriptions = (
   } = state
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
   const username = getUsername(state)
 
   dispatch(onSubscriptionsLoading())
@@ -268,7 +270,7 @@ export const deleteSubscription = (
 
   // Retrieve data from Redux using selectors
   const collectionsMetadata = getCollectionsMetadata(state)
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
@@ -365,8 +367,7 @@ export const updateSubscription = ({
     authToken
   } = state
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 

@@ -10,10 +10,12 @@ import {
 } from '../constants/actionTypes'
 
 import { displayNotificationType } from '../constants/enums'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { prepareRegionParams } from '../util/regions'
 
 import RegionRequest from '../util/request/regionRequest'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const updateRegionResults = (payload) => ({
   type: UPDATE_REGION_RESULTS,
@@ -50,8 +52,7 @@ export const finishRegionsTimer = () => ({
 export const getRegions = () => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const regionParams = prepareRegionParams(state)
 

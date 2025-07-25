@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { get, remove } from 'tiny-cookie'
 
 import { getEnvironmentConfig, getApplicationConfig } from '../../../../../sharedUtils/config'
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
-export const mapStateToProps = (state) => ({
-  earthdataEnvironment: getEarthdataEnvironment(state)
-})
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 export const AuthRequiredContainer = ({
   noRedirect,
-  children,
-  earthdataEnvironment
+  children
 }) => {
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
@@ -58,8 +55,7 @@ AuthRequiredContainer.defaultProps = {
 
 AuthRequiredContainer.propTypes = {
   noRedirect: PropTypes.bool,
-  children: PropTypes.node.isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired
+  children: PropTypes.node.isRequired
 }
 
-export default connect(mapStateToProps, null)(AuthRequiredContainer)
+export default AuthRequiredContainer

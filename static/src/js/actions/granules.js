@@ -35,12 +35,13 @@ import {
 import { toggleSpatialPolygonWarning } from './ui'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import { getProjectCollectionsIds } from '../zustand/selectors/project'
 import { eventEmitter } from '../events/events'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import RetrievalRequest from '../util/request/retrievalRequest'
+
 import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
+import { getProjectCollectionsIds } from '../zustand/selectors/project'
 
 const { granuleLinksPageSize, openSearchGranuleLinksPageSize } = getApplicationConfig()
 
@@ -137,8 +138,7 @@ export const fetchGranuleLinks = (
 ) => async (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 
@@ -261,8 +261,7 @@ const granuleSearchCancelTokens = {}
 export const getSearchGranules = () => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 

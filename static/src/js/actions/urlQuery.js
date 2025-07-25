@@ -11,7 +11,7 @@ import {
   isSavedProjectsPage,
   urlPathsWithoutUrlParams
 } from '../util/url/url'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 import { getCollectionSortPreference } from '../zustand/selectors/preferences'
 
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
@@ -65,7 +65,6 @@ export const updateStore = ({
     await dispatch(restoreFromUrl({
       advancedSearch,
       collections,
-      earthdataEnvironment,
       focusedCollection,
       focusedGranule,
       deprecatedUrlParams,
@@ -77,6 +76,9 @@ export const updateStore = ({
 
     useEdscStore.setState((zustandState) => ({
       ...zustandState,
+      earthdataEnvironment: {
+        currentEnvironment: earthdataEnvironment
+      },
       facetParams: {
         ...zustandState.facetParams,
         featureFacets,
@@ -112,11 +114,8 @@ export const updateStore = ({
   }
 }
 
-export const changePath = (path = '') => async (dispatch, getState) => {
-  const state = getState()
-
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+export const changePath = (path = '') => async (dispatch) => {
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const [pathname, queryString] = path.split('?')
 
@@ -268,8 +267,7 @@ const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
 export const changeUrl = (options) => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const {
     authToken,

@@ -1,17 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
-
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 
 import ContactInfo from '../../components/ContactInfo/ContactInfo'
 
 export const mapStateToProps = (state) => ({
-  contactInfo: state.contactInfo,
-  earthdataEnvironment: getEarthdataEnvironment(state)
+  contactInfo: state.contactInfo
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -33,14 +29,12 @@ export class ContactInfoContainer extends Component {
   render() {
     const {
       contactInfo,
-      earthdataEnvironment,
       onUpdateNotificationLevel
     } = this.props
 
     return (
       <ContactInfo
         contactInfo={contactInfo}
-        earthdataEnvironment={earthdataEnvironment}
         onUpdateNotificationLevel={onUpdateNotificationLevel}
       />
     )
@@ -49,11 +43,8 @@ export class ContactInfoContainer extends Component {
 
 ContactInfoContainer.propTypes = {
   contactInfo: PropTypes.shape({}).isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired,
   onFetchContactInfo: PropTypes.func.isRequired,
   onUpdateNotificationLevel: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(ContactInfoContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(ContactInfoContainer)

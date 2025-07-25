@@ -17,7 +17,6 @@ const setup = setupTest({
   Component: OrderStatusContainer,
   defaultProps: {
     authToken: 'testToken',
-    earthdataEnvironment: 'prod',
     granuleDownload: {},
     location: {},
     match: {
@@ -134,14 +133,12 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       authToken: 'mock-token',
-      earthdataEnvironment: 'prod',
       granuleDownload: {},
       retrieval: {}
     }
 
     const expectedState = {
       authToken: 'mock-token',
-      earthdataEnvironment: 'prod',
       granuleDownload: {},
       retrieval: {}
     }
@@ -159,7 +156,6 @@ describe('OrderStatusContainer component', () => {
       expect(OrderStatus).toHaveBeenCalledWith(
         {
           authToken: 'testToken',
-          earthdataEnvironment: 'prod',
           granuleDownload: {},
           location: {},
           match: {

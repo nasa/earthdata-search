@@ -5,8 +5,10 @@ import ContactInfoRequest from '../util/request/contactInfoRequest'
 
 import { UPDATE_CONTACT_INFO } from '../constants/actionTypes'
 
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const updateContactInfo = (data) => ({
   type: UPDATE_CONTACT_INFO,
@@ -30,8 +32,7 @@ export const setContactInfoFromJwt = (jwtToken) => (dispatch) => {
 export const fetchContactInfo = () => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 

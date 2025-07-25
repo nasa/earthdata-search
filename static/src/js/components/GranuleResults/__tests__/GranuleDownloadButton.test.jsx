@@ -18,7 +18,6 @@ const setup = setupTest({
     authToken: 'token',
     badge: '294 Granules',
     buttonText: 'Download All',
-    earthdataEnvironment: 'prod',
     focusedCollectionId: 'collectionId',
     granuleCount: 294,
     granuleLimit: 1000000,

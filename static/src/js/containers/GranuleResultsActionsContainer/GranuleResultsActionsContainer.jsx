@@ -7,7 +7,6 @@ import actions from '../../actions'
 
 import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
 
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
 import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
@@ -47,7 +46,6 @@ export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionQuery: state.query.collection,
-  earthdataEnvironment: getEarthdataEnvironment(state),
   focusedCollectionId: getFocusedCollectionId(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
@@ -59,7 +57,6 @@ export const GranuleResultsActionsContainer = (props) => {
     authToken,
     collectionMetadata,
     collectionQuery,
-    earthdataEnvironment,
     focusedCollectionId,
     granuleQuery,
     granuleSearchResults,
@@ -111,7 +108,6 @@ export const GranuleResultsActionsContainer = (props) => {
     <GranuleResultsActions
       authToken={authToken}
       addedGranuleIds={addedGranuleIds}
-      earthdataEnvironment={earthdataEnvironment}
       focusedCollectionId={focusedCollectionId}
       focusedProjectCollection={focusedProjectCollection}
       granuleLimit={granuleLimit}
@@ -135,7 +131,6 @@ GranuleResultsActionsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
   collectionQuery: PropTypes.shape({}).isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
   granuleQuery: PropTypes.shape({
     pageNum: PropTypes.number

@@ -13,7 +13,6 @@ import collectionMetadataReducer from './collectionMetadata'
 import collectionsResultsReducer from './collectionsResults'
 import colorMapsReducer from './colorMaps'
 import contactInfoReducer from './contactInfo'
-import earthdataEnvironmentReducer from './earthdataEnvironment'
 import errorsReducer from './errors'
 import facetsReducer from './facets'
 import focusedCollectionReducer from './focusedCollection'
@@ -42,7 +41,6 @@ export default (history) => combineReducers({
   authToken: authTokenReducer,
   autocomplete: autocompleteReducer,
   contactInfo: contactInfoReducer,
-  earthdataEnvironment: earthdataEnvironmentReducer,
   errors: errorsReducer,
   focusedCollection: focusedCollectionReducer,
   focusedGranule: focusedGranuleReducer,
