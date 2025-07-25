@@ -32,10 +32,10 @@ const ContactInfo = ({
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
   const { edlHost } = getEarthdataConfig(earthdataEnvironment)
 
-  const [notificationLevel, setNotificationLevel] = useState(propsNotificationLevel)
+  const [notificationLevel, setNotificationLevel] = useState(propsNotificationLevel || 'VERBOSE')
 
   useEffect(() => {
-    setNotificationLevel(propsNotificationLevel)
+    if (propsNotificationLevel) setNotificationLevel(propsNotificationLevel)
   }, [propsNotificationLevel])
 
   const handleNotificationLevelChange = (event) => {
