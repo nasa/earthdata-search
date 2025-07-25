@@ -75,7 +75,7 @@ const createPreferencesTable = (preferences) => {
 }
 
 export const AdminPreferencesMetricsList = () => {
-  const { loading, data } = useQuery(ADMIN_PREFERENCES_METRICS)
+  const { data, error, loading } = useQuery(ADMIN_PREFERENCES_METRICS)
 
   return (
     <div>
@@ -88,7 +88,7 @@ export const AdminPreferencesMetricsList = () => {
           />
         )
       }
-      {!loading && createPreferencesTable(data.adminPreferencesMetrics)}
+      {!loading && !error && createPreferencesTable(data.adminPreferencesMetrics)}
     </div>
   )
 }

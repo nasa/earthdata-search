@@ -891,8 +891,6 @@ export class Functions extends Construct {
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
-        // TODO use the optional authorizer, with graphql-shield to protect the admin queries. Need to check the token and user against to make sure they can see the page. Look at cmr-ordering
-        // authorizer: authorizers.edlOptionalAuthorizer,
         methods: ['GET', 'POST'],
         path: 'graphql'
       },
