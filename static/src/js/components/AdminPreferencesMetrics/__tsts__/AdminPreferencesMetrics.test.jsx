@@ -16,10 +16,6 @@ const setup = setupTest({
 })
 
 describe('AdminPreferencesMetrics component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('renders a page heading', () => {
     setup()
     expect(screen.getByRole('heading', { name: 'Preferences Metrics' })).toBeInTheDocument()

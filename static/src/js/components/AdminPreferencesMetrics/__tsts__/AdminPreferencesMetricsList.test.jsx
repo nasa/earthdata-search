@@ -280,13 +280,7 @@ describe('AdminPreferencesMetricsList component', () => {
   })
 
   test('renders spinner when isLoading is true', () => {
-    setup({
-      preferencesMetrics: {
-        isLoaded: false,
-        isLoading: true,
-        preferences: {}
-      }
-    })
+    setup()
 
     expect(screen.getByTestId('admin-preferences-metric-list-spinner')).toBeInTheDocument()
   })

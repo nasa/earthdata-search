@@ -56,7 +56,7 @@ test.describe('History', () => {
       })
     })
 
-    await page.route(/graphql/, async (route) => {
+    await page.route(/graphql.*\/api/, async (route) => {
       const { query } = JSON.parse(route.request().postData()).data
 
       if (query.includes('query GetSubscriptions')) {
