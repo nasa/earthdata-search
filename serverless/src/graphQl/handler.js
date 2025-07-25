@@ -28,7 +28,6 @@ const schema = applyMiddleware(
 
 const server = new ApolloServer({
   schema,
-  introspection: false,
   plugins: apolloPlugins
 })
 
