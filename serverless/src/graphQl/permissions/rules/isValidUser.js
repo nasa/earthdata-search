@@ -1,5 +1,4 @@
 import { rule } from 'graphql-shield'
-import { isEmpty } from 'lodash-es'
 
 /**
  * Checks if the user is valid (i.e., not empty)
