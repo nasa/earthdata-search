@@ -6,12 +6,18 @@ import { render, waitFor } from '@testing-library/react'
 
 import * as AppConfig from '../../../../sharedUtils/config'
 import App from '../App'
+import GraphQlProvider from '../providers/GraphQlProvider'
 
 jest.mock('../routes/Home/Home', () => {
   const MockedHome = () => <div data-testid="mocked-home" />
 
   return MockedHome
 })
+
+// Mock the GraphQlProvider
+jest.mock('../providers/GraphQlProvider', () => jest.fn(({ children }) => (
+  <div>{children}</div>
+)))
 
 // Mock App components routes and containers
 jest.mock('../routes/Admin/Admin', () => () => {
@@ -223,6 +229,11 @@ describe('App component', () => {
   test('sets the correct default title', async () => {
     setup()
     await waitFor(() => expect(document.title).toEqual('Earthdata Search'))
+  })
+
+  test('renders the GraphQlProvider component', async () => {
+    setup()
+    expect(GraphQlProvider).toHaveBeenCalledTimes(1)
   })
 
   test('sets the correct meta description', async () => {

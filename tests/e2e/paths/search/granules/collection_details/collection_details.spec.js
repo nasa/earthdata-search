@@ -256,7 +256,7 @@ test.describe('Path /search/granules/collection-details', () => {
         })
       })
 
-      await page.route(/graphql/, async (route) => {
+      await page.route(/graphql.*\/api/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
 
         if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
@@ -339,7 +339,7 @@ test.describe('Path /search/granules/collection-details', () => {
         })
       })
 
-      await page.route(/graphql/, async (route) => {
+      await page.route(/graphql.*\/api/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
         if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
           await route.fulfill({
@@ -453,7 +453,7 @@ test.describe('Path /search/granules/collection-details', () => {
           })
         })
 
-        await page.route(/graphql/, async (route) => {
+        await page.route(/graphql.*\/api/, async (route) => {
           const { query } = JSON.parse(route.request().postData())
 
           if (query === graphQlGetSubscriptionsQuery) {
@@ -512,7 +512,7 @@ test.describe('Path /search/granules/collection-details', () => {
           })
         })
 
-        await page.route(/graphql/, async (route) => {
+        await page.route(/graphql.*\/api/, async (route) => {
           const { query } = JSON.parse(route.request().postData())
 
           if (query === graphQlGetSubscriptionsQuery) {
@@ -571,7 +571,7 @@ test.describe('Path /search/granules/collection-details', () => {
           })
         })
 
-        await page.route(/graphql/, async (route) => {
+        await page.route(/graphql.*\/api/, async (route) => {
           const { query } = JSON.parse(route.request().postData())
 
           if (query === graphQlGetSubscriptionsQuery) {
@@ -630,7 +630,7 @@ test.describe('Path /search/granules/collection-details', () => {
           })
         })
 
-        await page.route(/graphql/, async (route) => {
+        await page.route(/graphql.*\/api/, async (route) => {
           const { query } = JSON.parse(route.request().postData())
 
           if (query === graphQlGetSubscriptionsQuery) {
@@ -690,7 +690,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           })
 
-          await page.route(/graphql/, async (route) => {
+          await page.route(/graphql.*\/api/, async (route) => {
             const { query } = JSON.parse(route.request().postData())
 
             if (query === graphQlGetSubscriptionsQuery) {
@@ -749,7 +749,7 @@ test.describe('Path /search/granules/collection-details', () => {
           })
         })
 
-        await page.route(/graphql/, async (route) => {
+        await page.route(/graphql.*\/api/, async (route) => {
           const { query } = JSON.parse(route.request().postData())
 
           if (query === graphQlGetSubscriptionsQuery) {

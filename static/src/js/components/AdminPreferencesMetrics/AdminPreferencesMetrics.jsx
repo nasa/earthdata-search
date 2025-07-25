@@ -1,14 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
 import { AdminPage } from '../AdminPage/AdminPage'
 import { AdminPreferencesMetricsList } from './AdminPreferencesMetricsList'
 
-export const AdminPreferencesMetrics = ({
-  preferencesMetrics
-}) => (
+export const AdminPreferencesMetrics = () => (
   <AdminPage
     pageTitle="Preferences Metrics"
     breadcrumbs={
@@ -26,20 +23,10 @@ export const AdminPreferencesMetrics = ({
   >
     <Row>
       <Col>
-        <AdminPreferencesMetricsList
-          preferencesMetrics={preferencesMetrics}
-        />
+        <AdminPreferencesMetricsList />
       </Col>
     </Row>
   </AdminPage>
 )
-
-AdminPreferencesMetrics.defaultProps = {
-  preferencesMetrics: {}
-}
-
-AdminPreferencesMetrics.propTypes = {
-  preferencesMetrics: PropTypes.shape({})
-}
 
 export default AdminPreferencesMetrics

@@ -71,7 +71,7 @@ const lambdaProxyWrapper = (method) => async (request, reply) => {
 
   // Create the event object to pass to the lambda
   const event = {
-    body: request.body,
+    body: typeof request.body === 'object' ? JSON.stringify(request.body) : request.body,
     headers: request.headers,
     httpMethod: request.method,
     pathParameters: request.params,
@@ -93,7 +93,7 @@ const lambdaProxyWrapper = (method) => async (request, reply) => {
 
   const {
     body: responseBody,
-    headers,
+    headers = {},
     isBase64Encoded,
     statusCode
   } = response

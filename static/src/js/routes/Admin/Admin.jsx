@@ -12,7 +12,7 @@ import AdminProjectsContainer from '../../containers/AdminProjectsContainer/Admi
 import AdminRetrievalContainer from '../../containers/AdminRetrievalContainer/AdminRetrievalContainer'
 import AdminRetrievalsContainer from '../../containers/AdminRetrievalsContainer/AdminRetrievalsContainer'
 import AdminRetrievalsMetricsContainer from '../../containers/AdminRetrievalsMetricsContainer/AdminRetrievalsMetricsContainer'
-import AdminPreferencesMetricsContainer from '../../containers/AdminPreferencesMetricsContainer/AdminPreferencesMetricsContainer'
+import AdminPreferencesMetrics from '../../components/AdminPreferencesMetrics/AdminPreferencesMetrics'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import actions from '../../actions'
 
@@ -77,7 +77,7 @@ export class Admin extends Component {
                 <Route exact path={`${path}/projects`} component={AdminProjectsContainer} />
                 <Route exact path={`${path}/projects/:id`} component={AdminProjectContainer} />
                 <Route exact path={`${path}/retrievals-metrics`} component={AdminRetrievalsMetricsContainer} />
-                <Route exact path={`${path}/preferences-metrics`} component={AdminPreferencesMetricsContainer} />
+                <Route exact path={`${path}/preferences-metrics`} component={AdminPreferencesMetrics} />
               </Switch>
             </div>
           </div>

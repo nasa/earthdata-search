@@ -16,7 +16,7 @@ describe('GraphQlRequest#constructor', () => {
     expect(request.authenticated).toBeTruthy()
     expect(request.authToken).toEqual(token)
     expect(request.baseUrl).toEqual('http://localhost:3000')
-    expect(request.searchPath).toEqual('graphql')
+    expect(request.searchPath).toEqual('cmr-graphql-proxy')
   })
 
   test('sets the default values when unauthenticated', () => {

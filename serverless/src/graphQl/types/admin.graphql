@@ -1,0 +1,38 @@
+type AdminPreferencesEntry {
+  "Preference value"
+  value: String
+  "Percentage of users who selected this preference"
+  percentage: String
+  "Count of users who selected this preference"
+  count: String
+}
+
+type AdminPreferencesMetrics {
+  "Top panel preferences"
+  panelState: [AdminPreferencesEntry]
+  "Collection List View preferences"
+  collectionListView: [AdminPreferencesEntry]
+  "Collection Sort preferences"
+  collectionSort: [AdminPreferencesEntry]
+  "Granule Sort preferences"
+  granuleSort: [AdminPreferencesEntry]
+  "Granule List View preferences"
+  granuleListView: [AdminPreferencesEntry]
+  "Zoom preferences"
+  zoom: [AdminPreferencesEntry]
+  "Latitude preferences"
+  latitude: [AdminPreferencesEntry]
+  "Longitude preferences"
+  longitude: [AdminPreferencesEntry]
+  "Projection preferences"
+  projection: [AdminPreferencesEntry]
+  "Overlay Layers preferences"
+  overlayLayers: [AdminPreferencesEntry]
+  "Base Layer preferences"
+  baseLayer: [AdminPreferencesEntry]
+}
+
+type Query {
+  "Retrieves admin preferences metrics"
+  adminPreferencesMetrics: AdminPreferencesMetrics
+}

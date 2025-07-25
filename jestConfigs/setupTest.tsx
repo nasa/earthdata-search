@@ -7,6 +7,7 @@ import {
   Switch
 } from 'react-router'
 import { Provider } from 'react-redux'
+import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 import { cloneDeep, merge } from 'lodash-es'
 
 import useEdscStore from '../static/src/js/zustand/useEdscStore'
@@ -15,12 +16,16 @@ import configureStore from '../static/src/js/store/configureStore'
 
 /** Common props shared between types */
 type SetupTestCommonProps = {
+  /** Default Apollo Client mocks for the test */
+  defaultApolloClientMocks?: MockedResponse[]
   /** Default Redux state for the test */
   defaultReduxState?: Record<string, unknown>
   /** Default router entries for the test */
   defaultRouterEntries?: string[]
   /** Default Zustand state for the test */
   defaultZustandState?: Record<string, unknown>
+  /** Whether to include ApolloClient in the test setup */
+  withApolloClient?: boolean
   /** Whether to include Redux in the test setup */
   withRedux?: boolean
   /** Whether to include React Router in the test setup */
@@ -54,6 +59,8 @@ export type SetupTestPropsComponentsByRoute = {
 
 /** Type for the overrides to be applied to the test setup */
 export type SetupTestOverrides = {
+  /** Override Apollo Client state for the test */
+  overrideApolloClientMocks?: MockedResponse[]
   /** Override router entries for the test */
   overrideRouterEntries?: string[]
   /** Override Redux state for the test */
@@ -83,14 +90,17 @@ export type SetupTestReturnType = {
 const setupTest = ({
   Component,
   ComponentsByRoute,
+  defaultApolloClientMocks = [],
   defaultProps = {},
   defaultPropsByRoute = {},
   defaultReduxState = {},
   defaultRouterEntries,
   defaultZustandState,
   withRedux = false,
-  withRouter = false
+  withRouter = false,
+  withApolloClient = false
 }: SetupTestPropsSingleComponent | SetupTestPropsComponentsByRoute) => ({
+  overrideApolloClientMocks = [],
   overrideRouterEntries,
   overrideReduxState = {},
   overrideProps = {},
@@ -184,6 +194,18 @@ const setupTest = ({
       <Provider store={store}>
         {RenderedComponent}
       </Provider>
+    )
+  }
+
+  if (withApolloClient) {
+    const apolloClientMocks = overrideApolloClientMocks.length > 0
+      ? overrideApolloClientMocks
+      : defaultApolloClientMocks
+
+    RenderedComponent = (
+      <MockedProvider mocks={apolloClientMocks} addTypename={false}>
+        {RenderedComponent}
+      </MockedProvider>
     )
   }
 

@@ -5,7 +5,10 @@ import { getEnvironmentConfig } from '../../../../sharedUtils/config'
 describe('edlAuthorizer', () => {
   describe('when the logged in user is an admin', () => {
     test('returns a valid policy', async () => {
-      jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => 'testuser')
+      jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => ({
+        userId: 1,
+        username: 'testuser'
+      }))
 
       const { jwtToken } = getEnvironmentConfig('test')
 

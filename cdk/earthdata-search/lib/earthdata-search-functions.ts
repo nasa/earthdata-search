@@ -109,28 +109,6 @@ export class Functions extends Construct {
     } = sharedResources
 
     /**
-     * Admin Get Preferences Metrics
-     */
-    const adminGetPreferencesMetricsNestedStack = new cdk.NestedStack(scope, 'AdminGetPreferencesMetricsNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(adminGetPreferencesMetricsNestedStack, 'AdminGetPreferencesMetricsLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['GET'],
-        parentId: adminApiGatewayResource.ref,
-        parentPath: 'admin',
-        path: 'preferences_metrics'
-      },
-      entry: '../../serverless/src/adminGetPreferencesMetrics/handler.js',
-      functionName: 'adminGetPreferencesMetrics',
-      functionNamePrefix,
-      memorySize: 1024
-    })
-
-    /**
      * Admin Get Projects
      */
     const adminGetProjectsNestedStack = new cdk.NestedStack(scope, 'AdminGetProjectsNestedStack')
@@ -913,12 +891,31 @@ export class Functions extends Construct {
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
-        authorizer: authorizers.edlOptionalAuthorizer,
-        methods: ['POST'],
+        // Only allow POST in production
+        methods: stageName === 'dev' ? ['GET', 'POST'] : ['POST'],
         path: 'graphql'
       },
       entry: '../../serverless/src/graphQl/handler.js',
       functionName: 'graphql',
+      functionNamePrefix
+    })
+
+    /**
+     * CMR GraphQL Proxy
+     */
+    const cmrGraphQlProxyNestedStack = new cdk.NestedStack(scope, 'CmrGraphQlProxyNestedStack')
+    // eslint-disable-next-line no-new
+    new application.NodeJsFunction(cmrGraphQlProxyNestedStack, 'GraphQlLambda', {
+      ...defaultLambdaConfig,
+      api: {
+        apiGatewayDeployment,
+        apiGatewayRestApi,
+        authorizer: authorizers.edlOptionalAuthorizer,
+        methods: ['POST'],
+        path: 'cmr-graphql-proxy'
+      },
+      entry: '../../serverless/src/cmrGraphQlProxy/handler.js',
+      functionName: 'cmrGraphQlProxy',
       functionNamePrefix
     })
 

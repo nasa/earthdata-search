@@ -32,7 +32,7 @@ test.describe('Authentication', () => {
       })
     })
 
-    await page.route(/graphql/, async (route) => {
+    await page.route(/graphql.*\/api/, async (route) => {
       await route.fulfill({
         json: getSubscriptionsGraphQlBody,
         headers: graphQlHeaders

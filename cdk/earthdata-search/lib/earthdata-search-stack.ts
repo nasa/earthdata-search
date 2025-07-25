@@ -130,7 +130,9 @@ export class EarthdataSearchStack extends cdk.Stack {
         ],
         loader: {
           '.svg': 'text',
-          '.ipynb': 'json'
+          '.ipynb': 'json',
+          '.graphql': 'text',
+          '.gql': 'text'
         },
         minify: NODE_ENV === 'production'
       },

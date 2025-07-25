@@ -46,7 +46,7 @@ const edlOptionalAuthorizer = async (event) => {
     throw new Error('Unauthorized')
   }
 
-  const username = await validateToken(jwtToken, earthdataEnvironment)
+  const { username } = await validateToken(jwtToken, earthdataEnvironment)
 
   if (username) {
     return generatePolicy(username, jwtToken, 'Allow', methodArn)
