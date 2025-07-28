@@ -32,7 +32,7 @@ test.describe('Download spec', () => {
       'https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MYD04_3K/2020/012/MYD04_3K.A2020012.1825.061.2020013152621.hdf'
     ]
 
-    await page.route(/graphql.*\/api/, async (route) => {
+    await page.route(/cmr-graphql-proxy/, async (route) => {
       await route.fulfill({
         json: collectionsGraphJson.body,
         headers: authHeaders
