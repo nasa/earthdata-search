@@ -58,7 +58,8 @@ module.exports = {
       '<rootDir>/static/src/js/util/jest/fileTransformer.cjs',
     '^.+\\.(js|jsx)$': 'babel-jest',
     '^.+\\.ipynb$': '<rootDir>/static/src/js/util/jest/ipynbTransformer.cjs',
-    '^.+\\.(ts|tsx)?$': 'ts-jest'
+    '^.+\\.(ts|tsx)?$': 'ts-jest',
+    '\\.(gql|graphql)$': '@graphql-tools/jest-transform'
   },
   testEnvironment: 'jsdom',
   transformIgnorePatterns: [`/node_modules/(?!${esModulesToIgnore})`]

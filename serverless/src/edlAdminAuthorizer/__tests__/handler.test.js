@@ -6,7 +6,11 @@ import { getEnvironmentConfig } from '../../../../sharedUtils/config'
 describe('edlAdminAuthorizer', () => {
   describe('when the logged in user is an admin', () => {
     test('returns a valid policy', async () => {
-      jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => 'testuser')
+      jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => ({
+        userId: 1,
+        username: 'testuser'
+      }))
+
       jest.spyOn(getAdminUsers, 'getAdminUsers').mockImplementationOnce(() => ['testuser'])
 
       const { jwtToken } = getEnvironmentConfig('test')
@@ -42,7 +46,11 @@ describe('edlAdminAuthorizer', () => {
 
   describe('when the logged in user is not an admin', () => {
     test('returns unauthorized', async () => {
-      jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => 'testuser')
+      jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => ({
+        userId: 1,
+        username: 'testuser'
+      }))
+
       jest.spyOn(getAdminUsers, 'getAdminUsers').mockImplementationOnce(() => ['adminuser'])
 
       const { jwtToken } = getEnvironmentConfig('test')
@@ -59,7 +67,11 @@ describe('edlAdminAuthorizer', () => {
 
   describe('when an error is returned while retrieving the admin user list', () => {
     test('returns unauthorized', async () => {
-      jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => 'testuser')
+      jest.spyOn(validateToken, 'validateToken').mockImplementationOnce(() => ({
+        userId: 1,
+        username: 'testuser'
+      }))
+
       jest.spyOn(getAdminUsers, 'getAdminUsers').mockImplementationOnce(() => (
         // eslint-disable-next-line no-promise-executor-return
         new Promise((resolve, reject) => reject(new Error('Unkown Error')))

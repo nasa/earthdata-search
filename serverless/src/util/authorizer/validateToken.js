@@ -113,8 +113,11 @@ export const validateToken = async (jwtToken, earthdataEnvironment) => {
         }
       }
 
-      // If successful, return the username associated with the token
-      return username
+      // If successful, return the user ID and username associated with the token
+      return {
+        userId,
+        username
+      }
     })
   } catch (error) {
     parseError(error)

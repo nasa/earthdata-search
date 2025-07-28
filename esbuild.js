@@ -17,7 +17,9 @@ build({
   outdir: 'serverless/dist',
   loader: {
     '.ipynb': 'json',
-    '.svg': 'text'
+    '.svg': 'text',
+    '.graphql': 'text',
+    '.gql': 'text'
   },
   external: [
     'better-sqlite3',

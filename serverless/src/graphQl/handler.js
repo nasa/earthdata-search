@@ -1,78 +1,58 @@
-import axios from 'axios'
+import { ApolloServer } from '@apollo/server'
+import {
+  ApolloServerPluginLandingPageLocalDefault
+} from '@apollo/server/plugin/landingPage/default'
+import { handlers, startServerAndCreateLambdaHandler } from '@as-integrations/aws-lambda'
+import { makeExecutableSchema } from '@graphql-tools/schema'
+import { applyMiddleware } from 'graphql-middleware'
 
-import { determineEarthdataEnvironment } from '../util/determineEarthdataEnvironment'
-import { getApplicationConfig, getEarthdataConfig } from '../../../sharedUtils/config'
-import { getEchoToken } from '../util/urs/getEchoToken'
-import { getJwtToken } from '../util/getJwtToken'
-import { parseError } from '../../../sharedUtils/parseError'
-import { prepareExposeHeaders } from '../util/cmr/prepareExposeHeaders'
+import buildPermissions from './permissions'
+import resolvers from './resolvers'
+import typeDefs from './types'
+import getContext from './utils/getContext'
 
-/**
- * Query GraphQL endpoint
- * @param {Object} event Details about the HTTP request that it received
- * @param {Object} context Methods and properties that provide information about the invocation, function, and execution environment
- */
-const graphQl = async (event, context) => {
-  // https://stackoverflow.com/questions/49347210/why-aws-lambda-keeps-timing-out-when-using-knex-js
-  // eslint-disable-next-line no-param-reassign
-  context.callbackWaitsForEmptyEventLoop = false
+const apolloPlugins = [
+  ApolloServerPluginLandingPageLocalDefault({
+    embed: false,
+    footer: false
+  })
+]
 
-  const { body, headers } = event
+const schema = applyMiddleware(
+  makeExecutableSchema({
+    typeDefs,
+    resolvers
+  }),
+  buildPermissions()
+)
 
-  const { defaultResponseHeaders } = getApplicationConfig()
+const server = new ApolloServer({
+  schema,
+  plugins: apolloPlugins
+})
 
-  const { data, requestId } = JSON.parse(body)
-
-  const { variables, query } = data
-
-  const earthdataEnvironment = determineEarthdataEnvironment(headers)
-
-  const jwtToken = getJwtToken(event)
-
-  const echoToken = await getEchoToken(jwtToken, earthdataEnvironment)
-
-  const { graphQlHost } = getEarthdataConfig(earthdataEnvironment)
-
-  const graphQlUrl = `${graphQlHost}/api`
-
-  try {
-    const response = await axios({
-      url: graphQlUrl,
-      method: 'post',
-      data: {
-        query,
-        variables
-      },
-      headers: {
-        Authorization: `Bearer ${echoToken}`,
-        'X-Request-Id': requestId
+export default startServerAndCreateLambdaHandler(
+  server,
+  handlers.createAPIGatewayProxyEventRequestHandler(),
+  {
+    context: getContext,
+    middleware: [
+      () => async (result) => {
+        const { headers } = result
+        // eslint-disable-next-line no-param-reassign
+        result.headers = {
+          ...headers,
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
+          'Access-Control-Allow-Headers': [
+            'Accept',
+            'Authorization',
+            'Client-Id',
+            'Content-Type',
+            'X-Request-Id'
+          ].join(', ')
+        }
       }
-    })
-
-    const {
-      data: responseData,
-      headers: responseHeaders,
-      status
-    } = response
-
-    return {
-      isBase64Encoded: false,
-      statusCode: status,
-      headers: {
-        ...defaultResponseHeaders,
-        'access-control-allow-origin': responseHeaders['access-control-allow-origin'],
-        'access-control-expose-headers': prepareExposeHeaders(responseHeaders),
-        'jwt-token': jwtToken
-      },
-      body: JSON.stringify(responseData)
-    }
-  } catch (error) {
-    return {
-      isBase64Encoded: false,
-      headers: defaultResponseHeaders,
-      ...parseError(error)
-    }
+    ]
   }
-}
-
-export default graphQl
+)

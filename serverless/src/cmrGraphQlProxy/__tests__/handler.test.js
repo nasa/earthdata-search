@@ -4,7 +4,7 @@ import * as getJwtToken from '../../util/getJwtToken'
 import * as getEarthdataConfig from '../../../../sharedUtils/config'
 import * as getEchoToken from '../../util/urs/getEchoToken'
 
-import graphQl from '../handler'
+import graphQlProxy from '../handler'
 
 beforeEach(() => {
   jest.spyOn(getJwtToken, 'getJwtToken').mockImplementation(() => 'mockJwt')
@@ -15,7 +15,7 @@ beforeEach(() => {
   }))
 })
 
-describe('graphQl', () => {
+describe('graphQlProxy', () => {
   describe('when graphQl returns a successful 200', () => {
     test('returns the result', async () => {
       nock(/graphql/)
@@ -48,7 +48,7 @@ describe('graphQl', () => {
         })
       }
 
-      const response = await graphQl(event, {})
+      const response = await graphQlProxy(event, {})
 
       expect(response.statusCode).toEqual(200)
     })
@@ -113,7 +113,7 @@ describe('graphQl', () => {
         })
       }
 
-      const response = await graphQl(event, {})
+      const response = await graphQlProxy(event, {})
 
       expect(response.statusCode).toEqual(200)
 
@@ -171,7 +171,7 @@ describe('graphQl', () => {
       })
     }
 
-    const response = await graphQl(event, {})
+    const response = await graphQlProxy(event, {})
 
     expect(response.statusCode).toEqual(500)
 
