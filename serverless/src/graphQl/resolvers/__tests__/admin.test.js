@@ -46,7 +46,10 @@ const setupServer = () => (
 const contextValue = {
   dataSources: { databaseClient },
   requestId: 'mock-request-id',
-  user: { ursId: 'testuser' }
+  user: {
+    ursId: 'testuser',
+    username: 'testusername'
+  }
 }
 
 describe('Admin Resolver', () => {

@@ -24,5 +24,6 @@ describe('AdminPreferencesMetrics component', () => {
   test('renders the AdminPreferencesMetricsList component', () => {
     setup()
     expect(AdminPreferencesMetricsList).toHaveBeenCalledTimes(1)
+    expect(AdminPreferencesMetricsList).toHaveBeenCalledWith({}, {})
   })
 })

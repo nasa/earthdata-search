@@ -34,7 +34,6 @@ describe('DatabaseClient', () => {
   })
 
   afterEach(() => {
-    jest.clearAllMocks()
     dbTracker.uninstall()
   })
 
