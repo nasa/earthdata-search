@@ -11,7 +11,7 @@ import Autosuggest from 'react-autosuggest'
 import { Search } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import AutocompleteRequest from '../../util/request/autocompleteRequest'
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { handleError } from '../../actions/errors'
 import Spinner from '../Spinner/Spinner'
 import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
@@ -41,10 +41,12 @@ const SearchAutocomplete = ({
 
   const {
     addCmrFacetFromAutocomplete,
-    setOpenFacetGroup
+    setOpenFacetGroup,
+    earthdataEnvironment
   } = useEdscStore((state) => ({
     addCmrFacetFromAutocomplete: state.facetParams.addCmrFacetFromAutocomplete,
-    setOpenFacetGroup: state.home.setOpenFacetGroup
+    setOpenFacetGroup: state.home.setOpenFacetGroup,
+    earthdataEnvironment: getEarthdataEnvironment(state)
   }))
 
   // Update local state when initial keyword changes
@@ -108,14 +110,12 @@ const SearchAutocomplete = ({
 
     const { value } = data
 
-    // Get earthdataEnvironment from Redux
+    // Get authToken from Redux
     const {
       dispatch: reduxDispatch,
       getState: reduxGetState
     } = configureStore()
     const reduxState = reduxGetState()
-    const earthdataEnvironment = getEarthdataEnvironment(reduxState)
-
     const { authToken } = reduxState
 
     setIsLoading(true)

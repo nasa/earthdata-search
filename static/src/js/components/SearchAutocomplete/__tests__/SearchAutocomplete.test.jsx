@@ -14,8 +14,12 @@ const setup = setupTest({
     onChangeFocusedCollection: jest.fn()
   },
   defaultReduxState: {
-    authToken: '',
-    earthdataEnvironment: 'prod'
+    authToken: ''
+  },
+  defaultZustandState: {
+    earthdataEnvironment: {
+      currentEnvironment: 'prod'
+    }
   }
 })
 
