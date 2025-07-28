@@ -1,47 +1,29 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
-import { MemoryRouter } from 'react-router-dom'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import { AdminPreferencesMetrics } from '../AdminPreferencesMetrics'
+import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
 
-const setup = () => {
-  const preferencesMetrics = {
-    isLoaded: true,
-    isLoading: false,
-    preferences: {
-      panelState: [],
-      granuleSort: [],
-      granuleListView: [],
-      collectionSort: [],
-      collectionListView: [],
-      zoom: [],
-      latitude: [],
-      longitude: [],
-      projection: [],
-      overlayLayers: [],
-      baseLayer: []
-    }
-  }
+jest.mock('../AdminPreferencesMetricsList', () => ({
+  AdminPreferencesMetricsList: jest.fn(() => <div />)
+}))
 
-  const props = {
-    preferencesMetrics
-  }
-
-  render(
-    <MemoryRouter>
-      <AdminPreferencesMetrics {...props} />
-    </MemoryRouter>
-  )
-
-  return {
-    preferencesMetrics
-  }
-}
+const setup = setupTest({
+  Component: AdminPreferencesMetrics,
+  withRouter: true
+})
 
 describe('AdminPreferencesMetrics component', () => {
-  test('renders itself correctly', () => {
+  test('renders a page heading', () => {
     setup()
     expect(screen.getByRole('heading', { name: 'Preferences Metrics' })).toBeInTheDocument()
+  })
+
+  test('renders the AdminPreferencesMetricsList component', () => {
+    setup()
+    expect(AdminPreferencesMetricsList).toHaveBeenCalledTimes(1)
+    expect(AdminPreferencesMetricsList).toHaveBeenCalledWith({}, {})
   })
 })

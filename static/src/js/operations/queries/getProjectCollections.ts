@@ -1,4 +1,4 @@
-const getProjectCollections = `
+const GET_PROJECT_COLLECTIONS = `
   query GetProjectCollections (
     $params: CollectionsInput,
     $subcriptionParams: SubscriptionsInput,
@@ -139,4 +139,4 @@ const getProjectCollections = `
   }
 `
 
-export default getProjectCollections
+export default GET_PROJECT_COLLECTIONS

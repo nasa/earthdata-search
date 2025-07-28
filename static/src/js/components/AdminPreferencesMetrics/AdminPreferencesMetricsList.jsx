@@ -1,8 +1,10 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { startCase } from 'lodash-es'
+import { gql, useQuery } from '@apollo/client'
 
 import Table from 'react-bootstrap/Table'
+
+import ADMIN_PREFERENCES_METRICS from '../../operations/queries/adminPreferencesMetrics'
 
 import Spinner from '../Spinner/Spinner'
 
@@ -14,14 +16,15 @@ import './AdminPreferencesMetricsList.scss'
  * @returns preference tables
  */
 const createPreferencesTable = (preferences) => {
-  const tables = Object.keys(preferences).map((key) => {
+  // TODO We should not have to filter out the typename here if we do not map on the keys
+  const tables = Object.keys(preferences).filter((key) => key !== '__typename').map((key) => {
     const header = (
       <thead key={`${key}_header`}>
         <tr key={`${preferences[key]}_header`}>
           {
-            // Pulling out the values (not the count)
-            Object.values(preferences[key]).map(([field]) => (
-              <th key={`${field}}`}>{field}</th>
+
+            Object.values(preferences[key]).map(({ value }) => (
+              <th key={`${value}}`}>{value}</th>
             ))
           }
         </tr>
@@ -33,8 +36,14 @@ const createPreferencesTable = (preferences) => {
           {
             // Pulling out the counts/percentages of each value
             // value[0] is the field and value[1] is the count
-            Object.values(preferences[key]).map(([field, count]) => (
-              <td key={`${field}_${count}`}>{count}</td>
+            Object.values(preferences[key]).map(({ count, percentage, value }) => (
+              <td key={`${value}_${count}`}>
+                {count}
+                {' '}
+                (
+                {percentage}
+                %)
+              </td>
             ))
           }
         </tr>
@@ -65,15 +74,13 @@ const createPreferencesTable = (preferences) => {
   )
 }
 
-export const AdminPreferencesMetricsList = ({
-  preferencesMetrics
-}) => {
-  const { preferences, isLoading, isLoaded } = preferencesMetrics
+export const AdminPreferencesMetricsList = () => {
+  const { data, error, loading } = useQuery(gql(ADMIN_PREFERENCES_METRICS))
 
   return (
     <div>
       {
-        isLoading && (
+        loading && (
           <Spinner
             dataTestId="admin-preferences-metric-list-spinner"
             className="position-absolute admin-preferences-metrics-list__spinner"
@@ -81,25 +88,9 @@ export const AdminPreferencesMetricsList = ({
           />
         )
       }
-      {isLoaded && createPreferencesTable(preferences)}
+      {!loading && !error && createPreferencesTable(data.adminPreferencesMetrics)}
     </div>
   )
-}
-
-AdminPreferencesMetricsList.defaultProps = {
-  preferencesMetrics: {
-    preferences: {},
-    isLoaded: false,
-    isLoading: false
-  }
-}
-
-AdminPreferencesMetricsList.propTypes = {
-  preferencesMetrics: PropTypes.shape({
-    preferences: PropTypes.shape({}),
-    isLoaded: PropTypes.bool,
-    isLoading: PropTypes.bool
-  })
 }
 
 export default AdminPreferencesMetricsList

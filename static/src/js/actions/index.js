@@ -9,8 +9,6 @@ import {
   updateAdminRetrievalsPageNum
 } from './admin/retrievals'
 
-import { fetchAdminPreferencesMetrics } from './admin/preferencesMetrics'
-
 import {
   fetchAdminRetrievalsMetrics,
   updateAdminRetrievalsMetricsStartDate,
@@ -220,7 +218,6 @@ const actions = {
   undoExcludeGranule,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
-  fetchAdminPreferencesMetrics,
   fetchAdminRetrievalsMetrics,
   updateAdminRetrievalsMetricsStartDate,
   updateAdminRetrievalsMetricsEndDate,
