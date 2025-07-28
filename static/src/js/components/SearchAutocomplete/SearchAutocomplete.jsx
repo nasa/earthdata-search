@@ -345,6 +345,7 @@ const SearchAutocomplete = ({
           shouldRenderSuggestions={shouldRenderSuggestions}
           inputProps={
             {
+              'data-testid': 'keyword-search-input',
               name: 'keywordSearch',
               className: 'search-autocomplete__input form-control',
               placeholder: 'Type to search for data',
