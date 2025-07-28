@@ -31,11 +31,6 @@ import {
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-})
-
 describe('setAdminProject', () => {
   test('should create an action to set the admin project data', () => {
     const payload = {

@@ -51,10 +51,6 @@ const createVariableResults = () => [{
   }
 }]
 
-beforeEach(() => {
-  jest.restoreAllMocks()
-})
-
 describe('updateFocusedCollection', () => {
   test('should create an action to update the focused collection', () => {
     const payload = 'newCollectionId'

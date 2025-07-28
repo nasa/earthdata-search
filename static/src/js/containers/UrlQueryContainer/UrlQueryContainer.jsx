@@ -12,7 +12,7 @@ import { encodeUrlQuery } from '../../util/url/url'
 import { locationPropType } from '../../util/propTypes/location'
 
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import {
@@ -34,7 +34,6 @@ export const mapStateToProps = (state) => ({
   boundingBoxSearch: state.query.collection.spatial.boundingBox,
   circleSearch: state.query.collection.spatial.circle,
   collectionsMetadata: getCollectionsMetadata(state),
-  earthdataEnvironment: getEarthdataEnvironment(state),
   focusedCollection: getFocusedCollectionId(state),
   focusedGranule: getFocusedGranuleId(state),
   hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,
@@ -67,6 +66,7 @@ export const UrlQueryContainer = (props) => {
   const previousSearch = useRef(search)
 
   const zustandValues = useEdscStore((state) => ({
+    earthdataEnvironment: getEarthdataEnvironment(state),
     featureFacets: state.facetParams.featureFacets,
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
     horizontalDataResolutionRangeFacets:

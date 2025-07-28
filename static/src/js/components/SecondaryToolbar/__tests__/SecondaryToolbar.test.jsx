@@ -33,7 +33,6 @@ const setup = setupTest({
   Component: SecondaryToolbar,
   defaultProps: {
     authToken: '',
-    earthdataEnvironment: 'prod',
     location: {
       pathname: '/search'
     },
@@ -144,8 +143,12 @@ describe('SecondaryToolbar component', () => {
       test('adds the ee param if the earthdataEnvironment is different than the deployed environment', async () => {
         const { user } = setup({
           overrideProps: {
-            authToken: 'fakeauthkey',
-            earthdataEnvironment: 'uat'
+            authToken: 'fakeauthkey'
+          },
+          overrideZustandState: {
+            earthdataEnvironment: {
+              currentEnvironment: 'uat'
+            }
           }
         })
 

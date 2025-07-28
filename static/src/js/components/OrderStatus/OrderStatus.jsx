@@ -17,13 +17,15 @@ import { locationPropType } from '../../util/propTypes/location'
 import { orderStatusSkeleton, orderStatusLinksSkeleton } from './skeleton'
 import { stringify } from '../../util/url/url'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+
 import './OrderStatus.scss'
 
 /**
  * Renders a RelatedCollection.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.authToken - The authToken for the logged in user.
- * @param {String} props.earthdataEnvironment - The accessMethods of the current collection.
  * @param {Object} props.granuleDownload - Data pertaining to the status of the granule download for a retrieval collection.
  * @param {Object} props.location - Location passed from react router.
  * @param {Object} props.match - Router match state.
@@ -38,7 +40,6 @@ import './OrderStatus.scss'
  */
 export const OrderStatus = ({
   authToken,
-  earthdataEnvironment,
   granuleDownload,
   location,
   match,
@@ -52,6 +53,8 @@ export const OrderStatus = ({
   onToggleAboutCSDAModal,
   retrieval = {}
 }) => {
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
+
   useEffect(() => {
     if (authToken !== '') {
       const { params } = match
@@ -386,7 +389,6 @@ export const OrderStatus = ({
 
 OrderStatus.propTypes = {
   authToken: PropTypes.string.isRequired,
-  earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   match: PropTypes.shape({

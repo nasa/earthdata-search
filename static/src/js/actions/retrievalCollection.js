@@ -5,8 +5,10 @@ import {
   SET_RETRIEVAL_COLLECTION_LOADING
 } from '../constants/actionTypes'
 
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { handleError } from './errors'
+import actions from './index'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const setRetrievalCollectionLoading = (retrievalCollection) => ({
   type: SET_RETRIEVAL_COLLECTION_LOADING,
@@ -27,7 +29,7 @@ export const fetchRetrievalCollection = (id) => (dispatch, getState) => {
   const { authToken } = state
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   dispatch(setRetrievalCollectionLoading({ id }))
 
@@ -43,7 +45,7 @@ export const fetchRetrievalCollection = (id) => (dispatch, getState) => {
       }))
     })
     .catch((error) => {
-      dispatch(handleError({
+      dispatch(actions.handleError({
         error,
         action: 'fetchRetrievalCollection',
         resource: 'collection',

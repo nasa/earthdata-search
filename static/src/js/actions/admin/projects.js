@@ -15,7 +15,9 @@ import {
 import actions from '../index'
 
 import { handleError } from '../errors'
-import { getEarthdataEnvironment } from '../../selectors/earthdataEnvironment'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 export const setAdminProject = (payload) => ({
   type: SET_ADMIN_PROJECT,
@@ -56,8 +58,7 @@ export const setAdminProjectsPagination = (data) => ({
 export const fetchAdminProject = (id) => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 

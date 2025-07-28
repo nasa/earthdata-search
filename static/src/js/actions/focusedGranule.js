@@ -3,11 +3,13 @@ import actions from './index'
 import { UPDATE_FOCUSED_GRANULE } from '../constants/actionTypes'
 
 import { createEcho10MetadataUrls } from '../util/granules'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedGranuleId } from '../selectors/focusedGranule'
 import { getFocusedGranuleMetadata } from '../selectors/granuleMetadata'
 
 import GraphQlRequest from '../util/request/graphQlRequest'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 /**
  * Sets the focused granule value in redux
@@ -30,7 +32,7 @@ export const getFocusedGranule = () => (dispatch, getState) => {
   } = state
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
   const focusedGranuleId = getFocusedGranuleId(state)
   const focusedGranuleMetadata = getFocusedGranuleMetadata(state)
 

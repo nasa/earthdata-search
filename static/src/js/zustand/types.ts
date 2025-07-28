@@ -9,6 +9,24 @@ import {
   VariableMetadata
 } from '../types/sharedTypes'
 
+/** Data Quality Summary item structure */
+type DataQualitySummaryItem = {
+  /** Unique identifier for the data quality summary */
+  id: string
+  /** HTML content of the summary */
+  summary: string
+}
+
+export type DataQualitySummariesSlice = {
+  /** The Data Quality Summaries Slice of the store */
+  dataQualitySummaries: {
+    /** Object storing data quality summaries by collection ID */
+    byCollectionId: Record<string, DataQualitySummaryItem[]>
+    /** Function to set data quality summaries for a collection */
+    setDataQualitySummaries: (catalogItemId: string, summaries: DataQualitySummaryItem[]) => void
+  }
+}
+
 export type EarthdataDownloadRedirectSlice = {
   /** The Earthdata Download Redirect Slice of the store */
   earthdataDownloadRedirect: {
@@ -16,6 +34,14 @@ export type EarthdataDownloadRedirectSlice = {
     redirectUrl: string
     /** Function to set the redirect URL */
     setRedirectUrl: (redirect: string) => void
+  }
+}
+
+export type EarthdataEnvironmentSlice = {
+  /** The Earthdata Environment Slice of the store */
+  earthdataEnvironment: {
+    /** The current Earthdata environment */
+    currentEnvironment: 'prod' | 'uat' | 'sit'
   }
 }
 
@@ -726,7 +752,9 @@ export type UiSlice = {
 }
 
 export type EdscStore =
-  EarthdataDownloadRedirectSlice
+  DataQualitySummariesSlice
+  & EarthdataDownloadRedirectSlice
+  & EarthdataEnvironmentSlice
   & FacetParamsSlice
   & HomeSlice
   & MapSlice

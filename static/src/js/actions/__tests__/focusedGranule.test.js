@@ -13,11 +13,6 @@ import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-})
-
 describe('updateFocusedGranule', () => {
   test('should create an action to update the focused collection', () => {
     const payload = 'newCollectionId'

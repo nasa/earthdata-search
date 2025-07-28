@@ -7,7 +7,7 @@ import {
   extractProjectCollectionGranuleParams
 } from './granules'
 
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 import useEdscStore from '../zustand/useEdscStore'
 import {
@@ -65,11 +65,9 @@ export const prepareRetrievalParams = (state) => {
 
   const { shapefile } = useEdscStore.getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
-
   // Retrieve data from Zustand
   const zustandState = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const collectionsMetadata = getProjectCollectionsMetadata(zustandState)
   const projectCollections = getProjectCollections(zustandState)
   const projectCollectionsIds = getProjectCollectionsIds(zustandState)

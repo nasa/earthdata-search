@@ -4,8 +4,10 @@ import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
 
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const updateSavedProject = (payload) => ({
   type: UPDATE_SAVED_PROJECT,
@@ -19,8 +21,7 @@ export const updateSavedProject = (payload) => ({
 export const updateProjectName = (name) => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const {
     authToken,

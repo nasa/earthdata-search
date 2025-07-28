@@ -12,10 +12,6 @@ import { EXPORT_FINISHED, EXPORT_STARTED } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('onExportStarted', () => {
   test('should create an action to update the store', () => {
     const payload = 'json'

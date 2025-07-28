@@ -17,10 +17,6 @@ import {
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('setColorMapsErrored', () => {
   test('should create an action to update metadata.colormaps with an errored entry', () => {
     const payload = { mock: 'payload' }

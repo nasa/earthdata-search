@@ -1,9 +1,11 @@
-import React from 'react'
-import { render, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import * as tinyCookie from 'tiny-cookie'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
-import { AuthRequiredContainer, mapStateToProps } from '../AuthRequiredContainer'
+import { AuthRequiredContainer } from '../AuthRequiredContainer'
 
 jest.mock('tiny-cookie', () => ({
   get: jest.fn(),
@@ -11,45 +13,23 @@ jest.mock('tiny-cookie', () => ({
   remove: jest.fn()
 }))
 
-const setup = (overrideProps) => {
-  const props = {
-    children: 'children',
-    earthdataEnvironment: 'prod',
-    ...overrideProps
+const setup = setupTest({
+  Component: AuthRequiredContainer,
+  defaultProps: {
+    children: 'children'
   }
-
-  render(
-    <AuthRequiredContainer {...props} />
-  )
-}
+})
 
 beforeEach(() => {
-  jest.restoreAllMocks()
-  jest.clearAllMocks()
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableDatabaseComponents: false
   }))
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      earthdataEnvironment: 'prod'
-    }
-
-    const expectedState = {
-      earthdataEnvironment: 'prod'
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
 })
 
 describe('AuthRequiredContainer component', () => {
   const { href } = window.location
 
   afterEach(() => {
-    jest.clearAllMocks()
     window.location.href = href
   })
 
@@ -65,6 +45,7 @@ describe('AuthRequiredContainer component', () => {
     window.location = { href: returnPath }
 
     setup()
+
     expect(screen.getByTestId('auth-required')).toBeInTheDocument()
     expect(window.location.href).toEqual(`http://localhost:3000/login?ee=prod&state=${encodeURIComponent(returnPath)}`)
   })
@@ -77,6 +58,7 @@ describe('AuthRequiredContainer component', () => {
     })
 
     setup()
+
     expect(screen.getByText('children')).toBeInTheDocument()
   })
 
@@ -92,7 +74,12 @@ describe('AuthRequiredContainer component', () => {
       delete window.location
       window.location = { href: returnPath }
 
-      setup({ noRedirect: true })
+      setup({
+        overrideProps: {
+          noRedirect: true
+        }
+      })
+
       expect(screen.getByTestId('auth-required')).toBeInTheDocument()
       expect(window.location.href).toEqual('http://example.com/test/path')
     })
@@ -104,7 +91,12 @@ describe('AuthRequiredContainer component', () => {
         return null
       })
 
-      setup({ noRedirect: true })
+      setup({
+        overrideProps: {
+          noRedirect: true
+        }
+      })
+
       expect(screen.queryByText('children')).not.toBeInTheDocument()
     })
   })
@@ -116,6 +108,7 @@ describe('AuthRequiredContainer component', () => {
       }))
 
       setup()
+
       expect(screen.getByTestId('auth-required')).toBeInTheDocument()
       expect(window.location.href).toEqual('/search')
     })
@@ -128,7 +121,9 @@ describe('AuthRequiredContainer component', () => {
       jest.spyOn(tinyCookie, 'remove').mockImplementation(() => null)
 
       setup()
+
       expect(tinyCookie.remove).toHaveBeenCalledTimes(1)
+      expect(tinyCookie.remove).toHaveBeenCalledWith('authToken')
     })
   })
 })

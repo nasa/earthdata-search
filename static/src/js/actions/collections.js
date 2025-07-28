@@ -21,8 +21,10 @@ import {
 } from '../constants/actionTypes'
 
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { pruneFilters } from '../util/pruneFilters'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const addMoreCollectionResults = (payload) => ({
   type: ADD_MORE_COLLECTION_RESULTS,
@@ -140,8 +142,7 @@ let cancelToken
 export const getCollections = () => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   // If cancel token is set, cancel the previous request(s)
   if (cancelToken) {

@@ -5,12 +5,12 @@ import { SET_RETRIEVAL_LOADING, UPDATE_RETRIEVAL } from '../constants/actionType
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import { deployedEnvironment } from '../../../../sharedUtils/deployedEnvironment'
-import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { handleError } from './errors'
 import { metricsDataAccess } from '../middleware/metrics/actions'
 import { prepareRetrievalParams } from '../util/retrievals'
 
 import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 export const setRetrievalLoading = () => ({
   type: SET_RETRIEVAL_LOADING
@@ -27,8 +27,7 @@ export const updateRetrieval = (retrievalData) => ({
 export const submitRetrieval = () => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 
@@ -126,8 +125,7 @@ export const submitRetrieval = () => (dispatch, getState) => {
 export const fetchRetrieval = (id) => (dispatch, getState) => {
   const state = getState()
 
-  // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { authToken } = state
 

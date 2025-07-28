@@ -32,13 +32,16 @@ jest.mock('../../../actions', () => ({
   addGranuleMetadata: jest.fn(),
   handleAlert: jest.fn(),
   handleError: jest.fn(),
-  setDataQualitySummaries: jest.fn(),
   toggleSpatialPolygonWarning: jest.fn(),
   updateCollectionMetadata: jest.fn()
 }))
 
 beforeEach(() => {
   MockDate.set(new Date('2025-01-01T00:00:00Z'))
+
+  useEdscStore.setState((state) => {
+    state.dataQualitySummaries.setDataQualitySummaries = jest.fn()
+  })
 })
 
 afterEach(() => {
@@ -395,7 +398,8 @@ describe('createProjectSlice', () => {
           }
         })
 
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(0)
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(2)
         expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([{
@@ -884,7 +888,8 @@ describe('createProjectSlice', () => {
           }
         })
 
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(0)
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([
@@ -920,8 +925,9 @@ describe('createProjectSlice', () => {
 
         expect(byId).toEqual({})
 
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(0)
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(0)
       })
     })
 
@@ -1002,10 +1008,10 @@ describe('createProjectSlice', () => {
           }
         })
 
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(0)
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
         expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
-
         expect(actions.handleError).toHaveBeenCalledTimes(1)
         expect(actions.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',
@@ -1115,14 +1121,12 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledTimes(1)
-        expect(actions.setDataQualitySummaries).toHaveBeenCalledWith({
-          catalogItemId: 'collectionId1',
-          dataQualitySummaries: [{
-            conceptId: 'DQS1000000-EDSC',
-            title: 'Data Quality Summary 1'
-          }]
-        })
+        const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
+        expect(setDataQualitySummaries).toHaveBeenCalledTimes(1)
+        expect(setDataQualitySummaries).toHaveBeenCalledWith('collectionId1', [{
+          conceptId: 'DQS1000000-EDSC',
+          title: 'Data Quality Summary 1'
+        }])
       })
     })
   })

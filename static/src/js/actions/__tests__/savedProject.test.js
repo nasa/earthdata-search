@@ -7,11 +7,6 @@ import { updateSavedProject, updateProjectName } from '../savedProject'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-})
-
 describe('updateSavedProject', () => {
   test('should create an action to update the savedProject', () => {
     const payload = {
