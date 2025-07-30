@@ -136,9 +136,6 @@ describe('SearchAutocomplete', () => {
       }))
 
       expect(screen.queryByText('Loading collections...')).not.toBeInTheDocument()
-
-      // Cleanup
-      handleErrorMock.mockRestore()
     })
   })
 
@@ -229,6 +226,8 @@ describe('SearchAutocomplete', () => {
           }
         })
       })
+
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
     })
 
     test('clears the input after selection', async () => {
@@ -286,6 +285,7 @@ describe('SearchAutocomplete', () => {
 
       await user.click(screen.getByText('Laser Reflectance'))
 
+      expect(addCmrFacetFromAutocomplete).toHaveBeenCalledTimes(1)
       expect(addCmrFacetFromAutocomplete).toHaveBeenCalledWith({
         science_keywords_h: {
           topic: 'Land Surface',
@@ -295,6 +295,7 @@ describe('SearchAutocomplete', () => {
         }
       })
 
+      expect(setOpenFacetGroup).toHaveBeenCalledTimes(1)
       expect(setOpenFacetGroup).toHaveBeenCalledWith('science_keywords')
     })
 
@@ -328,6 +329,7 @@ describe('SearchAutocomplete', () => {
 
       await user.click(screen.getByText('LANDSAT-8'))
 
+      expect(addCmrFacetFromAutocomplete).toHaveBeenCalledTimes(1)
       expect(addCmrFacetFromAutocomplete).toHaveBeenCalledWith({
         platforms_h: {
           basis: 'Space-based Platforms',
@@ -337,6 +339,7 @@ describe('SearchAutocomplete', () => {
         }
       })
 
+      expect(setOpenFacetGroup).toHaveBeenCalledTimes(1)
       expect(setOpenFacetGroup).toHaveBeenCalledWith('platforms')
     })
 

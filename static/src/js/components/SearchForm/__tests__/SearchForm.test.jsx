@@ -63,6 +63,7 @@ describe('SearchForm component', () => {
     })
 
     expect(props.onClearFilters).toHaveBeenCalledTimes(1)
+    expect(props.onClearFilters).toHaveBeenCalledWith()
   })
 
   describe('advanced search button', () => {
