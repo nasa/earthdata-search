@@ -95,8 +95,11 @@ export const ShapefileDropzoneContainer = ({
 
           dropzoneEl.removeFile(file)
 
+          // Minify the GeoJSON response from Ogre
+          const minifiedResponse = JSON.parse(JSON.stringify(resp))
+
           // Update the name to the original name (ogre puts a hash into this name field)
-          const updatedResponse = resp
+          const updatedResponse = minifiedResponse
           updatedResponse.name = name
 
           const fileWithIds = addEdscIdsToShapefile(updatedResponse)

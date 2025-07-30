@@ -125,6 +125,10 @@ describe('ShapefileDropzoneContainer component', () => {
       const filesizeMock = jest.fn(() => '200KB')
       const onSaveShapefileMock = jest.fn()
 
+      // Mock JSON methods to verify minification
+      const stringifySpy = jest.spyOn(JSON, 'stringify')
+      const parseSpy = jest.spyOn(JSON, 'parse')
+
       const { props } = setup({
         overrideZustandState: {
           shapefile: {
@@ -238,6 +242,11 @@ describe('ShapefileDropzoneContainer component', () => {
         filename: 'test-file-name.zip',
         size: '200KB'
       })
+
+      // Verify minification was performed
+      expect(stringifySpy).toHaveBeenCalledTimes(1)
+      expect(stringifySpy).toHaveBeenCalledWith(mockResponse)
+      expect(parseSpy).toHaveBeenCalledTimes(1)
     })
   })
 
