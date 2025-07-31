@@ -14,20 +14,11 @@ export const mapDispatchToProps = (dispatch) => ({
   onClearFilters:
     () => dispatch(actions.clearFilters()),
   onToggleAdvancedSearchModal:
-    (state) => dispatch(actions.toggleAdvancedSearchModal(state)),
-  onCancelAutocomplete:
-    () => dispatch(actions.cancelAutocomplete()),
-  onClearAutocompleteSuggestions:
-    () => dispatch(actions.clearAutocompleteSuggestions()),
-  onFetchAutocomplete:
-    (data) => dispatch(actions.fetchAutocomplete(data)),
-  onSelectAutocompleteSuggestion:
-    (data) => dispatch(actions.selectAutocompleteSuggestion(data))
+    (state) => dispatch(actions.toggleAdvancedSearchModal(state))
 })
 
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
-  autocomplete: state.autocomplete,
   keywordSearch: state.query.collection.keyword,
   temporalSearch: state.query.collection.temporal
 })
@@ -37,16 +28,11 @@ export const mapStateToProps = (state) => ({
 export const SearchFormContainer = (props) => {
   const {
     advancedSearch,
-    autocomplete,
     keywordSearch,
-    onCancelAutocomplete,
     onChangeQuery,
     onClearFilters,
     onChangeFocusedCollection,
-    onToggleAdvancedSearchModal,
-    onClearAutocompleteSuggestions,
-    onFetchAutocomplete,
-    onSelectAutocompleteSuggestion
+    onToggleAdvancedSearchModal
   } = props
 
   return (
@@ -55,13 +41,8 @@ export const SearchFormContainer = (props) => {
       onChangeFocusedCollection={onChangeFocusedCollection}
       onClearFilters={onClearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
-      onCancelAutocomplete={onCancelAutocomplete}
-      onClearAutocompleteSuggestions={onClearAutocompleteSuggestions}
-      onFetchAutocomplete={onFetchAutocomplete}
-      onSelectAutocompleteSuggestion={onSelectAutocompleteSuggestion}
       advancedSearch={advancedSearch}
       keywordSearch={keywordSearch}
-      autocomplete={autocomplete}
     />
   )
 }
@@ -76,16 +57,11 @@ SearchFormContainer.propTypes = {
   advancedSearch: PropTypes.shape({
     regionSearch: PropTypes.shape({})
   }),
-  autocomplete: PropTypes.shape({}).isRequired,
   keywordSearch: PropTypes.string,
   onChangeQuery: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired,
-  onCancelAutocomplete: PropTypes.func.isRequired,
-  onClearAutocompleteSuggestions: PropTypes.func.isRequired,
-  onFetchAutocomplete: PropTypes.func.isRequired,
-  onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
   temporalSearch: PropTypes.shape({
     endDate: PropTypes.string,
     startDate: PropTypes.string
