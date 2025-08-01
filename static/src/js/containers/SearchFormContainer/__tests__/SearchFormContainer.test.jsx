@@ -16,21 +16,21 @@ const setup = setupTest({
   Component: SearchFormContainer,
   defaultProps: {
     advancedSearch: {},
+    authToken: '',
     keywordSearch: 'Test value',
     temporalSearch: {},
-    onClearFilters: jest.fn(),
-    onChangeQuery: jest.fn(),
+    handleError: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn()
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onChangeQuery calls actions.changeQuery', () => {
+  test('handleError calls actions.handleError', () => {
     const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeQuery')
+    const spy = jest.spyOn(actions, 'handleError')
 
-    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
+    mapDispatchToProps(dispatch).handleError({ mock: 'data' })
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
@@ -44,15 +44,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
-  test('onClearFilters calls actions.clearFilters', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'clearFilters')
-
-    mapDispatchToProps(dispatch).onClearFilters()
-
-    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onToggleAdvancedSearchModal calls actions.toggleAdvancedSearchModal', () => {
@@ -70,20 +61,8 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
+      authToken: '',
       focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          keyword: '',
-          spatial: {
-            boundingBox: [],
-            circle: [],
-            line: [],
-            point: [],
-            polygon: []
-          },
-          temporal: {}
-        }
-      },
       ui: {
         map: {
           drawingNewLayer: false
@@ -93,8 +72,7 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      keywordSearch: '',
-      temporalSearch: {}
+      authToken: ''
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -108,10 +86,10 @@ describe('SearchFormContainer component', () => {
     expect(SearchForm).toHaveBeenCalledTimes(1)
     expect(SearchForm).toHaveBeenCalledWith({
       advancedSearch: props.advancedSearch,
-      keywordSearch: props.keywordSearch,
-      onChangeQuery: props.onChangeQuery,
+      authToken: props.authToken,
+      handleError: props.handleError,
       onChangeFocusedCollection: props.onChangeFocusedCollection,
-      onClearFilters: props.onClearFilters,
+      onClearFilters: expect.any(Function),
       onToggleAdvancedSearchModal: props.onToggleAdvancedSearchModal
     }, {})
   })

@@ -8,9 +8,7 @@ import AdvancedSearchDisplay from '../../components/AdvancedSearchDisplay/Advanc
 
 export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
-    (state) => dispatch(actions.updateAdvancedSearch(state)),
-  onChangeQuery:
-    (query) => dispatch(actions.changeQuery(query))
+    (state) => dispatch(actions.updateAdvancedSearch(state))
 })
 
 export const mapStateToProps = (state) => ({
@@ -19,13 +17,11 @@ export const mapStateToProps = (state) => ({
 
 export const AdvancedSearchDisplayContainer = ({
   advancedSearch,
-  onChangeQuery,
   onUpdateAdvancedSearch
 }) => (
   <AdvancedSearchDisplay
     advancedSearch={advancedSearch}
     onUpdateAdvancedSearch={onUpdateAdvancedSearch}
-    onChangeQuery={onChangeQuery}
   />
 )
 
@@ -35,8 +31,7 @@ AdvancedSearchDisplayContainer.defaultProps = {
 
 AdvancedSearchDisplayContainer.propTypes = {
   advancedSearch: PropTypes.shape({}),
-  onUpdateAdvancedSearch: PropTypes.func.isRequired,
-  onChangeQuery: PropTypes.func.isRequired
+  onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchDisplayContainer)

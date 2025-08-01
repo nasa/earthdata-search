@@ -5,6 +5,8 @@ import { Formik } from 'formik'
 
 import RegionSearchForm from './RegionSearchForm'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './RegionSearch.scss'
 
 /**
@@ -19,25 +21,24 @@ import './RegionSearch.scss'
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
- * @param {Function} props.onChangeRegionQuery - Callback function to update the region search results.
  */
 export class RegionSearch extends Component {
   onSearchSubmit(values) {
-    const {
-      onChangeRegionQuery
-    } = this.props
-
     const {
       keyword,
       endpoint,
       exact = false
     } = values
 
-    onChangeRegionQuery({
+    const { changeRegionQuery } = useEdscStore.getState().query
+
+    changeRegionQuery({
       exact,
       endpoint,
       keyword
-    }, this.renderSearchResults())
+    })
+
+    this.renderSearchResults()
   }
 
   onRemoveSelected() {
@@ -129,7 +130,6 @@ RegionSearch.propTypes = {
     ),
     name: PropTypes.string
   }).isRequired,
-  onChangeRegionQuery: PropTypes.func.isRequired,
   regionSearchResults: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setModalOverlay: PropTypes.func,

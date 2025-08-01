@@ -75,6 +75,14 @@ describe('retrievals', () => {
             }
           }
         }
+      },
+      query: {
+        collection: {
+          byId: {},
+          spatial: {
+            point: ['-77, 34']
+          }
+        }
       }
     })
 
@@ -93,20 +101,11 @@ describe('retrievals', () => {
           }
         }
       },
-      query: {
-        collection: {
-          byId: {},
-          spatial: {
-            point: ['-77, 34']
-          }
-        }
-      },
       router: {
         location: {
           search: '?p=C100000-EDSC'
         }
-      },
-      shapefile: {}
+      }
     }
 
     configureStore.mockReturnValue({
@@ -230,6 +229,14 @@ describe('retrievals', () => {
             }
           }
         }
+      },
+      query: {
+        collection: {
+          byId: {},
+          spatial: {
+            point: ['-77, 34']
+          }
+        }
       }
     })
 
@@ -248,20 +255,11 @@ describe('retrievals', () => {
           }
         }
       },
-      query: {
-        collection: {
-          byId: {},
-          spatial: {
-            point: ['-77, 34']
-          }
-        }
-      },
       router: {
         location: {
           search: '?p=C100000-EDSC'
         }
-      },
-      shapefile: {}
+      }
     }
 
     configureStore.mockReturnValue({

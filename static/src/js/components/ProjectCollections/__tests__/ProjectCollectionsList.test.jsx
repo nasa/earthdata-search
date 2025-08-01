@@ -29,7 +29,6 @@ const setup = setupTest({
         mock: 'data 2'
       }
     },
-    collectionsQuery: {},
     onSetActivePanel: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onTogglePanels: jest.fn(),
@@ -68,7 +67,6 @@ describe('ProjectCollectionsList component', () => {
       collectionCount: 2,
       collectionId: 'collectionId1',
       collectionMetadata: { mock: 'data 1' },
-      collectionsQuery: {},
       color: 'rgb(46, 204, 113, 1)',
       index: 0,
       isPanelActive: true,
@@ -86,7 +84,6 @@ describe('ProjectCollectionsList component', () => {
       collectionCount: 2,
       collectionId: 'collectionId2',
       collectionMetadata: { mock: 'data 2' },
-      collectionsQuery: {},
       color: 'rgb(52, 152, 219, 1)',
       index: 1,
       isPanelActive: false,

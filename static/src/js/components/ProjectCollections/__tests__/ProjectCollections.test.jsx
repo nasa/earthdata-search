@@ -16,17 +16,6 @@ jest.mock('../ProjectHeader', () => jest.fn(() => <div />))
 const setup = setupTest({
   Component: ProjectCollections,
   defaultProps: {
-    collectionsQuery: {
-      byId: {
-        collectionId1: {
-          granules: {}
-        },
-        collectionId2: {
-          granules: {}
-        }
-      },
-      pageNum: 1
-    },
     panels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -79,6 +68,19 @@ const setup = setupTest({
       getProjectGranules: jest.fn(),
       removeProjectCollection: jest.fn(),
       toggleCollectionVisibility: jest.fn()
+    },
+    query: {
+      collection: {
+        byId: {
+          collectionId1: {
+            granules: {}
+          },
+          collectionId2: {
+            granules: {}
+          }
+        },
+        pageNum: 1
+      }
     }
   },
   withRedux: true
@@ -90,13 +92,6 @@ describe('ProjectCollectionsList component', () => {
 
     expect(ProjectHeader).toHaveBeenCalledTimes(1)
     expect(ProjectHeader).toHaveBeenCalledWith({
-      collectionsQuery: {
-        byId: {
-          collectionId1: { granules: {} },
-          collectionId2: { granules: {} }
-        },
-        pageNum: 1
-      },
       onUpdateProjectName: expect.any(Function),
       savedProject: {
         name: 'test name',
@@ -109,13 +104,6 @@ describe('ProjectCollectionsList component', () => {
       collectionsMetadata: {
         collectionId1: { mock: 'data 1' },
         collectionId2: { mock: 'data 2' }
-      },
-      collectionsQuery: {
-        byId: {
-          collectionId1: { granules: {} },
-          collectionId2: { granules: {} }
-        },
-        pageNum: 1
       },
       onMetricsDataAccess: expect.any(Function),
       onSetActivePanel: expect.any(Function),

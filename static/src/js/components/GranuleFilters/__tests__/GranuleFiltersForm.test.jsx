@@ -1,13 +1,14 @@
 import React from 'react'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen } from '@testing-library/react'
 import MockDate from 'mockdate'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import GranuleFiltersForm from '../GranuleFiltersForm'
 
 jest.mock('formik', () => ({
   Form: jest.fn(({ children }) => (
-    <mock-formik data-testid="formik-mock">
+    <mock-formik>
       {children}
     </mock-formik>
   ))
@@ -15,30 +16,18 @@ jest.mock('formik', () => ({
 
 // TODO: Figure out how to test validation @low
 
-const setup = (overrideProps) => {
-  const user = userEvent.setup()
-
-  const handleBlur = jest.fn()
-  const handleChange = jest.fn()
-  const handleSubmit = jest.fn()
-  const onUndoExcludeGranule = jest.fn()
-  const onMetricsGranuleFilter = jest.fn()
-  const setFieldValue = jest.fn()
-  const setFieldTouched = jest.fn()
-
-  const props = {
+const setup = setupTest({
+  Component: GranuleFiltersForm,
+  defaultProps: {
     cmrFacetParams: {},
     collectionMetadata: {},
-    collectionQuery: {},
     errors: {},
-    excludedGranuleIds: [],
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    onUndoExcludeGranule,
-    onMetricsGranuleFilter,
-    setFieldValue,
-    setFieldTouched,
+    handleBlur: jest.fn(),
+    handleChange: jest.fn(),
+    handleSubmit: jest.fn(),
+    onMetricsGranuleFilter: jest.fn(),
+    setFieldValue: jest.fn(),
+    setFieldTouched: jest.fn(),
     touched: {},
     values: {
       temporal: {
@@ -46,37 +35,15 @@ const setup = (overrideProps) => {
         startDate: '',
         endDate: ''
       }
-    },
-    ...overrideProps
-  }
-
-  render(
-    <GranuleFiltersForm {...props} />
-  )
-
-  return {
-    handleBlur,
-    handleChange,
-    handleSubmit,
-    onUndoExcludeGranule,
-    onMetricsGranuleFilter,
-    setFieldValue,
-    setFieldTouched,
-    user
-  }
-}
-
-beforeEach(() => {
-  jest.clearAllMocks()
+    }
+  },
+  defaultReduxState: {
+    focusedCollection: 'collectionId'
+  },
+  withRedux: true
 })
 
 describe('GranuleFiltersForm component', () => {
-  test('renders itself correctly', () => {
-    setup()
-
-    expect(screen.getByTestId('formik-mock')).toBeInTheDocument()
-  })
-
   describe('Filtered Granules', () => {
     describe('when no granules are filtered', () => {
       test('does not display the filtered granules section', () => {
@@ -88,7 +55,19 @@ describe('GranuleFiltersForm component', () => {
     describe('when a granule is filtered', () => {
       test('displays the filtered granules section', () => {
         setup({
-          excludedGranuleIds: ['GRAN_ID_1']
+          overrideZustandState: {
+            query: {
+              collection: {
+                byId: {
+                  collectionId: {
+                    granules: {
+                      excludedGranuleIds: ['GRAN_ID_1']
+                    }
+                  }
+                }
+              }
+            }
+          }
         })
 
         expect(screen.getByText('Filtered Granules')).toBeInTheDocument()
@@ -97,7 +76,19 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays the undo button', () => {
         setup({
-          excludedGranuleIds: ['GRAN_ID_1']
+          overrideZustandState: {
+            query: {
+              collection: {
+                byId: {
+                  collectionId: {
+                    granules: {
+                      excludedGranuleIds: ['GRAN_ID_1']
+                    }
+                  }
+                }
+              }
+            }
+          }
         })
 
         expect(screen.getByRole('button', { name: 'Undo last filtered granule' })).toBeInTheDocument()
@@ -107,7 +98,19 @@ describe('GranuleFiltersForm component', () => {
       describe('when a single granule is filtered', () => {
         test('displays the correct status text', () => {
           setup({
-            excludedGranuleIds: ['GRAN_ID_1']
+            overrideZustandState: {
+              query: {
+                collection: {
+                  byId: {
+                    collectionId: {
+                      granules: {
+                        excludedGranuleIds: ['GRAN_ID_1']
+                      }
+                    }
+                  }
+                }
+              }
+            }
           })
 
           expect(screen.getByText('Filtered Granules')).toBeInTheDocument()
@@ -118,7 +121,19 @@ describe('GranuleFiltersForm component', () => {
       describe('when multiple granules are filtered', () => {
         test('displays the correct status text', () => {
           setup({
-            excludedGranuleIds: ['GRAN_ID_1', 'GRAN_ID_2']
+            overrideZustandState: {
+              query: {
+                collection: {
+                  byId: {
+                    collectionId: {
+                      granules: {
+                        excludedGranuleIds: ['GRAN_ID_1', 'GRAN_ID_2']
+                      }
+                    }
+                  }
+                }
+              }
+            }
           })
 
           expect(screen.getByText('Filtered Granules')).toBeInTheDocument()
@@ -128,18 +143,33 @@ describe('GranuleFiltersForm component', () => {
 
       describe('when clicking the undo button', () => {
         test('displays the undo button', async () => {
-          const { user, onUndoExcludeGranule } = setup({
-            excludedGranuleIds: ['GRAN_ID_1'],
-            collectionMetadata: {
-              id: 'COLL_ID'
+          const { user, zustandState } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                id: 'COLL_ID'
+              }
+            },
+            overrideZustandState: {
+              query: {
+                collection: {
+                  byId: {
+                    collectionId: {
+                      granules: {
+                        excludedGranuleIds: ['GRAN_ID_1']
+                      }
+                    }
+                  }
+                },
+                undoExcludeGranule: jest.fn()
+              }
             }
           })
 
           const undoButton = screen.getByRole('button', { name: 'Undo last filtered granule' })
           await user.click(undoButton)
 
-          expect(onUndoExcludeGranule).toHaveBeenCalledTimes(1)
-          expect(onUndoExcludeGranule).toHaveBeenCalledWith('COLL_ID')
+          expect(zustandState.query.undoExcludeGranule).toHaveBeenCalledTimes(1)
+          expect(zustandState.query.undoExcludeGranule).toHaveBeenCalledWith('COLL_ID')
         })
       })
     })
@@ -165,27 +195,23 @@ describe('GranuleFiltersForm component', () => {
     })
 
     describe('when `Enter` is pressed in the Granule ID(s) text field', () => {
-      test('calls onSubmit', async () => {
-        const { onMetricsGranuleFilter, handleSubmit, user } = setup({
-          values: {
-            readableGranuleName: ''
-          }
-        })
+      test('calls handleSubmit', async () => {
+        const { props, user } = setup()
 
         expect(screen.getByRole('heading', { name: 'Granule Search' })).toBeInTheDocument()
         const readableGranuleNameTextField = screen.getByRole('textbox', { name: 'Granule ID(s)' })
         await user.type(readableGranuleNameTextField, '{testGranuleName}')
         await user.type(readableGranuleNameTextField, '{Enter}')
 
-        expect(handleSubmit).toHaveBeenCalledTimes(1)
-        expect(handleSubmit).toHaveBeenCalledWith(
+        expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+        expect(props.handleSubmit).toHaveBeenCalledWith(
           expect.objectContaining({
             _reactName: 'onKeyPress'
           })
         )
 
-        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
           type: 'readableGranuleName',
           value: ''
         })
@@ -196,9 +222,11 @@ describe('GranuleFiltersForm component', () => {
       describe('displays temporal', () => {
         test('displays correctly when only start date is set', () => {
           setup({
-            values: {
-              temporal: {
-                startDate: '2019-08-14T00:00:00:000Z'
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '2019-08-14T00:00:00:000Z'
+                }
               }
             }
           })
@@ -212,9 +240,11 @@ describe('GranuleFiltersForm component', () => {
 
         test('displays correctly when only end date is set', () => {
           setup({
-            values: {
-              temporal: {
-                endDate: '2019-08-14T00:00:00:000Z'
+            overrideProps: {
+              values: {
+                temporal: {
+                  endDate: '2019-08-14T00:00:00:000Z'
+                }
               }
             }
           })
@@ -228,10 +258,12 @@ describe('GranuleFiltersForm component', () => {
 
         test('displays correctly when both dates are set', () => {
           setup({
-            values: {
-              temporal: {
-                startDate: '2019-08-13T00:00:00:000Z',
-                endDate: '2019-08-14T23:59:59:999Z'
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '2019-08-13T00:00:00:000Z',
+                  endDate: '2019-08-14T23:59:59:999Z'
+                }
               }
             }
           })
@@ -246,17 +278,13 @@ describe('GranuleFiltersForm component', () => {
         test('calls the correct callbacks on startDate submit', async () => {
           MockDate.set('2019-08-13')
 
-          const {
-            handleSubmit,
-            onMetricsGranuleFilter,
-            setFieldTouched,
-            setFieldValue,
-            user
-          } = setup({
-            values: {
-              temporal: {
-                startDate: '',
-                endDate: '2019-08-14T23:59:59:999Z'
+          const { props, user } = setup({
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '',
+                  endDate: '2019-08-14T23:59:59:999Z'
+                }
               }
             }
           })
@@ -264,17 +292,17 @@ describe('GranuleFiltersForm component', () => {
           const button = screen.getAllByRole('button', { name: 'Today' })[0]
           await user.click(button)
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(1)
-          expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(1)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2019-08-13T00:00:00.000Z')
+          expect(props.setFieldValue).toHaveBeenCalledTimes(1)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2019-08-13T00:00:00.000Z')
 
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith()
+          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+          expect(props.handleSubmit).toHaveBeenCalledWith()
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Start Date',
             value: '2019-08-13T00:00:00.000Z'
           })
@@ -285,17 +313,13 @@ describe('GranuleFiltersForm component', () => {
         test('calls the correct callbacks on startDate submit with an empty value', async () => {
           MockDate.set('2019-08-13')
 
-          const {
-            handleSubmit,
-            onMetricsGranuleFilter,
-            setFieldTouched,
-            setFieldValue,
-            user
-          } = setup({
-            values: {
-              temporal: {
-                startDate: '',
-                endDate: '2019-08-14T23:59:59:999Z'
+          const { props, user } = setup({
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '',
+                  endDate: '2019-08-14T23:59:59:999Z'
+                }
               }
             }
           })
@@ -304,17 +328,17 @@ describe('GranuleFiltersForm component', () => {
           await user.click(button)
 
           // `onClearClick` calls `onChange` twice
-          expect(setFieldTouched).toHaveBeenCalledTimes(2)
-          expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(2)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(2)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '')
+          expect(props.setFieldValue).toHaveBeenCalledTimes(2)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '')
 
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith()
+          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+          expect(props.handleSubmit).toHaveBeenCalledWith()
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Start Date',
             value: ''
           })
@@ -323,17 +347,13 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('does not call handleSubmit if shouldSubmit is false on startDate submit', async () => {
-          const {
-            handleSubmit,
-            onMetricsGranuleFilter,
-            setFieldTouched,
-            setFieldValue,
-            user
-          } = setup({
-            values: {
-              temporal: {
-                startDate: '',
-                endDate: '2019-08-14T23:59:59:999Z'
+          const { props, user } = setup({
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '',
+                  endDate: '2019-08-14T23:59:59:999Z'
+                }
               }
             }
           })
@@ -341,33 +361,29 @@ describe('GranuleFiltersForm component', () => {
           const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
           await user.type(startDateTextField, '2019')
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(4)
-          expect(setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(4)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.startDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(4)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '0')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '9')
+          expect(props.setFieldValue).toHaveBeenCalledTimes(4)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '2')
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '0')
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1')
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '9')
 
-          expect(handleSubmit).toHaveBeenCalledTimes(0)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
+          expect(props.handleSubmit).toHaveBeenCalledTimes(0)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
         })
 
         test('calls the correct callbacks on endDate submit', async () => {
           MockDate.set('2019-08-14')
 
-          const {
-            handleSubmit,
-            onMetricsGranuleFilter,
-            setFieldTouched,
-            setFieldValue,
-            user
-          } = setup({
-            values: {
-              temporal: {
-                startDate: '2019-08-13T00:00:00:000Z',
-                endDate: ''
+          const { props, user } = setup({
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '2019-08-13T00:00:00:000Z',
+                  endDate: ''
+                }
               }
             }
           })
@@ -375,17 +391,17 @@ describe('GranuleFiltersForm component', () => {
           const button = screen.getAllByRole('button', { name: 'Today' })[1]
           await user.click(button)
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(1)
-          expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(1)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2019-08-14T23:59:59.000Z')
+          expect(props.setFieldValue).toHaveBeenCalledTimes(1)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2019-08-14T23:59:59.000Z')
 
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith()
+          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+          expect(props.handleSubmit).toHaveBeenCalledWith()
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set End Date',
             value: '2019-08-14T23:59:59.000Z'
           })
@@ -396,17 +412,13 @@ describe('GranuleFiltersForm component', () => {
         test('calls the correct callbacks on endDate submit with an empty value', async () => {
           MockDate.set('2019-08-14')
 
-          const {
-            handleSubmit,
-            onMetricsGranuleFilter,
-            setFieldTouched,
-            setFieldValue,
-            user
-          } = setup({
-            values: {
-              temporal: {
-                startDate: '2019-08-13T00:00:00:000Z',
-                endDate: ''
+          const { props, user } = setup({
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '2019-08-13T00:00:00:000Z',
+                  endDate: ''
+                }
               }
             }
           })
@@ -415,17 +427,17 @@ describe('GranuleFiltersForm component', () => {
           await user.click(button)
 
           // `onClearClick` calls `onChange` twice
-          expect(setFieldTouched).toHaveBeenCalledTimes(2)
-          expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(2)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(2)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '')
+          expect(props.setFieldValue).toHaveBeenCalledTimes(2)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '')
 
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith()
+          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+          expect(props.handleSubmit).toHaveBeenCalledWith()
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set End Date',
             value: ''
           })
@@ -434,17 +446,14 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('does not call handleSubmit if shouldSubmit is false on endDate submit', async () => {
-          const {
-            handleSubmit,
-            onMetricsGranuleFilter,
-            setFieldTouched,
-            setFieldValue,
-            user
-          } = setup({
-            values: {
-              temporal: {
-                startDate: '2019-08-13T00:00:00:000Z',
-                endDate: ''
+          const { props, user } = setup({
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '2019-08-13T00:00:00:000Z',
+                  endDate: ''
+
+                }
               }
             }
           })
@@ -452,30 +461,27 @@ describe('GranuleFiltersForm component', () => {
           const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
           await user.type(endDateTextField, '2020')
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(4)
-          expect(setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(4)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.endDate')
 
-          expect(setFieldValue).toHaveBeenCalledTimes(4)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
+          expect(props.setFieldValue).toHaveBeenCalledTimes(4)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '2')
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.endDate', '0')
 
-          expect(handleSubmit).toHaveBeenCalledTimes(0)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
+          expect(props.handleSubmit).toHaveBeenCalledTimes(0)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
         })
 
         test('calls the correct callbacks on onRecurringToggle', async () => {
-          const {
-            onMetricsGranuleFilter,
-            setFieldTouched,
-            setFieldValue,
-            user
-          } = setup({
-            values: {
-              temporal: {
-                startDate: '2019-08-13T00:00:00.000Z',
-                endDate: '2019-08-14T23:59:59.999Z'
+          const { props, user } = setup({
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '2019-08-13T00:00:00.000Z',
+                  endDate: '2019-08-14T23:59:59.999Z'
+                }
               }
             }
           })
@@ -485,34 +491,32 @@ describe('GranuleFiltersForm component', () => {
 
           await user.click(isRecurringCheckbox)
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(1)
-          expect(setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
 
-          expect(setFieldValue).toHaveBeenCalledTimes(4)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1960-08-13T00:00:00.000Z')
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 225)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 226)
+          expect(props.setFieldValue).toHaveBeenCalledTimes(4)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1960-08-13T00:00:00.000Z')
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 225)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 226)
 
           expect(isRecurringCheckbox.checked).toBe(true)
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'Set Recurring',
             value: true
           })
         })
 
         test('calls the correct callbacks on onRecurringToggle when a leap day is involved', async () => {
-          const {
-            setFieldTouched,
-            setFieldValue,
-            user
-          } = setup({
-            values: {
-              temporal: {
-                startDate: '2019-06-01T00:00:00.000Z',
-                endDate: '2024-06-01T23:59:59.999Z'
+          const { props, user } = setup({
+            overrideProps: {
+              values: {
+                temporal: {
+                  startDate: '2019-06-01T00:00:00.000Z',
+                  endDate: '2024-06-01T23:59:59.999Z'
+                }
               }
             }
           })
@@ -522,13 +526,13 @@ describe('GranuleFiltersForm component', () => {
 
           await user.click(isRecurringCheckbox)
 
-          expect(setFieldTouched).toHaveBeenCalledTimes(1)
-          expect(setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+          expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
 
-          expect(setFieldValue).toHaveBeenCalledTimes(3)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 152)
-          expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 152)
+          expect(props.setFieldValue).toHaveBeenCalledTimes(3)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 152)
+          expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 152)
 
           expect(isRecurringCheckbox.checked).toBe(true)
         })
@@ -538,11 +542,13 @@ describe('GranuleFiltersForm component', () => {
     describe('Day/Night section', () => {
       test('defaults to an empty value', () => {
         setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { day_night_flag: true }
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { day_night_flag: true }
+                }
               }
             }
           }
@@ -554,16 +560,18 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays selected item', async () => {
         setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { day_night_flag: true }
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { day_night_flag: true }
+                }
               }
+            },
+            values: {
+              dayNightFlag: 'NIGHT'
             }
-          },
-          values: {
-            dayNightFlag: 'NIGHT'
           }
         })
 
@@ -572,17 +580,19 @@ describe('GranuleFiltersForm component', () => {
       })
 
       test('calls handleChange on change', async () => {
-        const { user, handleChange } = setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { day_night_flag: true }
+        const { props, user } = setup({
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { day_night_flag: true }
+                }
               }
+            },
+            values: {
+              dayNightFlag: 'NIGHT'
             }
-          },
-          values: {
-            dayNightFlag: 'NIGHT'
           }
         })
 
@@ -591,8 +601,8 @@ describe('GranuleFiltersForm component', () => {
         await user.selectOptions(dayNightSelection, 'Day')
         await user.selectOptions(dayNightSelection, 'Both')
 
-        expect(handleChange).toHaveBeenCalledTimes(2)
-        expect(handleChange).toHaveBeenCalledWith(
+        expect(props.handleChange).toHaveBeenCalledTimes(2)
+        expect(props.handleChange).toHaveBeenCalledWith(
           expect.objectContaining({
             _reactName: 'onChange'
           })
@@ -611,8 +621,10 @@ describe('GranuleFiltersForm component', () => {
 
         test('displays selected item', () => {
           setup({
-            values: {
-              browseOnly: true
+            overrideProps: {
+              values: {
+                browseOnly: true
+              }
             }
           })
 
@@ -622,20 +634,21 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls handleChange on change', async () => {
-          const { onMetricsGranuleFilter, handleChange, user } = setup()
+          const { props, user } = setup()
+
           const browseOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that have browse images' })
 
           await user.click(browseOnlyToggle)
 
-          expect(handleChange).toHaveBeenCalledTimes(1)
-          expect(handleChange).toHaveBeenCalledWith(
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
             })
           )
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'browseOnly',
             value: true
           })
@@ -652,8 +665,10 @@ describe('GranuleFiltersForm component', () => {
 
         test('displays selected item', () => {
           setup({
-            values: {
-              onlineOnly: true
+            overrideProps: {
+              values: {
+                onlineOnly: true
+              }
             }
           })
 
@@ -662,19 +677,20 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls handleChange on change', async () => {
-          const { onMetricsGranuleFilter, handleChange, user } = setup()
+          const { props, user } = setup()
+
           const onlineOnlyToggle = screen.getByRole('checkbox', { name: 'Find only granules that are available online' })
           await user.click(onlineOnlyToggle)
 
-          expect(handleChange).toHaveBeenCalledTimes(1)
-          expect(handleChange).toHaveBeenCalledWith(
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
             })
           )
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'onlineOnly',
             value: true
           })
@@ -686,11 +702,13 @@ describe('GranuleFiltersForm component', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
           setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { cloud_cover: true }
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { cloud_cover: true }
+                  }
                 }
               }
             }
@@ -705,12 +723,14 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls handleChange on change', async () => {
-          const { handleChange, user } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { cloud_cover: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { cloud_cover: true }
+                  }
                 }
               }
             }
@@ -719,8 +739,8 @@ describe('GranuleFiltersForm component', () => {
           await user.type(minCloudCover, '1')
           await user.tab(minCloudCover)
 
-          expect(handleChange).toHaveBeenCalledTimes(1)
-          expect(handleChange).toHaveBeenCalledWith(
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
             })
@@ -730,12 +750,14 @@ describe('GranuleFiltersForm component', () => {
 
       describe('Max', () => {
         test('defaults to an empty value', async () => {
-          const { handleChange } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { cloud_cover: true }
+          const { props } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { cloud_cover: true }
+                  }
                 }
               }
             }
@@ -744,18 +766,19 @@ describe('GranuleFiltersForm component', () => {
           const maxCloudCover = screen.getByRole('textbox', { name: 'Maximum' })
 
           expect(maxCloudCover).toHaveValue('')
-          expect(handleChange).toHaveBeenCalledTimes(0)
+
+          expect(props.handleChange).toHaveBeenCalledTimes(0)
         })
 
         test('calls handleChange on change', async () => {
-          const {
-            handleChange, user
-          } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { cloud_cover: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { cloud_cover: true }
+                  }
                 }
               }
             }
@@ -765,8 +788,8 @@ describe('GranuleFiltersForm component', () => {
 
           await user.type(maxCloudCover, '9')
 
-          expect(handleChange).toHaveBeenCalledTimes(1)
-          expect(handleChange).toHaveBeenCalledWith(
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
             })
@@ -779,11 +802,13 @@ describe('GranuleFiltersForm component', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
           setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -794,12 +819,14 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls handleChange on change', async () => {
-          const { handleChange, user } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -808,8 +835,8 @@ describe('GranuleFiltersForm component', () => {
           const maxOrbitNumber = screen.getByTestId('granule-filters__orbit-number-max')
           await user.type(maxOrbitNumber, '9')
 
-          expect(handleChange).toHaveBeenCalledTimes(1)
-          expect(handleChange).toHaveBeenCalledWith(
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
             })
@@ -817,14 +844,14 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls onBlur when the filter is submitted', async () => {
-          const {
-            handleBlur, handleSubmit, onMetricsGranuleFilter, user
-          } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -834,22 +861,22 @@ describe('GranuleFiltersForm component', () => {
           await user.type(minOrbitNumber, '9')
           await user.tab()
 
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith(
+          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+          expect(props.handleSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
             })
           )
 
-          expect(handleBlur).toHaveBeenCalledTimes(1)
-          expect(handleBlur).toHaveBeenCalledWith(
+          expect(props.handleBlur).toHaveBeenCalledTimes(1)
+          expect(props.handleBlur).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
             })
           )
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'orbitNumber.min',
             value: ''
           })
@@ -859,11 +886,13 @@ describe('GranuleFiltersForm component', () => {
       describe('Max', () => {
         test('defaults to an empty value', () => {
           setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -874,12 +903,14 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls handleChange on change', async () => {
-          const { handleChange, user } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -888,8 +919,8 @@ describe('GranuleFiltersForm component', () => {
           const maxOrbitNumber = screen.getByTestId('granule-filters__orbit-number-max')
           await user.type(maxOrbitNumber, '9')
 
-          expect(handleChange).toHaveBeenCalledTimes(1)
-          expect(handleChange).toHaveBeenCalledWith(
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
             })
@@ -897,14 +928,14 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls onBlur when the filter is submitted', async () => {
-          const {
-            handleBlur, handleSubmit, onMetricsGranuleFilter, user
-          } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -914,22 +945,22 @@ describe('GranuleFiltersForm component', () => {
           await user.type(maxOrbitNumber, '9')
           await user.tab()
 
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith(
+          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+          expect(props.handleSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
             })
           )
 
-          expect(handleBlur).toHaveBeenCalledTimes(1)
-          expect(handleBlur).toHaveBeenCalledWith(
+          expect(props.handleBlur).toHaveBeenCalledTimes(1)
+          expect(props.handleBlur).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
             })
           )
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'orbitNumber.max',
             value: ''
           })
@@ -940,12 +971,14 @@ describe('GranuleFiltersForm component', () => {
     describe('Equator Crossing Longitude section', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
-          const { handleChange } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -953,16 +986,19 @@ describe('GranuleFiltersForm component', () => {
 
           const minEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-min')
           expect(minEquatorCrossingLongitude).toHaveValue('')
-          expect(handleChange).toHaveBeenCalledTimes(0)
+
+          expect(props.handleChange).toHaveBeenCalledTimes(0)
         })
 
         test('calls handleChange on change', async () => {
-          const { handleChange, user } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -972,8 +1008,8 @@ describe('GranuleFiltersForm component', () => {
           await user.type(minEquatorCrossingLongitude, '1')
           await user.tab()
 
-          expect(handleChange).toHaveBeenCalledTimes(1)
-          expect(handleChange).toHaveBeenCalledWith(
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
             })
@@ -981,14 +1017,14 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls onBlur when the filter is submitted ', async () => {
-          const {
-            onMetricsGranuleFilter, handleBlur, handleSubmit, user
-          } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -998,22 +1034,22 @@ describe('GranuleFiltersForm component', () => {
           await user.type(minEquatorCrossingLongitude, '1')
           await user.tab()
 
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith(
+          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+          expect(props.handleSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
             })
           )
 
-          expect(handleBlur).toHaveBeenCalledTimes(1)
-          expect(handleBlur).toHaveBeenCalledWith(
+          expect(props.handleBlur).toHaveBeenCalledTimes(1)
+          expect(props.handleBlur).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
             })
           )
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'equatorCrossingLongitude.min',
             value: ''
           })
@@ -1022,12 +1058,14 @@ describe('GranuleFiltersForm component', () => {
 
       describe('Max', () => {
         test('defaults to an empty value', () => {
-          const { handleChange } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -1035,16 +1073,19 @@ describe('GranuleFiltersForm component', () => {
 
           const maxEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-max')
           expect(maxEquatorCrossingLongitude).toHaveValue('')
-          expect(handleChange).toHaveBeenCalledTimes(0)
+
+          expect(props.handleChange).toHaveBeenCalledTimes(0)
         })
 
         test('calls handleChange on change', async () => {
-          const { user, handleChange } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -1055,8 +1096,9 @@ describe('GranuleFiltersForm component', () => {
           await user.tab()
 
           expect(maxEquatorCrossingLongitude).toHaveValue('')
-          expect(handleChange).toHaveBeenCalledTimes(1)
-          expect(handleChange).toHaveBeenCalledWith(
+
+          expect(props.handleChange).toHaveBeenCalledTimes(1)
+          expect(props.handleChange).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onChange'
             })
@@ -1064,14 +1106,14 @@ describe('GranuleFiltersForm component', () => {
         })
 
         test('calls onBlur when the filter is submitted ', async () => {
-          const {
-            onMetricsGranuleFilter, handleBlur, handleSubmit, user
-          } = setup({
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          const { props, user } = setup({
+            overrideProps: {
+              collectionMetadata: {
+                isOpenSearch: false,
+                tags: {
+                  'edsc.extra.serverless.collection_capabilities': {
+                    data: { orbit_calculated_spatial_domains: true }
+                  }
                 }
               }
             }
@@ -1081,22 +1123,22 @@ describe('GranuleFiltersForm component', () => {
           await user.type(maxEquatorCrossingLongitude, '1')
           await user.tab()
 
-          expect(handleSubmit).toHaveBeenCalledTimes(1)
-          expect(handleSubmit).toHaveBeenCalledWith(
+          expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+          expect(props.handleSubmit).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
             })
           )
 
-          expect(handleBlur).toHaveBeenCalledTimes(1)
-          expect(handleBlur).toHaveBeenCalledWith(
+          expect(props.handleBlur).toHaveBeenCalledTimes(1)
+          expect(props.handleBlur).toHaveBeenCalledWith(
             expect.objectContaining({
               _reactName: 'onBlur'
             })
           )
 
-          expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-          expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+          expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
             type: 'equatorCrossingLongitude.max',
             value: ''
           })
@@ -1109,17 +1151,19 @@ describe('GranuleFiltersForm component', () => {
     describe('displays equator crossing date', () => {
       test('displays correctly when only start date is set', () => {
         setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              startDate: '2019-08-14T00:00:00:000Z'
+            },
+            values: {
+              equatorCrossingDate: {
+                startDate: '2019-08-14T00:00:00:000Z'
+              }
             }
           }
         })
@@ -1133,17 +1177,19 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays correctly when only end date is set', () => {
         setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              endDate: '2019-08-14T00:00:00:000Z'
+            },
+            values: {
+              equatorCrossingDate: {
+                endDate: '2019-08-14T00:00:00:000Z'
+              }
             }
           }
         })
@@ -1157,18 +1203,20 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays correctly when both dates are set', () => {
         setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              startDate: '2019-08-13T00:00:00:000Z',
-              endDate: '2019-08-14T23:59:59:999Z'
+            },
+            values: {
+              equatorCrossingDate: {
+                startDate: '2019-08-13T00:00:00:000Z',
+                endDate: '2019-08-14T23:59:59:999Z'
+              }
             }
           }
         })
@@ -1183,25 +1231,21 @@ describe('GranuleFiltersForm component', () => {
       test('calls the correct callbacks on startDate submit', async () => {
         MockDate.set('2019-08-13')
 
-        const {
-          handleSubmit,
-          onMetricsGranuleFilter,
-          setFieldTouched,
-          setFieldValue,
-          user
-        } = setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+        const { props, user } = setup({
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              startDate: '',
-              endDate: '2019-08-14T23:59:59:999Z'
+            },
+            values: {
+              equatorCrossingDate: {
+                startDate: '',
+                endDate: '2019-08-14T23:59:59:999Z'
+              }
             }
           }
         })
@@ -1209,17 +1253,17 @@ describe('GranuleFiltersForm component', () => {
         const button = screen.getAllByRole('button', { name: 'Today' })[2]
         await user.click(button)
 
-        expect(setFieldTouched).toHaveBeenCalledTimes(1)
-        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
+        expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
 
-        expect(setFieldValue).toHaveBeenCalledTimes(1)
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2019-08-13T00:00:00.000Z')
+        expect(props.setFieldValue).toHaveBeenCalledTimes(1)
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2019-08-13T00:00:00.000Z')
 
-        expect(handleSubmit).toHaveBeenCalledTimes(1)
-        expect(handleSubmit).toHaveBeenCalledWith()
+        expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+        expect(props.handleSubmit).toHaveBeenCalledWith()
 
-        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
           type: 'Equatorial Crossing Set Start Date',
           value: '2019-08-13T00:00:00.000Z'
         })
@@ -1228,25 +1272,21 @@ describe('GranuleFiltersForm component', () => {
       })
 
       test('calls the correct callbacks on startDate submit with an empty value', async () => {
-        const {
-          handleSubmit,
-          onMetricsGranuleFilter,
-          setFieldTouched,
-          setFieldValue,
-          user
-        } = setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+        const { props, user } = setup({
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              startDate: '',
-              endDate: '2019-08-14T23:59:59:999Z'
+            },
+            values: {
+              equatorCrossingDate: {
+                startDate: '',
+                endDate: '2019-08-14T23:59:59:999Z'
+              }
             }
           }
         })
@@ -1255,42 +1295,38 @@ describe('GranuleFiltersForm component', () => {
         await user.click(button)
 
         // `onClearClick` calls `onChange` twice
-        expect(setFieldTouched).toHaveBeenCalledTimes(2)
-        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
+        expect(props.setFieldTouched).toHaveBeenCalledTimes(2)
+        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
 
-        expect(setFieldValue).toHaveBeenCalledTimes(2)
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '')
+        expect(props.setFieldValue).toHaveBeenCalledTimes(2)
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '')
 
-        expect(handleSubmit).toHaveBeenCalledTimes(1)
-        expect(handleSubmit).toHaveBeenCalledWith()
+        expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+        expect(props.handleSubmit).toHaveBeenCalledWith()
 
-        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
           type: 'Equatorial Crossing Set Start Date',
           value: ''
         })
       })
 
       test('does not call handleSubmit if shouldSubmit is false on startDate submit', async () => {
-        const {
-          handleSubmit,
-          onMetricsGranuleFilter,
-          setFieldTouched,
-          setFieldValue,
-          user
-        } = setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+        const { props, user } = setup({
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              startDate: '',
-              endDate: '2019-08-14T23:59:59:999Z'
+            },
+            values: {
+              equatorCrossingDate: {
+                startDate: '',
+                endDate: '2019-08-14T23:59:59:999Z'
+              }
             }
           }
         })
@@ -1298,41 +1334,37 @@ describe('GranuleFiltersForm component', () => {
         const endDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
         await user.type(endDateTextField, '2019')
 
-        expect(setFieldTouched).toHaveBeenCalledTimes(4)
-        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
+        expect(props.setFieldTouched).toHaveBeenCalledTimes(4)
+        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.startDate')
 
-        expect(setFieldValue).toHaveBeenCalledTimes(4)
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2')
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '0')
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '1')
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '9')
+        expect(props.setFieldValue).toHaveBeenCalledTimes(4)
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '2')
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '0')
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '1')
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.startDate', '9')
 
-        expect(handleSubmit).toHaveBeenCalledTimes(0)
-        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
+        expect(props.handleSubmit).toHaveBeenCalledTimes(0)
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
       })
 
       test('calls the correct callbacks on endDate submit', async () => {
         MockDate.set('2019-08-14')
 
-        const {
-          handleSubmit,
-          onMetricsGranuleFilter,
-          setFieldTouched,
-          setFieldValue,
-          user
-        } = setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+        const { props, user } = setup({
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              startDate: '2019-08-13T00:00:00:000Z',
-              endDate: ''
+            },
+            values: {
+              equatorCrossingDate: {
+                startDate: '2019-08-13T00:00:00:000Z',
+                endDate: ''
+              }
             }
           }
         })
@@ -1340,17 +1372,17 @@ describe('GranuleFiltersForm component', () => {
         const button = screen.getAllByRole('button', { name: 'Today' })[3]
         await user.click(button)
 
-        expect(setFieldTouched).toHaveBeenCalledTimes(1)
-        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
+        expect(props.setFieldTouched).toHaveBeenCalledTimes(1)
+        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
 
-        expect(setFieldValue).toHaveBeenCalledTimes(1)
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2019-08-14T23:59:59.000Z')
+        expect(props.setFieldValue).toHaveBeenCalledTimes(1)
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2019-08-14T23:59:59.000Z')
 
-        expect(handleSubmit).toHaveBeenCalledTimes(1)
-        expect(handleSubmit).toHaveBeenCalledWith()
+        expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+        expect(props.handleSubmit).toHaveBeenCalledWith()
 
-        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
           type: 'Equatorial Crossing Set End Date',
           value: '2019-08-14T23:59:59.000Z'
         })
@@ -1361,25 +1393,21 @@ describe('GranuleFiltersForm component', () => {
       test('calls the correct callbacks on endDate submit with an empty value', async () => {
         MockDate.set('2019-08-14')
 
-        const {
-          handleSubmit,
-          onMetricsGranuleFilter,
-          setFieldTouched,
-          setFieldValue,
-          user
-        } = setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+        const { props, user } = setup({
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              startDate: '2019-08-13T00:00:00:000Z',
-              endDate: ''
+            },
+            values: {
+              equatorCrossingDate: {
+                startDate: '2019-08-13T00:00:00:000Z',
+                endDate: ''
+              }
             }
           }
         })
@@ -1388,17 +1416,17 @@ describe('GranuleFiltersForm component', () => {
         await user.click(button)
 
         // `onClearClick` calls `onChange` twice
-        expect(setFieldTouched).toHaveBeenCalledTimes(2)
-        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
+        expect(props.setFieldTouched).toHaveBeenCalledTimes(2)
+        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
 
-        expect(setFieldValue).toHaveBeenCalledTimes(2)
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '')
+        expect(props.setFieldValue).toHaveBeenCalledTimes(2)
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '')
 
-        expect(handleSubmit).toHaveBeenCalledTimes(1)
-        expect(handleSubmit).toHaveBeenCalledWith()
+        expect(props.handleSubmit).toHaveBeenCalledTimes(1)
+        expect(props.handleSubmit).toHaveBeenCalledWith()
 
-        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-        expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
           type: 'Equatorial Crossing Set End Date',
           value: ''
         })
@@ -1407,25 +1435,21 @@ describe('GranuleFiltersForm component', () => {
       })
 
       test('does not call handleSubmit if shouldSubmit is false on endDate submit', async () => {
-        const {
-          handleSubmit,
-          onMetricsGranuleFilter,
-          setFieldTouched,
-          setFieldValue,
-          user
-        } = setup({
-          collectionMetadata: {
-            isOpenSearch: false,
-            tags: {
-              'edsc.extra.serverless.collection_capabilities': {
-                data: { orbit_calculated_spatial_domains: true }
+        const { props, user } = setup({
+          overrideProps: {
+            collectionMetadata: {
+              isOpenSearch: false,
+              tags: {
+                'edsc.extra.serverless.collection_capabilities': {
+                  data: { orbit_calculated_spatial_domains: true }
+                }
               }
-            }
-          },
-          values: {
-            equatorCrossingDate: {
-              startDate: '2019-08-13T00:00:00:000Z',
-              endDate: ''
+            },
+            values: {
+              equatorCrossingDate: {
+                startDate: '2019-08-13T00:00:00:000Z',
+                endDate: ''
+              }
             }
           }
         })
@@ -1433,17 +1457,17 @@ describe('GranuleFiltersForm component', () => {
         const endDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
         await user.type(endDateTextField, '2020')
 
-        expect(setFieldTouched).toHaveBeenCalledTimes(4)
-        expect(setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
+        expect(props.setFieldTouched).toHaveBeenCalledTimes(4)
+        expect(props.setFieldTouched).toHaveBeenCalledWith('equatorCrossingDate.endDate')
 
-        expect(setFieldValue).toHaveBeenCalledTimes(4)
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')
-        expect(setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
+        expect(props.setFieldValue).toHaveBeenCalledTimes(4)
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '2')
+        expect(props.setFieldValue).toHaveBeenCalledWith('equatorCrossingDate.endDate', '0')
 
-        expect(handleSubmit).toHaveBeenCalledTimes(0)
-        expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
+        expect(props.handleSubmit).toHaveBeenCalledTimes(0)
+        expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(0)
       })
     })
   })
@@ -1458,20 +1482,22 @@ describe('GranuleFiltersForm component', () => {
 
     test('defaults to an empty value', () => {
       setup({
-        collectionMetadata: {
-          tilingIdentificationSystems: [
-            {
-              tilingIdentificationSystemName: 'MISR',
-              coordinate1: {
-                minimumValue: 1,
-                maximumValue: 233
-              },
-              coordinate2: {
-                minimumValue: 1,
-                maximumValue: 180
+        overrideProps: {
+          collectionMetadata: {
+            tilingIdentificationSystems: [
+              {
+                tilingIdentificationSystemName: 'MISR',
+                coordinate1: {
+                  minimumValue: 1,
+                  maximumValue: 233
+                },
+                coordinate2: {
+                  minimumValue: 1,
+                  maximumValue: 180
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       })
 
@@ -1481,21 +1507,23 @@ describe('GranuleFiltersForm component', () => {
     })
 
     test('calls handleChange on change', async () => {
-      const { onMetricsGranuleFilter, handleChange, user } = setup({
-        collectionMetadata: {
-          tilingIdentificationSystems: [
-            {
-              tilingIdentificationSystemName: 'MISR',
-              coordinate1: {
-                minimumValue: 1,
-                maximumValue: 233
-              },
-              coordinate2: {
-                minimumValue: 1,
-                maximumValue: 180
+      const { props, user } = setup({
+        overrideProps: {
+          collectionMetadata: {
+            tilingIdentificationSystems: [
+              {
+                tilingIdentificationSystemName: 'MISR',
+                coordinate1: {
+                  minimumValue: 1,
+                  maximumValue: 233
+                },
+                coordinate2: {
+                  minimumValue: 1,
+                  maximumValue: 180
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       })
 
@@ -1503,15 +1531,15 @@ describe('GranuleFiltersForm component', () => {
 
       await user.selectOptions(tileOptions, 'MISR')
 
-      expect(handleChange).toHaveBeenCalledTimes(1)
-      expect(handleChange).toHaveBeenCalledWith(
+      expect(props.handleChange).toHaveBeenCalledTimes(1)
+      expect(props.handleChange).toHaveBeenCalledWith(
         expect.objectContaining({
           _reactName: 'onChange'
         })
       )
 
-      expect(onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
-      expect(onMetricsGranuleFilter).toHaveBeenCalledWith(
+      expect(props.onMetricsGranuleFilter).toHaveBeenCalledTimes(1)
+      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith(
         {
           type: 'tilingSystem',
           value: 'MISR'
@@ -1521,23 +1549,25 @@ describe('GranuleFiltersForm component', () => {
 
     test('tiling system onchange displays grid coordinates', async () => {
       const { user } = setup({
-        collectionMetadata: {
-          tilingIdentificationSystems: [
-            {
-              tilingIdentificationSystemName: 'MISR',
-              coordinate1: {
-                minimumValue: 1,
-                maximumValue: 233
-              },
-              coordinate2: {
-                minimumValue: 1,
-                maximumValue: 183
+        overrideProps: {
+          collectionMetadata: {
+            tilingIdentificationSystems: [
+              {
+                tilingIdentificationSystemName: 'MISR',
+                coordinate1: {
+                  minimumValue: 1,
+                  maximumValue: 233
+                },
+                coordinate2: {
+                  minimumValue: 1,
+                  maximumValue: 183
+                }
               }
-            }
-          ]
-        },
-        values: {
-          tilingSystem: 'MISR'
+            ]
+          },
+          values: {
+            tilingSystem: 'MISR'
+          }
         }
       })
 
@@ -1554,14 +1584,14 @@ describe('GranuleFiltersForm component', () => {
 
   describe('Recurring date toggle behavior', () => {
     test('when toggling recurring with same year dates, adjusts start date to minimum year', async () => {
-      const {
-        setFieldValue, setFieldTouched, handleSubmit, onMetricsGranuleFilter, user
-      } = setup({
-        values: {
-          temporal: {
-            startDate: '2024-03-01T00:00:00.000Z',
-            endDate: '2024-12-31T23:59:59.999Z',
-            isRecurring: false
+      const { props, user } = setup({
+        overrideProps: {
+          values: {
+            temporal: {
+              startDate: '2024-03-01T00:00:00.000Z',
+              endDate: '2024-12-31T23:59:59.999Z',
+              isRecurring: false
+            }
           }
         }
       })
@@ -1570,33 +1600,35 @@ describe('GranuleFiltersForm component', () => {
       await user.click(recurringCheckbox)
 
       // Verify isRecurring was set
-      expect(setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
-      expect(setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
+      expect(props.setFieldValue).toHaveBeenCalledWith('temporal.isRecurring', true)
+      expect(props.setFieldTouched).toHaveBeenCalledWith('temporal.isRecurring', true)
 
       // Verify start date was adjusted to minimum year while preserving month/day
-      expect(setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1960-03-01T00:00:00.000Z')
+      expect(props.setFieldValue).toHaveBeenCalledWith('temporal.startDate', '1960-03-01T00:00:00.000Z')
 
       // Verify recurringDay values were set correctly
-      expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 61) // March 1st
-      expect(setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 366) // December 31st
+      expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayStart', 61) // March 1st
+      expect(props.setFieldValue).toHaveBeenCalledWith('temporal.recurringDayEnd', 366) // December 31st
 
       // Verify form was submitted
-      expect(handleSubmit).toHaveBeenCalled()
+      expect(props.handleSubmit).toHaveBeenCalled()
 
       // Verify metrics were recorded
-      expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
         type: 'Set Recurring',
         value: true
       })
     })
 
     test('when toggling recurring with different year dates, preserves original start date year', async () => {
-      const { setFieldValue, user } = setup({
-        values: {
-          temporal: {
-            startDate: '2023-03-01T00:00:00.000Z',
-            endDate: '2024-12-31T23:59:59.999Z',
-            isRecurring: false
+      const { props, user } = setup({
+        overrideProps: {
+          values: {
+            temporal: {
+              startDate: '2023-03-01T00:00:00.000Z',
+              endDate: '2024-12-31T23:59:59.999Z',
+              isRecurring: false
+            }
           }
         }
       })
@@ -1605,7 +1637,7 @@ describe('GranuleFiltersForm component', () => {
       await user.click(recurringCheckbox)
 
       // Verify start date was NOT adjusted since years are different
-      expect(setFieldValue).not.toHaveBeenCalledWith(
+      expect(props.setFieldValue).not.toHaveBeenCalledWith(
         'temporal.startDate',
         expect.stringContaining('1960')
       )
@@ -1616,14 +1648,14 @@ describe('GranuleFiltersForm component', () => {
     test('when submitting start date in same year as end date with recurring enabled, adjusts to minimum year', async () => {
       MockDate.set('2024-03-15')
 
-      const {
-        setFieldValue, handleSubmit, onMetricsGranuleFilter, user
-      } = setup({
-        values: {
-          temporal: {
-            isRecurring: true,
-            startDate: '',
-            endDate: '2024-12-31T23:59:59.999Z'
+      const { props, user } = setup({
+        overrideProps: {
+          values: {
+            temporal: {
+              isRecurring: true,
+              startDate: '',
+              endDate: '2024-12-31T23:59:59.999Z'
+            }
           }
         }
       })
@@ -1633,13 +1665,13 @@ describe('GranuleFiltersForm component', () => {
       await user.click(todayButton)
 
       // Verify start date was adjusted to minimum year while preserving month/day
-      expect(setFieldValue).toHaveBeenCalledWith(
+      expect(props.setFieldValue).toHaveBeenCalledWith(
         'temporal.startDate',
         '1960-03-15T00:00:00.000Z'
       )
 
-      expect(handleSubmit).toHaveBeenCalled()
-      expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+      expect(props.handleSubmit).toHaveBeenCalled()
+      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
         type: 'Set Start Date',
         value: '2024-03-15T00:00:00.000Z'
       })
@@ -1652,14 +1684,14 @@ describe('GranuleFiltersForm component', () => {
     test('when submitting end date in same year as start date with recurring enabled, adjusts start date to minimum year', async () => {
       MockDate.set('2024-12-15')
 
-      const {
-        setFieldValue, handleSubmit, onMetricsGranuleFilter, user
-      } = setup({
-        values: {
-          temporal: {
-            isRecurring: true,
-            startDate: '2024-03-15T00:00:00.000Z',
-            endDate: ''
+      const { props, user } = setup({
+        overrideProps: {
+          values: {
+            temporal: {
+              isRecurring: true,
+              startDate: '2024-03-15T00:00:00.000Z',
+              endDate: ''
+            }
           }
         }
       })
@@ -1669,13 +1701,13 @@ describe('GranuleFiltersForm component', () => {
       await user.click(todayButton)
 
       // Verify start date was adjusted to minimum year while preserving month/day
-      expect(setFieldValue).toHaveBeenCalledWith(
+      expect(props.setFieldValue).toHaveBeenCalledWith(
         'temporal.startDate',
         '1960-03-15T00:00:00.000Z'
       )
 
-      expect(handleSubmit).toHaveBeenCalled()
-      expect(onMetricsGranuleFilter).toHaveBeenCalledWith({
+      expect(props.handleSubmit).toHaveBeenCalled()
+      expect(props.onMetricsGranuleFilter).toHaveBeenCalledWith({
         type: 'Set End Date',
         value: '2024-12-15T23:59:59.000Z'
       })

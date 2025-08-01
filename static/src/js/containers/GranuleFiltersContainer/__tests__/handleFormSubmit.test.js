@@ -1,15 +1,17 @@
+import useEdscStore from '../../../zustand/useEdscStore'
 import handleFormSubmit from '../handleFormSubmit'
 
-const onApplyGranuleFiltersMock = jest.fn()
 const setSubmittingMock = jest.fn()
-
-beforeEach(() => {
-  jest.clearAllMocks()
-})
 
 describe('handleFormSubmit', () => {
   describe('when passing new values', () => {
     test('calls onApplyGranuleFilters witht the correct values', () => {
+      useEdscStore.setState({
+        query: {
+          changeGranuleQuery: jest.fn()
+        }
+      })
+
       const values = {
         test: 'value',
         readableGranuleName: ''
@@ -17,37 +19,64 @@ describe('handleFormSubmit', () => {
 
       const config = {
         props: {
-          onApplyGranuleFilters: onApplyGranuleFiltersMock
+          collectionMetadata: {
+            conceptId: 'collectionId'
+          }
         },
         setSubmitting: setSubmittingMock
       }
 
       handleFormSubmit(values, config)
 
-      expect(onApplyGranuleFiltersMock).toHaveBeenCalledTimes(1)
-      expect(onApplyGranuleFiltersMock).toHaveBeenCalledWith(values)
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      expect(query.changeGranuleQuery).toHaveBeenCalledTimes(1)
+      expect(query.changeGranuleQuery).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        query: {
+          readableGranuleName: '',
+          test: 'value'
+        }
+      })
+
+      expect(setSubmittingMock).toHaveBeenCalledTimes(1)
+      expect(setSubmittingMock).toHaveBeenCalledWith(false)
     })
   })
 
   describe('when readableGranuleName is defined', () => {
     test('splits the value on the comma', () => {
+      useEdscStore.setState({
+        query: {
+          changeGranuleQuery: jest.fn()
+        }
+      })
+
       const values = {
         readableGranuleName: '1,2,3'
       }
 
       const config = {
         props: {
-          onApplyGranuleFilters: onApplyGranuleFiltersMock
+          collectionMetadata: {
+            conceptId: 'collectionId'
+          }
         },
         setSubmitting: setSubmittingMock
       }
 
       handleFormSubmit(values, config)
 
-      expect(onApplyGranuleFiltersMock).toHaveBeenCalledTimes(1)
-      expect(onApplyGranuleFiltersMock).toHaveBeenCalledWith({
-        readableGranuleName: ['1', '2', '3']
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      expect(query.changeGranuleQuery).toHaveBeenCalledTimes(1)
+      expect(query.changeGranuleQuery).toHaveBeenCalledWith({
+        collectionId: 'collectionId',
+        query: { readableGranuleName: ['1', '2', '3'] }
       })
+
+      expect(setSubmittingMock).toHaveBeenCalledTimes(1)
+      expect(setSubmittingMock).toHaveBeenCalledWith(false)
     })
   })
 })

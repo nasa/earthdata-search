@@ -1,68 +1,49 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import FilterStackItem from '../../FilterStack/FilterStackItem'
+import { act, screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import AdvancedSearchDisplay from '../AdvancedSearchDisplay'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: AdvancedSearchDisplay,
+  defaultProps: {
     advancedSearch: {},
-    onUpdateAdvancedSearch: jest.fn(),
-    onChangeQuery: jest.fn(),
-    ...overrideProps
+    onUpdateAdvancedSearch: jest.fn()
+  },
+  defaultZustandState: {
+    query: {
+      changeQuery: jest.fn()
+    }
   }
-
-  const enzymeWrapper = shallow(<AdvancedSearchDisplay {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('AdvancedSearchDisplay component', () => {
   describe('with no active advancedSearch filters', () => {
     test('should render self without display', () => {
-      const { enzymeWrapper } = setup()
+      setup()
 
-      expect(enzymeWrapper.html()).toBe(null)
+      expect(screen.queryByText('Advanced Search')).not.toBeInTheDocument()
     })
 
     describe('when a filter is set to false', () => {
       test('should render self without display', () => {
-        const { enzymeWrapper } = setup({
-          advancedSearch: {
-            regionSearch: false
+        setup({
+          overrideProps: {
+            advancedSearch: {
+              regionSearch: false
+            }
           }
         })
 
-        expect(enzymeWrapper.html()).toBe(null)
+        expect(screen.queryByText('Advanced Search')).not.toBeInTheDocument()
       })
     })
   })
 
   describe('with active advancedSearch filters', () => {
     test('should display the filter stack item', () => {
-      const { enzymeWrapper } = setup({
-        advancedSearch: {
-          regionSearch: {
-            selectedRegion: {
-              test: 'test'
-            }
-          }
-        }
-      })
-
-      expect(enzymeWrapper.find(FilterStackItem).length).toEqual(1)
-    })
-  })
-
-  describe('FilterStackItem', () => {
-    describe('onRemove', () => {
-      test('calls the callbacks to update the advanced search and query states', () => {
-        const { enzymeWrapper, props } = setup({
+      setup({
+        overrideProps: {
           advancedSearch: {
             regionSearch: {
               selectedRegion: {
@@ -70,14 +51,39 @@ describe('AdvancedSearchDisplay component', () => {
               }
             }
           }
+        }
+      })
+
+      expect(screen.getByText('Advanced Search')).toBeInTheDocument()
+      expect(screen.getByText('(1 applied)')).toBeInTheDocument()
+    })
+  })
+
+  describe('FilterStackItem', () => {
+    describe('onRemove', () => {
+      test('calls the callbacks to update the advanced search and query states', async () => {
+        const { props, user, zustandState } = setup({
+          overrideProps: {
+            advancedSearch: {
+              regionSearch: {
+                selectedRegion: {
+                  test: 'test'
+                }
+              }
+            }
+          }
         })
 
-        enzymeWrapper.find(FilterStackItem).prop('onRemove')()
+        const button = screen.getByRole('button', { name: 'Remove advanced search filter' })
+        await act(async () => {
+          await user.click(button)
+        })
 
         expect(props.onUpdateAdvancedSearch).toHaveBeenCalledTimes(1)
         expect(props.onUpdateAdvancedSearch).toHaveBeenCalledWith({})
-        expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-        expect(props.onChangeQuery).toHaveBeenCalledWith({
+
+        expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+        expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
             spatial: {}
           }

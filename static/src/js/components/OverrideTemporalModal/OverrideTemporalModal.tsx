@@ -11,30 +11,23 @@ import './OverrideTemporalModal.scss'
 import focusedImage from '../../../assets/images/blue-bars-circle.png?format=webp'
 // @ts-expect-error: Types do not exist for this file
 import temporalImage from '../../../assets/images/orange-bars-circle.png?format=webp'
-import { Query } from '../../types/sharedTypes'
+import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
 
 interface OverrideTemporalModalProps {
   /** Whether the modal is open */
   isOpen: boolean
-  /** The temporal search object */
-  temporalSearch: {
-    /** The end date of the temporal search */
-    endDate?: string
-    /** The start date of the temporal search */
-    startDate?: string
-  }
-  /** Function to change the query */
-  onChangeQuery: (query: Query) => void
   /** Function to toggle the override temporal modal */
   onToggleOverrideTemporalModal: (open: boolean) => void
 }
 
 const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
   isOpen,
-  temporalSearch,
-  onChangeQuery,
   onToggleOverrideTemporalModal
 }) => {
+  const changeProjectQuery = useEdscStore((state) => state.query.changeProjectQuery)
+  const temporalQuery = useEdscStore(getCollectionsQueryTemporal)
+  const timelineQuery = useEdscStore((state) => state.timeline.query)
+
   /**
    * Called when the modal closes, sets the modal as closed in the store
    */
@@ -46,12 +39,9 @@ const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
    * Called when the user selects the focused date
    */
   const onFocusedClick = () => {
-    const zustandState = useEdscStore.getState()
-    const { timeline } = zustandState
-    const { query } = timeline
-    const { end, start } = query
+    const { end, start } = timelineQuery
 
-    onChangeQuery({
+    changeProjectQuery({
       collection: {
         overrideTemporal: {
           endDate: !end ? undefined : new Date(end).toISOString(),
@@ -67,9 +57,9 @@ const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
    * Called when the user selects the temporal search
    */
   const onTemporalClick = () => {
-    const { endDate, startDate } = temporalSearch
+    const { endDate, startDate } = temporalQuery
 
-    onChangeQuery({
+    changeProjectQuery({
       collection: {
         overrideTemporal: {
           endDate,

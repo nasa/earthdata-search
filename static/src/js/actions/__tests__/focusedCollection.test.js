@@ -13,7 +13,6 @@ import {
 } from '../focusedCollection'
 
 import {
-  INITIALIZE_COLLECTION_GRANULES_QUERY,
   INITIALIZE_COLLECTION_GRANULES_RESULTS,
   TOGGLE_SPATIAL_POLYGON_WARNING,
   UPDATE_COLLECTION_METADATA,
@@ -92,11 +91,6 @@ describe('getFocusedCollection', () => {
             }
           }
         },
-        query: {
-          collection: {
-            spatial: {}
-          }
-        },
         searchResults: {}
       })
 
@@ -150,11 +144,6 @@ describe('getFocusedCollection', () => {
           focusedCollection: 'C10000000000-EDSC',
           metadata: {
             collections: {}
-          },
-          query: {
-            collection: {
-              spatial: {}
-            }
           },
           searchResults: {}
         })
@@ -226,14 +215,14 @@ describe('getFocusedCollection', () => {
                 }
               }
             },
-            query: {
-              collection: {
-                spatial: {
-                  polygon: '-77,38,-77,38,-76,38,-77,38'
-                }
-              }
-            },
             searchResults: {}
+          })
+
+          useEdscStore.setState((state) => {
+            // eslint-disable-next-line no-param-reassign
+            state.query.collection.spatial = {
+              polygon: '-77,38,-77,38,-76,38,-77,38'
+            }
           })
 
           await store.dispatch(getFocusedCollection()).then(() => {
@@ -306,14 +295,14 @@ describe('getFocusedCollection', () => {
                 }
               }
             },
-            query: {
-              collection: {
-                spatial: {
-                  polygon: '-77,38,-77,38,-76,38,-77,38'
-                }
-              }
-            },
             searchResults: {}
+          })
+
+          useEdscStore.setState((state) => {
+            // eslint-disable-next-line no-param-reassign
+            state.query.collection.spatial = {
+              polygon: '-77,38,-77,38,-76,38,-77,38'
+            }
           })
 
           await store.dispatch(getFocusedCollection()).then(() => {
@@ -390,14 +379,14 @@ describe('getFocusedCollection', () => {
               }
             }
           },
-          query: {
-            collection: {
-              spatial: {
-                polygon: '-77,38,-77,38,-76,38,-77,38'
-              }
-            }
-          },
           searchResults: {}
+        })
+
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.query.collection.spatial = {
+            polygon: '-77,38,-77,38,-76,38,-77,38'
+          }
         })
 
         nock(/localhost/)
@@ -468,11 +457,6 @@ describe('getFocusedCollection', () => {
               search: '?some=testparams',
               pathname: '/search/granules'
             }
-          },
-          query: {
-            collection: {
-              spatial: {}
-            }
           }
         })
 
@@ -536,11 +520,6 @@ describe('getFocusedCollection', () => {
         focusedCollection: 'C10000000000-EDSC',
         metadata: {
           collections: {}
-        },
-        query: {
-          collection: {
-            spatial: {}
-          }
         },
         searchResults: {}
       })
@@ -637,11 +616,6 @@ describe('getFocusedCollection', () => {
         metadata: {
           collections: {}
         },
-        query: {
-          collection: {
-            spatial: {}
-          }
-        },
         searchResults: {}
       })
 
@@ -689,12 +663,7 @@ describe('getFocusedCollection', () => {
 
     const store = mockStore({
       authToken: '',
-      focusedCollection: 'C10000000000-EDSC',
-      query: {
-        collection: {
-          spatial: {}
-        }
-      }
+      focusedCollection: 'C10000000000-EDSC'
     })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
@@ -746,11 +715,6 @@ describe('getGranuleSubscriptions', () => {
                 ]
               }
             }
-          }
-        },
-        query: {
-          collection: {
-            spatial: {}
           }
         },
         searchResults: {}
@@ -805,11 +769,6 @@ describe('getGranuleSubscriptions', () => {
                 ]
               }
             }
-          }
-        },
-        query: {
-          collection: {
-            spatial: {}
           }
         },
         searchResults: {}
@@ -877,6 +836,7 @@ describe('changeFocusedCollection', () => {
       getFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
 
       const getTimelineMock = jest.fn()
+      const changeGranuleQueryMock = jest.fn()
       useEdscStore.setState((state) => ({
         ...state,
         timeline: {
@@ -889,6 +849,9 @@ describe('changeFocusedCollection', () => {
             ...state.preferences.preferences,
             granuleSort: 'default'
           }
+        },
+        query: {
+          changeGranuleQuery: changeGranuleQueryMock
         }
       }))
 
@@ -905,20 +868,17 @@ describe('changeFocusedCollection', () => {
       })
 
       expect(storeActions[1]).toEqual({
-        type: INITIALIZE_COLLECTION_GRANULES_QUERY,
-        payload: {
-          collectionId,
-          granuleSortPreference: 'default'
-        }
-      })
-
-      expect(storeActions[2]).toEqual({
         type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
         payload: collectionId
       })
 
       expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+      expect(getFocusedCollectionMock).toHaveBeenCalledWith()
+
       expect(getTimelineMock).toHaveBeenCalledTimes(1)
+      expect(getTimelineMock).toHaveBeenCalledWith()
+
+      expect(changeGranuleQueryMock).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -961,6 +921,62 @@ describe('changeFocusedCollection', () => {
       })
     })
   })
+
+  describe('when the granule sort preference is not the default', () => {
+    test('updates the focusedCollection and calls getFocusedCollection', () => {
+      const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection')
+      getFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
+
+      const getTimelineMock = jest.fn()
+      const changeGranuleQueryMock = jest.fn()
+      useEdscStore.setState((state) => ({
+        ...state,
+        timeline: {
+          ...state.timeline,
+          getTimeline: getTimelineMock
+        },
+        preferences: {
+          ...state.preferences,
+          preferences: {
+            ...state.preferences.preferences,
+            granuleSort: '-start_date'
+          }
+        },
+        query: {
+          changeGranuleQuery: changeGranuleQueryMock
+        }
+      }))
+
+      const store = mockStore({})
+
+      const collectionId = 'C1000000000-EDSC'
+
+      store.dispatch(actions.changeFocusedCollection(collectionId))
+
+      const storeActions = store.getActions()
+      expect(storeActions[0]).toEqual({
+        type: UPDATE_FOCUSED_COLLECTION,
+        payload: collectionId
+      })
+
+      expect(storeActions[1]).toEqual({
+        type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
+        payload: collectionId
+      })
+
+      expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+      expect(getFocusedCollectionMock).toHaveBeenCalledWith()
+
+      expect(getTimelineMock).toHaveBeenCalledTimes(1)
+      expect(getTimelineMock).toHaveBeenCalledWith()
+
+      expect(changeGranuleQueryMock).toHaveBeenCalledTimes(1)
+      expect(changeGranuleQueryMock).toHaveBeenCalledWith({
+        collectionId: 'C1000000000-EDSC',
+        query: { sortKey: '-start_date' }
+      })
+    })
+  })
 })
 
 describe('viewCollectionDetails', () => {
@@ -978,11 +994,6 @@ describe('viewCollectionDetails', () => {
         location: {
           search: '?some=testparams',
           pathname: '/search/granules'
-        }
-      },
-      query: {
-        collection: {
-          spatial: {}
         }
       }
     })
@@ -1009,11 +1020,6 @@ describe('viewCollectionGranules', () => {
         location: {
           search: '?some=testparams',
           pathname: '/search/granules'
-        }
-      },
-      query: {
-        collection: {
-          spatial: {}
         }
       }
     })

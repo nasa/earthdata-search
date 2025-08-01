@@ -17,18 +17,12 @@ import { isPath } from '../../util/isPath'
 // @ts-expect-error The file does not have types
 import Timeline from '../../components/Timeline/Timeline'
 
-import type {
-  CollectionMetadata,
-  CollectionsMetadata,
-  Query
-} from '../../types/sharedTypes'
+import type { CollectionMetadata, CollectionsMetadata } from '../../types/sharedTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onChangeQuery:
-    (query: Query) => dispatch(actions.changeQuery(query)),
   onToggleOverrideTemporalModal:
     (open: boolean) => dispatch(actions.toggleOverrideTemporalModal(open)),
   onMetricsTimeline:
@@ -43,16 +37,8 @@ export const mapStateToProps = (state) => ({
   focusedCollectionId: getFocusedCollectionId(state),
   isOpen: state.ui.timeline.isOpen,
   pathname: state.router.location.pathname,
-  search: state.router.location.search,
-  temporalSearch: state.query.collection.temporal
+  search: state.router.location.search
 })
-
-interface TemporalSearch {
-  /** The end date of the temporal search */
-  endDate?: string
-  /** The start date of the temporal search */
-  startDate?: string
-}
 
 interface TimelineContainerProps {
   /** Collections Metadata */
@@ -61,8 +47,6 @@ interface TimelineContainerProps {
   focusedCollectionId: string
   /** Whether the timeline is open */
   isOpen: boolean
-  /** Function to change the query */
-  onChangeQuery: (query: Query) => void
   /** Function to handle metrics timeline */
   onMetricsTimeline: (type: string) => void
   /** Function to toggle the override temporal modal */
@@ -73,8 +57,6 @@ interface TimelineContainerProps {
   pathname: string
   /** The search string from the location */
   search: string
-  /** The temporal search object */
-  temporalSearch: TemporalSearch
 }
 
 export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
@@ -82,13 +64,11 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
     collectionsMetadata,
     focusedCollectionId,
     isOpen,
-    onChangeQuery,
     onMetricsTimeline,
     onToggleOverrideTemporalModal,
     onToggleTimeline,
     pathname,
-    search: searchLocation,
-    temporalSearch = {}
+    search: searchLocation
   } = props
 
   const projectCollectionsIds = useEdscStore(getProjectCollectionsIds)
@@ -120,14 +100,12 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
     <Timeline
       collectionMetadata={collectionMetadata}
       isOpen={isOpen}
-      onChangeQuery={onChangeQuery}
       onMetricsTimeline={onMetricsTimeline}
       onToggleOverrideTemporalModal={onToggleOverrideTemporalModal}
       onToggleTimeline={onToggleTimeline}
       pathname={pathname}
       projectCollectionsIds={projectCollectionsIds}
       showOverrideModal={isProjectPage}
-      temporalSearch={temporalSearch}
     />
   )
 }

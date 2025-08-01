@@ -1,7 +1,8 @@
-export const mapPropsToValues = (props) => {
-  const {
-    granuleQuery
-  } = props
+import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
+
+export const mapPropsToValues = () => {
+  const granuleQuery = getFocusedCollectionGranuleQuery(useEdscStore.getState())
 
   const {
     browseOnly = false,

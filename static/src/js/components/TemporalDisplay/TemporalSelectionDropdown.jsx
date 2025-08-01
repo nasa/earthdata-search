@@ -10,6 +10,9 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import TemporalSelectionDropdownMenu from './TemporalSelectionDropdownMenu'
 import TemporalSelectionDropdownToggle from './TemporalSelectionDropdownToggle'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
+
 import './TemporalSelectionDropdown.scss'
 
 /**
@@ -24,9 +27,9 @@ const TemporalSelectionDropdown = ({
   allowRecurring,
   onChangeQuery,
   onMetricsTemporalFilter,
-  searchParams,
-  temporalSearch
+  searchParams
 }) => {
+  const temporalSearch = useEdscStore(getCollectionsQueryTemporal)
   const {
     startDate = '',
     endDate = '',
@@ -388,8 +391,7 @@ const TemporalSelectionDropdown = ({
 TemporalSelectionDropdown.defaultProps = {
   allowRecurring: true,
   onMetricsTemporalFilter: null,
-  searchParams: {},
-  temporalSearch: {}
+  searchParams: {}
 }
 
 TemporalSelectionDropdown.propTypes = {
@@ -398,13 +400,6 @@ TemporalSelectionDropdown.propTypes = {
   onMetricsTemporalFilter: PropTypes.func,
   searchParams: PropTypes.shape({
     q: PropTypes.string
-  }),
-  temporalSearch: PropTypes.shape({
-    endDate: PropTypes.string,
-    isRecurring: PropTypes.bool,
-    recurringDayEnd: PropTypes.string,
-    recurringDayStart: PropTypes.string,
-    startDate: PropTypes.string
   })
 }
 

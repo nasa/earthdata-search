@@ -20,7 +20,7 @@ jest.mock('../../../containers/SpatialDisplayContainer/SpatialDisplayContainer',
   <div>Spatial Display</div>
 )))
 
-jest.mock('../../../containers/TemporalDisplayContainer/TemporalDisplayContainer', () => jest.fn(() => (
+jest.mock('../../TemporalDisplay/TemporalDisplay', () => jest.fn(() => (
   <div>Temporal Display</div>
 )))
 
@@ -32,9 +32,9 @@ const setup = setupTest({
   Component: SearchForm,
   defaultProps: {
     advancedSearch: {},
-    keywordSearch: 'Test value',
+    authToken: '',
+    handleError: jest.fn(),
     onChangeFocusedCollection: jest.fn(),
-    onChangeQuery: jest.fn(),
     onClearFilters: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn()
   }
@@ -79,32 +79,6 @@ describe('SearchForm component', () => {
 
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)
-    })
-  })
-
-  describe('SearchAutocomplete integration', () => {
-    test('renders with initial keyword value', () => {
-      setup({
-        overrideProps: {
-          keywordSearch: 'Test value'
-        }
-      })
-
-      const input = screen.getByRole('textbox')
-      expect(input).toHaveValue('Test value')
-    })
-
-    test('passes required props to SearchAutocomplete', () => {
-      const { props } = setup({
-        overrideProps: {
-          keywordSearch: 'Test keyword'
-        }
-      })
-
-      expect(screen.getByRole('textbox')).toHaveValue('Test keyword')
-
-      expect(props.onChangeQuery).toBeDefined()
-      expect(props.onChangeFocusedCollection).toBeDefined()
     })
   })
 })
