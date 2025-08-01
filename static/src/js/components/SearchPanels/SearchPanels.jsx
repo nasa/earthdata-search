@@ -17,7 +17,6 @@ import Helmet from 'react-helmet'
 import { commafy } from '../../util/commafy'
 import { pluralize } from '../../util/pluralize'
 import { isLoggedIn } from '../../util/isLoggedIn'
-import { translateDefaultCollectionSortKey } from '../../util/collections'
 import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
@@ -183,16 +182,8 @@ class SearchPanels extends PureComponent {
 
     const {
       pageNum: collectionsPageNum = 1,
-      paramCollectionSortKey: urlCollectionsSortKey
+      sortKey: activeCollectionsSortKey
     } = collectionQuery
-
-    const { collectionSort: userPrefCollectionSortKey } = preferences
-
-    // Translate 'default' to proper sort key if needed
-    const userPrefCollSortKey = translateDefaultCollectionSortKey(userPrefCollectionSortKey)
-
-    // Use the url parameter sort key if present, else use user preferences sort key
-    const activeCollectionsSortKey = urlCollectionsSortKey || userPrefCollSortKey
 
     const {
       allIds: collectionAllIds,
@@ -255,22 +246,42 @@ class SearchPanels extends PureComponent {
       {
         label: 'Start Date, Newest First',
         isActive: activeGranulesSortKey === '-start_date',
-        onClick: () => onApplyGranuleFilters({ sortKey: '-start_date' })
+        onClick: () => onApplyGranuleFilters({
+          collectionId: conceptId,
+          query: {
+            sortKey: '-start_date'
+          }
+        })
       },
       {
         label: 'Start Date, Oldest First',
         isActive: activeGranulesSortKey === collectionSortKeys.startDateAscending,
-        onClick: () => onApplyGranuleFilters({ sortKey: collectionSortKeys.startDateAscending })
+        onClick: () => onApplyGranuleFilters({
+          collectionId: conceptId,
+          query: {
+            sortKey: collectionSortKeys.startDateAscending
+          }
+        })
       },
       {
         label: 'End Date, Newest First',
         isActive: activeGranulesSortKey === '-end_date',
-        onClick: () => onApplyGranuleFilters({ sortKey: '-end_date' })
+        onClick: () => onApplyGranuleFilters({
+          collectionId: conceptId,
+          query: {
+            sortKey: '-end_date'
+          }
+        })
       },
       {
         label: 'End Date, Oldest First',
         isActive: activeGranulesSortKey === 'end_date',
-        onClick: () => onApplyGranuleFilters({ sortKey: 'end_date' })
+        onClick: () => onApplyGranuleFilters({
+          collectionId: conceptId,
+          query: {
+            sortKey: 'end_date'
+          }
+        })
       }
     ]
 
@@ -290,13 +301,11 @@ class SearchPanels extends PureComponent {
     ]
 
     const setCollectionSort = (value) => {
-      const sortKey = [value]
-      const paramCollectionSortKey = value
+      const sortKey = value
 
       onChangeQuery({
         collection: {
-          sortKey,
-          paramCollectionSortKey
+          sortKey
         }
       })
 
@@ -886,10 +895,7 @@ SearchPanels.propTypes = {
   }).isRequired,
   collectionQuery: PropTypes.shape({
     pageNum: PropTypes.number,
-    sortKey: PropTypes.arrayOf(
-      PropTypes.string
-    ),
-    paramCollectionSortKey: PropTypes.string
+    sortKey: PropTypes.string
   }).isRequired,
   collectionsSearch: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),

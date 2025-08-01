@@ -71,7 +71,11 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
       } = configureStore()
 
       // Reset collection pageNum to 1 when facets are changing
-      reduxDispatch(actions.updateCollectionQuery({ pageNum: 1 }))
+      get().query.changeQuery({
+        collection: {
+          pageNum: 1
+        }
+      })
 
       // Fetch collections with the updated feature facets
       reduxDispatch(actions.getCollections())
@@ -89,7 +93,11 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
       } = configureStore()
 
       // Reset collection pageNum to 1 when facets are changing
-      reduxDispatch(actions.updateCollectionQuery({ pageNum: 1 }))
+      get().query.changeQuery({
+        collection: {
+          pageNum: 1
+        }
+      })
 
       // Fetch collections with the updated feature facets
       reduxDispatch(actions.getCollections())

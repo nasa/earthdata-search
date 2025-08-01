@@ -1,4 +1,5 @@
 import React from 'react'
+import { act } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -32,9 +33,11 @@ const setup = setupTest({
     onChangeCollectionPageNum: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     onViewCollectionDetails: jest.fn(),
-    panelView: 'list',
+    panelView: 'list'
+  },
+  defaultZustandState: {
     query: {
-      pageNum: 1
+      changeQuery: jest.fn()
     }
   }
 })
@@ -60,16 +63,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
-  test('onChangeCollectionPageNum calls actions.changeCollectionPageNum', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeCollectionPageNum')
-
-    mapDispatchToProps(dispatch).onChangeCollectionPageNum({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsActions, 'metricsAddCollectionProject')
@@ -87,9 +80,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      query: {
-        collection: {}
-      },
       searchResults: {
         collections: {}
       }
@@ -97,8 +87,7 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       collectionsSearch: {},
-      collectionsMetadata: {},
-      query: {}
+      collectionsMetadata: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -124,12 +113,18 @@ describe('CollectionResultsBodyContainer component', () => {
     }, {})
   })
 
-  test('loadNextPage calls onChangeCollectionPageNum', () => {
-    const { props } = setup()
+  test('loadNextPage calls changeQuery', async () => {
+    const { zustandState } = setup()
 
-    CollectionResultsBody.mock.calls[0][0].loadNextPage()
+    await act(async () => {
+      CollectionResultsBody.mock.calls[0][0].loadNextPage()
+    })
 
-    expect(props.onChangeCollectionPageNum).toHaveBeenCalledTimes(1)
-    expect(props.onChangeCollectionPageNum).toHaveBeenCalledWith(2)
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+      collection: {
+        pageNum: 2
+      }
+    })
   })
 })

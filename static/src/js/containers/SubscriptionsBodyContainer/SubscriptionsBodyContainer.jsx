@@ -1,14 +1,9 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
-import {
-  getCollectionSubscriptionQueryObj,
-  getGranuleSubscriptionQueryObj
-} from '../../selectors/query'
 import { getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import {
   getCollectionSubscriptionDisabledFields,
@@ -16,6 +11,12 @@ import {
   getGranuleSubscriptionDisabledFields
 } from '../../selectors/subscriptions'
 import SubscriptionsBody from '../../components/Subscriptions/SubscriptionsBody'
+
+import {
+  getCollectionSubscriptionQueryObj,
+  getGranuleSubscriptionQueryObj
+} from '../../zustand/selectors/query'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   onCreateSubscription:
@@ -39,10 +40,8 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
-  collectionQueryObj: getCollectionSubscriptionQueryObj(state),
   collectionSubscriptions: getCollectionSubscriptions(state),
   collectionSubscriptionDisabledFields: getCollectionSubscriptionDisabledFields(state),
-  granuleQueryObj: getGranuleSubscriptionQueryObj(state),
   granuleSubscriptions: getFocusedCollectionSubscriptions(state),
   granuleSubscriptionDisabledFields: getGranuleSubscriptionDisabledFields(state)
 })
@@ -50,9 +49,7 @@ export const mapStateToProps = (state) => ({
 // TODO: Needs tests for onCreateSubscription - EDSC-2923
 /**
  * Renders SubscriptionsBodyContainer.
- * @param {String} collectionQueryObj - String representing the current collection query string.
  * @param {Array} collectionSubscriptions - An array of collection subscriptions.
- * @param {String} granuleQueryObj - String representing the current granule query string.
  * @param {Array} granuleSubscriptions - An array of granule subscriptions.
  * @param {Function} onCreateSubscription - Callback to create a subscription.
  * @param {Function} onUpdateSubscription - Callback to update a subscription.
@@ -61,10 +58,8 @@ export const mapStateToProps = (state) => ({
  * @param {String} subscriptionType - The type of subscriptions to display, collection or granule.
  */
 export const SubscriptionsBodyContainer = ({
-  collectionQueryObj,
   collectionSubscriptions,
   collectionSubscriptionDisabledFields,
-  granuleQueryObj,
   granuleSubscriptions,
   granuleSubscriptionDisabledFields,
   onCreateSubscription,
@@ -75,6 +70,9 @@ export const SubscriptionsBodyContainer = ({
   onUpdateSubscriptionDisabledFields,
   subscriptionType
 }) => {
+  const collectionQueryObj = useEdscStore(getCollectionSubscriptionQueryObj)
+  const granuleQueryObj = useEdscStore(getGranuleSubscriptionQueryObj)
+
   let loadedSubscriptions
   let query
   let disabledFields
@@ -111,10 +109,8 @@ export const SubscriptionsBodyContainer = ({
 }
 
 SubscriptionsBodyContainer.propTypes = {
-  collectionQueryObj: PropTypes.shape({}).isRequired,
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   collectionSubscriptionDisabledFields: PropTypes.shape({}).isRequired,
-  granuleQueryObj: PropTypes.shape({}).isRequired,
   granuleSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   granuleSubscriptionDisabledFields: PropTypes.shape({}).isRequired,
   subscriptionType: PropTypes.string.isRequired,
@@ -126,6 +122,4 @@ SubscriptionsBodyContainer.propTypes = {
   onUpdateSubscriptionDisabledFields: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SubscriptionsBodyContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionsBodyContainer)

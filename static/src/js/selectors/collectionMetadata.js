@@ -44,8 +44,8 @@ export const getFocusedCollectionSubscriptions = createSelector(
 export const getFocusedCollectionTags = createSelector(
   [getFocusedCollectionMetadata],
   (focusedCollectionMetadata) => {
-    const { tags = {} } = focusedCollectionMetadata
+    const { tags } = focusedCollectionMetadata
 
-    return tags
+    return tags || {}
   }
 )

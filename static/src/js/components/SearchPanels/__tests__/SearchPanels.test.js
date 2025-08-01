@@ -75,7 +75,7 @@ function setup(overrideProps, location = '/search') {
     },
     collectionQuery: {
       pageNum: 1,
-      sortKey: [collectionSortKeys.scoreDescending]
+      sortKey: collectionSortKeys.scoreDescending
     },
     collectionsSearch: {
       allIds: ['COLL_ID_1'],
@@ -330,23 +330,22 @@ describe('SearchPanels component', () => {
         const { enzymeWrapper } = setup({
           collectionQuery: {
             pageNum: 1,
-            sortKey: [collectionSortKeys.scoreDescending],
-            paramCollectionSortKey: collectionSortKeys.startDateAscending
+            sortKey: collectionSortKeys.scoreDescending
           }
         })
         const panels = enzymeWrapper.find(Panels)
         const collectionResultsPanel = panels.find(PanelGroup).at(0)
         const collectionResultsPanelProps = collectionResultsPanel.props()
 
-        expect(collectionResultsPanelProps.activeSort).toBe('start_date')
+        expect(collectionResultsPanelProps.activeSort).toBe(collectionSortKeys.scoreDescending)
         expect(collectionResultsPanelProps.sortsArray[0].label).toBe('Relevance')
-        expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(false)
+        expect(collectionResultsPanelProps.sortsArray[0].isActive).toBe(true)
         expect(collectionResultsPanelProps.sortsArray[1].label).toBe('Usage')
         expect(collectionResultsPanelProps.sortsArray[1].isActive).toBe(false)
         expect(collectionResultsPanelProps.sortsArray[2].label).toBe('Recent Version')
         expect(collectionResultsPanelProps.sortsArray[2].isActive).toBe(false)
         expect(collectionResultsPanelProps.sortsArray[3].label).toBe('Start Date')
-        expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(true)
+        expect(collectionResultsPanelProps.sortsArray[3].isActive).toBe(false)
         expect(collectionResultsPanelProps.sortsArray[4].label).toBe('End Date')
         expect(collectionResultsPanelProps.sortsArray[4].isActive).toBe(false)
       })

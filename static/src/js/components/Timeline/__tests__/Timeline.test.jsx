@@ -27,15 +27,18 @@ const setup = setupTest({
         title: 'Test Collection'
       }
     },
-    temporalSearch: {},
     showOverrideModal: false,
     pathname: '/search/granules',
     projectCollectionsIds: ['collectionId'],
-    onChangeQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
     onMetricsTimeline: jest.fn(),
     onToggleTimeline: jest.fn(),
     isOpen: true
+  },
+  defaultZustandState: {
+    query: {
+      changeQuery: jest.fn()
+    }
   }
 })
 
@@ -72,13 +75,17 @@ describe('Timeline component', () => {
     const { props } = setup({
       overrideProps: {
         pathname: '/projects',
-        showOverrideModal: true,
-        temporalSearch: {
-          endDate: '2019-06-21T19:34:23.865Z',
-          startDate: '2018-12-28T15:56:46.870Z'
-        }
+        showOverrideModal: true
       },
       overrideZustandState: {
+        query: {
+          collection: {
+            temporal: {
+              endDate: '2019-06-21T19:34:23.865Z',
+              startDate: '2018-12-28T15:56:46.870Z'
+            }
+          }
+        },
         timeline: {
           intervals: {},
           query: {
@@ -94,6 +101,7 @@ describe('Timeline component', () => {
     })
 
     expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(true)
   })
 
   test('does not call onToggleOverrideTemporalModal on page load if spatial and focus don\'t both exist', () => {
@@ -336,7 +344,7 @@ describe('handleTimelineMoveEnd', () => {
 
 describe('handleTemporalSet', () => {
   test('when temporal is added', () => {
-    const { props } = setup()
+    const { zustandState } = setup()
     const temporalStart = 'Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)'
     const temporalEnd = 'Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)'
     const timelineProps = EDSCTimeline.mock.calls[0][0]
@@ -348,8 +356,8 @@ describe('handleTemporalSet', () => {
       })
     })
 
-    expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-    expect(props.onChangeQuery).toHaveBeenCalledWith(
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith(
       {
         collection: {
           temporal: {
@@ -362,7 +370,7 @@ describe('handleTemporalSet', () => {
   })
 
   test('when temporal is removed', () => {
-    const { props } = setup()
+    const { zustandState } = setup()
 
     const timelineProps = EDSCTimeline.mock.calls[0][0]
 
@@ -370,8 +378,8 @@ describe('handleTemporalSet', () => {
       timelineProps.onTemporalSet({})
     })
 
-    expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-    expect(props.onChangeQuery).toHaveBeenCalledWith({
+    expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+    expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
       collection: {
         temporal: {}
       }
@@ -526,13 +534,20 @@ describe('handleFocusedSet', () => {
     const { props } = setup({
       overrideProps: {
         pathname: '/projects',
-        showOverrideModal: true,
-        temporalSearch: {
-          endDate: '2019-06-21T19:34:23.865Z',
-          startDate: '2018-12-28T15:56:46.870Z'
+        showOverrideModal: true
+      },
+      overrideZustandState: {
+        query: {
+          collection: {
+            temporal: {
+              endDate: '2019-06-21T19:34:23.865Z',
+              startDate: '2018-12-28T15:56:46.870Z'
+            }
+          }
         }
       }
     })
+
     const timelineProps = EDSCTimeline.mock.calls[0][0]
     const focusedStart = new Date('Mon Dec 31 2018 19:00:00 GMT-0500 (Eastern Standard Time)')
     const focusedEnd = new Date('Thu Jan 31 2019 19:00:00 GMT-0500 (Eastern Standard Time)')
@@ -545,6 +560,7 @@ describe('handleFocusedSet', () => {
     })
 
     expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledTimes(1)
+    expect(props.onToggleOverrideTemporalModal).toHaveBeenCalledWith(true)
   })
 
   test('does not call onToggleOverrideTemporalModal when setting focus and temporal does not exist', () => {

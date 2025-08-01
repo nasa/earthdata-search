@@ -5,7 +5,6 @@ import { UPDATE_FOCUSED_COLLECTION, UPDATE_GRANULE_SUBSCRIPTIONS } from '../cons
 import { createFocusedCollectionMetadata } from '../util/focusedCollection'
 import { getValueForTag } from '../../../../sharedUtils/tags'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
-import { getCollectionsQuery } from '../selectors/query'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
@@ -17,6 +16,7 @@ import { retrieveVariablesRequest } from '../util/retrieveVariablesRequest'
 import GraphQlRequest from '../util/request/graphQlRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
+import { getCollectionsQuery } from '../zustand/selectors/query'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 /**
@@ -42,9 +42,11 @@ export const getFocusedCollection = () => async (dispatch, getState) => {
   // Send the relevency metric event
   dispatch(actions.collectionRelevancyMetrics())
 
+  const zustandState = useEdscStore.getState()
+  const collectionsQuery = getCollectionsQuery(zustandState)
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+
   // Retrieve data from Redux using selectors
-  const collectionsQuery = getCollectionsQuery(state)
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
   const focusedCollectionId = getFocusedCollectionId(state)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(state)
   const username = getUsername(state)
@@ -447,13 +449,20 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     }))
   } else {
     // Initialize a nested query element in Redux for the new focused collection
-    const { preferences, timeline } = useEdscStore.getState()
+    const {
+      preferences,
+      query,
+      timeline
+    } = useEdscStore.getState()
     const { preferences: preferencesValues } = preferences
     const { granuleSort: granuleSortPreference } = preferencesValues
-    dispatch(actions.initializeCollectionGranulesQuery({
-      collectionId,
-      granuleSortPreference
-    }))
+    const { changeGranuleQuery } = query
+    if (granuleSortPreference !== 'default') {
+      changeGranuleQuery({
+        collectionId,
+        query: { sortKey: granuleSortPreference }
+      })
+    }
 
     // Initialize a nested search results element in Redux for the new focused collection
     dispatch(actions.initializeCollectionGranulesResults(collectionId))

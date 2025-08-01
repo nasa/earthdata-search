@@ -15,7 +15,6 @@ jest.mock('../../../components/ProjectCollections/ProjectCollections', () => jes
 const setup = setupTest({
   Component: ProjectCollectionsContainer,
   defaultProps: {
-    collectionsQuery: {},
     project: {
       collections: {
         allIds: ['collectionId'],
@@ -145,14 +144,10 @@ describe('mapStateToProps', () => {
         collections: {}
       },
       panels: {},
-      query: {
-        collection: {}
-      },
       savedProject: {}
     }
 
     const expectedState = {
-      collectionsQuery: {},
       panels: {},
       savedProject: {}
     }
@@ -167,7 +162,6 @@ describe('ProjectCollectionsContainer component', () => {
 
     expect(ProjectCollections).toHaveBeenCalledTimes(1)
     expect(ProjectCollections).toHaveBeenCalledWith({
-      collectionsQuery: {},
       onMetricsDataAccess: expect.any(Function),
       onSetActivePanel: expect.any(Function),
       onSetActivePanelSection: expect.any(Function),

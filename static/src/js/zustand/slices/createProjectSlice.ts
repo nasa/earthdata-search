@@ -530,7 +530,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           const { polygon } = searchParams
 
           // CWIC does not support polygon searches, replace the polygon spatial with a minimum bounding rectangle
-          if (polygon) {
+          if (polygon && polygon.length > 0) {
             reduxDispatch(actions.toggleSpatialPolygonWarning(true))
 
             const {

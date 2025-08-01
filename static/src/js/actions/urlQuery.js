@@ -12,7 +12,6 @@ import {
   urlPathsWithoutUrlParams
 } from '../util/url/url'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getCollectionSortPreference } from '../zustand/selectors/preferences'
 
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
@@ -49,8 +48,6 @@ export const updateStore = ({
   const { location } = router
   const { pathname } = location
 
-  const collectionSortPreference = getCollectionSortPreference(useEdscStore.getState())
-
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
     pathname !== '/'
@@ -67,11 +64,7 @@ export const updateStore = ({
       collections,
       focusedCollection,
       focusedGranule,
-      deprecatedUrlParams,
-      query: {
-        ...query,
-        collectionSortPreference
-      }
+      deprecatedUrlParams
     }))
 
     useEdscStore.setState((zustandState) => ({
@@ -95,6 +88,10 @@ export const updateStore = ({
       project: {
         ...zustandState.project,
         ...project
+      },
+      query: {
+        ...zustandState.query,
+        ...query
       },
       shapefile: {
         ...zustandState.shapefile,

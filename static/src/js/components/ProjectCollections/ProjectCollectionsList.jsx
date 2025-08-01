@@ -21,7 +21,6 @@ import './ProjectCollectionsList.scss'
 export const ProjectCollectionsList = (props) => {
   const {
     collectionsMetadata,
-    collectionsQuery,
     onSetActivePanel,
     onSetActivePanelSection,
     onTogglePanels,
@@ -60,7 +59,6 @@ export const ProjectCollectionsList = (props) => {
         collectionMetadata={projectCollectionMetadata}
         collectionCount={projectIds.length}
         collectionId={collectionId}
-        collectionsQuery={collectionsQuery}
         color={color}
         index={index}
         isPanelActive={isPanelActive}
@@ -113,7 +111,6 @@ export const ProjectCollectionsList = (props) => {
 
 ProjectCollectionsList.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
-  collectionsQuery: PropTypes.shape({}).isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,

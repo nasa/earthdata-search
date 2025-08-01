@@ -12,14 +12,11 @@ import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import useEdscStore from '../../../zustand/useEdscStore'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import * as preferences from '../../../zustand/selectors/preferences'
 
 jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
   env: 'sit',
   collectionSearchResultsSortKey: collectionSortKeys.usageDescending
 }))
-
-jest.spyOn(preferences, 'getCollectionSortKeyParameter').mockImplementation(() => null)
 
 const setup = setupTest({
   Component: UrlQueryContainer,
@@ -98,23 +95,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      query: {
-        collection: {
-          hasGranulesOrCwic: false,
-          keyword: '',
-          overrideTemporal: {},
-          sortKey: [collectionSortKeys.usageDescending],
-          spatial: {
-            boundingBox: [],
-            circle: [],
-            line: [],
-            point: [],
-            polygon: []
-          },
-          tagKey: '',
-          temporal: {}
-        }
-      },
       router: {
         location: {
           pathname: ''
@@ -124,117 +104,13 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      boundingBoxSearch: [],
-      circleSearch: [],
       collectionsMetadata: {},
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
-      hasGranulesOrCwic: false,
-      keywordSearch: '',
-      lineSearch: [],
       location: {
         pathname: ''
       },
-      onlyEosdisCollections: undefined,
-      overrideTemporalSearch: {},
-      pathname: '',
-      pointSearch: [],
-      polygonSearch: [],
-      query: {
-        collection: {
-          hasGranulesOrCwic: false,
-          keyword: '',
-          overrideTemporal: {},
-          sortKey: ['-usage_score'],
-          spatial: {
-            boundingBox: [],
-            circle: [],
-            line: [],
-            point: [],
-            polygon: []
-          },
-          tagKey: '',
-          temporal: {}
-        }
-      },
-      tagKey: '',
-      temporalSearch: {}
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-
-  test('returns the correct state when using collectionSortKeys.endDateDescending', () => {
-    const store = {
-      advancedSearch: {},
-      focusedCollection: 'collectionId',
-      focusedGranule: 'granuleIdId',
-      metadata: {
-        collections: {}
-      },
-      query: {
-        collection: {
-          hasGranulesOrCwic: false,
-          keyword: '',
-          overrideTemporal: {},
-          sortKey: [collectionSortKeys.endDateDescending],
-          paramCollectionSortKey: collectionSortKeys.endDateDescending,
-          spatial: {
-            boundingBox: [],
-            circle: [],
-            line: [],
-            point: [],
-            polygon: []
-          },
-          tagKey: '',
-          temporal: {}
-        }
-      },
-      router: {
-        location: {
-          pathname: ''
-        }
-      }
-    }
-
-    const expectedState = {
-      advancedSearch: {},
-      boundingBoxSearch: [],
-      circleSearch: [],
-      collectionsMetadata: {},
-      focusedCollection: 'collectionId',
-      focusedGranule: 'granuleIdId',
-      hasGranulesOrCwic: false,
-      keywordSearch: '',
-      lineSearch: [],
-      location: {
-        pathname: ''
-      },
-      onlyEosdisCollections: undefined,
-      overrideTemporalSearch: {},
-      pathname: '',
-      pointSearch: [],
-      polygonSearch: [],
-      query: {
-        collection: {
-          hasGranulesOrCwic: false,
-          keyword: '',
-          overrideTemporal: {},
-          sortKey: [collectionSortKeys.endDateDescending],
-          paramCollectionSortKey: collectionSortKeys.endDateDescending,
-          spatial: {
-            boundingBox: [],
-            circle: [],
-            line: [],
-            point: [],
-            polygon: []
-          },
-          tagKey: '',
-          temporal: {}
-        }
-      },
-      tagKey: '',
-      temporalSearch: {}
+      pathname: ''
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

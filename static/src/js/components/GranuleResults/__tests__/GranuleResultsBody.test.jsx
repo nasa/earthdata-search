@@ -17,7 +17,6 @@ const setup = setupTest({
   Component: GranuleResultsBody,
   defaultProps: {
     collectionId: 'collectionId',
-    collectionQuerySpatial: {},
     collectionTags: {},
     directDistributionInformation: {},
     focusedGranuleId: '',
@@ -62,7 +61,6 @@ const setup = setupTest({
         ]
       }
     },
-    granuleQuery: {},
     granuleSearchResults: {
       allIds: ['one', 'two'],
       hits: 2,
@@ -74,7 +72,6 @@ const setup = setupTest({
     isOpenSearch: false,
     loadNextPage: jest.fn(),
     location: { search: 'value' },
-    onExcludeGranule: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
@@ -91,7 +88,6 @@ describe('GranuleResultsBody component', () => {
     expect(GranuleResultsList).toHaveBeenCalledTimes(1)
     expect(GranuleResultsList).toHaveBeenCalledWith({
       collectionId: 'collectionId',
-      collectionQuerySpatial: {},
       collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
@@ -197,7 +193,6 @@ describe('GranuleResultsBody component', () => {
       itemCount: 2,
       loadMoreItems: expect.any(Function),
       location: { search: 'value' },
-      onExcludeGranule: expect.any(Function),
       onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
@@ -218,7 +213,6 @@ describe('GranuleResultsBody component', () => {
     expect(GranuleResultsTable).toHaveBeenCalledTimes(1)
     expect(GranuleResultsTable).toHaveBeenCalledWith({
       collectionId: 'collectionId',
-      collectionQuerySpatial: {},
       collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
@@ -324,7 +318,6 @@ describe('GranuleResultsBody component', () => {
       itemCount: 2,
       loadMoreItems: expect.any(Function),
       location: { search: 'value' },
-      onExcludeGranule: expect.any(Function),
       onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),

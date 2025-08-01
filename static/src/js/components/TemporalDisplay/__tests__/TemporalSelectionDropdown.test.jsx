@@ -7,9 +7,7 @@ import {
 } from '@testing-library/react'
 import MockDate from 'mockdate'
 import PropTypes from 'prop-types'
-
 import moment from 'moment'
-
 import { useLocation } from 'react-router-dom'
 
 import * as metricsActions from '../../../middleware/metrics/actions'
@@ -77,20 +75,23 @@ const setup = setupTest({
   defaultPropsByRoute: {
     '/': {
       searchParams: {},
-      temporalSearch: {
-        endDate: '',
-        startDate: '',
-        isRecurring: false
-      },
-      onChangeQuery: jest.fn(),
-      onMetricsTemporalFilter: jest.fn()
+      onMetricsTemporalFilter: jest.fn(),
+      onChangeQuery: jest.fn()
+    }
+  },
+  defaultZustandState: {
+    query: {
+      collection: {
+        temporal: {
+          endDate: '',
+          startDate: '',
+          isRecurring: false
+        }
+      }
     }
   },
   withRedux: true,
   withRouter: true
-})
-
-beforeAll(() => {
 })
 
 beforeEach(() => {
@@ -208,11 +209,13 @@ describe('TemporalSelectionDropdown component', () => {
     const validEndDate = '2019-03-30T00:00:00.000Z'
 
     const { props, user } = setup({
-      overridePropsByRoute: {
-        '/': {
-          temporalSearch: {
-            endDate: validEndDate,
-            startDate: validStartDate
+      overrideZustandState: {
+        query: {
+          collection: {
+            temporal: {
+              endDate: validEndDate,
+              startDate: validStartDate
+            }
           }
         }
       }
@@ -527,12 +530,14 @@ describe('TemporalSelectionDropdown component', () => {
   describe('TemporalSelectionDropdown recurring and slider behavior', () => {
     test('handles recurring toggle and slider interactions correctly', async () => {
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '2022-03-29T00:00:00.000Z',
-              endDate: '2024-03-30T00:00:00.000Z',
-              isRecurring: true
+        overrideZustandState: {
+          query: {
+            collection: {
+              temporal: {
+                startDate: '2022-03-29T00:00:00.000Z',
+                endDate: '2024-03-30T00:00:00.000Z',
+                isRecurring: true
+              }
             }
           }
         }
@@ -573,14 +578,16 @@ describe('TemporalSelectionDropdown component', () => {
 
     test('handles unchecking isRecurring', async () => {
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              isRecurring: true,
-              startDate: '2022-03-29 00:00:00',
-              endDate: '2024-03-30 00:00:00',
-              recurringDayStart: '88',
-              recurringDayEnd: '89'
+        overrideZustandState: {
+          query: {
+            collection: {
+              temporal: {
+                isRecurring: true,
+                startDate: '2022-03-29 00:00:00',
+                endDate: '2024-03-30 00:00:00',
+                recurringDayStart: '88',
+                recurringDayEnd: '89'
+              }
             }
           }
         }
@@ -619,12 +626,14 @@ describe('TemporalSelectionDropdown component', () => {
 
     test('handles recurring toggle with same year dates', async () => {
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '2024-03-29T00:00:00.000Z',
-              endDate: '2024-03-30T00:00:00.000Z',
-              isRecurring: false
+        overrideZustandState: {
+          query: {
+            collection: {
+              temporal: {
+                startDate: '2024-03-29T00:00:00.000Z',
+                endDate: '2024-03-30T00:00:00.000Z',
+                isRecurring: false
+              }
             }
           }
         }
@@ -661,6 +670,7 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {
@@ -680,12 +690,14 @@ describe('TemporalSelectionDropdown component', () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
 
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '2024-01-01T00:00:00.000Z',
-              endDate: '',
-              isRecurring: false
+        overrideZustandState: {
+          query: {
+            collection: {
+              temporal: {
+                startDate: '2024-01-01T00:00:00.000Z',
+                endDate: '',
+                isRecurring: false
+              }
             }
           }
         }
@@ -717,6 +729,7 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {
@@ -736,12 +749,14 @@ describe('TemporalSelectionDropdown component', () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
 
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '',
-              endDate: '',
-              isRecurring: false
+        overrideZustandState: {
+          query: {
+            collection: {
+              temporal: {
+                startDate: '',
+                endDate: '',
+                isRecurring: false
+              }
             }
           }
         }
@@ -773,6 +788,7 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {
@@ -792,12 +808,14 @@ describe('TemporalSelectionDropdown component', () => {
       MockDate.set('2024-02-01T06:00:00.000Z')
 
       const { props, user } = setup({
-        overridePropsByRoute: {
-          '/': {
-            temporalSearch: {
-              startDate: '',
-              endDate: '2020-01-25T00:00:00.000Z',
-              isRecurring: false
+        overrideZustandState: {
+          query: {
+            collection: {
+              temporal: {
+                startDate: '',
+                endDate: '2020-01-25T00:00:00.000Z',
+                isRecurring: false
+              }
             }
           }
         }
@@ -829,6 +847,7 @@ describe('TemporalSelectionDropdown component', () => {
         await user.click(screen.getByRole('button', { name: 'Apply' }))
       })
 
+      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: {

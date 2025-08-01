@@ -5,15 +5,10 @@ import PropTypes from 'prop-types'
 import TemporalSelectionDropdown from '../../components/TemporalDisplay/TemporalSelectionDropdown'
 
 import { metricsTemporalFilter } from '../../middleware/metrics/actions'
-import actions from '../../actions'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onChangeQuery: (query) => dispatch(actions.changeQuery(query)),
   onMetricsTemporalFilter: (data) => dispatch(metricsTemporalFilter(data))
-})
-
-export const mapStateToProps = (state) => ({
-  temporalSearch: state.query.collection.temporal
 })
 
 /**
@@ -23,32 +18,28 @@ export const mapStateToProps = (state) => ({
  */
 export const TemporalSelectionDropdownContainer = (props) => {
   const {
-    onChangeQuery,
     searchParams,
-    temporalSearch,
     onMetricsTemporalFilter
   } = props
+
+  const changeQuery = useEdscStore((state) => state.query.changeQuery)
 
   return (
     <TemporalSelectionDropdown
       searchParams={searchParams}
-      onChangeQuery={onChangeQuery}
-      temporalSearch={temporalSearch}
+      onChangeQuery={changeQuery}
       onMetricsTemporalFilter={onMetricsTemporalFilter}
     />
   )
 }
 
 TemporalSelectionDropdownContainer.defaultProps = {
-  searchParams: {},
-  temporalSearch: {}
+  searchParams: {}
 }
 
 TemporalSelectionDropdownContainer.propTypes = {
-  onChangeQuery: PropTypes.func.isRequired,
   onMetricsTemporalFilter: PropTypes.func.isRequired,
-  searchParams: PropTypes.shape({}),
-  temporalSearch: PropTypes.shape({})
+  searchParams: PropTypes.shape({})
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(TemporalSelectionDropdownContainer)
+export default connect(null, mapDispatchToProps)(TemporalSelectionDropdownContainer)

@@ -15,12 +15,10 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import {
-  getMapPreferences,
-  getCollectionSortKeyParameter
-} from '../../zustand/selectors/preferences'
+import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -31,23 +29,11 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
-  boundingBoxSearch: state.query.collection.spatial.boundingBox,
-  circleSearch: state.query.collection.spatial.circle,
   collectionsMetadata: getCollectionsMetadata(state),
   focusedCollection: getFocusedCollectionId(state),
   focusedGranule: getFocusedGranuleId(state),
-  hasGranulesOrCwic: state.query.collection.hasGranulesOrCwic,
-  keywordSearch: state.query.collection.keyword,
-  lineSearch: state.query.collection.spatial.line,
   location: state.router.location,
-  onlyEosdisCollections: state.query.collection.onlyEosdisCollections,
-  overrideTemporalSearch: state.query.collection.overrideTemporal,
-  pathname: state.router.location.pathname,
-  pointSearch: state.query.collection.spatial.point,
-  polygonSearch: state.query.collection.spatial.polygon,
-  query: state.query,
-  tagKey: state.query.collection.tagKey,
-  temporalSearch: state.query.collection.temporal
+  pathname: state.router.location.pathname
 })
 
 export const UrlQueryContainer = (props) => {
@@ -66,6 +52,7 @@ export const UrlQueryContainer = (props) => {
   const previousSearch = useRef(search)
 
   const zustandValues = useEdscStore((state) => ({
+    collectionSortPreference: getCollectionSortPreference(state),
     earthdataEnvironment: getEarthdataEnvironment(state),
     featureFacets: state.facetParams.featureFacets,
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
@@ -76,7 +63,6 @@ export const UrlQueryContainer = (props) => {
     mapPreferences: getMapPreferences(state),
     mapView: state.map.mapView,
     organizationFacets: state.facetParams.cmrFacets.data_center_h,
-    paramCollectionSortKey: getCollectionSortKeyParameter(state),
     platformFacets: state.facetParams.cmrFacets.platforms_h,
     portalId: state.portal.portalId,
     processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,
@@ -88,6 +74,41 @@ export const UrlQueryContainer = (props) => {
     timelineQuery: state.timeline.query,
     twoDCoordinateSystemNameFacets: state.facetParams.cmrFacets.two_d_coordinate_system_name
   }))
+  const collectionsQuery = useEdscStore(getCollectionsQuery)
+  const {
+    spatial,
+    hasGranulesOrCwic,
+    keyword: keywordSearch,
+    onlyEosdisCollections,
+    overrideTemporal: overrideTemporalSearch,
+    sortKey,
+    tagKey,
+    temporal: temporalSearch
+  } = collectionsQuery
+  const {
+    boundingBox: boundingBoxSearch,
+    circle: circleSearch,
+    line: lineSearch,
+    point: pointSearch,
+    polygon: polygonSearch
+  } = spatial
+
+  const combinedZustandValues = {
+    ...zustandValues,
+    boundingBoxSearch,
+    circleSearch,
+    collectionSortKey: sortKey,
+    collectionsQuery,
+    hasGranulesOrCwic,
+    keywordSearch,
+    lineSearch,
+    onlyEosdisCollections,
+    overrideTemporalSearch,
+    pointSearch,
+    polygonSearch,
+    tagKey,
+    temporalSearch
+  }
 
   useEffect(() => {
     onChangePath([pathname, search].filter(Boolean).join(''))
@@ -102,7 +123,7 @@ export const UrlQueryContainer = (props) => {
     ) {
       const nextPath = encodeUrlQuery({
         ...props,
-        ...zustandValues
+        ...combinedZustandValues
       })
 
       if (currentPath !== nextPath) {

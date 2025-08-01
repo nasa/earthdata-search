@@ -21,22 +21,19 @@ const setup = setupTest({
   Component: TimelineContainer,
   defaultProps: {
     collectionsMetadata: {
-      projectCollectionId: {
-        title: 'project'
-      },
       focusedCollectionId: {
         title: 'focused'
+      },
+      projectCollectionId: {
+        title: 'project'
       }
     },
-    projectCollectionsIds: ['projectCollectionId'],
     focusedCollectionId: 'focusedCollectionId',
-    onChangeQuery: jest.fn(),
+    isOpen: true,
     onMetricsTimeline: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
     onToggleTimeline: jest.fn(),
     pathname: '/search',
-    temporalSearch: {},
-    isOpen: true,
     search: '?p=C123456-EDSC'
   },
   defaultZustandState: {
@@ -49,16 +46,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onChangeQuery calls actions.changeQuery', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeQuery')
-
-    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onToggleOverrideTemporalModal calls actions.toggleOverrideTemporalModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleOverrideTemporalModal')
@@ -97,11 +84,6 @@ describe('mapStateToProps', () => {
         collections: {}
       },
       focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          temporal: {}
-        }
-      },
       router: {
         location: {
           pathname: ''
@@ -118,7 +100,6 @@ describe('mapStateToProps', () => {
       collectionsMetadata: {},
       focusedCollectionId: 'collectionId',
       pathname: '',
-      temporalSearch: {},
       isOpen: false
     }
 
@@ -149,14 +130,12 @@ describe('TimelineContainer component', () => {
           }
         },
         isOpen: true,
-        onChangeQuery: expect.any(Function),
         onMetricsTimeline: expect.any(Function),
         onToggleOverrideTemporalModal: expect.any(Function),
         onToggleTimeline: expect.any(Function),
         pathname: '/search/granules',
         projectCollectionsIds: ['projectCollectionId'],
-        showOverrideModal: false,
-        temporalSearch: {}
+        showOverrideModal: false
       },
       {}
     )
@@ -178,14 +157,12 @@ describe('TimelineContainer component', () => {
           }
         },
         isOpen: true,
-        onChangeQuery: expect.any(Function),
         onMetricsTimeline: expect.any(Function),
         onToggleOverrideTemporalModal: expect.any(Function),
         onToggleTimeline: expect.any(Function),
         pathname: '/projects',
         projectCollectionsIds: ['projectCollectionId'],
-        showOverrideModal: true,
-        temporalSearch: {}
+        showOverrideModal: true
       },
       {}
     )

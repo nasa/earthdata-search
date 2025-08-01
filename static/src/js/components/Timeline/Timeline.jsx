@@ -16,6 +16,7 @@ import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import getObjectKeyByValue from '../../util/object'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
 
 import './Timeline.scss'
 
@@ -24,20 +25,21 @@ const earliestStart = '1960-01-01'
 export const Timeline = ({
   collectionMetadata,
   isOpen,
-  onChangeQuery,
   onMetricsTimeline,
   onToggleOverrideTemporalModal,
   onToggleTimeline,
   pathname,
   projectCollectionsIds,
-  showOverrideModal,
-  temporalSearch
+  showOverrideModal
 }) => {
+  const temporalSearch = useEdscStore(getCollectionsQueryTemporal)
   const {
+    changeQuery,
     timelineIntervals,
     timelineQuery,
     onChangeTimelineQuery
   } = useEdscStore((state) => ({
+    changeQuery: state.query.changeQuery,
     timelineIntervals: state.timeline.intervals,
     timelineQuery: state.timeline.query,
     onChangeTimelineQuery: state.timeline.setQuery
@@ -215,7 +217,7 @@ export const Timeline = ({
         }
       }
 
-      onChangeQuery({
+      changeQuery({
         collection: {
           temporal: {
             endDate: new Date(temporalEnd).toISOString(),
@@ -224,7 +226,7 @@ export const Timeline = ({
         }
       })
     } else {
-      onChangeQuery({
+      changeQuery({
         collection: {
           temporal: {}
         }
@@ -259,7 +261,7 @@ export const Timeline = ({
           onToggleOverrideTemporalModal(true)
         } else {
           // If we shouldn't show the modal, just update the query
-          onChangeQuery(newQuery)
+          changeQuery(newQuery)
         }
       }
     }
@@ -275,7 +277,7 @@ export const Timeline = ({
       if (!focusedStart && !focusedEnd && !oldStart && !oldEnd) shouldUpdateQuery = false
 
       if (shouldUpdateQuery) {
-        onChangeQuery(newQuery)
+        changeQuery(newQuery)
       }
     }
 
@@ -441,17 +443,12 @@ export const Timeline = ({
 Timeline.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
   onMetricsTimeline: PropTypes.func.isRequired,
   onToggleOverrideTemporalModal: PropTypes.func.isRequired,
   onToggleTimeline: PropTypes.func.isRequired,
   pathname: PropTypes.string.isRequired,
   projectCollectionsIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  showOverrideModal: PropTypes.bool.isRequired,
-  temporalSearch: PropTypes.shape({
-    endDate: PropTypes.string,
-    startDate: PropTypes.string
-  }).isRequired
+  showOverrideModal: PropTypes.bool.isRequired
 }
 
 export default Timeline

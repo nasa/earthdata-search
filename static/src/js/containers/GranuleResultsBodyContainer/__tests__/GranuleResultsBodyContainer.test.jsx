@@ -17,46 +17,33 @@ const setup = setupTest({
   Component: GranuleResultsBodyContainer,
   defaultProps: {
     collectionMetadata: {},
-    collectionQuerySpatial: {},
     collectionTags: {},
     focusedCollectionId: 'focusedCollection',
     focusedGranuleId: '',
     generateNotebook: {},
-    granuleQuery: { pageNum: 1 },
     granuleSearchResults: {},
     granulesMetadata: {},
     location: { search: 'value' },
-    onChangeGranulePageNum: jest.fn(),
-    onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     panelView: 'list'
+  },
+  defaultZustandState: {
+    query: {
+      collection: {
+        byId: {
+          focusedCollection: {}
+        }
+      },
+      changeGranuleQuery: jest.fn(),
+      excludeGranule: jest.fn()
+    }
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onChangeGranulePageNum calls actions.changeGranulePageNum', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeGranulePageNum')
-
-    mapDispatchToProps(dispatch).onChangeGranulePageNum({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onExcludeGranule calls actions.excludeGranule', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'excludeGranule')
-
-    mapDispatchToProps(dispatch).onExcludeGranule({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changeFocusedGranule')
@@ -106,17 +93,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
-      query: {
-        collection: {
-          byId: {
-            collectionId: {
-              granule: {}
-            }
-          },
-          spatial: {},
-          temporal: {}
-        }
-      },
       ui: {
         generateNotebook: {}
       }
@@ -125,11 +101,9 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionMetadata: {},
       collectionTags: {},
-      collectionQuerySpatial: {},
       focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
       generateNotebook: {},
-      granuleQuery: {},
       granuleSearchResults: {},
       granulesMetadata: {}
     }
@@ -145,18 +119,15 @@ describe('GranuleResultsBodyContainer component', () => {
     expect(GranuleResultsBody).toHaveBeenCalledTimes(1)
     expect(GranuleResultsBody).toHaveBeenCalledWith({
       collectionId: 'focusedCollection',
-      collectionQuerySpatial: {},
       collectionTags: {},
       directDistributionInformation: {},
       focusedGranuleId: '',
       generateNotebook: {},
-      granuleQuery: { pageNum: 1 },
       granuleSearchResults: {},
       granulesMetadata: {},
       isOpenSearch: false,
       loadNextPage: expect.any(Function),
       location: { search: 'value' },
-      onExcludeGranule: expect.any(Function),
       onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
@@ -166,14 +137,16 @@ describe('GranuleResultsBodyContainer component', () => {
   })
 
   test('loadNextPage calls onChangeGranulePageNum', () => {
-    const { props } = setup()
+    const { zustandState } = setup()
 
     GranuleResultsBody.mock.calls[0][0].loadNextPage()
 
-    expect(props.onChangeGranulePageNum).toHaveBeenCalledTimes(1)
-    expect(props.onChangeGranulePageNum).toHaveBeenCalledWith({
+    expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledTimes(1)
+    expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledWith({
       collectionId: 'focusedCollection',
-      pageNum: 2
+      query: {
+        pageNum: 2
+      }
     })
   })
 })

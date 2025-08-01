@@ -58,19 +58,14 @@ import { mapEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
+import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
 
 import type {
-  BoundingBoxString,
-  CircleString,
   CollectionsMetadata,
   GibsData,
   GranulesMetadata,
-  LineString,
   MapGranule,
-  PointString,
-  PolygonString,
   ProjectionCode,
-  Query,
   SpatialSearch
 } from '../../types/sharedTypes'
 
@@ -81,9 +76,6 @@ import './MapContainer.scss'
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
   onChangeFocusedGranule:
     (granuleId: string) => dispatch(actions.changeFocusedGranule(granuleId)),
-  onChangeQuery: (query: Query) => dispatch(actions.changeQuery(query)),
-  onExcludeGranule:
-    (data: { collectionId: string, granuleId: string }) => dispatch(actions.excludeGranule(data)),
   onMetricsMap:
     (type: string) => dispatch(metricsMap(type)),
   onToggleDrawingNewLayer:
@@ -97,8 +89,6 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
-  boundingBoxSearch: state.query.collection.spatial.boundingBox,
-  circleSearch: state.query.collection.spatial.circle,
   collectionsMetadata: state.metadata.collections,
   colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
@@ -107,9 +97,6 @@ export const mapStateToProps = (state) => ({
   focusedGranuleId: getFocusedGranuleId(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
-  lineSearch: state.query.collection.spatial.line,
-  pointSearch: state.query.collection.spatial.point,
-  polygonSearch: state.query.collection.spatial.polygon,
   router: state.router
 })
 
@@ -130,10 +117,6 @@ type ColormapMetadata = {
 interface MapContainerProps {
   /** The advanced search object */
   advancedSearch: object
-  /** The bounding box search coordinates */
-  boundingBoxSearch?: BoundingBoxString[]
-  /** The circle search coordinates */
-  circleSearch?: CircleString[]
   /** The collections metadata */
   collectionsMetadata: CollectionsMetadata
   /** The colormaps metadata */
@@ -157,14 +140,8 @@ interface MapContainerProps {
   }
   /** The granules metadata */
   granulesMetadata: GranulesMetadata
-  /** The line search coordinates */
-  lineSearch?: LineString[]
   /** Function to change the focused granule */
   onChangeFocusedGranule: (granuleId: string) => void
-  /** Function to change the query */
-  onChangeQuery: (query: object) => void
-  /** Function to exclude a granule */
-  onExcludeGranule: (data: { collectionId: string; granuleId: string }) => void
   /** Function to call the metrics map */
   onMetricsMap: (type: string) => void
   /** Function to toggle the drawing new layer */
@@ -173,10 +150,6 @@ interface MapContainerProps {
   onToggleShapefileUploadModal: (state: boolean) => void
   /** Function to toggle the too many points modal */
   onToggleTooManyPointsModal: (state: boolean) => void
-  /** The point search coordinates */
-  pointSearch?: PointString[]
-  /** The polygon search coordinates */
-  polygonSearch?: PolygonString[]
   /** The router values */
   router: {
     /** The router location */
@@ -190,8 +163,6 @@ interface MapContainerProps {
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const {
     advancedSearch = {},
-    boundingBoxSearch,
-    circleSearch,
     collectionsMetadata,
     colormapsMetadata,
     displaySpatialPolygonWarning,
@@ -200,16 +171,11 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     focusedGranuleId,
     granuleSearchResults,
     granulesMetadata,
-    lineSearch,
     onChangeFocusedGranule,
-    onChangeQuery,
-    onExcludeGranule,
     onMetricsMap,
     onToggleDrawingNewLayer,
     onToggleShapefileUploadModal,
     onToggleTooManyPointsModal,
-    pointSearch,
-    polygonSearch,
     router
   } = props
 
@@ -221,10 +187,20 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     '/search/granules/collection-details'
   ])
 
+  const spatialQuery = useEdscStore(getCollectionsQuerySpatial)
+  const {
+    boundingBox: boundingBoxSearch,
+    circle: circleSearch,
+    line: lineSearch,
+    point: pointSearch,
+    polygon: polygonSearch
+  } = spatialQuery
   const {
     map: mapProps,
     onChangeMap,
+    onChangeQuery,
     onClearShapefile,
+    onExcludeGranule,
     onFetchShapefile,
     onUpdateShapefile,
     projectCollections,
@@ -235,7 +211,9 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   } = useEdscStore((state) => ({
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
+    onChangeQuery: state.query.changeQuery,
     onClearShapefile: state.shapefile.clearShapefile,
+    onExcludeGranule: state.query.excludeGranule,
     onFetchShapefile: state.shapefile.fetchShapefile,
     onUpdateShapefile: state.shapefile.updateShapefile,
     projectCollections: state.project.collections,

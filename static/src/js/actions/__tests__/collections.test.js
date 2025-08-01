@@ -28,6 +28,7 @@ import {
   UPDATE_COLLECTION_RESULTS,
   UPDATE_FACETS
 } from '../../constants/actionTypes'
+import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
 
@@ -137,12 +138,14 @@ describe('getCollections', () => {
         facets: {},
         granules: {},
         viewAllFacets: {}
-      },
-      query: {
-        collection: {
-          pageNum: 1,
-          keyword: 'search keyword'
-        }
+      }
+    })
+
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.query.collection = {
+        pageNum: 1,
+        keyword: 'search keyword'
       }
     })
 
@@ -217,11 +220,13 @@ describe('getCollections', () => {
         facets: {},
         granules: {},
         viewAllFacets: {}
-      },
-      query: {
-        collection: {
-          keyword: 'search keyword'
-        }
+      }
+    })
+
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.query.collection = {
+        keyword: 'search keyword'
       }
     })
 
@@ -279,9 +284,13 @@ describe('getCollections', () => {
         facets: {},
         granules: {},
         viewAllFacets: {}
-      },
-      query: {
-        collection: {}
+      }
+    })
+
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.query.collection = {
+        keyword: ''
       }
     })
 

@@ -15,9 +15,8 @@ jest.mock('../../../components/ProjectPanels/ProjectPanels', () => jest.fn(() =>
 const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
-    focusedCollectionId: '',
+    focusedCollectionId: 'collectionId',
     focusedGranuleId: '',
-    granulesQueries: {},
     granulesMetadata: {},
     onSetActivePanel: jest.fn(),
     onTogglePanels: jest.fn(),
@@ -30,27 +29,34 @@ const setup = setupTest({
       search: ''
     },
     onChangePath: jest.fn(),
-    overrideTemporal: {},
     panels: {
       activePanel: '0.0.0',
       isOpen: false
     },
-    spatial: {},
     ursProfile: {}
   },
   defaultZustandState: {
+    dataQualitySummaries: {
+      byCollectionId: {},
+      setDataQualitySummaries: jest.fn()
+    },
     project: {
+      addGranuleToProjectCollection: jest.fn(),
       collections: {
         allIds: ['collectionId']
       },
-      addGranuleToProjectCollection: jest.fn(),
       removeGranuleFromProjectCollection: jest.fn(),
       selectAccessMethod: jest.fn(),
       updateAccessMethod: jest.fn()
     },
-    dataQualitySummaries: {
-      byCollectionId: {},
-      setDataQualitySummaries: jest.fn()
+    query: {
+      collections: {
+        byId: {
+          collectionId: {
+            granules: {}
+          }
+        }
+      }
     }
   }
 })
@@ -151,13 +157,6 @@ describe('mapStateToProps', () => {
       focusedGranule: 'granuleId',
       map: {},
       panels: {},
-      query: {
-        collection: {
-          spatial: {},
-          temporal: {},
-          overrideTemporal: {}
-        }
-      },
       router: {
         location: {}
       },
@@ -174,10 +173,7 @@ describe('mapStateToProps', () => {
       granulesMetadata: {},
       location: {},
       panels: {},
-      spatial: {},
-      temporal: {},
-      ursProfile: {},
-      overrideTemporal: {}
+      ursProfile: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -193,8 +189,8 @@ describe('ProjectPanelsContainer component', () => {
       dataQualitySummaries: {},
       focusedCollectionId: props.focusedCollectionId,
       focusedGranuleId: props.focusedGranuleId,
-      granulesQueries: props.granulesQueries,
       granulesMetadata: props.granulesMetadata,
+      granulesQueries: {},
       location: props.location,
       onAddGranuleToProjectCollection: expect.any(Function),
       onChangePath: props.onChangePath,
@@ -208,7 +204,7 @@ describe('ProjectPanelsContainer component', () => {
       onUpdateAccessMethod: expect.any(Function),
       onUpdateFocusedCollection: props.onUpdateFocusedCollection,
       onViewCollectionGranules: props.onViewCollectionGranules,
-      overrideTemporal: props.overrideTemporal,
+      overrideTemporal: {},
       panels: {
         activePanel: '0.0.0',
         isOpen: false
@@ -218,7 +214,13 @@ describe('ProjectPanelsContainer component', () => {
         byId: {}
       },
       projectCollectionsMetadata: {},
-      spatial: {},
+      spatial: {
+        boundingBox: [],
+        circle: [],
+        line: [],
+        point: [],
+        polygon: []
+      },
       temporal: {},
       ursProfile: {}
     }, {})

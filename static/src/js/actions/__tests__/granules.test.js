@@ -5,31 +5,24 @@ import thunk from 'redux-thunk'
 import actions from '../index'
 
 import {
-  excludeGranule,
   fetchGranuleLinks,
   getSearchGranules,
-  undoExcludeGranule,
   updateGranuleLinks,
   updateGranuleResults
 } from '../granules'
 
 import {
   ADD_GRANULE_METADATA,
-  EXCLUDE_GRANULE_ID,
   FINISHED_GRANULES_TIMER,
   LOADED_GRANULES,
   LOADING_GRANULES,
-  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   STARTED_GRANULES_TIMER,
   TOGGLE_SPATIAL_POLYGON_WARNING,
-  UNDO_EXCLUDE_GRANULE_ID,
-  UPDATE_GRANULE_FILTERS,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_RESULTS
 } from '../../constants/actionTypes'
 
 import OpenSearchGranuleRequest from '../../util/request/openSearchGranuleRequest'
-import * as EventEmitter from '../../events/events'
 import useEdscStore from '../../zustand/useEdscStore'
 
 const mockStore = configureMockStore([thunk])
@@ -69,13 +62,7 @@ describe('getSearchGranules', () => {
           mock: 'data'
         }
       },
-      focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        }
-      }
+      focusedCollection: 'collectionId'
     })
 
     await store.dispatch(getSearchGranules()).then(() => {
@@ -174,13 +161,7 @@ describe('getSearchGranules', () => {
           }
         }
       },
-      focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        }
-      }
+      focusedCollection: 'collectionId'
     })
 
     await store.dispatch(getSearchGranules()).then(() => {
@@ -274,14 +255,13 @@ describe('getSearchGranules', () => {
           }
         }
       },
-      focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {
-            polygon: ['-77,38,-77,38,-76,38,-77,38']
-          }
-        }
+      focusedCollection: 'collectionId'
+    })
+
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.query.collection.spatial = {
+        polygon: ['-77,38,-77,38,-76,38,-77,38']
       }
     })
 
@@ -386,14 +366,13 @@ describe('getSearchGranules', () => {
           }
         }
       },
-      focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {
-            polygon: ['-77,38,-77,38,-76,38,-77,38']
-          }
-        }
+      focusedCollection: 'collectionId'
+    })
+
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.query.collection.spatial = {
+        polygon: ['-77,38,-77,38,-76,38,-77,38']
       }
     })
 
@@ -509,13 +488,7 @@ describe('getSearchGranules', () => {
           }
         }
       },
-      focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          temporal: {},
-          spatial: {}
-        }
-      }
+      focusedCollection: 'collectionId'
     })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
@@ -523,62 +496,6 @@ describe('getSearchGranules', () => {
     await store.dispatch(getSearchGranules()).then(() => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
-  })
-})
-
-describe('excludeGranule', () => {
-  test('should create an action to update the collection', () => {
-    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
-    getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
-    const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
-    eventEmitterEmitMock.mockImplementation(() => jest.fn())
-
-    const payload = {
-      collectionId: 'collectionId',
-      granuleId: 'granuleId'
-    }
-
-    const expectedAction = {
-      type: EXCLUDE_GRANULE_ID,
-      payload
-    }
-
-    const store = mockStore({
-      query: {
-        collection: {
-          byId: {}
-        }
-      }
-    })
-
-    store.dispatch(excludeGranule(payload))
-
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual(expectedAction)
-
-    expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
-    expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
-    expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.collectionId.hoverGranule', { granule: null })
-  })
-})
-
-describe('undoExcludeGranule', () => {
-  test('should create an action to update the collection', () => {
-    const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
-    getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
-
-    const payload = 'collectionId'
-    const expectedAction = {
-      type: UNDO_EXCLUDE_GRANULE_ID,
-      payload
-    }
-
-    const store = mockStore()
-    store.dispatch(undoExcludeGranule(payload))
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual(expectedAction)
-
-    expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -974,134 +891,6 @@ describe('fetchGranuleLinks', () => {
       }))
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-    })
-  })
-})
-
-describe('applyGranuleFilters', () => {
-  describe('when the focused collection is not in the project', () => {
-    test('it does not request project granules', () => {
-      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
-      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
-
-      useEdscStore.setState({
-        project: {
-          collections: {
-            allIds: []
-          },
-          getProjectGranules: jest.fn()
-        }
-      })
-
-      const store = mockStore({
-        authToken: 'token',
-        focusedCollection: 'C100000-EDSC',
-        query: {
-          collection: {
-            byId: {
-              'C100000-EDSC': {
-                granules: {
-                  pageNum: 1
-                }
-              }
-            }
-          }
-        }
-      })
-
-      store.dispatch(actions.applyGranuleFilters({ pageNum: 2 }))
-
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: UPDATE_GRANULE_FILTERS,
-        payload: {
-          collectionId: 'C100000-EDSC',
-          pageNum: 2
-        }
-      })
-
-      expect(storeActions[1]).toEqual({
-        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-      })
-
-      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
-      expect(getSearchGranulesMock).toHaveBeenCalledWith()
-
-      const zustandState = useEdscStore.getState()
-      const { project } = zustandState
-      const { getProjectGranules } = project
-      expect(getProjectGranules).toHaveBeenCalledTimes(0)
-    })
-  })
-
-  describe('when the focused collection is in the project', () => {
-    test('it also requests project granules', () => {
-      const getSearchGranulesMock = jest.spyOn(actions, 'getSearchGranules')
-      getSearchGranulesMock.mockImplementationOnce(() => jest.fn())
-
-      useEdscStore.setState({
-        project: {
-          collections: {
-            allIds: ['C100000-EDSC'],
-            byId: {
-              'C100000-EDSC': {
-                granules: {
-                  addedGranuleIds: [],
-                  removedGranuleIds: []
-                }
-              }
-            }
-          },
-          getProjectGranules: jest.fn()
-        }
-      })
-
-      const store = mockStore({
-        authToken: 'token',
-        focusedCollection: 'C100000-EDSC',
-        metadata: {
-          collections: {
-            'C100000-EDSC': {
-              hasGranules: true
-            }
-          }
-        },
-        query: {
-          collection: {
-            byId: {
-              'C100000-EDSC': {
-                granules: {
-                  pageNum: 1
-                }
-              }
-            }
-          }
-        }
-      })
-
-      store.dispatch(actions.applyGranuleFilters({ pageNum: 2 }))
-
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        type: UPDATE_GRANULE_FILTERS,
-        payload: {
-          collectionId: 'C100000-EDSC',
-          pageNum: 2
-        }
-      })
-
-      expect(storeActions[1]).toEqual({
-        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-      })
-
-      expect(getSearchGranulesMock).toHaveBeenCalledTimes(1)
-      expect(getSearchGranulesMock).toHaveBeenCalledWith()
-
-      const zustandState = useEdscStore.getState()
-      const { project } = zustandState
-      const { getProjectGranules } = project
-      expect(getProjectGranules).toHaveBeenCalledTimes(1)
-      expect(getProjectGranules).toHaveBeenCalledWith()
     })
   })
 })

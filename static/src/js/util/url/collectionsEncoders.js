@@ -277,7 +277,7 @@ export const encodeCollections = (props) => {
     collectionsMetadata = {},
     focusedCollection,
     projectCollections = {},
-    query = {}
+    collectionsQuery = {}
   } = props
 
   const {
@@ -332,7 +332,6 @@ export const encodeCollections = (props) => {
     let encodedExcludedGranules
     const excludedKey = isOpenSearch ? 'cx' : 'x'
 
-    const { collection: collectionsQuery = {} } = query
     const { byId: collectionQueryById = {} } = collectionsQuery
     const { [collectionId]: collectionQuery = {} } = collectionQueryById
     const { granules: granuleQuery = {} } = collectionQuery

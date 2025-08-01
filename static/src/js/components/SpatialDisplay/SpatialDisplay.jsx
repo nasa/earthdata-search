@@ -31,32 +31,42 @@ import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
 
 import './SpatialDisplay.scss'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
 const SpatialDisplay = ({
-  boundingBoxSearch,
-  circleSearch,
   displaySpatialPolygonWarning,
-  drawingNewLayer,
-  lineSearch,
-  pointSearch,
-  polygonSearch,
-  onRemoveSpatialFilter,
-  onChangeQuery
+  drawingNewLayer
 }) => {
+  const {
+    changeQuery,
+    removeSpatialFilter
+  } = useEdscStore((state) => ({
+    changeQuery: state.query.changeQuery,
+    removeSpatialFilter: state.query.removeSpatialFilter
+  }))
+  const spatialQuery = useEdscStore(getCollectionsQuerySpatial)
+  const {
+    boundingBox: boundingBoxSearch,
+    circle: circleSearch,
+    line: lineSearch,
+    point: pointSearch,
+    polygon: polygonSearch
+  } = spatialQuery
+
   const shapefile = useEdscStore((state) => state.shapefile)
   const [error, setError] = useState('')
   const [manuallyEnteringVal, setManuallyEnteringVal] = useState('')
 
   const [currentPointSearch, setCurrentPointSearch] = useState(pointSearch)
   const [currentBoundingBoxSearch, setCurrentBoundingBoxSearch] = useState(
-    transformBoundingBoxCoordinates(boundingBoxSearch[0])
+    boundingBoxSearch && transformBoundingBoxCoordinates(boundingBoxSearch[0])
   )
   const [currentCircleSearch, setCurrentCircleSearch] = useState(
-    transformCircleCoordinates(circleSearch[0])
+    circleSearch && transformCircleCoordinates(circleSearch[0])
   )
   const [currentPolygonSearch, setCurrentPolygonSearch] = useState(polygonSearch)
   const [currentLineSearch, setCurrentLineSearch] = useState(lineSearch)
@@ -170,7 +180,8 @@ const SpatialDisplay = ({
           setManuallyEnteringVal(false)
 
           const boundingBox = [transformBoundingBoxCoordinates(currentBoundingBoxSearch.join(',')).join(',')]
-          onChangeQuery({
+
+          changeQuery({
             collection: {
               spatial: {
                 boundingBox
@@ -235,7 +246,7 @@ const SpatialDisplay = ({
 
           const circle = [transformCircleCoordinates(currentCircleSearch.join(','))].join(',')
 
-          onChangeQuery({
+          changeQuery({
             collection: {
               spatial: {
                 circle: [circle]
@@ -276,7 +287,8 @@ const SpatialDisplay = ({
         setManuallyEnteringVal(false)
 
         const point = currentPointSearch[0].length ? [currentPointSearch[0].replace(/\s/g, '')] : []
-        onChangeQuery({
+
+        changeQuery({
           collection: {
             spatial: {
               point
@@ -357,7 +369,7 @@ const SpatialDisplay = ({
   const onSpatialRemove = () => {
     setManuallyEnteringVal(false)
 
-    onRemoveSpatialFilter()
+    removeSpatialFilter()
 
     eventEmitter.emit(mapEventTypes.DRAWCANCEL)
     eventEmitter.emit(shapefileEventTypes.REMOVESHAPEFILE)
@@ -737,18 +749,11 @@ const SpatialDisplay = ({
 }
 
 SpatialDisplay.propTypes = {
-  boundingBoxSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-  circleSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
   displaySpatialPolygonWarning: PropTypes.bool.isRequired,
   drawingNewLayer: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.bool
-  ]).isRequired,
-  lineSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
-  onRemoveSpatialFilter: PropTypes.func.isRequired,
-  pointSearch: PropTypes.arrayOf(PropTypes.string).isRequired,
-  polygonSearch: PropTypes.arrayOf(PropTypes.string).isRequired
+  ]).isRequired
 }
 
 export default SpatialDisplay

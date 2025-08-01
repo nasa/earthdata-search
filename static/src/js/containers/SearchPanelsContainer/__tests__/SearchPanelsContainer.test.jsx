@@ -12,31 +12,19 @@ import {
   SearchPanelsContainer
 } from '../SearchPanelsContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+import { initialState } from '../../../zustand/slices/createQuerySlice'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
-
-const mockOnApplyGranuleFilters = jest.fn
-const mockOnChangeQuery = jest.fn
-const mockOnChangePath = jest.fn
-const mockOnFocusedCollectionChange = jest.fn
-const mockOnMetricsCollectionSortChange = jest.fn
-const mockOnToggleAboutCSDAModal = jest.fn
-const mockOnToggleAboutCwicModal = jest.fn
-const mockOnTogglePanels = jest.fn
-const mockOnSetActivePanel = jest.fn
-const mockOnExport = jest.fn
 
 const setup = setupTest({
   Component: SearchPanelsContainer,
   defaultProps: {
     authToken: '',
     collectionMetadata: {},
-    collectionQuery: {},
     collectionsSearch: {},
     collectionSubscriptions: [],
     granuleMetadata: {},
     granuleSearchResults: {},
-    granuleQuery: {},
     isExportRunning: {
       csv: false,
       json: false
@@ -45,16 +33,14 @@ const setup = setupTest({
     match: {
       url: '/search'
     },
-    onApplyGranuleFilters: mockOnApplyGranuleFilters,
-    onChangeQuery: mockOnChangeQuery,
-    onChangePath: mockOnChangePath,
-    onFocusedCollectionChange: mockOnFocusedCollectionChange,
-    onMetricsCollectionSortChange: mockOnMetricsCollectionSortChange,
-    onToggleAboutCSDAModal: mockOnToggleAboutCSDAModal,
-    onToggleAboutCwicModal: mockOnToggleAboutCwicModal,
-    onTogglePanels: mockOnTogglePanels,
-    onSetActivePanel: mockOnSetActivePanel,
-    onExport: mockOnExport,
+    onChangePath: jest.fn(),
+    onFocusedCollectionChange: jest.fn(),
+    onMetricsCollectionSortChange: jest.fn(),
+    onToggleAboutCSDAModal: jest.fn(),
+    onToggleAboutCwicModal: jest.fn(),
+    onTogglePanels: jest.fn(),
+    onSetActivePanel: jest.fn(),
+    onExport: jest.fn(),
     panels: {
       activePanel: '0.0.0',
       isOpen: false
@@ -83,26 +69,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onApplyGranuleFilters calls actions.applyGranuleFilters', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'applyGranuleFilters')
-
-    mapDispatchToProps(dispatch).onApplyGranuleFilters({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onChangeQuery calls actions.changeQuery', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeQuery')
-
-    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onChangePath calls actions.changePath', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changePath')
@@ -193,9 +159,6 @@ describe('mapStateToProps', () => {
       },
       focusedCollection: 'collectionId',
       panels: {},
-      query: {
-        collection: {}
-      },
       searchResults: {
         collections: {}
       },
@@ -212,12 +175,10 @@ describe('mapStateToProps', () => {
     const expectedState = {
       authToken: 'mock-token',
       collectionMetadata: {},
-      collectionQuery: {},
       collectionsSearch: {},
       collectionSubscriptions: [],
       granuleMetadata: {},
       granuleSearchResults: {},
-      granuleQuery: {},
       isExportRunning: {
         csv: false,
         json: false
@@ -231,7 +192,7 @@ describe('mapStateToProps', () => {
 
 describe('SearchPanelsContainer component', () => {
   test('passes its props and renders a single SearchPanels component', async () => {
-    setup()
+    const { props, zustandState } = setup()
 
     const panels = await screen.findByText('Search Panels')
 
@@ -241,7 +202,7 @@ describe('SearchPanelsContainer component', () => {
       {
         authToken: '',
         collectionMetadata: {},
-        collectionQuery: {},
+        collectionQuery: initialState.collection,
         collectionSubscriptions: [],
         collectionsSearch: {},
         granuleMetadata: {},
@@ -253,16 +214,16 @@ describe('SearchPanelsContainer component', () => {
         },
         location: {},
         match: { url: '/search' },
-        onApplyGranuleFilters: mockOnApplyGranuleFilters,
-        onChangePath: mockOnChangePath,
-        onChangeQuery: mockOnChangeQuery,
-        onExport: mockOnExport,
-        onFocusedCollectionChange: mockOnFocusedCollectionChange,
-        onMetricsCollectionSortChange: mockOnMetricsCollectionSortChange,
-        onSetActivePanel: mockOnSetActivePanel,
-        onToggleAboutCSDAModal: mockOnToggleAboutCSDAModal,
-        onToggleAboutCwicModal: mockOnToggleAboutCwicModal,
-        onTogglePanels: mockOnTogglePanels,
+        onApplyGranuleFilters: zustandState.query.changeGranuleQuery,
+        onChangePath: props.onChangePath,
+        onChangeQuery: zustandState.query.changeQuery,
+        onExport: props.onExport,
+        onFocusedCollectionChange: props.onFocusedCollectionChange,
+        onMetricsCollectionSortChange: props.onMetricsCollectionSortChange,
+        onSetActivePanel: props.onSetActivePanel,
+        onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
+        onToggleAboutCwicModal: props.onToggleAboutCwicModal,
+        onTogglePanels: props.onTogglePanels,
         panels: {
           activePanel: '0.0.0',
           isOpen: false

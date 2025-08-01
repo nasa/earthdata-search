@@ -1,15 +1,9 @@
 /**
- * Prepare parameters used in getRegions() based on current Redux State
- * @param {object} state Current Redux State
+ * Prepare parameters used in getRegions() based on current State
+ * @param {object} regionQuery Current region query
  * @returns Parameters used in buildRegionSearchParams
  */
-export const prepareRegionParams = (state) => {
-  const {
-    query
-  } = state
-
-  const { region: regionQuery } = query
-
+export const prepareRegionParams = (regionQuery) => {
   const {
     endpoint,
     exact,

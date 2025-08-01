@@ -12,7 +12,6 @@ const setup = setupTest({
   Component: GranuleResultsTable,
   defaultProps: {
     collectionId: 'collectionId',
-    collectionQuerySpatial: {},
     collectionTags: {},
     directDistributionInformation: {},
     focusedGranuleId: 'one',
@@ -25,7 +24,6 @@ const setup = setupTest({
     focusedGranule: 'one',
     loadMoreItems: jest.fn(),
     location: {},
-    onExcludeGranule: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
@@ -49,7 +47,13 @@ describe('GranuleResultsTable component', () => {
           addGranuleToProjectCollection: expect.any(Function),
           cellClassName: 'granule-results-table__cell--granule',
           collectionId: 'collectionId',
-          collectionQuerySpatial: {},
+          collectionQuerySpatial: {
+            boundingBox: [],
+            circle: [],
+            line: [],
+            point: [],
+            polygon: []
+          },
           collectionTags: {},
           directDistributionInformation: {},
           generateNotebook: {},

@@ -650,13 +650,13 @@ const AccessMethod = ({
       && hasNonBoundingBoxSpatial
     ) {
       let spatialType = ''
-      if (spatial.polygon) {
+      if (spatial.polygon && spatial.polygon.length > 0) {
         spatialType = 'polygon'
-      } else if (spatial.point) {
+      } else if (spatial.point && spatial.point.length > 0) {
         spatialType = 'point'
-      } else if (spatial.line) {
+      } else if (spatial.line && spatial.line.length > 0) {
         spatialType = 'line'
-      } else if (spatial.circle) {
+      } else if (spatial.circle && spatial.circle.length > 0) {
         spatialType = 'circle'
       }
 

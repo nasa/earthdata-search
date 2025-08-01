@@ -5,22 +5,19 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
 import SearchForm from '../../components/SearchForm/SearchForm'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onChangeQuery:
-    (query) => dispatch(actions.changeQuery(query)),
+  handleError: (error) => dispatch(actions.handleError(error)),
   onChangeFocusedCollection:
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
-  onClearFilters:
-    () => dispatch(actions.clearFilters()),
   onToggleAdvancedSearchModal:
     (state) => dispatch(actions.toggleAdvancedSearchModal(state))
 })
 
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
-  keywordSearch: state.query.collection.keyword,
-  temporalSearch: state.query.collection.temporal
+  authToken: state.authToken
 })
 
 // Export non-redux-connected component for use in tests
@@ -28,44 +25,37 @@ export const mapStateToProps = (state) => ({
 export const SearchFormContainer = (props) => {
   const {
     advancedSearch,
-    keywordSearch,
-    onChangeQuery,
-    onClearFilters,
+    authToken,
+    handleError,
     onChangeFocusedCollection,
     onToggleAdvancedSearchModal
   } = props
+  const clearFilters = useEdscStore((state) => state.query.clearFilters)
 
   return (
     <SearchForm
-      onChangeQuery={onChangeQuery}
+      authToken={authToken}
+      handleError={handleError}
       onChangeFocusedCollection={onChangeFocusedCollection}
-      onClearFilters={onClearFilters}
+      onClearFilters={clearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
       advancedSearch={advancedSearch}
-      keywordSearch={keywordSearch}
     />
   )
 }
 
 SearchFormContainer.defaultProps = {
-  advancedSearch: {},
-  keywordSearch: '',
-  temporalSearch: {}
+  advancedSearch: {}
 }
 
 SearchFormContainer.propTypes = {
   advancedSearch: PropTypes.shape({
     regionSearch: PropTypes.shape({})
   }),
-  keywordSearch: PropTypes.string,
-  onChangeQuery: PropTypes.func.isRequired,
+  authToken: PropTypes.string.isRequired,
+  handleError: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
-  onClearFilters: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
-  temporalSearch: PropTypes.shape({
-    endDate: PropTypes.string,
-    startDate: PropTypes.string
-  })
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 // Export redux-connected component for use in application

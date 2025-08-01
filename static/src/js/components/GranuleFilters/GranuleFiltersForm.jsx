@@ -22,6 +22,9 @@ import TemporalSelection from '../TemporalSelection/TemporalSelection'
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
+
 import './GranuleFiltersForm.scss'
 
 /**
@@ -29,14 +32,12 @@ import './GranuleFiltersForm.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionMetadata - The focused collections metadata.
  * @param {Object} props.errors - Form errors provided by Formik.
- * @param {Object} props.excludedGranuleIds - The list of excluded granules.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
  * @param {Function} props.handleSubmit - Callback function passed from the container.
  * @param {Function} props.setFieldTouched - Callback function provided by Formik.
  * @param {Function} props.setFieldValue - Callback function provided by Formik.
  * @param {Object} props.onMetricsGranuleFilter - Callback function passed from actions.
- * @param {Object} props.onUndoExcludeGranule - Callback function passed from actions.
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
  */
@@ -44,17 +45,19 @@ export const GranuleFiltersForm = (props) => {
   const {
     collectionMetadata,
     errors,
-    excludedGranuleIds,
     handleBlur,
     handleChange,
     handleSubmit,
     onMetricsGranuleFilter,
-    onUndoExcludeGranule,
     setFieldTouched,
     setFieldValue,
     touched,
     values
   } = props
+
+  const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
+  const { excludedGranuleIds = [] } = granuleQuery
+  const undoExcludeGranule = useEdscStore((state) => state.query.undoExcludeGranule)
 
   const {
     browseOnly = false,
@@ -259,7 +262,7 @@ export const GranuleFiltersForm = (props) => {
                 <Button
                   className="granule-filters-form__item-button"
                   label="Undo last filtered granule"
-                  onClick={() => onUndoExcludeGranule(collectionId)}
+                  onClick={() => undoExcludeGranule(collectionId)}
                   type="button"
                   bootstrapSize="sm"
                   bootstrapVariant="primary"
@@ -995,12 +998,10 @@ GranuleFiltersForm.propTypes = {
     temporal: PropTypes.shape({}),
     readableGranuleName: PropTypes.string
   }).isRequired,
-  excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   onMetricsGranuleFilter: PropTypes.func.isRequired,
-  onUndoExcludeGranule: PropTypes.func.isRequired,
   setFieldTouched: PropTypes.func.isRequired,
   setFieldValue: PropTypes.func.isRequired,
   touched: PropTypes.shape({

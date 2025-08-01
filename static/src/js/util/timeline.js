@@ -48,9 +48,9 @@ export const zoomLevelDifference = (startDate, endDate) => {
 export const prepareTimelineParams = (state) => {
   const {
     authToken,
+    collectionQuery,
     focusedCollection,
     project,
-    query,
     router,
     timeline
   } = state
@@ -77,7 +77,6 @@ export const prepareTimelineParams = (state) => {
     return null
   }
 
-  const { collection: collectionQuery } = query
   const { spatial } = collectionQuery
   const {
     boundingBox,
@@ -103,12 +102,12 @@ export const prepareTimelineParams = (state) => {
 
   return {
     authToken,
-    boundingBox,
+    boundingBox: boundingBox && boundingBox.length > 0 ? boundingBox : undefined,
     conceptId: conceptIds,
     endDate,
     interval,
-    point,
-    polygon,
+    point: point && point.length > 0 ? point : undefined,
+    polygon: polygon && polygon.length > 0 ? polygon : undefined,
     startDate
   }
 }

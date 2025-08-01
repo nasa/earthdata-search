@@ -4,7 +4,9 @@ import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig, getEarthdataConfig } from '../../../../sharedUtils/config'
 import { withAdvancedSearch } from './withAdvancedSearch'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
+
 import useEdscStore from '../zustand/useEdscStore'
+import { getCollectionsQuery } from '../zustand/selectors/query'
 
 /**
  * Populate granule payload used to update the store
@@ -58,13 +60,10 @@ export const populateGranuleResults = ({
  */
 export const extractGranuleSearchParams = (state, collectionId) => {
   const {
-    advancedSearch = {},
-    query = {}
+    advancedSearch = {}
   } = state
 
-  const {
-    collection: collectionsQuery
-  } = query
+  const collectionsQuery = getCollectionsQuery(useEdscStore.getState())
 
   const {
     byId: collectionQueryById = {},
@@ -102,9 +101,9 @@ export const extractGranuleSearchParams = (state, collectionId) => {
   } = collectionGranuleQuery
 
   const granuleParams = {
-    boundingBox,
+    boundingBox: boundingBox && boundingBox.length > 0 ? boundingBox : undefined,
     browseOnly,
-    circle,
+    circle: circle && circle.length > 0 ? circle : undefined,
     cloudCover,
     collectionId,
     dayNightFlag,
@@ -113,13 +112,13 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     excludedGranuleIds,
     granuleTemporal,
     gridCoords,
-    line,
+    line: line && line.length > 0 ? line : undefined,
     onlineOnly,
     orbitNumber,
     overrideTemporal,
     pageNum,
-    point,
-    polygon,
+    point: point && point.length > 0 ? point : undefined,
+    polygon: polygon && polygon.length > 0 ? polygon : undefined,
     readableGranuleName,
     sortKey,
     temporal,

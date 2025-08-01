@@ -112,14 +112,8 @@ describe('createTimelineSlice', () => {
         configureStore.mockReturnValue({
           getState: () => ({
             authToken: '',
-            earthdataEnvironment: 'prod',
             focusedCollection: 'collectionId',
             metadata: {},
-            query: {
-              collection: {
-                spatial: {}
-              }
-            },
             router: {
               location: {
                 pathname: ''
@@ -188,14 +182,8 @@ describe('createTimelineSlice', () => {
         configureStore.mockReturnValue({
           getState: () => ({
             authToken: 'mock-token',
-            earthdataEnvironment: 'prod',
             focusedCollection: 'collectionId',
             metadata: {},
-            query: {
-              collection: {
-                spatial: {}
-              }
-            },
             router: {
               location: {
                 pathname: ''
@@ -264,14 +252,8 @@ describe('createTimelineSlice', () => {
         configureStore.mockReturnValue({
           getState: () => ({
             authToken: 'mock-token',
-            earthdataEnvironment: 'prod',
             focusedCollection: '',
             metadata: {},
-            query: {
-              collection: {
-                spatial: {}
-              }
-            },
             router: {
               location: {
                 pathname: ''
@@ -321,14 +303,8 @@ describe('createTimelineSlice', () => {
           dispatch: mockDispatch,
           getState: () => ({
             authToken: '',
-            earthdataEnvironment: 'prod',
             focusedCollection: 'collectionId',
             metadata: {},
-            query: {
-              collection: {
-                spatial: {}
-              }
-            },
             router: {
               location: {
                 pathname: ''

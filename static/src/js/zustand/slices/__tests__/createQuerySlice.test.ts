@@ -1,0 +1,577 @@
+import useEdscStore from '../../useEdscStore'
+import { initialGranuleState, initialState } from '../createQuerySlice'
+
+// @ts-expect-error This file does not have types
+import configureStore from '../../../store/configureStore'
+
+// @ts-expect-error This file does not have types
+import actions from '../../../actions'
+
+import * as EventEmitter from '../../../events/events'
+
+jest.mock('../../../actions', () => ({
+  getCollections: jest.fn(),
+  getSearchGranules: jest.fn(),
+  getRegions: jest.fn(),
+  removeSubscriptionDisabledFields: jest.fn(),
+  toggleDrawingNewLayer: jest.fn()
+}))
+
+jest.mock('../../../store/configureStore', () => jest.fn())
+
+const mockDispatch = jest.fn()
+const mockGetState = jest.fn()
+configureStore.mockReturnValue({
+  dispatch: mockDispatch,
+  getState: mockGetState
+})
+
+describe('createQuerySlice', () => {
+  test('sets the default state', () => {
+    const zustandState = useEdscStore.getState()
+    const { query } = zustandState
+
+    expect(query).toEqual({
+      ...initialState,
+      changeQuery: expect.any(Function),
+      changeGranuleQuery: expect.any(Function),
+      changeRegionQuery: expect.any(Function),
+      clearFilters: expect.any(Function),
+      excludeGranule: expect.any(Function),
+      removeSpatialFilter: expect.any(Function),
+      undoExcludeGranule: expect.any(Function)
+    })
+  })
+
+  describe('changeQuery', () => {
+    describe('when there is no focused collection', () => {
+      test('updates the collection query and calls getCollections', async () => {
+        mockGetState.mockReturnValue({
+          focusedCollection: ''
+        })
+
+        useEdscStore.setState((state) => {
+          state.project.getProjectGranules = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          collection: {
+            keyword: 'test'
+          }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.pageNum).toEqual(1)
+        expect(updatedQuery.collection.keyword).toEqual('test')
+
+        expect(actions.getCollections).toHaveBeenCalledTimes(1)
+        expect(actions.getCollections).toHaveBeenCalledWith()
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when there is a focused collection', () => {
+      test('updates the collection query and calls getCollections and getSearchGranules', async () => {
+        mockGetState.mockReturnValue({
+          focusedCollection: 'collectionId'
+        })
+
+        useEdscStore.setState((state) => {
+          state.project.getProjectGranules = jest.fn()
+          state.query.collection.byId.collectionId = {
+            granules: {
+              ...initialGranuleState,
+              pageNum: 2
+            }
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          collection: {
+            keyword: 'test'
+          }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.pageNum).toEqual(1)
+        expect(updatedQuery.collection.keyword).toEqual('test')
+
+        expect(actions.getCollections).toHaveBeenCalledTimes(1)
+        expect(actions.getCollections).toHaveBeenCalledWith()
+
+        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
+        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when there is a project collection', () => {
+      test('updates the collection query and calls getCollections and getProjectGranules', async () => {
+        mockGetState.mockReturnValue({
+          focusedCollection: ''
+        })
+
+        useEdscStore.setState((state) => {
+          state.project.collections.allIds = ['collectionId']
+          state.project.getProjectGranules = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          collection: {
+            keyword: 'test'
+          }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.pageNum).toEqual(1)
+        expect(updatedQuery.collection.keyword).toEqual('test')
+
+        expect(actions.getCollections).toHaveBeenCalledTimes(1)
+        expect(actions.getCollections).toHaveBeenCalledWith()
+
+        expect(actions.getSearchGranules).toHaveBeenCalledTimes(0)
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
+        expect(project.getProjectGranules).toHaveBeenCalledWith()
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when there is spatial values', () => {
+      test('it keeps the default spatial values for types without values', async () => {
+        mockGetState.mockReturnValue({
+          focusedCollection: ''
+        })
+
+        useEdscStore.setState((state) => {
+          state.project.getProjectGranules = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          collection: {
+            spatial: {
+              point: ['0,0']
+            }
+          }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.spatial).toEqual({
+          ...initialState.collection.spatial,
+          point: ['0,0']
+        })
+      })
+    })
+  })
+
+  describe('changeGranuleQuery', () => {
+    describe('when the collection does not have a query yet', () => {
+      test('updates the granule query and calls actions', async () => {
+        useEdscStore.setState((state) => {
+          state.project.getProjectGranules = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeGranuleQuery } = query
+        await changeGranuleQuery({
+          collectionId: 'collectionId',
+          query: { pageNum: 3 }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
+          ...initialGranuleState,
+          pageNum: 3
+        })
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
+
+        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
+        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when the query is empty', () => {
+      test('updates the granule query and calls actions', async () => {
+        useEdscStore.setState((state) => {
+          state.project.getProjectGranules = jest.fn()
+          state.query.collection.byId.collectionId = {
+            granules: {
+              ...initialGranuleState,
+              pageNum: 2
+            }
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeGranuleQuery } = query
+        await changeGranuleQuery({
+          collectionId: 'collectionId',
+          query: {}
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.byId.collectionId.granules).toEqual(initialGranuleState)
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
+
+        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
+        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when there are new query values', () => {
+      test('updates the granule query and calls actions', async () => {
+        useEdscStore.setState((state) => {
+          state.project.getProjectGranules = jest.fn()
+          state.query.collection.byId.collectionId = {
+            granules: {
+              ...initialGranuleState,
+              pageNum: 2
+            }
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeGranuleQuery } = query
+        await changeGranuleQuery({
+          collectionId: 'collectionId',
+          query: { pageNum: 3 }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
+          ...initialGranuleState,
+          pageNum: 3
+        })
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
+
+        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
+        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when the collectionId is focused and in the projectCollectionIds', () => {
+      test('calls getProjectGranules', async () => {
+        mockGetState.mockReturnValue({
+          focusedCollection: 'collectionId'
+        })
+
+        useEdscStore.setState((state) => {
+          state.project.getProjectGranules = jest.fn()
+          state.project.collections.allIds = ['collectionId']
+          state.query.collection.byId.collectionId = {
+            granules: {
+              ...initialGranuleState,
+              pageNum: 2
+            }
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeGranuleQuery } = query
+        await changeGranuleQuery({
+          collectionId: 'collectionId',
+          query: { pageNum: 3 }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
+          ...initialGranuleState,
+          pageNum: 3
+        })
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
+        expect(project.getProjectGranules).toHaveBeenCalledWith()
+
+        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
+        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+  })
+
+  describe('changeRegionQuery', () => {
+    test('updates the region query and calls getRegions', async () => {
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { changeRegionQuery } = query
+      await changeRegionQuery({ keyword: 'test' })
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.region.keyword).toEqual('test')
+
+      expect(actions.getRegions).toHaveBeenCalledTimes(1)
+      expect(actions.getRegions).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('clearFilters', () => {
+    describe('when not on the granules page', () => {
+      test('updates the region query and calls getRegions', async () => {
+        mockGetState.mockReturnValue({
+          router: {
+            location: {
+              pathname: '/search'
+            }
+          }
+        })
+
+        useEdscStore.setState((state) => {
+          state.project.getProjectCollections = jest.fn()
+          state.shapefile.clearShapefile = jest.fn()
+          state.timeline.getTimeline = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { clearFilters } = query
+        await clearFilters()
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery,
+          shapefile,
+          timeline
+        } = updatedState
+
+        expect(updatedQuery.collection).toEqual(initialState.collection)
+
+        expect(actions.getCollections).toHaveBeenCalledTimes(1)
+        expect(actions.getCollections).toHaveBeenCalledWith()
+
+        expect(project.getProjectCollections).toHaveBeenCalledTimes(1)
+        expect(project.getProjectCollections).toHaveBeenCalledWith()
+
+        expect(actions.getSearchGranules).toHaveBeenCalledTimes(0)
+        expect(timeline.getTimeline).toHaveBeenCalledTimes(0)
+
+        expect(shapefile.clearShapefile).toHaveBeenCalledTimes(1)
+        expect(shapefile.clearShapefile).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when on the granules page', () => {
+      test('updates the region query and calls getRegions', async () => {
+        mockGetState.mockReturnValue({
+          router: {
+            location: {
+              pathname: '/search/granules'
+            }
+          }
+        })
+
+        useEdscStore.setState((state) => {
+          state.project.getProjectCollections = jest.fn()
+          state.timeline.getTimeline = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { clearFilters } = query
+        await clearFilters()
+
+        const updatedState = useEdscStore.getState()
+        const {
+          project,
+          query: updatedQuery,
+          timeline
+        } = updatedState
+
+        expect(updatedQuery.collection).toEqual(initialState.collection)
+
+        expect(actions.getCollections).toHaveBeenCalledTimes(1)
+        expect(actions.getCollections).toHaveBeenCalledWith()
+
+        expect(project.getProjectCollections).toHaveBeenCalledTimes(1)
+        expect(project.getProjectCollections).toHaveBeenCalledWith()
+
+        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
+        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+
+        expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+        expect(timeline.getTimeline).toHaveBeenCalledWith()
+      })
+    })
+  })
+
+  describe('excludeGranule', () => {
+    test('excludes a granule from the collection', async () => {
+      const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
+
+      useEdscStore.setState((state) => {
+        state.query.collection.byId.collectionId = {
+          granules: initialGranuleState
+        }
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { excludeGranule } = query
+      await excludeGranule({
+        collectionId: 'collectionId',
+        granuleId: 'granuleId'
+      })
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.collection.byId.collectionId.granules.excludedGranuleIds).toContain('granuleId')
+
+      expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
+      expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.collectionId.hoverGranule', {
+        granule: null
+      })
+
+      expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
+      expect(actions.getSearchGranules).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('removeSpatialFilter', () => {
+    test('removes the spatial filter', async () => {
+      mockGetState.mockReturnValue({
+        focusedCollection: ''
+      })
+
+      useEdscStore.setState((state) => {
+        state.query.collection.byId.collectionId = {
+          granules: initialGranuleState
+        }
+
+        state.shapefile.clearShapefile = jest.fn()
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { removeSpatialFilter } = query
+      await removeSpatialFilter()
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery,
+        shapefile
+      } = updatedState
+
+      expect(updatedQuery.collection.spatial).toEqual(initialState.collection.spatial)
+
+      expect(actions.toggleDrawingNewLayer).toHaveBeenCalledTimes(1)
+      expect(actions.toggleDrawingNewLayer).toHaveBeenCalledWith(false)
+
+      expect(shapefile.clearShapefile).toHaveBeenCalledTimes(1)
+      expect(shapefile.clearShapefile).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('undoExcludeGranule', () => {
+    test('removes a granule from the excluded list', async () => {
+      useEdscStore.setState((state) => {
+        state.query.collection.byId.collectionId = {
+          granules: {
+            ...initialGranuleState,
+            excludedGranuleIds: ['granuleId1', 'granuleId2']
+          }
+        }
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { undoExcludeGranule } = query
+      await undoExcludeGranule('collectionId')
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.collection.byId.collectionId.granules.excludedGranuleIds).not.toContain('granuleId2')
+
+      expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
+      expect(actions.getSearchGranules).toHaveBeenCalledWith()
+    })
+  })
+})

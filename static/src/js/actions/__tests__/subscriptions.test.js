@@ -33,6 +33,15 @@ import {
 
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as addToast from '../../util/addToast'
+import {
+  getCollectionSubscriptionQueryString,
+  getGranuleSubscriptionQueryString
+} from '../../zustand/selectors/query'
+
+jest.mock('../../zustand/selectors/query', () => ({
+  getCollectionSubscriptionQueryString: jest.fn().mockImplementation(() => {}),
+  getGranuleSubscriptionQueryString: jest.fn().mockImplementation(() => {})
+}))
 
 const mockStore = configureMockStore([thunk])
 
@@ -97,6 +106,8 @@ describe('createSubscription', () => {
     const getGranuleSubscriptionsMock = jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
     const addToastMock = jest.spyOn(addToast, 'addToast')
 
+    getGranuleSubscriptionQueryString.mockReturnValue('browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
+
     nock(/localhost/)
       .post(/graphql/, (body) => {
         const { data } = body
@@ -147,40 +158,12 @@ describe('createSubscription', () => {
           }
         }
       },
-      project: {},
       focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          byId: {
-            collectionId: {
-              granules: {
-                excludedGranuleIds: [],
-                gridCoords: '',
-                pageNum: 2,
-                sortKey: '-start_date',
-                collectionId: 'collectionId',
-                browseOnly: true
-              }
-            }
-          },
-          temporal: {
-            startDate: '2020-01-01T00:00:00.000Z',
-            endDate: '2020-01-31T23:59:59.999Z',
-            isRecurring: false
-          },
-          spatial: {
-            polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78']
-          }
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
           granule: {}
         }
-      },
-      timeline: {
-        query: {}
       },
       user: {
         username: 'testUser'
@@ -204,6 +187,8 @@ describe('createSubscription', () => {
 
     const getSubscriptionsMock = jest.spyOn(actions, 'getSubscriptions').mockImplementationOnce(() => jest.fn())
     const addToastMock = jest.spyOn(addToast, 'addToast')
+
+    getCollectionSubscriptionQueryString.mockReturnValue('options[temporal][limit_to_granules]=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
 
     nock(/localhost/)
       .post(/graphql/, (body) => {
@@ -253,28 +238,11 @@ describe('createSubscription', () => {
       metadata: {
         collections: {}
       },
-      project: {},
-      query: {
-        collection: {
-          byId: {},
-          temporal: {
-            startDate: '2020-01-01T00:00:00.000Z',
-            endDate: '2020-01-31T23:59:59.999Z',
-            isRecurring: false
-          },
-          spatial: {
-            polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78']
-          }
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
           granule: {}
         }
-      },
-      timeline: {
-        query: {}
       },
       user: {
         username: 'testUser'
@@ -300,6 +268,8 @@ describe('createSubscription', () => {
       const addToastMock = jest.spyOn(addToast, 'addToast')
       jest.spyOn(actions, 'getGranuleSubscriptions').mockImplementationOnce(() => jest.fn())
 
+      getGranuleSubscriptionQueryString.mockReturnValue('browse_only=true&temporal=2020-01-01T00:00:00.000Z,2020-01-31T23:59:59.999Z&polygon[]=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78')
+
       nock(/localhost/)
         .post(/graphql/, (body) => {
           const { data } = body
@@ -320,7 +290,7 @@ describe('createSubscription', () => {
             }, { encode: false })
           }&${
             stringify({
-              polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+              polygon: ['-18,-78,-13,-74,-16,-73,-22,-77,-18,-78']
             }, {
               encode: false,
               indices: false,
@@ -359,40 +329,12 @@ describe('createSubscription', () => {
             }
           }
         },
-        project: {},
         focusedCollection: 'collectionId',
-        query: {
-          collection: {
-            byId: {
-              collectionId: {
-                granules: {
-                  excludedGranuleIds: [],
-                  gridCoords: '',
-                  pageNum: 2,
-                  sortKey: '-start_date',
-                  collectionId: 'collectionId',
-                  browseOnly: true
-                }
-              }
-            },
-            temporal: {
-              startDate: '2020-01-01T00:00:00.000Z',
-              endDate: '2020-01-31T23:59:59.999Z',
-              isRecurring: false
-            },
-            spatial: {
-              polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
-            }
-          }
-        },
         subscriptions: {
           disabledFields: {
             collection: {},
             granule: {}
           }
-        },
-        timeline: {
-          query: {}
         },
         user: {
           username: 'testUser'

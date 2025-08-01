@@ -5,6 +5,8 @@ import {
   ProjectionCode,
   ScienceKeyword,
   ShapefileFile,
+  Spatial,
+  Temporal,
   TimelineIntervals,
   VariableMetadata
 } from '../types/sharedTypes'
@@ -628,7 +630,115 @@ export type ProjectSlice = {
   }
 }
 
-type UpdateShapefileProps = {
+/** Granule query parameters */
+type GranuleQuery = {
+  /** Flag to indicate if the granule is for browsing only */
+  browseOnly?: boolean
+  /** The day/night flag */
+  dayNightFlag?: 'DAY' | 'NIGHT' | 'BOTH'
+  /** The excluded granule IDs */
+  excludedGranuleIds: string[]
+  /** The grid coordinates */
+  gridCoords?: string
+  /** Flag to indicate if the granule is online only */
+  onlineOnly?: boolean
+  /** The page number */
+  pageNum: number
+  /** The sort key */
+  sortKey: string
+  /** The granule name */
+  readableGranuleName?: string
+  /** The temporal filter */
+  temporal?: Temporal
+}
+
+/** Collection specific queries by Collection ID */
+type CollectionQueryById = {
+  [key: string]: {
+    /** Granule query parameters for the collection */
+    granules: GranuleQuery
+  }
+}
+
+/** Region Query Parameters */
+type RegionQuery = {
+  /** The region endpoint */
+  endpoint?: 'huc' | 'region' | 'rivers/reach'
+  /** Should to search be an exact match */
+  exact: boolean
+  /** The keyword to search for */
+  keyword?: string
+}
+
+/** Collection Query Parameters */
+type CollectionQuery = {
+  /** Collection specific queries by Collection ID */
+  byId: CollectionQueryById
+  /** Flag to indicate if the collection has granules or CWIC */
+  hasGranulesOrCwic: boolean
+  /** The keyword to search for */
+  keyword: string
+  /** The temporal override */
+  overrideTemporal: Temporal
+  /** The page number */
+  pageNum: number
+  /** The sort key */
+  sortKey: string
+  /** The spatial filter */
+  spatial: Spatial
+  /** The temporal filter */
+  temporal: Temporal
+}
+
+/** Parameters for changing the query */
+type ChangeQueryParams = {
+  /** The collection query */
+  collection?: Partial<CollectionQuery>
+  /** The region query */
+  region?: Partial<RegionQuery>
+}
+
+export type QuerySlice = {
+  /** The Query Slice of the store */
+  query: {
+    /** The collection query */
+    collection: CollectionQuery
+    /** The region query */
+    region: RegionQuery
+    /** Function to change the query */
+    changeQuery: (query: ChangeQueryParams) => void
+    /** Function to change the granule query */
+    changeGranuleQuery: ({
+      collectionId,
+      query
+    }: {
+      /** The collection ID to update */
+      collectionId: string
+      /** The new query params */
+      query: Partial<GranuleQuery>
+    }) => void
+    /** Function to change the region query */
+    changeRegionQuery: (query: Partial<RegionQuery>) => void
+    /** Function to clear all filters */
+    clearFilters: () => void
+    /** Function to exclude a granule from a collection */
+    excludeGranule: ({
+      collectionId,
+      granuleId
+    }: {
+      /** The collection ID to update */
+      collectionId: string;
+      /** The granule ID to exclude */
+      granuleId: string
+    }) => void
+    /** Function to remove the spatial filter */
+    removeSpatialFilter: () => void
+    /** Function to undo the last excluded granule */
+    undoExcludeGranule: (collectionId: string) => void
+  }
+}
+
+type UpdateShapefileParams = {
   /** The shapefile id */
   shapefileId?: string
   /** The shapefile name */
@@ -641,7 +751,7 @@ type UpdateShapefileProps = {
   file?: ShapefileFile
 }
 
-type SaveShapefileProps = {
+type SaveShapefileParams = {
   /** The user's authToken */
   authToken: string
   /** The shapefile filename */
@@ -676,11 +786,11 @@ export type ShapefileSlice = {
     /** Function to set the shapefile errored */
     setErrored: (message: string) => void
     /** Function to update the shapefile */
-    updateShapefile: (data: UpdateShapefileProps) => void
+    updateShapefile: (data: UpdateShapefileParams) => void
     /** Function to clear the shapefile */
     clearShapefile: () => void
     /** Function to save the shapefile */
-    saveShapefile: (data: SaveShapefileProps) => Promise<void>
+    saveShapefile: (data: SaveShapefileParams) => Promise<void>
     /** Function to fetch the shapefile */
     fetchShapefile: (shapefileId: string) => Promise<void>
   }
@@ -761,6 +871,7 @@ export type EdscStore =
   & PortalSlice
   & PreferencesSlice
   & ProjectSlice
+  & QuerySlice
   & ShapefileSlice
   & TimelineSlice
   & UiSlice

@@ -22,14 +22,6 @@ const setup = setupTest({
       granule_count: 4,
       title: 'Collection Title'
     },
-    collectionsQuery: {
-      byId: {
-        collectionId: {
-          excludedGranuleIds: ['G10000001-EDSC']
-        }
-      },
-      pageNum: 1
-    },
     color: 'color',
     index: 0,
     isPanelActive: false,
@@ -57,6 +49,16 @@ const setup = setupTest({
     project: {
       removeProjectCollection: jest.fn(),
       toggleCollectionVisibility: jest.fn()
+    },
+    query: {
+      collection: {
+        byId: {
+          collectionId: {
+            excludedGranuleIds: ['G10000001-EDSC']
+          }
+        },
+        pageNum: 1
+      }
     },
     map: {
       mapView: {

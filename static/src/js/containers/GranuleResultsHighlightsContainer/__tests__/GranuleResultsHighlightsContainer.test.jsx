@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import {
   GranuleResultsHighlightsContainer,
@@ -8,11 +8,11 @@ import {
 } from '../GranuleResultsHighlightsContainer'
 import GranuleResultsHighlights from '../../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/GranuleResultsHighlights/GranuleResultsHighlights', () => jest.fn(() => <div />))
 
-function setup(overrideProps) {
-  const props = {
-    collectionsQuery: {},
+const setup = setupTest({
+  Component: GranuleResultsHighlightsContainer,
+  defaultProps: {
     focusedCollectionGranuleSearch: {
       allIds: ['id1'],
       hits: 1,
@@ -35,20 +35,9 @@ function setup(overrideProps) {
         mock: 'data'
       }
     },
-    focusedCollectionMetadata: {},
-    location: {
-      search: ''
-    },
-    ...overrideProps
+    focusedCollectionMetadata: {}
   }
-
-  const enzymeWrapper = shallow(<GranuleResultsHighlightsContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
@@ -57,16 +46,12 @@ describe('mapStateToProps', () => {
         collections: {}
       },
       focusedCollection: 'collectionId',
-      query: {
-        collection: {}
-      },
       searchResults: {
         collections: {}
       }
     }
 
     const expectedState = {
-      collectionsQuery: {},
       focusedCollectionGranuleSearch: {},
       focusedCollectionGranuleMetadata: {},
       focusedCollectionId: 'collectionId',
@@ -79,17 +64,15 @@ describe('mapStateToProps', () => {
 
 describe('GranuleResultsHighlightsContainer component', () => {
   test('passes its props and renders a single GranuleResultsHighlights component', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(GranuleResultsHighlights).length).toBe(1)
-    expect(enzymeWrapper.find(GranuleResultsHighlights).props().granules).toEqual([{
-      mock: 'data'
-    }])
-
-    expect(enzymeWrapper.find(GranuleResultsHighlights).props().granuleCount).toEqual(1)
-    expect(enzymeWrapper.find(GranuleResultsHighlights).props().visibleGranules).toEqual(1)
-    expect(enzymeWrapper.find(GranuleResultsHighlights).props().location).toEqual({ search: '' })
-    expect(enzymeWrapper.find(GranuleResultsHighlights).props().isLoading).toEqual(false)
-    expect(enzymeWrapper.find(GranuleResultsHighlights).props().isLoaded).toEqual(true)
+    expect(GranuleResultsHighlights).toHaveBeenCalledTimes(1)
+    expect(GranuleResultsHighlights).toHaveBeenCalledWith({
+      granuleCount: 1,
+      granules: [{ mock: 'data' }],
+      isLoaded: true,
+      isLoading: false,
+      visibleGranules: 1
+    }, {})
   })
 })

@@ -14,10 +14,8 @@ jest.mock('../../../components/Subscriptions/SubscriptionsBody', () => jest.fn((
 const setup = setupTest({
   Component: SubscriptionsBodyContainer,
   defaultProps: {
-    collectionQueryObj: {},
     collectionSubscriptions: [],
     collectionSubscriptionDisabledFields: {},
-    granuleQueryObj: {},
     granuleSubscriptions: [],
     granuleSubscriptionDisabledFields: {},
     subscriptionType: 'granule',
@@ -92,9 +90,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      query: {
-        collection: {}
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
@@ -104,14 +99,8 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      collectionQueryObj: {
-        consortium: [],
-        serviceType: [],
-        tagKey: []
-      },
       collectionSubscriptions: [],
       collectionSubscriptionDisabledFields: {},
-      granuleQueryObj: {},
       granuleSubscriptions: [],
       granuleSubscriptionDisabledFields: {}
     }
@@ -153,7 +142,12 @@ describe('SubscriptionsBodyContainer component', () => {
       onToggleEditSubscriptionModal: expect.any(Function),
       onUpdateSubscription: expect.any(Function),
       onUpdateSubscriptionDisabledFields: expect.any(Function),
-      query: {},
+      query: {
+        consortium: [],
+        hasGranulesOrCwic: true,
+        serviceType: [],
+        tagKey: []
+      },
       subscriptionType: 'collection',
       subscriptions: []
     }, {})

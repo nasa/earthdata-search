@@ -9,6 +9,7 @@ import ProjectHeader from './ProjectHeader'
 import ProjectCollectionsList from './ProjectCollectionsList'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 
 import './ProjectCollections.scss'
@@ -16,7 +17,6 @@ import './ProjectCollections.scss'
 /**
  * Renders ProjectCollections.
  * @param {Object} collections - List of collections passed from redux store.
- * @param {String} collectionsQuery - The collection search.
  * @param {String} map - The current map configuration.
  * @param {Function} onMetricsDataAccess - Callback to log metrics events.
  * @param {Function} onSetActivePanel - Callback to set the active panel.
@@ -28,7 +28,6 @@ import './ProjectCollections.scss'
  * @param {Object} savedProject - The saved project state.
  */
 const ProjectCollections = ({
-  collectionsQuery,
   onMetricsDataAccess,
   onSetActivePanel,
   onSetActivePanelSection,
@@ -49,6 +48,7 @@ const ProjectCollections = ({
   }))
   const { allIds: projectCollectionsIds } = projectCollections
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
+  const collectionsQuery = useEdscStore(getCollectionsQuery)
 
   useEffect(() => {
     projectCollectionsIds.forEach((id) => {
@@ -83,13 +83,11 @@ const ProjectCollections = ({
   return (
     <section className="project-collections">
       <ProjectHeader
-        collectionsQuery={collectionsQuery}
         savedProject={savedProject}
         onUpdateProjectName={onUpdateProjectName}
       />
       <ProjectCollectionsList
         collectionsMetadata={projectCollectionsMetadata}
-        collectionsQuery={collectionsQuery}
         onMetricsDataAccess={onMetricsDataAccess}
         onSetActivePanel={onSetActivePanel}
         onSetActivePanelSection={onSetActivePanelSection}
@@ -150,9 +148,6 @@ const ProjectCollections = ({
 }
 
 ProjectCollections.propTypes = {
-  collectionsQuery: PropTypes.shape({
-    byId: PropTypes.shape({})
-  }).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,

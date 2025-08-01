@@ -47,14 +47,12 @@ export const finishRegionsTimer = () => ({
 /**
  * Perform a collections request based on the current redux state.
  * @param {function} dispatch - A dispatch function provided by redux.
- * @param {function} getState - A function that returns the current state provided by redux.
  */
-export const getRegions = () => (dispatch, getState) => {
-  const state = getState()
+export const getRegions = () => (dispatch) => {
+  const zustandState = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
-
-  const regionParams = prepareRegionParams(state)
+  const regionParams = prepareRegionParams(zustandState.query.region)
 
   const {
     query

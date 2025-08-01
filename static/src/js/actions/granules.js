@@ -1,5 +1,4 @@
 import { isCancel } from 'axios'
-import { isEmpty } from 'lodash-es'
 import { mbr } from '@edsc/geo-utils'
 import 'array-foreach-async'
 import { stringify } from 'qs'
@@ -17,7 +16,6 @@ import {
   ADD_GRANULE_METADATA,
   ADD_MORE_GRANULE_RESULTS,
   ERRORED_GRANULES,
-  EXCLUDE_GRANULE_ID,
   FINISHED_GRANULES_TIMER,
   INITIALIZE_COLLECTION_GRANULES_RESULTS,
   LOADED_GRANULES,
@@ -26,22 +24,18 @@ import {
   SET_GRANULE_LINKS_LOADED,
   SET_GRANULE_LINKS_LOADING,
   STARTED_GRANULES_TIMER,
-  UNDO_EXCLUDE_GRANULE_ID,
   UPDATE_GRANULE_LINKS,
   UPDATE_GRANULE_METADATA,
-  UPDATE_GRANULE_RESULTS,
-  INITIALIZE_COLLECTION_GRANULES_QUERY
+  UPDATE_GRANULE_RESULTS
 } from '../constants/actionTypes'
 import { toggleSpatialPolygonWarning } from './ui'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import { eventEmitter } from '../events/events'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getProjectCollectionsIds } from '../zustand/selectors/project'
 
 const { granuleLinksPageSize, openSearchGranuleLinksPageSize } = getApplicationConfig()
 
@@ -94,16 +88,6 @@ export const finishGranulesTimer = (payload) => ({
   payload
 })
 
-export const onExcludeGranule = (payload) => ({
-  type: EXCLUDE_GRANULE_ID,
-  payload
-})
-
-export const onUndoExcludeGranule = (payload) => ({
-  type: UNDO_EXCLUDE_GRANULE_ID,
-  payload
-})
-
 export const updateGranuleLinks = (payload) => ({
   type: UPDATE_GRANULE_LINKS,
   payload
@@ -119,11 +103,6 @@ export const setGranuleLinksLoaded = () => ({
 
 export const initializeCollectionGranulesResults = (payload) => ({
   type: INITIALIZE_COLLECTION_GRANULES_RESULTS,
-  payload
-})
-
-export const initializeCollectionGranulesQuery = (payload) => ({
-  type: INITIALIZE_COLLECTION_GRANULES_QUERY,
   payload
 })
 
@@ -378,69 +357,4 @@ export const getSearchGranules = () => (dispatch, getState) => {
     })
 
   return response
-}
-
-export const undoExcludeGranule = (collectionId) => (dispatch) => {
-  dispatch(onUndoExcludeGranule(collectionId))
-  dispatch(actions.getSearchGranules())
-}
-
-/**
- * Called when granule filters are submitted. Resets the granule query page, applies any granule filters,
- * gets the granules, and optionally closes the sidebar panel.
- * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
- */
-export const applyGranuleFilters = (granuleFilters) => (dispatch, getState) => {
-  const state = getState()
-
-  const zustandState = useEdscStore.getState()
-
-  // Retrieve data from Redux using selectors
-  const focusedCollectionId = getFocusedCollectionId(state)
-  const projectCollectionsIds = getProjectCollectionsIds(zustandState)
-
-  if (isEmpty(granuleFilters)) {
-    dispatch(actions.clearFocusedCollectionGranuleFilters())
-  } else {
-    // Apply granule filters, ensuring to reset the page number to 1 as this results in a new search
-    dispatch(actions.updateFocusedCollectionGranuleFilters({
-      pageNum: 1,
-      ...granuleFilters
-    }))
-  }
-
-  // If there is a focused collection, and it is in the project also update the project granules
-  if (focusedCollectionId && projectCollectionsIds.includes(focusedCollectionId)) {
-    const { project } = zustandState
-    const { getProjectGranules } = project
-    getProjectGranules()
-  }
-
-  dispatch(actions.getSearchGranules())
-
-  // Clear any subscription disabledFields
-  dispatch(actions.removeSubscriptionDisabledFields())
-}
-
-/**
- * Calls apply granule filters with an empty object to reset the filters.
- */
-export const clearGranuleFilters = () => applyGranuleFilters({})
-
-/**
- * Excludes a single granule from search results and requests granules again
- * @param {Object} data Object containing the granule id and the collection that the granule belongs to
- */
-export const excludeGranule = (data) => (dispatch) => {
-  const { collectionId, granuleId } = data
-
-  // Unfocus the granule on the map
-  eventEmitter.emit(`map.layer.${collectionId}.hoverGranule`, { granule: null })
-
-  dispatch(actions.onExcludeGranule({
-    collectionId,
-    granuleId
-  }))
-
-  dispatch(actions.getSearchGranules())
 }

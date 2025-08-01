@@ -38,6 +38,8 @@ export interface Spatial {
   boundingBox?: BoundingBoxString[]
   /** The circle coordinates, if applied */
   circle?: CircleString[]
+  /** The line coordinates, if applied */
+  line?: LineString[]
   /** The point coordinates, if applied */
   point?: PointString[]
   /** The polygon coordinates, if applied */
