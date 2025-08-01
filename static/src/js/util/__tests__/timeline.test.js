@@ -243,12 +243,9 @@ describe('prepareTimelineParams', () => {
 
     expect(result).toEqual({
       authToken: 'test-auth-token',
-      boundingBox: [],
       conceptId: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC'],
       endDate: '2023-01-01T00:00:00Z',
       interval: 'day',
-      point: [],
-      polygon: [],
       startDate: '2022-01-01T00:00:00Z'
     })
   })
@@ -272,12 +269,9 @@ describe('prepareTimelineParams', () => {
 
     expect(result).toEqual({
       authToken: 'test-auth-token',
-      boundingBox: [],
       conceptId: ['C100000-EDSC'],
       endDate: '2023-01-01T00:00:00Z',
       interval: 'day',
-      point: [],
-      polygon: [],
       startDate: '2022-01-01T00:00:00Z'
     })
   })

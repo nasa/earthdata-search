@@ -101,9 +101,9 @@ export const extractGranuleSearchParams = (state, collectionId) => {
   } = collectionGranuleQuery
 
   const granuleParams = {
-    boundingBox,
+    boundingBox: boundingBox && boundingBox.length > 0 ? boundingBox : undefined,
     browseOnly,
-    circle,
+    circle: circle && circle.length > 0 ? circle : undefined,
     cloudCover,
     collectionId,
     dayNightFlag,
@@ -112,13 +112,13 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     excludedGranuleIds,
     granuleTemporal,
     gridCoords,
-    line,
+    line: line && line.length > 0 ? line : undefined,
     onlineOnly,
     orbitNumber,
     overrideTemporal,
     pageNum,
-    point,
-    polygon,
+    point: point && point.length > 0 ? point : undefined,
+    polygon: polygon && polygon.length > 0 ? polygon : undefined,
     readableGranuleName,
     sortKey,
     temporal,

@@ -121,13 +121,7 @@ describe('SubscriptionsBodyContainer component', () => {
       onToggleEditSubscriptionModal: expect.any(Function),
       onUpdateSubscription: expect.any(Function),
       onUpdateSubscriptionDisabledFields: expect.any(Function),
-      query: {
-        boundingBox: [],
-        circle: [],
-        line: [],
-        point: [],
-        polygon: []
-      },
+      query: {},
       subscriptionType: 'granule',
       subscriptions: []
     }, {})
@@ -149,13 +143,8 @@ describe('SubscriptionsBodyContainer component', () => {
       onUpdateSubscription: expect.any(Function),
       onUpdateSubscriptionDisabledFields: expect.any(Function),
       query: {
-        boundingBox: [],
-        circle: [],
         consortium: [],
         hasGranulesOrCwic: true,
-        line: [],
-        point: [],
-        polygon: [],
         serviceType: [],
         tagKey: []
       },
