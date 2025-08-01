@@ -158,21 +158,6 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
 
-    changeProjectQuery: async (query) => {
-      set((state) => ({
-        query: {
-          ...state.query,
-          ...query,
-          collection: {
-            ...state.query.collection,
-            ...query.collection
-          }
-        }
-      }))
-
-      await get().project.getProjectGranules()
-    },
-
     changeRegionQuery: (query) => {
       set((state) => ({
         query: {
@@ -192,6 +177,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
     clearFilters: async () => {
       get().facetParams.resetFacetParams()
+      get().shapefile.clearShapefile()
 
       set((state) => ({
         query: {
@@ -247,7 +233,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
     removeSpatialFilter: async () => {
       await get().query.changeQuery({
         collection: {
-          spatial: {}
+          spatial: initialState.collection.spatial
         },
         region: {
           exact: false
@@ -259,7 +245,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       } = configureStore()
       reduxDispatch(actions.toggleDrawingNewLayer(false))
 
-      await get().shapefile.clearShapefile()
+      get().shapefile.clearShapefile()
     },
 
     undoExcludeGranule: (collectionId) => {

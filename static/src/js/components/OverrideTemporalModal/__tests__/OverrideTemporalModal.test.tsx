@@ -17,7 +17,7 @@ const setup = setupTest({
           startDate: '2015-07-01T06:14:00.000Z'
         }
       },
-      changeProjectQuery: jest.fn()
+      changeQuery: jest.fn()
     },
     timeline: {
       query: {
@@ -36,8 +36,8 @@ describe('OverrideTemporalModal component', () => {
       const button = await screen.findByLabelText('Use Temporal Constraint')
       await user.click(button)
 
-      expect(zustandState.query.changeProjectQuery).toHaveBeenCalledTimes(1)
-      expect(zustandState.query.changeProjectQuery).toHaveBeenCalledWith({
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+      expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
         collection: {
           overrideTemporal: {
             endDate: '2019-06-17T23:59:59.999Z',
@@ -58,8 +58,8 @@ describe('OverrideTemporalModal component', () => {
       const button = await screen.findByLabelText('Use Focused Time Span')
       await user.click(button)
 
-      expect(zustandState.query.changeProjectQuery).toHaveBeenCalledTimes(1)
-      expect(zustandState.query.changeProjectQuery).toHaveBeenCalledWith({
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+      expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
         collection: {
           overrideTemporal: {
             endDate: '2019-01-31T23:59:59.999Z',

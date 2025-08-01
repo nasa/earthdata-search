@@ -24,7 +24,7 @@ const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
   isOpen,
   onToggleOverrideTemporalModal
 }) => {
-  const changeProjectQuery = useEdscStore((state) => state.query.changeProjectQuery)
+  const changeQuery = useEdscStore((state) => state.query.changeQuery)
   const temporalQuery = useEdscStore(getCollectionsQueryTemporal)
   const timelineQuery = useEdscStore((state) => state.timeline.query)
 
@@ -41,7 +41,7 @@ const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
   const onFocusedClick = () => {
     const { end, start } = timelineQuery
 
-    changeProjectQuery({
+    changeQuery({
       collection: {
         overrideTemporal: {
           endDate: !end ? undefined : new Date(end).toISOString(),
@@ -59,7 +59,7 @@ const OverrideTemporalModal: React.FC<OverrideTemporalModalProps> = ({
   const onTemporalClick = () => {
     const { endDate, startDate } = temporalQuery
 
-    changeProjectQuery({
+    changeQuery({
       collection: {
         overrideTemporal: {
           endDate,

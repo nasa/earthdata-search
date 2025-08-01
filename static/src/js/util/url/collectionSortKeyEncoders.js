@@ -3,9 +3,13 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
 
 export const encodeCollectionSortKey = (collectionSortKey, collectionSortPreference) => {
-  if (defaultSortKey === collectionSortKey) return undefined
+  if (collectionSortPreference === 'default' && defaultSortKey === collectionSortKey) {
+    return undefined
+  }
 
-  if (collectionSortPreference === collectionSortKey) return undefined
+  if (collectionSortPreference !== 'default' && collectionSortPreference === collectionSortKey) {
+    return undefined
+  }
 
   return {
     csk: collectionSortKey

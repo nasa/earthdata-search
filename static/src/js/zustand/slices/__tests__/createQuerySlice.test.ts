@@ -35,7 +35,6 @@ describe('createQuerySlice', () => {
       ...initialState,
       changeQuery: expect.any(Function),
       changeGranuleQuery: expect.any(Function),
-      changeProjectQuery: expect.any(Function),
       changeRegionQuery: expect.any(Function),
       clearFilters: expect.any(Function),
       excludeGranule: expect.any(Function),
@@ -369,34 +368,6 @@ describe('createQuerySlice', () => {
     })
   })
 
-  describe('changeProjectQuery', () => {
-    test('updates the collection query and calls getProjectGranules', async () => {
-      useEdscStore.setState((state) => {
-        state.project.getProjectGranules = jest.fn()
-      })
-
-      const zustandState = useEdscStore.getState()
-      const { query } = zustandState
-      const { changeProjectQuery } = query
-      await changeProjectQuery({
-        collection: {
-          keyword: 'test'
-        }
-      })
-
-      const updatedState = useEdscStore.getState()
-      const {
-        project,
-        query: updatedQuery
-      } = updatedState
-
-      expect(updatedQuery.collection.keyword).toEqual('test')
-
-      expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
-      expect(project.getProjectGranules).toHaveBeenCalledWith()
-    })
-  })
-
   describe('changeRegionQuery', () => {
     test('updates the region query and calls getRegions', async () => {
       const zustandState = useEdscStore.getState()
@@ -429,6 +400,7 @@ describe('createQuerySlice', () => {
 
         useEdscStore.setState((state) => {
           state.project.getProjectCollections = jest.fn()
+          state.shapefile.clearShapefile = jest.fn()
           state.timeline.getTimeline = jest.fn()
         })
 
@@ -441,6 +413,7 @@ describe('createQuerySlice', () => {
         const {
           project,
           query: updatedQuery,
+          shapefile,
           timeline
         } = updatedState
 
@@ -454,6 +427,9 @@ describe('createQuerySlice', () => {
 
         expect(actions.getSearchGranules).toHaveBeenCalledTimes(0)
         expect(timeline.getTimeline).toHaveBeenCalledTimes(0)
+
+        expect(shapefile.clearShapefile).toHaveBeenCalledTimes(1)
+        expect(shapefile.clearShapefile).toHaveBeenCalledWith()
       })
     })
 

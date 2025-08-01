@@ -6,10 +6,23 @@ describe('encodeCollectionSortKey', () => {
     test('returns undefined', () => {
       const result = encodeCollectionSortKey(
         collectionSortKeys.scoreDescending,
-        collectionSortKeys.usageDescending
+        'default'
       )
 
       expect(result).toBeUndefined()
+    })
+  })
+
+  describe('when the sort key matches the default but the user preferences is different', () => {
+    test('returns the encoded sort key', () => {
+      const result = encodeCollectionSortKey(
+        collectionSortKeys.scoreDescending,
+        collectionSortKeys.usageDescending
+      )
+
+      expect(result).toEqual({
+        csk: collectionSortKeys.scoreDescending
+      })
     })
   })
 

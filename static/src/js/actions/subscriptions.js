@@ -122,10 +122,10 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
 
   // If collection type get collection params, spatial, temporal, keyword, facets, feature facets, and checkboxes
   if (subscriptionType === 'collection') {
-    subscriptionQuery = getCollectionSubscriptionQueryString(zustandState)
+    subscriptionQuery = getCollectionSubscriptionQueryString()
   } else {
     // If granule type, pull out the granule specific params
-    subscriptionQuery = getGranuleSubscriptionQueryString(zustandState)
+    subscriptionQuery = getGranuleSubscriptionQueryString()
 
     // Retrieve data from Redux using selectors
     const collectionId = getFocusedCollectionId(state)

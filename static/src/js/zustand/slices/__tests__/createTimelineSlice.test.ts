@@ -114,11 +114,6 @@ describe('createTimelineSlice', () => {
             authToken: '',
             focusedCollection: 'collectionId',
             metadata: {},
-            query: {
-              collection: {
-                spatial: {}
-              }
-            },
             router: {
               location: {
                 pathname: ''
@@ -189,11 +184,6 @@ describe('createTimelineSlice', () => {
             authToken: 'mock-token',
             focusedCollection: 'collectionId',
             metadata: {},
-            query: {
-              collection: {
-                spatial: {}
-              }
-            },
             router: {
               location: {
                 pathname: ''
@@ -264,11 +254,6 @@ describe('createTimelineSlice', () => {
             authToken: 'mock-token',
             focusedCollection: '',
             metadata: {},
-            query: {
-              collection: {
-                spatial: {}
-              }
-            },
             router: {
               location: {
                 pathname: ''
@@ -320,11 +305,6 @@ describe('createTimelineSlice', () => {
             authToken: '',
             focusedCollection: 'collectionId',
             metadata: {},
-            query: {
-              collection: {
-                spatial: {}
-              }
-            },
             router: {
               location: {
                 pathname: ''
