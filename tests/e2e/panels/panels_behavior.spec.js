@@ -52,7 +52,7 @@ test.describe('Panel Behavior', () => {
     await page.keyboard.press(']')
 
     // Wait for the animation to complete
-    await page.waitForTimeout(200)
+    await page.waitForSelector('.panels--is-minimized', { state: 'visible' })
 
     await expect(page.locator('.panels--is-open')).toHaveCount(0)
     await expect(page.locator('.panels--is-minimized')).toHaveCount(1)
@@ -60,7 +60,7 @@ test.describe('Panel Behavior', () => {
     await page.keyboard.press(']')
 
     // Wait for the animation to complete
-    await page.waitForTimeout(200)
+    await page.waitForSelector('.panels--is-open', { state: 'visible' })
 
     await expect(page.locator('.panels--is-open')).toHaveCount(1)
     await expect(page.locator('.panels--is-minimized')).toHaveCount(0)
