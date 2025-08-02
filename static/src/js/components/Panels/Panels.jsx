@@ -413,7 +413,7 @@ export class Panels extends PureComponent {
       onPanelClose,
       onPanelOpen
     } = this.props
-
+    console.log('🚀 ~ file: Panels.jsx:416 ~ Panels ~ onPanelOpen:', onPanelOpen)
     const {
       maxWidth,
       minWidth
@@ -432,6 +432,7 @@ export class Panels extends PureComponent {
 
     // Only change the state when the user finishes a drag. Click events
     // will fire this function, but they should not fire the dragend events.
+    console.log('🚀 ~ file: Panels.jsx:437 ~ Panels ~ handleClickIsValid:', this.handleClickIsValid)
     if (!this.handleClickIsValid) {
       const dragEndStateDefaults = {
         dragging: false,
@@ -450,6 +451,7 @@ export class Panels extends PureComponent {
       const finalPanelWidth = Math.min(Math.max(minWidth, newWidth), maxWidth)
       setPanelsWidth(getSidebarWidth() + (panelShouldClose ? 0 : finalPanelWidth))
 
+      console.log('🚀 ~ file: Panels.jsx:455 ~ Panels ~ panelShouldClose:', panelShouldClose)
       if (panelShouldClose) {
         this.setState({
           ...dragEndStateDefaults,

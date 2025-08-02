@@ -1632,7 +1632,7 @@ describe('AccessMethod component', () => {
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
 
-          const { props, user } = setup({
+          const { user } = setup({
             overrideProps: {
               selectedAccessMethod: 'harmony0',
               accessMethods: {

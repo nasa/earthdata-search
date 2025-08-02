@@ -25,7 +25,6 @@ export const mapStateToProps = (state) => ({
   granuleMetadata: getFocusedGranuleMetadata(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granuleQuery: getFocusedCollectionGranuleQuery(state),
-  panels: state.panels,
   isExportRunning: state.ui.export.isExportRunning
 })
 
@@ -44,8 +43,6 @@ export const mapDispatchToProps = (dispatch) => ({
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onToggleAboutCwicModal:
     (state) => dispatch(actions.toggleAboutCwicModal(state)),
-  // OnTogglePanels:
-  //   (value) => dispatch(actions.togglePanels(value)),
   onExport: (format) => dispatch(actions.exportSearch(format))
 })
 
@@ -66,9 +63,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Function} props.onMetricsCollectionSortChange - Callback for collection sort metrics
  * @param {Function} props.onSetActivePanel - Callback to set the active panel
  * @param {Function} props.onToggleAboutCwicModal - Callback to toggle the CWIC modal
- * @param {Function} props.onTogglePanels - Callback to toggle the panels
- * @param {Object} props.panels - Panels state
- * @param {Object} props.preferences - Preferences state
  * @param {Object} props.match - Router match state
  */
 export const SearchPanelsContainer = ({
@@ -99,7 +93,7 @@ export const SearchPanelsContainer = ({
     setActivePanel,
     setIsOpen
   } = useEdscStore((state) => ({
-    panels: state.panels,
+    panels: state.panels.panels,
     setIsOpen: state.panels.setIsOpen,
     setActivePanel: state.panels.setActivePanel
   }))

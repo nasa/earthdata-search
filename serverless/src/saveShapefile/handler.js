@@ -29,6 +29,7 @@ const saveShapefile = async (event, context) => {
     file,
     filename
   } = params
+  console.log('🚀 ~ file: handler.js:32 ~ file:', file)
 
   const earthdataEnvironment = deployedEnvironment()
 

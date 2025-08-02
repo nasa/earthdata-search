@@ -751,13 +751,18 @@ export type UiSlice = {
   }
 }
 
+export type PanelsData = {
+  /** Whether the panels are open */
+  isOpen: boolean
+  /** The currently active panel, e.g., '0.0.0' */
+  activePanel: string
+}
+
 export type PanelsSlice = {
   /** The Panels Slice of the store */
   panels: {
-    /** Whether the panels are open */
-    isOpen: boolean
-    /** The currently active panel, e.g., '0.0.0' */
-    activePanel: string
+    /** The panels data */
+    panels: PanelsData
     /** Function to toggle the panels open/closed */
     setIsOpen: (isOpen: boolean) => void
     /** Function to set the active panel */

@@ -140,6 +140,7 @@ class ProjectPanels extends PureComponent {
     const { onTogglePanels, onUpdateFocusedCollection } = this.props
     onUpdateFocusedCollection('')
     // Close the panel once the user is done
+    debugger
     onTogglePanels(false)
   }
 
@@ -229,6 +230,7 @@ class ProjectPanels extends PureComponent {
   }
 
   onViewDetails(variable, index) {
+    console.log('🚀 ~ file: ProjectPanels.jsx:232 ~ ProjectPanels ~ variable:', variable)
     this.setState({ selectedVariable: variable })
     this.onChangePanel(`0.${index}.2`)
   }
@@ -493,7 +495,12 @@ class ProjectPanels extends PureComponent {
                 className="project-panels__action"
                 label="Done"
                 bootstrapVariant="primary"
-                onClick={() => this.onPanelClose()}
+                onClick={
+                  () => {
+                    console.log('hitting done button')
+                    this.onPanelClose()
+                  }
+                }
                 dataTestId="project-panels-done"
               >
                 Done
