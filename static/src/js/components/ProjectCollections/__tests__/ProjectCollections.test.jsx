@@ -79,6 +79,15 @@ const setup = setupTest({
       getProjectGranules: jest.fn(),
       removeProjectCollection: jest.fn(),
       toggleCollectionVisibility: jest.fn()
+    },
+    panels: {
+      panels: {
+        activePanel: '0.0.0',
+        isOpen: false
+      },
+      setActivePanel: jest.fn(),
+      setIsOpen: jest.fn(),
+      setPanelSection: jest.fn()
     }
   },
   withRedux: true

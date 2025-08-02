@@ -37,7 +37,7 @@ const ProjectCollections = ({
   savedProject
 }) => {
   const {
-    panels,
+    panels: panelsData,
     setActivePanel,
     togglePanels,
     setPanelSection,
@@ -46,7 +46,7 @@ const ProjectCollections = ({
   } = useEdscStore((state) => ({
     collections: state.project.collections,
     isSubmitting: state.project.isSubmitting,
-    panels: state.panels,
+    panels: state.panels.panels,
     setActivePanel: state.panels.setActivePanel,
     togglePanels: state.panels.setIsOpen,
     setPanelSection: state.panels.setPanelSection
@@ -101,7 +101,7 @@ const ProjectCollections = ({
         onUpdateFocusedCollection={onUpdateFocusedCollection}
         onViewCollectionDetails={onViewCollectionDetails}
         onViewCollectionGranules={onViewCollectionGranules}
-        panels={panels}
+        panels={panelsData}
       />
       <div className="project-collections__footer">
         {

@@ -6,8 +6,10 @@ describe('createPanelsSlice', () => {
     const { panels } = zustandState
 
     expect(panels).toEqual({
-      isOpen: true,
-      activePanel: '0.0.0',
+      panels: {
+        isOpen: true,
+        activePanel: '0.0.0'
+      },
       setIsOpen: expect.any(Function),
       setActivePanel: expect.any(Function),
       setPanelGroup: expect.any(Function),
@@ -23,7 +25,7 @@ describe('createPanelsSlice', () => {
       setIsOpen(false)
 
       const updatedState = useEdscStore.getState()
-      expect(updatedState.panels.isOpen).toBe(false)
+      expect(updatedState.panels.panels.isOpen).toBe(false)
     })
   })
 
@@ -35,7 +37,7 @@ describe('createPanelsSlice', () => {
       setActivePanel('1.2.3')
 
       const updatedState = useEdscStore.getState()
-      expect(updatedState.panels.activePanel).toBe('1.2.3')
+      expect(updatedState.panels.panels.activePanel).toBe('1.2.3')
     })
   })
 
@@ -48,7 +50,7 @@ describe('createPanelsSlice', () => {
       setPanelGroup('5')
 
       const updatedState = useEdscStore.getState()
-      expect(updatedState.panels.activePanel).toBe('1.5.3')
+      expect(updatedState.panels.panels.activePanel).toBe('1.5.3')
     })
   })
 
@@ -61,7 +63,7 @@ describe('createPanelsSlice', () => {
       setPanelSection('7')
 
       const updatedState = useEdscStore.getState()
-      expect(updatedState.panels.activePanel).toBe('7.2.3')
+      expect(updatedState.panels.panels.activePanel).toBe('7.2.3')
     })
   })
 })

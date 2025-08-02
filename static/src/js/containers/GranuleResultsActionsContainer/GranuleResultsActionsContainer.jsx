@@ -27,7 +27,6 @@ import {
   getProjectCollectionsIds
 } from '../../zustand/selectors/project'
 
-// TODO This one
 export const mapDispatchToProps = (dispatch) => ({
   onAddProjectCollection:
     (collectionId) => dispatch(actions.addProjectCollection(collectionId)),
