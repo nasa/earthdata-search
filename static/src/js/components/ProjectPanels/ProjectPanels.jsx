@@ -140,7 +140,6 @@ class ProjectPanels extends PureComponent {
     const { onTogglePanels, onUpdateFocusedCollection } = this.props
     onUpdateFocusedCollection('')
     // Close the panel once the user is done
-    debugger
     onTogglePanels(false)
   }
 
