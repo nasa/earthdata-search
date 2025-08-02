@@ -130,7 +130,8 @@ const ProjectCollectionItem = ({
                 onClick={
                   () => {
                     // If the panel is closed open it when user selects a collection in project
-                    // onTogglePanels(true)
+                    // TODO I don't think the toggle panels is needed here
+                    onTogglePanels(true)
                     onUpdateFocusedCollection(collectionId)
                     onSetActivePanelSection('1')
                   }
