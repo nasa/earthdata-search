@@ -22,8 +22,6 @@ const mockOnFocusedCollectionChange = jest.fn
 const mockOnMetricsCollectionSortChange = jest.fn
 const mockOnToggleAboutCSDAModal = jest.fn
 const mockOnToggleAboutCwicModal = jest.fn
-const mockOnTogglePanels = jest.fn
-const mockOnSetActivePanel = jest.fn
 const mockOnExport = jest.fn
 
 const setup = setupTest({
@@ -51,14 +49,8 @@ const setup = setupTest({
     onFocusedCollectionChange: mockOnFocusedCollectionChange,
     onMetricsCollectionSortChange: mockOnMetricsCollectionSortChange,
     onToggleAboutCSDAModal: mockOnToggleAboutCSDAModal,
-    onToggleAboutCwicModal: mockOnToggleAboutCwicModal,
-    onTogglePanels: mockOnTogglePanels,
-    onSetActivePanel: mockOnSetActivePanel,
     onExport: mockOnExport,
-    panels: {
-      activePanel: '0.0.0',
-      isOpen: false
-    }
+    onToggleAboutCwicModal: mockOnToggleAboutCwicModal
   },
   defaultZustandState: {
     preferences: {
@@ -78,6 +70,14 @@ const setup = setupTest({
           rotation: 0
         }
       }
+    },
+    panels: {
+      panels: {
+        activePanel: '0.0.0',
+        isOpen: true
+      },
+      setActivePanel: jest.fn(),
+      setIsOpen: jest.fn()
     }
   }
 })
@@ -133,16 +133,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
-  test('onSetActivePanel calls actions.setActivePanel', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setActivePanel')
-
-    mapDispatchToProps(dispatch).onSetActivePanel('panelId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('panelId')
-  })
-
   test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
@@ -161,16 +151,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(true)
-  })
-
-  test('onTogglePanels calls actions.togglePanels', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'togglePanels')
-
-    mapDispatchToProps(dispatch).onTogglePanels('value')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('value')
   })
 
   test('onExport calls actions.exportSearch', () => {
@@ -221,8 +201,7 @@ describe('mapStateToProps', () => {
       isExportRunning: {
         csv: false,
         json: false
-      },
-      panels: {}
+      }
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -259,13 +238,13 @@ describe('SearchPanelsContainer component', () => {
         onExport: mockOnExport,
         onFocusedCollectionChange: mockOnFocusedCollectionChange,
         onMetricsCollectionSortChange: mockOnMetricsCollectionSortChange,
-        onSetActivePanel: mockOnSetActivePanel,
         onToggleAboutCSDAModal: mockOnToggleAboutCSDAModal,
         onToggleAboutCwicModal: mockOnToggleAboutCwicModal,
-        onTogglePanels: mockOnTogglePanels,
+        onTogglePanels: expect.any(Function),
+        onSetActivePanel: expect.any(Function),
         panels: {
           activePanel: '0.0.0',
-          isOpen: false
+          isOpen: true
         },
         preferences: {
           panelState: 'default',

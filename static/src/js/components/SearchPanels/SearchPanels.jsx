@@ -107,11 +107,13 @@ class SearchPanels extends PureComponent {
 
   onPanelClose() {
     const { onTogglePanels } = this.props
+    console.log('Im collapsing the onPanelClose')
     onTogglePanels(false)
   }
 
   onChangePanel(panelId) {
     const { onSetActivePanel, onTogglePanels } = this.props
+    console.log('Im collapsing the onChangePanel')
     onSetActivePanel(panelId)
     onTogglePanels(true)
   }
@@ -178,7 +180,9 @@ class SearchPanels extends PureComponent {
 
     const {
       pageNum: granulesPageNum = 1,
-      sortKey: activeGranulesSortKey = ''
+      // TODO set this to initial state for the default query if someone navigates straight to granules from the url this can show up as unknown without an empty
+      // value
+      sortKey: activeGranulesSortKey = '-start_date'
     } = granuleQuery
 
     const {

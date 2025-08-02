@@ -8,7 +8,6 @@ import { getColorByIndex } from '../../util/colors'
 
 import ProjectCollectionItem from './ProjectCollectionItem'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-
 import useEdscStore from '../../zustand/useEdscStore'
 
 import './ProjectCollectionsList.scss'
@@ -42,6 +41,7 @@ export const ProjectCollectionsList = (props) => {
   const projectIsEmpty = !projectIds.length
 
   const { activePanel } = panels
+  console.log('🚀 ~ file: ProjectCollectionsList.jsx:49 ~ activePanel:', activePanel)
   const [
     activePanelSection,
     activePanelGroup

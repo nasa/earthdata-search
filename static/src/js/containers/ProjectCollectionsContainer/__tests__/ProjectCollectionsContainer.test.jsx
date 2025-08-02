@@ -57,36 +57,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onSetActivePanel calls actions.setActivePanel', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setActivePanel')
-
-    mapDispatchToProps(dispatch).onSetActivePanel('panelId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('panelId')
-  })
-
-  test('onTogglePanels calls actions.togglePanels', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'togglePanels')
-
-    mapDispatchToProps(dispatch).onTogglePanels(false)
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith(false)
-  })
-
-  test('onSetActivePanelSection calls actions.setActivePanelSection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setActivePanelSection')
-
-    mapDispatchToProps(dispatch).onSetActivePanelSection('sectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('sectionId')
-  })
-
   test('onUpdateProjectName calls actions.updateProjectName', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'updateProjectName')
@@ -153,7 +123,6 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       collectionsQuery: {},
-      panels: {},
       savedProject: {}
     }
 
@@ -169,17 +138,10 @@ describe('ProjectCollectionsContainer component', () => {
     expect(ProjectCollections).toHaveBeenCalledWith({
       collectionsQuery: {},
       onMetricsDataAccess: expect.any(Function),
-      onSetActivePanel: expect.any(Function),
-      onSetActivePanelSection: expect.any(Function),
-      onTogglePanels: expect.any(Function),
       onUpdateFocusedCollection: expect.any(Function),
       onUpdateProjectName: expect.any(Function),
       onViewCollectionDetails: expect.any(Function),
       onViewCollectionGranules: expect.any(Function),
-      panels: {
-        activePanel: '0.0.0',
-        isOpen: false
-      },
       savedProject: {}
     }, {})
   })

@@ -32,8 +32,6 @@ export const mapDispatchToProps = (dispatch) => ({
     (collectionId) => dispatch(actions.addProjectCollection(collectionId)),
   onRemoveCollectionFromProject:
     (collectionId) => dispatch(actions.removeCollectionFromProject(collectionId)),
-  onSetActivePanelSection:
-    (panelId) => dispatch(actions.setActivePanelSection(panelId)),
   onUpdateFocusedCollection:
     (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
   onChangePath:
@@ -63,7 +61,6 @@ export const GranuleResultsActionsContainer = (props) => {
     location,
     onChangePath,
     onMetricsAddCollectionProject,
-    onSetActivePanelSection,
     subscriptions
   } = props
 
@@ -117,7 +114,6 @@ export const GranuleResultsActionsContainer = (props) => {
       location={location}
       onChangePath={onChangePath}
       onMetricsAddCollectionProject={onMetricsAddCollectionProject}
-      onSetActivePanelSection={onSetActivePanelSection}
       projectCollectionIds={projectCollectionIds}
       projectGranuleCount={projectGranuleCount}
       removedGranuleIds={removedGranuleIds}
@@ -143,7 +139,6 @@ GranuleResultsActionsContainer.propTypes = {
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
   subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
 }
 

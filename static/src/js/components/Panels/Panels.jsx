@@ -189,6 +189,7 @@ export class Panels extends PureComponent {
     const { keyboardShortcuts } = this
 
     const togglePanels = () => {
+      console.log('Custom togglePanels only on this component 🧠')
       this.setState({
         show: !show,
         willMinimize: show
@@ -412,7 +413,7 @@ export class Panels extends PureComponent {
       onPanelClose,
       onPanelOpen
     } = this.props
-
+    console.log('🚀 ~ file: Panels.jsx:416 ~ Panels ~ onPanelOpen:', onPanelOpen)
     const {
       maxWidth,
       minWidth
@@ -431,6 +432,7 @@ export class Panels extends PureComponent {
 
     // Only change the state when the user finishes a drag. Click events
     // will fire this function, but they should not fire the dragend events.
+    console.log('🚀 ~ file: Panels.jsx:437 ~ Panels ~ handleClickIsValid:', this.handleClickIsValid)
     if (!this.handleClickIsValid) {
       const dragEndStateDefaults = {
         dragging: false,
@@ -449,6 +451,7 @@ export class Panels extends PureComponent {
       const finalPanelWidth = Math.min(Math.max(minWidth, newWidth), maxWidth)
       setPanelsWidth(getSidebarWidth() + (panelShouldClose ? 0 : finalPanelWidth))
 
+      console.log('🚀 ~ file: Panels.jsx:455 ~ Panels ~ panelShouldClose:', panelShouldClose)
       if (panelShouldClose) {
         this.setState({
           ...dragEndStateDefaults,
@@ -563,6 +566,7 @@ export class Panels extends PureComponent {
     if (!child) return null
 
     const { activePanel } = this.props
+    console.log('🚀 ~ file: Panels.jsx:567 ~ Panels ~ activePanel:', activePanel)
     const [activePanelSectionId = 0, activePanelGroupId = 0, activePanelId = 0] = activePanel.split('.')
     const panelSectionProps = { ...child.props }
     const { children } = panelSectionProps

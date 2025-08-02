@@ -30,22 +30,26 @@ import './ProjectCollections.scss'
 const ProjectCollections = ({
   collectionsQuery,
   onMetricsDataAccess,
-  onSetActivePanel,
-  onSetActivePanelSection,
-  onTogglePanels,
   onUpdateFocusedCollection,
   onUpdateProjectName,
   onViewCollectionDetails,
   onViewCollectionGranules,
-  panels,
   savedProject
 }) => {
   const {
+    panels: panelsData,
+    setActivePanel,
+    togglePanels,
+    setPanelSection,
     collections: projectCollections,
     isSubmitting
   } = useEdscStore((state) => ({
     collections: state.project.collections,
-    isSubmitting: state.project.isSubmitting
+    isSubmitting: state.project.isSubmitting,
+    panels: state.panels.panels,
+    setActivePanel: state.panels.setActivePanel,
+    togglePanels: state.panels.setIsOpen,
+    setPanelSection: state.panels.setPanelSection
   }))
   const { allIds: projectCollectionsIds } = projectCollections
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
@@ -91,13 +95,13 @@ const ProjectCollections = ({
         collectionsMetadata={projectCollectionsMetadata}
         collectionsQuery={collectionsQuery}
         onMetricsDataAccess={onMetricsDataAccess}
-        onSetActivePanel={onSetActivePanel}
-        onSetActivePanelSection={onSetActivePanelSection}
-        onTogglePanels={onTogglePanels}
+        onSetActivePanel={setActivePanel}
+        onSetActivePanelSection={setPanelSection}
+        onTogglePanels={togglePanels}
         onUpdateFocusedCollection={onUpdateFocusedCollection}
         onViewCollectionDetails={onViewCollectionDetails}
         onViewCollectionGranules={onViewCollectionGranules}
-        panels={panels}
+        panels={panelsData}
       />
       <div className="project-collections__footer">
         {
@@ -154,9 +158,6 @@ ProjectCollections.propTypes = {
     byId: PropTypes.shape({})
   }).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,

@@ -692,7 +692,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       // In the event that a collection (or the last granule added for a collection)
       // is removed before this action is concluded, we want to ensure we're not adding
       // unwanted state. If the collection isn't in `allIds` return the current
-      // state effectivly ignoring this abandoned request
+      // state effectievly ignoring this abandoned request
       if (!allIds.includes(collectionId)) return
 
       const collection = byId[collectionId]
