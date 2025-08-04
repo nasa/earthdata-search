@@ -66,25 +66,38 @@ export const updateStore = ({
       deprecatedUrlParams
     }))
 
-    useEdscStore.setState((zustandState) => ({
-      ...zustandState,
-      earthdataEnvironment: {
-        currentEnvironment: earthdataEnvironment
-      },
-      facetParams: {
-        ...zustandState.facetParams,
-        featureFacets,
-        cmrFacets
-      },
-      map: merge({}, zustandState.map, {
-        mapView: merge({}, zustandState.map.mapView, mapView)
-      }),
-      portal,
-      project: merge({}, zustandState.project, project),
-      query: merge({}, zustandState.query, query),
-      shapefile: merge({}, zustandState.shapefile, shapefile),
-      timeline: merge({}, zustandState.timeline, timeline)
-    }))
+    useEdscStore.setState((zustandState) => {
+      // Use merge on the queries to correctly use the initial state as a fallback for `undefined` decoded values
+      const mergedQuery = merge({}, zustandState.query, query)
+
+      return ({
+        ...zustandState,
+        earthdataEnvironment: {
+          currentEnvironment: earthdataEnvironment
+        },
+        facetParams: {
+          ...zustandState.facetParams,
+          featureFacets,
+          cmrFacets
+        },
+        map: merge({}, zustandState.map, {
+          mapView: merge({}, zustandState.map.mapView, mapView)
+        }),
+        portal,
+        project: merge({}, zustandState.project, project),
+        query: {
+          ...mergedQuery,
+          collection: {
+            ...mergedQuery.collection,
+            // If `hasGranulesOrCwic` is `undefined` from the decoded values it needs to stay `undefined` in the
+            // store, not fallback to the initial state
+            hasGranulesOrCwic: query.collection.hasGranulesOrCwic
+          }
+        },
+        shapefile: merge({}, zustandState.shapefile, shapefile),
+        timeline: merge({}, zustandState.timeline, timeline)
+      })
+    })
   } else {
     // We always need to load the portal config
     useEdscStore.setState((zustandState) => ({

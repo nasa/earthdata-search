@@ -115,7 +115,6 @@ describe('updateStore', () => {
       ...initialState.query,
       collection: {
         byId: {},
-        hasGranulesOrCwic: true,
         keyword: '',
         overrideTemporal: {},
         pageNum: 1,
@@ -256,7 +255,6 @@ describe('updateStore', () => {
         ...initialState.query,
         collection: {
           byId: {},
-          hasGranulesOrCwic: true,
           keyword: '',
           overrideTemporal: {},
           pageNum: 1,
@@ -442,7 +440,6 @@ describe('updateStore', () => {
         ...initialState.query,
         collection: {
           byId: {},
-          hasGranulesOrCwic: true,
           keyword: '',
           overrideTemporal: {},
           pageNum: 1,
