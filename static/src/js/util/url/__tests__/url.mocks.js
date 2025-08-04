@@ -37,7 +37,7 @@ export const emptyDecodedResult = {
         point: [],
         polygon: []
       },
-      sortKey: '-score',
+      sortKey: undefined,
       tagKey: undefined,
       temporal: {},
       hasGranulesOrCwic: true

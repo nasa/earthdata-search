@@ -73,6 +73,14 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
 
       const decoded = jwt.decode(jwtToken) as JwtTokenPayload
       const { preferences = {} } = decoded
+      const { collectionSort } = preferences
+
+      // If the collection sort is not default, set the value in the query slice.
+      if (collectionSort && collectionSort !== 'default') {
+        set((state) => {
+          state.query.collection.sortKey = collectionSort
+        })
+      }
 
       // TODO Remove in EDSC-4443 - Legacy layer migration
       if (preferences.mapView) {

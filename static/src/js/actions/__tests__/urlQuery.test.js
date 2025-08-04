@@ -114,9 +114,13 @@ describe('updateStore', () => {
     expect(query).toEqual({
       ...initialState.query,
       collection: {
+        byId: {},
+        hasGranulesOrCwic: true,
+        keyword: '',
         overrideTemporal: {},
         pageNum: 1,
-        spatial: {},
+        sortKey: collectionSortKeys.scoreDescending,
+        spatial: initialState.query.collection.spatial,
         temporal: {}
       }
     })
@@ -251,9 +255,13 @@ describe('updateStore', () => {
       expect(query).toEqual({
         ...initialState.query,
         collection: {
+          byId: {},
+          hasGranulesOrCwic: true,
+          keyword: '',
           overrideTemporal: {},
           pageNum: 1,
-          spatial: {},
+          sortKey: collectionSortKeys.scoreDescending,
+          spatial: initialState.query.collection.spatial,
           temporal: {}
         }
       })
@@ -433,9 +441,13 @@ describe('updateStore', () => {
       expect(query).toEqual({
         ...initialState.query,
         collection: {
+          byId: {},
+          hasGranulesOrCwic: true,
+          keyword: '',
           overrideTemporal: {},
           pageNum: 1,
-          spatial: {},
+          sortKey: collectionSortKeys.scoreDescending,
+          spatial: initialState.query.collection.spatial,
           temporal: {}
         }
       })
@@ -543,7 +555,6 @@ describe('changePath', () => {
               overrideTemporal: {},
               pageNum: 1,
               spatial: initialQueryState.collection.spatial,
-              sortKey: collectionSortKeys.scoreDescending,
               temporal: {}
             }
           },
@@ -620,7 +631,6 @@ describe('changePath', () => {
           overrideTemporal: {},
           pageNum: 1,
           spatial: initialQueryState.collection.spatial,
-          sortKey: collectionSortKeys.scoreDescending,
           temporal: {}
         }
       },

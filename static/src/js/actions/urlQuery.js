@@ -1,5 +1,4 @@
-/* eslint-disable import/no-dynamic-require, global-require */
-
+import { merge } from 'lodash-es'
 import { replace, push } from 'connected-react-router'
 import { parse, stringify } from 'qs'
 
@@ -77,30 +76,14 @@ export const updateStore = ({
         featureFacets,
         cmrFacets
       },
-      map: {
-        ...zustandState.map,
-        mapView: {
-          ...zustandState.map.mapView,
-          ...mapView
-        }
-      },
+      map: merge({}, zustandState.map, {
+        mapView: merge({}, zustandState.map.mapView, mapView)
+      }),
       portal,
-      project: {
-        ...zustandState.project,
-        ...project
-      },
-      query: {
-        ...zustandState.query,
-        ...query
-      },
-      shapefile: {
-        ...zustandState.shapefile,
-        ...shapefile
-      },
-      timeline: {
-        ...zustandState.timeline,
-        ...timeline
-      }
+      project: merge({}, zustandState.project, project),
+      query: merge({}, zustandState.query, query),
+      shapefile: merge({}, zustandState.shapefile, shapefile),
+      timeline: merge({}, zustandState.timeline, timeline)
     }))
   } else {
     // We always need to load the portal config

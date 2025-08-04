@@ -21,5 +21,5 @@ export const decodeCollectionSortKey = (params) => {
     csk
   } = params
 
-  return csk || defaultSortKey
+  return csk
 }

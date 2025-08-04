@@ -66,7 +66,7 @@ describe('decodeCollectionSortKey', () => {
     test('returns the default sort key', () => {
       const params = {}
 
-      expect(decodeCollectionSortKey(params)).toEqual(collectionSortKeys.scoreDescending)
+      expect(decodeCollectionSortKey(params)).toEqual(undefined)
     })
   })
 })

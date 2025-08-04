@@ -457,12 +457,17 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     const { preferences: preferencesValues } = preferences
     const { granuleSort: granuleSortPreference } = preferencesValues
     const { changeGranuleQuery } = query
+
+    const granuleQuery = {}
+
     if (granuleSortPreference !== 'default') {
-      changeGranuleQuery({
-        collectionId,
-        query: { sortKey: granuleSortPreference }
-      })
+      granuleQuery.sortKey = granuleSortPreference
     }
+
+    changeGranuleQuery({
+      collectionId,
+      query: granuleQuery
+    })
 
     // Initialize a nested search results element in Redux for the new focused collection
     dispatch(actions.initializeCollectionGranulesResults(collectionId))

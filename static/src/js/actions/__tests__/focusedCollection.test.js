@@ -878,7 +878,11 @@ describe('changeFocusedCollection', () => {
       expect(getTimelineMock).toHaveBeenCalledTimes(1)
       expect(getTimelineMock).toHaveBeenCalledWith()
 
-      expect(changeGranuleQueryMock).toHaveBeenCalledTimes(0)
+      expect(changeGranuleQueryMock).toHaveBeenCalledTimes(1)
+      expect(changeGranuleQueryMock).toHaveBeenCalledWith({
+        collectionId: 'C1000000000-EDSC',
+        query: {}
+      })
     })
   })
 
