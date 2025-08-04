@@ -23,7 +23,8 @@ describe('url#decodeUrlParams', () => {
           byId: {
             collectionId: {
               granules: {
-                pageNum: 1
+                pageNum: 1,
+                sortKey: '-start_date'
               }
             }
           }

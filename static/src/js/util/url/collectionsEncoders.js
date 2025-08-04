@@ -446,6 +446,14 @@ export const decodeCollections = (params) => {
   const ids = projectExists ? projectCollectionIds : [focusedCollection]
 
   ids.forEach((collectionId, index) => {
+    // Default a collection granule query for each collectionId
+    collectionGranuleQueryById[collectionId] = {
+      granules: {
+        pageNum: 1,
+        sortKey: '-start_date'
+      }
+    }
+
     // Compensate for the fact that we've already pulled
     // off the first element above to determine the focused collection
     const collectionListIndex = index + (projectExists ? 1 : 0)

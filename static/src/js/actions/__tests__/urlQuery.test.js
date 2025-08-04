@@ -620,7 +620,8 @@ describe('changePath', () => {
           byId: {
             'C00001-EDSC': {
               granules: {
-                pageNum: 1
+                pageNum: 1,
+                sortKey: '-start_date'
               }
             }
           },
