@@ -8,6 +8,7 @@ import mapLayers from '../../../constants/mapLayers'
 import projectionCodes from '../../../constants/projectionCodes'
 
 import useEdscStore from '../../useEdscStore'
+import { PreferencesData } from '../../types'
 
 jest.mock('../../../store/configureStore')
 
@@ -44,7 +45,7 @@ describe('getMapPreferences', () => {
         baseLayer: mapLayers.worldImagery,
         overlayLayers: [mapLayers.bordersRoads],
         rotation: 0
-      }
+      } as PreferencesData['mapView']
     })
 
     expect(getMapPreferences(useEdscStore.getState())).toEqual({

@@ -186,17 +186,24 @@ export type MapSlice = {
   }
 }
 
+export type PanelState = 'default' | 'collapsed' | 'open' | 'fullWidth'
+export type ListView = 'default' | 'list' | 'table'
+export type CollectionSort = 'default' | '-score' | '-usage_score' | '-create-data-date' | 'start_date' | '-ongoing'
+export type GranuleSort = 'default' | '-start_date' | 'start_date' | '-end_date' | 'end_date'
+export type BaseLayer = 'worldImagery' | 'trueColor' | 'landWaterMap'
+export type OverlayLayer = 'bordersRoads' | 'coastlines' | 'placeLabels'
+
 export type PreferencesData = {
   /** The state of the panels */
-  panelState: string
+  panelState: PanelState
   /** The view mode for collection lists */
-  collectionListView: string
+  collectionListView: ListView
   /** The view mode for granule lists */
-  granuleListView: string
+  granuleListView: ListView
   /** The sort preference for collections */
-  collectionSort: string
+  collectionSort: CollectionSort
   /** The sort preference for granules */
-  granuleSort: string
+  granuleSort: GranuleSort
   /** The map view preferences */
   mapView: {
     /** The zoom level of the map */
@@ -204,13 +211,13 @@ export type PreferencesData = {
     /** The latitude center of the map */
     latitude: number
     /** The base layer identifier for the map */
-    baseLayer: string
+    baseLayer: BaseLayer
     /** The longitude center of the map */
     longitude: number
     /** The projection code for the map */
-    projection: string
+    projection: ProjectionCode
     /** Array of overlay layer identifiers */
-    overlayLayers: string[]
+    overlayLayers: OverlayLayer[]
     /** The rotation of the map in degrees */
     rotation: number
   }
@@ -225,8 +232,6 @@ export type PreferencesSlice = {
     isSubmitting: boolean
     /** Flag indicating if preferences have been submitted */
     isSubmitted: boolean
-    /** Function to set preferences */
-    setPreferences: (preferences: Partial<PreferencesData>) => void
     /** Function to set preferences from JWT token */
     setPreferencesFromJwt: (jwtToken: string) => void
     /** Function to submit preference form data and save to the server */
