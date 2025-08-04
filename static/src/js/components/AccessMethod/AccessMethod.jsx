@@ -638,7 +638,7 @@ const AccessMethod = ({
   } = temporal
 
   const hasNonBoundingBoxSpatial = spatial
-    && (spatial.polygon || spatial.point || spatial.line || spatial.circle)
+    && ([].concat(spatial.polygon, spatial.point, spatial.line, spatial.circle).length > 0)
 
   const harmonyMbrWarning = useMemo(() => {
     let warning

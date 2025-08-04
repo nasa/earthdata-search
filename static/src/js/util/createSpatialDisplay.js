@@ -63,57 +63,53 @@ export const createSpatialDisplay = (spatial, usingMbr = false) => {
     polygon
   } = spatial
 
-  const selectedShape = boundingBox || circle || line || point || polygon
+  if (boundingBox && boundingBox.length > 0) {
+    const splitStr = transformBoundingBoxCoordinates(boundingBox[0])
 
-  if (selectedShape) {
-    if (boundingBox) {
-      const splitStr = transformBoundingBoxCoordinates(selectedShape[0])
+    return `SW: (${splitStr[0]}) NE: (${splitStr[1]})`
+  }
 
-      return `SW: (${splitStr[0]}) NE: (${splitStr[1]})`
-    }
+  if (usingMbr) {
+    const {
+      swLat,
+      swLng,
+      neLat,
+      neLng
+    } = mbr({
+      boundingBox: boundingBox && boundingBox[0],
+      circle: circle && circle[0],
+      line: line && line[0],
+      point: point && point[0],
+      polygon: polygon && polygon[0]
+    }, {
+      precision: defaultSpatialDecimalSize
+    })
 
-    if (usingMbr) {
-      const {
-        swLat,
-        swLng,
-        neLat,
-        neLng
-      } = mbr({
-        boundingBox: boundingBox && boundingBox[0],
-        circle: circle && circle[0],
-        line: line && line[0],
-        point: point && point[0],
-        polygon: polygon && polygon[0]
-      }, {
-        precision: defaultSpatialDecimalSize
-      })
+    return `SW: (${swLat}, ${swLng}) NE: (${neLat}, ${neLng})`
+  }
 
-      return `SW: (${swLat}, ${swLng}) NE: (${neLat}, ${neLng})`
-    }
+  if (circle && circle.length > 0) {
+    const splitStr = transformCircleCoordinates(circle[0])
 
-    if (circle) {
-      const splitStr = transformCircleCoordinates(selectedShape[0])
+    return `Center: (${splitStr[0]}) Radius (m): ${splitStr[1]})`
+  }
 
-      return `Center: (${splitStr[0]}) Radius (m): ${splitStr[1]})`
-    }
+  if (point && point.length > 0) {
+    return `Point: (${transformSingleCoordinate(point[0])})`
+  }
 
-    if (point) {
-      return `Point: (${transformSingleCoordinate(selectedShape[0])})`
-    }
+  if (line && line.length > 0) {
+    const splitStr = transformBoundingBoxCoordinates(line[0])
 
-    if (line) {
-      const splitStr = transformBoundingBoxCoordinates(selectedShape[0])
+    return `Start: (${splitStr[0]}) End: (${splitStr[1]})`
+  }
 
-      return `Start: (${splitStr[0]}) End: (${splitStr[1]})`
-    }
+  if (polygon && polygon.length > 0) {
+    const splitStr = polygon[0].split(',')
+    const pointArray = splitStr.length
+    const pointCount = (pointArray / 2) - 1
 
-    if (polygon) {
-      const splitStr = selectedShape[0].split(',')
-      const pointArray = splitStr.length
-      const pointCount = (pointArray / 2) - 1
-
-      return `${pointCount} Points`
-    }
+    return `${pointCount} Points`
   }
 
   return ''
