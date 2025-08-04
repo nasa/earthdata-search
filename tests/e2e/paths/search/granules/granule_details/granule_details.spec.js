@@ -57,7 +57,7 @@ test.describe('Path /search/granules/granule-details', () => {
 
     await page.route(/granules.json/, (route) => {
       // Check that the request bodies match up
-      expect(route.request().postData()).toEqual('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+      expect(route.request().postData()).toEqual('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date')
 
       route.fulfill({
         json: granulesBody,
