@@ -1,32 +1,5 @@
-import {
-  buildCollectionSearchParams,
-  prepareCollectionParams,
-  translateDefaultCollectionSortKey
-} from '../collections'
-import { collectionSortKeys } from '../../constants/collectionSortKeys'
-import * as getApplicationConfig from '../../../../../sharedUtils/config'
+import { buildCollectionSearchParams, prepareCollectionParams } from '../collections'
 import useEdscStore from '../../zustand/useEdscStore'
-
-describe('#translateDefaultCollectionSortKey', () => {
-  beforeEach(() => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-      collectionSearchResultsSortKey: collectionSortKeys.usageDescending
-    }))
-  })
-
-  test('returns default value of collectionSortKeys.usageDescending when sortKey is set to default', () => {
-    expect(translateDefaultCollectionSortKey('default')).toEqual(collectionSortKeys.usageDescending)
-  })
-
-  test('returns default value of collectionSortKeys.usageDescending when sortKey undefined', () => {
-    expect(translateDefaultCollectionSortKey(undefined)).toEqual(collectionSortKeys.usageDescending)
-  })
-
-  test('returns the sortKey as is when it is not set to default', () => {
-    const { scoreDescending } = collectionSortKeys
-    expect(translateDefaultCollectionSortKey(scoreDescending)).toEqual(scoreDescending)
-  })
-})
 
 describe('#prepareCollectionParams', () => {
   describe('when the customize facet is selected', () => {
@@ -48,58 +21,6 @@ describe('#prepareCollectionParams', () => {
             'opendap',
             'harmony'
           ]
-        })
-      )
-    })
-  })
-
-  describe('when paramCollectionSortKey is populated', () => {
-    test('includes the correct SortKey', () => {
-      const params = prepareCollectionParams({
-        query: {
-          collection: {
-            paramCollectionSortKey: collectionSortKeys.startDateAscending
-          }
-        }
-      })
-
-      expect(params).toEqual(
-        expect.objectContaining({
-          sortKey: [collectionSortKeys.startDateAscending]
-        })
-      )
-    })
-  })
-
-  describe('when paramCollectionSortKey is not populated', () => {
-    test('includes the User Preferences Sort Key', () => {
-      const params = prepareCollectionParams({
-        preferences: {
-          preferences: {
-            collectionSort: collectionSortKeys.endDateDescending
-          }
-        }
-      })
-
-      expect(params).toEqual(
-        expect.objectContaining({
-          sortKey: [collectionSortKeys.endDateDescending]
-        })
-      )
-    })
-  })
-
-  describe('when paramCollectionSortKey and preferences is not populated', () => {
-    test('includes the Default Sort Key', () => {
-      jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-        collectionSearchResultsSortKey: collectionSortKeys.usageDescending
-      }))
-
-      const params = prepareCollectionParams({})
-
-      expect(params).toEqual(
-        expect.objectContaining({
-          sortKey: [collectionSortKeys.usageDescending]
         })
       )
     })

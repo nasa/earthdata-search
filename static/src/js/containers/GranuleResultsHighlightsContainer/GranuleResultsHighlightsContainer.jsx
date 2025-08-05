@@ -1,10 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import { min } from 'lodash-es'
 
-import { getCollectionsQuery } from '../../selectors/query'
 import {
   getFocusedCollectionGranuleMetadata,
   getFocusedCollectionGranuleResults
@@ -12,12 +10,13 @@ import {
 import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getGranuleIds } from '../../util/getGranuleIds'
-import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
+import { getCollectionsQuery } from '../../zustand/selectors/query'
+import useEdscStore from '../../zustand/useEdscStore'
+
 export const mapStateToProps = (state) => ({
-  collectionsQuery: getCollectionsQuery(state),
   focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state),
   focusedCollectionGranuleSearch: getFocusedCollectionGranuleResults(state),
   focusedCollectionId: getFocusedCollectionId(state),
@@ -25,17 +24,16 @@ export const mapStateToProps = (state) => ({
 })
 
 export const GranuleResultsHighlightsContainer = ({
-  collectionsQuery,
   focusedCollectionGranuleSearch,
   focusedCollectionGranuleMetadata,
   focusedCollectionId,
-  focusedCollectionMetadata,
-  location
+  focusedCollectionMetadata
 }) => {
   const {
     isOpenSearch
   } = focusedCollectionMetadata
 
+  const collectionsQuery = useEdscStore(getCollectionsQuery)
   const { [focusedCollectionId]: collectionQueryResults = {} } = collectionsQuery
   const { granules: collectionGranuleQuery = {} } = collectionQueryResults
   const { excludedGranuleIds = [] } = collectionGranuleQuery
@@ -70,14 +68,12 @@ export const GranuleResultsHighlightsContainer = ({
       granules={granuleList}
       isLoaded={isLoaded}
       isLoading={isLoading}
-      location={location}
       visibleGranules={visibleGranules}
     />
   )
 }
 
 GranuleResultsHighlightsContainer.propTypes = {
-  collectionsQuery: PropTypes.shape({}).isRequired,
   focusedCollectionGranuleMetadata: PropTypes.shape({}).isRequired,
   focusedCollectionGranuleSearch: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),
@@ -88,10 +84,7 @@ GranuleResultsHighlightsContainer.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionMetadata: PropTypes.shape({
     isOpenSearch: PropTypes.bool
-  }).isRequired,
-  location: locationPropType.isRequired
+  }).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps)(GranuleResultsHighlightsContainer)
-)
+export default connect(mapStateToProps)(GranuleResultsHighlightsContainer)

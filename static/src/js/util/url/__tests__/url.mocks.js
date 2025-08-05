@@ -31,12 +31,13 @@ export const emptyDecodedResult = {
       onlyEosdisCollections: undefined,
       overrideTemporal: {},
       spatial: {
-        boundingBox: undefined,
-        circle: undefined,
-        line: undefined,
-        point: undefined,
-        polygon: undefined
+        boundingBox: [],
+        circle: [],
+        line: [],
+        point: [],
+        polygon: []
       },
+      sortKey: undefined,
       tagKey: undefined,
       temporal: {},
       hasGranulesOrCwic: true

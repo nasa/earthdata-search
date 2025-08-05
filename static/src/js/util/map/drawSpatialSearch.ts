@@ -116,7 +116,7 @@ const drawSpatialSearch = ({
   }
 
   // Draw a polygon for the bounding box search
-  if (boundingBoxSearch) {
+  if (boundingBoxSearch && boundingBoxSearch[0]) {
     const [swLon, swLat, neLon, neLat] = boundingBoxSearch[0].split(',').map(Number)
 
     const polygonCoordinates = [
@@ -156,7 +156,7 @@ const drawSpatialSearch = ({
   }
 
   // Draw a circular polygon for the circle search
-  if (circleSearch) {
+  if (circleSearch && circleSearch[0]) {
     const [lon, lat, radiusInMeters] = circleSearch[0].split(',').map(Number)
 
     // Create the circular polygon. 64 is the number of points in the circle
@@ -175,7 +175,7 @@ const drawSpatialSearch = ({
   }
 
   // Draw a point for the point search
-  if (pointSearch) {
+  if (pointSearch && pointSearch[0]) {
     const point = new Point(pointSearch[0].split(',').map(Number))
 
     let pointInProjection = point
@@ -199,7 +199,7 @@ const drawSpatialSearch = ({
   }
 
   // Draw a polygon for the polygon search
-  if (polygonSearch) {
+  if (polygonSearch && polygonSearch[0]) {
     const [polygonCoordinates = ''] = polygonSearch
     const coordinates: Coordinate[] = polygonCoordinates.split(',').reduce((acc: Coordinate[], coord: string, polygonsIndex: number) => {
       if (polygonsIndex % 2 === 0) {

@@ -4,7 +4,10 @@ import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig, getEarthdataConfig } from '../../../../sharedUtils/config'
 import { withAdvancedSearch } from './withAdvancedSearch'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
+
 import useEdscStore from '../zustand/useEdscStore'
+import { getCollectionsQuery } from '../zustand/selectors/query'
+import { pruneSpatial } from './pruneSpatial'
 
 /**
  * Populate granule payload used to update the store
@@ -58,13 +61,10 @@ export const populateGranuleResults = ({
  */
 export const extractGranuleSearchParams = (state, collectionId) => {
   const {
-    advancedSearch = {},
-    query = {}
+    advancedSearch = {}
   } = state
 
-  const {
-    collection: collectionsQuery
-  } = query
+  const collectionsQuery = getCollectionsQuery(useEdscStore.getState())
 
   const {
     byId: collectionQueryById = {},
@@ -79,7 +79,7 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     point,
     polygon,
     line
-  } = spatial
+  } = pruneSpatial(spatial)
 
   const { [collectionId]: collectionQuery = {} } = collectionQueryById
   const { granules: collectionGranuleQuery = {} } = collectionQuery

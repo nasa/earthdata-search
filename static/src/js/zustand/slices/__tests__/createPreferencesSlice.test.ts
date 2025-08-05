@@ -1,17 +1,23 @@
 // @ts-expect-error The file does not have types
 import jwt from 'jsonwebtoken'
 
+import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import projectionCodes from '../../../constants/projectionCodes'
 import mapLayers from '../../../constants/mapLayers'
+
 import useEdscStore from '../../useEdscStore'
 import { initialState } from '../createPreferencesSlice'
-// @ts-expect-error The file does not have types
-import configureStore from '../../../store/configureStore'
-import PreferencesRequest from '../../../util/request/preferencesRequest'
-// @ts-expect-error The file does not have types
-import actions from '../../../actions'
+
+import type { PreferencesData } from '../../types'
+
 // @ts-expect-error The file does not have types
 import { addToast } from '../../../util/addToast'
+import PreferencesRequest from '../../../util/request/preferencesRequest'
+
+// @ts-expect-error The file does not have types
+import configureStore from '../../../store/configureStore'
+// @ts-expect-error The file does not have types
+import actions from '../../../actions'
 
 jest.mock('jsonwebtoken')
 jest.mock('../../../store/configureStore')
@@ -32,123 +38,8 @@ describe('createPreferencesSlice', () => {
 
     expect(preferences).toEqual({
       ...initialState,
-      setPreferences: expect.any(Function),
       setPreferencesFromJwt: expect.any(Function),
       submitAndUpdatePreferences: expect.any(Function)
-    })
-  })
-
-  test('mapView preferences have correct initial structure', () => {
-    const { mapView } = useEdscStore.getState().preferences.preferences
-
-    expect(mapView).toEqual({
-      zoom: 3,
-      latitude: 0,
-      baseLayer: mapLayers.worldImagery,
-      longitude: 0,
-      projection: projectionCodes.geographic,
-      overlayLayers: [
-        mapLayers.bordersRoads,
-        mapLayers.placeLabels
-      ],
-      rotation: 0
-    })
-  })
-
-  describe('setPreferences', () => {
-    test('updates preferences by merging with existing preferences', () => {
-      const { setPreferences } = useEdscStore.getState().preferences
-      const initialPreferences = useEdscStore.getState().preferences.preferences
-
-      const newPreferences = {
-        panelState: 'collapsed',
-        collectionSort: '-score'
-      }
-
-      setPreferences(newPreferences)
-
-      const updatedPreferences = useEdscStore.getState().preferences.preferences
-      expect(updatedPreferences.panelState).toBe('collapsed')
-      expect(updatedPreferences.collectionSort).toBe('-score')
-      expect(updatedPreferences.collectionListView).toBe(initialPreferences.collectionListView)
-      expect(updatedPreferences.granuleListView).toBe(initialPreferences.granuleListView)
-      expect(updatedPreferences.granuleSort).toBe(initialPreferences.granuleSort)
-      expect(updatedPreferences.mapView).toEqual(initialPreferences.mapView)
-    })
-
-    test('updates mapView preferences by replacing the entire object', () => {
-      const { setPreferences } = useEdscStore.getState().preferences
-      const initialMapView = useEdscStore.getState().preferences.preferences.mapView
-
-      const newMapViewPreferences = {
-        mapView: {
-          ...initialMapView,
-          zoom: 5,
-          latitude: 45,
-          longitude: -95
-        }
-      }
-
-      setPreferences(newMapViewPreferences)
-
-      const updatedPreferences = useEdscStore.getState().preferences.preferences
-      expect(updatedPreferences.mapView.zoom).toBe(5)
-      expect(updatedPreferences.mapView.latitude).toBe(45)
-      expect(updatedPreferences.mapView.longitude).toBe(-95)
-      expect(updatedPreferences.mapView.baseLayer).toBe(initialMapView.baseLayer)
-      expect(updatedPreferences.mapView.projection).toBe(initialMapView.projection)
-      expect(updatedPreferences.mapView.overlayLayers).toEqual(initialMapView.overlayLayers)
-      expect(updatedPreferences.mapView.rotation).toBe(initialMapView.rotation)
-    })
-
-    test('completely replaces mapView when provided', () => {
-      const { setPreferences } = useEdscStore.getState().preferences
-
-      const newMapView = {
-        zoom: 8,
-        latitude: 30,
-        longitude: -120,
-        baseLayer: mapLayers.trueColor,
-        projection: projectionCodes.arctic,
-        overlayLayers: [mapLayers.coastlines],
-        rotation: 45
-      }
-
-      setPreferences({ mapView: newMapView })
-
-      const updatedPreferences = useEdscStore.getState().preferences.preferences
-      expect(updatedPreferences.mapView).toEqual(newMapView)
-    })
-
-    test('updates multiple preference categories at once', () => {
-      const { setPreferences } = useEdscStore.getState().preferences
-
-      const newPreferences = {
-        panelState: 'collapsed',
-        collectionSort: '-score',
-        granuleSort: '-start_date',
-        collectionListView: 'list',
-        granuleListView: 'table',
-        mapView: {
-          zoom: 6,
-          latitude: 40,
-          longitude: -110,
-          baseLayer: mapLayers.landWaterMap,
-          projection: projectionCodes.antarctic,
-          overlayLayers: [mapLayers.bordersRoads, mapLayers.coastlines],
-          rotation: 90
-        }
-      }
-
-      setPreferences(newPreferences)
-
-      const updatedPreferences = useEdscStore.getState().preferences.preferences
-      expect(updatedPreferences.panelState).toBe('collapsed')
-      expect(updatedPreferences.collectionSort).toBe('-score')
-      expect(updatedPreferences.granuleSort).toBe('-start_date')
-      expect(updatedPreferences.collectionListView).toBe('list')
-      expect(updatedPreferences.granuleListView).toBe('table')
-      expect(updatedPreferences.mapView).toEqual(newPreferences.mapView)
     })
   })
 
@@ -166,8 +57,8 @@ describe('createPreferencesSlice', () => {
     test('updates preferences from valid JWT token', () => {
       const mockDecodedToken = {
         preferences: {
-          panelState: 'jwt-panel',
-          collectionListView: 'jwt-view',
+          panelState: 'open',
+          collectionListView: 'list',
           mapView: {
             zoom: 10,
             latitude: 50,
@@ -185,8 +76,8 @@ describe('createPreferencesSlice', () => {
       setPreferencesFromJwt('valid-jwt-token')
 
       const updatedPreferences = useEdscStore.getState().preferences.preferences
-      expect(updatedPreferences.panelState).toBe('jwt-panel')
-      expect(updatedPreferences.collectionListView).toBe('jwt-view')
+      expect(updatedPreferences.panelState).toBe('open')
+      expect(updatedPreferences.collectionListView).toBe('list')
       expect(updatedPreferences.mapView.zoom).toBe(10)
       expect(updatedPreferences.mapView.latitude).toBe(50)
       expect(updatedPreferences.mapView.longitude).toBe(-100)
@@ -216,6 +107,33 @@ describe('createPreferencesSlice', () => {
         mapLayers.bordersRoads,
         mapLayers.placeLabels
       ])
+    })
+
+    describe('when the collectionSort value has been set', () => {
+      test('sets the query value correctly', () => {
+        const mockDecodedToken = {
+          preferences: {
+            panelState: 'open',
+            collectionListView: 'list',
+            collectionSort: collectionSortKeys.recentVersion,
+            mapView: {
+              zoom: 10,
+              latitude: 50,
+              longitude: -100,
+              baseLayer: mapLayers.trueColor,
+              overlayLayers: [mapLayers.coastlines]
+            }
+          }
+        }
+
+        mockJwt.decode.mockReturnValue(mockDecodedToken)
+        const { setPreferencesFromJwt } = useEdscStore.getState().preferences
+
+        setPreferencesFromJwt('valid-jwt-token')
+
+        const { sortKey } = useEdscStore.getState().query.collection
+        expect(sortKey).toBe(collectionSortKeys.recentVersion)
+      })
     })
   })
 
@@ -291,7 +209,7 @@ describe('createPreferencesSlice', () => {
 
       expect(initialPreferencesState.isSubmitting).toBe(false)
 
-      await submitAndUpdatePreferences({ formData: mockPreferencesData })
+      await submitAndUpdatePreferences({ formData: mockPreferencesData as PreferencesData })
 
       const finalState = useEdscStore.getState().preferences
 
@@ -347,7 +265,9 @@ describe('createPreferencesSlice', () => {
 
       const { submitAndUpdatePreferences } = useEdscStore.getState().preferences
 
-      const submitPromise = submitAndUpdatePreferences({ formData: mockPreferencesData })
+      const submitPromise = submitAndUpdatePreferences({
+        formData: mockPreferencesData as PreferencesData
+      })
 
       const stateWhileSubmitting = useEdscStore.getState().preferences
       expect(stateWhileSubmitting.isSubmitting).toBe(true)
@@ -388,7 +308,7 @@ describe('createPreferencesSlice', () => {
 
       const { submitAndUpdatePreferences } = useEdscStore.getState().preferences
 
-      await submitAndUpdatePreferences({ formData: mockPreferencesData })
+      await submitAndUpdatePreferences({ formData: mockPreferencesData as PreferencesData })
 
       const finalState = useEdscStore.getState().preferences
       expect(finalState.isSubmitting).toBe(false)
@@ -433,8 +353,12 @@ describe('createPreferencesSlice', () => {
         }
       }
 
-      const { setPreferences } = useEdscStore.getState().preferences
-      setPreferences(existingPreferences)
+      useEdscStore.setState((state) => ({
+        preferences: {
+          ...state.preferences,
+          ...existingPreferences
+        }
+      }))
 
       mockGetState.mockReturnValue({
         authToken: mockAuthToken,
@@ -448,7 +372,7 @@ describe('createPreferencesSlice', () => {
 
       const { submitAndUpdatePreferences } = useEdscStore.getState().preferences
 
-      await submitAndUpdatePreferences({ formData: mockPreferencesData })
+      await submitAndUpdatePreferences({ formData: mockPreferencesData as PreferencesData })
 
       const finalState = useEdscStore.getState().preferences
       expect(finalState.preferences.panelState).toBe('collapsed')
@@ -492,7 +416,7 @@ describe('createPreferencesSlice', () => {
 
       const { submitAndUpdatePreferences } = useEdscStore.getState().preferences
 
-      await submitAndUpdatePreferences({ formData: mockPreferencesData })
+      await submitAndUpdatePreferences({ formData: mockPreferencesData as PreferencesData })
 
       const finalState = useEdscStore.getState().preferences
       expect(finalState.preferences.mapView).toEqual(mockPreferencesData.mapView)
@@ -534,7 +458,7 @@ describe('createPreferencesSlice', () => {
 
       const { submitAndUpdatePreferences } = useEdscStore.getState().preferences
 
-      await submitAndUpdatePreferences({ formData: mockPreferencesData })
+      await submitAndUpdatePreferences({ formData: mockPreferencesData as PreferencesData })
 
       expect(mockDispatch).toHaveBeenCalledWith(expect.any(Function))
     })

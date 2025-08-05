@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import AdvancedSearchDisplay from '../../../components/AdvancedSearchDisplay/AdvancedSearchDisplay'
@@ -10,22 +10,15 @@ import {
   mapStateToProps
 } from '../AdvancedSearchDisplayContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/AdvancedSearchDisplay/AdvancedSearchDisplay', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: AdvancedSearchDisplayContainer,
+  defaultProps: {
     advancedSearch: {},
-    onUpdateAdvancedSearch: jest.fn(),
-    onChangeQuery: jest.fn()
+    onUpdateAdvancedSearch: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<AdvancedSearchDisplayContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onUpdateAdvancedSearch calls actions.updateAdvancedSearch', () => {
@@ -34,18 +27,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAdvancedSearch({ mock: 'data' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
-  })
-
-  test('onChangeQuery calls actions.changeQuery', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeQuery')
-
-    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
-
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ mock: 'data' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 })
 
@@ -65,9 +48,12 @@ describe('mapStateToProps', () => {
 
 describe('AdvancedSearchDisplayContainer component', () => {
   test('render AdvancedSearchDisplay with the correct props', () => {
-    const { enzymeWrapper, props } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(AdvancedSearchDisplay).props())
-      .toEqual(props)
+    expect(AdvancedSearchDisplay).toHaveBeenCalledTimes(1)
+    expect(AdvancedSearchDisplay).toHaveBeenCalledWith({
+      advancedSearch: {},
+      onUpdateAdvancedSearch: expect.any(Function)
+    }, {})
   })
 })

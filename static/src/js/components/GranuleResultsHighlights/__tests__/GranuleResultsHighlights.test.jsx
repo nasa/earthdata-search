@@ -1,14 +1,34 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import GranuleResultsHighlights from '../GranuleResultsHighlights'
 import Skeleton from '../../Skeleton/Skeleton'
+import getByTextWithMarkup from '../../../../../../jestConfigs/getByTextWithMarkup'
+import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalLinkContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn((props) => (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <mock-PortalLinkContainer {...props} />
+)))
 
-function setup(overrideProps) {
-  const props = {
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search/granules/collection-details',
+    search: '?p=C100005-EDSC',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
+
+const setup = setupTest({
+  Component: GranuleResultsHighlights,
+  defaultProps: {
     granules: [{
       title: 'producer_granule_id_1',
       formattedTemporal: [
@@ -18,82 +38,141 @@ function setup(overrideProps) {
     }],
     granuleCount: 5,
     visibleGranules: 1,
-    location: { search: '' },
     isLoading: true,
-    isLoaded: false,
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<GranuleResultsHighlights {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+    isLoaded: false
+  },
+  withRedux: true,
+  withRoute: true
+})
 
 describe('GranuleResultsHighlights component', () => {
-  test('renders the component', () => {
-    const { enzymeWrapper } = setup()
-    expect(enzymeWrapper.type()).toBe('div')
-    expect(enzymeWrapper.prop('className')).toBe('granule-results-highlights')
+  describe('when granules are loading', () => {
+    test('shows the loading state', () => {
+      setup()
+
+      expect(Skeleton).toHaveBeenCalledTimes(4)
+      expect(Skeleton).toHaveBeenNthCalledWith(1, {
+        containerStyle: { height: '18px' },
+        shapes: [{
+          height: 12,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 3,
+          width: 213
+        }],
+        variant: 'dark'
+      }, {})
+
+      const granuleSkeletonProps = {
+        className: 'granule-results-highlights__item',
+        containerStyle: { height: '99px' },
+        shapes: [{
+          height: 12,
+          left: 13,
+          radius: 2,
+          shape: 'rectangle',
+          top: 12,
+          width: 200
+        }, {
+          height: 12,
+          left: 13,
+          radius: 2,
+          shape: 'rectangle',
+          top: 29,
+          width: 100
+        }, {
+          height: 12,
+          left: 13,
+          radius: 2,
+          shape: 'rectangle',
+          top: 50,
+          width: 35
+        }, {
+          height: 12,
+          left: 160,
+          radius: 2,
+          shape: 'rectangle',
+          top: 50,
+          width: 85
+        }, {
+          height: 12,
+          left: 13,
+          radius: 2,
+          shape: 'rectangle',
+          top: 70,
+          width: 25
+        }, {
+          height: 12,
+          left: 160,
+          radius: 2,
+          shape: 'rectangle',
+          top: 70,
+          width: 85
+        }],
+        variant: 'dark'
+      }
+      expect(Skeleton).toHaveBeenNthCalledWith(2, granuleSkeletonProps, {})
+      expect(Skeleton).toHaveBeenNthCalledWith(3, granuleSkeletonProps, {})
+      expect(Skeleton).toHaveBeenNthCalledWith(4, granuleSkeletonProps, {})
+    })
   })
 
-  describe('granule count', () => {
-    describe('when granules are loading', () => {
-      test('shows the loading state', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.granule-results-highlights__count').find(Skeleton).length).toEqual(1)
-      })
-    })
-
-    describe('when granules are loaded', () => {
-      test('shows the count', () => {
-        const { enzymeWrapper } = setup({
+  describe('when granules are loaded', () => {
+    test('shows the granule count and granule info', () => {
+      setup({
+        overrideProps: {
           isLoading: false,
           isLoaded: true
-        })
-        expect(enzymeWrapper.find('.granule-results-highlights__count').text()).toEqual('Showing 1 of 5 matching granules')
+        }
       })
-    })
-  })
 
-  describe('granule ids and temporal', () => {
-    describe('when granules are loading', () => {
-      test('shows the loading state', () => {
-        const { enzymeWrapper } = setup()
-        expect(enzymeWrapper.find('.granule-results-highlights__list').find(Skeleton).length).toEqual(3)
-      })
-    })
+      expect(screen.getByText('Showing 1 of 5 matching granules')).toBeInTheDocument()
 
-    describe('when granules are loaded', () => {
-      test('displays the correct info', () => {
-        const { enzymeWrapper } = setup({
-          isLoading: false,
-          isLoaded: true
-        })
-        expect(enzymeWrapper.find('.granule-results-highlights__temporal-row').at(0).text()).toEqual('Start2020-03-04 19:30:00')
-        expect(enzymeWrapper.find('.granule-results-highlights__temporal-row').at(1).text()).toEqual('End2020-03-04 19:35:00')
-        expect(enzymeWrapper.find('.granule-results-highlights__item-title').text()).toEqual('producer_granule_id_1')
-      })
+      expect(getByTextWithMarkup('Start2020-03-04 19:30:00')).toBeInTheDocument()
+      expect(getByTextWithMarkup('End2020-03-04 19:35:00')).toBeInTheDocument()
+      expect(screen.getByText('producer_granule_id_1')).toBeInTheDocument()
+
+      expect(PortalLinkContainer).toHaveBeenCalledTimes(1)
+      expect(PortalLinkContainer).toHaveBeenCalledWith({
+        children: expect.arrayContaining([' View Granules']),
+        className: 'granule-results-header__title-link granule-results-header__title-link-icon',
+        to: {
+          pathname: '/search/granules',
+          search: '?p=C100005-EDSC'
+        }
+      }, {})
     })
 
     describe('when granules have no start time nor end time', () => {
       test('display not provided instead of date', () => {
-        const { enzymeWrapper } = setup({
-          isLoading: false,
-          isLoaded: true,
-          granules: [{
-            title: 'producer_granule_id_1'
-          }]
+        setup({
+          overrideProps: {
+            isLoading: false,
+            isLoaded: true,
+            granules: [{
+              title: 'producer_granule_id_1'
+            }]
+          }
         })
-        const row1 = enzymeWrapper.find('.granule-results-highlights__temporal-row').at(0)
-        expect(row1.find('.granule-results-highlights__temporal-label').text()).toEqual('Start')
-        expect(row1.find('.granule-results-highlights__temporal-value').text()).toEqual('Not Provided')
 
-        const row2 = enzymeWrapper.find('.granule-results-highlights__temporal-row').at(1)
-        expect(row2.find('.granule-results-highlights__temporal-label').text()).toEqual('End')
-        expect(row2.find('.granule-results-highlights__temporal-value').text()).toEqual('Not Provided')
+        expect(getByTextWithMarkup('StartNot Provided')).toBeInTheDocument()
+        expect(getByTextWithMarkup('EndNot Provided')).toBeInTheDocument()
+      })
+    })
+
+    describe('when there are no granules', () => {
+      test('displays No Granules Found message', () => {
+        setup({
+          overrideProps: {
+            isLoading: false,
+            isLoaded: true,
+            granules: [],
+            granuleCount: 0
+          }
+        })
+
+        expect(screen.getByText('No Granules')).toBeInTheDocument()
       })
     })
   })

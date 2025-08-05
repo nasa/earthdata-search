@@ -36,6 +36,14 @@ jest.mock('../../../constants/swodlrConstants', () => ({
 
 jest.mock('../EchoForm', () => jest.fn(() => <div />))
 
+const emptySpatial = {
+  boundingBox: [],
+  circle: [],
+  line: [],
+  point: [],
+  polygon: []
+}
+
 const setup = setupTest({
   Component: AccessMethod,
   defaultProps: {
@@ -44,7 +52,7 @@ const setup = setupTest({
     isActive: true,
     metadata: {},
     shapefileId: null,
-    spatial: {},
+    spatial: emptySpatial,
     temporal: {},
     ursProfile: {},
     overrideTemporal: {},
@@ -365,7 +373,7 @@ describe('AccessMethod component', () => {
         methodKey: 'echoOrder0',
         onUpdateAccessMethod: expect.any(Function),
         rawModel: null,
-        spatial: {},
+        spatial: emptySpatial,
         temporal: {},
         ursProfile: {}
       }, {})
@@ -400,7 +408,7 @@ describe('AccessMethod component', () => {
         methodKey: 'echoOrder0',
         onUpdateAccessMethod: expect.any(Function),
         rawModel,
-        spatial: {},
+        spatial: emptySpatial,
         temporal: {},
         ursProfile: {}
       }, {})
@@ -1296,6 +1304,7 @@ describe('AccessMethod component', () => {
               },
               selectedAccessMethod: 'harmony0',
               spatial: {
+                ...emptySpatial,
                 boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
               }
             }
@@ -1321,7 +1330,7 @@ describe('AccessMethod component', () => {
                 conceptId: 'collectionId'
               },
               selectedAccessMethod: 'harmony0',
-              spatial: {}
+              spatial: emptySpatial
             }
           })
 
@@ -1346,6 +1355,7 @@ describe('AccessMethod component', () => {
               },
               selectedAccessMethod: 'harmony0',
               spatial: {
+                ...emptySpatial,
                 circle: ['64.125,7.8161,983270-18.28125']
               }
             }
@@ -1372,6 +1382,7 @@ describe('AccessMethod component', () => {
               },
               selectedAccessMethod: 'harmony0',
               spatial: {
+                ...emptySpatial,
                 point: ['82.6875,-18.61541']
               }
             }
@@ -1398,6 +1409,7 @@ describe('AccessMethod component', () => {
               },
               selectedAccessMethod: 'harmony0',
               spatial: {
+                ...emptySpatial,
                 line: ['82.6875,-18.61541,83.1231, -16.11311']
               }
             }
@@ -1425,6 +1437,7 @@ describe('AccessMethod component', () => {
               },
               selectedAccessMethod: 'harmony0',
               spatial: {
+                ...emptySpatial,
                 polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
               }
             }
@@ -1453,6 +1466,7 @@ describe('AccessMethod component', () => {
                 },
                 selectedAccessMethod: 'harmony0',
                 spatial: {
+                  ...emptySpatial,
                   boundingBox: ['-18.28125,-25.8845,-10.40625,-14.07468']
                 }
               }
@@ -1491,6 +1505,7 @@ describe('AccessMethod component', () => {
                   },
                   selectedAccessMethod: 'harmony0',
                   spatial: {
+                    ...emptySpatial,
                     point: ['82.6875,-18.61541']
                   }
                 }
@@ -1528,6 +1543,7 @@ describe('AccessMethod component', () => {
                   },
                   selectedAccessMethod: 'harmony0',
                   spatial: {
+                    ...emptySpatial,
                     circle: ['64.125,7.8161,983270-18.28125']
                   }
                 }
@@ -1565,6 +1581,7 @@ describe('AccessMethod component', () => {
                   },
                   selectedAccessMethod: 'harmony0',
                   spatial: {
+                    ...emptySpatial,
                     line: ['82.6875,-18.61541,83.1231, -16.11311']
                   }
                 }
@@ -1602,6 +1619,7 @@ describe('AccessMethod component', () => {
                   },
                   selectedAccessMethod: 'harmony0',
                   spatial: {
+                    ...emptySpatial,
                     polygon: ['104.625,-10.6875,103.11328,-10.89844,103.57031,-12.19922,105.32813,-13.11328,106.38281,-11.70703,105.75,-10.33594,104.625,-10.6875']
                   }
                 }

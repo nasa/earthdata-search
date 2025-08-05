@@ -169,19 +169,17 @@ describe('prepareTimelineParams', () => {
   const setup = (overrides = {}) => {
     const baseStateWithOverrides = {
       authToken: 'test-auth-token',
+      collectionQuery: {
+        spatial: {
+          boundingBox: [],
+          point: [],
+          polygon: []
+        }
+      },
       focusedCollection: '',
       project: {
         collections: {
           allIds: []
-        }
-      },
-      query: {
-        collection: {
-          spatial: {
-            boundingBox: [],
-            point: [],
-            polygon: []
-          }
         }
       },
       router: {
@@ -245,12 +243,9 @@ describe('prepareTimelineParams', () => {
 
     expect(result).toEqual({
       authToken: 'test-auth-token',
-      boundingBox: [],
       conceptId: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC'],
       endDate: '2023-01-01T00:00:00Z',
       interval: 'day',
-      point: [],
-      polygon: [],
       startDate: '2022-01-01T00:00:00Z'
     })
   })
@@ -274,28 +269,23 @@ describe('prepareTimelineParams', () => {
 
     expect(result).toEqual({
       authToken: 'test-auth-token',
-      boundingBox: [],
       conceptId: ['C100000-EDSC'],
       endDate: '2023-01-01T00:00:00Z',
       interval: 'day',
-      point: [],
-      polygon: [],
       startDate: '2022-01-01T00:00:00Z'
     })
   })
 
   test('should include spatial parameters when provided', () => {
     const state = setup({
-      focusedCollection: 'C100000-EDSC',
-      query: {
-        collection: {
-          spatial: {
-            boundingBox: ['-180,90,180,-90'],
-            point: ['40,40'],
-            polygon: ['10,10,20,20,30,30,10,10']
-          }
+      collectionQuery: {
+        spatial: {
+          boundingBox: ['-180,90,180,-90'],
+          point: ['40,40'],
+          polygon: ['10,10,20,20,30,30,10,10']
         }
       },
+      focusedCollection: 'C100000-EDSC',
       router: {
         location: {
           pathname: '/search/granules'

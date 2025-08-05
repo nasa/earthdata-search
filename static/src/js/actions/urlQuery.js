@@ -1,5 +1,4 @@
-/* eslint-disable import/no-dynamic-require, global-require */
-
+import { merge } from 'lodash-es'
 import { replace, push } from 'connected-react-router'
 import { parse, stringify } from 'qs'
 
@@ -12,7 +11,6 @@ import {
   urlPathsWithoutUrlParams
 } from '../util/url/url'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getCollectionSortPreference } from '../zustand/selectors/preferences'
 
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
@@ -49,8 +47,6 @@ export const updateStore = ({
   const { location } = router
   const { pathname } = location
 
-  const collectionSortPreference = getCollectionSortPreference(useEdscStore.getState())
-
   // Prevent loading from the urls that don't use URL params.
   const loadFromUrl = (
     pathname !== '/'
@@ -67,44 +63,41 @@ export const updateStore = ({
       collections,
       focusedCollection,
       focusedGranule,
-      deprecatedUrlParams,
-      query: {
-        ...query,
-        collectionSortPreference
-      }
+      deprecatedUrlParams
     }))
 
-    useEdscStore.setState((zustandState) => ({
-      ...zustandState,
-      earthdataEnvironment: {
-        currentEnvironment: earthdataEnvironment
-      },
-      facetParams: {
-        ...zustandState.facetParams,
-        featureFacets,
-        cmrFacets
-      },
-      map: {
-        ...zustandState.map,
-        mapView: {
-          ...zustandState.map.mapView,
-          ...mapView
-        }
-      },
-      portal,
-      project: {
-        ...zustandState.project,
-        ...project
-      },
-      shapefile: {
-        ...zustandState.shapefile,
-        ...shapefile
-      },
-      timeline: {
-        ...zustandState.timeline,
-        ...timeline
-      }
-    }))
+    useEdscStore.setState((zustandState) => {
+      // Use merge on the queries to correctly use the initial state as a fallback for `undefined` decoded values
+      const mergedQuery = merge({}, zustandState.query, query)
+
+      return ({
+        ...zustandState,
+        earthdataEnvironment: {
+          currentEnvironment: earthdataEnvironment
+        },
+        facetParams: {
+          ...zustandState.facetParams,
+          featureFacets,
+          cmrFacets
+        },
+        map: merge({}, zustandState.map, {
+          mapView: merge({}, zustandState.map.mapView, mapView)
+        }),
+        portal,
+        project: merge({}, zustandState.project, project),
+        query: {
+          ...mergedQuery,
+          collection: {
+            ...mergedQuery.collection,
+            // If `hasGranulesOrCwic` is `undefined` from the decoded values it needs to stay `undefined` in the
+            // store, not fallback to the initial state
+            hasGranulesOrCwic: query.collection.hasGranulesOrCwic
+          }
+        },
+        shapefile: merge({}, zustandState.shapefile, shapefile),
+        timeline: merge({}, zustandState.timeline, timeline)
+      })
+    })
   } else {
     // We always need to load the portal config
     useEdscStore.setState((zustandState) => ({

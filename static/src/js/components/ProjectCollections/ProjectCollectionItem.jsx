@@ -30,6 +30,7 @@ import Skeleton from '../Skeleton/Skeleton'
 import useEdscStore from '../../zustand/useEdscStore'
 
 import './ProjectCollectionItem.scss'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 /**
  * Renders ProjectCollectionItem.
@@ -41,14 +42,12 @@ import './ProjectCollectionItem.scss'
  * @param {Function} props.onSetActivePanelSection - Callback to set the active panel.
  * @param {Function} props.onUpdateFocusedCollection - Callback to set the focused collection ID.
  * @param {Object} props.projectCollection - Collection from project.byId
- * @param {Object} props.collectionsQuery - Search values from query.collection
  */
 const ProjectCollectionItem = ({
   activePanelSection,
   collectionCount,
   collectionId,
   collectionMetadata,
-  collectionsQuery,
   color,
   index,
   isPanelActive,
@@ -69,6 +68,7 @@ const ProjectCollectionItem = ({
     removeProjectCollection: state.project.removeProjectCollection,
     toggleCollectionVisibility: state.project.toggleCollectionVisibility
   }))
+  const collectionsQuery = useEdscStore(getCollectionsQuery)
 
   const handleToggleCollectionVisibility = (event) => {
     toggleCollectionVisibility(collectionId)
@@ -254,7 +254,6 @@ ProjectCollectionItem.propTypes = {
   collectionCount: PropTypes.number.isRequired,
   collectionId: PropTypes.string.isRequired,
   collectionMetadata: collectionMetadataPropType.isRequired,
-  collectionsQuery: PropTypes.shape({}).isRequired,
   color: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   isPanelActive: PropTypes.bool.isRequired,

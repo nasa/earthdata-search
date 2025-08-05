@@ -6,17 +6,17 @@ import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui
 
 import Button from '../Button/Button'
 import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete'
+import FilterStack from '../FilterStack/FilterStack'
+import TemporalDisplay from '../TemporalDisplay/TemporalDisplay'
+
 import AdvancedSearchDisplayContainer
   from '../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
 import SpatialDisplayContainer
   from '../../containers/SpatialDisplayContainer/SpatialDisplayContainer'
-import TemporalDisplayContainer
-  from '../../containers/TemporalDisplayContainer/TemporalDisplayContainer'
 import SpatialSelectionDropdownContainer
   from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
 import TemporalSelectionDropdownContainer
   from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
-import FilterStack from '../FilterStack/FilterStack'
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 
 import './SearchForm.scss'
@@ -60,8 +60,8 @@ class SearchForm extends Component {
   render() {
     const {
       advancedSearch,
-      keywordSearch,
-      onChangeQuery,
+      authToken,
+      handleError,
       onChangeFocusedCollection
     } = this.props
 
@@ -83,8 +83,8 @@ class SearchForm extends Component {
       <section className="search-form">
         <div className="search-form__primary">
           <SearchAutocomplete
-            initialKeyword={keywordSearch}
-            onChangeQuery={onChangeQuery}
+            authToken={authToken}
+            handleError={handleError}
             onChangeFocusedCollection={onChangeFocusedCollection}
           />
         </div>
@@ -126,7 +126,7 @@ class SearchForm extends Component {
                 <SpatialDisplayContainer />
               )
             }
-            <TemporalDisplayContainer />
+            <TemporalDisplay />
           </FilterStack>
         </div>
       </section>
@@ -138,9 +138,9 @@ SearchForm.propTypes = {
   advancedSearch: PropTypes.shape({
     regionSearch: PropTypes.shape({})
   }).isRequired,
-  keywordSearch: PropTypes.string.isRequired,
+  authToken: PropTypes.string.isRequired,
+  handleError: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }

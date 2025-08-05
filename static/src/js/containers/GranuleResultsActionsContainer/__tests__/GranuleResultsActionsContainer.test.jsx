@@ -25,11 +25,7 @@ const setup = setupTest({
     collectionMetadata: {
       mock: 'data'
     },
-    collectionQuery: {},
     focusedCollectionId: 'focusedCollection',
-    granuleQuery: {
-      pageNum: 1
-    },
     granuleSearchResults: {
       allIds: [],
       excludledGranuleIds: [],
@@ -126,11 +122,7 @@ describe('mapStateToProps', () => {
         }
       },
       focusedCollection: 'collectionId',
-      focusedGranule: 'granuleId',
-      query: {
-        collection: {}
-      },
-      shapefile: {}
+      focusedGranule: 'granuleId'
     }
 
     const expectedState = {
@@ -138,9 +130,7 @@ describe('mapStateToProps', () => {
       collectionMetadata: {
         subscriptions: []
       },
-      collectionQuery: {},
       focusedCollectionId: 'collectionId',
-      granuleQuery: {},
       granuleSearchResults: {},
       subscriptions: []
     }

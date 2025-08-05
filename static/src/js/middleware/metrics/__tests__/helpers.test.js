@@ -9,147 +9,130 @@ import {
   computeFacets
 } from '../helpers'
 
+const emptySpatial = {
+  boundingBox: [],
+  circle: [],
+  line: [],
+  polygon: [],
+  point: []
+}
+
 describe('helpers', () => {
   describe('computeKeyword', () => {
     test('returns null when no keyword is applied', () => {
-      const state = {
-        query: {
-          collection: {
-            keyword: undefined
-          }
-        }
-      }
-      const value = computeKeyword(state)
+      const value = computeKeyword()
       expect(value).toEqual(null)
     })
 
     test('returns null when no keyword is applied', () => {
-      const state = {
+      useEdscStore.setState({
         query: {
           collection: {
             keyword: 'test keyword'
           }
         }
-      }
-      const value = computeKeyword(state)
+      })
+
+      const value = computeKeyword()
       expect(value).toEqual('test keyword')
     })
   })
 
   describe('computeSpatialType', () => {
     test('returns null when no spatial is applied', () => {
-      const state = {
-        query: {
-          collection: {
-            spatial: {
-              boundingBox: undefined,
-              polygon: undefined,
-              point: undefined
-            }
-          }
-        }
-      }
-      const value = computeSpatialType(state)
+      const value = computeSpatialType()
       expect(value).toEqual(null)
     })
 
     test('returns Bounding Box when bounding box is applied', () => {
-      const state = {
+      useEdscStore.setState({
         query: {
           collection: {
             spatial: {
-              boundingBox: '-15.310546875000002,47.08492103009955,17.5550537109375,61.17149911040902',
-              polygon: undefined,
-              point: undefined
+              ...emptySpatial,
+              boundingBox: ['-15.310546875000002,47.08492103009955,17.5550537109375,61.17149911040902']
             }
           }
         }
-      }
-      const value = computeSpatialType(state)
-      expect(value).toEqual(spatialTypes.BOUNDING_BOX)
-    })
+      })
 
-    test('returns Bounding Box when bounding box is applied', () => {
-      const state = {
-        query: {
-          collection: {
-            spatial: {
-              boundingBox: '-15.310546875000002,47.08492103009955,17.5550537109375,61.17149911040902',
-              polygon: undefined,
-              point: undefined
-            }
-          }
-        }
-      }
-      const value = computeSpatialType(state)
+      const value = computeSpatialType()
       expect(value).toEqual(spatialTypes.BOUNDING_BOX)
     })
 
     test('returns Polygon when polygon is applied', () => {
-      const state = {
+      useEdscStore.setState({
         query: {
           collection: {
             spatial: {
-              boundingBox: undefined,
-              polygon: '18.630615234375,52.411131961365896,14.657958984375,46.928897935258945,19.78253173828125,45.649948059241616,18.630615234375,52.411131961365896',
-              point: undefined
+              ...emptySpatial,
+              polygon: ['18.630615234375,52.411131961365896,14.657958984375,46.928897935258945,19.78253173828125,45.649948059241616,18.630615234375,52.411131961365896']
             }
           }
         }
-      }
-      const value = computeSpatialType(state)
+      })
+
+      const value = computeSpatialType()
       expect(value).toEqual(spatialTypes.POLYGON)
     })
 
     test('returns Point when point is applied', () => {
-      const state = {
+      useEdscStore.setState({
         query: {
           collection: {
             spatial: {
-              boundingBox: undefined,
-              polygon: undefined,
-              point: '4.5, 29.868554589199988'
+              ...emptySpatial,
+              point: ['4.5, 29.868554589199988']
             }
           }
         }
-      }
-      const value = computeSpatialType(state)
+      })
+
+      const value = computeSpatialType()
       expect(value).toEqual(spatialTypes.POINT)
     })
 
     test('returns Circle when circle is applied', () => {
-      const state = {
+      useEdscStore.setState({
         query: {
           collection: {
             spatial: {
-              boundingBox: undefined,
-              polygon: undefined,
-              point: undefined,
+              ...emptySpatial,
               circle: ['50.20313,41.0444,1042319']
             }
           }
         }
-      }
-      const value = computeSpatialType(state)
+      })
+
+      const value = computeSpatialType()
       expect(value).toEqual(spatialTypes.CIRCLE)
+    })
+
+    test('returns Line when line is applied', () => {
+      useEdscStore.setState({
+        query: {
+          collection: {
+            spatial: {
+              ...emptySpatial,
+              line: ['82.6875,-18.61541,83.1231, -16.11311']
+            }
+          }
+        }
+      })
+
+      const value = computeSpatialType()
+      expect(value).toEqual(spatialTypes.LINE)
     })
   })
 
   describe('computeTemporalType', () => {
     test('returns null when no temporal is applied', () => {
-      const state = {
-        query: {
-          collection: {
-            temporal: undefined
-          }
-        }
-      }
-      const value = computeTemporalType(state)
+      const value = computeTemporalType()
       expect(value).toEqual(null)
     })
 
     test('returns Standard Temporal when no temporal is applied', () => {
-      const state = {
+      useEdscStore.setState({
         query: {
           collection: {
             temporal: {
@@ -158,13 +141,14 @@ describe('helpers', () => {
             }
           }
         }
-      }
-      const value = computeTemporalType(state)
+      })
+
+      const value = computeTemporalType()
       expect(value).toEqual('Standard Temporal')
     })
 
     test('returns Recurring Temporal when no temporal is applied', () => {
-      const state = {
+      useEdscStore.setState({
         query: {
           collection: {
             temporal: {
@@ -174,8 +158,9 @@ describe('helpers', () => {
             }
           }
         }
-      }
-      const value = computeTemporalType(state)
+      })
+
+      const value = computeTemporalType()
       expect(value).toEqual('Recurring Temporal')
     })
   })

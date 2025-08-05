@@ -10,26 +10,29 @@ import { isEqual } from 'lodash-es'
 import Autosuggest from 'react-autosuggest'
 import { Search } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import AutocompleteRequest from '../../util/request/autocompleteRequest'
-import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { handleError } from '../../actions/errors'
-import Spinner from '../Spinner/Spinner'
 import AutocompleteSuggestion from '../AutocompleteSuggestion/AutocompleteSuggestion'
-import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Button from '../Button/Button'
+import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import Spinner from '../Spinner/Spinner'
+
+import AutocompleteRequest from '../../util/request/autocompleteRequest'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import { mapAutocompleteToFacets } from '../../util/mapAutocompleteToFacets'
 
-import configureStore from '../../store/configureStore'
 import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import './SearchAutocomplete.scss'
 
 const SearchAutocomplete = ({
-  initialKeyword,
-  onChangeQuery,
+  authToken,
+  handleError,
   onChangeFocusedCollection
 }) => {
+  const collectionQuery = useEdscStore(getCollectionsQuery)
+  const { keyword: initialKeyword } = collectionQuery
+
   const [keywordSearch, setKeywordSearch] = useState(initialKeyword || '')
   const [isLoaded, setIsLoaded] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -41,12 +44,14 @@ const SearchAutocomplete = ({
 
   const {
     addCmrFacetFromAutocomplete,
-    setOpenFacetGroup,
-    earthdataEnvironment
+    changeQuery,
+    earthdataEnvironment,
+    setOpenFacetGroup
   } = useEdscStore((state) => ({
     addCmrFacetFromAutocomplete: state.facetParams.addCmrFacetFromAutocomplete,
-    setOpenFacetGroup: state.home.setOpenFacetGroup,
-    earthdataEnvironment: getEarthdataEnvironment(state)
+    changeQuery: state.query.changeQuery,
+    earthdataEnvironment: getEarthdataEnvironment(state),
+    setOpenFacetGroup: state.home.setOpenFacetGroup
   }))
 
   // Update local state when initial keyword changes
@@ -110,14 +115,6 @@ const SearchAutocomplete = ({
 
     const { value } = data
 
-    // Get authToken from Redux
-    const {
-      dispatch: reduxDispatch,
-      getState: reduxGetState
-    } = configureStore()
-    const reduxState = reduxGetState()
-    const { authToken } = reduxState
-
     setIsLoading(true)
     setIsLoaded(false)
 
@@ -145,12 +142,12 @@ const SearchAutocomplete = ({
       setIsLoaded(false)
       setIsLoading(false)
 
-      reduxDispatch(handleError({
+      handleError({
         error,
         action: 'fetchAutocomplete',
         resource: 'suggestions',
         requestObject
-      }))
+      })
     }
   }, [])
 
@@ -170,7 +167,7 @@ const SearchAutocomplete = ({
       setOpenFacetGroup(type)
     }
 
-    onChangeQuery({
+    changeQuery({
       collection: {
         pageNum: 1,
         keyword: ''
@@ -179,7 +176,7 @@ const SearchAutocomplete = ({
 
     // Clear the local keyword state
     setKeywordSearch('')
-  }, [onChangeQuery])
+  }, [])
 
   const onFormSubmit = useCallback((event) => {
     event.preventDefault()
@@ -189,18 +186,15 @@ const SearchAutocomplete = ({
       cancelAutocomplete()
 
       onChangeFocusedCollection('')
-      onChangeQuery({
+      changeQuery({
         collection: {
           keyword: keywordSearch
         }
       })
     }
   }, [
-    initialKeyword,
-    keywordSearch,
-    cancelAutocomplete,
-    onChangeFocusedCollection,
-    onChangeQuery
+    changeQuery,
+    keywordSearch
   ])
 
   /**
@@ -279,7 +273,7 @@ const SearchAutocomplete = ({
                   <div className="search-autocomplete__loading-suggestions">
                     <Spinner className="search-autocomplete__spinner" type="dots" size="tiny" inline />
                     <span className="visually-hidden">
-                      Loading collections...
+                      Loading suggestions...
                     </span>
                   </div>
                 )
@@ -367,13 +361,9 @@ const SearchAutocomplete = ({
 }
 
 SearchAutocomplete.propTypes = {
-  initialKeyword: PropTypes.string,
-  onChangeQuery: PropTypes.func.isRequired,
+  authToken: PropTypes.string.isRequired,
+  handleError: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired
-}
-
-SearchAutocomplete.defaultProps = {
-  initialKeyword: ''
 }
 
 export default SearchAutocomplete

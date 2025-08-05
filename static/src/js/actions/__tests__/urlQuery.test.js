@@ -8,6 +8,8 @@ import { UPDATE_SAVED_PROJECT, RESTORE_FROM_URL } from '../../constants/actionTy
 
 import * as urlQuery from '../urlQuery'
 import useEdscStore from '../../zustand/useEdscStore'
+import { collectionSortKeys } from '../../constants/collectionSortKeys'
+import { initialState as initialQueryState } from '../../zustand/slices/createQuerySlice'
 
 const mockStore = configureMockStore([thunk])
 
@@ -60,16 +62,13 @@ describe('updateStore', () => {
     expect(storeActions[0]).toEqual({
       payload: {
         ...params,
-        query: {
-          ...params.query,
-          collectionSortPreference: 'default'
-        },
         cmrFacets: undefined,
         earthdataEnvironment: undefined,
         featureFacets: undefined,
         mapView: undefined,
         portal: undefined,
         project: undefined,
+        query: undefined,
         timeline: undefined
       },
       type: RESTORE_FROM_URL
@@ -83,6 +82,7 @@ describe('updateStore', () => {
       map,
       portal,
       project,
+      query,
       timeline
     } = useEdscStore.getState()
 
@@ -110,6 +110,19 @@ describe('updateStore', () => {
         byId: {}
       }
     }))
+
+    expect(query).toEqual({
+      ...initialState.query,
+      collection: {
+        byId: {},
+        keyword: '',
+        overrideTemporal: {},
+        pageNum: 1,
+        sortKey: collectionSortKeys.scoreDescending,
+        spatial: initialState.query.collection.spatial,
+        temporal: {}
+      }
+    })
 
     expect(timeline).toEqual({
       intervals: {},
@@ -147,8 +160,7 @@ describe('updateStore', () => {
             pageNum: 1,
             spatial: {},
             temporal: {}
-          },
-          granule: { pageNum: 1 }
+          }
         },
         timeline: {
           query: {
@@ -189,16 +201,13 @@ describe('updateStore', () => {
       expect(storeActions[0]).toEqual({
         payload: {
           ...params,
-          query: {
-            ...params.query,
-            collectionSortPreference: 'default'
-          },
           cmrFacets: undefined,
           earthdataEnvironment: undefined,
           featureFacets: undefined,
           mapView: undefined,
           portal: undefined,
           project: undefined,
+          query: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -213,6 +222,7 @@ describe('updateStore', () => {
         map,
         portal,
         project,
+        query,
         timeline
       } = useEdscStore.getState()
 
@@ -240,6 +250,19 @@ describe('updateStore', () => {
           byId: {}
         }
       }))
+
+      expect(query).toEqual({
+        ...initialState.query,
+        collection: {
+          byId: {},
+          keyword: '',
+          overrideTemporal: {},
+          pageNum: 1,
+          sortKey: collectionSortKeys.scoreDescending,
+          spatial: initialState.query.collection.spatial,
+          temporal: {}
+        }
+      })
 
       expect(timeline).toEqual({
         intervals: {},
@@ -278,8 +301,7 @@ describe('updateStore', () => {
             pageNum: 1,
             spatial: {},
             temporal: {}
-          },
-          granule: { pageNum: 1 }
+          }
         },
         timeline: {
           query: {
@@ -320,10 +342,6 @@ describe('updateStore', () => {
       expect(storeActions[0]).toEqual({
         payload: {
           ...params,
-          query: {
-            ...params.query,
-            collectionSortPreference: 'default'
-          },
           cmrFacets: undefined,
           earthdataEnvironment: undefined,
           featureFacets: undefined,
@@ -331,6 +349,7 @@ describe('updateStore', () => {
           portalId: undefined,
           portal: undefined,
           project: undefined,
+          query: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -345,6 +364,7 @@ describe('updateStore', () => {
         map,
         portal,
         project,
+        query,
         timeline
       } = useEdscStore.getState()
 
@@ -416,6 +436,19 @@ describe('updateStore', () => {
         getProjectCollections: expect.any(Function)
       })
 
+      expect(query).toEqual({
+        ...initialState.query,
+        collection: {
+          byId: {},
+          keyword: '',
+          overrideTemporal: {},
+          pageNum: 1,
+          sortKey: collectionSortKeys.scoreDescending,
+          spatial: initialState.query.collection.spatial,
+          temporal: {}
+        }
+      })
+
       expect(timeline).toEqual({
         intervals: {},
         query: {
@@ -467,7 +500,6 @@ describe('changePath', () => {
         },
         granules: {}
       },
-      query: {},
       router: {
         location: {
           pathname: '/search'
@@ -519,7 +551,7 @@ describe('changePath', () => {
               hasGranulesOrCwic: true,
               overrideTemporal: {},
               pageNum: 1,
-              spatial: {},
+              spatial: initialQueryState.collection.spatial,
               temporal: {}
             }
           },
@@ -588,14 +620,15 @@ describe('changePath', () => {
           byId: {
             'C00001-EDSC': {
               granules: {
-                pageNum: 1
+                pageNum: 1,
+                sortKey: '-start_date'
               }
             }
           },
           hasGranulesOrCwic: true,
           overrideTemporal: {},
           pageNum: 1,
-          spatial: {},
+          spatial: initialQueryState.collection.spatial,
           temporal: {}
         }
       },

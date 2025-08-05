@@ -17,23 +17,11 @@ const setup = setupTest({
   Component: OverrideTemporalModalContainer,
   defaultProps: {
     isOpen: true,
-    temporalSearch: {},
-    onChangeProjectQuery: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn()
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onChangeProjectQuery calls actions.changeProjectQuery', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeProjectQuery')
-
-    mapDispatchToProps(dispatch).onChangeProjectQuery({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onToggleOverrideTemporalModal calls actions.toggleOverrideTemporalModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleOverrideTemporalModal')
@@ -48,11 +36,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      query: {
-        collection: {
-          temporal: {}
-        }
-      },
       ui: {
         overrideTemporalModal: {
           isOpen: false
@@ -61,8 +44,7 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      isOpen: false,
-      temporalSearch: {}
+      isOpen: false
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -77,8 +59,6 @@ describe('OverrideTemporalModalContainer component', () => {
     expect(OverrideTemporalModal).toHaveBeenCalledWith(
       expect.objectContaining({
         isOpen: true,
-        temporalSearch: {},
-        onChangeQuery: expect.any(Function),
         onToggleOverrideTemporalModal: expect.any(Function)
       }),
       {}

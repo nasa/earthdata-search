@@ -28,14 +28,12 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
-  collectionsQuery: state.query.collection,
   panels: state.panels,
   savedProject: state.savedProject
 })
 
 export const ProjectCollectionsContainer = (props) => {
   const {
-    collectionsQuery,
     onMetricsDataAccess,
     onSetActivePanel,
     onSetActivePanelSection,
@@ -50,7 +48,6 @@ export const ProjectCollectionsContainer = (props) => {
 
   return (
     <ProjectCollections
-      collectionsQuery={collectionsQuery}
       onMetricsDataAccess={onMetricsDataAccess}
       onSetActivePanel={onSetActivePanel}
       onSetActivePanelSection={onSetActivePanelSection}
@@ -66,7 +63,6 @@ export const ProjectCollectionsContainer = (props) => {
 }
 
 ProjectCollectionsContainer.propTypes = {
-  collectionsQuery: PropTypes.shape({}).isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,

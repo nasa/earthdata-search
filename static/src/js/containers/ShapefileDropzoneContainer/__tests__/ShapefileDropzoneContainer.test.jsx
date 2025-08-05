@@ -19,22 +19,16 @@ const setup = setupTest({
   Component: ShapefileDropzoneContainer,
   defaultProps: {
     authToken: 'test-auth-token',
-    onRemoveTimelineFilter: jest.fn(),
-    onToggleShapefileUploadModal: jest.fn(),
-    onRemoveSpatialFilter: jest.fn()
+    onToggleShapefileUploadModal: jest.fn()
+  },
+  defaultZustandState: {
+    query: {
+      removeSpatialFilter: jest.fn()
+    }
   }
 })
 
 describe('mapDispatchToProps', () => {
-  test('onRemoveSpatialFilter calls actions.removeSpatialFilter', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'removeSpatialFilter')
-
-    mapDispatchToProps(dispatch).onRemoveSpatialFilter()
-
-    expect(spy).toHaveBeenCalledTimes(1)
-  })
-
   test('onToggleShapefileUploadModal calls actions.toggleShapefileUploadModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleShapefileUploadModal')
@@ -89,9 +83,9 @@ describe('ShapefileDropzoneContainer component', () => {
   // We don't like to manually trigger them in unit tests, but we do have Playwright tests
   // that upload files and trigger these callbacks through Dropzone.
   describe('when onSending is triggered', () => {
-    test('calls onRemoveSpatialFilter and onShapefileLoading', () => {
+    test('calls removeSpatialFilter and onShapefileLoading', () => {
       const onShapefileLoadingMock = jest.fn()
-      const { props } = setup({
+      const { zustandState } = setup({
         overrideZustandState: {
           shapefile: {
             setLoading: onShapefileLoadingMock
@@ -110,8 +104,8 @@ describe('ShapefileDropzoneContainer component', () => {
         onSending(mockFile)
       })
 
-      expect(props.onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
-      expect(props.onRemoveSpatialFilter).toHaveBeenCalledWith()
+      expect(zustandState.query.removeSpatialFilter).toHaveBeenCalledTimes(1)
+      expect(zustandState.query.removeSpatialFilter).toHaveBeenCalledWith()
 
       expect(onShapefileLoadingMock).toHaveBeenCalledTimes(1)
       expect(onShapefileLoadingMock).toHaveBeenCalledWith('test-file-name.zip')

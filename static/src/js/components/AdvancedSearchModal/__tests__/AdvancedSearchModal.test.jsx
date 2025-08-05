@@ -1,18 +1,19 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import AdvancedSearchModal from '../AdvancedSearchModal'
-import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
 import * as triggerKeyboardShortcut from '../../../util/triggerKeyboardShortcut'
+import AdvancedSearchForm from '../AdvancedSearchForm'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../AdvancedSearchForm', () => jest.fn(() => null))
 
 const windowEventMap = {}
 
-function setup(overrideProps) {
-  const props = {
+const setup = setupTest({
+  Component: AdvancedSearchModal,
+  defaultProps: {
     advancedSearch: {},
     isOpen: false,
     fields: [],
@@ -21,7 +22,6 @@ function setup(overrideProps) {
     handleChange: jest.fn(),
     handleSubmit: jest.fn(),
     isValid: true,
-    onChangeRegionQuery: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn(),
     resetForm: jest.fn(),
     regionSearchResults: {},
@@ -29,21 +29,11 @@ function setup(overrideProps) {
     setFieldTouched: jest.fn(),
     touched: {},
     values: {},
-    validateForm: jest.fn(),
-    ...overrideProps
+    validateForm: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<AdvancedSearchModal {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 beforeEach(() => {
-  jest.clearAllMocks()
-
   window.addEventListener = jest.fn((event, cb) => {
     windowEventMap[event] = cb
   })
@@ -51,30 +41,53 @@ beforeEach(() => {
 
 describe('AdvancedSearchModal component', () => {
   describe('when isOpen is false', () => {
-    test('should not render a modal', () => {
-      const { enzymeWrapper } = setup()
+    test('should not render the form', () => {
+      setup()
 
-      expect(enzymeWrapper.find(EDSCModalContainer).length).toEqual(1)
+      expect(AdvancedSearchForm).toHaveBeenCalledTimes(0)
     })
   })
 
   describe('when isOpen is true', () => {
-    test('should render a modal', () => {
-      const { enzymeWrapper } = setup({
-        isOpen: true
+    test('should render a form', () => {
+      setup({
+        overrideProps: {
+          isOpen: true
+        }
       })
 
-      expect(enzymeWrapper.find(EDSCModalContainer).length).toEqual(1)
+      expect(AdvancedSearchForm).toHaveBeenCalledTimes(1)
+      expect(AdvancedSearchForm).toHaveBeenCalledWith({
+        advancedSearch: {},
+        errors: {},
+        fields: [],
+        handleBlur: expect.any(Function),
+        handleChange: expect.any(Function),
+        isValid: true,
+        modalInnerRef: {
+          current: expect.anything()
+        },
+        regionSearchResults: {},
+        setFieldTouched: expect.any(Function),
+        setFieldValue: expect.any(Function),
+        setModalOverlay: expect.any(Function),
+        touched: {},
+        validateForm: expect.any(Function),
+        values: {}
+      }, {})
     })
   })
 
   describe('onModalClose', () => {
-    test('should call the callback to close the modal', () => {
-      const { enzymeWrapper, props } = setup({
-        isOpen: true
+    test('should call the callback to close the modal', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          isOpen: true
+        }
       })
 
-      enzymeWrapper.instance().onModalClose()
+      const button = screen.getByRole('button', { name: 'Close' })
+      await user.click(button)
 
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
@@ -82,12 +95,15 @@ describe('AdvancedSearchModal component', () => {
   })
 
   describe('onApplyClick', () => {
-    test('should call the callback to close the modal', () => {
-      const { enzymeWrapper, props } = setup({
-        isOpen: true
+    test('should call the callback to close the modal', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          isOpen: true
+        }
       })
 
-      enzymeWrapper.instance().onApplyClick()
+      const button = screen.getByRole('button', { name: 'Apply' })
+      await user.click(button)
 
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
@@ -95,12 +111,15 @@ describe('AdvancedSearchModal component', () => {
   })
 
   describe('onCancelClick', () => {
-    test('should call the callback to close the modal', () => {
-      const { enzymeWrapper, props } = setup({
-        isOpen: true
+    test('should call the callback to close the modal', async () => {
+      const { props, user } = setup({
+        overrideProps: {
+          isOpen: true
+        }
       })
 
-      enzymeWrapper.instance().onCancelClick()
+      const button = screen.getByRole('button', { name: 'Cancel' })
+      await user.click(button)
 
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(false)
@@ -116,7 +135,9 @@ describe('AdvancedSearchModal component', () => {
         const shortcutSpy = jest.spyOn(triggerKeyboardShortcut, 'triggerKeyboardShortcut')
 
         const { props } = setup({
-          isOpen: false
+          overrideProps: {
+            isOpen: false
+          }
         })
 
         windowEventMap.keyup({
@@ -139,7 +160,9 @@ describe('AdvancedSearchModal component', () => {
         const stopPropagationMock = jest.fn()
 
         const { props } = setup({
-          isOpen: true
+          overrideProps: {
+            isOpen: true
+          }
         })
 
         windowEventMap.keyup({

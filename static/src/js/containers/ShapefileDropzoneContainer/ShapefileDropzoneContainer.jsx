@@ -12,8 +12,6 @@ import ShapefileDropzone from '../../components/Dropzone/ShapefileDropzone'
 import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onRemoveSpatialFilter:
-    () => dispatch(actions.removeSpatialFilter()),
   onToggleShapefileUploadModal:
     (state) => dispatch(actions.toggleShapefileUploadModal(state))
 })
@@ -61,17 +59,18 @@ const dropzoneOptions = {
 
 export const ShapefileDropzoneContainer = ({
   authToken,
-  onRemoveSpatialFilter,
   onToggleShapefileUploadModal
 }) => {
   const {
     onShapefileErrored,
     onShapefileLoading,
-    onSaveShapefile
+    onSaveShapefile,
+    removeSpatialFilter
   } = useEdscStore((state) => ({
     onShapefileErrored: state.shapefile.setErrored,
     onShapefileLoading: state.shapefile.setLoading,
-    onSaveShapefile: state.shapefile.saveShapefile
+    onSaveShapefile: state.shapefile.saveShapefile,
+    removeSpatialFilter: state.query.removeSpatialFilter
   }))
 
   return (
@@ -81,7 +80,7 @@ export const ShapefileDropzoneContainer = ({
       onSending={
         (file) => {
           // Remove existing spatial from the store
-          onRemoveSpatialFilter()
+          removeSpatialFilter()
 
           const { name } = file
 
@@ -146,7 +145,6 @@ export const ShapefileDropzoneContainer = ({
 
 ShapefileDropzoneContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
-  onRemoveSpatialFilter: PropTypes.func.isRequired,
   onToggleShapefileUploadModal: PropTypes.func.isRequired
 }
 
