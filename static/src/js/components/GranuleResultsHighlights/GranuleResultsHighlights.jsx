@@ -55,8 +55,8 @@ export const GranuleResultsHighlights = ({
           !isLoaded && (
             <>
               {
-                [1, 2, 3].map((item, i) => {
-                  const key = `granule_loader_${i}`
+                Array.from({ length: 3 }).map((item, index) => {
+                  const key = `granule_loader_${index}`
 
                   return (
                     <Skeleton

@@ -8,6 +8,7 @@ import { collectionSortKeys } from '../constants/collectionSortKeys'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getCollectionsQuery } from '../zustand/selectors/query'
+import { pruneSpatial } from './pruneSpatial'
 
 /**
  * Prepare parameters used in getCollections() based on current Redux State
@@ -45,7 +46,7 @@ export const prepareCollectionParams = (state) => {
     line,
     point,
     polygon
-  } = spatial
+  } = pruneSpatial(spatial)
 
   const { viewAllFacets: viewAllFacetsSearchResults = {} } = searchResults
   const { selectedCategory: viewAllFacetsCategory } = viewAllFacetsSearchResults
@@ -92,17 +93,17 @@ export const prepareCollectionParams = (state) => {
 
   const collectionParams = {
     authToken,
-    boundingBox: boundingBox && boundingBox.length > 0 ? boundingBox : undefined,
-    circle: circle && circle.length > 0 ? circle : undefined,
+    boundingBox,
+    circle,
     cloudHosted,
     cmrFacets,
     featureFacets,
     hasGranulesOrCwic,
     keyword,
-    line: line && line.length > 0 ? line : undefined,
+    line,
     pageNum,
-    point: point && point.length > 0 ? point : undefined,
-    polygon: polygon && polygon.length > 0 ? polygon : undefined,
+    point,
+    polygon,
     serviceType,
     sortKey,
     tagKey,

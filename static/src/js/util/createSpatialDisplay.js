@@ -1,5 +1,6 @@
 import { mbr } from '@edsc/geo-utils'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
+import { pruneSpatial } from './pruneSpatial'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
@@ -61,9 +62,9 @@ export const createSpatialDisplay = (spatial, usingMbr = false) => {
     line,
     point,
     polygon
-  } = spatial
+  } = pruneSpatial(spatial)
 
-  if (boundingBox && boundingBox.length > 0) {
+  if (boundingBox) {
     const splitStr = transformBoundingBoxCoordinates(boundingBox[0])
 
     return `SW: (${splitStr[0]}) NE: (${splitStr[1]})`
@@ -88,23 +89,23 @@ export const createSpatialDisplay = (spatial, usingMbr = false) => {
     return `SW: (${swLat}, ${swLng}) NE: (${neLat}, ${neLng})`
   }
 
-  if (circle && circle.length > 0) {
+  if (circle) {
     const splitStr = transformCircleCoordinates(circle[0])
 
     return `Center: (${splitStr[0]}) Radius (m): ${splitStr[1]})`
   }
 
-  if (point && point.length > 0) {
+  if (point) {
     return `Point: (${transformSingleCoordinate(point[0])})`
   }
 
-  if (line && line.length > 0) {
+  if (line) {
     const splitStr = transformBoundingBoxCoordinates(line[0])
 
     return `Start: (${splitStr[0]}) End: (${splitStr[1]})`
   }
 
-  if (polygon && polygon.length > 0) {
+  if (polygon) {
     const splitStr = polygon[0].split(',')
     const pointArray = splitStr.length
     const pointCount = (pointArray / 2) - 1

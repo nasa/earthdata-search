@@ -204,6 +204,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       const { router } = reduxState
       const { location } = router
       const { pathname } = location
+
       if (isPath(pathname, ['/search/granules'])) {
         reduxDispatch(actions.getSearchGranules())
 

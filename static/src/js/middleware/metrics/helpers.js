@@ -1,4 +1,5 @@
 import spatialTypes from '../../constants/spatialTypes'
+import { pruneSpatial } from '../../util/pruneSpatial'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 import {
   getCollectionsQuery,
@@ -29,14 +30,16 @@ export const computeSpatialType = () => {
   const {
     boundingBox,
     circle,
+    line,
     polygon,
     point
-  } = spatialQuery
+  } = pruneSpatial(spatialQuery)
 
-  if (boundingBox && boundingBox.length > 0) return spatialTypes.BOUNDING_BOX
-  if (circle && circle.length > 0) return spatialTypes.CIRCLE
-  if (polygon && polygon.length > 0) return spatialTypes.POLYGON
-  if (point && point.length > 0) return spatialTypes.POINT
+  if (boundingBox) return spatialTypes.BOUNDING_BOX
+  if (circle) return spatialTypes.CIRCLE
+  if (line) return spatialTypes.LINE
+  if (polygon) return spatialTypes.POLYGON
+  if (point) return spatialTypes.POINT
 
   return null
 }

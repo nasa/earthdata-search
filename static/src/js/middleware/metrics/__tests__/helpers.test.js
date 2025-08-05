@@ -9,6 +9,14 @@ import {
   computeFacets
 } from '../helpers'
 
+const emptySpatial = {
+  boundingBox: [],
+  circle: [],
+  line: [],
+  polygon: [],
+  point: []
+}
+
 describe('helpers', () => {
   describe('computeKeyword', () => {
     test('returns null when no keyword is applied', () => {
@@ -41,6 +49,7 @@ describe('helpers', () => {
         query: {
           collection: {
             spatial: {
+              ...emptySpatial,
               boundingBox: ['-15.310546875000002,47.08492103009955,17.5550537109375,61.17149911040902']
             }
           }
@@ -56,6 +65,7 @@ describe('helpers', () => {
         query: {
           collection: {
             spatial: {
+              ...emptySpatial,
               polygon: ['18.630615234375,52.411131961365896,14.657958984375,46.928897935258945,19.78253173828125,45.649948059241616,18.630615234375,52.411131961365896']
             }
           }
@@ -71,6 +81,7 @@ describe('helpers', () => {
         query: {
           collection: {
             spatial: {
+              ...emptySpatial,
               point: ['4.5, 29.868554589199988']
             }
           }
@@ -86,6 +97,7 @@ describe('helpers', () => {
         query: {
           collection: {
             spatial: {
+              ...emptySpatial,
               circle: ['50.20313,41.0444,1042319']
             }
           }
@@ -94,6 +106,22 @@ describe('helpers', () => {
 
       const value = computeSpatialType()
       expect(value).toEqual(spatialTypes.CIRCLE)
+    })
+
+    test('returns Line when line is applied', () => {
+      useEdscStore.setState({
+        query: {
+          collection: {
+            spatial: {
+              ...emptySpatial,
+              line: ['82.6875,-18.61541,83.1231, -16.11311']
+            }
+          }
+        }
+      })
+
+      const value = computeSpatialType()
+      expect(value).toEqual(spatialTypes.LINE)
     })
   })
 

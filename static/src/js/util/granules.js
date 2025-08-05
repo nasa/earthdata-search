@@ -7,6 +7,7 @@ import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsdd
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getCollectionsQuery } from '../zustand/selectors/query'
+import { pruneSpatial } from './pruneSpatial'
 
 /**
  * Populate granule payload used to update the store
@@ -78,7 +79,7 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     point,
     polygon,
     line
-  } = spatial
+  } = pruneSpatial(spatial)
 
   const { [collectionId]: collectionQuery = {} } = collectionQueryById
   const { granules: collectionGranuleQuery = {} } = collectionQuery
@@ -101,9 +102,9 @@ export const extractGranuleSearchParams = (state, collectionId) => {
   } = collectionGranuleQuery
 
   const granuleParams = {
-    boundingBox: boundingBox && boundingBox.length > 0 ? boundingBox : undefined,
+    boundingBox,
     browseOnly,
-    circle: circle && circle.length > 0 ? circle : undefined,
+    circle,
     cloudCover,
     collectionId,
     dayNightFlag,
@@ -112,13 +113,13 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     excludedGranuleIds,
     granuleTemporal,
     gridCoords,
-    line: line && line.length > 0 ? line : undefined,
+    line,
     onlineOnly,
     orbitNumber,
     overrideTemporal,
     pageNum,
-    point: point && point.length > 0 ? point : undefined,
-    polygon: polygon && polygon.length > 0 ? polygon : undefined,
+    point,
+    polygon,
     readableGranuleName,
     sortKey,
     temporal,
