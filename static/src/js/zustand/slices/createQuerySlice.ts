@@ -68,6 +68,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
             ...query.collection,
             spatial: {
               ...initialState.collection.spatial,
+              ...state.query.collection.spatial,
               ...query.collection?.spatial
             }
           }
