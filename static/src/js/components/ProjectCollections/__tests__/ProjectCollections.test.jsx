@@ -74,18 +74,19 @@ const setup = setupTest({
         },
         pageNum: 1
       },
-    projectPanels: {
-      panels: {
-        activePanel: '0.0.0',
-        isOpen: false
-      },
-      setActivePanel: jest.fn(),
-      setIsOpen: jest.fn(),
-      setPanelSection: jest.fn()
-    }
-  },
-  withRedux: true
-}})
+      projectPanels: {
+        panels: {
+          activePanel: '0.0.0',
+          isOpen: false
+        },
+        setActivePanel: jest.fn(),
+        setIsOpen: jest.fn(),
+        setPanelSection: jest.fn()
+      }
+    },
+    withRedux: true
+  }
+})
 
 describe('ProjectCollectionsList component', () => {
   test('renders itself correctly', () => {

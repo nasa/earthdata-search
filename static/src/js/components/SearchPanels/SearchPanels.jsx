@@ -934,7 +934,6 @@ SearchPanels.propTypes = {
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired,
   preferences: PropTypes.shape({
     collectionSort: PropTypes.string,
     collectionListView: PropTypes.node,
