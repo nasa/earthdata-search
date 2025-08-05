@@ -116,24 +116,6 @@ describe('RegionSearch component', () => {
     }, {})
   })
 
-  // Describe('the form', () => {
-  //   test('onSumbit should call onSearchSubmit', () => {
-  //     const onSubmitMock = jest.fn()
-
-  //     const { enzymeWrapper } = setup()
-
-  //     enzymeWrapper.instance().onSearchSubmit = onSubmitMock
-  //     enzymeWrapper.find(Formik).prop('onSubmit')({
-  //       test: 'test'
-  //     })
-
-  //     expect(onSubmitMock).toHaveBeenCalledTimes(1)
-  //     expect(onSubmitMock).toHaveBeenCalledWith({
-  //       test: 'test'
-  //     })
-  //   })
-  // })
-
   describe('when submitting the form', () => {
     test('calls changeRegionQuery and setModalOverlay', async () => {
       const { props, zustandState } = setup({
