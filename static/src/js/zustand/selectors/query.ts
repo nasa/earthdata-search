@@ -7,8 +7,6 @@ import { EdscStore } from '../types'
 import configureStore from '../../store/configureStore'
 
 // @ts-expect-error The file does not have types
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
-// @ts-expect-error The file does not have types
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import {
@@ -16,6 +14,8 @@ import {
   getGranuleSubscriptionDisabledFields
 // @ts-expect-error The file does not have types
 } from '../../selectors/subscriptions'
+
+import { getFocusedCollectionId } from './focusedCollection'
 
 // @ts-expect-error The file does not have types
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
@@ -73,8 +73,9 @@ export const getCollectionsQueryTemporal = (state: EdscStore) => {
  * Retrieve query information pertaining to the focused collection id
  */
 export const getFocusedCollectionGranuleQuery = (state: EdscStore) => {
-  const { getState: reduxGetState } = configureStore()
-  const focusedCollectionId = getFocusedCollectionId(reduxGetState())
+  const focusedCollectionId = getFocusedCollectionId(state)
+
+  if (!focusedCollectionId) return {}
 
   const { byId: collectionsQueryById = {} } = getCollectionsQuery(state)
 

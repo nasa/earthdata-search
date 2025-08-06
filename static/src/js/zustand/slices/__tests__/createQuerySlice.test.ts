@@ -47,10 +47,6 @@ describe('createQuerySlice', () => {
   describe('changeQuery', () => {
     describe('when there is no focused collection', () => {
       test('updates the collection query and calls getCollections', async () => {
-        mockGetState.mockReturnValue({
-          focusedCollection: ''
-        })
-
         useEdscStore.setState((state) => {
           state.project.getProjectGranules = jest.fn()
         })
@@ -85,11 +81,8 @@ describe('createQuerySlice', () => {
 
     describe('when there is a focused collection', () => {
       test('updates the collection query and calls getCollections and getSearchGranules', async () => {
-        mockGetState.mockReturnValue({
-          focusedCollection: 'collectionId'
-        })
-
         useEdscStore.setState((state) => {
+          state.focusedCollection.focusedCollection = 'collectionId'
           state.project.getProjectGranules = jest.fn()
           state.query.collection.byId.collectionId = {
             granules: {
@@ -132,10 +125,6 @@ describe('createQuerySlice', () => {
 
     describe('when there is a project collection', () => {
       test('updates the collection query and calls getCollections and getProjectGranules', async () => {
-        mockGetState.mockReturnValue({
-          focusedCollection: ''
-        })
-
         useEdscStore.setState((state) => {
           state.project.collections.allIds = ['collectionId']
           state.project.getProjectGranules = jest.fn()
@@ -174,10 +163,6 @@ describe('createQuerySlice', () => {
 
     describe('when there are spatial values', () => {
       test('updates the store', async () => {
-        mockGetState.mockReturnValue({
-          focusedCollection: ''
-        })
-
         useEdscStore.setState((state) => {
           state.project.getProjectGranules = jest.fn()
         })
@@ -374,11 +359,8 @@ describe('createQuerySlice', () => {
 
     describe('when the collectionId is focused and in the projectCollectionIds', () => {
       test('calls getProjectGranules', async () => {
-        mockGetState.mockReturnValue({
-          focusedCollection: 'collectionId'
-        })
-
         useEdscStore.setState((state) => {
+          state.focusedCollection.focusedCollection = 'collectionId'
           state.project.getProjectGranules = jest.fn()
           state.project.collections.allIds = ['collectionId']
           state.query.collection.byId.collectionId = {
@@ -593,10 +575,6 @@ describe('createQuerySlice', () => {
 
   describe('removeSpatialFilter', () => {
     test('removes the spatial filter', async () => {
-      mockGetState.mockReturnValue({
-        focusedCollection: ''
-      })
-
       useEdscStore.setState((state) => {
         state.query.collection.byId.collectionId = {
           granules: initialGranuleState

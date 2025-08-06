@@ -61,7 +61,6 @@ export const updateStore = ({
     await dispatch(restoreFromUrl({
       advancedSearch,
       collections,
-      focusedCollection,
       focusedGranule,
       deprecatedUrlParams
     }))
@@ -79,6 +78,10 @@ export const updateStore = ({
           ...zustandState.facetParams,
           featureFacets,
           cmrFacets
+        },
+        focusedCollection: {
+          ...zustandState.focusedCollection,
+          focusedCollection
         },
         map: merge({}, zustandState.map, {
           mapView: merge({}, zustandState.map.mapView, mapView)
@@ -108,7 +111,8 @@ export const updateStore = ({
 }
 
 export const changePath = (path = '') => async (dispatch) => {
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const [pathname, queryString] = path.split('?')
 
@@ -165,6 +169,9 @@ export const changePath = (path = '') => async (dispatch) => {
     await dispatch(actions.updateStore(decodedParams, pathname))
   }
 
+  const { focusedCollection } = zustandState
+  const { getFocusedCollection } = focusedCollection
+
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
   // other cases, getGranules will be requested using the granule search query params.
@@ -180,7 +187,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules'
       || pathname.match(/\/portal\/\w*\/search\/granules$/)
     ) {
-      dispatch(actions.getFocusedCollection())
+      await getFocusedCollection()
     }
 
     // Collection Details
@@ -188,7 +195,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/collection-details'
       || pathname.match(/\/portal\/\w*\/search\/granules\/collection-details$/)
     ) {
-      dispatch(actions.getFocusedCollection())
+      await getFocusedCollection()
     }
 
     // Subscription Details
@@ -196,7 +203,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/subscriptions'
       || pathname.match(/\/portal\/\w*\/search\/granules\/subscriptions$/)
     ) {
-      dispatch(actions.getFocusedCollection())
+      await getFocusedCollection()
     }
 
     // Granule Details
@@ -204,7 +211,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/granule-details'
       || pathname.match(/\/portal\/\w*\/search\/granules\/granule-details$/)
     ) {
-      dispatch(actions.getFocusedCollection())
+      await getFocusedCollection()
 
       dispatch(actions.getFocusedGranule())
     }
@@ -215,7 +222,6 @@ export const changePath = (path = '') => async (dispatch) => {
   const { collections: projectCollections = {} } = project
   const { allIds = [] } = projectCollections
 
-  const zustandState = useEdscStore.getState()
   const {
     project: zustandProject,
     timeline

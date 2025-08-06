@@ -29,7 +29,6 @@ const setup = setupTest({
     onFetchRetrievalCollection: jest.fn(),
     onFetchRetrievalCollectionGranuleLinks: jest.fn(),
     onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
-    onFocusedCollectionChange: jest.fn(),
     onMetricsRelatedCollection: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
     retrieval: {
@@ -86,16 +85,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedCollection')
-
-    mapDispatchToProps(dispatch).onFocusedCollectionChange('mock-id')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('mock-id')
   })
 
   test('onMetricsRelatedCollection calls metricsRelatedCollection', () => {
@@ -168,7 +157,6 @@ describe('OrderStatusContainer component', () => {
           onFetchRetrievalCollection: expect.any(Function),
           onFetchRetrievalCollectionGranuleLinks: expect.any(Function),
           onFetchRetrievalCollectionGranuleBrowseLinks: expect.any(Function),
-          onFocusedCollectionChange: expect.any(Function),
           onMetricsRelatedCollection: expect.any(Function),
           onToggleAboutCSDAModal: expect.any(Function),
           retrieval: {

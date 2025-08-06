@@ -33,8 +33,6 @@ export const mapDispatchToProps = (dispatch) => ({
     (retrievalCollection) => dispatch(
       actions.fetchRetrievalCollectionGranuleBrowseLinks(retrievalCollection)
     ),
-  onFocusedCollectionChange:
-    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onMetricsRelatedCollection:
     (data) => dispatch(metricsRelatedCollection(data)),
   onToggleAboutCSDAModal:
@@ -51,7 +49,6 @@ export const OrderStatusContainer = ({
   onFetchRetrievalCollection,
   onFetchRetrievalCollectionGranuleLinks,
   onFetchRetrievalCollectionGranuleBrowseLinks,
-  onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleAboutCSDAModal,
   retrieval
@@ -66,7 +63,6 @@ export const OrderStatusContainer = ({
     onFetchRetrievalCollection={onFetchRetrievalCollection}
     onFetchRetrievalCollectionGranuleLinks={onFetchRetrievalCollectionGranuleLinks}
     onFetchRetrievalCollectionGranuleBrowseLinks={onFetchRetrievalCollectionGranuleBrowseLinks}
-    onFocusedCollectionChange={onFocusedCollectionChange}
     onMetricsRelatedCollection={onMetricsRelatedCollection}
     onToggleAboutCSDAModal={onToggleAboutCSDAModal}
     retrieval={retrieval}
@@ -83,7 +79,6 @@ OrderStatusContainer.propTypes = {
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleBrowseLinks: PropTypes.func.isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired

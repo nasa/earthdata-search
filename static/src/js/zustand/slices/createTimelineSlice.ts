@@ -52,16 +52,18 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
       } = configureStore()
       const reduxState = reduxGetState()
 
+      const currentState = get()
       const {
         authToken
       } = reduxState
-      const earthdataEnvironment = getEarthdataEnvironment(get())
 
+      const earthdataEnvironment = getEarthdataEnvironment(currentState)
       const timelineParams = prepareTimelineParams({
         ...reduxState,
-        collectionQuery: getCollectionsQuery(get()),
-        project: get().project,
-        timeline: get().timeline
+        collectionQuery: getCollectionsQuery(currentState),
+        focusedCollection: currentState.focusedCollection.focusedCollection,
+        projectCollections: currentState.project.collections,
+        timelineQuery: currentState.timeline.query
       })
 
       if (!timelineParams) {

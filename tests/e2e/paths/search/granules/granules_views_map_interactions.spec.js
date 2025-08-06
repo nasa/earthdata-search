@@ -1,9 +1,9 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import {
   interceptUnauthenticatedCollections
 } from '../../../../support/interceptUnauthenticatedCollections'
+import { isGetFocusedCollectionsQuery } from '../../../../support/isGetFocusedCollectionsQuery'
 import { setupTests } from '../../../../support/setupTests'
 
 import commonBody from './__mocks__/cmr_granules/common_collections.body.json'
@@ -52,7 +52,7 @@ test.describe('When clicking on a granule on the map', () => {
     await page.route(/api$/, async (route) => {
       const query = route.request().postData()
 
-      if (query === graphQlGetCollection(conceptId)) {
+      if (isGetFocusedCollectionsQuery(route, conceptId)) {
         await route.fulfill({
           json: cmrGranulesCollectionGraphQlBody,
           headers: cmrGranulesCollectionGraphQlHeaders

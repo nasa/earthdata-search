@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-
-import { getFocusedCollectionId } from './focusedCollection'
+import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
+import useEdscStore from '../zustand/useEdscStore'
 
 /**
  * Retrieve all collection metadata from Redux
@@ -17,8 +17,10 @@ export const getCollectionsMetadata = (state) => {
  * Retrieve metadata from Redux pertaining to the focused collection id
  */
 export const getFocusedCollectionMetadata = createSelector(
-  [getFocusedCollectionId, getCollectionsMetadata],
-  (focusedCollectionId, collectionsMetadata) => {
+  [getCollectionsMetadata],
+  (collectionsMetadata) => {
+    const focusedCollectionId = getFocusedCollectionId(useEdscStore.getState())
+
     const { [focusedCollectionId]: collectionMetadata = {} } = collectionsMetadata
 
     return collectionMetadata

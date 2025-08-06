@@ -13,8 +13,7 @@ import actions from '../../actions'
 // @ts-expect-error This file does not have types
 import { CLEAR_FILTERS } from '../../constants/actionTypes'
 
-// @ts-expect-error This file does not have types
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../selectors/project'
 
 import isPath from '../../util/isPath'
@@ -81,15 +80,13 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       })
 
       const {
-        dispatch: reduxDispatch,
-        getState: getReduxState
+        dispatch: reduxDispatch
       } = configureStore()
-      const reduxState = getReduxState()
       reduxDispatch(actions.getCollections())
 
       // If there is a focused collection, update it's granule search params
       // and request it's granules started with page one
-      const focusedCollectionId = getFocusedCollectionId(reduxState)
+      const focusedCollectionId = getFocusedCollectionId(get())
       if (focusedCollectionId) {
         set((state) => ({
           query: {
@@ -146,18 +143,15 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       })
 
-      const {
-        dispatch: reduxDispatch,
-        getState: getReduxState
-      } = configureStore()
-      const reduxState = getReduxState()
-
-      const focusedCollectionId = getFocusedCollectionId(reduxState)
+      const focusedCollectionId = getFocusedCollectionId(get())
       const projectCollectionsIds = getProjectCollectionsIds(get())
       if (focusedCollectionId && projectCollectionsIds.includes(focusedCollectionId)) {
         await get().project.getProjectGranules()
       }
 
+      const {
+        dispatch: reduxDispatch
+      } = configureStore()
       reduxDispatch(actions.getSearchGranules())
 
       // Clear any subscription disabledFields

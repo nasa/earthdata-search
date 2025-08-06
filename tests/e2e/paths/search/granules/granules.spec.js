@@ -1,15 +1,16 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { graphQlGetCollection } from '../../../../support/graphQlGetCollection'
 import { graphQlGetCollections } from '../../../../support/graphQlGetCollections'
 import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubscriptionsQuery'
-
-import { commafy } from '../../../../../static/src/js/util/commafy'
-import { pluralize } from '../../../../../static/src/js/util/pluralize'
-
 import {
   interceptUnauthenticatedCollections
 } from '../../../../support/interceptUnauthenticatedCollections'
+import { isGetFocusedCollectionsQuery } from '../../../../support/isGetFocusedCollectionsQuery'
+import { login } from '../../../../support/login'
+import { setupTests } from '../../../../support/setupTests'
+
+import { commafy } from '../../../../../static/src/js/util/commafy'
+import { pluralize } from '../../../../../static/src/js/util/pluralize'
 
 import browseOnlyGranulesBody from './__mocks__/browse_only/granules.body.json'
 import browseOnlyGraphQlBody from './__mocks__/browse_only/graphql.body.json'
@@ -104,9 +105,6 @@ import timelineTimelineBody from './__mocks__/timeline/timeline.body.json'
 import timelineTimelineHeaders from './__mocks__/timeline/timeline.headers.json'
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 
-import { login } from '../../../../support/login'
-import { setupTests } from '../../../../support/setupTests'
-
 const defaultCmrPageSize = 20
 
 /**
@@ -169,10 +167,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(noParamsGraphQlBody),
@@ -226,10 +221,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(readableGranuleNameGraphQlBody),
@@ -284,13 +276,7 @@ test.describe('Path /search/granules', () => {
         })
 
         await page.route('**/api', (route) => {
-          const request = route.request()
-          const body = JSON.stringify(request.postData())
-          const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
-          const requestBody = JSON.parse(body)
-          const expectedRequestBody = JSON.parse(expectedBody)
-
-          expect(requestBody).toEqual(expectedRequestBody)
+          expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
           route.fulfill({
             body: JSON.stringify(temporalGraphQlBody),
@@ -348,13 +334,7 @@ test.describe('Path /search/granules', () => {
         })
 
         await page.route('**/api', (route) => {
-          const request = route.request()
-          const body = JSON.stringify(request.postData())
-          const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
-          const requestBody = JSON.parse(body)
-          const expectedRequestBody = JSON.parse(expectedBody)
-
-          expect(requestBody).toEqual(expectedRequestBody)
+          expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
           route.fulfill({
             body: JSON.stringify(temporalGraphQlBody),
@@ -415,10 +395,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(browseOnlyGraphQlBody),
@@ -473,10 +450,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(onlineOnlyGraphQlBody),
@@ -531,10 +505,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(orbitNumberGraphQlBody),
@@ -589,10 +560,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(equatorialCrossingLongitudeGraphQlBody),
@@ -647,10 +615,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(equatorialCrossingDateGraphQlBody),
@@ -705,10 +670,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(sortKeyGraphQlBody),
@@ -763,10 +725,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(cloudCoverGraphQlBody),
@@ -821,10 +780,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(dayNightGraphQlBody),
@@ -878,10 +834,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(gridCoordsGraphQlBody),
@@ -950,10 +903,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const requestBody = JSON.parse(route.request().postData())
-        const expectedBody = JSON.parse(graphQlGetCollection(conceptId))
-
-        expect(requestBody).toEqual(expectedBody)
+        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(timelineGraphQlBody),
@@ -1014,7 +964,7 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', (route) => {
         const body = JSON.stringify(route.request().postData())
 
-        if (body === JSON.stringify(graphQlGetCollection(conceptId))) {
+        if (isGetFocusedCollectionsQuery(route, conceptId)) {
           route.fulfill({
             body: JSON.stringify(focusedGranuleCollectionGraphQlBody),
             headers: focusedGranuleGraphQlHeaders
@@ -1101,11 +1051,9 @@ test.describe('Path /search/granules', () => {
       await page.route('**/api', async (route) => {
         const request = route.request()
         const body = JSON.stringify(request.postData())
-        const expectedBody = JSON.stringify(graphQlGetCollection(conceptId))
         const requestBody = JSON.parse(body)
-        const expectedRequestBody = JSON.parse(expectedBody)
 
-        if (JSON.stringify(requestBody) === JSON.stringify(expectedRequestBody)) {
+        if (isGetFocusedCollectionsQuery(route, conceptId)) {
           await route.fulfill({
             body: JSON.stringify(projectGranuleCollectionGraphQlBody),
             headers: projectGranuleGraphQlHeaders
@@ -1234,7 +1182,7 @@ test.describe('Path /search/granules', () => {
 
         expect(JSON.parse(body).params).toEqual({
           concept_id: [],
-          echo_collection_id: 'C1214470488-ASF',
+          echo_collection_id: conceptId,
           exclude: {},
           options: {},
           page_num: 1,
@@ -1259,7 +1207,7 @@ test.describe('Path /search/granules', () => {
         const body = request.postData()
 
         expect(JSON.parse(body).params).toEqual({
-          concept_id: ['C1214470488-ASF'],
+          concept_id: [conceptId],
           end_date: '2047-01-01T00:00:00.000Z',
           interval: 'month',
           point: ['-77.04119,38.80585'],
@@ -1287,7 +1235,7 @@ test.describe('Path /search/granules', () => {
             }),
             headers: subscriptionGraphQlHeaders
           })
-        } else if (body.data.query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+        } else if (isGetFocusedCollectionsQuery(route, conceptId)) {
           await route.fulfill({
             body: JSON.stringify(subscriptionGraphQlBody),
             headers: graphQlHeaders

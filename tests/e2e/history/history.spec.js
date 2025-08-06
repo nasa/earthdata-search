@@ -66,7 +66,7 @@ test.describe('History', () => {
         })
       }
 
-      if (query.includes('query GetCollection')) {
+      if (query.includes('query GetFocusedCollection')) {
         await route.fulfill({
           json: granulesGraphQlBody,
           headers: graphQlHeaders

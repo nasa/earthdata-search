@@ -164,7 +164,7 @@ class SearchPanels extends PureComponent {
       onApplyGranuleFilters,
       onChangeQuery,
       onExport,
-      onFocusedCollectionChange,
+      changeFocusedCollection,
       onMetricsCollectionSortChange,
       onToggleAboutCSDAModal,
       onToggleAboutCwicModal,
@@ -525,7 +525,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => onFocusedCollectionChange('')
+              onClick: () => changeFocusedCollection('')
             }
           ]
         }
@@ -587,7 +587,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => onFocusedCollectionChange('')
+              onClick: () => changeFocusedCollection('')
             }
           ]
         }
@@ -627,7 +627,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => onFocusedCollectionChange('')
+              onClick: () => changeFocusedCollection('')
             },
             {
               title: collectionTitle,
@@ -681,7 +681,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => onFocusedCollectionChange('')
+              onClick: () => changeFocusedCollection('')
             },
             {
               title: collectionTitle,
@@ -739,7 +739,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => onFocusedCollectionChange('')
+              onClick: () => changeFocusedCollection('')
             }
           ]
         }
@@ -882,6 +882,7 @@ class SearchPanels extends PureComponent {
 
 SearchPanels.propTypes = {
   authToken: PropTypes.string.isRequired,
+  changeFocusedCollection: PropTypes.func.isRequired,
   collectionMetadata: PropTypes.shape({
     conceptId: PropTypes.string,
     consortiums: PropTypes.arrayOf(PropTypes.string),
@@ -929,7 +930,6 @@ SearchPanels.propTypes = {
   onApplyGranuleFilters: PropTypes.func.isRequired,
   onChangeQuery: PropTypes.func.isRequired,
   onExport: PropTypes.func.isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,

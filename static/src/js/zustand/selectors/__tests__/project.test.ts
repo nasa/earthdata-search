@@ -98,6 +98,9 @@ describe('project selectors', () => {
   describe('getFocusedProjectCollection', () => {
     test('returns the project collection for the focused collection ID', () => {
       useEdscStore.setState(() => ({
+        focusedCollection: {
+          focusedCollection: 'collection1'
+        },
         project: {
           collections: {
             allIds: ['collection1', 'collection2'],
@@ -109,18 +112,15 @@ describe('project selectors', () => {
         }
       }))
 
-      configureStore.mockReturnValue({
-        getState: () => ({
-          focusedCollection: 'collection1'
-        })
-      })
-
       const result = getFocusedProjectCollection(useEdscStore.getState())
       expect(result).toEqual({ id: 'collection1' })
     })
 
     test('returns an empty object if no focused collection exists', () => {
       useEdscStore.setState(() => ({
+        focusedCollection: {
+          focusedCollection: 'collection3' // Not in project collections
+        },
         project: {
           collections: {
             allIds: ['collection1', 'collection2'],
@@ -128,12 +128,6 @@ describe('project selectors', () => {
           }
         }
       }))
-
-      configureStore.mockReturnValue({
-        getState: () => ({
-          focusedCollection: 'collection3' // Not in project collections
-        })
-      })
 
       const result = getFocusedProjectCollection(useEdscStore.getState())
       expect(result).toEqual({})

@@ -83,8 +83,6 @@ const setup = setupTest({
     },
     loadNextPage: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
     panelView: 'list'
   },
   defaultZustandState: {
@@ -114,8 +112,6 @@ describe('CollectionResultsBody component', () => {
       itemCount: 2,
       loadMoreItems: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onViewCollectionDetails: expect.any(Function),
-      onViewCollectionGranules: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),
       visibleMiddleIndex: null
     }, {})
@@ -137,8 +133,6 @@ describe('CollectionResultsBody component', () => {
       itemCount: 2,
       loadMoreItems: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onViewCollectionDetails: expect.any(Function),
-      onViewCollectionGranules: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),
       visibleMiddleIndex: null
     }, {})
@@ -162,8 +156,6 @@ describe('CollectionResultsBody component', () => {
       itemCount: 1,
       loadMoreItems: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onViewCollectionDetails: expect.any(Function),
-      onViewCollectionGranules: expect.any(Function),
       setVisibleMiddleIndex: expect.any(Function),
       visibleMiddleIndex: null
     }, {})

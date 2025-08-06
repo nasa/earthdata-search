@@ -12,13 +12,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onUpdateProjectName:
     (name) => dispatch(actions.updateProjectName(name)),
   onMetricsDataAccess:
-    (data) => dispatch(metricsDataAccess(data)),
-  onUpdateFocusedCollection:
-    (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
-  onViewCollectionDetails:
-    (data) => dispatch(actions.viewCollectionDetails(data)),
-  onViewCollectionGranules:
-    (data) => dispatch(actions.viewCollectionGranules(data))
+    (data) => dispatch(metricsDataAccess(data))
 })
 
 export const mapStateToProps = (state) => ({
@@ -28,20 +22,14 @@ export const mapStateToProps = (state) => ({
 export const ProjectCollectionsContainer = (props) => {
   const {
     onMetricsDataAccess,
-    onUpdateFocusedCollection,
     onUpdateProjectName,
-    onViewCollectionDetails,
-    onViewCollectionGranules,
     savedProject
   } = props
 
   return (
     <ProjectCollections
       onMetricsDataAccess={onMetricsDataAccess}
-      onUpdateFocusedCollection={onUpdateFocusedCollection}
       onUpdateProjectName={onUpdateProjectName}
-      onViewCollectionDetails={onViewCollectionDetails}
-      onViewCollectionGranules={onViewCollectionGranules}
       savedProject={savedProject}
     />
   )
@@ -49,10 +37,7 @@ export const ProjectCollectionsContainer = (props) => {
 
 ProjectCollectionsContainer.propTypes = {
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }
 

@@ -50,9 +50,9 @@ export const prepareTimelineParams = (state) => {
     authToken,
     collectionQuery,
     focusedCollection,
-    project,
+    projectCollections,
     router,
-    timeline
+    timelineQuery
   } = state
 
   const { location } = router
@@ -63,7 +63,6 @@ export const prepareTimelineParams = (state) => {
 
   // If we are on the project page, we want to query the projectIds
   if (isProjectPage) {
-    const { collections: projectCollections } = project
     const { allIds: projectIds } = projectCollections
 
     conceptIds = projectIds
@@ -84,7 +83,6 @@ export const prepareTimelineParams = (state) => {
     polygon
   } = spatial
 
-  const { query: timelineQuery } = timeline
   const {
     endDate,
     startDate

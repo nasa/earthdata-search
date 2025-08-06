@@ -44,21 +44,21 @@ import './CollectionResultsItem.scss'
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collection - The collection metadata.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
- * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
- * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
  */
 export const CollectionResultsItem = forwardRef(({
   collectionMetadata,
-  onMetricsAddCollectionProject,
-  onViewCollectionDetails,
-  onViewCollectionGranules
+  onMetricsAddCollectionProject
 }, ref) => {
   const {
     addProjectCollection,
-    removeProjectCollection
+    removeProjectCollection,
+    viewCollectionDetails,
+    viewCollectionGranules
   } = useEdscStore((state) => ({
     addProjectCollection: state.project.addProjectCollection,
-    removeProjectCollection: state.project.removeProjectCollection
+    removeProjectCollection: state.project.removeProjectCollection,
+    viewCollectionDetails: state.focusedCollection.viewCollectionDetails,
+    viewCollectionGranules: state.focusedCollection.viewCollectionGranules
   }))
 
   const {
@@ -223,7 +223,7 @@ export const CollectionResultsItem = forwardRef(({
         onKeyPress={
           (event) => {
             if (event.key === 'Enter') {
-              onViewCollectionGranules(collectionId)
+              viewCollectionGranules(collectionId)
             }
 
             event.stopPropagation()
@@ -231,7 +231,7 @@ export const CollectionResultsItem = forwardRef(({
         }
         onClick={
           (event) => {
-            onViewCollectionGranules(collectionId)
+            viewCollectionGranules(collectionId)
             event.stopPropagation()
           }
         }
@@ -469,7 +469,7 @@ export const CollectionResultsItem = forwardRef(({
                   className="collection-results-item__action collection-results-item__action--collection-details"
                   onClick={
                     (event) => {
-                      onViewCollectionDetails(collectionId)
+                      viewCollectionDetails(collectionId)
                       event.stopPropagation()
                     }
                   }
@@ -500,9 +500,7 @@ CollectionResultsItem.displayName = 'CollectionResultsItem'
 
 CollectionResultsItem.propTypes = {
   collectionMetadata: collectionMetadataPropType.isRequired,
-  onMetricsAddCollectionProject: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired
+  onMetricsAddCollectionProject: PropTypes.func.isRequired
 }
 
 export default CollectionResultsItem
