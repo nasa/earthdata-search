@@ -5,7 +5,6 @@ export const retrievalStatusProps = {
   onFetchRetrievalCollection: jest.fn(),
   onFetchRetrievalCollectionGranuleLinks: jest.fn(),
   onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
-  onFocusedCollectionChange: jest.fn(),
   onMetricsRelatedCollection: jest.fn(),
   onToggleAboutCSDAModal: jest.fn(),
   match: {

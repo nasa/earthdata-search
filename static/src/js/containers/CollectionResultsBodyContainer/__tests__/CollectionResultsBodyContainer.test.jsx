@@ -3,8 +3,6 @@ import { act } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import actions from '../../../actions'
-
 import * as metricsActions from '../../../middleware/metrics/actions'
 
 import {
@@ -31,8 +29,6 @@ const setup = setupTest({
     projectCollectionsIds: [],
     onMetricsAddCollectionProject: jest.fn(),
     onChangeCollectionPageNum: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
     panelView: 'list'
   },
   defaultZustandState: {
@@ -43,26 +39,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onViewCollectionGranules calls actions.viewCollectionGranules', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'viewCollectionGranules')
-
-    mapDispatchToProps(dispatch).onViewCollectionGranules('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
-  test('onViewCollectionDetails calls actions.viewCollectionDetails', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'viewCollectionDetails')
-
-    mapDispatchToProps(dispatch).onViewCollectionDetails('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
   test('onMetricsAddCollectionProject calls metricsActions.metricsAddCollectionProject', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsActions, 'metricsAddCollectionProject')
@@ -107,8 +83,6 @@ describe('CollectionResultsBodyContainer component', () => {
       collectionsSearch: {},
       loadNextPage: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      onViewCollectionDetails: expect.any(Function),
-      onViewCollectionGranules: expect.any(Function),
       panelView: 'list'
     }, {})
   })

@@ -30,12 +30,12 @@ import {
 } from '../constants/actionTypes'
 import { toggleSpatialPolygonWarning } from './ui'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
-import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import RetrievalRequest from '../util/request/retrievalRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
+import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
 
 const { granuleLinksPageSize, openSearchGranuleLinksPageSize } = getApplicationConfig()
 
@@ -240,12 +240,13 @@ const granuleSearchCancelTokens = {}
 export const getSearchGranules = () => (dispatch, getState) => {
   const state = getState()
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+  const collectionId = getFocusedCollectionId(zustandState)
 
   const { authToken } = state
 
   // Retrieve data from Redux using selectors
-  const collectionId = getFocusedCollectionId(state)
   const collectionMetadata = getFocusedCollectionMetadata(state)
 
   // Extract granule search parameters from redux specific to the focused collection

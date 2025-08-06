@@ -1,10 +1,12 @@
 import { prepareCollectionParams, buildCollectionSearchParams } from '../util/collections'
 
 import { exactMatch } from '../util/relevancy'
-import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../selectors/collectionMetadata'
 
 import LoggerRequest from '../util/request/loggerRequest'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
 
 /**
  * Send collection relevancy information to lambda to be logged
@@ -16,8 +18,9 @@ export const collectionRelevancyMetrics = () => (dispatch, getState) => {
     searchResults
   } = state
 
+  const focusedCollectionId = getFocusedCollectionId(useEdscStore.getState())
+
   // Retrieve data from Redux using selectors
-  const focusedCollectionId = getFocusedCollectionId(state)
   const focusedCollectionMetadata = getFocusedCollectionMetadata(state)
 
   const collectionParams = buildCollectionSearchParams(prepareCollectionParams(state))

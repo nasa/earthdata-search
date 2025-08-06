@@ -12,7 +12,7 @@ import {
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import configureStore from '../../../store/configureStore'
+import useEdscStore from '../../../zustand/useEdscStore'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
 
@@ -25,7 +25,6 @@ const setup = setupTest({
     collectionMetadata: {
       mock: 'data'
     },
-    focusedCollectionId: 'focusedCollection',
     granuleSearchResults: {
       allIds: [],
       excludledGranuleIds: [],
@@ -42,6 +41,9 @@ const setup = setupTest({
     subscriptions: []
   },
   defaultZustandState: {
+    focusedCollection: {
+      focusedCollection: 'focusedCollection'
+    },
     project: {
       collections: {
         allIds: ['focusedCollection'],
@@ -79,16 +81,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledWith('panelId')
   })
 
-  test('onUpdateFocusedCollection calls actions.updateFocusedCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateFocusedCollection')
-
-    mapDispatchToProps(dispatch).onUpdateFocusedCollection('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
   test('onChangePath calls actions.changePath', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changePath')
@@ -112,6 +104,11 @@ describe('mapDispatchToProps', () => {
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const store = {
       authToken: 'token',
       metadata: {
@@ -120,9 +117,7 @@ describe('mapStateToProps', () => {
             subscriptions: []
           }
         }
-      },
-      focusedCollection: 'collectionId',
-      focusedGranule: 'granuleId'
+      }
     }
 
     const expectedState = {
@@ -130,7 +125,6 @@ describe('mapStateToProps', () => {
       collectionMetadata: {
         subscriptions: []
       },
-      focusedCollectionId: 'collectionId',
       granuleSearchResults: {},
       subscriptions: []
     }
@@ -141,12 +135,6 @@ describe('mapStateToProps', () => {
 
 describe('GranuleResultsActionsContainer component', () => {
   test('passes its props and renders a single GranuleResultsActions component', () => {
-    configureStore.mockReturnValue({
-      getState: () => ({
-        focusedCollection: 'focusedCollection'
-      })
-    })
-
     setup()
 
     expect(GranuleResultsActions).toHaveBeenCalledTimes(1)

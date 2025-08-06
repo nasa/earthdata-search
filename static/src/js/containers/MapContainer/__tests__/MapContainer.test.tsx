@@ -71,13 +71,7 @@ describe('mapStateToProps', () => {
         collections: {},
         colormaps: {}
       },
-      focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
-      query: {
-        collection: {
-          spatial: {}
-        }
-      },
       router: {},
       ui: {
         map: {
@@ -95,7 +89,6 @@ describe('mapStateToProps', () => {
       colormapsMetadata: {},
       displaySpatialPolygonWarning: false,
       drawingNewLayer: false,
-      focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
       granuleSearchResults: {},
       granulesMetadata: {},

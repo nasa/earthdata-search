@@ -1,3 +1,4 @@
+import useEdscStore from '../../zustand/useEdscStore'
 import {
   getFocusedCollectionMetadata,
   getFocusedCollectionSubscriptions,
@@ -6,8 +7,12 @@ import {
 
 describe('getFocusedCollectionMetadata selector', () => {
   test('returns the collection metadata', () => {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const state = {
-      focusedCollection: 'collectionId',
       metadata: {
         collections: {
           collectionId: {
@@ -21,7 +26,6 @@ describe('getFocusedCollectionMetadata selector', () => {
 
   test('returns an empty object when there is no focusedCollection', () => {
     const state = {
-      focusedCollection: '',
       metadata: {}
     }
 
@@ -31,8 +35,12 @@ describe('getFocusedCollectionMetadata selector', () => {
 
 describe('getFocusedCollectionSubscriptions', () => {
   test('returns the subscriptions', () => {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'C100000-EDSC'
+    })
+
     const state = {
-      focusedCollection: 'C100000-EDSC',
       metadata: {
         collections: {
           'C100000-EDSC': {
@@ -64,8 +72,12 @@ describe('getFocusedCollectionSubscriptions', () => {
 
 describe('getFocusedCollectionTags', () => {
   test('returns the subscriptions', () => {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'C100000-EDSC'
+    })
+
     const state = {
-      focusedCollection: 'C100000-EDSC',
       metadata: {
         collections: {
           'C100000-EDSC': {

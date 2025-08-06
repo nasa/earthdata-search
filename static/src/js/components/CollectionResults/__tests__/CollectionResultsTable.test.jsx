@@ -16,8 +16,6 @@ const setup = setupTest({
     itemCount: 1,
     loadMoreItems: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
     visibleMiddleIndex: 1
   }
@@ -42,9 +40,7 @@ describe('CollectionResultsTable component', () => {
           customProps: {
             cellClassName: 'collection-results-table__cell--collection',
             collectionId: '1234',
-            onViewCollectionGranules: expect.any(Function),
-            onMetricsAddCollectionProject: expect.any(Function),
-            onViewCollectionDetails: expect.any(Function)
+            onMetricsAddCollectionProject: expect.any(Function)
           }
         },
         {

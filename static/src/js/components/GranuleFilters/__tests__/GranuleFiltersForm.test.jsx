@@ -37,8 +37,10 @@ const setup = setupTest({
       }
     }
   },
-  defaultReduxState: {
-    focusedCollection: 'collectionId'
+  defaultZustandState: {
+    focusedCollection: {
+      focusedCollection: 'collectionId'
+    }
   },
   withRedux: true
 })

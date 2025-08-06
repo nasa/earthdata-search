@@ -13,8 +13,6 @@ import Spinner from '../../components/Spinner/Spinner'
 const CollectionDetailsBody = lazy(() => import('../../components/CollectionDetails/CollectionDetailsBody'))
 
 export const mapDispatchToProps = (dispatch) => ({
-  onFocusedCollectionChange:
-    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onToggleRelatedUrlsModal:
     (state) => dispatch(actions.toggleRelatedUrlsModal(state)),
   onMetricsRelatedCollection:
@@ -44,7 +42,6 @@ export const CollectionDetailsBodyContainer = ({
   collectionMetadata,
   isActive,
   location,
-  onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleRelatedUrlsModal
 }) => (
@@ -53,7 +50,6 @@ export const CollectionDetailsBodyContainer = ({
       collectionMetadata={collectionMetadata}
       isActive={isActive}
       location={location}
-      onFocusedCollectionChange={onFocusedCollectionChange}
       onMetricsRelatedCollection={onMetricsRelatedCollection}
       onToggleRelatedUrlsModal={onToggleRelatedUrlsModal}
     />
@@ -64,7 +60,6 @@ CollectionDetailsBodyContainer.propTypes = {
   collectionMetadata: PropTypes.shape({}).isRequired,
   isActive: PropTypes.bool.isRequired,
   location: PropTypes.shape({}).isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

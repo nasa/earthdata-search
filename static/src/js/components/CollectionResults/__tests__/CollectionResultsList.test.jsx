@@ -43,8 +43,6 @@ const setup = setupTest({
     isItemLoaded: jest.fn().mockReturnValue(true),
     loadMoreItems: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
     visibleMiddleIndex: 1
   }
@@ -71,8 +69,6 @@ describe('CollectionResultsList component', () => {
         }],
         isItemLoaded: expect.any(Function),
         onMetricsAddCollectionProject: expect.any(Function),
-        onViewCollectionDetails: expect.any(Function),
-        onViewCollectionGranules: expect.any(Function),
         setSize: expect.any(Function),
         windowHeight: 600,
         windowWidth: 600
@@ -100,8 +96,6 @@ describe('CollectionResultsList component', () => {
         }],
         isItemLoaded: expect.any(Function),
         onMetricsAddCollectionProject: expect.any(Function),
-        onViewCollectionDetails: expect.any(Function),
-        onViewCollectionGranules: expect.any(Function),
         setSize: expect.any(Function),
         windowHeight: 600,
         windowWidth: 600

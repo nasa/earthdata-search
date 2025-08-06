@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect'
 
-import { getFocusedCollectionId } from './focusedCollection'
 import { getGranulesMetadata } from './granuleMetadata'
+
+import useEdscStore from '../zustand/useEdscStore'
+import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
 
 /**
  * Retrieve current collection search information from Redux
@@ -18,8 +20,10 @@ export const getCollectionsSearch = (state) => {
  * Retrieve search information from Redux pertaining to the granules belonging to the focused collection id
  */
 export const getFocusedCollectionGranuleResults = createSelector(
-  [getFocusedCollectionId, getCollectionsSearch],
-  (focusedCollectionId, collectionsSearch) => {
+  [getCollectionsSearch],
+  (collectionsSearch) => {
+    const focusedCollectionId = getFocusedCollectionId(useEdscStore.getState())
+
     const { byId: collectionsSearchById = {} } = collectionsSearch
     const { [focusedCollectionId]: collectionSearch = {} } = collectionsSearchById
     const { granules: collectionGranuleSearch = {} } = collectionSearch
@@ -32,8 +36,10 @@ export const getFocusedCollectionGranuleResults = createSelector(
  * Retrieve metadata from Redux pertaining to the granules that have been retrieved as part of a collection search
  */
 export const getFocusedCollectionGranuleMetadata = createSelector(
-  [getFocusedCollectionId, getCollectionsSearch, getGranulesMetadata],
-  (focusedCollectionId, collectionsSearch, granulesMetadata) => {
+  [getCollectionsSearch, getGranulesMetadata],
+  (collectionsSearch, granulesMetadata) => {
+    const focusedCollectionId = getFocusedCollectionId(useEdscStore.getState())
+
     const { byId: collectionsSearchById = {} } = collectionsSearch
     const { [focusedCollectionId]: collectionSearch = {} } = collectionsSearchById
     const { granules: collectionGranuleSearch = {} } = collectionSearch

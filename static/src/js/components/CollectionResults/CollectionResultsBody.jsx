@@ -22,8 +22,6 @@ import './CollectionResultsBody.scss'
  * @param {Array} props.collections - Collections passed from redux store.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
- * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
- * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
  * @param {String} props.panelView - The current active view.
  */
 const CollectionResultsBody = ({
@@ -31,8 +29,6 @@ const CollectionResultsBody = ({
   collectionsSearch,
   loadNextPage,
   onMetricsAddCollectionProject,
-  onViewCollectionDetails,
-  onViewCollectionGranules,
   panelView
 }) => {
   const {
@@ -105,8 +101,6 @@ const CollectionResultsBody = ({
         <CollectionResultsList
           visibleMiddleIndex={visibleMiddleIndex}
           collectionsMetadata={collectionList}
-          onViewCollectionGranules={onViewCollectionGranules}
-          onViewCollectionDetails={onViewCollectionDetails}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
@@ -126,8 +120,6 @@ const CollectionResultsBody = ({
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
           onMetricsAddCollectionProject={onMetricsAddCollectionProject}
-          onViewCollectionDetails={onViewCollectionDetails}
-          onViewCollectionGranules={onViewCollectionGranules}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           visibleMiddleIndex={visibleMiddleIndex}
         />
@@ -172,8 +164,6 @@ CollectionResultsBody.propTypes = {
   }).isRequired,
   loadNextPage: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired
 }
 

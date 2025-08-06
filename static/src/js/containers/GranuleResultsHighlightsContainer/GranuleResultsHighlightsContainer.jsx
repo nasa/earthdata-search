@@ -7,33 +7,33 @@ import {
   getFocusedCollectionGranuleMetadata,
   getFocusedCollectionGranuleResults
 } from '../../selectors/collectionResults'
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getGranuleIds } from '../../util/getGranuleIds'
 
 import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/GranuleResultsHighlights'
 
-import { getCollectionsQuery } from '../../zustand/selectors/query'
 import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
 
 export const mapStateToProps = (state) => ({
   focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state),
   focusedCollectionGranuleSearch: getFocusedCollectionGranuleResults(state),
-  focusedCollectionId: getFocusedCollectionId(state),
   focusedCollectionMetadata: getFocusedCollectionMetadata(state)
 })
 
 export const GranuleResultsHighlightsContainer = ({
   focusedCollectionGranuleSearch,
   focusedCollectionGranuleMetadata,
-  focusedCollectionId,
   focusedCollectionMetadata
 }) => {
   const {
     isOpenSearch
   } = focusedCollectionMetadata
 
+  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
   const collectionsQuery = useEdscStore(getCollectionsQuery)
+
   const { [focusedCollectionId]: collectionQueryResults = {} } = collectionsQuery
   const { granules: collectionGranuleQuery = {} } = collectionQueryResults
   const { excludedGranuleIds = [] } = collectionGranuleQuery
@@ -81,7 +81,6 @@ GranuleResultsHighlightsContainer.propTypes = {
     isLoading: PropTypes.bool,
     isLoaded: PropTypes.bool
   }).isRequired,
-  focusedCollectionId: PropTypes.string.isRequired,
   focusedCollectionMetadata: PropTypes.shape({
     isOpenSearch: PropTypes.bool
   }).isRequired

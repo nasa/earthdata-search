@@ -8,7 +8,6 @@ import actions from '../../actions'
 import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
 
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import {
   getFocusedCollectionMetadata,
   getFocusedCollectionSubscriptions
@@ -21,6 +20,7 @@ import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
 import {
   getFocusedProjectCollection,
   getProjectCollectionsIds
@@ -33,8 +33,6 @@ import {
 export const mapDispatchToProps = (dispatch) => ({
   onSetActivePanelSection:
     (panelId) => dispatch(actions.setActivePanelSection(panelId)),
-  onUpdateFocusedCollection:
-    (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
   onChangePath:
     (path) => dispatch(actions.changePath(path)),
   onMetricsAddCollectionProject:
@@ -44,7 +42,6 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   collectionMetadata: getFocusedCollectionMetadata(state),
-  focusedCollectionId: getFocusedCollectionId(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   subscriptions: getFocusedCollectionSubscriptions(state)
 })
@@ -53,7 +50,6 @@ export const GranuleResultsActionsContainer = (props) => {
   const {
     authToken,
     collectionMetadata,
-    focusedCollectionId,
     granuleSearchResults,
     location,
     onChangePath,
@@ -67,6 +63,7 @@ export const GranuleResultsActionsContainer = (props) => {
   }))
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
+  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
 
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
   const projectCollectionIds = useEdscStore(getProjectCollectionsIds)
@@ -127,7 +124,6 @@ export const GranuleResultsActionsContainer = (props) => {
 GranuleResultsActionsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
-  focusedCollectionId: PropTypes.string.isRequired,
   granuleSearchResults: PropTypes.shape({
     hits: PropTypes.number,
     isLoaded: PropTypes.bool,

@@ -32,10 +32,7 @@ const ProjectCollections = ({
   onSetActivePanel,
   onSetActivePanelSection,
   onTogglePanels,
-  onUpdateFocusedCollection,
   onUpdateProjectName,
-  onViewCollectionDetails,
-  onViewCollectionGranules,
   panels,
   savedProject
 }) => {
@@ -92,9 +89,6 @@ const ProjectCollections = ({
         onSetActivePanel={onSetActivePanel}
         onSetActivePanelSection={onSetActivePanelSection}
         onTogglePanels={onTogglePanels}
-        onUpdateFocusedCollection={onUpdateFocusedCollection}
-        onViewCollectionDetails={onViewCollectionDetails}
-        onViewCollectionGranules={onViewCollectionGranules}
         panels={panels}
       />
       <div className="project-collections__footer">
@@ -152,10 +146,7 @@ ProjectCollections.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }

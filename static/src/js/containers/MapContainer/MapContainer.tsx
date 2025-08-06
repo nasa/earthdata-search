@@ -19,8 +19,6 @@ import { eventEmitter } from '../../events/events'
 // @ts-expect-error The file does not have types
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 // @ts-expect-error The file does not have types
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
-// @ts-expect-error The file does not have types
 import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
 // @ts-expect-error The file does not have types
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
@@ -57,8 +55,9 @@ import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
+import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 
 import type {
   CollectionsMetadata,
@@ -93,7 +92,6 @@ export const mapStateToProps = (state) => ({
   colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
-  focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
@@ -125,8 +123,6 @@ interface MapContainerProps {
   displaySpatialPolygonWarning: boolean
   /** The drawing new layer flag */
   drawingNewLayer: string | boolean
-  /** The focused collection id */
-  focusedCollectionId: string
   /** The focused granule id */
   focusedGranuleId: string
   /** The granule search results */
@@ -167,7 +163,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     colormapsMetadata,
     displaySpatialPolygonWarning,
     drawingNewLayer,
-    focusedCollectionId,
     focusedGranuleId,
     granuleSearchResults,
     granulesMetadata,
@@ -222,6 +217,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     showMbr: state.map.showMbr,
     startDrawing: state.home.startDrawing
   }))
+  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
 
   const [mapReady, setMapReady] = useState(false)
@@ -271,7 +267,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   // This is so the focused granule is always drawn on top of the other granules
   if (focusedGranuleId && granulesMetadata[focusedGranuleId as string]) {
     nonExcludedGranules[focusedGranuleId] = {
-      collectionId: focusedCollectionId,
+      collectionId: focusedCollectionId!,
       index: 0
     }
   }
@@ -369,7 +365,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   // Get the metadata for the currently focused collection, or an empty object if no collection is focused
   const focusedCollectionMetadata = useMemo(
-    () => collectionsMetadata[focusedCollectionId] || {},
+    () => collectionsMetadata[focusedCollectionId!] || {},
     [focusedCollectionId, collectionsMetadata]
   )
 
@@ -544,7 +540,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       base={base}
       center={center}
       colorMap={colorMap as Colormap}
-      focusedCollectionId={focusedCollectionId}
+      focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}
       granules={granulesToDraw}
       granulesKey={granulesKey}

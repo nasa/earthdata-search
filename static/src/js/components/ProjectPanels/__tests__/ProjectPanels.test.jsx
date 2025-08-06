@@ -89,10 +89,9 @@ function setup(overrideProps) {
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
     onSetActivePanelGroup: jest.fn(),
-    onUpdateFocusedCollection: jest.fn(),
+    setFocusedCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onChangeProjectGranulePageNum: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
     ...overrideProps
   }
 
@@ -166,13 +165,13 @@ describe('ProjectPanels component', () => {
     expect(props.onTogglePanels).toHaveBeenCalledWith(false)
   })
 
-  test('onChangePanel calls onUpdateFocusedCollection', () => {
+  test('onChangePanel calls setFocusedCollection', () => {
     const { enzymeWrapper, props } = setup()
 
     enzymeWrapper.instance().onChangePanel('0.0.1')
 
-    expect(props.onUpdateFocusedCollection).toHaveBeenCalledTimes(1)
-    expect(props.onUpdateFocusedCollection).toHaveBeenCalledWith('collectionId')
+    expect(props.setFocusedCollection).toHaveBeenCalledTimes(1)
+    expect(props.setFocusedCollection).toHaveBeenCalledWith('collectionId')
     expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
     expect(props.onTogglePanels).toHaveBeenCalledWith(true)
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
