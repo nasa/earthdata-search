@@ -9,7 +9,7 @@ type SpatialQuery = {
   [K in SpatialQueryType]?: string[]
 }
 
-// Helper function to remove altitude from coordinate arrays
+// Remove altitude from coordinate arrays for different types
 const removeAltitudeFromCoordinates = (
   coordinates: number[] | number[][] | number[][][]
 ): number[] | number[][] | number[][][] => {
