@@ -4,8 +4,36 @@ import { Point } from 'ol/geom'
 import spatialTypes from '../../constants/spatialTypes'
 import { SpatialQueryType } from '../../types/sharedTypes'
 
+// Define the return type for the spatial query
+type SpatialQuery = {
+  [K in SpatialQueryType]?: string[]
+}
+
+// Helper function to remove altitude from coordinate arrays
+const removeAltitudeFromCoordinates = (
+  coordinates: number[] | number[][] | number[][][]
+): number[] | number[][] | number[][][] => {
+  if (!coordinates) return coordinates
+
+  // Handle different coordinate structures
+  if (Array.isArray(coordinates[0])) {
+    if (Array.isArray(coordinates[0][0])) {
+      // Handle MultiPolygon shapes
+      return (coordinates as number[][][]).map(
+        (coord) => removeAltitudeFromCoordinates(coord) as number[][]
+      )
+    }
+
+    // Handle Polygon, MultiPoint, LineString, and MultiLineString
+    return (coordinates as number[][]).map((coord: number[]) => coord.slice(0, 2))
+  }
+
+  // Handle Point
+  return (coordinates as number[]).slice(0, 2)
+}
+
 // Get a CMR spatial query from the given feature
-const getQueryFromShapefileFeature = (feature: Feature) => {
+const getQueryFromShapefileFeature = (feature: Feature): SpatialQuery => {
   const geometry = feature.getGeometry()
   const {
     circleGeometry,
@@ -22,13 +50,35 @@ const getQueryFromShapefileFeature = (feature: Feature) => {
     && geographicCoordinates[0][0] // First coordinate
     && geographicCoordinates[0][0].length === 3 // If the coordinate has 3 values (longitude, latitude, altitude)
   ) {
-    geographicCoordinatesWithoutAltitude = geographicCoordinates.map(
-      (coords: number[][]) => coords.map(
-        (coord: number[]) => coord.slice(0, 2)
-      )
-    )
+    geographicCoordinatesWithoutAltitude = removeAltitudeFromCoordinates(geographicCoordinates)
   }
 
+  // Handle multi-geometry types
+  if (geometryType === spatialTypes.MULTI_POLYGON) {
+    const polygons = geographicCoordinatesWithoutAltitude.map((polygon: number[][][]) => polygon[0].flat().join(','))
+
+    return {
+      polygon: polygons
+    }
+  }
+
+  if (geometryType === spatialTypes.MULTI_POINT) {
+    const points = geographicCoordinatesWithoutAltitude.map((point: number[]) => point.join(','))
+
+    return {
+      point: points
+    }
+  }
+
+  if (geometryType === spatialTypes.MULTI_LINE_STRING) {
+    const lines = geographicCoordinatesWithoutAltitude.map((line: number[][]) => line.flat().join(','))
+
+    return {
+      line: lines
+    }
+  }
+
+  // Handle single geometry types
   let queryType: SpatialQueryType = geometryType.toLowerCase()
 
   // Get the coordinates from the feature

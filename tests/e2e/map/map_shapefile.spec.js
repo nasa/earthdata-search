@@ -587,5 +587,185 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-82.40647%2C56.25%2C-76.46517%2C42.1875%2C-76.46517%2C42.1875%2C-82.40647&sf=1&sfs\[0\]=0&lat=-78\.\d+&long=47\.\d+&projection=EPSG%3A3031&zoom=3\.\d+/)
       })
     })
+
+    test.describe('When the shapefile has a MultiPolygon shape', () => {
+      test('renders correctly and filters collections @screenshot', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          additionalRequests: [{
+            body: multipleShapesShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '2'
+            },
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '-109.6,38.81,-109.62,38.81,-109.62,38.83,-109.6,38.83,-109.6,38.81' && parsedQuery?.polygon?.[1] === '-109.55,38.75,-109.57,38.75,-109.57,38.77,-109.55,38.77,-109.55,38.75'
+          }]
+        })
+
+        await page.route(/shapefiles$/, async (route) => {
+          await route.fulfill({
+            json: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+        await page.goto('/search')
+
+        // Wait for the map to load
+        await initialMapPromise
+
+        // Upload the shapefile
+        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/4/)
+        await uploadShapefile(page, 'multipolygon.geojson')
+        await shapefilePromise
+
+        // Populates the spatial display field
+        await expect(
+          page.getByTestId('filter-stack__spatial')
+            .locator('.filter-stack-item__secondary-title')
+        ).toHaveText('Shape File')
+
+        await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
+        await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
+
+        // Checking that the right number of results are loaded ensures that the route
+        // was fulfilled correctly with the successful paramCheck
+        await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
+
+        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        await page.waitForURL(/zoom=4/, { timeout: 3000 })
+
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('multipolygon.png', {
+          clip: screenshotClip
+        })
+
+        // Updates the URL - expect both polygons in the URL
+        await expect(page).toHaveURL(/search\?polygon\[0\]=-109.6%2C38.81%2C-109.62%2C38.81%2C-109.62%2C38.83%2C-109.6%2C38.83%2C-109.6%2C38.81&polygon\[1\]=-109.55%2C38.75%2C-109.57%2C38.75%2C-109.57%2C38.77%2C-109.55%2C38.77%2C-109.55%2C38.75&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=4\.\d+/)
+      })
+    })
+
+    test.describe('When the shapefile has a MultiPoint shape', () => {
+      test('renders correctly and filters collections @screenshot', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          additionalRequests: [{
+            body: multipleShapesShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '2'
+            },
+            paramCheck: (parsedQuery) => parsedQuery?.point?.[0] === '-109.6,38.81' && parsedQuery?.point?.[1] === '-109.55,38.75' && parsedQuery?.point?.[2] === '-109.5,38.7'
+          }]
+        })
+
+        await page.route(/shapefiles$/, async (route) => {
+          await route.fulfill({
+            json: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+        await page.goto('/search')
+
+        // Wait for the map to load
+        await initialMapPromise
+
+        // Upload the shapefile
+        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/7/)
+        await uploadShapefile(page, 'multipoint.geojson')
+        await shapefilePromise
+
+        // Populates the spatial display field
+        await expect(
+          page.getByTestId('filter-stack__spatial')
+            .locator('.filter-stack-item__secondary-title')
+        ).toHaveText('Shape File')
+
+        await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
+        await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
+
+        // Checking that the right number of results are loaded ensures that the route
+        // was fulfilled correctly with the successful paramCheck
+        await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
+
+        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        await page.waitForURL(/zoom=7/, { timeout: 3000 })
+
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('multipoint.png', {
+          clip: screenshotClip
+        })
+
+        // Updates the URL - expect all points in the URL
+        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=7\.\d+/)
+      })
+    })
+
+    test.describe('When the shapefile has a MultiLineString shape', () => {
+      test('renders correctly and filters collections @screenshot', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          additionalRequests: [{
+            body: multipleShapesShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '2'
+            },
+            paramCheck: (parsedQuery) => parsedQuery?.line?.[0] === '-109.6,38.81,-109.62,38.83,-109.64,38.85' && parsedQuery?.line?.[1] === '-109.55,38.75,-109.57,38.77,-109.59,38.79'
+          }]
+        })
+
+        await page.route(/shapefiles$/, async (route) => {
+          await route.fulfill({
+            json: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+        await page.goto('/search')
+
+        // Wait for the map to load
+        await initialMapPromise
+
+        // Upload the shapefile
+        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
+        await uploadShapefile(page, 'multilinestring.geojson')
+        await shapefilePromise
+
+        // Populates the spatial display field
+        await expect(
+          page.getByTestId('filter-stack__spatial')
+            .locator('.filter-stack-item__secondary-title')
+        ).toHaveText('Shape File')
+
+        await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
+        await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
+
+        // Checking that the right number of results are loaded ensures that the route
+        // was fulfilled correctly with the successful paramCheck
+        await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
+
+        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
+        await page.waitForURL(/zoom=5/, { timeout: 3000 })
+
+        // Draws the spatial on the map
+        await expect(page).toHaveScreenshot('multilinestring.png', {
+          clip: screenshotClip
+        })
+
+        // Updates the URL - expect both lines in the URL
+        await expect(page).toHaveURL(/search\?line\[0\]=-109.6%2C38.81%2C-109.62%2C38.83%2C-109.64%2C38.85&line\[1\]=-109.55%2C38.75%2C-109.57%2C38.77%2C-109.59%2C38.79&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=5\.\d+/)
+      })
+    })
   })
 })

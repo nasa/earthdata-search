@@ -94,15 +94,15 @@ const onClickShapefile = ({
 
   const newQuery = getQueryFromShapefileFeature(feature)
   const [queryType] = Object.keys(newQuery) as SpatialQueryType[]
-  const [queryValue] = newQuery[queryType]
+  const queryValues = newQuery[queryType] || []
 
   // If newSelected is true, add the spatial, else remove it
   if (newSelected) {
-    // Add the queryValue to the existing spatial query
+    // Add all queryValues to the existing spatial query (for multi-geometries)
     const currentQueryValue = currentQuery[queryType]
     const updatedQueryValue = currentQueryValue
-      ? currentQueryValue.concat(queryValue)
-      : [queryValue]
+      ? currentQueryValue.concat(queryValues)
+      : queryValues
 
     query = {
       ...currentQuery,
@@ -112,10 +112,19 @@ const onClickShapefile = ({
     // Add the feature to the selectedFeatures
     selectedFeatures = updatedSelectedFeatures.concat(edscId)
   } else {
-    // Remove the feature from the existing spatial query
-    const queryIndex = currentQuery[queryType]?.indexOf(queryValue) || -1
-    currentQuery[queryType]?.splice(queryIndex, 1)
-    query = currentQuery
+    // Remove all queryValues from the existing spatial query (for multi-geometries)
+    const currentQueryValue = currentQuery[queryType] ? [...currentQuery[queryType]] : []
+    queryValues.forEach((queryValue) => {
+      const queryIndex = currentQueryValue.indexOf(queryValue)
+      if (queryIndex > -1) {
+        currentQueryValue.splice(queryIndex, 1)
+      }
+    })
+
+    query = {
+      ...currentQuery,
+      [queryType]: currentQueryValue
+    }
 
     // Remove the feature from the selectedFeatures
     const featuresIndex = updatedSelectedFeatures.indexOf(edscId)
