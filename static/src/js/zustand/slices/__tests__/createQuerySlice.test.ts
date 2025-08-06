@@ -38,6 +38,7 @@ describe('createQuerySlice', () => {
       changeRegionQuery: expect.any(Function),
       clearFilters: expect.any(Function),
       excludeGranule: expect.any(Function),
+      initializeGranuleQuery: expect.any(Function),
       removeSpatialFilter: expect.any(Function),
       undoExcludeGranule: expect.any(Function)
     })
@@ -509,6 +510,33 @@ describe('createQuerySlice', () => {
 
       expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
       expect(actions.getSearchGranules).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('initializeGranuleQuery', () => {
+    test('sets the granule query', () => {
+      const collectionId = 'collectionId'
+      const granuleQuery = {
+        sortKey: '-start_date'
+      }
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { initializeGranuleQuery } = query
+      initializeGranuleQuery({
+        collectionId,
+        query: granuleQuery
+      })
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
+        ...initialGranuleState,
+        ...granuleQuery
+      })
     })
   })
 
