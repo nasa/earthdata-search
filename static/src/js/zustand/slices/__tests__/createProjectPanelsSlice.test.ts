@@ -45,8 +45,19 @@ describe('createProjectPanelsSlice', () => {
     test('updates the group part of activePanel', () => {
       const zustandState = useEdscStore.getState()
       const { projectPanels } = zustandState
-      const { setActivePanel, setPanelGroup } = projectPanels
-      setActivePanel('1.2.3')
+      const { setPanelGroup } = projectPanels
+      const initialState = useEdscStore.getInitialState()
+
+      useEdscStore.setState({
+        projectPanels: {
+          ...initialState.projectPanels,
+          panels: {
+            isOpen: true,
+            activePanel: '1.2.3'
+          }
+        }
+      })
+
       setPanelGroup('5')
 
       const updatedState = useEdscStore.getState()
@@ -58,8 +69,19 @@ describe('createProjectPanelsSlice', () => {
     test('updates the section part of activePanel', () => {
       const zustandState = useEdscStore.getState()
       const { projectPanels } = zustandState
-      const { setActivePanel, setPanelSection } = projectPanels
-      setActivePanel('1.2.3')
+      const { setPanelSection } = projectPanels
+      const initialState = useEdscStore.getInitialState()
+
+      useEdscStore.setState({
+        projectPanels: {
+          ...initialState.projectPanels,
+          panels: {
+            isOpen: true,
+            activePanel: '1.2.3'
+          }
+        }
+      })
+
       setPanelSection('7')
 
       const updatedState = useEdscStore.getState()

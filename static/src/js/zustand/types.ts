@@ -876,11 +876,13 @@ export type UiSlice = {
   }
 }
 
+export type activePanelConfiguration =`${number}.${number}.${number}`
+
 export type panelsData = {
   /** Whether the project panels is open */
   isOpen: boolean
   /** The currently active project panel, e.g., '0.0.0' */
-  activePanel: string
+  activePanel: activePanelConfiguration
 }
 
 export type PanelsSlice = {
