@@ -40,10 +40,12 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {Number} props.index - The index of the current collection.
  * @param {Object} props.metadata - The metadata of the current collection.
  * @param {Function} props.onSelectAccessMethod - Selects an access method.
- * @param {Function} props.onTogglePanels - Toggles the panels.
  * @param {Function} props.onUpdateAccessMethod - Updates an access method.
  * @param {Object} props.projectCollection - The project collection.
  * @param {String} props.selectedAccessMethod - The selected access method of the current collection.
+ * @param {String} props.spatial - The spatial constraints if applied.
+ * @param {String} props.temporal - The temporal constraints if applied.
+ * @param {String} props.ursProfile - Response object from URS profile.
 */
 const AccessMethod = ({
   accessMethods,

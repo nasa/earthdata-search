@@ -62,14 +62,6 @@ const setup = setupTest({
           rotation: 0
         }
       }
-    },
-    panels: {
-      panels: {
-        activePanel: '0.0.0',
-        isOpen: false
-      },
-      setActivePanel: jest.fn(),
-      setIsOpen: jest.fn()
     }
   }
 })
@@ -205,14 +197,8 @@ describe('SearchPanelsContainer component', () => {
         onExport: props.onExport,
         onFocusedCollectionChange: props.onFocusedCollectionChange,
         onMetricsCollectionSortChange: props.onMetricsCollectionSortChange,
-        onSetActivePanel: props.onSetActivePanel,
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         onToggleAboutCwicModal: props.onToggleAboutCwicModal,
-        onTogglePanels: props.onTogglePanels,
-        panels: {
-          activePanel: '0.0.0',
-          isOpen: false
-        },
         preferences: {
           panelState: 'default',
           collectionListView: 'default',

@@ -31,10 +31,6 @@ import {
 } from '../../zustand/selectors/query'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onAddProjectCollection:
-    (collectionId) => dispatch(actions.addProjectCollection(collectionId)),
-  onRemoveCollectionFromProject:
-    (collectionId) => dispatch(actions.removeCollectionFromProject(collectionId)),
   onUpdateFocusedCollection:
     (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
   onChangePath:

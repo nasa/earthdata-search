@@ -743,7 +743,6 @@ class SearchPanels extends PureComponent {
             }
           ]
         }
-
       >
         <PanelItem>
           <PortalFeatureContainer authentication>

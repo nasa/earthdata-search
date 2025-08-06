@@ -26,10 +26,6 @@ const setup = setupTest({
       search: ''
     },
     onChangePath: jest.fn(),
-    panels: {
-      activePanel: '0.0.0',
-      isOpen: false
-    },
     ursProfile: {}
   },
   defaultZustandState: {
@@ -57,16 +53,16 @@ const setup = setupTest({
       dataQualitySummaries: {
         byCollectionId: {},
         setDataQualitySummaries: jest.fn()
-      },
-      projectPanels: {
-        panels: {
-          activePanel: '0.0.0',
-          isOpen: false
-        },
-        setActivePanel: jest.fn(),
-        setIsOpen: jest.fn(),
-        setPanelGroup: jest.fn()
       }
+    },
+    projectPanels: {
+      panels: {
+        activePanel: '0.0.0',
+        isOpen: false
+      },
+      setActivePanel: jest.fn(),
+      setIsOpen: jest.fn(),
+      setPanelGroup: jest.fn()
     }
   }
 })
@@ -136,14 +132,6 @@ describe('mapStateToProps', () => {
       focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
       map: {},
-      panels: {},
-      query: {
-        collection: {
-          spatial: {},
-          temporal: {},
-          overrideTemporal: {}
-        }
-      },
       router: {
         location: {}
       },

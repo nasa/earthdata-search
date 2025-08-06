@@ -15,10 +15,7 @@ import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 import './ProjectCollections.scss'
 
 /**
-/**
  * Renders ProjectCollections.
- * @param {Object} collections - List of collections passed from redux store.
- * @param {String} map - The current map configuration.
  * @param {Function} onMetricsDataAccess - Callback to log metrics events.
  * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
  * @param {Function} onUpdateProjectName - Callback to update the project name.
