@@ -5,22 +5,10 @@ import { tagName } from '../../../../sharedUtils/tags'
 import { autocompleteFacetsMap } from './autocompleteFacetsMap'
 import { withAdvancedSearch } from './withAdvancedSearch'
 import { collectionSortKeys } from '../constants/collectionSortKeys'
+
 import useEdscStore from '../zustand/useEdscStore'
-
-/**
- * If sortkey is set to 'default' or is undefined then
- * set it to the default sort key
- * @param {String} sortKey
- */
-export const translateDefaultCollectionSortKey = (sortKey) => {
-  const { collectionSearchResultsSortKey: defaultSortKey } = getApplicationConfig()
-
-  if (sortKey === undefined) {
-    return defaultSortKey
-  }
-
-  return sortKey === 'default' ? defaultSortKey : sortKey
-}
+import { getCollectionsQuery } from '../zustand/selectors/query'
+import { pruneSpatial } from './pruneSpatial'
 
 /**
  * Prepare parameters used in getCollections() based on current Redux State
@@ -32,16 +20,13 @@ export const prepareCollectionParams = (state) => {
     autocomplete = {},
     advancedSearch = {},
     authToken,
-    preferences = {},
-    query = {
-      collection: {}
-    },
     searchResults = {}
   } = state
 
-  const { portal, facetParams } = useEdscStore.getState()
+  const zustandState = useEdscStore.getState()
 
-  const { collection: collectionQuery } = query
+  const { portal, facetParams } = zustandState
+  const collectionQuery = getCollectionsQuery(zustandState)
 
   const {
     hasGranulesOrCwic,
@@ -49,19 +34,11 @@ export const prepareCollectionParams = (state) => {
     onlyEosdisCollections,
     overrideTemporal = {},
     pageNum,
-    paramCollectionSortKey,
+    sortKey,
     spatial = {},
     tagKey: selectedTag,
     temporal = {}
   } = collectionQuery
-
-  const { preferences: preferencesObj = {} } = preferences
-  const { collectionSort = 'default' } = preferencesObj
-
-  const userPrefSortKey = translateDefaultCollectionSortKey(collectionSort)
-
-  // Use parameter sort key if present, else use user preferences sort key
-  const sortKey = [paramCollectionSortKey || userPrefSortKey]
 
   const {
     boundingBox,
@@ -69,7 +46,7 @@ export const prepareCollectionParams = (state) => {
     line,
     point,
     polygon
-  } = spatial
+  } = pruneSpatial(spatial)
 
   const { viewAllFacets: viewAllFacetsSearchResults = {} } = searchResults
   const { selectedCategory: viewAllFacetsCategory } = viewAllFacetsSearchResults
@@ -218,12 +195,12 @@ export const buildCollectionSearchParams = (params) => {
     keywordWithWildcard = `${keyword.replace(/\s+/g, '* ')}*`
   }
 
-  const sortKey = [...selectedSortKey]
+  const sortKey = [selectedSortKey]
   // Only include has_granules_or_cwic sort key if the parameter is being used
   if (hasGranulesOrCwic) sortKey.unshift('has_granules_or_cwic')
 
   // Add Recent Version as a secondary sort key for all collection searches
-  if (selectedSortKey[0] !== collectionSortKeys.recentVersion) {
+  if (selectedSortKey !== collectionSortKeys.recentVersion) {
     sortKey.push(collectionSortKeys.recentVersion)
   }
 

@@ -1,0 +1,148 @@
+@use '../../../css/utils';
+
+.search-autocomplete {
+  &__form {
+    flex-grow: 1;
+    display: inline;
+    margin-block-end: 0;
+    vertical-align: middle;
+    background-color: utils.$color__spacesuit-white;
+  }
+
+  &__input {
+    display: inline-block;
+    width: 100%;
+    padding: 0.5rem 0.925rem 0.5rem 1.75rem;
+    border: 0;
+
+    &:focus {
+      box-shadow: none;
+      outline: 0;
+      border: 0;
+    }
+  }
+
+  &__search-icon {
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    color: utils.$color__carbon--40;
+  }
+
+  &__button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    border-radius: 0;
+    background-color: utils.$color__nasa-blue;
+    color: utils.$color__spacesuit-white;
+    vertical-align: middle;
+    letter-spacing: -0.0125rem;
+    z-index: 1;
+    font-weight: 500;
+    border: 0;
+
+    &.show,
+    &:active,
+    &:first-child:active,
+    &:hover,
+    &:focus {
+      background-color: utils.$color__nasa-blue--shade;
+      color: utils.$color__spacesuit-white;
+    }
+
+    &:focus {
+      z-index: 2;
+    }
+
+    &--submit {
+      flex-grow: 1;
+      color: utils.$color__spacesuit-white;
+      background-color: utils.$color__nasa-red;
+      border: 0;
+      margin-right: 0;
+      font-size: 1rem;
+
+      &.show,
+      &:active,
+      &:first-child:active,
+      &:hover,
+      &:focus {
+        background-color: utils.$color__nasa-red--shade;
+        color: utils.$color__spacesuit-white;
+        border: 0;
+      }
+    }
+  }
+
+  &__loading-suggestions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.55rem 0.5rem;
+    width: 100%;
+    background: white;
+    color: utils.$color__carbon--40;
+    font-size: 0.75rem;
+    border-top: 1px solid utils.$color__carbon--20;
+    z-index: 1;
+  }
+
+  &__spinner {
+    margin-right: 0.25rem;
+  }
+
+  &__query-hint {
+    padding: 0.25rem 0.5rem;
+    color: utils.$color__carbon--60;
+    text-align: center;
+    font-size: 0.75rem;
+    background-color: utils.$color__spacesuit-white;
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  &__suggestions-container {
+    position: relative;
+    z-index: 2;
+    background: utils.$color__spacesuit-white;
+    font-size: 0.75rem;
+    position: absolute;
+    width: 100%;
+    border-left: 1px solid utils.$color__carbon--20;
+    border-right: 1px solid utils.$color__carbon--20;
+    box-shadow: 0rem 0.5rem 0.75rem -0.125rem rgba(utils.$color__carbon-black, 0.5);
+
+    .react-autosuggest__suggestions-list {
+      border-top: 1px solid utils.$color__carbon--20;
+      list-style: none;
+      padding: 0;
+      margin-bottom: 0;
+    }
+
+    .react-autosuggest__suggestion {
+      padding: 0.325rem 0.75rem;
+      border-bottom: 1px solid utils.$color__carbon--20;
+      overflow-wrap: break-word;
+      transition: all 0.1s ease-in-out;
+      cursor: pointer;
+
+      &--highlighted,
+      &:hover {
+        background-color: utils.$color__carbon--5;
+
+        .autocomplete-suggestion__suggestions-hierarchy {
+          background-color: utils.$color__carbon--5;
+        }
+      }
+    }
+  }
+}

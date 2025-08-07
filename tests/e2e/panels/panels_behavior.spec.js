@@ -51,10 +51,16 @@ test.describe('Panel Behavior', () => {
   test('opens and closes when using keyboard shortcuts', async ({ page }) => {
     await page.keyboard.press(']')
 
+    // Wait for the animation to complete
+    await page.waitForSelector('.panels--is-minimized', { state: 'visible' })
+
     await expect(page.locator('.panels--is-open')).toHaveCount(0)
     await expect(page.locator('.panels--is-minimized')).toHaveCount(1)
 
     await page.keyboard.press(']')
+
+    // Wait for the animation to complete
+    await page.waitForSelector('.panels--is-open', { state: 'visible' })
 
     await expect(page.locator('.panels--is-open')).toHaveCount(1)
     await expect(page.locator('.panels--is-minimized')).toHaveCount(0)

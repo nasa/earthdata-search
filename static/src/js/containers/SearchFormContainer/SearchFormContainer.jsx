@@ -5,31 +5,19 @@ import PropTypes from 'prop-types'
 import actions from '../../actions/index'
 
 import SearchForm from '../../components/SearchForm/SearchForm'
+import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onChangeQuery:
-    (query) => dispatch(actions.changeQuery(query)),
+  handleError: (error) => dispatch(actions.handleError(error)),
   onChangeFocusedCollection:
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
-  onClearFilters:
-    () => dispatch(actions.clearFilters()),
   onToggleAdvancedSearchModal:
-    (state) => dispatch(actions.toggleAdvancedSearchModal(state)),
-  onCancelAutocomplete:
-    () => dispatch(actions.cancelAutocomplete()),
-  onClearAutocompleteSuggestions:
-    () => dispatch(actions.clearAutocompleteSuggestions()),
-  onFetchAutocomplete:
-    (data) => dispatch(actions.fetchAutocomplete(data)),
-  onSelectAutocompleteSuggestion:
-    (data) => dispatch(actions.selectAutocompleteSuggestion(data))
+    (state) => dispatch(actions.toggleAdvancedSearchModal(state))
 })
 
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
-  autocomplete: state.autocomplete,
-  keywordSearch: state.query.collection.keyword,
-  temporalSearch: state.query.collection.temporal
+  authToken: state.authToken
 })
 
 // Export non-redux-connected component for use in tests
@@ -37,59 +25,37 @@ export const mapStateToProps = (state) => ({
 export const SearchFormContainer = (props) => {
   const {
     advancedSearch,
-    autocomplete,
-    keywordSearch,
-    onCancelAutocomplete,
-    onChangeQuery,
-    onClearFilters,
+    authToken,
+    handleError,
     onChangeFocusedCollection,
-    onToggleAdvancedSearchModal,
-    onClearAutocompleteSuggestions,
-    onFetchAutocomplete,
-    onSelectAutocompleteSuggestion
+    onToggleAdvancedSearchModal
   } = props
+  const clearFilters = useEdscStore((state) => state.query.clearFilters)
 
   return (
     <SearchForm
-      onChangeQuery={onChangeQuery}
+      authToken={authToken}
+      handleError={handleError}
       onChangeFocusedCollection={onChangeFocusedCollection}
-      onClearFilters={onClearFilters}
+      onClearFilters={clearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
-      onCancelAutocomplete={onCancelAutocomplete}
-      onClearAutocompleteSuggestions={onClearAutocompleteSuggestions}
-      onFetchAutocomplete={onFetchAutocomplete}
-      onSelectAutocompleteSuggestion={onSelectAutocompleteSuggestion}
       advancedSearch={advancedSearch}
-      keywordSearch={keywordSearch}
-      autocomplete={autocomplete}
     />
   )
 }
 
 SearchFormContainer.defaultProps = {
-  advancedSearch: {},
-  keywordSearch: '',
-  temporalSearch: {}
+  advancedSearch: {}
 }
 
 SearchFormContainer.propTypes = {
   advancedSearch: PropTypes.shape({
     regionSearch: PropTypes.shape({})
   }),
-  autocomplete: PropTypes.shape({}).isRequired,
-  keywordSearch: PropTypes.string,
-  onChangeQuery: PropTypes.func.isRequired,
+  authToken: PropTypes.string.isRequired,
+  handleError: PropTypes.func.isRequired,
   onChangeFocusedCollection: PropTypes.func.isRequired,
-  onClearFilters: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
-  onCancelAutocomplete: PropTypes.func.isRequired,
-  onClearAutocompleteSuggestions: PropTypes.func.isRequired,
-  onFetchAutocomplete: PropTypes.func.isRequired,
-  onSelectAutocompleteSuggestion: PropTypes.func.isRequired,
-  temporalSearch: PropTypes.shape({
-    endDate: PropTypes.string,
-    startDate: PropTypes.string
-  })
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 // Export redux-connected component for use in application

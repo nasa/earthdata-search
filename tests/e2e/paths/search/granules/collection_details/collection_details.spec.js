@@ -22,7 +22,6 @@ import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.bod
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.graphql.body.json'
 
-import { login } from '../../../../../support/login'
 import { setupTests } from '../../../../../support/setupTests'
 
 /**
@@ -225,7 +224,7 @@ test.describe('Path /search/granules/collection-details', () => {
   })
 
   test.describe('When collection has associated DOIs', () => {
-    test('loads correctly', async ({ page, context }) => {
+    test('loads correctly', async ({ page }) => {
       const conceptId = 'C1240222820-ECHO_REST'
       const cmrHits = 12345
       const granuleHits = 0
@@ -245,7 +244,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/granules.json/, async (route) => {
         const query = route.request().postData()
-        expect(query).toBe('echo_collection_id=C1240222820-ECHO_REST&page_num=1&page_size=20')
+        expect(query).toBe('echo_collection_id=C1240222820-ECHO_REST&page_num=1&page_size=20&sort_key=-start_date')
 
         await route.fulfill({
           json: associatedDoisGranulesBody.body,
@@ -275,9 +274,6 @@ test.describe('Path /search/granules/collection-details', () => {
       })
 
       await page.goto('/search/granules/collection-details?p=C1240222820-ECHO_REST&ee=uat&ac=true')
-
-      // Log-in
-      await login(context)
 
       // Ensure title renders on page correctly
       testCollectionTitle(page, 'Mapping Example for UMM-C 1.16.1')
@@ -328,7 +324,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/granules.json/, async (route) => {
         const query = route.request().postData()
-        expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+        expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
 
         await route.fulfill({
           json: reformattingsGranulesBody,
@@ -442,7 +438,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/granules.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
 
           await route.fulfill({
             json: reformattingsGranulesBody,
@@ -501,7 +497,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/granules.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
 
           await route.fulfill({
             json: reformattingsGranulesBody,
@@ -560,7 +556,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/granules.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
 
           await route.fulfill({
             json: reformattingsGranulesBody,
@@ -619,7 +615,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/granules.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
 
           await route.fulfill({
             json: reformattingsGranulesBody,
@@ -679,7 +675,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
           await page.route(/granules.json/, async (route) => {
             const query = route.request().postData()
-            expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+            expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
 
             await route.fulfill({
               json: reformattingsGranulesBody,
@@ -738,7 +734,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
         await page.route(/granules.json/, async (route) => {
           const query = route.request().postData()
-          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20')
+          expect(query).toEqual('echo_collection_id=C1996546500-GHRC_DAAC&page_num=1&page_size=20&sort_key=-start_date')
 
           await route.fulfill({
             json: reformattingsGranulesBody,

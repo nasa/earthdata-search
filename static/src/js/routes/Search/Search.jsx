@@ -37,6 +37,7 @@ import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
@@ -46,14 +47,8 @@ const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFilte
 export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
     (values) => dispatch(actions.updateAdvancedSearch(values)),
-  onChangeQuery:
-    (query) => dispatch(actions.changeQuery(query)),
   onTogglePortalBrowserModal:
     (data) => dispatch(actions.togglePortalBrowserModal(data))
-})
-
-export const mapStateToProps = (state) => ({
-  collectionQuery: state.query.collection
 })
 
 /**
@@ -66,15 +61,20 @@ export const mapStateToProps = (state) => ({
  * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
  */
 export const Search = ({
-  collectionQuery,
   match,
-  onChangeQuery,
   onUpdateAdvancedSearch
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
 
-  const onSearchLoaded = useEdscStore((state) => state.ui.tour.onSearchLoaded)
+  const {
+    changeQuery,
+    onSearchLoaded
+  } = useEdscStore((state) => ({
+    changeQuery: state.query.changeQuery,
+    onSearchLoaded: state.ui.tour.onSearchLoaded
+  }))
+  const collectionQuery = useEdscStore(getCollectionsQuery)
 
   useEffect(() => {
     onSearchLoaded()
@@ -109,7 +109,7 @@ export const Search = ({
       if (checked) collection.hasGranulesOrCwic = undefined
     }
 
-    onChangeQuery({
+    changeQuery({
       collection
     })
   }
@@ -239,17 +239,12 @@ export const Search = ({
 }
 
 Search.propTypes = {
-  collectionQuery: PropTypes.shape({
-    hasGranulesOrCwic: PropTypes.bool,
-    onlyEosdisCollections: PropTypes.bool
-  }).isRequired,
   match: PropTypes.shape({
     path: PropTypes.string
   }).isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
   onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 
 export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(Search)
+  connect(null, mapDispatchToProps)(Search)
 )

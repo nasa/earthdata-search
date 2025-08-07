@@ -16,12 +16,8 @@ import {
   STARTED_COLLECTIONS_TIMER,
   UPDATE_COLLECTION_METADATA,
   UPDATE_COLLECTION_RESULTS,
-  UPDATE_FACETS,
-  UPDATE_GRANULE_FILTERS
+  UPDATE_FACETS
 } from '../constants/actionTypes'
-
-import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import { pruneFilters } from '../util/pruneFilters'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
@@ -79,57 +75,6 @@ export const startCollectionsTimer = () => ({
 export const finishCollectionsTimer = () => ({
   type: FINISHED_COLLECTIONS_TIMER
 })
-
-/**
- * Update the granule filters for the collection. Here we prune off any values that are not truthy,
- * as well as any objects that contain only falsy values.
- * @param {String} id - The id for the collection to update.
- * @param {Object} granuleFilters - An object containing the flags to apply as granuleFilters.
- */
-export const updateFocusedCollectionGranuleFilters = (granuleFilters) => (dispatch, getState) => {
-  const state = getState()
-
-  const focusedCollectionId = getFocusedCollectionId(state)
-
-  const { query = {} } = state
-  const { collection = {} } = query
-  const { byId = {} } = collection
-  const { [focusedCollectionId]: focusedCollectionQuery = {} } = byId
-  const { granules: existingGranuleFilters = {} } = focusedCollectionQuery
-
-  const allGranuleFilters = {
-    ...existingGranuleFilters,
-    ...granuleFilters
-  }
-
-  const prunedFilters = pruneFilters(allGranuleFilters)
-
-  // Updates the granule search query, throwing out all existing values
-  dispatch({
-    type: UPDATE_GRANULE_FILTERS,
-    payload: {
-      collectionId: focusedCollectionId,
-      ...prunedFilters
-    }
-  })
-}
-
-/**
- * Clears out the granule filters for the focused collection.
- */
-export const clearFocusedCollectionGranuleFilters = () => (dispatch, getState) => {
-  const state = getState()
-
-  const focusedCollectionId = getFocusedCollectionId(state)
-
-  dispatch({
-    type: UPDATE_GRANULE_FILTERS,
-    payload: {
-      collectionId: focusedCollectionId,
-      pageNum: 1
-    }
-  })
-}
 
 // Cancel token to cancel pending requests
 let cancelToken

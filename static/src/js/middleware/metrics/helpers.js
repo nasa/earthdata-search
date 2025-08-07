@@ -1,16 +1,21 @@
 import spatialTypes from '../../constants/spatialTypes'
+import { pruneSpatial } from '../../util/pruneSpatial'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
+import {
+  getCollectionsQuery,
+  getCollectionsQuerySpatial,
+  getCollectionsQueryTemporal
+} from '../../zustand/selectors/query'
 import useEdscStore from '../../zustand/useEdscStore'
 
 /**
 * Get the current keyword from the state.
-* @param {Object} state - The current Redux state.
 * @returns {String} The current keyword.
 */
-export const computeKeyword = (state) => {
-  const { query } = state
-  const { collection } = query
-  const { keyword } = collection
+export const computeKeyword = () => {
+  const collectionQuery = getCollectionsQuery(useEdscStore.getState())
+  const { keyword } = collectionQuery
+
   if (keyword) return keyword
 
   return null
@@ -18,21 +23,21 @@ export const computeKeyword = (state) => {
 
 /**
 * Get the current spatial type from the state.
-* @param {Object} state - The current Redux state.
 * @returns {String} The current spatial type.
 */
-export const computeSpatialType = (state) => {
-  const { query } = state
-  const { collection } = query
-  const { spatial } = collection
+export const computeSpatialType = () => {
+  const spatialQuery = getCollectionsQuerySpatial(useEdscStore.getState())
   const {
     boundingBox,
     circle,
+    line,
     polygon,
     point
-  } = spatial
+  } = pruneSpatial(spatialQuery)
+
   if (boundingBox) return spatialTypes.BOUNDING_BOX
   if (circle) return spatialTypes.CIRCLE
+  if (line) return spatialTypes.LINE
   if (polygon) return spatialTypes.POLYGON
   if (point) return spatialTypes.POINT
 
@@ -44,14 +49,13 @@ export const computeSpatialType = (state) => {
 * @param {Object} state - The current Redux state.
 * @returns {String} The current temporal type.
 */
-export const computeTemporalType = (state) => {
-  const { query } = state
-  const { collection } = query
-  const { temporal } = collection
-  if (temporal) {
+export const computeTemporalType = () => {
+  const temporalQuery = getCollectionsQueryTemporal(useEdscStore.getState())
+
+  if (temporalQuery) {
     // TODO: Set up recurring temporal
-    if (temporal.recurring) return 'Recurring Temporal'
-    if (temporal.startDate || temporal.endDate) return 'Standard Temporal'
+    if (temporalQuery.recurring) return 'Recurring Temporal'
+    if (temporalQuery.startDate || temporalQuery.endDate) return 'Standard Temporal'
   }
 
   return null

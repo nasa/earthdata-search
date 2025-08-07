@@ -19,6 +19,7 @@ import { decodeBoolean, encodeBoolean } from './booleanEncoders'
 import { isPath } from '../isPath'
 import { deprecatedURLParameters } from '../../constants/deprecatedURLParameters'
 import { decodePortal, encodePortal } from './portalEncoders'
+import { decodeCollectionSortKey, encodeCollectionSortKey } from './collectionSortKeyEncoders'
 
 /**
  * Takes a URL containing a path and query string and returns only the query string
@@ -165,11 +166,6 @@ const urlDefs = {
     shortKey: 'oe',
     encode: encodeBoolean,
     decode: decodeBoolean
-  },
-  paramCollectionSortKey: {
-    shortKey: 'csk',
-    encode: encodeString,
-    decode: decodeString
   }
 }
 
@@ -215,11 +211,11 @@ export const decodeUrlParams = (paramString) => {
   const mapView = decodeMap(params)
 
   const spatial = {}
-  spatial.point = decodeHelp(params, 'pointSearch')
-  spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch')
-  spatial.polygon = decodeHelp(params, 'polygonSearch')
-  spatial.line = decodeHelp(params, 'lineSearch')
-  spatial.circle = decodeHelp(params, 'circleSearch')
+  spatial.point = decodeHelp(params, 'pointSearch') || []
+  spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch') || []
+  spatial.polygon = decodeHelp(params, 'polygonSearch') || []
+  spatial.line = decodeHelp(params, 'lineSearch') || []
+  spatial.circle = decodeHelp(params, 'circleSearch') || []
 
   // Initialize the collection query
   const { collection = {} } = query
@@ -233,9 +229,9 @@ export const decodeUrlParams = (paramString) => {
   collectionQuery.onlyEosdisCollections = decodeHelp(params, 'onlyEosdisCollections')
   collectionQuery.overrideTemporal = decodeHelp(params, 'overrideTemporalSearch')
   collectionQuery.spatial = spatial
+  collectionQuery.sortKey = decodeCollectionSortKey(params)
   collectionQuery.tagKey = decodeHelp(params, 'tagKey')
   collectionQuery.temporal = decodeHelp(params, 'temporalSearch')
-  collectionQuery.paramCollectionSortKey = decodeHelp(params, 'paramCollectionSortKey')
 
   // Initialize the collection granule query
   const granuleQuery = {
@@ -339,6 +335,10 @@ export const encodeUrlQuery = (props) => {
   const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
   const advancedQuery = encodeAdvancedSearch(props.advancedSearch)
   const portalQuery = encodePortal(props.portalId)
+  const collectionSortKey = encodeCollectionSortKey(
+    props.collectionSortKey,
+    props.collectionSortPreference
+  )
 
   const encodedQuery = {
     ...portalQuery,
@@ -348,7 +348,8 @@ export const encodeUrlQuery = (props) => {
     ...scienceKeywordQuery,
     ...platformQuery,
     ...advancedQuery,
-    ...mapParams
+    ...mapParams,
+    ...collectionSortKey
   }
 
   const paramString = stringify(encodedQuery)

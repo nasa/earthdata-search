@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router'
 
-import { getFocusedCollectionGranuleQuery } from '../../selectors/query'
 import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
 import { getFocusedGranuleMetadata } from '../../selectors/granuleMetadata'
@@ -11,7 +10,12 @@ import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
+
 import useEdscStore from '../../zustand/useEdscStore'
+import {
+  getCollectionsQuery,
+  getFocusedCollectionGranuleQuery
+} from '../../zustand/selectors/query'
 import { getPreferences } from '../../zustand/selectors/preferences'
 
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
@@ -19,21 +23,15 @@ import SearchPanels from '../../components/SearchPanels/SearchPanels'
 export const mapStateToProps = (state) => ({
   authToken: state.authToken,
   collectionMetadata: getFocusedCollectionMetadata(state),
-  collectionQuery: state.query.collection,
   collectionsSearch: state.searchResults.collections,
   collectionSubscriptions: getCollectionSubscriptions(state),
   granuleMetadata: getFocusedGranuleMetadata(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
-  granuleQuery: getFocusedCollectionGranuleQuery(state),
   panels: state.panels,
   isExportRunning: state.ui.export.isExportRunning
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onApplyGranuleFilters:
-    (values) => dispatch(actions.applyGranuleFilters(values)),
-  onChangeQuery:
-    (query) => dispatch(actions.changeQuery(query)),
   onChangePath:
     (path) => dispatch(actions.changePath(path)),
   onFocusedCollectionChange:
@@ -56,14 +54,10 @@ export const mapDispatchToProps = (dispatch) => ({
  * @extends PureComponent
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionMetadata - Collection metadata state
- * @param {Object} props.collectionQuery - Collection query state
  * @param {Object} props.collectionsSearch - Collection search state
  * @param {Object} props.granuleMetadata - Granule metadata state
  * @param {Object} props.granuleSearchResults - Granule search results state
- * @param {Object} props.granuleQuery - Granule query state
  * @param {Object} props.location - Browser location state
- * @param {Function} props.onApplyGranuleFilters - Callback to apply granule filters
- * @param {Function} props.onChangeQuery - Callback to change the query
  * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection
  * @param {Function} props.onMetricsCollectionSortChange - Callback for collection sort metrics
  * @param {Function} props.onSetActivePanel - Callback to set the active panel
@@ -76,18 +70,14 @@ export const mapDispatchToProps = (dispatch) => ({
 export const SearchPanelsContainer = ({
   authToken,
   collectionMetadata,
-  collectionQuery,
   collectionsSearch,
   collectionSubscriptions,
   granuleMetadata,
   granuleSearchResults,
-  granuleQuery,
   isExportRunning,
   location,
-  onApplyGranuleFilters,
   onFocusedCollectionChange,
   onChangePath,
-  onChangeQuery,
   onMetricsCollectionSortChange,
   onSetActivePanel,
   onToggleAboutCSDAModal,
@@ -98,6 +88,15 @@ export const SearchPanelsContainer = ({
   match
 }) => {
   const preferences = useEdscStore(getPreferences)
+  const collectionQuery = useEdscStore(getCollectionsQuery)
+  const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
+  const {
+    changeQuery,
+    changeGranuleQuery
+  } = useEdscStore((state) => ({
+    changeQuery: state.query.changeQuery,
+    changeGranuleQuery: state.query.changeGranuleQuery
+  }))
 
   return (
     <SearchPanels
@@ -111,10 +110,10 @@ export const SearchPanelsContainer = ({
       granuleQuery={granuleQuery}
       isExportRunning={isExportRunning}
       location={location}
-      onApplyGranuleFilters={onApplyGranuleFilters}
+      onApplyGranuleFilters={changeGranuleQuery}
       onFocusedCollectionChange={onFocusedCollectionChange}
       onChangePath={onChangePath}
-      onChangeQuery={onChangeQuery}
+      onChangeQuery={changeQuery}
       onMetricsCollectionSortChange={onMetricsCollectionSortChange}
       onSetActivePanel={onSetActivePanel}
       onToggleAboutCSDAModal={onToggleAboutCSDAModal}
@@ -131,19 +130,15 @@ export const SearchPanelsContainer = ({
 SearchPanelsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionMetadata: PropTypes.shape({}).isRequired,
-  collectionQuery: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   granuleMetadata: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,
-  granuleQuery: PropTypes.shape({}).isRequired,
   isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
-  onApplyGranuleFilters: PropTypes.func.isRequired,
   onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onChangeQuery: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,

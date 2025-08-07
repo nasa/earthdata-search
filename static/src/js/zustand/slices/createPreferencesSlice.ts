@@ -5,7 +5,9 @@ import jwt from 'jsonwebtoken'
 import {
   ImmerStateCreator,
   PreferencesSlice,
-  PreferencesData
+  PreferencesData,
+  BaseLayer,
+  OverlayLayer
 } from '../types'
 import type { ProjectionCode } from '../../types/sharedTypes'
 // @ts-expect-error The file does not have types
@@ -50,7 +52,7 @@ const initialPreferencesData = {
 }
 
 export const initialState = {
-  preferences: initialPreferencesData,
+  preferences: initialPreferencesData as PreferencesData,
   isSubmitting: false,
   isSubmitted: false
 }
@@ -59,36 +61,38 @@ const createPreferencesSlice: ImmerStateCreator<PreferencesSlice> = (set, get) =
   preferences: {
     ...initialState,
 
-    setPreferences: (preferences) => {
-      set((state) => {
-        state.preferences.preferences = {
-          ...state.preferences.preferences,
-          ...preferences
-        }
-      })
-    },
-
     setPreferencesFromJwt: (jwtToken) => {
       if (!jwtToken) return
 
       const decoded = jwt.decode(jwtToken) as JwtTokenPayload
       const { preferences = {} } = decoded
+      const { collectionSort } = preferences
+
+      // If the collection sort is not default, set the value in the query slice.
+      if (collectionSort && collectionSort !== 'default') {
+        set((state) => {
+          state.query.collection.sortKey = collectionSort
+        })
+      }
 
       // TODO Remove in EDSC-4443 - Legacy layer migration
       if (preferences.mapView) {
         const { baseLayer, overlayLayers } = preferences.mapView
+        // @ts-expect-error `blueMarble` is a previous layer name
         if (baseLayer === 'blueMarble') {
-          preferences.mapView.baseLayer = mapLayers.worldImagery
+          preferences.mapView.baseLayer = mapLayers.worldImagery as BaseLayer
         }
 
+        // @ts-expect-error `referenceFeatures` is a previous layer name
         const referenceFeatureIndex = overlayLayers.indexOf('referenceFeatures')
+        // @ts-expect-error `referenceLabels` is a previous layer name
         const referenceLabelsIndex = overlayLayers.indexOf('referenceLabels')
         if (referenceFeatureIndex !== -1) {
-          overlayLayers[referenceFeatureIndex] = mapLayers.bordersRoads
+          overlayLayers[referenceFeatureIndex] = mapLayers.bordersRoads as OverlayLayer
         }
 
         if (referenceLabelsIndex !== -1) {
-          overlayLayers[referenceLabelsIndex] = mapLayers.placeLabels
+          overlayLayers[referenceLabelsIndex] = mapLayers.placeLabels as OverlayLayer
         }
       }
 

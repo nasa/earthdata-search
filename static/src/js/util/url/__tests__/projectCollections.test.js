@@ -31,6 +31,26 @@ describe('url#decodeUrlParams', () => {
             }
           }
         }
+      },
+      query: {
+        ...emptyDecodedResult.query,
+        collection: {
+          ...emptyDecodedResult.query.collection,
+          byId: {
+            collectionId1: {
+              granules: {
+                pageNum: 1,
+                sortKey: '-start_date'
+              }
+            },
+            collectionId2: {
+              granules: {
+                pageNum: 1,
+                sortKey: '-start_date'
+              }
+            }
+          }
+        }
       }
     }
 
@@ -62,7 +82,14 @@ describe('url#decodeUrlParams', () => {
           byId: {
             collectionId1: {
               granules: {
-                pageNum: 1
+                pageNum: 1,
+                sortKey: '-start_date'
+              }
+            },
+            collectionId2: {
+              granules: {
+                pageNum: 1,
+                sortKey: '-start_date'
               }
             }
           }

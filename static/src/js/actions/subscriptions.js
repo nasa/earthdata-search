@@ -22,7 +22,7 @@ import { getUsername } from '../selectors/user'
 import {
   getCollectionSubscriptionQueryString,
   getGranuleSubscriptionQueryString
-} from '../selectors/query'
+} from '../zustand/selectors/query'
 
 import { addToast } from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
@@ -97,7 +97,8 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
     authToken
   } = state
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   const username = getUsername(state)
 
   let subscriptionQuery
@@ -121,10 +122,10 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
 
   // If collection type get collection params, spatial, temporal, keyword, facets, feature facets, and checkboxes
   if (subscriptionType === 'collection') {
-    subscriptionQuery = getCollectionSubscriptionQueryString(state)
+    subscriptionQuery = getCollectionSubscriptionQueryString()
   } else {
     // If granule type, pull out the granule specific params
-    subscriptionQuery = getGranuleSubscriptionQueryString(state)
+    subscriptionQuery = getGranuleSubscriptionQueryString()
 
     // Retrieve data from Redux using selectors
     const collectionId = getFocusedCollectionId(state)

@@ -7,10 +7,6 @@ import spatialTypes from '../../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../../constants/eventTypes'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 const setup = setupTest({
   Component: SpatialDisplay,
   defaultProps: {
@@ -24,6 +20,12 @@ const setup = setupTest({
     onChangeQuery: jest.fn(),
     onRemoveSpatialFilter: jest.fn(),
     shapefile: {}
+  },
+  defaultZustandState: {
+    query: {
+      changeQuery: jest.fn(),
+      removeSpatialFilter: jest.fn()
+    }
   }
 })
 
@@ -39,8 +41,14 @@ describe('SpatialDisplay component', () => {
     test('should render the spatial info', () => {
       const newPoint = '-77.0418825,38.805869' // Lon,Lat
       setup({
-        overrideProps: {
-          pointSearch: [newPoint]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: [newPoint]
+              }
+            }
+          }
         }
       })
 
@@ -57,8 +65,14 @@ describe('SpatialDisplay component', () => {
     test('should render the spatial info', () => {
       const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
       setup({
-        overrideProps: {
-          boundingBoxSearch: [newBoundingBox]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                boundingBox: [newBoundingBox]
+              }
+            }
+          }
         }
       })
 
@@ -86,8 +100,14 @@ describe('SpatialDisplay component', () => {
     test('should render the spatial info', () => {
       const newCircle = '-77.119759,38.791645,20000'
       setup({
-        overrideProps: {
-          circleSearch: [newCircle]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                circle: [newCircle]
+              }
+            }
+          }
         }
       })
 
@@ -116,8 +136,14 @@ describe('SpatialDisplay component', () => {
         + '-77.04444122314453,38.99228142151045'
 
       setup({
-        overrideProps: {
-          polygonSearch: [newPolygon]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                polygon: [newPolygon]
+              }
+            }
+          }
         }
       })
 
@@ -156,8 +182,16 @@ describe('SpatialDisplay component', () => {
 
       setup({
         overrideProps: {
-          displaySpatialPolygonWarning: true,
-          polygonSearch: [newPolygon]
+          displaySpatialPolygonWarning: true
+        },
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                polygon: [newPolygon]
+              }
+            }
+          }
         }
       })
 
@@ -183,8 +217,14 @@ describe('SpatialDisplay component', () => {
         + '-76.89415168762207,38.902629947921575'
 
       setup({
-        overrideProps: {
-          lineSearch: [line]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                line: [line]
+              }
+            }
+          }
         }
       })
 
@@ -233,10 +273,14 @@ describe('SpatialDisplay component', () => {
           + '-77.04444122314453,38.99228142151045'
 
         setup({
-          overrideProps: {
-            polygonSearch: [newPolygon]
-          },
           overrideZustandState: {
+            query: {
+              collection: {
+                spatial: {
+                  polygon: [newPolygon]
+                }
+              }
+            },
             shapefile: {
               shapefileName: 'test file',
               shapefileSize: '42 KB',
@@ -269,10 +313,14 @@ describe('SpatialDisplay component', () => {
             + '-77.04444122314453,38.99228142151045'
 
           setup({
-            overrideProps: {
-              polygonSearch: [newPolygon]
-            },
             overrideZustandState: {
+              query: {
+                collection: {
+                  spatial: {
+                    polygon: [newPolygon]
+                  }
+                }
+              },
               shapefile: {
                 shapefileName: 'test file',
                 shapefileSize: '42 KB',
@@ -309,13 +357,17 @@ describe('SpatialDisplay component', () => {
     test('calls onRemoveSpatialFilter', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
-      const { props, user } = setup({
-        overrideProps: {
-          pointSearch: [' ']
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: [' ']
+              }
+            }
+          }
         }
       })
-
-      const { onRemoveSpatialFilter } = props
 
       const actionBtns = await screen.findAllByRole('button')
       const actionBtn = actionBtns[0]
@@ -326,7 +378,9 @@ describe('SpatialDisplay component', () => {
         await user.click(actionBtn)
       })
 
-      expect(onRemoveSpatialFilter).toHaveBeenCalledTimes(1)
+      expect(zustandState.query.removeSpatialFilter).toHaveBeenCalledTimes(1)
+      expect(zustandState.query.removeSpatialFilter).toHaveBeenCalledWith()
+
       expect(eventEmitterEmitMock).toHaveBeenCalledTimes(2)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(mapEventTypes.DRAWCANCEL)
       expect(eventEmitterEmitMock).toHaveBeenCalledWith(shapefileEventTypes.REMOVESHAPEFILE)
@@ -336,8 +390,14 @@ describe('SpatialDisplay component', () => {
   describe('manual entry of spatial values', () => {
     test('changing point search updates the state', async () => {
       const { user } = setup({
-        overrideProps: {
-          pointSearch: ['']
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: ['']
+              }
+            }
+          }
         }
       })
 
@@ -352,9 +412,15 @@ describe('SpatialDisplay component', () => {
     })
 
     test('submitting point search calls onChangeQuery', async () => {
-      const { props, user } = setup({
-        overrideProps: {
-          pointSearch: ['']
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: ['']
+              }
+            }
+          }
         }
       })
 
@@ -364,16 +430,22 @@ describe('SpatialDisplay component', () => {
       await user.type(input, '38,-77')
       await user.tab(input)
 
-      expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { point: ['-77,38'] } } })
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+      expect(zustandState.query.changeQuery).toHaveBeenCalledWith({ collection: { spatial: { point: ['-77,38'] } } })
     })
 
     test('changing bounding box search updates the state', async () => {
       const newBoundingBox = '-77.119759,38.791645,-76.909393,38.995845' // Lon,Lat,Lon,Lat
 
       const { user } = setup({
-        overrideProps: {
-          boundingBoxSearch: [newBoundingBox]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                boundingBox: [newBoundingBox]
+              }
+            }
+          }
         }
       })
 
@@ -402,9 +474,15 @@ describe('SpatialDisplay component', () => {
 
       const boundingBox = `${swPoint},${nePoint}` // Lon,Lat,Lon,Lat
 
-      const { props, user } = setup({
-        overrideProps: {
-          boundingBoxSearch: [boundingBox]
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                boundingBox: [boundingBox]
+              }
+            }
+          }
         }
       })
 
@@ -423,14 +501,20 @@ describe('SpatialDisplay component', () => {
       await user.type(neInput, newNePoint)
       await user.type(neInput, '{enter}')
 
-      expect(props.onChangeQuery).toHaveBeenCalledTimes(2)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: ['25,15,45,35'] } } })
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(2)
+      expect(zustandState.query.changeQuery).toHaveBeenCalledWith({ collection: { spatial: { boundingBox: ['25,15,45,35'] } } })
     })
 
     test('changing circle search updates the state', async () => {
       const { user } = setup({
-        overrideProps: {
-          circleSearch: ['0,0,0']
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                circle: ['0,0,0']
+              }
+            }
+          }
         }
       })
 
@@ -460,9 +544,15 @@ describe('SpatialDisplay component', () => {
       const center = '38,-77'
       const radius = '10000'
 
-      const { props, user } = setup({
-        overrideProps: {
-          circleSearch: [newCircle]
+      const { user, zustandState } = setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                circle: [newCircle]
+              }
+            }
+          }
         }
       })
 
@@ -479,16 +569,22 @@ describe('SpatialDisplay component', () => {
       await user.type(radiusInput, radius)
       await user.type(radiusInput, '{enter}')
 
-      expect(props.onChangeQuery).toHaveBeenCalledTimes(2)
-      expect(props.onChangeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: ['-77,38,10000'] } } })
+      expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(2)
+      expect(zustandState.query.changeQuery).toHaveBeenCalledWith({ collection: { spatial: { circle: ['-77,38,10000'] } } })
     })
   })
 
   describe('#trimCoordinate', () => {
     test('returns the input trimmed', async () => {
       const { user } = setup({
-        overrideProps: {
-          pointSearch: ['']
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: ['']
+              }
+            }
+          }
         }
       })
 
@@ -506,8 +602,14 @@ describe('SpatialDisplay component', () => {
 
     test('returns the input if no match was found', async () => {
       const { user } = setup({
-        overrideProps: {
-          pointSearch: ['']
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: ['']
+              }
+            }
+          }
         }
       })
 
@@ -527,8 +629,14 @@ describe('SpatialDisplay component', () => {
   describe('#validateCoordinate', () => {
     test('returns an empty string if no coordinate is provided', async () => {
       const { user } = setup({
-        overrideProps: {
-          pointSearch: ['']
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: ['']
+              }
+            }
+          }
         }
       })
 
@@ -548,8 +656,14 @@ describe('SpatialDisplay component', () => {
 
     test('returns no error with a valid coordinate', async () => {
       const { user } = setup({
-        overrideProps: {
-          pointSearch: ['']
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: ['']
+              }
+            }
+          }
         }
       })
 
@@ -570,8 +684,14 @@ describe('SpatialDisplay component', () => {
       const inputVal = '0,0.123456'
 
       setup({
-        overrideProps: {
-          pointSearch: [inputVal]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: [inputVal]
+              }
+            }
+          }
         }
       })
 
@@ -587,8 +707,14 @@ describe('SpatialDisplay component', () => {
       const inputVal = '0,95'
 
       setup({
-        overrideProps: {
-          pointSearch: [inputVal]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: [inputVal]
+              }
+            }
+          }
         }
       })
 
@@ -603,8 +729,14 @@ describe('SpatialDisplay component', () => {
       const inputVal = '190,0'
 
       setup({
-        overrideProps: {
-          pointSearch: [inputVal]
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                point: [inputVal]
+              }
+            }
+          }
         }
       })
 
@@ -621,8 +753,14 @@ describe('SpatialDisplay component', () => {
       const inputVal = '38.791,-77.119'
 
       const { user } = setup({
-        overrideProps: {
-          boundingBoxSearch: ['0,0,0,0']
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                boundingBox: ['0,0,0,0']
+              }
+            }
+          }
         }
       })
 
@@ -649,8 +787,14 @@ describe('SpatialDisplay component', () => {
       const inputVal = '-91.119,38.791'
 
       const { user } = setup({
-        overrideProps: {
-          boundingBoxSearch: ['0,0,0,0']
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                boundingBox: ['0,0,0,0']
+              }
+            }
+          }
         }
       })
 

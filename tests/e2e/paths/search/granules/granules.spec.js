@@ -143,7 +143,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(noParamsGranulesBody),
@@ -1145,7 +1145,7 @@ test.describe('Path /search/granules', () => {
         const request = route.request()
         const body = request.postData()
 
-        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20')
+        expect(body).toBe('echo_collection_id=C1214470488-ASF&page_num=1&page_size=20&sort_key=-start_date')
 
         route.fulfill({
           body: JSON.stringify(noParamsGranulesBody),

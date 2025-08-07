@@ -1,11 +1,7 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import {
-  Search,
-  mapDispatchToProps,
-  mapStateToProps
-} from '../Search'
+import { Search, mapDispatchToProps } from '../Search'
 
 import actions from '../../../actions'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -87,7 +83,6 @@ const setup = setupTest({
     '/search': {
       collectionQuery: {},
       match: { path: '/search' },
-      onChangeQuery: jest.fn(),
       onUpdateAdvancedSearch: jest.fn()
     }
   },
@@ -102,6 +97,9 @@ const setup = setupTest({
         showNonEosdisCheckbox: true,
         showOnlyGranulesCheckbox: true
       }
+    },
+    query: {
+      changeQuery: jest.fn()
     }
   },
   withRouter: true,
@@ -126,16 +124,6 @@ afterEach(() => {
 })
 
 describe('mapDispatchToProps', () => {
-  test('onChangeQuery calls actions.changeQuery', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeQuery')
-
-    mapDispatchToProps(dispatch).onChangeQuery({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
   test('onTogglePortalBrowserModal calls actions.togglePortalBrowserModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'togglePortalBrowserModal')
@@ -154,22 +142,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-})
-
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      query: {
-        collection: {}
-      }
-    }
-
-    const expectedState = {
-      collectionQuery: {}
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
   })
 })
 
@@ -200,30 +172,30 @@ describe('Search component', () => {
     })
 
     describe('handleCheckboxCheck', () => {
-      test('checking the "Include collections without granules" checkbox calls onChangeQuery', async () => {
-        const { user, props } = setup()
+      test('checking the "Include collections without granules" checkbox calls changeQuery', async () => {
+        const { user, zustandState } = setup()
 
         const includeWithoutGranulesCheckbox = await screen.findByText('Include collections without granules')
 
         await user.click(includeWithoutGranulesCheckbox)
 
-        expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-        expect(props.onChangeQuery).toHaveBeenCalledWith({
+        expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+        expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
-            hasGranulesOrCwic: true
+            hasGranulesOrCwic: undefined
           }
         })
       })
 
-      test('checking the "Include only EOSDIS collections" checkbox calls onChangeQuery', async () => {
-        const { user, props } = setup()
+      test('checking the "Include only EOSDIS collections" checkbox calls changeQuery', async () => {
+        const { user, zustandState } = setup()
 
         const includeWithoutGranulesCheckbox = await screen.findByText('Include only EOSDIS collections')
 
         await user.click(includeWithoutGranulesCheckbox)
 
-        expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
-        expect(props.onChangeQuery).toHaveBeenCalledWith({
+        expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
+        expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
           collection: {
             onlyEosdisCollections: true
           }

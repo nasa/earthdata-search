@@ -12,7 +12,6 @@ import './GranuleResultsList.scss'
  * Renders GranuleResultsList.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
- * @param {Object} props.collectionQuerySpatial - The spatial for the collection query
  * @param {Object} props.collectionTags - The tags for the focused collection
  * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
@@ -26,7 +25,6 @@ import './GranuleResultsList.scss'
  * @param {Number} props.itemCount - Number of total granule list itmes.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
  * @param {Object} props.location - Location passed from react router.
- * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
  * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
@@ -36,7 +34,6 @@ import './GranuleResultsList.scss'
  */
 export const GranuleResultsList = ({
   collectionId,
-  collectionQuerySpatial,
   collectionTags,
   directDistributionInformation,
   excludedGranuleIds,
@@ -51,7 +48,6 @@ export const GranuleResultsList = ({
   loadMoreItems,
   location,
   onGenerateNotebook,
-  onExcludeGranule,
   onFocusedGranuleChange,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
@@ -72,7 +68,6 @@ export const GranuleResultsList = ({
         ({ height, width }) => (
           <GranuleResultsListBody
             collectionId={collectionId}
-            collectionQuerySpatial={collectionQuerySpatial}
             collectionTags={collectionTags}
             directDistributionInformation={directDistributionInformation}
             excludedGranuleIds={excludedGranuleIds}
@@ -87,7 +82,6 @@ export const GranuleResultsList = ({
             itemCount={itemCount}
             loadMoreItems={loadMoreItems}
             location={location}
-            onExcludeGranule={onExcludeGranule}
             onFocusedGranuleChange={onFocusedGranuleChange}
             onGenerateNotebook={onGenerateNotebook}
             onMetricsAddGranuleProject={onMetricsAddGranuleProject}
@@ -110,7 +104,6 @@ GranuleResultsList.defaultProps = {
 
 GranuleResultsList.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  collectionQuerySpatial: PropTypes.shape({}).isRequired,
   collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
@@ -124,7 +117,6 @@ GranuleResultsList.propTypes = {
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
   location: locationPropType.isRequired,
-  onExcludeGranule: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,

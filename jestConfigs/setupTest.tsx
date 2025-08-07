@@ -13,6 +13,7 @@ import { cloneDeep, merge } from 'lodash-es'
 import useEdscStore from '../static/src/js/zustand/useEdscStore'
 // @ts-expect-error: This file does not have types
 import configureStore from '../static/src/js/store/configureStore'
+import { EdscStore } from '../static/src/js/zustand/types'
 
 /** Common props shared between types */
 type SetupTestCommonProps = {
@@ -84,7 +85,7 @@ export type SetupTestReturnType = {
   /** User event object for simulating user interactions */
   user: ReturnType<typeof userEvent.setup>
   /** Zustand state after the test setup */
-  zustandState: Record<string, unknown>
+  zustandState: EdscStore
 }
 
 const setupTest = ({

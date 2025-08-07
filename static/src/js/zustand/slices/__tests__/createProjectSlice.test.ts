@@ -1177,12 +1177,6 @@ describe('createProjectSlice', () => {
                 mock: 'data'
               }
             }
-          },
-          query: {
-            collection: {
-              temporal: {},
-              spatial: {}
-            }
           }
         })
       })
@@ -1267,12 +1261,6 @@ describe('createProjectSlice', () => {
                   }]
                 }
               }
-            },
-            query: {
-              collection: {
-                temporal: {},
-                spatial: {}
-              }
             }
           })
         })
@@ -1349,14 +1337,6 @@ describe('createProjectSlice', () => {
                   }]
                 }
               }
-            },
-            query: {
-              collection: {
-                temporal: {},
-                spatial: {
-                  polygon: ['-77,38,-77,38,-76,38,-77,38']
-                }
-              }
             }
           })
         })
@@ -1366,6 +1346,10 @@ describe('createProjectSlice', () => {
           state.project.collections.byId.collection1 = {
             granules: initialGranuleState,
             isVisible: true
+          }
+
+          state.query.collection.spatial = {
+            polygon: ['-77,38,-77,38,-76,38,-77,38']
           }
         })
 
@@ -1418,12 +1402,6 @@ describe('createProjectSlice', () => {
                 collection1: {
                   mock: 'data'
                 }
-              }
-            },
-            query: {
-              collection: {
-                temporal: {},
-                spatial: {}
               }
             }
           })
@@ -1497,12 +1475,6 @@ describe('createProjectSlice', () => {
                 collection1: {
                   mock: 'data'
                 }
-              }
-            },
-            query: {
-              collection: {
-                temporal: {},
-                spatial: {}
               }
             }
           })

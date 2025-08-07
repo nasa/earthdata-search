@@ -637,8 +637,7 @@ const AccessMethod = ({
     endDate = ''
   } = temporal
 
-  const hasNonBoundingBoxSpatial = spatial
-    && (spatial.polygon || spatial.point || spatial.line || spatial.circle)
+  const nonBoundingBoxSpatialType = ['polygon', 'point', 'line', 'circle'].find((spatialType) => spatial[spatialType] && spatial[spatialType].length > 0)
 
   const harmonyMbrWarning = useMemo(() => {
     let warning
@@ -647,26 +646,15 @@ const AccessMethod = ({
       enableSpatialSubsetting
       && supportsBoundingBoxSubsetting
       && !supportsShapefileSubsetting
-      && hasNonBoundingBoxSpatial
+      && nonBoundingBoxSpatialType
     ) {
-      let spatialType = ''
-      if (spatial.polygon) {
-        spatialType = 'polygon'
-      } else if (spatial.point) {
-        spatialType = 'point'
-      } else if (spatial.line) {
-        spatialType = 'line'
-      } else if (spatial.circle) {
-        spatialType = 'circle'
-      }
-
-      warning = `Only bounding boxes are supported. If this option is enabled, your ${spatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
+      warning = `Only bounding boxes are supported. If this option is enabled, your ${nonBoundingBoxSpatialType} will be automatically converted into the bounding box shown above and outlined on the map.`
     }
 
     return warning
   }, [
     enableSpatialSubsetting,
-    hasNonBoundingBoxSpatial,
+    nonBoundingBoxSpatialType,
     spatial,
     supportsBoundingBoxSubsetting,
     supportsShapefileSubsetting

@@ -20,14 +20,11 @@ import './AdvancedSearchForm.scss'
  * @param {Function} props.setModalOverlay - Sets the modal overlay content
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
- * @param {Function} props.onChangeRegionQuery - Callback function to update the region search results.
  */
-// eslint-disable-next-line react/prefer-stateless-function
-export class AdvancedSearchForm extends Component {
+class AdvancedSearchForm extends Component {
   componentDidMount() {
     const {
       values,
-      // eslint-disable-next-line react/prop-types
       validateForm
     } = this.props
 
@@ -44,8 +41,7 @@ export class AdvancedSearchForm extends Component {
       setFieldValue,
       setModalOverlay,
       touched,
-      values,
-      onChangeRegionQuery
+      values
     } = this.props
 
     return (
@@ -117,7 +113,6 @@ export class AdvancedSearchForm extends Component {
                             setFieldValue={setFieldValue}
                             setModalOverlay={setModalOverlay}
                             touched={touched}
-                            onChangeRegionQuery={onChangeRegionQuery}
                           />
                         )
                       }
@@ -138,18 +133,16 @@ AdvancedSearchForm.defaultProps = {
 }
 
 AdvancedSearchForm.propTypes = {
-  fields: PropTypes.arrayOf(
-    PropTypes.shape({})
-  ).isRequired,
   errors: PropTypes.shape({}).isRequired,
+  fields: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   handleBlur: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
   regionSearchResults: PropTypes.shape({}).isRequired,
   setFieldValue: PropTypes.func.isRequired,
   setModalOverlay: PropTypes.func,
   touched: PropTypes.shape({}).isRequired,
-  values: PropTypes.shape({}).isRequired,
-  onChangeRegionQuery: PropTypes.func.isRequired
+  validateForm: PropTypes.func.isRequired,
+  values: PropTypes.shape({}).isRequired
 }
 
 export default AdvancedSearchForm

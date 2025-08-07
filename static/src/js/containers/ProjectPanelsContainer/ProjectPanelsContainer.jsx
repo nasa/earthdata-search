@@ -13,17 +13,14 @@ import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 export const mapStateToProps = (state) => ({
   focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granulesMetadata: state.metadata.granules,
-  granulesQueries: state.query.collection.byId,
   location: state.router.location,
-  overrideTemporal: state.query.collection.overrideTemporal,
   panels: state.panels,
-  spatial: state.query.collection.spatial,
-  temporal: state.query.collection.temporal,
   ursProfile: getUrsProfile(state)
 })
 
@@ -54,7 +51,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
  * @param {Object} panels - The current panels state.
- * @param {Object} spatial - The spatial from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
@@ -70,7 +66,6 @@ export const ProjectPanelsContainer = ({
   focusedCollectionId,
   focusedGranuleId,
   granulesMetadata,
-  granulesQueries,
   location,
   onChangePath,
   onFocusedGranuleChange,
@@ -81,10 +76,7 @@ export const ProjectPanelsContainer = ({
   onUpdateFocusedCollection,
   onViewCollectionGranules,
   panels,
-  spatial,
-  temporal,
-  ursProfile,
-  overrideTemporal
+  ursProfile
 }) => {
   const {
     addGranuleToProjectCollection,
@@ -102,6 +94,13 @@ export const ProjectPanelsContainer = ({
     updateAccessMethod: state.project.updateAccessMethod
   }))
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
+  const collectionQuery = useEdscStore(getCollectionsQuery)
+  const {
+    byId: granulesQueries,
+    overrideTemporal,
+    spatial,
+    temporal
+  } = collectionQuery
 
   return (
     <ProjectPanels
@@ -134,17 +133,10 @@ export const ProjectPanelsContainer = ({
   )
 }
 
-ProjectPanelsContainer.defaultProps = {
-  granulesQueries: {},
-  temporal: {},
-  overrideTemporal: {}
-}
-
 ProjectPanelsContainer.propTypes = {
   focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
-  granulesQueries: PropTypes.shape({}),
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
@@ -155,12 +147,9 @@ ProjectPanelsContainer.propTypes = {
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
-  spatial: PropTypes.shape({}).isRequired,
-  temporal: PropTypes.shape({}),
   ursProfile: PropTypes.shape({
     email_address: PropTypes.string
-  }).isRequired,
-  overrideTemporal: PropTypes.shape({})
+  }).isRequired
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectPanelsContainer)

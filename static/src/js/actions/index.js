@@ -23,12 +23,7 @@ import {
   updateAdminProjectsPageNum
 } from './admin/projects'
 import { updateAdvancedSearch } from './advancedSearch'
-import {
-  getCollections,
-  clearFocusedCollectionGranuleFilters,
-  updateFocusedCollectionGranuleFilters,
-  updateCollectionMetadata
-} from './collections'
+import { getCollections, updateCollectionMetadata } from './collections'
 import {
   changeFocusedCollection,
   getFocusedCollection,
@@ -45,33 +40,14 @@ import {
 } from './colorMaps'
 import {
   addGranuleMetadata,
-  applyGranuleFilters,
-  clearGranuleFilters,
-  excludeGranule,
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
   getSearchGranules,
-  initializeCollectionGranulesQuery,
   initializeCollectionGranulesResults,
-  onExcludeGranule,
-  undoExcludeGranule,
   updateGranuleMetadata,
   updateGranuleResults
 } from './granules'
 import { logout, updateAuthToken } from './authToken'
-import {
-  changeCollectionPageNum,
-  changeGranulePageNum,
-  changeProjectQuery,
-  changeRegionQuery,
-  changeQuery,
-  clearFilters,
-  removeSpatialFilter,
-  removeTemporalFilter,
-  updateCollectionQuery,
-  updateGranuleSearchQuery,
-  updateRegionQuery
-} from './search'
 import {
   changeUrl,
   changePath,
@@ -121,12 +97,6 @@ import {
   updateNotificationLevel
 } from './contactInfo'
 import {
-  cancelAutocomplete,
-  clearAutocompleteSuggestions,
-  fetchAutocomplete,
-  selectAutocompleteSuggestion
-} from './autocomplete'
-import {
   createSubscription,
   getSubscriptions,
   deleteSubscription,
@@ -145,30 +115,17 @@ const actions = {
   adminIsAuthorized,
   adminViewProject,
   adminViewRetrieval,
-  applyGranuleFilters,
-  cancelAutocomplete,
-  changeCollectionPageNum,
   changeFocusedCollection,
   changeFocusedGranule,
-  changeGranulePageNum,
   changePath,
-  changeProjectQuery,
-  changeQuery,
-  changeRegionQuery,
   changeUrl,
-  clearAutocompleteSuggestions,
-  clearFilters,
-  clearFocusedCollectionGranuleFilters,
-  clearGranuleFilters,
   collectionRelevancyMetrics,
   createSubscription,
   deleteCollectionSubscription,
   deleteSubscription,
-  excludeGranule,
   exportSearch,
   fetchAdminRetrieval,
   fetchAdminRetrievals,
-  fetchAutocomplete,
   fetchContactInfo,
   fetchAdminProject,
   fetchAdminProjects,
@@ -188,16 +145,11 @@ const actions = {
   getViewAllFacets,
   handleAlert,
   handleError,
-  initializeCollectionGranulesQuery,
   initializeCollectionGranulesResults,
   logout,
-  onExcludeGranule,
   removeError,
-  removeSpatialFilter,
   removeSubscriptionDisabledFields,
-  removeTemporalFilter,
   requeueOrder,
-  selectAutocompleteSuggestion,
   setActivePanel,
   setActivePanelGroup,
   setActivePanelSection,
@@ -225,7 +177,6 @@ const actions = {
   toggleSpatialPolygonWarning,
   toggleTimeline,
   toggleTooManyPointsModal,
-  undoExcludeGranule,
   updateAdminRetrievalsPageNum,
   updateAdminRetrievalsSortKey,
   fetchAdminRetrievalsMetrics,
@@ -234,19 +185,15 @@ const actions = {
   updateAdvancedSearch,
   updateAuthToken,
   updateCollectionMetadata,
-  updateCollectionQuery,
   updateFocusedCollection,
-  updateFocusedCollectionGranuleFilters,
   updateFocusedGranule,
   updateGranuleMetadata,
   updateGranuleResults,
-  updateGranuleSearchQuery,
   updateGranuleSubscription,
   updateNotificationLevel,
   updateProjectName,
   updateAdminProjectsPageNum,
   updateAdminProjectsSortKey,
-  updateRegionQuery,
   updateSavedProject,
   updateStore,
   updateSubscription,

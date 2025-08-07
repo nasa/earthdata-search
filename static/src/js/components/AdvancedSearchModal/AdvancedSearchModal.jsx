@@ -29,7 +29,7 @@ import './AdvancedSearchModal.scss'
  * @param {Object} props.touched - Form state provided by Formik.
  * @param {Object} props.values - Form values provided by Formik.
  */
-export class AdvancedSearchModal extends Component {
+class AdvancedSearchModal extends Component {
   constructor(props) {
     super(props)
 
@@ -110,8 +110,7 @@ export class AdvancedSearchModal extends Component {
       setFieldTouched,
       touched,
       values,
-      validateForm,
-      onChangeRegionQuery
+      validateForm
     } = this.props
 
     const regionSearchResultsOverlay = (
@@ -139,7 +138,6 @@ export class AdvancedSearchModal extends Component {
         touched={touched}
         values={values}
         validateForm={validateForm}
-        onChangeRegionQuery={onChangeRegionQuery}
       />
     )
 
@@ -181,8 +179,7 @@ AdvancedSearchModal.propTypes = {
   touched: PropTypes.shape({}).isRequired,
   values: PropTypes.shape({}).isRequired,
   validateForm: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
-  onChangeRegionQuery: PropTypes.func.isRequired
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
 export default AdvancedSearchModal

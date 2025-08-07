@@ -172,13 +172,11 @@ describe('url#encodeUrlQuery', () => {
           hasGranulesOrCwic: true,
           pathname: '/path/here',
           focusedCollection: 'collectionId',
-          query: {
-            collection: {
-              byId: {
-                collectionId: {
-                  granules: {
-                    excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
-                  }
+          collectionsQuery: {
+            byId: {
+              collectionId: {
+                granules: {
+                  excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
                 }
               }
             }
@@ -221,13 +219,11 @@ describe('url#encodeUrlQuery', () => {
           hasGranulesOrCwic: true,
           pathname: '/path/here',
           focusedCollection: 'collectionId',
-          query: {
-            collection: {
-              byId: {
-                collectionId: {
-                  granules: {
-                    excludedGranuleIds: ['12345', '56789']
-                  }
+          collectionsQuery: {
+            byId: {
+              collectionId: {
+                granules: {
+                  excludedGranuleIds: ['12345', '56789']
                 }
               }
             }
@@ -253,13 +249,11 @@ describe('url#encodeUrlQuery', () => {
         projectCollections: {
           allIds: ['collectionId']
         },
-        query: {
-          collection: {
-            byId: {
-              collectionId: {
-                granules: {
-                  excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
-                }
+        collectionsQuery: {
+          byId: {
+            collectionId: {
+              granules: {
+                excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
               }
             }
           }
@@ -284,13 +278,11 @@ describe('url#encodeUrlQuery', () => {
         projectCollections: {
           allIds: ['collectionId']
         },
-        query: {
-          collection: {
-            byId: {
-              collectionId: {
-                granules: {
-                  excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
-                }
+        collectionsQuery: {
+          byId: {
+            collectionId: {
+              granules: {
+                excludedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
               }
             }
           }

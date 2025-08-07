@@ -26,12 +26,15 @@ const overlayContent = ({
 }) => {
   let temporalLabel = ''
 
-  if (formattedTemporal[0] && formattedTemporal[1]) {
-    temporalLabel = `<p class="m-0">${formattedTemporal[0]}</p><p class="m-0">${formattedTemporal[1]}</p>`
-  } else if (formattedTemporal[0]) {
-    temporalLabel = `<p class="m-0">${formattedTemporal[0]}</p>`
-  } else if (formattedTemporal[1]) {
-    temporalLabel = `<p class="m-0">${formattedTemporal[1]}</p>`
+  // If there is no temporal on the granule, don't add the temporalLabel
+  if (formattedTemporal) {
+    if (formattedTemporal[0] && formattedTemporal[1]) {
+      temporalLabel = `<p class="m-0">${formattedTemporal[0]}</p><p class="m-0">${formattedTemporal[1]}</p>`
+    } else if (formattedTemporal[0]) {
+      temporalLabel = `<p class="m-0">${formattedTemporal[0]}</p>`
+    } else if (formattedTemporal[1]) {
+      temporalLabel = `<p class="m-0">${formattedTemporal[1]}</p>`
+    }
   }
 
   let excludeHtml = ''
