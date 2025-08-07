@@ -1,13 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { adminIsAuthorized } from './admin/isAuthorized'
-import {
-  adminViewRetrieval,
-  fetchAdminRetrievals,
-  fetchAdminRetrieval,
-  requeueOrder,
-  updateAdminRetrievalsSortKey,
-  updateAdminRetrievalsPageNum
-} from './admin/retrievals'
+
+import { requeueOrder } from './admin/retrievals'
 
 import {
   fetchAdminRetrievalsMetrics,
@@ -101,7 +95,6 @@ const actions = {
   addGranuleMetadata,
   adminIsAuthorized,
   adminViewProject,
-  adminViewRetrieval,
   changeFocusedGranule,
   changePath,
   changeUrl,
@@ -110,8 +103,6 @@ const actions = {
   deleteCollectionSubscription,
   deleteSubscription,
   exportSearch,
-  fetchAdminRetrieval,
-  fetchAdminRetrievals,
   fetchContactInfo,
   fetchAdminProject,
   fetchAdminProjects,
@@ -158,8 +149,6 @@ const actions = {
   toggleSpatialPolygonWarning,
   toggleTimeline,
   toggleTooManyPointsModal,
-  updateAdminRetrievalsPageNum,
-  updateAdminRetrievalsSortKey,
   fetchAdminRetrievalsMetrics,
   updateAdminRetrievalsMetricsStartDate,
   updateAdminRetrievalsMetricsEndDate,

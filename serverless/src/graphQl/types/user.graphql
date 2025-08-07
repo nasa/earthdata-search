@@ -1,0 +1,7 @@
+type User {
+  "The unique identifier for the user"
+  id: Int
+
+  "The URS ID for the user"
+  ursId: String
+}

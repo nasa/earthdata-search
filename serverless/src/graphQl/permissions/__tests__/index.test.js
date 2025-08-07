@@ -26,6 +26,14 @@ describe('permissions', () => {
           adminPreferencesMetrics: and(
             isValidUser,
             isAdminUser
+          ),
+          adminRetrieval: and(
+            isValidUser,
+            isAdminUser
+          ),
+          adminRetrievals: and(
+            isValidUser,
+            isAdminUser
           )
         }
       }
