@@ -1,85 +1,29 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
-import actions from '../../actions'
 import AdminRetrievals from '../../components/AdminRetrievals/AdminRetrievals'
 
-export const mapStateToProps = (state) => ({
-  retrievals: state.admin.retrievals,
-  retrievalsLoading: state.admin.retrievals.isLoading,
-  retrievalsLoaded: state.admin.retrievals.isLoaded
-})
+export const AdminRetrievalsContainer = (props) => {
+  const {
+    history
+  } = props
 
-export const mapDispatchToProps = (dispatch) => ({
-  onAdminViewRetrieval:
-    (retrievalId) => dispatch(actions.adminViewRetrieval(retrievalId)),
-  onFetchAdminRetrievals:
-  (userId, retrievalCollectionId) => dispatch(
-    actions.fetchAdminRetrievals(userId, retrievalCollectionId)
-  ),
-  onUpdateAdminRetrievalsSortKey:
-    (sortKey, userId) => dispatch(
-      actions.updateAdminRetrievalsSortKey(sortKey, userId)
-    ),
-  onUpdateAdminRetrievalsPageNum:
-    (pageNum, userId) => dispatch(
-      actions.updateAdminRetrievalsPageNum(pageNum, userId)
-    )
-})
+  const {
+    push: historyPush
+  } = history
 
-export class AdminRetrievalsContainer extends Component {
-  componentDidMount() {
-    const {
-      onFetchAdminRetrievals
-    } = this.props
-
-    onFetchAdminRetrievals()
-  }
-
-  render() {
-    const {
-      history,
-      onAdminViewRetrieval,
-      onFetchAdminRetrievals,
-      onUpdateAdminRetrievalsSortKey,
-      onUpdateAdminRetrievalsPageNum,
-      retrievals
-    } = this.props
-
-    const {
-      push: historyPush
-    } = history
-
-    return (
-      <AdminRetrievals
-        historyPush={historyPush}
-        onAdminViewRetrieval={onAdminViewRetrieval}
-        onFetchAdminRetrievals={onFetchAdminRetrievals}
-        onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
-        onUpdateAdminRetrievalsPageNum={onUpdateAdminRetrievalsPageNum}
-        retrievals={retrievals}
-      />
-    )
-  }
-}
-
-AdminRetrievalsContainer.defaultProps = {
-  retrievals: {}
+  return (
+    <AdminRetrievals
+      historyPush={historyPush}
+    />
+  )
 }
 
 AdminRetrievalsContainer.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
-  }).isRequired,
-  onAdminViewRetrieval: PropTypes.func.isRequired,
-  onFetchAdminRetrievals: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
-  retrievals: PropTypes.shape({})
+  }).isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AdminRetrievalsContainer)
-)
+export default withRouter(AdminRetrievalsContainer)
