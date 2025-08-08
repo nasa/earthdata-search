@@ -1,0 +1,27 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "MultiLineString",
+        "coordinates": [
+          [
+            [-109.6, 38.81],
+            [-109.62, 38.83],
+            [-109.64, 38.85]
+          ],
+          [
+            [-109.55, 38.75],
+            [-109.57, 38.77],
+            [-109.59, 38.79]
+          ]
+        ]
+      },
+      "properties": {
+        "Name": "MultiLineString Test",
+        "edscId": "0"
+      }
+    }
+  ]
+}
