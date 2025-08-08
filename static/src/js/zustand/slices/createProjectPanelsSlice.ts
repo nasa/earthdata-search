@@ -25,7 +25,7 @@ const createProjectPanelsSlice: ImmerStateCreator<PanelsSlice> = (set) => ({
 
     setActivePanel: (activePanel) => {
       set((state) => {
-        state.projectPanels.panels.activePanel = activePanel as ActivePanelConfiguration
+        state.projectPanels.panels.activePanel = activePanel
       })
     },
 
