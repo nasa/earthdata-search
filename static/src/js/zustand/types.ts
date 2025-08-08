@@ -877,6 +877,8 @@ export type UiSlice = {
 }
 
 // Holds project panel state this is: panel.group.section
+// Example 0.5.2 is the 5th collection in the project and looking at the panel variable details
+// 1.3.0 is the granule list for the third collection in the project
 export type ActivePanelConfiguration =`${number}.${number}.${number}`
 
 export type panelsData = {
