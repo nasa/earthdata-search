@@ -876,13 +876,14 @@ export type UiSlice = {
   }
 }
 
-export type activePanelConfiguration =`${number}.${number}.${number}`
+// Holds project panel state this is: panel.group.section
+export type ActivePanelConfiguration =`${number}.${number}.${number}`
 
 export type panelsData = {
   /** Whether the project panels is open */
   isOpen: boolean
   /** The currently active project panel, e.g., '0.0.0' */
-  activePanel: activePanelConfiguration
+  activePanel: ActivePanelConfiguration
 }
 
 export type PanelsSlice = {

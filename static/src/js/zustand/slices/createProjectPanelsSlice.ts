@@ -1,12 +1,12 @@
 import {
+  ActivePanelConfiguration,
   ImmerStateCreator,
-  PanelsSlice,
-  activePanelConfiguration
+  PanelsSlice
 } from '../types'
 
 const initialPanelsData = {
   isOpen: true,
-  activePanel: '0.0.0' as activePanelConfiguration
+  activePanel: '0.0.0' as ActivePanelConfiguration
 }
 
 const initialState = {
@@ -25,7 +25,7 @@ const createProjectPanelsSlice: ImmerStateCreator<PanelsSlice> = (set) => ({
 
     setActivePanel: (activePanel) => {
       set((state) => {
-        state.projectPanels.panels.activePanel = activePanel as activePanelConfiguration
+        state.projectPanels.panels.activePanel = activePanel as ActivePanelConfiguration
       })
     },
 
@@ -33,7 +33,7 @@ const createProjectPanelsSlice: ImmerStateCreator<PanelsSlice> = (set) => ({
       set((state) => {
         const panelStateParts = state.projectPanels.panels.activePanel.split('.')
         panelStateParts[1] = group
-        state.projectPanels.panels.activePanel = panelStateParts.join('.') as activePanelConfiguration
+        state.projectPanels.panels.activePanel = panelStateParts.join('.') as ActivePanelConfiguration
       })
     },
 
@@ -41,7 +41,7 @@ const createProjectPanelsSlice: ImmerStateCreator<PanelsSlice> = (set) => ({
       set((state) => {
         const panelStateParts = state.projectPanels.panels.activePanel.split('.')
         panelStateParts[0] = section
-        state.projectPanels.panels.activePanel = panelStateParts.join('.') as activePanelConfiguration
+        state.projectPanels.panels.activePanel = panelStateParts.join('.') as ActivePanelConfiguration
       })
     }
   }
