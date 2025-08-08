@@ -31,11 +31,12 @@ export const AdminRetrievalsList = ({
   historyPush
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const [searchType, setSearchType] = useState('retrievalId')
+  const [searchType, setSearchType] = useState('obfuscatedId')
   const [searchValue, setSearchValue] = useState('')
   const [debouncedSearchValue, setDebouncedSearchValue] = useState('')
   const [sortKey, setSortKey] = useState()
 
+  // Debounce the search value to avoid rapid requests
   useEffect(() => {
     const debounceHandler = setTimeout(() => {
       setDebouncedSearchValue(searchValue)
@@ -64,10 +65,12 @@ export const AdminRetrievalsList = ({
   const { adminRetrievals: adminRetrievalsList } = data || {}
   const { adminRetrievals = [], count = 0 } = adminRetrievalsList || {}
 
+  // Clear the search value
   const onClearSearchValueClick = useCallback(() => {
     setSearchValue('')
   }, [])
 
+  // Handle clicks to sort by urs_id
   const onUrsIdSortClick = useCallback(() => {
     const sortKeyString = sortKey || ''
 
@@ -75,15 +78,16 @@ export const AdminRetrievalsList = ({
       setSortKey('-urs_id')
     }
 
-    if (sortKeyString === '+urs_id') {
-      setSortKey('')
-    }
-
     if (sortKeyString === '-urs_id') {
       setSortKey('+urs_id')
     }
+
+    if (sortKeyString === '+urs_id') {
+      setSortKey('')
+    }
   }, [sortKey])
 
+  // Handle clicks to sort by created_at
   const onCreatedAtSortClick = useCallback(() => {
     const sortKeyString = sortKey || ''
 
@@ -91,20 +95,21 @@ export const AdminRetrievalsList = ({
       setSortKey('-created_at')
     }
 
-    if (sortKeyString === '+created_at') {
-      setSortKey('')
-    }
-
     if (sortKeyString === '-created_at') {
       setSortKey('+created_at')
     }
+
+    if (sortKeyString === '+created_at') {
+      setSortKey('')
+    }
   }, [sortKey])
 
+  // Handle changes to the search type dropdown
   const onSearchTypeChange = useCallback((event) => {
-    setSearchValue('')
     setSearchType(event.target.value)
   }, [])
 
+  // Handle changes to the search filter input
   const onSearchFilterValueChange = useCallback((event) => {
     setSearchValue(event.target.value)
   }, [])
@@ -126,10 +131,7 @@ export const AdminRetrievalsList = ({
             value={searchType}
             onChange={onSearchTypeChange}
             className="me-3"
-            style={
-              {
-              }
-            }
+            defaultValue={searchType}
           >
             <option value="obfuscatedId">Obfuscated ID</option>
             <option value="ursId">URS ID</option>

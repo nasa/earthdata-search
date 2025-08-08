@@ -12,8 +12,10 @@ const loaders = getLoaders({ databaseClient })
 
 /**
  * Gets the context for the GraphQL resolver
- * @param {*} params The parameters for the context
- * @returns The context object
+ * @param {Object} params The parameters for the context
+ * @param {Object} params.event The event object from the lambda function
+ * @param {Object} params.context The context object from the lambda function
+ * @returns {Object} The context object
  */
 const getContext = async ({ event }) => {
   const { headers } = event

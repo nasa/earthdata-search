@@ -6,6 +6,7 @@ const { env } = getApplicationConfig()
 
 /**
  * Class that generates a client and handles database operations
+ * @class
  */
 export default class DatabaseClient {
   constructor() {
@@ -28,45 +29,6 @@ export default class DatabaseClient {
     }
 
     return this.dbConnection
-  }
-
-  /**
-   * Retrieves a user by their ID
-   * @param {number} userId The ID of the user to retrieve
-   * @returns {Promise<Object>} A promise that resolves to the user object
-   */
-  async getUserById(userId) {
-    try {
-      const db = await this.getDbConnection()
-
-      return await db('users')
-        .select('users.*')
-        .where({ 'users.id': userId })
-        .first()
-    } catch {
-      const errorMessage = 'Failed to retrieve user by ID'
-      console.log(errorMessage)
-      throw new Error(errorMessage)
-    }
-  }
-
-  /**
-   * Retrieves users by their IDs
-   * @param {number[]} userIds The IDs of the users to retrieve
-   * @returns {Promise<Object>} A promise that resolves to the array of user objects
-   */
-  async getUsersById(userIds) {
-    try {
-      const db = await this.getDbConnection()
-
-      return await db('users')
-        .select('users.*')
-        .whereIn('users.id', userIds)
-    } catch {
-      const errorMessage = 'Failed to retrieve users by ID'
-      console.log(errorMessage)
-      throw new Error(errorMessage)
-    }
   }
 
   /**
@@ -130,11 +92,11 @@ export default class DatabaseClient {
   }
 
   /**
-   * Retrieves a retrieval by its ID
-   * @param {number} id The ID of the retrieval to retrieve
+   * Retrieves a retrieval by its obfuscated ID
+   * @param {number} obfuscatedId The ID of the retrieval to retrieve
    * @returns {Promise<Object>} A promise that resolves to the retrieval object
    */
-  async getRetrievalById(id) {
+  async getRetrievalByObfuscatedId(obfuscatedId) {
     try {
       const db = await this.getDbConnection()
 
@@ -143,7 +105,7 @@ export default class DatabaseClient {
           'retrievals.*'
         )
         .where({
-          'retrievals.id': deobfuscateId(parseInt(id, 10))
+          'retrievals.id': deobfuscateId(parseInt(obfuscatedId, 10))
         })
         .first()
     } catch (e) {
@@ -199,7 +161,7 @@ export default class DatabaseClient {
       if (retrievalCollectionId) {
         query = query
           .leftJoin('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
-          .where({ 'retrieval_collections.id': parseInt(retrievalCollectionId, 10) })
+          .where({ 'retrieval_collections.id': retrievalCollectionId })
       }
 
       if (obfuscatedId) {
@@ -217,6 +179,45 @@ export default class DatabaseClient {
       return query
     } catch {
       const errorMessage = 'Failed to retrieve user retrievals'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves a user by their ID
+   * @param {number} userId The ID of the user to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the user object
+   */
+  async getUserById(userId) {
+    try {
+      const db = await this.getDbConnection()
+
+      return await db('users')
+        .select('users.*')
+        .where({ 'users.id': userId })
+        .first()
+    } catch {
+      const errorMessage = 'Failed to retrieve user by ID'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves users by their IDs
+   * @param {number[]} userIds The IDs of the users to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the array of user objects
+   */
+  async getUsersById(userIds) {
+    try {
+      const db = await this.getDbConnection()
+
+      return await db('users')
+        .select('users.*')
+        .whereIn('users.id', userIds)
+    } catch {
+      const errorMessage = 'Failed to retrieve users by ID'
       console.log(errorMessage)
       throw new Error(errorMessage)
     }
