@@ -20,7 +20,6 @@ export const mapStateToProps = (state) => ({
   focusedGranuleId: getFocusedGranuleId(state),
   granulesMetadata: state.metadata.granules,
   location: state.router.location,
-  panels: state.panels,
   ursProfile: getUrsProfile(state)
 })
 
@@ -29,14 +28,8 @@ export const mapDispatchToProps = (dispatch) => ({
     (path) => dispatch(actions.changePath(path)),
   onFocusedGranuleChange:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
-  onSetActivePanel:
-    (panelId) => dispatch(actions.setActivePanel(panelId)),
-  onSetActivePanelGroup:
-    (panelId) => dispatch(actions.setActivePanelGroup(panelId)),
   onToggleAboutCSDAModal:
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
-  onTogglePanels:
-    (value) => dispatch(actions.togglePanels(value)),
   onUpdateFocusedCollection:
     (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
   onViewCollectionGranules:
@@ -50,15 +43,10 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
- * @param {Object} panels - The current panels state.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
- * @param {Function} onSetActivePanel - Switches the currently active panel.
- * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
- * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
- * @param {Function} onTogglePanels - Toggles the panels opened or closed.
  * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
  * @param {Function} onViewCollectionGranules - Views the collection granules.
  */
@@ -69,13 +57,9 @@ export const ProjectPanelsContainer = ({
   location,
   onChangePath,
   onFocusedGranuleChange,
-  onSetActivePanel,
-  onSetActivePanelGroup,
   onToggleAboutCSDAModal,
-  onTogglePanels,
   onUpdateFocusedCollection,
   onViewCollectionGranules,
-  panels,
   ursProfile
 }) => {
   const {
@@ -84,14 +68,22 @@ export const ProjectPanelsContainer = ({
     projectCollections,
     removeGranuleFromProjectCollection,
     selectAccessMethod,
-    updateAccessMethod
+    updateAccessMethod,
+    panels: panelsData,
+    setActivePanel,
+    togglePanels,
+    setPanelGroup
   } = useEdscStore((state) => ({
     addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
     dataQualitySummaries: state.dataQualitySummaries.byCollectionId,
     projectCollections: state.project.collections,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     selectAccessMethod: state.project.selectAccessMethod,
-    updateAccessMethod: state.project.updateAccessMethod
+    updateAccessMethod: state.project.updateAccessMethod,
+    panels: state.projectPanels.panels,
+    setActivePanel: state.projectPanels.setActivePanel,
+    togglePanels: state.projectPanels.setIsOpen,
+    setPanelGroup: state.projectPanels.setPanelGroup
   }))
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
@@ -115,14 +107,14 @@ export const ProjectPanelsContainer = ({
       onFocusedGranuleChange={onFocusedGranuleChange}
       onRemoveGranuleFromProjectCollection={removeGranuleFromProjectCollection}
       onSelectAccessMethod={selectAccessMethod}
-      onSetActivePanel={onSetActivePanel}
-      onSetActivePanelGroup={onSetActivePanelGroup}
+      onSetActivePanel={setActivePanel}
+      onSetActivePanelGroup={setPanelGroup}
       onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-      onTogglePanels={onTogglePanels}
+      onTogglePanels={togglePanels}
       onUpdateAccessMethod={updateAccessMethod}
       onUpdateFocusedCollection={onUpdateFocusedCollection}
       onViewCollectionGranules={onViewCollectionGranules}
-      panels={panels}
+      panels={panelsData}
       projectCollections={projectCollections}
       projectCollectionsMetadata={projectCollectionsMetadata}
       spatial={spatial}
@@ -140,13 +132,9 @@ ProjectPanelsContainer.propTypes = {
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFocusedGranuleChange: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
-  onSetActivePanelGroup: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({
     email_address: PropTypes.string
   }).isRequired

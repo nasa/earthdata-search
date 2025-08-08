@@ -57,8 +57,6 @@ const setup = setupTest({
     ursProfile: {},
     overrideTemporal: {},
     onSelectAccessMethod: jest.fn(),
-    onSetActivePanel: jest.fn(),
-    onTogglePanels: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
     projectCollection: {
       granules: {}
@@ -69,6 +67,9 @@ const setup = setupTest({
     map: {
       showMbr: false,
       setShowMbr: jest.fn()
+    },
+    projectPanels: {
+      setActivePanel: jest.fn()
     }
   }
 })
@@ -1647,7 +1648,7 @@ describe('AccessMethod component', () => {
           const collectionId = 'collectionId'
           const serviceName = 'harmony-service-name'
 
-          const { props, user } = setup({
+          const { user } = setup({
             overrideProps: {
               selectedAccessMethod: 'harmony0',
               accessMethods: {
@@ -1692,11 +1693,11 @@ describe('AccessMethod component', () => {
           const editVariablesBtn = screen.getByRole('button', { name: 'Edit Variables' })
           await user.click(editVariablesBtn)
 
-          expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)
-          expect(props.onSetActivePanel).toHaveBeenCalledWith('0.0.1')
-
-          expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
-          expect(props.onTogglePanels).toHaveBeenCalledWith(true)
+          const zustandState = useEdscStore.getState()
+          const { projectPanels } = zustandState
+          const { setActivePanel } = projectPanels
+          expect(setActivePanel).toHaveBeenCalledTimes(1)
+          expect(setActivePanel).toHaveBeenCalledWith('0.0.1')
         })
       })
 

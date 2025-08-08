@@ -488,7 +488,6 @@ class ProjectPanels extends PureComponent {
                 label="Done"
                 bootstrapVariant="primary"
                 onClick={() => this.onPanelClose()}
-                dataTestId="project-panels-done"
               >
                 Done
               </Button>

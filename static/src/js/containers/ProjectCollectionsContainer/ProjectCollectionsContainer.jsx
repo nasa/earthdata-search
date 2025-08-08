@@ -9,12 +9,6 @@ import { metricsDataAccess } from '../../middleware/metrics/actions'
 import ProjectCollections from '../../components/ProjectCollections/ProjectCollections'
 
 export const mapDispatchToProps = (dispatch) => ({
-  onSetActivePanel:
-    (panelId) => dispatch(actions.setActivePanel(panelId)),
-  onTogglePanels:
-    (isOpen) => dispatch(actions.togglePanels(isOpen)),
-  onSetActivePanelSection:
-    (sectionId) => dispatch(actions.setActivePanelSection(sectionId)),
   onUpdateProjectName:
     (name) => dispatch(actions.updateProjectName(name)),
   onMetricsDataAccess:
@@ -28,35 +22,26 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
-  panels: state.panels,
   savedProject: state.savedProject
 })
 
 export const ProjectCollectionsContainer = (props) => {
   const {
     onMetricsDataAccess,
-    onSetActivePanel,
-    onSetActivePanelSection,
-    onTogglePanels,
     onUpdateFocusedCollection,
     onUpdateProjectName,
     onViewCollectionDetails,
     onViewCollectionGranules,
-    panels,
     savedProject
   } = props
 
   return (
     <ProjectCollections
       onMetricsDataAccess={onMetricsDataAccess}
-      onSetActivePanel={onSetActivePanel}
-      onSetActivePanelSection={onSetActivePanelSection}
-      onTogglePanels={onTogglePanels}
       onUpdateFocusedCollection={onUpdateFocusedCollection}
       onUpdateProjectName={onUpdateProjectName}
       onViewCollectionDetails={onViewCollectionDetails}
       onViewCollectionGranules={onViewCollectionGranules}
-      panels={panels}
       savedProject={savedProject}
     />
   )
@@ -64,14 +49,10 @@ export const ProjectCollectionsContainer = (props) => {
 
 ProjectCollectionsContainer.propTypes = {
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
-  onSetActivePanelSection: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
   onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   onViewCollectionDetails: PropTypes.func.isRequired,
   onViewCollectionGranules: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }
 

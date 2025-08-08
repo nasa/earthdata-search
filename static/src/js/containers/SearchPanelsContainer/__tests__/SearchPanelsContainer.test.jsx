@@ -38,8 +38,6 @@ const setup = setupTest({
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
-    onTogglePanels: jest.fn(),
-    onSetActivePanel: jest.fn(),
     onExport: jest.fn(),
     panels: {
       activePanel: '0.0.0',
@@ -99,16 +97,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
   })
 
-  test('onSetActivePanel calls actions.setActivePanel', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'setActivePanel')
-
-    mapDispatchToProps(dispatch).onSetActivePanel('panelId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('panelId')
-  })
-
   test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
@@ -127,16 +115,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith(true)
-  })
-
-  test('onTogglePanels calls actions.togglePanels', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'togglePanels')
-
-    mapDispatchToProps(dispatch).onTogglePanels('value')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('value')
   })
 
   test('onExport calls actions.exportSearch', () => {
@@ -182,8 +160,7 @@ describe('mapStateToProps', () => {
       isExportRunning: {
         csv: false,
         json: false
-      },
-      panels: {}
+      }
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -220,14 +197,8 @@ describe('SearchPanelsContainer component', () => {
         onExport: props.onExport,
         onFocusedCollectionChange: props.onFocusedCollectionChange,
         onMetricsCollectionSortChange: props.onMetricsCollectionSortChange,
-        onSetActivePanel: props.onSetActivePanel,
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         onToggleAboutCwicModal: props.onToggleAboutCwicModal,
-        onTogglePanels: props.onTogglePanels,
-        panels: {
-          activePanel: '0.0.0',
-          isOpen: false
-        },
         preferences: {
           panelState: 'default',
           collectionListView: 'default',
