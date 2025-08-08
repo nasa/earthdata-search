@@ -876,10 +876,13 @@ export type UiSlice = {
   }
 }
 
-// Holds project panel state this is: panel.group.section
-// Example 0.5.2 is the 5th collection in the project and looking at the panel variable details
-// 1.3.0 is the granule list for the third collection in the project
-export type ActivePanelConfiguration =`${number}.${number}.${number}`
+/** Holds project panel state */
+/** Example 0.5.2 is the 5th collection in the project and looking at the panel variable details */
+/** 1.3.0 is the granule list for the third collection in the project */
+type PanelsPanel = `${number}`
+type PanelsGroup = `${number}`
+type PanelsSection = `${number}`
+export type ActivePanelConfiguration = `${PanelsPanel}.${PanelsGroup}.${PanelsSection}`
 
 export type panelsData = {
   /** Whether the project panels is open */
@@ -896,11 +899,11 @@ export type PanelsSlice = {
     /** Function to toggle the panels open/closed */
     setIsOpen: (isOpen: boolean) => void
     /** Function to set the active panel */
-    setActivePanel: (activePanel: string) => void
+    setActivePanel: (activePanel: ActivePanelConfiguration) => void
     /** Function to set the panel group (updates the middle part of activePanel) */
-    setPanelGroup: (group: string) => void
+    setPanelGroup: (group: PanelsGroup) => void
     /** Function to set the panel section (updates the first part of activePanel) */
-    setPanelSection: (section: string) => void
+    setPanelSection: (section: PanelsSection) => void
   }
 }
 
