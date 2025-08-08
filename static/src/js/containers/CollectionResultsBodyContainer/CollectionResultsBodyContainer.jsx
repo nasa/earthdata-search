@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import actions from '../../actions/index'
-
 import { metricsAddCollectionProject } from '../../middleware/metrics/actions'
 
 import CollectionResultsBody from '../../components/CollectionResults/CollectionResultsBody'
@@ -17,10 +15,6 @@ export const mapStateToProps = (state) => ({
 })
 
 export const mapDispatchToProps = (dispatch) => ({
-  onViewCollectionGranules:
-    (collectionId) => dispatch(actions.viewCollectionGranules(collectionId)),
-  onViewCollectionDetails:
-    (collectionId) => dispatch(actions.viewCollectionDetails(collectionId)),
   onMetricsAddCollectionProject:
     (data) => dispatch(metricsAddCollectionProject(data))
 })
@@ -30,8 +24,6 @@ export const CollectionResultsBodyContainer = (props) => {
     collectionsMetadata,
     collectionsSearch,
     onMetricsAddCollectionProject,
-    onViewCollectionDetails,
-    onViewCollectionGranules,
     panelView
   } = props
 
@@ -54,8 +46,6 @@ export const CollectionResultsBodyContainer = (props) => {
       collectionsSearch={collectionsSearch}
       loadNextPage={loadNextPage}
       onMetricsAddCollectionProject={onMetricsAddCollectionProject}
-      onViewCollectionDetails={onViewCollectionDetails}
-      onViewCollectionGranules={onViewCollectionGranules}
       panelView={panelView}
     />
   )
@@ -65,8 +55,6 @@ CollectionResultsBodyContainer.propTypes = {
   collectionsMetadata: PropTypes.shape({}).isRequired,
   collectionsSearch: PropTypes.shape({}).isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired
 }
 

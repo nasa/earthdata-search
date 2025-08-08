@@ -65,6 +65,7 @@ describe('updateStore', () => {
         cmrFacets: undefined,
         earthdataEnvironment: undefined,
         featureFacets: undefined,
+        focusedCollection: undefined,
         mapView: undefined,
         portal: undefined,
         project: undefined,
@@ -79,6 +80,7 @@ describe('updateStore', () => {
     const {
       earthdataEnvironment,
       facetParams,
+      focusedCollection,
       map,
       portal,
       project,
@@ -98,6 +100,11 @@ describe('updateStore', () => {
         customizable: false,
         mapImagery: false
       }
+    })
+
+    expect(focusedCollection).toEqual({
+      ...initialState.focusedCollection,
+      focusedCollection: 'C00001-EDSC'
     })
 
     expect(map).toEqual(initialState.map)
@@ -184,11 +191,6 @@ describe('updateStore', () => {
       })
 
       const store = mockStore({
-        preferences: {
-          preferences: {
-            collectionSort: 'default'
-          }
-        },
         router: {
           location: {
             pathname: '/projects'
@@ -204,6 +206,7 @@ describe('updateStore', () => {
           cmrFacets: undefined,
           earthdataEnvironment: undefined,
           featureFacets: undefined,
+          focusedCollection: undefined,
           mapView: undefined,
           portal: undefined,
           project: undefined,
@@ -219,6 +222,7 @@ describe('updateStore', () => {
       const {
         earthdataEnvironment,
         facetParams,
+        focusedCollection,
         map,
         portal,
         project,
@@ -238,6 +242,11 @@ describe('updateStore', () => {
           customizable: false,
           mapImagery: false
         }
+      })
+
+      expect(focusedCollection).toEqual({
+        ...initialState.focusedCollection,
+        focusedCollection: 'C00001-EDSC'
       })
 
       expect(map).toEqual(initialState.map)
@@ -325,11 +334,6 @@ describe('updateStore', () => {
       })
 
       const store = mockStore({
-        preferences: {
-          preferences: {
-            collectionSort: 'default'
-          }
-        },
         router: {
           location: {
             pathname: '/projects'
@@ -345,6 +349,7 @@ describe('updateStore', () => {
           cmrFacets: undefined,
           earthdataEnvironment: undefined,
           featureFacets: undefined,
+          focusedCollection: undefined,
           mapView: undefined,
           portalId: undefined,
           portal: undefined,
@@ -361,6 +366,7 @@ describe('updateStore', () => {
       const {
         earthdataEnvironment,
         facetParams,
+        focusedCollection,
         map,
         portal,
         project,
@@ -380,6 +386,11 @@ describe('updateStore', () => {
           customizable: false,
           mapImagery: false
         }
+      })
+
+      expect(focusedCollection).toEqual({
+        ...initialState.focusedCollection,
+        focusedCollection: ''
       })
 
       expect(map).toEqual(initialState.map)
@@ -593,11 +604,6 @@ describe('changePath', () => {
     const newPath = '/search?p=C00001-EDSC'
 
     const store = mockStore({
-      query: {
-        collection: {
-          spatial: {}
-        }
-      },
       router: {
         location: {
           pathname: '/search'
@@ -667,8 +673,6 @@ describe('changePath', () => {
         },
         granules: {}
       },
-      providers: [],
-      query: {},
       router: {
         location: {
           pathname: '/search'
@@ -697,16 +701,10 @@ describe('changePath', () => {
     describe('when the path matches granule search', () => {
       test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
         const newPath = '/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
-          query: {
-            collection: {
-              spatial: {}
-            }
-          },
           router: {
             location: {
               pathname: '/search'
@@ -714,26 +712,31 @@ describe('changePath', () => {
           }
         })
 
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.focusedCollection.getFocusedCollection = jest.fn()
+        })
+
         await store.dispatch(urlQuery.changePath(newPath))
 
+        const { focusedCollection } = useEdscStore.getState()
+        const { getFocusedCollection } = focusedCollection
+
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledWith()
+
+        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollection).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches collection details', () => {
       test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
         const newPath = '/search/granules/collection-details?p=C00001-EDSC'
 
         const store = mockStore({
-          query: {
-            collection: {
-              spatial: {}
-            }
-          },
           router: {
             location: {
               pathname: '/search'
@@ -741,26 +744,31 @@ describe('changePath', () => {
           }
         })
 
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.focusedCollection.getFocusedCollection = jest.fn()
+        })
+
         await store.dispatch(urlQuery.changePath(newPath))
 
+        const { focusedCollection } = useEdscStore.getState()
+        const { getFocusedCollection } = focusedCollection
+
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledWith()
+
+        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollection).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches subscription list', () => {
       test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
         const newPath = '/search/granules/subscriptions?p=C00001-EDSC'
 
         const store = mockStore({
-          query: {
-            collection: {
-              spatial: {}
-            }
-          },
           router: {
             location: {
               pathname: '/search'
@@ -768,28 +776,33 @@ describe('changePath', () => {
           }
         })
 
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.focusedCollection.getFocusedCollection = jest.fn()
+        })
+
         await store.dispatch(urlQuery.changePath(newPath))
 
+        const { focusedCollection } = useEdscStore.getState()
+        const { getFocusedCollection } = focusedCollection
+
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledWith()
+
+        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollection).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches granule details', () => {
       test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
         const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule').mockImplementation(() => jest.fn())
 
         const newPath = '/search/granules/granule-details?p=C00001-EDSC'
 
         const store = mockStore({
           focusedGranule: 'G00001-EDSC',
-          query: {
-            collection: {
-              spatial: {}
-            }
-          },
           router: {
             location: {
               pathname: '/search'
@@ -797,11 +810,24 @@ describe('changePath', () => {
           }
         })
 
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.focusedCollection.getFocusedCollection = jest.fn()
+        })
+
         await store.dispatch(urlQuery.changePath(newPath))
 
+        const { focusedCollection } = useEdscStore.getState()
+        const { getFocusedCollection } = focusedCollection
+
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledWith()
+
+        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollection).toHaveBeenCalledWith()
+
         expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedGranuleMock).toHaveBeenCalledWith()
       })
     })
   })
@@ -810,16 +836,10 @@ describe('changePath', () => {
     describe('when the path matches granule search', () => {
       test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
         const newPath = '/portal/fakeportal/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
-          query: {
-            collection: {
-              spatial: {}
-            }
-          },
           router: {
             location: {
               pathname: '/search'
@@ -827,26 +847,31 @@ describe('changePath', () => {
           }
         })
 
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.focusedCollection.getFocusedCollection = jest.fn()
+        })
+
         await store.dispatch(urlQuery.changePath(newPath))
 
+        const { focusedCollection } = useEdscStore.getState()
+        const { getFocusedCollection } = focusedCollection
+
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledWith()
+
+        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollection).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches collection details', () => {
       test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
         const newPath = '/portal/fakeportal/search/granules/collection-details?p=C00001-EDSC'
 
         const store = mockStore({
-          query: {
-            collection: {
-              spatial: {}
-            }
-          },
           router: {
             location: {
               pathname: '/search'
@@ -854,26 +879,31 @@ describe('changePath', () => {
           }
         })
 
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.focusedCollection.getFocusedCollection = jest.fn()
+        })
+
         await store.dispatch(urlQuery.changePath(newPath))
 
+        const { focusedCollection } = useEdscStore.getState()
+        const { getFocusedCollection } = focusedCollection
+
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledWith()
+
+        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollection).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches subscription list', () => {
       test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
 
         const newPath = '/portal/fakeportal/search/granules/subscriptions?p=C00001-EDSC'
 
         const store = mockStore({
-          query: {
-            collection: {
-              spatial: {}
-            }
-          },
           router: {
             location: {
               pathname: '/search'
@@ -881,28 +911,33 @@ describe('changePath', () => {
           }
         })
 
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.focusedCollection.getFocusedCollection = jest.fn()
+        })
+
         await store.dispatch(urlQuery.changePath(newPath))
 
+        const { focusedCollection } = useEdscStore.getState()
+        const { getFocusedCollection } = focusedCollection
+
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledWith()
+
+        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollection).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches granule details', () => {
       test('calls getFocusedCollection action', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedCollectionMock = jest.spyOn(actions, 'getFocusedCollection').mockImplementation(() => jest.fn())
         const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule').mockImplementation(() => jest.fn())
 
         const newPath = '/portal/fakeportal/search/granules/granule-details?p=C00001-EDSC'
 
         const store = mockStore({
           focusedGranule: 'G00001-EDSC',
-          query: {
-            collection: {
-              spatial: {}
-            }
-          },
           router: {
             location: {
               pathname: '/search'
@@ -910,11 +945,24 @@ describe('changePath', () => {
           }
         })
 
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.focusedCollection.getFocusedCollection = jest.fn()
+        })
+
         await store.dispatch(urlQuery.changePath(newPath))
 
+        const { focusedCollection } = useEdscStore.getState()
+        const { getFocusedCollection } = focusedCollection
+
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollectionMock).toHaveBeenCalledTimes(1)
+        expect(getCollectionsMock).toHaveBeenCalledWith()
+
+        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
+        expect(getFocusedCollection).toHaveBeenCalledWith()
+
         expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
+        expect(getFocusedGranuleMock).toHaveBeenCalledWith()
       })
     })
   })
@@ -988,7 +1036,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          query: {},
           router: {
             location: {
               pathname: '/projectId=1'
@@ -1087,7 +1134,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          query: {},
           router: {
             location: {
               pathname: '/projectId=1'

@@ -27,8 +27,7 @@ import './SearchAutocomplete.scss'
 
 const SearchAutocomplete = ({
   authToken,
-  handleError,
-  onChangeFocusedCollection
+  handleError
 }) => {
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const { keyword: initialKeyword } = collectionQuery
@@ -44,11 +43,13 @@ const SearchAutocomplete = ({
 
   const {
     addCmrFacetFromAutocomplete,
+    changeFocusedCollection,
     changeQuery,
     earthdataEnvironment,
     setOpenFacetGroup
   } = useEdscStore((state) => ({
     addCmrFacetFromAutocomplete: state.facetParams.addCmrFacetFromAutocomplete,
+    changeFocusedCollection: state.focusedCollection.changeFocusedCollection,
     changeQuery: state.query.changeQuery,
     earthdataEnvironment: getEarthdataEnvironment(state),
     setOpenFacetGroup: state.home.setOpenFacetGroup
@@ -185,7 +186,7 @@ const SearchAutocomplete = ({
       // Cancel any in-flight autocomplete requests
       cancelAutocomplete()
 
-      onChangeFocusedCollection('')
+      changeFocusedCollection('')
       changeQuery({
         collection: {
           keyword: keywordSearch
@@ -362,8 +363,7 @@ const SearchAutocomplete = ({
 
 SearchAutocomplete.propTypes = {
   authToken: PropTypes.string.isRequired,
-  handleError: PropTypes.func.isRequired,
-  onChangeFocusedCollection: PropTypes.func.isRequired
+  handleError: PropTypes.func.isRequired
 }
 
 export default SearchAutocomplete

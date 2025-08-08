@@ -18,13 +18,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onUpdateProjectName:
     (name) => dispatch(actions.updateProjectName(name)),
   onMetricsDataAccess:
-    (data) => dispatch(metricsDataAccess(data)),
-  onUpdateFocusedCollection:
-    (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
-  onViewCollectionDetails:
-    (data) => dispatch(actions.viewCollectionDetails(data)),
-  onViewCollectionGranules:
-    (data) => dispatch(actions.viewCollectionGranules(data))
+    (data) => dispatch(metricsDataAccess(data))
 })
 
 export const mapStateToProps = (state) => ({
@@ -38,10 +32,7 @@ export const ProjectCollectionsContainer = (props) => {
     onSetActivePanel,
     onSetActivePanelSection,
     onTogglePanels,
-    onUpdateFocusedCollection,
     onUpdateProjectName,
-    onViewCollectionDetails,
-    onViewCollectionGranules,
     panels,
     savedProject
   } = props
@@ -52,10 +43,7 @@ export const ProjectCollectionsContainer = (props) => {
       onSetActivePanel={onSetActivePanel}
       onSetActivePanelSection={onSetActivePanelSection}
       onTogglePanels={onTogglePanels}
-      onUpdateFocusedCollection={onUpdateFocusedCollection}
       onUpdateProjectName={onUpdateProjectName}
-      onViewCollectionDetails={onViewCollectionDetails}
-      onViewCollectionGranules={onViewCollectionGranules}
       panels={panels}
       savedProject={savedProject}
     />
@@ -67,10 +55,7 @@ ProjectCollectionsContainer.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }

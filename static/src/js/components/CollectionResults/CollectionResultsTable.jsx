@@ -26,8 +26,6 @@ import './CollectionResultsTable.scss'
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
- * @param {Function} props.onViewCollectionDetails - Callback to show collection details route.
- * @param {Function} props.onViewCollectionGranules - Callback to show collection granules route.
  * @param {Function} props.setVisibleMiddleIndex - Callback to set the state with the current middle item.
  * @param {String} props.visibleMiddleIndex - The current middle item.
  */
@@ -37,8 +35,6 @@ export const CollectionResultsTable = ({
   itemCount,
   loadMoreItems,
   onMetricsAddCollectionProject,
-  onViewCollectionDetails,
-  onViewCollectionGranules,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => {
@@ -52,9 +48,7 @@ export const CollectionResultsTable = ({
       customProps: {
         cellClassName: 'collection-results-table__cell--collection',
         collectionId: '1234',
-        onViewCollectionGranules,
-        onMetricsAddCollectionProject,
-        onViewCollectionDetails
+        onMetricsAddCollectionProject
       }
     },
     {
@@ -334,8 +328,6 @@ CollectionResultsTable.propTypes = {
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   setVisibleMiddleIndex: PropTypes.func,
   visibleMiddleIndex: PropTypes.number
 }

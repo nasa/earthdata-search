@@ -66,6 +66,7 @@ useEdscStore.setState({
 function setup(overrideProps, location = '/search') {
   const props = {
     authToken: '',
+    changeFocusedCollection: jest.fn(),
     collectionMetadata: {
       hasAllMetadata: true,
       title: 'Collection Title',
@@ -114,7 +115,6 @@ function setup(overrideProps, location = '/search') {
     },
     onApplyGranuleFilters: jest.fn(),
     onChangeQuery: jest.fn(),
-    onFocusedCollectionChange: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),

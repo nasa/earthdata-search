@@ -20,7 +20,6 @@ const setup = setupTest({
     keywordSearch: 'Test value',
     temporalSearch: {},
     handleError: jest.fn(),
-    onChangeFocusedCollection: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn()
   }
 })
@@ -34,16 +33,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onChangeFocusedCollection calls actions.changeFocusedCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedCollection')
-
-    mapDispatchToProps(dispatch).onChangeFocusedCollection('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onToggleAdvancedSearchModal calls actions.toggleAdvancedSearchModal', () => {

@@ -24,9 +24,6 @@ export const ProjectCollectionsList = (props) => {
     onSetActivePanel,
     onSetActivePanelSection,
     onTogglePanels,
-    onUpdateFocusedCollection,
-    onViewCollectionDetails,
-    onViewCollectionGranules,
     panels
   } = props
 
@@ -66,9 +63,6 @@ export const ProjectCollectionsList = (props) => {
         onSetActivePanel={onSetActivePanel}
         onSetActivePanelSection={onSetActivePanelSection}
         onTogglePanels={onTogglePanels}
-        onUpdateFocusedCollection={onUpdateFocusedCollection}
-        onViewCollectionDetails={onViewCollectionDetails}
-        onViewCollectionGranules={onViewCollectionGranules}
         projectCollection={projectCollection}
       />
     )
@@ -114,9 +108,6 @@ ProjectCollectionsList.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({
     activePanel: PropTypes.string
   }).isRequired

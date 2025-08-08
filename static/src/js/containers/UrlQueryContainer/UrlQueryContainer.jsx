@@ -13,7 +13,7 @@ import { locationPropType } from '../../util/propTypes/location'
 
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
 
@@ -30,7 +30,6 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
   collectionsMetadata: getCollectionsMetadata(state),
-  focusedCollection: getFocusedCollectionId(state),
   focusedGranule: getFocusedGranuleId(state),
   location: state.router.location,
   pathname: state.router.location.pathname
@@ -55,6 +54,7 @@ export const UrlQueryContainer = (props) => {
     collectionSortPreference: getCollectionSortPreference(state),
     earthdataEnvironment: getEarthdataEnvironment(state),
     featureFacets: state.facetParams.featureFacets,
+    focusedCollection: getFocusedCollectionId(state),
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
     horizontalDataResolutionRangeFacets:
       state.facetParams.cmrFacets.horizontal_data_resolution_range,

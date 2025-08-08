@@ -9,7 +9,6 @@ import actions from '../../actions/index'
 import { metricsAddGranuleProject, metricsDataAccess } from '../../middleware/metrics/actions'
 
 import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import {
   getFocusedCollectionMetadata,
   getFocusedCollectionTags
@@ -21,6 +20,7 @@ import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBo
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
+import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
 
 export const mapDispatchToProps = (dispatch) => ({
   onFocusedGranuleChange:
@@ -36,7 +36,6 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   collectionMetadata: getFocusedCollectionMetadata(state),
   collectionTags: getFocusedCollectionTags(state),
-  focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   generateNotebook: state.ui.generateNotebook,
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
@@ -47,7 +46,6 @@ export const GranuleResultsBodyContainer = (props) => {
   const {
     collectionMetadata,
     collectionTags,
-    focusedCollectionId,
     focusedGranuleId,
     generateNotebook,
     granuleSearchResults,
@@ -62,6 +60,7 @@ export const GranuleResultsBodyContainer = (props) => {
 
   const changeGranuleQuery = useEdscStore((state) => state.query.changeGranuleQuery)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
+  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
 
   const {
     pageNum = 1
@@ -108,7 +107,6 @@ GranuleResultsBodyContainer.propTypes = {
     isOpenSearch: PropTypes.bool
   }).isRequired,
   collectionTags: PropTypes.shape({}).isRequired,
-  focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   generateNotebook: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({}).isRequired,

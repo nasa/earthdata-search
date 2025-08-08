@@ -5,18 +5,17 @@ import PropTypes from 'prop-types'
 import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
 import { getFocusedGranuleId } from '../../selectors/focusedGranule'
 import { getUrsProfile } from '../../selectors/contactInfo'
 
 import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 
 export const mapStateToProps = (state) => ({
-  focusedCollectionId: getFocusedCollectionId(state),
   focusedGranuleId: getFocusedGranuleId(state),
   granulesMetadata: state.metadata.granules,
   location: state.router.location,
@@ -36,16 +35,11 @@ export const mapDispatchToProps = (dispatch) => ({
   onToggleAboutCSDAModal:
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onTogglePanels:
-    (value) => dispatch(actions.togglePanels(value)),
-  onUpdateFocusedCollection:
-    (collectionId) => dispatch(actions.updateFocusedCollection(collectionId)),
-  onViewCollectionGranules:
-    (collectionId) => dispatch(actions.viewCollectionGranules(collectionId))
+    (value) => dispatch(actions.togglePanels(value))
 })
 
 /**
  * Renders ProjectPanelsContainer.
- * @param {String} focusedCollectionId - The focused collection ID.
  * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
@@ -59,11 +53,8 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Function} onSetActivePanelGroup - Callback to set the page number.
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  * @param {Function} onTogglePanels - Toggles the panels opened or closed.
- * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
- * @param {Function} onViewCollectionGranules - Views the collection granules.
  */
 export const ProjectPanelsContainer = ({
-  focusedCollectionId,
   focusedGranuleId,
   granulesMetadata,
   location,
@@ -73,8 +64,6 @@ export const ProjectPanelsContainer = ({
   onSetActivePanelGroup,
   onToggleAboutCSDAModal,
   onTogglePanels,
-  onUpdateFocusedCollection,
-  onViewCollectionGranules,
   panels,
   ursProfile
 }) => {
@@ -84,6 +73,7 @@ export const ProjectPanelsContainer = ({
     projectCollections,
     removeGranuleFromProjectCollection,
     selectAccessMethod,
+    setFocusedCollection,
     updateAccessMethod
   } = useEdscStore((state) => ({
     addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
@@ -91,8 +81,10 @@ export const ProjectPanelsContainer = ({
     projectCollections: state.project.collections,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     selectAccessMethod: state.project.selectAccessMethod,
+    setFocusedCollection: state.focusedCollection.setFocusedCollection,
     updateAccessMethod: state.project.updateAccessMethod
   }))
+  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const {
@@ -120,8 +112,7 @@ export const ProjectPanelsContainer = ({
       onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       onTogglePanels={onTogglePanels}
       onUpdateAccessMethod={updateAccessMethod}
-      onUpdateFocusedCollection={onUpdateFocusedCollection}
-      onViewCollectionGranules={onViewCollectionGranules}
+      setFocusedCollection={setFocusedCollection}
       panels={panels}
       projectCollections={projectCollections}
       projectCollectionsMetadata={projectCollectionsMetadata}
@@ -134,7 +125,6 @@ export const ProjectPanelsContainer = ({
 }
 
 ProjectPanelsContainer.propTypes = {
-  focusedCollectionId: PropTypes.string.isRequired,
   focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
@@ -144,8 +134,6 @@ ProjectPanelsContainer.propTypes = {
   onSetActivePanelGroup: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   panels: PropTypes.shape({}).isRequired,
   ursProfile: PropTypes.shape({
     email_address: PropTypes.string

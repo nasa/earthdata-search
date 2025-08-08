@@ -1,3 +1,4 @@
+import useEdscStore from '../../zustand/useEdscStore'
 import {
   getFocusedCollectionGranuleResults,
   getFocusedCollectionGranuleMetadata
@@ -5,8 +6,12 @@ import {
 
 describe('getFocusedCollectionGranuleResults selector', () => {
   test('returns the granule results', () => {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const state = {
-      focusedCollection: 'collectionId',
       searchResults: {
         collections: {
           byId: {
@@ -25,7 +30,6 @@ describe('getFocusedCollectionGranuleResults selector', () => {
 
   test('returns an empty object when there is no focusedCollection', () => {
     const state = {
-      focusedCollection: '',
       searchResults: {}
     }
 
@@ -35,8 +39,12 @@ describe('getFocusedCollectionGranuleResults selector', () => {
 
 describe('getFocusedCollectionGranuleMetadata selector', () => {
   test('returns the granule metadata', () => {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const state = {
-      focusedCollection: 'collectionId',
       metadata: {
         granules: {
           granuleId: {
@@ -66,7 +74,6 @@ describe('getFocusedCollectionGranuleMetadata selector', () => {
 
   test('returns an empty object when there is no focusedCollection', () => {
     const state = {
-      focusedCollection: '',
       searchResults: {}
     }
 

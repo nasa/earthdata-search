@@ -1,24 +1,31 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as deployedEnvironment from '../../../../../../sharedUtils/deployedEnvironment'
 
 import Spinner from '../../Spinner/Spinner'
 
-import { SubscriptionsList } from '../SubscriptionsList'
-import { SubscriptionsListTable } from '../SubscriptionsListTable'
+import SubscriptionsList from '../SubscriptionsList'
+import SubscriptionsListTable from '../SubscriptionsListTable'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
+jest.mock('../SubscriptionsListTable', () => jest.fn(() => <div />))
 
-function setup(props) {
-  const enzymeWrapper = shallow(<SubscriptionsList {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
+const setup = setupTest({
+  Component: SubscriptionsList,
+  defaultProps: {
+    subscriptions: {
+      byId: {},
+      isLoading: false,
+      isLoaded: false,
+      error: null,
+      timerStart: null,
+      loadTime: null
+    },
+    onDeleteSubscription: jest.fn()
   }
-}
+})
 
 beforeEach(() => {
   jest.spyOn(deployedEnvironment, 'deployedEnvironment').mockImplementation(() => 'prod')
@@ -27,20 +34,20 @@ beforeEach(() => {
 describe('SubscriptionsList component', () => {
   describe('when passed the correct props', () => {
     test('renders a spinner when retrievals are loading', () => {
-      const { enzymeWrapper } = setup({
-        subscriptions: {
-          byId: {},
-          isLoading: true,
-          isLoaded: false,
-          error: null,
-          timerStart: Date.now(),
-          loadTime: null
-        },
-        onDeleteSubscription: jest.fn(),
-        onFocusedCollectionChange: jest.fn()
+      setup({
+        overrideProps: {
+          subscriptions: {
+            byId: {},
+            isLoading: true,
+            isLoaded: false,
+            error: null,
+            timerStart: null,
+            loadTime: null
+          }
+        }
       })
 
-      expect(enzymeWrapper.find(Spinner).length).toBe(1)
+      expect(Spinner).toHaveBeenCalledTimes(1)
     })
 
     test('renders a SubscriptionsListTable when subscriptions exist', () => {
@@ -66,27 +73,32 @@ describe('SubscriptionsList component', () => {
         }
       }
 
-      const { enzymeWrapper } = setup({
-        subscriptions: {
-          byId: subscriptionsById,
-          isLoading: false,
-          isLoaded: true,
-          error: null,
-          timerStart: null,
-          loadTime: 1265
-        },
-        onDeleteSubscription: jest.fn(),
-        onFocusedCollectionChange: jest.fn()
+      setup({
+        overrideProps: {
+          subscriptions: {
+            byId: subscriptionsById,
+            isLoading: false,
+            isLoaded: true,
+            error: null,
+            timerStart: null,
+            loadTime: 1265
+          },
+          onDeleteSubscription: jest.fn()
+        }
       })
 
-      const tables = enzymeWrapper.find(SubscriptionsListTable)
-      expect(tables.length).toBe(2)
+      expect(SubscriptionsListTable).toHaveBeenCalledTimes(2)
+      expect(SubscriptionsListTable).toHaveBeenNthCalledWith(1, {
+        subscriptionsMetadata: [subscriptionsById['SUB100001-EDSC']],
+        subscriptionType: 'collection',
+        onDeleteSubscription: expect.any(Function)
+      }, {})
 
-      expect(tables.at(0).props().subscriptionType).toEqual('collection')
-      expect(tables.at(0).props().subscriptionsMetadata).toEqual([subscriptionsById['SUB100001-EDSC']])
-
-      expect(tables.at(1).props().subscriptionType).toEqual('granule')
-      expect(tables.at(1).props().subscriptionsMetadata).toEqual([subscriptionsById['SUB100000-EDSC']])
+      expect(SubscriptionsListTable).toHaveBeenNthCalledWith(2, {
+        subscriptionsMetadata: [subscriptionsById['SUB100000-EDSC']],
+        subscriptionType: 'granule',
+        onDeleteSubscription: expect.any(Function)
+      }, {})
     })
   })
 })

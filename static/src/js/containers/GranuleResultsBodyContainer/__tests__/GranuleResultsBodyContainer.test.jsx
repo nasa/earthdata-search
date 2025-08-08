@@ -18,7 +18,6 @@ const setup = setupTest({
   defaultProps: {
     collectionMetadata: {},
     collectionTags: {},
-    focusedCollectionId: 'focusedCollection',
     focusedGranuleId: '',
     generateNotebook: {},
     granuleSearchResults: {},
@@ -31,6 +30,9 @@ const setup = setupTest({
     panelView: 'list'
   },
   defaultZustandState: {
+    focusedCollection: {
+      focusedCollection: 'focusedCollection'
+    },
     query: {
       collection: {
         byId: {
@@ -91,7 +93,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
       ui: {
         generateNotebook: {}
@@ -101,7 +102,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionMetadata: {},
       collectionTags: {},
-      focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
       generateNotebook: {},
       granuleSearchResults: {},

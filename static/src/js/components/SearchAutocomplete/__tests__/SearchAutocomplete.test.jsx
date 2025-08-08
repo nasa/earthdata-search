@@ -12,8 +12,7 @@ const setup = setupTest({
   Component: SearchAutocomplete,
   defaultProps: {
     authToken: '',
-    handleError: jest.fn(),
-    onChangeFocusedCollection: jest.fn()
+    handleError: jest.fn()
   },
   defaultReduxState: {
     authToken: ''
@@ -21,6 +20,9 @@ const setup = setupTest({
   defaultZustandState: {
     earthdataEnvironment: {
       currentEnvironment: 'prod'
+    },
+    focusedCollection: {
+      changeFocusedCollection: jest.fn()
     }
   }
 })
@@ -110,8 +112,8 @@ describe('SearchAutocomplete', () => {
   })
 
   describe('when submitting the form', () => {
-    test('calls changeQuery and onChangeFocusedCollection when keyword has changed', async () => {
-      const { props, user, zustandState } = setup({
+    test('calls changeQuery and changeFocusedCollection when keyword has changed', async () => {
+      const { user, zustandState } = setup({
         overrideZustandState: {
           query: {
             collection: {
@@ -144,8 +146,8 @@ describe('SearchAutocomplete', () => {
       const searchButton = screen.getByText('Search')
       await user.click(searchButton)
 
-      expect(props.onChangeFocusedCollection).toHaveBeenCalledTimes(1)
-      expect(props.onChangeFocusedCollection).toHaveBeenCalledWith('')
+      expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledTimes(1)
+      expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledWith('')
 
       expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
       expect(zustandState.query.changeQuery).toHaveBeenCalledWith({

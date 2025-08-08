@@ -11,12 +11,12 @@ import {
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_COLLECTION_SUBSCRIPTION,
   UPDATE_GRANULE_SUBSCRIPTION,
+  UPDATE_GRANULE_SUBSCRIPTIONS,
   UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
 import { displayNotificationType } from '../constants/enums'
-import { getFocusedCollectionId } from '../selectors/focusedCollection'
 import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
 import {
@@ -30,6 +30,7 @@ import GraphQlRequest from '../util/request/graphQlRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
+import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -127,8 +128,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
     // If granule type, pull out the granule specific params
     subscriptionQuery = getGranuleSubscriptionQueryString()
 
-    // Retrieve data from Redux using selectors
-    const collectionId = getFocusedCollectionId(state)
+    const collectionId = getFocusedCollectionId(zustandState)
     params.collectionConceptId = collectionId
   }
 
@@ -253,6 +253,82 @@ export const getSubscriptions = (
   }
 
   return response
+}
+
+/**
+ * Request granule subscriptions
+ */
+export const getGranuleSubscriptions = (collectionId) => async (dispatch, getState) => {
+  const state = getState()
+
+  const {
+    authToken
+  } = state
+
+  let collectionConceptId = collectionId
+
+  // Retrieve data from Redux using selectors
+  const zustandState = useEdscStore.getState()
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+  if (collectionId == null) {
+    collectionConceptId = getFocusedCollectionId(zustandState)
+  }
+
+  const username = getUsername(state)
+
+  const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
+
+  const graphQuery = `
+    query GetGranuleSubscriptions($params: SubscriptionsInput) {
+      subscriptions(params: $params) {
+        count
+        items {
+          collectionConceptId
+          conceptId
+          name
+          nativeId
+          query
+          type
+        }
+      }
+    }`
+
+  try {
+    const response = await graphQlRequestObject.search(graphQuery, {
+      params: {
+        collectionConceptId,
+        subscriberId: username,
+        type: 'granule'
+      }
+    })
+
+    parseGraphQLError(response)
+
+    const {
+      data: responseData
+    } = response.data
+
+    const { subscriptions } = responseData
+
+    dispatch({
+      type: UPDATE_GRANULE_SUBSCRIPTIONS,
+      payload: {
+        collectionId: collectionConceptId,
+        subscriptions
+      }
+    })
+
+    return response
+  } catch (error) {
+    dispatch(actions.handleError({
+      error,
+      action: 'getGranuleSubscriptions',
+      resource: 'subscription',
+      requestObject: graphQlRequestObject
+    }))
+
+    return null
+  }
 }
 
 /**

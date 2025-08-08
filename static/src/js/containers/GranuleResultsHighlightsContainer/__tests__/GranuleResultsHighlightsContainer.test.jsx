@@ -29,13 +29,17 @@ const setup = setupTest({
         }
       }
     },
-    focusedCollectionId: 'focusedCollection',
     focusedCollectionGranuleMetadata: {
       id1: {
         mock: 'data'
       }
     },
     focusedCollectionMetadata: {}
+  },
+  defaultZustandState: {
+    focusedCollection: {
+      focusedCollection: 'focusedCollection'
+    }
   }
 })
 
@@ -45,7 +49,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      focusedCollection: 'collectionId',
       searchResults: {
         collections: {}
       }
@@ -54,7 +57,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       focusedCollectionGranuleSearch: {},
       focusedCollectionGranuleMetadata: {},
-      focusedCollectionId: 'collectionId',
       focusedCollectionMetadata: {}
     }
 

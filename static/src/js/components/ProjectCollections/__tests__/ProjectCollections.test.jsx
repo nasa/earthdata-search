@@ -28,10 +28,7 @@ const setup = setupTest({
     onTogglePanels: jest.fn(),
     onSetActivePanel: jest.fn(),
     onUpdateProjectName: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
-    onUpdateFocusedCollection: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
-    onViewCollectionGranules: jest.fn()
+    onSetActivePanelSection: jest.fn()
   },
   defaultReduxState: {
     metadata: {
@@ -109,9 +106,6 @@ describe('ProjectCollectionsList component', () => {
       onSetActivePanel: expect.any(Function),
       onSetActivePanelSection: expect.any(Function),
       onTogglePanels: expect.any(Function),
-      onUpdateFocusedCollection: expect.any(Function),
-      onViewCollectionDetails: expect.any(Function),
-      onViewCollectionGranules: expect.any(Function),
       panels: {
         activePanel: '0.0.0',
         isOpen: false

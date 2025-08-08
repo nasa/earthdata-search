@@ -34,8 +34,6 @@ export const mapStateToProps = (state) => ({
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
     (path) => dispatch(actions.changePath(path)),
-  onFocusedCollectionChange:
-    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onMetricsCollectionSortChange:
     (data) => dispatch(metricsCollectionSortChange(data)),
   onSetActivePanel:
@@ -58,7 +56,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.granuleMetadata - Granule metadata state
  * @param {Object} props.granuleSearchResults - Granule search results state
  * @param {Object} props.location - Browser location state
- * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection
  * @param {Function} props.onMetricsCollectionSortChange - Callback for collection sort metrics
  * @param {Function} props.onSetActivePanel - Callback to set the active panel
  * @param {Function} props.onToggleAboutCwicModal - Callback to toggle the CWIC modal
@@ -76,7 +73,6 @@ export const SearchPanelsContainer = ({
   granuleSearchResults,
   isExportRunning,
   location,
-  onFocusedCollectionChange,
   onChangePath,
   onMetricsCollectionSortChange,
   onSetActivePanel,
@@ -91,9 +87,11 @@ export const SearchPanelsContainer = ({
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const {
+    changeFocusedCollection,
     changeQuery,
     changeGranuleQuery
   } = useEdscStore((state) => ({
+    changeFocusedCollection: state.focusedCollection.changeFocusedCollection,
     changeQuery: state.query.changeQuery,
     changeGranuleQuery: state.query.changeGranuleQuery
   }))
@@ -111,7 +109,7 @@ export const SearchPanelsContainer = ({
       isExportRunning={isExportRunning}
       location={location}
       onApplyGranuleFilters={changeGranuleQuery}
-      onFocusedCollectionChange={onFocusedCollectionChange}
+      changeFocusedCollection={changeFocusedCollection}
       onChangePath={onChangePath}
       onChangeQuery={changeQuery}
       onMetricsCollectionSortChange={onMetricsCollectionSortChange}
@@ -137,7 +135,6 @@ SearchPanelsContainer.propTypes = {
   isExportRunning: PropTypes.shape({}).isRequired,
   location: PropTypes.shape({}).isRequired,
   match: PropTypes.shape({}).isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,

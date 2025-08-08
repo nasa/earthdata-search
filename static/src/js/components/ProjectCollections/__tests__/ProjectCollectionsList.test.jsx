@@ -32,9 +32,6 @@ const setup = setupTest({
     onSetActivePanel: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     onTogglePanels: jest.fn(),
-    onUpdateFocusedCollection: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
     panels: {
       activePanel: '0.0.0',
       isOpen: true
@@ -73,9 +70,6 @@ describe('ProjectCollectionsList component', () => {
       onSetActivePanel: expect.any(Function),
       onSetActivePanelSection: expect.any(Function),
       onTogglePanels: expect.any(Function),
-      onUpdateFocusedCollection: expect.any(Function),
-      onViewCollectionDetails: expect.any(Function),
-      onViewCollectionGranules: expect.any(Function),
       projectCollection: { isValid: false }
     }, {})
 
@@ -90,9 +84,6 @@ describe('ProjectCollectionsList component', () => {
       onSetActivePanel: expect.any(Function),
       onSetActivePanelSection: expect.any(Function),
       onTogglePanels: expect.any(Function),
-      onUpdateFocusedCollection: expect.any(Function),
-      onViewCollectionDetails: expect.any(Function),
-      onViewCollectionGranules: expect.any(Function),
       projectCollection: { isValid: false }
     }, {})
   })
