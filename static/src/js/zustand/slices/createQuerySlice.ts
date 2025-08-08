@@ -232,6 +232,17 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       reduxDispatch(actions.getSearchGranules())
     },
 
+    initializeGranuleQuery: ({ collectionId, query }) => {
+      set((state) => {
+        state.query.collection.byId[collectionId] = {
+          granules: {
+            ...initialGranuleState,
+            ...query
+          }
+        }
+      })
+    },
+
     removeSpatialFilter: async () => {
       await get().query.changeQuery({
         collection: {

@@ -736,6 +736,16 @@ export type QuerySlice = {
       /** The granule ID to exclude */
       granuleId: string
     }) => void
+    /** Initialize the granule query without fetching granules */
+    initializeGranuleQuery: ({
+      collectionId,
+      query
+    }: {
+      /** The collection ID to update */
+      collectionId: string
+      /** The new query params */
+      query: Partial<GranuleQuery>
+    }) => void
     /** Function to remove the spatial filter */
     removeSpatialFilter: () => void
     /** Function to undo the last excluded granule */

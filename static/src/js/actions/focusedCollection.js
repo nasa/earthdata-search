@@ -456,7 +456,7 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
     } = useEdscStore.getState()
     const { preferences: preferencesValues } = preferences
     const { granuleSort: granuleSortPreference } = preferencesValues
-    const { changeGranuleQuery } = query
+    const { initializeGranuleQuery } = query
 
     const granuleQuery = {}
 
@@ -464,7 +464,7 @@ export const changeFocusedCollection = (collectionId) => (dispatch, getState) =>
       granuleQuery.sortKey = granuleSortPreference
     }
 
-    changeGranuleQuery({
+    initializeGranuleQuery({
       collectionId,
       query: granuleQuery
     })
