@@ -34,7 +34,7 @@ const findShapefileFeature = ({
 
   // If the feature is a point or line, we need to check if the coordinate is close
   // to the feature, not within it
-  const closeEnoughTypes = [spatialTypes.POINT, spatialTypes.LINE_STRING]
+  const closeEnoughTypes = [spatialTypes.POINT, spatialTypes.MULTI_POINT, spatialTypes.LINE_STRING]
 
   // Is the coordinate actually within, or close enough to, the feature?
   let isWithinFeature

@@ -67,7 +67,7 @@ const onClickShapefile = ({
 
   // Set the style of the feature
   let style
-  if (geometryType === spatialTypes.POINT) {
+  if (geometryType === spatialTypes.POINT || geometryType === spatialTypes.MULTI_POINT) {
     style = newSelected ? spatialSearchMarkerStyle : unselectedShapefileMarkerStyle
   } else {
     style = newSelected ? spatialSearchStyle : unselectedShapefileStyle

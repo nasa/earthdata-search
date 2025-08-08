@@ -24,7 +24,7 @@ export const unhighlightShapefile = (spatialDrawingSource: VectorSource) => {
 
     if (selected || !isShapefile) return
 
-    if (geometryType === spatialTypes.POINT) {
+    if (geometryType === spatialTypes.POINT || geometryType === spatialTypes.MULTI_POINT) {
       sourceFeature.setStyle(unselectedShapefileMarkerStyle)
     } else {
       sourceFeature.setStyle(unselectedShapefileStyle)
@@ -72,7 +72,7 @@ export const highlightShapefile = ({
   if (selected) return
 
   // Set the style of the feature
-  if (geometryType === spatialTypes.POINT) {
+  if (geometryType === spatialTypes.POINT || geometryType === spatialTypes.MULTI_POINT) {
     feature.setStyle(hoveredShapefileMarkerStyle)
   } else {
     feature.setStyle(hoveredShapefileStyle)
