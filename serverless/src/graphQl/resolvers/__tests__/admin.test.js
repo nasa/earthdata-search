@@ -5,6 +5,7 @@ import resolvers from '../index'
 import typeDefs from '../../types'
 import DatabaseClient from '../../utils/databaseClient'
 import ADMIN_PREFERENCES_METRICS from '../../../../../static/src/js/operations/queries/adminPreferencesMetrics'
+import ADMIN_RETRIEVAL from '../../../../../static/src/js/operations/queries/adminRetrieval'
 
 jest.mock('../../utils/databaseClient', () => jest.fn().mockImplementation(() => ({
   getSitePreferences: jest.fn().mockResolvedValue([
@@ -154,6 +155,54 @@ describe('Admin Resolver', () => {
               }
             ]
           }
+        })
+      })
+
+      test('throws an error when the query fails', async () => {
+        databaseClient.getSitePreferences.mockImplementation(() => {
+          throw new Error('Something failed')
+        })
+
+        const server = setupServer()
+
+        const response = await server.executeOperation({
+          query: gql(ADMIN_PREFERENCES_METRICS)
+        }, {
+          contextValue: {
+            ...contextValue,
+            databaseClient
+          }
+        })
+
+        const { data, errors } = response.body.singleResult
+
+        const errorMessage = 'Something failed'
+
+        expect(data).toEqual({
+          adminPreferencesMetrics: null
+        })
+
+        expect(errors[0].message).toEqual(errorMessage)
+      })
+    })
+
+    describe.skip('adminRetrieval', () => {
+      test('returns results with all fields', async () => {
+        const server = setupServer()
+
+        const response = await server.executeOperation({
+          query: gql(ADMIN_RETRIEVAL)
+        }, {
+          contextValue: {
+            ...contextValue,
+            databaseClient
+          }
+        })
+
+        const { data } = response.body.singleResult
+        console.log('🚀 ~ response.body:', response.body)
+
+        expect(data).toEqual({
         })
       })
 

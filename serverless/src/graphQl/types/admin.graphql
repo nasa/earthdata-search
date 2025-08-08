@@ -203,20 +203,6 @@ input AdminRetrievalInput {
   obfuscatedId: String
 }
 
-type PageInfo {
-  "Indicates if there are more pages"
-  hasNextPage: Boolean
-
-  "Indicates if there are previous pages"
-  hasPreviousPage: Boolean
-
-  "Current page number"
-  currentPage: Int
-
-  "Total number of pages"
-  pageCount: Int
-}
-
 type AdminRetrievals {
   "List of retrievals"
   adminRetrievals: [AdminRetrieval]

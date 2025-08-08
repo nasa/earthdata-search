@@ -73,7 +73,7 @@ export class Admin extends Component {
                   </PortalLinkContainer>
                 </Route>
                 <Route exact path={`${path}/retrievals`} component={AdminRetrievalsContainer} />
-                <Route exact path={`${path}/retrievals/:id`} component={AdminRetrievalContainer} />
+                <Route exact path={`${path}/retrievals/:obfuscatedId`} component={AdminRetrievalContainer} />
                 <Route exact path={`${path}/projects`} component={AdminProjectsContainer} />
                 <Route exact path={`${path}/projects/:id`} component={AdminProjectContainer} />
                 <Route exact path={`${path}/retrievals-metrics`} component={AdminRetrievalsMetricsContainer} />

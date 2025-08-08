@@ -49,7 +49,7 @@ export default {
       const { params = {} } = args
       const { obfuscatedId } = params
 
-      const data = await databaseClient.getRetrievalById(obfuscatedId)
+      const data = await databaseClient.getRetrievalByObfuscatedId(obfuscatedId)
 
       return camelcaseKeys(data, { deep: true })
     },
@@ -114,7 +114,6 @@ export default {
   },
   AdminRetrieval: {
     user: async (parent, args, context) => {
-      console.log('🚀 ~ parent:', parent)
       const { loaders } = context
 
       const loaderData = await loaders.users.load(parent.userId)

@@ -15,7 +15,7 @@ export const AdminRetrievalContainer = ({
   onRequeueOrder
 }) => {
   const { params } = match
-  const { id: obfuscatedId } = params
+  const { obfuscatedId } = params
 
   return ((
     <AdminRetrieval
@@ -28,7 +28,7 @@ export const AdminRetrievalContainer = ({
 AdminRetrievalContainer.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.string
+      obfuscatedId: PropTypes.string
     })
   }).isRequired,
   onRequeueOrder: PropTypes.func.isRequired

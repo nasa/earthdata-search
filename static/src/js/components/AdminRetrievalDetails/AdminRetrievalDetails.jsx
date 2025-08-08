@@ -55,17 +55,17 @@ export const AdminRetrievalDetails = ({
               <Row className="admin-retrieval-details__metadata-display mb-2">
                 <Col className="admin-retrieval-details__metadata-display-item">
                   <span className="admin-retrieval-details__metadata-display-heading">Owner</span>
-                  <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{ursId}</span>
+                  <span className="admin-retrieval-details__metadata-display-content">{ursId}</span>
                 </Col>
                 <Col className="admin-retrieval-details__metadata-display-item">
                   <span className="admin-retrieval-details__metadata-display-heading">Obfuscated ID</span>
-                  <span data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content">{obfuscatedId}</span>
+                  <span className="admin-retrieval-details__metadata-display-content">{obfuscatedId}</span>
                 </Col>
               </Row>
               <Row className="admin-retrieval-details__metadata-display mb-2">
                 <Col className="admin-retrieval-details__metadata-display-item">
                   <span className="admin-retrieval-details__metadata-display-heading">Source Path</span>
-                  <a data-testid="admin-retrieval-details__metadata-display-content" className="admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
+                  <a className="admin-retrieval-details__metadata-display-content" href={sourcePath} target="_blank" rel="noopener noreferrer">
                     {sourcePath}
                   </a>
                 </Col>
@@ -74,7 +74,7 @@ export const AdminRetrievalDetails = ({
             <Col sm="auto">
               {
                 retrievalCollections.length > 0 && (
-                  <section data-testid="admin-retrieval-details__collections" className="admin-retrieval-details__collections">
+                  <section className="admin-retrieval-details__collections">
                     {
                       retrievalCollections.map((collection) => {
                         const {
