@@ -876,12 +876,20 @@ export type UiSlice = {
   }
 }
 
-/** Holds project panel state */
-/** Example 0.5.2 is the 5th collection in the project and looking at the panel variable details */
-/** 1.3.0 is the granule list for the third collection in the project */
+/** Represents the panel section (first part) in the activePanel string, e.g., '0' in '0.5.2' */
 type PanelsPanel = `${number}`
+
+/** Represents the group (middle part) in the activePanel string, e.g., '5' in '0.5.2' */
 type PanelsGroup = `${number}`
+
+/** Represents the section (last part) in the activePanel string, e.g., '2' in '0.5.2' */
 type PanelsSection = `${number}`
+
+/**
+ * Holds project panel state
+ * Example 0.5.2 is the 5th collection in the project and looking at the panel variable details
+ * 1.3.0 is the granule list for the third collection in the project
+ */
 export type ActivePanelConfiguration = `${PanelsPanel}.${PanelsGroup}.${PanelsSection}`
 
 export type panelsData = {
