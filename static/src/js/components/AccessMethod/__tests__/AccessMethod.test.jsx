@@ -1331,7 +1331,7 @@ describe('AccessMethod component', () => {
                 conceptId: 'collectionId'
               },
               selectedAccessMethod: 'harmony0',
-              spatial: emptySpatial
+              spatial: {}
             }
           })
 

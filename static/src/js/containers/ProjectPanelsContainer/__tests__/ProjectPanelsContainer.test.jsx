@@ -188,13 +188,7 @@ describe('ProjectPanelsContainer component', () => {
         byId: {}
       },
       projectCollectionsMetadata: {},
-      spatial: {
-        boundingBox: [],
-        circle: [],
-        line: [],
-        point: [],
-        polygon: []
-      },
+      spatial: {},
       temporal: {},
       ursProfile: {}
     }, {})

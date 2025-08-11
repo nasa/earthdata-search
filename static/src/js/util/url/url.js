@@ -211,11 +211,18 @@ export const decodeUrlParams = (paramString) => {
   const mapView = decodeMap(params)
 
   const spatial = {}
-  spatial.point = decodeHelp(params, 'pointSearch') || []
-  spatial.boundingBox = decodeHelp(params, 'boundingBoxSearch') || []
-  spatial.polygon = decodeHelp(params, 'polygonSearch') || []
-  spatial.line = decodeHelp(params, 'lineSearch') || []
-  spatial.circle = decodeHelp(params, 'circleSearch') || []
+
+  // If the decode values don't exist, don't add `undefined` to the spatial object.
+  const decodedBoundingBox = decodeHelp(params, 'boundingBoxSearch')
+  if (decodedBoundingBox) spatial.boundingBox = decodedBoundingBox
+  const decodedCircle = decodeHelp(params, 'circleSearch')
+  if (decodedCircle) spatial.circle = decodedCircle
+  const decodedLine = decodeHelp(params, 'lineSearch')
+  if (decodedLine) spatial.line = decodedLine
+  const decodedPoint = decodeHelp(params, 'pointSearch')
+  if (decodedPoint) spatial.point = decodedPoint
+  const decodedPolygon = decodeHelp(params, 'polygonSearch')
+  if (decodedPolygon) spatial.polygon = decodedPolygon
 
   // Initialize the collection query
   const { collection = {} } = query

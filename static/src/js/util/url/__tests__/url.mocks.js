@@ -30,13 +30,7 @@ export const emptyDecodedResult = {
       keyword: undefined,
       onlyEosdisCollections: undefined,
       overrideTemporal: {},
-      spatial: {
-        boundingBox: [],
-        circle: [],
-        line: [],
-        point: [],
-        polygon: []
-      },
+      spatial: {},
       sortKey: undefined,
       tagKey: undefined,
       temporal: {},
