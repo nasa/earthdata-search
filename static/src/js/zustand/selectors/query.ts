@@ -48,7 +48,16 @@ export const getCollectionsQuery = (state: EdscStore) => state.query?.collection
 export const getCollectionsQuerySpatial = (state: EdscStore) => {
   const { spatial } = getCollectionsQuery(state)
 
-  return spatial
+  // Default the spatial values to empty arrays. This ensures code that is looking for
+  // arrays will not break (SpatialDisplay.jsx)
+  return {
+    boundingBox: [],
+    circle: [],
+    line: [],
+    point: [],
+    polygon: [],
+    ...spatial
+  }
 }
 
 /**

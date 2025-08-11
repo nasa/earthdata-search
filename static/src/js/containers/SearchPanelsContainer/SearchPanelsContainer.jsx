@@ -27,7 +27,6 @@ export const mapStateToProps = (state) => ({
   collectionSubscriptions: getCollectionSubscriptions(state),
   granuleMetadata: getFocusedGranuleMetadata(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
-  panels: state.panels,
   isExportRunning: state.ui.export.isExportRunning
 })
 
@@ -38,20 +37,15 @@ export const mapDispatchToProps = (dispatch) => ({
     (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onMetricsCollectionSortChange:
     (data) => dispatch(metricsCollectionSortChange(data)),
-  onSetActivePanel:
-    (panelId) => dispatch(actions.setActivePanel(panelId)),
   onToggleAboutCSDAModal:
     (state) => dispatch(actions.toggleAboutCSDAModal(state)),
   onToggleAboutCwicModal:
     (state) => dispatch(actions.toggleAboutCwicModal(state)),
-  onTogglePanels:
-    (value) => dispatch(actions.togglePanels(value)),
   onExport: (format) => dispatch(actions.exportSearch(format))
 })
 
 /**
  * SearchPanelsContainer component
- * @extends PureComponent
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionMetadata - Collection metadata state
  * @param {Object} props.collectionsSearch - Collection search state
@@ -60,11 +54,7 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.location - Browser location state
  * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection
  * @param {Function} props.onMetricsCollectionSortChange - Callback for collection sort metrics
- * @param {Function} props.onSetActivePanel - Callback to set the active panel
  * @param {Function} props.onToggleAboutCwicModal - Callback to toggle the CWIC modal
- * @param {Function} props.onTogglePanels - Callback to toggle the panels
- * @param {Object} props.panels - Panels state
- * @param {Object} props.preferences - Preferences state
  * @param {Object} props.match - Router match state
  */
 export const SearchPanelsContainer = ({
@@ -79,12 +69,9 @@ export const SearchPanelsContainer = ({
   onFocusedCollectionChange,
   onChangePath,
   onMetricsCollectionSortChange,
-  onSetActivePanel,
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal,
-  onTogglePanels,
   onExport,
-  panels,
   match
 }) => {
   const preferences = useEdscStore(getPreferences)
@@ -115,12 +102,9 @@ export const SearchPanelsContainer = ({
       onChangePath={onChangePath}
       onChangeQuery={changeQuery}
       onMetricsCollectionSortChange={onMetricsCollectionSortChange}
-      onSetActivePanel={onSetActivePanel}
       onToggleAboutCSDAModal={onToggleAboutCSDAModal}
       onToggleAboutCwicModal={onToggleAboutCwicModal}
-      onTogglePanels={onTogglePanels}
       onExport={onExport}
-      panels={panels}
       preferences={preferences}
       match={match}
     />
@@ -142,10 +126,7 @@ SearchPanelsContainer.propTypes = {
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onToggleAboutCwicModal: PropTypes.func.isRequired,
-  onTogglePanels: PropTypes.func.isRequired,
-  onExport: PropTypes.func.isRequired,
-  onSetActivePanel: PropTypes.func.isRequired,
-  panels: PropTypes.shape({}).isRequired
+  onExport: PropTypes.func.isRequired
 }
 
 export default withRouter(

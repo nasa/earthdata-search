@@ -38,6 +38,7 @@ describe('createQuerySlice', () => {
       changeRegionQuery: expect.any(Function),
       clearFilters: expect.any(Function),
       excludeGranule: expect.any(Function),
+      initializeGranuleQuery: expect.any(Function),
       removeSpatialFilter: expect.any(Function),
       undoExcludeGranule: expect.any(Function)
     })
@@ -171,8 +172,8 @@ describe('createQuerySlice', () => {
       })
     })
 
-    describe('when there is spatial values', () => {
-      test('it keeps the default spatial values for types without values', async () => {
+    describe('when there are spatial values', () => {
+      test('updates the store', async () => {
         mockGetState.mockReturnValue({
           focusedCollection: ''
         })
@@ -198,9 +199,60 @@ describe('createQuerySlice', () => {
         } = updatedState
 
         expect(updatedQuery.collection.spatial).toEqual({
-          ...initialState.collection.spatial,
           point: ['0,0']
         })
+      })
+
+      test('it changes the spatial values to a new value', async () => {
+        useEdscStore.setState((state) => {
+          state.query.collection.spatial = {
+            point: ['1,1']
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          collection: {
+            spatial: {
+              polygon: ['-77,38,-77,38,-76,38,-77,38']
+            }
+          }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.spatial).toEqual({
+          polygon: ['-77,38,-77,38,-76,38,-77,38']
+        })
+      })
+
+      test('it removes spatial values', async () => {
+        useEdscStore.setState((state) => {
+          state.query.collection.spatial = {
+            point: ['1,1']
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          collection: {
+            spatial: {}
+          }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.spatial).toEqual(initialState.collection.spatial)
       })
     })
   })
@@ -509,6 +561,33 @@ describe('createQuerySlice', () => {
 
       expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
       expect(actions.getSearchGranules).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('initializeGranuleQuery', () => {
+    test('sets the granule query', () => {
+      const collectionId = 'collectionId'
+      const granuleQuery = {
+        sortKey: '-start_date'
+      }
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { initializeGranuleQuery } = query
+      initializeGranuleQuery({
+        collectionId,
+        query: granuleQuery
+      })
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.collection.byId.collectionId.granules).toEqual({
+        ...initialGranuleState,
+        ...granuleQuery
+      })
     })
   })
 

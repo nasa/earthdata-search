@@ -29,7 +29,13 @@ describe('query selectors', () => {
   describe('getCollectionsQuerySpatial', () => {
     test('returns the collection spatial query', () => {
       const spatialQuery = getCollectionsQuerySpatial(useEdscStore.getState())
-      expect(spatialQuery).toEqual(initialState.collection.spatial)
+      expect(spatialQuery).toEqual({
+        boundingBox: [],
+        circle: [],
+        line: [],
+        point: [],
+        polygon: []
+      })
     })
   })
 

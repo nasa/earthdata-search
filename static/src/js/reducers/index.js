@@ -17,7 +17,6 @@ import focusedCollectionReducer from './focusedCollection'
 import focusedGranuleReducer from './focusedGranule'
 import granuleDownloadReducer from './granuleDownload'
 import granuleMetadataReducer from './granuleMetadata'
-import panelsReducer from './panels'
 import regionResultsReducer from './regionResults'
 import retrievalReducer from './retrieval'
 import savedProjectReducer from './savedProject'
@@ -45,7 +44,6 @@ export default (history) => combineReducers({
     granules: granuleMetadataReducer,
     colormaps: colorMapsReducer
   }),
-  panels: panelsReducer,
   retrieval: retrievalReducer,
   router: connectRouter(history),
   savedProject: savedProjectReducer,

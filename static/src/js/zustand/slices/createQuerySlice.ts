@@ -33,13 +33,7 @@ export const initialState = {
     overrideTemporal: {},
     pageNum: 1,
     sortKey: collectionSearchResultsSortKey,
-    spatial: {
-      boundingBox: [],
-      circle: [],
-      line: [],
-      point: [],
-      polygon: []
-    },
+    spatial: {},
     temporal: {}
   },
   region: {
@@ -59,21 +53,32 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
     ...initialState,
 
     changeQuery: async (query) => {
-      set((state) => ({
-        query: {
-          ...state.query,
-          collection: {
-            ...state.query.collection,
-            pageNum: 1,
-            ...query.collection,
-            spatial: {
-              ...initialState.collection.spatial,
-              ...state.query.collection.spatial,
-              ...query.collection?.spatial
+      set((state) => {
+        // Default the spatial value to the existing object
+        let spatialValue = state.query.collection.spatial
+
+        // If the query contains spatial information, use it
+        if (query.collection?.spatial) {
+          spatialValue = query.collection.spatial
+        }
+
+        const newSpatial = {
+          ...initialState.collection.spatial,
+          ...spatialValue
+        }
+
+        return {
+          query: {
+            ...state.query,
+            collection: {
+              ...state.query.collection,
+              pageNum: 1,
+              ...query.collection,
+              spatial: newSpatial
             }
           }
         }
-      }))
+      })
 
       const {
         dispatch: reduxDispatch,
@@ -230,6 +235,17 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         dispatch: reduxDispatch
       } = configureStore()
       reduxDispatch(actions.getSearchGranules())
+    },
+
+    initializeGranuleQuery: ({ collectionId, query }) => {
+      set((state) => {
+        state.query.collection.byId[collectionId] = {
+          granules: {
+            ...initialGranuleState,
+            ...query
+          }
+        }
+      })
     },
 
     removeSpatialFilter: async () => {

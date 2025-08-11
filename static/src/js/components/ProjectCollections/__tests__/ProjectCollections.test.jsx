@@ -16,19 +16,12 @@ jest.mock('../ProjectHeader', () => jest.fn(() => <div />))
 const setup = setupTest({
   Component: ProjectCollections,
   defaultProps: {
-    panels: {
-      activePanel: '0.0.0',
-      isOpen: false
-    },
     savedProject: {
       projectId: 1,
       name: 'test name'
     },
     onMetricsDataAccess: jest.fn(),
-    onTogglePanels: jest.fn(),
-    onSetActivePanel: jest.fn(),
     onUpdateProjectName: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
     onUpdateFocusedCollection: jest.fn(),
     onViewCollectionDetails: jest.fn(),
     onViewCollectionGranules: jest.fn()
@@ -81,6 +74,15 @@ const setup = setupTest({
         },
         pageNum: 1
       }
+    },
+    projectPanels: {
+      panels: {
+        activePanel: '0.0.0',
+        isOpen: false
+      },
+      setActivePanel: jest.fn(),
+      setIsOpen: jest.fn(),
+      setPanelSection: jest.fn()
     }
   },
   withRedux: true

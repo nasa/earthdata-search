@@ -130,6 +130,7 @@ const ProjectCollectionItem = ({
                 label={`${title} Collection Details`}
                 onClick={
                   () => {
+                    // If the panel is closed open it when user selects a collection in project
                     onTogglePanels(true)
                     onUpdateFocusedCollection(collectionId)
                     onSetActivePanelSection('1')
@@ -225,6 +226,7 @@ const ProjectCollectionItem = ({
                   () => {
                     onUpdateFocusedCollection(collectionId)
                     onSetActivePanelSection('0')
+                    // If the panel is closed open it when user selects edit options for a collection
                     onTogglePanels(true)
                   }
                 }

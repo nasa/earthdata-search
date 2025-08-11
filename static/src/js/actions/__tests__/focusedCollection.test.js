@@ -836,7 +836,7 @@ describe('changeFocusedCollection', () => {
       getFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
 
       const getTimelineMock = jest.fn()
-      const changeGranuleQueryMock = jest.fn()
+      const initializeGranuleQueryMock = jest.fn()
       useEdscStore.setState((state) => ({
         ...state,
         timeline: {
@@ -851,7 +851,7 @@ describe('changeFocusedCollection', () => {
           }
         },
         query: {
-          changeGranuleQuery: changeGranuleQueryMock
+          initializeGranuleQuery: initializeGranuleQueryMock
         }
       }))
 
@@ -878,8 +878,8 @@ describe('changeFocusedCollection', () => {
       expect(getTimelineMock).toHaveBeenCalledTimes(1)
       expect(getTimelineMock).toHaveBeenCalledWith()
 
-      expect(changeGranuleQueryMock).toHaveBeenCalledTimes(1)
-      expect(changeGranuleQueryMock).toHaveBeenCalledWith({
+      expect(initializeGranuleQueryMock).toHaveBeenCalledTimes(1)
+      expect(initializeGranuleQueryMock).toHaveBeenCalledWith({
         collectionId: 'C1000000000-EDSC',
         query: {}
       })
@@ -932,7 +932,7 @@ describe('changeFocusedCollection', () => {
       getFocusedCollectionMock.mockImplementationOnce(() => jest.fn())
 
       const getTimelineMock = jest.fn()
-      const changeGranuleQueryMock = jest.fn()
+      const initializeGranuleQueryMock = jest.fn()
       useEdscStore.setState((state) => ({
         ...state,
         timeline: {
@@ -947,7 +947,7 @@ describe('changeFocusedCollection', () => {
           }
         },
         query: {
-          changeGranuleQuery: changeGranuleQueryMock
+          initializeGranuleQuery: initializeGranuleQueryMock
         }
       }))
 
@@ -974,8 +974,8 @@ describe('changeFocusedCollection', () => {
       expect(getTimelineMock).toHaveBeenCalledTimes(1)
       expect(getTimelineMock).toHaveBeenCalledWith()
 
-      expect(changeGranuleQueryMock).toHaveBeenCalledTimes(1)
-      expect(changeGranuleQueryMock).toHaveBeenCalledWith({
+      expect(initializeGranuleQueryMock).toHaveBeenCalledTimes(1)
+      expect(initializeGranuleQueryMock).toHaveBeenCalledWith({
         collectionId: 'C1000000000-EDSC',
         query: { sortKey: '-start_date' }
       })

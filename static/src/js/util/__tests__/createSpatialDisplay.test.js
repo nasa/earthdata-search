@@ -5,13 +5,7 @@ import createSpatialDisplay, {
 } from '../createSpatialDisplay'
 
 describe('createSpatialDisplay', () => {
-  const spatial = {
-    boundingBox: [],
-    circle: [],
-    line: [],
-    point: [],
-    polygon: []
-  }
+  const spatial = {}
 
   describe('boundingBox', () => {
     test('returns the correct values', () => {
