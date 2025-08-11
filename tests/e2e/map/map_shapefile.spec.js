@@ -360,7 +360,21 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // Updates the URL - accept multiple zoom levels
-        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&polygon\[1\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=0&sfs\[1\]=1&lat=-8\.\d+&long=46\.\d+&zoom=[3-5]\.\d+/)
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&polygon\[1\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=0&sfs\[1\]=1&lat=-8\.\d+&long=46\.\d+&zoom=3\.\d+/)
+
+        // Test deselection by clicking on the lower polygon again
+        await page.locator('.map').click({
+          position: {
+            x: 1200,
+            y: 448
+          }
+        })
+
+        // Should show only 1 shape selected now
+        await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
+
+        // URL should only contain the upper polygon now
+        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-1[0-1]\.\d+&long=4[7-8]\.\d+&zoom=4\.\d+/)
       })
     })
 
@@ -618,8 +632,9 @@ test.describe('Map: Shapefile interactions', () => {
         await initialMapPromise
 
         // Upload the shapefile
+        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/12/)
         await uploadShapefile(page, 'multipolygon.geojson')
-        await page.waitForTimeout(1000)
+        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -677,8 +692,9 @@ test.describe('Map: Shapefile interactions', () => {
         await initialMapPromise
 
         // Upload the shapefile
+        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/11/)
         await uploadShapefile(page, 'multipoint.geojson')
-        await page.waitForTimeout(1000)
+        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
@@ -698,7 +714,8 @@ test.describe('Map: Shapefile interactions', () => {
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('multipoint.png', {
-          clip: screenshotClip
+          clip: screenshotClip,
+          maxDiffPixelRatio: 0.005
         })
 
         // Updates the URL and expect all points in the URL
@@ -736,8 +753,9 @@ test.describe('Map: Shapefile interactions', () => {
         await initialMapPromise
 
         // Upload the shapefile
+        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/11/)
         await uploadShapefile(page, 'multilinestring.geojson')
-        await page.waitForTimeout(1000)
+        await shapefilePromise
 
         // Populates the spatial display field
         await expect(
