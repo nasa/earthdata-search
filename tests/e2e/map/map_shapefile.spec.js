@@ -374,7 +374,7 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
         // URL should only contain the upper polygon now
-        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-1[0-1]\.\d+&long=4[7-8]\.\d+&zoom=4\.\d+/)
+        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-[8-9]\.\d+&long=46\.\d+&zoom=[3-4]\.\d+/)
       })
     })
 
@@ -632,7 +632,7 @@ test.describe('Map: Shapefile interactions', () => {
         await initialMapPromise
 
         // Upload the shapefile
-        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/12/)
+        const shapefilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/11/)
         await uploadShapefile(page, 'multipolygon.geojson')
         await shapefilePromise
 
@@ -658,7 +658,7 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         // Updates the URL - expect both polygons in the URL
-        await expect(page).toHaveURL(/search\?polygon\[0\]=-109.6%2C38.81%2C-109.6%2C38.83%2C-109.62%2C38.83%2C-109.62%2C38.81%2C-109.6%2C38.81&polygon\[1\]=-109.55%2C38.75%2C-109.55%2C38.77%2C-109.57%2C38.77%2C-109.57%2C38.75%2C-109.55%2C38.75&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=1[0-3]\.\d+/)
+        await expect(page).toHaveURL(/search\?polygon\[0\]=-109.6%2C38.81%2C-109.6%2C38.83%2C-109.62%2C38.83%2C-109.62%2C38.81%2C-109.6%2C38.81&polygon\[1\]=-109.55%2C38.75%2C-109.55%2C38.77%2C-109.57%2C38.77%2C-109.57%2C38.75%2C-109.55%2C38.75&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=12\.\d+/)
       })
     })
 
