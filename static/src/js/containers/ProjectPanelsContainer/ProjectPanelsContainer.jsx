@@ -28,7 +28,7 @@ export const mapDispatchToProps = (dispatch) => ({
   onFocusedGranuleChange:
     (granuleId) => dispatch(actions.changeFocusedGranule(granuleId)),
   onToggleAboutCSDAModal:
-    (state) => dispatch(actions.toggleAboutCSDAModal(state)),
+    (state) => dispatch(actions.toggleAboutCSDAModal(state))
 })
 
 /**

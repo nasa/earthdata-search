@@ -2,8 +2,8 @@ import { createSelector } from 'reselect'
 
 import { getGranulesMetadata } from './granuleMetadata'
 
-import useEdscStore from '../zustand/useEdscStore'
-import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
+// eslint-disable-next-line camelcase
+import { TEMP_getFocusedCollectionId } from './collectionMetadata'
 
 /**
  * Retrieve current collection search information from Redux
@@ -20,10 +20,9 @@ export const getCollectionsSearch = (state) => {
  * Retrieve search information from Redux pertaining to the granules belonging to the focused collection id
  */
 export const getFocusedCollectionGranuleResults = createSelector(
-  [getCollectionsSearch],
-  (collectionsSearch) => {
-    const focusedCollectionId = getFocusedCollectionId(useEdscStore.getState())
-
+  // eslint-disable-next-line camelcase
+  [TEMP_getFocusedCollectionId, getCollectionsSearch],
+  (focusedCollectionId, collectionsSearch) => {
     const { byId: collectionsSearchById = {} } = collectionsSearch
     const { [focusedCollectionId]: collectionSearch = {} } = collectionsSearchById
     const { granules: collectionGranuleSearch = {} } = collectionSearch
@@ -36,10 +35,9 @@ export const getFocusedCollectionGranuleResults = createSelector(
  * Retrieve metadata from Redux pertaining to the granules that have been retrieved as part of a collection search
  */
 export const getFocusedCollectionGranuleMetadata = createSelector(
-  [getCollectionsSearch, getGranulesMetadata],
-  (collectionsSearch, granulesMetadata) => {
-    const focusedCollectionId = getFocusedCollectionId(useEdscStore.getState())
-
+  // eslint-disable-next-line camelcase
+  [TEMP_getFocusedCollectionId, getCollectionsSearch, getGranulesMetadata],
+  (focusedCollectionId, collectionsSearch, granulesMetadata) => {
     const { byId: collectionsSearchById = {} } = collectionsSearch
     const { [focusedCollectionId]: collectionSearch = {} } = collectionsSearchById
     const { granules: collectionGranuleSearch = {} } = collectionSearch
