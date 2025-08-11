@@ -359,7 +359,7 @@ test.describe('Map: Shapefile interactions', () => {
         // was fulfilled correctly with the succesfull paramCheck
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
-        // Updates the URL - accept multiple zoom levels
+        // Updates the URL
         await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&polygon\[1\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=0&sfs\[1\]=1&lat=-8\.\d+&long=46\.\d+&zoom=3\.\d+/)
 
         // Test deselection by clicking on the lower polygon again
