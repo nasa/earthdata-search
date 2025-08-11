@@ -9,13 +9,7 @@ import {
   computeFacets
 } from '../helpers'
 
-const emptySpatial = {
-  boundingBox: [],
-  circle: [],
-  line: [],
-  polygon: [],
-  point: []
-}
+const emptySpatial = {}
 
 describe('helpers', () => {
   describe('computeKeyword', () => {

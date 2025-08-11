@@ -170,11 +170,7 @@ describe('prepareTimelineParams', () => {
     const baseStateWithOverrides = {
       authToken: 'test-auth-token',
       collectionQuery: {
-        spatial: {
-          boundingBox: [],
-          point: [],
-          polygon: []
-        }
+        spatial: {}
       },
       focusedCollection: '',
       project: {

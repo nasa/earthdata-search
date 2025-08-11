@@ -113,9 +113,14 @@ const onClickShapefile = ({
     selectedFeatures = updatedSelectedFeatures.concat(edscId)
   } else {
     // Remove the feature from the existing spatial query
-    const queryIndex = currentQuery[queryType]?.indexOf(queryValue) || -1
-    currentQuery[queryType]?.splice(queryIndex, 1)
-    query = currentQuery
+    const queryByType = [...currentQuery[queryType] || []]
+    const queryIndex = queryByType.indexOf(queryValue)
+    queryByType.splice(queryIndex!, 1)
+
+    query = {
+      ...currentQuery,
+      [queryType]: queryByType
+    }
 
     // Remove the feature from the selectedFeatures
     const featuresIndex = updatedSelectedFeatures.indexOf(edscId)

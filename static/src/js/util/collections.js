@@ -8,7 +8,6 @@ import { collectionSortKeys } from '../constants/collectionSortKeys'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getCollectionsQuery } from '../zustand/selectors/query'
-import { pruneSpatial } from './pruneSpatial'
 
 /**
  * Prepare parameters used in getCollections() based on current Redux State
@@ -46,7 +45,7 @@ export const prepareCollectionParams = (state) => {
     line,
     point,
     polygon
-  } = pruneSpatial(spatial)
+  } = spatial
 
   const { viewAllFacets: viewAllFacetsSearchResults = {} } = searchResults
   const { selectedCategory: viewAllFacetsCategory } = viewAllFacetsSearchResults

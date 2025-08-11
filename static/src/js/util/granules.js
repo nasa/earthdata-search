@@ -7,7 +7,6 @@ import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsdd
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getCollectionsQuery } from '../zustand/selectors/query'
-import { pruneSpatial } from './pruneSpatial'
 
 /**
  * Populate granule payload used to update the store
@@ -79,7 +78,7 @@ export const extractGranuleSearchParams = (state, collectionId) => {
     point,
     polygon,
     line
-  } = pruneSpatial(spatial)
+  } = spatial
 
   const { [collectionId]: collectionQuery = {} } = collectionQueryById
   const { granules: collectionGranuleQuery = {} } = collectionQuery

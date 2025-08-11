@@ -1,6 +1,5 @@
 import { mbr } from '@edsc/geo-utils'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
-import { pruneSpatial } from './pruneSpatial'
 
 const { defaultSpatialDecimalSize } = getApplicationConfig()
 
@@ -62,7 +61,7 @@ export const createSpatialDisplay = (spatial, usingMbr = false) => {
     line,
     point,
     polygon
-  } = pruneSpatial(spatial)
+  } = spatial
 
   if (boundingBox) {
     const splitStr = transformBoundingBoxCoordinates(boundingBox[0])

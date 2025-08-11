@@ -1,7 +1,5 @@
 import getObjectKeyByValue from './object'
 
-import { pruneSpatial } from './pruneSpatial'
-
 /**
  * Mapping of timeline zoom levels. The Timeline (sometimes) and URL use numbers, CMR uses words
  */
@@ -84,7 +82,7 @@ export const prepareTimelineParams = (state) => {
     boundingBox,
     point,
     polygon
-  } = pruneSpatial(spatial)
+  } = spatial
 
   const { query: timelineQuery } = timeline
   const {
