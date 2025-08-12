@@ -207,7 +207,9 @@ const drawShapefile = ({
 
     // Set the style for the feature
     if (numFeatures > 1) {
-      if ((geometryType === spatialTypes.POINT || geometryType === spatialTypes.MULTI_POINT) && !radius) {
+      const isPointType = geometryType === spatialTypes.POINT
+        || geometryType === spatialTypes.MULTI_POINT
+      if (isPointType && !radius) {
         feature.setStyle(unselectedShapefileMarkerStyle)
       } else {
         feature.setStyle(unselectedShapefileStyle)
@@ -225,7 +227,9 @@ const drawShapefile = ({
       feature.set('selected', true)
 
       // Set the style for the feature
-      if ((geometryType === spatialTypes.POINT || geometryType === spatialTypes.MULTI_POINT) && !radius) {
+      const isPointType = geometryType === spatialTypes.POINT
+        || geometryType === spatialTypes.MULTI_POINT
+      if (isPointType && !radius) {
         feature.setStyle(spatialSearchMarkerStyle)
       } else {
         feature.setStyle(spatialSearchStyle)

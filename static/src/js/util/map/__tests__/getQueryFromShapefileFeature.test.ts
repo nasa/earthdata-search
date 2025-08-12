@@ -1,5 +1,4 @@
 import { Feature } from 'ol'
-import { Point } from 'ol/geom'
 import getQueryFromShapefileFeature from '../getQueryFromShapefileFeature'
 import spatialTypes from '../../../constants/spatialTypes'
 
@@ -52,7 +51,7 @@ describe('getQueryFromShapefileFeature', () => {
           [
             [
               [-76.0163, 37.883, 200],
-              [-76.0164, 37.884, 201], 
+              [-76.0164, 37.884, 201],
               [-76.0165, 37.885, 202],
               [-76.0163, 37.883, 200]
             ]
