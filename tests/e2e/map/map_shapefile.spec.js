@@ -279,22 +279,8 @@ test.describe('Map: Shapefile interactions', () => {
       })
     })
 
-    test.describe('When the shapefile has multiple shapes selected', () => {
-      test('renders correctly @screenshot', async ({ page }) => {
-        await interceptUnauthenticatedCollections({
-          page,
-          body: commonBody,
-          headers: commonHeaders,
-          additionalRequests: [{
-            body: multipleShapesShapefileBody,
-            headers: {
-              ...commonHeaders,
-              'cmr-hits': '2'
-            },
-            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647' && parsedQuery?.polygon?.[1] === '44.1875,0.40647,58.25,-14.46517,58.25,0.40647,44.1875,0.40647'
-          }]
-        })
-
+    test.describe('When the shapefile has multiple shapes', () => {
+      test.beforeEach(async ({ page }) => {
         await page.route(/shapefiles$/, async (route) => {
           await route.fulfill({
             json: { shapefile_id: '1' },
@@ -323,6 +309,22 @@ test.describe('Map: Shapefile interactions', () => {
 
         // Waiting for the URL to include the correct zoom level ensures the map is finished drawing
         await page.waitForURL(/zoom=3/, { timeout: 3000 })
+      })
+
+      test('renders and selects correctly @screenshot', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          additionalRequests: [{
+            body: multipleShapesShapefileBody,
+            headers: {
+              ...commonHeaders,
+              'cmr-hits': '2'
+            },
+            paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647' && parsedQuery?.polygon?.[1] === '44.1875,0.40647,58.25,-14.46517,58.25,0.40647,44.1875,0.40647'
+          }]
+        })
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('multiple-shapes.png', {
@@ -361,6 +363,51 @@ test.describe('Map: Shapefile interactions', () => {
 
         // Updates the URL
         await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&polygon\[1\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=0&sfs\[1\]=1&lat=-8\.\d+&long=46\.\d+&zoom=3\.\d+/)
+      })
+
+      test('deselects shapes correctly @screenshot', async ({ page }) => {
+        await interceptUnauthenticatedCollections({
+          page,
+          body: commonBody,
+          headers: commonHeaders,
+          additionalRequests: [
+            {
+              body: multipleShapesShapefileBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': '2'
+              },
+              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-16.46517,56.25,-16.46517,42.1875,-2.40647' && parsedQuery?.polygon?.[1] === '44.1875,0.40647,58.25,-14.46517,58.25,0.40647,44.1875,0.40647'
+            },
+            {
+              body: multipleShapesShapefileBody,
+              headers: {
+                ...commonHeaders,
+                'cmr-hits': '2'
+              },
+              paramCheck: (parsedQuery) => parsedQuery?.polygon?.[0] === '44.1875,0.40647,58.25,-14.46517,58.25,0.40647,44.1875,0.40647' && parsedQuery?.polygon?.length === 1
+            }
+          ]
+        })
+
+        // Select both polygons first
+        await page.locator('.map').click({
+          position: {
+            x: 1200,
+            y: 448
+          }
+        })
+
+        await page.waitForTimeout(300)
+
+        await page.locator('.map').click({
+          position: {
+            x: 1250,
+            y: 350
+          }
+        })
+
+        await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('2 shapes selected')
 
         // Test deselection by clicking on the lower polygon again
         await page.locator('.map').click({
@@ -370,11 +417,20 @@ test.describe('Map: Shapefile interactions', () => {
           }
         })
 
+        await page.waitForTimeout(300)
+
         // Should show only 1 shape selected now
         await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
 
+        await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
+
         // URL should only contain the upper polygon now
-        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-[8-9]\.\d+&long=46\.\d+&zoom=[3-4]\.\d+/)
+        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-1[0-1]\.\d+&long=4[7-8]\.\d+&zoom=4\.\d+/)
+
+        // Verify the map shows only the selected shape
+        await expect(page).toHaveScreenshot('multiple-shapes-deselected.png', {
+          clip: screenshotClip
+        })
       })
     })
 
@@ -719,7 +775,40 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         // Updates the URL and expect all points in the URL
-        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=1[0-2]\.\d+/)
+        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=11\.\d+/)
+      })
+
+      test('renders selected multipoint correctly @screenshot', async ({ page }) => {
+        await page.route(/shapefiles$/, async (route) => {
+          await route.fulfill({
+            json: { shapefile_id: '1' },
+            headers: { 'content-type': 'application/json; charset=utf-8' }
+          })
+        })
+
+        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+        await page.goto('/search')
+
+        // Wait for the map to load
+        await initialMapPromise
+
+        // Upload the shapefile
+        await uploadShapefile(page, 'multipoint.geojson')
+
+        // Populates the spatial display field
+        await expect(page.getByTestId('filter-stack__spatial').locator('.filter-stack-item__secondary-title')).toHaveText('Shape File')
+
+        await expect(page.getByTestId('spatial-display_shapefile-name')).toHaveText('test.geojson')
+
+        await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
+
+        await expect(page).toHaveScreenshot('multipoint-auto-selected.png', {
+          clip: screenshotClip,
+          maxDiffPixelRatio: 0.005
+        })
+
+        // URL should contain spatial parameters for the selected multipoint
+        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=11\.\d+/)
       })
     })
 
@@ -779,7 +868,7 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         // Updates the URL and expect both lines in the URL
-        await expect(page).toHaveURL(/search\?line\[0\]=-109.6%2C38.81%2C-109.62%2C38.83%2C-109.64%2C38.85&line\[1\]=-109.55%2C38.75%2C-109.57%2C38.77%2C-109.59%2C38.79&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=1[0-2]\.\d+/)
+        await expect(page).toHaveURL(/search\?line\[0\]=-109.6%2C38.81%2C-109.62%2C38.83%2C-109.64%2C38.85&line\[1\]=-109.55%2C38.75%2C-109.57%2C38.77%2C-109.59%2C38.79&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=11\.\d+/)
       })
     })
   })

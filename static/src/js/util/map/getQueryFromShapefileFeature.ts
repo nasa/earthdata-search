@@ -2,12 +2,7 @@ import { Feature } from 'ol'
 import { Point } from 'ol/geom'
 
 import spatialTypes from '../../constants/spatialTypes'
-import { SpatialQueryType } from '../../types/sharedTypes'
-
-// Define the return type for the spatial query
-type SpatialQuery = {
-  [K in SpatialQueryType]?: string[]
-}
+import { Spatial } from '../../types/sharedTypes'
 
 // Remove altitude from coordinate arrays for different types
 const removeAltitudeFromCoordinates = (
@@ -33,7 +28,7 @@ const removeAltitudeFromCoordinates = (
 }
 
 // Get a CMR spatial query from the given feature
-const getQueryFromShapefileFeature = (feature: Feature): SpatialQuery => {
+const getQueryFromShapefileFeature = (feature: Feature): Spatial => {
   const geometry = feature.getGeometry()
   const {
     circleGeometry,
