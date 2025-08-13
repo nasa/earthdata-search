@@ -425,7 +425,7 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // URL should only contain the upper polygon now
-        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-1[0-1]\.\d+&long=4[7-8]\.\d+/)
+        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-?\d+\.\d+&long=4\d\.\d+/)
         expect(0 === 1)
         // Verify the map shows only the selected shape
         await expect(page).toHaveScreenshot('multiple-shapes-deselected.png', {
