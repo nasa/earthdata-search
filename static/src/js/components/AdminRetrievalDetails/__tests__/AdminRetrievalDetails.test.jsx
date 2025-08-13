@@ -141,13 +141,8 @@ describe('AdminRetrievalDetails component', () => {
   describe('when clicking Requeue order button', () => {
     test('clicking on the Requeue button calls onRequeueOrder', async () => {
       const user = userEvent.setup()
-      const onRequeueOrderMock = jest.fn()
 
-      setup({
-        overrideProps: {
-          onRequeueOrder: onRequeueOrderMock
-        }
-      })
+      const { props } = setup()
 
       await waitFor(() => {
         expect(screen.getByText('06347346')).toBeInTheDocument()
@@ -155,8 +150,8 @@ describe('AdminRetrievalDetails component', () => {
 
       await user.click(screen.getByRole('button', { name: /Requeue/ }))
 
-      expect(onRequeueOrderMock).toHaveBeenCalledTimes(1)
-      expect(onRequeueOrderMock).toHaveBeenCalledWith(42)
+      expect(props.onRequeueOrder).toHaveBeenCalledTimes(1)
+      expect(props.onRequeueOrder).toHaveBeenCalledWith(42)
     })
   })
 })

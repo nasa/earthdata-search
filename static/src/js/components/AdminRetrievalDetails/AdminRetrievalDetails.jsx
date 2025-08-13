@@ -1,17 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { gql, useQuery } from '@apollo/client'
+
 import Alert from 'react-bootstrap/Alert'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
 
-import { gql, useQuery } from '@apollo/client'
 import { commafy } from '../../util/commafy'
+import ADMIN_RETRIEVAL from '../../operations/queries/adminRetrieval'
 
 import Button from '../Button/Button'
 
 import './AdminRetrievalDetails.scss'
-import ADMIN_RETRIEVAL from '../../operations/queries/adminRetrieval'
 
 export const AdminRetrievalDetails = ({
   obfuscatedId,

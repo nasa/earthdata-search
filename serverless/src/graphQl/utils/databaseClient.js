@@ -121,12 +121,12 @@ export default class DatabaseClient {
    * @returns {Promise<Array>} A promise that resolves to an array of retrieval objects
    */
   async getRetrievals({
-    ursId,
-    retrievalCollectionId,
-    obfuscatedId,
-    sortKey,
     limit,
-    offset
+    obfuscatedId,
+    offset,
+    retrievalCollectionId,
+    sortKey,
+    ursId
   }) {
     const sortKeyParams = {
       '-created_at': ['retrievals.created_at', 'desc'],

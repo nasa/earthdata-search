@@ -65,50 +65,45 @@ export default {
         retrievalCollectionId
       } = params
 
-      try {
-        const data = await databaseClient.getRetrievals({
-          ursId,
-          retrievalCollectionId,
-          obfuscatedId,
-          limit,
-          offset,
-          sortKey
-        })
+      const data = await databaseClient.getRetrievals({
+        ursId,
+        retrievalCollectionId,
+        obfuscatedId,
+        limit,
+        offset,
+        sortKey
+      })
 
-        let currentPage = null
+      let currentPage = null
 
-        const retrievalCount = data.length
-          ? data[0].total
-          : 0
+      const retrievalCount = data.length
+        ? data[0].total
+        : 0
 
-        const pageCount = data.length
-          ? Math.ceil(retrievalCount / limit)
-          : 0
+      const pageCount = data.length
+        ? Math.ceil(retrievalCount / limit)
+        : 0
 
-        if (pageCount > 0) {
-          if (offset) {
-            currentPage = Math.floor(offset / limit) + 1
-          } else {
-            currentPage = 1
-          }
+      if (pageCount > 0) {
+        if (offset) {
+          currentPage = Math.floor(offset / limit) + 1
+        } else {
+          currentPage = 1
         }
+      }
 
-        const hasNextPage = currentPage < pageCount
-        const hasPreviousPage = currentPage > 1
+      const hasNextPage = currentPage < pageCount
+      const hasPreviousPage = currentPage > 1
 
-        return {
-          adminRetrievals: camelcaseKeys(data, { deep: true }),
-          pageInfo: {
-            pageCount,
-            hasNextPage,
-            hasPreviousPage,
-            currentPage
-          },
-          count: retrievalCount
-        }
-      } catch (error) {
-        console.error('Error fetching retrievals:', error)
-        throw new Error('Failed to fetch retrievals')
+      return {
+        adminRetrievals: camelcaseKeys(data, { deep: true }),
+        pageInfo: {
+          pageCount,
+          hasNextPage,
+          hasPreviousPage,
+          currentPage
+        },
+        count: retrievalCount
       }
     }
   },

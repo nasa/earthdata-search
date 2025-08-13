@@ -22,16 +22,16 @@ import {
 import ADMIN_RETRIEVALS from '../../operations/queries/adminRetrievals'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+import Spinner from '../Spinner/Spinner'
 
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsList.scss'
-import Spinner from '../Spinner/Spinner'
 
 export const AdminRetrievalsList = ({
   historyPush
 }) => {
   const [currentPage, setCurrentPage] = useState(1)
-  const [searchType, setSearchType] = useState('obfuscatedId')
+  const [searchType, setSearchType] = useState('urs_id')
   const [searchValue, setSearchValue] = useState('')
   const [debouncedSearchValue, setDebouncedSearchValue] = useState('')
   const [sortKey, setSortKey] = useState()
