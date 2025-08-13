@@ -16,7 +16,7 @@ describe('AdminRetrievalContainer component', () => {
     const props = {
       match: {
         params: {
-          id: '1'
+          obfuscatedId: '1'
         }
       },
       onRequeueOrder: onRequeueOrderMock

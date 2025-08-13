@@ -1,8 +1,8 @@
 import { ApolloServer } from '@apollo/server'
 
-import getLoaders from '../../utils/getLoaders'
-import resolvers from '../index'
-import typeDefs from '../../types'
+import getLoaders from '../../../utils/getLoaders'
+import resolvers from '../../index'
+import typeDefs from '../../../types'
 
 /**
  * Sets up the Apollo Server with the provided database client

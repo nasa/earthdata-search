@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 import ADMIN_PREFERENCES_METRICS from '../../../../../static/src/js/operations/queries/adminPreferencesMetrics'
 import ADMIN_RETRIEVAL from '../../../../../static/src/js/operations/queries/adminRetrieval'
 import ADMIN_RETRIEVALS from '../../../../../static/src/js/operations/queries/adminRetrievals'
-import setupServer from './setupServer'
+import setupServer from './__mocks__/setupServer'
 
 describe('Admin Resolver', () => {
   describe('Query', () => {

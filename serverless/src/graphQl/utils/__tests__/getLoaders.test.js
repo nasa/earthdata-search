@@ -10,7 +10,7 @@ const mockContext = {
 }
 
 describe('getLoaders', () => {
-  it('returns the correct loaders', () => {
+  test('returns the correct loaders', () => {
     const loaders = getLoaders(mockContext)
     expect(loaders).toEqual({
       retrievalCollections: expect.any(DataLoader),
@@ -20,7 +20,7 @@ describe('getLoaders', () => {
   })
 
   describe('retrievalCollections loader', () => {
-    it('loads a retrieval collection by ID', async () => {
+    test('loads a retrieval collection by ID', async () => {
       mockContext.databaseClient.getRetrievalCollectionsByRetrievalId.mockResolvedValue([
         {
           id: 1,
@@ -66,7 +66,7 @@ describe('getLoaders', () => {
   })
 
   describe('retrievalOrders loader', () => {
-    it('loads a retrieval orders by ID', async () => {
+    test('loads a retrieval orders by ID', async () => {
       mockContext.databaseClient.getRetrievalOrdersByRetrievalCollectionId.mockResolvedValue([
         {
           id: 1,
@@ -112,7 +112,7 @@ describe('getLoaders', () => {
   })
 
   describe('users loader', () => {
-    it('loads a user by ID', async () => {
+    test('loads a user by ID', async () => {
       mockContext.databaseClient.getUsersById.mockResolvedValue([
         {
           id: 1,

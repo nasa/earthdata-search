@@ -108,9 +108,9 @@ export default class DatabaseClient {
           'retrievals.id': deobfuscateId(parseInt(obfuscatedId, 10))
         })
         .first()
-    } catch (e) {
+    } catch {
       const errorMessage = 'Failed to retrieve retrieval by ID'
-      console.log(e)
+      console.log(errorMessage)
       throw new Error(errorMessage)
     }
   }
@@ -176,7 +176,7 @@ export default class DatabaseClient {
         query = query.offset(offset)
       }
 
-      return query
+      return await query
     } catch {
       const errorMessage = 'Failed to retrieve user retrievals'
       console.log(errorMessage)

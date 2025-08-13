@@ -285,8 +285,7 @@ describe('DatabaseClient', () => {
       expect(queries[0].method).toEqual('first')
     })
 
-    // TODO why does this console.log not being called the same way as the others
-    test.skip('returns an error', async () => {
+    test('returns an error', async () => {
       const consoleMock = jest.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
@@ -378,24 +377,23 @@ describe('DatabaseClient', () => {
       expect(queries[0].method).toEqual('select')
     })
 
-    // TODO why does this console.log not being called the same way as the others
-    test.skip('returns an error', async () => {
+    test('returns an error', async () => {
       const consoleMock = jest.spyOn(console, 'log')
 
       dbTracker.on('query', (query) => {
         query.reject('Unknown Error')
       })
 
-      await expect(databaseClient.getRetrievals({})).rejects.toThrow('Failed to retrieve user by ID')
+      await expect(databaseClient.getRetrievals({})).rejects.toThrow('Failed to retrieve user retrievals')
 
       const { queries } = dbTracker.queries
 
-      expect(queries[0].sql).toEqual('select "users".* from "users" where "users"."id" = $1 limit $2')
-      expect(queries[0].bindings).toEqual([1, 1])
-      expect(queries[0].method).toEqual('first')
+      expect(queries[0].sql).toEqual('select "retrievals".*, "users"."id" as "user_id", "users"."urs_id" as "urs_id", count(*) OVER() as total from "retrievals" inner join "users" on "retrievals"."user_id" = "users"."id" order by "id" desc')
+      expect(queries[0].bindings).toEqual([])
+      expect(queries[0].method).toEqual('select')
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
-      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user by ID')
+      expect(consoleMock).toHaveBeenCalledWith('Failed to retrieve user retrievals')
     })
 
     describe('when searching with a sortKey', () => {

@@ -131,7 +131,6 @@ export const AdminRetrievalsList = ({
             value={searchType}
             onChange={onSearchTypeChange}
             className="me-3"
-            defaultValue={searchType}
           >
             <option value="obfuscatedId">Obfuscated ID</option>
             <option value="ursId">URS ID</option>
