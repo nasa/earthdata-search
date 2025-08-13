@@ -8,6 +8,7 @@ import createDataQualitySummariesSlice from './slices/createDataQualitySummaries
 import createEarthdataDownloadRedirectSlice from './slices/createEarthdataDownloadRedirectSlice'
 import createEarthdataEnvironmentSlice from './slices/createEarthdataEnvironmentSlice'
 import createFacetParamsSlice from './slices/createFacetParamsSlice'
+import createFocusedCollectionSlice from './slices/createFocusedCollectionSlice'
 import createHomeSlice from './slices/createHomeSlice'
 import createMapSlice from './slices/createMapSlice'
 import createPortalSlice from './slices/createPortalSlice'
@@ -27,6 +28,7 @@ const useEdscStore = create<EdscStore>()(
         ...createEarthdataDownloadRedirectSlice(...args),
         ...createEarthdataEnvironmentSlice(...args),
         ...createFacetParamsSlice(...args),
+        ...createFocusedCollectionSlice(...args),
         ...createHomeSlice(...args),
         ...createMapSlice(...args),
         ...createProjectPanelsSlice(...args),

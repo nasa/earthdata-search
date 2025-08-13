@@ -9,6 +9,7 @@ import actions from '../index'
 import {
   createSubscription,
   deleteSubscription,
+  getGranuleSubscriptions,
   getSubscriptions,
   onSubscriptionsErrored,
   onSubscriptionsLoaded,
@@ -27,16 +28,19 @@ import {
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
+  UPDATE_GRANULE_SUBSCRIPTIONS,
   UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
 
+import * as getClientId from '../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../sharedUtils/config'
 import * as addToast from '../../util/addToast'
 import {
   getCollectionSubscriptionQueryString,
   getGranuleSubscriptionQueryString
 } from '../../zustand/selectors/query'
+import useEdscStore from '../../zustand/useEdscStore'
 
 jest.mock('../../zustand/selectors/query', () => ({
   getCollectionSubscriptionQueryString: jest.fn().mockImplementation(() => {}),
@@ -148,6 +152,11 @@ describe('createSubscription', () => {
         }
       })
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const store = mockStore({
       authToken: 'token',
       metadata: {
@@ -158,7 +167,6 @@ describe('createSubscription', () => {
           }
         }
       },
-      focusedCollection: 'collectionId',
       subscriptions: {
         disabledFields: {
           collection: {},
@@ -312,6 +320,11 @@ describe('createSubscription', () => {
           }
         })
 
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.focusedCollection.focusedCollection = 'collectionId'
+      })
+
       const store = mockStore({
         authToken: 'token',
         metadata: {
@@ -329,7 +342,6 @@ describe('createSubscription', () => {
             }
           }
         },
-        focusedCollection: 'collectionId',
         subscriptions: {
           disabledFields: {
             collection: {},
@@ -371,6 +383,11 @@ describe('createSubscription', () => {
         .post(/error_logger/)
         .reply(200)
 
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.focusedCollection.focusedCollection = 'collectionId'
+      })
+
       const store = mockStore({
         authToken: 'token',
         metadata: {
@@ -387,40 +404,11 @@ describe('createSubscription', () => {
             }
           }
         },
-        project: {},
-        focusedCollection: 'collectionId',
-        query: {
-          collection: {
-            byId: {
-              collectionId: {
-                granules: {
-                  excludedGranuleIds: [],
-                  gridCoords: '',
-                  pageNum: 2,
-                  sortKey: '-start_date',
-                  collectionId: 'collectionId',
-                  browseOnly: true
-                }
-              }
-            },
-            temporal: {
-              startDate: '2020-01-01T00:00:00.000Z',
-              endDate: '2020-01-31T23:59:59.999Z',
-              isRecurring: false
-            },
-            spatial: {
-              polygon: '-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
-            }
-          }
-        },
         subscriptions: {
           disabledFields: {
             collection: {},
             granule: {}
           }
-        },
-        timeline: {
-          query: {}
         },
         user: {
           username: 'testUser'
@@ -636,6 +624,162 @@ describe('getSubscriptions', () => {
   })
 })
 
+describe('getGranuleSubscriptions', () => {
+  beforeEach(() => {
+    jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
+  })
+
+  describe('when a collection is not provided', () => {
+    test('updates the subscriptions of the focused collection', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            subscriptions: {
+              items: [
+                'new items'
+              ]
+            }
+          }
+        })
+
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+      })
+
+      const store = mockStore({
+        authToken: '',
+        metadata: {
+          collections: {
+            'C10000000000-EDSC': {
+              id: 'C10000000000-EDSC',
+              subscriptions: {
+                items: [
+                  'original items'
+                ]
+              }
+            }
+          }
+        },
+        searchResults: {}
+      })
+
+      await store.dispatch(getGranuleSubscriptions()).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: UPDATE_GRANULE_SUBSCRIPTIONS,
+          payload: {
+            collectionId: 'C10000000000-EDSC',
+            subscriptions: {
+              items: [
+                'new items'
+              ]
+            }
+          }
+        })
+      })
+    })
+  })
+
+  describe('when a collection is provided', () => {
+    test('updates the subscriptions of the focused collection', async () => {
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+        cmrHost: 'https://cmr.example.com',
+        graphQlHost: 'https://graphql.example.com',
+        opensearchRoot: 'https://cmr.example.com'
+      }))
+
+      nock(/graph/)
+        .post(/api/)
+        .reply(200, {
+          data: {
+            subscriptions: {
+              items: [
+                'new items'
+              ]
+            }
+          }
+        })
+
+      const store = mockStore({
+        authToken: '',
+        metadata: {
+          collections: {
+            'C10000000000-EDSC': {
+              id: 'C10000000000-EDSC',
+              subscriptions: {
+                items: [
+                  'original items'
+                ]
+              }
+            }
+          }
+        },
+        searchResults: {}
+      })
+
+      await store.dispatch(getGranuleSubscriptions('C10000000000-EDSC')).then(() => {
+        const storeActions = store.getActions()
+        expect(storeActions[0]).toEqual({
+          type: UPDATE_GRANULE_SUBSCRIPTIONS,
+          payload: {
+            collectionId: 'C10000000000-EDSC',
+            subscriptions: {
+              items: [
+                'new items'
+              ]
+            }
+          }
+        })
+      })
+    })
+  })
+
+  test('calls handleError when graphql throws an http error', async () => {
+    const handleErrorMock = jest.spyOn(actions, 'handleError')
+
+    jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      cmrHost: 'https://cmr.example.com',
+      graphQlHost: 'https://graphql.example.com'
+    }))
+
+    nock(/localhost/)
+      .post(/graphql/)
+      .reply(200, {
+        errors: [{
+          message: 'Token does not exist'
+        }]
+      })
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({
+      authToken: 'token'
+    })
+
+    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
+
+    await store.dispatch(getGranuleSubscriptions()).then(() => {
+      expect(handleErrorMock).toHaveBeenCalledTimes(1)
+      expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
+        action: 'getGranuleSubscriptions',
+        resource: 'subscription'
+      }))
+
+      expect(consoleMock).toHaveBeenCalledTimes(1)
+    })
+  })
+})
+
 describe('deleteSubscription', () => {
   test('should call graphql and call removeSubscription', async () => {
     jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
@@ -821,33 +965,11 @@ describe('updateSubscription', () => {
           }
         }
       },
-      project: {},
-      focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          byId: {
-            collectionId: {
-              granules: {
-                browseOnly: true
-              }
-            }
-          },
-          temporal: {
-            startDate: '2020-01-01T00:00:00.000Z',
-            endDate: '2020-01-31T23:59:59.999Z',
-            isRecurring: false
-          },
-          spatial: {}
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
           granule: {}
         }
-      },
-      timeline: {
-        query: {}
       },
       user: {
         username: 'testUser'
@@ -898,26 +1020,11 @@ describe('updateSubscription', () => {
       metadata: {
         collections: {}
       },
-      project: {},
-      query: {
-        collection: {
-          byId: {},
-          temporal: {
-            startDate: '2020-01-01T00:00:00.000Z',
-            endDate: '2020-01-31T23:59:59.999Z',
-            isRecurring: false
-          },
-          spatial: {}
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
           granule: {}
         }
-      },
-      timeline: {
-        query: {}
       },
       user: {
         username: 'testUser'
@@ -969,26 +1076,11 @@ describe('updateSubscription', () => {
       metadata: {
         collections: {}
       },
-      project: {},
-      query: {
-        collection: {
-          byId: {},
-          temporal: {
-            startDate: '2020-01-01T00:00:00.000Z',
-            endDate: '2020-01-31T23:59:59.999Z',
-            isRecurring: false
-          },
-          spatial: {}
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
           granule: {}
         }
-      },
-      timeline: {
-        query: {}
       },
       user: {
         username: 'testUser'
@@ -1053,33 +1145,11 @@ describe('updateSubscription', () => {
           }
         }
       },
-      project: {},
-      focusedCollection: 'collectionId',
-      query: {
-        collection: {
-          byId: {
-            collectionId: {
-              granules: {
-                browseOnly: true
-              }
-            }
-          },
-          temporal: {
-            startDate: '2020-01-01T00:00:00.000Z',
-            endDate: '2020-01-31T23:59:59.999Z',
-            isRecurring: false
-          },
-          spatial: {}
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
           granule: {}
         }
-      },
-      timeline: {
-        query: {}
       },
       user: {
         username: 'testUser'

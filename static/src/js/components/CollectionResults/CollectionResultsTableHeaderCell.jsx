@@ -14,10 +14,14 @@ import useEdscStore from '../../zustand/useEdscStore'
 const CollectionResultsTableHeaderCell = (props) => {
   const {
     addProjectCollection,
-    removeProjectCollection
+    removeProjectCollection,
+    viewCollectionDetails,
+    viewCollectionGranules
   } = useEdscStore((state) => ({
     addProjectCollection: state.project.addProjectCollection,
-    removeProjectCollection: state.project.removeProjectCollection
+    removeProjectCollection: state.project.removeProjectCollection,
+    viewCollectionDetails: state.focusedCollection.viewCollectionDetails,
+    viewCollectionGranules: state.focusedCollection.viewCollectionGranules
   }))
 
   const { column, cell, row } = props
@@ -26,9 +30,7 @@ const CollectionResultsTableHeaderCell = (props) => {
   const { collectionId, isCollectionInProject } = rowProps
 
   const {
-    onViewCollectionGranules,
-    onMetricsAddCollectionProject,
-    onViewCollectionDetails
+    onMetricsAddCollectionProject
   } = customProps
 
   const { value } = cell
@@ -42,7 +44,7 @@ const CollectionResultsTableHeaderCell = (props) => {
         title={value}
         onClick={
           (event) => {
-            onViewCollectionGranules(collectionId)
+            viewCollectionGranules(collectionId)
             event.stopPropagation()
           }
         }
@@ -61,7 +63,7 @@ const CollectionResultsTableHeaderCell = (props) => {
           title="View collection details"
           onClick={
             (event) => {
-              onViewCollectionDetails(collectionId)
+              viewCollectionDetails(collectionId)
               event.stopPropagation()
             }
           }
@@ -118,9 +120,7 @@ CollectionResultsTableHeaderCell.propTypes = {
   }).isRequired,
   column: PropTypes.shape({
     customProps: PropTypes.shape({
-      onViewCollectionGranules: PropTypes.func,
-      onMetricsAddCollectionProject: PropTypes.func,
-      onViewCollectionDetails: PropTypes.func
+      onMetricsAddCollectionProject: PropTypes.func
     })
   }).isRequired,
   row: PropTypes.shape({

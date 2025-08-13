@@ -25,7 +25,6 @@ const setup = setupTest({
     boundingBoxSearch: '',
     collectionsMetadata: {},
     gridCoords: '',
-    focusedCollection: '',
     focusedGranule: '',
     keywordSearch: '',
     mapPreferences: {},
@@ -52,7 +51,6 @@ const setup = setupTest({
 })
 
 beforeEach(() => {
-  jest.resetAllMocks()
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     collectionSearchResultsSortKey: collectionSortKeys.usageDescending
   }))
@@ -90,7 +88,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
       metadata: {
         collections: {}
@@ -105,7 +102,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       advancedSearch: {},
       collectionsMetadata: {},
-      focusedCollection: 'collectionId',
       focusedGranule: 'granuleIdId',
       location: {
         pathname: ''

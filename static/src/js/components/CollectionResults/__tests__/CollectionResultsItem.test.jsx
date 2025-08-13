@@ -21,6 +21,10 @@ const setup = setupTest({
   Component: CollectionResultsItem,
   defaultProps: collectionListItemProps,
   defaultZustandState: {
+    focusedCollection: {
+      viewCollectionDetails: jest.fn(),
+      viewCollectionGranules: jest.fn()
+    },
     project: {
       addProjectCollection: jest.fn(),
       removeProjectCollection: jest.fn()
@@ -45,8 +49,8 @@ describe('CollectionResultsList component', () => {
     })
   })
 
-  test('calls onViewCollectionGranules when clicked', async () => {
-    const { props, user } = setup()
+  test('calls viewCollectionGranules when clicked', async () => {
+    const { user, zustandState } = setup()
 
     const collectionResultLink = screen.getByRole('button', {
       name: /Test Collection/
@@ -54,8 +58,8 @@ describe('CollectionResultsList component', () => {
 
     await user.click(collectionResultLink)
 
-    expect(props.onViewCollectionGranules).toHaveBeenCalledWith('collectionId1')
-    expect(props.onViewCollectionGranules).toHaveBeenCalledTimes(1)
+    expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledWith('collectionId1')
+    expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledTimes(1)
   })
 
   test('renders the add button under PortalFeatureContainer', async () => {
@@ -133,22 +137,22 @@ describe('CollectionResultsList component', () => {
 
   describe('on keypress', () => {
     test('does nothing on non-enter press', async () => {
-      const { props, user } = setup()
+      const { user, zustandState } = setup()
 
       const collectionDetailsButton = screen.getByRole('button', { name: 'View collection details' })
       await user.type(collectionDetailsButton, '{a}')
 
-      expect(props.onViewCollectionGranules).toHaveBeenCalledTimes(0)
+      expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledTimes(0)
     })
 
-    test('calls onViewCollectionGranules on enter press', async () => {
-      const { props, user } = setup()
+    test('calls viewCollectionGranules on enter press', async () => {
+      const { user, zustandState } = setup()
 
       const collectionDetailsButton = screen.getByRole('button', { name: 'View collection details' })
       await user.type(collectionDetailsButton, '{Enter}')
 
-      expect(props.onViewCollectionGranules).toHaveBeenCalledTimes(1)
-      expect(props.onViewCollectionGranules).toHaveBeenCalledWith('collectionId1')
+      expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledTimes(1)
+      expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledWith('collectionId1')
     })
   })
 
@@ -464,13 +468,13 @@ describe('CollectionResultsList component', () => {
   })
 
   describe('view collection details button', () => {
-    test('calls onViewCollectionGranules when clicked', async () => {
-      const { props, user } = setup()
+    test('calls viewCollectionDetails when clicked', async () => {
+      const { user, zustandState } = setup()
 
       await user.click(screen.getByRole('button', { name: 'View collection details' }))
 
-      expect(props.onViewCollectionDetails).toHaveBeenCalledTimes(1)
-      expect(props.onViewCollectionDetails).toHaveBeenCalledWith('collectionId1')
+      expect(zustandState.focusedCollection.viewCollectionDetails).toHaveBeenCalledTimes(1)
+      expect(zustandState.focusedCollection.viewCollectionDetails).toHaveBeenCalledWith('collectionId1')
     })
   })
 

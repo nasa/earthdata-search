@@ -40,7 +40,6 @@ import { getCollectionsQuery } from '../../zustand/selectors/query'
  * @param {Object} props.isPanelActive - Whether or not the panel for the collection is active.
  * @param {Function} props.onSetActivePanel - Function called when an active panel is set.
  * @param {Function} props.onSetActivePanelSection - Callback to set the active panel.
- * @param {Function} props.onUpdateFocusedCollection - Callback to set the focused collection ID.
  * @param {Object} props.projectCollection - Collection from project.byId
  */
 const ProjectCollectionItem = ({
@@ -54,19 +53,22 @@ const ProjectCollectionItem = ({
   onSetActivePanel,
   onSetActivePanelSection,
   onTogglePanels,
-  onUpdateFocusedCollection,
-  onViewCollectionDetails,
-  onViewCollectionGranules,
   projectCollection
 }) => {
   const {
     mapView,
     removeProjectCollection,
-    toggleCollectionVisibility
+    setFocusedCollection,
+    toggleCollectionVisibility,
+    viewCollectionDetails,
+    viewCollectionGranules
   } = useEdscStore((state) => ({
     mapView: state.map.mapView,
     removeProjectCollection: state.project.removeProjectCollection,
-    toggleCollectionVisibility: state.project.toggleCollectionVisibility
+    setFocusedCollection: state.focusedCollection.setFocusedCollection,
+    toggleCollectionVisibility: state.project.toggleCollectionVisibility,
+    viewCollectionDetails: state.focusedCollection.viewCollectionDetails,
+    viewCollectionGranules: state.focusedCollection.viewCollectionGranules
   }))
   const collectionsQuery = useEdscStore(getCollectionsQuery)
 
@@ -132,7 +134,7 @@ const ProjectCollectionItem = ({
                   () => {
                     // If the panel is closed open it when user selects a collection in project
                     onTogglePanels(true)
-                    onUpdateFocusedCollection(collectionId)
+                    setFocusedCollection(collectionId)
                     onSetActivePanelSection('1')
                   }
                 }
@@ -172,13 +174,13 @@ const ProjectCollectionItem = ({
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-collection-details"
                   icon={AlertInformation}
                   title="Collection Details"
-                  onClick={() => onViewCollectionDetails(collectionId)}
+                  onClick={() => viewCollectionDetails(collectionId)}
                 />
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-granules"
                   icon={FaMap}
                   title="View Granules"
-                  onClick={() => onViewCollectionGranules(collectionId)}
+                  onClick={() => viewCollectionGranules(collectionId)}
                 />
                 <MoreActionsDropdownItem
                   className="project-collections-item__more-actions-item project-collections-item__more-actions-vis"
@@ -224,7 +226,7 @@ const ProjectCollectionItem = ({
                 label="Edit options"
                 onClick={
                   () => {
-                    onUpdateFocusedCollection(collectionId)
+                    setFocusedCollection(collectionId)
                     onSetActivePanelSection('0')
                     // If the panel is closed open it when user selects edit options for a collection
                     onTogglePanels(true)
@@ -262,9 +264,6 @@ ProjectCollectionItem.propTypes = {
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelSection: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({
       hits: PropTypes.number,

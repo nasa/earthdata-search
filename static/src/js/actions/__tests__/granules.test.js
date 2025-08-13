@@ -55,14 +55,18 @@ describe('getSearchGranules', () => {
         'cmr-hits': 1
       })
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const store = mockStore({
       authToken: '',
       metadata: {
         collectionId: {
           mock: 'data'
         }
-      },
-      focusedCollection: 'collectionId'
+      }
     })
 
     await store.dispatch(getSearchGranules()).then(() => {
@@ -152,6 +156,11 @@ describe('getSearchGranules', () => {
         'jwt-token': 'token'
       })
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const store = mockStore({
       authToken: 'token',
       metadata: {
@@ -160,8 +169,7 @@ describe('getSearchGranules', () => {
             mock: 'data'
           }
         }
-      },
-      focusedCollection: 'collectionId'
+      }
     })
 
     await store.dispatch(getSearchGranules()).then(() => {
@@ -241,6 +249,11 @@ describe('getSearchGranules', () => {
       .post(/opensearch\/granules/)
       .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><title>CWIC Granule</title></entry></feed>')
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const store = mockStore({
       authToken: 'token',
       metadata: {
@@ -254,8 +267,7 @@ describe('getSearchGranules', () => {
             }]
           }
         }
-      },
-      focusedCollection: 'collectionId'
+      }
     })
 
     useEdscStore.setState((state) => {
@@ -352,6 +364,11 @@ describe('getSearchGranules', () => {
       .post(/opensearch\/granules/)
       .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><title type="text">CWIC Granule</title><id>12345</id><updated>2020-06-09T23:59:59Z</updated></entry></feed>')
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const store = mockStore({
       authToken: 'token',
       metadata: {
@@ -365,8 +382,7 @@ describe('getSearchGranules', () => {
             }]
           }
         }
-      },
-      focusedCollection: 'collectionId'
+      }
     })
 
     useEdscStore.setState((state) => {
@@ -479,6 +495,11 @@ describe('getSearchGranules', () => {
       .post(/error_logger/)
       .reply(200)
 
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedCollection.focusedCollection = 'collectionId'
+    })
+
     const store = mockStore({
       authToken: '',
       metadata: {
@@ -487,8 +508,7 @@ describe('getSearchGranules', () => {
             mock: 'data'
           }
         }
-      },
-      focusedCollection: 'collectionId'
+      }
     })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())

@@ -33,7 +33,6 @@ import './OrderStatus.scss'
  * @param {Function} props.onFetchRetrieval - Fetches a retrieval from the database.
  * @param {Function} props.onFetchRetrievalCollection - Fetches a retrieval collection from the database.
  * @param {Function} props.onFetchRetrievalCollectionGranuleLinks - Passed down to child components, method to fetch granules for a given retrieval collection.
- * @param {Function} props.onFocusedCollectionChange - Callback to change the focused collection.
  * @param {Function} props.onMetricsRelatedCollection -  Callback to capture related collection metrics.
  * @param {Function} props.onToggleAboutCSDAModal - Callback to toggle the About CSDA Modal.
 
@@ -48,7 +47,6 @@ export const OrderStatus = ({
   onFetchRetrievalCollection,
   onFetchRetrievalCollectionGranuleLinks,
   onFetchRetrievalCollectionGranuleBrowseLinks,
-  onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleAboutCSDAModal,
   retrieval = {}
@@ -317,7 +315,6 @@ export const OrderStatus = ({
                                   key={`related-collection-${collectionId}`}
                                   className="collection-body__related-collection-link"
                                   location={location}
-                                  onFocusedCollectionChange={onFocusedCollectionChange}
                                   onMetricsRelatedCollection={onMetricsRelatedCollection}
                                   relatedCollection={relatedCollection}
                                 />
@@ -401,7 +398,6 @@ OrderStatus.propTypes = {
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleBrowseLinks: PropTypes.func.isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   retrieval: PropTypes.shape({}).isRequired

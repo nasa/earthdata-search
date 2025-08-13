@@ -16,17 +16,21 @@ import { SubscriptionsQueryList } from './SubscriptionsQueryList'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 import './SubscriptionsListTable.scss'
 
 /**
  * Renders the logged in users' subscription list
  */
-export const SubscriptionsListTable = ({
+const SubscriptionsListTable = ({
   subscriptionsMetadata = {},
   subscriptionType,
-  onDeleteSubscription,
-  onFocusedCollectionChange
+  onDeleteSubscription
 }) => {
+  const changeFocusedCollection = useEdscStore(
+    (state) => state.focusedCollection.changeFocusedCollection
+  )
   const onHandleRemove = (conceptId, nativeId, collectionId) => {
     // eslint-disable-next-line no-alert
     const confirmDeletion = window.confirm('Are you sure you want to remove this subscription? This action cannot be undone.')
@@ -126,7 +130,7 @@ export const SubscriptionsListTable = ({
                         }
                         onClick={
                           () => {
-                            if (subscriptionType === 'granule') onFocusedCollectionChange(collectionConceptId)
+                            if (subscriptionType === 'granule') changeFocusedCollection(collectionConceptId)
                           }
                         }
                         variant="naked"
@@ -159,8 +163,7 @@ export const SubscriptionsListTable = ({
 SubscriptionsListTable.propTypes = {
   subscriptionsMetadata: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   subscriptionType: PropTypes.string.isRequired,
-  onDeleteSubscription: PropTypes.func.isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired
+  onDeleteSubscription: PropTypes.func.isRequired
 }
 
 export default SubscriptionsListTable

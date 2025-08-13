@@ -1,7 +1,8 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { graphQlGetCollection } from '../../../../../support/graphQlGetCollection'
 import { graphQlGetSubscriptionsQuery } from '../../../../../support/graphQlGetSubscriptionsQuery'
+import { isGetFocusedCollectionsQuery } from '../../../../../support/isGetFocusedCollectionsQuery'
+import { setupTests } from '../../../../../support/setupTests'
 
 import { commafy } from '../../../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../../../static/src/js/util/pluralize'
@@ -21,8 +22,6 @@ import commonHeaders from './__mocks__/common/common.headers.json'
 import associatedDoisGranulesBody from './__mocks__/associated_dois/granules.body.json'
 import graphQlHeaders from './__mocks__/common/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/common/getSubscriptions.graphql.body.json'
-
-import { setupTests } from '../../../../../support/setupTests'
 
 /**
  * Tests the title displayed in the collection details
@@ -258,7 +257,7 @@ test.describe('Path /search/granules/collection-details', () => {
       await page.route(/graphql.*\/api/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
 
-        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+        if (isGetFocusedCollectionsQuery(route, conceptId)) {
           await route.fulfill({
             json: assocatedDoisGraphQlBody,
             headers: graphQlHeaders
@@ -337,7 +336,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/graphql.*\/api/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
-        if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+        if (isGetFocusedCollectionsQuery(route, conceptId)) {
           await route.fulfill({
             json: reformattingGraphQlBody,
             headers: graphQlHeaders
@@ -459,7 +458,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          if (isGetFocusedCollectionsQuery(route, conceptId)) {
             await route.fulfill({
               json: reformattingGraphQlBody,
               headers: graphQlHeaders
@@ -518,7 +517,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          if (isGetFocusedCollectionsQuery(route, conceptId)) {
             await route.fulfill({
               json: pointSpatialGraphqlBody,
               headers: graphQlHeaders
@@ -577,7 +576,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          if (isGetFocusedCollectionsQuery(route, conceptId)) {
             await route.fulfill({
               json: linesGraphqlBody,
               headers: graphQlHeaders
@@ -636,7 +635,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          if (isGetFocusedCollectionsQuery(route, conceptId)) {
             await route.fulfill({
               json: polygonGraphqlBody,
               headers: graphQlHeaders
@@ -696,7 +695,7 @@ test.describe('Path /search/granules/collection-details', () => {
               })
             }
 
-            if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+            if (isGetFocusedCollectionsQuery(route, conceptId)) {
               await route.fulfill({
                 json: smallPolygonGraphqlBody,
                 headers: graphQlHeaders
@@ -755,7 +754,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (query === JSON.parse(graphQlGetCollection(conceptId)).query) {
+          if (isGetFocusedCollectionsQuery(route, conceptId)) {
             await route.fulfill({
               json: multiShapeGraphqlBody,
               headers: graphQlHeaders

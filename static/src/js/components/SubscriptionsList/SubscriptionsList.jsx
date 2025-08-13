@@ -10,10 +10,9 @@ import './SubscriptionsList.scss'
 /**
  * Renders the logged in users' subscription list
  */
-export const SubscriptionsList = ({
+const SubscriptionsList = ({
   subscriptions = {},
-  onDeleteSubscription,
-  onFocusedCollectionChange
+  onDeleteSubscription
 }) => {
   const {
     byId: subscriptionsById,
@@ -48,7 +47,6 @@ export const SubscriptionsList = ({
                 subscriptionsMetadata={collectionSubsciptions}
                 subscriptionType="collection"
                 onDeleteSubscription={onDeleteSubscription}
-                onFocusedCollectionChange={onFocusedCollectionChange}
               />
             </div>
             <div className="subscriptions-list__subscription-group">
@@ -58,7 +56,6 @@ export const SubscriptionsList = ({
                 subscriptionsMetadata={granuleSubscriptions}
                 subscriptionType="granule"
                 onDeleteSubscription={onDeleteSubscription}
-                onFocusedCollectionChange={onFocusedCollectionChange}
               />
             </div>
           </>
@@ -70,8 +67,7 @@ export const SubscriptionsList = ({
 
 SubscriptionsList.propTypes = {
   subscriptions: PropTypes.shape({}).isRequired,
-  onDeleteSubscription: PropTypes.func.isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired
+  onDeleteSubscription: PropTypes.func.isRequired
 }
 
 export default SubscriptionsList

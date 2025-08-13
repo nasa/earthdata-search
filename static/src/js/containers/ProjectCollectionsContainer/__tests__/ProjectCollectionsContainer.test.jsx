@@ -40,11 +40,8 @@ const setup = setupTest({
     onMetricsDataAccess: jest.fn(),
     onTogglePanels: jest.fn(),
     onUpdateProjectName: jest.fn(),
-    onUpdateFocusedCollection: jest.fn(),
     onSetActivePanel: jest.fn(),
-    onSetActivePanelSection: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
-    onViewCollectionGranules: jest.fn()
+    onSetActivePanelSection: jest.fn()
   },
   defaultZustandState: {
     project: {
@@ -71,36 +68,6 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(metricsDataAccess, 'metricsDataAccess')
 
     mapDispatchToProps(dispatch).onMetricsDataAccess({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onUpdateFocusedCollection calls actions.updateFocusedCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateFocusedCollection')
-
-    mapDispatchToProps(dispatch).onUpdateFocusedCollection('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
-  test('onViewCollectionDetails calls viewCollectionDetails', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'viewCollectionDetails')
-
-    mapDispatchToProps(dispatch).onViewCollectionDetails({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onViewCollectionGranules calls viewCollectionGranules', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'viewCollectionGranules')
-
-    mapDispatchToProps(dispatch).onViewCollectionGranules({ mock: 'data' })
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })
@@ -132,10 +99,7 @@ describe('ProjectCollectionsContainer component', () => {
     expect(ProjectCollections).toHaveBeenCalledTimes(1)
     expect(ProjectCollections).toHaveBeenCalledWith({
       onMetricsDataAccess: expect.any(Function),
-      onUpdateFocusedCollection: expect.any(Function),
       onUpdateProjectName: expect.any(Function),
-      onViewCollectionDetails: expect.any(Function),
-      onViewCollectionGranules: expect.any(Function),
       savedProject: {}
     }, {})
   })

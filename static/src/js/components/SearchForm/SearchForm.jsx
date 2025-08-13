@@ -61,8 +61,7 @@ class SearchForm extends Component {
     const {
       advancedSearch,
       authToken,
-      handleError,
-      onChangeFocusedCollection
+      handleError
     } = this.props
 
     const {
@@ -85,7 +84,6 @@ class SearchForm extends Component {
           <SearchAutocomplete
             authToken={authToken}
             handleError={handleError}
-            onChangeFocusedCollection={onChangeFocusedCollection}
           />
         </div>
         <div className="search-form__secondary">
@@ -140,7 +138,6 @@ SearchForm.propTypes = {
   }).isRequired,
   authToken: PropTypes.string.isRequired,
   handleError: PropTypes.func.isRequired,
-  onChangeFocusedCollection: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }

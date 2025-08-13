@@ -25,14 +25,6 @@ import {
 import { updateAdvancedSearch } from './advancedSearch'
 import { getCollections, updateCollectionMetadata } from './collections'
 import {
-  changeFocusedCollection,
-  getFocusedCollection,
-  getGranuleSubscriptions,
-  updateFocusedCollection,
-  viewCollectionGranules,
-  viewCollectionDetails
-} from './focusedCollection'
-import {
   getColorMap,
   setColorMapsErrored,
   setColorMapsLoaded,
@@ -92,13 +84,14 @@ import {
 } from './contactInfo'
 import {
   createSubscription,
-  getSubscriptions,
-  deleteSubscription,
   deleteCollectionSubscription,
+  deleteSubscription,
+  getGranuleSubscriptions,
+  getSubscriptions,
   removeSubscriptionDisabledFields,
+  updateGranuleSubscription,
   updateSubscription,
-  updateSubscriptionDisabledFields,
-  updateGranuleSubscription
+  updateSubscriptionDisabledFields
 } from './subscriptions'
 import { setUserFromJwt } from './user'
 import { exportSearch } from './exportSearch'
@@ -109,7 +102,6 @@ const actions = {
   adminIsAuthorized,
   adminViewProject,
   adminViewRetrieval,
-  changeFocusedCollection,
   changeFocusedGranule,
   changePath,
   changeUrl,
@@ -130,7 +122,6 @@ const actions = {
   generateNotebook,
   getCollections,
   getColorMap,
-  getFocusedCollection,
   getFocusedGranule,
   getGranuleSubscriptions,
   getRegions,
@@ -175,7 +166,6 @@ const actions = {
   updateAdvancedSearch,
   updateAuthToken,
   updateCollectionMetadata,
-  updateFocusedCollection,
   updateFocusedGranule,
   updateGranuleMetadata,
   updateGranuleResults,
@@ -187,9 +177,7 @@ const actions = {
   updateSavedProject,
   updateStore,
   updateSubscription,
-  updateSubscriptionDisabledFields,
-  viewCollectionDetails,
-  viewCollectionGranules
+  updateSubscriptionDisabledFields
 }
 
 export default actions

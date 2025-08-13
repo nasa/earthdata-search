@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { graphQlGetCollection } from '../../../../../support/graphQlGetCollection'
+import { isGetFocusedCollectionsQuery } from '../../../../../support/isGetFocusedCollectionsQuery'
 import { setupTests } from '../../../../../support/setupTests'
 
 import collectionsBody from './__mocks__/collections.body.json'
@@ -29,7 +29,7 @@ test.describe('Path /search/granules/granule-details', () => {
       // If these requests change and are failing tests, console.log req.body to see the actual request being called
       const postData = route.request().postData()
 
-      if (postData === graphQlGetCollection(collectionId)) {
+      if (isGetFocusedCollectionsQuery(route, collectionId)) {
         route.fulfill({
           json: getCollectionGraphQlBody,
           headers: graphQlHeaders

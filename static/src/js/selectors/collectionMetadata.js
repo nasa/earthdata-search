@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-
-import { getFocusedCollectionId } from './focusedCollection'
+import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
+import useEdscStore from '../zustand/useEdscStore'
 
 /**
  * Retrieve all collection metadata from Redux
@@ -14,10 +14,18 @@ export const getCollectionsMetadata = (state) => {
 }
 
 /**
+ * Temporary selector to retrieve the focused collection id from Zustand. This
+ * will be removed when the Redux selectors using it are moved to Zustand.
+ */
+// eslint-disable-next-line camelcase
+export const TEMP_getFocusedCollectionId = () => getFocusedCollectionId(useEdscStore.getState())
+
+/**
  * Retrieve metadata from Redux pertaining to the focused collection id
  */
 export const getFocusedCollectionMetadata = createSelector(
-  [getFocusedCollectionId, getCollectionsMetadata],
+  // eslint-disable-next-line camelcase
+  [TEMP_getFocusedCollectionId, getCollectionsMetadata],
   (focusedCollectionId, collectionsMetadata) => {
     const { [focusedCollectionId]: collectionMetadata = {} } = collectionsMetadata
 

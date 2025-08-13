@@ -15,11 +15,9 @@ jest.mock('../../../components/ProjectPanels/ProjectPanels', () => jest.fn(() =>
 const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
-    focusedCollectionId: 'collectionId',
     focusedGranuleId: '',
     granulesMetadata: {},
     onToggleAboutCSDAModal: jest.fn(),
-    onUpdateFocusedCollection: jest.fn(),
     onFocusedGranuleChange: jest.fn(),
     onViewCollectionGranules: jest.fn(),
     location: {
@@ -32,6 +30,10 @@ const setup = setupTest({
     dataQualitySummaries: {
       byCollectionId: {},
       setDataQualitySummaries: jest.fn()
+    },
+    focusedCollection: {
+      focusedCollection: 'collectionId',
+      setFocusedCollection: jest.fn()
     },
     project: {
       addGranuleToProjectCollection: jest.fn(),
@@ -78,16 +80,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledWith('path')
   })
 
-  test('onUpdateFocusedCollection calls actions.updateFocusedCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateFocusedCollection')
-
-    mapDispatchToProps(dispatch).onUpdateFocusedCollection('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
-  })
-
   test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'changeFocusedGranule')
@@ -96,16 +88,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('granuleId')
-  })
-
-  test('onViewCollectionGranules calls actions.viewCollectionGranules', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'viewCollectionGranules')
-
-    mapDispatchToProps(dispatch).onViewCollectionGranules('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
@@ -129,7 +111,6 @@ describe('mapStateToProps', () => {
         collections: {},
         granules: {}
       },
-      focusedCollection: 'collectionId',
       focusedGranule: 'granuleId',
       map: {},
       router: {
@@ -143,7 +124,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      focusedCollectionId: 'collectionId',
       focusedGranuleId: 'granuleId',
       granulesMetadata: {},
       location: {},
@@ -156,28 +136,26 @@ describe('mapStateToProps', () => {
 
 describe('ProjectPanelsContainer component', () => {
   test('passes its props and renders a single ProjectPanels component', () => {
-    const { props } = setup()
+    const { props, zustandState } = setup()
 
     expect(ProjectPanels).toHaveBeenCalledTimes(1)
     expect(ProjectPanels).toHaveBeenCalledWith({
       dataQualitySummaries: {},
-      focusedCollectionId: props.focusedCollectionId,
+      focusedCollectionId: 'collectionId',
       focusedGranuleId: props.focusedGranuleId,
       granulesMetadata: props.granulesMetadata,
       granulesQueries: {},
       location: props.location,
-      onAddGranuleToProjectCollection: expect.any(Function),
+      onAddGranuleToProjectCollection: zustandState.project.addGranuleToProjectCollection,
       onChangePath: props.onChangePath,
       onFocusedGranuleChange: props.onFocusedGranuleChange,
-      onRemoveGranuleFromProjectCollection: expect.any(Function),
-      onSelectAccessMethod: expect.any(Function),
+      onRemoveGranuleFromProjectCollection: zustandState.project.removeGranuleFromProjectCollection,
+      onSelectAccessMethod: zustandState.project.selectAccessMethod,
       onSetActivePanel: expect.any(Function),
       onSetActivePanelGroup: expect.any(Function),
       onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
       onTogglePanels: expect.any(Function),
-      onUpdateAccessMethod: expect.any(Function),
-      onUpdateFocusedCollection: props.onUpdateFocusedCollection,
-      onViewCollectionGranules: props.onViewCollectionGranules,
+      onUpdateAccessMethod: zustandState.project.updateAccessMethod,
       overrideTemporal: {},
       panels: {
         activePanel: '0.0.0',
@@ -188,6 +166,7 @@ describe('ProjectPanelsContainer component', () => {
         byId: {}
       },
       projectCollectionsMetadata: {},
+      setFocusedCollection: zustandState.focusedCollection.setFocusedCollection,
       spatial: {},
       temporal: {},
       ursProfile: {}

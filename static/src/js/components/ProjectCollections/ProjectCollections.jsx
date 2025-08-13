@@ -25,10 +25,7 @@ import './ProjectCollections.scss'
  */
 const ProjectCollections = ({
   onMetricsDataAccess,
-  onUpdateFocusedCollection,
   onUpdateProjectName,
-  onViewCollectionDetails,
-  onViewCollectionGranules,
   savedProject
 }) => {
   const {
@@ -92,9 +89,6 @@ const ProjectCollections = ({
         onSetActivePanel={setActivePanel}
         onSetActivePanelSection={setPanelSection}
         onTogglePanels={togglePanels}
-        onUpdateFocusedCollection={onUpdateFocusedCollection}
-        onViewCollectionDetails={onViewCollectionDetails}
-        onViewCollectionGranules={onViewCollectionGranules}
         panels={panelsData}
       />
       <div className="project-collections__footer">
@@ -149,10 +143,7 @@ const ProjectCollections = ({
 
 ProjectCollections.propTypes = {
   onMetricsDataAccess: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
-  onViewCollectionDetails: PropTypes.func.isRequired,
-  onViewCollectionGranules: PropTypes.func.isRequired,
   savedProject: PropTypes.shape({}).isRequired
 }
 

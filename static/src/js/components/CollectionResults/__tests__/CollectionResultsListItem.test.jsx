@@ -47,8 +47,6 @@ const defaultProps = {
     isItemLoaded: jest.fn(() => true),
     loadMoreItems: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
-    onViewCollectionDetails: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
     setSize: jest.fn(),
     windowWidth: 800
   },
@@ -94,9 +92,7 @@ describe('CollectionResultsList component', () => {
             temporalRange: '2010-10-10 to 2011-10-10',
             versionId: '2'
           },
-          onMetricsAddCollectionProject: expect.any(Function),
-          onViewCollectionDetails: expect.any(Function),
-          onViewCollectionGranules: expect.any(Function)
+          onMetricsAddCollectionProject: expect.any(Function)
         },
         {
           current: expect.any(Object)

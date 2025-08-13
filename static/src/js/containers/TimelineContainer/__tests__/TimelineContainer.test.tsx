@@ -28,7 +28,6 @@ const setup = setupTest({
         title: 'project'
       }
     },
-    focusedCollectionId: 'focusedCollectionId',
     isOpen: true,
     onMetricsTimeline: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
@@ -37,6 +36,9 @@ const setup = setupTest({
     search: '?p=C123456-EDSC'
   },
   defaultZustandState: {
+    focusedCollection: {
+      focusedCollection: 'focusedCollectionId'
+    },
     project: {
       collections: {
         allIds: ['projectCollectionId']
@@ -83,7 +85,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      focusedCollection: 'collectionId',
       router: {
         location: {
           pathname: ''
@@ -98,7 +99,6 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       collectionsMetadata: {},
-      focusedCollectionId: 'collectionId',
       pathname: '',
       isOpen: false
     }
