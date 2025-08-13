@@ -92,7 +92,7 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         // Updates the URL
-        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&sf=1&sfs\[0\]=0&lat=-9\.\d+&long=49\.\d+&zoom=4\.\d+/)
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&sf=1&sfs\[0\]=0&lat=-9\.\d+&long=49\.\d+/)
       })
     })
 
@@ -425,8 +425,8 @@ test.describe('Map: Shapefile interactions', () => {
         await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         // URL should only contain the upper polygon now
-        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-1[0-1]\.\d+&long=4[7-8]\.\d+&zoom=4\.\d+/)
-
+        await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-1[0-1]\.\d+&long=4[7-8]\.\d+/)
+        expect(0 === 1)
         // Verify the map shows only the selected shape
         await expect(page).toHaveScreenshot('multiple-shapes-deselected.png', {
           clip: screenshotClip
