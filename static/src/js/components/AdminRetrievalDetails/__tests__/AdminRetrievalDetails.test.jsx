@@ -3,7 +3,6 @@ import {
   waitFor,
   within
 } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { gql } from '@apollo/client'
 
 import { AdminRetrievalDetails } from '../AdminRetrievalDetails'
