@@ -59,11 +59,6 @@ import {
   toggleTimeline
 } from './ui'
 import { getViewAllFacets } from './viewAllFacets'
-import {
-  changeFocusedGranule,
-  getFocusedGranule,
-  updateFocusedGranule
-} from './focusedGranule'
 import { getRegions } from './regions'
 import { fetchRetrieval, submitRetrieval } from './retrieval'
 import { fetchRetrievalCollection } from './retrievalCollection'
@@ -95,7 +90,6 @@ const actions = {
   addGranuleMetadata,
   adminIsAuthorized,
   adminViewProject,
-  changeFocusedGranule,
   changePath,
   changeUrl,
   collectionRelevancyMetrics,
@@ -113,7 +107,6 @@ const actions = {
   generateNotebook,
   getCollections,
   getColorMap,
-  getFocusedGranule,
   getGranuleSubscriptions,
   getRegions,
   getSearchGranules,
@@ -155,7 +148,6 @@ const actions = {
   updateAdvancedSearch,
   updateAuthToken,
   updateCollectionMetadata,
-  updateFocusedGranule,
   updateGranuleMetadata,
   updateGranuleResults,
   updateGranuleSubscription,

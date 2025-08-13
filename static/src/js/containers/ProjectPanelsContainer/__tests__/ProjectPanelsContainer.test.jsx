@@ -15,11 +15,8 @@ jest.mock('../../../components/ProjectPanels/ProjectPanels', () => jest.fn(() =>
 const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
-    focusedGranuleId: '',
     granulesMetadata: {},
     onToggleAboutCSDAModal: jest.fn(),
-    onFocusedGranuleChange: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
     location: {
       search: ''
     },
@@ -80,16 +77,6 @@ describe('mapDispatchToProps', () => {
     expect(spy).toHaveBeenCalledWith('path')
   })
 
-  test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedGranule')
-
-    mapDispatchToProps(dispatch).onFocusedGranuleChange('granuleId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('granuleId')
-  })
-
   test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'toggleAboutCSDAModal')
@@ -111,8 +98,6 @@ describe('mapStateToProps', () => {
         collections: {},
         granules: {}
       },
-      focusedGranule: 'granuleId',
-      map: {},
       router: {
         location: {}
       },
@@ -124,7 +109,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      focusedGranuleId: 'granuleId',
       granulesMetadata: {},
       location: {},
       ursProfile: {}
@@ -142,13 +126,11 @@ describe('ProjectPanelsContainer component', () => {
     expect(ProjectPanels).toHaveBeenCalledWith({
       dataQualitySummaries: {},
       focusedCollectionId: 'collectionId',
-      focusedGranuleId: props.focusedGranuleId,
       granulesMetadata: props.granulesMetadata,
       granulesQueries: {},
       location: props.location,
       onAddGranuleToProjectCollection: zustandState.project.addGranuleToProjectCollection,
       onChangePath: props.onChangePath,
-      onFocusedGranuleChange: props.onFocusedGranuleChange,
       onRemoveGranuleFromProjectCollection: zustandState.project.removeGranuleFromProjectCollection,
       onSelectAccessMethod: zustandState.project.selectAccessMethod,
       onSetActivePanel: expect.any(Function),

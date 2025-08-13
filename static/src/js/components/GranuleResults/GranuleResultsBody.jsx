@@ -13,6 +13,7 @@ import GranuleResultsTable from './GranuleResultsTable'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
+import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
 
 import './GranuleResultsBody.scss'
 
@@ -22,13 +23,11 @@ import './GranuleResultsBody.scss'
  * @param {String} props.collectionId - The focused collection ID.
  * @param {Object} props.collectionTags - The tags for the focused collection
  * @param {Object} props.directDistributionInformation - The collection direct distribution information.
- * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
  * @param {Object} props.granuleSearchResults - Granules passed from redux store.
  * @param {Object} props.isOpenSearch - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
  * @param {Object} props.location - Location passed from react router.
- * @param {Function} props.onFocusedGranuleChange - Callback change the focused granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
@@ -38,7 +37,6 @@ const GranuleResultsBody = ({
   collectionId,
   collectionTags,
   directDistributionInformation,
-  focusedGranuleId,
   generateNotebook,
   granuleSearchResults,
   granulesMetadata,
@@ -46,13 +44,19 @@ const GranuleResultsBody = ({
   loadNextPage,
   location,
   onGenerateNotebook,
-  onFocusedGranuleChange,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   panelView
 }) => {
+  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
-  const projectCollections = useEdscStore((state) => state.project.collections)
+  const {
+    changeFocusedGranule,
+    projectCollections
+  } = useEdscStore((state) => ({
+    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
+    projectCollections: state.project.collections
+  }))
 
   const [hoveredGranuleId, setHoveredGranuleId] = useState(null)
 
@@ -144,7 +148,7 @@ const GranuleResultsBody = ({
     focusedGranuleId,
     isGranuleInProject,
     isCollectionInProject,
-    onFocusedGranuleChange
+    changeFocusedGranule
   }), [granuleIds, granulesMetadata, focusedGranuleId, hoveredGranuleId])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
@@ -195,7 +199,6 @@ const GranuleResultsBody = ({
           readableGranuleName={readableGranuleName}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
-          focusedGranuleId={focusedGranuleId}
           generateNotebook={generateNotebook}
           granules={granulesList}
           isCollectionInProject={isCollectionInProject}
@@ -207,7 +210,6 @@ const GranuleResultsBody = ({
           location={location}
           onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
-          onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
           setVisibleMiddleIndex={setVisibleMiddleIndex}
           visibleMiddleIndex={visibleMiddleIndex}
@@ -224,7 +226,6 @@ const GranuleResultsBody = ({
           collectionTags={collectionTags}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
-          focusedGranuleId={focusedGranuleId}
           generateNotebook={generateNotebook}
           granules={granulesList}
           isOpenSearch={isOpenSearch}
@@ -232,7 +233,6 @@ const GranuleResultsBody = ({
           isItemLoaded={isItemLoaded}
           location={location}
           loadMoreItems={loadMoreItems}
-          onFocusedGranuleChange={onFocusedGranuleChange}
           onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onMetricsDataAccess={onMetricsDataAccess}
@@ -275,7 +275,6 @@ GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
   collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
-  focusedGranuleId: PropTypes.string.isRequired,
   generateNotebook: PropTypes.shape({}).isRequired,
   granuleSearchResults: PropTypes.shape({
     allIds: PropTypes.arrayOf(PropTypes.string),
@@ -309,7 +308,6 @@ GranuleResultsBody.propTypes = {
   isOpenSearch: PropTypes.bool.isRequired,
   location: locationPropType.isRequired,
   loadNextPage: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,

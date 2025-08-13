@@ -19,7 +19,6 @@ const setup = setupTest({
     collectionId: 'collectionId',
     collectionTags: {},
     directDistributionInformation: {},
-    focusedGranuleId: '',
     generateNotebook: {},
     granulesMetadata: {
       one: {
@@ -73,7 +72,6 @@ const setup = setupTest({
     loadNextPage: jest.fn(),
     location: { search: 'value' },
     onGenerateNotebook: jest.fn(),
-    onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     panelView: 'list',
@@ -91,7 +89,6 @@ describe('GranuleResultsBody component', () => {
       collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      focusedGranuleId: '',
       generateNotebook: {},
       granules: [{
         browseFlag: true,
@@ -193,7 +190,6 @@ describe('GranuleResultsBody component', () => {
       itemCount: 2,
       loadMoreItems: expect.any(Function),
       location: { search: 'value' },
-      onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),
@@ -216,7 +212,6 @@ describe('GranuleResultsBody component', () => {
       collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      focusedGranuleId: '',
       generateNotebook: {},
       granules: [{
         browseFlag: true,
@@ -318,7 +313,6 @@ describe('GranuleResultsBody component', () => {
       itemCount: 2,
       loadMoreItems: expect.any(Function),
       location: { search: 'value' },
-      onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),

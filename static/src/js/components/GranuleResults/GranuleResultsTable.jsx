@@ -10,6 +10,7 @@ import EDSCTable from '../EDSCTable/EDSCTable'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
+import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
 
 import './GranuleResultsTable.scss'
 
@@ -19,7 +20,6 @@ import './GranuleResultsTable.scss'
  * @param {String} props.collectionId - The collection ID.
  * @param {String} props.collectionId - The focused collection ID.
  * @param {Object} props.directDistributionInformation - The direct distribution information.
- * @param {String} props.focusedGranuleId - The focused granule ID.
  * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
  * @param {Array} props.granules - List of formatted granule.
  * @param {Boolean} props.hasBrowseImagery - Designates if the collection has browse imagery.
@@ -28,7 +28,6 @@ import './GranuleResultsTable.scss'
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
  * @param {Object} props.location - Location passed from react router.
- * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
@@ -40,7 +39,6 @@ export const GranuleResultsTable = ({
   collectionId,
   collectionTags,
   directDistributionInformation,
-  focusedGranuleId,
   generateNotebook,
   granules,
   isGranuleInProject,
@@ -48,7 +46,6 @@ export const GranuleResultsTable = ({
   itemCount,
   loadMoreItems,
   location,
-  onFocusedGranuleChange,
   onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
@@ -56,6 +53,7 @@ export const GranuleResultsTable = ({
   visibleMiddleIndex
 }) => {
   const collectionQuerySpatial = useEdscStore(getCollectionsQuerySpatial)
+  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
   const {
     excludeGranule,
     addGranuleToProjectCollection,
@@ -85,7 +83,6 @@ export const GranuleResultsTable = ({
         isGranuleInProject,
         location,
         onExcludeGranule: excludeGranule,
-        onFocusedGranuleChange,
         onGenerateNotebook,
         onMetricsAddGranuleProject,
         onMetricsDataAccess,
@@ -234,7 +231,6 @@ GranuleResultsTable.propTypes = {
   collectionId: PropTypes.string.isRequired,
   collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
-  focusedGranuleId: PropTypes.string.isRequired,
   generateNotebook: PropTypes.shape({}).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape).isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
@@ -242,7 +238,6 @@ GranuleResultsTable.propTypes = {
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
   location: locationPropType.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,

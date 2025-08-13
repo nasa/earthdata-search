@@ -22,7 +22,6 @@ const setup = setupTest({
   Component: CollectionDetails,
   defaultProps: {
     collectionId: 'COLL-1',
-    focusedGranuleId: '',
     granulesMetadata: {
       'GRAN-1-PROV': granules[0],
       'GRAN-2-PROV': granules[1]
@@ -30,7 +29,6 @@ const setup = setupTest({
     location: {
       search: '?=test_search=test'
     },
-    onFocusedGranuleChange: jest.fn(),
     projectCollection: {
       granules: {
         allIds: ['GRAN-1-PROV', 'GRAN-2-PROV'],
@@ -42,6 +40,9 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
+    focusedGranule: {
+      changeFocusedGranule: jest.fn()
+    },
     project: {
       removeGranuleFromProjectCollection: jest.fn(),
       updateProjectGranuleParams: jest.fn()
@@ -167,15 +168,15 @@ describe('CollectionDetails component', () => {
 
   describe('View granule details button', () => {
     test('focuses the granule', async () => {
-      const { props, user } = setup()
+      const { user, zustandState } = setup()
 
       const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
       const infoButton = within(item).getByRole('button', { name: 'View granule details' })
 
       await user.click(infoButton)
 
-      expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
-      expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('GRAN-1-PROV')
+      expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
+      expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledWith('GRAN-1-PROV')
     })
   })
 

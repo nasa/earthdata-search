@@ -10,6 +10,7 @@ import getGranuleGraphQlBody from './__mocks__/getGranule.graphql.body.json'
 import granulesBody from './__mocks__/granules.body.json'
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import formattedGranuleMetadata from './__mocks__/formattedGranuleMetadata.json'
+import { isGetFocusedGranuleQuery } from '../../../../../support/isGetFocusedGranuleQuery'
 
 test.describe('Path /search/granules/granule-details', () => {
   test.beforeEach(async ({ page, context }) => {
@@ -26,15 +27,12 @@ test.describe('Path /search/granules/granule-details', () => {
     const granuleHits = 1074221
 
     await page.route(/graphql.*\/api/, (route) => {
-      // If these requests change and are failing tests, console.log req.body to see the actual request being called
-      const postData = route.request().postData()
-
       if (isGetFocusedCollectionsQuery(route, collectionId)) {
         route.fulfill({
           json: getCollectionGraphQlBody,
           headers: graphQlHeaders
         })
-      } else if (postData === `{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"${granuleId}"}}}`) {
+      } else if (isGetFocusedGranuleQuery(route, granuleId)) {
         route.fulfill({
           json: getGranuleGraphQlBody,
           headers: graphQlHeaders

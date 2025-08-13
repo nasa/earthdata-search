@@ -20,7 +20,6 @@ const setup = setupTest({
     collectionTags: {},
     directDistributionInformation: {},
     excludedGranuleIds: [],
-    focusedGranuleId: '',
     generateNotebook: {},
     granules: [
       {
@@ -35,7 +34,6 @@ const setup = setupTest({
     isGranuleInProject: jest.fn(),
     isProjectGranulesLoading: false,
     location: { search: 'value' },
-    onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
@@ -58,7 +56,6 @@ describe('GranuleResultsList component', () => {
       collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      focusedGranuleId: '',
       generateNotebook: {},
       granules: [{ title: '123' }, { title: '456' }],
       height: 600,
@@ -69,7 +66,6 @@ describe('GranuleResultsList component', () => {
       itemCount: 2,
       loadMoreItems: expect.any(Function),
       location: { search: 'value' },
-      onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),
