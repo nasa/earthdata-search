@@ -771,27 +771,28 @@ test.describe('Map: Shapefile interactions', () => {
       })
 
       test('renders correctly and filters collections @screenshot', async ({ page }) => {
-        // Waiting for the URL to include the correct zoom level ensures the map is finished drawing - flexible zoom
-        await page.waitForURL(/zoom=11/, { timeout: 3000 })
+        // Wait for URL to contain spatial parameters
+        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
+
+        await page.waitForTimeout(200)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('multipoint.png', {
           clip: screenshotClip,
           maxDiffPixelRatio: 0.005
         })
-
-        // Updates the URL and expect all points in the URL
-        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
       })
 
       test('renders selected multipoint correctly @screenshot', async ({ page }) => {
+        // Wait for URL to contain spatial parameters
+        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
+
+        await page.waitForTimeout(200)
+
         await expect(page).toHaveScreenshot('multipoint-auto-selected.png', {
           clip: screenshotClip,
           maxDiffPixelRatio: 0.005
         })
-
-        // URL should contain spatial parameters for the selected multipoint
-        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
       })
     })
 
