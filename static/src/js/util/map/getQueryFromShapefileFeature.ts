@@ -39,12 +39,28 @@ const getQueryFromShapefileFeature = (feature: Feature): Spatial => {
   // Shapefiles can have altitude in their coordinates. This shows up as a 3rd value in each coordinate pair (e.g., [longitude, latitude, altitude]).
   // For CMR spatial queries, we only need the longitude and latitude values.
   let geographicCoordinatesWithoutAltitude = geographicCoordinates
-  if (
-    geographicCoordinates
-    && geographicCoordinates[0] // Array of coordinates
-    && geographicCoordinates[0][0] // First coordinate
-    && geographicCoordinates[0][0].length === 3 // If the coordinate has 3 values (longitude, latitude, altitude)
-  ) {
+
+  // Check for altitude in coordinates - handle different geometry structures
+  const hasAltitude = () => {
+    if (!geographicCoordinates || !geographicCoordinates[0]) return false
+
+    // For MultiPolygon: geographicCoordinates[0][0][0] should be [lon, lat, alt]
+    const isPolygon = Array.isArray(geographicCoordinates[0][0])
+    const isMultiPolygon = Array.isArray(geographicCoordinates[0][0][0])
+    if (isPolygon && isMultiPolygon) {
+      return geographicCoordinates[0][0][0].length === 3
+    }
+
+    // For Polygon, LineString, etc: geographicCoordinates[0][0] should be [lon, lat, alt]
+    if (Array.isArray(geographicCoordinates[0][0])) {
+      return geographicCoordinates[0][0].length === 3
+    }
+
+    // For Point, MultiPoint: geographicCoordinates[0] should be [lon, lat, alt]
+    return geographicCoordinates[0].length === 3
+  }
+
+  if (hasAltitude()) {
     geographicCoordinatesWithoutAltitude = removeAltitudeFromCoordinates(geographicCoordinates)
   }
 
