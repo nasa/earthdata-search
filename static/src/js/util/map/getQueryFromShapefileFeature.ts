@@ -2,7 +2,7 @@ import { Feature } from 'ol'
 import { Point } from 'ol/geom'
 
 import spatialTypes from '../../constants/spatialTypes'
-import { Spatial } from '../../types/sharedTypes'
+import { Spatial, SpatialQueryType } from '../../types/sharedTypes'
 
 // Remove altitude from coordinate arrays for different types
 const removeAltitudeFromCoordinates = (
