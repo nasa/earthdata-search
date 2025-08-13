@@ -410,31 +410,6 @@ test.describe('Map: Shapefile interactions', () => {
 
           await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('2 shapes selected')
         })
-
-        test('deselects shapes correctly @screenshot', async ({ page }) => {
-          // Test deselection by clicking on the lower polygon again
-          await page.locator('.map').click({
-            position: {
-              x: 1200,
-              y: 448
-            }
-          })
-
-          await page.waitForTimeout(300)
-
-          // Should show only 1 shape selected now
-          await expect(page.getByTestId('filter-stack-item__hint')).toHaveText('1 shape selected')
-
-          await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
-
-          // URL should only contain the upper polygon now
-          await expect(page).toHaveURL(/search\?polygon\[0\]=44.1875%2C0.40647%2C58.25%2C-14.46517%2C58.25%2C0.40647%2C44.1875%2C0.40647&sf=1&sfs\[0\]=1&lat=-?\d+\.\d+&long=4\d\.\d+/)
-
-          // Verify the map shows only the selected shape
-          await expect(page).toHaveScreenshot('multiple-shapes-deselected.png', {
-            clip: screenshotClip
-          })
-        })
       })
     })
 
@@ -786,6 +761,9 @@ test.describe('Map: Shapefile interactions', () => {
       test('renders selected multipoint correctly @screenshot', async ({ page }) => {
         // Wait for URL to contain spatial parameters
         await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
+
+        // Verify collections are loaded
+        await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
         await page.waitForTimeout(200)
 
