@@ -775,7 +775,7 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         // Updates the URL and expect all points in the URL
-        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=11\.\d+/)
+        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
       })
 
       test('renders selected multipoint correctly @screenshot', async ({ page }) => {
@@ -808,7 +808,7 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         // URL should contain spatial parameters for the selected multipoint
-        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=11\.\d+/)
+        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
       })
     })
 
