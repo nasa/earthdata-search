@@ -132,16 +132,15 @@ export type FocusedCollectionSlice = {
   focusedCollection: {
     /** The currently focused collection */
     focusedCollection: string | null
-
-    /** Function to change the focused collection and fetch data */
+    /** Function to set or remove the focused collection and fetch data */
     changeFocusedCollection: (collectionId: string | null) => void
     /** Function to get the focused collection metadata */
     getFocusedCollection: () => void
-    /** Function to set the focused collection */
+    /** Function to set or remove the focused collection */
     setFocusedCollection: (collectionId: string | null) => void
-    /** Function to change the focused collection and navigate to the collection details page */
+    /** Function to set or remove the focused collection and navigate to the collection details page */
     viewCollectionDetails: (collectionId: string | null) => void
-    /** Function to change the focused collection and navigate to the collection granules page */
+    /** Function to set or remove the focused collection and navigate to the collection granules page */
     viewCollectionGranules: (collectionId: string | null) => void
   }
 }
@@ -255,6 +254,45 @@ export type PreferencesSlice = {
     setPreferencesFromJwt: (jwtToken: string) => void
     /** Function to submit preference form data and save to the server */
     submitAndUpdatePreferences: (data: { formData: PreferencesData }) => Promise<void>
+  }
+}
+
+/** Represents the panel section (first part) in the activePanel string, e.g., '0' in '0.5.2' */
+type PanelsPanel = `${number}`
+
+/** Represents the group (middle part) in the activePanel string, e.g., '5' in '0.5.2' */
+type PanelsGroup = `${number}`
+
+/** Represents the section (last part) in the activePanel string, e.g., '2' in '0.5.2' */
+type PanelsSection = `${number}`
+
+/**
+ * Holds project panel state
+ * Example 0.5.2 is the 5th collection in the project and looking at the panel variable details
+ * 1.3.0 is the granule list for the third collection in the project
+ */
+export type ActivePanelConfiguration = `${PanelsPanel}.${PanelsGroup}.${PanelsSection}`
+
+export type panelsData = {
+  /** Whether the project panels is open */
+  isOpen: boolean
+  /** The currently active project panel, e.g., '0.0.0' */
+  activePanel: ActivePanelConfiguration
+}
+
+export type PanelsSlice = {
+  /** The Panels Slice of the store */
+  projectPanels: {
+    /** The panels data */
+    panels: panelsData
+    /** Function to toggle the panels open/closed */
+    setIsOpen: (isOpen: boolean) => void
+    /** Function to set the active panel */
+    setActivePanel: (activePanel: ActivePanelConfiguration) => void
+    /** Function to set the panel group (updates the middle part of activePanel) */
+    setPanelGroup: (group: PanelsGroup) => void
+    /** Function to set the panel section (updates the first part of activePanel) */
+    setPanelSection: (section: PanelsSection) => void
   }
 }
 
@@ -895,45 +933,6 @@ export type UiSlice = {
   }
 }
 
-/** Represents the panel section (first part) in the activePanel string, e.g., '0' in '0.5.2' */
-type PanelsPanel = `${number}`
-
-/** Represents the group (middle part) in the activePanel string, e.g., '5' in '0.5.2' */
-type PanelsGroup = `${number}`
-
-/** Represents the section (last part) in the activePanel string, e.g., '2' in '0.5.2' */
-type PanelsSection = `${number}`
-
-/**
- * Holds project panel state
- * Example 0.5.2 is the 5th collection in the project and looking at the panel variable details
- * 1.3.0 is the granule list for the third collection in the project
- */
-export type ActivePanelConfiguration = `${PanelsPanel}.${PanelsGroup}.${PanelsSection}`
-
-export type panelsData = {
-  /** Whether the project panels is open */
-  isOpen: boolean
-  /** The currently active project panel, e.g., '0.0.0' */
-  activePanel: ActivePanelConfiguration
-}
-
-export type PanelsSlice = {
-  /** The Panels Slice of the store */
-  projectPanels: {
-    /** The panels data */
-    panels: panelsData
-    /** Function to toggle the panels open/closed */
-    setIsOpen: (isOpen: boolean) => void
-    /** Function to set the active panel */
-    setActivePanel: (activePanel: ActivePanelConfiguration) => void
-    /** Function to set the panel group (updates the middle part of activePanel) */
-    setPanelGroup: (group: PanelsGroup) => void
-    /** Function to set the panel section (updates the first part of activePanel) */
-    setPanelSection: (section: PanelsSection) => void
-  }
-}
-
 export type EdscStore =
   DataQualitySummariesSlice
   & EarthdataDownloadRedirectSlice
@@ -942,6 +941,7 @@ export type EdscStore =
   & FocusedCollectionSlice
   & HomeSlice
   & MapSlice
+  & PanelsSlice
   & PortalSlice
   & PreferencesSlice
   & ProjectSlice
@@ -949,6 +949,5 @@ export type EdscStore =
   & ShapefileSlice
   & TimelineSlice
   & UiSlice
-  & PanelsSlice
 
 export type ImmerStateCreator<T> = StateCreator<EdscStore, [['zustand/immer', never], never], [], T>

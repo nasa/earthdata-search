@@ -283,8 +283,6 @@ const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = 
             ...focusedMetadata
           })
 
-          // A users authToken will come back with an authenticated request if a valid token was used
-
           // Update metadata in the store
           reduxDispatch(actions.updateCollectionMetadata(payload))
 
