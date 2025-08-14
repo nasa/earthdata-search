@@ -25,8 +25,8 @@ const setup = setupTest({
     onMetricsBrowseGranuleImage: jest.fn()
   },
   defaultZustandState: {
-    focusedGranule: {
-      focusedGranule: 'G-1234-TEST'
+    granule: {
+      granuleId: 'G-1234-TEST'
     }
   }
 })

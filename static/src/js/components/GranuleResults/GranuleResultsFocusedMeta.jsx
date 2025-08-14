@@ -23,7 +23,7 @@ import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalCon
 import EDSCImage from '../EDSCImage/EDSCImage'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './GranuleResultsFocusedMeta.scss'
 
@@ -38,7 +38,7 @@ const GranuleResultsFocusedMeta = ({
   focusedGranuleMetadata,
   onMetricsBrowseGranuleImage
 }) => {
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
 
   const { title, links = [], browseFlag } = focusedGranuleMetadata
   const [activeBrowseImageIndex, setActiveBrowseImageIndex] = useState(0)

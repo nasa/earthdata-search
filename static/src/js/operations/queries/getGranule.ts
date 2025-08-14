@@ -1,5 +1,5 @@
-const GET_FOCUSED_GRANULE = `
-  query GetFocusedGranule(
+const GET_GRANULE = `
+  query GetGranule(
     $params: GranuleInput
   ) {
     granule(
@@ -26,4 +26,4 @@ const GET_FOCUSED_GRANULE = `
   }
 `
 
-export default GET_FOCUSED_GRANULE
+export default GET_GRANULE

@@ -278,7 +278,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
 
       if (!collectionId || collectionId === '') {
         // If clearing the focused collection, also clear the focused granule
-        get().focusedGranule.changeFocusedGranule(null)
+        get().granule.setGranuleId(null)
         // And clear the spatial polygon warning if there is no focused collection
         reduxDispatch(actions.toggleSpatialPolygonWarning(false))
 

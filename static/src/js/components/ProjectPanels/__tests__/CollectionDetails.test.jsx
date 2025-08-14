@@ -40,8 +40,8 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
-    focusedGranule: {
-      changeFocusedGranule: jest.fn()
+    granule: {
+      setGranuleId: jest.fn()
     },
     project: {
       removeGranuleFromProjectCollection: jest.fn(),
@@ -175,8 +175,8 @@ describe('CollectionDetails component', () => {
 
       await user.click(infoButton)
 
-      expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledWith('GRAN-1-PROV')
+      expect(zustandState.granule.setGranuleId).toHaveBeenCalledTimes(1)
+      expect(zustandState.granule.setGranuleId).toHaveBeenCalledWith('GRAN-1-PROV')
     })
   })
 

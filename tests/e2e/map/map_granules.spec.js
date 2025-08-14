@@ -1,7 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
-import { isGetFocusedGranuleQuery } from '../../support/isGetFocusedGranuleQuery'
+import { isGetGranuleQuery } from '../../support/isGetGranuleQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
@@ -136,7 +136,7 @@ test.describe('Map: Granule interactions', () => {
       test.describe('When clicking on a granule', () => {
         test.beforeEach(async ({ page }) => {
           await page.route(/api$/, async (route) => {
-            expect(isGetFocusedGranuleQuery(route, 'G2061166811-ASF')).toEqual(true)
+            expect(isGetGranuleQuery(route, 'G2061166811-ASF')).toEqual(true)
 
             await route.fulfill({
               json: granuleGraphQlBody,
@@ -426,7 +426,7 @@ test.describe('Map: Granule interactions', () => {
           })
         }
 
-        if (isGetFocusedGranuleQuery(route, 'G1259235357-ASDC_DEV2')) {
+        if (isGetGranuleQuery(route, 'G1259235357-ASDC_DEV2')) {
           await route.fulfill({
             json: granuleCrossingGranuleGraphQlBody,
             headers: { 'content-type': 'application/json' }
@@ -499,7 +499,7 @@ test.describe('Map: Granule interactions', () => {
             })
           }
 
-          if (isGetFocusedGranuleQuery(route, 'G3453056435-LARC_CLOUD')) {
+          if (isGetGranuleQuery(route, 'G3453056435-LARC_CLOUD')) {
             await route.fulfill({
               json: gibsGranuleGraphQlBody,
               headers: { 'content-type': 'application/json' }

@@ -13,7 +13,7 @@ import GranuleResultsTable from './GranuleResultsTable'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './GranuleResultsBody.scss'
 
@@ -48,13 +48,13 @@ const GranuleResultsBody = ({
   onMetricsDataAccess,
   panelView
 }) => {
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const {
-    changeFocusedGranule,
+    setGranuleId,
     projectCollections
   } = useEdscStore((state) => ({
-    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
+    setGranuleId: state.granule.setGranuleId,
     projectCollections: state.project.collections
   }))
 
@@ -148,7 +148,7 @@ const GranuleResultsBody = ({
     focusedGranuleId,
     isGranuleInProject,
     isCollectionInProject,
-    changeFocusedGranule
+    setGranuleId
   }), [granuleIds, granulesMetadata, focusedGranuleId, hoveredGranuleId])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)

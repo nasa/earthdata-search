@@ -19,7 +19,7 @@ import GranuleResultsListItem from './GranuleResultsListItem'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './GranuleResultsList.scss'
 
@@ -107,7 +107,7 @@ export const GranuleResultsListBody = ({
   visibleMiddleIndex,
   width
 }) => {
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const excludeGranule = useEdscStore((state) => state.query.excludeGranule)
   const collectionQuerySpatial = useEdscStore(getCollectionsQuerySpatial)
 

@@ -13,7 +13,7 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import Button from '../Button/Button'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './CollectionDetails.scss'
 
@@ -30,13 +30,13 @@ export const CollectionDetails = ({
   location,
   projectCollection
 }) => {
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const {
-    changeFocusedGranule,
+    setGranuleId,
     removeGranuleFromProjectCollection,
     updateProjectGranuleParams
   } = useEdscStore((state) => ({
-    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
+    setGranuleId: state.granule.setGranuleId,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     updateProjectGranuleParams: state.project.updateProjectGranuleParams
   }))
@@ -104,13 +104,13 @@ export const CollectionDetails = ({
                           ? { granule: null }
                           : { granule: granuleMetadata }
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, newGranule)
-                        changeFocusedGranule(id)
+                        setGranuleId(id)
                       }
                     }
                     onKeyDown={
                       () => {
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, { granule: granuleMetadata })
-                        changeFocusedGranule(granuleMetadata.id)
+                        setGranuleId(granuleMetadata.id)
                       }
                     }
                   >
@@ -124,7 +124,7 @@ export const CollectionDetails = ({
                         bootstrapSize="sm"
                         onClick={
                           (event) => {
-                            changeFocusedGranule(id)
+                            setGranuleId(id)
                             event.stopPropagation()
                           }
                         }

@@ -11,6 +11,22 @@ import {
   VariableMetadata
 } from '../types/sharedTypes'
 
+export type CollectionSlice = {
+  /** The Collection Slice of the store */
+  collection: {
+    /** The currently focused collection */
+    collectionId: string | null
+    /** Function to get the focused collection metadata */
+    getCollectionMetadata: () => void
+    /** Function to set or remove the focused collection */
+    setCollectionId: (collectionId: string | null) => void
+    /** Function to set or remove the focused collection and navigate to the collection details page */
+    viewCollectionDetails: (collectionId: string | null) => void
+    /** Function to set or remove the focused collection and navigate to the collection granules page */
+    viewCollectionGranules: (collectionId: string | null) => void
+  }
+}
+
 /** Data Quality Summary item structure */
 type DataQualitySummaryItem = {
   /** Unique identifier for the data quality summary */
@@ -127,31 +143,15 @@ export type FacetParamsSlice = {
   }
 }
 
-export type CollectionSlice = {
-  /** The Collection Slice of the store */
-  collection: {
-    /** The currently focused collection */
-    collectionId: string | null
-    /** Function to get the focused collection metadata */
-    getCollectionMetadata: () => void
-    /** Function to set or remove the focused collection */
-    setCollectionId: (collectionId: string | null) => void
-    /** Function to set or remove the focused collection and navigate to the collection details page */
-    viewCollectionDetails: (collectionId: string | null) => void
-    /** Function to set or remove the focused collection and navigate to the collection granules page */
-    viewCollectionGranules: (collectionId: string | null) => void
-  }
-}
-
-export type FocusedGranuleSlice = {
-  /** The Focused Granule Slice of the store */
-  focusedGranule: {
+export type GranuleSlice = {
+  /** The Granule Slice of the store */
+  granule: {
     /** The currently focused granule */
-    focusedGranule: string | null
-    /** Function to set or remove the focused granule */
-    changeFocusedGranule: (granuleId: string | null) => void
+    granuleId: string | null
     /** Function to get the focused granule metadata */
-    getFocusedGranule: () => void
+    getGranuleMetadata: () => void
+    /** Function to set or remove the focused granule */
+    setGranuleId: (granuleId: string | null) => void
   }
 }
 
@@ -944,12 +944,12 @@ export type UiSlice = {
 }
 
 export type EdscStore =
-  DataQualitySummariesSlice
+  CollectionSlice
+  & DataQualitySummariesSlice
   & EarthdataDownloadRedirectSlice
   & EarthdataEnvironmentSlice
   & FacetParamsSlice
-  & CollectionSlice
-  & FocusedGranuleSlice
+  & GranuleSlice
   & HomeSlice
   & MapSlice
   & PanelsSlice

@@ -31,60 +31,60 @@ configureStore.mockReturnValue({
 describe('createFocusedGranuleSlice', () => {
   test('sets the default state', () => {
     const zustandState = useEdscStore.getState()
-    const { focusedGranule } = zustandState
+    const { granule } = zustandState
 
-    expect(focusedGranule).toEqual({
-      focusedGranule: null,
-      changeFocusedGranule: expect.any(Function),
-      getFocusedGranule: expect.any(Function)
+    expect(granule).toEqual({
+      granuleId: null,
+      getGranuleMetadata: expect.any(Function),
+      setGranuleId: expect.any(Function)
     })
   })
 
-  describe('changeFocusedGranule', () => {
+  describe('setGranuleId', () => {
     describe('when a granuleId is provided', () => {
-      test('sets the state and calls getFocusedGranule', () => {
+      test('sets the state and calls getGranuleMetadata', () => {
         useEdscStore.setState((state) => {
-          state.focusedGranule.getFocusedGranule = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
         })
 
         const granuleId = 'test-granule-id'
         const zustandState = useEdscStore.getState()
-        const { focusedGranule } = zustandState
-        const { changeFocusedGranule } = focusedGranule
+        const { granule } = zustandState
+        const { setGranuleId } = granule
 
-        changeFocusedGranule(granuleId)
+        setGranuleId(granuleId)
 
-        const { focusedGranule: updatedFocusedGranule } = useEdscStore.getState()
+        const { granule: updatedGranule } = useEdscStore.getState()
 
-        expect(updatedFocusedGranule.focusedGranule).toEqual(granuleId)
+        expect(updatedGranule.granuleId).toEqual(granuleId)
 
-        expect(updatedFocusedGranule.getFocusedGranule).toHaveBeenCalledTimes(1)
-        expect(updatedFocusedGranule.getFocusedGranule).toHaveBeenCalledWith()
+        expect(updatedGranule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(updatedGranule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when no granuleId is provided', () => {
-      test('sets the state and does not call getFocusedGranule', () => {
+      test('sets the state and does not call getGranuleMetadata', () => {
         useEdscStore.setState((state) => {
-          state.focusedGranule.getFocusedGranule = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
         })
 
         const zustandState = useEdscStore.getState()
-        const { focusedGranule } = zustandState
-        const { changeFocusedGranule } = focusedGranule
+        const { granule } = zustandState
+        const { setGranuleId } = granule
 
-        changeFocusedGranule(null)
+        setGranuleId(null)
 
-        const { focusedGranule: updatedFocusedGranule } = useEdscStore.getState()
+        const { granule: updatedGranule } = useEdscStore.getState()
 
-        expect(updatedFocusedGranule.focusedGranule).toEqual(null)
+        expect(updatedGranule.granuleId).toEqual(null)
 
-        expect(updatedFocusedGranule.getFocusedGranule).toHaveBeenCalledTimes(0)
+        expect(updatedGranule.getGranuleMetadata).toHaveBeenCalledTimes(0)
       })
     })
   })
 
-  describe('getFocusedGranule', () => {
+  describe('getGranuleMetadata', () => {
     beforeEach(() => {
       jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
@@ -98,7 +98,7 @@ describe('createFocusedGranuleSlice', () => {
     describe('when metadata has already been retrieved from graphql', () => {
       test('should take no action', async () => {
         useEdscStore.setState((state) => {
-          state.focusedGranule.focusedGranule = 'granuleId'
+          state.granule.granuleId = 'granuleId'
         })
 
         mockGetState.mockReturnValue({
@@ -113,10 +113,10 @@ describe('createFocusedGranuleSlice', () => {
           searchResults: {}
         })
 
-        const { focusedGranule } = useEdscStore.getState()
-        const { getFocusedGranule } = focusedGranule
+        const { granule } = useEdscStore.getState()
+        const { getGranuleMetadata } = granule
 
-        await getFocusedGranule()
+        await getGranuleMetadata()
 
         expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(0)
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
@@ -126,7 +126,7 @@ describe('createFocusedGranuleSlice', () => {
 
     describe('when no metadata exists in the store for the collection from graphql', () => {
       describe('when graphql returns metadata for the requested collection', () => {
-        test('should update the focusedGranule and fetch metadata from graphql', async () => {
+        test('should update the granule and fetch metadata from graphql', async () => {
           nock(/graph/)
             .post(/api/)
             .reply(200, {
@@ -138,7 +138,7 @@ describe('createFocusedGranuleSlice', () => {
             })
 
           useEdscStore.setState((state) => {
-            state.focusedGranule.focusedGranule = 'granuleId'
+            state.granule.granuleId = 'granuleId'
           })
 
           mockGetState.mockReturnValue({
@@ -150,10 +150,10 @@ describe('createFocusedGranuleSlice', () => {
             searchResults: {}
           })
 
-          const { focusedGranule } = useEdscStore.getState()
-          const { getFocusedGranule } = focusedGranule
+          const { granule } = useEdscStore.getState()
+          const { getGranuleMetadata } = granule
 
-          await getFocusedGranule()
+          await getGranuleMetadata()
 
           expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(1)
           expect(actions.updateGranuleMetadata).toHaveBeenCalledWith([{
@@ -207,7 +207,7 @@ describe('createFocusedGranuleSlice', () => {
         describe('when the requested granule is opensearch', () => {
           test('take no action', async () => {
             useEdscStore.setState((state) => {
-              state.focusedGranule.focusedGranule = 'granuleId'
+              state.granule.granuleId = 'granuleId'
             })
 
             mockGetState.mockReturnValue({
@@ -222,10 +222,10 @@ describe('createFocusedGranuleSlice', () => {
               searchResults: {}
             })
 
-            const { focusedGranule } = useEdscStore.getState()
-            const { getFocusedGranule } = focusedGranule
+            const { granule } = useEdscStore.getState()
+            const { getGranuleMetadata } = granule
 
-            await getFocusedGranule()
+            await getGranuleMetadata()
 
             expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(0)
             expect(actions.changeUrl).toHaveBeenCalledTimes(0)
@@ -235,7 +235,7 @@ describe('createFocusedGranuleSlice', () => {
       })
 
       describe('when graphql returns no metadata for the requested collection', () => {
-        test('should clear the focusedGranule', async () => {
+        test('should clear the granule', async () => {
           nock(/graph/)
             .post(/api/)
             .reply(200, {
@@ -245,7 +245,7 @@ describe('createFocusedGranuleSlice', () => {
             })
 
           useEdscStore.setState((state) => {
-            state.focusedGranule.focusedGranule = 'granuleId'
+            state.granule.granuleId = 'granuleId'
           })
 
           mockGetState.mockReturnValue({
@@ -263,13 +263,13 @@ describe('createFocusedGranuleSlice', () => {
             }
           })
 
-          const { focusedGranule } = useEdscStore.getState()
-          const { getFocusedGranule } = focusedGranule
+          const { granule } = useEdscStore.getState()
+          const { getGranuleMetadata } = granule
 
-          await getFocusedGranule()
+          await getGranuleMetadata()
 
-          const { focusedGranule: updatedFocusedGranule } = useEdscStore.getState()
-          expect(updatedFocusedGranule.focusedGranule).toEqual(null)
+          const { granule: updatedGranule } = useEdscStore.getState()
+          expect(updatedGranule.granuleId).toEqual(null)
 
           expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(0)
           expect(actions.handleError).toHaveBeenCalledTimes(0)
@@ -294,7 +294,7 @@ describe('createFocusedGranuleSlice', () => {
           .reply(200)
 
         useEdscStore.setState((state) => {
-          state.focusedGranule.focusedGranule = 'granuleId'
+          state.granule.granuleId = 'granuleId'
         })
 
         mockGetState.mockReturnValue({
@@ -304,20 +304,20 @@ describe('createFocusedGranuleSlice', () => {
           }
         })
 
-        const { focusedGranule } = useEdscStore.getState()
-        const { getFocusedGranule } = focusedGranule
+        const { granule } = useEdscStore.getState()
+        const { getGranuleMetadata } = granule
 
-        await getFocusedGranule()
+        await getGranuleMetadata()
 
-        const { focusedGranule: updatedFocusedGranule } = useEdscStore.getState()
-        expect(updatedFocusedGranule.focusedGranule).toEqual(null)
+        const { granule: updatedGranule } = useEdscStore.getState()
+        expect(updatedGranule.granuleId).toEqual(null)
 
         expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(0)
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
 
         expect(actions.handleError).toHaveBeenCalledTimes(1)
         expect(actions.handleError).toHaveBeenCalledWith(expect.objectContaining({
-          action: 'getFocusedGranule',
+          action: 'getGranuleMetadata',
           error: expect.any(Error),
           resource: 'granule'
         }))

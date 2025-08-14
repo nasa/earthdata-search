@@ -30,8 +30,8 @@ const setup = setupTest({
     visibleMiddleIndex: 1
   },
   defaultZustandState: {
-    focusedGranule: {
-      focusedGranule: 'one'
+    granule: {
+      granuleId: 'one'
     }
   }
 })

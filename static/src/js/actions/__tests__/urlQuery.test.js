@@ -83,7 +83,7 @@ describe('updateStore', () => {
       earthdataEnvironment,
       facetParams,
       collection,
-      focusedGranule,
+      granule,
       map,
       portal,
       project,
@@ -110,9 +110,9 @@ describe('updateStore', () => {
       collectionId: 'C00001-EDSC'
     })
 
-    expect(focusedGranule).toEqual({
-      ...initialState.focusedGranule,
-      focusedGranule: 'G00001-EDSC'
+    expect(granule).toEqual({
+      ...initialState.granule,
+      granuleId: 'G00001-EDSC'
     })
 
     expect(map).toEqual(initialState.map)
@@ -233,7 +233,7 @@ describe('updateStore', () => {
         earthdataEnvironment,
         facetParams,
         collection,
-        focusedGranule,
+        granule,
         map,
         portal,
         project,
@@ -260,9 +260,9 @@ describe('updateStore', () => {
         collectionId: 'C00001-EDSC'
       })
 
-      expect(focusedGranule).toEqual({
-        ...initialState.focusedGranule,
-        focusedGranule: 'G00001-EDSC'
+      expect(granule).toEqual({
+        ...initialState.granule,
+        granuleId: 'G00001-EDSC'
       })
 
       expect(map).toEqual(initialState.map)
@@ -385,7 +385,7 @@ describe('updateStore', () => {
         earthdataEnvironment,
         facetParams,
         collection,
-        focusedGranule,
+        granule,
         map,
         portal,
         project,
@@ -412,9 +412,9 @@ describe('updateStore', () => {
         collectionId: null
       })
 
-      expect(focusedGranule).toEqual({
-        ...initialState.focusedGranule,
-        focusedGranule: ''
+      expect(granule).toEqual({
+        ...initialState.granule,
+        granuleId: ''
       })
 
       expect(map).toEqual(initialState.map)
@@ -819,7 +819,7 @@ describe('changePath', () => {
     })
 
     describe('when the path matches granule details', () => {
-      test('calls getCollectionMetadata and getFocusedGranule', async () => {
+      test('calls getCollectionMetadata and getGranuleMetadata', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
 
         const newPath = '/search/granules/granule-details?p=C00001-EDSC'
@@ -836,14 +836,14 @@ describe('changePath', () => {
           // eslint-disable-next-line no-param-reassign
           state.collection.getCollectionMetadata = jest.fn()
           // eslint-disable-next-line no-param-reassign
-          state.focusedGranule.getFocusedGranule = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection, focusedGranule } = useEdscStore.getState()
+        const { collection, granule } = useEdscStore.getState()
         const { getCollectionMetadata } = collection
-        const { getFocusedGranule } = focusedGranule
+        const { getGranuleMetadata } = granule
 
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
         expect(getCollectionsMock).toHaveBeenCalledWith()
@@ -851,8 +851,8 @@ describe('changePath', () => {
         expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(getCollectionMetadata).toHaveBeenCalledWith()
 
-        expect(getFocusedGranule).toHaveBeenCalledTimes(1)
-        expect(getFocusedGranule).toHaveBeenCalledWith()
+        expect(getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
   })
@@ -955,7 +955,7 @@ describe('changePath', () => {
     })
 
     describe('when the path matches granule details', () => {
-      test('calls getCollectionMetadata and getFocusedGranule', async () => {
+      test('calls getCollectionMetadata and getGranuleMetadata', async () => {
         const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
 
         const newPath = '/portal/fakeportal/search/granules/granule-details?p=C00001-EDSC'
@@ -972,14 +972,14 @@ describe('changePath', () => {
           // eslint-disable-next-line no-param-reassign
           state.collection.getCollectionMetadata = jest.fn()
           // eslint-disable-next-line no-param-reassign
-          state.focusedGranule.getFocusedGranule = jest.fn()
+          state.granule.getGranuleMetadata = jest.fn()
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection, focusedGranule } = useEdscStore.getState()
+        const { collection, granule } = useEdscStore.getState()
         const { getCollectionMetadata } = collection
-        const { getFocusedGranule } = focusedGranule
+        const { getGranuleMetadata } = granule
 
         expect(getCollectionsMock).toHaveBeenCalledTimes(1)
         expect(getCollectionsMock).toHaveBeenCalledWith()
@@ -987,8 +987,8 @@ describe('changePath', () => {
         expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(getCollectionMetadata).toHaveBeenCalledWith()
 
-        expect(getFocusedGranule).toHaveBeenCalledTimes(1)
-        expect(getFocusedGranule).toHaveBeenCalledWith()
+        expect(getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
   })

@@ -70,7 +70,7 @@ function setup(overrides) {
   const hoveredGranuleId = null
   const isGranuleInProject = jest.fn()
   const isCollectionInProject = false
-  const changeFocusedGranule = jest.fn()
+  const setGranuleId = jest.fn()
 
   const { granulesList } = formatGranulesList({
     granuleIds,
@@ -79,14 +79,14 @@ function setup(overrides) {
     hoveredGranuleId,
     isGranuleInProject,
     isCollectionInProject,
-    changeFocusedGranule,
+    setGranuleId,
     ...overrides
   })
 
   return {
     granulesList,
     granulesMetadata,
-    changeFocusedGranule
+    setGranuleId
   }
 }
 
@@ -125,7 +125,7 @@ describe('granule map events', () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
     eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
-    const { granulesList, granulesMetadata, changeFocusedGranule } = setup()
+    const { granulesList, granulesMetadata, setGranuleId } = setup()
     const [granule] = granulesList
 
     granule.handleClick()
@@ -133,15 +133,15 @@ describe('granule map events', () => {
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.focusGranule', { granule: granulesMetadata['G1924512983-LANCEMODIS'] })
 
-    expect(changeFocusedGranule).toHaveBeenCalledTimes(1)
-    expect(changeFocusedGranule).toHaveBeenCalledWith('G1924512983-LANCEMODIS')
+    expect(setGranuleId).toHaveBeenCalledTimes(1)
+    expect(setGranuleId).toHaveBeenCalledWith('G1924512983-LANCEMODIS')
   })
 
   test('clicking on a focused granule removes that granule as sticky on the map', () => {
     const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
     eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
-    const { granulesList, changeFocusedGranule } = setup({ focusedGranuleId: 'G1924512983-LANCEMODIS' })
+    const { granulesList, setGranuleId } = setup({ focusedGranuleId: 'G1924512983-LANCEMODIS' })
     const [granule] = granulesList
 
     granule.handleClick()
@@ -149,8 +149,8 @@ describe('granule map events', () => {
     expect(eventEmitterEmitMock).toHaveBeenCalledTimes(1)
     expect(eventEmitterEmitMock).toHaveBeenCalledWith('map.layer.C1219248410-LANCEMODIS.focusGranule', { granule: null })
 
-    expect(changeFocusedGranule).toHaveBeenCalledTimes(1)
-    expect(changeFocusedGranule).toHaveBeenCalledWith(null)
+    expect(setGranuleId).toHaveBeenCalledTimes(1)
+    expect(setGranuleId).toHaveBeenCalledWith(null)
   })
 })
 

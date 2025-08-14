@@ -1,4 +1,4 @@
-import type { FocusedGranuleSlice, ImmerStateCreator } from '../types'
+import type { GranuleSlice, ImmerStateCreator } from '../types'
 
 // @ts-expect-error There are no types for this file
 import GraphQlRequest from '../../util/request/graphQlRequest'
@@ -12,25 +12,15 @@ import configureStore from '../../store/configureStore'
 // @ts-expect-error There are no types for this file
 import actions from '../../actions'
 
-import GET_FOCUSED_COLLECTION from '../../operations/queries/getFocusedGranule'
-import { getFocusedGranuleId } from '../selectors/focusedGranule'
+import GET_GRANULE from '../../operations/queries/getGranule'
+import { getGranuleId } from '../selectors/granule'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
-const createFocusedGranuleSlice: ImmerStateCreator<FocusedGranuleSlice> = (set, get) => ({
-  focusedGranule: {
-    focusedGranule: null,
+const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
+  granule: {
+    granuleId: null,
 
-    changeFocusedGranule: async (granuleId) => {
-      set((state) => {
-        state.focusedGranule.focusedGranule = granuleId
-      })
-
-      if (granuleId) {
-        get().focusedGranule.getFocusedGranule()
-      }
-    },
-
-    getFocusedGranule: async () => {
+    getGranuleMetadata: async () => {
       const {
         dispatch: reduxDispatch,
         getState: reduxGetState
@@ -45,12 +35,12 @@ const createFocusedGranuleSlice: ImmerStateCreator<FocusedGranuleSlice> = (set, 
 
       const currentState = get()
       const earthdataEnvironment = getEarthdataEnvironment(currentState)
-      const focusedGranuleId = getFocusedGranuleId(currentState)
+      const granuleId = getGranuleId(currentState)
 
       // Retrieve data from Redux using selectors
       // TODO EDSC-4516, this should be pulled from a selector, but Redux selectors don't see zustand state changes
       const { granules: granulesMetadata = {} } = metadata
-      const { [focusedGranuleId]: focusedGranuleMetadata = {} } = granulesMetadata
+      const { [granuleId]: focusedGranuleMetadata = {} } = granulesMetadata
 
       // Use the `hasAllMetadata` flag to determine if we've requested previously
       // requested the focused collections metadata from graphql
@@ -68,9 +58,9 @@ const createFocusedGranuleSlice: ImmerStateCreator<FocusedGranuleSlice> = (set, 
       const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
       try {
-        const response = await graphQlRequestObject.search(GET_FOCUSED_COLLECTION, {
+        const response = await graphQlRequestObject.search(GET_GRANULE, {
           params: {
-            conceptId: focusedGranuleId
+            conceptId: granuleId
           }
         })
 
@@ -115,7 +105,7 @@ const createFocusedGranuleSlice: ImmerStateCreator<FocusedGranuleSlice> = (set, 
             hasAllMetadata: true,
             id: conceptId,
             measuredParameters,
-            metadataUrls: createEcho10MetadataUrls(focusedGranuleId, earthdataEnvironment),
+            metadataUrls: createEcho10MetadataUrls(granuleId, earthdataEnvironment),
             onlineAccessFlag,
             originalFormat,
             providerDates,
@@ -132,7 +122,7 @@ const createFocusedGranuleSlice: ImmerStateCreator<FocusedGranuleSlice> = (set, 
         } else {
           // If no data was returned, clear the focused granule and redirect the user back to the search page
           set((state) => {
-            state.focusedGranule.focusedGranule = null
+            state.granule.granuleId = null
           })
 
           const { location } = router
@@ -145,18 +135,28 @@ const createFocusedGranuleSlice: ImmerStateCreator<FocusedGranuleSlice> = (set, 
         }
       } catch (error) {
         set((state) => {
-          state.focusedGranule.focusedGranule = null
+          state.granule.granuleId = null
         })
 
         reduxDispatch(actions.handleError({
           error,
-          action: 'getFocusedGranule',
+          action: 'getGranuleMetadata',
           resource: 'granule',
           requestObject: graphQlRequestObject
         }))
+      }
+    },
+
+    setGranuleId: async (granuleId) => {
+      set((state) => {
+        state.granule.granuleId = granuleId
+      })
+
+      if (granuleId) {
+        get().granule.getGranuleMetadata()
       }
     }
   }
 })
 
-export default createFocusedGranuleSlice
+export default createGranuleSlice

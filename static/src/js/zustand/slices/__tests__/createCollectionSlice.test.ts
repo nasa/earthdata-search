@@ -14,7 +14,7 @@ import * as getClientId from '../../../../../../sharedUtils/getClientId'
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 jest.mock('../../../actions', () => ({
-  changeFocusedGranule: jest.fn(),
+  setGranuleId: jest.fn(),
   changeUrl: jest.fn(),
   collectionRelevancyMetrics: jest.fn(),
   getColorMap: jest.fn(),
@@ -970,7 +970,7 @@ describe('createCollectionSlice', () => {
       test('should clear the collection and call changeUrl', async () => {
         useEdscStore.setState((state) => {
           state.collection.getCollectionMetadata = jest.fn()
-          state.focusedGranule.changeFocusedGranule = jest.fn()
+          state.granule.setGranuleId = jest.fn()
           state.query.changeGranuleQuery = jest.fn()
           state.timeline.getTimeline = jest.fn()
         })
@@ -999,12 +999,12 @@ describe('createCollectionSlice', () => {
 
         const {
           collection: updatedCollection,
-          focusedGranule
+          granule
         } = useEdscStore.getState()
         expect(updatedCollection.collectionId).toEqual(null)
 
-        expect(focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
-        expect(focusedGranule.changeFocusedGranule).toHaveBeenCalledWith(null)
+        expect(granule.setGranuleId).toHaveBeenCalledTimes(1)
+        expect(granule.setGranuleId).toHaveBeenCalledWith(null)
 
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)

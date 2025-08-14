@@ -4,7 +4,7 @@ import {
   interceptUnauthenticatedCollections
 } from '../../../../support/interceptUnauthenticatedCollections'
 import { isGetCollectionQuery } from '../../../../support/isGetCollectionQuery'
-import { isGetFocusedGranuleQuery } from '../../../../support/isGetFocusedGranuleQuery'
+import { isGetGranuleQuery } from '../../../../support/isGetGranuleQuery'
 import { setupTests } from '../../../../support/setupTests'
 
 import commonBody from './__mocks__/cmr_granules/common_collections.body.json'
@@ -58,7 +58,7 @@ test.describe('When clicking on a granule on the map', () => {
         })
       }
 
-      if (isGetFocusedGranuleQuery(route, 'G3275560218-LANCEMODIS')) {
+      if (isGetGranuleQuery(route, 'G3275560218-LANCEMODIS')) {
         await route.fulfill({
           json: granuleGraphQlBody,
           headers: { 'content-type': 'application/json' }

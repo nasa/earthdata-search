@@ -10,7 +10,7 @@ import getGranuleGraphQlBody from './__mocks__/getGranule.graphql.body.json'
 import granulesBody from './__mocks__/granules.body.json'
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import formattedGranuleMetadata from './__mocks__/formattedGranuleMetadata.json'
-import { isGetFocusedGranuleQuery } from '../../../../../support/isGetFocusedGranuleQuery'
+import { isGetGranuleQuery } from '../../../../../support/isGetGranuleQuery'
 
 test.describe('Path /search/granules/granule-details', () => {
   test.beforeEach(async ({ page, context }) => {
@@ -32,7 +32,7 @@ test.describe('Path /search/granules/granule-details', () => {
           json: getCollectionGraphQlBody,
           headers: graphQlHeaders
         })
-      } else if (isGetFocusedGranuleQuery(route, granuleId)) {
+      } else if (isGetGranuleQuery(route, granuleId)) {
         route.fulfill({
           json: getGranuleGraphQlBody,
           headers: graphQlHeaders

@@ -5,7 +5,7 @@ describe('getFocusedGranuleMetadata selector', () => {
   test('returns the granule metadata', () => {
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedGranule.focusedGranule = 'granuleId'
+      state.granule.granuleId = 'granuleId'
     })
 
     const state = {

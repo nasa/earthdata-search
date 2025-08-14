@@ -6,7 +6,7 @@ import {
   interceptUnauthenticatedCollections
 } from '../../../../support/interceptUnauthenticatedCollections'
 import { isGetCollectionQuery } from '../../../../support/isGetCollectionQuery'
-import { isGetFocusedGranuleQuery } from '../../../../support/isGetFocusedGranuleQuery'
+import { isGetGranuleQuery } from '../../../../support/isGetGranuleQuery'
 import { login } from '../../../../support/login'
 import { setupTests } from '../../../../support/setupTests'
 
@@ -968,7 +968,7 @@ test.describe('Path /search/granules', () => {
             body: JSON.stringify(focusedGranuleCollectionGraphQlBody),
             headers: focusedGranuleGraphQlHeaders
           })
-        } else if (isGetFocusedGranuleQuery(route, 'G2058417402-LPDAAC_ECS')) {
+        } else if (isGetGranuleQuery(route, 'G2058417402-LPDAAC_ECS')) {
           route.fulfill({
             body: JSON.stringify(focusedGranuleGranuleGraphQlBody),
             headers: focusedGranuleGraphQlHeaders

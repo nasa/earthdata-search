@@ -55,7 +55,7 @@ import { mapEventTypes } from '../../constants/eventTypes'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
 import { getCollectionId } from '../../zustand/selectors/collection'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 
 import type {
@@ -181,7 +181,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     polygon: polygonSearch
   } = spatialQuery
   const {
-    changeFocusedGranule,
     map: mapProps,
     onChangeMap,
     onChangeQuery,
@@ -190,12 +189,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onFetchShapefile,
     onUpdateShapefile,
     projectCollections,
+    setGranuleId,
     setStartDrawing,
     shapefile,
     showMbr,
     startDrawing
   } = useEdscStore((state) => ({
-    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
     onChangeQuery: state.query.changeQuery,
@@ -204,13 +203,14 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onFetchShapefile: state.shapefile.fetchShapefile,
     onUpdateShapefile: state.shapefile.updateShapefile,
     projectCollections: state.project.collections,
+    setGranuleId: state.granule.setGranuleId,
     setStartDrawing: state.home.setStartDrawing,
     shapefile: state.shapefile,
     showMbr: state.map.showMbr,
     startDrawing: state.home.startDrawing
   }))
   const focusedCollectionId = useEdscStore(getCollectionId)
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
 
   const [mapReady, setMapReady] = useState(false)
@@ -532,7 +532,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     <Map
       base={base}
       center={center}
-      changeFocusedGranule={changeFocusedGranule}
+      setGranuleId={setGranuleId}
       colorMap={colorMap as Colormap}
       focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}

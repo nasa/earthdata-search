@@ -10,7 +10,7 @@ import EDSCTable from '../EDSCTable/EDSCTable'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './GranuleResultsTable.scss'
 
@@ -53,7 +53,7 @@ export const GranuleResultsTable = ({
   visibleMiddleIndex
 }) => {
   const collectionQuerySpatial = useEdscStore(getCollectionsQuerySpatial)
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const {
     excludeGranule,
     addGranuleToProjectCollection,
