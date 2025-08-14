@@ -1,5 +1,5 @@
 import addToast from '../../util/addToast'
-import RetrievalRequest from '../../util/request/retrievalRequest'
+import RetrievalRequest from '../../util/request/admin/retrievalRequest'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import useEdscStore from '../../zustand/useEdscStore'
 
@@ -19,6 +19,7 @@ export const requeueOrder = (orderId) => (dispatch, getState) => {
   const { authToken } = state
 
   const requestObject = new RetrievalRequest(authToken, earthdataEnvironment)
+
   const response = requestObject.requeueOrder({ orderId })
     .then(() => {
       addToast('Order Requeued for processing', {
