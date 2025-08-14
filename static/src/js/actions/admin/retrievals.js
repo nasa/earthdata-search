@@ -1,11 +1,12 @@
-import addToast from '../../util/addToast'
+import { addToast } from '../../util/addToast'
 import RetrievalRequest from '../../util/request/admin/retrievalRequest'
-import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import useEdscStore from '../../zustand/useEdscStore'
 
 import actions from '../index'
 
 import { displayNotificationType } from '../../constants/enums'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 /**
  * Sends a request to have the provided order requeued for processing

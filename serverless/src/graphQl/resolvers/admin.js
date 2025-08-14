@@ -2,38 +2,6 @@ import camelcaseKeys from 'camelcase-keys'
 import { obfuscateId } from '../../util/obfuscation/obfuscateId'
 import formatAdminPreferencesMetrics from '../utils/formatAdminPreferencesMetrics'
 
-// Const paginateData = async (query, key, { limit, offset }) => {
-//   const paginatedData = await query.limit(limit).offset(offset)
-
-//   let currentPage = null
-
-//   const pageCount = paginatedData.length
-//     ? Math.ceil(paginatedData[0].total / limit)
-//     : 0
-
-//   if (pageCount > 0) {
-//     if (offset) {
-//       currentPage = Math.floor(offset / limit) + 1
-//     } else {
-//       currentPage = 1
-//     }
-//   }
-
-//   const hasNextPage = currentPage < pageCount
-//   const hasPreviousPage = currentPage > 1
-
-//   return {
-//     [key]: paginatedData,
-//     pageInfo: {
-//       pageCount,
-//       hasNextPage,
-//       hasPreviousPage,
-//       currentPage
-//     },
-//     count: paginatedData.length
-//   }
-// }
-
 /**
  * GraphQL resolver for admin preferences metrics
  */
