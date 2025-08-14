@@ -34,7 +34,6 @@ const setup = setupTest({
       url: '/search'
     },
     onChangePath: jest.fn(),
-    onFocusedCollectionChange: jest.fn(),
     onMetricsCollectionSortChange: jest.fn(),
     onToggleAboutCSDAModal: jest.fn(),
     onToggleAboutCwicModal: jest.fn(),
@@ -75,16 +74,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('/search')
-  })
-
-  test('onFocusedCollectionChange calls actions.changeFocusedCollection', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedCollection')
-
-    mapDispatchToProps(dispatch).onFocusedCollectionChange('collectionId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('collectionId')
   })
 
   test('onMetricsCollectionSortChange calls metricsCollectionSortChange', () => {
@@ -135,7 +124,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      focusedCollection: 'collectionId',
       panels: {},
       searchResults: {
         collections: {}
@@ -178,6 +166,7 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledWith(
       {
         authToken: '',
+        changeFocusedCollection: zustandState.focusedCollection.changeFocusedCollection,
         collectionMetadata: {},
         collectionQuery: initialState.collection,
         collectionSubscriptions: [],
@@ -195,7 +184,6 @@ describe('SearchPanelsContainer component', () => {
         onChangePath: props.onChangePath,
         onChangeQuery: zustandState.query.changeQuery,
         onExport: props.onExport,
-        onFocusedCollectionChange: props.onFocusedCollectionChange,
         onMetricsCollectionSortChange: props.onMetricsCollectionSortChange,
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         onToggleAboutCwicModal: props.onToggleAboutCwicModal,

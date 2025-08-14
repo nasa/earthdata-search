@@ -1,19 +1,23 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
-
 import { parse } from 'qs'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import { stringify } from '../../util/url/url'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 export const RelatedCollection = ({
   className,
   location,
-  onFocusedCollectionChange,
   onMetricsRelatedCollection,
   relatedCollection
 }) => {
+  const changeFocusedCollection = useEdscStore(
+    (state) => state.focusedCollection.changeFocusedCollection
+  )
+
   const { id, title } = relatedCollection
   const params = parse(
     location.search,
@@ -37,7 +41,7 @@ export const RelatedCollection = ({
             type: 'view'
           })
 
-          onFocusedCollectionChange(id)
+          changeFocusedCollection(id)
         }
       }
       to={
@@ -64,7 +68,6 @@ RelatedCollection.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string
   }).isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   relatedCollection: PropTypes.shape({
     id: PropTypes.string,

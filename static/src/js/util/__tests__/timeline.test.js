@@ -173,22 +173,18 @@ describe('prepareTimelineParams', () => {
         spatial: {}
       },
       focusedCollection: '',
-      project: {
-        collections: {
-          allIds: []
-        }
+      projectCollections: {
+        allIds: []
       },
       router: {
         location: {
           pathname: '/search'
         }
       },
-      timeline: {
-        query: {
-          startDate: '2022-01-01T00:00:00Z',
-          endDate: '2023-01-01T00:00:00Z',
-          interval: 'month'
-        }
+      timelineQuery: {
+        startDate: '2022-01-01T00:00:00Z',
+        endDate: '2023-01-01T00:00:00Z',
+        interval: 'month'
       },
       ...overrides
     }
@@ -205,15 +201,11 @@ describe('prepareTimelineParams', () => {
   test('should return null when startDate is not provided', () => {
     const state = setup({
       focusedCollection: 'C100000-EDSC',
-      project: {
-        collections: {
-          allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
-        }
+      projectCollections: {
+        allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
       },
-      timeline: {
-        query: {
-          startDate: null
-        }
+      timelineQuery: {
+        startDate: null
       }
     })
 
@@ -223,10 +215,8 @@ describe('prepareTimelineParams', () => {
   test('should use project collection IDs when on project page', () => {
     const state = setup({
       focusedCollection: 'C100003-EDSC',
-      project: {
-        collections: {
-          allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
-        }
+      projectCollections: {
+        allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
       },
       router: {
         location: {
@@ -249,10 +239,8 @@ describe('prepareTimelineParams', () => {
   test('should use focused collection when not on project page', () => {
     const state = setup({
       focusedCollection: 'C100000-EDSC',
-      project: {
-        collections: {
-          allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
-        }
+      projectCollections: {
+        allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
       },
       router: {
         location: {

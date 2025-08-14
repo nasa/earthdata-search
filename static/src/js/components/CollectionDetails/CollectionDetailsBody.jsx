@@ -133,7 +133,6 @@ export const CollectionDetailsBody = ({
   collectionMetadata,
   isActive,
   location,
-  onFocusedCollectionChange,
   onMetricsRelatedCollection,
   onToggleRelatedUrlsModal
 }) => {
@@ -558,7 +557,6 @@ export const CollectionDetailsBody = ({
                                 key={`related-collection-${id}`}
                                 className="collection-details-body__related-collection-link"
                                 location={location}
-                                onFocusedCollectionChange={onFocusedCollectionChange}
                                 onMetricsRelatedCollection={onMetricsRelatedCollection}
                                 relatedCollection={relatedCollection}
                               />
@@ -609,7 +607,6 @@ CollectionDetailsBody.propTypes = {
   location: PropTypes.shape({
     search: PropTypes.string
   }).isRequired,
-  onFocusedCollectionChange: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

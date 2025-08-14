@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { graphQlGetCollection } from '../../support/graphQlGetCollection'
+import { isGetFocusedCollectionsQuery } from '../../support/isGetFocusedCollectionsQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
@@ -97,9 +97,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         await page.route(/api$/, async (route) => {
-          const query = route.request().postData()
-
-          expect(query).toEqual(graphQlGetCollection(conceptId))
+          expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
 
           await route.fulfill({
             json: cmrGranulesCollectionGraphQlBody,
@@ -264,14 +262,14 @@ test.describe('Map: Granule interactions', () => {
       await page.route(/search\/granules.json/, async (route) => {
         const query = route.request().postData()
 
-        if (query === `echo_collection_id=${conceptIdOne}&page_num=1&page_size=20`) {
+        if (query === `echo_collection_id=${conceptIdOne}&page_num=1&page_size=20&sort_key=-start_date`) {
           await route.fulfill({
             json: colormapGranulesOneBody,
             headers: colormapGranulesHeaders
           })
         }
 
-        if (query === `echo_collection_id=${conceptIdTwo}&page_num=1&page_size=20`) {
+        if (query === `echo_collection_id=${conceptIdTwo}&page_num=1&page_size=20&sort_key=-start_date`) {
           await route.fulfill({
             json: colormapGranulesTwoBody,
             headers: colormapGranulesHeaders
@@ -280,16 +278,14 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.route(/api$/, async (route) => {
-        const query = route.request().postData()
-
-        if (query === graphQlGetCollection(conceptIdOne)) {
+        if (isGetFocusedCollectionsQuery(route, conceptIdOne)) {
           await route.fulfill({
             json: colormapCollectionOneGraphQlBody,
             headers: colormapCollectionGraphQlHeaders
           })
         }
 
-        if (query === graphQlGetCollection(conceptIdTwo)) {
+        if (isGetFocusedCollectionsQuery(route, conceptIdTwo)) {
           await route.fulfill({
             json: colormapCollectionTwoGraphQlBody,
             headers: colormapCollectionGraphQlHeaders
@@ -426,7 +422,7 @@ test.describe('Map: Granule interactions', () => {
       await page.route(/api$/, async (route) => {
         const query = route.request().postData()
 
-        if (query === graphQlGetCollection(conceptId)) {
+        if (isGetFocusedCollectionsQuery(route, conceptId)) {
           await route.fulfill({
             json: granuleCrossingCollectionGraphQlBody,
             headers: cmrGranulesCollectionGraphQlHeaders
@@ -501,7 +497,7 @@ test.describe('Map: Granule interactions', () => {
         await page.route(/api$/, async (route) => {
           const query = route.request().postData()
 
-          if (query === graphQlGetCollection(conceptId)) {
+          if (isGetFocusedCollectionsQuery(route, conceptId)) {
             await route.fulfill({
               json: gibsCollectionGraphQlBody,
               headers: gibsCollectionGraphQlHeaders

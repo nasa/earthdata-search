@@ -11,9 +11,10 @@ import retrieval from './__mocks__/retrieval.json'
 import retrievals from './__mocks__/retrievals.json'
 import timeline from './__mocks__/timeline.json'
 
-import { setupTests } from '../../support/setupTests'
-import { getAuthHeaders } from '../../support/getAuthHeaders'
+import { isGetFocusedCollectionsQuery } from '../../support/isGetFocusedCollectionsQuery'
 import { login } from '../../support/login'
+import { getAuthHeaders } from '../../support/getAuthHeaders'
+import { setupTests } from '../../support/setupTests'
 
 const conceptId = 'C1214470488-ASF'
 
@@ -66,7 +67,7 @@ test.describe('History', () => {
         })
       }
 
-      if (query.includes('query GetCollection')) {
+      if (isGetFocusedCollectionsQuery(route, conceptId)) {
         await route.fulfill({
           json: granulesGraphQlBody,
           headers: graphQlHeaders

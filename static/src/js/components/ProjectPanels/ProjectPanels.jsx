@@ -50,7 +50,7 @@ import './ProjectPanels.scss'
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  * @param {Function} onTogglePanels - Toggles the panels opened or closed.
  * @param {Function} onUpdateAccessMethod - Callback to update the access method.
- * @param {Function} onUpdateFocusedCollection - Callback to update the focused collection.
+ * @param {Function} setFocusedCollection - Callback to update the focused collection.
  */
 class ProjectPanels extends PureComponent {
   constructor(props) {
@@ -134,8 +134,8 @@ class ProjectPanels extends PureComponent {
   }
 
   onPanelClose() {
-    const { onTogglePanels, onUpdateFocusedCollection } = this.props
-    onUpdateFocusedCollection('')
+    const { onTogglePanels, setFocusedCollection } = this.props
+    setFocusedCollection('')
     onTogglePanels(false)
   }
 
@@ -143,7 +143,7 @@ class ProjectPanels extends PureComponent {
     const {
       onSetActivePanel,
       onTogglePanels,
-      onUpdateFocusedCollection,
+      setFocusedCollection,
       projectCollections
     } = this.props
 
@@ -152,7 +152,7 @@ class ProjectPanels extends PureComponent {
     const newFocusedCollectionIndex = activePanel.split('.')[1]
     const newFocusedCollectionId = allIds[newFocusedCollectionIndex]
 
-    onUpdateFocusedCollection(newFocusedCollectionId)
+    setFocusedCollection(newFocusedCollectionId)
     onSetActivePanel(activePanel)
     onTogglePanels(true)
   }
@@ -698,7 +698,7 @@ ProjectPanels.propTypes = {
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
-  onUpdateFocusedCollection: PropTypes.func.isRequired,
+  setFocusedCollection: PropTypes.func.isRequired,
   overrideTemporal: PropTypes.shape({}).isRequired,
   panels: PropTypes.shape({
     activePanel: PropTypes.string,

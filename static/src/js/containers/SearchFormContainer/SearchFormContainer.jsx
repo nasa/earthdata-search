@@ -9,8 +9,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 export const mapDispatchToProps = (dispatch) => ({
   handleError: (error) => dispatch(actions.handleError(error)),
-  onChangeFocusedCollection:
-    (collectionId) => dispatch(actions.changeFocusedCollection(collectionId)),
   onToggleAdvancedSearchModal:
     (state) => dispatch(actions.toggleAdvancedSearchModal(state))
 })
@@ -27,7 +25,6 @@ export const SearchFormContainer = (props) => {
     advancedSearch,
     authToken,
     handleError,
-    onChangeFocusedCollection,
     onToggleAdvancedSearchModal
   } = props
   const clearFilters = useEdscStore((state) => state.query.clearFilters)
@@ -36,7 +33,6 @@ export const SearchFormContainer = (props) => {
     <SearchForm
       authToken={authToken}
       handleError={handleError}
-      onChangeFocusedCollection={onChangeFocusedCollection}
       onClearFilters={clearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
       advancedSearch={advancedSearch}
@@ -54,7 +50,6 @@ SearchFormContainer.propTypes = {
   }),
   authToken: PropTypes.string.isRequired,
   handleError: PropTypes.func.isRequired,
-  onChangeFocusedCollection: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 

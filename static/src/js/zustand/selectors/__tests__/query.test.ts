@@ -48,13 +48,10 @@ describe('query selectors', () => {
 
   describe('getFocusedCollectionGranuleQuery', () => {
     test('returns the focused collection granule query', () => {
-      configureStore.mockReturnValue({
-        getState: () => ({
-          focusedCollection: 'collectionId'
-        })
-      })
-
       useEdscStore.setState(() => ({
+        focusedCollection: {
+          focusedCollection: 'collectionId'
+        },
         query: {
           collection: {
             byId: {
@@ -71,12 +68,6 @@ describe('query selectors', () => {
     })
 
     test('returns an empty object when there is no focusedCollection', () => {
-      configureStore.mockReturnValue({
-        getState: () => ({
-          focusedCollection: 'collectionId'
-        })
-      })
-
       const granuleQuery = getFocusedCollectionGranuleQuery(useEdscStore.getState())
       expect(granuleQuery).toEqual({})
     })
@@ -86,7 +77,6 @@ describe('query selectors', () => {
     test('returns the granule subscription query object', () => {
       configureStore.mockReturnValue({
         getState: () => ({
-          focusedCollection: 'collectionId',
           metadata: {
             collections: {
               collectionId: {
@@ -98,6 +88,9 @@ describe('query selectors', () => {
       })
 
       useEdscStore.setState(() => ({
+        focusedCollection: {
+          focusedCollection: 'collectionId'
+        },
         query: {
           collection: {
             byId: {
@@ -129,7 +122,6 @@ describe('query selectors', () => {
     test('returns the granule subscription query string', () => {
       configureStore.mockReturnValue({
         getState: () => ({
-          focusedCollection: 'collectionId',
           metadata: {
             collections: {
               collectionId: {
@@ -146,6 +138,9 @@ describe('query selectors', () => {
       })
 
       useEdscStore.setState(() => ({
+        focusedCollection: {
+          focusedCollection: 'collectionId'
+        },
         query: {
           collection: {
             byId: {
@@ -174,7 +169,6 @@ describe('query selectors', () => {
     test('returns the collection subscription query object', () => {
       configureStore.mockReturnValue({
         getState: () => ({
-          focusedCollection: 'collectionId',
           metadata: {
             collections: {
               collectionId: {
@@ -197,6 +191,9 @@ describe('query selectors', () => {
               'National Snow and Ice Data Center (NSIDC)'
             ]
           }
+        },
+        focusedCollection: {
+          focusedCollection: 'collectionId'
         },
         query: {
           collection: {
@@ -227,7 +224,6 @@ describe('query selectors', () => {
     test('returns the collection subscription query string', () => {
       configureStore.mockReturnValue({
         getState: () => ({
-          focusedCollection: 'collectionId',
           metadata: {
             collections: {
               collectionId: {
@@ -257,6 +253,9 @@ describe('query selectors', () => {
               'National Snow and Ice Data Center (NSIDC)'
             ]
           }
+        },
+        focusedCollection: {
+          focusedCollection: 'collectionId'
         },
         query: {
           collection: {

@@ -34,7 +34,6 @@ const setup = setupTest({
     advancedSearch: {},
     authToken: '',
     handleError: jest.fn(),
-    onChangeFocusedCollection: jest.fn(),
     onClearFilters: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn()
   }

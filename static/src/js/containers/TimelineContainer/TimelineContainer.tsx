@@ -10,8 +10,7 @@ import { metricsTimeline } from '../../middleware/metrics/actions'
 
 // @ts-expect-error The file does not have types
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
-// @ts-expect-error The file does not have types
-import { getFocusedCollectionId } from '../../selectors/focusedCollection'
+
 import { isPath } from '../../util/isPath'
 
 // @ts-expect-error The file does not have types
@@ -20,6 +19,7 @@ import Timeline from '../../components/Timeline/Timeline'
 import type { CollectionMetadata, CollectionsMetadata } from '../../types/sharedTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -34,7 +34,6 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
   collectionsMetadata: getCollectionsMetadata(state),
-  focusedCollectionId: getFocusedCollectionId(state),
   isOpen: state.ui.timeline.isOpen,
   pathname: state.router.location.pathname,
   search: state.router.location.search
@@ -43,8 +42,6 @@ export const mapStateToProps = (state) => ({
 interface TimelineContainerProps {
   /** Collections Metadata */
   collectionsMetadata: CollectionsMetadata
-  /** The focused collection ID */
-  focusedCollectionId: string
   /** Whether the timeline is open */
   isOpen: boolean
   /** Function to handle metrics timeline */
@@ -62,7 +59,6 @@ interface TimelineContainerProps {
 export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
   const {
     collectionsMetadata,
-    focusedCollectionId,
     isOpen,
     onMetricsTimeline,
     onToggleOverrideTemporalModal,
@@ -71,6 +67,7 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
     search: searchLocation
   } = props
 
+  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
   const projectCollectionsIds = useEdscStore(getProjectCollectionsIds)
 
   // Determine the collectionMetadata the timeline should be displaying
@@ -84,7 +81,7 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
   if (isProjectPage) {
     collectionsToRender.push(...projectCollectionsIds.slice(0, 3))
   } else if (isGranulesPage && focusedCollectionId !== '') {
-    collectionsToRender.push(focusedCollectionId)
+    collectionsToRender.push(focusedCollectionId!)
   }
 
   // Retrieve metadata for each collection we're displaying
