@@ -44,23 +44,26 @@ const getQueryFromShapefileFeature = (feature: Feature): Spatial => {
   const hasAltitude = () => {
     if (!geographicCoordinates || !geographicCoordinates[0]) return false
 
-    // For MultiPolygon: geographicCoordinates[0][0][0] should be [lon, lat, alt]
-    const isPolygon = Array.isArray(geographicCoordinates[0][0])
-    const isMultiPolygon = Array.isArray(geographicCoordinates[0][0][0])
-    if (isPolygon && isMultiPolygon) {
+    // For MultiPolygon
+    if (Array.isArray(geographicCoordinates[0][0][0])) {
       return geographicCoordinates[0][0][0].length === 3
     }
 
-    // For Polygon, LineString, etc: geographicCoordinates[0][0] should be [lon, lat, alt]
+    // For Polygon, LineString
     if (Array.isArray(geographicCoordinates[0][0])) {
       return geographicCoordinates[0][0].length === 3
     }
 
-    // For Point, MultiPoint: geographicCoordinates[0] should be [lon, lat, alt]
+    // For Point, MultiPoint
     return geographicCoordinates[0].length === 3
   }
 
-  if (hasAltitude()) {
+  // Only run altitude detection for geometry types that use geographicCoordinates
+  if (
+    geometryType !== spatialTypes.CIRCLE
+    && geometryType !== spatialTypes.POINT
+    && hasAltitude()
+  ) {
     geographicCoordinatesWithoutAltitude = removeAltitudeFromCoordinates(geographicCoordinates)
   }
 
