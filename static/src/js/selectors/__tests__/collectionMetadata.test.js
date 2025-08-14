@@ -9,7 +9,7 @@ describe('getFocusedCollectionMetadata selector', () => {
   test('returns the collection metadata', () => {
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const state = {
@@ -37,7 +37,7 @@ describe('getFocusedCollectionSubscriptions', () => {
   test('returns the subscriptions', () => {
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'C100000-EDSC'
+      state.collection.collectionId = 'C100000-EDSC'
     })
 
     const state = {
@@ -74,7 +74,7 @@ describe('getFocusedCollectionTags', () => {
   test('returns the subscriptions', () => {
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'C100000-EDSC'
+      state.collection.collectionId = 'C100000-EDSC'
     })
 
     const state = {

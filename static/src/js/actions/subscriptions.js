@@ -30,7 +30,7 @@ import GraphQlRequest from '../util/request/graphQlRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../zustand/selectors/collection'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -128,7 +128,7 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
     // If granule type, pull out the granule specific params
     subscriptionQuery = getGranuleSubscriptionQueryString()
 
-    const collectionId = getFocusedCollectionId(zustandState)
+    const collectionId = getCollectionId(zustandState)
     params.collectionConceptId = collectionId
   }
 
@@ -271,7 +271,7 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
   const zustandState = useEdscStore.getState()
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   if (collectionId == null) {
-    collectionConceptId = getFocusedCollectionId(zustandState)
+    collectionConceptId = getCollectionId(zustandState)
   }
 
   const username = getUsername(state)

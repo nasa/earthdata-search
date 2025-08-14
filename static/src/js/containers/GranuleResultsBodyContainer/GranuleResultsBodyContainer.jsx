@@ -19,7 +19,7 @@ import GranuleResultsBody from '../../components/GranuleResults/GranuleResultsBo
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../../zustand/selectors/collection'
 
 export const mapDispatchToProps = (dispatch) => ({
   onGenerateNotebook:
@@ -54,7 +54,7 @@ export const GranuleResultsBodyContainer = (props) => {
 
   const changeGranuleQuery = useEdscStore((state) => state.query.changeGranuleQuery)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
-  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
+  const focusedCollectionId = useEdscStore(getCollectionId)
 
   const {
     pageNum = 1

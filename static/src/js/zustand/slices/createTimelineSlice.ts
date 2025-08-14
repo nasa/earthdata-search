@@ -61,7 +61,7 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
       const timelineParams = prepareTimelineParams({
         ...reduxState,
         collectionQuery: getCollectionsQuery(currentState),
-        focusedCollection: currentState.focusedCollection.focusedCollection,
+        focusedCollection: currentState.collection.collectionId,
         projectCollections: currentState.project.collections,
         timelineQuery: currentState.timeline.query
       })

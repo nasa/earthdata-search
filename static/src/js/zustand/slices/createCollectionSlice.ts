@@ -1,5 +1,5 @@
 import type {
-  FocusedCollectionSlice,
+  CollectionSlice,
   GranuleQuery,
   ImmerStateCreator
 } from '../types'
@@ -33,72 +33,14 @@ import { getUsername } from '../../selectors/user'
 
 import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../selectors/focusedCollection'
-import GET_FOCUSED_COLLECTION from '../../operations/queries/getFocusedCollection'
+import { getCollectionId } from '../selectors/collection'
+import GET_COLLECTION from '../../operations/queries/getCollection'
 
-const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = (set, get) => ({
-  focusedCollection: {
-    focusedCollection: null,
+const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => ({
+  collection: {
+    collectionId: null,
 
-    changeFocusedCollection: async (collectionId) => {
-      const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
-      } = configureStore()
-      const reduxState = reduxGetState()
-
-      get().focusedCollection.setFocusedCollection(collectionId)
-
-      if (!collectionId || collectionId === '') {
-        // If clearing the focused collection, also clear the focused granule
-        get().focusedGranule.changeFocusedGranule(null)
-        // And clear the spatial polygon warning if there is no focused collection
-        reduxDispatch(actions.toggleSpatialPolygonWarning(false))
-
-        const { router } = reduxState
-        const { location } = router
-        const { search } = location
-
-        // If clearing the focused collection, redirect the user back to the search page
-        reduxDispatch(actions.changeUrl({
-          pathname: '/search',
-          search
-        }))
-      } else {
-        // Initialize a nested query element for the new focused collection
-        const {
-          preferences,
-          query,
-          timeline
-        } = get()
-        const { preferences: preferencesValues } = preferences
-        const { granuleSort: granuleSortPreference } = preferencesValues
-
-        const granuleQuery = {} as GranuleQuery
-
-        if (granuleSortPreference !== 'default') {
-          granuleQuery.sortKey = granuleSortPreference
-        }
-
-        const { initializeGranuleQuery } = query
-        initializeGranuleQuery({
-          collectionId,
-          query: granuleQuery
-        })
-
-        // Initialize a nested search results element in Redux for the new focused collection
-        reduxDispatch(actions.initializeCollectionGranulesResults(collectionId))
-
-        // Fetch the focused collection metadata
-        await get().focusedCollection.getFocusedCollection()
-
-        // Fetch timeline data for the focused collection
-        const { getTimeline } = timeline
-        getTimeline()
-      }
-    },
-
-    getFocusedCollection: async () => {
+    getCollectionMetadata: async () => {
       const {
         dispatch: reduxDispatch,
         getState: reduxGetState
@@ -117,7 +59,7 @@ const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = 
       const zustandState = get()
       const collectionsQuery = getCollectionsQuery(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-      const focusedCollectionId = getFocusedCollectionId(zustandState)
+      const focusedCollectionId = getCollectionId(zustandState)
 
       // TODO EDSC-4516, this should be pulled from a selector, but Redux selectors don't see zustand state changes
       const { collections: collectionsMetadata = {} } = metadata
@@ -157,7 +99,7 @@ const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = 
       const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
       try {
-        const response = await graphQlRequestObject.search(GET_FOCUSED_COLLECTION, {
+        const response = await graphQlRequestObject.search(GET_COLLECTION, {
           params: {
             conceptId: focusedCollectionId,
             includeHasGranules: true,
@@ -290,7 +232,9 @@ const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = 
           reduxDispatch(actions.getSearchGranules())
         } else {
           // If no data was returned, clear the focused collection and redirect the user back to the search page
-          get().focusedCollection.setFocusedCollection('')
+          set((state) => {
+            state.collection.collectionId = null
+          })
 
           const { location } = router
           const { search } = location
@@ -305,7 +249,7 @@ const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = 
       } catch (error) {
         reduxDispatch(actions.handleError({
           error,
-          action: 'getFocusedCollection',
+          action: 'getCollectionMetadata',
           resource: 'collection',
           requestObject: graphQlRequestObject
         }))
@@ -314,14 +258,71 @@ const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = 
       }
     },
 
-    setFocusedCollection: (collectionId) => {
+    setCollectionId: async (collectionId) => {
+      const {
+        dispatch: reduxDispatch,
+        getState: reduxGetState
+      } = configureStore()
+      const reduxState = reduxGetState()
+
       set((state) => {
-        state.focusedCollection.focusedCollection = collectionId
+        state.collection.collectionId = collectionId
       })
+
+      const { router } = reduxState
+      const { location } = router
+      const { pathname, search } = location
+
+      const isProjectPage = pathname.includes('/project')
+      if (!collectionId && isProjectPage) return
+
+      if (!collectionId || collectionId === '') {
+        // If clearing the focused collection, also clear the focused granule
+        get().focusedGranule.changeFocusedGranule(null)
+        // And clear the spatial polygon warning if there is no focused collection
+        reduxDispatch(actions.toggleSpatialPolygonWarning(false))
+
+        // If clearing the focused collection, redirect the user back to the search page
+        reduxDispatch(actions.changeUrl({
+          pathname: '/search',
+          search
+        }))
+      } else {
+        // Initialize a nested query element for the new focused collection
+        const {
+          preferences,
+          query,
+          timeline
+        } = get()
+        const { preferences: preferencesValues } = preferences
+        const { granuleSort: granuleSortPreference } = preferencesValues
+
+        const granuleQuery = {} as GranuleQuery
+
+        if (granuleSortPreference !== 'default') {
+          granuleQuery.sortKey = granuleSortPreference
+        }
+
+        const { initializeGranuleQuery } = query
+        initializeGranuleQuery({
+          collectionId,
+          query: granuleQuery
+        })
+
+        // Initialize a nested search results element in Redux for the new focused collection
+        reduxDispatch(actions.initializeCollectionGranulesResults(collectionId))
+
+        // Fetch the focused collection metadata
+        await get().collection.getCollectionMetadata()
+
+        // Fetch timeline data for the focused collection
+        const { getTimeline } = timeline
+        getTimeline()
+      }
     },
 
     viewCollectionDetails: async (collectionId) => {
-      get().focusedCollection.changeFocusedCollection(collectionId)
+      get().collection.setCollectionId(collectionId)
 
       const {
         dispatch: reduxDispatch,
@@ -340,7 +341,7 @@ const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = 
     },
 
     viewCollectionGranules: async (collectionId) => {
-      get().focusedCollection.changeFocusedCollection(collectionId)
+      get().collection.setCollectionId(collectionId)
 
       const {
         dispatch: reduxDispatch,
@@ -360,4 +361,4 @@ const createFocusedCollectionSlice: ImmerStateCreator<FocusedCollectionSlice> = 
   }
 })
 
-export default createFocusedCollectionSlice
+export default createCollectionSlice

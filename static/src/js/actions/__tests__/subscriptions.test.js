@@ -154,7 +154,7 @@ describe('createSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = mockStore({
@@ -322,7 +322,7 @@ describe('createSubscription', () => {
 
       useEdscStore.setState((state) => {
         // eslint-disable-next-line no-param-reassign
-        state.focusedCollection.focusedCollection = 'collectionId'
+        state.collection.collectionId = 'collectionId'
       })
 
       const store = mockStore({
@@ -385,7 +385,7 @@ describe('createSubscription', () => {
 
       useEdscStore.setState((state) => {
         // eslint-disable-next-line no-param-reassign
-        state.focusedCollection.focusedCollection = 'collectionId'
+        state.collection.collectionId = 'collectionId'
       })
 
       const store = mockStore({
@@ -651,7 +651,7 @@ describe('getGranuleSubscriptions', () => {
 
       useEdscStore.setState((state) => {
         // eslint-disable-next-line no-param-reassign
-        state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+        state.collection.collectionId = 'C10000000000-EDSC'
       })
 
       const store = mockStore({

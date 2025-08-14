@@ -16,7 +16,7 @@ describe('collectionRelevancyMetrics', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collection2'
+      state.collection.collectionId = 'collection2'
     })
 
     const store = mockStore({

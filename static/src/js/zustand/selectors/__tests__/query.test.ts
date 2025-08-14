@@ -49,8 +49,8 @@ describe('query selectors', () => {
   describe('getFocusedCollectionGranuleQuery', () => {
     test('returns the focused collection granule query', () => {
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -88,8 +88,8 @@ describe('query selectors', () => {
       })
 
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -138,8 +138,8 @@ describe('query selectors', () => {
       })
 
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -192,8 +192,8 @@ describe('query selectors', () => {
             ]
           }
         },
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -254,8 +254,8 @@ describe('query selectors', () => {
             ]
           }
         },
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {

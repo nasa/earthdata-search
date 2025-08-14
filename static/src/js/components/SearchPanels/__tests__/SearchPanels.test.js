@@ -66,7 +66,7 @@ useEdscStore.setState({
 function setup(overrideProps, location = '/search') {
   const props = {
     authToken: '',
-    changeFocusedCollection: jest.fn(),
+    setCollectionId: jest.fn(),
     collectionMetadata: {
       hasAllMetadata: true,
       title: 'Collection Title',

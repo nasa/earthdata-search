@@ -34,168 +34,21 @@ configureStore.mockReturnValue({
   getState: mockGetState
 })
 
-describe('createFocusedCollectionSlice', () => {
+describe('createCollectionSlice', () => {
   test('sets the default state', () => {
     const zustandState = useEdscStore.getState()
-    const { focusedCollection } = zustandState
+    const { collection } = zustandState
 
-    expect(focusedCollection).toEqual({
-      focusedCollection: null,
-      changeFocusedCollection: expect.any(Function),
-      getFocusedCollection: expect.any(Function),
-      setFocusedCollection: expect.any(Function),
+    expect(collection).toEqual({
+      collectionId: null,
+      getCollectionMetadata: expect.any(Function),
+      setCollectionId: expect.any(Function),
       viewCollectionDetails: expect.any(Function),
       viewCollectionGranules: expect.any(Function)
     })
   })
 
-  describe('changeFocusedCollection', () => {
-    describe('when a collection id is provided', () => {
-      test('updates the focusedCollection and calls getFocusedCollection', async () => {
-        useEdscStore.setState((state) => {
-          state.focusedCollection.getFocusedCollection = jest.fn()
-          state.query.initializeGranuleQuery = jest.fn()
-          state.timeline.getTimeline = jest.fn()
-        })
-
-        const zustandState = useEdscStore.getState()
-        const {
-          focusedCollection,
-          timeline,
-          query
-        } = zustandState
-        const {
-          changeFocusedCollection,
-          getFocusedCollection
-        } = focusedCollection
-
-        const collectionId = 'C1000000000-EDSC'
-
-        await changeFocusedCollection(collectionId)
-
-        const { focusedCollection: updatedFocusedCollection } = useEdscStore.getState()
-        expect(updatedFocusedCollection.focusedCollection).toEqual(collectionId)
-
-        expect(query.initializeGranuleQuery).toHaveBeenCalledTimes(1)
-        expect(query.initializeGranuleQuery).toHaveBeenCalledWith({
-          collectionId: 'C1000000000-EDSC',
-          query: {}
-        })
-
-        expect(actions.initializeCollectionGranulesResults).toHaveBeenCalledTimes(1)
-        expect(actions.initializeCollectionGranulesResults).toHaveBeenCalledWith(collectionId)
-
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
-
-        expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
-        expect(timeline.getTimeline).toHaveBeenCalledWith()
-      })
-    })
-
-    describe('when a collection id is not provided', () => {
-      test('should clear the focusedCollection and call changeUrl', async () => {
-        useEdscStore.setState((state) => {
-          state.focusedCollection.getFocusedCollection = jest.fn()
-          state.focusedGranule.changeFocusedGranule = jest.fn()
-          state.query.changeGranuleQuery = jest.fn()
-          state.timeline.getTimeline = jest.fn()
-        })
-
-        mockGetState.mockReturnValue({
-          router: {
-            location: {
-              pathname: '/search/granules',
-              search: '?keyword=modis'
-            }
-          }
-        })
-
-        const zustandState = useEdscStore.getState()
-        const {
-          focusedCollection,
-          timeline,
-          query
-        } = zustandState
-        const {
-          changeFocusedCollection,
-          getFocusedCollection
-        } = focusedCollection
-
-        await changeFocusedCollection('')
-
-        const {
-          focusedCollection: updatedFocusedCollection,
-          focusedGranule
-        } = useEdscStore.getState()
-        expect(updatedFocusedCollection.focusedCollection).toEqual('')
-
-        expect(focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
-        expect(focusedGranule.changeFocusedGranule).toHaveBeenCalledWith(null)
-
-        expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
-        expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
-
-        expect(actions.changeUrl).toHaveBeenCalledTimes(1)
-        expect(actions.changeUrl).toHaveBeenCalledWith({
-          pathname: '/search',
-          search: '?keyword=modis'
-        })
-
-        expect(getFocusedCollection).toHaveBeenCalledTimes(0)
-        expect(query.changeGranuleQuery).toHaveBeenCalledTimes(0)
-        expect(timeline.getTimeline).toHaveBeenCalledTimes(0)
-      })
-    })
-
-    describe('when the granule sort preference is not the default', () => {
-      test('updates the focusedCollection and calls getFocusedCollection', async () => {
-        useEdscStore.setState((state) => {
-          state.focusedCollection.getFocusedCollection = jest.fn()
-          state.preferences.preferences.granuleSort = '-start_date'
-          state.query.initializeGranuleQuery = jest.fn()
-          state.timeline.getTimeline = jest.fn()
-        })
-
-        const zustandState = useEdscStore.getState()
-        const {
-          focusedCollection,
-          timeline,
-          query
-        } = zustandState
-        const {
-          changeFocusedCollection,
-          getFocusedCollection
-        } = focusedCollection
-
-        const collectionId = 'C1000000000-EDSC'
-
-        await changeFocusedCollection(collectionId)
-
-        const { focusedCollection: updatedFocusedCollection } = useEdscStore.getState()
-        expect(updatedFocusedCollection.focusedCollection).toEqual(collectionId)
-
-        expect(query.initializeGranuleQuery).toHaveBeenCalledTimes(1)
-        expect(query.initializeGranuleQuery).toHaveBeenCalledWith({
-          collectionId: 'C1000000000-EDSC',
-          query: {
-            sortKey: '-start_date'
-          }
-        })
-
-        expect(actions.initializeCollectionGranulesResults).toHaveBeenCalledTimes(1)
-        expect(actions.initializeCollectionGranulesResults).toHaveBeenCalledWith(collectionId)
-
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
-
-        expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
-        expect(timeline.getTimeline).toHaveBeenCalledWith()
-      })
-    })
-  })
-
-  describe('getFocusedCollection', () => {
+  describe('getCollectionMetadata', () => {
     beforeEach(() => {
       jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
@@ -207,9 +60,9 @@ describe('createFocusedCollectionSlice', () => {
     })
 
     describe('when metdata has already been retrieved from graphql', () => {
-      test('should update the focusedCollection and call getSearchGranules', async () => {
+      test('should update the collection and call getSearchGranules', async () => {
         useEdscStore.setState((state) => {
-          state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+          state.collection.collectionId = 'C10000000000-EDSC'
         })
 
         mockGetState.mockReturnValue({
@@ -224,10 +77,10 @@ describe('createFocusedCollectionSlice', () => {
           searchResults: {}
         })
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection } = useEdscStore.getState()
+        const { getCollectionMetadata } = collection
 
-        await getFocusedCollection()
+        await getCollectionMetadata()
 
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
@@ -245,7 +98,7 @@ describe('createFocusedCollectionSlice', () => {
 
     describe('when no metadata exists in the store for the collection from graphql', () => {
       describe('when graphql returns metadata for the requested collection', () => {
-        test('should update the focusedCollection, fetch metadata from graphql and calls getSearchGranules', async () => {
+        test('should update the collection, fetch metadata from graphql and calls getSearchGranules', async () => {
           nock(/graph/)
             .post(/api/)
             .reply(200, {
@@ -264,8 +117,7 @@ describe('createFocusedCollectionSlice', () => {
             })
 
           useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-            state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+            state.collection.collectionId = 'C10000000000-EDSC'
           })
 
           mockGetState.mockReturnValue({
@@ -276,10 +128,10 @@ describe('createFocusedCollectionSlice', () => {
             searchResults: {}
           })
 
-          const { focusedCollection } = useEdscStore.getState()
-          const { getFocusedCollection } = focusedCollection
+          const { collection } = useEdscStore.getState()
+          const { getCollectionMetadata } = collection
 
-          await getFocusedCollection()
+          await getCollectionMetadata()
 
           expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
           expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
@@ -366,7 +218,7 @@ describe('createFocusedCollectionSlice', () => {
         })
 
         describe('when the requested collection is cwic and a polygon search is active and we try and retrieve an existing gibs tag', () => {
-          test('should toggle the polygon warning, update the focusedCollection and call getSearchGranules', async () => {
+          test('should toggle the polygon warning, update the collection and call getSearchGranules', async () => {
             nock(/graph/)
               .post(/api/)
               .reply(200, {
@@ -387,7 +239,7 @@ describe('createFocusedCollectionSlice', () => {
               })
 
             useEdscStore.setState((state) => {
-              state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+              state.collection.collectionId = 'C10000000000-EDSC'
               state.query.collection.spatial = {
                 polygon: ['-77,38,-77,38,-76,38,-77,38']
               }
@@ -405,10 +257,10 @@ describe('createFocusedCollectionSlice', () => {
               searchResults: {}
             })
 
-            const { focusedCollection } = useEdscStore.getState()
-            const { getFocusedCollection } = focusedCollection
+            const { collection } = useEdscStore.getState()
+            const { getCollectionMetadata } = collection
 
-            await getFocusedCollection()
+            await getCollectionMetadata()
 
             expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
             expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(true)
@@ -519,7 +371,7 @@ describe('createFocusedCollectionSlice', () => {
               })
 
             useEdscStore.setState((state) => {
-              state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+              state.collection.collectionId = 'C10000000000-EDSC'
               state.query.collection.spatial = {
                 polygon: ['-77,38,-77,38,-76,38,-77,38']
               }
@@ -537,10 +389,10 @@ describe('createFocusedCollectionSlice', () => {
               searchResults: {}
             })
 
-            const { focusedCollection } = useEdscStore.getState()
-            const { getFocusedCollection } = focusedCollection
+            const { collection } = useEdscStore.getState()
+            const { getCollectionMetadata } = collection
 
-            await getFocusedCollection()
+            await getCollectionMetadata()
 
             expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
             expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(true)
@@ -662,7 +514,7 @@ describe('createFocusedCollectionSlice', () => {
             })
 
           useEdscStore.setState((state) => {
-            state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+            state.collection.collectionId = 'C10000000000-EDSC'
             state.query.collection.spatial = {
               polygon: ['-77,38,-77,38,-76,38,-77,38']
             }
@@ -680,10 +532,10 @@ describe('createFocusedCollectionSlice', () => {
             searchResults: {}
           })
 
-          const { focusedCollection } = useEdscStore.getState()
-          const { getFocusedCollection } = focusedCollection
+          const { collection } = useEdscStore.getState()
+          const { getCollectionMetadata } = collection
 
-          await getFocusedCollection()
+          await getCollectionMetadata()
 
           expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
           expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(true)
@@ -780,7 +632,7 @@ describe('createFocusedCollectionSlice', () => {
       })
 
       describe('when graphql returns no metadata for the requested collection', () => {
-        test('should clear the focusedCollection', async () => {
+        test('should clear the collection', async () => {
           nock(/graph/)
             .post(/api/)
             .reply(200, {
@@ -790,8 +642,8 @@ describe('createFocusedCollectionSlice', () => {
             })
 
           useEdscStore.setState((state) => {
-            state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
-            state.focusedCollection.setFocusedCollection = jest.fn()
+            state.collection.collectionId = 'C10000000000-EDSC'
+            state.collection.setCollectionId = jest.fn()
           })
 
           mockGetState.mockReturnValue({
@@ -810,16 +662,13 @@ describe('createFocusedCollectionSlice', () => {
             }
           })
 
-          const { focusedCollection } = useEdscStore.getState()
-          const { getFocusedCollection } = focusedCollection
+          const { collection } = useEdscStore.getState()
+          const { getCollectionMetadata } = collection
 
-          await getFocusedCollection()
+          await getCollectionMetadata()
 
-          const { focusedCollection: updatedFocusedCollection } = useEdscStore.getState()
-          const { setFocusedCollection } = updatedFocusedCollection
-
-          expect(setFocusedCollection).toHaveBeenCalledTimes(1)
-          expect(setFocusedCollection).toHaveBeenCalledWith('')
+          const { collection: updatedCollection } = useEdscStore.getState()
+          expect(updatedCollection.collectionId).toEqual(null)
 
           expect(actions.changeUrl).toHaveBeenCalledTimes(1)
           expect(actions.changeUrl).toHaveBeenCalledWith({
@@ -864,7 +713,7 @@ describe('createFocusedCollectionSlice', () => {
           })
 
         useEdscStore.setState((state) => {
-          state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+          state.collection.collectionId = 'C10000000000-EDSC'
         })
 
         mockGetState.mockReturnValue({
@@ -875,10 +724,10 @@ describe('createFocusedCollectionSlice', () => {
           searchResults: {}
         })
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection } = useEdscStore.getState()
+        const { getCollectionMetadata } = collection
 
-        await getFocusedCollection()
+        await getCollectionMetadata()
 
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
@@ -975,7 +824,7 @@ describe('createFocusedCollectionSlice', () => {
           })
 
         useEdscStore.setState((state) => {
-          state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+          state.collection.collectionId = 'C10000000000-EDSC'
         })
 
         mockGetState.mockReturnValue({
@@ -992,10 +841,10 @@ describe('createFocusedCollectionSlice', () => {
           { conceptId: 'V10000000002-EDSC' }
         ]
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection } = useEdscStore.getState()
+        const { getCollectionMetadata } = collection
 
-        await getFocusedCollection()
+        await getCollectionMetadata()
 
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
@@ -1022,7 +871,7 @@ describe('createFocusedCollectionSlice', () => {
       })
     })
 
-    test('does not call updateFocusedCollection when graphql throws an http error', async () => {
+    test('does not call updateCollection when graphql throws an http error', async () => {
       nock(/graph/)
         .post(/api/)
         .reply(500)
@@ -1038,10 +887,10 @@ describe('createFocusedCollectionSlice', () => {
         }
       })
 
-      const { focusedCollection } = useEdscStore.getState()
-      const { getFocusedCollection } = focusedCollection
+      const { collection } = useEdscStore.getState()
+      const { getCollectionMetadata } = collection
 
-      await getFocusedCollection()
+      await getCollectionMetadata()
 
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
@@ -1052,7 +901,7 @@ describe('createFocusedCollectionSlice', () => {
       expect(actions.handleError).toHaveBeenCalledTimes(1)
       expect(actions.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
-          action: 'getFocusedCollection',
+          action: 'getCollectionMetadata',
           error: expect.any(Error),
           resource: 'collection'
         })
@@ -1064,23 +913,165 @@ describe('createFocusedCollectionSlice', () => {
     })
   })
 
-  describe('setFocusedCollection', () => {
-    test('updates focusedCollection', () => {
-      const zustandState = useEdscStore.getState()
-      const { focusedCollection } = zustandState
-      const { setFocusedCollection } = focusedCollection
-      setFocusedCollection('collection-1')
+  describe('setCollectionId', () => {
+    describe('when a collection id is provided', () => {
+      test('updates the collection and calls getCollectionMetadata', async () => {
+        useEdscStore.setState((state) => {
+          state.collection.getCollectionMetadata = jest.fn()
+          state.query.initializeGranuleQuery = jest.fn()
+          state.timeline.getTimeline = jest.fn()
+        })
 
-      const updatedState = useEdscStore.getState()
-      const { focusedCollection: updatedFocusedCollection } = updatedState
-      expect(updatedFocusedCollection.focusedCollection).toEqual('collection-1')
+        mockGetState.mockReturnValue({
+          router: {
+            location: {
+              pathname: '/search/granules',
+              search: '?keyword=modis'
+            }
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const {
+          collection,
+          timeline,
+          query
+        } = zustandState
+        const {
+          setCollectionId,
+          getCollectionMetadata
+        } = collection
+
+        const collectionId = 'C1000000000-EDSC'
+
+        await setCollectionId(collectionId)
+
+        const { collection: updatedCollection } = useEdscStore.getState()
+        expect(updatedCollection.collectionId).toEqual(collectionId)
+
+        expect(query.initializeGranuleQuery).toHaveBeenCalledTimes(1)
+        expect(query.initializeGranuleQuery).toHaveBeenCalledWith({
+          collectionId: 'C1000000000-EDSC',
+          query: {}
+        })
+
+        expect(actions.initializeCollectionGranulesResults).toHaveBeenCalledTimes(1)
+        expect(actions.initializeCollectionGranulesResults).toHaveBeenCalledWith(collectionId)
+
+        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(getCollectionMetadata).toHaveBeenCalledWith()
+
+        expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+        expect(timeline.getTimeline).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when a collection id is not provided', () => {
+      test('should clear the collection and call changeUrl', async () => {
+        useEdscStore.setState((state) => {
+          state.collection.getCollectionMetadata = jest.fn()
+          state.focusedGranule.changeFocusedGranule = jest.fn()
+          state.query.changeGranuleQuery = jest.fn()
+          state.timeline.getTimeline = jest.fn()
+        })
+
+        mockGetState.mockReturnValue({
+          router: {
+            location: {
+              pathname: '/search/granules',
+              search: '?keyword=modis'
+            }
+          }
+        })
+
+        const zustandState = useEdscStore.getState()
+        const {
+          collection,
+          timeline,
+          query
+        } = zustandState
+        const {
+          setCollectionId,
+          getCollectionMetadata
+        } = collection
+
+        await setCollectionId(null)
+
+        const {
+          collection: updatedCollection,
+          focusedGranule
+        } = useEdscStore.getState()
+        expect(updatedCollection.collectionId).toEqual(null)
+
+        expect(focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
+        expect(focusedGranule.changeFocusedGranule).toHaveBeenCalledWith(null)
+
+        expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
+        expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
+
+        expect(actions.changeUrl).toHaveBeenCalledTimes(1)
+        expect(actions.changeUrl).toHaveBeenCalledWith({
+          pathname: '/search',
+          search: '?keyword=modis'
+        })
+
+        expect(getCollectionMetadata).toHaveBeenCalledTimes(0)
+        expect(query.changeGranuleQuery).toHaveBeenCalledTimes(0)
+        expect(timeline.getTimeline).toHaveBeenCalledTimes(0)
+      })
+    })
+
+    describe('when the granule sort preference is not the default', () => {
+      test('updates the collection and calls getCollectionMetadata', async () => {
+        useEdscStore.setState((state) => {
+          state.collection.getCollectionMetadata = jest.fn()
+          state.preferences.preferences.granuleSort = '-start_date'
+          state.query.initializeGranuleQuery = jest.fn()
+          state.timeline.getTimeline = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const {
+          collection,
+          timeline,
+          query
+        } = zustandState
+        const {
+          setCollectionId,
+          getCollectionMetadata
+        } = collection
+
+        const collectionId = 'C1000000000-EDSC'
+
+        await setCollectionId(collectionId)
+
+        const { collection: updatedCollection } = useEdscStore.getState()
+        expect(updatedCollection.collectionId).toEqual(collectionId)
+
+        expect(query.initializeGranuleQuery).toHaveBeenCalledTimes(1)
+        expect(query.initializeGranuleQuery).toHaveBeenCalledWith({
+          collectionId: 'C1000000000-EDSC',
+          query: {
+            sortKey: '-start_date'
+          }
+        })
+
+        expect(actions.initializeCollectionGranulesResults).toHaveBeenCalledTimes(1)
+        expect(actions.initializeCollectionGranulesResults).toHaveBeenCalledWith(collectionId)
+
+        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(getCollectionMetadata).toHaveBeenCalledWith()
+
+        expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+        expect(timeline.getTimeline).toHaveBeenCalledWith()
+      })
     })
   })
 
   describe('viewCollectionDetails', () => {
-    test('calls changeFocusedCollection and changeUrl', async () => {
+    test('calls setCollectionId and changeUrl', async () => {
       useEdscStore.setState((state) => {
-        state.focusedCollection.changeFocusedCollection = jest.fn()
+        state.collection.setCollectionId = jest.fn()
       })
 
       mockGetState.mockReturnValue({
@@ -1092,13 +1083,13 @@ describe('createFocusedCollectionSlice', () => {
       })
 
       const zustandState = useEdscStore.getState()
-      const { focusedCollection } = zustandState
-      const { changeFocusedCollection, viewCollectionDetails } = focusedCollection
+      const { collection } = zustandState
+      const { setCollectionId, viewCollectionDetails } = collection
 
       await viewCollectionDetails('collection-1')
 
-      expect(changeFocusedCollection).toHaveBeenCalledTimes(1)
-      expect(changeFocusedCollection).toHaveBeenCalledWith('collection-1')
+      expect(setCollectionId).toHaveBeenCalledTimes(1)
+      expect(setCollectionId).toHaveBeenCalledWith('collection-1')
 
       expect(actions.changeUrl).toHaveBeenCalledTimes(1)
       expect(actions.changeUrl).toHaveBeenCalledWith({
@@ -1109,9 +1100,9 @@ describe('createFocusedCollectionSlice', () => {
   })
 
   describe('viewCollectionGranules', () => {
-    test('calls changeFocusedCollection and changeUrl', async () => {
+    test('calls setCollectionId and changeUrl', async () => {
       useEdscStore.setState((state) => {
-        state.focusedCollection.changeFocusedCollection = jest.fn()
+        state.collection.setCollectionId = jest.fn()
       })
 
       mockGetState.mockReturnValue({
@@ -1123,13 +1114,13 @@ describe('createFocusedCollectionSlice', () => {
       })
 
       const zustandState = useEdscStore.getState()
-      const { focusedCollection } = zustandState
-      const { changeFocusedCollection, viewCollectionGranules } = focusedCollection
+      const { collection } = zustandState
+      const { setCollectionId, viewCollectionGranules } = collection
 
       await viewCollectionGranules('collection-1')
 
-      expect(changeFocusedCollection).toHaveBeenCalledTimes(1)
-      expect(changeFocusedCollection).toHaveBeenCalledWith('collection-1')
+      expect(setCollectionId).toHaveBeenCalledTimes(1)
+      expect(setCollectionId).toHaveBeenCalledWith('collection-1')
 
       expect(actions.changeUrl).toHaveBeenCalledTimes(1)
       expect(actions.changeUrl).toHaveBeenCalledWith({

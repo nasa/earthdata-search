@@ -127,17 +127,15 @@ export type FacetParamsSlice = {
   }
 }
 
-export type FocusedCollectionSlice = {
-  /** The Focused Collection Slice of the store */
-  focusedCollection: {
+export type CollectionSlice = {
+  /** The Collection Slice of the store */
+  collection: {
     /** The currently focused collection */
-    focusedCollection: string | null
-    /** Function to set or remove the focused collection and fetch data */
-    changeFocusedCollection: (collectionId: string | null) => void
+    collectionId: string | null
     /** Function to get the focused collection metadata */
-    getFocusedCollection: () => void
+    getCollectionMetadata: () => void
     /** Function to set or remove the focused collection */
-    setFocusedCollection: (collectionId: string | null) => void
+    setCollectionId: (collectionId: string | null) => void
     /** Function to set or remove the focused collection and navigate to the collection details page */
     viewCollectionDetails: (collectionId: string | null) => void
     /** Function to set or remove the focused collection and navigate to the collection granules page */
@@ -950,7 +948,7 @@ export type EdscStore =
   & EarthdataDownloadRedirectSlice
   & EarthdataEnvironmentSlice
   & FacetParamsSlice
-  & FocusedCollectionSlice
+  & CollectionSlice
   & FocusedGranuleSlice
   & HomeSlice
   & MapSlice

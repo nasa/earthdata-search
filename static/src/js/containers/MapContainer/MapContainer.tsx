@@ -54,7 +54,7 @@ import { mapEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../../zustand/selectors/collection'
 import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 
@@ -209,7 +209,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     showMbr: state.map.showMbr,
     startDrawing: state.home.startDrawing
   }))
-  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
+  const focusedCollectionId = useEdscStore(getCollectionId)
   const focusedGranuleId = useEdscStore(getFocusedGranuleId)
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
 

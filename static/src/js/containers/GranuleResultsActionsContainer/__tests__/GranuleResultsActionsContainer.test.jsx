@@ -40,14 +40,14 @@ const setup = setupTest({
     subscriptions: []
   },
   defaultZustandState: {
-    focusedCollection: {
-      focusedCollection: 'focusedCollection'
+    collection: {
+      collectionId: 'collectionId'
     },
     project: {
       collections: {
-        allIds: ['focusedCollection'],
+        allIds: ['collectionId'],
         byId: {
-          focusedCollection: {
+          collectionId: {
             accessMethods: {},
             granules: {
               addedIds: [],
@@ -95,7 +95,7 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = {
@@ -130,7 +130,7 @@ describe('GranuleResultsActionsContainer component', () => {
     expect(GranuleResultsActions).toHaveBeenCalledWith({
       addedGranuleIds: [],
       authToken: 'token',
-      focusedCollectionId: 'focusedCollection',
+      focusedCollectionId: 'collectionId',
       focusedProjectCollection: {
         accessMethods: {},
         granules: {
@@ -152,7 +152,7 @@ describe('GranuleResultsActionsContainer component', () => {
       location: { search: 'value' },
       onChangePath: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
-      projectCollectionIds: ['focusedCollection'],
+      projectCollectionIds: ['collectionId'],
       projectGranuleCount: 100,
       removedGranuleIds: [],
       searchGranuleCount: 100,

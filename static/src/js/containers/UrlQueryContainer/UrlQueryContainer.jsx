@@ -16,7 +16,7 @@ import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../../zustand/selectors/collection'
 import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
 import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
 
@@ -53,7 +53,7 @@ export const UrlQueryContainer = (props) => {
     collectionSortPreference: getCollectionSortPreference(state),
     earthdataEnvironment: getEarthdataEnvironment(state),
     featureFacets: state.facetParams.featureFacets,
-    focusedCollection: getFocusedCollectionId(state),
+    focusedCollection: getCollectionId(state),
     focusedGranule: getFocusedGranuleId(state),
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
     horizontalDataResolutionRangeFacets:

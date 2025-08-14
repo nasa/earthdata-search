@@ -28,9 +28,9 @@ const setup = setupTest({
       byCollectionId: {},
       setDataQualitySummaries: jest.fn()
     },
-    focusedCollection: {
-      focusedCollection: 'collectionId',
-      setFocusedCollection: jest.fn()
+    collection: {
+      collectionId: 'collectionId',
+      setCollectionId: jest.fn()
     },
     project: {
       addGranuleToProjectCollection: jest.fn(),
@@ -125,7 +125,7 @@ describe('ProjectPanelsContainer component', () => {
     expect(ProjectPanels).toHaveBeenCalledTimes(1)
     expect(ProjectPanels).toHaveBeenCalledWith({
       dataQualitySummaries: {},
-      focusedCollectionId: 'collectionId',
+      collectionId: 'collectionId',
       granulesMetadata: props.granulesMetadata,
       granulesQueries: {},
       location: props.location,
@@ -148,7 +148,7 @@ describe('ProjectPanelsContainer component', () => {
         byId: {}
       },
       projectCollectionsMetadata: {},
-      setFocusedCollection: zustandState.focusedCollection.setFocusedCollection,
+      setCollectionId: zustandState.collection.setCollectionId,
       spatial: {},
       temporal: {},
       ursProfile: {}

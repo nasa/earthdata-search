@@ -21,7 +21,7 @@ const setup = setupTest({
   Component: TimelineContainer,
   defaultProps: {
     collectionsMetadata: {
-      focusedCollectionId: {
+      collectionId: {
         title: 'focused'
       },
       projectCollectionId: {
@@ -36,8 +36,8 @@ const setup = setupTest({
     search: '?p=C123456-EDSC'
   },
   defaultZustandState: {
-    focusedCollection: {
-      focusedCollection: 'focusedCollectionId'
+    collection: {
+      collectionId: 'collectionId'
     },
     project: {
       collections: {
@@ -125,7 +125,7 @@ describe('TimelineContainer component', () => {
     expect(Timeline).toHaveBeenCalledWith(
       {
         collectionMetadata: {
-          focusedCollectionId: {
+          collectionId: {
             title: 'focused'
           }
         },

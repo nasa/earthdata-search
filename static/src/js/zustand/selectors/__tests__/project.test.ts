@@ -98,8 +98,8 @@ describe('project selectors', () => {
   describe('getFocusedProjectCollection', () => {
     test('returns the project collection for the focused collection ID', () => {
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collection1'
+        collection: {
+          collectionId: 'collection1'
         },
         project: {
           collections: {
@@ -118,8 +118,8 @@ describe('project selectors', () => {
 
     test('returns an empty object if no focused collection exists', () => {
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collection3' // Not in project collections
+        collection: {
+          collectionId: 'collection3' // Not in project collections
         },
         project: {
           collections: {

@@ -82,7 +82,7 @@ describe('createQuerySlice', () => {
     describe('when there is a focused collection', () => {
       test('updates the collection query and calls getCollections and getSearchGranules', async () => {
         useEdscStore.setState((state) => {
-          state.focusedCollection.focusedCollection = 'collectionId'
+          state.collection.collectionId = 'collectionId'
           state.project.getProjectGranules = jest.fn()
           state.query.collection.byId.collectionId = {
             granules: {
@@ -360,7 +360,7 @@ describe('createQuerySlice', () => {
     describe('when the collectionId is focused and in the projectCollectionIds', () => {
       test('calls getProjectGranules', async () => {
         useEdscStore.setState((state) => {
-          state.focusedCollection.focusedCollection = 'collectionId'
+          state.collection.collectionId = 'collectionId'
           state.project.getProjectGranules = jest.fn()
           state.project.collections.allIds = ['collectionId']
           state.query.collection.byId.collectionId = {

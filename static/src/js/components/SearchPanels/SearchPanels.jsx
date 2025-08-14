@@ -164,7 +164,7 @@ class SearchPanels extends PureComponent {
       onApplyGranuleFilters,
       onChangeQuery,
       onExport,
-      changeFocusedCollection,
+      setCollectionId,
       onMetricsCollectionSortChange,
       onToggleAboutCSDAModal,
       onToggleAboutCwicModal,
@@ -525,7 +525,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             }
           ]
         }
@@ -587,7 +587,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             }
           ]
         }
@@ -627,7 +627,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             },
             {
               title: collectionTitle,
@@ -681,7 +681,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             },
             {
               title: collectionTitle,
@@ -739,7 +739,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             }
           ]
         }
@@ -882,7 +882,7 @@ class SearchPanels extends PureComponent {
 
 SearchPanels.propTypes = {
   authToken: PropTypes.string.isRequired,
-  changeFocusedCollection: PropTypes.func.isRequired,
+  setCollectionId: PropTypes.func.isRequired,
   collectionMetadata: PropTypes.shape({
     conceptId: PropTypes.string,
     consortiums: PropTypes.arrayOf(PropTypes.string),

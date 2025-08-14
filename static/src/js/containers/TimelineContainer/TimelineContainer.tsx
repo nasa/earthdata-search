@@ -19,7 +19,7 @@ import Timeline from '../../components/Timeline/Timeline'
 import type { CollectionMetadata, CollectionsMetadata } from '../../types/sharedTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../../zustand/selectors/collection'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -67,7 +67,7 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
     search: searchLocation
   } = props
 
-  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
+  const focusedCollectionId = useEdscStore(getCollectionId)
   const projectCollectionsIds = useEdscStore(getProjectCollectionsIds)
 
   // Determine the collectionMetadata the timeline should be displaying

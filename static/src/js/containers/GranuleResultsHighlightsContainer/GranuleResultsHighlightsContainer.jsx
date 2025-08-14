@@ -14,7 +14,7 @@ import GranuleResultsHighlights from '../../components/GranuleResultsHighlights/
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../../zustand/selectors/collection'
 
 export const mapStateToProps = (state) => ({
   focusedCollectionGranuleMetadata: getFocusedCollectionGranuleMetadata(state),
@@ -31,7 +31,7 @@ export const GranuleResultsHighlightsContainer = ({
     isOpenSearch
   } = focusedCollectionMetadata
 
-  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
+  const focusedCollectionId = useEdscStore(getCollectionId)
   const collectionsQuery = useEdscStore(getCollectionsQuery)
 
   const { [focusedCollectionId]: collectionQueryResults = {} } = collectionsQuery

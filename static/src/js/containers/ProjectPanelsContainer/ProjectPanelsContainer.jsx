@@ -11,7 +11,7 @@ import ProjectPanels from '../../components/ProjectPanels/ProjectPanels'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../../zustand/selectors/collection'
 import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 
 export const mapStateToProps = (state) => ({
@@ -51,7 +51,7 @@ export const ProjectPanelsContainer = ({
     removeGranuleFromProjectCollection,
     selectAccessMethod,
     setActivePanel,
-    setFocusedCollection,
+    setCollectionId,
     setPanelGroup,
     togglePanels,
     updateAccessMethod
@@ -63,12 +63,12 @@ export const ProjectPanelsContainer = ({
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     selectAccessMethod: state.project.selectAccessMethod,
     setActivePanel: state.projectPanels.setActivePanel,
-    setFocusedCollection: state.focusedCollection.setFocusedCollection,
+    setCollectionId: state.collection.setCollectionId,
     setPanelGroup: state.projectPanels.setPanelGroup,
     togglePanels: state.projectPanels.setIsOpen,
     updateAccessMethod: state.project.updateAccessMethod
   }))
-  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
+  const collectionId = useEdscStore(getCollectionId)
   const projectCollectionsMetadata = useEdscStore(getProjectCollectionsMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const {
@@ -81,7 +81,7 @@ export const ProjectPanelsContainer = ({
   return (
     <ProjectPanels
       dataQualitySummaries={dataQualitySummaries}
-      focusedCollectionId={focusedCollectionId}
+      collectionId={collectionId}
       granulesMetadata={granulesMetadata}
       granulesQueries={granulesQueries}
       location={location}
@@ -97,7 +97,7 @@ export const ProjectPanelsContainer = ({
       panels={panelsData}
       projectCollections={projectCollections}
       projectCollectionsMetadata={projectCollectionsMetadata}
-      setFocusedCollection={setFocusedCollection}
+      setCollectionId={setCollectionId}
       spatial={spatial}
       temporal={temporal}
       ursProfile={ursProfile}

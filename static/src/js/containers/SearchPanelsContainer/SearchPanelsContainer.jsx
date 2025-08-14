@@ -74,11 +74,11 @@ export const SearchPanelsContainer = ({
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const {
-    changeFocusedCollection,
+    setCollectionId,
     changeQuery,
     changeGranuleQuery
   } = useEdscStore((state) => ({
-    changeFocusedCollection: state.focusedCollection.changeFocusedCollection,
+    setCollectionId: state.collection.setCollectionId,
     changeQuery: state.query.changeQuery,
     changeGranuleQuery: state.query.changeGranuleQuery
   }))
@@ -96,7 +96,7 @@ export const SearchPanelsContainer = ({
       isExportRunning={isExportRunning}
       location={location}
       onApplyGranuleFilters={changeGranuleQuery}
-      changeFocusedCollection={changeFocusedCollection}
+      setCollectionId={setCollectionId}
       onChangePath={onChangePath}
       onChangeQuery={changeQuery}
       onMetricsCollectionSortChange={onMetricsCollectionSortChange}

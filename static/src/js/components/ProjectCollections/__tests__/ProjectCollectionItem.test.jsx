@@ -43,8 +43,8 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
-    focusedCollection: {
-      setFocusedCollection: jest.fn(),
+    collection: {
+      setCollectionId: jest.fn(),
       viewCollectionDetails: jest.fn(),
       viewCollectionGranules: jest.fn()
     },
@@ -322,8 +322,8 @@ describe('ProjectCollectionItem component', () => {
       const button = screen.getByRole('button', { name: 'Collection Details' })
       await user.click(button)
 
-      expect(zustandState.focusedCollection.viewCollectionDetails).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.viewCollectionDetails).toHaveBeenCalledWith('collectionId')
+      expect(zustandState.collection.viewCollectionDetails).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.viewCollectionDetails).toHaveBeenCalledWith('collectionId')
     })
   })
 
@@ -339,13 +339,13 @@ describe('ProjectCollectionItem component', () => {
       const button = screen.getByRole('button', { name: 'View Granules' })
       await user.click(button)
 
-      expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledWith('collectionId')
+      expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledWith('collectionId')
     })
   })
 
   describe('when clicking Edit options', () => {
-    test('calls onSetActivePanelSection and setFocusedCollection and onTogglePanels', async () => {
+    test('calls onSetActivePanelSection and setCollectionId and onTogglePanels', async () => {
       const { props, user, zustandState } = setup()
 
       const button = screen.getByRole('button', { name: 'Edit options' })
@@ -354,8 +354,8 @@ describe('ProjectCollectionItem component', () => {
       expect(props.onSetActivePanelSection).toHaveBeenCalledTimes(1)
       expect(props.onSetActivePanelSection).toHaveBeenCalledWith('0')
 
-      expect(zustandState.focusedCollection.setFocusedCollection).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.setFocusedCollection).toHaveBeenCalledWith('collectionId')
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith('collectionId')
 
       expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
       expect(props.onTogglePanels).toHaveBeenCalledWith(true)
@@ -363,7 +363,7 @@ describe('ProjectCollectionItem component', () => {
   })
 
   describe('when clicking the collection title', () => {
-    test('calls onTogglePanels setFocusedCollection and onSetActivePanelSection', async () => {
+    test('calls onTogglePanels setCollectionId and onSetActivePanelSection', async () => {
       const { props, user, zustandState } = setup()
 
       const title = screen.getByRole('heading', { name: 'Collection Title' })
@@ -372,8 +372,8 @@ describe('ProjectCollectionItem component', () => {
       expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
       expect(props.onTogglePanels).toHaveBeenCalledWith(true)
 
-      expect(zustandState.focusedCollection.setFocusedCollection).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.setFocusedCollection).toHaveBeenCalledWith('collectionId')
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith('collectionId')
 
       expect(props.onSetActivePanelSection).toHaveBeenCalledTimes(1)
       expect(props.onSetActivePanelSection).toHaveBeenCalledWith('1')

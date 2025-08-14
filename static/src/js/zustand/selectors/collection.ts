@@ -3,6 +3,6 @@ import { EdscStore } from '../types'
 /**
  * Retrieve the id of the focused collection
  */
-export const getFocusedCollectionId = (
+export const getCollectionId = (
   state: EdscStore
-) => state.focusedCollection.focusedCollection || ''
+) => state.collection.collectionId || ''

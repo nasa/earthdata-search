@@ -35,7 +35,7 @@ import RetrievalRequest from '../util/request/retrievalRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../zustand/selectors/collection'
 
 const { granuleLinksPageSize, openSearchGranuleLinksPageSize } = getApplicationConfig()
 
@@ -242,7 +242,7 @@ export const getSearchGranules = () => (dispatch, getState) => {
 
   const zustandState = useEdscStore.getState()
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
-  const collectionId = getFocusedCollectionId(zustandState)
+  const collectionId = getCollectionId(zustandState)
 
   const { authToken } = state
 

@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { isGetFocusedCollectionsQuery } from '../../support/isGetFocusedCollectionsQuery'
+import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import { isGetFocusedGranuleQuery } from '../../support/isGetFocusedGranuleQuery'
 import {
   interceptUnauthenticatedCollections
@@ -98,7 +98,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         await page.route(/api$/, async (route) => {
-          expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+          expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
           await route.fulfill({
             json: cmrGranulesCollectionGraphQlBody,
@@ -277,14 +277,14 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.route(/api$/, async (route) => {
-        if (isGetFocusedCollectionsQuery(route, conceptIdOne)) {
+        if (isGetCollectionQuery(route, conceptIdOne)) {
           await route.fulfill({
             json: colormapCollectionOneGraphQlBody,
             headers: colormapCollectionGraphQlHeaders
           })
         }
 
-        if (isGetFocusedCollectionsQuery(route, conceptIdTwo)) {
+        if (isGetCollectionQuery(route, conceptIdTwo)) {
           await route.fulfill({
             json: colormapCollectionTwoGraphQlBody,
             headers: colormapCollectionGraphQlHeaders
@@ -419,7 +419,7 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.route(/api$/, async (route) => {
-        if (isGetFocusedCollectionsQuery(route, conceptId)) {
+        if (isGetCollectionQuery(route, conceptId)) {
           await route.fulfill({
             json: granuleCrossingCollectionGraphQlBody,
             headers: cmrGranulesCollectionGraphQlHeaders
@@ -492,7 +492,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         await page.route(/api$/, async (route) => {
-          if (isGetFocusedCollectionsQuery(route, conceptId)) {
+          if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: gibsCollectionGraphQlBody,
               headers: gibsCollectionGraphQlHeaders

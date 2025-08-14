@@ -8,7 +8,7 @@ describe('getFocusedCollectionGranuleResults selector', () => {
   test('returns the granule results', () => {
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const state = {
@@ -41,7 +41,7 @@ describe('getFocusedCollectionGranuleMetadata selector', () => {
   test('returns the granule metadata', () => {
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const state = {

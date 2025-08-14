@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { isGetFocusedCollectionsQuery } from '../../support/isGetFocusedCollectionsQuery'
+import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
@@ -1819,7 +1819,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       await page.route(/api$/, async (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         await route.fulfill({
           json: opensearchGranulesCollectionGraphQlBody,

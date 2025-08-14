@@ -31,8 +31,8 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
-    focusedCollection: {
-      changeFocusedCollection: jest.fn()
+    collection: {
+      setCollectionId: jest.fn()
     }
   }
 })
@@ -55,7 +55,7 @@ describe('Related Collections', () => {
   })
 
   describe('when clicking a related collection', () => {
-    test('calls onMetricsRelatedCollection and changeFocusedCollection', async () => {
+    test('calls onMetricsRelatedCollection and setCollectionId', async () => {
       const { props, user, zustandState } = setup()
 
       const button = screen.getByText('Test Title 1')
@@ -67,8 +67,8 @@ describe('Related Collections', () => {
         collectionId: 'TEST_COLLECTION_1'
       })
 
-      expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledWith('TEST_COLLECTION_1')
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith('TEST_COLLECTION_1')
     })
   })
 })

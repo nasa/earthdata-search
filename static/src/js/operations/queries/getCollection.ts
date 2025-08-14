@@ -1,5 +1,5 @@
-const GET_FOCUSED_COLLECTION = `
-  query GetFocusedCollection(
+const GET_COLLECTION = `
+  query GetCollection(
     $params: CollectionInput
     $subcriptionParams: SubscriptionsInput
     $variableParams: VariablesInput
@@ -107,4 +107,4 @@ const GET_FOCUSED_COLLECTION = `
   }
 `
 
-export default GET_FOCUSED_COLLECTION
+export default GET_COLLECTION

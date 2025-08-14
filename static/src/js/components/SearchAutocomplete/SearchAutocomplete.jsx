@@ -43,13 +43,13 @@ const SearchAutocomplete = ({
 
   const {
     addCmrFacetFromAutocomplete,
-    changeFocusedCollection,
+    setCollectionId,
     changeQuery,
     earthdataEnvironment,
     setOpenFacetGroup
   } = useEdscStore((state) => ({
     addCmrFacetFromAutocomplete: state.facetParams.addCmrFacetFromAutocomplete,
-    changeFocusedCollection: state.focusedCollection.changeFocusedCollection,
+    setCollectionId: state.collection.setCollectionId,
     changeQuery: state.query.changeQuery,
     earthdataEnvironment: getEarthdataEnvironment(state),
     setOpenFacetGroup: state.home.setOpenFacetGroup
@@ -186,7 +186,7 @@ const SearchAutocomplete = ({
       // Cancel any in-flight autocomplete requests
       cancelAutocomplete()
 
-      changeFocusedCollection('')
+      setCollectionId(null)
       changeQuery({
         collection: {
           keyword: keywordSearch

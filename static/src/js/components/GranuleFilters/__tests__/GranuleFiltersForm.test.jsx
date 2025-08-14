@@ -38,8 +38,8 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
-    focusedCollection: {
-      focusedCollection: 'collectionId'
+    collection: {
+      collectionId: 'collectionId'
     }
   },
   withRedux: true

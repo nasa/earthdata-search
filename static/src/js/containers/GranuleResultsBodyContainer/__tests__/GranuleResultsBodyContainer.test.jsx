@@ -28,13 +28,13 @@ const setup = setupTest({
     panelView: 'list'
   },
   defaultZustandState: {
-    focusedCollection: {
-      focusedCollection: 'focusedCollection'
+    collection: {
+      collectionId: 'collectionId'
     },
     query: {
       collection: {
         byId: {
-          focusedCollection: {}
+          collectionId: {}
         }
       },
       changeGranuleQuery: jest.fn(),
@@ -104,7 +104,7 @@ describe('GranuleResultsBodyContainer component', () => {
 
     expect(GranuleResultsBody).toHaveBeenCalledTimes(1)
     expect(GranuleResultsBody).toHaveBeenCalledWith({
-      collectionId: 'focusedCollection',
+      collectionId: 'collectionId',
       collectionTags: {},
       directDistributionInformation: {},
       generateNotebook: {},
@@ -127,7 +127,7 @@ describe('GranuleResultsBodyContainer component', () => {
 
     expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledWith({
-      collectionId: 'focusedCollection',
+      collectionId: 'collectionId',
       query: {
         pageNum: 2
       }

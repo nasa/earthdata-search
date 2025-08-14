@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { isGetFocusedCollectionsQuery } from '../../../../../support/isGetFocusedCollectionsQuery'
+import { isGetCollectionQuery } from '../../../../../support/isGetCollectionQuery'
 import { setupTests } from '../../../../../support/setupTests'
 
 import collectionsBody from './__mocks__/collections.body.json'
@@ -27,7 +27,7 @@ test.describe('Path /search/granules/granule-details', () => {
     const granuleHits = 1074221
 
     await page.route(/graphql.*\/api/, (route) => {
-      if (isGetFocusedCollectionsQuery(route, collectionId)) {
+      if (isGetCollectionQuery(route, collectionId)) {
         route.fulfill({
           json: getCollectionGraphQlBody,
           headers: graphQlHeaders

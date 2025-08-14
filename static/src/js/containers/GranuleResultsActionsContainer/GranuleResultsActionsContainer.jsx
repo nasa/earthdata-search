@@ -20,7 +20,7 @@ import { getHandoffLinks } from '../../util/handoffs/getHandoffLinks'
 import GranuleResultsActions from '../../components/GranuleResults/GranuleResultsActions'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getCollectionId } from '../../zustand/selectors/collection'
 import {
   getFocusedProjectCollection,
   getProjectCollectionsIds
@@ -60,7 +60,7 @@ export const GranuleResultsActionsContainer = (props) => {
   }))
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
-  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
+  const focusedCollectionId = useEdscStore(getCollectionId)
 
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
   const projectCollectionIds = useEdscStore(getProjectCollectionsIds)

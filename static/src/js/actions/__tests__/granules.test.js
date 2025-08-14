@@ -57,7 +57,7 @@ describe('getSearchGranules', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = mockStore({
@@ -158,7 +158,7 @@ describe('getSearchGranules', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = mockStore({
@@ -251,7 +251,7 @@ describe('getSearchGranules', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = mockStore({
@@ -366,7 +366,7 @@ describe('getSearchGranules', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = mockStore({
@@ -497,7 +497,7 @@ describe('getSearchGranules', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = mockStore({

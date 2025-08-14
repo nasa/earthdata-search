@@ -13,7 +13,7 @@ import actions from '../../actions'
 // @ts-expect-error This file does not have types
 import { CLEAR_FILTERS } from '../../constants/actionTypes'
 
-import { getFocusedCollectionId } from '../selectors/focusedCollection'
+import { getCollectionId } from '../selectors/collection'
 import { getProjectCollectionsIds } from '../selectors/project'
 
 import isPath from '../../util/isPath'
@@ -86,7 +86,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
       // If there is a focused collection, update it's granule search params
       // and request it's granules started with page one
-      const focusedCollectionId = getFocusedCollectionId(get())
+      const focusedCollectionId = getCollectionId(get())
       if (focusedCollectionId) {
         set((state) => ({
           query: {
@@ -143,7 +143,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       })
 
-      const focusedCollectionId = getFocusedCollectionId(get())
+      const focusedCollectionId = getCollectionId(get())
       const projectCollectionsIds = getProjectCollectionsIds(get())
       if (focusedCollectionId && projectCollectionsIds.includes(focusedCollectionId)) {
         await get().project.getProjectGranules()

@@ -15,7 +15,7 @@ import {
 // @ts-expect-error The file does not have types
 } from '../../selectors/subscriptions'
 
-import { getFocusedCollectionId } from './focusedCollection'
+import { getCollectionId } from './collection'
 
 // @ts-expect-error The file does not have types
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
@@ -73,7 +73,7 @@ export const getCollectionsQueryTemporal = (state: EdscStore) => {
  * Retrieve query information pertaining to the focused collection id
  */
 export const getFocusedCollectionGranuleQuery = (state: EdscStore) => {
-  const focusedCollectionId = getFocusedCollectionId(state)
+  const focusedCollectionId = getCollectionId(state)
 
   if (!focusedCollectionId) return {}
 

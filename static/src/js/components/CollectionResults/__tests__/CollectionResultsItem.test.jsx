@@ -21,7 +21,7 @@ const setup = setupTest({
   Component: CollectionResultsItem,
   defaultProps: collectionListItemProps,
   defaultZustandState: {
-    focusedCollection: {
+    collection: {
       viewCollectionDetails: jest.fn(),
       viewCollectionGranules: jest.fn()
     },
@@ -58,8 +58,8 @@ describe('CollectionResultsList component', () => {
 
     await user.click(collectionResultLink)
 
-    expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledWith('collectionId1')
-    expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledTimes(1)
+    expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledWith('collectionId1')
+    expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledTimes(1)
   })
 
   test('renders the add button under PortalFeatureContainer', async () => {
@@ -142,7 +142,7 @@ describe('CollectionResultsList component', () => {
       const collectionDetailsButton = screen.getByRole('button', { name: 'View collection details' })
       await user.type(collectionDetailsButton, '{a}')
 
-      expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledTimes(0)
+      expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledTimes(0)
     })
 
     test('calls viewCollectionGranules on enter press', async () => {
@@ -151,8 +151,8 @@ describe('CollectionResultsList component', () => {
       const collectionDetailsButton = screen.getByRole('button', { name: 'View collection details' })
       await user.type(collectionDetailsButton, '{Enter}')
 
-      expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledWith('collectionId1')
+      expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledWith('collectionId1')
     })
   })
 
@@ -473,8 +473,8 @@ describe('CollectionResultsList component', () => {
 
       await user.click(screen.getByRole('button', { name: 'View collection details' }))
 
-      expect(zustandState.focusedCollection.viewCollectionDetails).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.viewCollectionDetails).toHaveBeenCalledWith('collectionId1')
+      expect(zustandState.collection.viewCollectionDetails).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.viewCollectionDetails).toHaveBeenCalledWith('collectionId1')
     })
   })
 

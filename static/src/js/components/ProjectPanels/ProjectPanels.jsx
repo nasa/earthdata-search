@@ -32,7 +32,7 @@ import './ProjectPanels.scss'
 /**
  * Renders ProjectPanels.
  * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
- * @param {String} focusedCollectionId - The focused collection ID.
+ * @param {String} collectionId - The focused collection ID.
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
@@ -48,7 +48,7 @@ import './ProjectPanels.scss'
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  * @param {Function} onTogglePanels - Toggles the panels opened or closed.
  * @param {Function} onUpdateAccessMethod - Callback to update the access method.
- * @param {Function} setFocusedCollection - Callback to update the focused collection.
+ * @param {Function} setCollectionId - Callback to update the focused collection.
  */
 class ProjectPanels extends PureComponent {
   constructor(props) {
@@ -73,7 +73,7 @@ class ProjectPanels extends PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const {
-      focusedCollectionId,
+      collectionId: focusedCollectionId,
       onSetActivePanelGroup,
       onTogglePanels,
       panels
@@ -81,7 +81,7 @@ class ProjectPanels extends PureComponent {
 
     const {
       projectCollections: nextProjectCollections,
-      focusedCollectionId: nextFocusedCollection
+      collectionId: nextFocusedCollection
     } = nextProps
 
     const { byId, allIds } = nextProjectCollections
@@ -132,8 +132,8 @@ class ProjectPanels extends PureComponent {
   }
 
   onPanelClose() {
-    const { onTogglePanels, setFocusedCollection } = this.props
-    setFocusedCollection('')
+    const { onTogglePanels, setCollectionId } = this.props
+    setCollectionId(null)
     onTogglePanels(false)
   }
 
@@ -141,7 +141,7 @@ class ProjectPanels extends PureComponent {
     const {
       onSetActivePanel,
       onTogglePanels,
-      setFocusedCollection,
+      setCollectionId,
       projectCollections
     } = this.props
 
@@ -150,7 +150,7 @@ class ProjectPanels extends PureComponent {
     const newFocusedCollectionIndex = activePanel.split('.')[1]
     const newFocusedCollectionId = allIds[newFocusedCollectionIndex]
 
-    setFocusedCollection(newFocusedCollectionId)
+    setCollectionId(newFocusedCollectionId)
     onSetActivePanel(activePanel)
     onTogglePanels(true)
   }
@@ -679,7 +679,7 @@ class ProjectPanels extends PureComponent {
 
 ProjectPanels.propTypes = {
   dataQualitySummaries: PropTypes.shape({}).isRequired,
-  focusedCollectionId: PropTypes.string.isRequired,
+  collectionId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   granulesQueries: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
@@ -690,7 +690,7 @@ ProjectPanels.propTypes = {
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
-  setFocusedCollection: PropTypes.func.isRequired,
+  setCollectionId: PropTypes.func.isRequired,
   overrideTemporal: PropTypes.shape({}).isRequired,
   panels: PropTypes.shape({
     activePanel: PropTypes.string,

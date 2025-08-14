@@ -78,9 +78,9 @@ export const updateStore = ({
           featureFacets,
           cmrFacets
         },
-        focusedCollection: {
-          ...zustandState.focusedCollection,
-          focusedCollection
+        collection: {
+          ...zustandState.collection,
+          collectionId: focusedCollection
         },
         focusedGranule: {
           ...zustandState.focusedGranule,
@@ -172,8 +172,8 @@ export const changePath = (path = '') => async (dispatch) => {
     await dispatch(actions.updateStore(decodedParams, pathname))
   }
 
-  const { focusedCollection, focusedGranule } = zustandState
-  const { getFocusedCollection } = focusedCollection
+  const { collection, focusedGranule } = zustandState
+  const { getCollectionMetadata } = collection
   const { getFocusedGranule } = focusedGranule
 
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
@@ -191,7 +191,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules'
       || pathname.match(/\/portal\/\w*\/search\/granules$/)
     ) {
-      await getFocusedCollection()
+      await getCollectionMetadata()
     }
 
     // Collection Details
@@ -199,7 +199,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/collection-details'
       || pathname.match(/\/portal\/\w*\/search\/granules\/collection-details$/)
     ) {
-      await getFocusedCollection()
+      await getCollectionMetadata()
     }
 
     // Subscription Details
@@ -207,7 +207,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/subscriptions'
       || pathname.match(/\/portal\/\w*\/search\/granules\/subscriptions$/)
     ) {
-      await getFocusedCollection()
+      await getCollectionMetadata()
     }
 
     // Granule Details
@@ -215,7 +215,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/granule-details'
       || pathname.match(/\/portal\/\w*\/search\/granules\/granule-details$/)
     ) {
-      await getFocusedCollection()
+      await getCollectionMetadata()
 
       await getFocusedGranule()
     }

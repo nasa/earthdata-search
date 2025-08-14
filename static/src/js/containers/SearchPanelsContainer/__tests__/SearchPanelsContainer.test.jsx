@@ -166,7 +166,7 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledWith(
       {
         authToken: '',
-        changeFocusedCollection: zustandState.focusedCollection.changeFocusedCollection,
+        setCollectionId: zustandState.collection.setCollectionId,
         collectionMetadata: {},
         collectionQuery: initialState.collection,
         collectionSubscriptions: [],

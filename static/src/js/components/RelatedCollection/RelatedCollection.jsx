@@ -14,8 +14,8 @@ export const RelatedCollection = ({
   onMetricsRelatedCollection,
   relatedCollection
 }) => {
-  const changeFocusedCollection = useEdscStore(
-    (state) => state.focusedCollection.changeFocusedCollection
+  const setCollectionId = useEdscStore(
+    (state) => state.collection.setCollectionId
   )
 
   const { id, title } = relatedCollection
@@ -41,7 +41,7 @@ export const RelatedCollection = ({
             type: 'view'
           })
 
-          changeFocusedCollection(id)
+          setCollectionId(id)
         }
       }
       to={
