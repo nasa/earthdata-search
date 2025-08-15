@@ -13,13 +13,12 @@ type CoordinateInput = Coordinate | LineString | Polygon | MultiPolygon
 
 // Remove altitude from coordinate arrays recursively
 const removeAltitudeFromCoordinates = (coordinates: CoordinateInput): CoordinateInput => {
-  if (!Array.isArray(coordinates)) return coordinates
-
   if (typeof coordinates[0] === 'number') {
     return (coordinates as Coordinate).slice(0, 2) as Coordinate
   }
 
-  return (coordinates as (LineString | Polygon | MultiPolygon)).map(removeAltitudeFromCoordinates) as CoordinateInput
+  return (coordinates as (LineString | Polygon | MultiPolygon))
+    .map(removeAltitudeFromCoordinates) as CoordinateInput
 }
 
 // Get a CMR spatial query from the given feature
