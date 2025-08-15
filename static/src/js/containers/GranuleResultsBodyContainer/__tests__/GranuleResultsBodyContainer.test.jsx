@@ -18,12 +18,10 @@ const setup = setupTest({
   defaultProps: {
     collectionMetadata: {},
     collectionTags: {},
-    focusedGranuleId: '',
     generateNotebook: {},
     granuleSearchResults: {},
     granulesMetadata: {},
     location: { search: 'value' },
-    onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
@@ -46,16 +44,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedGranule')
-
-    mapDispatchToProps(dispatch).onFocusedGranuleChange('granuleId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('granuleId')
-  })
-
   test('onGenerateNotebook calls actions.generateNotebook', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'generateNotebook')
@@ -93,7 +81,6 @@ describe('mapStateToProps', () => {
       metadata: {
         collections: {}
       },
-      focusedGranule: 'granuleId',
       ui: {
         generateNotebook: {}
       }
@@ -102,7 +89,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionMetadata: {},
       collectionTags: {},
-      focusedGranuleId: 'granuleId',
       generateNotebook: {},
       granuleSearchResults: {},
       granulesMetadata: {}
@@ -121,14 +107,12 @@ describe('GranuleResultsBodyContainer component', () => {
       collectionId: 'focusedCollection',
       collectionTags: {},
       directDistributionInformation: {},
-      focusedGranuleId: '',
       generateNotebook: {},
       granuleSearchResults: {},
       granulesMetadata: {},
       isOpenSearch: false,
       loadNextPage: expect.any(Function),
       location: { search: 'value' },
-      onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),

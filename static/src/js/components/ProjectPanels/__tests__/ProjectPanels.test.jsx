@@ -52,7 +52,6 @@ function setup(overrideProps) {
     },
     dataQualitySummaries: {},
     focusedCollectionId: '',
-    focusedGranuleId: '',
     granulesMetadata: {},
     granulesQueries: {},
     projectCollections: {
@@ -90,7 +89,6 @@ function setup(overrideProps) {
     onUpdateAccessMethod: jest.fn(),
     onSetActivePanelGroup: jest.fn(),
     setFocusedCollection: jest.fn(),
-    onFocusedGranuleChange: jest.fn(),
     onChangeProjectGranulePageNum: jest.fn(),
     ...overrideProps
   }

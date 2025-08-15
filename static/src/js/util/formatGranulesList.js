@@ -18,13 +18,13 @@ import { createDataLinks } from './granules'
  * @returns {GranuleListInfo} - The return object
  */
 export const formatGranulesList = ({
+  changeFocusedGranule,
+  focusedGranuleId,
   granuleIds,
   granulesMetadata,
   hoveredGranuleId,
-  focusedGranuleId,
-  isGranuleInProject,
   isCollectionInProject,
-  onFocusedGranuleChange
+  isGranuleInProject
 }) => {
   let hasBrowseImagery = false
 
@@ -65,7 +65,7 @@ export const formatGranulesList = ({
     const handleClick = () => {
       let focusedGranule = original
       if (id === focusedGranuleId) focusedGranule = null
-      onFocusedGranuleChange(focusedGranule ? focusedGranule.id : '')
+      changeFocusedGranule(focusedGranule ? focusedGranule.id : null)
       eventEmitter.emit(`map.layer.${collectionConceptId}.focusGranule`, { granule: focusedGranule })
     }
 

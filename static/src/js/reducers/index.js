@@ -12,7 +12,6 @@ import colorMapsReducer from './colorMaps'
 import contactInfoReducer from './contactInfo'
 import errorsReducer from './errors'
 import facetsReducer from './facets'
-import focusedGranuleReducer from './focusedGranule'
 import granuleDownloadReducer from './granuleDownload'
 import granuleMetadataReducer from './granuleMetadata'
 import regionResultsReducer from './regionResults'
@@ -33,7 +32,6 @@ export default (history) => combineReducers({
   authToken: authTokenReducer,
   contactInfo: contactInfoReducer,
   errors: errorsReducer,
-  focusedGranule: focusedGranuleReducer,
   granuleDownload: granuleDownloadReducer,
   metadata: combineReducers({
     collections: collectionMetadataReducer,

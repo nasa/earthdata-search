@@ -1,6 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { isGetFocusedCollectionsQuery } from '../../support/isGetFocusedCollectionsQuery'
+import { isGetFocusedGranuleQuery } from '../../support/isGetFocusedGranuleQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
@@ -135,9 +136,7 @@ test.describe('Map: Granule interactions', () => {
       test.describe('When clicking on a granule', () => {
         test.beforeEach(async ({ page }) => {
           await page.route(/api$/, async (route) => {
-            const query = route.request().postData()
-
-            expect(query).toEqual('{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G2061166811-ASF"}}}')
+            expect(isGetFocusedGranuleQuery(route, 'G2061166811-ASF')).toEqual(true)
 
             await route.fulfill({
               json: granuleGraphQlBody,
@@ -420,8 +419,6 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.route(/api$/, async (route) => {
-        const query = route.request().postData()
-
         if (isGetFocusedCollectionsQuery(route, conceptId)) {
           await route.fulfill({
             json: granuleCrossingCollectionGraphQlBody,
@@ -429,7 +426,7 @@ test.describe('Map: Granule interactions', () => {
           })
         }
 
-        if (query === `{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"${conceptId}"}}}`) {
+        if (isGetFocusedGranuleQuery(route, 'G1259235357-ASDC_DEV2')) {
           await route.fulfill({
             json: granuleCrossingGranuleGraphQlBody,
             headers: { 'content-type': 'application/json' }
@@ -495,8 +492,6 @@ test.describe('Map: Granule interactions', () => {
         })
 
         await page.route(/api$/, async (route) => {
-          const query = route.request().postData()
-
           if (isGetFocusedCollectionsQuery(route, conceptId)) {
             await route.fulfill({
               json: gibsCollectionGraphQlBody,
@@ -504,7 +499,7 @@ test.describe('Map: Granule interactions', () => {
             })
           }
 
-          if (query === '{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G3453056435-LARC_CLOUD"}}}') {
+          if (isGetFocusedGranuleQuery(route, 'G3453056435-LARC_CLOUD')) {
             await route.fulfill({
               json: gibsGranuleGraphQlBody,
               headers: { 'content-type': 'application/json' }

@@ -22,6 +22,9 @@ import Button from '../Button/Button'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import EDSCImage from '../EDSCImage/EDSCImage'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+
 import './GranuleResultsFocusedMeta.scss'
 
 /**
@@ -33,9 +36,10 @@ import './GranuleResultsFocusedMeta.scss'
  */
 const GranuleResultsFocusedMeta = ({
   focusedGranuleMetadata,
-  focusedGranuleId,
   onMetricsBrowseGranuleImage
 }) => {
+  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+
   const { title, links = [], browseFlag } = focusedGranuleMetadata
   const [activeBrowseImageIndex, setActiveBrowseImageIndex] = useState(0)
   const [activeModalBrowseImageIndex, setActiveModalBrowseImageIndex] = useState(0)
@@ -479,7 +483,6 @@ const GranuleResultsFocusedMeta = ({
 }
 
 GranuleResultsFocusedMeta.propTypes = {
-  focusedGranuleId: PropTypes.string.isRequired,
   focusedGranuleMetadata: PropTypes.shape({
     browseFlag: PropTypes.bool,
     conceptId: PropTypes.string,

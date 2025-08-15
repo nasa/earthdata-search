@@ -42,7 +42,6 @@ export const GranuleResultsListItem = memo(({
     location,
     numColumns,
     onExcludeGranule,
-    onFocusedGranuleChange,
     onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
@@ -116,7 +115,6 @@ export const GranuleResultsListItem = memo(({
           location={location}
           onExcludeGranule={onExcludeGranule}
           onGenerateNotebook={onGenerateNotebook}
-          onFocusedGranuleChange={onFocusedGranuleChange}
           onMetricsDataAccess={onMetricsDataAccess}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           readableGranuleName={readableGranuleName}
@@ -144,7 +142,6 @@ GranuleResultsListItem.propTypes = {
     location: PropTypes.shape({}),
     numColumns: PropTypes.number,
     onExcludeGranule: PropTypes.func,
-    onFocusedGranuleChange: PropTypes.func,
     onGenerateNotebook: PropTypes.func,
     onMetricsAddGranuleProject: PropTypes.func,
     onMetricsDataAccess: PropTypes.func,

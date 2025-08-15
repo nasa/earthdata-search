@@ -19,6 +19,7 @@ import GranuleResultsListItem from './GranuleResultsListItem'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
+import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
 
 import './GranuleResultsList.scss'
 
@@ -74,7 +75,6 @@ innerElementType.propTypes = {
  * @param {Function} props.loadMoreItems - Callback to load more granules.
  * @param {Object} props.location - Location passed from react router.
  * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
- * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
@@ -89,7 +89,6 @@ export const GranuleResultsListBody = ({
   collectionTags,
   directDistributionInformation,
   excludedGranuleIds,
-  focusedGranuleId,
   generateNotebook,
   granules,
   height,
@@ -100,7 +99,6 @@ export const GranuleResultsListBody = ({
   itemCount,
   loadMoreItems,
   location,
-  onFocusedGranuleChange,
   onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
@@ -109,6 +107,7 @@ export const GranuleResultsListBody = ({
   visibleMiddleIndex,
   width
 }) => {
+  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
   const excludeGranule = useEdscStore((state) => state.query.excludeGranule)
   const collectionQuerySpatial = useEdscStore(getCollectionsQuerySpatial)
 
@@ -250,7 +249,6 @@ export const GranuleResultsListBody = ({
                 location,
                 numColumns,
                 onExcludeGranule: excludeGranule,
-                onFocusedGranuleChange,
                 onGenerateNotebook,
                 onMetricsAddGranuleProject,
                 onMetricsDataAccess,
@@ -299,7 +297,6 @@ GranuleResultsListBody.propTypes = {
   collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  focusedGranuleId: PropTypes.string.isRequired,
   generateNotebook: PropTypes.shape({}).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
@@ -310,7 +307,6 @@ GranuleResultsListBody.propTypes = {
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
   location: locationPropType.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,

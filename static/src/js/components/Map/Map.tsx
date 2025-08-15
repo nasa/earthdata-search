@@ -283,7 +283,7 @@ interface MapProps {
   /** Flag to show if this is a project page */
   isProjectPage: boolean
   /** Function to call when the focused granule is changed */
-  onChangeFocusedGranule: (granuleId: string) => void
+  changeFocusedGranule: (granuleId: string | null) => void
   /** Function to call when the map is updated */
   onChangeMap: (mapView: Partial<MapView>) => void
   /** Function to call when the projection is changed */
@@ -340,7 +340,7 @@ interface MapProps {
  * @param {String} params.granulesKey Key to determine if the granules have changed
  * @param {String} params.focusedCollectionId Collection ID of the focused collection
  * @param {String} params.focusedGranuleId Granule ID of the focused granule
- * @param {Function} params.onChangeFocusedGranule Function to call when the focused granule is changed
+ * @param {Function} params.changeFocusedGranule Function to call when the focused granule is changed
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
  * @param {Function} params.onChangeQuery Function to call when the query is changed
@@ -361,6 +361,7 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({
   base,
   center,
+  changeFocusedGranule,
   colorMap,
   focusedCollectionId = '',
   focusedGranuleId = '',
@@ -368,7 +369,6 @@ const Map: React.FC<MapProps> = ({
   granulesKey,
   isFocusedCollectionPage,
   isProjectPage,
-  onChangeFocusedGranule,
   onChangeMap,
   onChangeProjection,
   onChangeQuery,
@@ -828,7 +828,7 @@ const Map: React.FC<MapProps> = ({
       granuleBackgroundsSource,
       isProjectPage,
       map,
-      onChangeFocusedGranule,
+      changeFocusedGranule,
       onExcludeGranule,
       onMetricsMap,
       timesIconSvg
@@ -896,7 +896,7 @@ const Map: React.FC<MapProps> = ({
       granuleId: granule ? granule.id : null,
       isProjectPage,
       map: mapRef.current as OlMap,
-      onChangeFocusedGranule,
+      changeFocusedGranule,
       onExcludeGranule,
       timesIconSvg
     })
@@ -992,7 +992,7 @@ const Map: React.FC<MapProps> = ({
         granuleId: focusedGranuleId,
         isProjectPage,
         map: mapRef.current as OlMap,
-        onChangeFocusedGranule,
+        changeFocusedGranule,
         onExcludeGranule,
         shouldMoveMap: false,
         timesIconSvg

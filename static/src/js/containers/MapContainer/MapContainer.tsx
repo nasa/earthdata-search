@@ -21,8 +21,6 @@ import { getFocusedCollectionGranuleResults } from '../../selectors/collectionRe
 // @ts-expect-error The file does not have types
 import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
 // @ts-expect-error The file does not have types
-import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-// @ts-expect-error The file does not have types
 import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 
 import { isPath } from '../../util/isPath'
@@ -57,6 +55,7 @@ import { mapEventTypes } from '../../constants/eventTypes'
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
 import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 
 import type {
@@ -73,8 +72,6 @@ import type { ProjectCollection, ProjectGranules } from '../../zustand/types'
 import './MapContainer.scss'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onChangeFocusedGranule:
-    (granuleId: string) => dispatch(actions.changeFocusedGranule(granuleId)),
   onMetricsMap:
     (type: string) => dispatch(metricsMap(type)),
   onToggleDrawingNewLayer:
@@ -92,7 +89,6 @@ export const mapStateToProps = (state) => ({
   colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
-  focusedGranuleId: getFocusedGranuleId(state),
   granuleSearchResults: getFocusedCollectionGranuleResults(state),
   granulesMetadata: getGranulesMetadata(state),
   router: state.router
@@ -123,8 +119,6 @@ interface MapContainerProps {
   displaySpatialPolygonWarning: boolean
   /** The drawing new layer flag */
   drawingNewLayer: string | boolean
-  /** The focused granule id */
-  focusedGranuleId: string
   /** The granule search results */
   granuleSearchResults: {
     /** The IDs of the granule results */
@@ -136,8 +130,6 @@ interface MapContainerProps {
   }
   /** The granules metadata */
   granulesMetadata: GranulesMetadata
-  /** Function to change the focused granule */
-  onChangeFocusedGranule: (granuleId: string) => void
   /** Function to call the metrics map */
   onMetricsMap: (type: string) => void
   /** Function to toggle the drawing new layer */
@@ -163,10 +155,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     colormapsMetadata,
     displaySpatialPolygonWarning,
     drawingNewLayer,
-    focusedGranuleId,
     granuleSearchResults,
     granulesMetadata,
-    onChangeFocusedGranule,
     onMetricsMap,
     onToggleDrawingNewLayer,
     onToggleShapefileUploadModal,
@@ -191,6 +181,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     polygon: polygonSearch
   } = spatialQuery
   const {
+    changeFocusedGranule,
     map: mapProps,
     onChangeMap,
     onChangeQuery,
@@ -204,6 +195,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     showMbr,
     startDrawing
   } = useEdscStore((state) => ({
+    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
     onChangeQuery: state.query.changeQuery,
@@ -218,6 +210,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     startDrawing: state.home.startDrawing
   }))
   const focusedCollectionId = useEdscStore(getFocusedCollectionId)
+  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
 
   const [mapReady, setMapReady] = useState(false)
@@ -539,6 +532,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     <Map
       base={base}
       center={center}
+      changeFocusedGranule={changeFocusedGranule}
       colorMap={colorMap as Colormap}
       focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}
@@ -546,7 +540,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       granulesKey={granulesKey}
       isFocusedCollectionPage={isFocusedCollectionPage}
       isProjectPage={isProjectPage}
-      onChangeFocusedGranule={onChangeFocusedGranule}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}

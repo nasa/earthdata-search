@@ -22,22 +22,11 @@ const setup = setupTest({
   Component: UrlQueryContainer,
   defaultProps: {
     children: 'stuff',
-    boundingBoxSearch: '',
     collectionsMetadata: {},
-    gridCoords: '',
-    focusedGranule: '',
-    keywordSearch: '',
-    mapPreferences: {},
-    overrideTemporalSearch: {},
     pathname: '',
-    pointSearch: '',
-    polygonSearch: '',
-    project: {},
-    projectFacets: {},
     location: {
       search: '?p=C00001-EDSC'
     },
-    temporalSearch: {},
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
   },
@@ -88,7 +77,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      focusedGranule: 'granuleIdId',
       metadata: {
         collections: {}
       },
@@ -102,7 +90,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       advancedSearch: {},
       collectionsMetadata: {},
-      focusedGranule: 'granuleIdId',
       location: {
         pathname: ''
       },

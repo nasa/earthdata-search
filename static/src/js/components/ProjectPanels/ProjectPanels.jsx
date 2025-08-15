@@ -33,7 +33,6 @@ import './ProjectPanels.scss'
  * Renders ProjectPanels.
  * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
  * @param {String} focusedCollectionId - The focused collection ID.
- * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
@@ -42,7 +41,6 @@ import './ProjectPanels.scss'
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} projectCollection - The project collection.
  * @param {Function} onChangePath - Callback to change the path.
- * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} onSelectAccessMethod - Selects an access method.
  * @param {Function} onSetActivePanel - Switches the currently active panel.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
@@ -265,12 +263,10 @@ class ProjectPanels extends PureComponent {
   render() {
     const {
       dataQualitySummaries,
-      focusedGranuleId,
       granulesMetadata,
       granulesQueries,
       location,
       onChangePath,
-      onFocusedGranuleChange,
       onSelectAccessMethod,
       onSetActivePanel,
       onToggleAboutCSDAModal,
@@ -649,10 +645,8 @@ class ProjectPanels extends PureComponent {
           <PanelItem scrollable={false}>
             <CollectionDetails
               collectionId={collectionId}
-              focusedGranuleId={focusedGranuleId}
               granulesMetadata={granulesMetadata}
               location={location}
-              onFocusedGranuleChange={onFocusedGranuleChange}
               projectCollection={projectCollection}
             />
           </PanelItem>
@@ -686,12 +680,10 @@ class ProjectPanels extends PureComponent {
 ProjectPanels.propTypes = {
   dataQualitySummaries: PropTypes.shape({}).isRequired,
   focusedCollectionId: PropTypes.string.isRequired,
-  focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   granulesQueries: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelGroup: PropTypes.func.isRequired,

@@ -61,7 +61,6 @@ export const updateStore = ({
     await dispatch(restoreFromUrl({
       advancedSearch,
       collections,
-      focusedGranule,
       deprecatedUrlParams
     }))
 
@@ -82,6 +81,10 @@ export const updateStore = ({
         focusedCollection: {
           ...zustandState.focusedCollection,
           focusedCollection
+        },
+        focusedGranule: {
+          ...zustandState.focusedGranule,
+          focusedGranule
         },
         map: merge({}, zustandState.map, {
           mapView: merge({}, zustandState.map.mapView, mapView)
@@ -169,8 +172,9 @@ export const changePath = (path = '') => async (dispatch) => {
     await dispatch(actions.updateStore(decodedParams, pathname))
   }
 
-  const { focusedCollection } = zustandState
+  const { focusedCollection, focusedGranule } = zustandState
   const { getFocusedCollection } = focusedCollection
+  const { getFocusedGranule } = focusedGranule
 
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
@@ -213,7 +217,7 @@ export const changePath = (path = '') => async (dispatch) => {
     ) {
       await getFocusedCollection()
 
-      dispatch(actions.getFocusedGranule())
+      await getFocusedGranule()
     }
   }
 

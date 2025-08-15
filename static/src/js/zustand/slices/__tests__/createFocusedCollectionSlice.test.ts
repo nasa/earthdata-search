@@ -97,6 +97,7 @@ describe('createFocusedCollectionSlice', () => {
       test('should clear the focusedCollection and call changeUrl', async () => {
         useEdscStore.setState((state) => {
           state.focusedCollection.getFocusedCollection = jest.fn()
+          state.focusedGranule.changeFocusedGranule = jest.fn()
           state.query.changeGranuleQuery = jest.fn()
           state.timeline.getTimeline = jest.fn()
         })
@@ -123,11 +124,14 @@ describe('createFocusedCollectionSlice', () => {
 
         await changeFocusedCollection('')
 
-        const { focusedCollection: updatedFocusedCollection } = useEdscStore.getState()
+        const {
+          focusedCollection: updatedFocusedCollection,
+          focusedGranule
+        } = useEdscStore.getState()
         expect(updatedFocusedCollection.focusedCollection).toEqual('')
 
-        expect(actions.changeFocusedGranule).toHaveBeenCalledTimes(1)
-        expect(actions.changeFocusedGranule).toHaveBeenCalledWith('')
+        expect(focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
+        expect(focusedGranule.changeFocusedGranule).toHaveBeenCalledWith(null)
 
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledWith(false)
@@ -191,8 +195,6 @@ describe('createFocusedCollectionSlice', () => {
     })
   })
 
-  // TODO Wednesday update these tests to work with zustand,
-  // then update app to use focusedCollection functions
   describe('getFocusedCollection', () => {
     beforeEach(() => {
       jest.spyOn(getClientId, 'getClientId').mockImplementation(() => ({ client: 'eed-edsc-test-serverless-client' }))

@@ -4,6 +4,7 @@ import {
   interceptUnauthenticatedCollections
 } from '../../../../support/interceptUnauthenticatedCollections'
 import { isGetFocusedCollectionsQuery } from '../../../../support/isGetFocusedCollectionsQuery'
+import { isGetFocusedGranuleQuery } from '../../../../support/isGetFocusedGranuleQuery'
 import { setupTests } from '../../../../support/setupTests'
 
 import commonBody from './__mocks__/cmr_granules/common_collections.body.json'
@@ -50,8 +51,6 @@ test.describe('When clicking on a granule on the map', () => {
     })
 
     await page.route(/api$/, async (route) => {
-      const query = route.request().postData()
-
       if (isGetFocusedCollectionsQuery(route, conceptId)) {
         await route.fulfill({
           json: cmrGranulesCollectionGraphQlBody,
@@ -59,7 +58,7 @@ test.describe('When clicking on a granule on the map', () => {
         })
       }
 
-      if (query === `{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"${conceptId}"}}}`) {
+      if (isGetFocusedGranuleQuery(route, 'G3275560218-LANCEMODIS')) {
         await route.fulfill({
           json: granuleGraphQlBody,
           headers: { 'content-type': 'application/json' }

@@ -47,7 +47,6 @@ import './GranuleResultsItem.scss'
  * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
- * @param {Function} props.onFocusedGranuleChange - Callback to focus a granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
@@ -65,7 +64,6 @@ const GranuleResultsItem = forwardRef(({
   isGranuleInProject,
   location,
   onExcludeGranule,
-  onFocusedGranuleChange,
   onMetricsDataAccess,
   onMetricsAddGranuleProject,
   onGenerateNotebook,
@@ -73,9 +71,11 @@ const GranuleResultsItem = forwardRef(({
 }, ref) => {
   const {
     addGranuleToProjectCollection,
+    changeFocusedGranule,
     removeGranuleFromProjectCollection
   } = useEdscStore((state) => ({
     addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
+    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection
   }))
   const generateNotebookTag = getValueForTag('notebook_generation', collectionTags)
@@ -99,7 +99,7 @@ const GranuleResultsItem = forwardRef(({
   }
 
   const handleClickGranuleDetails = (granuleId) => {
-    onFocusedGranuleChange(granuleId)
+    changeFocusedGranule(granuleId)
   }
 
   const {
@@ -377,7 +377,6 @@ GranuleResultsItem.propTypes = {
   isGranuleInProject: PropTypes.func.isRequired,
   location: locationPropType.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,
