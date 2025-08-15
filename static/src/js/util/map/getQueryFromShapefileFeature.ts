@@ -67,9 +67,14 @@ const getQueryFromShapefileFeature = (feature: Feature): Spatial => {
     geographicCoordinatesWithoutAltitude = removeAltitudeFromCoordinates(geographicCoordinates)
   }
 
+  // Transformation functions for different geometry types
+  const transformPolygonToString = (polygon: number[][][]): string => polygon[0].flat().join(',')
+  const transformPointToString = (point: number[]): string => point.join(',')
+  const transformLineToString = (line: number[][]): string => line.flat().join(',')
+
   // Handle multi-geometry types
   if (geometryType === spatialTypes.MULTI_POLYGON) {
-    const polygons = geographicCoordinatesWithoutAltitude.map((polygon: number[][][]) => polygon[0].flat().join(','))
+    const polygons = geographicCoordinatesWithoutAltitude.map(transformPolygonToString)
 
     return {
       polygon: polygons
@@ -77,7 +82,7 @@ const getQueryFromShapefileFeature = (feature: Feature): Spatial => {
   }
 
   if (geometryType === spatialTypes.MULTI_POINT) {
-    const points = geographicCoordinatesWithoutAltitude.map((point: number[]) => point.join(','))
+    const points = geographicCoordinatesWithoutAltitude.map(transformPointToString)
 
     return {
       point: points
@@ -85,7 +90,7 @@ const getQueryFromShapefileFeature = (feature: Feature): Spatial => {
   }
 
   if (geometryType === spatialTypes.MULTI_LINE_STRING) {
-    const lines = geographicCoordinatesWithoutAltitude.map((line: number[][]) => line.flat().join(','))
+    const lines = geographicCoordinatesWithoutAltitude.map(transformLineToString)
 
     return {
       line: lines
