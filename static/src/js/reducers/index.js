@@ -4,7 +4,6 @@ import { connectRouter } from 'connected-react-router'
 import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminProjectsReducer from './admin/projects'
 import adminRetrievalsMetricsReducer from './admin/retrievalsMetrics'
-import adminRetrievalsReducer from './admin/retrievals'
 import advancedSearchReducer from './advancedSearch'
 import authTokenReducer from './authToken'
 import collectionMetadataReducer from './collectionMetadata'
@@ -28,7 +27,6 @@ export default (history) => combineReducers({
   admin: combineReducers({
     isAuthorized: adminIsAuthorizedReducer,
     projects: adminProjectsReducer,
-    retrievals: adminRetrievalsReducer,
     retrievalsMetrics: adminRetrievalsMetricsReducer
   }),
   advancedSearch: advancedSearchReducer,

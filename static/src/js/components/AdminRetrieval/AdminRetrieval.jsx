@@ -5,7 +5,7 @@ import { AdminRetrievalDetails } from '../AdminRetrievalDetails/AdminRetrievalDe
 import { AdminPage } from '../AdminPage/AdminPage'
 
 export const AdminRetrieval = ({
-  retrieval,
+  obfuscatedId,
   onRequeueOrder
 }) => (
   <AdminPage
@@ -28,18 +28,14 @@ export const AdminRetrieval = ({
     }
   >
     <AdminRetrievalDetails
-      retrieval={retrieval}
+      obfuscatedId={obfuscatedId}
       onRequeueOrder={onRequeueOrder}
     />
   </AdminPage>
 )
 
-AdminRetrieval.defaultProps = {
-  retrieval: {}
-}
-
 AdminRetrieval.propTypes = {
-  retrieval: PropTypes.shape({}),
+  obfuscatedId: PropTypes.string.isRequired,
   onRequeueOrder: PropTypes.func.isRequired
 }
 

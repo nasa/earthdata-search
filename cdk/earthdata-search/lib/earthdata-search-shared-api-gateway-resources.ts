@@ -16,8 +16,6 @@ export class SharedApiGatewayResources extends Construct {
 
   public readonly adminProjectsApiGatewayResource: apigateway.CfnResource
 
-  public readonly adminRetrievalsApiGatewayResource: apigateway.CfnResource
-
   public readonly collectionsApiGatewayResource: apigateway.CfnResource
 
   public readonly colormapsApiGatewayResource: apigateway.CfnResource
@@ -82,25 +80,6 @@ export class SharedApiGatewayResources extends Construct {
     })
 
     this.adminProjectsApiGatewayResource = adminProjectsApiGatewayResource
-
-    /**
-     * Admin Retrievals API Gateway Resource
-     */
-    const adminRetrievalsApiGatewayResource = new apigateway.CfnResource(scope, 'ApiGatewayResourceAdminRetrievals', {
-      parentId: adminApiGatewayResource.ref,
-      pathPart: 'retrievals',
-      restApiId: apiGatewayRestApi.ref
-    })
-    // eslint-disable-next-line no-new
-    new application.ApiOptionsMethod(scope, 'AdminRetrievalsOptionsMethod', {
-      apiGatewayDeployment,
-      apiGatewayResource: adminRetrievalsApiGatewayResource,
-      apiGatewayRestApi,
-      methods: ['GET'],
-      name: 'AdminRetrievals'
-    })
-
-    this.adminRetrievalsApiGatewayResource = adminRetrievalsApiGatewayResource
 
     /**
      * Collections API Gateway Resource

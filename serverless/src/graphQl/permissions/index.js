@@ -16,6 +16,14 @@ const buildPermissions = () => shield(
       adminPreferencesMetrics: and(
         isValidUser,
         isAdminUser
+      ),
+      adminRetrieval: and(
+        isValidUser,
+        isAdminUser
+      ),
+      adminRetrievals: and(
+        isValidUser,
+        isAdminUser
       )
     }
     // TODO When we add mutations here, we need to ensure we add a wildcard deny rule like we have for the Query

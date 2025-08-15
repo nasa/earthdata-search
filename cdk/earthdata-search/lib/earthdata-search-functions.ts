@@ -92,7 +92,6 @@ export class Functions extends Construct {
     const {
       adminApiGatewayResource,
       adminProjectsApiGatewayResource,
-      adminRetrievalsApiGatewayResource,
       collectionsApiGatewayResource,
       colormapsApiGatewayResource,
       conceptsApiGatewayResource,
@@ -147,48 +146,6 @@ export class Functions extends Construct {
       },
       entry: '../../serverless/src/adminGetProject/handler.js',
       functionName: 'adminGetProject',
-      functionNamePrefix
-    })
-
-    /**
-     * Admin Get Retrievals
-     */
-    const adminGetRetrievalsNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalsNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(adminGetRetrievalsNestedStack, 'AdminGetRetrievalsLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: adminRetrievalsApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['GET'],
-        parentPath: 'admin',
-        path: 'retrievals'
-      },
-      entry: '../../serverless/src/adminGetRetrievals/handler.js',
-      functionName: 'adminGetRetrievals',
-      functionNamePrefix
-    })
-
-    /**
-     * Admin Get Retrieval
-     */
-    const adminGetRetrievalNestedStack = new cdk.NestedStack(scope, 'AdminGetRetrievalNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(adminGetRetrievalNestedStack, 'AdminGetRetrievalLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['GET'],
-        parentId: adminRetrievalsApiGatewayResource?.ref,
-        parentPath: 'admin/retrievals',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/adminGetRetrieval/handler.js',
-      functionName: 'adminGetRetrieval',
       functionNamePrefix
     })
 

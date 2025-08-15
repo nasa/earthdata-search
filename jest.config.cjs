@@ -44,7 +44,8 @@ module.exports = {
     'mocks.js',
     'mocks.ts',
     'node_modules',
-    '/tests'
+    '/tests',
+    '/__mocks__'
   ],
   // Skips modules from being visible to jest
   modulePathIgnorePatterns: [
