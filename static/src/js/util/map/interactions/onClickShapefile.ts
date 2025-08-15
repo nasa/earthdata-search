@@ -85,11 +85,11 @@ const onClickShapefile = ({
   const updatedSelectedFeatures = [...currentSelectedFeatures]
 
   const currentQuery = {
-    boundingBox: spatialSearch.boundingBoxSearch,
-    circle: spatialSearch.circleSearch,
-    line: spatialSearch.lineSearch,
-    point: spatialSearch.pointSearch,
-    polygon: spatialSearch.polygonSearch
+    boundingBox: spatialSearch.boundingBoxSearch || [],
+    circle: spatialSearch.circleSearch || [],
+    line: spatialSearch.lineSearch || [],
+    point: spatialSearch.pointSearch || [],
+    polygon: spatialSearch.polygonSearch || []
   }
 
   const newQuery = getQueryFromShapefileFeature(feature)
@@ -113,7 +113,7 @@ const onClickShapefile = ({
     selectedFeatures = updatedSelectedFeatures.concat(edscId)
   } else {
     // Remove all queryValues from the existing spatial query (for multi-geometries)
-    const currentQueryValue = currentQuery[queryType] ? [...currentQuery[queryType]] : []
+    const currentQueryValue = [...currentQuery[queryType]]
     queryValues.forEach((queryValue) => {
       const queryIndex = currentQueryValue.indexOf(queryValue)
       if (queryIndex > -1) {
