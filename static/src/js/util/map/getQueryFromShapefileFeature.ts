@@ -4,27 +4,22 @@ import { Point } from 'ol/geom'
 import spatialTypes from '../../constants/spatialTypes'
 import { Spatial, SpatialQueryType } from '../../types/sharedTypes'
 
-// Remove altitude from coordinate arrays for different types
-const removeAltitudeFromCoordinates = (
-  coordinates: number[] | number[][] | number[][][]
-): number[] | number[][] | number[][][] => {
-  if (!coordinates) return coordinates
+// Coordinate types for spatial types
+type Coordinate = [number, number] | [number, number, number]
+type LineString = Coordinate[]
+type Polygon = Coordinate[][]
+type MultiPolygon = Coordinate[][][]
+type CoordinateInput = Coordinate | LineString | Polygon | MultiPolygon
 
-  // Handle different coordinate structures
-  if (Array.isArray(coordinates[0])) {
-    if (Array.isArray(coordinates[0][0])) {
-      // Handle MultiPolygon shapes
-      return (coordinates as number[][][]).map(
-        (coord) => removeAltitudeFromCoordinates(coord) as number[][]
-      )
-    }
+// Remove altitude from coordinate arrays recursively
+const removeAltitudeFromCoordinates = (coordinates: CoordinateInput): CoordinateInput => {
+  if (!Array.isArray(coordinates)) return coordinates
 
-    // Handle Polygon, MultiPoint, LineString, and MultiLineString
-    return (coordinates as number[][]).map((coord: number[]) => coord.slice(0, 2))
+  if (typeof coordinates[0] === 'number') {
+    return (coordinates as Coordinate).slice(0, 2) as Coordinate
   }
 
-  // Handle Point
-  return (coordinates as number[]).slice(0, 2)
+  return (coordinates as (LineString | Polygon | MultiPolygon)).map(removeAltitudeFromCoordinates) as CoordinateInput
 }
 
 // Get a CMR spatial query from the given feature
