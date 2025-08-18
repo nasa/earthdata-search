@@ -1,5 +1,11 @@
 const variablesMatch = (variables, granuleId) => variables.params.conceptId === granuleId
 
+/**
+ * Check if the route is a GetFocusedGranule query for the specified granule ID
+ * @param {Object} route Playwright route object
+ * @param {string} granuleId The granule ID to check against
+ * @returns boolean
+ */
 export const isGetFocusedGranuleQuery = (route, granuleId) => {
   let data = JSON.parse(route.request().postData())
 
