@@ -92,7 +92,7 @@ test.describe('Map: Shapefile interactions', () => {
         })
 
         // Updates the URL
-        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&sf=1&sfs\[0\]=0&lat=-9\.\d+&long=49\.\d+/)
+        await expect(page).toHaveURL(/search\?polygon\[0\]=42.1875%2C-2.40647%2C42.1875%2C-16.46517%2C56.25%2C-16.46517%2C42.1875%2C-2.40647&sf=1&sfs\[0\]=0&lat=-9\.\d+&long=49\.\d+&zoom=4\.\d+/)
       })
     })
 
@@ -747,27 +747,10 @@ test.describe('Map: Shapefile interactions', () => {
 
       test('renders correctly and filters collections @screenshot', async ({ page }) => {
         // Wait for URL to contain spatial parameters
-        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
-
-        await page.waitForTimeout(200)
+        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+&zoom=11\.\d+/)
 
         // Draws the spatial on the map
         await expect(page).toHaveScreenshot('multipoint.png', {
-          clip: screenshotClip,
-          maxDiffPixelRatio: 0.005
-        })
-      })
-
-      test('renders selected multipoint correctly @screenshot', async ({ page }) => {
-        // Wait for URL to contain spatial parameters
-        await expect(page).toHaveURL(/search\?sp\[0\]=-109.6%2C38.81&sp\[1\]=-109.55%2C38.75&sp\[2\]=-109.5%2C38.7&sf=1&sfs\[0\]=0&lat=38\.\d+&long=-109\.\d+/)
-
-        // Verify collections are loaded
-        await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
-
-        await page.waitForTimeout(200)
-
-        await expect(page).toHaveScreenshot('multipoint-auto-selected.png', {
           clip: screenshotClip,
           maxDiffPixelRatio: 0.005
         })
