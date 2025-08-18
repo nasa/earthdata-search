@@ -14,7 +14,6 @@ const setup = setupTest({
     collectionId: 'collectionId',
     collectionTags: {},
     directDistributionInformation: {},
-    focusedGranuleId: 'one',
     generateNotebook: {},
     granules: granuleData,
     isItemLoaded: jest.fn(),
@@ -24,12 +23,16 @@ const setup = setupTest({
     focusedGranule: 'one',
     loadMoreItems: jest.fn(),
     location: {},
-    onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     setVisibleMiddleIndex: jest.fn(),
     visibleMiddleIndex: 1
+  },
+  defaultZustandState: {
+    focusedGranule: {
+      focusedGranule: 'one'
+    }
   }
 })
 
@@ -61,7 +64,6 @@ describe('GranuleResultsTable component', () => {
           isGranuleInProject: expect.any(Function),
           location: {},
           onExcludeGranule: expect.any(Function),
-          onFocusedGranuleChange: expect.any(Function),
           onGenerateNotebook: expect.any(Function),
           onMetricsAddGranuleProject: expect.any(Function),
           onMetricsDataAccess: expect.any(Function),

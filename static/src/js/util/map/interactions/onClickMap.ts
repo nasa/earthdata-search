@@ -14,7 +14,7 @@ const onClickMap = ({
   granuleBackgroundsSource,
   isProjectPage,
   map,
-  onChangeFocusedGranule,
+  changeFocusedGranule,
   onExcludeGranule,
   onMetricsMap,
   timesIconSvg
@@ -37,7 +37,7 @@ const onClickMap = ({
   /** The map */
   map: Map
   /** Function to change the focused granule */
-  onChangeFocusedGranule: (granuleId: string) => void
+  changeFocusedGranule: (granuleId: string | null) => void
   /** Function to exclude the granule */
   onExcludeGranule: (params: { collectionId: string; granuleId: string }) => void
   /** Function to clear the focused granule source */
@@ -60,7 +60,7 @@ const onClickMap = ({
 
     // If we have a focused granule, unfocus it
     if (focusedGranuleId) {
-      onChangeFocusedGranule('')
+      changeFocusedGranule(null)
     }
 
     return false
@@ -71,7 +71,7 @@ const onClickMap = ({
 
   // If the featureToFocus is the same as the focusedGranuleId, unfocus it
   if (focusedGranuleId === newFocusedGranuleId) {
-    onChangeFocusedGranule('')
+    changeFocusedGranule(null)
     clearFocusedGranuleSource(map)
 
     return false
@@ -81,7 +81,7 @@ const onClickMap = ({
   onMetricsMap('Selected Granule')
 
   // Focus the new granule
-  onChangeFocusedGranule(newFocusedGranuleId)
+  changeFocusedGranule(newFocusedGranuleId)
   drawFocusedGranule({
     collectionId: focusedCollectionId,
     focusedGranuleSource,
@@ -89,7 +89,7 @@ const onClickMap = ({
     granuleId: newFocusedGranuleId,
     isProjectPage,
     map,
-    onChangeFocusedGranule,
+    changeFocusedGranule,
     onExcludeGranule,
     timesIconSvg
   })

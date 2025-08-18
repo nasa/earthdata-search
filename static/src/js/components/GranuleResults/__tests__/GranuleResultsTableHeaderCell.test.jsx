@@ -14,7 +14,6 @@ const defaultCustomProps = {
   isGranuleInProject: jest.fn().mockReturnValue(false),
   location: {},
   onExcludeGranule: jest.fn(),
-  onFocusedGranuleChange: jest.fn(),
   onGenerateNotebook: jest.fn(),
   onMetricsAddGranuleProject: jest.fn(),
   onMetricsDataAccess: jest.fn(),
@@ -42,6 +41,9 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
+    focusedGranule: {
+      changeFocusedGranule: jest.fn()
+    },
     portal: {
       features: {
         authentication: true
@@ -61,8 +63,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })).toBeInTheDocument()
   })
 
-  test('clicking the details button calls onFocusedGranuleChange', async () => {
-    const { props, user } = setup()
+  test('clicking the details button calls changeFocusedGranule', async () => {
+    const { user, zustandState } = setup()
 
     const dropdownButton = screen.getByRole('button', {
       name: 'More actions'
@@ -76,8 +78,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })
     await user.click(detailsButton)
 
-    expect(props.column.customProps.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
-    expect(props.column.customProps.onFocusedGranuleChange).toHaveBeenCalledWith('one')
+    expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
+    expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledWith('one')
   })
 
   test('clicking the filter button calls onExcludeGranule', async () => {

@@ -6,6 +6,7 @@ import {
   interceptUnauthenticatedCollections
 } from '../../../../support/interceptUnauthenticatedCollections'
 import { isGetFocusedCollectionsQuery } from '../../../../support/isGetFocusedCollectionsQuery'
+import { isGetFocusedGranuleQuery } from '../../../../support/isGetFocusedGranuleQuery'
 import { login } from '../../../../support/login'
 import { setupTests } from '../../../../support/setupTests'
 
@@ -962,14 +963,12 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const body = JSON.stringify(route.request().postData())
-
         if (isGetFocusedCollectionsQuery(route, conceptId)) {
           route.fulfill({
             body: JSON.stringify(focusedGranuleCollectionGraphQlBody),
             headers: focusedGranuleGraphQlHeaders
           })
-        } else if (body === '{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G2058417402-LPDAAC_ECS"}}}') {
+        } else if (isGetFocusedGranuleQuery(route, 'G2058417402-LPDAAC_ECS')) {
           route.fulfill({
             body: JSON.stringify(focusedGranuleGranuleGraphQlBody),
             headers: focusedGranuleGraphQlHeaders

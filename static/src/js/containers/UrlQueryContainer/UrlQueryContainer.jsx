@@ -12,13 +12,13 @@ import { encodeUrlQuery } from '../../util/url/url'
 import { locationPropType } from '../../util/propTypes/location'
 
 import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
-import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
-import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -30,7 +30,6 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
   collectionsMetadata: getCollectionsMetadata(state),
-  focusedGranule: getFocusedGranuleId(state),
   location: state.router.location,
   pathname: state.router.location.pathname
 })
@@ -55,6 +54,7 @@ export const UrlQueryContainer = (props) => {
     earthdataEnvironment: getEarthdataEnvironment(state),
     featureFacets: state.facetParams.featureFacets,
     focusedCollection: getFocusedCollectionId(state),
+    focusedGranule: getFocusedGranuleId(state),
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
     horizontalDataResolutionRangeFacets:
       state.facetParams.cmrFacets.horizontal_data_resolution_range,

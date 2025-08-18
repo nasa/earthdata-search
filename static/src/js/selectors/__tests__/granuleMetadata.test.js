@@ -1,9 +1,14 @@
+import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedGranuleMetadata } from '../granuleMetadata'
 
 describe('getFocusedGranuleMetadata selector', () => {
   test('returns the granule metadata', () => {
+    useEdscStore.setState((state) => {
+      // eslint-disable-next-line no-param-reassign
+      state.focusedGranule.focusedGranule = 'granuleId'
+    })
+
     const state = {
-      focusedGranule: 'granuleId',
       metadata: {
         granules: {
           granuleId: {
@@ -18,7 +23,6 @@ describe('getFocusedGranuleMetadata selector', () => {
 
   test('returns an empty object when there is no focusedGranule', () => {
     const state = {
-      focusedGranule: '',
       metadata: {}
     }
 

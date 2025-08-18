@@ -13,30 +13,30 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import Button from '../Button/Button'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
 
 import './CollectionDetails.scss'
 
 /**
  * Renders CollectionDetails.
  * @param {String} collectionId - The current collection ID.
- * @param {String} focusedGranuleId - The focused granule ID.
  * @param {Object} granulesMetadata - The metadata in the store for granules.
  * @param {Object} location - The location from the store.
- * @param {Function} onFocusedGranuleChange - The callback to change the focused granule.
  * @param {Object} projectCollection - The project collection.
  */
 export const CollectionDetails = ({
   collectionId,
-  focusedGranuleId,
   granulesMetadata,
   location,
-  onFocusedGranuleChange,
   projectCollection
 }) => {
+  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
   const {
+    changeFocusedGranule,
     removeGranuleFromProjectCollection,
     updateProjectGranuleParams
   } = useEdscStore((state) => ({
+    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     updateProjectGranuleParams: state.project.updateProjectGranuleParams
   }))
@@ -104,13 +104,13 @@ export const CollectionDetails = ({
                           ? { granule: null }
                           : { granule: granuleMetadata }
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, newGranule)
-                        onFocusedGranuleChange(id)
+                        changeFocusedGranule(id)
                       }
                     }
                     onKeyDown={
                       () => {
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, { granule: granuleMetadata })
-                        onFocusedGranuleChange(granuleMetadata.id)
+                        changeFocusedGranule(granuleMetadata.id)
                       }
                     }
                   >
@@ -124,7 +124,7 @@ export const CollectionDetails = ({
                         bootstrapSize="sm"
                         onClick={
                           (event) => {
-                            onFocusedGranuleChange(id)
+                            changeFocusedGranule(id)
                             event.stopPropagation()
                           }
                         }
@@ -193,10 +193,8 @@ export const CollectionDetails = ({
 
 CollectionDetails.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  focusedGranuleId: PropTypes.string.isRequired,
   granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})
   }).isRequired
