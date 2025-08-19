@@ -370,26 +370,46 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   )
 
   const { tags } = focusedCollectionMetadata
-  const [gibsTag] = getValueForTag('gibs', tags) || []
+  console.log('🚀 ~ file: MapContainer.tsx:373 ALLL OF THEM ~ tags:', tags)
+  const gibsTags = getValueForTag('gibs', tags) || []
+  // Const gibsTag = gibsTags[0]
+
+  // Helper function to get GIBS tags available for the current projection
+  const getGibsTagsForProjection = useCallback(() => {
+    if (!gibsTags) return []
+
+    if (Array.isArray(gibsTags)) {
+      return gibsTags.filter((tag) => hasGibsLayerForProjection(tag, projection))
+    }
+
+    return hasGibsLayerForProjection(gibsTags, projection) ? [gibsTags] : []
+  }, [gibsTags, projection])
 
   // Get the colormap data for the currently focused collection
   const colorMapState: ColormapMetadata = useMemo(() => {
     let colorMapData = {}
 
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
-    if (gibsTag && hasGibsLayerForProjection(gibsTag, projection)) {
-      const { product } = gibsTag
+    const gibsTagsForProjection = getGibsTagsForProjection()
+
+    if (gibsTagsForProjection.length > 0) {
+      // Use the first available GIBS tag for colormap data
+      const { product } = gibsTagsForProjection[0]
       colorMapData = colormapsMetadata[product] || {}
     }
 
     return colorMapData
-  }, [gibsTag, colormapsMetadata, projection])
+  }, [gibsTags, colormapsMetadata, projection, getGibsTagsForProjection])
 
   const { colorMapData: colorMap = {} } = colorMapState
+  console.log('🚀 ~ file: MapContainer.tsx:391 ~ colorMap:', colorMap)
 
   // Get GIBS data to pass to the map within each granule
-  let gibsData: Partial<GibsData> = {}
-  if (gibsTag) {
+  const gibsTagsForProjection = getGibsTagsForProjection()
+  const gibsDataArray: Partial<GibsData>[] = []
+
+  gibsTagsForProjection.forEach((gibsTag) => {
+    console.log('🚀 ~ file: MapContainer.tsx:394 ~ gibsTag:', gibsTag)
     const {
       antarctic_resolution: antarcticResolution,
       arctic_resolution: arcticResolution,
@@ -408,13 +428,13 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       resolution = geographicResolution
     }
 
-    gibsData = {
+    gibsDataArray.push({
       format,
       layerPeriod,
       product,
       resolution
-    }
-  }
+    })
+  })
 
   // Added and removed granule ids for the focused collection are used to apply different
   // styles to the granules. Granules that are added are drawn with a regular style, while
@@ -484,24 +504,33 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
           : deemphisizedGranuleStyle(index)
       }
 
-      let granuleGibsData: Partial<GibsData> | undefined
+      const granuleGibsData: Partial<GibsData>[] = []
 
-      if (gibsTag) {
-        const gibsTime = gibsData.layerPeriod?.toLowerCase() === 'subdaily' ? timeStart : timeStart.substring(0, 10)
+      if (gibsTags.length > 0 && gibsDataArray.length > 0) {
+        console.log('🚀 ~ file: MapContainer.tsx:495 ~ timeStart:', timeStart)
 
-        granuleGibsData = {
-          ...gibsData,
-          opacity: shouldDrawRegularStyle ? 1 : 0.5,
-          time: gibsTime,
-          url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
-        }
+        // Create GIBS data for each available GIBS layer
+        gibsDataArray.forEach((gibsDataItem) => {
+          // If the GIBS layer is "subdaily", use the full timeStart (date and time).
+          // Otherwise, use only the date part of timeStart.
+          const gibsTime = gibsDataItem.layerPeriod?.toLowerCase() === 'subdaily'
+            ? timeStart
+            : timeStart.substring(0, 10)
+
+          granuleGibsData.push({
+            ...gibsDataItem,
+            opacity: shouldDrawRegularStyle ? 1 : 0.5,
+            time: gibsTime,
+            url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
+          })
+        })
       }
 
       granulesToDraw.push({
         backgroundGranuleStyle: granule.backgroundGranuleStyle,
         collectionId,
         formattedTemporal,
-        gibsData: granuleGibsData as GibsData,
+        gibsData: granuleGibsData as GibsData[],
         granuleId,
         granuleStyle: granule.granuleStyle,
         highlightedStyle: granule.highlightedStyle,

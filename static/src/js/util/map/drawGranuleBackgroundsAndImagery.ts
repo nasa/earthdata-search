@@ -34,6 +34,7 @@ import drawOutline from './drawOutline'
 import projectionCodes from '../../constants/projectionCodes'
 import { MapGranule } from '../../types/sharedTypes'
 
+// TODO do we need these lru cahces
 const tileLayerCache: LRUCache<TileLayer> = new LRUCache(100)
 const imageryCache: LRUCache<HTMLImageElement> = new LRUCache(100)
 
@@ -140,7 +141,7 @@ const drawGranuleBackgroundsAndImagery = ({
       vectorSource.addFeature(backgroundFeature)
 
       // If the granule has no GIBS data, return without drawing imagery
-      if (!gibsData) return
+      if (!gibsData || gibsData.length === 0) return
 
       // There are a few things we need to keep in mind when drawing the granule imagery:
       // 1. The granule imagery is served by GIBS in tiles, but we only show the imagery that is contained
@@ -156,6 +157,8 @@ const drawGranuleBackgroundsAndImagery = ({
       const geometry = backgroundFeature.getGeometry() as Geometry
 
       // We are only expecting MultiPolygon geometries for granules. Return if the geometry is not a MultiPolygon
+      // TODO is that just something we expect for granules that have imagery to be multi-polygon?
+      console.log('🚀 ~ file: drawGranuleBackgroundsAndImagery.ts:162 ~ geometry.getType():', geometry.getType())
       if (geometry.getType() !== 'MultiPolygon') return
 
       const turfMultiPolygon = multiPolygon((geometry as OlMultiPolygon).getCoordinates())
@@ -183,6 +186,7 @@ const drawGranuleBackgroundsAndImagery = ({
       if (index === 0) {
         // If this is the first granule, the union will be the current granule geometry
         granulesUnion = turfMultiPolygon
+        console.log('🚀 ~ file: drawGranuleBackgroundsAndImagery.ts:189 ~ granulesUnion:', granulesUnion)
       } else {
         // Create a union of all the granule geometries added so far
         const previousGranulesUnion = granulesUnion
@@ -219,101 +223,106 @@ const drawGranuleBackgroundsAndImagery = ({
 
       const geometryToClip = granuleDiffMultiPolygon as OlMultiPolygon
 
-      // Create a cache key for the layer.
-      const cacheKey = `${granuleId}-${gibsData.product}-${gibsData.time}-${projectionCode}`
+      // Create imagery layers for each GIBS data item
+      gibsData.forEach((gibsDataItem) => {
+        // Create a cache key for the layer.
+        const cacheKey = `${granuleId}-${gibsDataItem.product}-${gibsDataItem.time}-${projectionCode}`
 
-      let imageryLayer: TileLayer
-      if (tileLayerCache.containsKey(cacheKey)) {
-        imageryLayer = tileLayerCache.get(cacheKey)
+        let imageryLayer: TileLayer
+        if (tileLayerCache.containsKey(cacheKey)) {
+          imageryLayer = tileLayerCache.get(cacheKey)
 
-        // `unByKey` removes the event listeners by the key provided
-        const { prerenderKey } = imageryLayer.getProperties()
+          // `unByKey` removes the event listeners by the key provided
+          const { prerenderKey } = imageryLayer.getProperties()
 
-        // Remove the existing event listeners for the cached layer
-        unByKey(prerenderKey)
-        imageryLayer.un(RenderEventType.POSTRENDER as LayerRenderEventTypes, onTileLayerPostrender)
-      } else {
-        imageryLayer = new TileLayer({
-          className: `granule-imagery-${granuleId}`,
-          preload: 5,
-          zIndex: 3,
-          source: new WMTS({
-            crossOrigin: 'anonymous',
-            format: `image/${gibsData.format}`,
-            interpolate: false,
-            layer: gibsData.product,
-            matrixSet: gibsData.resolution,
-            projection: crsProjections[projectionCode],
-            style: 'default',
-            tileGrid: getTileGrid(projectionCode, gibsData.resolution),
-            tileLoadFunction: (tile, src) => {
-              // We are caching the images retrieved from GIBS so we don't have to reload them
-              // every time we redraw the granules.
+          // Remove the existing event listeners for the cached layer
+          unByKey(prerenderKey)
+          imageryLayer.un(RenderEventType.POSTRENDER as LayerRenderEventTypes, onTileLayerPostrender)
+        } else {
+          imageryLayer = new TileLayer({
+            className: `granule-imagery-${granuleId}`,
+            preload: 5,
+            zIndex: 3,
+            source: new WMTS({
+              crossOrigin: 'anonymous',
+              format: `image/${gibsDataItem.format}`,
+              interpolate: false,
+              layer: gibsDataItem.product,
+              matrixSet: gibsDataItem.resolution,
+              projection: crsProjections[projectionCode],
+              style: 'default',
+              tileGrid: getTileGrid(projectionCode, gibsDataItem.resolution),
+              tileLoadFunction: (tile, src) => {
+                console.log('🚀 ~ file: drawGranuleBackgroundsAndImagery.ts:302 ~ gibsDataItem.product:', gibsDataItem.product)
 
-              // The key for the cache is the URL of the image, excluding the domain name.
-              // Because the domain name is `gibs-{a-c}`, so it might have a different domain
-              // each time we try to load the image.
-              const tileCacheKey = src.split('nasa.gov/')[1]
+                // We are caching the images retrieved from GIBS so we don't have to reload them
+                // every time we redraw the granules.
 
-              if (imageryCache.containsKey(tileCacheKey)) {
-                // If the cache has the image, set the image to the tile
-                const tileData = imageryCache.get(tileCacheKey);
-                (tile as ImageTile).setImage(tileData)
-              } else {
-                // If the cache does not have the image, load the image and add it to tile and the cache
-                const image = new Image()
-                image.crossOrigin = 'anonymous'
-                image.src = src;
+                // The key for the cache is the URL of the image, excluding the domain name.
+                // Because the domain name is `gibs-{a-c}`, so it might have a different domain
+                // each time we try to load the image.
+                const tileCacheKey = src.split('nasa.gov/')[1]
 
-                // Set the image to the tile
-                // If this is not set here, for some reason the basemap tiles aren't updating when zooming.
-                (tile as ImageTile).setImage(image)
-
-                image.onload = () => {
-                  // It is possible while the image is loading, it was saved to the cache by another granule
-                  // If that is the case, replace the image in the cache with the new image
-                  if (!imageryCache.containsKey(tileCacheKey)) {
-                    imageryCache.set(tileCacheKey, image)
-                  }
+                if (imageryCache.containsKey(tileCacheKey)) {
+                  // If the cache has the image, set the image to the tile
+                  const tileData = imageryCache.get(tileCacheKey);
+                  (tile as ImageTile).setImage(tileData)
+                } else {
+                  // If the cache does not have the image, load the image and add it to tile and the cache
+                  const image = new Image()
+                  image.crossOrigin = 'anonymous'
+                  image.src = src;
 
                   // Set the image to the tile
-                  // Set the image here after the image is loaded to ensure the whole granule image
-                  // is drawn correctly
+                  // If this is not set here, for some reason the basemap tiles aren't updating when zooming.
                   (tile as ImageTile).setImage(image)
-                }
 
-                image.onerror = () => {
-                  // If the image errored it was most likely because that tile does not exist.
-                  // Cache the reponse so we don't try to load it again
-                  if (!imageryCache.containsKey(tileCacheKey)) {
-                    imageryCache.set(tileCacheKey, image)
+                  image.onload = () => {
+                    // It is possible while the image is loading, it was saved to the cache by another granule
+                    // If that is the case, replace the image in the cache with the new image
+                    if (!imageryCache.containsKey(tileCacheKey)) {
+                      imageryCache.set(tileCacheKey, image)
+                    }
+
+                    // Set the image to the tile
+                    // Set the image here after the image is loaded to ensure the whole granule image
+                    // is drawn correctly
+                    (tile as ImageTile).setImage(image)
+                  }
+
+                  image.onerror = () => {
+                    // If the image errored it was most likely because that tile does not exist.
+                    // Cache the response so we don't try to load it again
+                    if (!imageryCache.containsKey(tileCacheKey)) {
+                      imageryCache.set(tileCacheKey, image)
+                    }
                   }
                 }
-              }
-            },
-            url: gibsData.url,
-            wrapX: false
+              },
+              url: gibsDataItem.url,
+              wrapX: false
+            })
           })
-        })
 
-        // Save the layer to the cache
-        tileLayerCache.set(cacheKey, imageryLayer)
-      }
+          // Save the layer to the cache
+          tileLayerCache.set(cacheKey, imageryLayer)
+        }
 
-      // Set the opacity of the layer provided by the gibsData
-      imageryLayer.setOpacity(gibsData.opacity)
+        // Set the opacity of the layer provided by the gibsData
+        imageryLayer.setOpacity(gibsDataItem.opacity)
 
-      // Add the event listeners to the layer
-      const prerenderKey = imageryLayer.on(
-        RenderEventType.PRERENDER as LayerRenderEventTypes,
-        onTileLayerPrerender.bind(null, map, geometryToClip)
-      )
-      imageryLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, onTileLayerPostrender)
+        // Add the event listeners to the layer
+        const prerenderKey = imageryLayer.on(
+          RenderEventType.PRERENDER as LayerRenderEventTypes,
+          onTileLayerPrerender.bind(null, map, geometryToClip)
+        )
+        imageryLayer.on(RenderEventType.POSTRENDER as LayerRenderEventTypes, onTileLayerPostrender)
 
-      // Save the event listener key to the layer properties, for turning off the listener later
-      imageryLayer.set('prerenderKey', prerenderKey)
+        // Save the event listener key to the layer properties, for turning off the listener later
+        imageryLayer.set('prerenderKey', prerenderKey)
 
-      granuleImageryLayers.push(imageryLayer)
+        granuleImageryLayers.push(imageryLayer)
+      })
     })
   })
 

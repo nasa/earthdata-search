@@ -6,8 +6,14 @@ import React, {
 } from 'react'
 import hexToRgba from 'hex-to-rgba'
 import classNames from 'classnames'
+import { ArrowChevronRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import LayerGroup from 'ol/layer/Group'
+import TileLayer from 'ol/layer/Tile'
+import Button from '../Button/Button'
 
 import './Legend.scss'
+
+// TODO this is the colormap
 
 /**
  * Renders supported html entities when they are provided by the colormaps endpoint.
@@ -71,16 +77,27 @@ export type Colormap = ColormapScale | ColormapClasses
 interface LegendProps {
   /** The colormap information */
   colorMap: Colormap
+  granules: Array<{ gibsData?: Array<{ product: string }> }> | undefined
+  /** The OpenLayers Layer Group containing granule imagery layers */
+  granuleImageryLayerGroup?: LayerGroup
 }
 
 /**
  * Renders a legend on the map when a colormap is present
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.colorMap - The colormap information.
+ * @param {Array} props.granules - Array of granule metadata.
+ * @param {Object} props.granuleImageryLayerGroup - The OL Layer Group containing granule imagery layers.
  */
 export const Legend: React.FC<LegendProps> = ({
-  colorMap
+  colorMap,
+  granules,
+  granuleImageryLayerGroup
 }) => {
+  console.log('🚀 ~ file: Legend.tsx:90 ~ granules:', granules)
+  const layers = granules && granules[0] && granules[0].gibsData ? granules[0].gibsData : null
+
+  console.log('🚀 ~ file: Legend.tsx:90 ~ layers:', layers)
   const { scale, classes } = colorMap
 
   const colormapData = scale || classes
@@ -91,6 +108,20 @@ export const Legend: React.FC<LegendProps> = ({
   const [focusColor, setFocusColor] = useState<string | null>(null)
   const [focusLabel, setFocusLabel] = useState<string | null>(null)
   const [colormapIsRendered, setColormapIsRendered] = useState(false)
+
+  // TODO this is an array of objects
+  const [visibleLayers, setVisibleLayers] = useState<string[]>([])
+  console.log('🚀 ~ file: Legend.tsx:107 ~ visibleLayers:', visibleLayers)
+
+  // Initialize visible layers when layers prop changes
+  useEffect(() => {
+    console.log('🚀 ~ file: Legend.tsx:112 ~ layers:', layers)
+    if (layers && Array.isArray(layers)) {
+      // Extract product names from layers and set them as initially visible
+      const productNames = layers.map((layer: { product: string }) => layer.product)
+      setVisibleLayers(productNames)
+    }
+  }, [granules])
 
   useEffect(() => {
     if (barRef.current) {
@@ -169,6 +200,33 @@ export const Legend: React.FC<LegendProps> = ({
     setIsFocused(false)
   }
 
+  /**
+   * Toggles the visibility of a layer
+   */
+  const toggleLayerVisibility = (productName: string) => {
+    setVisibleLayers((prev) => {
+      const newVisibleLayers = prev.includes(productName)
+        ? prev.filter((name) => name !== productName)
+        : [...prev, productName]
+
+      // Update the actual OpenLayers layer visibility
+      if (granuleImageryLayerGroup) {
+        const groupLayers = granuleImageryLayerGroup.getLayers()
+        groupLayers.forEach((layer) => {
+          if (layer instanceof TileLayer) {
+            const layerClassName = layer.getClassName()
+            // Check if this layer belongs to the toggled product
+            if (layerClassName && layerClassName.includes(productName)) {
+              layer.setVisible(newVisibleLayers.includes(productName))
+            }
+          }
+        })
+      }
+
+      return newVisibleLayers
+    })
+  }
+
   const legendClassNames = classNames([
     'legend',
     {
@@ -227,6 +285,41 @@ export const Legend: React.FC<LegendProps> = ({
               </div>
             )
         }
+      </div>
+      {
+        layers && layers.length > 0 && (
+          <div className="legend__layers">
+            <h4>Available Layers:</h4>
+            {
+              layers.map((layer: { product: string }) => (
+                <div key={layer.product} className="legend__layer-item">
+                  <label>
+                    <input
+                      type="checkbox"
+                      checked={visibleLayers.includes(layer.product)}
+                      onChange={() => toggleLayerVisibility(layer.product)}
+                    />
+                    {layer.product}
+                  </label>
+                </div>
+              ))
+            }
+          </div>
+        )
+      }
+      <div>
+        <Button
+          variant="naked"
+          icon={ArrowChevronRight}
+          label="Layer picker"
+          onClick={
+            () => {
+              alert('swap layer')
+            }
+          }
+        >
+          Layer picker
+        </Button>
       </div>
     </div>
   )

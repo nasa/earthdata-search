@@ -171,7 +171,7 @@ export type MapGranule = {
   /** The temporal value formatted for display */
   formattedTemporal: string
   /** The GIBS metadata */
-  gibsData: GibsData
+  gibsData: GibsData[]
   /** The granule id */
   granuleId: string
   /** The granule style */

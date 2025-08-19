@@ -168,6 +168,14 @@ To invoke lambdas locally we must create a stringified JSON file with the order 
 
     npm run invoke-local <name-of-lambda-function> ./path/to/event.json
 
+### Pulling down colormaps locally
+    npm run invoke-local generateColorMaps ./tmp/generate_colormaps.json
+
+with a JSON object of
+{
+  "projection": "epsg4326"
+}
+
 ### Run the Automated [Jest](https://jestjs.io/) tests
 
 Once the project is built, you must ensure that the automated unit tests pass:

@@ -404,7 +404,8 @@ const Map: React.FC<MapProps> = ({
     const map = new OlMap({
       controls: [
         new LegendControl({
-          colorMap
+          colorMap,
+          granules
         })
       ],
       interactions: defaultInteractions().extend([
@@ -935,7 +936,8 @@ const Map: React.FC<MapProps> = ({
     if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
       controls.push(
         new LegendControl({
-          colorMap
+          colorMap,
+          granules
         })
       )
     }
@@ -982,6 +984,20 @@ const Map: React.FC<MapProps> = ({
       projectionCode,
       vectorSource: granuleBackgroundsSource
     })
+
+    // TODO consider removing the legendControl first
+    const gibsLayers = granules && granules[0] && granules[0].gibsData ? granules[0].gibsData : null
+    const map = mapRef.current as OlMap
+    const controls = map.getControls()
+
+    if (gibsLayers) {
+      controls.push(
+        new LegendControl({
+          colorMap,
+          granules
+        })
+      )
+    }
 
     // If there is a focused granule draw it
     if (focusedGranuleId) {
