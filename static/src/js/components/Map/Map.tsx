@@ -98,7 +98,7 @@ import {
   ShapefileFile,
   SpatialSearch
 } from '../../types/sharedTypes'
-import { Colormap } from '../Legend/Legend'
+import { Colormap } from '../ColorMap/ColorMap'
 import { MapView, ShapefileSlice } from '../../zustand/types'
 
 let previousGranulesKey: string
@@ -282,7 +282,7 @@ interface MapProps {
     longitude: number
   }
   /** The color map for the focused collection */
-  colorMap: Colormap
+  colorMap: Record<string, Colormap>
   /** The ID of the focused collection */
   focusedCollectionId: string
   /** The ID of the focused granule */
@@ -426,7 +426,9 @@ const Map: React.FC<MapProps> = ({
     const map = new OlMap({
       controls: [
         new LegendControl({
-          colorMap
+          collectionId: focusedCollectionId,
+          colorMap: colorMap as Record<string, Colormap>,
+          granuleImageryLayerGroup
         })
       ],
       interactions: defaultInteractions().extend([
@@ -957,7 +959,9 @@ const Map: React.FC<MapProps> = ({
     if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
       controls.push(
         new LegendControl({
-          colorMap
+          collectionId: focusedCollectionId,
+          colorMap,
+          granuleImageryLayerGroup
         })
       )
     }

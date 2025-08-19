@@ -275,6 +275,55 @@ export type MapSlice = {
     showMbr: boolean
     /** Function to set the showMbr value */
     setShowMbr: (showMbr: boolean) => void
+    /** Store layers for each collection */
+    mapLayers: Record<string, Array<{
+      product: string
+      title?: string
+      format?: string
+      layerPeriod?: string
+      antarctic_resolution?: string
+      arctic_resolution?: string
+      geographic_resolution?: string
+      antarctic?: boolean
+      arctic?: boolean
+      geographic?: boolean
+      isVisible?: boolean
+      opacity?: number
+    }>>
+    /** Function to set layers for a collection */
+    setMapLayers: (collectionId: string, layers: Array<{
+      product: string
+      title?: string
+      format?: string
+      layerPeriod?: string
+      antarctic_resolution?: string
+      arctic_resolution?: string
+      geographic_resolution?: string
+      antarctic?: boolean
+      arctic?: boolean
+      geographic?: boolean
+      isVisible?: boolean
+      opacity?: number
+    }>) => void
+    /** Function to toggle layer visibility for a collection */
+    toggleLayerVisibility: (collectionId: string, productName: string) => void
+    /** Function to set the order of layers when they are dragged and dropped */
+    setMapLayersOrder: (collectionId: string, newOrder: Array<{
+      product: string
+      title?: string
+      format?: string
+      layerPeriod?: string
+      antarctic_resolution?: string
+      arctic_resolution?: string
+      geographic_resolution?: string
+      antarctic?: boolean
+      arctic?: boolean
+      geographic?: boolean
+      isVisible?: boolean
+      opacity?: number
+    }>) => void
+    /** Function to update the opacity of a specific layer */
+    updateLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
   }
 }
 

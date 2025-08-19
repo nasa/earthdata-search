@@ -1,0 +1,82 @@
+@use '../../../css/utils';
+
+.colormap {
+  overflow: hidden;
+
+  &__bar,
+  .ol-viewport & canvas.colormap__bar {
+    height: 1rem;
+    width: 100%;
+    cursor: crosshair;
+    opacity: 0;
+    visibility: visible;
+    transition: opacity 0.2s ease;
+    overflow-x: hidden;
+
+    .colormap--is-colormap-rendered & {
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+  }
+
+  &__labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    visibility: visible;
+    opacity: 1;
+    width: 100%;
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: utils.$color__carbon--60;
+    pointer-events: none;
+    letter-spacing: 0.01rem;
+  }
+
+  &__hover-prompt {
+    font-style: italic;
+  }
+
+  &__meta {
+    display: flex;
+  }
+
+  &__focus {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    visibility: hidden;
+
+    .colormap__bar:hover + .colormap__meta & {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  &__focus-label-color {
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    margin-right: 0.5rem;
+    border: 1px solid utils.$color__carbon--30;
+    background-color: transparent;
+  }
+
+  &__focus-label {
+    display: block;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 0.01rem;
+    color: utils.$color__carbon--60;
+    font-weight: 500;
+    transition: opacity 0.2s ease-in-out;
+  }
+}

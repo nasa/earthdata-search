@@ -140,6 +140,14 @@ export interface UrsProfile {
   email_address: EmailAddressString
 }
 
+/** The tag data */
+export type Tag = {
+  /** The tag data */
+  data: {
+    [key: string]: string | boolean | null
+  }
+}
+
 /** The Collection Metadata */
 export interface CollectionMetadata {
   // Will flush out Collection types in the future
@@ -196,6 +204,10 @@ export type GibsData = {
   time?: string
   /** The GIBS layer URL */
   url?: string
+  /** The GIBS layer title */
+  title?: string
+  /** Whether the layer is visible (from Zustand state) */
+  visible?: boolean
 }
 
 export type MapGranule = {
@@ -206,7 +218,7 @@ export type MapGranule = {
   /** The temporal value formatted for display */
   formattedTemporal: string
   /** The GIBS metadata */
-  gibsData: GibsData
+  gibsData: GibsData[]
   /** The granule id */
   granuleId: string
   /** The granule style */

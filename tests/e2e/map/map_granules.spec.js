@@ -1,5 +1,4 @@
 import { test, expect } from 'playwright-test-coverage'
-
 import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import { isGetGranuleQuery } from '../../support/isGetGranuleQuery'
 import {
@@ -51,6 +50,14 @@ const colormapScreenshotClip = {
 }
 
 const temporalLabelClass = '.map__focused-granule-overlay__granule-label-temporal'
+
+const dragPanelToX = async (page, x) => {
+  const handle = page.locator('[data-testid="panels__handle"]')
+  await handle.hover()
+  await handle.dispatchEvent('mousedown', { button: 0 })
+  await handle.dispatchEvent('mousemove', { clientX: x })
+  await handle.dispatchEvent('mouseup', { button: 0 })
+}
 
 test.describe('Map: Granule interactions', () => {
   test.beforeEach(async ({ page, context }) => {
@@ -326,21 +333,17 @@ test.describe('Map: Granule interactions', () => {
         clip: colormapScreenshotClip
       })
 
-      await expect(page.getByTestId('legend-label-min')).toHaveText('0 – 1 %')
-      await expect(page.getByTestId('legend-label-max')).toHaveText('100 %')
+      await expect(page.getByTestId('legend-label-min').first()).toHaveText('0 – 1 %')
+      await expect(page.getByTestId('legend-label-max').first()).toHaveText('100 %')
     })
 
     test.describe('when hovering over the colormap', () => {
       test('displays color map data to the user', async ({ page }) => {
-        await page.getByTestId('legend').hover({
-          position: {
-            x: 108,
-            y: 5
-          }
-        })
+        // Hover over the middle of the colorbar
+        await page.locator('.colormap__bar').first().hover()
 
-        await expect(page.getByTestId('legend-label')).toHaveText('44 – 45 %')
-        await expect(page.getByTestId('legend-label-color')).toHaveAttribute('style', 'background-color: rgb(0, 250, 241);')
+        await expect(page.getByTestId('legend-label')).toHaveText('50 – 51 %')
+        await expect(page.getByTestId('legend-label-color')).toHaveAttribute('style', 'background-color: rgb(0, 217, 142);')
       })
     })
 
@@ -366,8 +369,8 @@ test.describe('Map: Granule interactions', () => {
             clip: colormapScreenshotClip
           })
 
-          await expect(page.getByTestId('legend-label-min')).toHaveText('0.00 – 0.12 DU')
-          await expect(page.getByTestId('legend-label-max')).toHaveText('500.00 DU')
+          await expect(page.getByTestId('legend-label-min').first()).toHaveText('0.00 – 0.12 DU')
+          await expect(page.getByTestId('legend-label-max').first()).toHaveText('500.00 DU')
         })
       })
     })
@@ -552,6 +555,92 @@ test.describe('Map: Granule interactions', () => {
           await expect(page).toHaveScreenshot('gibs-focused.png', {
             clip: screenshotClip
           })
+        })
+
+        test('toggles layer visibility when clicking the visibility button @screenshot', async ({ page }) => {
+          await page.getByTestId('legend').waitFor()
+
+          await dragPanelToX(page, -1500)
+
+          // Find and click the visibility toggle button for the first layer
+          const visibilityButton = page.locator('.layer-picker__layer-toggle').first()
+          await visibilityButton.click()
+
+          // Take a screenshot to verify the layer is no longer visible
+          await expect(page).toHaveScreenshot('gibs-layer-hidden.png', {
+            clip: screenshotClip
+          })
+        })
+
+        test('updates layer opacity when adjusting the opacity slider @screenshot', async ({ page }) => {
+          await page.getByTestId('legend').waitFor()
+          await dragPanelToX(page, -1500)
+
+          // Find and click the settings button for the first layer to open the opacity popover
+          const settingsButton = page.locator('.layer-picker__layer-settings').first()
+          await settingsButton.click()
+
+          // Wait for the opacity popover to be visible
+          await page.getByRole('slider').waitFor()
+
+          // Find the opacity slider and adjust it to 50%
+          const opacitySlider = page.getByRole('slider')
+          await opacitySlider.fill('0.5')
+
+          // Trigger the onMouseUp event to apply the opacity change
+          await opacitySlider.dispatchEvent('mouseup')
+
+          // Wait a moment for the opacity change to be applied
+          await page.waitForTimeout(500)
+
+          // Take a screenshot to verify the layer opacity has changed
+          await expect(page).toHaveScreenshot('gibs-layer-opacity-adjusted.png', {
+            clip: screenshotClip
+          })
+
+          // Check the actual slider value (0.5 for 50%)
+          expect(await opacitySlider.getAttribute('value')).toBe('0.5')
+          // Check the displayed percentage
+          expect(page.locator('div:has-text("50 %")').first()).toBeVisible()
+
+          // Close the popover by clicking outside
+          await page.locator('body').click()
+        })
+
+        test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
+          await page.getByTestId('legend').waitFor()
+          await dragPanelToX(page, -1500)
+
+          // Verify the the first layer product name
+          const layerItems = page.locator('.layer-picker__layer-item')
+          const firstLayerProductName = await layerItems.first().locator('.layer-picker__layer-name').textContent()
+          expect(firstLayerProductName).toContain('Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)')
+
+          const secondLayerVisibilityButton = page.locator('.layer-picker__layer-toggle').nth(1)
+          await secondLayerVisibilityButton.click()
+
+          // Find the second layer's drag handle
+          const secondLayerDragHandle = page.getByRole('button', { name: 'Drag to reorder layer' }).nth(1)
+
+          // Get the bounding box of the first layer to know where to drop
+          const firstLayer = page.locator('.layer-picker__layer-item').first()
+          const firstLayerBox = await firstLayer.boundingBox()
+
+          // Drag the second layer to the top (above the first layer)
+          await secondLayerDragHandle.hover()
+          await page.mouse.down()
+          await page.mouse.move(firstLayerBox.x + firstLayerBox.width / 2, firstLayerBox.y - 20)
+          await page.mouse.up()
+
+          // Wait a moment for the drag operation to complete
+          await page.waitForTimeout(500)
+
+          // Verify the second layer is now at the top
+          const layerItemsUpdated = page.locator('.layer-picker__layer-item')
+          const updatedFirstLayerProductName = await layerItemsUpdated.first().locator('.layer-picker__layer-name').textContent()
+
+          // The second layer should now be first in the list "Cloud Pressure Total"
+          expect(updatedFirstLayerProductName).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
         })
       })
     })
