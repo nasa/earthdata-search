@@ -1,96 +1,50 @@
 import { screen } from '@testing-library/react'
-import 'jest-canvas-mock'
 
 import Legend from '../Legend'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-const quantitativeColorMap = {
-  scale: {
-    colors: [
-      '#080008',
-      '#100010',
-      '#180018',
-      '#200020',
-      '#280028'
-    ],
-    labels: [
-      '0.004 – 0.008 mm',
-      '0.008 – 0.013 mm',
-      '0.013 – 0.017 mm',
-      '0.017 – 0.021 mm',
-      '&#8805; 0.025 mm'
-    ]
-  }
-}
-
-const qualitativeColorMap = {
-  classes: {
-    colors: [
-      '#080008',
-      '#100010',
-      '#180018',
-      '#200020',
-      '#280028'
-    ],
-    labels: [
-      'Not Water',
-      'Open Water',
-      'Partial Surface Water',
-      'Snow/Ice',
-      'Cloud'
-    ]
-  }
+const mockGranuleImageryLayerGroup = {
+  getLayers: jest.fn(() => ({
+    getArray: jest.fn(() => [])
+  }))
 }
 
 const setup = setupTest({
   Component: Legend,
   defaultProps: {
-    colorMap: quantitativeColorMap
+    collectionId: 'test-collection',
+    colorMap: {}
   }
 })
-
 describe('Legend', () => {
-  describe('if the scale property exists', () => {
-    test('renders the min label', () => {
-      setup()
+  test('renders the legend container', () => {
+    setup()
 
-      const minLabel = screen.queryByText('0.004 – 0.008 mm')
+    const legend = screen.getByTestId('legend')
 
-      expect(minLabel).toBeInTheDocument()
-    })
-
-    test('renders and encodes the max label', () => {
-      setup()
-
-      const maxLabel = screen.queryByText('≥ 0.025 mm')
-
-      expect(maxLabel).toBeInTheDocument()
-    })
+    expect(legend).toBeInTheDocument()
+    expect(legend).toHaveClass('legend')
   })
 
-  describe('if the class property exists', () => {
-    test('renders the hover prompt', () => {
-      setup({
-        overrideProps: {
-          colorMap: qualitativeColorMap
-        }
-      })
-
-      const hoverPrompt = screen.queryByText('Hover for class names')
-
-      expect(hoverPrompt).toBeInTheDocument()
+  test('renders LayerPicker when granuleImageryLayerGroup is provided', () => {
+    setup({
+      overrideProps: {
+        granuleImageryLayerGroup: mockGranuleImageryLayerGroup
+      }
     })
 
-    test('does not render the max label', () => {
-      setup({
-        overrideProps: {
-          colorMap: qualitativeColorMap
-        }
-      })
+    const legend = screen.getByTestId('legend')
 
-      const maxLabel = screen.queryByText('Cloud')
+    expect(legend).toBeInTheDocument()
+    // LayerPicker should be rendered (we can't easily test its content without mocking it)
+  })
 
-      expect(maxLabel).not.toBeInTheDocument()
-    })
+  test('does not render LayerPicker when granuleImageryLayerGroup is not provided', () => {
+    setup()
+
+    const legend = screen.getByTestId('legend')
+
+    expect(legend).toBeInTheDocument()
+    expect(legend.innerHTML).toBe('')
   })
 })

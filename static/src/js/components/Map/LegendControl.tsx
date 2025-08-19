@@ -1,14 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Control from 'ol/control/Control'
+import LayerGroup from 'ol/layer/Group'
 
-import Legend, { Colormap } from '../Legend/Legend'
+import Legend from '../Legend/Legend'
+import { Colormap } from '../ColorMap/ColorMap'
 
 import './LegendControl.scss'
 
 export type LegendControlOptions = {
-  /** The colormap to display */
-  colorMap: Colormap
+  /** The collection ID to manage layers for */
+  collectionId: string
+  /** The colormap information by product name */
+  colorMap: Record<string, Colormap>
+  /** The OpenLayers Layer Group containing granule imagery layers */
+  granuleImageryLayerGroup?: LayerGroup
   /** The target element to render the control into */
   target?: HTMLElement | string
 }
@@ -16,7 +22,9 @@ export type LegendControlOptions = {
 /**
  * OpenLayers control for displaying the Legend component
  * @param {Object} options - The options to configure the LegendControl
+ * @param {string} options.collectionId - The collection ID to manage layers for.
  * @param {Object} options.colorMap - The colormap data to display in the legend
+ * @param {Object} [options.granuleImageryLayerGroup] - The OL Layer Group containing granule imagery layers
  * @param {HTMLElement|string} [options.target] - The DOM element or element ID where this control should be rendered instead of the default map controls container
  */
 class LegendControl extends Control {
@@ -29,11 +37,13 @@ class LegendControl extends Control {
       target: options.target
     })
 
-    if (Object.keys(options.colorMap).length === 0) return
-
     // @ts-expect-error We are still on React 17
     ReactDOM.render(
-      <Legend colorMap={options.colorMap} />,
+      <Legend
+        collectionId={options.collectionId}
+        colorMap={options.colorMap}
+        granuleImageryLayerGroup={options.granuleImageryLayerGroup}
+      />,
       this.element
     )
   }

@@ -191,8 +191,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
           const gibsTags = tags ? getValueForTag('gibs', tags) : null
           if (gibsTags && gibsTags.length > 0) {
-            const { product } = gibsTags[0]
-            reduxDispatch(actions.getColorMap({ product }))
+            gibsTags.forEach((gibsTag: { product: string }) => {
+              const { product } = gibsTag
+              reduxDispatch(actions.getColorMap({ product }))
+            })
           }
 
           // Formats the metadata returned from graphql for use throughout the application
