@@ -61,6 +61,12 @@ $card-border-radius: 0;
 $dropdown-bg: utils.$color__spacesuit-white;
 $dropdown-border-radius: 0;
 
+/* Popovers */
+$popover-border-width: 1px;
+$popover-border-color: utils.$color__carbon--20;
+$popover-border-radius: 0;
+$popover-header-bg: utils.$color__spacesuit-white;
+
 /* Custom Breakpoints */
 
 $grid-breakpoints: (
