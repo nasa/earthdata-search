@@ -25,12 +25,6 @@ import Button from '../../components/Button/Button'
 // @ts-expect-error: Types do not exist for this file
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
-import SpatialSelectionDropdownContainer
-// @ts-expect-error: Types do not exist for this file
-  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
-import TemporalSelectionDropdownContainer
-// @ts-expect-error: Types do not exist for this file
-  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import TopicCard from './HomeTopicCard'
@@ -56,6 +50,8 @@ import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 
 // @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
+// @ts-expect-error: Types do not exist for this file
+import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
@@ -198,8 +194,95 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
     setKeyword(e.target.value)
   }
 
+  // Note: NLP search is used for logging/comparison only, not for actual search flow
+
+  // Add helper function to window for viewing stored NLP responses
+  React.useEffect(() => {
+    (window as any).viewNlpLogs = () => {
+      const logs = JSON.parse(sessionStorage.getItem('nlpSearchLogs') || '[]')
+      console.log('📊 Stored NLP Search Logs:', logs)
+
+      return logs
+    }
+
+    (window as any).clearNlpLogs = () => {
+      sessionStorage.removeItem('nlpSearchLogs')
+      console.log('🗑️ Cleared NLP search logs')
+    }
+  }, [])
+
   const searchParams = {
     q: keyword
+  }
+
+  const logNlpSearchResponse = async (query: string) => {
+    const timestamp = new Date().toISOString()
+
+    console.log(`🔍 [${timestamp}] Landing Page: Making NLP request via backend for query:`, query)
+
+    try {
+      const startTime = performance.now()
+
+      // Use our backend NLP request class
+      const nlpRequest = new NlpSearchRequest('', 'sit')
+      console.log(`🔍 [${timestamp}] NLP Request URL: ${nlpRequest.baseUrl}/${nlpRequest.searchPath}`)
+      console.log(`🔍 [${timestamp}] NLP Request config:`, {
+        baseUrl: nlpRequest.baseUrl,
+        searchPath: nlpRequest.searchPath,
+        lambda: nlpRequest.lambda,
+        authenticated: nlpRequest.authenticated,
+        optionallyAuthenticated: nlpRequest.optionallyAuthenticated
+      })
+      
+      const response = await nlpRequest.search({ q: query })
+
+      const endTime = performance.now()
+      const duration = Math.round(endTime - startTime)
+
+      console.log(`🔍 [${new Date().toISOString()}] Landing Page: NLP Response (${duration}ms):`, response)
+
+      // Parse the response to get the actual data
+      const data = response.data || response
+
+      // Log key parts of the response for easy viewing
+      if (data.queryInfo) {
+        console.log('🔍 Query Info:', data.queryInfo)
+      }
+
+      if (data.metadata?.feed?.entry) {
+        console.log(
+          `🔍 Found ${data.metadata.feed.entry.length} collections:`,
+          data.metadata.feed.entry.map((entry) => entry.title)
+        )
+      }
+
+      // Store in sessionStorage for reference
+      const logEntry = {
+        timestamp,
+        query,
+        response: data,
+        duration,
+        source: 'landing-page'
+      }
+
+      const existingLogs = JSON.parse(sessionStorage.getItem('nlpSearchLogs') || '[]')
+      existingLogs.push(logEntry)
+      sessionStorage.setItem('nlpSearchLogs', JSON.stringify(existingLogs.slice(-10))) // Keep last 10
+    } catch (error) {
+      console.error(`🔍 [${new Date().toISOString()}] Landing Page: NLP request failed:`, error)
+
+      // Still store the failed attempt
+      const logEntry = {
+        timestamp,
+        query,
+        error: error.message,
+        source: 'landing-page'
+      }
+
+      const existingLogs = JSON.parse(sessionStorage.getItem('nlpSearchLogs') || '[]')
+      existingLogs.push(logEntry)
+      sessionStorage.setItem('nlpSearchLogs', JSON.stringify(existingLogs.slice(-10)))
+    }
   }
 
   return (
@@ -227,6 +310,15 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                 onSubmit={
                   (e) => {
                     e.preventDefault()
+                    console.log('🔍 Form submitted with keyword:', keyword)
+
+                    // Make NLP request and log response
+                    if (keyword.trim()) {
+                      logNlpSearchResponse(keyword.trim())
+                    }
+
+                    // Then navigate using regular search path
+                    console.log('🔍 Using regular search path')
                     onChangePath(`/search?q=${keyword}`)
                     history.push(`/search?q=${keyword}`)
                   }
@@ -242,10 +334,6 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                     onChange={onChangeKeyword}
                     ref={inputRef}
                   />
-                </div>
-                <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                  <TemporalSelectionDropdownContainer searchParams={searchParams} />
-                  <SpatialSelectionDropdownContainer searchParams={searchParams} />
                 </div>
                 <Button type="submit" className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light" bootstrapVariant="primary" bootstrapSize="lg">Search</Button>
               </form>
