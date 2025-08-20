@@ -1,6 +1,7 @@
 import { isCancel } from 'axios'
 
 import CollectionRequest from '../util/request/collectionRequest'
+import NlpSearchRequest from '../util/request/nlpSearchRequest'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { handleError } from './errors'
 
@@ -113,27 +114,82 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(onFacetsLoading())
   dispatch(startCollectionsTimer())
 
-  const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
+  // Check if this search originated from the landing page (should use NLP)
+  const { searchSource } = useEdscStore.getState().query
+  const useNlpSearch = searchSource === 'landing'
+  
+  let requestObject
+  let searchParams
+  
+  if (useNlpSearch) {
+    // Use NLP search for semantic search (landing page initiated searches only)
+    console.log('🔍 Using NLP search for collections (source: landing page)')
+    requestObject = new NlpSearchRequest(authToken, earthdataEnvironment)
+    // For NLP search, we only need the keyword query
+    searchParams = { q: keyword }
+  } else {
+    // Use regular CMR search for all other scenarios
+    console.log(`🔍 Using regular CMR search for collections (source: ${searchSource})`)
+    requestObject = new CollectionRequest(authToken, earthdataEnvironment)
+    searchParams = buildCollectionSearchParams(collectionParams)
+  }
+  
   cancelToken = requestObject.getCancelToken()
 
-  const response = requestObject.search(buildCollectionSearchParams(collectionParams))
+  const response = requestObject.search(searchParams)
     .then((responseObject) => {
       const { data, headers } = responseObject
+      
+      console.log('🔍 Raw response object:', responseObject)
 
-      const cmrHits = parseInt(headers['cmr-hits'], 10)
+      let entry = []
+      let facets = []
+      let hits = 0
 
-      const { feed = {} } = data
-      const {
-        entry = [],
-        facets = {}
-      } = feed
-      const { children = [] } = facets
+      if (useNlpSearch) {
+        // Handle NLP response format
+        console.log('🔍 Processing NLP response format')
+        
+        // NLP response structure: data.metadata.feed.entry
+        if (data && data.metadata && data.metadata.feed && data.metadata.feed.entry) {
+          entry = data.metadata.feed.entry
+          hits = entry.length // NLP doesn't return total hits, use current page count
+          facets = [] // NLP doesn't return facets
+          console.log(`🔍 NLP found ${entry.length} collections`)
+        } else {
+          console.warn('🔍 Unexpected NLP response structure:', data)
+        }
+      } else {
+        // Handle regular CMR response format
+        console.log('🔍 Processing regular CMR response format')
+        
+        const cmrHits = parseInt(headers['cmr-hits'], 10)
+        const { feed = {} } = data
+        const {
+          entry: cmrEntry = [],
+          facets: cmrFacets = {}
+        } = feed
+        const { children = [] } = cmrFacets
+
+        entry = cmrEntry
+        facets = children
+        hits = cmrHits
+      }
 
       const payload = {
-        facets: children,
-        hits: cmrHits,
+        facets,
+        hits,
         keyword,
         results: entry
+      }
+
+      // Reset searchSource after successful NLP search to ensure subsequent searches use CMR
+      if (useNlpSearch) {
+        console.log('🔍 Resetting searchSource to "direct" after successful NLP search')
+        // Directly update the searchSource in the store without triggering another getCollections call
+        useEdscStore.setState((state) => {
+          state.query.searchSource = 'direct'
+        })
       }
 
       dispatch(finishCollectionsTimer())
