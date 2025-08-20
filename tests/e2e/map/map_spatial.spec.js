@@ -1780,7 +1780,7 @@ test.describe('Map: Spatial interactions', () => {
             ...commonHeaders,
             'cmr-hits': '1'
           },
-          paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
+          paramCheck: (parsedQuery) => parsedQuery?.keyword.includes(conceptId) && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
         }],
         includeDefault: false
       })

@@ -1,5 +1,5 @@
-import { GranulesMetadata } from '../../types/sharedTypes'
-import { EdscStore } from '../types'
+import type { GranulesMetadata } from '../../types/sharedTypes'
+import type { EdscStore } from '../types'
 
 /**
  * Retrieve the granules

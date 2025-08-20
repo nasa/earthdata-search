@@ -3,8 +3,10 @@ import { CancelTokenSource, isCancel } from 'axios'
 import { mbr } from '@edsc/geo-utils'
 
 import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
+import { getCollectionsById } from '../selectors/collections'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { GranulesSlice, ImmerStateCreator } from '../types'
+
+import type { GranulesSlice, ImmerStateCreator } from '../types'
 
 // @ts-expect-error There are no types for this file
 import GranuleRequest from '../../util/request/granuleRequest'
@@ -26,6 +28,7 @@ import {
 } from '../../util/granules'
 
 const initialState = {
+  collectionConceptId: null,
   count: null,
   isLoaded: false,
   isLoading: false,
@@ -51,6 +54,8 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
       const earthdataEnvironment = getEarthdataEnvironment(currentState)
       const collectionId = getCollectionId(currentState)
       const collectionMetadata = getFocusedCollectionMetadata(currentState)
+      const collections = getCollectionsById(currentState)
+      const collectionById = collections[collectionId]
 
       const { authToken } = reduxState
 
@@ -59,7 +64,13 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
 
       // Format and structure data from Redux to be sent to CMR
       const granuleParams = prepareGranuleParams(
-        collectionMetadata,
+        // Use focusedCollection and collection search results together to build the granule
+        // search parameters. This will ensure isOpenSearch can be properly determined before
+        // retrieving full collection metadata
+        {
+          ...collectionMetadata,
+          ...collectionById
+        },
         extractedGranuleParams
       )
 
@@ -74,8 +85,24 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
         pageNum
       } = granuleParams
 
-      // Clear out the current results if a new set of pages has been requested
       if (pageNum === 1) {
+        // If the collection ID matches the collectionConceptId already saved, and the collection is
+        // not OpenSearch, don't fetch granules.
+        // In `getCollectionMetadata` we call `getGranules` as soon as we can to fetch CMR granules right away.
+        // But that request will be empty for OpenSearch collections, which aren't stored in CMR.
+        // So after the collection metadata is returned we call `getGranules` again. This results
+        // in a double fetch for OpenSearch Granules, but the two requests are made to different
+        // endpoints. This `if` ensures we don't double fetch CMR granules.
+        // TODO This is causing a double fetch for OpenSearch granules (both to the same OpenSearch endpoint)
+        // TODO when loaded from the search results. The first request gets cancelled, but it would be nice to avoid that
+        if (
+          collectionId === currentState.granules.granules.collectionConceptId
+          && !isOpenSearch
+        ) {
+          return
+        }
+
+        // Clear out the current results if a new set of pages has been requested
         set((state) => {
           state.granules.granules.items = []
         })
@@ -119,6 +146,8 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
         requestObject = new GranuleRequest(authToken, earthdataEnvironment)
       }
 
+      granuleSearchCancelTokens[collectionId] = requestObject.getCancelToken()
+
       try {
         const response = await requestObject.search(searchParams)
 
@@ -134,6 +163,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
 
         // Update the store with the new values
         set((state) => {
+          state.granules.granules.collectionConceptId = collectionId
           state.granules.granules.count = payload.count
           state.granules.granules.loadTime = Date.now() - timerStart
           state.granules.granules.isLoaded = true

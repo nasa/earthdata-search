@@ -164,6 +164,7 @@ describe('SearchPanelsContainer component', () => {
         granuleMetadata: {},
         granuleQuery: {},
         granules: {
+          collectionConceptId: null,
           count: null,
           isLoaded: false,
           isLoading: false,

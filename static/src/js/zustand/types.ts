@@ -198,6 +198,8 @@ export type GranulesSlice = {
   granules: {
     /** The metadata for the granule searches */
     granules: {
+      /** The collection concept ID of the granules */
+      collectionConceptId: string | null
       /** The total number of granules found */
       count: number | null
       /** Flag indicating if the granules are loaded */

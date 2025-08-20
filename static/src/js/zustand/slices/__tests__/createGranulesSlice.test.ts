@@ -37,6 +37,7 @@ describe('createGranulesSlice', () => {
 
     expect(granules).toEqual({
       granules: {
+        collectionConceptId: null,
         count: null,
         isLoaded: false,
         isLoading: false,
@@ -78,11 +79,16 @@ describe('createGranulesSlice', () => {
         authToken: ''
       })
 
+      useEdscStore.setState((state) => {
+        state.collection.collectionId = 'collectionId'
+      })
+
       const { granules } = useEdscStore.getState()
       await granules.getGranules()
 
       const { granules: updatedGranules } = useEdscStore.getState()
       expect(updatedGranules.granules).toEqual({
+        collectionConceptId: 'collectionId',
         count: 1,
         isLoaded: true,
         isLoading: false,
@@ -121,11 +127,16 @@ describe('createGranulesSlice', () => {
         authToken: 'mock-token'
       })
 
+      useEdscStore.setState((state) => {
+        state.collection.collectionId = 'collectionId'
+      })
+
       const { granules } = useEdscStore.getState()
       await granules.getGranules()
 
       const { granules: updatedGranules } = useEdscStore.getState()
       expect(updatedGranules.granules).toEqual({
+        collectionConceptId: 'collectionId',
         count: 1,
         isLoaded: true,
         isLoading: false,
@@ -177,6 +188,7 @@ describe('createGranulesSlice', () => {
       const { granules: updatedGranules } = useEdscStore.getState()
       expect(updatedGranules.granules).toEqual({
         count: 1,
+        collectionConceptId: 'collectionId',
         isLoaded: true,
         isLoading: false,
         items: [{

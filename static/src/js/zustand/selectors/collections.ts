@@ -1,3 +1,4 @@
+import type { CollectionsMetadata } from '../../types/sharedTypes'
 import type { EdscStore } from '../types'
 
 /**
@@ -22,4 +23,22 @@ export const getCollectionsPageInfo = (state: EdscStore) => {
     isLoading,
     loadTime
   }
+}
+
+/**
+ * Retrieve the collections in an object keyed by their ID
+ */
+export const getCollectionsById = (
+  state: EdscStore
+) => {
+  const collections = getCollections(state)
+  const { items = [] } = collections
+
+  const collectionsById = {} as CollectionsMetadata
+
+  items.forEach((collection) => {
+    collectionsById[collection.id] = collection
+  })
+
+  return collectionsById
 }

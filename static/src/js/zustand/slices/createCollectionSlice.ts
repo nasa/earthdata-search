@@ -83,7 +83,8 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         reduxDispatch(actions.toggleSpatialPolygonWarning(false))
       }
 
-      // Ensure the granules have been retrieved
+      // Fetch granules for the focused collection.
+      // This will ensure CMR granules are retrieved as soon as possible.
       get().granules.getGranules()
 
       // If we already have the metadata for the focusedCollection, don't fetch it again
@@ -225,6 +226,11 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           set((state) => {
             state.collection.collectionMetadata[conceptId] = collectionMetadata
           })
+
+          // Fetch granules for the focused collection.
+          // This will ensure OpenSearch granules are retrieved correctly, after the collection
+          // metadata is loaded with the isOpenSearch flag
+          get().granules.getGranules()
         } else {
           // If no data was returned, clear the focused collection and redirect the user back to the search page
           set((state) => {

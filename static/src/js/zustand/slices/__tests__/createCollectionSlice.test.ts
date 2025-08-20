@@ -221,8 +221,9 @@ describe('createCollectionSlice', () => {
           expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
           expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
 
-          expect(granules.getGranules).toHaveBeenCalledTimes(1)
-          expect(granules.getGranules).toHaveBeenCalledWith()
+          expect(granules.getGranules).toHaveBeenCalledTimes(2)
+          expect(granules.getGranules).toHaveBeenNthCalledWith(1)
+          expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
           expect(actions.getColorMap).toHaveBeenCalledTimes(0)
         })
@@ -356,8 +357,9 @@ describe('createCollectionSlice', () => {
             expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
             expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
 
-            expect(granules.getGranules).toHaveBeenCalledTimes(1)
-            expect(granules.getGranules).toHaveBeenCalledWith()
+            expect(granules.getGranules).toHaveBeenCalledTimes(2)
+            expect(granules.getGranules).toHaveBeenNthCalledWith(1)
+            expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
             expect(actions.getColorMap).toHaveBeenCalledTimes(0)
           })
@@ -492,8 +494,9 @@ describe('createCollectionSlice', () => {
             expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
             expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
 
-            expect(granules.getGranules).toHaveBeenCalledTimes(1)
-            expect(granules.getGranules).toHaveBeenCalledWith()
+            expect(granules.getGranules).toHaveBeenCalledTimes(2)
+            expect(granules.getGranules).toHaveBeenNthCalledWith(1)
+            expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
             expect(actions.getColorMap).toHaveBeenCalledTimes(0)
           })
@@ -635,8 +638,9 @@ describe('createCollectionSlice', () => {
           expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
           expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
 
-          expect(granules.getGranules).toHaveBeenCalledTimes(1)
-          expect(granules.getGranules).toHaveBeenCalledWith()
+          expect(granules.getGranules).toHaveBeenCalledTimes(2)
+          expect(granules.getGranules).toHaveBeenNthCalledWith(1)
+          expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
           expect(actions.getColorMap).toHaveBeenCalledTimes(1)
           expect(actions.getColorMap).toHaveBeenCalledWith({
@@ -757,8 +761,9 @@ describe('createCollectionSlice', () => {
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
 
-        expect(granules.getGranules).toHaveBeenCalledTimes(1)
-        expect(granules.getGranules).toHaveBeenCalledWith()
+        expect(granules.getGranules).toHaveBeenCalledTimes(2)
+        expect(granules.getGranules).toHaveBeenNthCalledWith(1)
+        expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
         expect(actions.getColorMap).toHaveBeenCalledTimes(0)
       })
@@ -876,8 +881,9 @@ describe('createCollectionSlice', () => {
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(1)
         expect(actions.collectionRelevancyMetrics).toHaveBeenCalledWith()
 
-        expect(granules.getGranules).toHaveBeenCalledTimes(1)
-        expect(granules.getGranules).toHaveBeenCalledWith()
+        expect(granules.getGranules).toHaveBeenCalledTimes(2)
+        expect(granules.getGranules).toHaveBeenNthCalledWith(1)
+        expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
         expect(actions.getColorMap).toHaveBeenCalledTimes(0)
       })
