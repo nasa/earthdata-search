@@ -144,11 +144,12 @@ describe('CollectionRequest#transformResponse', () => {
       feed: {
         ...data.feed,
         entry: [{
+          conceptId: 'collectionId',
+          hasMapImagery: false,
           id: 'collectionId',
           isDefaultImage: true,
-          tags: {},
-          has_map_imagery: false,
           isOpenSearch: false,
+          tags: {},
           thumbnail: 'test-file-stub'
         }]
       }
@@ -183,16 +184,17 @@ describe('CollectionRequest#transformResponse', () => {
       feed: {
         ...data.feed,
         entry: [{
+          conceptId: 'collectionId',
+          hasMapImagery: false,
           id: 'collectionId',
           isDefaultImage: true,
-          has_map_imagery: false,
-          links: [{
-            length: '0.0KB',
-            rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
-            hreflang: 'en-US',
-            href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev'
-          }],
           isOpenSearch: true,
+          links: [{
+            href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-dev',
+            hreflang: 'en-US',
+            length: '0.0KB',
+            rel: 'http://esipfed.org/ns/fedsearch/1.1/search#'
+          }],
           thumbnail: 'test-file-stub'
         }]
       }
@@ -222,9 +224,10 @@ describe('CollectionRequest#transformResponse', () => {
       feed: {
         ...data.feed,
         entry: [{
+          conceptId: 'collectionId',
           id: 'collectionId',
-          isDefaultImage: true,
           isCSDA: true,
+          isDefaultImage: true,
           organizations: ['NASA/CSDA'],
           thumbnail: 'test-file-stub'
         }]
@@ -262,10 +265,11 @@ describe('CollectionRequest#transformResponse', () => {
         feed: {
           ...data.feed,
           entry: [{
+            browseFlag: true,
+            conceptId: 'collectionId',
+            hasGranules: false,
+            hasMapImagery: true,
             id: 'collectionId',
-            browse_flag: true,
-            has_granules: false,
-            has_map_imagery: true,
             isOpenSearch: false,
             tags: {
               'edsc.extra.serverless.gibs': 'stuff here'
@@ -301,11 +305,12 @@ describe('CollectionRequest#transformResponse', () => {
         feed: {
           ...data.feed,
           entry: [{
-            browse_flag: false,
-            has_granules: false,
-            isDefaultImage: true,
-            has_map_imagery: false,
+            browseFlag: false,
+            conceptId: 'collectionId',
+            hasGranules: false,
+            hasMapImagery: false,
             id: 'collectionId',
+            isDefaultImage: true,
             isOpenSearch: false,
             tags: {},
             thumbnail: 'test-file-stub'

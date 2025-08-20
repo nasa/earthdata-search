@@ -20,13 +20,11 @@ import './CollectionDetails.scss'
 /**
  * Renders CollectionDetails.
  * @param {String} collectionId - The current collection ID.
- * @param {Object} granulesMetadata - The metadata in the store for granules.
  * @param {Object} location - The location from the store.
  * @param {Object} projectCollection - The project collection.
  */
 export const CollectionDetails = ({
   collectionId,
-  granulesMetadata,
   location,
   projectCollection
 }) => {
@@ -48,7 +46,8 @@ export const CollectionDetails = ({
   const {
     addedGranuleIds = [],
     allIds: granulesAllIds = [],
-    hits: granuleCount,
+    byId: granulesById = {},
+    count: granuleCount,
     removedGranuleIds = []
   } = projectCollectionGranules
 
@@ -71,7 +70,7 @@ export const CollectionDetails = ({
         <ul className="collection-details__list">
           {
             granulesToDisplay.map((id) => {
-              const { [id]: granuleMetadata = {} } = granulesMetadata
+              const { [id]: granuleMetadata = {} } = granulesById
 
               const { title } = granuleMetadata
 
@@ -193,7 +192,6 @@ export const CollectionDetails = ({
 
 CollectionDetails.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})

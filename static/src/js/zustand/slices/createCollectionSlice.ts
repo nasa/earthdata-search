@@ -33,12 +33,13 @@ import { getUsername } from '../../selectors/user'
 
 import { getCollectionsQuery } from '../selectors/query'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
-import { getCollectionId } from '../selectors/collection'
+import { getCollectionId, getFocusedCollectionMetadata } from '../selectors/collection'
 import GET_COLLECTION from '../../operations/queries/getCollection'
 
 const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => ({
   collection: {
     collectionId: null,
+    collectionMetadata: {},
 
     getCollectionMetadata: async () => {
       const {
@@ -49,7 +50,6 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
 
       const {
         authToken,
-        metadata,
         router
       } = reduxState
 
@@ -60,10 +60,8 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const collectionsQuery = getCollectionsQuery(zustandState)
       const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const focusedCollectionId = getCollectionId(zustandState)
+      const focusedCollectionMetadata = getFocusedCollectionMetadata(zustandState)
 
-      // TODO EDSC-4516, this should be pulled from a selector, but Redux selectors don't see zustand state changes
-      const { collections: collectionsMetadata = {} } = metadata
-      const { [focusedCollectionId]: focusedCollectionMetadata = {} } = collectionsMetadata
       const username = getUsername(reduxState)
 
       // Use the `hasAllMetadata` flag to determine if we've requested previously
@@ -85,11 +83,11 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         reduxDispatch(actions.toggleSpatialPolygonWarning(false))
       }
 
+      // Ensure the granules have been retrieved
+      get().granules.getGranules()
+
       // If we already have the metadata for the focusedCollection, don't fetch it again
       if (hasAllMetadata) {
-        // Ensure the granules have been retrieved
-        reduxDispatch(actions.getSearchGranules())
-
         return null
       }
 
@@ -112,8 +110,6 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             limit: maxCmrPageSize
           }
         })
-
-        const payload = []
 
         const {
           data: responseData
@@ -191,7 +187,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             earthdataEnvironment
           )
 
-          payload.push({
+          const collectionMetadata = {
             abstract,
             archiveAndDistributionInformation,
             associatedDois,
@@ -223,13 +219,12 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             variables,
             versionId,
             ...focusedMetadata
-          })
+          }
 
           // Update metadata in the store
-          reduxDispatch(actions.updateCollectionMetadata(payload))
-
-          // Query CMR for granules belonging to the focused collection
-          reduxDispatch(actions.getSearchGranules())
+          set((state) => {
+            state.collection.collectionMetadata[conceptId] = collectionMetadata
+          })
         } else {
           // If no data was returned, clear the focused collection and redirect the user back to the search page
           set((state) => {
@@ -309,16 +304,19 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           query: granuleQuery
         })
 
-        // Initialize a nested search results element in Redux for the new focused collection
-        reduxDispatch(actions.initializeCollectionGranulesResults(collectionId))
-
         // Fetch the focused collection metadata
-        await get().collection.getCollectionMetadata()
+        get().collection.getCollectionMetadata()
 
         // Fetch timeline data for the focused collection
         const { getTimeline } = timeline
         getTimeline()
       }
+    },
+
+    updateGranuleSubscriptions: (collectionId, subscriptions) => {
+      set((state) => {
+        state.collection.collectionMetadata[collectionId].subscriptions = subscriptions
+      })
     },
 
     viewCollectionDetails: async (collectionId) => {

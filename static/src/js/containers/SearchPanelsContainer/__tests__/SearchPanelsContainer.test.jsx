@@ -20,11 +20,7 @@ const setup = setupTest({
   Component: SearchPanelsContainer,
   defaultProps: {
     authToken: '',
-    collectionMetadata: {},
-    collectionsSearch: {},
     collectionSubscriptions: [],
-    granuleMetadata: {},
-    granuleSearchResults: {},
     isExportRunning: {
       csv: false,
       json: false
@@ -121,13 +117,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       authToken: 'mock-token',
-      metadata: {
-        collections: {}
-      },
-      panels: {},
-      searchResults: {
-        collections: {}
-      },
       ui: {
         export: {
           isExportRunning: {
@@ -140,11 +129,7 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       authToken: 'mock-token',
-      collectionMetadata: {},
-      collectionsSearch: {},
       collectionSubscriptions: [],
-      granuleMetadata: {},
-      granuleSearchResults: {},
       isExportRunning: {
         csv: false,
         json: false
@@ -166,20 +151,33 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledWith(
       {
         authToken: '',
-        setCollectionId: zustandState.collection.setCollectionId,
         collectionMetadata: {},
         collectionQuery: initialState.collection,
+        collections: {
+          count: 0,
+          isLoaded: false,
+          isLoading: false,
+          items: [],
+          loadTime: 0
+        },
         collectionSubscriptions: [],
-        collectionsSearch: {},
         granuleMetadata: {},
         granuleQuery: {},
-        granuleSearchResults: {},
+        granules: {
+          count: null,
+          isLoaded: false,
+          isLoading: false,
+          items: [],
+          loadTime: 0
+        },
         isExportRunning: {
           csv: false,
           json: false
         },
         location: {},
-        match: { url: '/search' },
+        match: {
+          url: '/search'
+        },
         onApplyGranuleFilters: zustandState.query.changeGranuleQuery,
         onChangePath: props.onChangePath,
         onChangeQuery: zustandState.query.changeQuery,
@@ -188,21 +186,22 @@ describe('SearchPanelsContainer component', () => {
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
         onToggleAboutCwicModal: props.onToggleAboutCwicModal,
         preferences: {
-          panelState: 'default',
           collectionListView: 'default',
-          granuleListView: 'default',
           collectionSort: 'default',
+          granuleListView: 'default',
           granuleSort: 'default',
           mapView: {
-            zoom: 3,
+            baseLayer: 'worldImagery',
             latitude: 0,
             longitude: 0,
-            projection: 'epsg4326',
-            baseLayer: 'worldImagery',
             overlayLayers: ['bordersRoads', 'placeLabels'],
-            rotation: 0
-          }
-        }
+            projection: 'epsg4326',
+            rotation: 0,
+            zoom: 3
+          },
+          panelState: 'default'
+        },
+        setCollectionId: zustandState.collection.setCollectionId
       },
       {}
     )

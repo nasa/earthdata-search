@@ -1,10 +1,11 @@
 import { screen } from '@testing-library/react'
+import { useLocation } from 'react-router-dom'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as config from '../../../../../../sharedUtils/config'
 
-import { mapStateToProps, FooterContainer } from '../FooterContainer'
+import Footer from '../Footer'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'), // Preserve other exports
@@ -18,11 +19,13 @@ jest.mock('react-router-dom', () => ({
 }))
 
 const setup = setupTest({
-  Component: FooterContainer,
-  defaultProps: {
-    loadTime: 2.2
-  },
+  Component: Footer,
   defaultZustandState: {
+    collections: {
+      collections: {
+        loadTime: 2200
+      }
+    },
     portal: {
       footer: {
         attributionText: 'Mock text',
@@ -42,25 +45,7 @@ const setup = setupTest({
   withRedux: true
 })
 
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      searchResults: {
-        collections: {
-          loadTime: ''
-        }
-      }
-    }
-
-    const expectedState = {
-      loadTime: ''
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
-describe('FooterContainer component', () => {
+describe('Footer component', () => {
   test('displays version', () => {
     jest.spyOn(config, 'getApplicationConfig').mockImplementation(() => ({
       env: 'prod',
@@ -91,10 +76,26 @@ describe('FooterContainer component', () => {
     expect(screen.queryByText('v2.0.0')).not.toBeInTheDocument()
   })
 
-  test('displays attribution text', () => {
-    setup()
+  describe('attribution', () => {
+    test('displays attribution text', () => {
+      setup()
 
-    expect(screen.getByText('Mock text')).toBeInTheDocument()
+      expect(screen.getByText('Mock text')).toBeInTheDocument()
+    })
+
+    test('does not display attribution when it does not exist', () => {
+      setup({
+        overrideZustandState: {
+          portal: {
+            footer: {
+              attributionText: null
+            }
+          }
+        }
+      })
+
+      expect(screen.queryByText('Mock text')).not.toBeInTheDocument()
+    })
   })
 
   test('displays primary links', () => {
@@ -111,6 +112,40 @@ describe('FooterContainer component', () => {
     const link = screen.getByRole('link', { name: 'Secondary Example' })
     expect(link).toBeInTheDocument()
     expect(link.href).toEqual('http://secondary.example.com/')
+  })
+
+  describe('search time', () => {
+    describe('when on the search page', () => {
+      test('displays search time', () => {
+        setup()
+
+        expect(screen.getByText('Search Time: 2.2s')).toBeInTheDocument()
+      })
+    })
+
+    describe('when on the project page', () => {
+      test('displays search time', () => {
+        useLocation.mockReturnValue({
+          pathname: '/projects'
+        })
+
+        setup()
+
+        expect(screen.getByText('Search Time: 2.2s')).toBeInTheDocument()
+      })
+    })
+
+    describe('when on the granules page', () => {
+      test('does not display search time', () => {
+        useLocation.mockReturnValue({
+          pathname: '/search/granules'
+        })
+
+        setup()
+
+        expect(screen.queryByText('Search Time: 2.2s')).not.toBeInTheDocument()
+      })
+    })
   })
 
   describe('when in the prod environment', () => {

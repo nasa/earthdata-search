@@ -1,24 +1,20 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import { useLocation } from 'react-router-dom'
 
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { isPath } from '../../util/isPath'
 
-import TimelineContainer from '../TimelineContainer/TimelineContainer'
-import { FooterLink } from '../../components/FooterLink/FooterLink'
+import TimelineContainer from '../../containers/TimelineContainer/TimelineContainer'
+import { FooterLink } from '../FooterLink/FooterLink'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
 
-import './FooterContainer.scss'
+import './Footer.scss'
 
-export const mapStateToProps = (state) => ({
-  loadTime: state.searchResults.collections.loadTime
-})
-
-export const FooterContainer = ({ loadTime }) => {
+const Footer = () => {
+  const { loadTime } = useEdscStore(getCollectionsPageInfo)
   const portal = useEdscStore((state) => state.portal)
   const location = useLocation()
   const { pathname } = location
@@ -130,12 +126,4 @@ export const FooterContainer = ({ loadTime }) => {
   )
 }
 
-FooterContainer.defaultProps = {
-  loadTime: 0
-}
-
-FooterContainer.propTypes = {
-  loadTime: PropTypes.number
-}
-
-export default connect(mapStateToProps)(FooterContainer)
+export default Footer

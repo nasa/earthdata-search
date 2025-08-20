@@ -30,7 +30,7 @@ const setup = setupTest({
     onTogglePanels: jest.fn(),
     projectCollection: {
       granules: {
-        hits: 4,
+        count: 4,
         isLoading: false,
         isLoaded: true,
         totalSize: {
@@ -403,7 +403,7 @@ describe('ProjectCollectionItem component', () => {
             },
             selectedAccessMethod: 'download',
             granules: {
-              hits: 4,
+              count: 4,
               isLoading: false,
               isLoaded: true,
               totalSize: {

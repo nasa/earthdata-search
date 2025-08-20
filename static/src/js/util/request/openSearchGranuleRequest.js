@@ -229,7 +229,7 @@ export default class OpenSearchGranuleRequest extends Request {
       return {
         feed: {
           entry: granuleResults.filter(Boolean),
-          hits: totalResults
+          count: totalResults
         }
       }
     } catch (error) {

@@ -15,7 +15,6 @@ import { getCollectionId } from '../../zustand/selectors/collection'
 import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 
 export const mapStateToProps = (state) => ({
-  granulesMetadata: state.metadata.granules,
   location: state.router.location,
   ursProfile: getUrsProfile(state)
 })
@@ -37,7 +36,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  */
 export const ProjectPanelsContainer = ({
-  granulesMetadata,
   location,
   onChangePath,
   onToggleAboutCSDAModal,
@@ -82,7 +80,6 @@ export const ProjectPanelsContainer = ({
     <ProjectPanels
       dataQualitySummaries={dataQualitySummaries}
       collectionId={collectionId}
-      granulesMetadata={granulesMetadata}
       granulesQueries={granulesQueries}
       location={location}
       onAddGranuleToProjectCollection={addGranuleToProjectCollection}
@@ -107,7 +104,6 @@ export const ProjectPanelsContainer = ({
 }
 
 ProjectPanelsContainer.propTypes = {
-  granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,

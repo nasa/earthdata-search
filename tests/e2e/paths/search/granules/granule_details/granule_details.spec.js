@@ -72,7 +72,9 @@ test.describe('Path /search/granules/granule-details', () => {
     await expect(page.getByTestId('panel-group_granule-details').getByTestId('panel-group-header__heading-primary')).toContainText('S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
 
     // Displays the metadata in the Information tab
-    await expect(page.getByTestId('granule-details-info__content')).toHaveText(JSON.stringify(formattedGranuleMetadata, null, 2))
+    await expect(page.getByText('collectionConceptId')).toHaveText(
+      JSON.stringify(formattedGranuleMetadata, null, 2)
+    )
 
     // Displays the metadata links in the Metadata Tab
     await page.getByTestId('granule-details-body').getByText('Metadata').first().click()

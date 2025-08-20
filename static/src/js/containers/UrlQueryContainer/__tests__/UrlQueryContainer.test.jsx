@@ -77,9 +77,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      metadata: {
-        collections: {}
-      },
       router: {
         location: {
           pathname: ''
@@ -89,7 +86,6 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      collectionsMetadata: {},
       location: {
         pathname: ''
       },

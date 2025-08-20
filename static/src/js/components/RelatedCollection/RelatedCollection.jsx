@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import { PropTypes } from 'prop-types'
 import { parse } from 'qs'
 
@@ -10,10 +11,10 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 export const RelatedCollection = ({
   className,
-  location,
   onMetricsRelatedCollection,
   relatedCollection
 }) => {
+  const location = useLocation()
   const setCollectionId = useEdscStore(
     (state) => state.collection.setCollectionId
   )
@@ -65,9 +66,6 @@ RelatedCollection.defaultProps = {
 
 RelatedCollection.propTypes = {
   className: PropTypes.string,
-  location: PropTypes.shape({
-    search: PropTypes.string
-  }).isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   relatedCollection: PropTypes.shape({
     id: PropTypes.string,

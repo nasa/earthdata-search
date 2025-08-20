@@ -76,20 +76,17 @@ describe('query selectors', () => {
   describe('getGranuleSubscriptionQueryObj', () => {
     test('returns the granule subscription query object', () => {
       configureStore.mockReturnValue({
-        getState: () => ({
-          metadata: {
-            collections: {
-              collectionId: {
-                id: 'collectionId'
-              }
-            }
-          }
-        })
+        getState: () => ({})
       })
 
       useEdscStore.setState(() => ({
         collection: {
-          collectionId: 'collectionId'
+          collectionId: 'collectionId',
+          collectionMetadata: {
+            collectionId: {
+              id: 'collectionId'
+            }
+          }
         },
         query: {
           collection: {
@@ -110,7 +107,7 @@ describe('query selectors', () => {
         }
       }))
 
-      const granuleSubscriptionQuery = getGranuleSubscriptionQueryObj()
+      const granuleSubscriptionQuery = getGranuleSubscriptionQueryObj(useEdscStore.getState())
       expect(granuleSubscriptionQuery).toEqual({
         browseOnly: true,
         point: '0,0'
@@ -122,13 +119,6 @@ describe('query selectors', () => {
     test('returns the granule subscription query string', () => {
       configureStore.mockReturnValue({
         getState: () => ({
-          metadata: {
-            collections: {
-              collectionId: {
-                id: 'collectionId'
-              }
-            }
-          },
           subscriptions: {
             disabledFields: {
               granule: {}
@@ -139,7 +129,12 @@ describe('query selectors', () => {
 
       useEdscStore.setState(() => ({
         collection: {
-          collectionId: 'collectionId'
+          collectionId: 'collectionId',
+          collectionMetadata: {
+            collectionId: {
+              id: 'collectionId'
+            }
+          }
         },
         query: {
           collection: {
@@ -160,7 +155,7 @@ describe('query selectors', () => {
         }
       }))
 
-      const granuleSubscriptionQuery = getGranuleSubscriptionQueryString()
+      const granuleSubscriptionQuery = getGranuleSubscriptionQueryString(useEdscStore.getState())
       expect(granuleSubscriptionQuery).toEqual('browse_only=true&point=0,0')
     })
   })

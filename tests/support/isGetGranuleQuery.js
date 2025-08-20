@@ -7,7 +7,7 @@
 const variablesMatch = (variables, granuleId) => variables.params.conceptId === granuleId
 
 /**
- * Check if the route is a GetFocusedGranule query for the specified granule ID
+ * Check if the route is a GetGranule query for the specified granule ID
  * @param {Object} route Playwright route object
  * @param {String} granuleId The granule ID to check against
  * @returns boolean

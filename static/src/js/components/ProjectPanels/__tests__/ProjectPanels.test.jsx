@@ -52,7 +52,6 @@ function setup(overrideProps) {
     },
     dataQualitySummaries: {},
     collectionId: '',
-    granulesMetadata: {},
     granulesQueries: {},
     projectCollections: {
       allIds: ['collectionId'],

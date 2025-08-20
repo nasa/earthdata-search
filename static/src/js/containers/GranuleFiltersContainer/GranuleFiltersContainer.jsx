@@ -7,16 +7,11 @@ import validationSchema from './validationSchema'
 import mapPropsToValues from './mapPropsToValues'
 import handleFormSubmit from './handleFormSubmit'
 
-import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
-
 import GranuleFiltersForm from '../../components/GranuleFilters/GranuleFiltersForm'
 import { metricsGranuleFilter } from '../../middleware/metrics/actions'
 
 import useEdscStore from '../../zustand/useEdscStore'
-
-export const mapStateToProps = (state) => ({
-  collectionMetadata: getFocusedCollectionMetadata(state)
-})
+import { getCollectionId } from '../../zustand/selectors/collection'
 
 export const mapDispatchToProps = (dispatch) => ({
   onMetricsGranuleFilter:
@@ -26,7 +21,6 @@ export const mapDispatchToProps = (dispatch) => ({
 /**
  * Renders GranuleFiltersContainer.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.collectionMetadata - The focused collections metadata.
  * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Boolean} props.granuleFiltersNeedsReset - Flag to trigger a form reset.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
@@ -42,7 +36,6 @@ export const mapDispatchToProps = (dispatch) => ({
  */
 export const GranuleFiltersContainer = (props) => {
   const {
-    collectionMetadata,
     errors,
     granuleFiltersNeedsReset,
     handleBlur,
@@ -57,15 +50,14 @@ export const GranuleFiltersContainer = (props) => {
     values
   } = props
 
+  const collectionId = useEdscStore(getCollectionId)
   const changeGranuleQuery = useEdscStore((state) => state.query.changeGranuleQuery)
 
   const onClearGranuleFilters = () => {
     handleReset()
 
-    const { conceptId } = collectionMetadata
-
     changeGranuleQuery({
-      collectionId: conceptId,
+      collectionId,
       query: {}
     })
   }
@@ -88,7 +80,6 @@ export const GranuleFiltersContainer = (props) => {
 
   return (
     <GranuleFiltersForm
-      collectionMetadata={collectionMetadata}
       values={values}
       touched={touched}
       errors={errors}
@@ -110,9 +101,6 @@ const EnhancedGranuleFiltersContainer = withFormik({
 })(GranuleFiltersContainer)
 
 GranuleFiltersContainer.propTypes = {
-  collectionMetadata: PropTypes.shape({
-    conceptId: PropTypes.string
-  }).isRequired,
   errors: PropTypes.shape({}).isRequired,
   granuleFiltersNeedsReset: PropTypes.bool.isRequired,
   handleBlur: PropTypes.func.isRequired,
@@ -127,4 +115,4 @@ GranuleFiltersContainer.propTypes = {
   values: PropTypes.shape({}).isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EnhancedGranuleFiltersContainer)
+export default connect(null, mapDispatchToProps)(EnhancedGranuleFiltersContainer)

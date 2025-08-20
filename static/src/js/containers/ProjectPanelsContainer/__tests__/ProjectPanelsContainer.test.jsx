@@ -15,7 +15,6 @@ jest.mock('../../../components/ProjectPanels/ProjectPanels', () => jest.fn(() =>
 const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
-    granulesMetadata: {},
     onToggleAboutCSDAModal: jest.fn(),
     location: {
       search: ''
@@ -94,10 +93,6 @@ describe('mapStateToProps', () => {
       contactInfo: {
         ursProfile: {}
       },
-      metadata: {
-        collections: {},
-        granules: {}
-      },
       router: {
         location: {}
       },
@@ -109,7 +104,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      granulesMetadata: {},
       location: {},
       ursProfile: {}
     }
@@ -126,7 +120,6 @@ describe('ProjectPanelsContainer component', () => {
     expect(ProjectPanels).toHaveBeenCalledWith({
       dataQualitySummaries: {},
       collectionId: 'collectionId',
-      granulesMetadata: props.granulesMetadata,
       granulesQueries: {},
       location: props.location,
       onAddGranuleToProjectCollection: zustandState.project.addGranuleToProjectCollection,

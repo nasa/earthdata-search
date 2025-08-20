@@ -4,11 +4,7 @@ import { waitFor } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import * as metrics from '../../../middleware/metrics/actions'
 
-import {
-  GranuleFiltersContainer,
-  mapDispatchToProps,
-  mapStateToProps
-} from '../GranuleFiltersContainer'
+import { GranuleFiltersContainer, mapDispatchToProps } from '../GranuleFiltersContainer'
 
 import GranuleFiltersForm from '../../../components/GranuleFilters/GranuleFiltersForm'
 
@@ -17,18 +13,12 @@ jest.mock('../../../components/GranuleFilters/GranuleFiltersForm', () => jest.fn
 const setup = setupTest({
   Component: GranuleFiltersContainer,
   defaultProps: {
-    collectionMetadata: {
-      conceptId: 'collectionId',
-      title: 'Test Collection'
-    },
-    // Dirty: false,
     errors: {},
     granuleFiltersNeedsReset: false,
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
     handleReset: jest.fn(),
     handleSubmit: jest.fn(),
-    // IsValid: true,
     onMetricsGranuleFilter: jest.fn(),
     setFieldTouched: jest.fn(),
     setFieldValue: jest.fn(),
@@ -37,6 +27,9 @@ const setup = setupTest({
     values: {}
   },
   defaultZustandState: {
+    collection: {
+      collectionId: 'collectionId'
+    },
     query: {
       changeGranuleQuery: jest.fn()
     }
@@ -57,33 +50,12 @@ describe('mapDispatchToProps', () => {
   })
 })
 
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      metadata: {
-        collections: {}
-      },
-      focusedCollection: 'collectionId'
-    }
-
-    const expectedState = {
-      collectionMetadata: {}
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
 describe('GranuleFiltersContainer component', () => {
   test('renders the GranuleFiltersForm', () => {
     setup()
 
     expect(GranuleFiltersForm).toHaveBeenCalledTimes(1)
     expect(GranuleFiltersForm).toHaveBeenCalledWith({
-      collectionMetadata: {
-        conceptId: 'collectionId',
-        title: 'Test Collection'
-      },
       errors: {},
       handleBlur: expect.any(Function),
       handleChange: expect.any(Function),

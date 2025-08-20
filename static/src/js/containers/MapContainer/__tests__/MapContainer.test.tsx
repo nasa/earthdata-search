@@ -57,10 +57,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       advancedSearch: {},
-      metadata: {
-        collections: {},
-        colormaps: {}
-      },
       router: {},
       ui: {
         map: {
@@ -74,12 +70,9 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       advancedSearch: {},
-      collectionsMetadata: {},
       colormapsMetadata: {},
       displaySpatialPolygonWarning: false,
       drawingNewLayer: false,
-      granuleSearchResults: {},
-      granulesMetadata: {},
       router: {}
     }
 

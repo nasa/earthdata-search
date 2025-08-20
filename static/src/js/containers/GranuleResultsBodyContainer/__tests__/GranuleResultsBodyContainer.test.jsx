@@ -16,12 +16,7 @@ jest.mock('../../../components/GranuleResults/GranuleResultsBody', () => jest.fn
 const setup = setupTest({
   Component: GranuleResultsBodyContainer,
   defaultProps: {
-    collectionMetadata: {},
-    collectionTags: {},
     generateNotebook: {},
-    granuleSearchResults: {},
-    granulesMetadata: {},
-    location: { search: 'value' },
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
@@ -78,20 +73,13 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      metadata: {
-        collections: {}
-      },
       ui: {
         generateNotebook: {}
       }
     }
 
     const expectedState = {
-      collectionMetadata: {},
-      collectionTags: {},
-      generateNotebook: {},
-      granuleSearchResults: {},
-      granulesMetadata: {}
+      generateNotebook: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -105,14 +93,10 @@ describe('GranuleResultsBodyContainer component', () => {
     expect(GranuleResultsBody).toHaveBeenCalledTimes(1)
     expect(GranuleResultsBody).toHaveBeenCalledWith({
       collectionId: 'collectionId',
-      collectionTags: {},
       directDistributionInformation: {},
       generateNotebook: {},
-      granuleSearchResults: {},
-      granulesMetadata: {},
       isOpenSearch: false,
       loadNextPage: expect.any(Function),
-      location: { search: 'value' },
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),

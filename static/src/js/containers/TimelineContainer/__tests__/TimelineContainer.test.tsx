@@ -37,7 +37,15 @@ const setup = setupTest({
   },
   defaultZustandState: {
     collection: {
-      collectionId: 'collectionId'
+      collectionId: 'collectionId',
+      collectionMetadata: {
+        collectionId: {
+          title: 'focused'
+        },
+        projectCollectionId: {
+          title: 'project'
+        }
+      }
     },
     project: {
       collections: {
@@ -82,9 +90,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      metadata: {
-        collections: {}
-      },
       router: {
         location: {
           pathname: ''
@@ -98,7 +103,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      collectionsMetadata: {},
       pathname: '',
       isOpen: false
     }

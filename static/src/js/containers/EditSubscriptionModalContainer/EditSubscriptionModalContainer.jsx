@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions'
 import { getSubscriptions } from '../../selectors/subscriptions'
-import { getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 
 import EditSubscriptionModal from '../../components/EditSubscriptionModal/EditSubscriptionModal'
 
@@ -12,8 +11,7 @@ export const mapStateToProps = (state) => ({
   isOpen: state.ui.editSubscriptionModal.isOpen,
   subscriptionConceptId: state.ui.editSubscriptionModal.subscriptionConceptId,
   subscriptionType: state.ui.editSubscriptionModal.type,
-  subscriptions: getSubscriptions(state),
-  granuleSubscriptions: getFocusedCollectionSubscriptions(state)
+  subscriptions: getSubscriptions(state)
 })
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -29,18 +27,16 @@ export const EditSubscriptionModalContainer = ({
   isOpen,
   onToggleEditSubscriptionModal,
   onUpdateSubscription,
-  granuleSubscriptions,
-  subscriptions,
   subscriptionConceptId,
+  subscriptions,
   subscriptionType
 }) => (
   <EditSubscriptionModal
     isOpen={isOpen}
     onToggleEditSubscriptionModal={onToggleEditSubscriptionModal}
     onUpdateSubscription={onUpdateSubscription}
-    granuleSubscriptions={granuleSubscriptions}
-    subscriptions={subscriptions}
     subscriptionConceptId={subscriptionConceptId}
+    subscriptions={subscriptions}
     subscriptionType={subscriptionType}
   />
 )
@@ -49,11 +45,8 @@ EditSubscriptionModalContainer.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onToggleEditSubscriptionModal: PropTypes.func.isRequired,
   onUpdateSubscription: PropTypes.func.isRequired,
-  granuleSubscriptions: PropTypes.arrayOf(
-    PropTypes.shape({})
-  ).isRequired,
-  subscriptions: PropTypes.shape({}).isRequired,
   subscriptionConceptId: PropTypes.string.isRequired,
+  subscriptions: PropTypes.shape({}).isRequired,
   subscriptionType: PropTypes.string.isRequired
 }
 

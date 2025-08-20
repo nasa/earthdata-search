@@ -27,22 +27,22 @@ export const populateGranuleResults = ({
   payload.isOpenSearch = isOpenSearch
 
   if (isOpenSearch) {
-    payload.hits = response.data.feed.hits
+    payload.count = response.data.feed.count
   } else {
-    payload.hits = parseInt(response.headers['cmr-hits'], 10)
+    payload.count = parseInt(response.headers['cmr-hits'], 10)
   }
 
   let size = 0
   payload.results.forEach((granule) => {
-    size += parseFloat(granule.granule_size || 0)
+    size += parseFloat(granule.granuleSize || 0)
   })
 
   let singleGranuleSize = 0
 
-  if (payload.hits > 0) {
+  if (payload.count > 0) {
     singleGranuleSize = size / payload.results.length
 
-    const totalSize = singleGranuleSize * payload.hits
+    const totalSize = singleGranuleSize * payload.count
     payload.totalSize = convertSize(totalSize)
     payload.singleGranuleSize = singleGranuleSize
   } else {

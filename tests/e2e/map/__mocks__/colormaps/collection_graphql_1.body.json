@@ -410,6 +410,8 @@
                   ]
               }
           ],
+          "timeStart": "2002-05-31T21:00:00.000Z",
+          "timeEnd": null,
           "tilingIdentificationSystems": null,
           "title": "GHRSST Level 4 MUR Global Foundation Sea Surface Temperature Analysis (v4.1)",
           "versionId": "4.1",

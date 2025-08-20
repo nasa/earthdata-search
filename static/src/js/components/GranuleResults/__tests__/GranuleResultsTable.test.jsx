@@ -8,11 +8,21 @@ import { granuleData } from './mocks'
 
 jest.mock('../../EDSCTable/EDSCTable', () => jest.fn(() => <div />))
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search/granules',
+    search: '?p=collectionId',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
+
 const setup = setupTest({
   Component: GranuleResultsTable,
   defaultProps: {
     collectionId: 'collectionId',
-    collectionTags: {},
     directDistributionInformation: {},
     generateNotebook: {},
     granules: granuleData,
@@ -22,7 +32,6 @@ const setup = setupTest({
     itemCount: 1,
     focusedGranule: 'one',
     loadMoreItems: jest.fn(),
-    location: {},
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
@@ -62,7 +71,13 @@ describe('GranuleResultsTable component', () => {
           generateNotebook: {},
           GranuleResultsTableHeaderCell: expect.any(Function),
           isGranuleInProject: expect.any(Function),
-          location: {},
+          location: {
+            pathname: '/search/granules',
+            search: '?p=collectionId',
+            hash: '',
+            state: null,
+            key: 'testKey'
+          },
           onExcludeGranule: expect.any(Function),
           onGenerateNotebook: expect.any(Function),
           onMetricsAddGranuleProject: expect.any(Function),

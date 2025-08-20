@@ -13,12 +13,14 @@ import configureStore from '../../store/configureStore'
 import actions from '../../actions'
 
 import GET_GRANULE from '../../operations/queries/getGranule'
-import { getGranuleId } from '../selectors/granule'
+import { getFocusedGranule, getGranuleId } from '../selectors/granule'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getFocusedCollectionMetadata } from '../selectors/collection'
 
 const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
   granule: {
     granuleId: null,
+    granuleMetadata: {},
 
     getGranuleMetadata: async () => {
       const {
@@ -29,30 +31,24 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
 
       const {
         authToken,
-        metadata,
         router
       } = reduxState
 
       const currentState = get()
       const earthdataEnvironment = getEarthdataEnvironment(currentState)
       const granuleId = getGranuleId(currentState)
+      const collectionMetadata = getFocusedCollectionMetadata(currentState)
+      const focusedGranuleMetadata = getFocusedGranule(currentState)
 
-      // Retrieve data from Redux using selectors
-      // TODO EDSC-4516, this should be pulled from a selector, but Redux selectors don't see zustand state changes
-      const { granules: granulesMetadata = {} } = metadata
-      const { [granuleId]: focusedGranuleMetadata = {} } = granulesMetadata
-
-      // Use the `hasAllMetadata` flag to determine if we've requested previously
-      // requested the focused collections metadata from graphql
-      const {
-        hasAllMetadata = false,
-        isOpenSearch = false
-      } = focusedGranuleMetadata
+      // If there is no granuleId to fetch, return
+      if (!granuleId) return
 
       // If this is an opensearch granule, we've already retrieved everything we can from the search
+      const { isOpenSearch = false } = collectionMetadata
       if (isOpenSearch) return
 
       // If we already have the metadata for the focusedGranule, don't fetch it again
+      const { hasAllMetadata = false } = focusedGranuleMetadata
       if (hasAllMetadata) return
 
       const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
@@ -63,8 +59,6 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
             conceptId: granuleId
           }
         })
-
-        const payload = []
 
         const {
           data: responseData
@@ -94,7 +88,7 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
             title
           } = granule
 
-          payload.push({
+          const granuleMetadata = {
             collectionConceptId,
             conceptId,
             dataCenter,
@@ -115,10 +109,12 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
             timeEnd,
             timeStart,
             title
-          })
+          }
 
           // Update metadata in the store
-          reduxDispatch(actions.updateGranuleMetadata(payload))
+          set((state) => {
+            state.granule.granuleMetadata[conceptId] = granuleMetadata
+          })
         } else {
           // If no data was returned, clear the focused granule and redirect the user back to the search page
           set((state) => {

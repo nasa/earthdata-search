@@ -25,19 +25,16 @@ const setup = setupTest({
       viewCollectionDetails: jest.fn(),
       viewCollectionGranules: jest.fn()
     },
+    collections: {
+      collections: {
+        items: [collectionListItemProps.collectionMetadata]
+      }
+    },
     project: {
       addProjectCollection: jest.fn(),
       removeProjectCollection: jest.fn()
     }
-  },
-  defaultReduxState: {
-    metadata: {
-      collections: {
-        collectionId1: collectionListItemProps.collectionMetadata
-      }
-    }
-  },
-  withRedux: true
+  }
 })
 
 describe('CollectionResultsList component', () => {

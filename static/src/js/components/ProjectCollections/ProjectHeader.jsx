@@ -114,7 +114,7 @@ export const ProjectHeader = memo(({
     const { [collectionId]: projectCollection = {} } = projectCollectionById
     const { granules = {} } = projectCollection
     const {
-      hits: granulesCount,
+      count: granulesCount,
       isLoaded,
       singleGranuleSize
     } = granules

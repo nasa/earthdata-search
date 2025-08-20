@@ -172,8 +172,13 @@ export const changePath = (path = '') => async (dispatch) => {
     await dispatch(actions.updateStore(decodedParams, pathname))
   }
 
-  const { collection, granule } = zustandState
+  const {
+    collection,
+    collections,
+    granule
+  } = zustandState
   const { getCollectionMetadata } = collection
+  const { getCollections } = collections
   const { getGranuleMetadata } = granule
 
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
@@ -184,14 +189,15 @@ export const changePath = (path = '') => async (dispatch) => {
     // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {
-    dispatch(actions.getCollections())
+    getCollections()
 
     // Granules Search
     if (
       pathname === '/search/granules'
       || pathname.match(/\/portal\/\w*\/search\/granules$/)
     ) {
-      await getCollectionMetadata()
+      getCollectionMetadata()
+      getGranuleMetadata()
     }
 
     // Collection Details
@@ -199,7 +205,8 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/collection-details'
       || pathname.match(/\/portal\/\w*\/search\/granules\/collection-details$/)
     ) {
-      await getCollectionMetadata()
+      getCollectionMetadata()
+      getGranuleMetadata()
     }
 
     // Subscription Details
@@ -207,7 +214,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/subscriptions'
       || pathname.match(/\/portal\/\w*\/search\/granules\/subscriptions$/)
     ) {
-      await getCollectionMetadata()
+      getCollectionMetadata()
     }
 
     // Granule Details
@@ -215,9 +222,9 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/granule-details'
       || pathname.match(/\/portal\/\w*\/search\/granules\/granule-details$/)
     ) {
-      await getCollectionMetadata()
+      getCollectionMetadata()
 
-      await getGranuleMetadata()
+      getGranuleMetadata()
     }
   }
 

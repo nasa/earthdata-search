@@ -79,10 +79,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      reduxDispatch(actions.getCollections())
+      get().collections.getCollections()
 
       // If there is a focused collection, update it's granule search params
       // and request it's granules started with page one
@@ -107,7 +104,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
           }
         }))
 
-        reduxDispatch(actions.getSearchGranules())
+        get().granules.getGranules()
       }
 
       // If there are collections in the project, update their respective granule results
@@ -117,6 +114,10 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       }
 
       // Clear any subscription disabledFields
+
+      const {
+        dispatch: reduxDispatch
+      } = configureStore()
       reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
 
@@ -149,11 +150,11 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         await get().project.getProjectGranules()
       }
 
+      get().granules.getGranules()
+
       const {
         dispatch: reduxDispatch
       } = configureStore()
-      reduxDispatch(actions.getSearchGranules())
-
       // Clear any subscription disabledFields
       reduxDispatch(actions.removeSubscriptionDisabledFields())
     },
@@ -194,9 +195,9 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       // TODO EDSC-4510, update when advanced search is in Zustand
       reduxDispatch({ type: CLEAR_FILTERS })
 
-      reduxDispatch(actions.getCollections())
+      get().collections.getCollections()
 
-      await get().project.getProjectCollections()
+      get().project.getProjectCollections()
 
       // Don't request granules unless we are viewing granules
       const reduxState = reduxGetState()
@@ -205,9 +206,9 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       const { pathname } = location
 
       if (isPath(pathname, ['/search/granules'])) {
-        reduxDispatch(actions.getSearchGranules())
+        get().granules.getGranules()
 
-        await get().timeline.getTimeline()
+        get().timeline.getTimeline()
       }
     },
 
@@ -225,10 +226,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      reduxDispatch(actions.getSearchGranules())
+      get().granules.getGranules()
     },
 
     initializeGranuleQuery: ({ collectionId, query }) => {
@@ -268,10 +266,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       })
 
-      const {
-        dispatch: reduxDispatch
-      } = configureStore()
-      reduxDispatch(actions.getSearchGranules())
+      get().granules.getGranules()
     }
   }
 })

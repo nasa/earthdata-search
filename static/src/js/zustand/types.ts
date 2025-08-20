@@ -1,29 +1,62 @@
 import { StateCreator } from 'zustand'
 
 import {
+  CollectionMetadata,
+  CollectionsMetadata,
+  GranuleMetadata,
+  GranulesMetadata,
   PortalConfig,
   ProjectionCode,
   ScienceKeyword,
   ShapefileFile,
   Spatial,
+  SubscriptionResponse,
   Temporal,
   TimelineIntervals,
   VariableMetadata
 } from '../types/sharedTypes'
 
 export type CollectionSlice = {
-  /** The Collection Slice of the store */
+  /**
+   * The Collection Slice of the store. This saves the focused collection ID and
+   * collection metadata for any focused collection
+   */
   collection: {
     /** The currently focused collection */
     collectionId: string | null
+    /** The metadata of any fetched collections */
+    collectionMetadata: CollectionsMetadata
     /** Function to get the focused collection metadata */
     getCollectionMetadata: () => void
     /** Function to set or remove the focused collection */
     setCollectionId: (collectionId: string | null) => void
+    /** Function to update the granule subscriptions within the collectionMetadata store */
+    updateGranuleSubscriptions: (collectionId: string, subscriptions: SubscriptionResponse) => void
     /** Function to set or remove the focused collection and navigate to the collection details page */
     viewCollectionDetails: (collectionId: string | null) => void
     /** Function to set or remove the focused collection and navigate to the collection granules page */
     viewCollectionGranules: (collectionId: string | null) => void
+  }
+}
+
+export type CollectionsSlice = {
+  /** The Collections Slice of the store. This stores the metadata for collection searches */
+  collections: {
+    /** The metadata for the collection searches */
+    collections: {
+      /** The total number of collections found */
+      count: number | null
+      /** Flag indicating if the collections are loaded */
+      isLoaded: boolean
+      /** Flag indicating if the collections are currently loading */
+      isLoading: boolean
+      /** The time taken to load the collections */
+      loadTime: number | null
+      /** The list of collection metadata */
+      items: CollectionMetadata[]
+    }
+    /** Function to fetch the collections from CMR */
+    getCollections: () => void
   }
 }
 
@@ -144,14 +177,40 @@ export type FacetParamsSlice = {
 }
 
 export type GranuleSlice = {
-  /** The Granule Slice of the store */
+  /**
+   * The Granule Slice of the store. This saves the focused granule ID and granule metadata
+   * of any focused granules
+   */
   granule: {
     /** The currently focused granule */
     granuleId: string | null
+    /** The metadata of any fetched granules */
+    granuleMetadata: GranulesMetadata
     /** Function to get the focused granule metadata */
     getGranuleMetadata: () => void
     /** Function to set or remove the focused granule */
     setGranuleId: (granuleId: string | null) => void
+  }
+}
+
+export type GranulesSlice = {
+  /** The Granules Slice of the store. This saves the metadata for granule searches */
+  granules: {
+    /** The metadata for the granule searches */
+    granules: {
+      /** The total number of granules found */
+      count: number | null
+      /** Flag indicating if the granules are loaded */
+      isLoaded: boolean
+      /** Flag indicating if the granules are currently loading */
+      isLoading: boolean
+      /** The time taken to load the granules */
+      loadTime: number | null
+      /** The list of granule metadata */
+      items: GranuleMetadata[]
+    }
+    /** Function to fetch the granules from CMR */
+    getGranules: () => void
   }
 }
 
@@ -325,7 +384,7 @@ export type ProjectGranules = {
     }
   }
   /** The number of granules in the project */
-  hits: number
+  count: number
   /** Flag to indicate if the granules are errored */
   isErrored: boolean
   /** Flag to indicate if the granules are loaded */
@@ -604,7 +663,7 @@ export type ProjectGranuleResults = {
   /** The collection ID */
   collectionId: string
   /** The number of granule results */
-  hits: number
+  count: number
   /** Flag to indicate if the granules are OpenSearch */
   isOpenSearch: boolean
   /** The page number of the results */
@@ -945,11 +1004,13 @@ export type UiSlice = {
 
 export type EdscStore =
   CollectionSlice
+  & CollectionsSlice
   & DataQualitySummariesSlice
   & EarthdataDownloadRedirectSlice
   & EarthdataEnvironmentSlice
   & FacetParamsSlice
   & GranuleSlice
+  & GranulesSlice
   & HomeSlice
   & MapSlice
   & PanelsSlice

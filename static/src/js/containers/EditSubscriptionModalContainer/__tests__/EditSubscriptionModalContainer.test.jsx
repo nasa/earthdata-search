@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import {
@@ -8,30 +8,21 @@ import {
   mapStateToProps,
   EditSubscriptionModalContainer
 } from '../EditSubscriptionModalContainer'
-import {
-  EditSubscriptionModal
-} from '../../../components/EditSubscriptionModal/EditSubscriptionModal'
+import EditSubscriptionModal from '../../../components/EditSubscriptionModal/EditSubscriptionModal'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/EditSubscriptionModal/EditSubscriptionModal', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
-    granuleSubscriptions: [],
+const setup = setupTest({
+  Component: EditSubscriptionModalContainer,
+  defaultProps: {
     isOpen: true,
-    onUpdateSubscription: jest.fn(),
     onToggleEditSubscriptionModal: jest.fn(),
+    onUpdateSubscription: jest.fn(),
     subscriptionConceptId: 'SUB1',
     subscriptions: {},
-    subscriptionType: ''
+    subscriptionType: 'granule'
   }
-
-  const enzymeWrapper = shallow(<EditSubscriptionModalContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onToggleEditSubscriptionModal calls actions.toggleEditSubscriptionModal', () => {
@@ -40,8 +31,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleEditSubscriptionModal(false)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(false)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(false)
   })
 
   test('onUpdateSubscription calls actions.toggleEditSubscriptionModal', () => {
@@ -50,14 +41,17 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateSubscription('conceptId', 'nativeId', 'subscriptionName', 'subscriptionType')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('conceptId', 'nativeId', 'subscriptionName', 'subscriptionType')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('conceptId', 'nativeId', 'subscriptionName', 'subscriptionType')
   })
 })
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
+      subscriptions: {
+
+      },
       ui: {
         editSubscriptionModal: {
           isOpen: false,
@@ -67,7 +61,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      granuleSubscriptions: [],
       isOpen: false,
       subscriptionConceptId: 'SUB1',
       subscriptions: {}
@@ -78,11 +71,17 @@ describe('mapStateToProps', () => {
 })
 
 describe('EditSubscriptionModalContainer component', () => {
-  test('passes its props and renders a single FacetsModal component', () => {
-    const { enzymeWrapper } = setup()
+  test('passes its props and renders a EditSubscriptionModal component', () => {
+    setup()
 
-    expect(enzymeWrapper.find(EditSubscriptionModal).length).toBe(1)
-    expect(enzymeWrapper.find(EditSubscriptionModal).props().isOpen).toEqual(true)
-    expect(typeof enzymeWrapper.find(EditSubscriptionModal).props().onToggleEditSubscriptionModal).toEqual('function')
+    expect(EditSubscriptionModal).toHaveBeenCalledTimes(1)
+    expect(EditSubscriptionModal).toHaveBeenCalledWith({
+      isOpen: true,
+      onToggleEditSubscriptionModal: expect.any(Function),
+      onUpdateSubscription: expect.any(Function),
+      subscriptionConceptId: 'SUB1',
+      subscriptions: {},
+      subscriptionType: 'granule'
+    }, {})
   })
 })

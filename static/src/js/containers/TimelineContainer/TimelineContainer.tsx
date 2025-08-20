@@ -8,9 +8,6 @@ import actions from '../../actions/index'
 // @ts-expect-error The file does not have types
 import { metricsTimeline } from '../../middleware/metrics/actions'
 
-// @ts-expect-error The file does not have types
-import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
-
 import { isPath } from '../../util/isPath'
 
 // @ts-expect-error The file does not have types
@@ -19,7 +16,7 @@ import Timeline from '../../components/Timeline/Timeline'
 import type { CollectionMetadata, CollectionsMetadata } from '../../types/sharedTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionId } from '../../zustand/selectors/collection'
+import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors/collection'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -33,15 +30,12 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
-  collectionsMetadata: getCollectionsMetadata(state),
   isOpen: state.ui.timeline.isOpen,
   pathname: state.router.location.pathname,
   search: state.router.location.search
 })
 
 interface TimelineContainerProps {
-  /** Collections Metadata */
-  collectionsMetadata: CollectionsMetadata
   /** Whether the timeline is open */
   isOpen: boolean
   /** Function to handle metrics timeline */
@@ -58,7 +52,6 @@ interface TimelineContainerProps {
 
 export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
   const {
-    collectionsMetadata,
     isOpen,
     onMetricsTimeline,
     onToggleOverrideTemporalModal,
@@ -67,6 +60,7 @@ export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
     search: searchLocation
   } = props
 
+  const collectionsMetadata = useEdscStore(getCollectionsMetadata)
   const focusedCollectionId = useEdscStore(getCollectionId)
   const projectCollectionsIds = useEdscStore(getProjectCollectionsIds)
 

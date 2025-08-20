@@ -15,8 +15,7 @@ import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
 jest.mock('../../../actions', () => ({
   changeUrl: jest.fn(),
-  handleError: jest.fn(),
-  updateGranuleMetadata: jest.fn()
+  handleError: jest.fn()
 }))
 
 jest.mock('../../../store/configureStore', () => jest.fn())
@@ -28,13 +27,14 @@ configureStore.mockReturnValue({
   getState: mockGetState
 })
 
-describe('createFocusedGranuleSlice', () => {
+describe('createGranuleSlice', () => {
   test('sets the default state', () => {
     const zustandState = useEdscStore.getState()
     const { granule } = zustandState
 
     expect(granule).toEqual({
       granuleId: null,
+      granuleMetadata: {},
       getGranuleMetadata: expect.any(Function),
       setGranuleId: expect.any(Function)
     })
@@ -88,7 +88,7 @@ describe('createFocusedGranuleSlice', () => {
     beforeEach(() => {
       jest.spyOn(getClientId, 'getClientId').mockImplementationOnce(() => ({ client: 'eed-edsc-test-serverless-client' }))
 
-      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementationOnce(() => ({
+      jest.spyOn(getEarthdataConfig, 'getEarthdataConfig').mockImplementation(() => ({
         cmrHost: 'https://cmr.example.com',
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
@@ -99,18 +99,14 @@ describe('createFocusedGranuleSlice', () => {
       test('should take no action', async () => {
         useEdscStore.setState((state) => {
           state.granule.granuleId = 'granuleId'
+          state.granule.granuleMetadata.granuleId = {
+            id: 'granuleId',
+            hasAllMetadata: true
+          }
         })
 
         mockGetState.mockReturnValue({
-          authToken: '',
-          metadata: {
-            granules: {
-              granuleId: {
-                hasAllMetadata: true
-              }
-            }
-          },
-          searchResults: {}
+          authToken: ''
         })
 
         const { granule } = useEdscStore.getState()
@@ -118,7 +114,6 @@ describe('createFocusedGranuleSlice', () => {
 
         await getGranuleMetadata()
 
-        expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(0)
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
         expect(actions.handleError).toHaveBeenCalledTimes(0)
       })
@@ -142,12 +137,7 @@ describe('createFocusedGranuleSlice', () => {
           })
 
           mockGetState.mockReturnValue({
-            authToken: '',
-            metadata: {
-              collections: {},
-              granules: {}
-            },
-            searchResults: {}
+            authToken: ''
           })
 
           const { granule } = useEdscStore.getState()
@@ -155,50 +145,52 @@ describe('createFocusedGranuleSlice', () => {
 
           await getGranuleMetadata()
 
-          expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(1)
-          expect(actions.updateGranuleMetadata).toHaveBeenCalledWith([{
-            collectionConceptId: undefined,
-            conceptId: 'granuleId',
-            dataCenter: undefined,
-            dataGranule: undefined,
-            dayNightFlag: undefined,
-            granuleSize: undefined,
-            granuleUr: undefined,
-            hasAllMetadata: true,
-            id: 'granuleId',
-            measuredParameters: undefined,
-            metadataUrls: {
-              atom: {
-                href: 'https://cmr.example.com/search/concepts/granuleId.atom',
-                title: 'ATOM'
+          const { granule: updatedGranule } = useEdscStore.getState()
+          expect(updatedGranule.granuleMetadata).toEqual({
+            granuleId: {
+              collectionConceptId: undefined,
+              conceptId: 'granuleId',
+              dataCenter: undefined,
+              dataGranule: undefined,
+              dayNightFlag: undefined,
+              granuleSize: undefined,
+              granuleUr: undefined,
+              hasAllMetadata: true,
+              id: 'granuleId',
+              measuredParameters: undefined,
+              metadataUrls: {
+                atom: {
+                  href: 'https://cmr.example.com/search/concepts/granuleId.atom',
+                  title: 'ATOM'
+                },
+                echo10: {
+                  href: 'https://cmr.example.com/search/concepts/granuleId.echo10',
+                  title: 'ECHO 10'
+                },
+                iso19115: {
+                  href: 'https://cmr.example.com/search/concepts/granuleId.iso19115',
+                  title: 'ISO 19115'
+                },
+                native: {
+                  href: 'https://cmr.example.com/search/concepts/granuleId',
+                  title: 'Native'
+                },
+                umm_json: {
+                  href: 'https://cmr.example.com/search/concepts/granuleId.umm_json',
+                  title: 'UMM-G'
+                }
               },
-              echo10: {
-                href: 'https://cmr.example.com/search/concepts/granuleId.echo10',
-                title: 'ECHO 10'
-              },
-              iso19115: {
-                href: 'https://cmr.example.com/search/concepts/granuleId.iso19115',
-                title: 'ISO 19115'
-              },
-              native: {
-                href: 'https://cmr.example.com/search/concepts/granuleId',
-                title: 'Native'
-              },
-              umm_json: {
-                href: 'https://cmr.example.com/search/concepts/granuleId.umm_json',
-                title: 'UMM-G'
-              }
-            },
-            onlineAccessFlag: undefined,
-            originalFormat: undefined,
-            providerDates: undefined,
-            relatedUrls: undefined,
-            spatialExtent: undefined,
-            temporalExtent: undefined,
-            timeEnd: undefined,
-            timeStart: undefined,
-            title: undefined
-          }])
+              onlineAccessFlag: undefined,
+              originalFormat: undefined,
+              providerDates: undefined,
+              relatedUrls: undefined,
+              spatialExtent: undefined,
+              temporalExtent: undefined,
+              timeEnd: undefined,
+              timeStart: undefined,
+              title: undefined
+            }
+          })
 
           expect(actions.changeUrl).toHaveBeenCalledTimes(0)
           expect(actions.handleError).toHaveBeenCalledTimes(0)
@@ -207,19 +199,17 @@ describe('createFocusedGranuleSlice', () => {
         describe('when the requested granule is opensearch', () => {
           test('take no action', async () => {
             useEdscStore.setState((state) => {
+              state.collection.collectionId = 'collectionId'
+              state.collection.collectionMetadata.collectionId = {
+                conceptId: 'collectionId',
+                isOpenSearch: true
+              }
+
               state.granule.granuleId = 'granuleId'
             })
 
             mockGetState.mockReturnValue({
-              authToken: '',
-              metadata: {
-                granules: {
-                  granuleId: {
-                    isOpenSearch: true
-                  }
-                }
-              },
-              searchResults: {}
+              authToken: ''
             })
 
             const { granule } = useEdscStore.getState()
@@ -227,7 +217,6 @@ describe('createFocusedGranuleSlice', () => {
 
             await getGranuleMetadata()
 
-            expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(0)
             expect(actions.changeUrl).toHaveBeenCalledTimes(0)
             expect(actions.handleError).toHaveBeenCalledTimes(0)
           })
@@ -250,11 +239,6 @@ describe('createFocusedGranuleSlice', () => {
 
           mockGetState.mockReturnValue({
             authToken: '',
-            metadata: {
-              granules: {
-                granuleId: {}
-              }
-            },
             router: {
               location: {
                 search: '?some=testparams',
@@ -271,7 +255,6 @@ describe('createFocusedGranuleSlice', () => {
           const { granule: updatedGranule } = useEdscStore.getState()
           expect(updatedGranule.granuleId).toEqual(null)
 
-          expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(0)
           expect(actions.handleError).toHaveBeenCalledTimes(0)
 
           expect(actions.changeUrl).toHaveBeenCalledTimes(1)
@@ -298,10 +281,7 @@ describe('createFocusedGranuleSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: '',
-          metadata: {
-            granules: {}
-          }
+          authToken: ''
         })
 
         const { granule } = useEdscStore.getState()
@@ -312,7 +292,6 @@ describe('createFocusedGranuleSlice', () => {
         const { granule: updatedGranule } = useEdscStore.getState()
         expect(updatedGranule.granuleId).toEqual(null)
 
-        expect(actions.updateGranuleMetadata).toHaveBeenCalledTimes(0)
         expect(actions.changeUrl).toHaveBeenCalledTimes(0)
 
         expect(actions.handleError).toHaveBeenCalledTimes(1)

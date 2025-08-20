@@ -78,22 +78,24 @@ function setup(overrideProps, location = '/search') {
       pageNum: 1,
       sortKey: collectionSortKeys.scoreDescending
     },
-    collectionsSearch: {
-      allIds: ['COLL_ID_1'],
-      hits: 1,
+    collections: {
+      count: 1,
       isLoading: false,
-      isLoaded: true
+      isLoaded: true,
+      items: [{
+        id: 'COLL_ID_1'
+      }]
     },
     collectionSubscriptions: [],
     granuleMetadata: {
       conceptId: 'G-1000',
       title: 'Granule Title'
     },
-    granuleSearchResults: {
-      allIds: [],
-      hits: 0,
+    granules: {
+      count: 0,
       isLoading: true,
-      isLoaded: false
+      isLoaded: false,
+      items: []
     },
     granuleQuery: {
       pageNum: 1,
@@ -178,11 +180,11 @@ describe('SearchPanels component', () => {
     describe('when the collections are loading', () => {
       test('shows the loading state', () => {
         const { enzymeWrapper } = setup({
-          collectionsSearch: {
-            allIds: [],
-            hits: 0,
+          collections: {
+            count: 0,
             isLoading: true,
-            isLoaded: false
+            isLoaded: false,
+            items: []
           }
         })
 
@@ -275,11 +277,15 @@ describe('SearchPanels component', () => {
     describe('when there is more than one collection', () => {
       test('renders the PanelGroup with the correct props', () => {
         const { enzymeWrapper } = setup({
-          collectionsSearch: {
-            allIds: ['COLL_ID_1', 'COLL_ID_2'],
-            hits: 4,
+          collections: {
+            count: 4,
             isLoading: false,
-            isLoaded: true
+            isLoaded: true,
+            items: [{
+              id: 'COLL_ID_1'
+            }, {
+              id: 'COLL_ID_2'
+            }]
           }
         })
 
@@ -508,15 +514,17 @@ describe('SearchPanels component', () => {
             title: 'Collection Title',
             isOpenSearch: false
           },
-          granuleSearchResults: {
-            allIds: [],
-            hits: 0,
+          granules: {
+            items: [],
+            count: 0,
             isLoading: true,
             isLoaded: false
           },
-          collectionsSearch: {
-            allIds: ['COLL_ID_1'],
-            hits: 0,
+          collections: {
+            items: [{
+              id: 'COLL_ID_1'
+            }],
+            count: 0,
             isLoading: true,
             isLoaded: false
           }
@@ -537,16 +545,18 @@ describe('SearchPanels component', () => {
         expect(granuleResultsPanelProps.headerMessage.type).toBe(React.Fragment)
         expect(granuleResultsPanelProps.headerMetaPrimaryLoading).toBe(true)
         expect(granuleResultsPanelProps.headerMetaPrimaryText).toBe('Showing 0 of 0 matching granules')
-        expect(granuleResultsPanelProps.headerLoading).toBe(true)
+        expect(granuleResultsPanelProps.headerLoading).toBe(false)
       })
     })
 
     describe('when there is only one granule loaded', () => {
       test('renders the PanelGroup with the correct props', () => {
         const { enzymeWrapper } = setup({
-          granuleSearchResults: {
-            allIds: ['GRAN_ID_1'],
-            hits: 1,
+          granules: {
+            items: [{
+              id: 'GRAN_ID_1'
+            }],
+            count: 1,
             isLoading: false,
             isLoaded: true
           }
@@ -573,9 +583,13 @@ describe('SearchPanels component', () => {
     describe('when there is more than one granule', () => {
       test('renders the PanelGroup with the correct props', () => {
         const { enzymeWrapper } = setup({
-          granuleSearchResults: {
-            allIds: ['GRAN_ID_1', 'GRAN_ID_2'],
-            hits: 4,
+          granules: {
+            items: [{
+              id: 'GRAN_ID_1'
+            }, {
+              id: 'GRAN_ID_2'
+            }],
+            count: 4,
             isLoading: false,
             isLoaded: true
           }

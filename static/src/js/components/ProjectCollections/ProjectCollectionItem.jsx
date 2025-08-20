@@ -87,7 +87,11 @@ const ProjectCollectionItem = ({
     title
   } = collectionMetadata
 
-  const { hits: granuleCount, isLoaded, singleGranuleSize } = granules
+  const {
+    count: granuleCount,
+    isLoaded,
+    singleGranuleSize
+  } = granules
 
   const totalSize = convertSize(granuleCount * singleGranuleSize)
 
@@ -266,7 +270,7 @@ ProjectCollectionItem.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({
-      hits: PropTypes.number,
+      count: PropTypes.number,
       isLoaded: PropTypes.bool,
       singleGranuleSize: PropTypes.number
     }),

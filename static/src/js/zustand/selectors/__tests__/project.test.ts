@@ -8,11 +8,6 @@ import {
 
 import useEdscStore from '../../useEdscStore'
 
-// @ts-expect-error: This file does not have types
-import configureStore from '../../../store/configureStore'
-
-jest.mock('../../../store/configureStore', () => jest.fn())
-
 describe('project selectors', () => {
   describe('getProjectCollectionsIds', () => {
     test('returns the project collection IDs', () => {
@@ -54,24 +49,25 @@ describe('project selectors', () => {
   describe('getProjectCollectionsMetadata', () => {
     test('returns metadata for project collections', () => {
       useEdscStore.setState(() => ({
+        collection: {
+          collectionMetadata: {
+            collection1: {
+              title: 'Collection 1'
+            },
+            collection2: {
+              title: 'Collection 2'
+            },
+            collection3: {
+              title: 'Collection 3'
+            }
+          }
+        },
         project: {
           collections: {
             allIds: ['collection1', 'collection2']
           }
         }
       }))
-
-      configureStore.mockReturnValue({
-        getState: () => ({
-          metadata: {
-            collections: {
-              collection1: { title: 'Collection 1' },
-              collection2: { title: 'Collection 2' },
-              collection3: { title: 'Collection 3' }
-            }
-          }
-        })
-      })
 
       const result = getProjectCollectionsMetadata(useEdscStore.getState())
       expect(result).toEqual({
@@ -143,13 +139,13 @@ describe('project selectors', () => {
             byId: {
               collection1: {
                 granules: {
-                  hits: 3000
+                  count: 3000
                 },
                 selectedAccessMethod: 'download'
               },
               collection2: {
                 granules: {
-                  hits: 3000
+                  count: 3000
                 },
                 selectedAccessMethod: 'esi0'
               }
@@ -162,7 +158,7 @@ describe('project selectors', () => {
       expect(result).toEqual({
         collection2: {
           granules: {
-            hits: 3000
+            count: 3000
           },
           selectedAccessMethod: 'esi0'
         }

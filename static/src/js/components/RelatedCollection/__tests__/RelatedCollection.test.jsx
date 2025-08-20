@@ -9,6 +9,17 @@ import PortalLinkContainer from '../../../containers/PortalLinkContainer/PortalL
 // eslint-disable-next-line react/jsx-props-no-spreading
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => jest.fn((props) => <div {...props} />))
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search/granules/collection-details',
+    search: '?p=TEST_COLLECTION_0',
+    hash: '',
+    state: null,
+    key: '1234'
+  })
+}))
+
 const setup = setupTest({
   Component: RelatedCollection,
   defaultProps: {
@@ -22,12 +33,6 @@ const setup = setupTest({
         }
       ],
       title: 'Test Title 1'
-    },
-    location: {
-      pathname: '/search/granules/collection-details',
-      search: '?p=TEST_COLLECTION_0',
-      hash: '',
-      key: '1234'
     }
   },
   defaultZustandState: {

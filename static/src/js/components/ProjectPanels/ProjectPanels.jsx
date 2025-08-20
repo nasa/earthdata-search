@@ -263,7 +263,6 @@ class ProjectPanels extends PureComponent {
   render() {
     const {
       dataQualitySummaries,
-      granulesMetadata,
       granulesQueries,
       location,
       onChangePath,
@@ -311,7 +310,7 @@ class ProjectPanels extends PureComponent {
 
       const {
         allIds: granulesAllIds = [],
-        hits: granuleCount
+        count: granuleCount
       } = projectCollectionGranules
 
       const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
@@ -567,7 +566,6 @@ class ProjectPanels extends PureComponent {
           >
             <AccessMethod
               accessMethods={accessMethods}
-              granuleMetadata={granulesMetadata}
               index={index}
               metadata={collectionMetadata}
               onSelectAccessMethod={onSelectAccessMethod}
@@ -645,7 +643,6 @@ class ProjectPanels extends PureComponent {
           <PanelItem scrollable={false}>
             <CollectionDetails
               collectionId={collectionId}
-              granulesMetadata={granulesMetadata}
               location={location}
               projectCollection={projectCollection}
             />
@@ -680,7 +677,6 @@ class ProjectPanels extends PureComponent {
 ProjectPanels.propTypes = {
   dataQualitySummaries: PropTypes.shape({}).isRequired,
   collectionId: PropTypes.string.isRequired,
-  granulesMetadata: PropTypes.shape({}).isRequired,
   granulesQueries: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,

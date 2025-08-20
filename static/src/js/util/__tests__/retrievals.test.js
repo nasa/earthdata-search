@@ -7,6 +7,19 @@ jest.mock('../../store/configureStore', () => jest.fn())
 describe('retrievals', () => {
   test('prepareRetrievalParams', () => {
     useEdscStore.setState({
+      collection: {
+        collectionMetadata: {
+          'C100000-EDSC': {
+            conceptId: 'C100000-EDSC',
+            dataCenter: 'EDSC',
+            directDistributionInformation: {},
+            isCSDA: false,
+            shortName: 'mock shortName',
+            title: 'Vestibulum id ligula porta felis euismod semper.',
+            versionId: 'mock version'
+          }
+        }
+      },
       portal: {
         portalId: 'edsc'
       },
@@ -50,7 +63,7 @@ describe('retrievals', () => {
                 }
               },
               granules: {
-                hits: 100,
+                count: 100,
                 allIds: ['G1000000001-EDSC', 'G1000000002-EDSC'],
                 byId: {
                   'G1000000001-EDSC':
@@ -88,19 +101,6 @@ describe('retrievals', () => {
 
     const reduxState = {
       authToken: 'auth-token',
-      metadata: {
-        collections: {
-          'C100000-EDSC': {
-            conceptId: 'C100000-EDSC',
-            dataCenter: 'EDSC',
-            directDistributionInformation: {},
-            isCSDA: false,
-            shortName: 'mock shortName',
-            title: 'Vestibulum id ligula porta felis euismod semper.',
-            versionId: 'mock version'
-          }
-        }
-      },
       router: {
         location: {
           search: '?p=C100000-EDSC'
@@ -178,6 +178,19 @@ describe('retrievals', () => {
 
   test('when there are no links on the granules', () => {
     useEdscStore.setState({
+      collection: {
+        collectionMetadata: {
+          'C100000-EDSC': {
+            conceptId: 'C100000-EDSC',
+            dataCenter: 'EDSC',
+            directDistributionInformation: {},
+            isCSDA: false,
+            shortName: 'mock shortName',
+            title: 'Vestibulum id ligula porta felis euismod semper.',
+            versionId: 'mock version'
+          }
+        }
+      },
       portal: {
         portalId: 'edsc'
       },
@@ -221,7 +234,7 @@ describe('retrievals', () => {
                 }
               },
               granules: {
-                hits: 100,
+                count: 100,
                 allIds: [],
                 byId: {}
               },
@@ -242,19 +255,6 @@ describe('retrievals', () => {
 
     const reduxState = {
       authToken: 'auth-token',
-      metadata: {
-        collections: {
-          'C100000-EDSC': {
-            conceptId: 'C100000-EDSC',
-            dataCenter: 'EDSC',
-            directDistributionInformation: {},
-            isCSDA: false,
-            shortName: 'mock shortName',
-            title: 'Vestibulum id ligula porta felis euismod semper.',
-            versionId: 'mock version'
-          }
-        }
-      },
       router: {
         location: {
           search: '?p=C100000-EDSC'

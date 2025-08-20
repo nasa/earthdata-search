@@ -507,10 +507,11 @@ describe('changePath', () => {
       })
 
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
 
-    const getTimelineMock = jest.fn()
     useEdscStore.setState({
+      collections: {
+        getCollections: jest.fn()
+      },
       project: {
         collections: {
           allIds: ['C00001-EDSC']
@@ -519,7 +520,7 @@ describe('changePath', () => {
         getProjectGranules: jest.fn()
       },
       timeline: {
-        getTimeline: getTimelineMock
+        getTimeline: jest.fn()
       }
     })
 
@@ -596,32 +597,36 @@ describe('changePath', () => {
         })
       )
 
-      expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-      expect(getCollectionsMock).toHaveBeenCalledWith()
-
       const zustandState = useEdscStore.getState()
-      const { project } = zustandState
-      const { getProjectCollections, getProjectGranules } = project
+      const {
+        collections,
+        project,
+        timeline
+      } = zustandState
 
-      expect(getProjectCollections).toHaveBeenCalledTimes(1)
-      expect(getProjectCollections).toHaveBeenCalledWith()
+      expect(collections.getCollections).toHaveBeenCalledTimes(1)
+      expect(collections.getCollections).toHaveBeenCalledWith()
 
-      expect(getProjectGranules).toHaveBeenCalledTimes(1)
-      expect(getProjectGranules).toHaveBeenCalledWith()
+      expect(project.getProjectCollections).toHaveBeenCalledTimes(1)
+      expect(project.getProjectCollections).toHaveBeenCalledWith()
 
-      expect(getTimelineMock).toHaveBeenCalledTimes(1)
-      expect(getTimelineMock).toHaveBeenCalledWith()
+      expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
+      expect(project.getProjectGranules).toHaveBeenCalledWith()
+
+      expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+      expect(timeline.getTimeline).toHaveBeenCalledWith()
     })
   })
 
   test('updates the store if there is not a projectId', async () => {
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
 
-    const getTimelineMock = jest.fn()
     useEdscStore.setState({
+      collections: {
+        getCollections: jest.fn()
+      },
       timeline: {
-        getTimeline: getTimelineMock
+        getTimeline: jest.fn()
       }
     })
 
@@ -667,8 +672,17 @@ describe('changePath', () => {
       }
     }), '/search')
 
-    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getTimelineMock).toHaveBeenCalledTimes(1)
+    const zustandState = useEdscStore.getState()
+    const {
+      collections,
+      timeline
+    } = zustandState
+
+    expect(collections.getCollections).toHaveBeenCalledTimes(1)
+    expect(collections.getCollections).toHaveBeenCalledWith()
+
+    expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+    expect(timeline.getTimeline).toHaveBeenCalledWith()
   })
 
   test('handles an error fetching the project', async () => {
@@ -676,12 +690,14 @@ describe('changePath', () => {
       .get(/projects/)
       .reply(500, { mock: 'error' })
 
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
     const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
-    const getTimelineMock = jest.fn()
+
     useEdscStore.setState({
+      collections: {
+        getCollections: jest.fn()
+      },
       timeline: {
-        getTimeline: getTimelineMock
+        getTimeline: jest.fn()
       }
     })
 
@@ -708,8 +724,17 @@ describe('changePath', () => {
       const storeActions = store.getActions()
       expect(storeActions.length).toEqual(0)
 
-      expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-      expect(getTimelineMock).toHaveBeenCalledTimes(1)
+      const zustandState = useEdscStore.getState()
+      const {
+        collections,
+        timeline
+      } = zustandState
+
+      expect(collections.getCollections).toHaveBeenCalledTimes(1)
+      expect(collections.getCollections).toHaveBeenCalledWith()
+
+      expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+      expect(timeline.getTimeline).toHaveBeenCalledWith()
 
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
@@ -724,8 +749,6 @@ describe('changePath', () => {
   describe('when a path is provided', () => {
     describe('when the path matches granule search', () => {
       test('calls getCollectionMetadata action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
         const newPath = '/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
@@ -736,28 +759,29 @@ describe('changePath', () => {
           }
         })
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.collection.getCollectionMetadata = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection } = useEdscStore.getState()
-        const { getCollectionMetadata } = collection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(getCollectionMetadata).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches collection details', () => {
       test('calls getCollectionMetadata action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
         const newPath = '/search/granules/collection-details?p=C00001-EDSC'
 
         const store = mockStore({
@@ -768,28 +792,29 @@ describe('changePath', () => {
           }
         })
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.collection.getCollectionMetadata = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection } = useEdscStore.getState()
-        const { getCollectionMetadata } = collection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(getCollectionMetadata).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches subscription list', () => {
       test('calls getCollectionMetadata action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
         const newPath = '/search/granules/subscriptions?p=C00001-EDSC'
 
         const store = mockStore({
@@ -800,28 +825,29 @@ describe('changePath', () => {
           }
         })
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.collection.getCollectionMetadata = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection } = useEdscStore.getState()
-        const { getCollectionMetadata } = collection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(getCollectionMetadata).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches granule details', () => {
       test('calls getCollectionMetadata and getGranuleMetadata', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
         const newPath = '/search/granules/granule-details?p=C00001-EDSC'
 
         const store = mockStore({
@@ -832,27 +858,34 @@ describe('changePath', () => {
           }
         })
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.collection.getCollectionMetadata = jest.fn()
-          // eslint-disable-next-line no-param-reassign
-          state.granule.getGranuleMetadata = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          },
+          granule: {
+            getGranuleMetadata: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection, granule } = useEdscStore.getState()
-        const { getCollectionMetadata } = collection
-        const { getGranuleMetadata } = granule
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(getCollectionMetadata).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
 
-        expect(getGranuleMetadata).toHaveBeenCalledTimes(1)
-        expect(getGranuleMetadata).toHaveBeenCalledWith()
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
   })
@@ -860,8 +893,6 @@ describe('changePath', () => {
   describe('when a portal path is provided', () => {
     describe('when the path matches granule search', () => {
       test('calls getCollectionMetadata action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
         const newPath = '/portal/fakeportal/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
@@ -872,28 +903,29 @@ describe('changePath', () => {
           }
         })
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.collection.getCollectionMetadata = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection } = useEdscStore.getState()
-        const { getCollectionMetadata } = collection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(getCollectionMetadata).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches collection details', () => {
       test('calls getCollectionMetadata action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
         const newPath = '/portal/fakeportal/search/granules/collection-details?p=C00001-EDSC'
 
         const store = mockStore({
@@ -904,28 +936,29 @@ describe('changePath', () => {
           }
         })
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.collection.getCollectionMetadata = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection } = useEdscStore.getState()
-        const { getCollectionMetadata } = collection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(getCollectionMetadata).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches subscription list', () => {
       test('calls getCollectionMetadata action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
         const newPath = '/portal/fakeportal/search/granules/subscriptions?p=C00001-EDSC'
 
         const store = mockStore({
@@ -936,28 +969,29 @@ describe('changePath', () => {
           }
         })
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.collection.getCollectionMetadata = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection } = useEdscStore.getState()
-        const { getCollectionMetadata } = collection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(getCollectionMetadata).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches granule details', () => {
       test('calls getCollectionMetadata and getGranuleMetadata', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
         const newPath = '/portal/fakeportal/search/granules/granule-details?p=C00001-EDSC'
 
         const store = mockStore({
@@ -968,27 +1002,34 @@ describe('changePath', () => {
           }
         })
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.collection.getCollectionMetadata = jest.fn()
-          // eslint-disable-next-line no-param-reassign
-          state.granule.getGranuleMetadata = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          },
+          granule: {
+            getGranuleMetadata: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { collection, granule } = useEdscStore.getState()
-        const { getCollectionMetadata } = collection
-        const { getGranuleMetadata } = granule
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(getCollectionMetadata).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
 
-        expect(getGranuleMetadata).toHaveBeenCalledTimes(1)
-        expect(getGranuleMetadata).toHaveBeenCalledWith()
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
   })

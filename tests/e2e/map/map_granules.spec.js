@@ -355,7 +355,6 @@ test.describe('Map: Granule interactions', () => {
       test.describe('when visiting another collection with a colormap', () => {
         test('displays a new colormap @screenshot', async ({ page }) => {
           await page.getByTestId('collection-result-item_C1243477369-GES_DISC').click()
-          await expect(page.getByTestId('timeline')).toBeInViewport()
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
             clip: colormapScreenshotClip

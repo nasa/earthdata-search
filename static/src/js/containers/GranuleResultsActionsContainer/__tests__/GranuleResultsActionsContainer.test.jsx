@@ -12,7 +12,6 @@ import {
 import GranuleResultsActions from '../../../components/GranuleResults/GranuleResultsActions'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import useEdscStore from '../../../zustand/useEdscStore'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
 
@@ -22,26 +21,20 @@ const setup = setupTest({
   Component: GranuleResultsActionsContainer,
   defaultProps: {
     authToken: 'token',
-    collectionMetadata: {
-      mock: 'data'
-    },
-    granuleSearchResults: {
-      allIds: [],
-      excludledGranuleIds: [],
-      hits: 100,
-      isLoaded: true,
-      isLoading: false
-    },
-    location: {
-      search: 'value'
-    },
     onChangePath: jest.fn(),
-    onMetricsAddCollectionProject: jest.fn(),
-    subscriptions: []
+    onMetricsAddCollectionProject: jest.fn()
   },
   defaultZustandState: {
     collection: {
       collectionId: 'collectionId'
+    },
+    granules: {
+      granules: {
+        count: 100,
+        isLoaded: true,
+        isLoading: false,
+        items: []
+      }
     },
     project: {
       collections: {
@@ -52,7 +45,7 @@ const setup = setupTest({
             granules: {
               addedIds: [],
               allIds: [],
-              hits: 100,
+              count: 100,
               isLoaded: true,
               isLoading: false,
               params: {
@@ -93,29 +86,12 @@ describe('mapDispatchToProps', () => {
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
-    useEdscStore.setState((state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.collection.collectionId = 'collectionId'
-    })
-
     const store = {
-      authToken: 'token',
-      metadata: {
-        collections: {
-          collectionId: {
-            subscriptions: []
-          }
-        }
-      }
+      authToken: 'token'
     }
 
     const expectedState = {
-      authToken: 'token',
-      collectionMetadata: {
-        subscriptions: []
-      },
-      granuleSearchResults: {},
-      subscriptions: []
+      authToken: 'token'
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -136,7 +112,7 @@ describe('GranuleResultsActionsContainer component', () => {
         granules: {
           addedIds: [],
           allIds: [],
-          hits: 100,
+          count: 100,
           isLoaded: true,
           isLoading: false,
           params: { pageNum: 1 },
@@ -149,14 +125,12 @@ describe('GranuleResultsActionsContainer component', () => {
       handoffLinks: [],
       initialLoading: false,
       isCollectionInProject: true,
-      location: { search: 'value' },
       onChangePath: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
       projectCollectionIds: ['collectionId'],
       projectGranuleCount: 100,
       removedGranuleIds: [],
-      searchGranuleCount: 100,
-      subscriptions: []
+      searchGranuleCount: 100
     }, {})
   })
 })

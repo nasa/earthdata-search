@@ -41,8 +41,8 @@ import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
-const GranuleResultsHighlightsContainer = lazy(() => import('../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'))
 const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFiltersContainer/GranuleFiltersContainer'))
+const GranuleResultsHighlights = lazy(() => import('../../components/GranuleResultsHighlights/GranuleResultsHighlights'))
 
 export const mapDispatchToProps = (dispatch) => ({
   onUpdateAdvancedSearch:
@@ -152,7 +152,7 @@ export const Search = ({
                 titleIcon={FaMap}
               >
                 <Suspense fallback={<div />}>
-                  <GranuleResultsHighlightsContainer />
+                  <GranuleResultsHighlights />
                 </Suspense>
               </SidebarSection>
             </Route>

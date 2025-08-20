@@ -3,12 +3,7 @@ import { EdscStore, ProjectCollections } from '../types'
 // @ts-expect-error: This file does not have types
 import { calculateOrderCount } from '../../util/orderCount'
 
-// @ts-expect-error: This file does not have types
-import configureStore from '../../store/configureStore'
-// @ts-expect-error: This file does not have types
-import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
-
-import { getCollectionId } from './collection'
+import { getCollectionId, getCollectionsMetadata } from './collection'
 
 /**
  * Retrieve all project collection ids
@@ -29,9 +24,7 @@ export const getProjectCollections = (
  */
 export const getProjectCollectionsMetadata = (state: EdscStore) => {
   const projectCollectionsIds = getProjectCollectionsIds(state)
-
-  const { getState: getReduxState } = configureStore()
-  const collectionsMetadata = getCollectionsMetadata(getReduxState())
+  const collectionsMetadata = getCollectionsMetadata(state)
 
   return Object.keys(collectionsMetadata)
     .filter((key) => projectCollectionsIds.includes(key))

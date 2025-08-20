@@ -50,7 +50,7 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
       .transformResponse(singleCwicGranuleResponse)
 
     const { feed } = transformedResponse
-    expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'hits']))
+    expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'count']))
 
     const { entry } = feed
     expect(entry).toBeInstanceOf(Array)
@@ -77,7 +77,7 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
       .transformResponse(multipleCwicGranulesResponse)
 
     const { feed } = transformedResponse
-    expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'hits']))
+    expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'count']))
 
     const { entry } = feed
     expect(entry).toBeInstanceOf(Array)
@@ -100,7 +100,7 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
       .transformResponse(multipleCwicGranulesResponse)
 
     const { feed } = transformedResponse
-    expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'hits']))
+    expect(Object.keys(feed)).toEqual(expect.arrayContaining(['entry', 'count']))
 
     const { entry } = feed
     expect(mockParse).toHaveBeenCalledTimes(1)
@@ -160,7 +160,7 @@ describe('OpenSearchGranuleRequest#search', () => {
     const expectedResponse = {
       feed: {
         entry: [],
-        hits: 0
+        count: 0
       }
     }
     openSearchGranulesRequest.transformResponse = jest.fn(() => expectedResponse)

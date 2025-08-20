@@ -12,15 +12,13 @@ import { createDataLinks } from './granules'
  * Formats granule results
  * @param {String} focusedGranuleId - The focused granule.
  * @param {Object} granules - The granules from the redux store.
- * @param {Array} granuleIds - Granule IDs to return in the list.
  * @param {Function} isGranuleInProject - Returns a boolean to designate if a granule is in the project.
  * @param {Boolean} isCollectionInProject - Boolean to designate if a collection is in the project.
  * @returns {GranuleListInfo} - The return object
  */
 export const formatGranulesList = ({
   focusedGranuleId,
-  granuleIds,
-  granulesMetadata,
+  granules,
   hoveredGranuleId,
   isCollectionInProject,
   isGranuleInProject,
@@ -28,12 +26,10 @@ export const formatGranulesList = ({
 }) => {
   let hasBrowseImagery = false
 
-  const granulesList = granuleIds.map((granuleId) => {
-    const granule = granulesMetadata[granuleId]
-
+  const granulesList = granules.map((granule) => {
     const original = granule
 
-    const isFocused = focusedGranuleId === granuleId
+    const isFocused = focusedGranuleId === granule.id
 
     const {
       browseFlag,

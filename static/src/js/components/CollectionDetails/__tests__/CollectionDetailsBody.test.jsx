@@ -5,18 +5,12 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import CollectionDetailsBody from '../CollectionDetailsBody'
 import CollectionDetailsMinimap from '../CollectionDetailsMinimap'
+import RelatedCollection from '../../RelatedCollection/RelatedCollection'
+import Skeleton from '../../Skeleton/Skeleton'
 
-jest.mock('../CollectionDetailsMinimap', () => jest.fn(({ children }) => (
-  <mock-CollectionDetailsMinimap data-testid="collection-details-body__minimap">
-    {children}
-  </mock-CollectionDetailsMinimap>
-)))
-
-jest.mock('../../RelatedCollection/RelatedCollection', () => jest.fn(() => (
-  <mock-RelatedCollection>
-    Mock related collection
-  </mock-RelatedCollection>
-)))
+jest.mock('../CollectionDetailsMinimap', () => jest.fn(() => <div />))
+jest.mock('../../RelatedCollection/RelatedCollection', () => jest.fn(() => <div />))
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 const defaultCollectionMetadata = {
   hasAllMetadata: true,
@@ -64,13 +58,20 @@ const setup = setupTest({
   Component: CollectionDetailsBody,
   defaultProps: {
     isActive: true,
-    collectionMetadata: defaultCollectionMetadata,
+    // CollectionMetadata: defaultCollectionMetadata,
     location: {
       pathname: '/search'
     },
-    onFocusedCollectionChange: jest.fn(),
     onMetricsRelatedCollection: jest.fn(),
     onToggleRelatedUrlsModal: jest.fn()
+  },
+  defaultZustandState: {
+    collection: {
+      collectionId: 'collectionId',
+      collectionMetadata: {
+        collectionId: defaultCollectionMetadata
+      }
+    }
   }
 })
 
@@ -78,15 +79,82 @@ describe('CollectionDetailsBody component', () => {
   describe('when the details are not loaded', () => {
     test('displays a skeleton loader', () => {
       setup({
-        overrideProps: {
-          collectionMetadata: {
-            ...defaultCollectionMetadata,
-            hasAllMetadata: false
+        overrideZustandState: {
+          collection: {
+            collectionMetadata: {
+              collectionId: {
+                ...defaultCollectionMetadata,
+                hasAllMetadata: false
+              }
+            }
           }
         }
       })
 
-      expect(screen.getAllByTestId('collection-details-body__skeleton')).not.toBeNull()
+      expect(Skeleton).toHaveBeenCalledTimes(1)
+      expect(Skeleton).toHaveBeenCalledWith({
+        containerStyle: {
+          height: '400px',
+          width: '100%'
+        },
+        shapes: [{
+          height: 21,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 3,
+          width: 100
+        }, {
+          height: 12,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 40,
+          width: 70
+        }, {
+          height: 20,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 60,
+          width: 500
+        }, {
+          height: 12,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 95,
+          width: 96
+        }, {
+          height: 20,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 115,
+          width: 220
+        }, {
+          height: 12,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 149,
+          width: 80
+        }, {
+          height: 20,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 170,
+          width: 250
+        }, {
+          height: 300,
+          left: 0,
+          radius: 2,
+          shape: 'rectangle',
+          top: 220,
+          width: 400
+        }]
+      }, {})
     })
   })
 
@@ -94,22 +162,28 @@ describe('CollectionDetailsBody component', () => {
     test('renders itself correctly', () => {
       const spatialMetadata = 'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
       const boxesMetadata = '-90 -180 90 180'
+      const collectionMetadata = {
+        ...defaultCollectionMetadata,
+        boxes: [
+          boxesMetadata
+        ],
+        spatial: [
+          spatialMetadata
+        ]
+      }
 
       setup({
-        overrideProps: {
-          collectionMetadata: {
-            ...defaultCollectionMetadata,
-            boxes: [
-              boxesMetadata
-            ],
-            spatial: [
-              spatialMetadata
-            ]
+        overrideZustandState: {
+          collection: {
+            collectionMetadata: {
+              collectionId: collectionMetadata
+            }
           }
         }
       })
 
       expect(CollectionDetailsMinimap).toHaveBeenCalledTimes(1)
+      expect(CollectionDetailsMinimap).toHaveBeenCalledWith({ metadata: collectionMetadata }, {})
 
       expect(screen.getByText(spatialMetadata)).toBeInTheDocument()
     })
@@ -119,12 +193,16 @@ describe('CollectionDetailsBody component', () => {
         const spatialMetadata = 'Bounding Rectangle: (90.0°, -180.0°, -90.0°, 180.0°)'
 
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              spatial: [
-                spatialMetadata
-              ]
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  spatial: [
+                    spatialMetadata
+                  ]
+                }
+              }
             }
           }
         })
@@ -136,12 +214,16 @@ describe('CollectionDetailsBody component', () => {
     describe('DOI Badge', () => {
       test('renders correctly and links to correct location', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              doi: {
-                doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
-                doiText: '10.3334/ORNLDAAC/1569'
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  doi: {
+                    doiLink: 'https://dx.doi.org/10.3334/ORNLDAAC/1569',
+                    doiText: '10.3334/ORNLDAAC/1569'
+                  }
+                }
               }
             }
           }
@@ -156,21 +238,25 @@ describe('CollectionDetailsBody component', () => {
     describe('Associated DOIs', () => {
       test('renders its links correctly', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              associatedDois: [
-                {
-                  doi: '10.1234/ParentDOIID1',
-                  title: 'DOI Title 1',
-                  authority: 'https://doi.org/'
-                },
-                {
-                  doi: '10.1234/ParentDOIID2',
-                  title: 'DOI Title 2',
-                  authority: 'https://doi.org/'
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  associatedDois: [
+                    {
+                      doi: '10.1234/ParentDOIID1',
+                      title: 'DOI Title 1',
+                      authority: 'https://doi.org/'
+                    },
+                    {
+                      doi: '10.1234/ParentDOIID2',
+                      title: 'DOI Title 2',
+                      authority: 'https://doi.org/'
+                    }
+                  ]
                 }
-              ]
+              }
             }
           }
         })
@@ -186,111 +272,115 @@ describe('CollectionDetailsBody component', () => {
     describe('Related URLs', () => {
       test('renders its links correctly', async () => {
         const { props, user } = setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              relatedUrls: [
-                {
-                  content_type: 'CollectionURL',
-                  label: 'Collection URL',
-                  urls: [
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  relatedUrls: [
                     {
-                      description: 'Data set Landing Page DOI URL',
-                      urlContentType: 'CollectionURL',
-                      type: 'DATA SET LANDING PAGE',
-                      url: 'https://doi.org/10.3334/ORNLDAAC/830',
-                      subtype: ''
-                    }
-                  ]
-                },
-                {
-                  content_type: 'DistributionURL',
-                  label: 'Distribution URL',
-                  urls: [
-                    {
-                      description: 'This link allows direct data access via Earthdata login',
-                      urlContentType: 'DistributionURL',
-                      type: 'GET DATA',
-                      url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/',
-                      subtype: ''
+                      content_type: 'CollectionURL',
+                      label: 'Collection URL',
+                      urls: [
+                        {
+                          description: 'Data set Landing Page DOI URL',
+                          urlContentType: 'CollectionURL',
+                          type: 'DATA SET LANDING PAGE',
+                          url: 'https://doi.org/10.3334/ORNLDAAC/830',
+                          subtype: ''
+                        }
+                      ]
                     },
                     {
-                      description: 'Web Coverage Service for this collection.',
-                      urlContentType: 'DistributionURL',
-                      type: 'USE SERVICE API',
-                      subtype: 'WEB COVERAGE SERVICE (WCS)',
-                      url: 'https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830',
-                      get_service: {
-                        mimeType: 'application/gml+xml',
-                        protocol: 'Not provided',
-                        fullName: 'Not provided',
-                        dataId: 'NotProvided',
-                        dataType: 'Not provided'
-                      }
-                    }
-                  ]
-                },
-                {
-                  content_type: 'PublicationURL',
-                  label: 'Publication URL',
-                  urls: [
-                    {
-                      description: 'ORNL DAAC Data Set Documentation',
-                      urlContentType: 'PublicationURL',
-                      type: 'VIEW RELATED INFORMATION',
-                      subtype: 'GENERAL DOCUMENTATION',
-                      url: 'https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html'
+                      content_type: 'DistributionURL',
+                      label: 'Distribution URL',
+                      urls: [
+                        {
+                          description: 'This link allows direct data access via Earthdata login',
+                          urlContentType: 'DistributionURL',
+                          type: 'GET DATA',
+                          url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/',
+                          subtype: ''
+                        },
+                        {
+                          description: 'Web Coverage Service for this collection.',
+                          urlContentType: 'DistributionURL',
+                          type: 'USE SERVICE API',
+                          subtype: 'WEB COVERAGE SERVICE (WCS)',
+                          url: 'https://webmap.ornl.gov/wcsdown/dataset.jsp?ds_id=830',
+                          get_service: {
+                            mimeType: 'application/gml+xml',
+                            protocol: 'Not provided',
+                            fullName: 'Not provided',
+                            dataId: 'NotProvided',
+                            dataType: 'Not provided'
+                          }
+                        }
+                      ]
                     },
                     {
-                      description: 'Data Set Documentation',
-                      urlContentType: 'PublicationURL',
-                      type: 'VIEW RELATED INFORMATION',
-                      subtype: 'GENERAL DOCUMENTATION',
-                      url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg'
+                      content_type: 'PublicationURL',
+                      label: 'Publication URL',
+                      urls: [
+                        {
+                          description: 'ORNL DAAC Data Set Documentation',
+                          urlContentType: 'PublicationURL',
+                          type: 'VIEW RELATED INFORMATION',
+                          subtype: 'GENERAL DOCUMENTATION',
+                          url: 'https://daac.ornl.gov/CLIMATE/guides/global_N_deposition_maps.html'
+                        },
+                        {
+                          description: 'Data Set Documentation',
+                          urlContentType: 'PublicationURL',
+                          type: 'VIEW RELATED INFORMATION',
+                          subtype: 'GENERAL DOCUMENTATION',
+                          url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/deposition_maps.jpg'
+                        },
+                        {
+                          description: 'Data Set Documentation',
+                          urlContentType: 'PublicationURL',
+                          type: 'VIEW RELATED INFORMATION',
+                          subtype: 'GENERAL DOCUMENTATION',
+                          url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf'
+                        },
+                        {
+                          description: 'Data Set Documentation',
+                          urlContentType: 'PublicationURL',
+                          type: 'VIEW RELATED INFORMATION',
+                          subtype: 'GENERAL DOCUMENTATION',
+                          url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf'
+                        }
+                      ]
                     },
                     {
-                      description: 'Data Set Documentation',
-                      urlContentType: 'PublicationURL',
-                      type: 'VIEW RELATED INFORMATION',
-                      subtype: 'GENERAL DOCUMENTATION',
-                      url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps.pdf'
+                      content_type: 'VisualizationURL',
+                      label: 'Visualization URL',
+                      urls: [
+                        {
+                          description: 'Browse Image',
+                          urlContentType: 'VisualizationURL',
+                          type: 'GET RELATED VISUALIZATION',
+                          url: 'https://daac.ornl.gov/graphics/browse/sdat-tds/830_1_fit.png',
+                          subtype: ''
+                        }
+                      ]
                     },
                     {
-                      description: 'Data Set Documentation',
-                      urlContentType: 'PublicationURL',
-                      type: 'VIEW RELATED INFORMATION',
-                      subtype: 'GENERAL DOCUMENTATION',
-                      url: 'https://daac.ornl.gov/daacdata/global_climate/global_N_deposition_maps/comp/global_N_deposition_maps_readme.pdf'
-                    }
-                  ]
-                },
-                {
-                  content_type: 'VisualizationURL',
-                  label: 'Visualization URL',
-                  urls: [
-                    {
-                      description: 'Browse Image',
-                      urlContentType: 'VisualizationURL',
-                      type: 'GET RELATED VISUALIZATION',
-                      url: 'https://daac.ornl.gov/graphics/browse/sdat-tds/830_1_fit.png',
-                      subtype: ''
-                    }
-                  ]
-                },
-                {
-                  content_type: 'HighlightedURL',
-                  label: 'Highlighted URL',
-                  urls: [
-                    {
-                      description: 'Data set Landing Page DOI URL',
-                      urlContentType: 'CollectionURL',
-                      type: 'DATA SET LANDING PAGE',
-                      url: 'https://doi.org/10.3334/ORNLDAAC/830',
-                      highlightedType: 'Data Set Landing Page'
+                      content_type: 'HighlightedURL',
+                      label: 'Highlighted URL',
+                      urls: [
+                        {
+                          description: 'Data set Landing Page DOI URL',
+                          urlContentType: 'CollectionURL',
+                          type: 'DATA SET LANDING PAGE',
+                          url: 'https://doi.org/10.3334/ORNLDAAC/830',
+                          highlightedType: 'Data Set Landing Page'
+                        }
+                      ]
                     }
                   ]
                 }
-              ]
+              }
             }
           }
         })
@@ -318,12 +408,16 @@ describe('CollectionDetailsBody component', () => {
     describe('Temporal Extent', () => {
       test('renders correctly', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              temporal: [
-                '1860-01-01 to 2050-12-31'
-              ]
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  temporal: [
+                    '1860-01-01 to 2050-12-31'
+                  ]
+                }
+              }
             }
           }
         })
@@ -394,10 +488,14 @@ describe('CollectionDetailsBody component', () => {
         ]
 
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              dataCenters: mockDataCenters
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  dataCenters: mockDataCenters
+                }
+              }
             }
           }
         })
@@ -467,10 +565,14 @@ describe('CollectionDetailsBody component', () => {
           ]
 
           setup({
-            overrideProps: {
-              collectionMetadata: {
-                ...defaultCollectionMetadata,
-                dataCenters: mockDataCenters
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    ...defaultCollectionMetadata,
+                    dataCenters: mockDataCenters
+                  }
+                }
               }
             }
           })
@@ -483,10 +585,14 @@ describe('CollectionDetailsBody component', () => {
     describe('GIBS Layers', () => {
       test('renders correctly', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              gibsLayers: 'Gib layer'
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  gibsLayers: 'Gib layer'
+                }
+              }
             }
           }
         })
@@ -498,39 +604,43 @@ describe('CollectionDetailsBody component', () => {
     describe('Supported Reformatting', () => {
       test('renders correctly', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              services: {
-                items: [
-                  {
-                    type: 'ECHO ORDERS',
-                    supportedOutputFormats: null,
-                    supportedReformattings: null
-                  },
-                  {
-                    type: 'ESI',
-                    supportedReformattings: [
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  services: {
+                    items: [
                       {
-                        supportedInputFormat: 'HDF-EOS2',
-                        supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                        type: 'ECHO ORDERS',
+                        supportedOutputFormats: null,
+                        supportedReformattings: null
                       },
                       {
-                        supportedInputFormat: 'HDF-EOS5',
-                        supportedOutputFormats: ['PNG', 'JPEG']
+                        type: 'ESI',
+                        supportedReformattings: [
+                          {
+                            supportedInputFormat: 'HDF-EOS2',
+                            supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                          },
+                          {
+                            supportedInputFormat: 'HDF-EOS5',
+                            supportedOutputFormats: ['PNG', 'JPEG']
+                          },
+                          {
+                            supportedInputFormat: 'HDF-EOS5',
+                            supportedOutputFormats: ['TIFF']
+                          }
+                        ]
                       },
                       {
-                        supportedInputFormat: 'HDF-EOS5',
-                        supportedOutputFormats: ['TIFF']
+                        type: 'NOT PROVIDED',
+                        supportedOutputFormats: null,
+                        supportedReformattings: null
                       }
                     ]
-                  },
-                  {
-                    type: 'NOT PROVIDED',
-                    supportedOutputFormats: null,
-                    supportedReformattings: null
                   }
-                ]
+                }
               }
             }
           }
@@ -546,39 +656,43 @@ describe('CollectionDetailsBody component', () => {
 
       test('does not render duplicate formats', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              services: {
-                items: [
-                  {
-                    type: 'ECHO ORDERS',
-                    supportedOutputFormats: null,
-                    supportedReformattings: null
-                  },
-                  {
-                    type: 'ESI',
-                    supportedReformattings: [
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  services: {
+                    items: [
                       {
-                        supportedInputFormat: 'HDF-EOS2',
-                        supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                        type: 'ECHO ORDERS',
+                        supportedOutputFormats: null,
+                        supportedReformattings: null
                       },
                       {
-                        supportedInputFormat: 'HDF-EOS5',
-                        supportedOutputFormats: ['PNG', 'JPEG']
+                        type: 'ESI',
+                        supportedReformattings: [
+                          {
+                            supportedInputFormat: 'HDF-EOS2',
+                            supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                          },
+                          {
+                            supportedInputFormat: 'HDF-EOS5',
+                            supportedOutputFormats: ['PNG', 'JPEG']
+                          },
+                          {
+                            supportedInputFormat: 'HDF-EOS5',
+                            supportedOutputFormats: ['TIFF', 'PNG', 'JPEG'] // PNG and JPEG are duplicated for HDF-EOS5
+                          }
+                        ]
                       },
                       {
-                        supportedInputFormat: 'HDF-EOS5',
-                        supportedOutputFormats: ['TIFF', 'PNG', 'JPEG'] // PNG and JPEG are duplicated for HDF-EOS5
+                        type: 'NOT PROVIDED',
+                        supportedOutputFormats: null,
+                        supportedReformattings: null
                       }
                     ]
-                  },
-                  {
-                    type: 'NOT PROVIDED',
-                    supportedOutputFormats: null,
-                    supportedReformattings: null
                   }
-                ]
+                }
               }
             }
           }
@@ -595,39 +709,43 @@ describe('CollectionDetailsBody component', () => {
 
       test('does not render options not supported by EDSC', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              services: {
-                items: [
-                  {
-                    type: 'ECHO ORDERS',
-                    supportedOutputFormats: null,
-                    supportedReformattings: null
-                  },
-                  {
-                    type: 'ESI',
-                    supportedReformattings: null
-                  },
-                  {
-                    type: 'NOT PROVIDED',
-                    supportedOutputFormats: null,
-                    supportedReformattings: [
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  services: {
+                    items: [
                       {
-                        supportedInputFormat: 'HDF-EOS2',
-                        supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                        type: 'ECHO ORDERS',
+                        supportedOutputFormats: null,
+                        supportedReformattings: null
                       },
                       {
-                        supportedInputFormat: 'HDF-EOS5',
-                        supportedOutputFormats: ['PNG', 'JPEG']
+                        type: 'ESI',
+                        supportedReformattings: null
                       },
                       {
-                        supportedInputFormat: 'HDF-EOS5',
-                        supportedOutputFormats: ['TIFF']
+                        type: 'NOT PROVIDED',
+                        supportedOutputFormats: null,
+                        supportedReformattings: [
+                          {
+                            supportedInputFormat: 'HDF-EOS2',
+                            supportedOutputFormats: ['XML', 'ASCII', 'ICARTT']
+                          },
+                          {
+                            supportedInputFormat: 'HDF-EOS5',
+                            supportedOutputFormats: ['PNG', 'JPEG']
+                          },
+                          {
+                            supportedInputFormat: 'HDF-EOS5',
+                            supportedOutputFormats: ['TIFF']
+                          }
+                        ]
                       }
                     ]
                   }
-                ]
+                }
               }
             }
           }
@@ -641,12 +759,16 @@ describe('CollectionDetailsBody component', () => {
     describe('Science Keywords', () => {
       test('renders correctly', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              scienceKeywords: [
-                ['Earth Science', 'Atmosphere', 'Atmospheric Chemistry']
-              ]
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  scienceKeywords: [
+                    ['Earth Science', 'Atmosphere', 'Atmospheric Chemistry']
+                  ]
+                }
+              }
             }
           }
         })
@@ -660,10 +782,14 @@ describe('CollectionDetailsBody component', () => {
     describe('Data Formats', () => {
       test('renders correctly', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              nativeDataFormats: ['PDF']
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  nativeDataFormats: ['PDF']
+                }
+              }
             }
           }
         })
@@ -676,10 +802,14 @@ describe('CollectionDetailsBody component', () => {
     describe('Summary', () => {
       test('renders correctly', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              abstract: 'This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  abstract: 'This data set provides global gridded estimates of atmospheric deposition of total inorganic nitrogen (N), NHx (NH3 and NH4+), and NOy (all oxidized forms of nitrogen other than N2O), in mg N/m2/year, for the years 1860 and 1993 and projections for the year 2050. The data set was generated using a global three-dimensional chemistry-transport model (TM3) with a spatial resolution of 5 degrees longitude by 3.75 degrees latitude (Jeuken et al., 2001; Lelieveld and Dentener, 2000). Nitrogen emissions estimates (Van Aardenne et al., 2001) and projection scenario data (IPCC, 1996; 2000) were used as input to the model.'
+                }
+              }
             }
           }
         })
@@ -692,14 +822,18 @@ describe('CollectionDetailsBody component', () => {
     describe('Direct Distribution Information', () => {
       test('renders correctly', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              directDistributionInformation: {
-                region: 'us-east-2',
-                s3BucketAndObjectPrefixNames: ['TestBucketOrObjectPrefix'],
-                s3CredentialsApiEndpoint: 'https://DAACCredentialEndpoint.org',
-                s3CredentialsApiDocumentationUrl: 'https://DAACCredentialDocumentation.org'
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  directDistributionInformation: {
+                    region: 'us-east-2',
+                    s3BucketAndObjectPrefixNames: ['TestBucketOrObjectPrefix'],
+                    s3CredentialsApiEndpoint: 'https://DAACCredentialEndpoint.org',
+                    s3CredentialsApiDocumentationUrl: 'https://DAACCredentialDocumentation.org'
+                  }
+                }
               }
             }
           }
@@ -720,30 +854,34 @@ describe('CollectionDetailsBody component', () => {
       describe('when the collection has variables with instance information', () => {
         test('renders variable instance information and cloud access header', () => {
           setup({
-            overrideProps: {
-              collectionMetadata: {
-                ...defaultCollectionMetadata,
-                variables: {
-                  items: [
-                    {
-                      conceptId: 'V123456-EDSC',
-                      instanceInformation: {
-                        url: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name',
-                        format: 'Zarr',
-                        description: 'brief end user information goes here.',
-                        directDistributionInformation: {
-                          region: 'us-west-2',
-                          s3BucketAndObjectPrefixNames: [
-                            'test-aws-cache',
-                            'zarr/test-name'
-                          ],
-                          s3CredentialsApiEndpoint: 'https://api.test.earthdata.nasa.gov/s3credentials',
-                          s3CredentialsApiDocumentationUrl: 'https://test/information/documents?title=In-region%20Direct%20S3%20Zarr%20Cache%20Access'
-                        },
-                        chunkingInformation: 'Chunk size for this test example is 1MB. optimized for time series.'
-                      }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    ...defaultCollectionMetadata,
+                    variables: {
+                      items: [
+                        {
+                          conceptId: 'V123456-EDSC',
+                          instanceInformation: {
+                            url: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name',
+                            format: 'Zarr',
+                            description: 'brief end user information goes here.',
+                            directDistributionInformation: {
+                              region: 'us-west-2',
+                              s3BucketAndObjectPrefixNames: [
+                                'test-aws-cache',
+                                'zarr/test-name'
+                              ],
+                              s3CredentialsApiEndpoint: 'https://api.test.earthdata.nasa.gov/s3credentials',
+                              s3CredentialsApiDocumentationUrl: 'https://test/information/documents?title=In-region%20Direct%20S3%20Zarr%20Cache%20Access'
+                            },
+                            chunkingInformation: 'Chunk size for this test example is 1MB. optimized for time series.'
+                          }
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             }
@@ -766,26 +904,30 @@ describe('CollectionDetailsBody component', () => {
       describe('when the collection has variables with instance information but, no `s3BucketAndObjectPrefixNames`', () => {
         test('the `s3BucketAndObjectPrefixNames` field is not rendered', () => {
           setup({
-            overrideProps: {
-              collectionMetadata: {
-                ...defaultCollectionMetadata,
-                variables: {
-                  items: [
-                    {
-                      conceptId: 'V123456-EDSC',
-                      instanceInformation: {
-                        url: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name',
-                        format: 'Zarr',
-                        description: 'brief end user information goes here.',
-                        directDistributionInformation: {
-                          region: 'us-west-2',
-                          s3CredentialsApiEndpoint: 'https://api.test.earthdata.nasa.gov/s3credentials',
-                          s3CredentialsApiDocumentationUrl: 'https://test/information/documents?title=In-region%20Direct%20S3%20Zarr%20Cache%20Access'
-                        },
-                        chunkingInformation: 'Chunk size for this test example is 1MB. optimized for time series.'
-                      }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    ...defaultCollectionMetadata,
+                    variables: {
+                      items: [
+                        {
+                          conceptId: 'V123456-EDSC',
+                          instanceInformation: {
+                            url: 's3://test-aws-address-cache.s3.us-west-7.amazonaws.com/zarr/test-name',
+                            format: 'Zarr',
+                            description: 'brief end user information goes here.',
+                            directDistributionInformation: {
+                              region: 'us-west-2',
+                              s3CredentialsApiEndpoint: 'https://api.test.earthdata.nasa.gov/s3credentials',
+                              s3CredentialsApiDocumentationUrl: 'https://test/information/documents?title=In-region%20Direct%20S3%20Zarr%20Cache%20Access'
+                            },
+                            chunkingInformation: 'Chunk size for this test example is 1MB. optimized for time series.'
+                          }
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             }
@@ -798,15 +940,19 @@ describe('CollectionDetailsBody component', () => {
       describe('when the collection has variables without instance information', () => {
         test('does not render variable instance information or cloud access header', () => {
           setup({
-            overrideProps: {
-              collectionMetadata: {
-                ...defaultCollectionMetadata,
-                variables: {
-                  items: [
-                    {
-                      conceptId: 'V123456-EDSC'
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    ...defaultCollectionMetadata,
+                    variables: {
+                      items: [
+                        {
+                          conceptId: 'V123456-EDSC'
+                        }
+                      ]
                     }
-                  ]
+                  }
                 }
               }
             }
@@ -867,70 +1013,74 @@ describe('CollectionDetailsBody component', () => {
     describe('Related Collections', () => {
       test('renders the links', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              relatedCollections: {
-                count: 5,
-                items: [
-                  {
-                    doi: '1.TEST.DOI',
-                    id: 'TEST_COLLECTION_1',
-                    relationships: [
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  relatedCollections: {
+                    count: 5,
+                    items: [
                       {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 1'
-                  },
-                  {
-                    doi: '2.TEST.DOI',
-                    id: 'TEST_COLLECTION_2',
-                    relationships: [
+                        doi: '1.TEST.DOI',
+                        id: 'TEST_COLLECTION_1',
+                        relationships: [
+                          {
+                            relationshipType: 'relatedUrl'
+                          }
+                        ],
+                        title: 'Test Title 1'
+                      },
                       {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 2'
-                  },
-                  {
-                    doi: '3.TEST.DOI',
-                    id: 'TEST_COLLECTION_3',
-                    relationships: [
+                        doi: '2.TEST.DOI',
+                        id: 'TEST_COLLECTION_2',
+                        relationships: [
+                          {
+                            relationshipType: 'relatedUrl'
+                          }
+                        ],
+                        title: 'Test Title 2'
+                      },
                       {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 3'
-                  },
-                  {
-                    doi: '4.TEST.DOI',
-                    id: 'TEST_COLLECTION_4',
-                    relationships: [
+                        doi: '3.TEST.DOI',
+                        id: 'TEST_COLLECTION_3',
+                        relationships: [
+                          {
+                            relationshipType: 'relatedUrl'
+                          }
+                        ],
+                        title: 'Test Title 3'
+                      },
                       {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 4'
-                  },
-                  {
-                    doi: '5.TEST.DOI',
-                    id: 'TEST_COLLECTION_5',
-                    relationships: [
+                        doi: '4.TEST.DOI',
+                        id: 'TEST_COLLECTION_4',
+                        relationships: [
+                          {
+                            relationshipType: 'relatedUrl'
+                          }
+                        ],
+                        title: 'Test Title 4'
+                      },
                       {
-                        relationshipType: 'relatedUrl'
+                        doi: '5.TEST.DOI',
+                        id: 'TEST_COLLECTION_5',
+                        relationships: [
+                          {
+                            relationshipType: 'relatedUrl'
+                          }
+                        ],
+                        title: 'Test Title 5'
                       }
-                    ],
-                    title: 'Test Title 5'
+                    ]
                   }
-                ]
+                },
+                location: {
+                  pathname: '/search/granules/collection-details',
+                  search: '?p=TEST_COLLECTION_0',
+                  hash: '',
+                  key: '1234'
+                }
               }
-            },
-            location: {
-              pathname: '/search/granules/collection-details',
-              search: '?p=TEST_COLLECTION_0',
-              hash: '',
-              key: '1234'
             }
           }
         })
@@ -946,55 +1096,91 @@ describe('CollectionDetailsBody component', () => {
       test('renders a maximum of 3 links', () => {
         // Limit 3 being set in static/src/js/actions/focusedCollection.js
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              ...defaultCollectionMetadata,
-              relatedCollections: {
-                count: 5,
-                items: [
-                  {
-                    doi: '1.TEST.DOI',
-                    id: 'TEST_COLLECTION_1',
-                    relationships: [
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  ...defaultCollectionMetadata,
+                  relatedCollections: {
+                    count: 5,
+                    items: [
                       {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 1'
-                  },
-                  {
-                    doi: '2.TEST.DOI',
-                    id: 'TEST_COLLECTION_2',
-                    relationships: [
+                        doi: '1.TEST.DOI',
+                        id: 'TEST_COLLECTION_1',
+                        relationships: [
+                          {
+                            relationshipType: 'relatedUrl'
+                          }
+                        ],
+                        title: 'Test Title 1'
+                      },
                       {
-                        relationshipType: 'relatedUrl'
-                      }
-                    ],
-                    title: 'Test Title 2'
-                  },
-                  {
-                    doi: '3.TEST.DOI',
-                    id: 'TEST_COLLECTION_3',
-                    relationships: [
+                        doi: '2.TEST.DOI',
+                        id: 'TEST_COLLECTION_2',
+                        relationships: [
+                          {
+                            relationshipType: 'relatedUrl'
+                          }
+                        ],
+                        title: 'Test Title 2'
+                      },
                       {
-                        relationshipType: 'relatedUrl'
+                        doi: '3.TEST.DOI',
+                        id: 'TEST_COLLECTION_3',
+                        relationships: [
+                          {
+                            relationshipType: 'relatedUrl'
+                          }
+                        ],
+                        title: 'Test Title 3'
                       }
-                    ],
-                    title: 'Test Title 3'
+                    ]
                   }
-                ]
+                },
+                location: {
+                  pathname: '/search/granules/collection-details',
+                  search: '?p=TEST_COLLECTION_0',
+                  hash: '',
+                  key: '1234'
+                }
               }
-            },
-            location: {
-              pathname: '/search/granules/collection-details',
-              search: '?p=TEST_COLLECTION_0',
-              hash: '',
-              key: '1234'
             }
           }
         })
 
-        expect(screen.getAllByText('Mock related collection').length).toEqual(3)
+        expect(RelatedCollection).toHaveBeenCalledTimes(3)
+        expect(RelatedCollection).toHaveBeenNthCalledWith(1, {
+          className: 'collection-details-body__related-collection-link',
+          onMetricsRelatedCollection: expect.any(Function),
+          relatedCollection: {
+            doi: '1.TEST.DOI',
+            id: 'TEST_COLLECTION_1',
+            relationships: [{ relationshipType: 'relatedUrl' }],
+            title: 'Test Title 1'
+          }
+        }, {})
+
+        expect(RelatedCollection).toHaveBeenNthCalledWith(2, {
+          className: 'collection-details-body__related-collection-link',
+          onMetricsRelatedCollection: expect.any(Function),
+          relatedCollection: {
+            doi: '2.TEST.DOI',
+            id: 'TEST_COLLECTION_2',
+            relationships: [{ relationshipType: 'relatedUrl' }],
+            title: 'Test Title 2'
+          }
+        }, {})
+
+        expect(RelatedCollection).toHaveBeenNthCalledWith(3, {
+          className: 'collection-details-body__related-collection-link',
+          onMetricsRelatedCollection: expect.any(Function),
+          relatedCollection: {
+            doi: '3.TEST.DOI',
+            id: 'TEST_COLLECTION_3',
+            relationships: [{ relationshipType: 'relatedUrl' }],
+            title: 'Test Title 3'
+          }
+        }, {})
       })
     })
   })
