@@ -37,7 +37,9 @@ export const initialState = {
   },
   region: {
     exact: false
-  }
+  },
+  searchSource: 'direct', // 'landing' | 'search' | 'direct' - determines NLP vs CMR usage
+  nlpSearchCompleted: false
 }
 
 export const initialGranuleState = {
@@ -71,6 +73,11 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
           pageNum: 1,
           ...query.collection,
           spatial: newSpatial
+        }
+
+        // Handle searchSource if provided
+        if (query.searchSource) {
+          state.query.searchSource = query.searchSource
         }
 
         // Clear the collectionConceptId in order to ensure granules are requested in `getGranules`
@@ -249,6 +256,18 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       })
 
       get().granules.getGranules()
+    },
+
+    setNlpSearchCompleted: (completed) => {
+      set((state) => {
+        state.query.nlpSearchCompleted = completed
+      })
+    },
+
+    clearNlpSearchCompleted: () => {
+      set((state) => {
+        state.query.nlpSearchCompleted = false
+      })
     }
   }
 })

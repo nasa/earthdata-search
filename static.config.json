@@ -28,7 +28,7 @@
       "edsc.*",
       "opensearch.granule.osdd"
     ],
-    "nlpSearch": false,
+    "nlpSearch": "true",
     "defaultMaxOrderSize": 1000000,
     "defaultGranulesPerOrder": 2000,
     "defaultSpatialDecimalSize": 5,

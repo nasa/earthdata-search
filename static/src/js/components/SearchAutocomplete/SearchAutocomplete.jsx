@@ -16,7 +16,6 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Spinner from '../Spinner/Spinner'
 
 import AutocompleteRequest from '../../util/request/autocompleteRequest'
-import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 import { mapAutocompleteToFacets } from '../../util/mapAutocompleteToFacets'
 
@@ -103,78 +102,6 @@ const SearchAutocomplete = ({
     setIsLoading(false)
   }, [])
 
-  /**
-   * Log NLP search response for comparison (search page)
-   */
-  const logNlpSearchResponse = useCallback(async (query) => {
-    const timestamp = new Date().toISOString()
-
-    console.log(`🔍 [${timestamp}] Search Page: Making NLP request via backend for query:`, query)
-
-    try {
-      const startTime = performance.now()
-
-      // Use our backend NLP request class
-      const nlpRequest = new NlpSearchRequest('', 'sit')
-      console.log(`🔍 [${timestamp}] NLP Request URL: ${nlpRequest.baseUrl}/${nlpRequest.searchPath}`)
-      console.log(`🔍 [${timestamp}] NLP Request config:`, {
-        baseUrl: nlpRequest.baseUrl,
-        searchPath: nlpRequest.searchPath,
-        lambda: nlpRequest.lambda,
-        authenticated: nlpRequest.authenticated,
-        optionallyAuthenticated: nlpRequest.optionallyAuthenticated
-      })
-
-      const response = await nlpRequest.search({ q: query })
-
-      const endTime = performance.now()
-      const duration = Math.round(endTime - startTime)
-
-      console.log(`🔍 [${new Date().toISOString()}] Search Page: NLP Response (${duration}ms):`, response)
-
-      // Parse the response to get the actual data
-      const data = response.data || response
-
-      // Log key parts of the response for easy viewing
-      if (data.queryInfo) {
-        console.log('🔍 Query Info:', data.queryInfo)
-      }
-
-      if (data.metadata?.feed?.entry) {
-        console.log(
-          `🔍 Found ${data.metadata.feed.entry.length} collections:`,
-          data.metadata.feed.entry.map((entry) => entry.title)
-        )
-      }
-
-      // Store in sessionStorage for reference
-      const logEntry = {
-        timestamp,
-        query,
-        response: data,
-        duration,
-        source: 'search-page'
-      }
-
-      const existingLogs = JSON.parse(sessionStorage.getItem('nlpSearchLogs') || '[]')
-      existingLogs.push(logEntry)
-      sessionStorage.setItem('nlpSearchLogs', JSON.stringify(existingLogs.slice(-10))) // Keep last 10
-    } catch (error) {
-      console.error(`🔍 [${new Date().toISOString()}] Search Page: NLP request failed:`, error)
-
-      // Still store the failed attempt
-      const logEntry = {
-        timestamp,
-        query,
-        error: error.message,
-        source: 'search-page'
-      }
-
-      const existingLogs = JSON.parse(sessionStorage.getItem('nlpSearchLogs') || '[]')
-      existingLogs.push(logEntry)
-      sessionStorage.setItem('nlpSearchLogs', JSON.stringify(existingLogs.slice(-10)))
-    }
-  }, [])
 
   const clearAutocompleteSuggestions = useCallback(() => {
     setIsLoaded(false)
@@ -262,23 +189,18 @@ const SearchAutocomplete = ({
 
       setCollectionId(null)
       changeQuery({
+        searchSource: 'search', // Use regular CMR search for search page interactions
         collection: {
           keyword: keywordSearch
         }
       })
-
-      // Make NLP request and log response
-      if (keywordSearch && keywordSearch.trim()) {
-        logNlpSearchResponse(keywordSearch.trim())
-      }
     }
   }, [
     cancelAutocomplete,
     changeFocusedCollection,
     changeQuery,
     initialKeyword,
-    keywordSearch,
-    logNlpSearchResponse
+    keywordSearch
   ])
 
   /**

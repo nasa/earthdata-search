@@ -50,8 +50,7 @@ import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 
 // @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
-// @ts-expect-error: Types do not exist for this file
-import NlpSearchRequest from '../../util/request/nlpSearchRequest'
+import useEdscStore from '../../zustand/useEdscStore'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
@@ -157,6 +156,11 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
   const history = useHistory()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
+  
+  // Get access to changeQuery for setting search source
+  const { changeQuery } = useEdscStore((state) => ({
+    changeQuery: state.query.changeQuery
+  }))
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -194,96 +198,6 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
     setKeyword(e.target.value)
   }
 
-  // Note: NLP search is used for logging/comparison only, not for actual search flow
-
-  // Add helper function to window for viewing stored NLP responses
-  React.useEffect(() => {
-    (window as any).viewNlpLogs = () => {
-      const logs = JSON.parse(sessionStorage.getItem('nlpSearchLogs') || '[]')
-      console.log('📊 Stored NLP Search Logs:', logs)
-
-      return logs
-    }
-
-    (window as any).clearNlpLogs = () => {
-      sessionStorage.removeItem('nlpSearchLogs')
-      console.log('🗑️ Cleared NLP search logs')
-    }
-  }, [])
-
-  const searchParams = {
-    q: keyword
-  }
-
-  const logNlpSearchResponse = async (query: string) => {
-    const timestamp = new Date().toISOString()
-
-    console.log(`🔍 [${timestamp}] Landing Page: Making NLP request via backend for query:`, query)
-
-    try {
-      const startTime = performance.now()
-
-      // Use our backend NLP request class
-      const nlpRequest = new NlpSearchRequest('', 'sit')
-      console.log(`🔍 [${timestamp}] NLP Request URL: ${nlpRequest.baseUrl}/${nlpRequest.searchPath}`)
-      console.log(`🔍 [${timestamp}] NLP Request config:`, {
-        baseUrl: nlpRequest.baseUrl,
-        searchPath: nlpRequest.searchPath,
-        lambda: nlpRequest.lambda,
-        authenticated: nlpRequest.authenticated,
-        optionallyAuthenticated: nlpRequest.optionallyAuthenticated
-      })
-      
-      const response = await nlpRequest.search({ q: query })
-
-      const endTime = performance.now()
-      const duration = Math.round(endTime - startTime)
-
-      console.log(`🔍 [${new Date().toISOString()}] Landing Page: NLP Response (${duration}ms):`, response)
-
-      // Parse the response to get the actual data
-      const data = response.data || response
-
-      // Log key parts of the response for easy viewing
-      if (data.queryInfo) {
-        console.log('🔍 Query Info:', data.queryInfo)
-      }
-
-      if (data.metadata?.feed?.entry) {
-        console.log(
-          `🔍 Found ${data.metadata.feed.entry.length} collections:`,
-          data.metadata.feed.entry.map((entry) => entry.title)
-        )
-      }
-
-      // Store in sessionStorage for reference
-      const logEntry = {
-        timestamp,
-        query,
-        response: data,
-        duration,
-        source: 'landing-page'
-      }
-
-      const existingLogs = JSON.parse(sessionStorage.getItem('nlpSearchLogs') || '[]')
-      existingLogs.push(logEntry)
-      sessionStorage.setItem('nlpSearchLogs', JSON.stringify(existingLogs.slice(-10))) // Keep last 10
-    } catch (error) {
-      console.error(`🔍 [${new Date().toISOString()}] Landing Page: NLP request failed:`, error)
-
-      // Still store the failed attempt
-      const logEntry = {
-        timestamp,
-        query,
-        error: error.message,
-        source: 'landing-page'
-      }
-
-      const existingLogs = JSON.parse(sessionStorage.getItem('nlpSearchLogs') || '[]')
-      existingLogs.push(logEntry)
-      sessionStorage.setItem('nlpSearchLogs', JSON.stringify(existingLogs.slice(-10)))
-    }
-  }
 
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
@@ -308,19 +222,25 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
               <form
                 className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
                 onSubmit={
-                  (e) => {
+                  async (e) => {
                     e.preventDefault()
-                    console.log('🔍 Form submitted with keyword:', keyword)
+                    console.log('🔍 Form submitted with keyword from landing page:', keyword)
 
-                    // Make NLP request and log response
                     if (keyword.trim()) {
-                      logNlpSearchResponse(keyword.trim())
+                      // Set search source to 'landing' and keyword, which will trigger NLP search
+                      console.log('🔍 Setting searchSource to "landing" for NLP search')
+                      await changeQuery({
+                        searchSource: 'landing',
+                        collection: {
+                          keyword: keyword.trim()
+                        }
+                      })
+                      
+                      // Navigate to search page 
+                      console.log('🔍 Navigating to search page')
+                      onChangePath(`/search?q=${keyword}`)
+                      history.push(`/search?q=${keyword}`)
                     }
-
-                    // Then navigate using regular search path
-                    console.log('🔍 Using regular search path')
-                    onChangePath(`/search?q=${keyword}`)
-                    history.push(`/search?q=${keyword}`)
                   }
                 }
               >
