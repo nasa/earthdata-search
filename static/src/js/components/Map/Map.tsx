@@ -405,7 +405,8 @@ const Map: React.FC<MapProps> = ({
       controls: [
         new LegendControl({
           colorMap,
-          granules
+          granules,
+          granuleImageryLayerGroup
         })
       ],
       interactions: defaultInteractions().extend([
@@ -933,11 +934,15 @@ const Map: React.FC<MapProps> = ({
     }
 
     // Add new legend control only if on focused collection page and colorMap exists
+    console.log('🚀 ~ file: Map.tsx:938 ~ colorMap:', colorMap)
+    console.log('🚀 ~ file: Map.tsx:946 ~ granuleImageryLayerGroup:', granuleImageryLayerGroup)
     if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
+      debugger
       controls.push(
         new LegendControl({
           colorMap,
-          granules
+          granules,
+          granuleImageryLayerGroup
         })
       )
     }
@@ -994,7 +999,8 @@ const Map: React.FC<MapProps> = ({
       controls.push(
         new LegendControl({
           colorMap,
-          granules
+          granules,
+          granuleImageryLayerGroup
         })
       )
     }

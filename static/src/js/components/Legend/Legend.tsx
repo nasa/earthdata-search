@@ -6,11 +6,10 @@ import React, {
 } from 'react'
 import hexToRgba from 'hex-to-rgba'
 import classNames from 'classnames'
-import { ArrowChevronRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import LayerGroup from 'ol/layer/Group'
 import TileLayer from 'ol/layer/Tile'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 import Button from '../Button/Button'
-
 import './Legend.scss'
 
 // TODO this is the colormap
@@ -214,9 +213,9 @@ export const Legend: React.FC<LegendProps> = ({
         const groupLayers = granuleImageryLayerGroup.getLayers()
         groupLayers.forEach((layer) => {
           if (layer instanceof TileLayer) {
-            const layerClassName = layer.getClassName()
-            // Check if this layer belongs to the toggled product
-            if (layerClassName && layerClassName.includes(productName)) {
+            // Check if this layer belongs to the toggled product using the stored product property
+            const layerProduct = layer.get('product')
+            if (layerProduct === productName) {
               layer.setVisible(newVisibleLayers.includes(productName))
             }
           }
@@ -289,38 +288,24 @@ export const Legend: React.FC<LegendProps> = ({
       {
         layers && layers.length > 0 && (
           <div className="legend__layers">
-            <h4>Available Layers:</h4>
             {
               layers.map((layer: { product: string }) => (
                 <div key={layer.product} className="legend__layer-item">
-                  <label>
-                    <input
-                      type="checkbox"
-                      checked={visibleLayers.includes(layer.product)}
-                      onChange={() => toggleLayerVisibility(layer.product)}
-                    />
-                    {layer.product}
-                  </label>
+                  <Button
+                    type="button"
+                    className="legend__layer-toggle"
+                    aria-label={`${visibleLayers.includes(layer.product) ? 'Hide' : 'Show'} ${layer.product}`}
+                    onClick={() => toggleLayerVisibility(layer.product)}
+                  >
+                    {visibleLayers.includes(layer.product) ? <FaEye /> : <FaEyeSlash />}
+                    <span className="legend__layer-name">{layer.product}</span>
+                  </Button>
                 </div>
               ))
             }
           </div>
         )
       }
-      <div>
-        <Button
-          variant="naked"
-          icon={ArrowChevronRight}
-          label="Layer picker"
-          onClick={
-            () => {
-              alert('swap layer')
-            }
-          }
-        >
-          Layer picker
-        </Button>
-      </div>
     </div>
   )
 }

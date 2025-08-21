@@ -510,6 +510,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
         console.log('🚀 ~ file: MapContainer.tsx:495 ~ timeStart:', timeStart)
 
         // Create GIBS data for each available GIBS layer
+        console.log('🚀 ~ file: MapContainer.tsx:527 ~ HAS THIS MANY LAYERS:', gibsDataArray)
         gibsDataArray.forEach((gibsDataItem) => {
           // If the GIBS layer is "subdaily", use the full timeStart (date and time).
           // Otherwise, use only the date part of timeStart.
@@ -524,6 +525,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
             url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
           })
         })
+
+        console.log('🚀 ~ file: MapContainer.tsx:527 ~ gibsDataArray:', gibsDataArray)
       }
 
       granulesToDraw.push({

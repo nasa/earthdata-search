@@ -311,6 +311,10 @@ const drawGranuleBackgroundsAndImagery = ({
         // Set the opacity of the layer provided by the gibsData
         imageryLayer.setOpacity(gibsDataItem.opacity)
 
+        // Store the product information in the layer properties for layer visibility toggling
+        imageryLayer.set('product', gibsDataItem.product)
+        imageryLayer.set('granuleId', granuleId)
+
         // Add the event listeners to the layer
         const prerenderKey = imageryLayer.on(
           RenderEventType.PRERENDER as LayerRenderEventTypes,

@@ -86,4 +86,16 @@
     font-weight: 500;
     transition: opacity 0.2s ease-in-out;
   }
+
+  // &__layers {
+  //   padding: 0.5rem 0.325rem;
+  // }
+
+  &__layer-item {
+    color: utils.$color__carbon-black;
+  }
+
+  &__layer-item {
+    color: utils.$color__carbon-black;
+  }
 }
