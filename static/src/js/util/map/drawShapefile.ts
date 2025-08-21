@@ -5,7 +5,7 @@ import Polygon, { circular } from 'ol/geom/Polygon'
 import { Point, SimpleGeometry } from 'ol/geom'
 import VectorSource from 'ol/source/Vector'
 
-import { booleanClockwise, simplify } from '@turf/turf'
+import { simplifyPolygonCoordinates } from '../spatial/simplifyPolygonCoordinates'
 
 import {
   mbrStyle,
@@ -45,52 +45,35 @@ const simplifyShape = ({
   /** If the shapefile was just added */
   shapefileAdded: boolean
 }): SimpleGeometry => {
-  let simplifiedGeometry = geometry.clone() as SimpleGeometry
+  // Convert OpenLayers geometry to GeoJSON to extract coordinates
+  const turfGeometry = new GeoJSON().writeGeometryObject(geometry)
 
-  const coordinates = geometry.getFlatCoordinates()
-  let numPoints = coordinates.length / 2
+  if (!turfGeometry.coordinates || !turfGeometry.coordinates[0]) {
+    return geometry.clone() as SimpleGeometry
+  }
+
+  const originalCoordinates = turfGeometry.coordinates[0]
 
   // If the shapefile was added and the shape has too many points, show a modal
-  if (shapefileAdded && numPoints > MAX_POLYGON_SIZE) {
+  if (shapefileAdded && originalCoordinates.length > MAX_POLYGON_SIZE) {
     onToggleTooManyPointsModal(true)
   }
 
-  let tolerance = 0.001
-  let previousNumPoints = numPoints
+  // Use shared simplification logic
+  const { coordinates, wasSimplified } = simplifyPolygonCoordinates(originalCoordinates)
 
-  while (numPoints > MAX_POLYGON_SIZE) {
-    // Take OpenLayers geometry and create a turf.js geometry to simplify
-    const turfGeometry = new GeoJSON().writeGeometryObject(geometry)
-
-    // Simplify the geometry, increasing the tolerance each time
-    const simplified = simplify(turfGeometry, {
-      tolerance: tolerance += 0.002,
-      highQuality: true
-    }) as {
-      coordinates: number[][][]
-    }
-
-    // Ensure the simplified geometry is counter-clockwise
-    if (booleanClockwise(simplified.coordinates[0])) {
-      simplified.coordinates[0] = simplified.coordinates[0].reverse()
-    }
-
-    // Convert the simplified geometry back to an OpenLayers geometry
-    simplifiedGeometry = new GeoJSON().readGeometry(simplified) as SimpleGeometry
-
-    // Get the number of points in the simplified geometry
-    const newCoordinates = simplifiedGeometry.getFlatCoordinates()
-    numPoints = newCoordinates.length / 2
-
-    if (numPoints === previousNumPoints) {
-      // If the number of points hasn't changed, break out of the loop
-      break
-    }
-
-    previousNumPoints = numPoints
+  // If no simplification was needed or possible, return original geometry
+  if (!wasSimplified) {
+    return geometry.clone() as SimpleGeometry
   }
 
-  return simplifiedGeometry
+  // Create new GeoJSON with simplified coordinates and convert back to OpenLayers
+  const simplifiedGeoJson = {
+    ...turfGeometry,
+    coordinates: [coordinates]
+  }
+
+  return new GeoJSON().readGeometry(simplifiedGeoJson) as SimpleGeometry
 }
 
 /**

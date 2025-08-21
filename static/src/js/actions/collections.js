@@ -4,6 +4,8 @@ import CollectionRequest from '../util/request/collectionRequest'
 import NlpSearchRequest from '../util/request/nlpSearchRequest'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { handleError } from './errors'
+import { convertGeoJsonToPolygonString } from '../util/spatial/convertGeoJsonToPolygonString'
+import { convertNlpTemporalData } from '../util/temporal/convertNlpTemporalData'
 
 import {
   ADD_MORE_COLLECTION_RESULTS,
@@ -117,52 +119,57 @@ export const getCollections = () => (dispatch, getState) => {
   // Check if this search originated from the landing page (should use NLP)
   const { searchSource } = useEdscStore.getState().query
   const useNlpSearch = searchSource === 'landing'
-  
+
   let requestObject
   let searchParams
-  
+
   if (useNlpSearch) {
     // Use NLP search for semantic search (landing page initiated searches only)
-    console.log('🔍 Using NLP search for collections (source: landing page)')
     requestObject = new NlpSearchRequest(authToken, earthdataEnvironment)
     // For NLP search, we only need the keyword query
     searchParams = { q: keyword }
   } else {
     // Use regular CMR search for all other scenarios
-    console.log(`🔍 Using regular CMR search for collections (source: ${searchSource})`)
     requestObject = new CollectionRequest(authToken, earthdataEnvironment)
     searchParams = buildCollectionSearchParams(collectionParams)
   }
-  
+
   cancelToken = requestObject.getCancelToken()
 
   const response = requestObject.search(searchParams)
     .then((responseObject) => {
       const { data, headers } = responseObject
-      
-      console.log('🔍 Raw response object:', responseObject)
 
       let entry = []
       let facets = []
       let hits = 0
+      let nlpSpatialData = null
+      let nlpTemporalData = null
 
       if (useNlpSearch) {
-        // Handle NLP response format
-        console.log('🔍 Processing NLP response format')
-        
         // NLP response structure: data.metadata.feed.entry
         if (data && data.metadata && data.metadata.feed && data.metadata.feed.entry) {
           entry = data.metadata.feed.entry
-          hits = entry.length // NLP doesn't return total hits, use current page count
-          facets = [] // NLP doesn't return facets
-          console.log(`🔍 NLP found ${entry.length} collections`)
-        } else {
-          console.warn('🔍 Unexpected NLP response structure:', data)
+          hits = entry.length
+          facets = []
+
+          // Extract spatial data from NLP queryInfo if available
+          if (data.queryInfo && data.queryInfo.spatial) {
+            const conversionResult = convertGeoJsonToPolygonString(data.queryInfo.spatial)
+            if (conversionResult && conversionResult.polygonString) {
+              nlpSpatialData = {
+                polygon: [conversionResult.polygonString],
+                wasSimplified: conversionResult.wasSimplified
+              }
+            }
+          }
+
+          // Extract temporal data from NLP queryInfo if available
+          if (data.queryInfo && data.queryInfo.temporal) {
+            nlpTemporalData = convertNlpTemporalData(data.queryInfo.temporal)
+          }
         }
       } else {
-        // Handle regular CMR response format
-        console.log('🔍 Processing regular CMR response format')
-        
         const cmrHits = parseInt(headers['cmr-hits'], 10)
         const { feed = {} } = data
         const {
@@ -185,11 +192,14 @@ export const getCollections = () => (dispatch, getState) => {
 
       // Reset searchSource after successful NLP search to ensure subsequent searches use CMR
       if (useNlpSearch) {
-        console.log('🔍 Resetting searchSource to "direct" after successful NLP search')
         // Directly update the searchSource in the store without triggering another getCollections call
-        useEdscStore.setState((state) => {
-          state.query.searchSource = 'direct'
-        })
+        useEdscStore.setState((storeState) => ({
+          ...storeState,
+          query: {
+            ...storeState.query,
+            searchSource: 'direct'
+          }
+        }))
       }
 
       dispatch(finishCollectionsTimer())
@@ -211,6 +221,40 @@ export const getCollections = () => (dispatch, getState) => {
       }))
 
       dispatch(updateFacets(payload))
+
+      // If NLP search returned spatial data, update the spatial query state
+      if (useNlpSearch && nlpSpatialData) {
+        useEdscStore.setState((storeState) => ({
+          ...storeState,
+          query: {
+            ...storeState.query,
+            collection: {
+              ...storeState.query.collection,
+              spatial: {
+                ...storeState.query.collection.spatial,
+                polygon: nlpSpatialData.polygon
+              }
+            }
+          }
+        }))
+      }
+
+      // If NLP search returned temporal data, update the temporal query state
+      if (useNlpSearch && nlpTemporalData) {
+        useEdscStore.setState((storeState) => ({
+          ...storeState,
+          query: {
+            ...storeState.query,
+            collection: {
+              ...storeState.query.collection,
+              temporal: {
+                ...storeState.query.collection.temporal,
+                ...nlpTemporalData
+              }
+            }
+          }
+        }))
+      }
     })
     .catch((error) => {
       if (isCancel(error)) return
