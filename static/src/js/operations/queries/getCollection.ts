@@ -12,6 +12,7 @@ const GET_COLLECTION = `
       cloudHosted
       conceptId
       coordinateSystem
+      consortiums
       dataCenter
       dataCenters
       directDistributionInformation

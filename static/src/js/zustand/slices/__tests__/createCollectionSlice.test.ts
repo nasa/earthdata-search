@@ -236,6 +236,7 @@ describe('createCollectionSlice', () => {
                 data: {
                   collection: {
                     conceptId: 'C10000000000-EDSC',
+                    consortiums: ['CEOS'],
                     shortName: 'id_1',
                     versionId: 'VersionID',
                     hasGranules: false,
@@ -284,6 +285,7 @@ describe('createCollectionSlice', () => {
                 boxes: undefined,
                 cloudHosted: undefined,
                 coordinateSystem: undefined,
+                consortiums: ['CEOS'],
                 dataCenter: undefined,
                 dataCenters: undefined,
                 directDistributionInformation: {},

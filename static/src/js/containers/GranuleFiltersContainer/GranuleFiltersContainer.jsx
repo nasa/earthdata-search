@@ -11,7 +11,7 @@ import GranuleFiltersForm from '../../components/GranuleFilters/GranuleFiltersFo
 import { metricsGranuleFilter } from '../../middleware/metrics/actions'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionId } from '../../zustand/selectors/collection'
+import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 
 export const mapDispatchToProps = (dispatch) => ({
   onMetricsGranuleFilter:
@@ -100,6 +100,21 @@ const EnhancedGranuleFiltersContainer = withFormik({
   handleSubmit: handleFormSubmit
 })(GranuleFiltersContainer)
 
+// `withFormik` uses props passed in to it in order to populate data in `handleFormSubmit`.
+// `handleFormSubmit` needs access to collectionMetadata from Zustand, which is not available
+// in props after removing it from `mapStateToProps`. This wrapper component uses the `useEdscStore`
+// hook to fetch the collection metadata, then pass it into the `EnhancedGranuleFiltersContainer`.
+const GranuleFiltersContainerWrapper = (props) => {
+  const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
+
+  return (
+    <EnhancedGranuleFiltersContainer
+      {...props}
+      collectionMetadata={collectionMetadata}
+    />
+  )
+}
+
 GranuleFiltersContainer.propTypes = {
   errors: PropTypes.shape({}).isRequired,
   granuleFiltersNeedsReset: PropTypes.bool.isRequired,
@@ -115,4 +130,4 @@ GranuleFiltersContainer.propTypes = {
   values: PropTypes.shape({}).isRequired
 }
 
-export default connect(null, mapDispatchToProps)(EnhancedGranuleFiltersContainer)
+export default connect(null, mapDispatchToProps)(GranuleFiltersContainerWrapper)

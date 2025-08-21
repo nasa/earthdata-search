@@ -66,17 +66,15 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
           ...spatialValue
         }
 
-        return {
-          query: {
-            ...state.query,
-            collection: {
-              ...state.query.collection,
-              pageNum: 1,
-              ...query.collection,
-              spatial: newSpatial
-            }
-          }
+        state.query.collection = {
+          ...state.query.collection,
+          pageNum: 1,
+          ...query.collection,
+          spatial: newSpatial
         }
+
+        // Clear the collectionConceptId in order to ensure granules are requested in `getGranules`
+        state.granules.granules.collectionConceptId = null
       })
 
       get().collections.getCollections()
@@ -85,24 +83,9 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       // and request it's granules started with page one
       const focusedCollectionId = getCollectionId(get())
       if (focusedCollectionId) {
-        set((state) => ({
-          query: {
-            ...state.query,
-            collection: {
-              ...state.query.collection,
-              byId: {
-                ...state.query.collection.byId,
-                [focusedCollectionId]: {
-                  ...state.query.collection.byId[focusedCollectionId],
-                  granules: {
-                    ...state.query.collection.byId[focusedCollectionId].granules,
-                    pageNum: 1
-                  }
-                }
-              }
-            }
-          }
-        }))
+        set((state) => {
+          state.query.collection.byId[focusedCollectionId].granules.pageNum = 1
+        })
 
         get().granules.getGranules()
       }
@@ -114,7 +97,6 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       }
 
       // Clear any subscription disabledFields
-
       const {
         dispatch: reduxDispatch
       } = configureStore()
@@ -123,6 +105,9 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
     changeGranuleQuery: async ({ collectionId, query }) => {
       set((state) => {
+        // Clear the collectionConceptId in order to ensure granules are requested in `getGranules`
+        state.granules.granules.collectionConceptId = null
+
         if (!get().query.collection.byId[collectionId]) {
           state.query.collection.byId[collectionId] = {
             granules: initialGranuleState
@@ -160,15 +145,12 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
     },
 
     changeRegionQuery: (query) => {
-      set((state) => ({
-        query: {
-          ...state.query,
-          region: {
-            ...state.query.region,
-            ...query
-          }
+      set((state) => {
+        state.query.region = {
+          ...state.query.region,
+          ...query
         }
-      }))
+      })
 
       const {
         dispatch: reduxDispatch

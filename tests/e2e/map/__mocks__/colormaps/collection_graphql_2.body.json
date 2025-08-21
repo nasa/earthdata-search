@@ -327,6 +327,8 @@
                     "endsAtPresentFlag": true
                 }
             ],
+            "timeStart": "2002-05-31T21:00:00.000Z",
+            "timeEnd": null,
             "tilingIdentificationSystems": null,
             "title": "AIRS/Aqua L1B Infrared (IR) geolocated and calibrated radiances V005 (AIRIBRAD) at GES DISC at GES DISC",
             "versionId": "005",

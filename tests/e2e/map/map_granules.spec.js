@@ -315,6 +315,9 @@ test.describe('Map: Granule interactions', () => {
 
       // Wait for the map to load
       await initialMapPromise
+
+      // Wait for the timeline to be visible
+      await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
     })
 
     test('displays the color map on the page @screenshot', async ({ page }) => {
@@ -355,6 +358,9 @@ test.describe('Map: Granule interactions', () => {
       test.describe('when visiting another collection with a colormap', () => {
         test('displays a new colormap @screenshot', async ({ page }) => {
           await page.getByTestId('collection-result-item_C1243477369-GES_DISC').click()
+
+          // Wait for the timeline to be visible
+          await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
             clip: colormapScreenshotClip
