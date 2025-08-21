@@ -51,6 +51,14 @@ import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 // @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
 import useEdscStore from '../../zustand/useEdscStore'
+// @ts-expect-error: Types do not exist for this file
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+import SpatialSelectionDropdownContainer
+// @ts-expect-error: Types do not exist for this file
+  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
+import TemporalSelectionDropdownContainer
+// @ts-expect-error: Types do not exist for this file
+  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
@@ -156,11 +164,15 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
   const history = useHistory()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
-  
+
   // Get access to changeQuery for setting search source
   const { changeQuery } = useEdscStore((state) => ({
     changeQuery: state.query.changeQuery
   }))
+
+  // Check if NLP search is enabled to conditionally show spatial/temporal buttons
+  const { nlpSearch } = getApplicationConfig()
+  const showSearchButtons = !(nlpSearch === true || nlpSearch === 'true')
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -198,7 +210,6 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
     setKeyword(e.target.value)
   }
 
-
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
       <div className="route-wrapper__content">
@@ -224,20 +235,17 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                 onSubmit={
                   async (e) => {
                     e.preventDefault()
-                    console.log('🔍 Form submitted with keyword from landing page:', keyword)
 
                     if (keyword.trim()) {
                       // Set search source to 'landing' and keyword, which will trigger NLP search
-                      console.log('🔍 Setting searchSource to "landing" for NLP search')
                       await changeQuery({
                         searchSource: 'landing',
                         collection: {
                           keyword: keyword.trim()
                         }
                       })
-                      
-                      // Navigate to search page 
-                      console.log('🔍 Navigating to search page')
+
+                      // Navigate to search page
                       onChangePath(`/search?q=${keyword}`)
                       history.push(`/search?q=${keyword}`)
                     }
@@ -255,6 +263,14 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                     ref={inputRef}
                   />
                 </div>
+                {
+                  showSearchButtons && (
+                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                      <TemporalSelectionDropdownContainer searchParams={{}} />
+                      <SpatialSelectionDropdownContainer searchParams={{}} />
+                    </div>
+                  )
+                }
                 <Button type="submit" className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light" bootstrapVariant="primary" bootstrapSize="lg">Search</Button>
               </form>
             </div>

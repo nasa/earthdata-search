@@ -102,7 +102,6 @@ const SearchAutocomplete = ({
     setIsLoading(false)
   }, [])
 
-
   const clearAutocompleteSuggestions = useCallback(() => {
     setIsLoaded(false)
     setSuggestions([])
