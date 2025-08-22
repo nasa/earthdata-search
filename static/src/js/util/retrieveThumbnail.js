@@ -6,7 +6,6 @@ import unavailableImg from '../../assets/images/image-unavailable.svg'
  * @returns {Promise<string>} The thumbnail image as as a `base64` encoded string
  */
 export const retrieveThumbnail = async (thumbnailSrc) => {
-  // Handle null, undefined, or empty thumbnailSrc
   if (!thumbnailSrc || thumbnailSrc === 'null' || thumbnailSrc === '') {
     return unavailableImg
   }

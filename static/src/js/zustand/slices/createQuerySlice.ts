@@ -38,7 +38,7 @@ export const initialState = {
   region: {
     exact: false
   },
-  searchSource: 'direct' // 'landing' | 'search' | 'direct' - determines NLP vs CMR usage
+  searchSource: 'search'
 }
 
 export const initialGranuleState = {
@@ -76,7 +76,6 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
               ...query.collection,
               spatial: newSpatial
             },
-            // Handle searchSource if provided
             ...(query.searchSource && { searchSource: query.searchSource })
           }
         }

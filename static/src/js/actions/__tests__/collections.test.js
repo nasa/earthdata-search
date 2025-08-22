@@ -403,8 +403,8 @@ describe('getCollections', () => {
       expect(zustandState.shapefile.selectedFeatures).toEqual(['0'])
       expect(zustandState.shapefile.shapefileName).toBe('NLP Spatial Area')
 
-      // Verify searchSource was reset to 'direct'
-      expect(zustandState.query.searchSource).toBe('direct')
+      // Verify searchSource was reset to 'search'
+      expect(zustandState.query.searchSource).toBe('search')
     })
 
     test('processes NLP search with spatial and temporal data', async () => {
@@ -522,7 +522,7 @@ describe('getCollections', () => {
       expect(zustandState.shapefile.selectedFeatures).toEqual([])
 
       // Verify searchSource was still reset
-      expect(zustandState.query.searchSource).toBe('direct')
+      expect(zustandState.query.searchSource).toBe('search')
     })
   })
 })

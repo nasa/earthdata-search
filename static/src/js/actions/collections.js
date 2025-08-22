@@ -115,7 +115,7 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(onFacetsLoading())
   dispatch(startCollectionsTimer())
 
-  // Check if this search originated from the landing page (should use NLP)
+  // Check if this search originated from the landing page
   const { searchSource } = useEdscStore.getState().query
   const useNlpSearch = searchSource === 'landing'
 
@@ -123,12 +123,9 @@ export const getCollections = () => (dispatch, getState) => {
   let searchParams
 
   if (useNlpSearch) {
-    // Use NLP search for semantic search (landing page initiated searches only)
     requestObject = new NlpSearchRequest(authToken, earthdataEnvironment)
-    // For NLP search, we only need the keyword query
     searchParams = { q: keyword }
   } else {
-    // Use regular CMR search for all other scenarios
     requestObject = new CollectionRequest(authToken, earthdataEnvironment)
     searchParams = buildCollectionSearchParams(collectionParams)
   }
@@ -145,15 +142,14 @@ export const getCollections = () => (dispatch, getState) => {
       let nlpTemporalData = null
 
       if (useNlpSearch) {
-        // NLP response structure: data.metadata.feed.entry
         if (data && data.metadata && data.metadata.feed && data.metadata.feed.entry) {
           entry = data.metadata.feed.entry
           hits = entry.length
           facets = []
 
-          // If NLP search returned spatial data, add it to the shapefile system
+          // If NLP search returned spatial data, add it to the shapefile system and
+          // convert NLP GeoJSON to FeatureCollection format that shapefile system expects
           if (data.queryInfo && data.queryInfo.spatial) {
-            // Convert NLP GeoJSON to FeatureCollection format that shapefile system expects
             const nlpShapefileData = {
               type: 'FeatureCollection',
               name: 'NLP Extracted Spatial Area',
@@ -178,7 +174,7 @@ export const getCollections = () => (dispatch, getState) => {
                 isLoading: false,
                 isErrored: false,
                 shapefileName: 'NLP Spatial Area',
-                selectedFeatures: ['0'] // Select the first (and only) feature
+                selectedFeatures: ['0']
               }
             }))
           }
@@ -211,12 +207,11 @@ export const getCollections = () => (dispatch, getState) => {
 
       // Reset searchSource after successful NLP search to ensure subsequent searches use CMR
       if (useNlpSearch) {
-        // Directly update the searchSource in the store without triggering another getCollections call
         useEdscStore.setState((storeState) => ({
           ...storeState,
           query: {
             ...storeState.query,
-            searchSource: 'direct'
+            searchSource: 'search'
           }
         }))
       }
@@ -240,7 +235,6 @@ export const getCollections = () => (dispatch, getState) => {
       }))
 
       dispatch(updateFacets(payload))
-
 
       // If NLP search returned temporal data, update the temporal query state
       if (useNlpSearch && nlpTemporalData) {
