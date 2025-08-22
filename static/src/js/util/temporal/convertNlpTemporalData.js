@@ -17,7 +17,6 @@ export const convertNlpTemporalData = (nlpTemporal) => {
 
   const { startDate, endDate } = nlpTemporal
 
-  // At least one date must be provided
   if (!startDate && !endDate) {
     return null
   }
@@ -36,7 +35,7 @@ export const convertNlpTemporalData = (nlpTemporal) => {
       }
     }
 
-    // Convert end date from "YYYY-MM-DD" to "YYYY-MM-DDTHH:mm:ss.sssZ" (end of day)
+    // Convert end date from "YYYY-MM-DD" to "YYYY-MM-DDTHH:mm:ss.sssZ"
     if (endDate) {
       const endDateObj = new Date(`${endDate}T23:59:59.999Z`)
       if (!Number.isNaN(endDateObj.getTime())) {
@@ -46,7 +45,6 @@ export const convertNlpTemporalData = (nlpTemporal) => {
       }
     }
 
-    // Convert to application temporal format
     const applicationTemporal = {
       startDate: convertedStartDate,
       endDate: convertedEndDate,

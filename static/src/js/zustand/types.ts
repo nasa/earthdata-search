@@ -830,7 +830,7 @@ type ChangeQueryParams = {
   /** The region query */
   region?: Partial<RegionQuery>
   /** The search source context */
-  searchSource?: 'direct' | 'landing' | 'search'
+  searchSource?: 'landing' | 'search'
 }
 
 export type QuerySlice = {

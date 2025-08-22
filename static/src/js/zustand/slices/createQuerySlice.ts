@@ -38,7 +38,7 @@ export const initialState = {
   region: {
     exact: false
   },
-  searchSource: 'direct', // 'landing' | 'search' | 'direct' - determines NLP vs CMR usage
+  searchSource: 'search', // 'landing' | 'search' | 'direct' - determines NLP vs CMR usage
   nlpSearchCompleted: false
 }
 

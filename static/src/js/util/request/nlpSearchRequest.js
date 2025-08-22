@@ -8,7 +8,7 @@ export default class NlpSearchRequest extends CmrRequest {
   constructor(authToken, earthdataEnvironment) {
     super(getEnvironmentConfig().apiHost, earthdataEnvironment)
 
-    this.lambda = true // Route through our backend lambda
+    this.lambda = true
 
     if (authToken && authToken !== '') {
       this.authenticated = true

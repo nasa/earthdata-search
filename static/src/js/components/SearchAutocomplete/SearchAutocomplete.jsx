@@ -188,7 +188,7 @@ const SearchAutocomplete = ({
 
       setCollectionId(null)
       changeQuery({
-        searchSource: 'search', // Use regular CMR search for search page interactions
+        searchSource: 'search',
         collection: {
           keyword: keywordSearch
         }

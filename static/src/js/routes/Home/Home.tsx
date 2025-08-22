@@ -25,6 +25,12 @@ import Button from '../../components/Button/Button'
 // @ts-expect-error: Types do not exist for this file
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
+import SpatialSelectionDropdownContainer
+// @ts-expect-error: Types do not exist for this file
+  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
+import TemporalSelectionDropdownContainer
+// @ts-expect-error: Types do not exist for this file
+  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import TopicCard from './HomeTopicCard'
@@ -53,12 +59,6 @@ import actions from '../../actions'
 import useEdscStore from '../../zustand/useEdscStore'
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
-import SpatialSelectionDropdownContainer
-// @ts-expect-error: Types do not exist for this file
-  from '../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
-import TemporalSelectionDropdownContainer
-// @ts-expect-error: Types do not exist for this file
-  from '../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
@@ -165,14 +165,13 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
 
-  // Get access to changeQuery for setting search source
   const { changeQuery } = useEdscStore((state) => ({
     changeQuery: state.query.changeQuery
   }))
 
   // Check if NLP search is enabled to conditionally show spatial/temporal buttons
   const { nlpSearch } = getApplicationConfig()
-  const showSearchButtons = !(nlpSearch === true || nlpSearch === 'true')
+  const showSearchButtons = nlpSearch !== 'true'
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -237,7 +236,6 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                     e.preventDefault()
 
                     if (keyword.trim()) {
-                      // Set search source to 'landing' and keyword, which will trigger NLP search
                       await changeQuery({
                         searchSource: 'landing',
                         collection: {
@@ -245,7 +243,6 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                         }
                       })
 
-                      // Navigate to search page
                       onChangePath(`/search?q=${keyword}`)
                       history.push(`/search?q=${keyword}`)
                     }
