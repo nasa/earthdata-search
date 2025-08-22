@@ -56,10 +56,23 @@ jest.mock('../../../actions', () => ({
   ...jest.requireActual('../../../actions'),
   changePath: jest.fn(() => (dispatch: Dispatch) => {
     dispatch({ type: 'CHANGE_PATH' })
+  }),
+  getCollections: jest.fn(() => (dispatch: Dispatch) => {
+    dispatch({ type: 'GET_COLLECTIONS' })
+  }),
+  removeSubscriptionDisabledFields: jest.fn(() => (dispatch: Dispatch) => {
+    dispatch({ type: 'REMOVE_SUBSCRIPTION_DISABLED_FIELDS' })
   })
 }))
 
 jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
+
+jest.mock('../../../../../../sharedUtils/config', () => ({
+  ...jest.requireActual('../../../../../../sharedUtils/config'),
+  getApplicationConfig: jest.fn(() => ({
+    nlpSearch: 'false'
+  }))
+}))
 
 const setup = setupTest({
   Component: Home,
