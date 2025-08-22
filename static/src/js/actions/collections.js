@@ -4,7 +4,6 @@ import CollectionRequest from '../util/request/collectionRequest'
 import NlpSearchRequest from '../util/request/nlpSearchRequest'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { handleError } from './errors'
-import { convertGeoJsonToPolygonString } from '../util/spatial/convertGeoJsonToPolygonString'
 import { convertNlpTemporalData } from '../util/temporal/convertNlpTemporalData'
 
 import {
@@ -143,7 +142,6 @@ export const getCollections = () => (dispatch, getState) => {
       let entry = []
       let facets = []
       let hits = 0
-      let nlpSpatialData = null
       let nlpTemporalData = null
 
       if (useNlpSearch) {
@@ -153,15 +151,36 @@ export const getCollections = () => (dispatch, getState) => {
           hits = entry.length
           facets = []
 
-          // Extract spatial data from NLP queryInfo if available
+          // If NLP search returned spatial data, add it to the shapefile system
           if (data.queryInfo && data.queryInfo.spatial) {
-            const conversionResult = convertGeoJsonToPolygonString(data.queryInfo.spatial)
-            if (conversionResult && conversionResult.polygonString) {
-              nlpSpatialData = {
-                polygon: [conversionResult.polygonString],
-                wasSimplified: conversionResult.wasSimplified
-              }
+            // Convert NLP GeoJSON to FeatureCollection format that shapefile system expects
+            const nlpShapefileData = {
+              type: 'FeatureCollection',
+              name: 'NLP Extracted Spatial Area',
+              features: [{
+                type: 'Feature',
+                properties: {
+                  source: 'nlp',
+                  query: keyword,
+                  edscId: '0'
+                },
+                geometry: data.queryInfo.spatial
+              }]
             }
+
+            // Update the shapefile store with NLP spatial data
+            useEdscStore.setState((storeState) => ({
+              ...storeState,
+              shapefile: {
+                ...storeState.shapefile,
+                file: nlpShapefileData,
+                isLoaded: true,
+                isLoading: false,
+                isErrored: false,
+                shapefileName: 'NLP Spatial Area',
+                selectedFeatures: ['0'] // Select the first (and only) feature
+              }
+            }))
           }
 
           // Extract temporal data from NLP queryInfo if available
@@ -222,22 +241,6 @@ export const getCollections = () => (dispatch, getState) => {
 
       dispatch(updateFacets(payload))
 
-      // If NLP search returned spatial data, update the spatial query state
-      if (useNlpSearch && nlpSpatialData) {
-        useEdscStore.setState((storeState) => ({
-          ...storeState,
-          query: {
-            ...storeState.query,
-            collection: {
-              ...storeState.query.collection,
-              spatial: {
-                ...storeState.query.collection.spatial,
-                polygon: nlpSpatialData.polygon
-              }
-            }
-          }
-        }))
-      }
 
       // If NLP search returned temporal data, update the temporal query state
       if (useNlpSearch && nlpTemporalData) {
