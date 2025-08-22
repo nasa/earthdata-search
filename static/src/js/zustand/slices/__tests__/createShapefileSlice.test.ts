@@ -395,4 +395,53 @@ describe('createShapefileSlice', () => {
       })
     })
   })
+
+  describe('NLP shapefile integration', () => {
+    test('accepts NLP shapefile data with edscId in feature properties', () => {
+      const nlpShapefileData: ShapefileFile = {
+        name: 'NLP Extracted Spatial Area',
+        type: 'FeatureCollection' as const,
+        features: [
+          {
+            type: 'Feature',
+            geometry: {
+              type: 'Polygon',
+              coordinates: [[
+                [-120, 40],
+                [-120, 50],
+                [-110, 50],
+                [-110, 40],
+                [-120, 40]
+              ]]
+            },
+            properties: {
+              source: 'nlp',
+              query: 'wildfire california',
+              edscId: '0'
+            }
+          }
+        ]
+      }
+
+      const zustandState = useEdscStore.getState()
+      const { shapefile } = zustandState
+      const { updateShapefile } = shapefile
+
+      updateShapefile({
+        file: nlpShapefileData,
+        shapefileName: 'NLP Spatial Area',
+        selectedFeatures: ['0']
+      })
+
+      const updatedState = useEdscStore.getState()
+      const { shapefile: updatedShapefile } = updatedState
+
+      expect(updatedShapefile.file).toEqual(nlpShapefileData)
+      expect(updatedShapefile.isLoaded).toBe(true)
+      expect(updatedShapefile.selectedFeatures).toEqual(['0'])
+      expect(updatedShapefile.shapefileName).toBe('NLP Spatial Area')
+      expect(updatedShapefile.file?.features[0].properties?.edscId).toBe('0')
+      expect(updatedShapefile.file?.features[0].properties?.source).toBe('nlp')
+    })
+  })
 })

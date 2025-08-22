@@ -238,7 +238,6 @@ export class Functions extends Construct {
       api: {
         apiGatewayDeployment,
         apiGatewayRestApi,
-        // Remove authorizer for logging purposes - no auth required
         methods: ['POST'],
         path: 'nlpSearch'
       },
