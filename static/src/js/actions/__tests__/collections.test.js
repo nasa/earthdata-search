@@ -317,4 +317,212 @@ describe('getCollections', () => {
       expect(consoleMock).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('NLP search integration', () => {
+    test('processes NLP search with spatial data and updates shapefile store', async () => {
+      nock(/localhost/)
+        .post(/nlpSearch/)
+        .reply(200, {
+          metadata: {
+            feed: {
+              entry: [{ mockCollectionData: 'nlp result' }]
+            }
+          },
+          queryInfo: {
+            spatial: {
+              type: 'Polygon',
+              coordinates: [[
+                [-120, 40],
+                [-120, 50],
+                [-110, 50],
+                [-110, 40],
+                [-120, 40]
+              ]]
+            }
+          }
+        })
+
+      const store = mockStore({
+        authToken: '',
+        searchResults: {
+          collections: {},
+          facets: {},
+          granules: {},
+          viewAllFacets: {}
+        }
+      })
+
+      // Set searchSource to 'landing' to trigger NLP search
+      const zustandInitialState = useEdscStore.getInitialState()
+      useEdscStore.setState({
+        ...zustandInitialState,
+        query: {
+          collection: {
+            keyword: 'wildfire data'
+          },
+          searchSource: 'landing'
+        },
+        shapefile: {
+          file: null,
+          isLoaded: false,
+          isLoading: false,
+          isErrored: false,
+          shapefileName: '',
+          selectedFeatures: []
+        }
+      })
+
+      await store.dispatch(getCollections())
+
+      // Verify shapefile store was updated with NLP spatial data
+      const zustandState = useEdscStore.getState()
+      expect(zustandState.shapefile.file).toEqual({
+        type: 'FeatureCollection',
+        name: 'NLP Extracted Spatial Area',
+        features: [{
+          type: 'Feature',
+          properties: {
+            source: 'nlp',
+            query: 'wildfire data',
+            edscId: '0'
+          },
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[
+              [-120, 40],
+              [-120, 50],
+              [-110, 50],
+              [-110, 40],
+              [-120, 40]
+            ]]
+          }
+        }]
+      })
+
+      expect(zustandState.shapefile.isLoaded).toBe(true)
+      expect(zustandState.shapefile.selectedFeatures).toEqual(['0'])
+      expect(zustandState.shapefile.shapefileName).toBe('NLP Spatial Area')
+
+      // Verify searchSource was reset to 'direct'
+      expect(zustandState.query.searchSource).toBe('direct')
+    })
+
+    test('processes NLP search with spatial and temporal data', async () => {
+      nock(/localhost/)
+        .post(/nlpSearch/)
+        .reply(200, {
+          metadata: {
+            feed: {
+              entry: [{ mockCollectionData: 'nlp result with temporal' }]
+            }
+          },
+          queryInfo: {
+            spatial: {
+              type: 'Point',
+              coordinates: [-120, 40]
+            },
+            temporal: {
+              startDate: '2020-01-01',
+              endDate: '2020-12-31'
+            }
+          }
+        })
+
+      const store = mockStore({
+        authToken: '',
+        searchResults: {
+          collections: {},
+          facets: {},
+          granules: {},
+          viewAllFacets: {}
+        }
+      })
+
+      const zustandInitialState = useEdscStore.getInitialState()
+      useEdscStore.setState({
+        ...zustandInitialState,
+        query: {
+          collection: {
+            keyword: 'temperature data 2020',
+            temporal: {}
+          },
+          searchSource: 'landing'
+        },
+        shapefile: {
+          file: null,
+          isLoaded: false,
+          isLoading: false,
+          isErrored: false,
+          shapefileName: '',
+          selectedFeatures: []
+        }
+      })
+
+      await store.dispatch(getCollections())
+
+      const zustandState = useEdscStore.getState()
+
+      // Verify both shapefile AND temporal data were updated
+      expect(zustandState.shapefile.file).not.toBeNull()
+      expect(zustandState.shapefile.file.features[0].properties.edscId).toBe('0')
+
+      expect(zustandState.query.collection.temporal.startDate).toBe('2020-01-01T00:00:00.000Z')
+      expect(zustandState.query.collection.temporal.endDate).toBe('2020-12-31T23:59:59.999Z')
+      expect(zustandState.query.collection.temporal.isRecurring).toBe(false)
+    })
+
+    test('processes NLP search without spatial data (baseline)', async () => {
+      nock(/localhost/)
+        .post(/nlpSearch/)
+        .reply(200, {
+          metadata: {
+            feed: {
+              entry: [{ mockCollectionData: 'nlp result no spatial' }]
+            }
+          },
+          queryInfo: {}
+        })
+
+      const store = mockStore({
+        authToken: '',
+        searchResults: {
+          collections: {},
+          facets: {},
+          granules: {},
+          viewAllFacets: {}
+        }
+      })
+
+      const zustandInitialState = useEdscStore.getInitialState()
+      useEdscStore.setState({
+        ...zustandInitialState,
+        query: {
+          collection: {
+            keyword: 'basic search'
+          },
+          searchSource: 'landing'
+        },
+        shapefile: {
+          file: null,
+          isLoaded: false,
+          isLoading: false,
+          isErrored: false,
+          shapefileName: '',
+          selectedFeatures: []
+        }
+      })
+
+      await store.dispatch(getCollections())
+
+      const zustandState = useEdscStore.getState()
+
+      // Verify shapefile store was NOT modified
+      expect(zustandState.shapefile.file).toBeNull()
+      expect(zustandState.shapefile.isLoaded).toBe(false)
+      expect(zustandState.shapefile.selectedFeatures).toEqual([])
+
+      // Verify searchSource was still reset
+      expect(zustandState.query.searchSource).toBe('direct')
+    })
+  })
 })
