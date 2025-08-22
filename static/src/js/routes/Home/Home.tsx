@@ -209,6 +209,10 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
     setKeyword(e.target.value)
   }
 
+  const searchParams = {
+    q: keyword
+  }
+
   return (
     <main className="route-wrapper route-wrapper--content-page route-wrapper--home">
       <div className="route-wrapper__content">
@@ -236,12 +240,16 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                     e.preventDefault()
 
                     if (keyword.trim()) {
-                      await changeQuery({
-                        searchSource: 'landing',
-                        collection: {
-                          keyword: keyword.trim()
-                        }
-                      })
+                      const isNlpEnabled = nlpSearch === 'true'
+
+                      if (isNlpEnabled) {
+                        await changeQuery({
+                          searchSource: 'landing',
+                          collection: {
+                            keyword: keyword.trim()
+                          }
+                        })
+                      }
 
                       onChangePath(`/search?q=${keyword}`)
                       history.push(`/search?q=${keyword}`)
@@ -263,8 +271,8 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                 {
                   showSearchButtons && (
                     <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                      <TemporalSelectionDropdownContainer searchParams={{}} />
-                      <SpatialSelectionDropdownContainer searchParams={{}} />
+                      <TemporalSelectionDropdownContainer searchParams={searchParams} />
+                      <SpatialSelectionDropdownContainer searchParams={searchParams} />
                     </div>
                   )
                 }
