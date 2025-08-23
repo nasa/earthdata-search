@@ -13,7 +13,7 @@ const xmlParser = new XMLParser({
 
 /**
  * Converts a single color component to hex
- * @param {String} component An OpenSearch string template representing the URL to retreive granules with.
+ * @param {String} component An OpenSearch string template representing the URL to retrieve granules with.
  * @return {String} A formatted URL with the users request parameters inserted
  */
 const componentToHex = (component) => {
@@ -25,7 +25,7 @@ const componentToHex = (component) => {
 /**
  * Retrieve a single legend entry (which contains a tooltip) from a provided list of legends
  * @param {Array} legends A list of legends from a ColorMap
- * @param {String} ref The ref to lookup in the list of legendshaha.
+ * @param {String} ref The ref to lookup in the list of legends.
  * @return {Object} The requested legend containing a tooltip
  */
 const getLegendTooltip = (legends, ref) => legends.find((legend) => legend.id === ref)

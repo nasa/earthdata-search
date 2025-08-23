@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom'
 import Control from 'ol/control/Control'
 import LayerGroup from 'ol/layer/Group'
 
-import Legend, { Colormap } from '../Legend/Legend'
+import Legend from '../Legend/Legend'
+import { Colormap } from '../Legend/ColorMap'
 
 import './LegendControl.scss'
 
@@ -35,7 +36,6 @@ class LegendControl extends Control {
       target: options.target
     })
 
-    if (Object.keys(options.colorMap).length === 0) return
     console.log('🚀 ~ file: LegendControl.tsx:37 ~ LegendControl ~ options.granules:', options.granules)
     // @ts-expect-error We are still on React 17
     ReactDOM.render(

@@ -311,8 +311,10 @@ const drawGranuleBackgroundsAndImagery = ({
         // Set the opacity of the layer provided by the gibsData
         imageryLayer.setOpacity(gibsDataItem.opacity)
 
+        console.log('🚀 ~ file: drawGranuleBackgroundsAndImagery.ts:316 ~ gibsDataItem:', gibsDataItem)
         // Store the product information in the layer properties for layer visibility toggling
         imageryLayer.set('product', gibsDataItem.product)
+        imageryLayer.set('title', gibsDataItem.title)
         imageryLayer.set('granuleId', granuleId)
 
         // Add the event listeners to the layer

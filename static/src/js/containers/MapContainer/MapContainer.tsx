@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { difference } from 'lodash-es'
 import { Geometry } from 'ol/geom'
-
+import testColorMapMetadata from './colorMapMetadata.json'
 // @ts-expect-error The file does not have types
 import actions from '../../actions'
 // @ts-expect-error The file does not have types
@@ -37,7 +37,7 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 import projectionCodes from '../../constants/projectionCodes'
 
 import Map from '../../components/Map/Map'
-import { Colormap } from '../../components/Legend/Legend'
+import { Colormap } from '../../components/Legend/ColorMap'
 
 import {
   backgroundGranulePointStyle,
@@ -392,17 +392,41 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
     const gibsTagsForProjection = getGibsTagsForProjection()
 
+    // TODO we'll need to do this more carefully
     if (gibsTagsForProjection.length > 0) {
-      // Use the first available GIBS tag for colormap data
-      const { product } = gibsTagsForProjection[0]
-      colorMapData = colormapsMetadata[product] || {}
+      console.log('🚀 ~ file: MapContainer.tsx:397 ~ gibsTagsForProjection:', gibsTagsForProjection)
+      console.log('🚀 ~ file: MapContainer.tsx:401 ~ colormapsMetadata:', colormapsMetadata)
+
+      // Get colormap data for all available GIBS tags
+      gibsTagsForProjection.forEach((gibsTag) => {
+        const { product } = gibsTag
+        console.log('🚀 ~ file: MapContainer.tsx:404 ~ product:', product)
+        let productColormap = colormapsMetadata[product]
+        // TODO test HACK REMOVE ME PLEASE
+        if (product === 'IMERG_Precipitation_Rate_30min') {
+          // Convert the test colormap to the expected format
+          productColormap = {
+            colorMapData: testColorMapMetadata
+          }
+        }
+
+        if (productColormap && productColormap.colorMapData) {
+          // Store colormap data by product name
+          colorMapData[product] = productColormap.colorMapData
+        }
+      })
     }
+
+    console.log('🚀 ~ file: MapContainer.tsx:424 ~ colorMapData:', colorMapData)
 
     return colorMapData
   }, [gibsTags, colormapsMetadata, projection, getGibsTagsForProjection])
 
-  const { colorMapData: colorMap = {} } = colorMapState
-  console.log('🚀 ~ file: MapContainer.tsx:391 ~ colorMap:', colorMap)
+  // Extract the actual colormap data from the state
+  console.log('🚀 ~ file: MapContainer.tsx:428 ~ colorMapState:', colorMapState)
+
+  // For now, select the first available colormap to display
+  // TODO: Update the UI to handle multiple colormaps properly
 
   // Get GIBS data to pass to the map within each granule
   const gibsTagsForProjection = getGibsTagsForProjection()
@@ -416,7 +440,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       format,
       geographic_resolution: geographicResolution,
       layerPeriod,
-      product
+      product,
+      title
     } = gibsTag
 
     let resolution
@@ -432,6 +457,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       format,
       layerPeriod,
       product,
+      title,
       resolution
     })
   })
@@ -571,7 +597,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     <Map
       base={base}
       center={center}
-      colorMap={colorMap as Colormap}
+      colorMap={colorMapState}
       focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}
       granules={granulesToDraw}

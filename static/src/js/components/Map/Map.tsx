@@ -96,7 +96,7 @@ import {
   ShapefileFile,
   SpatialSearch
 } from '../../types/sharedTypes'
-import { Colormap } from '../Legend/Legend'
+import { Colormap } from '../Legend/ColorMap'
 import { MapView, ShapefileSlice } from '../../zustand/types'
 
 let previousGranulesKey: string
@@ -936,8 +936,9 @@ const Map: React.FC<MapProps> = ({
     // Add new legend control only if on focused collection page and colorMap exists
     console.log('🚀 ~ file: Map.tsx:938 ~ colorMap:', colorMap)
     console.log('🚀 ~ file: Map.tsx:946 ~ granuleImageryLayerGroup:', granuleImageryLayerGroup)
-    if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
-      debugger
+    console.log('🚀 ~ file: Map.tsx:940 ~ granuleImageryLayerGroup.getLayers().getLength() > 0:', granuleImageryLayerGroup.getLayers())
+    // TODO we need to look at this conditioanl more carefully
+    if (isFocusedCollectionPage && granuleImageryLayerGroup.getLayers().getLength() > 0) {
       controls.push(
         new LegendControl({
           colorMap,

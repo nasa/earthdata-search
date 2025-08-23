@@ -93,9 +93,94 @@
 
   &__layer-item {
     color: utils.$color__carbon-black;
+    margin-bottom: 0.5rem;
   }
 
-  &__layer-item {
-    color: utils.$color__carbon-black;
+  &__layer-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  &__layer-toggle {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__layer-settings {
+    flex-shrink: 0;
+    padding: 0.25rem;
+    min-width: auto;
+  }
+
+  &__opacity-slider {
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    background-color: utils.$color__carbon--10;
+    border-radius: 0.25rem;
+    border: 1px solid utils.$color__carbon--30;
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: utils.$color__carbon--60;
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  &__opacity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+
+    span {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: utils.$color__carbon--60;
+    }
+  }
+
+  &__opacity-close {
+    background: none;
+    border: none;
+    color: utils.$color__carbon--60;
+    font-size: 1.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: utils.$color__carbon--20;
+      color: utils.$color__carbon--80;
+    }
+
+    &:focus {
+      outline: 2px solid utils.$color__carbon--40;
+      outline-offset: 2px;
+    }
+  }
+
+  &__opacity-range {
+    width: 100%;
+    height: 0.25rem;
+    border-radius: 0.125rem;
+    background: utils.$color__carbon--30;
+  }
+
+  // TODO I want the name if its too long for the container to get ellipsed
+  &__layer-name {
+    text-overflow: ellipsis;
   }
 }
