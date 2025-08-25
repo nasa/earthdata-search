@@ -56,6 +56,9 @@ import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 
 // @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
+import useEdscStore from '../../zustand/useEdscStore'
+// @ts-expect-error: Types do not exist for this file
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
@@ -162,6 +165,14 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
 
+  const { changeQuery } = useEdscStore((state) => ({
+    changeQuery: state.query.changeQuery
+  }))
+
+  // Check if NLP search is enabled to conditionally show spatial/temporal buttons
+  const { nlpSearch } = getApplicationConfig()
+  const showSearchButtons = nlpSearch !== 'true'
+
   useEffect(() => {
     // Focus the search input when the component mounts
     if (inputRef.current) {
@@ -225,10 +236,24 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
               <form
                 className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
                 onSubmit={
-                  (e) => {
+                  async (e) => {
                     e.preventDefault()
-                    onChangePath(`/search?q=${keyword}`)
-                    history.push(`/search?q=${keyword}`)
+
+                    if (keyword.trim()) {
+                      const isNlpEnabled = nlpSearch === 'true'
+
+                      if (isNlpEnabled) {
+                        await changeQuery({
+                          searchSource: 'landing',
+                          collection: {
+                            keyword: keyword.trim()
+                          }
+                        })
+                      }
+
+                      onChangePath(`/search?q=${keyword}`)
+                      history.push(`/search?q=${keyword}`)
+                    }
                   }
                 }
               >
@@ -243,10 +268,14 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                     ref={inputRef}
                   />
                 </div>
-                <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                  <TemporalSelectionDropdownContainer searchParams={searchParams} />
-                  <SpatialSelectionDropdownContainer searchParams={searchParams} />
-                </div>
+                {
+                  showSearchButtons && (
+                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                      <TemporalSelectionDropdownContainer searchParams={searchParams} />
+                      <SpatialSelectionDropdownContainer searchParams={searchParams} />
+                    </div>
+                  )
+                }
                 <Button type="submit" className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light" bootstrapVariant="primary" bootstrapSize="lg">Search</Button>
               </form>
             </div>

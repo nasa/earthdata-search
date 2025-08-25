@@ -1,8 +1,10 @@
 import { isCancel } from 'axios'
 
 import CollectionRequest from '../util/request/collectionRequest'
+import NlpSearchRequest from '../util/request/nlpSearchRequest'
 import { buildCollectionSearchParams, prepareCollectionParams } from '../util/collections'
 import { handleError } from './errors'
+import { convertNlpTemporalData } from '../util/temporal/convertNlpTemporalData'
 
 import {
   ADD_MORE_COLLECTION_RESULTS,
@@ -113,27 +115,105 @@ export const getCollections = () => (dispatch, getState) => {
   dispatch(onFacetsLoading())
   dispatch(startCollectionsTimer())
 
-  const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
+  // Check if this search originated from the landing page
+  const { searchSource } = useEdscStore.getState().query
+  const useNlpSearch = searchSource === 'landing'
+
+  let requestObject
+  let searchParams
+
+  if (useNlpSearch) {
+    requestObject = new NlpSearchRequest(authToken, earthdataEnvironment)
+    searchParams = { q: keyword }
+  } else {
+    requestObject = new CollectionRequest(authToken, earthdataEnvironment)
+    searchParams = buildCollectionSearchParams(collectionParams)
+  }
+
   cancelToken = requestObject.getCancelToken()
 
-  const response = requestObject.search(buildCollectionSearchParams(collectionParams))
+  const response = requestObject.search(searchParams)
     .then((responseObject) => {
       const { data, headers } = responseObject
 
-      const cmrHits = parseInt(headers['cmr-hits'], 10)
+      let entry = []
+      let facets = []
+      let hits = 0
+      let nlpTemporalData = null
 
-      const { feed = {} } = data
-      const {
-        entry = [],
-        facets = {}
-      } = feed
-      const { children = [] } = facets
+      if (useNlpSearch) {
+        if (data && data.metadata && data.metadata.feed && data.metadata.feed.entry) {
+          entry = data.metadata.feed.entry
+          hits = entry.length
+          facets = []
+
+          // If NLP search returned spatial data, add it to the shapefile system and
+          // convert NLP GeoJSON to FeatureCollection format that shapefile system expects
+          if (data.queryInfo && data.queryInfo.spatial) {
+            const nlpShapefileData = {
+              type: 'FeatureCollection',
+              name: 'NLP Extracted Spatial Area',
+              features: [{
+                type: 'Feature',
+                properties: {
+                  source: 'nlp',
+                  query: keyword,
+                  edscId: '0'
+                },
+                geometry: data.queryInfo.spatial
+              }]
+            }
+
+            // Update the shapefile store with NLP spatial data
+            useEdscStore.setState((storeState) => ({
+              ...storeState,
+              shapefile: {
+                ...storeState.shapefile,
+                file: nlpShapefileData,
+                isLoaded: true,
+                isLoading: false,
+                isErrored: false,
+                shapefileName: 'NLP Spatial Area',
+                selectedFeatures: ['0']
+              }
+            }))
+          }
+
+          // Extract temporal data from NLP queryInfo if available
+          if (data.queryInfo && data.queryInfo.temporal) {
+            nlpTemporalData = convertNlpTemporalData(data.queryInfo.temporal)
+          }
+        }
+      } else {
+        const cmrHits = parseInt(headers['cmr-hits'], 10)
+        const { feed = {} } = data
+        const {
+          entry: cmrEntry = [],
+          facets: cmrFacets = {}
+        } = feed
+        const { children = [] } = cmrFacets
+
+        entry = cmrEntry
+        facets = children
+        hits = cmrHits
+      }
 
       const payload = {
-        facets: children,
-        hits: cmrHits,
+        facets,
+        hits,
         keyword,
         results: entry
+      }
+
+      // Reset searchSource after successful NLP search to ensure subsequent searches use CMR
+      if (useNlpSearch) {
+        useEdscStore.setState((storeState) => ({
+          ...storeState,
+          query: {
+            ...storeState.query,
+            searchSource: 'search'
+          }
+        }))
       }
 
       dispatch(finishCollectionsTimer())
@@ -155,6 +235,23 @@ export const getCollections = () => (dispatch, getState) => {
       }))
 
       dispatch(updateFacets(payload))
+
+      // If NLP search returned temporal data, update the temporal query state
+      if (useNlpSearch && nlpTemporalData) {
+        useEdscStore.setState((storeState) => ({
+          ...storeState,
+          query: {
+            ...storeState.query,
+            collection: {
+              ...storeState.query.collection,
+              temporal: {
+                ...storeState.query.collection.temporal,
+                ...nlpTemporalData
+              }
+            }
+          }
+        }))
+      }
     })
     .catch((error) => {
       if (isCancel(error)) return

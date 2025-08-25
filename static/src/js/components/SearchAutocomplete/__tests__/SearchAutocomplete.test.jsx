@@ -78,7 +78,9 @@ describe('SearchAutocomplete', () => {
         await user.type(input, 'test')
       })
 
-      expect(screen.getByText('Loading suggestions...')).toBeInTheDocument()
+      await waitFor(() => {
+        expect(screen.getByText('Loading suggestions...')).toBeInTheDocument()
+      })
 
       // Clean up the nock that has a delay
       nock.cleanAll()
@@ -151,6 +153,7 @@ describe('SearchAutocomplete', () => {
 
       expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
       expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
+        searchSource: 'search',
         collection: {
           keyword: 'MODIS'
         }

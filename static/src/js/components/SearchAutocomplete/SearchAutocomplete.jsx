@@ -188,13 +188,17 @@ const SearchAutocomplete = ({
 
       changeFocusedCollection('')
       changeQuery({
+        searchSource: 'search',
         collection: {
           keyword: keywordSearch
         }
       })
     }
   }, [
+    cancelAutocomplete,
+    changeFocusedCollection,
     changeQuery,
+    initialKeyword,
     keywordSearch
   ])
 

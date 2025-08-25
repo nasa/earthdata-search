@@ -770,6 +770,8 @@ type ChangeQueryParams = {
   collection?: Partial<CollectionQuery>
   /** The region query */
   region?: Partial<RegionQuery>
+  /** The search source context */
+  searchSource?: 'landing' | 'search'
 }
 
 export type QuerySlice = {

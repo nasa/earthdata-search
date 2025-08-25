@@ -37,7 +37,8 @@ export const initialState = {
   },
   region: {
     exact: false
-  }
+  },
+  searchSource: 'search'
 }
 
 export const initialGranuleState = {
@@ -74,7 +75,8 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
               pageNum: 1,
               ...query.collection,
               spatial: newSpatial
-            }
+            },
+            ...(query.searchSource && { searchSource: query.searchSource })
           }
         }
       })
