@@ -42,24 +42,24 @@ const nlpSearch = async (event) => {
       earthdataEnvironment
     })
 
-    const finalResponse = {
+    const response = {
       ...results,
       headers: {
         ...results.headers,
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Access-Control-Request-Headers,Access-Control-Request-Methods,Authorization,Client-Id,Content-Type,Earthdata-ENV,Origin,User-Agent,X-Amz-Date,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id,X-Api-Key,X-Request-Id',
+        'Access-Control-Allow-Headers': 'Content-Type,Authorization,Client-Id,X-Request-Id',
         'Access-Control-Allow-Methods': 'OPTIONS,POST'
       }
     }
 
-    return finalResponse
+    return response
   } catch (error) {
     return {
       isBase64Encoded: false,
       headers: {
         ...defaultResponseHeaders,
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Access-Control-Request-Headers,Access-Control-Request-Methods,Authorization,Client-Id,Content-Type,Earthdata-ENV,Origin,User-Agent,X-Amz-Date,X-Amz-Security-Token,X-Amz-User-Agent,X-Amzn-Trace-Id,X-Api-Key,X-Request-Id',
+        'Access-Control-Allow-Headers': 'Content-Type,Authorization,Client-Id,X-Request-Id',
         'Access-Control-Allow-Methods': 'OPTIONS,POST'
       },
       ...parseError(error)
