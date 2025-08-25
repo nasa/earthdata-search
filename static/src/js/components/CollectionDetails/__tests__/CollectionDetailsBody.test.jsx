@@ -58,7 +58,6 @@ const setup = setupTest({
   Component: CollectionDetailsBody,
   defaultProps: {
     isActive: true,
-    // CollectionMetadata: defaultCollectionMetadata,
     location: {
       pathname: '/search'
     },

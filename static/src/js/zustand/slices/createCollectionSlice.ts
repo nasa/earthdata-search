@@ -196,6 +196,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             boxes,
             cloudHosted,
             coordinateSystem,
+            conceptId,
             consortiums,
             dataCenter,
             duplicateCollections,

@@ -24,9 +24,9 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
+import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 
 import './GranuleFiltersForm.scss'
-import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 
 /**
  * Renders GranuleFiltersForm.

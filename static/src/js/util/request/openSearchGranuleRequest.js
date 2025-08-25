@@ -1,5 +1,6 @@
 import { XMLParser } from 'fast-xml-parser'
 import { isEmpty, isString } from 'lodash-es'
+import camelcaseKeys from 'camelcase-keys'
 
 import Request from './request'
 
@@ -228,7 +229,7 @@ export default class OpenSearchGranuleRequest extends Request {
 
       return {
         feed: {
-          entry: granuleResults.filter(Boolean),
+          entry: camelcaseKeys(granuleResults.filter(Boolean), { deep: true }),
           count: totalResults
         }
       }

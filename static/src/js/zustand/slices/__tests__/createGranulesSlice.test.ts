@@ -192,8 +192,8 @@ describe('createGranulesSlice', () => {
         isLoaded: true,
         isLoading: false,
         items: [{
-          browse_flag: false,
-          formatted_temporal: [
+          browseFlag: false,
+          formattedTemporal: [
             '2020-06-09 23:59:59',
             null
           ],
@@ -201,7 +201,7 @@ describe('createGranulesSlice', () => {
           collectionConceptId: 'collectionId',
           isOpenSearch: true,
           spatial: null,
-          time_start: '2020-06-09T23:59:59Z',
+          timeStart: '2020-06-09T23:59:59Z',
           title: 'CWIC Granule',
           updated: '2020-06-09T23:59:59Z'
         }],

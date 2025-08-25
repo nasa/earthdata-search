@@ -51,7 +51,7 @@ describe('mapStateToProps', () => {
 })
 
 describe('RelatedUrlsModalContainer component', () => {
-  test('passes its props and renders a single FacetsModal component', () => {
+  test('passes its props and renders a RelatedUrlsModal component', () => {
     setup()
 
     expect(RelatedUrlsModal).toHaveBeenCalledTimes(1)

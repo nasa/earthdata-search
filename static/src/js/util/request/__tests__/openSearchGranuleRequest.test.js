@@ -67,7 +67,7 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
     const { entry } = feed
 
     const granuleKeys = Object.keys(entry[0])
-    expect(granuleKeys).toEqual(expect.arrayContaining(['browse_flag', 'thumbnail']))
+    expect(granuleKeys).toEqual(expect.arrayContaining(['browseFlag', 'thumbnail']))
   })
 
   test('formats multi-granule results correctly', () => {
@@ -129,7 +129,7 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
 
       const { feed } = transformedResponse
       const { entry } = feed
-      expect(entry[0].browse_url)
+      expect(entry[0].browseUrl)
         .toEqual('https://uops.nrsc.gov.in//imgarchive/IRS1C/LISS/1996/NOV/14/083042LG.319.jpeg')
     })
 
@@ -141,7 +141,7 @@ describe('OpenSearchGranuleRequest#transformResponse', () => {
 
       const { feed } = transformedResponse
       const { entry } = feed
-      expect(entry[0].browse_url)
+      expect(entry[0].browseUrl)
         .toEqual('https://uops.nrsc.gov.in//imgarchive/IRS1C/LISS/1996/NOV/14/083042LG.319.jpeg')
     })
   })
