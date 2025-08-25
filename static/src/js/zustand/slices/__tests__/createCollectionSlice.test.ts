@@ -58,7 +58,7 @@ describe('createCollectionSlice', () => {
     })
 
     describe('when metdata has already been retrieved from graphql', () => {
-      test('should update the collection and call getSearchGranules', async () => {
+      test('should update the collection and call getGranules', async () => {
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'C10000000000-EDSC'
           state.collection.collectionMetadata['C10000000000-EDSC'] = {
@@ -70,7 +70,10 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: ''
+          authToken: '',
+          router: {
+            location: {}
+          }
         })
 
         const { collection } = useEdscStore.getState()
@@ -103,9 +106,49 @@ describe('createCollectionSlice', () => {
       })
     })
 
+    describe('when there is no focused collection id', () => {
+      test('redirects the user to /search', async () => {
+        useEdscStore.setState((state) => {
+          state.granules.getGranules = jest.fn()
+        })
+
+        mockGetState.mockReturnValue({
+          authToken: '',
+          router: {
+            location: {
+              search: '?zoom=4'
+            }
+          }
+        })
+
+        const { collection } = useEdscStore.getState()
+        const { getCollectionMetadata } = collection
+
+        await getCollectionMetadata()
+
+        const {
+          collection: updatedCollection,
+          granules
+        } = useEdscStore.getState()
+
+        expect(updatedCollection.collectionMetadata).toEqual({})
+
+        expect(actions.changeUrl).toHaveBeenCalledTimes(1)
+        expect(actions.changeUrl).toHaveBeenCalledWith({
+          pathname: '/search',
+          search: '?zoom=4'
+        })
+
+        expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(0)
+        expect(actions.collectionRelevancyMetrics).toHaveBeenCalledTimes(0)
+        expect(granules.getGranules).toHaveBeenCalledTimes(0)
+        expect(actions.getColorMap).toHaveBeenCalledTimes(0)
+      })
+    })
+
     describe('when no metadata exists in the store for the collection from graphql', () => {
       describe('when graphql returns metadata for the requested collection', () => {
-        test('should update the collection, fetch metadata from graphql and calls getSearchGranules', async () => {
+        test('should update the collection, fetch metadata from graphql and calls getGranules', async () => {
           nock(/graph/)
             .post(/api/)
             .reply(200, {
@@ -129,7 +172,10 @@ describe('createCollectionSlice', () => {
           })
 
           mockGetState.mockReturnValue({
-            authToken: ''
+            authToken: '',
+            router: {
+              location: {}
+            }
           })
 
           const { collection } = useEdscStore.getState()
@@ -230,7 +276,7 @@ describe('createCollectionSlice', () => {
         })
 
         describe('when the requested collection is opensearch and a polygon search is active and we try and retrieve an existing gibs tag', () => {
-          test('should toggle the polygon warning, update the collection and call getSearchGranules', async () => {
+          test('should toggle the polygon warning, update the collection and call getGranules', async () => {
             nock(/graph/)
               .post(/api/)
               .reply(200, {
@@ -265,7 +311,10 @@ describe('createCollectionSlice', () => {
             })
 
             mockGetState.mockReturnValue({
-              authToken: ''
+              authToken: '',
+              router: {
+                location: {}
+              }
             })
 
             const { collection } = useEdscStore.getState()
@@ -404,7 +453,10 @@ describe('createCollectionSlice', () => {
             })
 
             mockGetState.mockReturnValue({
-              authToken: ''
+              authToken: '',
+              router: {
+                location: {}
+              }
             })
 
             const { collection } = useEdscStore.getState()
@@ -545,7 +597,10 @@ describe('createCollectionSlice', () => {
           })
 
           mockGetState.mockReturnValue({
-            authToken: ''
+            authToken: '',
+            router: {
+              location: {}
+            }
           })
 
           const { collection } = useEdscStore.getState()
@@ -742,7 +797,10 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: ''
+          authToken: '',
+          router: {
+            location: {}
+          }
         })
 
         const { collection } = useEdscStore.getState()
@@ -853,7 +911,10 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: ''
+          authToken: '',
+          router: {
+            location: {}
+          }
         })
 
         const expectedItems = [
@@ -905,10 +966,14 @@ describe('createCollectionSlice', () => {
         .reply(200)
 
       mockGetState.mockReturnValue({
-        authToken: ''
+        authToken: '',
+        router: {
+          location: {}
+        }
       })
 
       useEdscStore.setState((state) => {
+        state.collection.collectionId = 'C10000000000-EDSC'
         state.granules.getGranules = jest.fn()
       })
 

@@ -53,8 +53,8 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         router
       } = reduxState
 
-      // Send the relevency metric event
-      reduxDispatch(actions.collectionRelevancyMetrics())
+      const { location } = router
+      const { search } = location
 
       const zustandState = get()
       const collectionsQuery = getCollectionsQuery(zustandState)
@@ -63,6 +63,18 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const focusedCollectionMetadata = getFocusedCollectionMetadata(zustandState)
 
       const username = getUsername(reduxState)
+
+      if (!focusedCollectionId) {
+        reduxDispatch(actions.changeUrl({
+          pathname: '/search',
+          search
+        }))
+
+        return
+      }
+
+      // Send the relevency metric event
+      reduxDispatch(actions.collectionRelevancyMetrics())
 
       // Use the `hasAllMetadata` flag to determine if we've requested previously
       // requested the focused collections metadata from graphql
@@ -89,7 +101,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
 
       // If we already have the metadata for the focusedCollection, don't fetch it again
       if (hasAllMetadata) {
-        return null
+        return
       }
 
       // Retrieve the default CMR tags to provide to the collection request
@@ -240,16 +252,11 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
             state.collection.collectionId = null
           })
 
-          const { location } = router
-          const { search } = location
-
           reduxDispatch(actions.changeUrl({
             pathname: '/search',
             search
           }))
         }
-
-        return response
       } catch (error) {
         reduxDispatch(actions.handleError({
           error,
@@ -257,8 +264,6 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           resource: 'collection',
           requestObject: graphQlRequestObject
         }))
-
-        return null
       }
     },
 
