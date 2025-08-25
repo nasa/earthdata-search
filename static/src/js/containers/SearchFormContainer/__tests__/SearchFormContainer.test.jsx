@@ -77,7 +77,6 @@ describe('SearchFormContainer component', () => {
       advancedSearch: props.advancedSearch,
       authToken: props.authToken,
       handleError: props.handleError,
-      onChangeFocusedCollection: props.onChangeFocusedCollection,
       onClearFilters: expect.any(Function),
       onToggleAdvancedSearchModal: props.onToggleAdvancedSearchModal
     }, {})

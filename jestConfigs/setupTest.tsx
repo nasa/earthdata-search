@@ -8,7 +8,11 @@ import {
 } from 'react-router'
 import { Provider } from 'react-redux'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
-import { cloneDeep, merge } from 'lodash-es'
+import {
+  cloneDeep,
+  merge,
+  mergeWith
+} from 'lodash-es'
 
 import useEdscStore from '../static/src/js/zustand/useEdscStore'
 // @ts-expect-error: This file does not have types
@@ -125,7 +129,13 @@ const setupTest = ({
 
   // Merge the Zustand state with the override Zustand state if available
   if (overrideZustandState) {
-    zustandState = merge(zustandState, overrideZustandState)
+    // eslint-disable-next-line consistent-return
+    zustandState = mergeWith(zustandState, overrideZustandState, (objValue, srcValue) => {
+      // If the value is an array, only take the override array
+      if (Array.isArray(objValue)) {
+        return srcValue
+      }
+    })
   }
 
   // Set the Zustand state

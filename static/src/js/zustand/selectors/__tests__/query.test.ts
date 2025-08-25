@@ -49,8 +49,8 @@ describe('query selectors', () => {
   describe('getFocusedCollectionGranuleQuery', () => {
     test('returns the focused collection granule query', () => {
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -76,20 +76,17 @@ describe('query selectors', () => {
   describe('getGranuleSubscriptionQueryObj', () => {
     test('returns the granule subscription query object', () => {
       configureStore.mockReturnValue({
-        getState: () => ({
-          metadata: {
-            collections: {
-              collectionId: {
-                id: 'collectionId'
-              }
-            }
-          }
-        })
+        getState: () => ({})
       })
 
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId',
+          collectionMetadata: {
+            collectionId: {
+              id: 'collectionId'
+            }
+          }
         },
         query: {
           collection: {
@@ -110,7 +107,7 @@ describe('query selectors', () => {
         }
       }))
 
-      const granuleSubscriptionQuery = getGranuleSubscriptionQueryObj()
+      const granuleSubscriptionQuery = getGranuleSubscriptionQueryObj(useEdscStore.getState())
       expect(granuleSubscriptionQuery).toEqual({
         browseOnly: true,
         point: '0,0'
@@ -122,13 +119,6 @@ describe('query selectors', () => {
     test('returns the granule subscription query string', () => {
       configureStore.mockReturnValue({
         getState: () => ({
-          metadata: {
-            collections: {
-              collectionId: {
-                id: 'collectionId'
-              }
-            }
-          },
           subscriptions: {
             disabledFields: {
               granule: {}
@@ -138,8 +128,13 @@ describe('query selectors', () => {
       })
 
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId',
+          collectionMetadata: {
+            collectionId: {
+              id: 'collectionId'
+            }
+          }
         },
         query: {
           collection: {
@@ -160,7 +155,7 @@ describe('query selectors', () => {
         }
       }))
 
-      const granuleSubscriptionQuery = getGranuleSubscriptionQueryString()
+      const granuleSubscriptionQuery = getGranuleSubscriptionQueryString(useEdscStore.getState())
       expect(granuleSubscriptionQuery).toEqual('browse_only=true&point=0,0')
     })
   })
@@ -192,8 +187,8 @@ describe('query selectors', () => {
             ]
           }
         },
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -254,8 +249,8 @@ describe('query selectors', () => {
             ]
           }
         },
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {

@@ -25,7 +25,7 @@ const setup = setupTest({
             granules: {
               isLoading: false,
               isLoaded: true,
-              hits: 1,
+              count: 1,
               totalSize: {
                 size: '4.0',
                 unit: 'MB'
@@ -142,7 +142,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 1,
+                    count: 1,
                     totalSize: {
                       size: '4.0',
                       unit: 'MB'
@@ -154,7 +154,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 5,
+                    count: 5,
                     totalSize: {
                       size: '5.0',
                       unit: 'MB'
@@ -193,7 +193,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 1,
+                    count: 1,
                     totalSize: {
                       size: '4.0',
                       unit: 'MB'
@@ -205,7 +205,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 5,
+                    count: 5,
                     totalSize: {
                       size: '5.0',
                       unit: 'MB'
@@ -235,7 +235,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 1,
+                    count: 1,
                     totalSize: {
                       size: '4.0',
                       unit: 'MB'
@@ -247,7 +247,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 3,
+                    count: 3,
                     totalSize: {
                       size: '5.0',
                       unit: 'MB'
@@ -279,7 +279,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 1,
+                    count: 1,
                     totalSize: {
                       size: '4.0',
                       unit: 'MB'
@@ -291,7 +291,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 3,
+                    count: 3,
                     totalSize: {
                       size: '5.0',
                       unit: 'MB'
@@ -322,7 +322,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 1,
+                    count: 1,
                     totalSize: {
                       size: '4.0',
                       unit: 'MB'
@@ -334,7 +334,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 3,
+                    count: 3,
                     totalSize: {
                       size: '5.0',
                       unit: 'MB'
@@ -366,7 +366,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 1,
+                    count: 1,
                     totalSize: {
                       size: '4.0',
                       unit: 'MB'
@@ -378,7 +378,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 3,
+                    count: 3,
                     totalSize: {
                       size: '5.0',
                       unit: 'MB'
@@ -410,7 +410,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 1,
+                    count: 1,
                     totalSize: {
                       size: '4.0',
                       unit: 'MB'
@@ -422,7 +422,7 @@ describe('ProjectHeader component', () => {
                   granules: {
                     isLoading: false,
                     isLoaded: true,
-                    hits: 3,
+                    count: 3,
                     totalSize: {
                       size: '5.0',
                       unit: 'MB'

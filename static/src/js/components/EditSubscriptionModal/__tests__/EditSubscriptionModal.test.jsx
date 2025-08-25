@@ -1,134 +1,155 @@
-import React from 'react'
-import Enzyme, { mount, shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
-import Form from 'react-bootstrap/Form'
+import { act, screen } from '@testing-library/react'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import EditSubscriptionModal from '../EditSubscriptionModal'
-import EDSCModalContainer from '../../../containers/EDSCModalContainer/EDSCModalContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup() {
-  const props = {
-    isOpen: false,
+const setup = setupTest({
+  Component: EditSubscriptionModal,
+  defaultProps: {
+    isOpen: true,
     onToggleEditSubscriptionModal: jest.fn(),
     onUpdateSubscription: jest.fn(),
-    granuleSubscriptions: [],
     subscriptions: {},
     subscriptionConceptId: '',
     subscriptionType: 'collection'
+  },
+  defaultZustandState: {
+    collection: {
+      collectionId: 'collectionId',
+      collectionMetadata: {
+        collectionId: {
+          subscriptions: {
+            items: []
+          }
+        }
+      }
+    }
   }
-
-  const enzymeWrapper = shallow(<EditSubscriptionModal {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('EditSubscriptionModal component', () => {
   test('should render a Modal', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(EDSCModalContainer).length).toEqual(1)
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
   })
 
   test('should render a title', () => {
-    const { enzymeWrapper } = setup()
+    setup()
 
-    expect(enzymeWrapper.find(EDSCModalContainer).prop('title')).toEqual('Edit Subscription')
+    expect(screen.getByText('Edit Subscription')).toBeInTheDocument()
   })
 
   describe('when a collection subscription is defined', () => {
     test('sets the value of the name input', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
-        subscriptions: {
-          byId: {
-            SUB1: {
-              name: 'Original Name'
+      setup({
+        overrideProps: {
+          subscriptions: {
+            byId: {
+              SUB1: {
+                name: 'Original Name'
+              }
             }
-          }
-        },
-        subscriptionConceptId: 'SUB1'
+          },
+          subscriptionConceptId: 'SUB1'
+        }
       })
 
-      const modalBody = mount(enzymeWrapper.props().body)
-      expect(modalBody.find(Form.Control).props().value).toEqual('Original Name')
+      expect(screen.getByRole('textbox')).toHaveValue('Original Name')
     })
 
     test('defaults the checkbox to unchecked', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
-        subscriptions: {
-          byId: {
-            SUB1: {
-              name: 'Original Name'
+      setup({
+        overrideProps: {
+          subscriptions: {
+            byId: {
+              SUB1: {
+                name: 'Original Name'
+              }
             }
-          }
-        },
-        subscriptionConceptId: 'SUB1'
+          },
+          subscriptionConceptId: 'SUB1'
+        }
       })
 
-      const modalBody = mount(enzymeWrapper.props().body)
-      expect(modalBody.find(Form.Check).props().checked).toEqual(false)
+      expect(screen.getByRole('checkbox')).not.toBeChecked()
     })
   })
 
   describe('when a granule subscription is defined', () => {
     test('sets the value of the name input', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
-        granuleSubscriptions: [{
-          conceptId: 'SUB1',
-          name: 'Original Name (Granule)'
-        }],
-        subscriptionConceptId: 'SUB1',
-        subscriptionType: 'granule'
+      setup({
+        overrideProps: {
+          subscriptionConceptId: 'SUB1',
+          subscriptionType: 'granule'
+        },
+        overrideZustandState: {
+          collection: {
+            collectionMetadata: {
+              collectionId: {
+                subscriptions: {
+                  items: [{
+                    conceptId: 'SUB1',
+                    name: 'Original Name (Granule)'
+                  }]
+                }
+              }
+            }
+          }
+        }
       })
 
-      const modalBody = mount(enzymeWrapper.props().body)
-      expect(modalBody.find(Form.Control).props().value).toEqual('Original Name (Granule)')
+      expect(screen.getByRole('textbox')).toHaveValue('Original Name (Granule)')
     })
 
     test('defaults the checkbox to unchecked', () => {
-      const { enzymeWrapper } = setup()
-
-      enzymeWrapper.setProps({
-        granuleSubscriptions: [{
-          conceptId: 'SUB1',
-          name: 'Original Name (Granule)'
-        }],
-        subscriptionConceptId: 'SUB1',
-        subscriptionType: 'granule'
+      setup({
+        overrideProps: {
+          subscriptionConceptId: 'SUB1',
+          subscriptionType: 'granule'
+        },
+        overrideZustandState: {
+          collection: {
+            collectionMetadata: {
+              collectionId: {
+                subscriptions: {
+                  items: [{
+                    conceptId: 'SUB1',
+                    name: 'Original Name (Granule)'
+                  }]
+                }
+              }
+            }
+          }
+        }
       })
 
-      const modalBody = mount(enzymeWrapper.props().body)
-      expect(modalBody.find(Form.Check).props().checked).toEqual(false)
+      expect(screen.getByRole('checkbox')).not.toBeChecked()
     })
   })
 
   describe('onSubscriptionEditSubmit', () => {
     test('calls onUpdateSubscription and onToggleEditSubscriptionModal', async () => {
-      const { enzymeWrapper, props } = setup()
-      enzymeWrapper.setProps({
-        subscriptions: {
-          byId: {
-            SUB1: {
-              name: 'Original Name',
-              conceptId: 'SUB1',
-              nativeId: 'mock-guid'
+      const { props, user } = setup({
+        overrideProps: {
+          subscriptions: {
+            byId: {
+              SUB1: {
+                conceptId: 'SUB1',
+                name: 'Original Name',
+                nativeId: 'mock-guid'
+              }
             }
-          }
-        },
-        subscriptionConceptId: 'SUB1'
+          },
+          subscriptionConceptId: 'SUB1'
+        }
       })
 
-      await enzymeWrapper.instance().onSubscriptionEditSubmit()
+      const submitButton = screen.getByRole('button', { name: 'Save' })
+      await act(async () => {
+        await user.click(submitButton)
+      })
 
       expect(props.onUpdateSubscription).toHaveBeenCalledTimes(1)
       expect(props.onUpdateSubscription).toHaveBeenCalledWith({

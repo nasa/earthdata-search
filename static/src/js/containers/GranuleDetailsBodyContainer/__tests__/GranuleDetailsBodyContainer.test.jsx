@@ -10,27 +10,18 @@ jest.mock('../../../components/GranuleDetails/GranuleDetailsBody', () => jest.fn
 const setup = setupTest({
   Component: GranuleDetailsBodyContainer,
   defaultProps: {
-    authToken: '',
-    granuleMetadata: {
-      metadataUrls: {
-        atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
-      }
-    }
+    authToken: ''
   }
 })
 
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      authToken: 'mock-token',
-      metadata: {
-        granules: {}
-      }
+      authToken: 'mock-token'
     }
 
     const expectedState = {
-      authToken: 'mock-token',
-      granuleMetadata: {}
+      authToken: 'mock-token'
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -43,17 +34,9 @@ describe('GranuleResultsBodyContainer component', () => {
       setup()
 
       expect(GranuleDetailsBody).toHaveBeenCalledTimes(1)
-      expect(GranuleDetailsBody).toHaveBeenCalledWith(
-        expect.objectContaining({
-          authToken: '',
-          granuleMetadata: {
-            metadataUrls: {
-              atom: 'https://cmr.earthdata.nasa.gov/search/concepts/focusedGranule.atom'
-            }
-          }
-        }),
-        {}
-      )
+      expect(GranuleDetailsBody).toHaveBeenCalledWith({
+        authToken: ''
+      }, {})
     })
   })
 })

@@ -11,7 +11,7 @@ import collectionsGraphQlBody from './__mocks__/collections_graphql_body.json'
 
 const screenshotClip = {
   x: 1027,
-  y: 473,
+  y: 439,
   width: 180,
   height: 90
 }
@@ -50,7 +50,7 @@ test.describe('Harmony with MBR', () => {
           })
         })
 
-        await page.route('**/cmr-graphql-proxy', async (route) => {
+        await page.route(/cmr-graphql-proxy/, async (route) => {
           await route.fulfill({
             json: collectionsGraphQlBody,
             headers: authHeaders

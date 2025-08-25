@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
 import { FaMap } from 'react-icons/fa'
+import { min } from 'lodash-es'
 
 import { commafy } from '../../util/commafy'
 import { granuleListItem, granuleListTotal } from './skeleton'
@@ -12,6 +12,11 @@ import Skeleton from '../Skeleton/Skeleton'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './GranuleResultsHighlights.scss'
+import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
+import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getGranuleIds } from '../../util/getGranuleIds'
+import { getGranules } from '../../zustand/selectors/granules'
 
 const granuleListItemSkeletonStyle = {
   height: '99px'
@@ -21,14 +26,45 @@ const granuleListTotalStyle = {
   height: '18px'
 }
 
-export const GranuleResultsHighlights = ({
-  granuleCount,
-  granules,
-  isLoaded,
-  isLoading,
-  visibleGranules
-}) => {
+const GranuleResultsHighlights = () => {
   const location = useLocation()
+  const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
+  const {
+    isOpenSearch
+  } = collectionMetadata
+
+  const focusedCollectionId = useEdscStore(getCollectionId)
+  const collectionsQuery = useEdscStore(getCollectionsQuery)
+  const granules = useEdscStore(getGranules)
+
+  const { [focusedCollectionId]: collectionQueryResults = {} } = collectionsQuery
+  const { granules: collectionGranuleQuery = {} } = collectionQueryResults
+  const { excludedGranuleIds = [] } = collectionGranuleQuery
+
+  const {
+    items = [],
+    count,
+    isLoading = false,
+    isLoaded = false
+  } = granules
+
+  // Limit the number of granules shown
+  const limit = min([5, count])
+
+  const allIds = items.map((granule) => granule.id)
+  const granuleIds = getGranuleIds({
+    allIds,
+    excludedGranuleIds,
+    isOpenSearch,
+    limit
+  })
+
+  const granuleList = granuleIds.map((granuleId) => (
+    granules.items.find((granule) => granule.id === granuleId)
+  ))
+
+  const visibleGranules = granuleIds.length ? granuleIds.length : 0
+  const granuleCount = count - excludedGranuleIds.length
 
   return (
     <div className="granule-results-highlights">
@@ -76,7 +112,7 @@ export const GranuleResultsHighlights = ({
           (isLoaded && !isLoading) && (
             granuleCount > 0
               ? (
-                granules.map((granule, i) => {
+                granuleList.map((granule, i) => {
                   const {
                     id,
                     title,
@@ -140,14 +176,6 @@ export const GranuleResultsHighlights = ({
       }
     </div>
   )
-}
-
-GranuleResultsHighlights.propTypes = {
-  granuleCount: PropTypes.number.isRequired,
-  granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  isLoaded: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired,
-  visibleGranules: PropTypes.number.isRequired
 }
 
 export default GranuleResultsHighlights

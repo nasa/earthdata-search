@@ -23,7 +23,7 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
-    focusedCollection: {
+    collection: {
       viewCollectionDetails: jest.fn(),
       viewCollectionGranules: jest.fn()
     },
@@ -46,8 +46,8 @@ describe('CollectionResultsTableHeaderCell component', () => {
     const titleButton = screen.getByRole('button', { name: 'test value' })
     await user.click(titleButton)
 
-    expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledTimes(1)
-    expect(zustandState.focusedCollection.viewCollectionGranules).toHaveBeenCalledWith('collectionId')
+    expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledTimes(1)
+    expect(zustandState.collection.viewCollectionGranules).toHaveBeenCalledWith('collectionId')
   })
 
   test('clicking the details button calls viewCollectionDetails', async () => {
@@ -56,8 +56,8 @@ describe('CollectionResultsTableHeaderCell component', () => {
     const detailsButton = screen.getByRole('button', { name: 'View collection details' })
     await user.click(detailsButton)
 
-    expect(zustandState.focusedCollection.viewCollectionDetails).toHaveBeenCalledTimes(1)
-    expect(zustandState.focusedCollection.viewCollectionDetails).toHaveBeenCalledWith('collectionId')
+    expect(zustandState.collection.viewCollectionDetails).toHaveBeenCalledTimes(1)
+    expect(zustandState.collection.viewCollectionDetails).toHaveBeenCalledWith('collectionId')
   })
 
   test('clicking the add to project button calls addProjectCollection and onMetricsAddCollectionProject', async () => {

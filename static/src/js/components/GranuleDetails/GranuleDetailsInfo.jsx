@@ -7,10 +7,7 @@ import Spinner from '../Spinner/Spinner'
 
 export const GranuleDetailsInfo = ({ granuleMetadata }) => (
   <div className="granule-details-info">
-    <div
-      className="granule-details-info__content"
-      data-testid="granule-details-info__content"
-    >
+    <div className="granule-details-info__content">
       {granuleMetadata && JSON.stringify(granuleMetadata, null, 2)}
       {
         !granuleMetadata && (

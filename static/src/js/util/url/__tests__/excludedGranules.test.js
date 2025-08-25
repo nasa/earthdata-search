@@ -63,7 +63,7 @@ describe('url#decodeUrlParams', () => {
     test('decodes excludeGranules correctly', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId'],
@@ -144,7 +144,7 @@ describe('url#encodeUrlQuery', () => {
     const props = {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      focusedCollection: ''
+      focusedCollection: null
     }
 
     expect(encodeUrlQuery(props)).toEqual('/path/here')
@@ -245,7 +245,7 @@ describe('url#encodeUrlQuery', () => {
         },
         hasGranulesOrCwic: true,
         pathname: '/path/here',
-        focusedCollection: '',
+        focusedCollection: null,
         projectCollections: {
           allIds: ['collectionId']
         },

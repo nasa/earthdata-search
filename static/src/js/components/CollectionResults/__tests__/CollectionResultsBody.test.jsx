@@ -29,63 +29,60 @@ jest.mock('react-router-dom', () => ({
 const setup = setupTest({
   Component: CollectionResultsBody,
   defaultProps: {
-    collectionsMetadata: {
-      collectionId: {
-        cloudHosted: true,
-        collectionDataType: 'SCIENCE_QUALITY',
-        consortiums: [],
-        datasetId: 'test dataset id',
-        granuleCount: 42,
-        hasMapImagery: false,
-        id: 'collectionId',
-        isCSDA: false,
-        isNrt: false,
-        isOpenSearch: false,
-        organizations: ['test/org'],
-        serviceFeatures: {
-          esi: {
-            has_formats: false,
-            has_spatial_subsetting: false,
-            has_temporal_subsetting: false,
-            has_transforms: false,
-            has_variables: false
-          },
-          harmony: {
-            has_formats: false,
-            has_spatial_subsetting: false,
-            has_temporal_subsetting: false,
-            has_transforms: false,
-            has_variables: false
-          },
-          opendap: {
-            has_formats: false,
-            has_spatial_subsetting: false,
-            has_temporal_subsetting: false,
-            has_transforms: false,
-            has_variables: false
-          }
-        },
-        shortName: 'test_short_name',
-        summary: 'test summary',
-        thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-        timeEnd: '2019-01-15T00:00:00.000Z',
-        timeStart: '2019-01-14T00:00:00.000Z',
-        versionId: '2'
-      }
-    },
-    collectionsSearch: {
-      allIds: ['collectionId'],
-      hits: 181,
-      isLoaded: true,
-      isLoading: false,
-      loadTime: 1150,
-      timerStart: null
-    },
     loadNextPage: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
     panelView: 'list'
   },
   defaultZustandState: {
+    collections: {
+      collections: {
+        count: 181,
+        isLoaded: true,
+        isLoading: false,
+        items: [{
+          cloudHosted: true,
+          collectionDataType: 'SCIENCE_QUALITY',
+          consortiums: [],
+          datasetId: 'test dataset id',
+          granuleCount: 42,
+          hasMapImagery: false,
+          id: 'collectionId',
+          isCSDA: false,
+          isNrt: false,
+          isOpenSearch: false,
+          organizations: ['test/org'],
+          serviceFeatures: {
+            esi: {
+              has_formats: false,
+              has_spatial_subsetting: false,
+              has_temporal_subsetting: false,
+              has_transforms: false,
+              has_variables: false
+            },
+            harmony: {
+              has_formats: false,
+              has_spatial_subsetting: false,
+              has_temporal_subsetting: false,
+              has_transforms: false,
+              has_variables: false
+            },
+            opendap: {
+              has_formats: false,
+              has_spatial_subsetting: false,
+              has_temporal_subsetting: false,
+              has_transforms: false,
+              has_variables: false
+            }
+          },
+          shortName: 'test_short_name',
+          summary: 'test summary',
+          thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+          timeEnd: '2019-01-15T00:00:00.000Z',
+          timeStart: '2019-01-14T00:00:00.000Z',
+          versionId: '2'
+        }]
+      }
+    },
     portal: {
       portalId: 'default-portal',
       features: {
@@ -140,11 +137,13 @@ describe('CollectionResultsBody component', () => {
 
   test('adds a dummy item when the first collections are loading', () => {
     setup({
-      overrideProps: {
-        collectionsSearch: {
-          allIds: [],
-          byId: {},
-          isLoading: true
+      overrideZustandState: {
+        collections: {
+          collections: {
+            isLoaded: false,
+            isLoading: true,
+            items: []
+          }
         }
       }
     })
@@ -165,36 +164,34 @@ describe('CollectionResultsBody component', () => {
     describe('when there is no next page', () => {
       test('returns true', () => {
         setup({
-          overrideProps: {
-            collectionsMetadata: {
-              collectionId: {
-                summary: 'test summary',
-                datasetId: 'test dataset id',
-                granuleCount: 42,
-                hasFormats: false,
-                hasMapImagery: false,
-                hasSpatialSubsetting: false,
-                hasTemporalSubsetting: false,
-                hasTransforms: false,
-                hasVariables: false,
-                id: 'collectionId',
-                isOpenSearch: false,
-                isNrt: false,
-                organizations: ['test/org'],
-                shortName: 'test_short_name',
-                thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-                timeEnd: '2019-01-15T00:00:00.000Z',
-                timeStart: '2019-01-14T00:00:00.000Z',
-                versionId: '2'
+          overrideZustandState: {
+            collections: {
+              collections: {
+                count: 1,
+                isLoaded: true,
+                isLoading: false,
+                loadTime: 1150,
+                items: [{
+                  summary: 'test summary',
+                  datasetId: 'test dataset id',
+                  granuleCount: 42,
+                  hasFormats: false,
+                  hasMapImagery: false,
+                  hasSpatialSubsetting: false,
+                  hasTemporalSubsetting: false,
+                  hasTransforms: false,
+                  hasVariables: false,
+                  id: 'collectionId',
+                  isOpenSearch: false,
+                  isNrt: false,
+                  organizations: ['test/org'],
+                  shortName: 'test_short_name',
+                  thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+                  timeEnd: '2019-01-15T00:00:00.000Z',
+                  timeStart: '2019-01-14T00:00:00.000Z',
+                  versionId: '2'
+                }]
               }
-            },
-            collectionsSearch: {
-              allIds: ['collectionId'],
-              hits: 1,
-              isLoaded: true,
-              isLoading: false,
-              loadTime: 1150,
-              timerStart: null
             }
           }
         })
@@ -207,36 +204,34 @@ describe('CollectionResultsBody component', () => {
     describe('when there is a next page and the item is loaded', () => {
       test('returns false', () => {
         setup({
-          overrideProps: {
-            collectionsMetadata: {
-              collectionId: {
-                summary: 'test summary',
-                datasetId: 'test dataset id',
-                granuleCount: 42,
-                hasFormats: false,
-                hasMapImagery: false,
-                hasSpatialSubsetting: false,
-                hasTemporalSubsetting: false,
-                hasTransforms: false,
-                hasVariables: false,
-                id: 'collectionId',
-                isOpenSearch: false,
-                isNrt: false,
-                organizations: ['test/org'],
-                shortName: 'test_short_name',
-                thumbnail: 'http://some.test.com/thumbnail/url.jpg',
-                timeEnd: '2019-01-15T00:00:00.000Z',
-                timeStart: '2019-01-14T00:00:00.000Z',
-                versionId: '2'
+          overrideZustandState: {
+            collections: {
+              collections: {
+                count: 2,
+                isLoaded: true,
+                isLoading: false,
+                loadTime: 1150,
+                items: [{
+                  summary: 'test summary',
+                  datasetId: 'test dataset id',
+                  granuleCount: 42,
+                  hasFormats: false,
+                  hasMapImagery: false,
+                  hasSpatialSubsetting: false,
+                  hasTemporalSubsetting: false,
+                  hasTransforms: false,
+                  hasVariables: false,
+                  id: 'collectionId',
+                  isOpenSearch: false,
+                  isNrt: false,
+                  organizations: ['test/org'],
+                  shortName: 'test_short_name',
+                  thumbnail: 'http://some.test.com/thumbnail/url.jpg',
+                  timeEnd: '2019-01-15T00:00:00.000Z',
+                  timeStart: '2019-01-14T00:00:00.000Z',
+                  versionId: '2'
+                }]
               }
-            },
-            collectionsSearch: {
-              allIds: ['collectionId'],
-              hits: 2,
-              isLoaded: true,
-              isLoading: false,
-              loadTime: 1150,
-              timerStart: null
             }
           }
         })

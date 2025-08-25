@@ -195,7 +195,7 @@ const transformOpenSearchResponse = (data) => {
     return {
       feed: {
         entry: granuleResults.filter(Boolean),
-        hits: totalResults
+        count: totalResults
       }
     }
   } catch (error) {

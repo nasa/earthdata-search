@@ -1,7 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { isGetFocusedCollectionsQuery } from '../../support/isGetFocusedCollectionsQuery'
-import { isGetFocusedGranuleQuery } from '../../support/isGetFocusedGranuleQuery'
+import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
+import { isGetGranuleQuery } from '../../support/isGetGranuleQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
@@ -98,7 +98,7 @@ test.describe('Map: Granule interactions', () => {
         })
 
         await page.route(/api$/, async (route) => {
-          expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+          expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
           await route.fulfill({
             json: cmrGranulesCollectionGraphQlBody,
@@ -136,7 +136,7 @@ test.describe('Map: Granule interactions', () => {
       test.describe('When clicking on a granule', () => {
         test.beforeEach(async ({ page }) => {
           await page.route(/api$/, async (route) => {
-            expect(isGetFocusedGranuleQuery(route, 'G2061166811-ASF')).toEqual(true)
+            expect(isGetGranuleQuery(route, 'G2061166811-ASF')).toEqual(true)
 
             await route.fulfill({
               json: granuleGraphQlBody,
@@ -277,14 +277,14 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.route(/api$/, async (route) => {
-        if (isGetFocusedCollectionsQuery(route, conceptIdOne)) {
+        if (isGetCollectionQuery(route, conceptIdOne)) {
           await route.fulfill({
             json: colormapCollectionOneGraphQlBody,
             headers: colormapCollectionGraphQlHeaders
           })
         }
 
-        if (isGetFocusedCollectionsQuery(route, conceptIdTwo)) {
+        if (isGetCollectionQuery(route, conceptIdTwo)) {
           await route.fulfill({
             json: colormapCollectionTwoGraphQlBody,
             headers: colormapCollectionGraphQlHeaders
@@ -315,6 +315,9 @@ test.describe('Map: Granule interactions', () => {
 
       // Wait for the map to load
       await initialMapPromise
+
+      // Wait for the timeline to be visible
+      await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
     })
 
     test('displays the color map on the page @screenshot', async ({ page }) => {
@@ -355,7 +358,9 @@ test.describe('Map: Granule interactions', () => {
       test.describe('when visiting another collection with a colormap', () => {
         test('displays a new colormap @screenshot', async ({ page }) => {
           await page.getByTestId('collection-result-item_C1243477369-GES_DISC').click()
-          await expect(page.getByTestId('timeline')).toBeInViewport()
+
+          // Wait for the timeline to be visible
+          await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
             clip: colormapScreenshotClip
@@ -419,14 +424,14 @@ test.describe('Map: Granule interactions', () => {
       })
 
       await page.route(/api$/, async (route) => {
-        if (isGetFocusedCollectionsQuery(route, conceptId)) {
+        if (isGetCollectionQuery(route, conceptId)) {
           await route.fulfill({
             json: granuleCrossingCollectionGraphQlBody,
             headers: cmrGranulesCollectionGraphQlHeaders
           })
         }
 
-        if (isGetFocusedGranuleQuery(route, 'G1259235357-ASDC_DEV2')) {
+        if (isGetGranuleQuery(route, 'G1259235357-ASDC_DEV2')) {
           await route.fulfill({
             json: granuleCrossingGranuleGraphQlBody,
             headers: { 'content-type': 'application/json' }
@@ -492,14 +497,14 @@ test.describe('Map: Granule interactions', () => {
         })
 
         await page.route(/api$/, async (route) => {
-          if (isGetFocusedCollectionsQuery(route, conceptId)) {
+          if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: gibsCollectionGraphQlBody,
               headers: gibsCollectionGraphQlHeaders
             })
           }
 
-          if (isGetFocusedGranuleQuery(route, 'G3453056435-LARC_CLOUD')) {
+          if (isGetGranuleQuery(route, 'G3453056435-LARC_CLOUD')) {
             await route.fulfill({
               json: gibsGranuleGraphQlBody,
               headers: { 'content-type': 'application/json' }

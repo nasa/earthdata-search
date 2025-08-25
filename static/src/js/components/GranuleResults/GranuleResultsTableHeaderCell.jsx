@@ -22,7 +22,7 @@ import GranuleResultsDownloadNotebookButton from './GranuleResultsDownloadNotebo
 import useEdscStore from '../../zustand/useEdscStore'
 
 const GranuleResultsTableHeaderCell = (props) => {
-  const changeFocusedGranule = useEdscStore((state) => state.focusedGranule.changeFocusedGranule)
+  const setGranuleId = useEdscStore((state) => state.granule.setGranuleId)
 
   const { column, cell, row } = props
   const { customProps } = column
@@ -163,7 +163,7 @@ const GranuleResultsTableHeaderCell = (props) => {
           <LinkContainer
             onClick={
               () => {
-                changeFocusedGranule(id)
+                setGranuleId(id)
               }
             }
             to={

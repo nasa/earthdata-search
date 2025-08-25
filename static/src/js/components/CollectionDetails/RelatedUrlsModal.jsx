@@ -6,13 +6,16 @@ import ArrowTags from '../ArrowTags/ArrowTags'
 
 import { pluralize } from '../../util/pluralize'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
+
 import './RelatedUrlsModal.scss'
 
-export const RelatedUrlsModal = ({
-  collectionMetadata,
+const RelatedUrlsModal = ({
   isOpen,
   onToggleRelatedUrlsModal
 }) => {
+  const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const { relatedUrls = [] } = collectionMetadata
 
   const body = (
@@ -33,8 +36,15 @@ export const RelatedUrlsModal = ({
                     return (
                       <ul key={urlKey} className="related-urls-modal__url">
                         <ArrowTags tags={[url.type, url.subtype]} />
-                        {/* eslint-disable-next-line react/jsx-no-target-blank */}
-                        <a className="related-urls-modal__link" href={url.url} target="_blank">{url.url}</a>
+
+                        <a
+                          className="related-urls-modal__link"
+                          href={url.url}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {url.url}
+                        </a>
                       </ul>
                     )
                   })
@@ -67,9 +77,6 @@ export const RelatedUrlsModal = ({
 }
 
 RelatedUrlsModal.propTypes = {
-  collectionMetadata: PropTypes.shape({
-    relatedUrls: PropTypes.arrayOf(PropTypes.shape({}))
-  }).isRequired,
   isOpen: PropTypes.bool.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

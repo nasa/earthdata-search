@@ -13,30 +13,28 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 import Button from '../Button/Button'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './CollectionDetails.scss'
 
 /**
  * Renders CollectionDetails.
  * @param {String} collectionId - The current collection ID.
- * @param {Object} granulesMetadata - The metadata in the store for granules.
  * @param {Object} location - The location from the store.
  * @param {Object} projectCollection - The project collection.
  */
 export const CollectionDetails = ({
   collectionId,
-  granulesMetadata,
   location,
   projectCollection
 }) => {
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const {
-    changeFocusedGranule,
+    setGranuleId,
     removeGranuleFromProjectCollection,
     updateProjectGranuleParams
   } = useEdscStore((state) => ({
-    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
+    setGranuleId: state.granule.setGranuleId,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     updateProjectGranuleParams: state.project.updateProjectGranuleParams
   }))
@@ -48,7 +46,8 @@ export const CollectionDetails = ({
   const {
     addedGranuleIds = [],
     allIds: granulesAllIds = [],
-    hits: granuleCount,
+    byId: granulesById = {},
+    count: granuleCount,
     removedGranuleIds = []
   } = projectCollectionGranules
 
@@ -71,7 +70,7 @@ export const CollectionDetails = ({
         <ul className="collection-details__list">
           {
             granulesToDisplay.map((id) => {
-              const { [id]: granuleMetadata = {} } = granulesMetadata
+              const { [id]: granuleMetadata = {} } = granulesById
 
               const { title } = granuleMetadata
 
@@ -104,13 +103,13 @@ export const CollectionDetails = ({
                           ? { granule: null }
                           : { granule: granuleMetadata }
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, newGranule)
-                        changeFocusedGranule(id)
+                        setGranuleId(id)
                       }
                     }
                     onKeyDown={
                       () => {
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, { granule: granuleMetadata })
-                        changeFocusedGranule(granuleMetadata.id)
+                        setGranuleId(granuleMetadata.id)
                       }
                     }
                   >
@@ -124,7 +123,7 @@ export const CollectionDetails = ({
                         bootstrapSize="sm"
                         onClick={
                           (event) => {
-                            changeFocusedGranule(id)
+                            setGranuleId(id)
                             event.stopPropagation()
                           }
                         }
@@ -193,7 +192,6 @@ export const CollectionDetails = ({
 
 CollectionDetails.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  granulesMetadata: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})

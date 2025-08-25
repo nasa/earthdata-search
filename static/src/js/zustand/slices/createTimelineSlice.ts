@@ -24,6 +24,7 @@ import actions from '../../actions'
 import { TimelineResponseData } from '../../types/sharedTypes'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getCollectionsQuery } from '../selectors/query'
+import { getCollectionId } from '../selectors/collection'
 
 let cancelToken: CancelTokenSource
 
@@ -61,7 +62,7 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
       const timelineParams = prepareTimelineParams({
         ...reduxState,
         collectionQuery: getCollectionsQuery(currentState),
-        focusedCollection: currentState.focusedCollection.focusedCollection,
+        focusedCollection: getCollectionId(currentState),
         projectCollections: currentState.project.collections,
         timelineQuery: currentState.timeline.query
       })

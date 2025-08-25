@@ -112,8 +112,6 @@ describe('createTimelineSlice', () => {
         configureStore.mockReturnValue({
           getState: () => ({
             authToken: '',
-            focusedCollection: 'collectionId',
-            metadata: {},
             router: {
               location: {
                 pathname: ''
@@ -135,15 +133,12 @@ describe('createTimelineSlice', () => {
             ]
           }])
 
-        const initialState = useEdscStore.getInitialState()
-        useEdscStore.setState({
-          timeline: {
-            ...initialState.timeline,
-            query: {
-              endDate: '2009-12-01T23:59:59.000Z',
-              interval: TimelineInterval.Day,
-              startDate: '1979-01-01T00:00:00.000Z'
-            }
+        useEdscStore.setState((state) => {
+          state.collection.collectionId = 'collectionId'
+          state.timeline.query = {
+            endDate: '2009-12-01T23:59:59.000Z',
+            interval: TimelineInterval.Day,
+            startDate: '1979-01-01T00:00:00.000Z'
           }
         })
 
@@ -182,8 +177,6 @@ describe('createTimelineSlice', () => {
         configureStore.mockReturnValue({
           getState: () => ({
             authToken: 'mock-token',
-            focusedCollection: 'collectionId',
-            metadata: {},
             router: {
               location: {
                 pathname: ''
@@ -205,15 +198,12 @@ describe('createTimelineSlice', () => {
             ]
           }])
 
-        const initialState = useEdscStore.getInitialState()
-        useEdscStore.setState({
-          timeline: {
-            ...initialState.timeline,
-            query: {
-              endDate: '2009-12-01T23:59:59.000Z',
-              interval: TimelineInterval.Day,
-              startDate: '1979-01-01T00:00:00.000Z'
-            }
+        useEdscStore.setState((state) => {
+          state.collection.collectionId = 'collectionId'
+          state.timeline.query = {
+            endDate: '2009-12-01T23:59:59.000Z',
+            interval: TimelineInterval.Day,
+            startDate: '1979-01-01T00:00:00.000Z'
           }
         })
 
@@ -252,8 +242,6 @@ describe('createTimelineSlice', () => {
         configureStore.mockReturnValue({
           getState: () => ({
             authToken: 'mock-token',
-            focusedCollection: '',
-            metadata: {},
             router: {
               location: {
                 pathname: ''
@@ -262,19 +250,15 @@ describe('createTimelineSlice', () => {
           })
         })
 
-        const initialState = useEdscStore.getInitialState()
-        useEdscStore.setState({
-          timeline: {
-            ...initialState.timeline,
-            intervals: {
-              collectionId: [
-                [
-                  1298937600,
-                  1304208000,
-                  3
-                ]
+        useEdscStore.setState((state) => {
+          state.timeline.intervals = {
+            collectionId: [
+              [
+                1298937600,
+                1304208000,
+                3
               ]
-            }
+            ]
           }
         })
 
@@ -303,8 +287,6 @@ describe('createTimelineSlice', () => {
           dispatch: mockDispatch,
           getState: () => ({
             authToken: '',
-            focusedCollection: 'collectionId',
-            metadata: {},
             router: {
               location: {
                 pathname: ''
@@ -317,15 +299,12 @@ describe('createTimelineSlice', () => {
           .post(/granules\/timeline/)
           .reply(500)
 
-        const initialState = useEdscStore.getInitialState()
-        useEdscStore.setState({
-          timeline: {
-            ...initialState.timeline,
-            query: {
-              endDate: '2009-12-01T23:59:59.000Z',
-              interval: TimelineInterval.Day,
-              startDate: '1979-01-01T00:00:00.000Z'
-            }
+        useEdscStore.setState((state) => {
+          state.collection.collectionId = 'collectionId'
+          state.timeline.query = {
+            endDate: '2009-12-01T23:59:59.000Z',
+            interval: TimelineInterval.Day,
+            startDate: '1979-01-01T00:00:00.000Z'
           }
         })
 

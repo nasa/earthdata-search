@@ -33,7 +33,7 @@ export const calculateOrderCount = (projectCollection) => {
   // subsetting work and therefore create orders
   if (['download', 'opendap'].indexOf(selectedAccessMethod) > -1) return 0
 
-  const { hits: granuleCount } = projectCollectionGranules
+  const { count: granuleCount } = projectCollectionGranules
 
   // SWODLR requires each granule requested to be its own order
   if (selectedAccessMethod === 'SWODLR') {

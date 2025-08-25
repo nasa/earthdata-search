@@ -1,55 +1,46 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { screen } from '@testing-library/react'
 
-import { granuleResultsBodyProps } from './mocks'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
+import { granuleMetadata } from './mocks'
 
 import GranuleDetailsInfo from '../GranuleDetailsInfo'
 import Spinner from '../../Spinner/Spinner'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../Spinner/Spinner', () => jest.fn(() => <div />))
 
-function setup(overrideProps) {
-  const props = {
-    granuleMetadata: null,
-    ...overrideProps
+const setup = setupTest({
+  Component: GranuleDetailsInfo,
+  defaultProps: {
+    granuleMetadata
   }
-
-  const enzymeWrapper = shallow(<GranuleDetailsInfo {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('GranuleDetailsInfo component', () => {
   describe('when the metadata is not provided', () => {
     test('renders a loading state', () => {
-      const { enzymeWrapper } = setup()
+      setup({
+        overrideProps: {
+          granuleMetadata: null
+        }
+      })
 
-      expect(enzymeWrapper.find(Spinner).length).toEqual(1)
+      expect(Spinner).toHaveBeenCalledTimes(1)
+      expect(Spinner).toHaveBeenCalledWith({
+        className: 'granule-details-info__spinner',
+        size: 'small',
+        type: 'dots'
+      }, {})
     })
   })
 
   describe('when the metadata has been provided', () => {
-    test('renders the info', () => {
-      const { enzymeWrapper } = setup({
-        granuleMetadata: granuleResultsBodyProps.granuleMetadata
-      })
-
-      expect(enzymeWrapper.type()).toBe('div')
-      expect(enzymeWrapper.prop('className')).toBe('granule-details-info')
-      expect(enzymeWrapper.find('.granule-details-info__content').length).toEqual(1)
-    })
-
     test('renders formatted granule details correctly', () => {
-      const { enzymeWrapper } = setup({
-        granuleMetadata: granuleResultsBodyProps.granuleMetadata
-      })
+      setup()
 
-      expect(enzymeWrapper.find('.granule-details-info__content').text())
-        .toEqual(JSON.stringify(granuleResultsBodyProps.granuleMetadata, null, 2))
+      const element = screen.getByText(granuleMetadata.title, { exact: false })
+      expect(element.textContent).toEqual(JSON.stringify(granuleMetadata, null, 2))
     })
   })
 })

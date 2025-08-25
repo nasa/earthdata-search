@@ -4,33 +4,37 @@ import { immer } from 'zustand/middleware/immer'
 
 import { EdscStore } from './types'
 
+import createCollectionSlice from './slices/createCollectionSlice'
+import createCollectionsSlice from './slices/createCollectionsSlice'
 import createDataQualitySummariesSlice from './slices/createDataQualitySummariesSlice'
 import createEarthdataDownloadRedirectSlice from './slices/createEarthdataDownloadRedirectSlice'
 import createEarthdataEnvironmentSlice from './slices/createEarthdataEnvironmentSlice'
 import createFacetParamsSlice from './slices/createFacetParamsSlice'
-import createFocusedCollectionSlice from './slices/createFocusedCollectionSlice'
-import createFocusedGranuleSlice from './slices/createFocusedGranuleSlice'
+import createGranuleSlice from './slices/createGranuleSlice'
+import createGranulesSlice from './slices/createGranulesSlice'
 import createHomeSlice from './slices/createHomeSlice'
 import createMapSlice from './slices/createMapSlice'
 import createPortalSlice from './slices/createPortalSlice'
 import createPreferencesSlice from './slices/createPreferencesSlice'
+import createProjectPanelsSlice from './slices/createProjectPanelsSlice'
 import createProjectSlice from './slices/createProjectSlice'
 import createQuerySlice from './slices/createQuerySlice'
 import createShapefileSlice from './slices/createShapefileSlice'
 import createTimelineSlice from './slices/createTimelineSlice'
 import createUiSlice from './slices/createUiSlice'
-import createProjectPanelsSlice from './slices/createProjectPanelsSlice'
 
 const useEdscStore = create<EdscStore>()(
   immer(
     devtools(
       (...args) => ({
+        ...createCollectionSlice(...args),
+        ...createCollectionsSlice(...args),
         ...createDataQualitySummariesSlice(...args),
         ...createEarthdataDownloadRedirectSlice(...args),
         ...createEarthdataEnvironmentSlice(...args),
         ...createFacetParamsSlice(...args),
-        ...createFocusedCollectionSlice(...args),
-        ...createFocusedGranuleSlice(...args),
+        ...createGranuleSlice(...args),
+        ...createGranulesSlice(...args),
         ...createHomeSlice(...args),
         ...createMapSlice(...args),
         ...createProjectPanelsSlice(...args),

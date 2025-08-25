@@ -55,11 +55,11 @@ import './SearchPanels.scss'
  * @param {string} props.authToken - The authentication token for the user.
  * @param {Object} props.collectionMetadata - Metadata for the currently focused collection.
  * @param {Object} props.collectionQuery - Query parameters for collections.
- * @param {Object} props.collectionsSearch - Search results and state for collections.
+ * @param {Object} props.collections - Search results and state for collections.
  * @param {Array} props.collectionSubscriptions - List of subscriptions for the current collection.
  * @param {Object} props.granuleMetadata - Metadata for the currently focused granule.
  * @param {Object} props.granuleQuery - Query parameters for granules.
- * @param {Object} props.granuleSearchResults - Search results and state for granules.
+ * @param {Object} props.granules - Search results and state for granules.
  * @param {Object} props.isExportRunning - State indicating if export is running for CSV or JSON.
  * @param {Object} props.location - The current browser location object.
  * @param {Object} props.match - React Router match object.
@@ -153,18 +153,18 @@ class SearchPanels extends PureComponent {
       authToken,
       collectionMetadata,
       collectionQuery,
-      collectionsSearch,
+      collections,
       collectionSubscriptions,
       granuleMetadata,
       granuleQuery,
-      granuleSearchResults,
+      granules,
       isExportRunning,
       location,
       match,
       onApplyGranuleFilters,
       onChangeQuery,
       onExport,
-      changeFocusedCollection,
+      setCollectionId,
       onMetricsCollectionSortChange,
       onToggleAboutCSDAModal,
       onToggleAboutCwicModal,
@@ -189,11 +189,11 @@ class SearchPanels extends PureComponent {
     } = collectionQuery
 
     const {
-      allIds: collectionAllIds,
-      hits: collectionHits = 0,
+      count: collectionHits = 0,
       isLoading: collectionSearchIsLoading,
-      isLoaded: collectionSearchIsLoaded
-    } = collectionsSearch
+      isLoaded: collectionSearchIsLoaded,
+      items: collectionItems
+    } = collections
 
     const { panelState } = preferences
 
@@ -207,7 +207,7 @@ class SearchPanels extends PureComponent {
     } = collectionMetadata
 
     // Do not display the international/interagency data message for EOSDIS or CWIC collections
-    const isInternationalInteragency = consortiums.filter((consortium) => consortium !== 'EOSDIS' && consortium !== 'GEOSS').length > 0
+    const isInternationalInteragency = consortiums?.filter((consortium) => consortium !== 'EOSDIS' && consortium !== 'GEOSS').length > 0
 
     const { title: granuleTitle = '', conceptId: granuleConceptId = '' } = granuleMetadata
 
@@ -217,18 +217,18 @@ class SearchPanels extends PureComponent {
       map: mapView
     })
     const {
-      allIds: allGranuleIds = [],
-      hits: granuleHits = '0',
+      count: granuleHits = '0',
       isLoading: granulesIsLoading,
-      isLoaded: granulesIsLoaded
-    } = granuleSearchResults
+      isLoaded: granulesIsLoaded,
+      items: granuleItems = []
+    } = granules
 
     const {
       collectionPanelView,
       granulePanelView
     } = this.state
 
-    const granuleResultsHeaderMetaPrimaryText = `Showing ${commafy(allGranuleIds.length)} of ${commafy(
+    const granuleResultsHeaderMetaPrimaryText = `Showing ${commafy(granuleItems.length)} of ${commafy(
       granuleHits
     )} matching ${pluralize('granule', granuleHits)}`
 
@@ -236,7 +236,7 @@ class SearchPanels extends PureComponent {
     let collectionResultsPrimaryHeading = ''
 
     collectionResultsPrimaryHeading = `${commafy(collectionHits)} Matching ${pluralize('Collection', collectionHits)}`
-    collectionResultsHeaderMetaPrimaryText = `Showing ${commafy(collectionAllIds.length)} of ${commafy(
+    collectionResultsHeaderMetaPrimaryText = `Showing ${commafy(collectionItems.length)} of ${commafy(
       collectionHits
     )} matching ${pluralize('collection', collectionHits)}`
 
@@ -525,7 +525,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             }
           ]
         }
@@ -545,7 +545,7 @@ class SearchPanels extends PureComponent {
             </Badge>
           )
         }
-        headerLoading={!collectionSearchIsLoaded && hasAllCollectionMetadata === false}
+        headerLoading={!collectionTitle && hasAllCollectionMetadata === false}
         activeView={granulePanelView}
         activeSort={activeGranulesSortKey}
         sortsArray={!collectionIsOpenSearch ? granulesSortsArray : []}
@@ -587,7 +587,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             }
           ]
         }
@@ -627,7 +627,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             },
             {
               title: collectionTitle,
@@ -681,7 +681,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             },
             {
               title: collectionTitle,
@@ -739,7 +739,7 @@ class SearchPanels extends PureComponent {
                 pathname: '/search',
                 search: location.search
               },
-              onClick: () => changeFocusedCollection('')
+              onClick: () => setCollectionId(null)
             }
           ]
         }
@@ -882,7 +882,7 @@ class SearchPanels extends PureComponent {
 
 SearchPanels.propTypes = {
   authToken: PropTypes.string.isRequired,
-  changeFocusedCollection: PropTypes.func.isRequired,
+  setCollectionId: PropTypes.func.isRequired,
   collectionMetadata: PropTypes.shape({
     conceptId: PropTypes.string,
     consortiums: PropTypes.arrayOf(PropTypes.string),
@@ -895,9 +895,9 @@ SearchPanels.propTypes = {
     pageNum: PropTypes.number,
     sortKey: PropTypes.string
   }).isRequired,
-  collectionsSearch: PropTypes.shape({
-    allIds: PropTypes.arrayOf(PropTypes.string),
-    hits: PropTypes.number,
+  collections: PropTypes.shape({
+    items: PropTypes.arrayOf(PropTypes.shape({})),
+    count: PropTypes.number,
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool
   }).isRequired,
@@ -910,9 +910,9 @@ SearchPanels.propTypes = {
     pageNum: PropTypes.number,
     sortKey: PropTypes.string
   }).isRequired,
-  granuleSearchResults: PropTypes.shape({
-    allIds: PropTypes.arrayOf(PropTypes.string),
-    hits: PropTypes.number,
+  granules: PropTypes.shape({
+    items: PropTypes.arrayOf(PropTypes.shape({})),
+    count: PropTypes.number,
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool
   }).isRequired,

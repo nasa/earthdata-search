@@ -51,10 +51,10 @@ jest.mock('../../../containers/CollectionDetailsHighlightsContainer/CollectionDe
   return CollectionDetailsHighlightsContainer
 })
 
-jest.mock('../../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer', () => {
-  const GranuleResultsHighlightsContainer = () => <div data-testid="mock-GranuleResultsHighlightsContainer" />
+jest.mock('../../../components/GranuleResultsHighlights/GranuleResultsHighlights', () => {
+  const GranuleResultsHighlights = () => <div data-testid="mock-GranuleResultsHighlights" />
 
-  return GranuleResultsHighlightsContainer
+  return GranuleResultsHighlights
 })
 
 jest.mock('../../../containers/GranuleFiltersContainer/GranuleFiltersContainer', () => {

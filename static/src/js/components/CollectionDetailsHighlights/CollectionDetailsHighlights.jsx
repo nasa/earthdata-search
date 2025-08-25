@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import { collectionDetailsParagraph, collectionDetailsRow } from './skeleton'
 
@@ -7,22 +8,23 @@ import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Skeleton from '../Skeleton/Skeleton'
 
-import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
-import { locationPropType } from '../../util/propTypes/location'
+import useEdscStore from '../../zustand/useEdscStore'
+import { getCollectionsPageInfo } from '../../zustand/selectors/collections'
+import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 
 import './CollectionDetailsHighlights.scss'
 
-const granuleListTotalStyle = {
+export const granuleListTotalStyle = {
   height: '18px',
   width: '225px'
 }
 
 export const CollectionDetailsHighlights = ({
-  collectionMetadata,
-  collectionsSearch,
-  location,
   onToggleRelatedUrlsModal
 }) => {
+  const location = useLocation()
+  const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
+
   const {
     abstract,
     doi = {},
@@ -34,7 +36,7 @@ export const CollectionDetailsHighlights = ({
   const {
     isLoaded,
     isLoading
-  } = collectionsSearch
+  } = useEdscStore(getCollectionsPageInfo)
 
   const { doiText } = doi
 
@@ -193,12 +195,6 @@ export const CollectionDetailsHighlights = ({
 }
 
 CollectionDetailsHighlights.propTypes = {
-  collectionMetadata: collectionMetadataPropType.isRequired,
-  collectionsSearch: PropTypes.shape({
-    isLoaded: PropTypes.bool,
-    isLoading: PropTypes.bool
-  }).isRequired,
-  location: locationPropType.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }
 

@@ -1,3 +1,5 @@
+import camelcaseKeys from 'camelcase-keys'
+
 import CmrRequest from './cmrRequest'
 import {
   getApplicationConfig,
@@ -82,6 +84,7 @@ export default class CollectionRequest extends CmrRequest {
     // Iterate over the collections
     entry.map((collection) => {
       const transformedCollection = collection
+      transformedCollection.conceptId = collection.id
 
       if (collection && (collection.tags || collection.links)) {
         transformedCollection.isOpenSearch = !!getOpenSearchOsddLink(collection)
@@ -117,6 +120,10 @@ export default class CollectionRequest extends CmrRequest {
       return transformedCollection
     })
 
-    return data
+    return camelcaseKeys(data, {
+      deep: true,
+      exclude: ['isCSDA'],
+      stopPaths: ['feed.entry.tags']
+    })
   }
 }

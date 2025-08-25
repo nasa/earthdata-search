@@ -427,3 +427,25 @@ export type VariableMetadata = {
   /** The variable science keywords */
   scienceKeywords: ScienceKeyword[]
 }
+
+export type Subscription = {
+  /** The subscription ID */
+  conceptId: string
+  /** The subscription nativeId */
+  nativeId: string
+  /** The subscription name */
+  name: string
+  /** The subscription type */
+  type: 'granule' | 'collection'
+  /** The collection concept ID */
+  collectionConceptId?: string
+  /** The query parameters for the subscription */
+  query: string
+}
+
+export type SubscriptionResponse = {
+  /** The total number of subscriptions */
+  count: number
+  /** The list of subscriptions */
+  items: Subscription[]
+}

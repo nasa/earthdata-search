@@ -21,7 +21,7 @@ const setup = setupTest({
   Component: TimelineContainer,
   defaultProps: {
     collectionsMetadata: {
-      focusedCollectionId: {
+      collectionId: {
         title: 'focused'
       },
       projectCollectionId: {
@@ -36,8 +36,16 @@ const setup = setupTest({
     search: '?p=C123456-EDSC'
   },
   defaultZustandState: {
-    focusedCollection: {
-      focusedCollection: 'focusedCollectionId'
+    collection: {
+      collectionId: 'collectionId',
+      collectionMetadata: {
+        collectionId: {
+          title: 'focused'
+        },
+        projectCollectionId: {
+          title: 'project'
+        }
+      }
     },
     project: {
       collections: {
@@ -82,9 +90,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      metadata: {
-        collections: {}
-      },
       router: {
         location: {
           pathname: ''
@@ -98,7 +103,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      collectionsMetadata: {},
       pathname: '',
       isOpen: false
     }
@@ -125,7 +129,7 @@ describe('TimelineContainer component', () => {
     expect(Timeline).toHaveBeenCalledWith(
       {
         collectionMetadata: {
-          focusedCollectionId: {
+          collectionId: {
             title: 'focused'
           }
         },

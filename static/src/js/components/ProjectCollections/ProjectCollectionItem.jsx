@@ -58,17 +58,17 @@ const ProjectCollectionItem = ({
   const {
     mapView,
     removeProjectCollection,
-    setFocusedCollection,
+    setCollectionId,
     toggleCollectionVisibility,
     viewCollectionDetails,
     viewCollectionGranules
   } = useEdscStore((state) => ({
     mapView: state.map.mapView,
     removeProjectCollection: state.project.removeProjectCollection,
-    setFocusedCollection: state.focusedCollection.setFocusedCollection,
+    setCollectionId: state.collection.setCollectionId,
     toggleCollectionVisibility: state.project.toggleCollectionVisibility,
-    viewCollectionDetails: state.focusedCollection.viewCollectionDetails,
-    viewCollectionGranules: state.focusedCollection.viewCollectionGranules
+    viewCollectionDetails: state.collection.viewCollectionDetails,
+    viewCollectionGranules: state.collection.viewCollectionGranules
   }))
   const collectionsQuery = useEdscStore(getCollectionsQuery)
 
@@ -87,7 +87,11 @@ const ProjectCollectionItem = ({
     title
   } = collectionMetadata
 
-  const { hits: granuleCount, isLoaded, singleGranuleSize } = granules
+  const {
+    count: granuleCount,
+    isLoaded,
+    singleGranuleSize
+  } = granules
 
   const totalSize = convertSize(granuleCount * singleGranuleSize)
 
@@ -134,7 +138,7 @@ const ProjectCollectionItem = ({
                   () => {
                     // If the panel is closed open it when user selects a collection in project
                     onTogglePanels(true)
-                    setFocusedCollection(collectionId)
+                    setCollectionId(collectionId)
                     onSetActivePanelSection('1')
                   }
                 }
@@ -226,7 +230,7 @@ const ProjectCollectionItem = ({
                 label="Edit options"
                 onClick={
                   () => {
-                    setFocusedCollection(collectionId)
+                    setCollectionId(collectionId)
                     onSetActivePanelSection('0')
                     // If the panel is closed open it when user selects edit options for a collection
                     onTogglePanels(true)
@@ -266,7 +270,7 @@ ProjectCollectionItem.propTypes = {
   onTogglePanels: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({
-      hits: PropTypes.number,
+      count: PropTypes.number,
       isLoaded: PropTypes.bool,
       singleGranuleSize: PropTypes.number
     }),

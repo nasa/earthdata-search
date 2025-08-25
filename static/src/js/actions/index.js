@@ -13,11 +13,16 @@ import {
   adminViewProject,
   fetchAdminProjects,
   fetchAdminProject,
-  updateAdminProjectsSortKey,
-  updateAdminProjectsPageNum
+  updateAdminProjectsPageNum,
+  updateAdminProjectsSortKey
 } from './admin/projects'
 import { updateAdvancedSearch } from './advancedSearch'
-import { getCollections, updateCollectionMetadata } from './collections'
+import {
+  updateFacets,
+  onFacetsLoading,
+  onFacetsLoaded,
+  onFacetsErrored
+} from './facets'
 import {
   getColorMap,
   setColorMapsErrored,
@@ -25,13 +30,8 @@ import {
   setColorMapsLoading
 } from './colorMaps'
 import {
-  addGranuleMetadata,
   fetchRetrievalCollectionGranuleBrowseLinks,
-  fetchRetrievalCollectionGranuleLinks,
-  getSearchGranules,
-  initializeCollectionGranulesResults,
-  updateGranuleMetadata,
-  updateGranuleResults
+  fetchRetrievalCollectionGranuleLinks
 } from './granules'
 import { logout, updateAuthToken } from './authToken'
 import {
@@ -78,7 +78,6 @@ import {
   getGranuleSubscriptions,
   getSubscriptions,
   removeSubscriptionDisabledFields,
-  updateGranuleSubscription,
   updateSubscription,
   updateSubscriptionDisabledFields
 } from './subscriptions'
@@ -87,7 +86,6 @@ import { exportSearch } from './exportSearch'
 import { generateNotebook } from './generateNotebook'
 
 const actions = {
-  addGranuleMetadata,
   adminIsAuthorized,
   adminViewProject,
   changePath,
@@ -100,22 +98,23 @@ const actions = {
   fetchContactInfo,
   fetchAdminProject,
   fetchAdminProjects,
+  fetchAdminRetrievalsMetrics,
   fetchRetrieval,
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
   generateNotebook,
-  getCollections,
   getColorMap,
   getGranuleSubscriptions,
   getRegions,
-  getSearchGranules,
   getSubscriptions,
   getViewAllFacets,
   handleAlert,
   handleError,
-  initializeCollectionGranulesResults,
   logout,
+  onFacetsErrored,
+  onFacetsLoaded,
+  onFacetsLoading,
   removeError,
   removeSubscriptionDisabledFields,
   requeueOrder,
@@ -142,15 +141,11 @@ const actions = {
   toggleSpatialPolygonWarning,
   toggleTimeline,
   toggleTooManyPointsModal,
-  fetchAdminRetrievalsMetrics,
   updateAdminRetrievalsMetricsStartDate,
   updateAdminRetrievalsMetricsEndDate,
   updateAdvancedSearch,
   updateAuthToken,
-  updateCollectionMetadata,
-  updateGranuleMetadata,
-  updateGranuleResults,
-  updateGranuleSubscription,
+  updateFacets,
   updateNotificationLevel,
   updateProjectName,
   updateAdminProjectsPageNum,

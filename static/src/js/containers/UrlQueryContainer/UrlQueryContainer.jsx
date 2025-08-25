@@ -11,13 +11,11 @@ import actions from '../../actions/index'
 import { encodeUrlQuery } from '../../util/url/url'
 import { locationPropType } from '../../util/propTypes/location'
 
-import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
-
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors/collection'
+import { getGranuleId } from '../../zustand/selectors/granule'
 import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
 
 export const mapDispatchToProps = (dispatch) => ({
@@ -29,7 +27,6 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
-  collectionsMetadata: getCollectionsMetadata(state),
   location: state.router.location,
   pathname: state.router.location.pathname
 })
@@ -50,11 +47,12 @@ export const UrlQueryContainer = (props) => {
   const previousSearch = useRef(search)
 
   const zustandValues = useEdscStore((state) => ({
+    collectionsMetadata: getCollectionsMetadata(state),
     collectionSortPreference: getCollectionSortPreference(state),
     earthdataEnvironment: getEarthdataEnvironment(state),
     featureFacets: state.facetParams.featureFacets,
-    focusedCollection: getFocusedCollectionId(state),
-    focusedGranule: getFocusedGranuleId(state),
+    focusedCollection: getCollectionId(state),
+    focusedGranule: getGranuleId(state),
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
     horizontalDataResolutionRangeFacets:
       state.facetParams.cmrFacets.horizontal_data_resolution_range,

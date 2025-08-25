@@ -28,7 +28,6 @@ import {
   LOADING_SUBSCRIPTIONS,
   REMOVE_SUBSCRIPTION,
   STARTED_SUBSCRIPTIONS_TIMER,
-  UPDATE_GRANULE_SUBSCRIPTIONS,
   UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../../constants/actionTypes'
@@ -154,19 +153,11 @@ describe('createSubscription', () => {
 
     useEdscStore.setState((state) => {
       // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collectionId'
+      state.collection.collectionId = 'collectionId'
     })
 
     const store = mockStore({
       authToken: 'token',
-      metadata: {
-        collections: {
-          collectionId: {
-            mock: 'data',
-            id: 'collectionId'
-          }
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
@@ -243,9 +234,6 @@ describe('createSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      metadata: {
-        collections: {}
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
@@ -322,26 +310,11 @@ describe('createSubscription', () => {
 
       useEdscStore.setState((state) => {
         // eslint-disable-next-line no-param-reassign
-        state.focusedCollection.focusedCollection = 'collectionId'
+        state.collection.collectionId = 'collectionId'
       })
 
       const store = mockStore({
         authToken: 'token',
-        metadata: {
-          collections: {
-            collectionId: {
-              id: 'collectionId',
-              subscriptions: {
-                items: [
-                  {
-                    name: 'granule subscription',
-                    conceptId: 'SUB1'
-                  }
-                ]
-              }
-            }
-          }
-        },
         subscriptions: {
           disabledFields: {
             collection: {},
@@ -385,25 +358,11 @@ describe('createSubscription', () => {
 
       useEdscStore.setState((state) => {
         // eslint-disable-next-line no-param-reassign
-        state.focusedCollection.focusedCollection = 'collectionId'
+        state.collection.collectionId = 'collectionId'
       })
 
       const store = mockStore({
         authToken: 'token',
-        metadata: {
-          collections: {
-            collectionId: {
-              subscriptions: {
-                items: [
-                  {
-                    name: 'collectionId Subscription',
-                    conceptId: 'SUB1'
-                  }
-                ]
-              }
-            }
-          }
-        },
         subscriptions: {
           disabledFields: {
             collection: {},
@@ -651,39 +610,20 @@ describe('getGranuleSubscriptions', () => {
 
       useEdscStore.setState((state) => {
         // eslint-disable-next-line no-param-reassign
-        state.focusedCollection.focusedCollection = 'C10000000000-EDSC'
+        state.collection.collectionId = 'C10000000000-EDSC'
+        // eslint-disable-next-line no-param-reassign
+        state.collection.updateGranuleSubscriptions = jest.fn()
       })
 
       const store = mockStore({
-        authToken: '',
-        metadata: {
-          collections: {
-            'C10000000000-EDSC': {
-              id: 'C10000000000-EDSC',
-              subscriptions: {
-                items: [
-                  'original items'
-                ]
-              }
-            }
-          }
-        },
-        searchResults: {}
+        authToken: ''
       })
 
       await store.dispatch(getGranuleSubscriptions()).then(() => {
-        const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          type: UPDATE_GRANULE_SUBSCRIPTIONS,
-          payload: {
-            collectionId: 'C10000000000-EDSC',
-            subscriptions: {
-              items: [
-                'new items'
-              ]
-            }
-          }
-        })
+        const { collection } = useEdscStore.getState()
+
+        expect(collection.updateGranuleSubscriptions).toHaveBeenCalledTimes(1)
+        expect(collection.updateGranuleSubscriptions).toHaveBeenCalledWith('C10000000000-EDSC', { items: ['new items'] })
       })
     })
   })
@@ -708,36 +648,20 @@ describe('getGranuleSubscriptions', () => {
           }
         })
 
-      const store = mockStore({
-        authToken: '',
-        metadata: {
-          collections: {
-            'C10000000000-EDSC': {
-              id: 'C10000000000-EDSC',
-              subscriptions: {
-                items: [
-                  'original items'
-                ]
-              }
-            }
-          }
-        },
-        searchResults: {}
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.collection.updateGranuleSubscriptions = jest.fn()
       })
 
-      await store.dispatch(getGranuleSubscriptions('C10000000000-EDSC')).then(() => {
-        const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          type: UPDATE_GRANULE_SUBSCRIPTIONS,
-          payload: {
-            collectionId: 'C10000000000-EDSC',
-            subscriptions: {
-              items: [
-                'new items'
-              ]
-            }
-          }
-        })
+      const store = mockStore({
+        authToken: ''
+      })
+
+      await store.dispatch(getGranuleSubscriptions('C10000000001-EDSC')).then(() => {
+        const { collection } = useEdscStore.getState()
+
+        expect(collection.updateGranuleSubscriptions).toHaveBeenCalledTimes(1)
+        expect(collection.updateGranuleSubscriptions).toHaveBeenCalledWith('C10000000001-EDSC', { items: ['new items'] })
       })
     })
   })
@@ -836,9 +760,12 @@ describe('deleteSubscription', () => {
       })
 
     const store = mockStore({
-      authToken: 'token',
-      metadata: {
-        collections: {
+      authToken: 'token'
+    })
+
+    useEdscStore.setState({
+      collection: {
+        collectionMetadata: {
           collectionId: {
             subscriptions: {
               items: [
@@ -896,21 +823,7 @@ describe('deleteSubscription', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'token',
-      metadata: {
-        collections: {
-          collectionId: {
-            subscriptions: {
-              items: [
-                {
-                  name: 'collectionId Subscription',
-                  conceptId: 'SUB1'
-                }
-              ]
-            }
-          }
-        }
-      }
+      authToken: 'token'
     })
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
@@ -949,22 +862,6 @@ describe('updateSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      metadata: {
-        collections: {
-          collectionId: {
-            id: 'collectionId',
-            subscriptions: {
-              items: [
-                {
-                  name: 'collectionId Subscription',
-                  conceptId: 'SUB1',
-                  query: 'query=original'
-                }
-              ]
-            }
-          }
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
@@ -1017,9 +914,6 @@ describe('updateSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      metadata: {
-        collections: {}
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
@@ -1073,9 +967,6 @@ describe('updateSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      metadata: {
-        collections: {}
-      },
       subscriptions: {
         disabledFields: {
           collection: {},
@@ -1130,21 +1021,6 @@ describe('updateSubscription', () => {
 
     const store = mockStore({
       authToken: 'token',
-      metadata: {
-        collections: {
-          collectionId: {
-            subscriptions: {
-              items: [
-                {
-                  name: 'collectionId Subscription',
-                  conceptId: 'SUB1',
-                  query: 'query=original'
-                }
-              ]
-            }
-          }
-        }
-      },
       subscriptions: {
         disabledFields: {
           collection: {},

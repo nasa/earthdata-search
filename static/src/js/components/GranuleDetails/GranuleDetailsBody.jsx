@@ -6,18 +6,20 @@ import Tabs from 'react-bootstrap/Tabs'
 import GranuleDetailsInfo from './GranuleDetailsInfo'
 import GranuleDetailsMetadata from './GranuleDetailsMetadata'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedGranule } from '../../zustand/selectors/granule'
+
 import './GranuleDetailsBody.scss'
 
 /**
  * Renders GranuleDetailsBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.authToken - The authToken for the logged in user
- * @param {Object} props.granuleMetadata - The formatted metadata from CMR
  */
 const GranuleDetailsBody = ({
-  authToken,
-  granuleMetadata
+  authToken
 }) => {
+  const granuleMetadata = useEdscStore(getFocusedGranule)
   const { metadataUrls } = granuleMetadata
 
   return (
@@ -45,10 +47,7 @@ GranuleDetailsBody.defaultProps = {
 }
 
 GranuleDetailsBody.propTypes = {
-  authToken: PropTypes.string,
-  granuleMetadata: PropTypes.shape({
-    metadataUrls: PropTypes.shape({})
-  }).isRequired
+  authToken: PropTypes.string
 }
 
 export default GranuleDetailsBody

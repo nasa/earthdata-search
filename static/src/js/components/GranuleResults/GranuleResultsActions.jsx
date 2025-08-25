@@ -7,13 +7,13 @@ import {
   FaFolderMinus
 } from 'react-icons/fa'
 import { IoShare } from 'react-icons/io5'
+import { useLocation } from 'react-router-dom'
 
 import { Subscribe } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Dropdown from 'react-bootstrap/Dropdown'
 
 import { commafy } from '../../util/commafy'
-import { locationPropType } from '../../util/propTypes/location'
 
 import AuthRequiredContainer from '../../containers/AuthRequiredContainer/AuthRequiredContainer'
 import Button from '../Button/Button'
@@ -25,6 +25,7 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import ExternalLink from '../ExternalLink/ExternalLink'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedCollectionSubscriptions } from '../../zustand/selectors/collection'
 
 import './GranuleResultsActions.scss'
 
@@ -36,7 +37,6 @@ import './GranuleResultsActions.scss'
  * @param {Number} props.granuleLimit - The granule limit.
  * @param {Boolean} props.initialLoading - Flag designating the initial loading state.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
- * @param {Object} props.location - The location from the store.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {Function} props.onChangePath - Callback to change the path.
  */
@@ -49,14 +49,13 @@ const GranuleResultsActions = ({
   handoffLinks,
   initialLoading,
   isCollectionInProject,
-  location,
   onMetricsAddCollectionProject,
   onChangePath,
   projectGranuleCount,
   removedGranuleIds,
-  searchGranuleCount,
-  subscriptions
+  searchGranuleCount
 }) => {
+  const location = useLocation()
   const {
     addProjectCollection,
     removeProjectCollection
@@ -64,6 +63,7 @@ const GranuleResultsActions = ({
     addProjectCollection: state.project.addProjectCollection,
     removeProjectCollection: state.project.removeProjectCollection
   }))
+  const subscriptions = useEdscStore(getFocusedCollectionSubscriptions)
 
   const granuleResultsActionsContainer = useRef(null)
   const addToProjectButton = (
@@ -145,7 +145,6 @@ const GranuleResultsActions = ({
       granuleLimit={granuleLimit}
       initialLoading={initialLoading}
       isCollectionInProject={isCollectionInProject}
-      location={location}
       onChangePath={onChangePath}
       projectCollection={focusedProjectCollection}
       tooManyGranules={tooManyGranules}
@@ -255,13 +254,11 @@ GranuleResultsActions.propTypes = {
   handoffLinks: PropTypes.arrayOf(PropTypes.shape({})),
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   projectGranuleCount: PropTypes.number,
   removedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  searchGranuleCount: PropTypes.number,
-  subscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired
+  searchGranuleCount: PropTypes.number
 }
 
 export default GranuleResultsActions

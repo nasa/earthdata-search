@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { useLocation } from 'react-router-dom'
 
 import { parse } from 'qs'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
@@ -11,7 +12,6 @@ import { getApplicationConfig, getEnvironmentConfig } from '../../../../../share
 import { commafy } from '../../util/commafy'
 import { isLoggedIn } from '../../util/isLoggedIn'
 import { stringify } from '../../util/url/url'
-import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -28,10 +28,10 @@ export const GranuleDownloadButton = ({
   granuleLimit,
   initialLoading,
   isCollectionInProject,
-  location,
   onChangePath,
   tooManyGranules
 }) => {
+  const location = useLocation()
   const addProjectCollection = useEdscStore((state) => state.project.addProjectCollection)
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
@@ -185,7 +185,6 @@ GranuleDownloadButton.propTypes = {
   granuleLimit: PropTypes.number,
   initialLoading: PropTypes.bool.isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
-  location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({}).isRequired,
   tooManyGranules: PropTypes.bool.isRequired

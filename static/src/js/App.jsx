@@ -23,6 +23,7 @@ import Home from './routes/Home/Home'
 
 // Components
 import ErrorBoundary from './components/Errors/ErrorBoundary'
+import Footer from './components/Footer/Footer'
 import NotFound from './components/Errors/NotFound'
 import Spinner from './components/Spinner/Spinner'
 import GraphQlProvider from './providers/GraphQlProvider'
@@ -33,7 +34,6 @@ import AuthCallbackContainer from './containers/AuthCallbackContainer/AuthCallba
 import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequiredContainer'
 import AuthTokenContainer from './containers/AuthTokenContainer/AuthTokenContainer'
 import ErrorBannerContainer from './containers/ErrorBannerContainer/ErrorBannerContainer'
-import FooterContainer from './containers/FooterContainer/FooterContainer'
 import HistoryContainer from './containers/HistoryContainer/HistoryContainer'
 import MetricsEventsContainer from './containers/MetricsEventsContainer/MetricsEventsContainer'
 import PortalContainer from './containers/PortalContainer/PortalContainer'
@@ -270,7 +270,7 @@ class App extends Component {
                         </Route>
                       </Switch>
                     </WrappingContainer>
-                    <FooterContainer />
+                    <Footer />
                   </UrlQueryContainer>
                 </AuthTokenContainer>
               </ConnectedRouter>

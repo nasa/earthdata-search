@@ -325,8 +325,8 @@ const setup = setupTest({
   Component: GranuleResultsItem,
   defaultProps,
   defaultZustandState: {
-    focusedGranule: {
-      changeFocusedGranule: jest.fn()
+    granule: {
+      setGranuleId: jest.fn()
     },
     project: {
       addGranuleToProjectCollection: jest.fn(),
@@ -816,8 +816,8 @@ describe('GranuleResultsItem component', () => {
         await user.click(screen.getByRole('button', { name: 'View details' }), { pointerEventsCheck: 0 })
       })
 
-      expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledWith('granuleId')
+      expect(zustandState.granule.setGranuleId).toHaveBeenCalledTimes(1)
+      expect(zustandState.granule.setGranuleId).toHaveBeenCalledWith('granuleId')
     })
   })
 

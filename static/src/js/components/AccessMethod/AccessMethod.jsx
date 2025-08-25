@@ -27,6 +27,7 @@ import SwodlrForm from './SwodlrForm'
 import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getGranuleMetadata } from '../../zustand/selectors/granule'
 
 import './AccessMethod.scss'
 
@@ -36,7 +37,6 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * Renders AccessMethod.
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.accessMethods - The accessMethods of the current collection.
- * @param {Object} props.granuleMetadata - The metadata for the granules on the collection.
  * @param {Number} props.index - The index of the current collection.
  * @param {Object} props.metadata - The metadata of the current collection.
  * @param {Function} props.onSelectAccessMethod - Selects an access method.
@@ -49,7 +49,6 @@ const EchoForm = lazy(() => import('./EchoForm'))
 */
 const AccessMethod = ({
   accessMethods,
-  granuleMetadata,
   index,
   isActive,
   metadata,
@@ -61,6 +60,7 @@ const AccessMethod = ({
   temporal,
   ursProfile
 }) => {
+  const granulesMetadata = useEdscStore(getGranuleMetadata)
   const {
     setShowMbr,
     setActivePanel
@@ -138,7 +138,7 @@ const AccessMethod = ({
     }
 
     // Build the list of granules
-    const granuleListObj = granulesToDisplay.map((id) => granuleMetadata[id])
+    const granuleListObj = granulesToDisplay.map((id) => granulesMetadata[id])
     setGranuleList(granuleListObj)
 
     // Disable temporal subsetting if the user has a recurring date selected
@@ -1004,7 +1004,6 @@ AccessMethod.defaultProps = {
   metadata: {},
   selectedAccessMethod: null,
   spatial: {},
-  granuleMetadata: {},
   projectCollection: {
     granules: {}
   }
@@ -1037,7 +1036,6 @@ AccessMethod.propTypes = {
   ursProfile: PropTypes.shape({
     email_address: PropTypes.string
   }).isRequired,
-  granuleMetadata: PropTypes.shape({}),
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})
   })

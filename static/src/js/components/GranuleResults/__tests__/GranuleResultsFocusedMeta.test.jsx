@@ -18,15 +18,20 @@ jest.mock('../../EDSCImage/EDSCImage', () => jest.fn(({ className }) => <div cla
 const setup = setupTest({
   Component: GranuleResultsFocusedMeta,
   defaultProps: {
-    focusedGranuleMetadata: {
-      browseFlag: false,
-      title: '1234 Test'
-    },
     onMetricsBrowseGranuleImage: jest.fn()
   },
   defaultZustandState: {
-    focusedGranule: {
-      focusedGranule: 'G-1234-TEST'
+    granule: {
+      granuleId: 'G-1234-TEST'
+    },
+    granules: {
+      granules: {
+        items: [{
+          id: 'G-1234-TEST',
+          browseFlag: false,
+          title: '1234 Test'
+        }]
+      }
     }
   }
 })
@@ -45,14 +50,19 @@ describe('GranuleResultsFocusedMeta component', () => {
   describe('when the browse flag is false', () => {
     test('should not render', () => {
       setup({
-        overrideProps: {
-          focusedGranuleMetadata: {
-            browseFlag: false,
-            links: [{
-              href: 'http://test.com/test.jpg',
-              rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-            }],
-            title: '1234 Test'
+        overrideZustandState: {
+          granules: {
+            granules: {
+              items: [{
+                id: 'G-1234-TEST',
+                browseFlag: false,
+                links: [{
+                  href: 'http://test.com/test.jpg',
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                }],
+                title: '1234 Test'
+              }]
+            }
           }
         }
       })
@@ -66,14 +76,19 @@ describe('GranuleResultsFocusedMeta component', () => {
   describe('when links are provided', () => {
     test('should render', async () => {
       setup({
-        overrideProps: {
-          focusedGranuleMetadata: {
-            browseFlag: true,
-            links: [{
-              href: 'http://test.com/test.jpg',
-              rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-            }],
-            title: '1234 Test'
+        overrideZustandState: {
+          granules: {
+            granules: {
+              items: [{
+                id: 'G-1234-TEST',
+                browseFlag: true,
+                links: [{
+                  href: 'http://test.com/test.jpg',
+                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                }],
+                title: '1234 Test'
+              }]
+            }
           }
         }
       })
@@ -85,14 +100,19 @@ describe('GranuleResultsFocusedMeta component', () => {
     describe('when clicking the expand button', () => {
       test('should render a modal', async () => {
         const { props, user } = setup({
-          overrideProps: {
-            focusedGranuleMetadata: {
-              browseFlag: true,
-              links: [{
-                href: 'http://test.com/test.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              }],
-              title: '1234 Test'
+          overrideZustandState: {
+            granules: {
+              granules: {
+                items: [{
+                  id: 'G-1234-TEST',
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }]
+              }
             }
           }
         })
@@ -116,14 +136,19 @@ describe('GranuleResultsFocusedMeta component', () => {
 
       test('should not render modal navigation', async () => {
         const { user } = setup({
-          overrideProps: {
-            focusedGranuleMetadata: {
-              browseFlag: true,
-              links: [{
-                href: 'http://test.com/test.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              }],
-              title: '1234 Test'
+          overrideZustandState: {
+            granules: {
+              granules: {
+                items: [{
+                  id: 'G-1234-TEST',
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }]
+              }
             }
           }
         })
@@ -148,22 +173,27 @@ describe('GranuleResultsFocusedMeta component', () => {
     describe('when multiple links are provided', () => {
       test('should render the navigation', async () => {
         setup({
-          overrideProps: {
-            focusedGranuleMetadata: {
-              browseFlag: true,
-              links: [{
-                href: 'http://test.com/test.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              },
-              {
-                href: 'http://test.com/test-2.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              },
-              {
-                href: 'http://test.com/test-3.jpg',
-                rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-              }],
-              title: '1234 Test'
+          overrideZustandState: {
+            granules: {
+              granules: {
+                items: [{
+                  id: 'G-1234-TEST',
+                  browseFlag: true,
+                  links: [{
+                    href: 'http://test.com/test.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-2.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  },
+                  {
+                    href: 'http://test.com/test-3.jpg',
+                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                  }],
+                  title: '1234 Test'
+                }]
+              }
             }
           }
         })
@@ -183,22 +213,27 @@ describe('GranuleResultsFocusedMeta component', () => {
       describe('when the selection button is clicked', () => {
         test('should render the popover selection menu', async () => {
           const { user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -218,22 +253,27 @@ describe('GranuleResultsFocusedMeta component', () => {
 
         test('should hide the tooltip', async () => {
           const { user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -265,22 +305,27 @@ describe('GranuleResultsFocusedMeta component', () => {
       describe('when clicking the next button', () => {
         test('should cycle the images', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -310,22 +355,27 @@ describe('GranuleResultsFocusedMeta component', () => {
       describe('when clicking the previous button', () => {
         test('should cycle the images', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -357,22 +407,27 @@ describe('GranuleResultsFocusedMeta component', () => {
       describe('when clicking the list button', () => {
         test('should select the image and close the popover', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -410,18 +465,23 @@ describe('GranuleResultsFocusedMeta component', () => {
       describe('when clicking fully through the images with the next button', () => {
         test('should repeat the images', async () => {
           const { user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -445,18 +505,23 @@ describe('GranuleResultsFocusedMeta component', () => {
       describe('when clicking fully through the images with the previous button', () => {
         test('should repeat the images', async () => {
           const { user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -479,22 +544,27 @@ describe('GranuleResultsFocusedMeta component', () => {
       describe('when clicking the expand button', () => {
         test('should render modal navigation', async () => {
           const { user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-2.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                },
-                {
-                  href: 'http://test.com/test-3.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-2.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    },
+                    {
+                      href: 'http://test.com/test-3.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -517,14 +587,19 @@ describe('GranuleResultsFocusedMeta component', () => {
 
         test('displays a larger image', async () => {
           const { user } = setup({
-            overrideProps: {
-              focusedGranuleMetadata: {
-                browseFlag: true,
-                links: [{
-                  href: 'http://test.com/test.jpg',
-                  rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                }],
-                title: '1234 Test'
+            overrideZustandState: {
+              granules: {
+                granules: {
+                  items: [{
+                    id: 'G-1234-TEST',
+                    browseFlag: true,
+                    links: [{
+                      href: 'http://test.com/test.jpg',
+                      rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                    }],
+                    title: '1234 Test'
+                  }]
+                }
               }
             }
           })
@@ -551,22 +626,27 @@ describe('GranuleResultsFocusedMeta component', () => {
         describe('when clicking the close button', () => {
           test('should close the modal', async () => {
             const { user } = setup({
-              overrideProps: {
-                focusedGranuleMetadata: {
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-3.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
+              overrideZustandState: {
+                granules: {
+                  granules: {
+                    items: [{
+                      id: 'G-1234-TEST',
+                      browseFlag: true,
+                      links: [{
+                        href: 'http://test.com/test.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-2.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-3.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      }],
+                      title: '1234 Test'
+                    }]
+                  }
                 }
               }
             })
@@ -594,22 +674,27 @@ describe('GranuleResultsFocusedMeta component', () => {
         describe('when clicking the next button', () => {
           test('should cycle the images', async () => {
             const { props, user } = setup({
-              overrideProps: {
-                focusedGranuleMetadata: {
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-3.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
+              overrideZustandState: {
+                granules: {
+                  granules: {
+                    items: [{
+                      id: 'G-1234-TEST',
+                      browseFlag: true,
+                      links: [{
+                        href: 'http://test.com/test.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-2.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-3.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      }],
+                      title: '1234 Test'
+                    }]
+                  }
                 }
               }
             })
@@ -645,22 +730,27 @@ describe('GranuleResultsFocusedMeta component', () => {
         describe('when clicking the previous button', () => {
           test('should cycle the images', async () => {
             const { props, user } = setup({
-              overrideProps: {
-                focusedGranuleMetadata: {
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-3.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
+              overrideZustandState: {
+                granules: {
+                  granules: {
+                    items: [{
+                      id: 'G-1234-TEST',
+                      browseFlag: true,
+                      links: [{
+                        href: 'http://test.com/test.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-2.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-3.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      }],
+                      title: '1234 Test'
+                    }]
+                  }
                 }
               }
             })
@@ -698,22 +788,27 @@ describe('GranuleResultsFocusedMeta component', () => {
         describe('when clicking the list button', () => {
           test('should select the image and close the popover', async () => {
             const { props, user } = setup({
-              overrideProps: {
-                focusedGranuleMetadata: {
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-3.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
+              overrideZustandState: {
+                granules: {
+                  granules: {
+                    items: [{
+                      id: 'G-1234-TEST',
+                      browseFlag: true,
+                      links: [{
+                        href: 'http://test.com/test.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-2.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-3.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      }],
+                      title: '1234 Test'
+                    }]
+                  }
                 }
               }
             })
@@ -758,18 +853,23 @@ describe('GranuleResultsFocusedMeta component', () => {
         describe('when clicking fully through the images with the next button', () => {
           test('should repeat the images', async () => {
             const { user } = setup({
-              overrideProps: {
-                focusedGranuleMetadata: {
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
+              overrideZustandState: {
+                granules: {
+                  granules: {
+                    items: [{
+                      id: 'G-1234-TEST',
+                      browseFlag: true,
+                      links: [{
+                        href: 'http://test.com/test.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-2.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      }],
+                      title: '1234 Test'
+                    }]
+                  }
                 }
               }
             })
@@ -800,18 +900,23 @@ describe('GranuleResultsFocusedMeta component', () => {
             const focusedGranuleLink = 'http://test.com/test.jpg'
 
             const { props, user } = setup({
-              overrideProps: {
-                focusedGranuleMetadata: {
-                  browseFlag: true,
-                  links: [{
-                    href: focusedGranuleLink,
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
+              overrideZustandState: {
+                granules: {
+                  granules: {
+                    items: [{
+                      id: 'G-1234-TEST',
+                      browseFlag: true,
+                      links: [{
+                        href: focusedGranuleLink,
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-2.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      }],
+                      title: '1234 Test'
+                    }]
+                  }
                 }
               }
             })
@@ -839,18 +944,23 @@ describe('GranuleResultsFocusedMeta component', () => {
         describe('when clicking fully through the images with the previous button', () => {
           test('should repeat the images', async () => {
             const { user } = setup({
-              overrideProps: {
-                focusedGranuleMetadata: {
-                  browseFlag: true,
-                  links: [{
-                    href: 'http://test.com/test.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  },
-                  {
-                    href: 'http://test.com/test-2.jpg',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
-                  }],
-                  title: '1234 Test'
+              overrideZustandState: {
+                granules: {
+                  granules: {
+                    items: [{
+                      id: 'G-1234-TEST',
+                      browseFlag: true,
+                      links: [{
+                        href: 'http://test.com/test.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      },
+                      {
+                        href: 'http://test.com/test-2.jpg',
+                        rel: 'http://esipfed.org/ns/fedsearch/1.1/browse#'
+                      }],
+                      title: '1234 Test'
+                    }]
+                  }
                 }
               }
             })

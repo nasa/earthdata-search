@@ -107,10 +107,10 @@ describe('GranuleRequest#transformResponse', () => {
         entry: [
           {
             id: 'granuleId',
-            time_end: '2000-01-31T00:00:00.000Z',
-            time_start: '2000-01-01T00:00:00.000Z',
+            timeEnd: '2000-01-31T00:00:00.000Z',
+            timeStart: '2000-01-01T00:00:00.000Z',
             thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
-            formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
+            formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
             isOpenSearch: false,
             spatial: null
           }
@@ -148,10 +148,10 @@ describe('GranuleRequest#transformResponse', () => {
           entry: [
             {
               id: 'granuleId',
-              time_end: '2000-01-31T00:00:00.000Z',
-              time_start: '2000-01-01T00:00:00.000Z',
+              timeEnd: '2000-01-31T00:00:00.000Z',
+              timeStart: '2000-01-01T00:00:00.000Z',
               thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
-              formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
+              formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               points: ['0 10'],
               spatial: {
@@ -197,11 +197,11 @@ describe('GranuleRequest#transformResponse', () => {
           entry: [
             {
               id: 'granuleId',
-              browse_url: undefined,
-              time_end: '2000-01-31T00:00:00.000Z',
-              time_start: '2000-01-01T00:00:00.000Z',
+              browseUrl: undefined,
+              timeEnd: '2000-01-31T00:00:00.000Z',
+              timeStart: '2000-01-01T00:00:00.000Z',
               thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
-              formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
+              formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               spatial: null
             }
@@ -243,11 +243,11 @@ describe('GranuleRequest#transformResponse', () => {
           entry: [
             {
               id: 'granuleId',
-              browse_url: 'https://test.com/browse/image/url.jpg',
-              time_end: '2000-01-31T00:00:00.000Z',
-              time_start: '2000-01-01T00:00:00.000Z',
+              browseUrl: 'https://test.com/browse/image/url.jpg',
+              timeEnd: '2000-01-31T00:00:00.000Z',
+              timeStart: '2000-01-01T00:00:00.000Z',
               thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
-              formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
+              formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
                 {
@@ -303,11 +303,11 @@ describe('GranuleRequest#transformResponse', () => {
           entry: [
             {
               id: 'granuleId',
-              browse_url: 'https://test.com/browse/image/first_url.jpg',
-              time_end: '2000-01-31T00:00:00.000Z',
-              time_start: '2000-01-01T00:00:00.000Z',
+              browseUrl: 'https://test.com/browse/image/first_url.jpg',
+              timeEnd: '2000-01-31T00:00:00.000Z',
+              timeStart: '2000-01-01T00:00:00.000Z',
               thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
-              formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
+              formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
                 {
@@ -371,11 +371,11 @@ describe('GranuleRequest#transformResponse', () => {
           entry: [
             {
               id: 'granuleId',
-              browse_url: 'https://test.com/browse/image/second_url.jpg',
-              time_end: '2000-01-31T00:00:00.000Z',
-              time_start: '2000-01-01T00:00:00.000Z',
+              browseUrl: 'https://test.com/browse/image/second_url.jpg',
+              timeEnd: '2000-01-31T00:00:00.000Z',
+              timeStart: '2000-01-01T00:00:00.000Z',
               thumbnail: 'http://localhost:3000/scale/granules/granuleId?h=85&w=85&ee=prod',
-              formatted_temporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
+              formattedTemporal: ['2000-01-01 00:00:00', '2000-01-31 00:00:00'],
               isOpenSearch: false,
               links: [
                 {

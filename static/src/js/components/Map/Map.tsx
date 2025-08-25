@@ -282,8 +282,6 @@ interface MapProps {
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
   isProjectPage: boolean
-  /** Function to call when the focused granule is changed */
-  changeFocusedGranule: (granuleId: string | null) => void
   /** Function to call when the map is updated */
   onChangeMap: (mapView: Partial<MapView>) => void
   /** Function to call when the projection is changed */
@@ -323,6 +321,8 @@ interface MapProps {
   projectionCode: ProjectionCode
   /** The rotation of the map */
   rotation: number
+  /** Function to call when the focused granule is changed */
+  setGranuleId: (granuleId: string | null) => void
   /** The shapefile to render on the map */
   shapefile: ShapefileSlice['shapefile']
   /** The spatial search object */
@@ -340,7 +340,6 @@ interface MapProps {
  * @param {String} params.granulesKey Key to determine if the granules have changed
  * @param {String} params.focusedCollectionId Collection ID of the focused collection
  * @param {String} params.focusedGranuleId Granule ID of the focused granule
- * @param {Function} params.changeFocusedGranule Function to call when the focused granule is changed
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
  * @param {Function} params.onChangeQuery Function to call when the query is changed
@@ -354,6 +353,7 @@ interface MapProps {
  * @param {Function} params.onUpdateShapefile Function to call when the shapefile is updated
  * @param {String} params.projectionCode Projection code of the map
  * @param {Number} params.rotation Rotation of the map
+ * @param {Function} params.setGranuleId Function to call when the focused granule is changed
  * @param {Object} params.shapefile Shapefile to render on the map
  * @param {Object} params.spatialSearch Spatial search object
  * @param {Number} params.zoom Zoom level of the map
@@ -361,7 +361,6 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({
   base,
   center,
-  changeFocusedGranule,
   colorMap,
   focusedCollectionId = '',
   focusedGranuleId = '',
@@ -384,6 +383,7 @@ const Map: React.FC<MapProps> = ({
   overlays,
   projectionCode,
   rotation,
+  setGranuleId,
   shapefile,
   spatialSearch,
   zoom
@@ -828,9 +828,9 @@ const Map: React.FC<MapProps> = ({
       granuleBackgroundsSource,
       isProjectPage,
       map,
-      changeFocusedGranule,
       onExcludeGranule,
       onMetricsMap,
+      setGranuleId,
       timesIconSvg
     })
 
@@ -895,9 +895,9 @@ const Map: React.FC<MapProps> = ({
       granuleBackgroundsSource,
       granuleId: granule ? granule.id : null,
       isProjectPage,
-      map: mapRef.current as OlMap,
-      changeFocusedGranule,
+      map: (mapRef.current as OlMap),
       onExcludeGranule,
+      setGranuleId,
       timesIconSvg
     })
   }
@@ -991,9 +991,9 @@ const Map: React.FC<MapProps> = ({
         granuleBackgroundsSource,
         granuleId: focusedGranuleId,
         isProjectPage,
-        map: mapRef.current as OlMap,
-        changeFocusedGranule,
+        map: (mapRef.current as OlMap),
         onExcludeGranule,
+        setGranuleId,
         shouldMoveMap: false,
         timesIconSvg
       })

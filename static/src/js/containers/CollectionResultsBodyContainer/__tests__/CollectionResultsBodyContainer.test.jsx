@@ -7,8 +7,7 @@ import * as metricsActions from '../../../middleware/metrics/actions'
 
 import {
   CollectionResultsBodyContainer,
-  mapDispatchToProps,
-  mapStateToProps
+  mapDispatchToProps
 } from '../CollectionResultsBodyContainer'
 import CollectionResultsBody from '../../../components/CollectionResults/CollectionResultsBody'
 
@@ -17,18 +16,7 @@ jest.mock('../../../components/CollectionResults/CollectionResultsBody', () => j
 const setup = setupTest({
   Component: CollectionResultsBodyContainer,
   defaultProps: {
-    collectionsMetadata: {
-      id1: {
-        title: 'collection 1 title'
-      },
-      id2: {
-        title: 'collection 2 title'
-      }
-    },
-    collectionsSearch: {},
-    projectCollectionsIds: [],
     onMetricsAddCollectionProject: jest.fn(),
-    onChangeCollectionPageNum: jest.fn(),
     panelView: 'list'
   },
   defaultZustandState: {
@@ -50,37 +38,12 @@ describe('mapDispatchToProps', () => {
   })
 })
 
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      metadata: {
-        collections: {}
-      },
-      searchResults: {
-        collections: {}
-      }
-    }
-
-    const expectedState = {
-      collectionsSearch: {},
-      collectionsMetadata: {}
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
 describe('CollectionResultsBodyContainer component', () => {
   test('passes its props and renders a single CollectionResultsBody component', () => {
     setup()
 
     expect(CollectionResultsBody).toHaveBeenCalledTimes(1)
     expect(CollectionResultsBody).toHaveBeenCalledWith({
-      collectionsMetadata: {
-        id1: { title: 'collection 1 title' },
-        id2: { title: 'collection 2 title' }
-      },
-      collectionsSearch: {},
       loadNextPage: expect.any(Function),
       onMetricsAddCollectionProject: expect.any(Function),
       panelView: 'list'

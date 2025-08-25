@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import PropTypes from 'prop-types'
-
-import { locationPropType } from '../../util/propTypes/location'
+import { useLocation } from 'react-router-dom'
 
 import Cell from '../EDSCTable/EDSCTableCell'
 import GranuleResultsTableHeaderCell from './GranuleResultsTableHeaderCell'
@@ -10,14 +9,14 @@ import EDSCTable from '../EDSCTable/EDSCTable'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getFocusedCollectionTags } from '../../zustand/selectors/collection'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './GranuleResultsTable.scss'
 
 /**
  * Renders GranuleResultsTable.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.collectionId - The collection ID.
  * @param {String} props.collectionId - The focused collection ID.
  * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
@@ -27,7 +26,6 @@ import './GranuleResultsTable.scss'
  * @param {Function} props.isItemLoaded - Callback to see if an item has loaded.
  * @param {Boolean} props.itemCount - The current count of rows to show.
  * @param {Function} props.loadMoreItems - Callback to load the next page of results.
- * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
@@ -37,7 +35,6 @@ import './GranuleResultsTable.scss'
 
 export const GranuleResultsTable = ({
   collectionId,
-  collectionTags,
   directDistributionInformation,
   generateNotebook,
   granules,
@@ -45,15 +42,16 @@ export const GranuleResultsTable = ({
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  location,
   onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   setVisibleMiddleIndex,
   visibleMiddleIndex
 }) => {
+  const location = useLocation()
+  const collectionTags = useEdscStore(getFocusedCollectionTags)
   const collectionQuerySpatial = useEdscStore(getCollectionsQuerySpatial)
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const {
     excludeGranule,
     addGranuleToProjectCollection,
@@ -229,7 +227,6 @@ GranuleResultsTable.defaultProps = {
 
 GranuleResultsTable.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   generateNotebook: PropTypes.shape({}).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape).isRequired,
@@ -237,7 +234,6 @@ GranuleResultsTable.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  location: locationPropType.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,

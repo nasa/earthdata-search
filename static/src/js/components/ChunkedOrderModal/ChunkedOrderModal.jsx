@@ -83,7 +83,7 @@ const ChunkedOrderModal = ({
               selectedAccessMethod
             } = projectCollection
 
-            const { hits: granuleCount } = granules
+            const { count: granuleCount } = granules
 
             const granulesPerOrder = calculateGranulesPerOrder(
               accessMethods,

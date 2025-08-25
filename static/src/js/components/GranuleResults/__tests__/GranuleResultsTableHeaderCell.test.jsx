@@ -41,8 +41,8 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
-    focusedGranule: {
-      changeFocusedGranule: jest.fn()
+    granule: {
+      setGranuleId: jest.fn()
     },
     portal: {
       features: {
@@ -63,7 +63,7 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })).toBeInTheDocument()
   })
 
-  test('clicking the details button calls changeFocusedGranule', async () => {
+  test('clicking the details button calls setGranuleId', async () => {
     const { user, zustandState } = setup()
 
     const dropdownButton = screen.getByRole('button', {
@@ -78,8 +78,8 @@ describe('GranuleResultsTableHeaderCell component', () => {
     })
     await user.click(detailsButton)
 
-    expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledTimes(1)
-    expect(zustandState.focusedGranule.changeFocusedGranule).toHaveBeenCalledWith('one')
+    expect(zustandState.granule.setGranuleId).toHaveBeenCalledTimes(1)
+    expect(zustandState.granule.setGranuleId).toHaveBeenCalledWith('one')
   })
 
   test('clicking the filter button calls onExcludeGranule', async () => {

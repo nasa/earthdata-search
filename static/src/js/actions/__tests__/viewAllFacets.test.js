@@ -75,7 +75,7 @@ describe('getViewAllFacets', () => {
         children: {
           instrument: {
             applied: true,
-            has_children: true,
+            hasChildren: true,
             title: 'Instrument',
             type: 'group',
             children: [
@@ -83,7 +83,7 @@ describe('getViewAllFacets', () => {
                 title: '1 Test facet',
                 type: 'filter',
                 applied: false,
-                has_children: false,
+                hasChildren: false,
                 links: {
                   apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h[]=1+Test+facet'
                 }
@@ -92,7 +92,7 @@ describe('getViewAllFacets', () => {
                 title: 'Test facet 2',
                 type: 'filter',
                 applied: false,
-                has_children: false,
+                hasChildren: false,
                 links: {
                   apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h[]=Test+facet+2'
                 }
@@ -110,7 +110,7 @@ describe('getViewAllFacets', () => {
     facets: {
       instrument: {
         applied: true,
-        has_children: true,
+        hasChildren: true,
         title: 'Instrument',
         type: 'group',
         children: [
@@ -118,7 +118,7 @@ describe('getViewAllFacets', () => {
             title: '1 Test facet',
             type: 'filter',
             applied: false,
-            has_children: false,
+            hasChildren: false,
             links: {
               apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h[]=1+Test+facet'
             }
@@ -127,7 +127,7 @@ describe('getViewAllFacets', () => {
             title: 'Test facet 2',
             type: 'filter',
             applied: false,
-            has_children: false,
+            hasChildren: false,
             links: {
               apply: 'https://cmr.sit.earthdata.nasa.gov:443/search/collections.json?has_granules_or_cwic=true&include_facets=v2&include_granule_counts=true&include_has_granules=true&include_tags=edsc.%2A%2Corg.ceos.wgiss.cwic.granules.prod&keyword=&options[temporal][limit_to_granules]=true&page_num=1&page_size=20&sort_key=has_granules_or_cwic&facets_size[instrument]=10000&instrument_h[]=Test+facet+2'
             }

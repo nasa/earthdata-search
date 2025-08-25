@@ -1,3 +1,5 @@
+import camelcaseKeys from 'camelcase-keys'
+
 import CmrRequest from './cmrRequest'
 import {
   getApplicationConfig,
@@ -106,7 +108,7 @@ export default class GranuleRequest extends CmrRequest {
 
     return {
       feed: {
-        entry
+        entry: camelcaseKeys(entry, { deep: true })
       }
     }
   }

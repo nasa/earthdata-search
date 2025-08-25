@@ -1,7 +1,7 @@
 import { test, expect } from 'playwright-test-coverage'
 
 import { graphQlGetSubscriptionsQuery } from '../../../../../support/graphQlGetSubscriptionsQuery'
-import { isGetFocusedCollectionsQuery } from '../../../../../support/isGetFocusedCollectionsQuery'
+import { isGetCollectionQuery } from '../../../../../support/isGetCollectionQuery'
 import { setupTests } from '../../../../../support/setupTests'
 
 import { commafy } from '../../../../../../static/src/js/util/commafy'
@@ -257,7 +257,7 @@ test.describe('Path /search/granules/collection-details', () => {
       await page.route(/graphql.*\/api/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
 
-        if (isGetFocusedCollectionsQuery(route, conceptId)) {
+        if (isGetCollectionQuery(route, conceptId)) {
           await route.fulfill({
             json: assocatedDoisGraphQlBody,
             headers: graphQlHeaders
@@ -336,7 +336,7 @@ test.describe('Path /search/granules/collection-details', () => {
 
       await page.route(/graphql.*\/api/, async (route) => {
         const { query } = JSON.parse(route.request().postData())
-        if (isGetFocusedCollectionsQuery(route, conceptId)) {
+        if (isGetCollectionQuery(route, conceptId)) {
           await route.fulfill({
             json: reformattingGraphQlBody,
             headers: graphQlHeaders
@@ -458,7 +458,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (isGetFocusedCollectionsQuery(route, conceptId)) {
+          if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: reformattingGraphQlBody,
               headers: graphQlHeaders
@@ -517,7 +517,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (isGetFocusedCollectionsQuery(route, conceptId)) {
+          if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: pointSpatialGraphqlBody,
               headers: graphQlHeaders
@@ -576,7 +576,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (isGetFocusedCollectionsQuery(route, conceptId)) {
+          if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: linesGraphqlBody,
               headers: graphQlHeaders
@@ -635,7 +635,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (isGetFocusedCollectionsQuery(route, conceptId)) {
+          if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: polygonGraphqlBody,
               headers: graphQlHeaders
@@ -695,7 +695,7 @@ test.describe('Path /search/granules/collection-details', () => {
               })
             }
 
-            if (isGetFocusedCollectionsQuery(route, conceptId)) {
+            if (isGetCollectionQuery(route, conceptId)) {
               await route.fulfill({
                 json: smallPolygonGraphqlBody,
                 headers: graphQlHeaders
@@ -754,7 +754,7 @@ test.describe('Path /search/granules/collection-details', () => {
             })
           }
 
-          if (isGetFocusedCollectionsQuery(route, conceptId)) {
+          if (isGetCollectionQuery(route, conceptId)) {
             await route.fulfill({
               json: multiShapeGraphqlBody,
               headers: graphQlHeaders

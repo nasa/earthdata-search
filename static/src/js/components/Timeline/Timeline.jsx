@@ -79,7 +79,12 @@ export const Timeline = ({
       const metadata = collectionMetadata[collectionConceptId]
       setIsMetadataLoaded(!!metadata?.timeStart)
     }
-  }, [collectionMetadata, isProjectPage, projectCollectionsIds, collectionConceptId])
+  }, [
+    collectionConceptId,
+    collectionMetadata,
+    isProjectPage,
+    projectCollectionsIds
+  ])
 
   useEffect(() => {
     if (!isInitialSetup) {

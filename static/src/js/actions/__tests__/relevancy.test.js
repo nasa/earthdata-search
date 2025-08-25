@@ -14,14 +14,10 @@ describe('collectionRelevancyMetrics', () => {
       .post(/relevancy_logger/)
       .reply(200)
 
-    useEdscStore.setState((state) => {
-      // eslint-disable-next-line no-param-reassign
-      state.focusedCollection.focusedCollection = 'collection2'
-    })
-
-    const store = mockStore({
-      metadata: {
-        collections: {
+    useEdscStore.setState({
+      collection: {
+        collectionId: 'collection2',
+        collectionMetadata: {
           collection1: {
             id: 'collection1'
           },
@@ -30,13 +26,18 @@ describe('collectionRelevancyMetrics', () => {
           }
         }
       },
-      searchResults: {
+      collections: {
         collections: {
-          allIds: ['collection1', 'collection2'],
-          keyword: 'test'
+          items: [{
+            id: 'collection1'
+          }, {
+            id: 'collection2'
+          }]
         }
       }
     })
+
+    const store = mockStore()
 
     const loggerSpy = jest.spyOn(LoggerRequest.prototype, 'logRelevancy')
 

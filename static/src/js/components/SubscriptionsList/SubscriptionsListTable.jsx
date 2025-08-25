@@ -28,8 +28,8 @@ const SubscriptionsListTable = ({
   subscriptionType,
   onDeleteSubscription
 }) => {
-  const changeFocusedCollection = useEdscStore(
-    (state) => state.focusedCollection.changeFocusedCollection
+  const setCollectionId = useEdscStore(
+    (state) => state.collection.setCollectionId
   )
   const onHandleRemove = (conceptId, nativeId, collectionId) => {
     // eslint-disable-next-line no-alert
@@ -130,7 +130,7 @@ const SubscriptionsListTable = ({
                         }
                         onClick={
                           () => {
-                            if (subscriptionType === 'granule') changeFocusedCollection(collectionConceptId)
+                            if (subscriptionType === 'granule') setCollectionId(collectionConceptId)
                           }
                         }
                         variant="naked"

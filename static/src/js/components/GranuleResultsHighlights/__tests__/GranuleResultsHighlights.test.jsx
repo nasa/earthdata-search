@@ -28,18 +28,18 @@ jest.mock('react-router-dom', () => ({
 
 const setup = setupTest({
   Component: GranuleResultsHighlights,
-  defaultProps: {
-    granules: [{
-      title: 'producer_granule_id_1',
-      formattedTemporal: [
-        '2020-03-04 19:30:00',
-        '2020-03-04 19:35:00'
-      ]
-    }],
-    granuleCount: 5,
-    visibleGranules: 1,
-    isLoading: true,
-    isLoaded: false
+  defaultZustandState: {
+    granules: {
+      granules: {
+        count: 5,
+        isLoaded: false,
+        isLoading: true,
+        items: [{
+          formattedTemporal: ['2020-03-04 19:30:00', '2020-03-04 19:35:00'],
+          title: 'producer_granule_id_1'
+        }]
+      }
+    }
   },
   withRedux: true,
   withRoute: true
@@ -121,9 +121,13 @@ describe('GranuleResultsHighlights component', () => {
   describe('when granules are loaded', () => {
     test('shows the granule count and granule info', () => {
       setup({
-        overrideProps: {
-          isLoading: false,
-          isLoaded: true
+        overrideZustandState: {
+          granules: {
+            granules: {
+              isLoaded: true,
+              isLoading: false
+            }
+          }
         }
       })
 
@@ -147,12 +151,16 @@ describe('GranuleResultsHighlights component', () => {
     describe('when granules have no start time nor end time', () => {
       test('display not provided instead of date', () => {
         setup({
-          overrideProps: {
-            isLoading: false,
-            isLoaded: true,
-            granules: [{
-              title: 'producer_granule_id_1'
-            }]
+          overrideZustandState: {
+            granules: {
+              granules: {
+                isLoaded: true,
+                isLoading: false,
+                items: [{
+                  title: 'producer_granule_id_1'
+                }]
+              }
+            }
           }
         })
 
@@ -164,11 +172,15 @@ describe('GranuleResultsHighlights component', () => {
     describe('when there are no granules', () => {
       test('displays No Granules Found message', () => {
         setup({
-          overrideProps: {
-            isLoading: false,
-            isLoaded: true,
-            granules: [],
-            granuleCount: 0
+          overrideZustandState: {
+            granules: {
+              granules: {
+                count: 0,
+                isLoaded: true,
+                isLoading: false,
+                items: []
+              }
+            }
           }
         })
 

@@ -51,8 +51,7 @@ function setup(overrideProps) {
       }
     },
     dataQualitySummaries: {},
-    focusedCollectionId: '',
-    granulesMetadata: {},
+    collectionId: '',
     granulesQueries: {},
     projectCollections: {
       allIds: ['collectionId'],
@@ -88,7 +87,7 @@ function setup(overrideProps) {
     onSetActivePanel: jest.fn(),
     onUpdateAccessMethod: jest.fn(),
     onSetActivePanelGroup: jest.fn(),
-    setFocusedCollection: jest.fn(),
+    setCollectionId: jest.fn(),
     onChangeProjectGranulePageNum: jest.fn(),
     ...overrideProps
   }
@@ -163,13 +162,13 @@ describe('ProjectPanels component', () => {
     expect(props.onTogglePanels).toHaveBeenCalledWith(false)
   })
 
-  test('onChangePanel calls setFocusedCollection', () => {
+  test('onChangePanel calls setCollectionId', () => {
     const { enzymeWrapper, props } = setup()
 
     enzymeWrapper.instance().onChangePanel('0.0.1')
 
-    expect(props.setFocusedCollection).toHaveBeenCalledTimes(1)
-    expect(props.setFocusedCollection).toHaveBeenCalledWith('collectionId')
+    expect(props.setCollectionId).toHaveBeenCalledTimes(1)
+    expect(props.setCollectionId).toHaveBeenCalledWith('collectionId')
     expect(props.onTogglePanels).toHaveBeenCalledTimes(1)
     expect(props.onTogglePanels).toHaveBeenCalledWith(true)
     expect(props.onSetActivePanel).toHaveBeenCalledTimes(1)

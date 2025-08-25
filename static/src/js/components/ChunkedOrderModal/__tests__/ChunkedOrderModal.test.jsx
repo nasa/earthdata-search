@@ -36,7 +36,7 @@ const setup = setupTest({
     projectCollectionsRequiringChunking: {
       'C100005-EDSC': {
         granules: {
-          hits: 9001
+          count: 9001
         }
       }
     },
@@ -44,29 +44,26 @@ const setup = setupTest({
     onToggleChunkedOrderModal: jest.fn()
   },
   defaultZustandState: {
+    collection: {
+      collectionMetadata: {
+        'C100005-EDSC': {
+          title: 'collection title'
+        }
+      }
+    },
     project: {
       collections: {
         allIds: ['C100005-EDSC'],
         byId: {
           'C100005-EDSC': {
             granules: {
-              hits: 9001
+              count: 9001
             }
           }
         }
       }
     }
   },
-  defaultReduxState: {
-    metadata: {
-      collections: {
-        'C100005-EDSC': {
-          title: 'collection title'
-        }
-      }
-    }
-  },
-  withRedux: true,
   withRouter: true
 })
 
@@ -92,7 +89,7 @@ describe('ChunkedOrderModal component', () => {
             byId: {
               'C100005-EDSC': {
                 granules: {
-                  hits: 9001
+                  count: 9001
                 },
                 accessMethods: {
                   echoOrder0: {
@@ -140,7 +137,7 @@ describe('ChunkedOrderModal component', () => {
               byId: {
                 'C100005-EDSC': {
                   granules: {
-                    hits: 9001
+                    count: 9001
                   },
                   selectedAccessMethod: 'echoOrder0'
                 }
@@ -162,7 +159,7 @@ describe('ChunkedOrderModal component', () => {
               byId: {
                 'C100005-EDSC': {
                   granules: {
-                    hits: 9001
+                    count: 9001
                   },
                   selectedAccessMethod: 'esi0'
                 }
@@ -184,7 +181,7 @@ describe('ChunkedOrderModal component', () => {
               byId: {
                 'C100005-EDSC': {
                   granules: {
-                    hits: 9001
+                    count: 9001
                   },
                   selectedAccessMethod: 'harmony0'
                 }

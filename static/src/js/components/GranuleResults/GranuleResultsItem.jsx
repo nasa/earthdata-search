@@ -71,11 +71,11 @@ const GranuleResultsItem = forwardRef(({
 }, ref) => {
   const {
     addGranuleToProjectCollection,
-    changeFocusedGranule,
+    setGranuleId,
     removeGranuleFromProjectCollection
   } = useEdscStore((state) => ({
     addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
-    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
+    setGranuleId: state.granule.setGranuleId,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection
   }))
   const generateNotebookTag = getValueForTag('notebook_generation', collectionTags)
@@ -99,7 +99,7 @@ const GranuleResultsItem = forwardRef(({
   }
 
   const handleClickGranuleDetails = (granuleId) => {
-    changeFocusedGranule(granuleId)
+    setGranuleId(granuleId)
   }
 
   const {

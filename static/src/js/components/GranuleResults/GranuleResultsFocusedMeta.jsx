@@ -23,24 +23,28 @@ import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalCon
 import EDSCImage from '../EDSCImage/EDSCImage'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
+import { getGranulesById } from '../../zustand/selectors/granules'
 
 import './GranuleResultsFocusedMeta.scss'
 
 /**
  * Renders GranuleResultsFocusedMeta.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.focusedGranuleMetadata - The metadata for any currently focused granule.
- * @param {String} props.focusedGranuleId - The id for the focused granule.
  * @param {String} props.onMetricsBrowseGranuleImage - Callback function passed from actions to track metrics.
  */
 const GranuleResultsFocusedMeta = ({
-  focusedGranuleMetadata,
   onMetricsBrowseGranuleImage
 }) => {
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
+  const granulesById = useEdscStore(getGranulesById)
+  const focusedGranuleMetadata = granulesById[focusedGranuleId] || {}
 
-  const { title, links = [], browseFlag } = focusedGranuleMetadata
+  const {
+    title,
+    links = [],
+    browseFlag
+  } = focusedGranuleMetadata
   const [activeBrowseImageIndex, setActiveBrowseImageIndex] = useState(0)
   const [activeModalBrowseImageIndex, setActiveModalBrowseImageIndex] = useState(0)
   const [browseImageModalIsActive, setBrowseImageModalIsActive] = useState(false)
@@ -483,18 +487,6 @@ const GranuleResultsFocusedMeta = ({
 }
 
 GranuleResultsFocusedMeta.propTypes = {
-  focusedGranuleMetadata: PropTypes.shape({
-    browseFlag: PropTypes.bool,
-    conceptId: PropTypes.string,
-    links: PropTypes.arrayOf(
-      PropTypes.shape({
-        href: PropTypes.string.isRequired,
-        inherited: PropTypes.bool,
-        rel: PropTypes.string.isRequired
-      })
-    ),
-    title: PropTypes.string
-  }).isRequired,
   onMetricsBrowseGranuleImage: PropTypes.func.isRequired
 }
 

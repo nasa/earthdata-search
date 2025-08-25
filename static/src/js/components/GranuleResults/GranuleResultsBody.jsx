@@ -5,7 +5,6 @@ import { CSSTransition } from 'react-transition-group'
 import { getGranuleIds } from '../../util/getGranuleIds'
 import { formatGranulesList } from '../../util/formatGranulesList'
 import { eventEmitter } from '../../events/events'
-import { locationPropType } from '../../util/propTypes/location'
 
 import Spinner from '../Spinner/Spinner'
 import GranuleResultsList from './GranuleResultsList'
@@ -13,7 +12,8 @@ import GranuleResultsTable from './GranuleResultsTable'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import { getGranuleId } from '../../zustand/selectors/granule'
+import { getGranules } from '../../zustand/selectors/granules'
 
 import './GranuleResultsBody.scss'
 
@@ -21,13 +21,10 @@ import './GranuleResultsBody.scss'
  * Renders GranuleResultsBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The focused collection ID.
- * @param {Object} props.collectionTags - The tags for the focused collection
  * @param {Object} props.directDistributionInformation - The collection direct distribution information.
  * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
- * @param {Object} props.granuleSearchResults - Granules passed from redux store.
  * @param {Object} props.isOpenSearch - Flag set if the focused collection is a CWIC collection.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
- * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Metrics callback for data access events.
@@ -35,26 +32,23 @@ import './GranuleResultsBody.scss'
  */
 const GranuleResultsBody = ({
   collectionId,
-  collectionTags,
   directDistributionInformation,
   generateNotebook,
-  granuleSearchResults,
-  granulesMetadata,
   isOpenSearch,
   loadNextPage,
-  location,
   onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   panelView
 }) => {
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedGranuleId = useEdscStore(getGranuleId)
+  const granuleSearchResults = useEdscStore(getGranules)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const {
-    changeFocusedGranule,
+    setGranuleId,
     projectCollections
   } = useEdscStore((state) => ({
-    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
+    setGranuleId: state.granule.setGranuleId,
     projectCollections: state.project.collections
   }))
 
@@ -75,17 +69,18 @@ const GranuleResultsBody = ({
   })
 
   const {
-    hits: granuleHits,
+    count: granuleHits,
     loadTime = 0,
     isLoaded,
     isLoading,
-    allIds
+    items
   } = granuleSearchResults
 
   const {
     excludedGranuleIds = [],
     readableGranuleName = ['']
   } = granuleQuery
+  const allIds = items.map((granule) => granule.id)
 
   const granuleIds = getGranuleIds({
     allIds,
@@ -93,6 +88,9 @@ const GranuleResultsBody = ({
     isOpenSearch,
     limit: false
   })
+
+  // Filter the granule items by the granuleIds
+  const granuleItems = items.filter((granule) => granuleIds.includes(granule.id))
 
   const {
     byId: projectCollectionsById = {},
@@ -142,14 +140,17 @@ const GranuleResultsBody = ({
   const loadTimeInSeconds = (loadTime / 1000).toFixed(1)
 
   const result = useMemo(() => formatGranulesList({
-    granuleIds,
-    granulesMetadata,
+    granules: granuleItems,
     hoveredGranuleId,
     focusedGranuleId,
     isGranuleInProject,
     isCollectionInProject,
-    changeFocusedGranule
-  }), [granuleIds, granulesMetadata, focusedGranuleId, hoveredGranuleId])
+    setGranuleId
+  }), [
+    granuleItems,
+    focusedGranuleId,
+    hoveredGranuleId
+  ])
 
   const [visibleMiddleIndex, setVisibleMiddleIndex] = useState(null)
 
@@ -195,7 +196,6 @@ const GranuleResultsBody = ({
       >
         <GranuleResultsList
           collectionId={collectionId}
-          collectionTags={collectionTags}
           readableGranuleName={readableGranuleName}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
@@ -207,7 +207,6 @@ const GranuleResultsBody = ({
           isItemLoaded={isItemLoaded}
           itemCount={itemCount}
           loadMoreItems={loadMoreItems}
-          location={location}
           onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
           onMetricsDataAccess={onMetricsDataAccess}
@@ -223,7 +222,6 @@ const GranuleResultsBody = ({
       >
         <GranuleResultsTable
           collectionId={collectionId}
-          collectionTags={collectionTags}
           directDistributionInformation={directDistributionInformation}
           excludedGranuleIds={excludedGranuleIds}
           generateNotebook={generateNotebook}
@@ -231,7 +229,6 @@ const GranuleResultsBody = ({
           isOpenSearch={isOpenSearch}
           itemCount={itemCount}
           isItemLoaded={isItemLoaded}
-          location={location}
           loadMoreItems={loadMoreItems}
           onGenerateNotebook={onGenerateNotebook}
           onMetricsAddGranuleProject={onMetricsAddGranuleProject}
@@ -273,40 +270,9 @@ const GranuleResultsBody = ({
 
 GranuleResultsBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   generateNotebook: PropTypes.shape({}).isRequired,
-  granuleSearchResults: PropTypes.shape({
-    allIds: PropTypes.arrayOf(PropTypes.string),
-    hits: PropTypes.number,
-    isLoaded: PropTypes.bool,
-    isLoading: PropTypes.bool,
-    loadTime: PropTypes.number
-  }).isRequired,
-  granulesMetadata: PropTypes.objectOf(
-    PropTypes.shape({
-      browseFlag: PropTypes.bool,
-      browseUrl: PropTypes.string,
-      collectionConceptId: PropTypes.string,
-      dayNightFlag: PropTypes.string,
-      formattedTemporal: PropTypes.arrayOf(PropTypes.string),
-      granuleThumbnail: PropTypes.string,
-      id: PropTypes.string.isRequired,
-      links: PropTypes.arrayOf(
-        PropTypes.shape({
-          href: PropTypes.string.isRequired,
-          inherited: PropTypes.bool,
-          rel: PropTypes.string.isRequired
-        })
-      ),
-      onlineAccessFlag: PropTypes.bool,
-      originalFormat: PropTypes.string,
-      producerGranuleId: PropTypes.string,
-      title: PropTypes.string.isRequired
-    })
-  ).isRequired,
   isOpenSearch: PropTypes.bool.isRequired,
-  location: locationPropType.isRequired,
   loadNextPage: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,

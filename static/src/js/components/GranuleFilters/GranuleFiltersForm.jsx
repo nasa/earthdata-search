@@ -24,13 +24,13 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getFocusedCollectionGranuleQuery } from '../../zustand/selectors/query'
+import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 
 import './GranuleFiltersForm.scss'
 
 /**
  * Renders GranuleFiltersForm.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.collectionMetadata - The focused collections metadata.
  * @param {Object} props.errors - Form errors provided by Formik.
  * @param {Function} props.handleBlur - Callback function provided by Formik.
  * @param {Function} props.handleChange - Callback function provided by Formik.
@@ -43,7 +43,6 @@ import './GranuleFiltersForm.scss'
  */
 export const GranuleFiltersForm = (props) => {
   const {
-    collectionMetadata,
     errors,
     handleBlur,
     handleChange,
@@ -55,6 +54,7 @@ export const GranuleFiltersForm = (props) => {
     values
   } = props
 
+  const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const { excludedGranuleIds = [] } = granuleQuery
   const undoExcludeGranule = useEdscStore((state) => state.query.undoExcludeGranule)
@@ -983,12 +983,6 @@ export const GranuleFiltersForm = (props) => {
 }
 
 GranuleFiltersForm.propTypes = {
-  collectionMetadata: PropTypes.shape({
-    id: PropTypes.string,
-    isOpenSearch: PropTypes.bool,
-    tags: PropTypes.shape({}),
-    tilingIdentificationSystems: PropTypes.arrayOf(PropTypes.shape({}))
-  }).isRequired,
   errors: PropTypes.shape({
     cloudCover: PropTypes.shape({}),
     gridCoords: PropTypes.string,

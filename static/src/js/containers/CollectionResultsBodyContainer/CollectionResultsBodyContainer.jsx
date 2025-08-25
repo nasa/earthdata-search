@@ -9,11 +9,6 @@ import CollectionResultsBody from '../../components/CollectionResults/Collection
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuery } from '../../zustand/selectors/query'
 
-export const mapStateToProps = (state) => ({
-  collectionsSearch: state.searchResults.collections,
-  collectionsMetadata: state.metadata.collections
-})
-
 export const mapDispatchToProps = (dispatch) => ({
   onMetricsAddCollectionProject:
     (data) => dispatch(metricsAddCollectionProject(data))
@@ -21,8 +16,6 @@ export const mapDispatchToProps = (dispatch) => ({
 
 export const CollectionResultsBodyContainer = (props) => {
   const {
-    collectionsMetadata,
-    collectionsSearch,
     onMetricsAddCollectionProject,
     panelView
   } = props
@@ -42,8 +35,6 @@ export const CollectionResultsBodyContainer = (props) => {
 
   return (
     <CollectionResultsBody
-      collectionsMetadata={collectionsMetadata}
-      collectionsSearch={collectionsSearch}
       loadNextPage={loadNextPage}
       onMetricsAddCollectionProject={onMetricsAddCollectionProject}
       panelView={panelView}
@@ -52,10 +43,8 @@ export const CollectionResultsBodyContainer = (props) => {
 }
 
 CollectionResultsBodyContainer.propTypes = {
-  collectionsMetadata: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({}).isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionResultsBodyContainer)
+export default connect(null, mapDispatchToProps)(CollectionResultsBodyContainer)
