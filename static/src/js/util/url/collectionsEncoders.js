@@ -631,7 +631,7 @@ export const decodeCollections = (params) => {
 
   return {
     collections,
-    focusedCollection,
+    focusedCollection: focusedCollection.length > 0 ? focusedCollection : null,
     project,
     query: {
       collection: {

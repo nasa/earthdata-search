@@ -6,8 +6,7 @@ import * as actions from '../../../middleware/metrics/actions'
 import GranuleResultsFocusedMeta from '../../../components/GranuleResults/GranuleResultsFocusedMeta'
 import {
   GranuleResultsFocusedMetaContainer,
-  mapDispatchToProps,
-  mapStateToProps
+  mapDispatchToProps
 } from '../GranuleResultsFocusedMetaContainer'
 
 jest.mock('../../../components/GranuleResults/GranuleResultsFocusedMeta', () => jest.fn(() => <div />))
@@ -15,7 +14,6 @@ jest.mock('../../../components/GranuleResults/GranuleResultsFocusedMeta', () => 
 const setup = setupTest({
   Component: GranuleResultsFocusedMetaContainer,
   defaultProps: {
-    focusedGranuleMetadata: { test: 'test' },
     onMetricsBrowseGranuleImage: jest.fn()
   }
 })
@@ -40,29 +38,12 @@ describe('mapDispatchToProps', () => {
   })
 })
 
-describe('mapStateToProps', () => {
-  test('returns the correct state', () => {
-    const store = {
-      metadata: {
-        granules: {}
-      }
-    }
-
-    const expectedState = {
-      focusedGranuleMetadata: {}
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
 describe('GranuleResultsFocusedMetaContainer component', () => {
   test('passes its props and renders a single GranuleResultsFocusedMeta component', () => {
     const { props } = setup()
 
     expect(GranuleResultsFocusedMeta).toHaveBeenCalledTimes(1)
     expect(GranuleResultsFocusedMeta).toHaveBeenCalledWith({
-      focusedGranuleMetadata: { test: 'test' },
       onMetricsBrowseGranuleImage: props.onMetricsBrowseGranuleImage
     }, {})
   })

@@ -10,19 +10,19 @@ describe('isProjectValid', () => {
           collection1: {
             accessMethods: {},
             granules: {
-              hits: 1
+              count: 1
             }
           },
           collection2: {
             accessMethods: {},
             granules: {
-              hits: 1
+              count: 1
             }
           },
           collection3: {
             accessMethods: {},
             granules: {
-              hits: 1
+              count: 1
             }
           }
         }
@@ -60,20 +60,20 @@ describe('isProjectValid', () => {
               }
             },
             granules: {
-              hits: 1
+              count: 1
             },
             selectedAccessMethod: 'download'
           },
           collection2: {
             accessMethods: {},
             granules: {
-              hits: 1
+              count: 1
             }
           },
           collection3: {
             accessMethods: {},
             granules: {
-              hits: 0
+              count: 0
             }
           }
         }
@@ -112,7 +112,7 @@ describe('isProjectValid', () => {
               }
             },
             granules: {
-              hits: 1
+              count: 1
             },
             selectedAccessMethod: 'download'
           },
@@ -124,7 +124,7 @@ describe('isProjectValid', () => {
               }
             },
             granules: {
-              hits: 1
+              count: 1
             },
             selectedAccessMethod: 'download'
           },
@@ -136,7 +136,7 @@ describe('isProjectValid', () => {
               }
             },
             granules: {
-              hits: 1
+              count: 1
             },
             selectedAccessMethod: 'download'
           }

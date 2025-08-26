@@ -89,9 +89,6 @@ describe('AccessMethod component', () => {
           metadata: {
             conceptId: collectionId,
             granule_count: 10000
-          },
-          granuleMetadata: {
-            hits: 3800
           }
         }
       })
@@ -116,9 +113,6 @@ describe('AccessMethod component', () => {
             metadata: {
               conceptId: collectionId,
               granule_count: 10000
-            },
-            granuleMetadata: {
-              hits: 3800
             }
           }
         })
@@ -141,9 +135,6 @@ describe('AccessMethod component', () => {
           metadata: {
             conceptId: collectionId,
             granule_count: 10000
-          },
-          granuleMetadata: {
-            hits: 3800
           }
         }
       })
@@ -1818,13 +1809,17 @@ describe('AccessMethod component', () => {
                 ],
                 byId: {}
               }
-            },
-            granuleMetadata: {
-              'G10000000000-EDSC': {
-                id: 'G10000000000-EDSC'
-              },
-              'G1000000001-EDSC': {
-                id: 'G1000000001-EDSC'
+            }
+          },
+          overrideZustandState: {
+            granule: {
+              granuleMetadata: {
+                'G10000000000-EDSC': {
+                  id: 'G10000000000-EDSC'
+                },
+                'G1000000001-EDSC': {
+                  id: 'G1000000001-EDSC'
+                }
               }
             }
           }
@@ -1859,9 +1854,6 @@ describe('AccessMethod component', () => {
                   ],
                   byId: {}
                 }
-              },
-              granuleMetadata: {
-                undefined
               }
             }
           })
@@ -1901,16 +1893,20 @@ describe('AccessMethod component', () => {
                 ],
                 byId: {}
               }
-            },
-            granuleMetadata: {
-              'G1000000000-EDSC': {
-                id: 'G1000000000-EDSC'
-              },
-              'G1000000001-EDSC': {
-                id: 'G1000000001-EDSC'
-              },
-              'G1000000002-EDSC': {
-                id: 'G1000000002-EDSC'
+            }
+          },
+          overrideZustandState: {
+            granule: {
+              granuleMetadata: {
+                'G1000000000-EDSC': {
+                  id: 'G1000000000-EDSC'
+                },
+                'G1000000001-EDSC': {
+                  id: 'G1000000001-EDSC'
+                },
+                'G1000000002-EDSC': {
+                  id: 'G1000000002-EDSC'
+                }
               }
             }
           }

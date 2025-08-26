@@ -11,6 +11,17 @@ import GranuleResultsActions from '../GranuleResultsActions'
 
 jest.mock('../../../containers/AuthRequiredContainer/AuthRequiredContainer', () => jest.fn(({ children }) => <div>{children}</div>))
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search/granules',
+    search: '?p=collectionId',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
+
 const setup = setupTest({
   Component: GranuleResultsActions,
   defaultProps: {
@@ -28,20 +39,24 @@ const setup = setupTest({
     handoffLinks: [],
     initialLoading: false,
     isCollectionInProject: false,
-    location: {
-      search: '?p=collectionId'
-    },
     onChangePath: jest.fn(),
     onMetricsAddCollectionProject: jest.fn(),
     onSetActivePanelSection: jest.fn(),
     removedGranuleIds: [],
-    searchGranuleCount: 5000,
-    subscriptions: []
+    searchGranuleCount: 5000
   },
   defaultReduxState: {
     authToken: 'token'
   },
   defaultZustandState: {
+    collection: {
+      collectionId: 'collectionId',
+      collectionMetadata: {
+        collectionId: {
+          subscriptions: {}
+        }
+      }
+    },
     portal: {
       features: {
         authentication: true
@@ -178,12 +193,20 @@ describe('GranuleResultsActions component', () => {
   describe('when a user is subscribed', () => {
     test('renders the correct subscription button', () => {
       setup({
-        overrideProps: {
-          subscriptions: [
-            {
-              name: 'Sub 1'
+        overrideZustandState: {
+          collection: {
+            collectionMetadata: {
+              collectionId: {
+                subscriptions: {
+                  items: [
+                    {
+                      name: 'Sub 1'
+                    }
+                  ]
+                }
+              }
             }
-          ]
+          }
         }
       })
 

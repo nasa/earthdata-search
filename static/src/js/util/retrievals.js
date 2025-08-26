@@ -83,7 +83,7 @@ export const prepareRetrievalParams = (state) => {
     } = projectCollection
 
     const {
-      hits: granuleCount,
+      count: granuleCount,
       allIds: allGranuleIds = [],
       byId: byGranuleId = {}
     } = granules

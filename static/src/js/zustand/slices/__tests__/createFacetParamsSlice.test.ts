@@ -3,13 +3,16 @@ import useEdscStore from '../../useEdscStore'
 // @ts-expect-error This file does not have types
 import configureStore from '../../../store/configureStore'
 
-import {
-  REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
-  TOGGLE_VIEW_ALL_FACETS_MODAL
-  // @ts-expect-error This file does not have types
-} from '../../../constants/actionTypes'
+// @ts-expect-error This file does not have types
+import actions from '../../../actions'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
+
+jest.mock('../../../actions', () => ({
+  getViewAllFacets: jest.fn(),
+  removeSubscriptionDisabledFields: jest.fn(),
+  toggleFacetsModal: jest.fn()
+}))
 
 const mockDispatch = jest.fn()
 const mockGetState = jest.fn()
@@ -83,6 +86,7 @@ describe('createFacetParamsSlice', () => {
 
       const updatedState = useEdscStore.getState()
       const { facetParams: updatedFacetParams } = updatedState
+
       expect(updatedFacetParams.cmrFacets).toEqual({
         science_keywords_h: [{
           topic: 'Agriculture',
@@ -101,57 +105,36 @@ describe('createFacetParamsSlice', () => {
       const { applyViewAllFacets } = facetParams
 
       // Set initial viewAllFacets
-      useEdscStore.setState(() => ({
-        facetParams: {
-          ...facetParams,
-          viewAllFacets: {
-            instrument_h: ['AIRS']
-          }
-        },
-        query: {
-          changeQuery: jest.fn()
-        }
-      }))
+      useEdscStore.setState((state) => {
+        state.facetParams.setCmrFacets = jest.fn()
+        state.facetParams.viewAllFacets.instrument_h = ['AIRS']
+        state.query.changeQuery = jest.fn()
+      })
 
       // Apply the viewAllFacets
       applyViewAllFacets()
 
       const updatedState = useEdscStore.getState()
       const {
-        facetParams: updatedFacetParams,
-        query
+        facetParams: updatedFacetParams
       } = updatedState
-      expect(updatedFacetParams.cmrFacets).toEqual({
+
+      expect(updatedFacetParams.setCmrFacets).toHaveBeenCalledTimes(1)
+      expect(updatedFacetParams.setCmrFacets).toHaveBeenCalledWith({
         instrument_h: ['AIRS']
       })
 
-      expect(query.changeQuery).toHaveBeenCalledTimes(1)
-      expect(query.changeQuery).toHaveBeenCalledWith({
-        collection: {
-          pageNum: 1
-        }
-      })
-
-      expect(mockDispatch).toHaveBeenCalledTimes(3)
-      expect(mockDispatch).toHaveBeenNthCalledWith(1, {
-        type: TOGGLE_VIEW_ALL_FACETS_MODAL,
-        payload: false
-      })
-
-      expect(mockDispatch).toHaveBeenNthCalledWith(2, expect.any(Function))
-      expect(mockDispatch).toHaveBeenNthCalledWith(3, {
-        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-      })
+      expect(actions.toggleFacetsModal).toHaveBeenCalledTimes(1)
+      expect(actions.toggleFacetsModal).toHaveBeenCalledWith(false)
     })
   })
 
   describe('setFeatureFacets', () => {
     test('updates featureFacets', () => {
-      useEdscStore.setState(() => ({
-        query: {
-          changeQuery: jest.fn()
-        }
-      }))
+      useEdscStore.setState((state) => {
+        state.collections.getCollections = jest.fn()
+        state.query.changeQuery = jest.fn()
+      })
 
       const zustandState = useEdscStore.getState()
       const { facetParams } = zustandState
@@ -160,14 +143,19 @@ describe('createFacetParamsSlice', () => {
 
       const updatedState = useEdscStore.getState()
       const {
+        collections,
         facetParams: updatedFacetParams,
         query
       } = updatedState
+
       expect(updatedFacetParams.featureFacets).toEqual({
         availableInEarthdataCloud: true,
         customizable: false,
         mapImagery: false
       })
+
+      expect(collections.getCollections).toHaveBeenCalledTimes(1)
+      expect(collections.getCollections).toHaveBeenCalledWith()
 
       expect(query.changeQuery).toHaveBeenCalledTimes(1)
       expect(query.changeQuery).toHaveBeenCalledWith({
@@ -176,11 +164,8 @@ describe('createFacetParamsSlice', () => {
         }
       })
 
-      expect(mockDispatch).toHaveBeenCalledTimes(2)
-      expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-      expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-        type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-      })
+      expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+      expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
     })
   })
 
@@ -188,11 +173,10 @@ describe('createFacetParamsSlice', () => {
     describe('when setting science keywords', () => {
       describe('when the facet is being applied', () => {
         test('updates cmrFacets', () => {
-          useEdscStore.setState(() => ({
-            query: {
-              changeQuery: jest.fn()
-            }
-          }))
+          useEdscStore.setState((state) => {
+            state.collections.getCollections = jest.fn()
+            state.query.changeQuery = jest.fn()
+          })
 
           const zustandState = useEdscStore.getState()
           const { facetParams } = zustandState
@@ -209,12 +193,17 @@ describe('createFacetParamsSlice', () => {
 
           const updatedState = useEdscStore.getState()
           const {
+            collections,
             facetParams: updatedFacetParams,
             query
           } = updatedState
+
           expect(updatedFacetParams.cmrFacets).toEqual({
             science_keywords_h: [{ topic: 'Agriculture' }]
           })
+
+          expect(collections.getCollections).toHaveBeenCalledTimes(1)
+          expect(collections.getCollections).toHaveBeenCalledWith()
 
           expect(query.changeQuery).toHaveBeenCalledTimes(1)
           expect(query.changeQuery).toHaveBeenCalledWith({
@@ -223,20 +212,16 @@ describe('createFacetParamsSlice', () => {
             }
           })
 
-          expect(mockDispatch).toHaveBeenCalledTimes(2)
-          expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-          expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-            type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-          })
+          expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+          expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
         })
 
         describe('when the facet is being removed', () => {
           test('updates cmrFacets', () => {
-            useEdscStore.setState(() => ({
-              query: {
-                changeQuery: jest.fn()
-              }
-            }))
+            useEdscStore.setState((state) => {
+              state.collections.getCollections = jest.fn()
+              state.query.changeQuery = jest.fn()
+            })
 
             mockGetState.mockReturnValue({
               autocomplete: {
@@ -255,12 +240,17 @@ describe('createFacetParamsSlice', () => {
 
             const updatedState = useEdscStore.getState()
             const {
+              collections,
               facetParams: updatedFacetParams,
               query
             } = updatedState
+
             expect(updatedFacetParams.cmrFacets).toEqual({
               science_keywords_h: []
             })
+
+            expect(collections.getCollections).toHaveBeenCalledTimes(1)
+            expect(collections.getCollections).toHaveBeenCalledWith()
 
             expect(query.changeQuery).toHaveBeenCalledTimes(1)
             expect(query.changeQuery).toHaveBeenCalledWith({
@@ -269,11 +259,8 @@ describe('createFacetParamsSlice', () => {
               }
             })
 
-            expect(mockDispatch).toHaveBeenCalledTimes(2)
-            expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-            expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-              type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-            })
+            expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+            expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
           })
         })
       })
@@ -281,11 +268,10 @@ describe('createFacetParamsSlice', () => {
 
     describe('when setting platforms', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -302,12 +288,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           platforms_h: [{ basis: 'Land-based+Platforms' }]
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -316,21 +307,17 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
     describe('when setting instruments', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -343,12 +330,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           instrument_h: ['AIRS']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -357,21 +349,17 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
     describe('when setting organizations', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -384,12 +372,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           data_center_h: ['Alaska+Satellite+Facility']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -398,21 +391,17 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
     describe('when setting projects', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -425,12 +414,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           project_h: ['ABoVE']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -439,21 +433,17 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
     describe('when setting processing level id', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -466,12 +456,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           processing_level_id_h: ['0+-+Raw+Data']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -480,21 +475,17 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
     describe('when setting data format', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -507,12 +498,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           granule_data_format_h: ['ASCII']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -521,21 +517,17 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
     describe('when setting tiling system', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -548,12 +540,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           two_d_coordinate_system_name: ['CALIPSO']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -562,21 +559,17 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
     describe('when setting horizontal data resolution', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -589,12 +582,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           horizontal_data_resolution_range: ['0+to+1+meter']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -603,21 +601,17 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
 
     describe('when setting latency', () => {
       test('updates cmrFacets', () => {
-        useEdscStore.setState(() => ({
-          query: {
-            changeQuery: jest.fn()
-          }
-        }))
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.query.changeQuery = jest.fn()
+        })
 
         const zustandState = useEdscStore.getState()
         const { facetParams } = zustandState
@@ -630,12 +624,17 @@ describe('createFacetParamsSlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           facetParams: updatedFacetParams,
           query
         } = updatedState
+
         expect(updatedFacetParams.cmrFacets).toEqual({
           latency: ['1+to+3+hours']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(query.changeQuery).toHaveBeenCalledTimes(1)
         expect(query.changeQuery).toHaveBeenCalledWith({
@@ -644,11 +643,8 @@ describe('createFacetParamsSlice', () => {
           }
         })
 
-        expect(mockDispatch).toHaveBeenCalledTimes(2)
-        expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
-        expect(mockDispatch).toHaveBeenNthCalledWith(2, {
-          type: REMOVE_SUBSCRIPTION_DISABLED_FIELDS
-        })
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
       })
     })
   })
@@ -741,8 +737,8 @@ describe('createFacetParamsSlice', () => {
       // Trigger the View All Facets modal for instruments
       triggerViewAllFacets('instrument_h')
 
-      expect(mockDispatch).toHaveBeenCalledTimes(1)
-      expect(mockDispatch).toHaveBeenNthCalledWith(1, expect.any(Function))
+      expect(actions.getViewAllFacets).toHaveBeenCalledTimes(1)
+      expect(actions.getViewAllFacets).toHaveBeenCalledWith('instrument_h')
 
       // Check that the viewAllFacets state is set to the current cmrFacets
       const updatedState = useEdscStore.getState()

@@ -21,8 +21,8 @@ const setup = setupTest({
     earthdataEnvironment: {
       currentEnvironment: 'prod'
     },
-    focusedCollection: {
-      changeFocusedCollection: jest.fn()
+    collection: {
+      setCollectionId: jest.fn()
     }
   }
 })
@@ -112,7 +112,7 @@ describe('SearchAutocomplete', () => {
   })
 
   describe('when submitting the form', () => {
-    test('calls changeQuery and changeFocusedCollection when keyword has changed', async () => {
+    test('calls changeQuery and setCollectionId when keyword has changed', async () => {
       const { user, zustandState } = setup({
         overrideZustandState: {
           query: {
@@ -146,8 +146,8 @@ describe('SearchAutocomplete', () => {
       const searchButton = screen.getByText('Search')
       await user.click(searchButton)
 
-      expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledWith('')
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith(null)
 
       expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
       expect(zustandState.query.changeQuery).toHaveBeenCalledWith({

@@ -15,7 +15,6 @@ jest.mock('../../../components/ProjectPanels/ProjectPanels', () => jest.fn(() =>
 const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
-    granulesMetadata: {},
     onToggleAboutCSDAModal: jest.fn(),
     location: {
       search: ''
@@ -28,9 +27,9 @@ const setup = setupTest({
       byCollectionId: {},
       setDataQualitySummaries: jest.fn()
     },
-    focusedCollection: {
-      focusedCollection: 'collectionId',
-      setFocusedCollection: jest.fn()
+    collection: {
+      collectionId: 'collectionId',
+      setCollectionId: jest.fn()
     },
     project: {
       addGranuleToProjectCollection: jest.fn(),
@@ -94,10 +93,6 @@ describe('mapStateToProps', () => {
       contactInfo: {
         ursProfile: {}
       },
-      metadata: {
-        collections: {},
-        granules: {}
-      },
       router: {
         location: {}
       },
@@ -109,7 +104,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      granulesMetadata: {},
       location: {},
       ursProfile: {}
     }
@@ -125,8 +119,7 @@ describe('ProjectPanelsContainer component', () => {
     expect(ProjectPanels).toHaveBeenCalledTimes(1)
     expect(ProjectPanels).toHaveBeenCalledWith({
       dataQualitySummaries: {},
-      focusedCollectionId: 'collectionId',
-      granulesMetadata: props.granulesMetadata,
+      collectionId: 'collectionId',
       granulesQueries: {},
       location: props.location,
       onAddGranuleToProjectCollection: zustandState.project.addGranuleToProjectCollection,
@@ -148,7 +141,7 @@ describe('ProjectPanelsContainer component', () => {
         byId: {}
       },
       projectCollectionsMetadata: {},
-      setFocusedCollection: zustandState.focusedCollection.setFocusedCollection,
+      setCollectionId: zustandState.collection.setCollectionId,
       spatial: {},
       temporal: {},
       ursProfile: {}

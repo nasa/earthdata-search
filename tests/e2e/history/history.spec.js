@@ -11,7 +11,7 @@ import retrieval from './__mocks__/retrieval.json'
 import retrievals from './__mocks__/retrievals.json'
 import timeline from './__mocks__/timeline.json'
 
-import { isGetFocusedCollectionsQuery } from '../../support/isGetFocusedCollectionsQuery'
+import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 import { setupTests } from '../../support/setupTests'
@@ -67,7 +67,7 @@ test.describe('History', () => {
         })
       }
 
-      if (isGetFocusedCollectionsQuery(route, conceptId)) {
+      if (isGetCollectionQuery(route, conceptId)) {
         await route.fulfill({
           json: granulesGraphQlBody,
           headers: graphQlHeaders

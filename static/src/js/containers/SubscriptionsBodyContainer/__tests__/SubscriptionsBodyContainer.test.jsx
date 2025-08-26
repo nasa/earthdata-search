@@ -16,7 +16,6 @@ const setup = setupTest({
   defaultProps: {
     collectionSubscriptions: [],
     collectionSubscriptionDisabledFields: {},
-    granuleSubscriptions: [],
     granuleSubscriptionDisabledFields: {},
     subscriptionType: 'granule',
     onCreateSubscription: jest.fn(),
@@ -101,7 +100,6 @@ describe('mapStateToProps', () => {
     const expectedState = {
       collectionSubscriptions: [],
       collectionSubscriptionDisabledFields: {},
-      granuleSubscriptions: [],
       granuleSubscriptionDisabledFields: {}
     }
 

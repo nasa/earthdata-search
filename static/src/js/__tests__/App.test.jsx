@@ -50,10 +50,10 @@ jest.mock('../routes/EarthdataDownloadRedirect/EarthdataDownloadRedirect', () =>
   return MockedEarthdataDownloadRedirect
 })
 
-jest.mock('../containers/FooterContainer/FooterContainer', () => {
-  const MockedFooterContainer = () => <div data-testid="mocked-footer-container" />
+jest.mock('../components/Footer/Footer', () => {
+  const MockedFooter = () => <div data-testid="mocked-footer" />
 
-  return MockedFooterContainer
+  return MockedFooter
 })
 
 jest.mock('../routes/Preferences/Preferences', () => {

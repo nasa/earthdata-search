@@ -1,4 +1,5 @@
 import { screen } from '@testing-library/react'
+import { useLocation } from 'react-router-dom'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -9,6 +10,13 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn().mockReturnValue({
     push: jest.fn()
+  }),
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search/granules',
+    search: '?p=collectionId&ff=Map%20Imagery',
+    hash: '',
+    state: null,
+    key: 'testKey'
   })
 }))
 
@@ -23,10 +31,6 @@ const setup = setupTest({
     granuleLimit: 1000000,
     initialLoading: false,
     isCollectionInProject: false,
-    location: {
-      pathname: '/search/granules',
-      search: '?p=collectionId&ff=Map%20Imagery'
-    },
     projectCollection: {},
     tooManyGranules: false,
     onChangePath: jest.fn()
@@ -58,13 +62,14 @@ describe('GranuleDownloadButton component', () => {
 
   describe('when the collection is already in the project', () => {
     test('clicking the button calls addProjectCollection and onChangePath', async () => {
+      useLocation.mockReturnValueOnce({
+        pathname: '/search/granules',
+        search: '?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery'
+      })
+
       const { props, user, zustandState } = setup({
         overrideProps: {
-          isCollectionInProject: true,
-          location: {
-            pathname: '/search/granules',
-            search: '?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery'
-          }
+          isCollectionInProject: true
         }
       })
 
@@ -122,13 +127,14 @@ describe('GranuleDownloadButton component', () => {
     describe('when there are some pg parameters in the URL', () => {
       describe('when the user is not logged in', () => {
         test('clicking the button calls sets window.location.href to login', async () => {
+          useLocation.mockReturnValueOnce({
+            pathname: '/search/granules',
+            search: '?p=collectionId&pg[0][gsk]=start_date&ff=Map%20Imagery'
+          })
+
           const { user, zustandState } = setup({
             overrideProps: {
-              authToken: '',
-              location: {
-                pathname: '/search/granules',
-                search: '?p=collectionId&pg[0][gsk]=start_date&ff=Map%20Imagery'
-              }
+              authToken: ''
             }
           })
 
@@ -149,14 +155,12 @@ describe('GranuleDownloadButton component', () => {
       })
 
       test('clicking the button calls addProjectCollection and onChangePath', async () => {
-        const { props, user, zustandState } = setup({
-          overrideProps: {
-            location: {
-              pathname: '/search/granules',
-              search: '?p=collectionId&pg[0][gsk]=start_date&ff=Map%20Imagery'
-            }
-          }
+        useLocation.mockReturnValueOnce({
+          pathname: '/search/granules',
+          search: '?p=collectionId&pg[0][gsk]=start_date&ff=Map%20Imagery'
         })
+
+        const { props, user, zustandState } = setup()
 
         const button = screen.getByRole('button', { name: 'Download All' })
         await user.click(button)
@@ -172,17 +176,18 @@ describe('GranuleDownloadButton component', () => {
 
   describe('when the database components are disabled', () => {
     test('the granule download button is disabled', () => {
+      useLocation.mockReturnValueOnce({
+        pathname: '/search/granules',
+        search: '?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery'
+      })
+
       jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
         disableDatabaseComponents: 'true'
       }))
 
       setup({
         overrideProps: {
-          isCollectionInProject: true,
-          location: {
-            pathname: '/search/granules',
-            search: '?p=collectionId!collectionId&pg[1][gsk]=start_date&ff=Map%20Imagery'
-          }
+          isCollectionInProject: true
         }
       })
 

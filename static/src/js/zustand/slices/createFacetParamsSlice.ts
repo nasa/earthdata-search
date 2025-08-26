@@ -78,7 +78,7 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
       })
 
       // Fetch collections with the updated feature facets
-      reduxDispatch(actions.getCollections())
+      get().collections.getCollections()
 
       // Clear any subscription disabledFields
       reduxDispatch(actions.removeSubscriptionDisabledFields())
@@ -100,7 +100,7 @@ const createFacetParamsSlice: ImmerStateCreator<FacetParamsSlice> = (set, get) =
       })
 
       // Fetch collections with the updated feature facets
-      reduxDispatch(actions.getCollections())
+      get().collections.getCollections()
 
       // Clear any subscription disabledFields
       reduxDispatch(actions.removeSubscriptionDisabledFields())

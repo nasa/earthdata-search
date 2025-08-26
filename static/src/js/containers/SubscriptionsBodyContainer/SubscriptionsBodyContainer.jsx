@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 
 import actions from '../../actions/index'
 
-import { getFocusedCollectionSubscriptions } from '../../selectors/collectionMetadata'
 import {
   getCollectionSubscriptionDisabledFields,
   getCollectionSubscriptions,
@@ -12,11 +11,12 @@ import {
 } from '../../selectors/subscriptions'
 import SubscriptionsBody from '../../components/Subscriptions/SubscriptionsBody'
 
+import useEdscStore from '../../zustand/useEdscStore'
 import {
   getCollectionSubscriptionQueryObj,
   getGranuleSubscriptionQueryObj
 } from '../../zustand/selectors/query'
-import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedCollectionSubscriptions } from '../../zustand/selectors/collection'
 
 export const mapDispatchToProps = (dispatch) => ({
   onCreateSubscription:
@@ -42,7 +42,6 @@ export const mapDispatchToProps = (dispatch) => ({
 export const mapStateToProps = (state) => ({
   collectionSubscriptions: getCollectionSubscriptions(state),
   collectionSubscriptionDisabledFields: getCollectionSubscriptionDisabledFields(state),
-  granuleSubscriptions: getFocusedCollectionSubscriptions(state),
   granuleSubscriptionDisabledFields: getGranuleSubscriptionDisabledFields(state)
 })
 
@@ -50,7 +49,6 @@ export const mapStateToProps = (state) => ({
 /**
  * Renders SubscriptionsBodyContainer.
  * @param {Array} collectionSubscriptions - An array of collection subscriptions.
- * @param {Array} granuleSubscriptions - An array of granule subscriptions.
  * @param {Function} onCreateSubscription - Callback to create a subscription.
  * @param {Function} onUpdateSubscription - Callback to update a subscription.
  * @param {Function} onDeleteSubscription - Callback to delete a subscription.
@@ -60,7 +58,6 @@ export const mapStateToProps = (state) => ({
 export const SubscriptionsBodyContainer = ({
   collectionSubscriptions,
   collectionSubscriptionDisabledFields,
-  granuleSubscriptions,
   granuleSubscriptionDisabledFields,
   onCreateSubscription,
   onDeleteSubscription,
@@ -70,6 +67,7 @@ export const SubscriptionsBodyContainer = ({
   onUpdateSubscriptionDisabledFields,
   subscriptionType
 }) => {
+  const granuleSubscriptions = useEdscStore(getFocusedCollectionSubscriptions)
   const collectionQueryObj = useEdscStore(getCollectionSubscriptionQueryObj)
   const granuleQueryObj = useEdscStore(getGranuleSubscriptionQueryObj)
 
@@ -111,7 +109,6 @@ export const SubscriptionsBodyContainer = ({
 SubscriptionsBodyContainer.propTypes = {
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   collectionSubscriptionDisabledFields: PropTypes.shape({}).isRequired,
-  granuleSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   granuleSubscriptionDisabledFields: PropTypes.shape({}).isRequired,
   subscriptionType: PropTypes.string.isRequired,
   onCreateSubscription: PropTypes.func.isRequired,

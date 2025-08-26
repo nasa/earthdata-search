@@ -7,7 +7,7 @@ import React, {
 } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
-import { difference } from 'lodash-es'
+import { difference, isEmpty } from 'lodash-es'
 import { Geometry } from 'ol/geom'
 
 // @ts-expect-error The file does not have types
@@ -17,11 +17,7 @@ import { metricsMap } from '../../middleware/metrics/actions'
 
 import { eventEmitter } from '../../events/events'
 // @ts-expect-error The file does not have types
-import { getFocusedCollectionGranuleResults } from '../../selectors/collectionResults'
-// @ts-expect-error The file does not have types
 import { getColormapsMetadata } from '../../selectors/colormapsMetadata'
-// @ts-expect-error The file does not have types
-import { getGranulesMetadata } from '../../selectors/granuleMetadata'
 
 import { isPath } from '../../util/isPath'
 import { projectionConfigs } from '../../util/map/crs'
@@ -53,15 +49,17 @@ import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
-import { getFocusedGranuleId } from '../../zustand/selectors/focusedGranule'
+import {
+  getCollectionsQuerySpatial,
+  getFocusedCollectionGranuleQuery
+} from '../../zustand/selectors/query'
+import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
+import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
+import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 
 import type {
-  CollectionsMetadata,
   GibsData,
-  GranulesMetadata,
   MapGranule,
   ProjectionCode,
   SpatialSearch
@@ -85,12 +83,9 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
   advancedSearch: state.advancedSearch,
-  collectionsMetadata: state.metadata.collections,
   colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
-  granuleSearchResults: getFocusedCollectionGranuleResults(state),
-  granulesMetadata: getGranulesMetadata(state),
   router: state.router
 })
 
@@ -111,25 +106,12 @@ type ColormapMetadata = {
 interface MapContainerProps {
   /** The advanced search object */
   advancedSearch: object
-  /** The collections metadata */
-  collectionsMetadata: CollectionsMetadata
   /** The colormaps metadata */
   colormapsMetadata: ColormapMetadata
   /** The display spatial polygon warning flag */
   displaySpatialPolygonWarning: boolean
   /** The drawing new layer flag */
   drawingNewLayer: string | boolean
-  /** The granule search results */
-  granuleSearchResults: {
-    /** The IDs of the granule results */
-    allIds: string[]
-    /** The excluded granule IDs */
-    excludedGranuleIds: string[]
-    /** Are the granules Open Search */
-    isOpenSearch: boolean
-  }
-  /** The granules metadata */
-  granulesMetadata: GranulesMetadata
   /** Function to call the metrics map */
   onMetricsMap: (type: string) => void
   /** Function to toggle the drawing new layer */
@@ -151,12 +133,9 @@ interface MapContainerProps {
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const {
     advancedSearch = {},
-    collectionsMetadata,
     colormapsMetadata,
     displaySpatialPolygonWarning,
     drawingNewLayer,
-    granuleSearchResults,
-    granulesMetadata,
     onMetricsMap,
     onToggleDrawingNewLayer,
     onToggleShapefileUploadModal,
@@ -181,7 +160,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     polygon: polygonSearch
   } = spatialQuery
   const {
-    changeFocusedGranule,
     map: mapProps,
     onChangeMap,
     onChangeQuery,
@@ -190,12 +168,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onFetchShapefile,
     onUpdateShapefile,
     projectCollections,
+    setGranuleId,
     setStartDrawing,
     shapefile,
     showMbr,
     startDrawing
   } = useEdscStore((state) => ({
-    changeFocusedGranule: state.focusedGranule.changeFocusedGranule,
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
     onChangeQuery: state.query.changeQuery,
@@ -204,14 +182,26 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onFetchShapefile: state.shapefile.fetchShapefile,
     onUpdateShapefile: state.shapefile.updateShapefile,
     projectCollections: state.project.collections,
+    setGranuleId: state.granule.setGranuleId,
     setStartDrawing: state.home.setStartDrawing,
     shapefile: state.shapefile,
     showMbr: state.map.showMbr,
     startDrawing: state.home.startDrawing
   }))
-  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
-  const focusedGranuleId = useEdscStore(getFocusedGranuleId)
+  const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
+  const focusedCollectionId = useEdscStore(getCollectionId)
+  const focusedCollectionMetadata = useEdscStore(getFocusedCollectionMetadata)
+  const focusedGranule = useEdscStore(getFocusedGranule)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
+  const granules = useEdscStore(getGranules)
+  const granulesById = useEdscStore(getGranulesById)
+
+  // Default the granuleMetadata to the granulesById. These are the granules we want to show
+  // on the search page
+  let granuleMetadata = {
+    ...granulesById
+  }
 
   const [mapReady, setMapReady] = useState(false)
 
@@ -258,15 +248,21 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const nonExcludedGranules: { [key: string]: { collectionId: string; index: number } } = {}
   // If the focusedGranuleId is set, add it to the nonExcludedGranules first.
   // This is so the focused granule is always drawn on top of the other granules
-  if (focusedGranuleId && granulesMetadata[focusedGranuleId as string]) {
+  if (focusedGranuleId && focusedGranule) {
     nonExcludedGranules[focusedGranuleId] = {
       collectionId: focusedCollectionId!,
       index: 0
     }
   }
 
-  if (focusedCollectionId && granuleSearchResults) {
-    const { allIds, excludedGranuleIds, isOpenSearch } = granuleSearchResults
+  const {
+    items: granuleItems
+  } = granules
+
+  if (focusedCollectionId && granuleItems.length > 0) {
+    const { excludedGranuleIds = [] } = focusedCollectionGranuleQuery
+    const { isOpenSearch } = focusedCollectionMetadata
+    const allIds = granuleItems.map((item) => item.id)
     const allGranuleIds = allIds
 
     let granuleIds
@@ -295,6 +291,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       byId: projectById
     } = projectCollections
 
+    // If on the project page, clear out the search granule metadata so we only
+    // show project granules
+    granuleMetadata = {}
+
     projectIds.forEach((collectionId, index) => {
       const {
         granules: projectCollectionGranules,
@@ -303,10 +303,19 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
       if (!projectCollectionGranules || !projectCollectionIsVisible) return
 
-      const { allIds = [] } = projectCollectionGranules
+      const {
+        allIds = [],
+        byId: projectGranulesById = {}
+      } = projectCollectionGranules
+
+      // Add the project granules to granuleMetadata to be shown on the map
+      granuleMetadata = {
+        ...granuleMetadata,
+        ...projectGranulesById
+      }
 
       allIds.forEach((granuleId) => {
-        if (granulesMetadata[granuleId]) {
+        if (focusedGranule) {
           nonExcludedGranules[granuleId] = {
             collectionId,
             index
@@ -355,12 +364,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
     setStartDrawing(false)
   }, [setStartDrawing])
-
-  // Get the metadata for the currently focused collection, or an empty object if no collection is focused
-  const focusedCollectionMetadata = useMemo(
-    () => collectionsMetadata[focusedCollectionId!] || {},
-    [focusedCollectionId, collectionsMetadata]
-  )
 
   const { tags } = focusedCollectionMetadata
   const [gibsTag] = getValueForTag('gibs', tags) || []
@@ -417,8 +420,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   // If on the focusedCollectionPage and the focusedCollectionId is set, get the added and removed granule ids
   if (isFocusedCollectionPage && focusedCollectionId && focusedCollectionId !== '') {
-    const { granules = {} } = focusedProjectCollection as ProjectCollection
-    const { addedGranuleIds = [], removedGranuleIds = [] } = granules as ProjectGranules
+    const { granules: granulesObject = {} } = focusedProjectCollection as ProjectCollection
+    const { addedGranuleIds = [], removedGranuleIds = [] } = granulesObject as ProjectGranules
 
     allAddedGranuleIds.push(...addedGranuleIds)
     allRemovedGranuleIds.push(...removedGranuleIds)
@@ -438,7 +441,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   if (granuleIds.length > 0) {
     granuleIds.forEach((granuleId) => {
       const { collectionId, index } = nonExcludedGranules[granuleId]
-      const granule = { ...granulesMetadata[granuleId] }
+      const granule = { ...granuleMetadata[granuleId] }
+
+      // If the granule hasn't been fetched yet, return
+      if (isEmpty(granule)) {
+        return
+      }
 
       // Determine if the granule should be drawn with the regular style or the deemphasized style
       let shouldDrawRegularStyle = true
@@ -532,7 +540,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     <Map
       base={base}
       center={center}
-      changeFocusedGranule={changeFocusedGranule}
+      setGranuleId={setGranuleId}
       colorMap={colorMap as Colormap}
       focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}

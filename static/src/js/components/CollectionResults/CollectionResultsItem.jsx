@@ -57,8 +57,8 @@ export const CollectionResultsItem = forwardRef(({
   } = useEdscStore((state) => ({
     addProjectCollection: state.project.addProjectCollection,
     removeProjectCollection: state.project.removeProjectCollection,
-    viewCollectionDetails: state.focusedCollection.viewCollectionDetails,
-    viewCollectionGranules: state.focusedCollection.viewCollectionGranules
+    viewCollectionDetails: state.collection.viewCollectionDetails,
+    viewCollectionGranules: state.collection.viewCollectionGranules
   }))
 
   const {
