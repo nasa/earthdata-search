@@ -58,6 +58,11 @@ export const getCollectionsQuerySpatial = (state: EdscStore) => {
 }
 
 /**
+ * Retrieve the selected region query object
+ */
+export const getSelectedRegionQuery = (state: EdscStore) => state.query.selectedRegion
+
+/**
  * Retrieve current collection temporal information
  */
 export const getCollectionsQueryTemporal = (state: EdscStore) => {
@@ -88,10 +93,7 @@ export const getGranuleSubscriptionQueryObj = (state: EdscStore) => {
   const collectionMetadata = getFocusedCollectionMetadata(state)
   const { id: collectionId } = collectionMetadata
 
-  // Extract granule search parameters from redux specific to the focused collection
-  const { getState: reduxGetState } = configureStore()
-  const reduxState = reduxGetState()
-  const extractedGranuleParams = extractGranuleSearchParams(reduxState, collectionId)
+  const extractedGranuleParams = extractGranuleSearchParams(collectionId)
 
   const granuleParams = prepareGranuleParams(
     collectionMetadata,

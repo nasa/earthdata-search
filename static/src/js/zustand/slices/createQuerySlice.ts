@@ -37,7 +37,8 @@ export const initialState = {
   },
   region: {
     exact: false
-  }
+  },
+  selectedRegion: {}
 }
 
 export const initialGranuleState = {
@@ -71,6 +72,10 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
           pageNum: 1,
           ...query.collection,
           spatial: newSpatial
+        }
+
+        if (query.selectedRegion) {
+          state.query.selectedRegion = query.selectedRegion
         }
 
         // Clear the collectionConceptId in order to ensure granules are requested in `getGranules`

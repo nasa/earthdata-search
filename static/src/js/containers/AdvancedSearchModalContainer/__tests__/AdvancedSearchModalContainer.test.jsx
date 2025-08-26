@@ -15,9 +15,6 @@ jest.mock('../../../components/AdvancedSearchModal/AdvancedSearchModal', () => j
 const setup = setupTest({
   Component: AdvancedSearchModalContainer,
   defaultProps: {
-    advancedSearch: {
-      query: {}
-    },
     isOpen: true,
     isValid: true,
     errors: {},
@@ -54,7 +51,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      advancedSearch: {},
       searchResults: {
         regions: {}
       },
@@ -66,7 +62,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      advancedSearch: {},
       isOpen: false,
       regionSearchResults: {}
     }
@@ -81,7 +76,6 @@ describe('AdvancedSearchModalContainer component', () => {
 
     expect(AdvancedSearchModal).toHaveBeenCalledTimes(1)
     expect(AdvancedSearchModal).toHaveBeenCalledWith({
-      advancedSearch: { query: {} },
       errors: {},
       fields: [],
       handleBlur: expect.any(Function),

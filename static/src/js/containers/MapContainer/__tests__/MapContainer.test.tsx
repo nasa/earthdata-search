@@ -56,7 +56,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      advancedSearch: {},
       router: {},
       ui: {
         map: {
@@ -69,7 +68,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      advancedSearch: {},
       colormapsMetadata: {},
       displaySpatialPolygonWarning: false,
       drawingNewLayer: false,

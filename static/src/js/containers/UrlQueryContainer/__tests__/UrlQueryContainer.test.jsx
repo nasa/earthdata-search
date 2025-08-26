@@ -22,7 +22,6 @@ const setup = setupTest({
   Component: UrlQueryContainer,
   defaultProps: {
     children: 'stuff',
-    collectionsMetadata: {},
     pathname: '',
     location: {
       search: '?p=C00001-EDSC'
@@ -76,7 +75,6 @@ describe('mapStateToProps', () => {
 
   test('returns the correct state', () => {
     const store = {
-      advancedSearch: {},
       router: {
         location: {
           pathname: ''
@@ -85,7 +83,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      advancedSearch: {},
       location: {
         pathname: ''
       },

@@ -6,6 +6,7 @@ import actions from '../../actions/index'
 
 import SearchForm from '../../components/SearchForm/SearchForm'
 import useEdscStore from '../../zustand/useEdscStore'
+import { getSelectedRegionQuery } from '../../zustand/selectors/query'
 
 export const mapDispatchToProps = (dispatch) => ({
   handleError: (error) => dispatch(actions.handleError(error)),
@@ -14,7 +15,6 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
-  advancedSearch: state.advancedSearch,
   authToken: state.authToken
 })
 
@@ -22,12 +22,12 @@ export const mapStateToProps = (state) => ({
 // Import this class as `import { SearchFormContainer } from '../SearchFormContainer'`
 export const SearchFormContainer = (props) => {
   const {
-    advancedSearch,
     authToken,
     handleError,
     onToggleAdvancedSearchModal
   } = props
   const clearFilters = useEdscStore((state) => state.query.clearFilters)
+  const selectedRegion = useEdscStore(getSelectedRegionQuery)
 
   return (
     <SearchForm
@@ -35,19 +35,12 @@ export const SearchFormContainer = (props) => {
       handleError={handleError}
       onClearFilters={clearFilters}
       onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
-      advancedSearch={advancedSearch}
+      selectedRegion={selectedRegion}
     />
   )
 }
 
-SearchFormContainer.defaultProps = {
-  advancedSearch: {}
-}
-
 SearchFormContainer.propTypes = {
-  advancedSearch: PropTypes.shape({
-    regionSearch: PropTypes.shape({})
-  }),
   authToken: PropTypes.string.isRequired,
   handleError: PropTypes.func.isRequired,
   onToggleAdvancedSearchModal: PropTypes.func.isRequired

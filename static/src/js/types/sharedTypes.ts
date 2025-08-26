@@ -48,17 +48,12 @@ export interface Spatial {
 
 /** The spatial object */
 export interface SpatialSearch {
-  advancedSearch?: {
-    /** The region search object */
-    regionSearch?: {
-      /** The selected region object */
-      selectedRegion?: {
-        /** The spatial coordinates */
-        spatial?: string
-        /** The spatial type */
-        type?: 'reach' | 'huc'
-      }
-    }
+  /** The selected region object */
+  selectedRegion?: {
+    /** The spatial coordinates */
+    spatial?: string
+    /** The spatial type */
+    type?: 'reach' | 'huc'
   }
   /** The bounding box coordinates, if applied */
   boundingBoxSearch?: BoundingBoxString[]

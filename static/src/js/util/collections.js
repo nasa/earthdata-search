@@ -3,11 +3,11 @@ import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 import { tagName } from '../../../../sharedUtils/tags'
 import { autocompleteFacetsMap } from './autocompleteFacetsMap'
-import { withAdvancedSearch } from './withAdvancedSearch'
+import { withSelectedRegion } from './withSelectedRegion'
 import { collectionSortKeys } from '../constants/collectionSortKeys'
 
 import useEdscStore from '../zustand/useEdscStore'
-import { getCollectionsQuery } from '../zustand/selectors/query'
+import { getCollectionsQuery, getSelectedRegionQuery } from '../zustand/selectors/query'
 
 /**
  * Prepare parameters used in getCollections() based on current Redux State
@@ -17,7 +17,6 @@ import { getCollectionsQuery } from '../zustand/selectors/query'
 export const prepareCollectionParams = (state) => {
   const {
     autocomplete = {},
-    advancedSearch = {},
     authToken,
     searchResults = {}
   } = state
@@ -26,6 +25,7 @@ export const prepareCollectionParams = (state) => {
 
   const { portal, facetParams } = zustandState
   const collectionQuery = getCollectionsQuery(zustandState)
+  const selectedRegion = getSelectedRegionQuery(zustandState)
 
   const {
     hasGranulesOrCwic,
@@ -131,9 +131,9 @@ export const prepareCollectionParams = (state) => {
   })
 
   // Apply any overrides for advanced search
-  const paramsWithAdvancedSearch = withAdvancedSearch(collectionParams, advancedSearch)
+  const paramsWithSelectedRegion = withSelectedRegion(collectionParams, selectedRegion)
 
-  return paramsWithAdvancedSearch
+  return paramsWithSelectedRegion
 }
 
 /**

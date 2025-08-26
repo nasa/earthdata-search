@@ -14,7 +14,6 @@ const windowEventMap = {}
 const setup = setupTest({
   Component: AdvancedSearchModal,
   defaultProps: {
-    advancedSearch: {},
     isOpen: false,
     fields: [],
     errors: {},
@@ -58,7 +57,6 @@ describe('AdvancedSearchModal component', () => {
 
       expect(AdvancedSearchForm).toHaveBeenCalledTimes(1)
       expect(AdvancedSearchForm).toHaveBeenCalledWith({
-        advancedSearch: {},
         errors: {},
         fields: [],
         handleBlur: expect.any(Function),

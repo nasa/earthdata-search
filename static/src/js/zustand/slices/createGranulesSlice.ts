@@ -60,7 +60,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
       const { authToken } = reduxState
 
       // Extract granule search parameters from redux specific to the focused collection
-      const extractedGranuleParams = extractGranuleSearchParams(reduxState, collectionId)
+      const extractedGranuleParams = extractGranuleSearchParams(collectionId)
 
       // Format and structure data from Redux to be sent to CMR
       const granuleParams = prepareGranuleParams(

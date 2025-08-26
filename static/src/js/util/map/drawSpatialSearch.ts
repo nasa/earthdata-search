@@ -43,7 +43,7 @@ const drawSpatialSearch = ({
   vectorSource.clear()
 
   const {
-    advancedSearch,
+    selectedRegion,
     boundingBoxSearch,
     circleSearch,
     drawingNewLayer,
@@ -56,9 +56,7 @@ const drawSpatialSearch = ({
   if (drawingNewLayer !== false) return
 
   // Draw the advanced search spatial. This will be a polygon or a line depending on the user selection
-  if (advancedSearch) {
-    const { regionSearch = {} } = advancedSearch
-    const { selectedRegion = {} } = regionSearch
+  if (selectedRegion) {
     const {
       spatial: regionSpatial,
       type

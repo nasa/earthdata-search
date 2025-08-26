@@ -2,11 +2,11 @@ import { convertSize } from './project'
 import { encodeGridCoords } from './url/gridEncoders'
 import { encodeTemporal } from './url/temporalEncoders'
 import { getApplicationConfig, getEarthdataConfig } from '../../../../sharedUtils/config'
-import { withAdvancedSearch } from './withAdvancedSearch'
+import { withSelectedRegion } from './withSelectedRegion'
 import { getOpenSearchOsddLink } from '../../../../sharedUtils/getOpenSearchOsddLink'
 
 import useEdscStore from '../zustand/useEdscStore'
-import { getCollectionsQuery } from '../zustand/selectors/query'
+import { getCollectionsQuery, getSelectedRegionQuery } from '../zustand/selectors/query'
 
 /**
  * Populate granule payload used to update the store
@@ -55,15 +55,12 @@ export const populateGranuleResults = ({
 
 /**
  * Extract granule parameters specific to the users search session
- * @param {Object} state Current Redux State
  * @param {String} collectionId The collection id the user has requested to view granules for
  */
-export const extractGranuleSearchParams = (state, collectionId) => {
-  const {
-    advancedSearch = {}
-  } = state
-
-  const collectionsQuery = getCollectionsQuery(useEdscStore.getState())
+export const extractGranuleSearchParams = (collectionId) => {
+  const zustandState = useEdscStore.getState()
+  const collectionsQuery = getCollectionsQuery(zustandState)
+  const selectedRegion = getSelectedRegionQuery(zustandState)
 
   const {
     byId: collectionQueryById = {},
@@ -126,17 +123,16 @@ export const extractGranuleSearchParams = (state, collectionId) => {
   }
 
   // Apply any overrides for advanced search
-  const paramsWithAdvancedSearch = withAdvancedSearch(granuleParams, advancedSearch)
+  const paramsWithSelectedRegion = withSelectedRegion(granuleParams, selectedRegion)
 
-  return paramsWithAdvancedSearch
+  return paramsWithSelectedRegion
 }
 
 /**
  * Extract granule parameters specific to the users current project
- * @param {Object} state Current Redux State
  * @param {String} collectionId The collection id the user has requested to view granules for
  */
-export const extractProjectCollectionGranuleParams = (state, collectionId) => {
+export const extractProjectCollectionGranuleParams = (collectionId) => {
   const { project } = useEdscStore.getState()
 
   const { collections } = project
@@ -148,7 +144,7 @@ export const extractProjectCollectionGranuleParams = (state, collectionId) => {
 
   return {
     // Ensure that the `generic` search params are also included
-    ...extractGranuleSearchParams(state, collectionId),
+    ...extractGranuleSearchParams(collectionId),
     addedGranuleIds,
     pageNum,
     removedGranuleIds

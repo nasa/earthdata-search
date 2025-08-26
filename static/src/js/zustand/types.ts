@@ -823,12 +823,25 @@ type CollectionQuery = {
   temporal: Temporal
 }
 
+type SelectedRegion = {
+  /** The ID of the selected region */
+  id?: string
+  /** The name of the selected region */
+  name?: string
+  /** The spatial representation of the selected region */
+  spatial?: string
+  /** The type of the selected region */
+  type?: 'huc' | 'reach'
+}
+
 /** Parameters for changing the query */
 type ChangeQueryParams = {
   /** The collection query */
   collection?: Partial<CollectionQuery>
   /** The region query */
   region?: Partial<RegionQuery>
+  /** The selected region query */
+  selectedRegion?: Partial<SelectedRegion>
 }
 
 export type QuerySlice = {
@@ -836,8 +849,10 @@ export type QuerySlice = {
   query: {
     /** The collection query */
     collection: CollectionQuery
-    /** The region query */
+    /** The region query (for searching regions) */
     region: RegionQuery
+    /** The selected region (to use as a spatial query to CMR) */
+    selectedRegion: SelectedRegion
     /** Function to change the query */
     changeQuery: (query: ChangeQueryParams) => void
     /** Function to change the granule query */

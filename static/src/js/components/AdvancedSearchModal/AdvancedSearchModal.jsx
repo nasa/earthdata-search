@@ -12,7 +12,6 @@ import './AdvancedSearchModal.scss'
 /**
  * Renders AdvancedSearchModal.
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.advancedSearch - The collections.
  * @param {Boolean} props.isOpen - The modal state.
  * @param {Object} props.fields - The advanced search fields.
  * @param {Object} props.errors - Form errors provided by Formik.
@@ -98,7 +97,6 @@ class AdvancedSearchModal extends Component {
 
   render() {
     const {
-      advancedSearch,
       fields,
       isOpen,
       errors,
@@ -126,7 +124,6 @@ class AdvancedSearchModal extends Component {
 
     const body = (
       <AdvancedSearchForm
-        advancedSearch={advancedSearch}
         fields={fields}
         errors={errors}
         handleBlur={handleBlur}
@@ -162,7 +159,6 @@ class AdvancedSearchModal extends Component {
 }
 
 AdvancedSearchModal.propTypes = {
-  advancedSearch: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   fields: PropTypes.arrayOf(
     PropTypes.shape({})

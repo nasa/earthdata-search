@@ -11,7 +11,7 @@ import { decodeScienceKeywords, encodeScienceKeywords } from './scienceKeywordEn
 import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
-import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
+import { decodeselectedRegion, encodeselectedRegion } from './selectedRegionEncoders'
 import { encodeArray, decodeArray } from './arrayEncoders'
 import { encodeEarthdataEnvironment, decodeEarthdataEnvironment } from './environmentEncoders'
 import { decodeBoolean, encodeBoolean } from './booleanEncoders'
@@ -294,13 +294,12 @@ export const decodeUrlParams = (paramString) => {
     selectedFeatures: decodeHelp(params, 'selectedFeatures')
   }
 
-  const advancedSearch = decodeAdvancedSearch(params)
+  const selectedRegion = decodeselectedRegion(params)
 
   const earthdataEnvironment = decodeHelp(params, 'earthdataEnvironment')
   const portalId = decodePortal(params)
 
   return {
-    advancedSearch,
     earthdataEnvironment,
     cmrFacets,
     metadata,
@@ -315,6 +314,7 @@ export const decodeUrlParams = (paramString) => {
       ...query,
       collection: collectionQuery
     },
+    selectedRegion,
     shapefile,
     timeline
   }
@@ -340,7 +340,7 @@ export const encodeUrlQuery = (props) => {
   const platformQuery = encodePlatforms(props.platformFacets)
   const collectionsQuery = encodeCollections(props)
   const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
-  const advancedQuery = encodeAdvancedSearch(props.advancedSearch)
+  const selectedRegion = encodeselectedRegion(props.selectedRegion)
   const portalQuery = encodePortal(props.portalId)
   const collectionSortKey = encodeCollectionSortKey(
     props.collectionSortKey,
@@ -354,7 +354,7 @@ export const encodeUrlQuery = (props) => {
     ...timelineQuery,
     ...scienceKeywordQuery,
     ...platformQuery,
-    ...advancedQuery,
+    ...selectedRegion,
     ...mapParams,
     ...collectionSortKey
   }

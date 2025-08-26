@@ -12,7 +12,7 @@ jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectio
   <div>Spatial Selection</div>
 )))
 
-jest.mock('../../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer', () => jest.fn(() => (
+jest.mock('../../../components/AdvancedSearchDisplay/AdvancedSearchDisplay', () => jest.fn(() => (
   <div>Advanced Search Display</div>
 )))
 
@@ -31,11 +31,11 @@ jest.mock('../../../containers/PortalFeatureContainer/PortalFeatureContainer', (
 const setup = setupTest({
   Component: SearchForm,
   defaultProps: {
-    advancedSearch: {},
     authToken: '',
     handleError: jest.fn(),
     onClearFilters: jest.fn(),
-    onToggleAdvancedSearchModal: jest.fn()
+    onToggleAdvancedSearchModal: jest.fn(),
+    selectedRegion: {}
   }
 })
 

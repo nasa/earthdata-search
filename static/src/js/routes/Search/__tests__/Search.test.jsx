@@ -81,9 +81,7 @@ const setup = setupTest({
   },
   defaultPropsByRoute: {
     '/search': {
-      collectionQuery: {},
-      match: { path: '/search' },
-      onUpdateAdvancedSearch: jest.fn()
+      match: { path: '/search' }
     }
   },
   withRedux: true,
@@ -129,16 +127,6 @@ describe('mapDispatchToProps', () => {
     const spy = jest.spyOn(actions, 'togglePortalBrowserModal')
 
     mapDispatchToProps(dispatch).onTogglePortalBrowserModal({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onUpdateAdvancedSearch calls actions.updateAdvancedSearch', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateAdvancedSearch')
-
-    mapDispatchToProps(dispatch).onUpdateAdvancedSearch({ mock: 'data' })
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith({ mock: 'data' })

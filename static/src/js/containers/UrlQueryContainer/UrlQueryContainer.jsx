@@ -12,7 +12,7 @@ import { encodeUrlQuery } from '../../util/url/url'
 import { locationPropType } from '../../util/propTypes/location'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionsQuery } from '../../zustand/selectors/query'
+import { getCollectionsQuery, getSelectedRegionQuery } from '../../zustand/selectors/query'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors/collection'
 import { getGranuleId } from '../../zustand/selectors/granule'
@@ -26,7 +26,6 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const mapStateToProps = (state) => ({
-  advancedSearch: state.advancedSearch,
   location: state.router.location,
   pathname: state.router.location.pathname
 })
@@ -68,6 +67,7 @@ export const UrlQueryContainer = (props) => {
     projectFacets: state.facetParams.cmrFacets.project_h,
     scienceKeywordFacets: state.facetParams.cmrFacets.science_keywords_h,
     selectedFeatures: state.shapefile.selectedFeatures,
+    selectedRegion: getSelectedRegionQuery(state),
     shapefileId: state.shapefile.shapefileId,
     timelineQuery: state.timeline.query,
     twoDCoordinateSystemNameFacets: state.facetParams.cmrFacets.two_d_coordinate_system_name
