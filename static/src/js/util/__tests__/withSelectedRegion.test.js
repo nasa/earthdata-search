@@ -1,13 +1,13 @@
-import { withAdvancedSearch } from '../withAdvancedSearch'
+import { withSelectedRegion } from '../withSelectedRegion'
 
-describe('#withAdvancedSearch', () => {
+describe('#withSelectedRegion', () => {
   describe('when no advanced search parameters are passed', () => {
     test('should return the collection params', () => {
       const params = {
         test: 'test'
       }
-      const advancedSearch = {}
-      const result = withAdvancedSearch(params, advancedSearch)
+      const selectedRegion = {}
+      const result = withSelectedRegion(params, selectedRegion)
 
       expect(result).toEqual({
         test: 'test'
@@ -23,14 +23,10 @@ describe('#withAdvancedSearch', () => {
         const params = {
           polygon: originalPolygon
         }
-        const advancedSearch = {
-          regionSearch: {
-            selectedRegion: {
-              spatial: advSearchPolygon
-            }
-          }
+        const selectedRegion = {
+          spatial: advSearchPolygon
         }
-        const result = withAdvancedSearch(params, advancedSearch)
+        const result = withSelectedRegion(params, selectedRegion)
 
         expect(result).toEqual({
           polygon: [advSearchPolygon]
@@ -43,15 +39,11 @@ describe('#withAdvancedSearch', () => {
         const params = {
           line: originalLine
         }
-        const advancedSearch = {
-          regionSearch: {
-            selectedRegion: {
-              type: 'reach',
-              spatial: advSearchLine
-            }
-          }
+        const selectedRegion = {
+          type: 'reach',
+          spatial: advSearchLine
         }
-        const result = withAdvancedSearch(params, advancedSearch)
+        const result = withSelectedRegion(params, selectedRegion)
 
         expect(result).toEqual({
           line: [advSearchLine]

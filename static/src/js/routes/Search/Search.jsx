@@ -45,8 +45,6 @@ const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFilte
 const GranuleResultsHighlights = lazy(() => import('../../components/GranuleResultsHighlights/GranuleResultsHighlights'))
 
 export const mapDispatchToProps = (dispatch) => ({
-  onUpdateAdvancedSearch:
-    (values) => dispatch(actions.updateAdvancedSearch(values)),
   onTogglePortalBrowserModal:
     (data) => dispatch(actions.togglePortalBrowserModal(data))
 })
@@ -54,15 +52,10 @@ export const mapDispatchToProps = (dispatch) => ({
 /**
  * Search route components
  * @param {Object} props - The props passed into the component.
- * @param {Object} props.collectionQuery - Collection query state
  * @param {Object} props.match - Router match state
- * @param {Function} props.onChangeQuery - Callback to change the query
- * @param {Function} props.onTogglePortalBrowserModal - Callback to update the portal browser modal state
- * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
  */
 export const Search = ({
-  match,
-  onUpdateAdvancedSearch
+  match
 }) => {
   const { path } = match
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
@@ -225,7 +218,6 @@ export const Search = ({
           <PortalFeatureContainer advancedSearch>
             <AdvancedSearchModalContainer
               fields={advancedSearchFields}
-              onUpdateAdvancedSearch={onUpdateAdvancedSearch}
             />
           </PortalFeatureContainer>
         </div>
@@ -241,8 +233,7 @@ export const Search = ({
 Search.propTypes = {
   match: PropTypes.shape({
     path: PropTypes.string
-  }).isRequired,
-  onUpdateAdvancedSearch: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default withRouter(

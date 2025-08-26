@@ -1,5 +1,4 @@
 export const emptyDecodedResult = {
-  advancedSearch: undefined,
   cmrFacets: {
     data_center_h: undefined,
     granule_data_format_h: undefined,
