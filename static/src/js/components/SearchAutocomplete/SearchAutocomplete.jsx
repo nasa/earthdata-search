@@ -188,7 +188,6 @@ const SearchAutocomplete = ({
 
       setCollectionId(null)
       changeQuery({
-        searchSource: 'search',
         collection: {
           keyword: keywordSearch
         }

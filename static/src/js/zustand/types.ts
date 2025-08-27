@@ -829,8 +829,8 @@ type ChangeQueryParams = {
   collection?: Partial<CollectionQuery>
   /** The region query */
   region?: Partial<RegionQuery>
-  /** The search source context */
-  searchSource?: 'landing' | 'search'
+  /** Skip automatic collection search trigger when updating query */
+  skipCollectionSearch?: boolean
 }
 
 export type QuerySlice = {
@@ -840,6 +840,8 @@ export type QuerySlice = {
     collection: CollectionQuery
     /** The region query */
     region: RegionQuery
+    /** Flag indicating if NLP search from landing page completed */
+    nlpSearchCompleted: boolean
     /** Function to change the query */
     changeQuery: (query: ChangeQueryParams) => void
     /** Function to change the granule query */
@@ -880,6 +882,10 @@ export type QuerySlice = {
     removeSpatialFilter: () => void
     /** Function to undo the last excluded granule */
     undoExcludeGranule: (collectionId: string) => void
+    /** Function to set NLP search completion flag */
+    setNlpSearchCompleted: (completed: boolean) => void
+    /** Function to clear NLP search completion flag */
+    clearNlpSearchCompleted: () => void
   }
 }
 

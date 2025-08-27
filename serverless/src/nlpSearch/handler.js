@@ -18,7 +18,9 @@ const nlpSearch = async (event) => {
   const earthdataEnvironment = 'sit'
 
   const permittedCmrKeys = [
-    'q'
+    'q',
+    'pageNum',
+    'pageSize'
   ]
 
   const nonIndexedKeys = []

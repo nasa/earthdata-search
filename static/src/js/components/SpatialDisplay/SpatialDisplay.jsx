@@ -453,13 +453,16 @@ const SpatialDisplay = ({
       spatialError = message
     }
 
-    secondaryTitle = 'Shape File'
+    // Determine title based on source - NLP spatial data vs uploaded shapefile
+    const isNlpSpatial = shapefile.file?.features?.[0]?.properties?.source === 'nlp'
+    const spatialTitle = isNlpSpatial ? 'Search Area' : 'Shape File'
+    secondaryTitle = spatialTitle
 
     contents.push((
       <FilterStackContents
         key="filter__shapefile"
         body={entry}
-        title="Shape File"
+        title={spatialTitle}
         hint={hint}
       />
     ))

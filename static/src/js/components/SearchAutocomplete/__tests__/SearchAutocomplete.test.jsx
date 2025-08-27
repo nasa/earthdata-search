@@ -153,7 +153,6 @@ describe('SearchAutocomplete', () => {
 
       expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
       expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
-        searchSource: 'search',
         collection: {
           keyword: 'MODIS'
         }

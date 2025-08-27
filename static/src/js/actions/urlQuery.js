@@ -189,7 +189,11 @@ export const changePath = (path = '') => async (dispatch) => {
     // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {
-    getCollections()
+    const { nlpSearchCompleted } = zustandState.query
+
+    if (!nlpSearchCompleted) {
+      getCollections()
+    }
 
     // Granules Search
     if (

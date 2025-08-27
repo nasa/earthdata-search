@@ -38,7 +38,6 @@ export const initialState = {
   region: {
     exact: false
   },
-  searchSource: 'search', // 'landing' | 'search' | 'direct' - determines NLP vs CMR usage
   nlpSearchCompleted: false
 }
 
@@ -75,16 +74,14 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
           spatial: newSpatial
         }
 
-        // Handle searchSource if provided
-        if (query.searchSource) {
-          state.query.searchSource = query.searchSource
-        }
-
         // Clear the collectionConceptId in order to ensure granules are requested in `getGranules`
         state.granules.granules.collectionConceptId = null
       })
 
-      get().collections.getCollections()
+      // Only trigger automatic collection search if not explicitly skipped
+      if (!query.skipCollectionSearch) {
+        get().collections.getCollections()
+      }
 
       // If there is a focused collection, update it's granule search params
       // and request it's granules started with page one

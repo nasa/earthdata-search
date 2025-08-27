@@ -10,16 +10,16 @@ import Container from 'react-bootstrap/Container'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Row from 'react-bootstrap/Row'
-import { connect, MapDispatchToProps } from 'react-redux'
-import { useHistory, type RouteComponentProps } from 'react-router-dom'
-import { type Dispatch } from 'redux'
-
 import {
   ArrowCircleDown,
   ArrowCircleUp,
   Search
   // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { connect, MapDispatchToProps } from 'react-redux'
+import { useHistory, type RouteComponentProps } from 'react-router-dom'
+import { type Dispatch } from 'redux'
+import { type RootState } from '../../store/configureStore'
 
 import Button from '../../components/Button/Button'
 // @ts-expect-error: Types do not exist for this file
@@ -56,6 +56,8 @@ import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 
 // @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
+// @ts-expect-error: Types do not exist for this file
+import { getNlpCollections } from '../../actions/nlpCollections'
 import useEdscStore from '../../zustand/useEdscStore'
 // @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
@@ -72,6 +74,8 @@ const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
 )
 
+const { nlpSearch } = getApplicationConfig()
+
 let preloaded = false
 
 const preloadRoutes = () => {
@@ -87,9 +91,15 @@ const preloadRoutes = () => {
   import('../../containers/MapContainer/MapContainer')
 }
 
+export const mapStateToProps = (state: RootState) => ({
+  collectionsSearch: state.searchResults.collections
+})
+
 export const mapDispatchToProps: MapDispatchToProps<object, object> = (dispatch: Dispatch) => ({
   onChangePath:
-    (path: string) => dispatch(actions.changePath(path))
+    (path: string) => dispatch(actions.changePath(path)),
+  onGetNlpCollections:
+    (keyword: string) => dispatch(getNlpCollections(keyword))
 })
 export interface HomeTopic {
   /** The title of the topic */
@@ -153,14 +163,28 @@ const topics: HomeTopic[] = [
   }
 ]
 
+interface HomeStateProps {
+  /** Collections search results state */
+  collectionsSearch: {
+    hits?: number
+    isLoading?: boolean
+  }
+}
+
 interface HomeDispatchProps {
   /** The Redux action to change the path */
   onChangePath: (path: string) => void
+  /** The Redux action to get NLP collections */
+  onGetNlpCollections: (keyword: string) => void
 }
 
-type HomeProps = HomeDispatchProps & RouteComponentProps
+type HomeProps = HomeStateProps & HomeDispatchProps & RouteComponentProps
 
-export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
+export const Home: React.FC<HomeProps> = ({
+  collectionsSearch,
+  onChangePath,
+  onGetNlpCollections
+}) => {
   const history = useHistory()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
@@ -170,7 +194,6 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
   }))
 
   // Check if NLP search is enabled to conditionally show spatial/temporal buttons
-  const { nlpSearch } = getApplicationConfig()
   const showSearchButtons = nlpSearch !== 'true'
 
   useEffect(() => {
@@ -244,11 +267,13 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
 
                       if (isNlpEnabled) {
                         await changeQuery({
-                          searchSource: 'landing',
                           collection: {
                             keyword: keyword.trim()
-                          }
+                          },
+                          skipCollectionSearch: true
                         })
+
+                        onGetNlpCollections(keyword.trim())
                       }
 
                       onChangePath(`/search?q=${keyword}`)
@@ -417,4 +442,4 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
   )
 }
 
-export default connect(null, mapDispatchToProps)(Home)
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
