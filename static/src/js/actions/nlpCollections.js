@@ -1,13 +1,9 @@
 import { isCancel } from 'axios'
-import GeoJSON from 'ol/format/GeoJSON'
-import VectorSource from 'ol/source/Vector'
 import { booleanClockwise, simplify } from '@turf/turf'
 
 import NlpSearchRequest from '../util/request/nlpSearchRequest'
 import { handleError } from './errors'
 import { convertNlpTemporalData } from '../util/temporal/convertNlpTemporalData'
-import { eventEmitter } from '../events/events'
-import { mapEventTypes } from '../constants/eventTypes'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 import {
@@ -40,23 +36,19 @@ const simplifyNlpGeometry = (geometry) => {
     return geometry
   }
 
-  // Count coordinate points - each coordinate pair is [lng, lat]
   let numPoints = 0
   if (geometry.type === 'Polygon') {
     geometry.coordinates.forEach((ring) => {
       numPoints += ring.length
     })
   } else {
-    // For other geometry types, approximate by JSON string length
     numPoints = JSON.stringify(geometry.coordinates).split(',').length / 2
   }
 
-  // If under the limit, return as-is
   if (numPoints <= MAX_POLYGON_SIZE) {
     return geometry
   }
 
-  // Apply iterative simplification with increasing tolerance
   let simplifiedGeometry = { ...geometry }
   let tolerance = 0.001
   let previousNumPoints = numPoints
@@ -67,7 +59,7 @@ const simplifyNlpGeometry = (geometry) => {
       highQuality: true
     })
 
-    // Ensure counter-clockwise orientation for polygons (matches drawShapefile.ts)
+    // Ensure counter-clockwise orientation for polygons
     if (simplified.type === 'Polygon' && simplified.coordinates[0]) {
       if (booleanClockwise(simplified.coordinates[0])) {
         simplified.coordinates[0] = simplified.coordinates[0].reverse()
@@ -76,15 +68,17 @@ const simplifyNlpGeometry = (geometry) => {
 
     simplifiedGeometry = simplified
 
-    // Recount points in simplified geometry
     if (simplified.type === 'Polygon') {
       numPoints = simplified.coordinates.reduce((acc, ring) => acc + ring.length, 0)
     } else {
       numPoints = JSON.stringify(simplified.coordinates).split(',').length / 2
     }
 
-    // Prevent infinite loops
-    if (numPoints === previousNumPoints) break
+    if (numPoints === previousNumPoints) {
+      // If the number of points hasn't changed, break out of the loop
+      break
+    }
+
     previousNumPoints = numPoints
   }
 
@@ -209,7 +203,6 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
         // If NLP search returned spatial data, add it to the shapefile system and
         // convert NLP GeoJSON to FeatureCollection format that shapefile system expects
         if (data.queryInfo && data.queryInfo.spatial) {
-          // Simplify the geometry early to reduce storage and improve performance
           const simplifiedGeometry = simplifyNlpGeometry(data.queryInfo.spatial)
 
           const nlpShapefileData = {
@@ -226,32 +219,11 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
             }]
           }
 
-          // Update the shapefile store with NLP spatial data
-          useEdscStore.setState((storeState) => ({
-            ...storeState,
-            shapefile: {
-              ...storeState.shapefile,
-              file: nlpShapefileData,
-              isLoaded: true,
-              isLoading: false,
-              isErrored: false,
-              shapefileName: 'NLP Spatial Area',
-              selectedFeatures: ['0']
-            }
-          }))
-
-          // Pan map to NLP spatial area (same as shapefile upload behavior)
-          setTimeout(() => {
-            // Create vector source from NLP spatial data to trigger map movement
-            const vectorSource = new VectorSource()
-            const features = new GeoJSON().readFeatures(nlpShapefileData)
-            vectorSource.addFeatures(features)
-
-            // Emit MOVEMAP event to pan and zoom map to spatial area
-            eventEmitter.emit(mapEventTypes.MOVEMAP, {
-              source: vectorSource
-            })
-          }, 0)
+          useEdscStore.getState().shapefile.updateShapefile({
+            file: nlpShapefileData,
+            shapefileName: 'NLP Spatial Area',
+            selectedFeatures: ['0']
+          })
         }
 
         // Extract temporal data from NLP queryInfo if available
@@ -289,19 +261,12 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
 
       // If NLP search returned temporal data, update the temporal query state
       if (nlpTemporalData) {
-        useEdscStore.setState((storeState) => ({
-          ...storeState,
-          query: {
-            ...storeState.query,
-            collection: {
-              ...storeState.query.collection,
-              temporal: {
-                ...storeState.query.collection.temporal,
-                ...nlpTemporalData
-              }
-            }
-          }
-        }))
+        useEdscStore.getState().query.changeQuery({
+          collection: {
+            temporal: nlpTemporalData
+          },
+          skipCollectionSearch: true
+        })
       }
     })
     .catch((error) => {

@@ -3,6 +3,7 @@ import { replace, push } from 'connected-react-router'
 import { parse, stringify } from 'qs'
 
 import actions from './index'
+import { getNlpCollections } from './nlpCollections'
 
 import { isPath } from '../util/isPath'
 import {
@@ -167,7 +168,30 @@ export const changePath = (path = '') => async (dispatch) => {
       }))
     }
   } else {
-    decodedParams = decodeUrlParams(queryString)
+    const queryParams = parse(queryString)
+    const isNlpSearch = queryParams.nlp === 'true'
+
+    if (isNlpSearch && queryParams.q) {
+      useEdscStore.getState().query.changeQuery({
+        collection: {
+          keyword: queryParams.q
+        },
+        skipCollectionSearch: true
+      })
+
+      // Trigger the NLP search instead of regular cmr search
+      dispatch(getNlpCollections(queryParams.q))
+
+      decodedParams = decodeUrlParams(queryString)
+      if (decodedParams.query && decodedParams.query.collection) {
+        decodedParams.query.collection = {
+          ...decodedParams.query.collection,
+          keyword: undefined
+        }
+      }
+    } else {
+      decodedParams = decodeUrlParams(queryString)
+    }
 
     await dispatch(actions.updateStore(decodedParams, pathname))
   }
@@ -191,7 +215,11 @@ export const changePath = (path = '') => async (dispatch) => {
   ) {
     const { nlpSearchCompleted } = zustandState.query
 
-    if (!nlpSearchCompleted) {
+    // Check if we just initiated an NLP search from URL params
+    const queryParams = parse(queryString)
+    const isNlpSearch = queryParams.nlp === 'true'
+
+    if (!nlpSearchCompleted && !isNlpSearch) {
       getCollections()
     }
 

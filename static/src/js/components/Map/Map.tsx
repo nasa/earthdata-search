@@ -400,6 +400,9 @@ const Map: React.FC<MapProps> = ({
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
+  // Track previous shapefile name to detect newly added NLP spatial data
+  const prevShapefileNameRef = useRef<string | undefined>(undefined)
+
   useEffect(() => {
     const map = new OlMap({
       controls: [
@@ -636,7 +639,8 @@ const Map: React.FC<MapProps> = ({
         shapefile: file,
         shapefileAdded: true,
         showMbr,
-        vectorSource: spatialDrawingSource
+        vectorSource: spatialDrawingSource,
+        isNlpData: false
       })
     }
 
@@ -1012,9 +1016,14 @@ const Map: React.FC<MapProps> = ({
   // When the shapefile changes, draw the shapefile
   useEffect(() => {
     if (shapefile && shapefile.file) {
-      const { file, selectedFeatures } = shapefile
+      const { file, selectedFeatures, shapefileName } = shapefile
 
       const { showMbr, drawingNewLayer } = spatialSearch
+
+      const isNlpSpatialData = shapefileName === 'NLP Spatial Area'
+      const isNewlyAdded = isNlpSpatialData && prevShapefileNameRef.current !== shapefileName
+
+      prevShapefileNameRef.current = shapefileName
 
       drawShapefile({
         drawingNewLayer,
@@ -1025,9 +1034,10 @@ const Map: React.FC<MapProps> = ({
         projectionCode,
         selectedFeatures,
         shapefile: file,
-        shapefileAdded: false,
+        shapefileAdded: isNewlyAdded,
         showMbr,
-        vectorSource: spatialDrawingSource
+        vectorSource: spatialDrawingSource,
+        isNlpData: isNlpSpatialData
       })
     }
   }, [

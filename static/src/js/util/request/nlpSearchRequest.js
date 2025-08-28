@@ -1,6 +1,6 @@
+import { pick } from 'lodash-es'
 import CmrRequest from './cmrRequest'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { pick } from 'lodash-es'
 
 /**
  * Request object for NLP search requests

@@ -19,6 +19,7 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux'
 import { useHistory, type RouteComponentProps } from 'react-router-dom'
 import { type Dispatch } from 'redux'
+// @ts-expect-error: Types do not exist for this file
 import { type RootState } from '../../store/configureStore'
 
 import Button from '../../components/Button/Button'
@@ -57,9 +58,6 @@ import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 // @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
 // @ts-expect-error: Types do not exist for this file
-import { getNlpCollections } from '../../actions/nlpCollections'
-import useEdscStore from '../../zustand/useEdscStore'
-// @ts-expect-error: Types do not exist for this file
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
@@ -97,9 +95,7 @@ export const mapStateToProps = (state: RootState) => ({
 
 export const mapDispatchToProps: MapDispatchToProps<object, object> = (dispatch: Dispatch) => ({
   onChangePath:
-    (path: string) => dispatch(actions.changePath(path)),
-  onGetNlpCollections:
-    (keyword: string) => dispatch(getNlpCollections(keyword))
+    (path: string) => dispatch(actions.changePath(path))
 })
 export interface HomeTopic {
   /** The title of the topic */
@@ -174,24 +170,16 @@ interface HomeStateProps {
 interface HomeDispatchProps {
   /** The Redux action to change the path */
   onChangePath: (path: string) => void
-  /** The Redux action to get NLP collections */
-  onGetNlpCollections: (keyword: string) => void
 }
 
 type HomeProps = HomeStateProps & HomeDispatchProps & RouteComponentProps
 
 export const Home: React.FC<HomeProps> = ({
-  collectionsSearch,
-  onChangePath,
-  onGetNlpCollections
+  onChangePath
 }) => {
   const history = useHistory()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
-
-  const { changeQuery } = useEdscStore((state) => ({
-    changeQuery: state.query.changeQuery
-  }))
 
   // Check if NLP search is enabled to conditionally show spatial/temporal buttons
   const showSearchButtons = nlpSearch !== 'true'
@@ -259,25 +247,18 @@ export const Home: React.FC<HomeProps> = ({
               <form
                 className="d-flex justify-content-center flex-grow-1 flex-shrink-1"
                 onSubmit={
-                  async (e) => {
+                  (e) => {
                     e.preventDefault()
 
                     if (keyword.trim()) {
+                      const encodedKeyword = encodeURIComponent(keyword.trim())
                       const isNlpEnabled = nlpSearch === 'true'
+                      const searchUrl = isNlpEnabled
+                        ? `/search?q=${encodedKeyword}&nlp=true`
+                        : `/search?q=${encodedKeyword}`
 
-                      if (isNlpEnabled) {
-                        await changeQuery({
-                          collection: {
-                            keyword: keyword.trim()
-                          },
-                          skipCollectionSearch: true
-                        })
-
-                        onGetNlpCollections(keyword.trim())
-                      }
-
-                      onChangePath(`/search?q=${keyword}`)
-                      history.push(`/search?q=${keyword}`)
+                      onChangePath(searchUrl)
+                      history.push(searchUrl)
                     }
                   }
                 }
