@@ -425,9 +425,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     allRemovedGranuleIds.push(...removedGranuleIds)
   }
 
-  // Generate a key based on the nonExcludedGranules and the addedGranuleIds and removedGranuleIds
-  // This key will be used to determine if the granules need to be redrawn
+  // Generate a key based on the nonExcludedGranules, addedGranuleIds, gibsTagProduct, and removedGranuleIds,
+  // and gibs tags. `granulesKey` is used to prevent unnecessary rerenders in the Map component.
   const granulesKey = Buffer.from(JSON.stringify({
+    gibsTagProduct: gibsTag?.product || '',
     nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
     addedGranuleIds: allAddedGranuleIds,
     removedGranuleIds: allRemovedGranuleIds
