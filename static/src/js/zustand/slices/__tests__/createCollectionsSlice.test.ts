@@ -43,7 +43,10 @@ describe('createCollectionsSlice', () => {
         loadTime: 0,
         items: []
       },
-      getCollections: expect.any(Function)
+      getCollections: expect.any(Function),
+      setCollectionsErrored: expect.any(Function),
+      setCollectionsLoaded: expect.any(Function),
+      setCollectionsLoading: expect.any(Function)
     })
   })
 
