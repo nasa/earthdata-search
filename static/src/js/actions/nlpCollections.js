@@ -200,12 +200,12 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
         hits = entry.length
         facets = []
 
-        // If NLP search returned spatial data, add it to the shapefile system and
-        // convert NLP GeoJSON to FeatureCollection format that shapefile system expects
+        // If NLP search returned spatial data, add it to the spatial data system and
+        // convert NLP GeoJSON to FeatureCollection format that spatial data system expects
         if (data.queryInfo && data.queryInfo.spatial) {
           const simplifiedGeometry = simplifyNlpGeometry(data.queryInfo.spatial)
 
-          const nlpShapefileData = {
+          const nlpSpatialData = {
             type: 'FeatureCollection',
             name: 'NLP Extracted Spatial Area',
             features: [{
@@ -220,7 +220,7 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
           }
 
           useEdscStore.getState().shapefile.updateShapefile({
-            file: nlpShapefileData,
+            file: nlpSpatialData,
             shapefileName: 'NLP Spatial Area',
             selectedFeatures: ['0']
           })

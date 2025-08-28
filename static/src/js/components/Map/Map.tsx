@@ -400,7 +400,7 @@ const Map: React.FC<MapProps> = ({
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
-  // Track previous shapefile name to detect newly added NLP spatial data
+  // Track previous spatial data name to detect newly added NLP spatial data
   const prevShapefileNameRef = useRef<string | undefined>(undefined)
 
   useEffect(() => {

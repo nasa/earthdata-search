@@ -396,9 +396,9 @@ describe('createShapefileSlice', () => {
     })
   })
 
-  describe('NLP shapefile integration', () => {
-    test('accepts NLP shapefile data with edscId in feature properties', () => {
-      const nlpShapefileData: ShapefileFile = {
+  describe('NLP spatial data integration', () => {
+    test('accepts NLP spatial data with edscId in feature properties', () => {
+      const nlpSpatialData: ShapefileFile = {
         name: 'NLP Extracted Spatial Area',
         type: 'FeatureCollection' as const,
         features: [
@@ -428,7 +428,7 @@ describe('createShapefileSlice', () => {
       const { updateShapefile } = shapefile
 
       updateShapefile({
-        file: nlpShapefileData,
+        file: nlpSpatialData,
         shapefileName: 'NLP Spatial Area',
         selectedFeatures: ['0']
       })
@@ -436,7 +436,7 @@ describe('createShapefileSlice', () => {
       const updatedState = useEdscStore.getState()
       const { shapefile: updatedShapefile } = updatedState
 
-      expect(updatedShapefile.file).toEqual(nlpShapefileData)
+      expect(updatedShapefile.file).toEqual(nlpSpatialData)
       expect(updatedShapefile.isLoaded).toBe(true)
       expect(updatedShapefile.selectedFeatures).toEqual(['0'])
       expect(updatedShapefile.shapefileName).toBe('NLP Spatial Area')

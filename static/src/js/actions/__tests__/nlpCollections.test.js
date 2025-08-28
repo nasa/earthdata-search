@@ -51,7 +51,9 @@ const mockZustandState = {
       keyword: 'test search',
       pageNum: 1,
       temporal: {}
-    }
+    },
+    setNlpSearchCompleted: jest.fn(),
+    clearNlpSearchCompleted: jest.fn()
   }
 }
 
@@ -256,7 +258,7 @@ describe('nlpCollections action', () => {
 
       await store.dispatch(getNlpCollections('test search california'))
 
-      // Verify shapefile store was updated with NLP spatial data
+      // Verify spatial data store was updated with NLP spatial data
       expect(mockSetState).toHaveBeenCalledWith(expect.any(Function))
 
       const setStateCall = mockSetState.mock.calls[0][0]
