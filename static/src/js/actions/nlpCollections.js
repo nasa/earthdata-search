@@ -7,17 +7,9 @@ import { convertNlpTemporalData } from '../util/temporal/convertNlpTemporalData'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 import {
-  ADD_MORE_COLLECTION_RESULTS,
-  ERRORED_COLLECTIONS,
   ERRORED_FACETS,
-  FINISHED_COLLECTIONS_TIMER,
-  LOADED_COLLECTIONS,
   LOADED_FACETS,
-  LOADING_COLLECTIONS,
   LOADING_FACETS,
-  STARTED_COLLECTIONS_TIMER,
-  UPDATE_COLLECTION_METADATA,
-  UPDATE_COLLECTION_RESULTS,
   UPDATE_FACETS
 } from '../constants/actionTypes'
 
@@ -85,34 +77,6 @@ const simplifyNlpGeometry = (geometry) => {
   return simplifiedGeometry
 }
 
-export const addMoreCollectionResults = (payload) => ({
-  type: ADD_MORE_COLLECTION_RESULTS,
-  payload
-})
-
-export const updateCollectionResults = (payload) => ({
-  type: UPDATE_COLLECTION_RESULTS,
-  payload
-})
-
-export const updateCollectionMetadata = (payload) => ({
-  type: UPDATE_COLLECTION_METADATA,
-  payload
-})
-
-export const onCollectionsLoading = () => ({
-  type: LOADING_COLLECTIONS
-})
-
-export const onCollectionsLoaded = (payload) => ({
-  type: LOADED_COLLECTIONS,
-  payload
-})
-
-export const onCollectionsErrored = () => ({
-  type: ERRORED_COLLECTIONS
-})
-
 export const updateFacets = (payload) => ({
   type: UPDATE_FACETS,
   payload
@@ -129,14 +93,6 @@ export const onFacetsLoaded = (payload) => ({
 
 export const onFacetsErrored = () => ({
   type: ERRORED_FACETS
-})
-
-export const startCollectionsTimer = () => ({
-  type: STARTED_COLLECTIONS_TIMER
-})
-
-export const finishCollectionsTimer = () => ({
-  type: FINISHED_COLLECTIONS_TIMER
 })
 
 // Cancel token to cancel pending requests
@@ -165,16 +121,9 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
   const { authToken } = reduxState
   const { pageNum } = zustandState.query.collection
 
-  if (pageNum === 1) {
-    const emptyPayload = {
-      results: []
-    }
-    dispatch(updateCollectionResults(emptyPayload))
-  }
+  useEdscStore.getState().collections.setCollectionsLoading(pageNum)
 
-  dispatch(onCollectionsLoading())
   dispatch(onFacetsLoading())
-  dispatch(startCollectionsTimer())
 
   const requestObject = new NlpSearchRequest(authToken, earthdataEnvironment)
   const { defaultCmrPageSize } = getApplicationConfig()
@@ -232,32 +181,18 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
         }
       }
 
-      const payload = {
-        facets,
-        hits,
-        keyword,
-        results: entry
-      }
-
-      dispatch(finishCollectionsTimer())
-
-      dispatch(onCollectionsLoaded({
-        loaded: true
-      }))
-
-      dispatch(updateCollectionMetadata(entry))
-
-      if (pageNum === 1) {
-        dispatch(updateCollectionResults(payload))
-      } else {
-        dispatch(addMoreCollectionResults(payload))
-      }
+      useEdscStore.getState().collections.setCollectionsLoaded(entry, hits, pageNum)
 
       dispatch(onFacetsLoaded({
         loaded: true
       }))
 
-      dispatch(updateFacets(payload))
+      dispatch(updateFacets({
+        facets,
+        hits,
+        keyword,
+        results: entry
+      }))
 
       // If NLP search returned temporal data, update the temporal query state
       if (nlpTemporalData) {
@@ -274,10 +209,9 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
 
       // Clear NLP search flag on error so traditional search can run
       useEdscStore.getState().query.clearNlpSearchCompleted()
+      useEdscStore.getState().collections.setCollectionsErrored()
 
-      dispatch(onCollectionsErrored())
       dispatch(onFacetsErrored())
-      dispatch(finishCollectionsTimer())
 
       handleError({
         error,

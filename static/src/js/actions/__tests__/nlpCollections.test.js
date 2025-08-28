@@ -4,32 +4,16 @@ import nock from 'nock'
 
 import {
   getNlpCollections,
-  addMoreCollectionResults,
-  updateCollectionResults,
-  updateCollectionMetadata,
-  onCollectionsLoading,
-  onCollectionsLoaded,
-  onCollectionsErrored,
   updateFacets,
   onFacetsLoading,
   onFacetsLoaded,
-  onFacetsErrored,
-  startCollectionsTimer,
-  finishCollectionsTimer
+  onFacetsErrored
 } from '../nlpCollections'
 
 import {
-  ADD_MORE_COLLECTION_RESULTS,
-  ERRORED_COLLECTIONS,
   ERRORED_FACETS,
-  FINISHED_COLLECTIONS_TIMER,
-  LOADED_COLLECTIONS,
   LOADED_FACETS,
-  LOADING_COLLECTIONS,
   LOADING_FACETS,
-  STARTED_COLLECTIONS_TIMER,
-  UPDATE_COLLECTION_METADATA,
-  UPDATE_COLLECTION_RESULTS,
   UPDATE_FACETS
 } from '../../constants/actionTypes'
 
@@ -44,7 +28,20 @@ const mockZustandState = {
     isLoading: false,
     isErrored: false,
     shapefileName: '',
-    selectedFeatures: []
+    selectedFeatures: [],
+    updateShapefile: jest.fn()
+  },
+  collections: {
+    collections: {
+      count: 0,
+      isLoaded: false,
+      isLoading: false,
+      loadTime: 0,
+      items: []
+    },
+    setCollectionsLoading: jest.fn(),
+    setCollectionsLoaded: jest.fn(),
+    setCollectionsErrored: jest.fn()
   },
   query: {
     collection: {
@@ -53,81 +50,22 @@ const mockZustandState = {
       temporal: {}
     },
     setNlpSearchCompleted: jest.fn(),
-    clearNlpSearchCompleted: jest.fn()
+    clearNlpSearchCompleted: jest.fn(),
+    changeQuery: jest.fn()
   }
 }
 
-const mockSetState = jest.fn()
-
 jest.mock('../../zustand/useEdscStore', () => ({
-  getState: jest.fn(() => mockZustandState),
-  setState: jest.fn()
+  getState: jest.fn(() => mockZustandState)
 }))
 
 beforeEach(() => {
   jest.clearAllMocks()
   useEdscStore.getState.mockReturnValue(mockZustandState)
-  useEdscStore.setState.mockImplementation(mockSetState)
 })
 
 describe('nlpCollections action', () => {
   describe('action creators', () => {
-    test('should create an action to add more collection results', () => {
-      const payload = { results: [] }
-      const expectedAction = {
-        type: ADD_MORE_COLLECTION_RESULTS,
-        payload
-      }
-
-      expect(addMoreCollectionResults(payload)).toEqual(expectedAction)
-    })
-
-    test('should create an action to update collection results', () => {
-      const payload = { results: [] }
-      const expectedAction = {
-        type: UPDATE_COLLECTION_RESULTS,
-        payload
-      }
-
-      expect(updateCollectionResults(payload)).toEqual(expectedAction)
-    })
-
-    test('should create an action to update collection metadata', () => {
-      const payload = []
-      const expectedAction = {
-        type: UPDATE_COLLECTION_METADATA,
-        payload
-      }
-
-      expect(updateCollectionMetadata(payload)).toEqual(expectedAction)
-    })
-
-    test('should create an action to indicate collections are loading', () => {
-      const expectedAction = {
-        type: LOADING_COLLECTIONS
-      }
-
-      expect(onCollectionsLoading()).toEqual(expectedAction)
-    })
-
-    test('should create an action to indicate collections are loaded', () => {
-      const payload = { loaded: true }
-      const expectedAction = {
-        type: LOADED_COLLECTIONS,
-        payload
-      }
-
-      expect(onCollectionsLoaded(payload)).toEqual(expectedAction)
-    })
-
-    test('should create an action to indicate collections errored', () => {
-      const expectedAction = {
-        type: ERRORED_COLLECTIONS
-      }
-
-      expect(onCollectionsErrored()).toEqual(expectedAction)
-    })
-
     test('should create an action to update facets', () => {
       const payload = { facets: [] }
       const expectedAction = {
@@ -163,26 +101,10 @@ describe('nlpCollections action', () => {
 
       expect(onFacetsErrored()).toEqual(expectedAction)
     })
-
-    test('should create an action to start the collections timer', () => {
-      const expectedAction = {
-        type: STARTED_COLLECTIONS_TIMER
-      }
-
-      expect(startCollectionsTimer()).toEqual(expectedAction)
-    })
-
-    test('should create an action to finish the collections timer', () => {
-      const expectedAction = {
-        type: FINISHED_COLLECTIONS_TIMER
-      }
-
-      expect(finishCollectionsTimer()).toEqual(expectedAction)
-    })
   })
 
   describe('getNlpCollections', () => {
-    test('should create the correct actions on successful NLP search', async () => {
+    test('should update Zustand state and create facets actions on successful NLP search', async () => {
       const nlpResponse = {
         metadata: {
           feed: {
@@ -218,14 +140,28 @@ describe('nlpCollections action', () => {
 
       const storeActions = store.getActions()
 
-      expect(storeActions[0]).toEqual({
-        type: UPDATE_COLLECTION_RESULTS,
-        payload: { results: [] }
+      expect(storeActions).toContainEqual({ type: LOADING_FACETS })
+      expect(storeActions).toContainEqual({
+        type: LOADED_FACETS,
+        payload: { loaded: true }
       })
 
-      expect(storeActions[1]).toEqual({ type: LOADING_COLLECTIONS })
-      expect(storeActions[2]).toEqual({ type: LOADING_FACETS })
-      expect(storeActions[3]).toEqual({ type: STARTED_COLLECTIONS_TIMER })
+      expect(storeActions).toContainEqual({
+        type: UPDATE_FACETS,
+        payload: {
+          facets: [],
+          hits: 1,
+          keyword: 'test search',
+          results: nlpResponse.metadata.feed.entry
+        }
+      })
+
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledWith(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+        nlpResponse.metadata.feed.entry,
+        1,
+        1
+      )
     })
 
     test('should handle NLP search with spatial data', async () => {
@@ -259,31 +195,26 @@ describe('nlpCollections action', () => {
       await store.dispatch(getNlpCollections('test search california'))
 
       // Verify spatial data store was updated with NLP spatial data
-      expect(mockSetState).toHaveBeenCalledWith(expect.any(Function))
-
-      const setStateCall = mockSetState.mock.calls[0][0]
-      const updatedState = setStateCall(mockZustandState)
-      expect(updatedState.shapefile.file).toEqual({
-        type: 'FeatureCollection',
-        name: 'NLP Extracted Spatial Area',
-        features: [{
-          type: 'Feature',
-          properties: {
-            source: 'nlp',
-            query: 'test search california',
-            edscId: '0'
-          },
-          geometry: {
-            type: 'Polygon',
-            coordinates: [[[-120, 30], [-110, 30], [-110, 40], [-120, 40], [-120, 30]]]
-          }
-        }]
+      expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
+        file: {
+          type: 'FeatureCollection',
+          name: 'NLP Extracted Spatial Area',
+          features: [{
+            type: 'Feature',
+            properties: {
+              source: 'nlp',
+              query: 'test search california',
+              edscId: '0'
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [[[-120, 30], [-110, 30], [-110, 40], [-120, 40], [-120, 30]]]
+            }
+          }]
+        },
+        shapefileName: 'NLP Spatial Area',
+        selectedFeatures: ['0']
       })
-
-      expect(updatedState.shapefile.isLoaded).toBe(true)
-
-      expect(updatedState.shapefile.shapefileName).toBe('NLP Spatial Area')
-      expect(updatedState.shapefile.selectedFeatures).toEqual(['0'])
     })
 
     test('should handle NLP search with temporal data', async () => {
@@ -316,23 +247,16 @@ describe('nlpCollections action', () => {
 
       await store.dispatch(getNlpCollections('test search 2020'))
 
-      // Verify temporal data was processed and state updated
-      expect(mockSetState).toHaveBeenCalledWith(expect.any(Function))
-
-      const temporalUpdateCall = mockSetState.mock.calls.find((call) => {
-        const updatedState = call[0](mockZustandState)
-
-        return (
-          updatedState.query
-          && updatedState.query.collection
-          && updatedState.query.collection.temporal
-        )
+      // Verify temporal data was processed and changeQuery was called
+      expect(mockZustandState.query.changeQuery).toHaveBeenCalledWith({
+        collection: {
+          temporal: expect.any(Object)
+        },
+        skipCollectionSearch: true
       })
-
-      expect(temporalUpdateCall).toBeDefined()
     })
 
-    test('should create the correct actions on failed NLP search', async () => {
+    test('should handle failed NLP search correctly', async () => {
       nock(/localhost/)
         .post(/nlpSearch/)
         .reply(500, { error: 'Server Error' })
@@ -345,9 +269,10 @@ describe('nlpCollections action', () => {
 
       const storeActions = store.getActions()
 
-      expect(storeActions).toContainEqual({ type: ERRORED_COLLECTIONS })
       expect(storeActions).toContainEqual({ type: ERRORED_FACETS })
-      expect(storeActions).toContainEqual({ type: FINISHED_COLLECTIONS_TIMER })
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledWith(1)
+      expect(mockZustandState.collections.setCollectionsErrored).toHaveBeenCalled()
+      expect(mockZustandState.query.clearNlpSearchCompleted).toHaveBeenCalled()
     })
 
     test('should handle empty NLP response', async () => {
@@ -372,7 +297,7 @@ describe('nlpCollections action', () => {
       const storeActions = store.getActions()
 
       expect(storeActions).toContainEqual({
-        type: UPDATE_COLLECTION_RESULTS,
+        type: UPDATE_FACETS,
         payload: {
           facets: [],
           hits: 0,
@@ -380,6 +305,9 @@ describe('nlpCollections action', () => {
           results: []
         }
       })
+
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledWith(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith([], 0, 1)
     })
   })
 })

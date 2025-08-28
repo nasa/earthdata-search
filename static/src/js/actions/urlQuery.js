@@ -179,7 +179,7 @@ export const changePath = (path = '') => async (dispatch) => {
         skipCollectionSearch: true
       })
 
-      // Trigger the NLP search instead of regular cmr search
+      // Trigger the NLP search instead of regular CMR search
       dispatch(getNlpCollections(queryParams.q))
 
       decodedParams = decodeUrlParams(queryString)

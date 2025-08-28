@@ -120,6 +120,35 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           requestObject
         }))
       }
+    },
+
+    setCollectionsLoading: (pageNum) => {
+      set((state) => {
+        state.collections.collections.isLoading = true
+        if (pageNum === 1) {
+          state.collections.collections.items = []
+        }
+      })
+    },
+
+    setCollectionsLoaded: (items, count, pageNum) => {
+      set((state) => {
+        state.collections.collections.isLoaded = true
+        state.collections.collections.isLoading = false
+        state.collections.collections.count = count
+        if (pageNum === 1) {
+          state.collections.collections.items = items
+        } else {
+          state.collections.collections.items = state.collections.collections.items.concat(items)
+        }
+      })
+    },
+
+    setCollectionsErrored: () => {
+      set((state) => {
+        state.collections.collections.isLoading = false
+        state.collections.collections.isLoaded = false
+      })
     }
   }
 })
