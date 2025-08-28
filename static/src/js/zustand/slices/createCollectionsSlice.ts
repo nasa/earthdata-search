@@ -1,6 +1,7 @@
 import { CancelTokenSource, isCancel } from 'axios'
 
 import { CollectionsSlice, ImmerStateCreator } from '../types'
+import { CollectionMetadata } from '../../types/sharedTypes'
 
 // @ts-expect-error There are no types for this file
 import configureStore from '../../store/configureStore'
@@ -122,7 +123,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       }
     },
 
-    setCollectionsLoading: (pageNum) => {
+    setCollectionsLoading: (pageNum: number) => {
       set((state) => {
         state.collections.collections.isLoading = true
         if (pageNum === 1) {
@@ -131,7 +132,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       })
     },
 
-    setCollectionsLoaded: (items, count, pageNum) => {
+    setCollectionsLoaded: (items: CollectionMetadata[], count: number, pageNum: number) => {
       set((state) => {
         state.collections.collections.isLoaded = true
         state.collections.collections.isLoading = false
