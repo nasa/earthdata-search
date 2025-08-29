@@ -57,6 +57,12 @@ export type CollectionsSlice = {
     }
     /** Function to fetch the collections from CMR */
     getCollections: () => void
+    /** Function to set collections loading state */
+    setCollectionsLoading: (pageNum: number) => void
+    /** Function to set collections loaded state with data */
+    setCollectionsLoaded: (items: CollectionMetadata[], count: number, pageNum: number) => void
+    /** Function to set collections error state */
+    setCollectionsErrored: () => void
   }
 }
 

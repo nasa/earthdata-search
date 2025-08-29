@@ -18,6 +18,7 @@ import {
 } from '../../constants/actionTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import polygonWithManyPoints from './fixtures/polygonWithManyPoints.json'
 
 const mockStore = configureMockStore([thunk])
 
@@ -128,8 +129,9 @@ describe('nlpCollections action', () => {
         }
       }
 
-      nock(/localhost/)
-        .post(/nlpSearch/)
+      nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+        .get(/search\/nlp\/query\.json/)
+        .query(true)
         .reply(200, nlpResponse)
 
       const store = mockStore({
@@ -156,7 +158,8 @@ describe('nlpCollections action', () => {
         }
       })
 
-      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledWith(1)
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
       expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
         nlpResponse.metadata.feed.entry,
         1,
@@ -184,8 +187,9 @@ describe('nlpCollections action', () => {
         }
       }
 
-      nock(/localhost/)
-        .post(/nlpSearch/)
+      nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+        .get(/search\/nlp\/query\.json/)
+        .query(true)
         .reply(200, nlpResponse)
 
       const store = mockStore({
@@ -194,7 +198,17 @@ describe('nlpCollections action', () => {
 
       await store.dispatch(getNlpCollections('test search california'))
 
+      // Verify collections were loaded
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+        nlpResponse.metadata.feed.entry,
+        1,
+        1
+      )
+
       // Verify spatial data store was updated with NLP spatial data
+      expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(1)
       expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
         file: {
           type: 'FeatureCollection',
@@ -237,8 +251,9 @@ describe('nlpCollections action', () => {
         }
       }
 
-      nock(/localhost/)
-        .post(/nlpSearch/)
+      nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+        .get(/search\/nlp\/query\.json/)
+        .query(true)
         .reply(200, nlpResponse)
 
       const store = mockStore({
@@ -247,7 +262,17 @@ describe('nlpCollections action', () => {
 
       await store.dispatch(getNlpCollections('test search 2020'))
 
+      // Verify collections were loaded
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+        nlpResponse.metadata.feed.entry,
+        1,
+        1
+      )
+
       // Verify temporal data was processed and changeQuery was called
+      expect(mockZustandState.query.changeQuery).toHaveBeenCalledTimes(1)
       expect(mockZustandState.query.changeQuery).toHaveBeenCalledWith({
         collection: {
           temporal: expect.any(Object)
@@ -257,8 +282,9 @@ describe('nlpCollections action', () => {
     })
 
     test('should handle failed NLP search correctly', async () => {
-      nock(/localhost/)
-        .post(/nlpSearch/)
+      nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+        .get(/search\/nlp\/query\.json/)
+        .query(true)
         .reply(500, { error: 'Server Error' })
 
       const store = mockStore({
@@ -270,9 +296,9 @@ describe('nlpCollections action', () => {
       const storeActions = store.getActions()
 
       expect(storeActions).toContainEqual({ type: ERRORED_FACETS })
-      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledWith(1)
-      expect(mockZustandState.collections.setCollectionsErrored).toHaveBeenCalled()
-      expect(mockZustandState.query.clearNlpSearchCompleted).toHaveBeenCalled()
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsErrored).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.query.clearNlpSearchCompleted).toHaveBeenCalledTimes(1)
     })
 
     test('should handle empty NLP response', async () => {
@@ -284,8 +310,9 @@ describe('nlpCollections action', () => {
         }
       }
 
-      nock(/localhost/)
-        .post(/nlpSearch/)
+      nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+        .get(/search\/nlp\/query\.json/)
+        .query(true)
         .reply(200, nlpResponse)
 
       const store = mockStore({
@@ -306,8 +333,317 @@ describe('nlpCollections action', () => {
         }
       })
 
-      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledWith(1)
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
       expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith([], 0, 1)
+    })
+
+    test('should handle CMR response format', async () => {
+      const nlpResponse = {
+        metadata: {
+          feed: {
+            entry: [{
+              id: 'C1000000-EDSC',
+              title: 'Test Collection'
+            }]
+          }
+        },
+        queryInfo: {
+          spatial: {
+            geoLocation: 'texas',
+            geoJson: {
+              type: 'Polygon',
+              coordinates: [[[-120, 30], [-110, 30], [-110, 40], [-120, 40], [-120, 30]]]
+            }
+          }
+        }
+      }
+
+      nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+        .get(/search\/nlp\/query\.json/)
+        .query(true)
+        .reply(200, nlpResponse)
+
+      const store = mockStore({ authToken: '' })
+      await store.dispatch(getNlpCollections('test search texas'))
+
+      // Verify collections were loaded
+      expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+        nlpResponse.metadata.feed.entry,
+        1,
+        1
+      )
+
+      expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(1)
+      expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
+        file: {
+          type: 'FeatureCollection',
+          name: 'NLP Extracted Spatial Area',
+          features: [{
+            type: 'Feature',
+            properties: {
+              source: 'nlp',
+              query: 'test search texas',
+              edscId: '0'
+            },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [[[-120, 30], [-110, 30], [-110, 40], [-120, 40], [-120, 30]]]
+            }
+          }]
+        },
+        selectedFeatures: ['0'],
+        shapefileName: 'NLP Spatial Area'
+      })
+    })
+
+    describe('geometry simplification', () => {
+      test('should handle null geometry', async () => {
+        const nlpResponse = {
+          metadata: {
+            feed: {
+              entry: [{
+                id: 'C1000000-EDSC',
+                title: 'Test Collection'
+              }]
+            }
+          },
+          queryInfo: {
+            spatial: null
+          }
+        }
+
+        nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+          .get(/search\/nlp\/query\.json/)
+          .query(true)
+          .reply(200, nlpResponse)
+
+        const store = mockStore({ authToken: '' })
+        const initialCallCount = mockZustandState.shapefile.updateShapefile.mock.calls.length
+
+        await store.dispatch(getNlpCollections('test search'))
+
+        // Verify collections were loaded normally
+        expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+          nlpResponse.metadata.feed.entry,
+          1,
+          1
+        )
+
+        // Null spatial data should not trigger updateShapefile call
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(initialCallCount)
+      })
+
+      test('should handle Point geometry without modification', async () => {
+        const nlpResponse = {
+          metadata: {
+            feed: {
+              entry: [{
+                id: 'C1000000-EDSC',
+                title: 'Test Collection'
+              }]
+            }
+          },
+          queryInfo: {
+            spatial: {
+              type: 'Point',
+              coordinates: [-120, 35]
+            }
+          }
+        }
+
+        nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+          .get(/search\/nlp\/query\.json/)
+          .query(true)
+          .reply(200, nlpResponse)
+
+        const store = mockStore({ authToken: '' })
+        await store.dispatch(getNlpCollections('test search point'))
+
+        // Verify collections were loaded
+        expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+          nlpResponse.metadata.feed.entry,
+          1,
+          1
+        )
+
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
+          file: expect.objectContaining({
+            features: [expect.objectContaining({
+              geometry: {
+                type: 'Point',
+                coordinates: [-120, 35]
+              }
+            })]
+          }),
+          shapefileName: 'NLP Spatial Area',
+          selectedFeatures: ['0']
+        })
+      })
+
+      test('should handle LineString geometry', async () => {
+        const nlpResponse = {
+          metadata: {
+            feed: {
+              entry: [{
+                id: 'C1000000-EDSC',
+                title: 'Test Collection'
+              }]
+            }
+          },
+          queryInfo: {
+            spatial: {
+              type: 'LineString',
+              coordinates: [[-120, 30], [-110, 35], [-100, 40]]
+            }
+          }
+        }
+
+        nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+          .get(/search\/nlp\/query\.json/)
+          .query(true)
+          .reply(200, nlpResponse)
+
+        const store = mockStore({ authToken: '' })
+        await store.dispatch(getNlpCollections('test search line'))
+
+        // Verify collections were loaded
+        expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+          nlpResponse.metadata.feed.entry,
+          1,
+          1
+        )
+
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
+          file: expect.objectContaining({
+            features: [expect.objectContaining({
+              geometry: {
+                type: 'LineString',
+                coordinates: [[-120, 30], [-110, 35], [-100, 40]]
+              }
+            })]
+          }),
+          shapefileName: 'NLP Spatial Area',
+          selectedFeatures: ['0']
+        })
+      })
+
+      test('should simplify large polygon with many points', async () => {
+        const largePolygonCoords = polygonWithManyPoints.coordinates
+
+        const nlpResponse = {
+          metadata: {
+            feed: {
+              entry: [{
+                id: 'C1000000-EDSC',
+                title: 'Test Collection'
+              }]
+            }
+          },
+          queryInfo: {
+            spatial: {
+              type: 'Polygon',
+              coordinates: [largePolygonCoords]
+            }
+          }
+        }
+
+        nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+          .get(/search\/nlp\/query\.json/)
+          .query(true)
+          .reply(200, nlpResponse)
+
+        const store = mockStore({ authToken: '' })
+        await store.dispatch(getNlpCollections('test search large polygon'))
+
+        // Verify collections were loaded
+        expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+          nlpResponse.metadata.feed.entry,
+          1,
+          1
+        )
+
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
+          file: expect.objectContaining({
+            features: [expect.objectContaining({
+              geometry: expect.objectContaining({
+                type: 'Polygon',
+                coordinates: expect.any(Array)
+              })
+            })]
+          }),
+          shapefileName: 'NLP Spatial Area',
+          selectedFeatures: ['0']
+        })
+      })
+
+      test('should fix clockwise polygon orientation', async () => {
+        // Create a clockwise polygon (normally should be counter-clockwise)
+        const clockwiseCoords = [
+          [-120, 30], [-110, 30], [-110, 40], [-120, 40], [-120, 30]
+        ]
+
+        const nlpResponse = {
+          metadata: {
+            feed: {
+              entry: [{
+                id: 'C1000000-EDSC',
+                title: 'Test Collection'
+              }]
+            }
+          },
+          queryInfo: {
+            spatial: {
+              type: 'Polygon',
+              coordinates: [clockwiseCoords]
+            }
+          }
+        }
+
+        nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+          .get(/search\/nlp\/query\.json/)
+          .query(true)
+          .reply(200, nlpResponse)
+
+        const store = mockStore({ authToken: '' })
+        await store.dispatch(getNlpCollections('test search clockwise polygon'))
+
+        // Verify collections were loaded
+        expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledWith(
+          nlpResponse.metadata.feed.entry,
+          1,
+          1
+        )
+
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
+          file: expect.objectContaining({
+            features: [expect.objectContaining({
+              geometry: expect.objectContaining({
+                type: 'Polygon',
+                coordinates: expect.any(Array)
+              })
+            })]
+          }),
+          shapefileName: 'NLP Spatial Area',
+          selectedFeatures: ['0']
+        })
+      })
     })
   })
 })

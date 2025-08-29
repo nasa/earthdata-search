@@ -235,4 +235,75 @@ describe('createCollectionsSlice', () => {
       )
     })
   })
+
+  describe('slice methods', () => {
+    test('setCollectionsLoading sets loading state and clears items for page 1', () => {
+      useEdscStore.setState((state) => {
+        state.collections.collections.items = [{ conceptId: 'C1000000000-EDSC', mockData: 'existing' }]
+        state.collections.collections.isLoading = false
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { setCollectionsLoading } = collections
+
+      setCollectionsLoading(1)
+
+      const { collections: updatedCollections } = useEdscStore.getState()
+      expect(updatedCollections.collections.isLoading).toBe(true)
+      expect(updatedCollections.collections.items).toEqual([])
+
+      setCollectionsLoading(2)
+
+      const { collections: secondUpdate } = useEdscStore.getState()
+      expect(secondUpdate.collections.isLoading).toBe(true)
+      expect(secondUpdate.collections.items).toEqual([])
+    })
+
+    test('setCollectionsLoaded updates state correctly', () => {
+      const mockItems1 = [{ conceptId: 'C1000000001-EDSC', id: '1', title: 'Collection 1' }]
+      const mockItems2 = [{ conceptId: 'C1000000002-EDSC', id: '2', title: 'Collection 2' }]
+
+      useEdscStore.setState((state) => {
+        state.collections.collections.isLoaded = false
+        state.collections.collections.isLoading = true
+        state.collections.collections.count = 0
+        state.collections.collections.items = []
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { setCollectionsLoaded } = collections
+
+      setCollectionsLoaded(mockItems1, 5, 1)
+
+      const { collections: firstUpdate } = useEdscStore.getState()
+      expect(firstUpdate.collections.isLoaded).toBe(true)
+      expect(firstUpdate.collections.isLoading).toBe(false)
+      expect(firstUpdate.collections.count).toBe(5)
+      expect(firstUpdate.collections.items).toEqual(mockItems1)
+
+      setCollectionsLoaded(mockItems2, 10, 2)
+
+      const { collections: secondUpdate } = useEdscStore.getState()
+      expect(secondUpdate.collections.isLoaded).toBe(true)
+      expect(secondUpdate.collections.isLoading).toBe(false)
+      expect(secondUpdate.collections.count).toBe(10)
+      expect(secondUpdate.collections.items).toEqual([...mockItems1, ...mockItems2])
+    })
+
+    test('setCollectionsErrored sets error state', () => {
+      useEdscStore.setState((state) => {
+        state.collections.collections.isLoaded = true
+        state.collections.collections.isLoading = true
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { setCollectionsErrored } = collections
+
+      setCollectionsErrored()
+
+      const { collections: updatedCollections } = useEdscStore.getState()
+      expect(updatedCollections.collections.isLoading).toBe(false)
+      expect(updatedCollections.collections.isLoaded).toBe(false)
+    })
+  })
 })

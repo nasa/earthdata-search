@@ -125,7 +125,7 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
 
   dispatch(onFacetsLoading())
 
-  const requestObject = new NlpSearchRequest(authToken, earthdataEnvironment)
+  const requestObject = new NlpSearchRequest(authToken)
   const { defaultCmrPageSize } = getApplicationConfig()
   const searchParams = {
     q: keyword,
@@ -152,27 +152,35 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
         // If NLP search returned spatial data, add it to the spatial data system and
         // convert NLP GeoJSON to FeatureCollection format that spatial data system expects
         if (data.queryInfo && data.queryInfo.spatial) {
-          const simplifiedGeometry = simplifyNlpGeometry(data.queryInfo.spatial)
+          const spatialData = data.queryInfo.spatial
+          const actualGeometry = spatialData.geoJson || spatialData
 
-          const nlpSpatialData = {
-            type: 'FeatureCollection',
-            name: 'NLP Extracted Spatial Area',
-            features: [{
-              type: 'Feature',
-              properties: {
-                source: 'nlp',
-                query: keyword,
-                edscId: '0'
-              },
-              geometry: simplifiedGeometry
-            }]
+          const simplifiedGeometry = simplifyNlpGeometry(actualGeometry)
+
+          // Only create shapefile data if we have a valid geometry
+          if (simplifiedGeometry) {
+            const nlpSpatialData = {
+              type: 'FeatureCollection',
+              name: 'NLP Extracted Spatial Area',
+              features: [{
+                type: 'Feature',
+                properties: {
+                  source: 'nlp',
+                  query: keyword,
+                  edscId: '0'
+                },
+                geometry: simplifiedGeometry
+              }]
+            }
+
+            useEdscStore.getState().shapefile.updateShapefile({
+              file: nlpSpatialData,
+              shapefileName: 'NLP Spatial Area',
+              selectedFeatures: ['0']
+            })
+          } else {
+            console.warn('NLP spatial geometry is invalid, skipping shapefile update')
           }
-
-          useEdscStore.getState().shapefile.updateShapefile({
-            file: nlpSpatialData,
-            shapefileName: 'NLP Spatial Area',
-            selectedFeatures: ['0']
-          })
         }
 
         // Extract temporal data from NLP queryInfo if available

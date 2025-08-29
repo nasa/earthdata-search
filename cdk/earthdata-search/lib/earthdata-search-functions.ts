@@ -228,23 +228,6 @@ export class Functions extends Construct {
       functionNamePrefix
     })
 
-    /**
-     * NLP Search
-     */
-    const nlpSearchNestedStack = new cdk.NestedStack(scope, 'NlpSearchNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(nlpSearchNestedStack, 'NlpSearchLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        methods: ['POST'],
-        path: 'nlpSearch'
-      },
-      entry: '../../serverless/src/nlpSearch/handler.js',
-      functionName: 'nlpSearch',
-      functionNamePrefix
-    })
 
     /**
      * Cloudfront To Cloudwatch
