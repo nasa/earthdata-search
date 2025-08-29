@@ -1,11 +1,11 @@
 /**
  * Converts NLP temporal data to the application's temporal format
  * @param {Object} nlpTemporal - The temporal object from NLP response
- * @param {string} nlpTemporal.startDate - The start date in YYYY-MM-DD format
- * @param {string} nlpTemporal.endDate - The end date in YYYY-MM-DD format
+ * @param {string} nlpTemporal.startDate - The start date in ISO format (e.g., "2020-01-01T00:00:00+00:00")
+ * @param {string} nlpTemporal.endDate - The end date in ISO format (e.g., "2020-12-31T00:00:00+00:00")
  * @returns {Object|null} - Temporal object in application format, or null if invalid
- * @returns {string} returns.startDate - Start date string
- * @returns {string} returns.endDate - End date string
+ * @returns {string} returns.startDate - Start date string in ISO format
+ * @returns {string} returns.endDate - End date string in ISO format
  * @returns {string} returns.recurringDayStart - Recurring day start (empty for NLP data)
  * @returns {string} returns.recurringDayEnd - Recurring day end (empty for NLP data)
  * @returns {boolean} returns.isRecurring - Whether this is recurring temporal data (always false for NLP)
@@ -25,9 +25,9 @@ export const convertNlpTemporalData = (nlpTemporal) => {
     let convertedStartDate = ''
     let convertedEndDate = ''
 
-    // Convert start date from "YYYY-MM-DD" to "YYYY-MM-DDTHH:mm:ss.sssZ"
+    // Convert start date from ISO format to application format
     if (startDate) {
-      const startDateObj = new Date(`${startDate}T00:00:00.000Z`)
+      const startDateObj = new Date(startDate)
       if (!Number.isNaN(startDateObj.getTime())) {
         convertedStartDate = startDateObj.toISOString()
       } else {
@@ -35,10 +35,14 @@ export const convertNlpTemporalData = (nlpTemporal) => {
       }
     }
 
-    // Convert end date from "YYYY-MM-DD" to "YYYY-MM-DDTHH:mm:ss.sssZ"
+    // Convert end date from ISO format to application format
     if (endDate) {
-      const endDateObj = new Date(`${endDate}T23:59:59.999Z`)
+      const endDateObj = new Date(endDate)
       if (!Number.isNaN(endDateObj.getTime())) {
+        // If the time is 00:00:00, change it to end of day
+        if (endDateObj.getUTCHours() === 0 && endDateObj.getUTCMinutes() === 0 && endDateObj.getUTCSeconds() === 0) {
+          endDateObj.setUTCHours(23, 59, 59, 999)
+        }
         convertedEndDate = endDateObj.toISOString()
       } else {
         console.warn('Invalid end date format:', endDate)

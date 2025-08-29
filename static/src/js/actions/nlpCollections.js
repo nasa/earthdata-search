@@ -7,11 +7,11 @@ import { convertNlpTemporalData } from '../util/temporal/convertNlpTemporalData'
 import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 import {
-  ERRORED_FACETS,
-  LOADED_FACETS,
-  LOADING_FACETS,
-  UPDATE_FACETS
-} from '../constants/actionTypes'
+  onFacetsErrored,
+  onFacetsLoaded,
+  onFacetsLoading,
+  updateFacets
+} from './facets'
 
 import useEdscStore from '../zustand/useEdscStore'
 
@@ -76,24 +76,6 @@ const simplifyNlpGeometry = (geometry) => {
   return simplifiedGeometry
 }
 
-export const updateFacets = (payload) => ({
-  type: UPDATE_FACETS,
-  payload
-})
-
-export const onFacetsLoading = () => ({
-  type: LOADING_FACETS
-})
-
-export const onFacetsLoaded = (payload) => ({
-  type: LOADED_FACETS,
-  payload
-})
-
-export const onFacetsErrored = () => ({
-  type: ERRORED_FACETS
-})
-
 // Cancel token to cancel pending requests
 let cancelToken
 
@@ -136,54 +118,56 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
     .then((responseObject) => {
       const { data } = responseObject
 
-      let entry = []
-      let facets = []
-      let hits = 0
+      const entry = data?.metadata?.feed?.entry || []
+      const facets = []
+      const hits = entry.length
       let nlpTemporalData = null
 
-      if (data && data.metadata && data.metadata.feed && data.metadata.feed.entry) {
-        entry = data.metadata.feed.entry
-        hits = entry.length
-        facets = []
+      // If NLP search returned spatial data, add it to the spatial data system and
+      // convert NLP GeoJSON to FeatureCollection format that spatial data system expects
+      if (data.queryInfo && data.queryInfo.spatial) {
+        const spatialData = data.queryInfo.spatial
+        const actualGeometry = spatialData.geoJson || spatialData
 
-        // If NLP search returned spatial data, add it to the spatial data system and
-        // convert NLP GeoJSON to FeatureCollection format that spatial data system expects
-        if (data.queryInfo && data.queryInfo.spatial) {
-          const spatialData = data.queryInfo.spatial
-          const actualGeometry = spatialData.geoJson || spatialData
+        const simplifiedGeometry = simplifyNlpGeometry(actualGeometry)
 
-          const simplifiedGeometry = simplifyNlpGeometry(actualGeometry)
-
-          // Only create shapefile data if we have a valid geometry
-          if (simplifiedGeometry) {
-            const nlpSpatialData = {
-              type: 'FeatureCollection',
-              name: 'NLP Extracted Spatial Area',
-              features: [{
-                type: 'Feature',
-                properties: {
-                  source: 'nlp',
-                  query: keyword,
-                  edscId: '0'
-                },
-                geometry: simplifiedGeometry
-              }]
-            }
-
-            useEdscStore.getState().shapefile.updateShapefile({
-              file: nlpSpatialData,
-              shapefileName: 'NLP Spatial Area',
-              selectedFeatures: ['0']
-            })
-          } else {
-            console.warn('NLP spatial geometry is invalid, skipping shapefile update')
+        // Only create shapefile data if we have a valid geometry
+        if (simplifiedGeometry) {
+          const nlpSpatialData = {
+            type: 'FeatureCollection',
+            name: 'NLP Extracted Spatial Area',
+            features: [{
+              type: 'Feature',
+              properties: {
+                source: 'nlp',
+                query: keyword,
+                edscId: '0'
+              },
+              geometry: simplifiedGeometry
+            }]
           }
-        }
 
-        // Extract temporal data from NLP queryInfo if available
-        if (data.queryInfo && data.queryInfo.temporal) {
-          nlpTemporalData = convertNlpTemporalData(data.queryInfo.temporal)
+          useEdscStore.getState().shapefile.updateShapefile({
+            file: nlpSpatialData,
+            shapefileName: 'NLP Spatial Area',
+            selectedFeatures: ['0']
+          })
         }
+      }
+
+      // Extract temporal data from NLP queryInfo if available
+      if (data.queryInfo && data.queryInfo.temporal) {
+        nlpTemporalData = convertNlpTemporalData(data.queryInfo.temporal)
+      }
+
+      // If NLP search returned temporal data, update the temporal query state BEFORE loading collections
+      if (nlpTemporalData) {
+        useEdscStore.getState().query.changeQuery({
+          collection: {
+            temporal: nlpTemporalData
+          },
+          skipCollectionSearch: true
+        })
       }
 
       useEdscStore.getState().collections.setCollectionsLoaded(entry, hits, pageNum)
@@ -198,16 +182,6 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
         keyword,
         results: entry
       }))
-
-      // If NLP search returned temporal data, update the temporal query state
-      if (nlpTemporalData) {
-        useEdscStore.getState().query.changeQuery({
-          collection: {
-            temporal: nlpTemporalData
-          },
-          skipCollectionSearch: true
-        })
-      }
     })
     .catch((error) => {
       if (isCancel(error)) return

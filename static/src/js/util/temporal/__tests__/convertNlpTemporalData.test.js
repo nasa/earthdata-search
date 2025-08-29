@@ -1,10 +1,10 @@
 import { convertNlpTemporalData } from '../convertNlpTemporalData'
 
 describe('convertNlpTemporalData', () => {
-  test('converts valid date range from YYYY-MM-DD to ISO format', () => {
+  test('converts valid date range from ISO format to application format', () => {
     const nlpTemporal = {
-      startDate: '2020-01-01',
-      endDate: '2020-12-31'
+      startDate: '2020-01-01T00:00:00+00:00',
+      endDate: '2020-12-31T00:00:00+00:00'
     }
 
     const result = convertNlpTemporalData(nlpTemporal)
@@ -20,7 +20,7 @@ describe('convertNlpTemporalData', () => {
 
   test('converts only start date when end date is missing', () => {
     const nlpTemporal = {
-      startDate: '2020-06-15'
+      startDate: '2020-06-15T00:00:00+00:00'
     }
 
     const result = convertNlpTemporalData(nlpTemporal)
@@ -36,7 +36,7 @@ describe('convertNlpTemporalData', () => {
 
   test('converts only end date when start date is missing', () => {
     const nlpTemporal = {
-      endDate: '2020-12-31'
+      endDate: '2020-12-31T00:00:00+00:00'
     }
 
     const result = convertNlpTemporalData(nlpTemporal)
@@ -55,7 +55,7 @@ describe('convertNlpTemporalData', () => {
 
     const nlpTemporal = {
       startDate: 'invalid-date',
-      endDate: '2020-12-31'
+      endDate: '2020-12-31T00:00:00+00:00'
     }
 
     const result = convertNlpTemporalData(nlpTemporal)
@@ -94,8 +94,8 @@ describe('convertNlpTemporalData', () => {
     })
 
     const nlpTemporal = {
-      startDate: '2020-01-01',
-      endDate: '2020-12-31'
+      startDate: '2020-01-01T00:00:00+00:00',
+      endDate: '2020-12-31T00:00:00+00:00'
     }
 
     const result = convertNlpTemporalData(nlpTemporal)
