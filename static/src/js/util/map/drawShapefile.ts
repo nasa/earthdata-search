@@ -29,8 +29,7 @@ import {
   ShapefileFile
 } from '../../types/sharedTypes'
 import { ShapefileSlice } from '../../zustand/types'
-
-const MAX_POLYGON_SIZE = 50
+import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 
 // Simplify the shape if it has too many points
 const simplifyShape = ({

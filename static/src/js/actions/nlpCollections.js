@@ -14,8 +14,7 @@ import {
 } from './facets'
 
 import useEdscStore from '../zustand/useEdscStore'
-
-const MAX_POLYGON_SIZE = 50
+import { MAX_POLYGON_SIZE } from '../constants/spatialConstants'
 
 /**
  * Simplifies NLP geometry if it has too many points using Turf.js
