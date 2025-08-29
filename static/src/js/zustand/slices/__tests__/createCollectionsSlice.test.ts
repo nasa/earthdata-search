@@ -239,7 +239,11 @@ describe('createCollectionsSlice', () => {
   describe('slice methods', () => {
     test('setCollectionsLoading sets loading state and clears items for page 1', () => {
       useEdscStore.setState((state) => {
-        state.collections.collections.items = [{ conceptId: 'C1000000000-EDSC', mockData: 'existing' }]
+        state.collections.collections.items = [{
+          conceptId: 'C1000000000-EDSC',
+          mockData: 'existing'
+        }]
+
         state.collections.collections.isLoading = false
       })
 
@@ -260,8 +264,16 @@ describe('createCollectionsSlice', () => {
     })
 
     test('setCollectionsLoaded updates state correctly', () => {
-      const mockItems1 = [{ conceptId: 'C1000000001-EDSC', id: '1', title: 'Collection 1' }]
-      const mockItems2 = [{ conceptId: 'C1000000002-EDSC', id: '2', title: 'Collection 2' }]
+      const mockItems1 = [{
+        conceptId: 'C1000000001-EDSC',
+        id: '1',
+        title: 'Collection 1'
+      }]
+      const mockItems2 = [{
+        conceptId: 'C1000000002-EDSC',
+        id: '2',
+        title: 'Collection 2'
+      }]
 
       useEdscStore.setState((state) => {
         state.collections.collections.isLoaded = false

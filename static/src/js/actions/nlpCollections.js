@@ -14,7 +14,6 @@ import {
 } from '../constants/actionTypes'
 
 import useEdscStore from '../zustand/useEdscStore'
-import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 
 const MAX_POLYGON_SIZE = 50
 
@@ -107,8 +106,6 @@ let cancelToken
 export const getNlpCollections = (keyword) => (dispatch, getState) => {
   const reduxState = getState()
   const zustandState = useEdscStore.getState()
-
-  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   // Mark NLP search as active immediately to prevent urlQuery from triggering traditional search
   useEdscStore.getState().query.setNlpSearchCompleted(true)

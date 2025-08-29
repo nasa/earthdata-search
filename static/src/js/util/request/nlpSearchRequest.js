@@ -58,7 +58,6 @@ export default class NlpSearchRequest extends CmrRequest {
     return axios(requestOptions)
   }
 
-
   /**
    * Override search method for NLP calls
    * @param {Object} searchParams - Search parameters

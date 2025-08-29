@@ -228,7 +228,6 @@ export class Functions extends Construct {
       functionNamePrefix
     })
 
-
     /**
      * Cloudfront To Cloudwatch
      */
