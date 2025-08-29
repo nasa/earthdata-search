@@ -2,13 +2,13 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import nock from 'nock'
 
+import { getNlpCollections } from '../nlpCollections'
 import {
-  getNlpCollections,
   updateFacets,
   onFacetsLoading,
   onFacetsLoaded,
   onFacetsErrored
-} from '../../nlpCollections'
+} from '../facets'
 
 import {
   ERRORED_FACETS,
