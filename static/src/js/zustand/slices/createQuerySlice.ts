@@ -37,7 +37,8 @@ export const initialState = {
   },
   region: {
     exact: false
-  }
+  },
+  nlpSearchCompleted: false
 }
 
 export const initialGranuleState = {
@@ -77,7 +78,10 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         state.granules.granules.collectionConceptId = null
       })
 
-      get().collections.getCollections()
+      // Only trigger automatic collection search if not explicitly skipped
+      if (!query.skipCollectionSearch) {
+        get().collections.getCollections()
+      }
 
       // If there is a focused collection, update it's granule search params
       // and request it's granules started with page one
@@ -249,6 +253,18 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       })
 
       get().granules.getGranules()
+    },
+
+    setNlpSearchCompleted: (completed) => {
+      set((state) => {
+        state.query.nlpSearchCompleted = completed
+      })
+    },
+
+    clearNlpSearchCompleted: () => {
+      set((state) => {
+        state.query.nlpSearchCompleted = false
+      })
     }
   }
 })

@@ -350,6 +350,52 @@ describe('SpatialDisplay component', () => {
           expect(screen.getByText('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')).toBeInTheDocument()
         })
       })
+
+      describe('when the spatial data is from NLP', () => {
+        test('should display "Search Area" instead of "Shape File"', () => {
+          const newPolygon = '-77.04444122314453,38.99228142151045,'
+            + '-77.01992797851562,38.79166886339155,'
+            + '-76.89415168762207,38.902629947921575,'
+            + '-77.04444122314453,38.99228142151045'
+
+          setup({
+            overrideZustandState: {
+              query: {
+                collection: {
+                  spatial: {
+                    polygon: [newPolygon]
+                  }
+                }
+              },
+              shapefile: {
+                shapefileName: 'NLP Spatial Area',
+                isLoaded: true,
+                isLoading: false,
+                file: {
+                  type: 'FeatureCollection',
+                  features: [{
+                    type: 'Feature',
+                    properties: {
+                      source: 'nlp',
+                      query: 'flood data in california',
+                      edscId: '0'
+                    },
+                    geometry: {
+                      type: 'Polygon',
+                      coordinates: [[[-77.04444122314453, 38.99228142151045]]]
+                    }
+                  }]
+                }
+              }
+            }
+          })
+
+          expect(screen.queryAllByText('Search Area')).toHaveLength(1)
+          expect(screen.queryAllByText('Search Area')[0]).toBeVisible()
+          expect(screen.queryAllByText('Shape File')).toHaveLength(0)
+          expect(screen.queryAllByText('NLP Spatial Area')).toHaveLength(1)
+        })
+      })
     })
   })
 

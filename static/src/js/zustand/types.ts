@@ -57,6 +57,12 @@ export type CollectionsSlice = {
     }
     /** Function to fetch the collections from CMR */
     getCollections: () => void
+    /** Function to set collections loading state */
+    setCollectionsLoading: (pageNum: number) => void
+    /** Function to set collections loaded state with data */
+    setCollectionsLoaded: (items: CollectionMetadata[], count: number, pageNum: number) => void
+    /** Function to set collections error state */
+    setCollectionsErrored: () => void
   }
 }
 
@@ -829,6 +835,8 @@ type ChangeQueryParams = {
   collection?: Partial<CollectionQuery>
   /** The region query */
   region?: Partial<RegionQuery>
+  /** Skip automatic collection search trigger when updating query */
+  skipCollectionSearch?: boolean
 }
 
 export type QuerySlice = {
@@ -838,6 +846,8 @@ export type QuerySlice = {
     collection: CollectionQuery
     /** The region query */
     region: RegionQuery
+    /** Flag indicating if NLP search from landing page completed */
+    nlpSearchCompleted: boolean
     /** Function to change the query */
     changeQuery: (query: ChangeQueryParams) => void
     /** Function to change the granule query */
@@ -878,6 +888,10 @@ export type QuerySlice = {
     removeSpatialFilter: () => void
     /** Function to undo the last excluded granule */
     undoExcludeGranule: (collectionId: string) => void
+    /** Function to set NLP search completion flag */
+    setNlpSearchCompleted: (completed: boolean) => void
+    /** Function to clear NLP search completion flag */
+    clearNlpSearchCompleted: () => void
   }
 }
 
