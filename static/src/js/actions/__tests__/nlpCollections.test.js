@@ -8,7 +8,7 @@ import {
   onFacetsLoading,
   onFacetsLoaded,
   onFacetsErrored
-} from '../nlpCollections'
+} from '../../nlpCollections'
 
 import {
   ERRORED_FACETS,
