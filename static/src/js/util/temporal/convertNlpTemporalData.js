@@ -40,9 +40,13 @@ export const convertNlpTemporalData = (nlpTemporal) => {
       const endDateObj = new Date(endDate)
       if (!Number.isNaN(endDateObj.getTime())) {
         // If the time is 00:00:00, change it to end of day
-        if (endDateObj.getUTCHours() === 0 && endDateObj.getUTCMinutes() === 0 && endDateObj.getUTCSeconds() === 0) {
+        const isStartOfDay = endDateObj.getUTCHours() === 0
+          && endDateObj.getUTCMinutes() === 0
+          && endDateObj.getUTCSeconds() === 0
+        if (isStartOfDay) {
           endDateObj.setUTCHours(23, 59, 59, 999)
         }
+
         convertedEndDate = endDateObj.toISOString()
       } else {
         console.warn('Invalid end date format:', endDate)
