@@ -259,6 +259,9 @@ export const Home: React.FC<HomeProps> = ({
 
                       onChangePath(searchUrl)
                       history.push(searchUrl)
+                    } else if (nlpSearch !== 'true') {
+                      onChangePath('/search')
+                      history.push('/search')
                     }
                   }
                 }
