@@ -181,6 +181,45 @@ describe('createQuerySlice', () => {
       })
     })
 
+    describe('when skipCollectionSearch is true', () => {
+      test('updates the collection query without calling getCollections', async () => {
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.project.getProjectGranules = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          collection: {
+            keyword: 'test'
+          },
+          skipCollectionSearch: true
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          collections,
+          granules,
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.pageNum).toEqual(1)
+        expect(updatedQuery.collection.keyword).toEqual('test')
+
+        expect(granules.granules.collectionConceptId).toEqual(null)
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(0)
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+
     describe('when there are spatial values', () => {
       test('updates the store', async () => {
         useEdscStore.setState((state) => {
@@ -695,6 +734,42 @@ describe('createQuerySlice', () => {
 
       expect(granules.getGranules).toHaveBeenCalledTimes(1)
       expect(granules.getGranules).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('setNlpSearchCompleted', () => {
+    test('sets the nlpSearchCompleted flag', () => {
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { setNlpSearchCompleted } = query
+      setNlpSearchCompleted(true)
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpSearchCompleted).toBe(true)
+    })
+  })
+
+  describe('clearNlpSearchCompleted', () => {
+    test('clears the nlpSearchCompleted flag', () => {
+      useEdscStore.setState((state) => {
+        state.query.nlpSearchCompleted = true
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { clearNlpSearchCompleted } = query
+      clearNlpSearchCompleted()
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpSearchCompleted).toBe(false)
     })
   })
 })
