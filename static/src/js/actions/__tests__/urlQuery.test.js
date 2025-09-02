@@ -3,7 +3,6 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import actions from '../index'
-import { getNlpCollections } from '../nlpCollections'
 
 import { UPDATE_SAVED_PROJECT, RESTORE_FROM_URL } from '../../constants/actionTypes'
 
@@ -1136,7 +1135,6 @@ describe('changePath', () => {
       })
     })
   })
-
 
   describe('when nlpSearchCompleted is true', () => {
     test('skips calling getCollections', async () => {
