@@ -72,6 +72,28 @@ describe('convertNlpTemporalData', () => {
     consoleMock.mockRestore()
   })
 
+  test('handles invalid end date format gracefully', () => {
+    const consoleMock = jest.spyOn(console, 'warn').mockImplementation(() => {})
+
+    const nlpTemporal = {
+      startDate: '2020-01-01T00:00:00+00:00',
+      endDate: 'invalid-end-date'
+    }
+
+    const result = convertNlpTemporalData(nlpTemporal)
+
+    expect(result).toEqual({
+      startDate: '2020-01-01T00:00:00.000Z',
+      endDate: '',
+      recurringDayStart: '',
+      recurringDayEnd: '',
+      isRecurring: false
+    })
+
+    expect(consoleMock).toHaveBeenCalledWith('Invalid end date format:', 'invalid-end-date')
+    consoleMock.mockRestore()
+  })
+
   test('returns null when no dates are provided', () => {
     const nlpTemporal = {}
     const result = convertNlpTemporalData(nlpTemporal)

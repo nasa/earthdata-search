@@ -644,6 +644,109 @@ describe('nlpCollections action', () => {
           selectedFeatures: ['0']
         })
       })
+
+      test('should simplify non-Polygon geometry types', async () => {
+        // Create a LineString with many points to trigger simplification
+        const manyPoints = []
+        for (let i = 0; i < 100; i += 1) {
+          manyPoints.push([i, i * 0.1])
+        }
+
+        const nlpResponse = {
+          metadata: {
+            feed: {
+              entry: [{
+                id: 'C1000000-EDSC',
+                title: 'Test Collection'
+              }]
+            }
+          },
+          queryInfo: {
+            spatial: {
+              type: 'LineString',
+              coordinates: manyPoints
+            }
+          }
+        }
+
+        nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+          .get(/search\/nlp\/query\.json/)
+          .query(true)
+          .reply(200, nlpResponse)
+
+        const store = mockStore({ authToken: '' })
+        await store.dispatch(getNlpCollections('test search linestring'))
+
+        // Verify collections were loaded
+        expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+
+        // Verify shapefile was created with simplified LineString
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
+          file: expect.objectContaining({
+            features: [expect.objectContaining({
+              geometry: expect.objectContaining({
+                type: 'LineString',
+                coordinates: expect.any(Array)
+              })
+            })]
+          }),
+          shapefileName: 'NLP Spatial Area',
+          selectedFeatures: ['0']
+        })
+      })
+
+      test('should handle geometry that cannot be simplified further', async () => {
+        // Create a minimal polygon that cannot be simplified
+        const triangleCoords = [
+          [[-120, 30], [-110, 30], [-115, 40], [-120, 30]]
+        ]
+
+        const nlpResponse = {
+          metadata: {
+            feed: {
+              entry: [{
+                id: 'C1000000-EDSC',
+                title: 'Test Collection'
+              }]
+            }
+          },
+          queryInfo: {
+            spatial: {
+              type: 'Polygon',
+              coordinates: triangleCoords
+            }
+          }
+        }
+
+        nock(/cmr\.sit\.earthdata\.nasa\.gov/)
+          .get(/search\/nlp\/query\.json/)
+          .query(true)
+          .reply(200, nlpResponse)
+
+        const store = mockStore({ authToken: '' })
+        await store.dispatch(getNlpCollections('test search triangle'))
+
+        // Verify collections were loaded
+        expect(mockZustandState.collections.setCollectionsLoading).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.collections.setCollectionsLoaded).toHaveBeenCalledTimes(1)
+
+        // Verify shapefile was created
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledTimes(1)
+        expect(mockZustandState.shapefile.updateShapefile).toHaveBeenCalledWith({
+          file: expect.objectContaining({
+            features: [expect.objectContaining({
+              geometry: expect.objectContaining({
+                type: 'Polygon',
+                coordinates: expect.any(Array)
+              })
+            })]
+          }),
+          shapefileName: 'NLP Spatial Area',
+          selectedFeatures: ['0']
+        })
+      })
     })
   })
 })
