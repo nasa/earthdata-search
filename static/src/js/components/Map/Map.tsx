@@ -72,6 +72,7 @@ import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
+import drawSpatialData from '../../util/map/drawSpatialData'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
@@ -639,8 +640,7 @@ const Map: React.FC<MapProps> = ({
         shapefile: file,
         shapefileAdded: true,
         showMbr,
-        vectorSource: spatialDrawingSource,
-        isNlpData: false
+        vectorSource: spatialDrawingSource
       })
     }
 
@@ -1025,20 +1025,32 @@ const Map: React.FC<MapProps> = ({
 
       prevShapefileNameRef.current = shapefileName
 
-      drawShapefile({
+      const commonDrawParams = {
         drawingNewLayer,
+        selectedFeatures,
         onChangeQuery,
+        onChangeProjection,
         onMetricsMap,
-        onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
-        selectedFeatures,
-        shapefile: file,
-        shapefileAdded: isNewlyAdded,
-        showMbr,
-        vectorSource: spatialDrawingSource,
-        isNlpData: isNlpSpatialData
-      })
+        vectorSource: spatialDrawingSource
+      }
+
+      if (isNlpSpatialData) {
+        drawSpatialData({
+          ...commonDrawParams,
+          spatialData: file,
+          spatialDataAdded: isNewlyAdded
+        })
+      } else {
+        drawShapefile({
+          ...commonDrawParams,
+          shapefile: file,
+          shapefileAdded: isNewlyAdded,
+          onToggleTooManyPointsModal,
+          showMbr
+        })
+      }
     }
   }, [
     shapefile,

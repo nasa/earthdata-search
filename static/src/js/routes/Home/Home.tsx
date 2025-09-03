@@ -19,8 +19,6 @@ import {
 import { connect, MapDispatchToProps } from 'react-redux'
 import { useHistory, type RouteComponentProps } from 'react-router-dom'
 import { type Dispatch } from 'redux'
-// @ts-expect-error: Types do not exist for this file
-import { type RootState } from '../../store/configureStore'
 
 import Button from '../../components/Button/Button'
 // @ts-expect-error: Types do not exist for this file
@@ -89,7 +87,6 @@ const preloadRoutes = () => {
   import('../../containers/MapContainer/MapContainer')
 }
 
-
 export const mapDispatchToProps: MapDispatchToProps<object, object> = (dispatch: Dispatch) => ({
   onChangePath:
     (path: string) => dispatch(actions.changePath(path))
@@ -156,15 +153,12 @@ const topics: HomeTopic[] = [
   }
 ]
 
-interface HomeStateProps {
-}
-
 interface HomeDispatchProps {
   /** The Redux action to change the path */
   onChangePath: (path: string) => void
 }
 
-type HomeProps = HomeStateProps & HomeDispatchProps & RouteComponentProps
+type HomeProps = HomeDispatchProps & RouteComponentProps
 
 export const Home: React.FC<HomeProps> = ({
   onChangePath

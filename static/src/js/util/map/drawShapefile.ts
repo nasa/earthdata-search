@@ -35,8 +35,7 @@ import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 const simplifyShape = ({
   geometry,
   onToggleTooManyPointsModal,
-  shapefileAdded,
-  isNlpData = false
+  shapefileAdded
 }: {
   /** The geometry to simplify */
   geometry: SimpleGeometry
@@ -44,8 +43,6 @@ const simplifyShape = ({
   onToggleTooManyPointsModal: (isOpen: boolean) => void
   /** If the shapefile was just added */
   shapefileAdded: boolean
-  /** If this is NLP data that has already been simplified */
-  isNlpData?: boolean
 }): SimpleGeometry => {
   let simplifiedGeometry = geometry.clone() as SimpleGeometry
 
@@ -53,46 +50,43 @@ const simplifyShape = ({
   let numPoints = coordinates.length / 2
 
   // If the shapefile was added and the shape has too many points, show a modal
-  if (shapefileAdded && numPoints > MAX_POLYGON_SIZE && !isNlpData) {
+  if (shapefileAdded && numPoints > MAX_POLYGON_SIZE) {
     onToggleTooManyPointsModal(true)
   }
 
-  // Skip duplicate simplification for NLP data since it's already been simplified upstream
-  if (!isNlpData) {
-    let tolerance = 0.001
-    let previousNumPoints = numPoints
+  let tolerance = 0.001
+  let previousNumPoints = numPoints
 
-    while (numPoints > MAX_POLYGON_SIZE) {
-      // Take OpenLayers geometry and create a turf.js geometry to simplify
-      const turfGeometry = new GeoJSON().writeGeometryObject(geometry)
+  while (numPoints > MAX_POLYGON_SIZE) {
+    // Take OpenLayers geometry and create a turf.js geometry to simplify
+    const turfGeometry = new GeoJSON().writeGeometryObject(geometry)
 
-      // Simplify the geometry, increasing the tolerance each time
-      const simplified = simplify(turfGeometry, {
-        tolerance: tolerance += 0.002,
-        highQuality: true
-      }) as {
-        coordinates: number[][][]
-      }
-
-      // Ensure the simplified geometry is counter-clockwise
-      if (booleanClockwise(simplified.coordinates[0])) {
-        simplified.coordinates[0] = simplified.coordinates[0].reverse()
-      }
-
-      // Convert the simplified geometry back to an OpenLayers geometry
-      simplifiedGeometry = new GeoJSON().readGeometry(simplified) as SimpleGeometry
-
-      // Get the number of points in the simplified geometry
-      const newCoordinates = simplifiedGeometry.getFlatCoordinates()
-      numPoints = newCoordinates.length / 2
-
-      if (numPoints === previousNumPoints) {
-        // If the number of points hasn't changed, break out of the loop
-        break
-      }
-
-      previousNumPoints = numPoints
+    // Simplify the geometry, increasing the tolerance each time
+    const simplified = simplify(turfGeometry, {
+      tolerance: tolerance += 0.002,
+      highQuality: true
+    }) as {
+      coordinates: number[][][]
     }
+
+    // Ensure the simplified geometry is counter-clockwise
+    if (booleanClockwise(simplified.coordinates[0])) {
+      simplified.coordinates[0] = simplified.coordinates[0].reverse()
+    }
+
+    // Convert the simplified geometry back to an OpenLayers geometry
+    simplifiedGeometry = new GeoJSON().readGeometry(simplified) as SimpleGeometry
+
+    // Get the number of points in the simplified geometry
+    const newCoordinates = simplifiedGeometry.getFlatCoordinates()
+    numPoints = newCoordinates.length / 2
+
+    if (numPoints === previousNumPoints) {
+      // If the number of points hasn't changed, break out of the loop
+      break
+    }
+
+    previousNumPoints = numPoints
   }
 
   return simplifiedGeometry
@@ -126,8 +120,7 @@ const drawShapefile = ({
   projectionCode,
   shapefileAdded,
   showMbr,
-  vectorSource,
-  isNlpData = false
+  vectorSource
 }: {
   /** If a new layer is being drawn */
   drawingNewLayer: boolean | string
@@ -154,8 +147,6 @@ const drawShapefile = ({
   showMbr: boolean
   /** The source to draw the shapefile on */
   vectorSource: VectorSource
-  /** If this is NLP data that has already been simplified */
-  isNlpData?: boolean
 }) => {
   vectorSource.clear()
 
@@ -180,8 +171,7 @@ const drawShapefile = ({
     geometry = simplifyShape({
       geometry,
       onToggleTooManyPointsModal,
-      shapefileAdded,
-      isNlpData
+      shapefileAdded
     })
 
     // Save the geographic coordinates of the feature to use for the spatial query
