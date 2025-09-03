@@ -40,7 +40,7 @@ describe('NlpSearchRequest#constructor', () => {
   })
 
   test('uses correct environment for CMR host', () => {
-    const request = new NlpSearchRequest('test-token', 'uat')
+    NlpSearchRequest('test-token', 'uat')
 
     expect(getEarthdataConfig).toHaveBeenCalledWith('uat')
   })
