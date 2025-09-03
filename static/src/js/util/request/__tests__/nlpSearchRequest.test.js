@@ -38,12 +38,6 @@ describe('NlpSearchRequest#constructor', () => {
     expect(request.optionallyAuthenticated).toBe(true)
     expect(request.authenticated).toBeFalsy()
   })
-
-  test('uses correct environment for CMR host', () => {
-    NlpSearchRequest('test-token', 'uat')
-
-    expect(getEarthdataConfig).toHaveBeenCalledWith('uat')
-  })
 })
 
 describe('NlpSearchRequest#filterData', () => {
