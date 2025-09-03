@@ -22,7 +22,6 @@ import {
   onFacetsLoaded,
   onFacetsErrored
 } from './facets'
-import { getNlpCollections } from './nlpCollections'
 import {
   getColorMap,
   setColorMapsErrored,
@@ -104,7 +103,6 @@ const actions = {
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
   generateNotebook,
-  getNlpCollections,
   getColorMap,
   getGranuleSubscriptions,
   getRegions,

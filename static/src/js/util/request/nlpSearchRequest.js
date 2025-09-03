@@ -11,15 +11,6 @@ export default class NlpSearchRequest extends CmrRequest {
   constructor(authToken, earthdataEnvironment) {
     super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
-    this.lambda = false
-
-    if (authToken && authToken !== '') {
-      this.authenticated = true
-      this.authToken = authToken
-    } else {
-      this.optionallyAuthenticated = true
-    }
-
     this.searchPath = 'search/nlp/query.json'
   }
 

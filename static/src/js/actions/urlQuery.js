@@ -3,7 +3,6 @@ import { replace, push } from 'connected-react-router'
 import { parse, stringify } from 'qs'
 
 import actions from './index'
-import { getNlpCollections } from './nlpCollections'
 
 import { isPath } from '../util/isPath'
 import {
@@ -183,7 +182,7 @@ export const changePath = (path = '') => async (dispatch) => {
       })
 
       // Trigger the NLP search instead of regular CMR search
-      dispatch(getNlpCollections(queryParams.q))
+      useEdscStore.getState().collections.getNlpCollections(queryParams.q)
 
       decodedParams = decodeUrlParams(queryString)
       if (decodedParams.query && decodedParams.query.collection) {

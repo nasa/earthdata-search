@@ -89,9 +89,6 @@ const preloadRoutes = () => {
   import('../../containers/MapContainer/MapContainer')
 }
 
-export const mapStateToProps = (state: RootState) => ({
-  collectionsSearch: state.searchResults.collections
-})
 
 export const mapDispatchToProps: MapDispatchToProps<object, object> = (dispatch: Dispatch) => ({
   onChangePath:
@@ -160,11 +157,6 @@ const topics: HomeTopic[] = [
 ]
 
 interface HomeStateProps {
-  /** Collections search results state */
-  collectionsSearch: {
-    hits?: number
-    isLoading?: boolean
-  }
 }
 
 interface HomeDispatchProps {
@@ -426,4 +418,4 @@ export const Home: React.FC<HomeProps> = ({
   )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(null, mapDispatchToProps)(Home)

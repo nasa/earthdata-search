@@ -1,7 +1,0 @@
-{
-  "body": "{\"params\": {\"q\": \"texas\"}, \"requestId\": \"test-request-id\"}",
-  "headers": {
-    "Content-Type": "application/json"
-  },
-  "httpMethod": "POST"
-}
