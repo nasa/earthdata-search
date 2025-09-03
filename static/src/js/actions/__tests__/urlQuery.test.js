@@ -7,17 +7,12 @@ import actions from '../index'
 import { UPDATE_SAVED_PROJECT, RESTORE_FROM_URL } from '../../constants/actionTypes'
 
 import * as urlQuery from '../urlQuery'
-import { getNlpCollections } from '../nlpCollections'
 import useEdscStore from '../../zustand/useEdscStore'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import { initialState as initialQueryState } from '../../zustand/slices/createQuerySlice'
 import * as urlUtils from '../../util/url/url'
 
 const mockStore = configureMockStore([thunk])
-
-jest.mock('../nlpCollections', () => ({
-  getNlpCollections: jest.fn(() => ({ type: 'GET_NLP_COLLECTIONS' }))
-}))
 
 describe('updateStore', () => {
   test('calls restoreFromUrl and gets new search results', async () => {
@@ -1186,6 +1181,7 @@ describe('changePath', () => {
     test('handles NLP search with query parameter', async () => {
       const changeQueryMock = jest.fn()
       const getCollectionsMock = jest.fn()
+      const getNlpCollectionsMock = jest.fn()
 
       const decodeUrlParamsSpy = jest.spyOn(urlUtils, 'decodeUrlParams')
       decodeUrlParamsSpy.mockReturnValue({
@@ -1198,7 +1194,8 @@ describe('changePath', () => {
 
       useEdscStore.setState({
         collections: {
-          getCollections: getCollectionsMock
+          getCollections: getCollectionsMock,
+          getNlpCollections: getNlpCollectionsMock
         },
         query: {
           changeQuery: changeQueryMock,
@@ -1228,11 +1225,8 @@ describe('changePath', () => {
         skipCollectionSearch: true
       })
 
-      expect(getNlpCollections).toHaveBeenCalledWith('climate data')
+      expect(getNlpCollectionsMock).toHaveBeenCalledWith('climate data')
       expect(decodeUrlParamsSpy).toHaveBeenCalledWith('nlp=true&q=climate+data')
-
-      const storeActions = store.getActions()
-      expect(storeActions).toContainEqual({ type: 'GET_NLP_COLLECTIONS' })
 
       decodeUrlParamsSpy.mockRestore()
     })

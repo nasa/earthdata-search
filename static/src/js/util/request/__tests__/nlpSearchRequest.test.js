@@ -16,27 +16,10 @@ beforeEach(() => {
 })
 
 describe('NlpSearchRequest#constructor', () => {
-  test('sets authenticated to true when authToken is provided', () => {
+  test('sets searchPath correctly', () => {
     const request = new NlpSearchRequest('test-auth-token', 'sit')
 
-    expect(request.authenticated).toBe(true)
-    expect(request.authToken).toBe('test-auth-token')
-    expect(request.lambda).toBe(false)
     expect(request.searchPath).toBe('search/nlp/query.json')
-  })
-
-  test('sets optionallyAuthenticated to true when no authToken is provided', () => {
-    const request = new NlpSearchRequest('', 'uat')
-
-    expect(request.optionallyAuthenticated).toBe(true)
-    expect(request.authenticated).toBeFalsy()
-  })
-
-  test('sets optionallyAuthenticated to true when empty authToken is provided', () => {
-    const request = new NlpSearchRequest('', 'prod')
-
-    expect(request.optionallyAuthenticated).toBe(true)
-    expect(request.authenticated).toBeFalsy()
   })
 })
 

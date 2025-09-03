@@ -19,7 +19,17 @@ jest.mock('../../../events/events', () => ({
 }))
 
 jest.mock('ol/proj', () => ({
-  transform: jest.fn((coords) => coords)
+  transform: jest.fn((coords) => coords),
+  get: jest.fn(() => 'EPSG:4326')
+}))
+
+jest.mock('ol/geom/Polygon', () => ({
+  __esModule: true,
+  default: jest.fn(),
+  circular: jest.fn(() => ({
+    getType: jest.fn().mockReturnValue('Polygon'),
+    getCoordinates: jest.fn().mockReturnValue([[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]])
+  }))
 }))
 
 jest.mock('../getQueryFromShapefileFeature', () => jest.fn(() => ({
@@ -266,7 +276,7 @@ describe('drawSpatialData', () => {
       vectorSource
     })
 
-    expect(pointFeature.set).toHaveBeenCalledWith('geometryType', 'circle')
+    expect(pointFeature.set).toHaveBeenCalledWith('geometryType', 'Circle')
     expect(pointFeature.set).toHaveBeenCalledWith('circleGeometry', [[0, 0], 1000])
   })
 
