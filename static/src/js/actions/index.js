@@ -16,7 +16,6 @@ import {
   updateAdminProjectsPageNum,
   updateAdminProjectsSortKey
 } from './admin/projects'
-import { updateAdvancedSearch } from './advancedSearch'
 import {
   updateFacets,
   onFacetsLoading,
@@ -145,7 +144,6 @@ const actions = {
   toggleTooManyPointsModal,
   updateAdminRetrievalsMetricsStartDate,
   updateAdminRetrievalsMetricsEndDate,
-  updateAdvancedSearch,
   updateAuthToken,
   updateFacets,
   updateNotificationLevel,

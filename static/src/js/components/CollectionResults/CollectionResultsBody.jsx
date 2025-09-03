@@ -82,7 +82,7 @@ const CollectionResultsBody = ({
 
   const {
     portalId,
-    title = portalId
+    title = {}
   } = portal
 
   const { primary: primaryPortalTitle = portalId } = title

@@ -4,21 +4,13 @@ import { isEmpty } from 'lodash-es'
  * Takes CMR params and applies any changes needed to
  * account for the current advanced search state.
  * @param {Object} params The current collection search params.
- * @param {Object} advancedSearch The current advanced search state params.
+ * @param {Object} selectedRegion The current selected region params.
  * @returns {Object} Parameters merged with advanced search spatial.
  */
-export const withAdvancedSearch = (params, advancedSearch) => {
+export const withSelectedRegion = (params, selectedRegion) => {
   const mergedParams = {
     ...params
   }
-
-  const {
-    regionSearch = {}
-  } = advancedSearch
-
-  const {
-    selectedRegion = {}
-  } = regionSearch
 
   // If we have a spatial value for the selectedRegion, use that for the spatial
   if (!isEmpty(selectedRegion) && selectedRegion.spatial) {

@@ -314,6 +314,43 @@ describe('createQuerySlice', () => {
         expect(collections.getCollections).toHaveBeenCalledWith()
       })
     })
+
+    describe('when there is a selectedRegion value', () => {
+      test('updates the store', async () => {
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.project.getProjectGranules = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          selectedRegion: {
+            id: '1234',
+            name: 'Mock Hub',
+            spatial: '-77,38,-77,38,-76,38,-77,38',
+            type: 'huc'
+          }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          collections,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.selectedRegion).toEqual({
+          id: '1234',
+          name: 'Mock Hub',
+          spatial: '-77,38,-77,38,-76,38,-77,38',
+          type: 'huc'
+        })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
+      })
+    })
   })
 
   describe('changeGranuleQuery', () => {

@@ -28,7 +28,6 @@ const restoreFromUrl = (payload) => ({
 })
 
 export const updateStore = ({
-  advancedSearch,
   cmrFacets,
   collections,
   earthdataEnvironment,
@@ -41,6 +40,7 @@ export const updateStore = ({
   project,
   query,
   shapefile,
+  selectedRegion,
   timeline
 }, newPathname) => async (dispatch, getState) => {
   const state = getState()
@@ -60,7 +60,6 @@ export const updateStore = ({
   // If the newPathname is not equal to the current pathname, restore the data from the url
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     await dispatch(restoreFromUrl({
-      advancedSearch,
       collections,
       deprecatedUrlParams
     }))
@@ -99,6 +98,10 @@ export const updateStore = ({
             // If `hasGranulesOrCwic` is `undefined` from the decoded values it needs to stay `undefined` in the
             // store, not fallback to the initial state
             hasGranulesOrCwic: query.collection.hasGranulesOrCwic
+          },
+          selectedRegion: {
+            ...mergedQuery.selectedRegion,
+            ...selectedRegion
           }
         },
         shapefile: merge({}, zustandState.shapefile, shapefile),

@@ -107,7 +107,7 @@ export const prepareRetrievalParams = (state) => {
     returnValue.granule_link_count = totalGranuleLinks
     returnValue.collection_metadata = pick(collectionMetadata, permittedCollectionMetadataFields)
 
-    const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)
+    const extractedGranuleParams = extractProjectCollectionGranuleParams(collectionId)
 
     const preparedParams = prepareGranuleParams(
       collectionsMetadata,
