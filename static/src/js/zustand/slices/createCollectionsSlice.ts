@@ -1,4 +1,12 @@
 import { CancelTokenSource, isCancel } from 'axios'
+import {
+  Point,
+  LineString,
+  Polygon,
+  MultiPoint,
+  MultiLineString,
+  MultiPolygon
+} from 'geojson'
 
 import { booleanClockwise, simplify } from '@turf/turf'
 import { CollectionsSlice, ImmerStateCreator } from '../types'
@@ -24,6 +32,8 @@ import { convertNlpTemporalData } from '../../util/temporal/convertNlpTemporalDa
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 
+type CoordinateGeometry = Point | LineString | Polygon | MultiPoint | MultiLineString | MultiPolygon
+
 const initialState = {
   count: 0,
   isLoaded: false,
@@ -37,41 +47,36 @@ let nlpCancelToken: CancelTokenSource
 
 /**
  * Simplifies NLP geometry if it has too many points using Turf.js
- * @param {Object} geometry - GeoJSON geometry object to simplify
- * @returns {Object|null} Simplified geometry or null if simplification failed
+ * @param {CoordinateGeometry | null} geometry - GeoJSON geometry object to simplify
+ * @returns {CoordinateGeometry | null} Simplified geometry or null if simplification failed
  */
-const simplifyNlpGeometry = (geometry: any) => {
+const simplifyNlpGeometry = (geometry: CoordinateGeometry | null): CoordinateGeometry | null => {
   if (!geometry || !geometry.type) {
     return null
   }
 
-  // Don't simplify Point geometries
   if (geometry.type === 'Point') {
     return geometry
   }
 
-  // Get coordinates to check size
   const coords = geometry.coordinates
   if (!coords) return geometry
 
-  // For Polygon, check the outer ring (first array)
   const coordsToCheck = geometry.type === 'Polygon' ? coords[0] : coords
   const coordinateCount = Array.isArray(coordsToCheck) ? coordsToCheck.length : 0
 
-  // Only simplify if the geometry has many points
   if (coordinateCount > MAX_POLYGON_SIZE) {
     let simplified = geometry
     let tolerance = 0.001
 
     // Try to simplify with increasing tolerance until we get under the max size
-    for (let attempts = 0; attempts < 10; attempts++) {
+    for (let attempts = 0; attempts < 10; attempts += 1) {
       try {
         simplified = simplify(geometry, {
           tolerance,
           highQuality: false
         })
 
-        // Check if simplified enough
         const simplifiedCoords = simplified.type === 'Polygon'
           ? simplified.coordinates[0]
           : simplified.coordinates
@@ -88,10 +93,10 @@ const simplifyNlpGeometry = (geometry: any) => {
       }
     }
 
-    // Fix polygon winding order if needed
+    // Fix polygon order if needed
     if (simplified.type === 'Polygon' && simplified.coordinates?.[0]?.length >= 4) {
       try {
-        const isClockwise = booleanClockwise(simplified)
+        const isClockwise = booleanClockwise(simplified.coordinates[0])
         if (isClockwise) {
           simplified.coordinates[0].reverse()
         }
