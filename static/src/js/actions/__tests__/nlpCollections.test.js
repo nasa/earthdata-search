@@ -23,7 +23,7 @@ import polygonWithManyPoints from './fixtures/polygonWithManyPoints.json'
 const mockStore = configureMockStore([thunk])
 
 const mockZustandState = {
-  earthdataEnvironment: { currentEnvironment: 'prod' },
+  earthdataEnvironment: { currentEnvironment: 'sit' },
   shapefile: {
     isLoaded: false,
     isLoading: false,

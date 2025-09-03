@@ -17,7 +17,7 @@ beforeEach(() => {
 
 describe('NlpSearchRequest#constructor', () => {
   test('sets authenticated to true when authToken is provided', () => {
-    const request = new NlpSearchRequest('test-auth-token')
+    const request = new NlpSearchRequest('test-auth-token', 'sit')
 
     expect(request.authenticated).toBe(true)
     expect(request.authToken).toBe('test-auth-token')
@@ -26,23 +26,29 @@ describe('NlpSearchRequest#constructor', () => {
   })
 
   test('sets optionallyAuthenticated to true when no authToken is provided', () => {
-    const request = new NlpSearchRequest()
+    const request = new NlpSearchRequest('', 'uat')
 
     expect(request.optionallyAuthenticated).toBe(true)
     expect(request.authenticated).toBeFalsy()
   })
 
   test('sets optionallyAuthenticated to true when empty authToken is provided', () => {
-    const request = new NlpSearchRequest('')
+    const request = new NlpSearchRequest('', 'prod')
 
     expect(request.optionallyAuthenticated).toBe(true)
     expect(request.authenticated).toBeFalsy()
+  })
+
+  test('uses correct environment for CMR host', () => {
+    const request = new NlpSearchRequest('test-token', 'uat')
+
+    expect(getEarthdataConfig).toHaveBeenCalledWith('uat')
   })
 })
 
 describe('NlpSearchRequest#filterData', () => {
   test('returns picked data when data is provided', () => {
-    const request = new NlpSearchRequest()
+    const request = new NlpSearchRequest('', 'sit')
     const testData = {
       q: 'test',
       pageNum: 1,
@@ -58,7 +64,7 @@ describe('NlpSearchRequest#filterData', () => {
   })
 
   test('returns data as-is when data is null', () => {
-    const request = new NlpSearchRequest()
+    const request = new NlpSearchRequest('', 'sit')
 
     const result = request.filterData(null)
 
@@ -66,7 +72,7 @@ describe('NlpSearchRequest#filterData', () => {
   })
 
   test('returns data as-is when data is undefined', () => {
-    const request = new NlpSearchRequest()
+    const request = new NlpSearchRequest('', 'sit')
 
     const result = request.filterData(undefined)
 
@@ -76,7 +82,7 @@ describe('NlpSearchRequest#filterData', () => {
 
 describe('NlpSearchRequest#get', () => {
   test('calls axios with correct options', async () => {
-    const request = new NlpSearchRequest()
+    const request = new NlpSearchRequest('test-token', 'sit')
     const startTimerSpy = jest.spyOn(request, 'startTimer').mockImplementation()
     const setFullUrlSpy = jest.spyOn(request, 'setFullUrl').mockImplementation()
     const mockCancelToken = { token: 'mock-cancel-token' }
@@ -105,7 +111,7 @@ describe('NlpSearchRequest#get', () => {
 
 describe('NlpSearchRequest#search', () => {
   test('calls get with searchPath and params', () => {
-    const request = new NlpSearchRequest()
+    const request = new NlpSearchRequest('', 'sit')
     const getSpy = jest.spyOn(request, 'get').mockImplementation()
     const searchParams = {
       q: 'test',
@@ -120,7 +126,7 @@ describe('NlpSearchRequest#search', () => {
 
 describe('NlpSearchRequest#nonIndexedKeys', () => {
   test('returns an empty array', () => {
-    const request = new NlpSearchRequest()
+    const request = new NlpSearchRequest('', 'sit')
 
     expect(request.nonIndexedKeys()).toEqual([])
   })
@@ -128,7 +134,7 @@ describe('NlpSearchRequest#nonIndexedKeys', () => {
 
 describe('NlpSearchRequest#permittedCmrKeys', () => {
   test('returns the correct array of permitted keys', () => {
-    const request = new NlpSearchRequest()
+    const request = new NlpSearchRequest('', 'sit')
 
     expect(request.permittedCmrKeys()).toEqual(['q', 'pageNum', 'pageSize'])
   })

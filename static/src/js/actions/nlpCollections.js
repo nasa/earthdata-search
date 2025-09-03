@@ -14,6 +14,7 @@ import {
 } from './facets'
 
 import useEdscStore from '../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
 import { MAX_POLYGON_SIZE } from '../constants/spatialConstants'
 
 /**
@@ -98,12 +99,13 @@ export const getNlpCollections = (keyword) => (dispatch, getState) => {
 
   const { authToken } = reduxState
   const { pageNum } = zustandState.query.collection
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   useEdscStore.getState().collections.setCollectionsLoading(pageNum)
 
   dispatch(onFacetsLoading())
 
-  const requestObject = new NlpSearchRequest(authToken)
+  const requestObject = new NlpSearchRequest(authToken, earthdataEnvironment)
   const { defaultCmrPageSize } = getApplicationConfig()
   const searchParams = {
     q: keyword,

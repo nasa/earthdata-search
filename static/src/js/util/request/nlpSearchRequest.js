@@ -8,10 +8,8 @@ import { getEarthdataConfig } from '../../../../../sharedUtils/config'
  * Calls CMR NLP endpoint directly
  */
 export default class NlpSearchRequest extends CmrRequest {
-  constructor(authToken) {
-    // Always use SIT environment since NLP endpoint only exists there
-    const nlpEnvironment = 'sit'
-    super(getEarthdataConfig(nlpEnvironment).cmrHost, nlpEnvironment)
+  constructor(authToken, earthdataEnvironment) {
+    super(getEarthdataConfig(earthdataEnvironment).cmrHost, earthdataEnvironment)
 
     this.lambda = false
 
