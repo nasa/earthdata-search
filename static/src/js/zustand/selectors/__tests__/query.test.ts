@@ -6,7 +6,8 @@ import {
   getCollectionSubscriptionQueryString,
   getFocusedCollectionGranuleQuery,
   getGranuleSubscriptionQueryObj,
-  getGranuleSubscriptionQueryString
+  getGranuleSubscriptionQueryString,
+  getSelectedRegionQuery
 } from '../query'
 
 import useEdscStore from '../../useEdscStore'
@@ -36,6 +37,13 @@ describe('query selectors', () => {
         point: [],
         polygon: []
       })
+    })
+  })
+
+  describe('getSelectedRegionQuery', () => {
+    test('returns the selected region query', () => {
+      const selectedRegionQuery = getSelectedRegionQuery(useEdscStore.getState())
+      expect(selectedRegionQuery).toEqual(initialState.selectedRegion)
     })
   })
 

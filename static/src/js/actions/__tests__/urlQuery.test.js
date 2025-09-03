@@ -41,6 +41,7 @@ describe('updateStore', () => {
           temporal: {}
         }
       },
+      selectedRegion: {},
       timeline: {
         query: {
           center: 1676443651000,
@@ -72,6 +73,7 @@ describe('updateStore', () => {
         portal: undefined,
         project: undefined,
         query: undefined,
+        selectedRegion: undefined,
         timeline: undefined
       },
       type: RESTORE_FROM_URL
@@ -136,7 +138,8 @@ describe('updateStore', () => {
         sortKey: collectionSortKeys.scoreDescending,
         spatial: initialState.query.collection.spatial,
         temporal: {}
-      }
+      },
+      selectedRegion: {}
     })
 
     expect(timeline).toEqual({
@@ -178,6 +181,7 @@ describe('updateStore', () => {
             temporal: {}
           }
         },
+        selectedRegion: {},
         timeline: {
           query: {
             center: 1676443651000,
@@ -221,6 +225,7 @@ describe('updateStore', () => {
           portal: undefined,
           project: undefined,
           query: undefined,
+          selectedRegion: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -286,7 +291,8 @@ describe('updateStore', () => {
           sortKey: collectionSortKeys.scoreDescending,
           spatial: initialState.query.collection.spatial,
           temporal: {}
-        }
+        },
+        selectedRegion: {}
       })
 
       expect(timeline).toEqual({
@@ -329,6 +335,7 @@ describe('updateStore', () => {
             temporal: {}
           }
         },
+        selectedRegion: {},
         timeline: {
           query: {
             center: 1676443651000,
@@ -373,6 +380,7 @@ describe('updateStore', () => {
           portal: undefined,
           project: undefined,
           query: undefined,
+          selectedRegion: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -481,7 +489,8 @@ describe('updateStore', () => {
           sortKey: collectionSortKeys.scoreDescending,
           spatial: initialState.query.collection.spatial,
           temporal: {}
-        }
+        },
+        selectedRegion: {}
       })
 
       expect(timeline).toEqual({

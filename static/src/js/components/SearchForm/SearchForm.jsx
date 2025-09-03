@@ -9,8 +9,7 @@ import SearchAutocomplete from '../SearchAutocomplete/SearchAutocomplete'
 import FilterStack from '../FilterStack/FilterStack'
 import TemporalDisplay from '../TemporalDisplay/TemporalDisplay'
 
-import AdvancedSearchDisplayContainer
-  from '../../containers/AdvancedSearchDisplayContainer/AdvancedSearchDisplayContainer'
+import AdvancedSearchDisplay from '../AdvancedSearchDisplay/AdvancedSearchDisplay'
 import SpatialDisplayContainer
   from '../../containers/SpatialDisplayContainer/SpatialDisplayContainer'
 import SpatialSelectionDropdownContainer
@@ -59,9 +58,9 @@ class SearchForm extends Component {
 
   render() {
     const {
-      advancedSearch,
       authToken,
-      handleError
+      handleError,
+      selectedRegion
     } = this.props
 
     const {
@@ -70,13 +69,7 @@ class SearchForm extends Component {
 
     let spatialDisplayIsVisible = true
 
-    if (!isEmpty(advancedSearch)) {
-      const { regionSearch = {} } = advancedSearch
-      if (!isEmpty(regionSearch)) {
-        const { selectedRegion = {} } = regionSearch
-        if (!isEmpty(selectedRegion)) spatialDisplayIsVisible = false
-      }
-    }
+    if (!isEmpty(selectedRegion)) spatialDisplayIsVisible = false
 
     return (
       <section className="search-form">
@@ -117,7 +110,7 @@ class SearchForm extends Component {
           </div>
           <FilterStack isOpen={showFilterStack}>
             <PortalFeatureContainer advancedSearch>
-              <AdvancedSearchDisplayContainer />
+              <AdvancedSearchDisplay />
             </PortalFeatureContainer>
             {
               spatialDisplayIsVisible && (
@@ -133,13 +126,11 @@ class SearchForm extends Component {
 }
 
 SearchForm.propTypes = {
-  advancedSearch: PropTypes.shape({
-    regionSearch: PropTypes.shape({})
-  }).isRequired,
   authToken: PropTypes.string.isRequired,
   handleError: PropTypes.func.isRequired,
   onClearFilters: PropTypes.func.isRequired,
-  onToggleAdvancedSearchModal: PropTypes.func.isRequired
+  onToggleAdvancedSearchModal: PropTypes.func.isRequired,
+  selectedRegion: PropTypes.shape({}).isRequired
 }
 
 export default SearchForm

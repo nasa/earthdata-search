@@ -1,6 +1,5 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { isEmpty, isObject } from 'lodash-es'
+import { isEmpty } from 'lodash-es'
 import { Filter } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import AdvancedSearchDisplayEntry from './AdvancedSearchDisplayEntry'
@@ -11,23 +10,15 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 import './AdvancedSearchDisplay.scss'
 
-const AdvancedSearchDisplay = ({
-  advancedSearch,
-  onUpdateAdvancedSearch
-}) => {
+const AdvancedSearchDisplay = () => {
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
+  const selectedRegion = useEdscStore((state) => state.query.selectedRegion)
 
-  const advancedSearchFiltersApplied = Object.values(advancedSearch).filter((value) => {
-    if (isObject(value)) {
-      return !isEmpty(value)
-    }
+  const selectedRegionApplied = !isEmpty(selectedRegion)
 
-    return !!value
-  }).length
+  if (!selectedRegionApplied) return null
 
-  if (advancedSearchFiltersApplied === 0) return null
-
-  const valueToDisplay = `(${advancedSearchFiltersApplied} applied)`
+  const valueToDisplay = '(1 applied)'
 
   return (
     <FilterStackItem
@@ -35,11 +26,11 @@ const AdvancedSearchDisplay = ({
       title="Advanced Search"
       onRemove={
         () => {
-          onUpdateAdvancedSearch({})
           changeQuery({
             collection: {
               spatial: {}
-            }
+            },
+            selectedRegion: {}
           })
         }
       }
@@ -58,15 +49,6 @@ const AdvancedSearchDisplay = ({
       />
     </FilterStackItem>
   )
-}
-
-AdvancedSearchDisplay.defaultProps = {
-  advancedSearch: {}
-}
-
-AdvancedSearchDisplay.propTypes = {
-  advancedSearch: PropTypes.shape({}),
-  onUpdateAdvancedSearch: PropTypes.func.isRequired
 }
 
 export default AdvancedSearchDisplay

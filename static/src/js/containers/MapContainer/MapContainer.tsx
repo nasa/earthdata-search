@@ -51,7 +51,8 @@ import { mapEventTypes } from '../../constants/eventTypes'
 import useEdscStore from '../../zustand/useEdscStore'
 import {
   getCollectionsQuerySpatial,
-  getFocusedCollectionGranuleQuery
+  getFocusedCollectionGranuleQuery,
+  getSelectedRegionQuery
 } from '../../zustand/selectors/query'
 import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
@@ -82,7 +83,6 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
-  advancedSearch: state.advancedSearch,
   colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
   drawingNewLayer: state.ui.map.drawingNewLayer,
@@ -104,8 +104,6 @@ type ColormapMetadata = {
 }
 
 interface MapContainerProps {
-  /** The advanced search object */
-  advancedSearch: object
   /** The colormaps metadata */
   colormapsMetadata: ColormapMetadata
   /** The display spatial polygon warning flag */
@@ -132,7 +130,6 @@ interface MapContainerProps {
 
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const {
-    advancedSearch = {},
     colormapsMetadata,
     displaySpatialPolygonWarning,
     drawingNewLayer,
@@ -188,6 +185,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     showMbr: state.map.showMbr,
     startDrawing: state.home.startDrawing
   }))
+  const selectedRegion = useEdscStore(getSelectedRegionQuery)
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)
   const focusedCollectionMetadata = useEdscStore(getFocusedCollectionMetadata)
@@ -513,7 +511,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   // Create the spatial search object to pass to the map
   const spatialSearch = useMemo<SpatialSearch>(() => ({
-    advancedSearch,
+    selectedRegion,
     boundingBoxSearch,
     circleSearch,
     drawingNewLayer,
@@ -522,7 +520,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     polygonSearch,
     showMbr: showMbr || displaySpatialPolygonWarning
   }), [
-    advancedSearch,
+    selectedRegion,
     boundingBoxSearch,
     circleSearch,
     displaySpatialPolygonWarning,
