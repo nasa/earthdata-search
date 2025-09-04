@@ -190,6 +190,24 @@ export const changePath = (path = '') => async (dispatch) => {
 
         if (nlpData.spatial || nlpData.temporal) {
           useEdscStore.getState().query.setNlpCollection(nlpData)
+
+          // Apply spatial filter by setting shapefile
+          if (nlpData.spatial) {
+            useEdscStore.getState().shapefile.updateShapefile({
+              file: nlpData.spatial,
+              shapefileName: 'NLP Spatial Area',
+              isLoaded: true
+            })
+          }
+
+          // Apply temporal filter by updating query
+          if (nlpData.temporal) {
+            useEdscStore.getState().query.changeQuery({
+              collection: {
+                temporal: nlpData.temporal
+              }
+            })
+          }
         }
 
         useEdscStore.getState().query.setNlpSearchCompleted(true)
