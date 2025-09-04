@@ -960,6 +960,7 @@ const Map: React.FC<MapProps> = ({
   // When the granules change, draw the granule backgrounds
   useEffect(() => {
     // If the granules haven't changed and the projection hasn't changed, don't redraw the granule backgrounds
+    // Redraw the granule backgrounds if the product layer from the gibs tag has changed
     if (granulesKey === previousGranulesKey && projectionCode === previousProjectionCode) return
 
     // Update the previous values
