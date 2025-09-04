@@ -44,7 +44,6 @@ describe('createCollectionsSlice', () => {
         items: []
       },
       getCollections: expect.any(Function),
-      getNlpCollections: expect.any(Function),
       setCollectionsErrored: expect.any(Function),
       setCollectionsLoaded: expect.any(Function),
       setCollectionsLoading: expect.any(Function)

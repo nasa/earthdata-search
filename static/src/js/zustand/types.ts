@@ -63,8 +63,6 @@ export type CollectionsSlice = {
     setCollectionsLoaded: (items: CollectionMetadata[], count: number, pageNum: number) => void
     /** Function to set collections error state */
     setCollectionsErrored: () => void
-    /** Function to perform NLP collections search */
-    getNlpCollections: (keyword: string) => Promise<void>
   }
 }
 
@@ -842,6 +840,19 @@ type SelectedRegion = {
   type?: 'huc' | 'reach'
 }
 
+/** NLP Collection Query Parameters */
+type NlpCollectionQuery = {
+  /** The original search query string */
+  query: string
+  /** The spatial data extracted from NLP */
+  spatial: ShapefileFile | null
+  /** The temporal data extracted from NLP */
+  temporal: {
+    startDate: string
+    endDate: string
+  } | null
+}
+
 /** Parameters for changing the query */
 type ChangeQueryParams = {
   /** The collection query */
@@ -865,6 +876,8 @@ export type QuerySlice = {
     nlpSearchCompleted: boolean
     /** The selected region (to use as a spatial query to CMR) */
     selectedRegion: SelectedRegion
+    /** The NLP collection query data */
+    nlpCollection: NlpCollectionQuery | null
     /** Function to change the query */
     changeQuery: (query: ChangeQueryParams) => void
     /** Function to change the granule query */
@@ -909,6 +922,10 @@ export type QuerySlice = {
     setNlpSearchCompleted: (completed: boolean) => void
     /** Function to clear NLP search completion flag */
     clearNlpSearchCompleted: () => void
+    /** Function to set NLP collection data */
+    setNlpCollection: (data: NlpCollectionQuery) => void
+    /** Function to clear NLP collection data */
+    clearNlpCollection: () => void
   }
 }
 

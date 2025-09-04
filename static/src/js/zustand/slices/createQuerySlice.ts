@@ -39,7 +39,8 @@ export const initialState = {
     exact: false
   },
   nlpSearchCompleted: false,
-  selectedRegion: {}
+  selectedRegion: {},
+  nlpCollection: null
 }
 
 export const initialGranuleState = {
@@ -269,6 +270,18 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
     clearNlpSearchCompleted: () => {
       set((state) => {
         state.query.nlpSearchCompleted = false
+      })
+    },
+
+    setNlpCollection: (data) => {
+      set((state) => {
+        state.query.nlpCollection = data
+      })
+    },
+
+    clearNlpCollection: () => {
+      set((state) => {
+        state.query.nlpCollection = null
       })
     }
   }
