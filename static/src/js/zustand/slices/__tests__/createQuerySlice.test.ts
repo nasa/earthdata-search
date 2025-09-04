@@ -37,10 +37,12 @@ describe('createQuerySlice', () => {
       changeGranuleQuery: expect.any(Function),
       changeRegionQuery: expect.any(Function),
       clearFilters: expect.any(Function),
+      clearNlpCollection: expect.any(Function),
       clearNlpSearchCompleted: expect.any(Function),
       excludeGranule: expect.any(Function),
       initializeGranuleQuery: expect.any(Function),
       removeSpatialFilter: expect.any(Function),
+      setNlpCollection: expect.any(Function),
       setNlpSearchCompleted: expect.any(Function),
       undoExcludeGranule: expect.any(Function)
     })
