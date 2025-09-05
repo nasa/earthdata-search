@@ -13,6 +13,8 @@ import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
 
+import routerHelper from '../../../router/router'
+
 jest.mock('../../../actions', () => ({
   changeUrl: jest.fn(),
   collectionRelevancyMetrics: jest.fn(),
@@ -55,6 +57,17 @@ describe('createCollectionSlice', () => {
         graphQlHost: 'https://graphql.example.com',
         opensearchRoot: 'https://cmr.example.com'
       }))
+
+      routerHelper.router = {
+        navigate: jest.fn(),
+        state: {
+          location: {
+            pathname: '/search',
+            search: ''
+          }
+        },
+        subscribe: jest.fn()
+      }
     })
 
     describe('when metdata has already been retrieved from graphql', () => {
@@ -70,10 +83,7 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: '',
-          router: {
-            location: {}
-          }
+          authToken: ''
         })
 
         const { collection } = useEdscStore.getState()
@@ -108,17 +118,23 @@ describe('createCollectionSlice', () => {
 
     describe('when there is no focused collection id', () => {
       test('redirects the user to /search', async () => {
+        routerHelper.router = {
+          navigate: jest.fn(),
+          state: {
+            location: {
+              pathname: '/search',
+              search: '?zoom=4'
+            }
+          },
+          subscribe: jest.fn()
+        }
+
         useEdscStore.setState((state) => {
           state.granules.getGranules = jest.fn()
         })
 
         mockGetState.mockReturnValue({
-          authToken: '',
-          router: {
-            location: {
-              search: '?zoom=4'
-            }
-          }
+          authToken: ''
         })
 
         const { collection } = useEdscStore.getState()
@@ -172,10 +188,7 @@ describe('createCollectionSlice', () => {
           })
 
           mockGetState.mockReturnValue({
-            authToken: '',
-            router: {
-              location: {}
-            }
+            authToken: ''
           })
 
           const { collection } = useEdscStore.getState()
@@ -311,10 +324,7 @@ describe('createCollectionSlice', () => {
             })
 
             mockGetState.mockReturnValue({
-              authToken: '',
-              router: {
-                location: {}
-              }
+              authToken: ''
             })
 
             const { collection } = useEdscStore.getState()
@@ -453,10 +463,7 @@ describe('createCollectionSlice', () => {
             })
 
             mockGetState.mockReturnValue({
-              authToken: '',
-              router: {
-                location: {}
-              }
+              authToken: ''
             })
 
             const { collection } = useEdscStore.getState()
@@ -597,10 +604,7 @@ describe('createCollectionSlice', () => {
           })
 
           mockGetState.mockReturnValue({
-            authToken: '',
-            router: {
-              location: {}
-            }
+            authToken: ''
           })
 
           const { collection } = useEdscStore.getState()
@@ -712,6 +716,17 @@ describe('createCollectionSlice', () => {
 
       describe('when graphql returns no metadata for the requested collection', () => {
         test('should clear the collection', async () => {
+          routerHelper.router = {
+            navigate: jest.fn(),
+            state: {
+              location: {
+                search: '?p=C10000000000-EDSC',
+                pathname: '/search/granules'
+              }
+            },
+            subscribe: jest.fn()
+          }
+
           nock(/graph/)
             .post(/api/)
             .reply(200, {
@@ -727,13 +742,7 @@ describe('createCollectionSlice', () => {
           })
 
           mockGetState.mockReturnValue({
-            authToken: '',
-            router: {
-              location: {
-                search: '?some=testparams',
-                pathname: '/search/granules'
-              }
-            }
+            authToken: ''
           })
 
           const { collection } = useEdscStore.getState()
@@ -751,7 +760,7 @@ describe('createCollectionSlice', () => {
           expect(actions.changeUrl).toHaveBeenCalledTimes(1)
           expect(actions.changeUrl).toHaveBeenCalledWith({
             pathname: '/search',
-            search: '?some=testparams'
+            search: '?p=C10000000000-EDSC'
           })
 
           expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
@@ -797,10 +806,7 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: '',
-          router: {
-            location: {}
-          }
+          authToken: ''
         })
 
         const { collection } = useEdscStore.getState()
@@ -911,10 +917,7 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          authToken: '',
-          router: {
-            location: {}
-          }
+          authToken: ''
         })
 
         const expectedItems = [
@@ -966,10 +969,7 @@ describe('createCollectionSlice', () => {
         .reply(200)
 
       mockGetState.mockReturnValue({
-        authToken: '',
-        router: {
-          location: {}
-        }
+        authToken: ''
       })
 
       useEdscStore.setState((state) => {
@@ -1014,6 +1014,17 @@ describe('createCollectionSlice', () => {
   describe('setCollectionId', () => {
     describe('when a collection id is provided', () => {
       test('updates the collection and calls getCollectionMetadata', async () => {
+        routerHelper.router = {
+          navigate: jest.fn(),
+          state: {
+            location: {
+              search: '?keyword=modis',
+              pathname: '/search'
+            }
+          },
+          subscribe: jest.fn()
+        }
+
         useEdscStore.setState((state) => {
           state.collection.getCollectionMetadata = jest.fn()
           state.query.initializeGranuleQuery = jest.fn()
@@ -1021,12 +1032,7 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          router: {
-            location: {
-              pathname: '/search/granules',
-              search: '?keyword=modis'
-            }
-          }
+          authToken: ''
         })
 
         const zustandState = useEdscStore.getState()
@@ -1063,6 +1069,17 @@ describe('createCollectionSlice', () => {
 
     describe('when a collection id is not provided', () => {
       test('should clear the collection and call changeUrl', async () => {
+        routerHelper.router = {
+          navigate: jest.fn(),
+          state: {
+            location: {
+              search: '?keyword=modis',
+              pathname: '/search'
+            }
+          },
+          subscribe: jest.fn()
+        }
+
         useEdscStore.setState((state) => {
           state.collection.getCollectionMetadata = jest.fn()
           state.granule.setGranuleId = jest.fn()
@@ -1071,12 +1088,7 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          router: {
-            location: {
-              pathname: '/search/granules',
-              search: '?keyword=modis'
-            }
-          }
+          authToken: ''
         })
 
         const zustandState = useEdscStore.getState()
@@ -1161,6 +1173,17 @@ describe('createCollectionSlice', () => {
 
     describe('when clearing the collectionId on the project page', () => {
       test('updates the collectionId and does not redirect or call getCollectionMetadata', async () => {
+        routerHelper.router = {
+          navigate: jest.fn(),
+          state: {
+            location: {
+              pathname: '/project',
+              search: '?p=collectionId!collectionId'
+            }
+          },
+          subscribe: jest.fn()
+        }
+
         useEdscStore.setState((state) => {
           state.collection.getCollectionMetadata = jest.fn()
           state.granule.setGranuleId = jest.fn()
@@ -1169,12 +1192,7 @@ describe('createCollectionSlice', () => {
         })
 
         mockGetState.mockReturnValue({
-          router: {
-            location: {
-              pathname: '/project',
-              search: '?p=collectionId!collectionId'
-            }
-          }
+          authToken: ''
         })
 
         const zustandState = useEdscStore.getState()
@@ -1257,16 +1275,23 @@ describe('createCollectionSlice', () => {
 
   describe('viewCollectionDetails', () => {
     test('calls setCollectionId and changeUrl', async () => {
+      routerHelper.router = {
+        navigate: jest.fn(),
+        state: {
+          location: {
+            search: '?keyword=modis',
+            pathname: '/search'
+          }
+        },
+        subscribe: jest.fn()
+      }
+
       useEdscStore.setState((state) => {
         state.collection.setCollectionId = jest.fn()
       })
 
       mockGetState.mockReturnValue({
-        router: {
-          location: {
-            search: '?keyword=modis'
-          }
-        }
+        authToken: ''
       })
 
       const zustandState = useEdscStore.getState()
@@ -1288,16 +1313,23 @@ describe('createCollectionSlice', () => {
 
   describe('viewCollectionGranules', () => {
     test('calls setCollectionId and changeUrl', async () => {
+      routerHelper.router = {
+        navigate: jest.fn(),
+        state: {
+          location: {
+            search: '?keyword=modis',
+            pathname: '/search'
+          }
+        },
+        subscribe: jest.fn()
+      }
+
       useEdscStore.setState((state) => {
         state.collection.setCollectionId = jest.fn()
       })
 
       mockGetState.mockReturnValue({
-        router: {
-          location: {
-            search: '?keyword=modis'
-          }
-        }
+        authToken: ''
       })
 
       const zustandState = useEdscStore.getState()

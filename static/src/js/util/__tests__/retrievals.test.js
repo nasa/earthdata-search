@@ -2,6 +2,18 @@ import configureStore from '../../store/configureStore'
 import useEdscStore from '../../zustand/useEdscStore'
 import { prepareRetrievalParams } from '../retrievals'
 
+jest.mock('../../router/router', () => ({
+  ...jest.requireActual('../../router/router'),
+  router: {
+    navigate: jest.fn(),
+    state: {
+      location: {
+        search: '?p=C100000-EDSC'
+      }
+    }
+  }
+}))
+
 jest.mock('../../store/configureStore', () => jest.fn())
 
 describe('retrievals', () => {
@@ -100,12 +112,7 @@ describe('retrievals', () => {
     })
 
     const reduxState = {
-      authToken: 'auth-token',
-      router: {
-        location: {
-          search: '?p=C100000-EDSC'
-        }
-      }
+      authToken: 'auth-token'
     }
 
     configureStore.mockReturnValue({
@@ -254,12 +261,7 @@ describe('retrievals', () => {
     })
 
     const reduxState = {
-      authToken: 'auth-token',
-      router: {
-        location: {
-          search: '?p=C100000-EDSC'
-        }
-      }
+      authToken: 'auth-token'
     }
 
     configureStore.mockReturnValue({

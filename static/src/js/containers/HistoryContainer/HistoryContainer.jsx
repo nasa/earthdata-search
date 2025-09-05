@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import actions from '../../actions'
-import history from '../../util/history'
+import routerHelper from '../../router/router'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -11,19 +11,23 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const HistoryContainer = ({ onChangePath }) => {
-  useEffect(() => {
-    const unlisten = history.listen((location, action) => {
-      // If the action is POP (browser back or forward buttons), call onChangePath to reset the store
-      // with the new location values
-      if (action === 'POP') {
-        const { pathname, search } = location
+  const { router } = routerHelper
 
+  useEffect(() => {
+    const unsubscribe = router.subscribe((location) => {
+      const {
+        historyAction,
+        pathname,
+        search
+      } = location
+
+      if (historyAction === 'POP') {
         onChangePath(`${pathname}${search}`)
       }
     })
 
     return () => {
-      unlisten()
+      unsubscribe()
     }
   }, [])
 

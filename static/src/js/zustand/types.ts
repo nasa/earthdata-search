@@ -811,6 +811,8 @@ type CollectionQuery = {
   hasGranulesOrCwic: boolean
   /** The keyword to search for */
   keyword: string
+  /** Flag to indicate if only EOSDIS collections should be included */
+  onlyEosdisCollections: boolean
   /** The temporal override */
   overrideTemporal: Temporal
   /** The page number */
@@ -819,6 +821,8 @@ type CollectionQuery = {
   sortKey: string
   /** The spatial filter */
   spatial: Spatial
+  /** The tag key */
+  tagKey: string
   /** The temporal filter */
   temporal: Temporal
 }

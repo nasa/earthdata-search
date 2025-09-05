@@ -12,7 +12,6 @@ import {
   SearchPanelsContainer
 } from '../SearchPanelsContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import { initialState } from '../../../zustand/slices/createQuerySlice'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
 
@@ -25,7 +24,6 @@ const setup = setupTest({
       csv: false,
       json: false
     },
-    location: {},
     match: {
       url: '/search'
     },
@@ -58,7 +56,8 @@ const setup = setupTest({
         }
       }
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('mapDispatchToProps', () => {
@@ -142,7 +141,7 @@ describe('mapStateToProps', () => {
 
 describe('SearchPanelsContainer component', () => {
   test('passes its props and renders a single SearchPanels component', async () => {
-    const { props, zustandState } = setup()
+    const { props } = setup()
 
     const panels = await screen.findByText('Search Panels')
 
@@ -151,58 +150,16 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledWith(
       {
         authToken: '',
-        collectionMetadata: {},
-        collectionQuery: initialState.collection,
-        collections: {
-          count: 0,
-          isLoaded: false,
-          isLoading: false,
-          items: [],
-          loadTime: 0
-        },
         collectionSubscriptions: [],
-        granuleMetadata: {},
-        granuleQuery: {},
-        granules: {
-          collectionConceptId: null,
-          count: null,
-          isLoaded: false,
-          isLoading: false,
-          items: [],
-          loadTime: 0
-        },
         isExportRunning: {
           csv: false,
           json: false
         },
-        location: {},
-        match: {
-          url: '/search'
-        },
-        onApplyGranuleFilters: zustandState.query.changeGranuleQuery,
         onChangePath: props.onChangePath,
-        onChangeQuery: zustandState.query.changeQuery,
         onExport: props.onExport,
         onMetricsCollectionSortChange: props.onMetricsCollectionSortChange,
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
-        onToggleAboutCwicModal: props.onToggleAboutCwicModal,
-        preferences: {
-          collectionListView: 'default',
-          collectionSort: 'default',
-          granuleListView: 'default',
-          granuleSort: 'default',
-          mapView: {
-            baseLayer: 'worldImagery',
-            latitude: 0,
-            longitude: 0,
-            overlayLayers: ['bordersRoads', 'placeLabels'],
-            projection: 'epsg4326',
-            rotation: 0,
-            zoom: 3
-          },
-          panelState: 'default'
-        },
-        setCollectionId: zustandState.collection.setCollectionId
+        onToggleAboutCwicModal: props.onToggleAboutCwicModal
       },
       {}
     )

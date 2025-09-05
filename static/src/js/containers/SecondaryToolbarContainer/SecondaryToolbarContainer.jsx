@@ -47,10 +47,14 @@ export const SecondaryToolbarContainer = (props) => {
 
   useEffect(() => {
     // If we have a authToken, but no ursProfile, request the contact info
-    if (authToken && !(ursProfile && ursProfile.first_name)) {
+    if (secondaryToolbarEnabled && authToken && !(ursProfile && ursProfile.first_name)) {
       onFetchContactInfo()
     }
-  }, [authToken])
+  }, [secondaryToolbarEnabled])
+
+  if (!secondaryToolbarEnabled) {
+    return null
+  }
 
   return (
     <SecondaryToolbar
@@ -61,7 +65,6 @@ export const SecondaryToolbarContainer = (props) => {
       projectCollectionIds={projectCollectionIds}
       retrieval={retrieval}
       savedProject={savedProject}
-      secondaryToolbarEnabled={secondaryToolbarEnabled}
       ursProfile={ursProfile}
     />
   )

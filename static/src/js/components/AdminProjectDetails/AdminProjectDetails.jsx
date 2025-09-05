@@ -1,7 +1,5 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import { isEmpty } from 'lodash-es'
 import { parse } from 'qs'
 import Col from 'react-bootstrap/Col'
@@ -78,6 +76,4 @@ AdminProjectDetails.propTypes = {
   })
 }
 
-export default withRouter(
-  connect(null, null)(AdminProjectDetails)
-)
+export default AdminProjectDetails

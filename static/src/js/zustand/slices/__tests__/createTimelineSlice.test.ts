@@ -11,6 +11,7 @@ import configureStore from '../../../store/configureStore'
 import actions from '../../../actions'
 
 import TimelineRequest from '../../../util/request/timelineRequest'
+import routerHelper from '../../../router/router'
 
 jest.mock('../../../store/configureStore', () => jest.fn())
 
@@ -107,16 +108,24 @@ describe('createTimelineSlice', () => {
   })
 
   describe('getTimeline', () => {
+    beforeEach(() => {
+      routerHelper.router = {
+        navigate: jest.fn(),
+        state: {
+          location: {
+            pathname: '/search/granules',
+            search: ''
+          }
+        },
+        subscribe: jest.fn()
+      }
+    })
+
     describe('when the user is not logged in', () => {
       test('calls cmr to set the intervals', async () => {
         configureStore.mockReturnValue({
           getState: () => ({
-            authToken: '',
-            router: {
-              location: {
-                pathname: ''
-              }
-            }
+            authToken: ''
           })
         })
 
@@ -176,12 +185,7 @@ describe('createTimelineSlice', () => {
       test('calls lambda to set the intervals', async () => {
         configureStore.mockReturnValue({
           getState: () => ({
-            authToken: 'mock-token',
-            router: {
-              location: {
-                pathname: ''
-              }
-            }
+            authToken: 'mock-token'
           })
         })
 
@@ -241,12 +245,7 @@ describe('createTimelineSlice', () => {
       test('sets intervals to empty', async () => {
         configureStore.mockReturnValue({
           getState: () => ({
-            authToken: 'mock-token',
-            router: {
-              location: {
-                pathname: ''
-              }
-            }
+            authToken: 'mock-token'
           })
         })
 
@@ -286,12 +285,7 @@ describe('createTimelineSlice', () => {
         configureStore.mockReturnValue({
           dispatch: mockDispatch,
           getState: () => ({
-            authToken: '',
-            router: {
-              location: {
-                pathname: ''
-              }
-            }
+            authToken: ''
           })
         })
 

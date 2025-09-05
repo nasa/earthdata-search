@@ -30,6 +30,19 @@ jest.mock('../PanelItem', () => ({
   ))
 }))
 
+jest.mock('../../../router/router', () => ({
+  ...jest.requireActual('../../../router/router'),
+  router: {
+    navigate: jest.fn(),
+    state: {
+      location: {
+        pathname: '/search'
+      }
+    },
+    subscribe: jest.fn()
+  }
+}))
+
 const setup = (renderMethod, overrideProps = {}) => {
   const props = {
     show: true,

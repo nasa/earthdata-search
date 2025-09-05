@@ -1,3 +1,4 @@
+import routerHelper from '../router/router'
 import getObjectKeyByValue from './object'
 
 /**
@@ -51,11 +52,10 @@ export const prepareTimelineParams = (state) => {
     collectionQuery,
     focusedCollection,
     projectCollections,
-    router,
     timelineQuery
   } = state
 
-  const { location } = router
+  const { location } = routerHelper.router.state
   const { pathname } = location
   const isProjectPage = pathname.startsWith('/project')
 

@@ -161,18 +161,22 @@ describe('helpers', () => {
 
   describe('computeCollectionsViewed', () => {
     test('returns null when no keyword is applied', () => {
-      const state = {
-        focusedCollection: undefined
-      }
-      const value = computeCollectionsViewed(state)
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.collection.collectionId = null
+      })
+
+      const value = computeCollectionsViewed()
       expect(value).toEqual(null)
     })
 
     test('returns collection id when no keyword is applied', () => {
-      const state = {
-        focusedCollection: 'TEST-COLL-ID'
-      }
-      const value = computeCollectionsViewed(state)
+      useEdscStore.setState((state) => {
+        // eslint-disable-next-line no-param-reassign
+        state.collection.collectionId = 'TEST-COLL-ID'
+      })
+
+      const value = computeCollectionsViewed()
       expect(value).toEqual('TEST-COLL-ID')
     })
   })

@@ -38,14 +38,14 @@ const setup = setupTest({
   defaultZustandState: {
     query: {
       changeQuery: jest.fn()
+    },
+    timeline: {
+      setQuery: jest.fn()
     }
   }
 })
 
 beforeEach(() => {
-  jest.clearAllMocks()
-  jest.restoreAllMocks()
-
   // MockDate is used here to overwrite the js Date object. This allows us to
   // mock changes needed to test the moment functions
   MockDate.set('2021-01-01T10:00:00.000Z')

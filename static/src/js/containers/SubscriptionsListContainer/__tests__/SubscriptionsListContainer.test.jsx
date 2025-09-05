@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import {
@@ -10,10 +10,11 @@ import {
 } from '../SubscriptionsListContainer'
 import SubscriptionsList from '../../../components/SubscriptionsList/SubscriptionsList'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/SubscriptionsList/SubscriptionsList', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
+const setup = setupTest({
+  Component: SubscriptionsListContainer,
+  defaultProps: {
     subscriptions: {
       byId: {
         'SUB100000-EDSC': {
@@ -36,14 +37,7 @@ function setup() {
     onDeleteSubscription: jest.fn(),
     onFetchSubscriptions: jest.fn()
   }
-
-  const enzymeWrapper = shallow(<SubscriptionsListContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onDeleteSubscription calls actions.deleteSubscription', () => {
@@ -52,8 +46,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onDeleteSubscription('conceptId', 'nativeId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('conceptId', 'nativeId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('conceptId', 'nativeId')
   })
 
   test('onFetchSubscriptions calls actions.getSubscriptions', () => {
@@ -62,7 +56,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchSubscriptions()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith()
   })
 })
 
@@ -82,29 +77,36 @@ describe('mapStateToProps', () => {
 
 describe('SubscriptionsListContainer component', () => {
   test('passes its props and renders SubscriptionsList component', () => {
-    const { enzymeWrapper, props } = setup()
+    const { props } = setup()
 
-    expect(enzymeWrapper.find(SubscriptionsList).length).toBe(1)
-    expect(enzymeWrapper.find(SubscriptionsList).props().subscriptions).toEqual({
-      byId: {
-        'SUB100000-EDSC': {
-          collection: {
-            conceptId: 'C100000-EDSC',
-            title: 'Mattis Justo Vulputate Ullamcorper Amet.'
+    expect(props.onFetchSubscriptions).toHaveBeenCalledTimes(1)
+    expect(props.onFetchSubscriptions).toHaveBeenCalledWith()
+
+    expect(SubscriptionsList).toHaveBeenCalledTimes(1)
+    expect(SubscriptionsList).toHaveBeenCalledWith(
+      {
+        subscriptions: {
+          byId: {
+            'SUB100000-EDSC': {
+              collection: {
+                conceptId: 'C100000-EDSC',
+                title: 'Mattis Justo Vulputate Ullamcorper Amet.'
+              },
+              collectionConceptId: 'C100000-EDSC',
+              conceptId: 'SUB100000-EDSC',
+              name: 'Test Subscription',
+              query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
+            }
           },
-          collectionConceptId: 'C100000-EDSC',
-          conceptId: 'SUB100000-EDSC',
-          name: 'Test Subscription',
-          query: 'polygon=-18,-78,-13,-74,-16,-73,-22,-77,-18,-78'
-        }
+          isLoading: false,
+          isLoaded: true,
+          error: null,
+          timerStart: null,
+          loadTime: 1265
+        },
+        onDeleteSubscription: expect.any(Function)
       },
-      isLoading: false,
-      isLoaded: true,
-      error: null,
-      timerStart: null,
-      loadTime: 1265
-    })
-
-    expect(typeof props.onFetchSubscriptions).toEqual('function')
+      {}
+    )
   })
 })
