@@ -385,8 +385,7 @@ describe('createCollectionsSlice', () => {
       expect(mockSetNlpCollection).toHaveBeenCalledWith({
         query: 'test query',
         spatial: expect.objectContaining({
-          type: 'FeatureCollection',
-          name: 'Test Area'
+          type: 'Polygon'
         }),
         temporal: {
           startDate: '2023-01-01T00:00:00.000Z',
@@ -397,8 +396,7 @@ describe('createCollectionsSlice', () => {
       expect(mockChangeQuery).toHaveBeenCalledWith({
         collection: {
           spatial: expect.objectContaining({
-            type: 'FeatureCollection',
-            name: 'Test Area'
+            type: 'Polygon'
           })
         }
       })
@@ -461,8 +459,7 @@ describe('createCollectionsSlice', () => {
       expect(mockSetNlpCollection).toHaveBeenCalledWith({
         query: 'spatial query',
         spatial: expect.objectContaining({
-          type: 'FeatureCollection',
-          name: 'Point Location'
+          type: 'Point'
         }),
         temporal: null
       })
@@ -470,8 +467,7 @@ describe('createCollectionsSlice', () => {
       expect(mockChangeQuery).toHaveBeenCalledWith({
         collection: {
           spatial: expect.objectContaining({
-            type: 'FeatureCollection',
-            name: 'Point Location'
+            type: 'Point'
           })
         }
       })

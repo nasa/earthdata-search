@@ -171,19 +171,7 @@ export default class NlpSearchRequest extends CmrRequest {
       const simplifiedGeometry = simplifyNlpGeometry(actualGeometry)
 
       if (simplifiedGeometry) {
-        spatialData = {
-          type: 'FeatureCollection',
-          name: rawSpatialData.geoLocation || 'Extracted Spatial Area',
-          features: [{
-            type: 'Feature',
-            properties: {
-              source: 'nlp',
-              query,
-              edscId: '0'
-            },
-            geometry: simplifiedGeometry
-          }]
-        }
+        spatialData = simplifiedGeometry
       }
     }
 
