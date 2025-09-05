@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import AdminProjects from '../../../components/AdminProjects/AdminProjects'
@@ -10,27 +10,18 @@ import {
   mapStateToProps
 } from '../AdminProjectsContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/AdminProjects/AdminProjects', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
-    history: {
-      push: jest.fn()
-    },
+const setup = setupTest({
+  Component: AdminProjectsContainer,
+  defaultProps: {
     onAdminViewProject: jest.fn(),
     onFetchAdminProjects: jest.fn(),
     onUpdateAdminProjectsSortKey: jest.fn(),
     onUpdateAdminProjectsPageNum: jest.fn(),
     projects: {}
   }
-
-  const enzymeWrapper = shallow(<AdminProjectsContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onAdminViewProject calls actions.adminViewProject', () => {
@@ -39,8 +30,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onAdminViewProject('projectId')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('projectId')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('projectId')
   })
 
   test('onFetchAdminProjects calls actions.fetchAdminProjects', () => {
@@ -49,7 +40,7 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchAdminProjects()
 
-    expect(spy).toBeCalledTimes(1)
+    expect(spy).toHaveBeenCalledTimes(1)
   })
 
   test('onUpdateAdminProjectsSortKey calls actions.updateAdminProjectsSortKey', () => {
@@ -58,8 +49,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAdminProjectsSortKey('sort-key')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('sort-key')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('sort-key')
   })
 
   test('onUpdateAdminProjectsPageNum calls actions.updateAdminProjectsPageNum', () => {
@@ -68,8 +59,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onUpdateAdminProjectsPageNum('sort-key')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('sort-key')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('sort-key')
   })
 })
 
@@ -99,8 +90,18 @@ describe('mapStateToProps', () => {
 
 describe('AdminProjectsContainer component', () => {
   test('render AdminProjects with the correct props', () => {
-    const { enzymeWrapper } = setup()
+    const { props } = setup()
 
-    expect(enzymeWrapper.find(AdminProjects).length).toBe(1)
+    expect(props.onFetchAdminProjects).toHaveBeenCalledTimes(1)
+    expect(props.onFetchAdminProjects).toHaveBeenCalledWith()
+
+    expect(AdminProjects).toHaveBeenCalledTimes(1)
+    expect(AdminProjects).toHaveBeenCalledWith({
+      onAdminViewProject: expect.any(Function),
+      onFetchAdminProjects: expect.any(Function),
+      onUpdateAdminProjectsSortKey: expect.any(Function),
+      onUpdateAdminProjectsPageNum: expect.any(Function),
+      projects: {}
+    }, {})
   })
 })

@@ -12,20 +12,16 @@ const { dataLayer = [] } = window
 /**
 * Pushes a virtualPageView event on the dataLayer. Only fires on PUSH events.
 * These `PUSH` events only fire during page transitions
-* @param {Object} action - The action.
-* @param {Object} state - The current state.
+* @param {Object} navigationType - The navigation type.
 */
-export const virtualPageview = (action, state) => {
-  const { payload } = action
-  const { action: locationChangeType } = payload
-
-  if (locationChangeType === 'PUSH') {
+export const virtualPageview = (navigationType) => {
+  if (navigationType === 'PUSH') {
     dataLayer.push({
       event: 'virtualPageView',
-      dimension11: computeKeyword(state), // Keyword Search
-      dimension12: computeSpatialType(state), // Spatial
-      dimension13: computeTemporalType(state), // Temporal
-      dimension14: computeCollectionsViewed(state), // Collections Viewed
+      dimension11: computeKeyword(), // Keyword Search
+      dimension12: computeSpatialType(), // Spatial
+      dimension13: computeTemporalType(), // Temporal
+      dimension14: computeCollectionsViewed(), // Collections Viewed
       dimension15: computeCollectionsAdded(), // Collections Added
       dimension16: computeFacets() // Search Facet
     })

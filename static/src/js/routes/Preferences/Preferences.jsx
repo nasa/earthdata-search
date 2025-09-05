@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
 import PreferencesForm from '../../components/Preferences/PreferencesForm'
@@ -30,4 +29,4 @@ export const Preferences = () => {
   )
 }
 
-export default withRouter(Preferences)
+export default Preferences

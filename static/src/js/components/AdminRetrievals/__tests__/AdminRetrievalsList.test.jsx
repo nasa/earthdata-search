@@ -11,10 +11,6 @@ import ADMIN_RETRIEVALS from '../../../operations/queries/adminRetrievals'
 
 const setup = setupTest({
   Component: AdminRetrievalsList,
-  defaultProps: {
-    obfuscatedId: '1',
-    historyPush: jest.fn()
-  },
   defaultApolloClientMocks: [
     {
       request: {
@@ -55,6 +51,7 @@ const setup = setupTest({
       }
     }
   ],
+  withRouter: true,
   withApolloClient: true
 })
 

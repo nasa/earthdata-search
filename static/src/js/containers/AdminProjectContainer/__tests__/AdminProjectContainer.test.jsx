@@ -1,6 +1,6 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import AdminProject from '../../../components/AdminProject/AdminProject'
@@ -10,26 +10,26 @@ import {
   mapStateToProps
 } from '../AdminProjectContainer'
 
-Enzyme.configure({ adapter: new Adapter() })
+jest.mock('../../../components/AdminProject/AdminProject', () => jest.fn(() => <div />))
 
-function setup() {
-  const props = {
-    match: {
-      params: {
-        id: '1'
-      }
-    },
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useParams: jest.fn().mockReturnValue({
+    id: '1234'
+  })
+}))
+
+const setup = setupTest({
+  Component: AdminProjectContainer,
+  defaultProps: {
     onFetchAdminProject: jest.fn(),
-    project: {}
+    projects: {
+      1234: {
+        mock: 'project'
+      }
+    }
   }
-
-  const enzymeWrapper = shallow(<AdminProjectContainer {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onFetchAdminProject calls actions.fetchAdminProject', () => {
@@ -38,8 +38,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onFetchAdminProject('id')
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith('id')
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith('id')
   })
 })
 
@@ -63,8 +63,16 @@ describe('mapStateToProps', () => {
 
 describe('AdminProjectContainer component', () => {
   test('render AdminProject with the correct props', () => {
-    const { enzymeWrapper } = setup()
+    const { props } = setup()
 
-    expect(enzymeWrapper.find(AdminProject).length).toBe(1)
+    expect(props.onFetchAdminProject).toHaveBeenCalledTimes(1)
+    expect(props.onFetchAdminProject).toHaveBeenCalledWith('1234')
+
+    expect(AdminProject).toHaveBeenCalledTimes(1)
+    expect(AdminProject).toHaveBeenCalledWith({
+      project: {
+        mock: 'project'
+      }
+    }, {})
   })
 })

@@ -10,7 +10,6 @@ export const OrderStatusList = ({
   collections,
   earthdataEnvironment,
   granuleDownload,
-  match,
   onChangePath,
   onFetchRetrieval,
   onFetchRetrievalCollection,
@@ -35,7 +34,6 @@ export const OrderStatusList = ({
               earthdataEnvironment={earthdataEnvironment}
               granuleDownload={granuleDownload}
               key={id + collectionId}
-              match={match}
               onChangePath={onChangePath}
               onFetchRetrieval={onFetchRetrieval}
               onFetchRetrievalCollection={onFetchRetrievalCollection}
@@ -60,7 +58,6 @@ OrderStatusList.propTypes = {
   collections: PropTypes.arrayOf(PropTypes.shape({})),
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrieval: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,

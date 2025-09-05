@@ -11,7 +11,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Row from 'react-bootstrap/Row'
 import { connect, MapDispatchToProps } from 'react-redux'
-import { useHistory, type RouteComponentProps } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { type Dispatch } from 'redux'
 
 import {
@@ -155,10 +155,10 @@ interface HomeDispatchProps {
   onChangePath: (path: string) => void
 }
 
-type HomeProps = HomeDispatchProps & RouteComponentProps
+type HomeProps = HomeDispatchProps
 
 export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
-  const history = useHistory()
+  const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
 
@@ -227,8 +227,8 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                 onSubmit={
                   (e) => {
                     e.preventDefault()
+                    navigate(`/search?q=${keyword}`)
                     onChangePath(`/search?q=${keyword}`)
-                    history.push(`/search?q=${keyword}`)
                   }
                 }
               >

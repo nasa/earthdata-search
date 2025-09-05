@@ -8,9 +8,6 @@ import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn().mockReturnValue({
-    push: jest.fn()
-  }),
   useLocation: jest.fn().mockReturnValue({
     pathname: '/search/granules',
     search: '?p=collectionId&ff=Map%20Imagery',
@@ -40,6 +37,7 @@ const setup = setupTest({
       addProjectCollection: jest.fn()
     }
   },
+  withRouter: true,
   withRedux: true
 })
 

@@ -1,5 +1,4 @@
 import { screen } from '@testing-library/react'
-import { useHistory } from 'react-router-dom'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -8,11 +7,11 @@ import { mapDispatchToProps, PortalLinkContainer } from '../PortalLinkContainer'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import actions from '../../../actions'
 
+const mockUseNavigate = jest.fn()
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useHistory: jest.fn().mockReturnValue({
-    push: jest.fn()
-  })
+  useNavigate: () => mockUseNavigate
 }))
 
 const setup = setupTest({
@@ -130,8 +129,8 @@ describe('PortalLinkContainer component', () => {
 
     await user.click(button)
 
-    expect(useHistory().push).toHaveBeenCalledTimes(1)
-    expect(useHistory().push).toHaveBeenCalledWith({
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+    expect(mockUseNavigate).toHaveBeenCalledWith({
       pathname: '/search',
       search: ''
     })

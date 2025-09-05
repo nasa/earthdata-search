@@ -1,8 +1,8 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { locationPropType } from '../../util/propTypes/location'
 import actions from '../../actions/index'
 
 import { getUrsProfile } from '../../selectors/contactInfo'
@@ -15,7 +15,6 @@ import { getCollectionId } from '../../zustand/selectors/collection'
 import { getProjectCollectionsMetadata } from '../../zustand/selectors/project'
 
 export const mapStateToProps = (state) => ({
-  location: state.router.location,
   ursProfile: getUrsProfile(state)
 })
 
@@ -30,17 +29,17 @@ export const mapDispatchToProps = (dispatch) => ({
  * Renders ProjectPanelsContainer.
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
- * @param {Object} location - The location from the store.
  * @param {Object} shapefileId - The shapefileId from the store.
  * @param {Function} onChangePath - Callback to change the path.
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  */
 export const ProjectPanelsContainer = ({
-  location,
   onChangePath,
   onToggleAboutCSDAModal,
   ursProfile
 }) => {
+  const location = useLocation()
+
   const {
     addGranuleToProjectCollection,
     dataQualitySummaries,
@@ -104,7 +103,6 @@ export const ProjectPanelsContainer = ({
 }
 
 ProjectPanelsContainer.propTypes = {
-  location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   ursProfile: PropTypes.shape({

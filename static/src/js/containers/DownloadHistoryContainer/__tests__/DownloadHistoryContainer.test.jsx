@@ -1,12 +1,12 @@
 import React from 'react'
 import {
-  render,
   screen,
   waitFor,
   act
 } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import nock from 'nock'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import { addToast } from '../../../util/addToast'
 import actions from '../../../actions'
@@ -50,20 +50,13 @@ jest.mock('../../../actions', () => ({
   }))
 }))
 
-const setup = (props) => {
-  const defaultProps = {
+const setup = setupTest({
+  Component: DownloadHistoryContainer,
+  defaultProps: {
     authToken: 'testToken',
-    earthdataEnvironment: 'prod',
     dispatchHandleError: jest.fn()
   }
-
-  return render(
-    <DownloadHistoryContainer
-      {...defaultProps}
-      {...props}
-    />
-  )
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('dispatchHandleError calls actions.handleError', () => {
@@ -80,13 +73,11 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('should return the authToken and earthdataEnvironment from the state', () => {
     const mockState = {
-      authToken: 'testTokenFromState',
-      earthdataEnvironment: 'prodFromState'
+      authToken: 'testTokenFromState'
     }
 
     const expectedProps = {
-      authToken: 'testTokenFromState',
-      earthdataEnvironment: 'prodFromState'
+      authToken: 'testTokenFromState'
     }
 
     expect(mapStateToProps(mockState)).toEqual(expectedProps)
@@ -95,10 +86,9 @@ describe('mapStateToProps', () => {
 
 describe('DownloadHistoryContainer component', () => {
   beforeEach(() => {
-    jest.clearAllMocks()
-
     nock(/localhost/)
       .get(/retrievals/)
+      .once()
       .reply(200, [{
         id: '8069076',
         jsondata: {},
@@ -113,24 +103,58 @@ describe('DownloadHistoryContainer component', () => {
     expect(screen.getByRole('heading', { name: 'Download Status & History' })).toBeInTheDocument()
 
     await waitFor(() => {
-      expect(DownloadHistory).toHaveBeenCalledWith(
-        expect.objectContaining({
-          earthdataEnvironment: 'prod',
-          retrievalHistoryLoading: false,
-          retrievalHistoryLoaded: true,
-          retrievalHistory: expect.arrayContaining([
-            expect.objectContaining({
-              id: '8069076'
-            })
-          ])
-        }),
-        expect.anything()
-      )
+      expect(DownloadHistory).toHaveBeenCalledTimes(4)
     })
+
+    expect(DownloadHistory).toHaveBeenNthCalledWith(1, {
+      earthdataEnvironment: 'prod',
+      onDeleteRetrieval: expect.any(Function),
+      retrievalHistoryLoaded: false,
+      retrievalHistoryLoading: false,
+      retrievalHistory: []
+    }, {})
+
+    expect(DownloadHistory).toHaveBeenNthCalledWith(2, {
+      earthdataEnvironment: 'prod',
+      onDeleteRetrieval: expect.any(Function),
+      retrievalHistoryLoaded: false,
+      retrievalHistoryLoading: true,
+      retrievalHistory: []
+    }, {})
+
+    expect(DownloadHistory).toHaveBeenNthCalledWith(3, {
+      earthdataEnvironment: 'prod',
+      onDeleteRetrieval: expect.any(Function),
+      retrievalHistoryLoaded: false,
+      retrievalHistoryLoading: true,
+      retrievalHistory: [{
+        id: '8069076',
+        jsondata: {},
+        created_at: '2019-08-25T11:58:14.390Z',
+        collections: [{}]
+      }]
+    }, {})
+
+    expect(DownloadHistory).toHaveBeenNthCalledWith(4, {
+      earthdataEnvironment: 'prod',
+      onDeleteRetrieval: expect.any(Function),
+      retrievalHistoryLoaded: true,
+      retrievalHistoryLoading: false,
+      retrievalHistory: [{
+        id: '8069076',
+        jsondata: {},
+        created_at: '2019-08-25T11:58:14.390Z',
+        collections: [{}]
+      }]
+    }, {})
   })
 
   test('handles the case when authToken is not provided', async () => {
-    setup({ authToken: '' })
+    setup({
+      overrideProps: {
+        authToken: ''
+      }
+    })
 
     expect(screen.getByRole('heading', { name: 'Download Status & History' })).toBeInTheDocument()
 
@@ -140,8 +164,10 @@ describe('DownloadHistoryContainer component', () => {
         retrievalHistoryLoaded: false,
         retrievalHistory: []
       }),
-      expect.anything()
+      {}
     )
+
+    expect(DownloadHistory).toHaveBeenCalledTimes(1)
   })
 
   test('successfully deletes a retrieval when confirmed', async () => {
@@ -151,15 +177,14 @@ describe('DownloadHistoryContainer component', () => {
       .delete(/retrievals\/8069076/)
       .reply(204)
 
-    const view = userEvent.setup()
-    setup()
+    const { user } = setup()
 
     await waitFor(() => {
       expect(screen.getByRole('link', { name: '8069076' })).toBeInTheDocument()
     })
 
     await act(async () => {
-      await view.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
+      await user.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
     })
 
     await waitFor(() => {
@@ -168,6 +193,8 @@ describe('DownloadHistoryContainer component', () => {
         autoDismiss: true
       })
     })
+
+    expect(addToast).toHaveBeenCalledTimes(1)
   })
 
   test('handles errors when deleting a retrieval', async () => {
@@ -177,26 +204,25 @@ describe('DownloadHistoryContainer component', () => {
       .delete(/retrievals\/8069076/)
       .replyWithError('Connection error')
 
-    const dispatchHandleError = jest.fn()
-    const view = userEvent.setup()
-
-    setup({ dispatchHandleError })
+    const { props, user } = setup()
 
     await waitFor(() => {
       expect(screen.getByRole('link', { name: '8069076' })).toBeInTheDocument()
     })
 
     await act(async () => {
-      await view.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
+      await user.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
     })
 
     await waitFor(() => {
-      expect(dispatchHandleError).toHaveBeenCalledWith(
+      expect(props.dispatchHandleError).toHaveBeenCalledWith(
         expect.objectContaining({
           error: expect.any(Error),
           action: 'handleDeleteRetrieval'
         })
       )
     })
+
+    expect(props.dispatchHandleError).toHaveBeenCalledTimes(1)
   })
 })

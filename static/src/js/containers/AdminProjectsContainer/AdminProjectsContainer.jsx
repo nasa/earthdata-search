@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 import AdminProjects from '../../components/AdminProjects/AdminProjects'
@@ -27,40 +26,26 @@ export const mapDispatchToProps = (dispatch) => ({
     )
 })
 
-export class AdminProjectsContainer extends Component {
-  componentDidMount() {
-    const {
-      onFetchAdminProjects
-    } = this.props
-
+export const AdminProjectsContainer = ({
+  onAdminViewProject,
+  onFetchAdminProjects,
+  onUpdateAdminProjectsSortKey,
+  onUpdateAdminProjectsPageNum,
+  projects
+}) => {
+  useEffect(() => {
     onFetchAdminProjects()
-  }
+  }, [])
 
-  render() {
-    const {
-      history,
-      onAdminViewProject,
-      onFetchAdminProjects,
-      onUpdateAdminProjectsSortKey,
-      onUpdateAdminProjectsPageNum,
-      projects
-    } = this.props
-
-    const {
-      push: historyPush
-    } = history
-
-    return (
-      <AdminProjects
-        historyPush={historyPush}
-        onAdminViewProject={onAdminViewProject}
-        onFetchAdminProjects={onFetchAdminProjects}
-        onUpdateAdminProjectsSortKey={onUpdateAdminProjectsSortKey}
-        onUpdateAdminProjectsPageNum={onUpdateAdminProjectsPageNum}
-        projects={projects}
-      />
-    )
-  }
+  return (
+    <AdminProjects
+      onAdminViewProject={onAdminViewProject}
+      onFetchAdminProjects={onFetchAdminProjects}
+      onUpdateAdminProjectsSortKey={onUpdateAdminProjectsSortKey}
+      onUpdateAdminProjectsPageNum={onUpdateAdminProjectsPageNum}
+      projects={projects}
+    />
+  )
 }
 
 AdminProjectsContainer.defaultProps = {
@@ -68,9 +53,6 @@ AdminProjectsContainer.defaultProps = {
 }
 
 AdminProjectsContainer.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func
-  }).isRequired,
   onAdminViewProject: PropTypes.func.isRequired,
   onFetchAdminProjects: PropTypes.func.isRequired,
   onUpdateAdminProjectsPageNum: PropTypes.func.isRequired,
@@ -78,6 +60,4 @@ AdminProjectsContainer.propTypes = {
   projects: PropTypes.shape({})
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AdminProjectsContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminProjectsContainer)

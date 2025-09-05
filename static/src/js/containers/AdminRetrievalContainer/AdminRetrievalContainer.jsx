@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import actions from '../../actions'
 import AdminRetrieval from '../../components/AdminRetrieval/AdminRetrieval'
@@ -11,10 +11,9 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const AdminRetrievalContainer = ({
-  match,
   onRequeueOrder
 }) => {
-  const { params } = match
+  const params = useParams()
   const { obfuscatedId } = params
 
   return ((
@@ -26,14 +25,7 @@ export const AdminRetrievalContainer = ({
 }
 
 AdminRetrievalContainer.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      obfuscatedId: PropTypes.string
-    })
-  }).isRequired,
   onRequeueOrder: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(null, mapDispatchToProps)(AdminRetrievalContainer)
-)
+export default connect(null, mapDispatchToProps)(AdminRetrievalContainer)

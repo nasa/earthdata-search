@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Link, useHistory } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { parse, stringify } from 'qs'
 import { isObject } from 'lodash-es'
 
@@ -31,7 +31,7 @@ export const PortalLinkContainer = (props) => {
     onChangePath
   } = props
 
-  const history = useHistory()
+  const navigate = useNavigate()
 
   const currentPortalId = useEdscStore((state) => state.portal.portalId)
 
@@ -110,7 +110,7 @@ export const PortalLinkContainer = (props) => {
         onClick={
           (event) => {
             onClickWithChangePath(event)
-            history.push(newTo)
+            navigate(newTo)
           }
         }
       />

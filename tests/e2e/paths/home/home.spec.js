@@ -15,6 +15,7 @@ import portalCollections from './__mocks__/portal-collections.body.json'
 import whatIsThisImageCollections from './__mocks__/what-is-this-image-collections.body.json'
 import whatIsThisImageGranules from './__mocks__/what-is-this-image-granules.body.json'
 import whatIsThisImageGranulesHeaders from './__mocks__/what-is-this-image-granules.headers.json'
+import whatIsThisImageGraphQlBody from './__mocks__/what-is-this-image-collections.graphql.body.json'
 
 test.describe('Home Page', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
@@ -218,6 +219,15 @@ test.describe('Home Page', () => {
         await route.fulfill({
           json: whatIsThisImageGranules,
           headers: whatIsThisImageGranulesHeaders
+        })
+      })
+
+      await page.route(/graphql.*\/api/, async (route) => {
+        await route.fulfill({
+          json: whatIsThisImageGraphQlBody,
+          headers: {
+            'content-type': 'application/json'
+          }
         })
       })
 

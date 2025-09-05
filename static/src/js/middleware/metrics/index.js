@@ -1,5 +1,3 @@
-import { LOCATION_CHANGE } from 'connected-react-router'
-
 import {
   collectionSortChange,
   addCollectionProject,
@@ -13,8 +11,7 @@ import {
   spatialEdit,
   spatialSelection,
   temporalFilter,
-  timeline,
-  virtualPageview
+  timeline
 } from './events'
 
 import {
@@ -34,14 +31,6 @@ import {
 } from './constants'
 
 const createMetricsMiddleware = () => ({ getState }) => (next) => (action) => {
-  if (action.type === LOCATION_CHANGE) {
-    // This setTimeout is needed to ensure that the zustand store has been updated
-    // before the virtual pageview is sent.
-    setTimeout(() => {
-      virtualPageview(action, getState())
-    }, 0)
-  }
-
   if (action.type === METRICS_DATA_ACCESS) {
     dataAccess(action, getState())
   }

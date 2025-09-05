@@ -1,5 +1,4 @@
 import { merge } from 'lodash-es'
-import { replace, push } from 'connected-react-router'
 import { parse, stringify } from 'qs'
 
 import actions from './index'
@@ -20,6 +19,7 @@ import { buildConfig } from '../util/portals'
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../portals/availablePortals.json'
 import useEdscStore from '../zustand/useEdscStore'
+import routerHelper from '../router/router'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -41,10 +41,8 @@ export const updateStore = ({
   shapefile,
   selectedRegion,
   timeline
-}, newPathname) => async (dispatch, getState) => {
-  const state = getState()
-  const { router } = state
-  const { location } = router
+}, newPathname) => async (dispatch) => {
+  const { location } = routerHelper.router.state
   const { pathname } = location
 
   // Prevent loading from the urls that don't use URL params.
@@ -245,7 +243,7 @@ export const changePath = (path = '') => async (dispatch) => {
     // Project collection metadata needs to exist before calling retrieving access methods
     await zustandProject.getProjectCollections()
 
-    await zustandProject.getProjectGranules()
+    zustandProject.getProjectGranules()
   }
 
   const { getTimeline } = timeline
@@ -254,13 +252,13 @@ export const changePath = (path = '') => async (dispatch) => {
   return null
 }
 
-const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
+const updateUrl = ({ options, oldPathname, newPathname }) => () => {
   // Only replace if the pathname stays the same as the current pathname.
   // Push if the pathname is different
   if (oldPathname === newPathname) {
-    dispatch(replace(options))
+    routerHelper.router.navigate(options, { replace: true })
   } else {
-    dispatch(push(options))
+    routerHelper.router.navigate(options)
   }
 }
 
@@ -284,12 +282,11 @@ export const changeUrl = (options) => (dispatch, getState) => {
 
   const {
     authToken,
-    router,
     savedProject
   } = state
 
   let newOptions = options
-  const { location } = router
+  const { location } = routerHelper.router.state
   const { pathname: oldPathname } = location
 
   let newPathname
@@ -298,7 +295,8 @@ export const changeUrl = (options) => (dispatch, getState) => {
 
     const { projectId, name, path } = savedProject
     if (projectId || options.length > 2000) {
-      if (path !== newOptions) {
+      // Make sure the path has changed, and is not a path where we don't use params
+      if (path !== newOptions && !isPath(newOptions, urlPathsWithoutUrlParams)) {
         const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
 
         const projectResponse = requestObject.save({
@@ -317,7 +315,7 @@ export const changeUrl = (options) => (dispatch, getState) => {
             newOptions = `${projectPath.split('?')[0]}?projectId=${newProjectId}`
 
             if (projectId !== newProjectId) {
-              dispatch(replace(newOptions))
+              routerHelper.router.navigate(newOptions, { replace: true })
             }
 
             dispatch(actions.updateSavedProject({

@@ -1,23 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router'
+import { Route, Routes } from 'react-router-dom'
 
 import { getCollectionSubscriptions } from '../../selectors/subscriptions'
 
 import { metricsCollectionSortChange } from '../../middleware/metrics/actions'
 import actions from '../../actions/index'
-
-import useEdscStore from '../../zustand/useEdscStore'
-import {
-  getCollectionsQuery,
-  getFocusedCollectionGranuleQuery
-} from '../../zustand/selectors/query'
-import { getCollections } from '../../zustand/selectors/collections'
-import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
-import { getFocusedGranule } from '../../zustand/selectors/granule'
-import { getGranules } from '../../zustand/selectors/granules'
-import { getPreferences } from '../../zustand/selectors/preferences'
 
 import SearchPanels from '../../components/SearchPanels/SearchPanels'
 
@@ -51,63 +40,38 @@ export const SearchPanelsContainer = ({
   authToken,
   collectionSubscriptions,
   isExportRunning,
-  location,
   onChangePath,
   onMetricsCollectionSortChange,
   onToggleAboutCSDAModal,
   onToggleAboutCwicModal,
-  onExport,
-  match
-}) => {
-  const collections = useEdscStore(getCollections)
-  const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
-  const granules = useEdscStore(getGranules)
-  const granuleMetadata = useEdscStore(getFocusedGranule)
-  const preferences = useEdscStore(getPreferences)
-  const collectionQuery = useEdscStore(getCollectionsQuery)
-  const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
-  const {
-    setCollectionId,
-    changeQuery,
-    changeGranuleQuery
-  } = useEdscStore((state) => ({
-    setCollectionId: state.collection.setCollectionId,
-    changeQuery: state.query.changeQuery,
-    changeGranuleQuery: state.query.changeGranuleQuery
-  }))
-
-  return (
-    <SearchPanels
-      authToken={authToken}
-      collectionMetadata={collectionMetadata}
-      collectionQuery={collectionQuery}
-      collections={collections}
-      collectionSubscriptions={collectionSubscriptions}
-      granuleMetadata={granuleMetadata}
-      granuleQuery={granuleQuery}
-      granules={granules}
-      isExportRunning={isExportRunning}
-      location={location}
-      match={match}
-      onApplyGranuleFilters={changeGranuleQuery}
-      onChangePath={onChangePath}
-      onChangeQuery={changeQuery}
-      onExport={onExport}
-      onMetricsCollectionSortChange={onMetricsCollectionSortChange}
-      onToggleAboutCSDAModal={onToggleAboutCSDAModal}
-      onToggleAboutCwicModal={onToggleAboutCwicModal}
-      preferences={preferences}
-      setCollectionId={setCollectionId}
+  onExport
+}) => (
+  <Routes>
+    <Route
+      path="/:activePanel1?/:activePanel2?/*"
+      element={
+        (
+          <SearchPanels
+            authToken={authToken}
+            collectionSubscriptions={collectionSubscriptions}
+            isExportRunning={isExportRunning}
+            onChangePath={onChangePath}
+            onExport={onExport}
+            onMetricsCollectionSortChange={onMetricsCollectionSortChange}
+            onToggleAboutCSDAModal={onToggleAboutCSDAModal}
+            onToggleAboutCwicModal={onToggleAboutCwicModal}
+          />
+        )
+      }
     />
-  )
-}
+
+  </Routes>
+)
 
 SearchPanelsContainer.propTypes = {
   authToken: PropTypes.string.isRequired,
   collectionSubscriptions: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   isExportRunning: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onMetricsCollectionSortChange: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
@@ -115,6 +79,4 @@ SearchPanelsContainer.propTypes = {
   onExport: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPanelsContainer)
