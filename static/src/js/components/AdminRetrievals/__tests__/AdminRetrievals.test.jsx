@@ -9,19 +9,14 @@ jest.mock('../AdminRetrievalsList', () => ({
 
 const setup = setupTest({
   Component: AdminRetrievals,
-  withRouter: true,
-  defaultProps: {
-    historyPush: jest.fn()
-  }
+  withRouter: true
 })
 
 describe('when AdminRetrievals is rendered', () => {
   test('renders child components with correct props', () => {
-    const { props } = setup()
+    setup()
 
     expect(AdminRetrievalsList).toHaveBeenCalledTimes(1)
-    expect(AdminRetrievalsList).toHaveBeenCalledWith({
-      historyPush: props.historyPush
-    }, {})
+    expect(AdminRetrievalsList).toHaveBeenCalledWith({}, {})
   })
 })

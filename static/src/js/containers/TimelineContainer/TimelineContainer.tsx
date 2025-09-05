@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
+import { useLocation } from 'react-router-dom'
 
 // @ts-expect-error The file does not have types
 import actions from '../../actions/index'
@@ -30,9 +31,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
-  isOpen: state.ui.timeline.isOpen,
-  pathname: state.router.location.pathname,
-  search: state.router.location.search
+  isOpen: state.ui.timeline.isOpen
 })
 
 interface TimelineContainerProps {
@@ -44,20 +43,20 @@ interface TimelineContainerProps {
   onToggleOverrideTemporalModal: (open: boolean) => void
   /** Function to toggle the timeline */
   onToggleTimeline: (open: boolean) => void
-  /** The pathname of the current location */
-  pathname: string
-  /** The search string from the location */
-  search: string
 }
 
 export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
+  const location = useLocation()
+  const {
+    pathname = '',
+    search: searchLocation = ''
+  } = location
+
   const {
     isOpen,
     onMetricsTimeline,
     onToggleOverrideTemporalModal,
-    onToggleTimeline,
-    pathname,
-    search: searchLocation
+    onToggleTimeline
   } = props
 
   const collectionsMetadata = useEdscStore(getCollectionsMetadata)

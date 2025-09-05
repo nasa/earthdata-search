@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import actions from '../../actions'
 import AdminProject from '../../components/AdminProject/AdminProject'
@@ -14,36 +14,24 @@ export const mapDispatchToProps = (dispatch) => ({
   onFetchAdminProject: (id) => dispatch(actions.fetchAdminProject(id))
 })
 
-export class AdminProjectContainer extends Component {
-  componentDidMount() {
-    const {
-      match,
-      onFetchAdminProject
-    } = this.props
+export const AdminProjectContainer = ({
+  projects,
+  onFetchAdminProject
+}) => {
+  const params = useParams()
+  const { id } = params
 
-    const { params } = match
-    const { id } = params
-
+  useEffect(() => {
     onFetchAdminProject(id)
-  }
+  }, [])
 
-  render() {
-    const {
-      match,
-      projects
-    } = this.props
+  const { [id]: selectedProject } = projects
 
-    const { params } = match
-    const { id } = params
-
-    const { [id]: selectedProject } = projects
-
-    return (
-      <AdminProject
-        project={selectedProject}
-      />
-    )
-  }
+  return (
+    <AdminProject
+      project={selectedProject}
+    />
+  )
 }
 
 AdminProjectContainer.defaultProps = {
@@ -51,15 +39,8 @@ AdminProjectContainer.defaultProps = {
 }
 
 AdminProjectContainer.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string
-    })
-  }).isRequired,
   onFetchAdminProject: PropTypes.func.isRequired,
   projects: PropTypes.shape({})
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AdminProjectContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminProjectContainer)

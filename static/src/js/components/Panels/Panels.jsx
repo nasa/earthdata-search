@@ -7,12 +7,14 @@ import Tooltip from 'react-bootstrap/Tooltip'
 import { PanelSection } from './PanelSection'
 import { PanelGroup } from './PanelGroup'
 
-import history from '../../util/history'
 import { getPanelSizeMap } from '../../util/getPanelSizeMap'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
-import './Panels.scss'
 import useEdscStore from '../../zustand/useEdscStore'
+
+import routerHelper from '../../router/router'
+
+import './Panels.scss'
 
 // Returns the width of the sidebar
 const getSidebarWidth = () => {
@@ -82,7 +84,7 @@ export class Panels extends PureComponent {
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize, { capture: true })
     window.addEventListener('keyup', this.onWindowKeyUp, { capture: true })
-    this.browserHistoryUnlisten = history.listen(this.onWindowResize)
+    this.browserHistoryUnlisten = routerHelper.router.subscribe(this.onWindowResize)
 
     const maxWidth = this.calculateMaxWidth()
 
@@ -97,7 +99,8 @@ export class Panels extends PureComponent {
     const { ui } = zustandState
     const { panels } = ui
     const { setPanelsWidth } = panels
-    setPanelsWidth(this.width + getSidebarWidth())
+    const width = this.width + getSidebarWidth()
+    setPanelsWidth(width)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -150,6 +153,14 @@ export class Panels extends PureComponent {
         document.body.classList.remove('is-panels-dragging')
       }
     }
+
+    // When the component updates call setPanelsWidth to set the initial width
+    const zustandState = useEdscStore.getState()
+    const { ui } = zustandState
+    const { panels } = ui
+    const { setPanelsWidth } = panels
+    const width = this.width + getSidebarWidth()
+    setPanelsWidth(width)
   }
 
   componentWillUnmount() {

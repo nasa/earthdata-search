@@ -10,9 +10,6 @@ import configureStore from '../../store/configureStore'
 // @ts-expect-error This file does not have types
 import actions from '../../actions'
 
-// @ts-expect-error This file does not have types
-import { CLEAR_FILTERS } from '../../constants/actionTypes'
-
 import { getCollectionId } from '../selectors/collection'
 import { getProjectCollectionsIds } from '../selectors/project'
 
@@ -29,10 +26,12 @@ export const initialState = {
     byId: {},
     hasGranulesOrCwic: true,
     keyword: '',
+    onlyEosdisCollections: false,
     overrideTemporal: {},
     pageNum: 1,
     sortKey: collectionSearchResultsSortKey,
     spatial: {},
+    tagKey: '',
     temporal: {}
   },
   region: {
@@ -176,12 +175,8 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       }))
 
       const {
-        dispatch: reduxDispatch,
         getState: reduxGetState
       } = configureStore()
-
-      // TODO EDSC-4510, update when advanced search is in Zustand
-      reduxDispatch({ type: CLEAR_FILTERS })
 
       get().collections.getCollections()
 

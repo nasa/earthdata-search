@@ -10,15 +10,17 @@ jest.mock('../../../components/AdminRetrieval/AdminRetrieval', () => jest.fn(({ 
   </mock-AdminRetrieval>
 )))
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useParams: jest.fn().mockReturnValue({
+    obfuscatedId: '1'
+  })
+}))
+
 describe('AdminRetrievalContainer component', () => {
   test('render AdminRetrieval with the correct props', () => {
     const onRequeueOrderMock = jest.fn()
     const props = {
-      match: {
-        params: {
-          obfuscatedId: '1'
-        }
-      },
       onRequeueOrder: onRequeueOrderMock
     }
 

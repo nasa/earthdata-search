@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { waitFor } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
@@ -10,41 +11,28 @@ import {
   mapStateToProps,
   SecondaryToolbarContainer
 } from '../SecondaryToolbarContainer'
-
 import SecondaryToolbar from '../../../components/SecondaryToolbar/SecondaryToolbar'
-
-jest.mock('../../../components/SecondaryToolbar/SecondaryToolbar', () => jest.fn(() => <div />))
-
-const locationObject = {
-  pathname: '/search',
-  search: '',
-  hash: '',
-  state: null,
-  key: 'testKey'
-}
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'), // Preserve other exports
-  useLocation: jest.fn().mockReturnValue(locationObject)
-}))
-
-const setup = setupTest({
-  Component: SecondaryToolbarContainer,
-  defaultProps: {
-    authToken: '',
-    onFetchContactInfo: jest.fn(),
-    onLogout: jest.fn(),
-    onUpdateProjectName: jest.fn(),
-    projectCollectionIds: [],
-    retrieval: {},
-    savedProject: {},
-    ursProfile: {}
-  }
-})
 
 beforeEach(() => {
   jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
     disableDatabaseComponents: 'false'
   }))
+})
+
+jest.mock('../../../components/SecondaryToolbar/SecondaryToolbar', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: SecondaryToolbarContainer,
+  defaultProps: {
+    authToken: 'mock-token',
+    savedProject: {},
+    retrieval: {},
+    onLogout: jest.fn(),
+    onUpdateProjectName: jest.fn(),
+    onFetchContactInfo: jest.fn(),
+    ursProfile: {}
+  },
+  withRouter: true
 })
 
 describe('mapDispatchToProps', () => {
@@ -102,33 +90,32 @@ describe('mapStateToProps', () => {
 })
 
 describe('SecondaryToolbarContainer component', () => {
-  test('passes its props and renders a single SearchForm component', () => {
-    setup()
+  test('passes its props and renders a single SearchForm component', async () => {
+    const { props } = setup()
+
+    await waitFor(() => {
+      expect(props.onFetchContactInfo).toHaveBeenCalledTimes(1)
+    })
+
+    expect(props.onFetchContactInfo).toHaveBeenCalledWith()
 
     expect(SecondaryToolbar).toHaveBeenCalledTimes(1)
     expect(SecondaryToolbar).toHaveBeenCalledWith({
-      authToken: '',
-      location: locationObject,
+      authToken: 'mock-token',
+      location: {
+        hash: '',
+        key: 'default',
+        pathname: '/',
+        search: '',
+        state: null
+      },
       onLogout: expect.any(Function),
       onUpdateProjectName: expect.any(Function),
       projectCollectionIds: [],
-      savedProject: {},
       retrieval: {},
-      secondaryToolbarEnabled: true,
+      savedProject: {},
       ursProfile: {}
     }, {})
-  })
-
-  test('calls onFetchContactInfo if authToken is present and ursProfile is not', () => {
-    const { props } = setup({
-      overrideProps: {
-        authToken: 'mock-token',
-        ursProfile: {}
-      }
-    })
-
-    expect(props.onFetchContactInfo).toHaveBeenCalledTimes(1)
-    expect(props.onFetchContactInfo).toHaveBeenCalledWith()
   })
 })
 
@@ -138,19 +125,9 @@ describe('if the secondaryToolbar should be disabled', () => {
       disableDatabaseComponents: 'true'
     }))
 
-    setup()
+    const { props } = setup()
 
-    expect(SecondaryToolbar).toHaveBeenCalledTimes(1)
-    expect(SecondaryToolbar).toHaveBeenCalledWith({
-      authToken: '',
-      location: locationObject,
-      onLogout: expect.any(Function),
-      onUpdateProjectName: expect.any(Function),
-      projectCollectionIds: [],
-      savedProject: {},
-      retrieval: {},
-      secondaryToolbarEnabled: false,
-      ursProfile: {}
-    }, {})
+    expect(props.onFetchContactInfo).toHaveBeenCalledTimes(0)
+    expect(SecondaryToolbar).toHaveBeenCalledTimes(0)
   })
 })

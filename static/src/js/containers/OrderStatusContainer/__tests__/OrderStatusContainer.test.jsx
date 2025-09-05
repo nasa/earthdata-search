@@ -18,12 +18,6 @@ const setup = setupTest({
   defaultProps: {
     authToken: 'testToken',
     granuleDownload: {},
-    location: {},
-    match: {
-      search: {
-        id: 7
-      }
-    },
     onChangePath: jest.fn(),
     onFetchRetrieval: jest.fn(),
     onFetchRetrievalCollection: jest.fn(),
@@ -146,12 +140,6 @@ describe('OrderStatusContainer component', () => {
         {
           authToken: 'testToken',
           granuleDownload: {},
-          location: {},
-          match: {
-            search: {
-              id: 7
-            }
-          },
           onChangePath: expect.any(Function),
           onFetchRetrieval: expect.any(Function),
           onFetchRetrievalCollection: expect.any(Function),

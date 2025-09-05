@@ -1,0 +1,725 @@
+{
+    "data": {
+        "collection": {
+            "abstract": "The MODIS/Terra Calibrated Radiances 5Min L1B Swath 250m data set contains calibrated and geolocated at-aperture radiances for 2 discrete bands located in the 0.62 to 0.88 micron region of the electromagnetic spectrum. These data are generated from the MODIS Level 1A scans of raw radiance which have been processed to geophysical units of W / (m^2 um sr). Additional data are provided including quality flags, error estimates and calibration data. \r\n\r\nSeparate L1B products are available for the five 500m resolution channels (MOD02HKM) and the twenty-nine 1km resolution channels (MOD021KM). For the 500m product, there are actually seven channels available since the data from the two 250 m channels have been aggregated to 500m resolution.  Similarly, for the 1km product, all 36 MODIS channels are available since the data from the two 250m and five 500m channels have been aggregated into equivalent 1km\r\npixel values.\r\n\r\nSpatial resolution for pixels at nadir is 250 m, degrading to 1.2 km in the along-scan direction and 0.5 km in the along-track direction for pixels located at the scan extremes. A 55 degree scanning pattern at the EOS orbit of 705 km results in a 2330 km orbital swath width and provides global coverage every one to two days. A single MODIS Level 1B 250 m granule will contain a scene built from 203 scans sampled 5416 times in the cross-track direction, corresponding to approximately 5 minutes worth of data; thus 288 granules will be produced per day. Since an individual MODIS scan will contain 40 along-track spatial elements for the 250 m channels, the scene will be composed of (5416 x 8120) pixels, resulting in a spatial coverage of (2330 km x 2040 km). Due to the MODIS scan geometry, there will be increasing scan overlap beyond about 17 degrees scan angle.\r\n\r\nThe shortname for this product is MOD02QKM and is stored in the Earth Observing System Hierarchical\r\nData Format (HDF-EOS). A typical file size will be approximately 140 MB and the total daily volume is around 22GB.\r\n\r\nEnvironmental information derived from MODIS L1B measurements will offer a comprehensive and unprecedented look at terrestrial, atmospheric, and ocean phenomenology for a wide and diverse community of users throughout the world.\r\n\r\nSee the MODIS Characterization Support Team webpage for more C6 product information at:\r\n\r\nhttps://mcst.gsfc.nasa.gov/l1b/product-information\r\n\r\nor visit the Science Team homepage at: \r\nhttps://modis.gsfc.nasa.gov/data/dataprod/",
+            "archiveAndDistributionInformation": {
+                "fileArchiveInformation": [
+                    {
+                        "format": "HDF-EOS",
+                        "formatType": "Native",
+                        "averageFileSize": 140,
+                        "averageFileSizeUnit": "MB",
+                        "totalCollectionFileSizeBeginDate": "2000-02-24T00:00:00.000Z"
+                    }
+                ],
+                "fileDistributionInformation": [
+                    {
+                        "format": "HDF-EOS",
+                        "formatType": "Native",
+                        "media": [
+                            "Online (HTTPS)"
+                        ],
+                        "averageFileSize": 140,
+                        "averageFileSizeUnit": "MB",
+                        "totalCollectionFileSizeBeginDate": "2000-02-24T00:00:00.000Z",
+                        "fees": "No Fee"
+                    }
+                ]
+            },
+            "associatedDois": null,
+            "boxes": [
+                "-90 -180 90 180"
+            ],
+            "cloudHosted": true,
+            "conceptId": "C1378579425-LAADS",
+            "coordinateSystem": "CARTESIAN",
+            "dataCenter": "LAADS",
+            "dataCenters": [
+                {
+                    "roles": [
+                        "ORIGINATOR"
+                    ],
+                    "contactGroups": [
+                        {
+                            "roles": [
+                                "Data Center Contact"
+                            ],
+                            "contactInformation": {
+                                "relatedUrls": [
+                                    {
+                                        "urlContentType": "DataContactURL",
+                                        "type": "HOME PAGE",
+                                        "url": "https://mcst.gsfc.nasa.gov/"
+                                    }
+                                ],
+                                "contactMechanisms": [
+                                    {
+                                        "type": "Email",
+                                        "value": "https://mcst.gsfc.nasa.gov/contact"
+                                    }
+                                ]
+                            },
+                            "groupName": "MODIS Characterization Support Team (MCST)"
+                        }
+                    ],
+                    "contactInformation": {
+                        "relatedUrls": [
+                            {
+                                "urlContentType": "DataCenterURL",
+                                "type": "HOME PAGE",
+                                "url": "https://mcst.gsfc.nasa.gov/"
+                            }
+                        ]
+                    },
+                    "shortName": "NASA/GSFC/SED/ESD/HBSL/BSB/MCST",
+                    "longName": "MODIS Characterization Support Team (MCST), Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA"
+                },
+                {
+                    "roles": [
+                        "PROCESSOR"
+                    ],
+                    "contactGroups": [
+                        {
+                            "roles": [
+                                "Data Center Contact"
+                            ],
+                            "contactInformation": {
+                                "relatedUrls": [
+                                    {
+                                        "urlContentType": "DataContactURL",
+                                        "type": "HOME PAGE",
+                                        "url": "https://modaps.modaps.eosdis.nasa.gov/"
+                                    }
+                                ],
+                                "contactMechanisms": [
+                                    {
+                                        "type": "Email",
+                                        "value": "laads-support@nasa.gov"
+                                    }
+                                ],
+                                "addresses": [
+                                    {
+                                        "streetAddresses": [
+                                            "MODAPS User Support Team",
+                                            "NASA/GSFC",
+                                            "Mail Code: 619"
+                                        ],
+                                        "country": "United States",
+                                        "city": "Greenbelt",
+                                        "stateProvince": "Maryland",
+                                        "postalCode": "20771"
+                                    }
+                                ]
+                            },
+                            "groupName": "MODAPS USER SUPPORT TEAM"
+                        }
+                    ],
+                    "contactInformation": {
+                        "relatedUrls": [
+                            {
+                                "urlContentType": "DataCenterURL",
+                                "type": "HOME PAGE",
+                                "url": "https://modaps.modaps.eosdis.nasa.gov/"
+                            }
+                        ]
+                    },
+                    "shortName": "NASA/GSFC/SED/ESD/TISL/MODAPS",
+                    "longName": "MODIS Adaptive Processing System, Terrestrial Information Systems Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA"
+                },
+                {
+                    "roles": [
+                        "DISTRIBUTOR"
+                    ],
+                    "contactGroups": [
+                        {
+                            "roles": [
+                                "Data Center Contact"
+                            ],
+                            "contactInformation": {
+                                "relatedUrls": [
+                                    {
+                                        "urlContentType": "DataContactURL",
+                                        "type": "HOME PAGE",
+                                        "url": "https://ladsweb.modaps.eosdis.nasa.gov/"
+                                    }
+                                ],
+                                "contactMechanisms": [
+                                    {
+                                        "type": "Email",
+                                        "value": "laads-support@nasa.gov"
+                                    }
+                                ],
+                                "addresses": [
+                                    {
+                                        "streetAddresses": [
+                                            "MODAPS User Support Team",
+                                            "NASA/GSFC",
+                                            "Mail Code: 619"
+                                        ],
+                                        "country": "United States",
+                                        "city": "Greenbelt",
+                                        "stateProvince": "Maryland",
+                                        "postalCode": "20771"
+                                    }
+                                ]
+                            },
+                            "groupName": "MODAPS USER SUPPORT TEAM"
+                        }
+                    ],
+                    "contactInformation": {
+                        "relatedUrls": [
+                            {
+                                "urlContentType": "DataCenterURL",
+                                "type": "HOME PAGE",
+                                "url": "https://ladsweb.modaps.eosdis.nasa.gov/"
+                            }
+                        ]
+                    },
+                    "shortName": "NASA/GSFC/SED/ESD/HBSL/BISB/LAADS",
+                    "longName": "L1 and Atmosphere Archive and Distribution System,Biospheric Information Systems Branch, Hydrospheric and Biospheric Sciences Laboratory, Earth Sciences Division, Science and Exploration Directorate, Goddard Space Flight Center, NASA"
+                }
+            ],
+            "directDistributionInformation": {
+                "region": "us-west-2",
+                "s3BucketAndObjectPrefixNames": [
+                    "s3://prod-lads/MOD02QKM"
+                ],
+                "s3CredentialsApiEndpoint": "https://data.laadsdaac.earthdatacloud.nasa.gov/s3credentials",
+                "s3CredentialsApiDocumentationUrl": "https://data.laadsdaac.earthdatacloud.nasa.gov/s3credentialsREADME"
+            },
+            "doi": {
+                "doi": "10.5067/MODIS/MOD02QKM.061",
+                "authority": "https://doi.org/"
+            },
+            "duplicateCollections": {
+                "count": 0,
+                "items": []
+            },
+            "hasGranules": true,
+            "lines": null,
+            "nativeDataFormats": [
+                "HDF-EOS"
+            ],
+            "points": null,
+            "polygons": null,
+            "relatedUrls": [
+                {
+                    "description": "MODIS Level 1B Product User’s Guide",
+                    "urlContentType": "PublicationURL",
+                    "type": "VIEW RELATED INFORMATION",
+                    "subtype": "USER'S GUIDE",
+                    "url": "https://mcst.gsfc.nasa.gov/sites/default/files/file_attachments/M1054D_PUG_083112_final.pdf"
+                },
+                {
+                    "description": "Product Landing Page",
+                    "urlContentType": "CollectionURL",
+                    "type": "DATA SET LANDING PAGE",
+                    "url": "https://doi.org/10.5067/MODIS/MOD02QKM.061"
+                },
+                {
+                    "description": "Search and order products from LAADS website.",
+                    "urlContentType": "DistributionURL",
+                    "type": "GET DATA",
+                    "subtype": "LAADS",
+                    "url": "https://ladsweb.modaps.eosdis.nasa.gov/search/order/2/MOD02QKM--61",
+                    "getData": {
+                        "format": "Not provided",
+                        "mimeType": "text/html",
+                        "size": 0,
+                        "unit": "KB"
+                    }
+                },
+                {
+                    "description": "Direct access to the https site and directory hosting the MOD02QKM C6.1 data set.",
+                    "urlContentType": "DistributionURL",
+                    "type": "GET DATA",
+                    "subtype": "LAADS",
+                    "url": "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/61/MOD02QKM/",
+                    "getData": {
+                        "format": "Not provided",
+                        "mimeType": "text/html",
+                        "size": 0,
+                        "unit": "KB"
+                    }
+                },
+                {
+                    "getService": {
+                        "format": "Not provided",
+                        "mimeType": "text/html",
+                        "protocol": "HTTPS",
+                        "fullName": "Not provided",
+                        "dataId": "Not provided",
+                        "dataType": "Not provided"
+                    },
+                    "description": "Direct access to the OPenDAP for the MOD02QKM C6.1 data set.",
+                    "urlContentType": "DistributionURL",
+                    "type": "USE SERVICE API",
+                    "subtype": "OPENDAP DATA",
+                    "url": "https://ladsweb.modaps.eosdis.nasa.gov/opendap/RemoteResources/laads/allData/61/MOD02QKM/contents.html"
+                },
+                {
+                    "description": "MODIS Level 1B Product ATBD",
+                    "urlContentType": "PublicationURL",
+                    "type": "VIEW RELATED INFORMATION",
+                    "subtype": "ALGORITHM THEORETICAL BASIS DOCUMENT (ATBD)",
+                    "url": "https://mcst.gsfc.nasa.gov/sites/mcst.gsfc/files/file_attachments/MODIS_L1B_ATBD_ver4.pdf"
+                }
+            ],
+            "relatedCollections": {
+                "count": 0,
+                "items": []
+            },
+            "scienceKeywords": [
+                {
+                    "category": "EARTH SCIENCE",
+                    "topic": "SPECTRAL/ENGINEERING",
+                    "term": "INFRARED WAVELENGTHS",
+                    "variableLevel1": "INFRARED RADIANCE"
+                },
+                {
+                    "category": "EARTH SCIENCE",
+                    "topic": "SPECTRAL/ENGINEERING",
+                    "term": "INFRARED WAVELENGTHS",
+                    "variableLevel1": "REFLECTED INFRARED"
+                },
+                {
+                    "category": "EARTH SCIENCE",
+                    "topic": "SPECTRAL/ENGINEERING",
+                    "term": "VISIBLE WAVELENGTHS",
+                    "variableLevel1": "VISIBLE RADIANCE"
+                }
+            ],
+            "shortName": "MOD02QKM",
+            "spatialExtent": {
+                "horizontalSpatialDomain": {
+                    "geometry": {
+                        "boundingRectangles": [
+                            {
+                                "northBoundingCoordinate": 90,
+                                "westBoundingCoordinate": -180,
+                                "eastBoundingCoordinate": 180,
+                                "southBoundingCoordinate": -90
+                            }
+                        ],
+                        "coordinateSystem": "CARTESIAN"
+                    },
+                    "resolutionAndCoordinateSystem": {
+                        "horizontalDataResolution": {
+                            "genericResolutions": [
+                                {
+                                    "xdimension": 250,
+                                    "ydimension": 250,
+                                    "unit": "Not provided"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "granuleSpatialRepresentation": "GEODETIC"
+            },
+            "tags": {
+                "edsc.extra.serverless.collection_capabilities": {
+                    "data": {
+                        "cloud_cover": false,
+                        "day_night_flag": true,
+                        "granule_online_access_flag": true,
+                        "orbit_calculated_spatial_domains": false,
+                        "updated_at": "2025-09-02T19:04:40.692Z"
+                    }
+                },
+                "edsc.extra.serverless.gibs": {
+                    "data": [
+                        {
+                            "antarctic": true,
+                            "group": "baselayers",
+                            "product": "MODIS_Terra_CorrectedReflectance_Bands367",
+                            "antarctic_resolution": "250m",
+                            "layerPeriod": "Daily",
+                            "updated_at": "2025-09-04T12:45:22.048Z",
+                            "arctic": true,
+                            "title": "Corrected Reflectance (Bands 3-6-7)",
+                            "source": "Terra / MODIS",
+                            "match": {
+                                "time_start": ">=2000-02-24T00:00:00Z",
+                                "day_night_flag": "day"
+                            },
+                            "geographic": true,
+                            "arctic_resolution": "250m",
+                            "format": "jpeg",
+                            "geographic_resolution": "250m"
+                        },
+                        {
+                            "antarctic": true,
+                            "group": "baselayers",
+                            "product": "MODIS_Terra_CorrectedReflectance_Bands721",
+                            "antarctic_resolution": "250m",
+                            "layerPeriod": "Daily",
+                            "updated_at": "2025-09-04T12:45:22.048Z",
+                            "arctic": true,
+                            "title": "Corrected Reflectance (Bands 7-2-1)",
+                            "source": "Terra / MODIS",
+                            "match": {
+                                "time_start": ">=2000-02-24T00:00:00Z",
+                                "day_night_flag": "day"
+                            },
+                            "geographic": true,
+                            "arctic_resolution": "250m",
+                            "format": "jpeg",
+                            "geographic_resolution": "250m"
+                        },
+                        {
+                            "antarctic": true,
+                            "group": "baselayers",
+                            "product": "MODIS_Terra_CorrectedReflectance_TrueColor",
+                            "antarctic_resolution": "250m",
+                            "layerPeriod": "Daily",
+                            "updated_at": "2025-09-04T12:45:22.048Z",
+                            "arctic": true,
+                            "title": "Corrected Reflectance (True Color)",
+                            "source": "Terra / MODIS",
+                            "match": {
+                                "time_start": ">=2000-02-24T00:00:00Z",
+                                "day_night_flag": "day"
+                            },
+                            "geographic": true,
+                            "arctic_resolution": "250m",
+                            "format": "jpeg",
+                            "geographic_resolution": "250m"
+                        },
+                        {
+                            "antarctic": false,
+                            "group": "overlays",
+                            "product": "MODIS_Terra_Data_No_Data",
+                            "antarctic_resolution": null,
+                            "layerPeriod": "Daily",
+                            "updated_at": "2025-09-04T12:45:22.088Z",
+                            "arctic": false,
+                            "title": "Areas of No Data (mask)",
+                            "source": "Terra / MODIS",
+                            "match": {
+                                "time_start": ">=2000-02-24T00:00:00Z",
+                                "day_night_flag": "day"
+                            },
+                            "geographic": true,
+                            "arctic_resolution": null,
+                            "format": "png",
+                            "geographic_resolution": "250m"
+                        }
+                    ]
+                }
+            },
+            "temporalExtents": [
+                {
+                    "rangeDateTimes": [
+                        {
+                            "beginningDateTime": "2000-02-24T00:00:00.000Z"
+                        }
+                    ],
+                    "precisionOfSeconds": 1,
+                    "endsAtPresentFlag": true
+                }
+            ],
+            "timeStart": "2000-02-24T00:00:00.000Z",
+            "timeEnd": null,
+            "tilingIdentificationSystems": null,
+            "title": "MODIS/Terra Calibrated Radiances 5-Min L1B Swath 250m",
+            "versionId": "6.1",
+            "services": {
+                "count": 2,
+                "items": [
+                    {
+                        "conceptId": "S2951645688-LAADS",
+                        "longName": "LAADS DAAC Geolocation (geoloco) Service",
+                        "name": "laads-geoloco-service",
+                        "type": "Harmony",
+                        "url": {
+                            "description": "Harmony Production",
+                            "urlValue": "https://harmony.earthdata.nasa.gov"
+                        },
+                        "serviceOptions": {
+                            "subset": {
+                                "spatialSubset": {
+                                    "boundingBox": {
+                                        "allowMultipleValues": true
+                                    }
+                                },
+                                "variableSubset": {
+                                    "allowMultipleValues": true
+                                }
+                            },
+                            "supportedInputProjections": [
+                                {
+                                    "projectionName": "Geographic"
+                                },
+                                {
+                                    "projectionName": "Albers Equal-Area Conic"
+                                },
+                                {
+                                    "projectionName": "Lambert Azimuthal Equal Area"
+                                },
+                                {
+                                    "projectionName": "Lambert Conic Conformal"
+                                },
+                                {
+                                    "projectionName": "Mercator"
+                                }
+                            ],
+                            "supportedOutputProjections": [
+                                {
+                                    "projectionName": "Geographic"
+                                },
+                                {
+                                    "projectionName": "Albers Equal-Area Conic"
+                                },
+                                {
+                                    "projectionName": "Lambert Azimuthal Equal Area"
+                                },
+                                {
+                                    "projectionName": "Lambert Conic Conformal"
+                                },
+                                {
+                                    "projectionName": "Mercator"
+                                }
+                            ]
+                        },
+                        "supportedOutputProjections": [
+                            {
+                                "projectionName": "Geographic"
+                            },
+                            {
+                                "projectionName": "Albers Equal-Area Conic"
+                            },
+                            {
+                                "projectionName": "Lambert Azimuthal Equal Area"
+                            },
+                            {
+                                "projectionName": "Lambert Conic Conformal"
+                            },
+                            {
+                                "projectionName": "Mercator"
+                            }
+                        ],
+                        "supportedReformattings": null
+                    },
+                    {
+                        "conceptId": "S3269314724-LAADS",
+                        "longName": "LAADS DAAC Service for Band and Variable Subsetting (HDF-4/HDF-EOS 2)",
+                        "name": "laads-subset_name_band-service",
+                        "type": "Harmony",
+                        "url": {
+                            "description": "Harmony Production",
+                            "urlValue": "https://harmony.earthdata.nasa.gov"
+                        },
+                        "serviceOptions": {
+                            "subset": {
+                                "variableSubset": {
+                                    "allowMultipleValues": true
+                                }
+                            }
+                        },
+                        "supportedOutputProjections": null,
+                        "supportedReformattings": null
+                    }
+                ]
+            },
+            "granules": {
+                "count": 1457149,
+                "items": [
+                    {
+                        "conceptId": "G1462754234-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754407-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754409-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754405-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754403-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754236-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754408-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754510-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754404-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754242-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462753927-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754411-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462753827-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754512-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754238-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462753929-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754239-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754410-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754412-LAADS",
+                        "onlineAccessFlag": true
+                    },
+                    {
+                        "conceptId": "G1462754413-LAADS",
+                        "onlineAccessFlag": true
+                    }
+                ]
+            },
+            "subscriptions": {
+                "count": 0,
+                "items": []
+            },
+            "tools": {
+                "count": 0,
+                "items": []
+            },
+            "variables": {
+                "count": 11,
+                "cursor": "eyJ1bW0iOiJbXCJub2lzZV9pbl90aGVybWFsX2RldGVjdG9yc1wiLFwiTEFBRFNcIixcIk5vaXNlX2luX1RoZXJtYWxfRGV0ZWN0b3JzXCIsXCJMQUFEU1wiXSJ9",
+                "items": [
+                    {
+                        "conceptId": "V3558940881-LAADS",
+                        "definition": "Band_250M",
+                        "instanceInformation": null,
+                        "longName": "250M Band Numbers for Subsetting",
+                        "name": "Band_250M",
+                        "nativeId": "MOD02QKM_Band_250M",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940894-LAADS",
+                        "definition": "Change_in_relative_responses_of_thermal_detectors",
+                        "instanceInformation": null,
+                        "longName": "Change_in_relative_responses_of_thermal_detectors",
+                        "name": "Change_in_relative_responses_of_thermal_detectors",
+                        "nativeId": "MOD02QKM_Change_in_relative_responses_of_thermal_detectors",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940873-LAADS",
+                        "definition": "DC_Restore_Change_for_Reflective_1km_Bands",
+                        "instanceInformation": null,
+                        "longName": "DC_Restore_Change_for_Reflective_1km_Bands",
+                        "name": "DC_Restore_Change_for_Reflective_1km_Bands",
+                        "nativeId": "MOD02QKM_DC_Restore_Change_for_Reflective_1km_Bands",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940919-LAADS",
+                        "definition": "DC_Restore_Change_for_Reflective_250m_Bands",
+                        "instanceInformation": null,
+                        "longName": "DC_Restore_Change_for_Reflective_250m_Bands",
+                        "name": "DC_Restore_Change_for_Reflective_250m_Bands",
+                        "nativeId": "MOD02QKM_DC_Restore_Change_for_Reflective_250m_Bands",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940912-LAADS",
+                        "definition": "DC_Restore_Change_for_Reflective_500m_Bands",
+                        "instanceInformation": null,
+                        "longName": "DC_Restore_Change_for_Reflective_500m_Bands",
+                        "name": "DC_Restore_Change_for_Reflective_500m_Bands",
+                        "nativeId": "MOD02QKM_DC_Restore_Change_for_Reflective_500m_Bands",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940877-LAADS",
+                        "definition": "DC_Restore_Change_for_Thermal_Bands",
+                        "instanceInformation": null,
+                        "longName": "DC_Restore_Change_for_Thermal_Bands",
+                        "name": "DC_Restore_Change_for_Thermal_Bands",
+                        "nativeId": "MOD02QKM_DC_Restore_Change_for_Thermal_Bands",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940875-LAADS",
+                        "definition": "EV_250_RefSB",
+                        "instanceInformation": null,
+                        "longName": "Earth View 250M Reflective Solar Bands Scaled Integers",
+                        "name": "EV_250_RefSB",
+                        "nativeId": "MOD02QKM_EV_250_RefSB",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940908-LAADS",
+                        "definition": "EV_250_RefSB_Uncert_Indexes",
+                        "instanceInformation": null,
+                        "longName": "Earth View 250M Reflective Solar Bands Uncertainty Indexes",
+                        "name": "EV_250_RefSB_Uncert_Indexes",
+                        "nativeId": "MOD02QKM_EV_250_RefSB_Uncert_Indexes",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940887-LAADS",
+                        "definition": "Latitude",
+                        "instanceInformation": null,
+                        "longName": "Latitude",
+                        "name": "Latitude",
+                        "nativeId": "MOD02QKM_Latitude",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940890-LAADS",
+                        "definition": "Longitude",
+                        "instanceInformation": null,
+                        "longName": "Longitude",
+                        "name": "Longitude",
+                        "nativeId": "MOD02QKM_Longitude",
+                        "scienceKeywords": null
+                    },
+                    {
+                        "conceptId": "V3558940884-LAADS",
+                        "definition": "Noise_in_Thermal_Detectors",
+                        "instanceInformation": null,
+                        "longName": "Noise_in_Thermal_Detectors",
+                        "name": "Noise_in_Thermal_Detectors",
+                        "nativeId": "MOD02QKM_Noise_in_Thermal_Detectors",
+                        "scienceKeywords": null
+                    }
+                ]
+            }
+        }
+    }
+}

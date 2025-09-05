@@ -17,15 +17,7 @@ const setup = setupTest({
     '/': {
       title: 'Test Topic',
       image: 'mock-image-src',
-      url: '/search?fst0=Test+Topic',
-      color: '#123456'
-    }
-  },
-  defaultReduxState: {
-    router: {
-      location: {
-        pathname: '/'
-      }
+      url: '/search?fst0=Test+Topic'
     }
   },
   defaultZustandState: {

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 import { eventEmitter } from '../../events/events'
 import LoggerRequest from '../../util/request/loggerRequest'
-import { locationPropType } from '../../util/propTypes/location'
 
 import './NotFound.scss'
 
-export const NotFound = ({
-  location
-}) => {
+export const NotFound = () => {
+  const location = useLocation()
+
   useEffect(() => {
     eventEmitter.emit('error.global', true)
 
@@ -64,10 +64,6 @@ export const NotFound = ({
       </div>
     </div>
   )
-}
-
-NotFound.propTypes = {
-  location: locationPropType.isRequired
 }
 
 export default NotFound

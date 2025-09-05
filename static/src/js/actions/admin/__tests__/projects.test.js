@@ -28,6 +28,20 @@ import {
   UPDATE_ADMIN_PROJECTS_SORT_KEY,
   UPDATE_ADMIN_PROJECTS_PAGE_NUM
 } from '../../../constants/actionTypes'
+import routerHelper from '../../../router/router'
+
+jest.mock('../../../router/router', () => ({
+  ...jest.requireActual('../../../router/router'),
+  router: {
+    navigate: jest.fn(),
+    state: {
+      location: {
+        pathname: '/admin'
+      }
+    },
+    subscribe: jest.fn()
+  }
+}))
 
 const mockStore = configureMockStore([thunk])
 
@@ -221,27 +235,13 @@ describe('fetchAdminProjects', () => {
 
 describe('adminViewProject', () => {
   test('should create an action to change the URL', () => {
-    const store = mockStore({
-      router: {
-        location: {
-          pathname: '/admin'
-        }
-      }
-    })
+    const store = mockStore()
 
     store.dispatch(adminViewProject(123))
 
-    const storeActions = store.getActions()
-    expect(storeActions[0]).toEqual({
-      payload: {
-        args: [
-          {
-            pathname: '/admin/projects/123'
-          }
-        ],
-        method: 'push'
-      },
-      type: '@@router/CALL_HISTORY_METHOD'
+    expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+    expect(routerHelper.router.navigate).toHaveBeenCalledWith({
+      pathname: '/admin/projects/123'
     })
   })
 })

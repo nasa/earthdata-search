@@ -1,7 +1,6 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 import { type Dispatch } from 'redux'
-import { useHistory } from 'react-router-dom'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
@@ -10,13 +9,6 @@ import { Home } from '../Home'
 // @ts-expect-error: No types for sharedUtils/config in tests
 import * as sharedConfig from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn().mockReturnValue({
-    push: jest.fn()
-  })
-}))
 
 jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => {
   const MockSpatialSelectionDropdown = () => <div data-testid="spatial-selection-dropdown">Spatial Selection Dropdown</div>
@@ -76,6 +68,13 @@ jest.mock('../../../../../../sharedUtils/config', () => ({
   }))
 }))
 
+const mockUseNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockUseNavigate
+}))
+
 const setup = setupTest({
   Component: Home,
   defaultProps: {
@@ -130,8 +129,8 @@ describe('Home', () => {
     expect(props.onChangePath).toHaveBeenCalledTimes(1)
     expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
 
-    expect(useHistory().push).toHaveBeenCalledTimes(1)
-    expect(useHistory().push).toHaveBeenCalledWith('/search?q=test')
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search?q=test')
   })
 
   test('calls onChangePath and history.push when the enter key is pressed', async () => {
@@ -145,8 +144,8 @@ describe('Home', () => {
     expect(props.onChangePath).toHaveBeenCalledTimes(1)
     expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
 
-    expect(useHistory().push).toHaveBeenCalledTimes(1)
-    expect(useHistory().push).toHaveBeenCalledWith('/search?q=test')
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search?q=test')
   })
 
   test('renders the topic cards', () => {
@@ -208,7 +207,7 @@ describe('Home', () => {
     await user.click(screen.getByRole('button', { name: /search/i }))
 
     expect(props.onChangePath).toHaveBeenCalledWith('/search')
-    expect(useHistory().push).toHaveBeenCalledWith('/search')
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
   })
 
   describe('when nlpSearch is enabled', () => {
@@ -228,7 +227,7 @@ describe('Home', () => {
       await user.click(screen.getByRole('button', { name: /search/i }))
 
       expect(props.onChangePath).toHaveBeenCalledWith('/search?nlp=test')
-      expect(useHistory().push).toHaveBeenCalledWith('/search?nlp=test')
+      expect(mockUseNavigate).toHaveBeenCalledWith('/search?nlp=test')
       expect(screen.queryByTestId('spatial-selection-dropdown')).toBeNull()
       expect(screen.queryByTestId('temporal-selection-dropdown')).toBeNull()
     })

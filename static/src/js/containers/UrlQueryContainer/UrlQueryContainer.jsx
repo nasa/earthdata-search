@@ -5,11 +5,11 @@ import {
 } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
 import { encodeUrlQuery } from '../../util/url/url'
-import { locationPropType } from '../../util/propTypes/location'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import {
@@ -29,18 +29,14 @@ export const mapDispatchToProps = (dispatch) => ({
     (query) => dispatch(actions.changeUrl(query))
 })
 
-export const mapStateToProps = (state) => ({
-  location: state.router.location,
-  pathname: state.router.location.pathname
-})
-
 export const UrlQueryContainer = (props) => {
   const {
     children,
-    location,
     onChangePath,
     onChangeUrl
   } = props
+
+  const location = useLocation()
   const {
     pathname,
     search
@@ -117,6 +113,10 @@ export const UrlQueryContainer = (props) => {
     onChangePath([pathname, search].filter(Boolean).join(''))
   }, [])
 
+  // This useEffect gets triggered twice. The first time is when a zustand value changes,
+  // meaning the URL should be encoded and updated. The second time is when the search
+  // value changes, which happens after the URL has been updated.
+  // If I take the check for search out of the dependency array, do I even need to do it?
   useEffect(() => {
     // The only time the search prop changes is after the URL has been updated
     // So we only need to worry about encoding the query and updating the URL
@@ -125,8 +125,8 @@ export const UrlQueryContainer = (props) => {
       previousSearch.current === search
     ) {
       const nextPath = encodeUrlQuery({
-        ...props,
-        ...combinedZustandValues
+        ...combinedZustandValues,
+        pathname
       })
 
       if (currentPath !== nextPath) {
@@ -139,16 +139,19 @@ export const UrlQueryContainer = (props) => {
     }
 
     previousSearch.current = search
-  }, [props, search, zustandValues])
+  }, [
+    pathname,
+    search,
+    combinedZustandValues
+  ])
 
   return children
 }
 
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UrlQueryContainer)
+export default connect(null, mapDispatchToProps)(UrlQueryContainer)

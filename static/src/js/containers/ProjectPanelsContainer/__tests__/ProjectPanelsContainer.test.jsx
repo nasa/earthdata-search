@@ -16,9 +16,6 @@ const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
     onToggleAboutCSDAModal: jest.fn(),
-    location: {
-      search: ''
-    },
     onChangePath: jest.fn(),
     ursProfile: {}
   },
@@ -62,7 +59,8 @@ const setup = setupTest({
       setIsOpen: jest.fn(),
       setPanelGroup: jest.fn()
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('mapDispatchToProps', () => {
@@ -93,9 +91,6 @@ describe('mapStateToProps', () => {
       contactInfo: {
         ursProfile: {}
       },
-      router: {
-        location: {}
-      },
       ui: {
         map: {
           drawingNewLayer: false
@@ -104,7 +99,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      location: {},
       ursProfile: {}
     }
 
@@ -121,7 +115,13 @@ describe('ProjectPanelsContainer component', () => {
       dataQualitySummaries: {},
       collectionId: 'collectionId',
       granulesQueries: {},
-      location: props.location,
+      location: {
+        hash: '',
+        key: 'default',
+        pathname: '/',
+        search: '',
+        state: null
+      },
       onAddGranuleToProjectCollection: zustandState.project.addGranuleToProjectCollection,
       onChangePath: props.onChangePath,
       onRemoveGranuleFromProjectCollection: zustandState.project.removeGranuleFromProjectCollection,

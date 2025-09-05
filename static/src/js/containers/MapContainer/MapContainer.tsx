@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { difference, isEmpty } from 'lodash-es'
 import { Geometry } from 'ol/geom'
+import { useLocation } from 'react-router-dom'
 
 // @ts-expect-error The file does not have types
 import actions from '../../actions'
@@ -119,14 +120,6 @@ interface MapContainerProps {
   onToggleShapefileUploadModal: (state: boolean) => void
   /** Function to toggle the too many points modal */
   onToggleTooManyPointsModal: (state: boolean) => void
-  /** The router values */
-  router: {
-    /** The router location */
-    location: {
-      /** The pathname of the router */
-      pathname: string
-    }
-  }
 }
 
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
@@ -137,11 +130,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onMetricsMap,
     onToggleDrawingNewLayer,
     onToggleShapefileUploadModal,
-    onToggleTooManyPointsModal,
-    router
+    onToggleTooManyPointsModal
   } = props
 
-  const { location } = router
+  const location = useLocation()
   const { pathname } = location
   const isProjectPage = isPath(pathname, ['/projects'])
   const isFocusedCollectionPage = isPath(pathname, [
