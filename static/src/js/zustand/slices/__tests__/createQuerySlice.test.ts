@@ -37,9 +37,13 @@ describe('createQuerySlice', () => {
       changeGranuleQuery: expect.any(Function),
       changeRegionQuery: expect.any(Function),
       clearFilters: expect.any(Function),
+      clearNlpCollection: expect.any(Function),
+      clearNlpSearchCompleted: expect.any(Function),
       excludeGranule: expect.any(Function),
       initializeGranuleQuery: expect.any(Function),
       removeSpatialFilter: expect.any(Function),
+      setNlpCollection: expect.any(Function),
+      setNlpSearchCompleted: expect.any(Function),
       undoExcludeGranule: expect.any(Function)
     })
   })
@@ -173,6 +177,45 @@ describe('createQuerySlice', () => {
 
         expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
         expect(project.getProjectGranules).toHaveBeenCalledWith()
+
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
+        expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when skipCollectionSearch is true', () => {
+      test('updates the collection query without calling getCollections', async () => {
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.project.getProjectGranules = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          collection: {
+            keyword: 'test'
+          },
+          skipCollectionSearch: true
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          collections,
+          granules,
+          project,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.collection.pageNum).toEqual(1)
+        expect(updatedQuery.collection.keyword).toEqual('test')
+
+        expect(granules.granules.collectionConceptId).toEqual(null)
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(0)
+
+        expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
 
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
@@ -730,6 +773,192 @@ describe('createQuerySlice', () => {
 
       expect(granules.getGranules).toHaveBeenCalledTimes(1)
       expect(granules.getGranules).toHaveBeenCalledWith()
+    })
+  })
+
+  describe('setNlpSearchCompleted', () => {
+    test('sets the nlpSearchCompleted flag', () => {
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { setNlpSearchCompleted } = query
+      setNlpSearchCompleted(true)
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpSearchCompleted).toBe(true)
+    })
+  })
+
+  describe('clearNlpSearchCompleted', () => {
+    test('clears the nlpSearchCompleted flag', () => {
+      useEdscStore.setState((state) => {
+        state.query.nlpSearchCompleted = true
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { clearNlpSearchCompleted } = query
+      clearNlpSearchCompleted()
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpSearchCompleted).toBe(false)
+    })
+  })
+
+  describe('setNlpCollection', () => {
+    test('sets NLP collection data with spatial and temporal info', () => {
+      const mockNlpData = {
+        query: 'test query',
+        spatial: {
+          type: 'FeatureCollection' as const,
+          name: 'NLP Spatial Area',
+          features: [{
+            type: 'Feature' as const,
+            geometry: {
+              type: 'Polygon' as const,
+              coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+            },
+            properties: {}
+          }]
+        },
+        temporal: {
+          startDate: '2023-01-01T00:00:00.000Z',
+          endDate: '2023-12-31T23:59:59.999Z'
+        }
+      }
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { setNlpCollection } = query
+      setNlpCollection(mockNlpData)
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpCollection).toEqual(mockNlpData)
+    })
+
+    test('sets NLP collection data with only spatial info', () => {
+      const mockNlpData = {
+        query: 'spatial query',
+        spatial: {
+          type: 'FeatureCollection' as const,
+          name: 'NLP Spatial Area',
+          features: [{
+            type: 'Feature' as const,
+            geometry: {
+              type: 'Point' as const,
+              coordinates: [0, 0]
+            },
+            properties: {}
+          }]
+        },
+        temporal: null
+      }
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { setNlpCollection } = query
+      setNlpCollection(mockNlpData)
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpCollection).toEqual(mockNlpData)
+      expect(updatedQuery.nlpCollection?.spatial).toBeTruthy()
+      expect(updatedQuery.nlpCollection?.temporal).toBeNull()
+    })
+
+    test('sets NLP collection data with only temporal info', () => {
+      const mockNlpData = {
+        query: 'temporal query',
+        spatial: null,
+        temporal: {
+          startDate: '2023-06-01T00:00:00.000Z',
+          endDate: '2023-06-30T23:59:59.999Z'
+        }
+      }
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { setNlpCollection } = query
+      setNlpCollection(mockNlpData)
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpCollection).toEqual(mockNlpData)
+      expect(updatedQuery.nlpCollection?.spatial).toBeNull()
+      expect(updatedQuery.nlpCollection?.temporal).toBeTruthy()
+    })
+  })
+
+  describe('clearNlpCollection', () => {
+    test('clears the NLP collection data', () => {
+      const mockNlpData = {
+        query: 'test query',
+        spatial: {
+          type: 'FeatureCollection' as const,
+          name: 'NLP Spatial Area',
+          features: []
+        },
+        temporal: {
+          startDate: '2023-01-01T00:00:00.000Z',
+          endDate: '2023-12-31T23:59:59.999Z'
+        }
+      }
+
+      useEdscStore.setState((state) => {
+        state.query.nlpCollection = mockNlpData
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { clearNlpCollection } = query
+
+      // Verify data is set before clearing
+      expect(zustandState.query.nlpCollection).toEqual(mockNlpData)
+
+      clearNlpCollection()
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpCollection).toBeNull()
+    })
+
+    test('handles clearing when nlpCollection is already null', () => {
+      // Ensure nlpCollection starts as null
+      useEdscStore.setState((state) => {
+        state.query.nlpCollection = null
+      })
+
+      const zustandState = useEdscStore.getState()
+      const { query } = zustandState
+      const { clearNlpCollection } = query
+      clearNlpCollection()
+
+      const updatedState = useEdscStore.getState()
+      const {
+        query: updatedQuery
+      } = updatedState
+
+      expect(updatedQuery.nlpCollection).toBeNull()
     })
   })
 })

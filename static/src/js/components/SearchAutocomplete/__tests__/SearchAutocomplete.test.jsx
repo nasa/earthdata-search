@@ -78,7 +78,9 @@ describe('SearchAutocomplete', () => {
         await user.type(input, 'test')
       })
 
-      expect(screen.getByText('Loading suggestions...')).toBeInTheDocument()
+      await waitFor(() => {
+        expect(screen.getByText('Loading suggestions...')).toBeInTheDocument()
+      })
 
       // Clean up the nock that has a delay
       nock.cleanAll()

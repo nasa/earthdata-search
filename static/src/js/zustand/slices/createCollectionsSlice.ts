@@ -1,6 +1,6 @@
 import { CancelTokenSource, isCancel } from 'axios'
-
 import { CollectionsSlice, ImmerStateCreator } from '../types'
+import { CollectionMetadata } from '../../types/sharedTypes'
 
 // @ts-expect-error There are no types for this file
 import configureStore from '../../store/configureStore'
@@ -12,6 +12,8 @@ import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 
 // @ts-expect-error There are no types for this file
 import CollectionRequest from '../../util/request/collectionRequest'
+// @ts-expect-error There are no types for this file
+import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 // @ts-expect-error There are no types for this file
 import { buildCollectionSearchParams, prepareCollectionParams } from '../../util/collections'
 
@@ -118,6 +120,94 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           action: 'getCollections',
           resource: 'collections',
           requestObject
+        }))
+      }
+    },
+
+    setCollectionsLoading: (pageNum: number) => {
+      set((state) => {
+        state.collections.collections.isLoading = true
+        if (pageNum === 1) {
+          state.collections.collections.items = []
+        }
+      })
+    },
+
+    setCollectionsLoaded: (items: CollectionMetadata[], count: number, pageNum: number) => {
+      set((state) => {
+        state.collections.collections.isLoaded = true
+        state.collections.collections.isLoading = false
+        state.collections.collections.count = count
+        if (pageNum === 1) {
+          state.collections.collections.items = items
+        } else {
+          state.collections.collections.items = state.collections.collections.items.concat(items)
+        }
+      })
+    },
+
+    setCollectionsErrored: () => {
+      set((state) => {
+        state.collections.collections.isLoading = false
+        state.collections.collections.isLoaded = false
+      })
+    },
+
+    performNlpSearch: async (searchQuery: string) => {
+      const {
+        dispatch: reduxDispatch,
+        getState: reduxGetState
+      } = configureStore()
+      const reduxState = reduxGetState()
+
+      const earthdataEnvironment = getEarthdataEnvironment(get())
+
+      try {
+        const nlpRequest = new NlpSearchRequest(reduxState.authToken, earthdataEnvironment)
+        const response = await nlpRequest.search({ q: searchQuery })
+
+        const nlpData = nlpRequest.transformResponse(response, searchQuery)
+
+        if (nlpData.spatial || nlpData.temporal) {
+          const zustandState = get()
+          zustandState.query.setNlpCollection(nlpData)
+
+          if (nlpData.spatial) {
+            zustandState.query.changeQuery({
+              collection: {
+                spatial: nlpData.spatial
+              }
+            })
+          }
+
+          if (nlpData.temporal) {
+            zustandState.query.changeQuery({
+              collection: {
+                temporal: nlpData.temporal
+              }
+            })
+          }
+        }
+
+        const { data } = response
+        const { metadata = {} } = data
+        const { feed = {} } = metadata
+        const { entry: collections = [] } = feed
+
+        const zustandState = get()
+        zustandState.collections.setCollectionsLoaded(collections, collections.length, 1)
+
+        zustandState.query.setNlpSearchCompleted(true)
+      } catch (error) {
+        const zustandState = get()
+        zustandState.query.setNlpSearchCompleted(true)
+        zustandState.collections.setCollectionsErrored()
+
+        reduxDispatch(actions.handleError({
+          error,
+          action: 'performNlpSearch',
+          resource: 'nlpSearch',
+          requestObject: new NlpSearchRequest(reduxState.authToken, earthdataEnvironment)
         }))
       }
     }

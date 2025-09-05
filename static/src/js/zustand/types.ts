@@ -57,6 +57,14 @@ export type CollectionsSlice = {
     }
     /** Function to fetch the collections from CMR */
     getCollections: () => void
+    /** Function to set collections loading state */
+    setCollectionsLoading: (pageNum: number) => void
+    /** Function to set collections loaded state with data */
+    setCollectionsLoaded: (items: CollectionMetadata[], count: number, pageNum: number) => void
+    /** Function to set collections error state */
+    setCollectionsErrored: () => void
+    /** Function to perform NLP search and process results */
+    performNlpSearch: (searchQuery: string) => Promise<void>
   }
 }
 
@@ -834,12 +842,27 @@ type SelectedRegion = {
   type?: 'huc' | 'reach'
 }
 
+/** NLP Collection Query Parameters */
+type NlpCollectionQuery = {
+  /** The original search query string */
+  query: string
+  /** The spatial data extracted from NLP */
+  spatial: ShapefileFile | null
+  /** The temporal data extracted from NLP */
+  temporal: {
+    startDate: string
+    endDate: string
+  } | null
+}
+
 /** Parameters for changing the query */
 type ChangeQueryParams = {
   /** The collection query */
   collection?: Partial<CollectionQuery>
   /** The region query */
   region?: Partial<RegionQuery>
+  /** Skip automatic collection search trigger when updating query */
+  skipCollectionSearch?: boolean
   /** The selected region query */
   selectedRegion?: Partial<SelectedRegion>
 }
@@ -851,8 +874,12 @@ export type QuerySlice = {
     collection: CollectionQuery
     /** The region query (for searching regions) */
     region: RegionQuery
+    /** Flag indicating if NLP search from landing page completed */
+    nlpSearchCompleted: boolean
     /** The selected region (to use as a spatial query to CMR) */
     selectedRegion: SelectedRegion
+    /** The NLP collection query data */
+    nlpCollection: NlpCollectionQuery | null
     /** Function to change the query */
     changeQuery: (query: ChangeQueryParams) => void
     /** Function to change the granule query */
@@ -893,6 +920,14 @@ export type QuerySlice = {
     removeSpatialFilter: () => void
     /** Function to undo the last excluded granule */
     undoExcludeGranule: (collectionId: string) => void
+    /** Function to set NLP search completion flag */
+    setNlpSearchCompleted: (completed: boolean) => void
+    /** Function to clear NLP search completion flag */
+    clearNlpSearchCompleted: () => void
+    /** Function to set NLP collection data */
+    setNlpCollection: (data: NlpCollectionQuery) => void
+    /** Function to clear NLP collection data */
+    clearNlpCollection: () => void
   }
 }
 

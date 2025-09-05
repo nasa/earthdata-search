@@ -10,16 +10,15 @@ import Container from 'react-bootstrap/Container'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
 import Row from 'react-bootstrap/Row'
-import { connect, MapDispatchToProps } from 'react-redux'
-import { useHistory, type RouteComponentProps } from 'react-router-dom'
-import { type Dispatch } from 'redux'
-
 import {
   ArrowCircleDown,
   ArrowCircleUp,
   Search
   // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+import { connect, MapDispatchToProps } from 'react-redux'
+import { useHistory, type RouteComponentProps } from 'react-router-dom'
+import { type Dispatch } from 'redux'
 
 import Button from '../../components/Button/Button'
 // @ts-expect-error: Types do not exist for this file
@@ -56,6 +55,8 @@ import heroImgSources from '~Images/homepage-hero/MODIS-Terra-Swirling-Clouds-In
 
 // @ts-expect-error: Types do not exist for this file
 import actions from '../../actions'
+// @ts-expect-error: Types do not exist for this file
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import getHeroImageSrcSet from '../../../../../vite_plugins/getHeroImageSrcSet'
 
@@ -68,6 +69,8 @@ import '../../components/SearchForm/SearchForm.scss'
 const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
 )
+
+const { nlpSearch } = getApplicationConfig()
 
 let preloaded = false
 
@@ -157,10 +160,15 @@ interface HomeDispatchProps {
 
 type HomeProps = HomeDispatchProps & RouteComponentProps
 
-export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
+export const Home: React.FC<HomeProps> = ({
+  onChangePath
+}) => {
   const history = useHistory()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
+
+  // Check if NLP search is enabled to conditionally show spatial/temporal buttons
+  const showSearchButtons = nlpSearch !== 'true'
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -227,8 +235,20 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                 onSubmit={
                   (e) => {
                     e.preventDefault()
-                    onChangePath(`/search?q=${keyword}`)
-                    history.push(`/search?q=${keyword}`)
+
+                    if (keyword.trim()) {
+                      const encodedKeyword = encodeURIComponent(keyword.trim())
+                      const isNlpEnabled = nlpSearch === 'true'
+                      const searchUrl = isNlpEnabled
+                        ? `/search?q=${encodedKeyword}&nlp=true`
+                        : `/search?q=${encodedKeyword}`
+
+                      onChangePath(searchUrl)
+                      history.push(searchUrl)
+                    } else {
+                      onChangePath('/search')
+                      history.push('/search')
+                    }
                   }
                 }
               >
@@ -243,10 +263,14 @@ export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
                     ref={inputRef}
                   />
                 </div>
-                <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
-                  <TemporalSelectionDropdownContainer searchParams={searchParams} />
-                  <SpatialSelectionDropdownContainer searchParams={searchParams} />
-                </div>
+                {
+                  showSearchButtons && (
+                    <div className="d-flex gap-2 align-items-center flex-shrink-0 ps-2 pe-2 bg-white border-top border-bottom">
+                      <TemporalSelectionDropdownContainer searchParams={searchParams} />
+                      <SpatialSelectionDropdownContainer searchParams={searchParams} />
+                    </div>
+                  )
+                }
                 <Button type="submit" className="home__hero-submit-button flex-shrink-0 btn btn-primary btn-lg focus-light" bootstrapVariant="primary" bootstrapSize="lg">Search</Button>
               </form>
             </div>

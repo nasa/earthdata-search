@@ -126,7 +126,9 @@ export const CollectionResultsItem = forwardRef(({
   // Fetch the base64 string from the Lambda function
   // Explicity call the GET request for the lambda
   useEffect(() => {
-    parseScaleImageResponse()
+    parseScaleImageResponse().catch(() => {
+      onThumbnailLoaded()
+    })
   }, [])
 
   const getConsortiumTooltipText = (consortium) => {
@@ -351,30 +353,26 @@ export const CollectionResultsItem = forwardRef(({
                 {summary}
               </p>
             </div>
-            {
-              thumbnail && (
-                <div className={`collection-results-item__thumb ${loadingThumbnail ? 'collection-results-item__thumb--is-loading' : 'collection-results-item__thumb--is-loaded'}`}>
-                  {
-                    loadingThumbnail && (
-                      <Spinner
-                        type="dots"
-                        dataTestId="collection-results-item-spinner"
-                        className="collection-results-item__thumb-spinner"
-                        color="white"
-                        size="tiny"
-                      />
-                    )
-                  }
-                  <img
-                    className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
-                    src={base64Image}
-                    alt={`Thumbnail for ${datasetId}`}
-                    height={thumbnailHeight}
-                    width={thumbnailWidth}
+            <div className={`collection-results-item__thumb ${loadingThumbnail ? 'collection-results-item__thumb--is-loading' : 'collection-results-item__thumb--is-loaded'}`}>
+              {
+                loadingThumbnail && (
+                  <Spinner
+                    type="dots"
+                    dataTestId="collection-results-item-spinner"
+                    className="collection-results-item__thumb-spinner"
+                    color="white"
+                    size="tiny"
                   />
-                </div>
-              )
-            }
+                )
+              }
+              <img
+                className={`collection-results-item__thumb-image ${loadingThumbnail ? 'collection-results-item__thumb-image--is-loading' : 'collection-results-item__thumb-image--is-loaded'}`}
+                src={base64Image}
+                alt={`Thumbnail for ${datasetId}`}
+                height={thumbnailHeight}
+                width={thumbnailWidth}
+              />
+            </div>
           </div>
           <div className="collection-results-item__attribution">
             {

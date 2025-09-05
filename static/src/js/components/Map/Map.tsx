@@ -72,6 +72,7 @@ import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
+import drawSpatialData from '../../util/map/drawSpatialData'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
@@ -399,6 +400,9 @@ const Map: React.FC<MapProps> = ({
   const mapElRef = useRef<HTMLDivElement>(null)
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
+
+  // Track previous spatial data name to detect newly added NLP spatial data
+  const prevShapefileNameRef = useRef<string | undefined>(undefined)
 
   useEffect(() => {
     const map = new OlMap({
@@ -1013,23 +1017,41 @@ const Map: React.FC<MapProps> = ({
   // When the shapefile changes, draw the shapefile
   useEffect(() => {
     if (shapefile && shapefile.file) {
-      const { file, selectedFeatures } = shapefile
+      const { file, selectedFeatures, shapefileName } = shapefile
 
       const { showMbr, drawingNewLayer } = spatialSearch
 
-      drawShapefile({
+      const isNlpSpatialData = shapefileName === 'NLP Spatial Area'
+      const isNewlyAdded = isNlpSpatialData && prevShapefileNameRef.current !== shapefileName
+
+      prevShapefileNameRef.current = shapefileName
+
+      const commonDrawParams = {
         drawingNewLayer,
+        selectedFeatures,
         onChangeQuery,
+        onChangeProjection,
         onMetricsMap,
-        onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
-        selectedFeatures,
-        shapefile: file,
-        shapefileAdded: false,
-        showMbr,
         vectorSource: spatialDrawingSource
-      })
+      }
+
+      if (isNlpSpatialData) {
+        drawSpatialData({
+          ...commonDrawParams,
+          spatialData: file,
+          spatialDataAdded: isNewlyAdded
+        })
+      } else {
+        drawShapefile({
+          ...commonDrawParams,
+          shapefile: file,
+          shapefileAdded: isNewlyAdded,
+          onToggleTooManyPointsModal,
+          showMbr
+        })
+      }
     }
   }, [
     shapefile,

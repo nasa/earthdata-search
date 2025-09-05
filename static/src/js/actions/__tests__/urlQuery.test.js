@@ -503,6 +503,108 @@ describe('updateStore', () => {
         getTimeline: expect.any(Function)
       })
     })
+
+    describe('when loadFromUrl is false and no newPathname', () => {
+      test('only loads portal config', async () => {
+        const params = {
+          cmrFacets: {},
+          earthdataEnvironment: 'prod',
+          featureFacets: {
+            availableInEarthdataCloud: false,
+            customizable: false,
+            mapImagery: false
+          },
+          focusedCollection: 'C00001-EDSC',
+          focusedGranule: 'G00001-EDSC',
+          mapView: {},
+          portalId: 'testPortal',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          query: {
+            collection: {
+              overrideTemporal: {},
+              pageNum: 1,
+              spatial: {},
+              temporal: {}
+            }
+          },
+          timeline: {
+            query: {
+              center: 1676443651000,
+              interval: 'month'
+            }
+          }
+        }
+
+        const store = mockStore({
+          router: {
+            location: {
+              pathname: '/'
+            }
+          }
+        })
+
+        await store.dispatch(urlQuery.updateStore(params))
+
+        const storeActions = store.getActions()
+        expect(storeActions.length).toBe(0)
+
+        // Expect only portal config to be loaded in zustand store
+        const { portal } = useEdscStore.getState()
+
+        expect(portal).toEqual({
+          features: {
+            advancedSearch: true,
+            authentication: true,
+            featureFacets: {
+              showAvailableInEarthdataCloud: true,
+              showCustomizable: true,
+              showMapImagery: true
+            }
+          },
+          footer: {
+            attributionText: 'NASA Official: Test Official',
+            displayVersion: true,
+            primaryLinks: [{
+              href: 'http://www.nasa.gov/FOIA/index.html',
+              title: 'FOIA'
+            }, {
+              href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+              title: 'NASA Privacy Policy'
+            }, {
+              href: 'http://www.usa.gov',
+              title: 'USA.gov'
+            }],
+            secondaryLinks: [{
+              href: 'https://access.earthdata.nasa.gov/',
+              title: 'Earthdata Access: A Section 508 accessible alternative'
+            }]
+          },
+          moreInfoUrl: 'https://test.gov',
+          pageTitle: 'TEST',
+          parentConfig: 'edsc',
+          portalBrowser: true,
+          portalId: 'testPortal',
+          query: {
+            hasGranulesOrCwic: null,
+            project: 'testProject'
+          },
+          title: {
+            primary: 'test',
+            secondary: 'test secondary title'
+          },
+          ui: {
+            showNonEosdisCheckbox: false,
+            showOnlyGranulesCheckbox: false,
+            showTophat: true
+          }
+        })
+      })
+    })
   })
 })
 
@@ -1040,6 +1142,211 @@ describe('changePath', () => {
         expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
         expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
+    })
+  })
+
+  describe('when nlpSearchCompleted is true', () => {
+    test('skips calling getCollections', async () => {
+      const getCollectionsMock = jest.fn()
+      useEdscStore.setState({
+        collections: {
+          getCollections: getCollectionsMock
+        },
+        query: {
+          nlpSearchCompleted: true
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const newPath = '/search?p=C00001-EDSC'
+
+      const store = mockStore({
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        }
+      })
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(getCollectionsMock).toHaveBeenCalledTimes(0)
+    })
+  })
+
+  describe('when NLP search is requested', () => {
+    test('calls collections performNlpSearch action with query parameter', async () => {
+      const changeQueryMock = jest.fn()
+      const setNlpSearchCompletedMock = jest.fn()
+
+      // Mock console.error to prevent test environment from throwing on error logs
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+      useEdscStore.setState({
+        query: {
+          changeQuery: changeQueryMock,
+          setNlpSearchCompleted: setNlpSearchCompletedMock,
+          setNlpCollection: jest.fn(),
+          nlpSearchCompleted: false
+        },
+        collections: {
+          performNlpSearch: jest.fn().mockResolvedValue(),
+          setCollectionsLoaded: jest.fn(),
+          setCollectionsErrored: jest.fn()
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const newPath = '/search?nlp=true&q=climate+data'
+
+      const store = mockStore({
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        }
+      })
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(changeQueryMock).toHaveBeenCalledWith({
+        collection: {
+          keyword: 'climate data'
+        },
+        skipCollectionSearch: true
+      })
+
+      consoleErrorSpy.mockRestore()
+    })
+
+    test('calls performNlpSearch with correct query', async () => {
+      const changeQueryMock = jest.fn()
+      const performNlpSearchMock = jest.fn().mockResolvedValue()
+
+      useEdscStore.setState({
+        query: {
+          changeQuery: changeQueryMock,
+          nlpSearchCompleted: false
+        },
+        collections: {
+          performNlpSearch: performNlpSearchMock
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const store = mockStore({
+        authToken: '',
+        earthdataEnvironment: 'prod',
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        },
+        metadata: {
+          collections: {
+            allIds: [],
+            byId: {}
+          }
+        }
+      })
+
+      const newPath = '/?q=test+spatial+query&nlp=true'
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(changeQueryMock).toHaveBeenCalledWith({
+        collection: {
+          keyword: 'test spatial query'
+        },
+        skipCollectionSearch: true
+      })
+
+      expect(performNlpSearchMock).toHaveBeenCalledWith('test spatial query')
+    })
+
+    test('does not call performNlpSearch when nlpSearch parameter is false', async () => {
+      const changeQueryMock = jest.fn()
+      const performNlpSearchMock = jest.fn().mockResolvedValue()
+
+      useEdscStore.setState({
+        query: {
+          changeQuery: changeQueryMock,
+          nlpSearchCompleted: false
+        },
+        collections: {
+          performNlpSearch: performNlpSearchMock
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const store = mockStore({
+        authToken: '',
+        earthdataEnvironment: 'prod',
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        },
+        metadata: {
+          collections: {
+            allIds: [],
+            byId: {}
+          }
+        }
+      })
+
+      const newPath = '/?query=test+query&nlpSearch=false'
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(performNlpSearchMock).not.toHaveBeenCalled()
+    })
+
+    test('does not call performNlpSearch when no query parameter provided', async () => {
+      const performNlpSearchMock = jest.fn().mockResolvedValue()
+
+      useEdscStore.setState({
+        query: {
+          changeQuery: jest.fn(),
+          nlpSearchCompleted: false
+        },
+        collections: {
+          performNlpSearch: performNlpSearchMock
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const store = mockStore({
+        authToken: '',
+        earthdataEnvironment: 'prod',
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        },
+        metadata: {
+          collections: {
+            allIds: [],
+            byId: {}
+          }
+        }
+      })
+
+      const newPath = '/?nlpSearch=true'
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(performNlpSearchMock).not.toHaveBeenCalled()
     })
   })
 })
