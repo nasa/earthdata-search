@@ -15,7 +15,6 @@ import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironme
 import { RESTORE_FROM_URL } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
-import NlpSearchRequest from '../util/request/nlpSearchRequest'
 import { buildConfig } from '../util/portals'
 
 // eslint-disable-next-line import/no-unresolved
@@ -182,47 +181,7 @@ export const changePath = (path = '') => async (dispatch) => {
         skipCollectionSearch: true
       })
 
-      try {
-        const nlpRequest = new NlpSearchRequest(undefined, earthdataEnvironment)
-        const response = await nlpRequest.search({ q: queryParams.q })
-
-        const nlpData = nlpRequest.transformResponse(response, queryParams.q)
-
-        if (nlpData.spatial || nlpData.temporal) {
-          useEdscStore.getState().query.setNlpCollection(nlpData)
-
-          // Apply spatial filter by setting shapefile
-          if (nlpData.spatial) {
-            useEdscStore.getState().shapefile.updateShapefile({
-              file: nlpData.spatial,
-              shapefileName: 'NLP Spatial Area',
-              isLoaded: true
-            })
-          }
-
-          // Apply temporal filter by updating query
-          if (nlpData.temporal) {
-            useEdscStore.getState().query.changeQuery({
-              collection: {
-                temporal: nlpData.temporal
-              }
-            })
-          }
-        }
-
-        useEdscStore.getState().query.setNlpSearchCompleted(true)
-
-        const { data } = response
-        const { metadata = {} } = data
-        const { feed = {} } = metadata
-        const { entry: collections = [] } = feed
-
-        useEdscStore.getState().collections.setCollectionsLoaded(collections, collections.length, 1)
-      } catch (error) {
-        console.error('NLP search failed:', error)
-        useEdscStore.getState().query.setNlpSearchCompleted(true)
-        useEdscStore.getState().collections.setCollectionsErrored()
-      }
+      await useEdscStore.getState().collections.performNlpSearch(queryParams.q)
 
       decodedParams = decodeUrlParams(queryString)
       if (decodedParams.query && decodedParams.query.collection) {

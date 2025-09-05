@@ -44,6 +44,7 @@ describe('createCollectionsSlice', () => {
         items: []
       },
       getCollections: expect.any(Function),
+      performNlpSearch: expect.any(Function),
       setCollectionsErrored: expect.any(Function),
       setCollectionsLoaded: expect.any(Function),
       setCollectionsLoading: expect.any(Function)
@@ -316,6 +317,239 @@ describe('createCollectionsSlice', () => {
       const { collections: updatedCollections } = useEdscStore.getState()
       expect(updatedCollections.collections.isLoading).toBe(false)
       expect(updatedCollections.collections.isLoaded).toBe(false)
+    })
+  })
+
+  describe('performNlpSearch', () => {
+    beforeEach(() => {
+      jest.clearAllMocks()
+      nock.cleanAll()
+    })
+
+    test('successfully performs NLP search and processes response', async () => {
+      const mockNlpResponse = {
+        data: {
+          queryInfo: {
+            spatial: {
+              geoJson: {
+                type: 'Polygon',
+                coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+              },
+              geoLocation: 'Test Area'
+            },
+            temporal: {
+              startDate: '2023-01-01T00:00:00.000Z',
+              endDate: '2023-12-31T23:59:59.999Z'
+            }
+          },
+          metadata: {
+            feed: {
+              entry: [
+                {
+                  conceptId: 'C1000000000-EDSC',
+                  title: 'Test Collection'
+                },
+                {
+                  conceptId: 'C1000000001-EDSC',
+                  title: 'Another Collection'
+                }
+              ]
+            }
+          }
+        }
+      }
+
+      nock(/cmr/)
+        .get(/search\/nlp\/query\.json/)
+        .reply(200, mockNlpResponse)
+
+      mockGetState.mockReturnValue({
+        authToken: 'test-token'
+      })
+
+      const mockSetNlpCollection = jest.fn()
+      const mockChangeQuery = jest.fn()
+      const mockSetNlpSearchCompleted = jest.fn()
+
+      useEdscStore.setState((state) => {
+        state.query.setNlpCollection = mockSetNlpCollection
+        state.query.changeQuery = mockChangeQuery
+        state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { performNlpSearch } = collections
+
+      await performNlpSearch('test query')
+
+      expect(mockSetNlpCollection).toHaveBeenCalledWith({
+        query: 'test query',
+        spatial: expect.objectContaining({
+          type: 'FeatureCollection',
+          name: 'Test Area'
+        }),
+        temporal: {
+          startDate: '2023-01-01T00:00:00.000Z',
+          endDate: '2023-12-31T23:59:59.999Z'
+        }
+      })
+
+      expect(mockChangeQuery).toHaveBeenCalledWith({
+        collection: {
+          spatial: expect.objectContaining({
+            type: 'FeatureCollection',
+            name: 'Test Area'
+          })
+        }
+      })
+
+      expect(mockChangeQuery).toHaveBeenCalledWith({
+        collection: {
+          temporal: {
+            startDate: '2023-01-01T00:00:00.000Z',
+            endDate: '2023-12-31T23:59:59.999Z'
+          }
+        }
+      })
+
+      expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
+    })
+
+    test('handles NLP search with only spatial data', async () => {
+      const mockNlpResponse = {
+        data: {
+          queryInfo: {
+            spatial: {
+              geoJson: {
+                type: 'Point',
+                coordinates: [0, 0]
+              },
+              geoLocation: 'Point Location'
+            }
+          },
+          metadata: {
+            feed: {
+              entry: []
+            }
+          }
+        }
+      }
+
+      nock(/cmr/)
+        .get(/search\/nlp\/query\.json/)
+        .reply(200, mockNlpResponse)
+
+      mockGetState.mockReturnValue({
+        authToken: 'test-token'
+      })
+
+      const mockSetNlpCollection = jest.fn()
+      const mockChangeQuery = jest.fn()
+      const mockSetNlpSearchCompleted = jest.fn()
+
+      useEdscStore.setState((state) => {
+        state.query.setNlpCollection = mockSetNlpCollection
+        state.query.changeQuery = mockChangeQuery
+        state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { performNlpSearch } = collections
+
+      await performNlpSearch('spatial query')
+
+      expect(mockSetNlpCollection).toHaveBeenCalledWith({
+        query: 'spatial query',
+        spatial: expect.objectContaining({
+          type: 'FeatureCollection',
+          name: 'Point Location'
+        }),
+        temporal: null
+      })
+
+      expect(mockChangeQuery).toHaveBeenCalledWith({
+        collection: {
+          spatial: expect.objectContaining({
+            type: 'FeatureCollection',
+            name: 'Point Location'
+          })
+        }
+      })
+
+      expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
+    })
+
+    test('handles NLP search errors', async () => {
+      nock(/cmr/)
+        .get(/search\/nlp\/query\.json/)
+        .reply(500, { error: 'Server error' })
+
+      mockGetState.mockReturnValue({
+        authToken: 'test-token'
+      })
+
+      const mockSetNlpSearchCompleted = jest.fn()
+      const mockSetCollectionsErrored = jest.fn()
+
+      useEdscStore.setState((state) => {
+        state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
+        state.collections.setCollectionsErrored = mockSetCollectionsErrored
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { performNlpSearch } = collections
+
+      await performNlpSearch('error query')
+
+      expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
+      expect(mockSetCollectionsErrored).toHaveBeenCalledWith()
+      expect(actions.handleError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: 'performNlpSearch',
+          resource: 'nlpSearch',
+          error: expect.any(Error)
+        })
+      )
+    })
+
+    test('handles empty NLP response', async () => {
+      const mockNlpResponse = {
+        data: {
+          queryInfo: {},
+          metadata: {
+            feed: {
+              entry: []
+            }
+          }
+        }
+      }
+
+      nock(/cmr/)
+        .get(/search\/nlp\/query\.json/)
+        .reply(200, mockNlpResponse)
+
+      mockGetState.mockReturnValue({
+        authToken: 'test-token'
+      })
+
+      const mockSetNlpCollection = jest.fn()
+      const mockSetNlpSearchCompleted = jest.fn()
+      const mockSetCollectionsLoaded = jest.fn()
+
+      useEdscStore.setState((state) => {
+        state.query.setNlpCollection = mockSetNlpCollection
+        state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
+        state.collections.setCollectionsLoaded = mockSetCollectionsLoaded
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { performNlpSearch } = collections
+
+      await performNlpSearch('empty query')
+
+      expect(mockSetNlpCollection).not.toHaveBeenCalled()
+      expect(mockSetCollectionsLoaded).toHaveBeenCalledWith([], 0, 1)
+      expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })
   })
 })
