@@ -399,7 +399,7 @@ describe('createShapefileSlice', () => {
   describe('NLP spatial data integration', () => {
     test('accepts NLP spatial data with edscId in feature properties', () => {
       const nlpSpatialData: ShapefileFile = {
-        name: 'NLP Extracted Spatial Area',
+        name: 'Test Geographic Area',
         type: 'FeatureCollection' as const,
         features: [
           {

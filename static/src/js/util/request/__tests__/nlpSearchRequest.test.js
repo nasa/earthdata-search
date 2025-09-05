@@ -423,7 +423,8 @@ describe('NlpSearchRequest#transformResponse', () => {
       data: {
         queryInfo: {
           spatial: {
-            geoJson: spatialGeometry
+            geoJson: spatialGeometry,
+            geoLocation: 'Test Location'
           }
         }
       }
@@ -435,7 +436,7 @@ describe('NlpSearchRequest#transformResponse', () => {
       query: 'test query',
       spatial: {
         type: 'FeatureCollection',
-        name: 'NLP Extracted Spatial Area',
+        name: 'Test Location',
         features: [{
           type: 'Feature',
           properties: {
@@ -468,7 +469,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     expect(result.spatial).toEqual({
       type: 'FeatureCollection',
-      name: 'NLP Extracted Spatial Area',
+      name: 'Extracted Spatial Area',
       features: [{
         type: 'Feature',
         properties: {
@@ -524,7 +525,8 @@ describe('NlpSearchRequest#transformResponse', () => {
       data: {
         queryInfo: {
           spatial: {
-            geoJson: spatialGeometry
+            geoJson: spatialGeometry,
+            geoLocation: 'Alaska Region'
           },
           temporal: temporalData
         }
@@ -537,7 +539,7 @@ describe('NlpSearchRequest#transformResponse', () => {
       query: 'landsat data',
       spatial: {
         type: 'FeatureCollection',
-        name: 'NLP Extracted Spatial Area',
+        name: 'Alaska Region',
         features: [{
           type: 'Feature',
           properties: {
@@ -607,7 +609,7 @@ describe('NlpSearchRequest#transformResponse', () => {
         if (simplifiedGeometry) {
           spatialData = {
             type: 'FeatureCollection',
-            name: 'NLP Extracted Spatial Area',
+            name: data.queryInfo.spatial.geoLocation || 'Extracted Spatial Area',
             features: [{
               type: 'Feature',
               properties: {
