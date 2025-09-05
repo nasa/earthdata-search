@@ -776,4 +776,44 @@ describe('CollectionResultsList component', () => {
       expect(zustandState.project.removeProjectCollection).toHaveBeenCalledWith('collectionId1')
     })
   })
+
+  describe('thumbnail loading error handling', () => {
+    test('handles thumbnail loading errors gracefully', async () => {
+      retrieveThumbnail.mockRejectedValue(new Error('Failed to load thumbnail'))
+
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+      setup({
+        overrideProps: {
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            thumbnail: null,
+            isDefaultImage: false
+          }
+        }
+      })
+
+      await waitFor(() => {
+        expect(screen.getByTestId('collection-results-item')).toBeInTheDocument()
+      })
+
+      consoleErrorSpy.mockRestore()
+    })
+
+    test('renders thumbnail section even when thumbnail is null', async () => {
+      setup({
+        overrideProps: {
+          collectionMetadata: {
+            ...collectionListItemProps.collectionMetadata,
+            thumbnail: null,
+            isDefaultImage: false
+          }
+        }
+      })
+
+      await waitFor(() => {
+        expect(screen.getByAltText('Thumbnail for Test Collection')).toBeInTheDocument()
+      })
+    })
+  })
 })

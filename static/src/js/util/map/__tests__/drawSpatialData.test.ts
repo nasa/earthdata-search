@@ -4,6 +4,7 @@ import drawSpatialData from '../drawSpatialData'
 import { eventEmitter } from '../../../events/events'
 import { mapEventTypes } from '../../../constants/eventTypes'
 import { ShapefileFile } from '../../../types/sharedTypes'
+import { spatialSearchMarkerStyle } from '../styles'
 
 const mockGeoJSONInstance = {
   readFeatures: jest.fn(),
@@ -278,6 +279,249 @@ describe('drawSpatialData', () => {
 
     expect(pointFeature.set).toHaveBeenCalledWith('geometryType', 'Circle')
     expect(pointFeature.set).toHaveBeenCalledWith('circleGeometry', [[0, 0], 1000])
+  })
+
+  test('should handle point geometries without radius', () => {
+    const pointFeature = {
+      ...mockFeature,
+      get: jest.fn((key) => {
+        if (key === 'edscId') return 'point-feature-id'
+
+        return undefined
+      }),
+      getGeometry: jest.fn().mockReturnValue({
+        getType: jest.fn().mockReturnValue('Point'),
+        getCoordinates: jest.fn().mockReturnValue([0, 0]),
+        clone: jest.fn().mockReturnThis(),
+        transform: jest.fn().mockReturnThis()
+      })
+    }
+
+    mockGeoJSONInstance.readFeatures.mockReturnValue([pointFeature])
+
+    const spatialData: ShapefileFile = {
+      type: 'FeatureCollection' as const,
+      name: 'NLP Spatial Area',
+      features: [{
+        type: 'Feature' as const,
+        geometry: {
+          type: 'Point' as const,
+          coordinates: [0, 0]
+        },
+        properties: {}
+      }]
+    }
+
+    drawSpatialData({
+      drawingNewLayer: false,
+      selectedFeatures: null,
+      spatialData,
+      onChangeQuery: jest.fn(),
+      onChangeProjection: jest.fn(),
+      onMetricsMap: jest.fn(),
+      onUpdateShapefile: jest.fn(),
+      projectionCode: 'epsg4326',
+      spatialDataAdded: false,
+      vectorSource
+    })
+
+    expect(pointFeature.set).toHaveBeenCalledWith('geometryType', 'Point')
+    expect(pointFeature.setStyle).toHaveBeenCalledWith(spatialSearchMarkerStyle)
+  })
+
+  test('should handle projection changes for Arctic regions', () => {
+    const mockOnChangeProjection = jest.fn()
+
+    vectorSource.getExtent = jest.fn().mockReturnValue([0, 70, 10, 80])
+
+    const spatialData: ShapefileFile = {
+      type: 'FeatureCollection' as const,
+      name: 'NLP Spatial Area',
+      features: [{
+        type: 'Feature' as const,
+        geometry: {
+          type: 'Polygon' as const,
+          coordinates: [[[0, 70], [10, 70], [10, 80], [0, 80], [0, 70]]]
+        },
+        properties: {}
+      }]
+    }
+
+    drawSpatialData({
+      drawingNewLayer: false,
+      selectedFeatures: null,
+      spatialData,
+      onChangeQuery: jest.fn(),
+      onChangeProjection: mockOnChangeProjection,
+      onMetricsMap: jest.fn(),
+      onUpdateShapefile: jest.fn(),
+      projectionCode: 'epsg4326',
+      spatialDataAdded: true,
+      vectorSource
+    })
+
+    expect(mockOnChangeProjection).toHaveBeenCalledWith('epsg3413')
+  })
+
+  test('should handle projection changes for Antarctic regions', () => {
+    const mockOnChangeProjection = jest.fn()
+
+    vectorSource.getExtent = jest.fn().mockReturnValue([0, -80, 10, -70])
+
+    const spatialData: ShapefileFile = {
+      type: 'FeatureCollection' as const,
+      name: 'NLP Spatial Area',
+      features: [{
+        type: 'Feature' as const,
+        geometry: {
+          type: 'Polygon' as const,
+          coordinates: [[[0, -80], [10, -80], [10, -70], [0, -70], [0, -80]]]
+        },
+        properties: {}
+      }]
+    }
+
+    drawSpatialData({
+      drawingNewLayer: false,
+      selectedFeatures: null,
+      spatialData,
+      onChangeQuery: jest.fn(),
+      onChangeProjection: mockOnChangeProjection,
+      onMetricsMap: jest.fn(),
+      onUpdateShapefile: jest.fn(),
+      projectionCode: 'epsg4326',
+      spatialDataAdded: true,
+      vectorSource
+    })
+
+    expect(mockOnChangeProjection).toHaveBeenCalledWith('epsg3031')
+  })
+
+  test('should not change projection for non-polar regions', () => {
+    const mockOnChangeProjection = jest.fn()
+
+    vectorSource.getExtent = jest.fn().mockReturnValue([0, 40, 10, 50])
+
+    const spatialData: ShapefileFile = {
+      type: 'FeatureCollection' as const,
+      name: 'NLP Spatial Area',
+      features: [{
+        type: 'Feature' as const,
+        geometry: {
+          type: 'Polygon' as const,
+          coordinates: [[[0, 40], [10, 40], [10, 50], [0, 50], [0, 40]]]
+        },
+        properties: {}
+      }]
+    }
+
+    drawSpatialData({
+      drawingNewLayer: false,
+      selectedFeatures: null,
+      spatialData,
+      onChangeQuery: jest.fn(),
+      onChangeProjection: mockOnChangeProjection,
+      onMetricsMap: jest.fn(),
+      onUpdateShapefile: jest.fn(),
+      projectionCode: 'epsg4326',
+      spatialDataAdded: true,
+      vectorSource
+    })
+
+    expect(mockOnChangeProjection).not.toHaveBeenCalled()
+  })
+
+  test('should handle projection transformation for non-geographic projections', () => {
+    const spatialData: ShapefileFile = {
+      type: 'FeatureCollection' as const,
+      name: 'NLP Spatial Area',
+      features: [{
+        type: 'Feature' as const,
+        geometry: {
+          type: 'Polygon' as const,
+          coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+        },
+        properties: {}
+      }]
+    }
+
+    drawSpatialData({
+      drawingNewLayer: false,
+      selectedFeatures: null,
+      spatialData,
+      onChangeQuery: jest.fn(),
+      onChangeProjection: jest.fn(),
+      onMetricsMap: jest.fn(),
+      onUpdateShapefile: jest.fn(),
+      projectionCode: 'epsg3413',
+      spatialDataAdded: false,
+      vectorSource
+    })
+
+    expect(mockFeature.getGeometry().clone().transform).toHaveBeenCalled()
+    expect(mockFeature.setGeometry).toHaveBeenCalled()
+  })
+
+  test('should handle multiple features with selected features', () => {
+    const feature1 = {
+      ...mockFeature,
+      get: jest.fn((key) => {
+        if (key === 'edscId') return 'feature-1'
+
+        return undefined
+      })
+    }
+
+    const feature2 = {
+      ...mockFeature,
+      get: jest.fn((key) => {
+        if (key === 'edscId') return 'feature-2'
+
+        return undefined
+      })
+    }
+
+    mockGeoJSONInstance.readFeatures.mockReturnValue([feature1, feature2])
+
+    const spatialData: ShapefileFile = {
+      type: 'FeatureCollection' as const,
+      name: 'NLP Spatial Area',
+      features: [
+        {
+          type: 'Feature' as const,
+          geometry: {
+            type: 'Polygon' as const,
+            coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+          },
+          properties: { edscId: 'feature-1' }
+        },
+        {
+          type: 'Feature' as const,
+          geometry: {
+            type: 'Polygon' as const,
+            coordinates: [[[2, 2], [3, 2], [3, 3], [2, 3], [2, 2]]]
+          },
+          properties: { edscId: 'feature-2' }
+        }
+      ]
+    }
+
+    drawSpatialData({
+      drawingNewLayer: false,
+      selectedFeatures: ['feature-1'],
+      spatialData,
+      onChangeQuery: jest.fn(),
+      onChangeProjection: jest.fn(),
+      onMetricsMap: jest.fn(),
+      onUpdateShapefile: jest.fn(),
+      projectionCode: 'epsg4326',
+      spatialDataAdded: false,
+      vectorSource
+    })
+
+    expect(feature1.set).toHaveBeenCalledWith('selected', true)
+    expect(feature2.set).toHaveBeenCalledWith('selected', false)
+    expect(vectorSource.addFeatures).toHaveBeenCalledWith([feature1, feature2])
   })
 
   test('should return early if no features are found', () => {

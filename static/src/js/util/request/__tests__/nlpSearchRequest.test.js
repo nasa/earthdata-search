@@ -2,12 +2,10 @@ import axios from 'axios'
 import { simplify, booleanClockwise } from '@turf/turf'
 import NlpSearchRequest from '../nlpSearchRequest'
 import { getEarthdataConfig } from '../../../../../../sharedUtils/config'
-import { convertNlpTemporalData } from '../../temporal/convertNlpTemporalData'
 
 jest.mock('axios')
 jest.mock('../../../../../../sharedUtils/config')
 jest.mock('@turf/turf')
-jest.mock('../../temporal/convertNlpTemporalData')
 
 const mockConfig = {
   cmrHost: 'https://cmr.sit.earthdata.nasa.gov'
@@ -20,7 +18,6 @@ beforeEach(() => {
 
   simplify.mockClear()
   booleanClockwise.mockClear()
-  convertNlpTemporalData.mockClear()
 })
 
 describe('NlpSearchRequest#constructor', () => {
@@ -488,16 +485,9 @@ describe('NlpSearchRequest#transformResponse', () => {
 
   test('processes temporal data', () => {
     const temporalData = {
-      startDate: '2020-01-01',
-      endDate: '2020-12-31'
-    }
-
-    const convertedTemporal = {
       startDate: '2020-01-01T00:00:00.000Z',
       endDate: '2020-12-31T23:59:59.999Z'
     }
-
-    convertNlpTemporalData.mockReturnValue(convertedTemporal)
 
     const response = {
       data: {
@@ -509,7 +499,6 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'temperature data')
 
-    expect(convertNlpTemporalData).toHaveBeenCalledWith(temporalData)
     expect(result).toEqual({
       query: 'temperature data',
       spatial: null,
@@ -527,16 +516,9 @@ describe('NlpSearchRequest#transformResponse', () => {
     }
 
     const temporalData = {
-      startDate: '2023-01-01',
-      endDate: '2023-06-30'
-    }
-
-    const convertedTemporal = {
       startDate: '2023-01-01T00:00:00.000Z',
       endDate: '2023-06-30T23:59:59.999Z'
     }
-
-    convertNlpTemporalData.mockReturnValue(convertedTemporal)
 
     const response = {
       data: {
@@ -573,32 +555,8 @@ describe('NlpSearchRequest#transformResponse', () => {
     })
   })
 
-  test('handles empty temporal conversion result', () => {
-    const temporalData = {
-      invalidData: 'not-a-date'
-    }
-
-    convertNlpTemporalData.mockReturnValue({})
-
-    const response = {
-      data: {
-        queryInfo: {
-          temporal: temporalData
-        }
-      }
-    }
-
-    const result = request.transformResponse(response, 'test query')
-
-    expect(result.temporal).toBeNull()
-  })
-
-  test('handles null temporal conversion result', () => {
-    const temporalData = {
-      malformedData: 'invalid'
-    }
-
-    convertNlpTemporalData.mockReturnValue(null)
+  test('handles temporal data with no dates', () => {
+    const temporalData = {}
 
     const response = {
       data: {
@@ -757,15 +715,8 @@ describe('NlpSearchRequest#transformResponse', () => {
 
   test('handles temporal data with missing startDate', () => {
     const temporalData = {
-      endDate: '2020-12-31'
-    }
-
-    const convertedTemporal = {
-      startDate: '',
       endDate: '2020-12-31T23:59:59.999Z'
     }
-
-    convertNlpTemporalData.mockReturnValue(convertedTemporal)
 
     const response = {
       data: {
@@ -785,15 +736,8 @@ describe('NlpSearchRequest#transformResponse', () => {
 
   test('handles temporal data with missing endDate', () => {
     const temporalData = {
-      startDate: '2020-01-01'
+      startDate: '2020-01-01T00:00:00.000Z'
     }
-
-    const convertedTemporal = {
-      startDate: '2020-01-01T00:00:00.000Z',
-      endDate: ''
-    }
-
-    convertNlpTemporalData.mockReturnValue(convertedTemporal)
 
     const response = {
       data: {

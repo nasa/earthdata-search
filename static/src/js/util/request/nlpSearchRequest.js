@@ -4,7 +4,6 @@ import { booleanClockwise, simplify } from '@turf/turf'
 
 import CmrRequest from './cmrRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { convertNlpTemporalData } from '../temporal/convertNlpTemporalData'
 import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 
 /**
@@ -189,11 +188,11 @@ export default class NlpSearchRequest extends CmrRequest {
     }
 
     if (data.queryInfo.temporal) {
-      const nlpTemporal = convertNlpTemporalData(data.queryInfo.temporal)
-      if (nlpTemporal && Object.keys(nlpTemporal).length > 0) {
+      const { startDate, endDate } = data.queryInfo.temporal
+      if (startDate || endDate) {
         temporalData = {
-          startDate: nlpTemporal.startDate || '',
-          endDate: nlpTemporal.endDate || ''
+          startDate: startDate ? new Date(startDate).toISOString() : '',
+          endDate: endDate ? new Date(endDate).toISOString() : ''
         }
       }
     }

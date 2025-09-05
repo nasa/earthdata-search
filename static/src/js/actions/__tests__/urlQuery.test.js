@@ -10,6 +10,10 @@ import * as urlQuery from '../urlQuery'
 import useEdscStore from '../../zustand/useEdscStore'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import { initialState as initialQueryState } from '../../zustand/slices/createQuerySlice'
+import NlpSearchRequest from '../../util/request/nlpSearchRequest'
+
+// Mock NlpSearchRequest
+jest.mock('../../util/request/nlpSearchRequest')
 
 const mockStore = configureMockStore([thunk])
 
@@ -1218,6 +1222,303 @@ describe('changePath', () => {
         },
         skipCollectionSearch: true
       })
+
+      consoleErrorSpy.mockRestore()
+    })
+
+    test('handles NLP search with spatial data', async () => {
+      const changeQueryMock = jest.fn()
+      const setNlpSearchCompletedMock = jest.fn()
+      const setNlpCollectionMock = jest.fn()
+      const updateShapefileMock = jest.fn()
+
+      const mockSpatialData = {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+          }
+        }]
+      }
+
+      const mockNlpResponse = {
+        data: {
+          metadata: {
+            feed: {
+              entry: [{ id: 'test-collection' }]
+            }
+          }
+        }
+      }
+
+      const mockNlpRequest = {
+        search: jest.fn().mockResolvedValue(mockNlpResponse),
+        transformResponse: jest.fn().mockReturnValue({
+          query: 'test query',
+          spatial: mockSpatialData,
+          temporal: null
+        })
+      }
+
+      NlpSearchRequest.mockImplementation(() => mockNlpRequest)
+
+      useEdscStore.setState({
+        query: {
+          changeQuery: changeQueryMock,
+          setNlpSearchCompleted: setNlpSearchCompletedMock,
+          setNlpCollection: setNlpCollectionMock,
+          nlpSearchCompleted: false
+        },
+        collections: {
+          setCollectionsLoaded: jest.fn()
+        },
+        shapefile: {
+          updateShapefile: updateShapefileMock
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const newPath = '/search?nlp=true&q=test+query'
+
+      const store = mockStore({
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        }
+      })
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(setNlpCollectionMock).toHaveBeenCalledWith({
+        query: 'test query',
+        spatial: mockSpatialData,
+        temporal: null
+      })
+
+      expect(updateShapefileMock).toHaveBeenCalledWith({
+        file: mockSpatialData,
+        shapefileName: 'NLP Spatial Area',
+        isLoaded: true
+      })
+    })
+
+    test('handles NLP search with temporal data', async () => {
+      const changeQueryMock = jest.fn()
+      const setNlpSearchCompletedMock = jest.fn()
+      const setNlpCollectionMock = jest.fn()
+
+      const mockTemporalData = {
+        startDate: '2023-01-01T00:00:00.000Z',
+        endDate: '2023-12-31T23:59:59.999Z'
+      }
+
+      const mockNlpResponse = {
+        data: {
+          metadata: {
+            feed: {
+              entry: [{ id: 'test-collection' }]
+            }
+          }
+        }
+      }
+
+      const mockNlpRequest = {
+        search: jest.fn().mockResolvedValue(mockNlpResponse),
+        transformResponse: jest.fn().mockReturnValue({
+          query: 'test query',
+          spatial: null,
+          temporal: mockTemporalData
+        })
+      }
+
+      NlpSearchRequest.mockImplementation(() => mockNlpRequest)
+
+      useEdscStore.setState({
+        query: {
+          changeQuery: changeQueryMock,
+          setNlpSearchCompleted: setNlpSearchCompletedMock,
+          setNlpCollection: setNlpCollectionMock,
+          nlpSearchCompleted: false
+        },
+        collections: {
+          setCollectionsLoaded: jest.fn()
+        },
+        shapefile: {
+          updateShapefile: jest.fn()
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const newPath = '/search?nlp=true&q=test+query'
+
+      const store = mockStore({
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        }
+      })
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(setNlpCollectionMock).toHaveBeenCalledWith({
+        query: 'test query',
+        spatial: null,
+        temporal: mockTemporalData
+      })
+
+      expect(changeQueryMock).toHaveBeenCalledWith({
+        collection: {
+          temporal: mockTemporalData
+        }
+      })
+    })
+
+    test('handles NLP search with both spatial and temporal data', async () => {
+      const changeQueryMock = jest.fn()
+      const setNlpSearchCompletedMock = jest.fn()
+      const setNlpCollectionMock = jest.fn()
+      const updateShapefileMock = jest.fn()
+
+      const mockSpatialData = {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          geometry: {
+            type: 'Polygon',
+            coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+          }
+        }]
+      }
+
+      const mockTemporalData = {
+        startDate: '2023-01-01T00:00:00.000Z',
+        endDate: '2023-12-31T23:59:59.999Z'
+      }
+
+      const mockNlpResponse = {
+        data: {
+          metadata: {
+            feed: {
+              entry: [{ id: 'test-collection' }]
+            }
+          }
+        }
+      }
+
+      const mockNlpRequest = {
+        search: jest.fn().mockResolvedValue(mockNlpResponse),
+        transformResponse: jest.fn().mockReturnValue({
+          query: 'test query',
+          spatial: mockSpatialData,
+          temporal: mockTemporalData
+        })
+      }
+
+      NlpSearchRequest.mockImplementation(() => mockNlpRequest)
+
+      useEdscStore.setState({
+        query: {
+          changeQuery: changeQueryMock,
+          setNlpSearchCompleted: setNlpSearchCompletedMock,
+          setNlpCollection: setNlpCollectionMock,
+          nlpSearchCompleted: false
+        },
+        collections: {
+          setCollectionsLoaded: jest.fn()
+        },
+        shapefile: {
+          updateShapefile: updateShapefileMock
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const newPath = '/search?nlp=true&q=test+query'
+
+      const store = mockStore({
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        }
+      })
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(setNlpCollectionMock).toHaveBeenCalledWith({
+        query: 'test query',
+        spatial: mockSpatialData,
+        temporal: mockTemporalData
+      })
+
+      expect(updateShapefileMock).toHaveBeenCalledWith({
+        file: mockSpatialData,
+        shapefileName: 'NLP Spatial Area',
+        isLoaded: true
+      })
+
+      expect(changeQueryMock).toHaveBeenCalledWith({
+        collection: {
+          temporal: mockTemporalData
+        }
+      })
+    })
+
+    test('handles NLP search error', async () => {
+      const setNlpSearchCompletedMock = jest.fn()
+      const setCollectionsErroredMock = jest.fn()
+
+      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+
+      const mockNlpRequest = {
+        search: jest.fn().mockRejectedValue(new Error('NLP search failed'))
+      }
+
+      NlpSearchRequest.mockImplementation(() => mockNlpRequest)
+
+      useEdscStore.setState({
+        query: {
+          changeQuery: jest.fn(),
+          setNlpSearchCompleted: setNlpSearchCompletedMock,
+          setNlpCollection: jest.fn(),
+          nlpSearchCompleted: false
+        },
+        collections: {
+          setCollectionsLoaded: jest.fn(),
+          setCollectionsErrored: setCollectionsErroredMock
+        },
+        shapefile: {
+          updateShapefile: jest.fn()
+        },
+        timeline: {
+          getTimeline: jest.fn()
+        }
+      })
+
+      const newPath = '/search?nlp=true&q=test+query'
+
+      const store = mockStore({
+        router: {
+          location: {
+            pathname: '/search'
+          }
+        }
+      })
+
+      await store.dispatch(urlQuery.changePath(newPath))
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith('NLP search failed:', expect.any(Error))
+      expect(setNlpSearchCompletedMock).toHaveBeenCalledWith(true)
+      expect(setCollectionsErroredMock).toHaveBeenCalled()
 
       consoleErrorSpy.mockRestore()
     })
