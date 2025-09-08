@@ -171,29 +171,13 @@ export const changePath = (path = '') => async (dispatch) => {
     }
   } else {
     const queryParams = parse(queryString)
-    const isNlpSearch = queryParams.nlp === 'true'
 
-    if (isNlpSearch && queryParams.q) {
-      useEdscStore.getState().query.changeQuery({
-        collection: {
-          keyword: queryParams.q
-        },
-        skipCollectionSearch: true
-      })
-
-      useEdscStore.getState().query.setNlpCollection({ query: queryParams.q })
-      await useEdscStore.getState().collections.getNlpCollections()
-
-      decodedParams = decodeUrlParams(queryString)
-      if (decodedParams.query && decodedParams.query.collection) {
-        decodedParams.query.collection = {
-          ...decodedParams.query.collection,
-          keyword: undefined
-        }
-      }
-    } else {
-      decodedParams = decodeUrlParams(queryString)
+    if (queryParams.nlp) {
+      const nlpQuery = decodeURIComponent(queryParams.nlp)
+      useEdscStore.getState().query.setNlpCollection({ query: nlpQuery })
     }
+
+    decodedParams = decodeUrlParams(queryString)
 
     await dispatch(actions.updateStore(decodedParams, pathname))
   }
@@ -215,15 +199,7 @@ export const changePath = (path = '') => async (dispatch) => {
     // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {
-    const { nlpSearchCompleted } = zustandState.query
-
-    // Check if we just initiated an NLP search from URL params
-    const queryParams = parse(queryString)
-    const isNlpSearch = queryParams.nlp === 'true'
-
-    if (!nlpSearchCompleted && !isNlpSearch) {
-      getCollections()
-    }
+    getCollections()
 
     // Granules Search
     if (

@@ -5,6 +5,9 @@ import { CollectionsSlice, ImmerStateCreator } from '../types'
 import configureStore from '../../store/configureStore'
 
 // @ts-expect-error There are no types for this file
+import { getApplicationConfig } from '../../../../../sharedUtils/config'
+
+// @ts-expect-error There are no types for this file
 import actions from '../../actions'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -31,6 +34,16 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
     collections: initialState,
 
     getCollections: async () => {
+      const config = getApplicationConfig()
+      if (config.nlpSearch === 'true') {
+        const zustandState = get()
+        if (zustandState.query.nlpCollection?.query) {
+          await zustandState.collections.getNlpCollections()
+
+          return
+        }
+      }
+
       const {
         dispatch: reduxDispatch,
         getState: reduxGetState

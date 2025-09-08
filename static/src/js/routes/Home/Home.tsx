@@ -240,7 +240,7 @@ export const Home: React.FC<HomeProps> = ({
                       const encodedKeyword = encodeURIComponent(keyword.trim())
                       const isNlpEnabled = nlpSearch === 'true'
                       const searchUrl = isNlpEnabled
-                        ? `/search?q=${encodedKeyword}&nlp=true`
+                        ? `/search?nlp=${encodedKeyword}`
                         : `/search?q=${encodedKeyword}`
 
                       onChangePath(searchUrl)
