@@ -178,6 +178,26 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
                 spatial: nlpData.spatial
               }
             })
+
+            const spatialName = nlpData.geoLocation || 'NLP Spatial Area'
+            const spatialFeatureCollection = {
+              type: 'FeatureCollection' as const,
+              name: spatialName,
+              features: [{
+                type: 'Feature' as const,
+                properties: {
+                  source: 'nlp',
+                  query: searchQuery,
+                  edscId: '0'
+                },
+                geometry: nlpData.spatial
+              }]
+            }
+
+            zustandState.shapefile.updateShapefile({
+              file: spatialFeatureCollection,
+              shapefileName: spatialName
+            })
           }
 
           if (nlpData.temporal) {

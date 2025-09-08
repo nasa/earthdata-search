@@ -153,30 +153,35 @@ export default class NlpSearchRequest extends CmrRequest {
    */
   transformResponse(response, query) {
     const { data } = response
+    const actualData = data?.data || data
 
-    if (!data || !data.queryInfo) {
+    if (!actualData || !actualData.queryInfo) {
       return {
         query,
         spatial: null,
+        geoLocation: null,
         temporal: null
       }
     }
 
     let spatialData = null
+    let geoLocation = null
     let temporalData = null
 
-    if (data.queryInfo.spatial) {
-      const rawSpatialData = data.queryInfo.spatial
+    if (actualData.queryInfo.spatial) {
+      const rawSpatialData = actualData.queryInfo.spatial
       const actualGeometry = rawSpatialData.geoJson || rawSpatialData
       const simplifiedGeometry = simplifyNlpGeometry(actualGeometry)
 
       if (simplifiedGeometry) {
         spatialData = simplifiedGeometry
       }
+
+      geoLocation = rawSpatialData.geoLocation || null
     }
 
-    if (data.queryInfo.temporal) {
-      const { startDate, endDate } = data.queryInfo.temporal
+    if (actualData.queryInfo.temporal) {
+      const { startDate, endDate } = actualData.queryInfo.temporal
       if (startDate || endDate) {
         temporalData = {
           startDate: startDate ? new Date(startDate).toISOString() : '',
@@ -188,6 +193,7 @@ export default class NlpSearchRequest extends CmrRequest {
     return {
       query,
       spatial: spatialData,
+      geoLocation,
       temporal: temporalData
     }
   }

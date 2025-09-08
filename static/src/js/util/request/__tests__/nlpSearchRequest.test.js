@@ -143,6 +143,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
     expect(result).toEqual({
       query: 'test query',
       spatial: null,
+      geoLocation: null,
       temporal: null
     })
   })
@@ -167,6 +168,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
     expect(result).toEqual({
       query: 'test query',
       spatial: null,
+      geoLocation: null,
       temporal: null
     })
   })
@@ -394,6 +396,7 @@ describe('NlpSearchRequest#transformResponse', () => {
     expect(result).toEqual({
       query: 'test query',
       spatial: null,
+      geoLocation: null,
       temporal: null
     })
   })
@@ -409,6 +412,7 @@ describe('NlpSearchRequest#transformResponse', () => {
     expect(result).toEqual({
       query: 'climate data',
       spatial: null,
+      geoLocation: null,
       temporal: null
     })
   })
@@ -435,6 +439,7 @@ describe('NlpSearchRequest#transformResponse', () => {
     expect(result).toEqual({
       query: 'test query',
       spatial: spatialGeometry,
+      geoLocation: 'Test Location',
       temporal: null
     })
   })
@@ -479,6 +484,7 @@ describe('NlpSearchRequest#transformResponse', () => {
     expect(result).toEqual({
       query: 'temperature data',
       spatial: null,
+      geoLocation: null,
       temporal: {
         startDate: '2020-01-01T00:00:00.000Z',
         endDate: '2020-12-31T23:59:59.999Z'
@@ -514,6 +520,7 @@ describe('NlpSearchRequest#transformResponse', () => {
     expect(result).toEqual({
       query: 'landsat data',
       spatial: spatialGeometry,
+      geoLocation: 'Alaska Region',
       temporal: {
         startDate: '2023-01-01T00:00:00.000Z',
         endDate: '2023-06-30T23:59:59.999Z'
