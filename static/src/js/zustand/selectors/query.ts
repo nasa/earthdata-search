@@ -33,11 +33,36 @@ import {
 } from '../../util/granules'
 // @ts-expect-error The file does not have types
 import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../../util/subscriptions'
+// @ts-expect-error The file does not have types
+import { convertNlpSpatialToQueryFormat } from '../../util/nlpSpatialDataUtils'
 
 /**
- * Retrieve current collection query information
+ * Retrieve current collection query information, merging NLP data when present
  */
-export const getCollectionsQuery = (state: EdscStore) => state.query?.collection || {}
+export const getCollectionsQuery = (state: EdscStore) => {
+  const baseQuery = state.query?.collection || {}
+  const nlpCollection = state.query?.nlpCollection
+
+  if (!nlpCollection) return baseQuery
+
+  const mergedQuery = { ...baseQuery }
+  if (nlpCollection.spatial) {
+    const nlpSpatial = convertNlpSpatialToQueryFormat(nlpCollection.spatial)
+    mergedQuery.spatial = {
+      ...baseQuery.spatial,
+      ...nlpSpatial
+    }
+  }
+
+  if (nlpCollection.temporal) {
+    mergedQuery.temporal = {
+      ...baseQuery.temporal,
+      ...nlpCollection.temporal
+    }
+  }
+
+  return mergedQuery
+}
 
 /**
  * Retrieve current collection spatial information

@@ -171,33 +171,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         if (nlpData.spatial || nlpData.temporal) {
           const zustandState = get()
           zustandState.query.setNlpCollection(nlpData)
-
-          if (nlpData.spatial) {
-            let spatialQuery = {}
-
-            if (nlpData.spatial.type === 'Polygon') {
-              const coordinates = nlpData.spatial.coordinates[0]
-              const polygonString = coordinates.map((coord: [number, number]) => `${coord[0]},${coord[1]}`).join(',')
-              spatialQuery = { polygon: [polygonString] }
-            } else if (nlpData.spatial.type === 'Point') {
-              const [lon, lat] = nlpData.spatial.coordinates
-              spatialQuery = { point: [`${lat},${lon}`] }
-            }
-
-            zustandState.query.changeQuery({
-              collection: {
-                spatial: spatialQuery
-              }
-            })
-          }
-
-          if (nlpData.temporal) {
-            zustandState.query.changeQuery({
-              collection: {
-                temporal: nlpData.temporal
-              }
-            })
-          }
         }
 
         const { data } = response

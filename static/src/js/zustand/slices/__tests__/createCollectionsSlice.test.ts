@@ -394,24 +394,6 @@ describe('createCollectionsSlice', () => {
         }
       })
 
-      expect(mockChangeQuery).toHaveBeenCalledWith({
-        collection: {
-          spatial: {
-            polygon: ['0,0,1,0,1,1,0,1,0,0']
-          }
-        }
-      })
-
-      expect(mockChangeQuery).toHaveBeenCalledWith({
-        collection: {
-          temporal: {
-            startDate: '2023-01-01T00:00:00.000Z',
-            endDate: '2023-12-31T23:59:59.999Z'
-          }
-        }
-      })
-
-
       expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })
 
@@ -466,15 +448,6 @@ describe('createCollectionsSlice', () => {
         geoLocation: 'Point Location',
         temporal: null
       })
-
-      expect(mockChangeQuery).toHaveBeenCalledWith({
-        collection: {
-          spatial: {
-            point: ['0,0']
-          }
-        }
-      })
-
 
       expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })
