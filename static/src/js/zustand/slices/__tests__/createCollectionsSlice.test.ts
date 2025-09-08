@@ -44,7 +44,7 @@ describe('createCollectionsSlice', () => {
         items: []
       },
       getCollections: expect.any(Function),
-      performNlpSearch: expect.any(Function),
+      getNlpCollections: expect.any(Function),
       setCollectionsErrored: expect.any(Function),
       setCollectionsLoaded: expect.any(Function),
       setCollectionsLoading: expect.any(Function)
@@ -320,7 +320,7 @@ describe('createCollectionsSlice', () => {
     })
   })
 
-  describe('performNlpSearch', () => {
+  describe('getNlpCollections', () => {
     beforeEach(() => {
       jest.clearAllMocks()
       nock.cleanAll()
@@ -378,9 +378,9 @@ describe('createCollectionsSlice', () => {
       })
 
       const { collections } = useEdscStore.getState()
-      const { performNlpSearch } = collections
+      const { getNlpCollections } = collections
 
-      await performNlpSearch('test query')
+      await getNlpCollections('test query')
 
       expect(mockSetNlpCollection).toHaveBeenCalledWith({
         query: 'test query',
@@ -454,9 +454,9 @@ describe('createCollectionsSlice', () => {
       })
 
       const { collections } = useEdscStore.getState()
-      const { performNlpSearch } = collections
+      const { getNlpCollections } = collections
 
-      await performNlpSearch('spatial query')
+      await getNlpCollections('spatial query')
 
       expect(mockSetNlpCollection).toHaveBeenCalledWith({
         query: 'spatial query',
@@ -497,15 +497,15 @@ describe('createCollectionsSlice', () => {
       })
 
       const { collections } = useEdscStore.getState()
-      const { performNlpSearch } = collections
+      const { getNlpCollections } = collections
 
-      await performNlpSearch('error query')
+      await getNlpCollections('error query')
 
       expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
       expect(mockSetCollectionsErrored).toHaveBeenCalledWith()
       expect(actions.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
-          action: 'performNlpSearch',
+          action: 'getNlpCollections',
           resource: 'nlpSearch',
           error: expect.any(Error)
         })
@@ -543,9 +543,9 @@ describe('createCollectionsSlice', () => {
       })
 
       const { collections } = useEdscStore.getState()
-      const { performNlpSearch } = collections
+      const { getNlpCollections } = collections
 
-      await performNlpSearch('empty query')
+      await getNlpCollections('empty query')
 
       expect(mockSetNlpCollection).not.toHaveBeenCalled()
       expect(mockSetCollectionsLoaded).toHaveBeenCalledWith([], 0, 1)

@@ -1177,7 +1177,7 @@ describe('changePath', () => {
   })
 
   describe('when NLP search is requested', () => {
-    test('calls collections performNlpSearch action with query parameter', async () => {
+    test('calls collections getNlpCollections action with query parameter', async () => {
       const changeQueryMock = jest.fn()
       const setNlpSearchCompletedMock = jest.fn()
 
@@ -1192,7 +1192,7 @@ describe('changePath', () => {
           nlpSearchCompleted: false
         },
         collections: {
-          performNlpSearch: jest.fn().mockResolvedValue(),
+          getNlpCollections: jest.fn().mockResolvedValue(),
           setCollectionsLoaded: jest.fn(),
           setCollectionsErrored: jest.fn()
         },
@@ -1223,9 +1223,9 @@ describe('changePath', () => {
       consoleErrorSpy.mockRestore()
     })
 
-    test('calls performNlpSearch with correct query', async () => {
+    test('calls getNlpCollections with correct query', async () => {
       const changeQueryMock = jest.fn()
-      const performNlpSearchMock = jest.fn().mockResolvedValue()
+      const getNlpCollectionsMock = jest.fn().mockResolvedValue()
 
       useEdscStore.setState({
         query: {
@@ -1233,7 +1233,7 @@ describe('changePath', () => {
           nlpSearchCompleted: false
         },
         collections: {
-          performNlpSearch: performNlpSearchMock
+          getNlpCollections: getNlpCollectionsMock
         },
         timeline: {
           getTimeline: jest.fn()
@@ -1267,12 +1267,12 @@ describe('changePath', () => {
         skipCollectionSearch: true
       })
 
-      expect(performNlpSearchMock).toHaveBeenCalledWith('test spatial query')
+      expect(getNlpCollectionsMock).toHaveBeenCalledWith('test spatial query')
     })
 
-    test('does not call performNlpSearch when nlpSearch parameter is false', async () => {
+    test('does not call getNlpCollections when nlpSearch parameter is false', async () => {
       const changeQueryMock = jest.fn()
-      const performNlpSearchMock = jest.fn().mockResolvedValue()
+      const getNlpCollectionsMock = jest.fn().mockResolvedValue()
 
       useEdscStore.setState({
         query: {
@@ -1280,7 +1280,7 @@ describe('changePath', () => {
           nlpSearchCompleted: false
         },
         collections: {
-          performNlpSearch: performNlpSearchMock
+          getNlpCollections: getNlpCollectionsMock
         },
         timeline: {
           getTimeline: jest.fn()
@@ -1307,11 +1307,11 @@ describe('changePath', () => {
 
       await store.dispatch(urlQuery.changePath(newPath))
 
-      expect(performNlpSearchMock).not.toHaveBeenCalled()
+      expect(getNlpCollectionsMock).not.toHaveBeenCalled()
     })
 
-    test('does not call performNlpSearch when no query parameter provided', async () => {
-      const performNlpSearchMock = jest.fn().mockResolvedValue()
+    test('does not call getNlpCollections when no query parameter provided', async () => {
+      const getNlpCollectionsMock = jest.fn().mockResolvedValue()
 
       useEdscStore.setState({
         query: {
@@ -1319,7 +1319,7 @@ describe('changePath', () => {
           nlpSearchCompleted: false
         },
         collections: {
-          performNlpSearch: performNlpSearchMock
+          getNlpCollections: getNlpCollectionsMock
         },
         timeline: {
           getTimeline: jest.fn()
@@ -1346,7 +1346,7 @@ describe('changePath', () => {
 
       await store.dispatch(urlQuery.changePath(newPath))
 
-      expect(performNlpSearchMock).not.toHaveBeenCalled()
+      expect(getNlpCollectionsMock).not.toHaveBeenCalled()
     })
   })
 })

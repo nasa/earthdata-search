@@ -64,7 +64,7 @@ export type CollectionsSlice = {
     /** Function to set collections error state */
     setCollectionsErrored: () => void
     /** Function to perform NLP search and process results */
-    performNlpSearch: (searchQuery: string) => Promise<void>
+    getNlpCollections: (searchQuery: string) => Promise<void>
   }
 }
 

@@ -181,7 +181,7 @@ export const changePath = (path = '') => async (dispatch) => {
         skipCollectionSearch: true
       })
 
-      await useEdscStore.getState().collections.performNlpSearch(queryParams.q)
+      await useEdscStore.getState().collections.getNlpCollections(queryParams.q)
 
       decodedParams = decodeUrlParams(queryString)
       if (decodedParams.query && decodedParams.query.collection) {

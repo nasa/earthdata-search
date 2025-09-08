@@ -153,7 +153,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       })
     },
 
-    performNlpSearch: async (searchQuery: string) => {
+    getNlpCollections: async (searchQuery: string) => {
       const {
         dispatch: reduxDispatch,
         getState: reduxGetState
@@ -216,7 +216,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
         reduxDispatch(actions.handleError({
           error,
-          action: 'performNlpSearch',
+          action: 'getNlpCollections',
           resource: 'nlpSearch',
           requestObject: new NlpSearchRequest(reduxState.authToken, earthdataEnvironment)
         }))
