@@ -64,7 +64,7 @@ export type CollectionsSlice = {
     /** Function to set collections error state */
     setCollectionsErrored: () => void
     /** Function to perform NLP search and process results */
-    getNlpCollections: (searchQuery: string) => Promise<void>
+    getNlpCollections: () => Promise<void>
   }
 }
 
@@ -847,12 +847,14 @@ type NlpCollectionQuery = {
   /** The original search query string */
   query: string
   /** The spatial data extracted from NLP */
-  spatial: ShapefileFile | null
+  spatial?: ShapefileFile | null
   /** The temporal data extracted from NLP */
-  temporal: {
+  temporal?: {
     startDate: string
     endDate: string
   } | null
+  /** The location name from NLP */
+  geoLocation?: string | null
 }
 
 /** Parameters for changing the query */

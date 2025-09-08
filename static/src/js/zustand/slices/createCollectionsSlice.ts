@@ -153,7 +153,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       })
     },
 
-    getNlpCollections: async (searchQuery: string) => {
+    getNlpCollections: async () => {
       const {
         dispatch: reduxDispatch,
         getState: reduxGetState
@@ -161,6 +161,10 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       const reduxState = reduxGetState()
 
       const earthdataEnvironment = getEarthdataEnvironment(get())
+      const zustandState = get()
+      const searchQuery = zustandState.query.nlpCollection?.query
+
+      if (!searchQuery) return
 
       try {
         const nlpRequest = new NlpSearchRequest(reduxState.authToken, earthdataEnvironment)
@@ -169,8 +173,8 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         const nlpData = nlpRequest.transformResponse(response, searchQuery)
 
         if (nlpData.spatial || nlpData.temporal) {
-          const zustandState = get()
-          zustandState.query.setNlpCollection(nlpData)
+          const currentState = get()
+          currentState.query.setNlpCollection(nlpData)
         }
 
         const { data } = response
@@ -178,14 +182,14 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         const { feed = {} } = metadata
         const { entry: collections = [] } = feed
 
-        const zustandState = get()
-        zustandState.collections.setCollectionsLoaded(collections, collections.length, 1)
+        const currentState = get()
+        currentState.collections.setCollectionsLoaded(collections, collections.length, 1)
 
-        zustandState.query.setNlpSearchCompleted(true)
+        currentState.query.setNlpSearchCompleted(true)
       } catch (error) {
-        const zustandState = get()
-        zustandState.query.setNlpSearchCompleted(true)
-        zustandState.collections.setCollectionsErrored()
+        const errorState = get()
+        errorState.query.setNlpSearchCompleted(true)
+        errorState.collections.setCollectionsErrored()
 
         reduxDispatch(actions.handleError({
           error,

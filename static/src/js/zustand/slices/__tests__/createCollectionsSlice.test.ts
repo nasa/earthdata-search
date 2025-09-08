@@ -375,12 +375,13 @@ describe('createCollectionsSlice', () => {
         state.query.setNlpCollection = mockSetNlpCollection
         state.query.changeQuery = mockChangeQuery
         state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
+        state.query.nlpCollection = { query: 'test query' }
       })
 
       const { collections } = useEdscStore.getState()
       const { getNlpCollections } = collections
 
-      await getNlpCollections('test query')
+      await getNlpCollections()
 
       expect(mockSetNlpCollection).toHaveBeenCalledWith({
         query: 'test query',
@@ -433,12 +434,13 @@ describe('createCollectionsSlice', () => {
         state.query.setNlpCollection = mockSetNlpCollection
         state.query.changeQuery = mockChangeQuery
         state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
+        state.query.nlpCollection = { query: 'spatial query' }
       })
 
       const { collections } = useEdscStore.getState()
       const { getNlpCollections } = collections
 
-      await getNlpCollections('spatial query')
+      await getNlpCollections()
 
       expect(mockSetNlpCollection).toHaveBeenCalledWith({
         query: 'spatial query',
@@ -467,12 +469,13 @@ describe('createCollectionsSlice', () => {
       useEdscStore.setState((state) => {
         state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
         state.collections.setCollectionsErrored = mockSetCollectionsErrored
+        state.query.nlpCollection = { query: 'error query' }
       })
 
       const { collections } = useEdscStore.getState()
       const { getNlpCollections } = collections
 
-      await getNlpCollections('error query')
+      await getNlpCollections()
 
       expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
       expect(mockSetCollectionsErrored).toHaveBeenCalledWith()
@@ -513,12 +516,13 @@ describe('createCollectionsSlice', () => {
         state.query.setNlpCollection = mockSetNlpCollection
         state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
         state.collections.setCollectionsLoaded = mockSetCollectionsLoaded
+        state.query.nlpCollection = { query: 'empty query' }
       })
 
       const { collections } = useEdscStore.getState()
       const { getNlpCollections } = collections
 
-      await getNlpCollections('empty query')
+      await getNlpCollections()
 
       expect(mockSetNlpCollection).not.toHaveBeenCalled()
       expect(mockSetCollectionsLoaded).toHaveBeenCalledWith([], 0, 1)

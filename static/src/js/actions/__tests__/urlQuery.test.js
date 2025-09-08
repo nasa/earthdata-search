@@ -1226,10 +1226,12 @@ describe('changePath', () => {
     test('calls getNlpCollections with correct query', async () => {
       const changeQueryMock = jest.fn()
       const getNlpCollectionsMock = jest.fn().mockResolvedValue()
+      const setNlpCollectionMock = jest.fn()
 
       useEdscStore.setState({
         query: {
           changeQuery: changeQueryMock,
+          setNlpCollection: setNlpCollectionMock,
           nlpSearchCompleted: false
         },
         collections: {
@@ -1267,7 +1269,8 @@ describe('changePath', () => {
         skipCollectionSearch: true
       })
 
-      expect(getNlpCollectionsMock).toHaveBeenCalledWith('test spatial query')
+      expect(setNlpCollectionMock).toHaveBeenCalledWith({ query: 'test spatial query' })
+      expect(getNlpCollectionsMock).toHaveBeenCalledWith()
     })
 
     test('does not call getNlpCollections when nlpSearch parameter is false', async () => {
