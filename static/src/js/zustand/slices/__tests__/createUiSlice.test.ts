@@ -8,7 +8,9 @@ describe('createUiSlice', () => {
     expect(ui).toEqual({
       panels: {
         panelsWidth: 0,
-        setPanelsWidth: expect.any(Function)
+        setPanelsWidth: expect.any(Function),
+        sidebarWidth: 0,
+        setSidebarWidth: expect.any(Function)
       },
       tour: {
         runTour: false,
@@ -31,6 +33,21 @@ describe('createUiSlice', () => {
         const { ui: updatedUi } = updatedState
         const { panels: updatedPanels } = updatedUi
         expect(updatedPanels.panelsWidth).toBe(100)
+      })
+    })
+
+    describe('setSidebarWidth', () => {
+      test('updates sidebarWidth', () => {
+        const zustandState = useEdscStore.getState()
+        const { ui } = zustandState
+        const { panels } = ui
+        const { setSidebarWidth } = panels
+        setSidebarWidth(100)
+
+        const updatedState = useEdscStore.getState()
+        const { ui: updatedUi } = updatedState
+        const { panels: updatedPanels } = updatedUi
+        expect(updatedPanels.sidebarWidth).toBe(100)
       })
     })
   })

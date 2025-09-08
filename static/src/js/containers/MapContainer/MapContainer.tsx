@@ -150,6 +150,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     polygon: polygonSearch
   } = spatialQuery
   const {
+    panelsWidth,
+    sidebarWidth,
     map: mapProps,
     onChangeMap,
     onChangeQuery,
@@ -164,6 +166,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     showMbr,
     startDrawing
   } = useEdscStore((state) => ({
+    panelsWidth: state.ui.panels.panelsWidth,
+    sidebarWidth: state.ui.panels.sidebarWidth,
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
     onChangeQuery: state.query.changeQuery,
@@ -529,6 +533,9 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   ])
 
   const memoizedShapefile = useMemo(() => shapefile, [shapefile])
+
+  // If the panels or sidebar are not visible, don't render the map
+  if (panelsWidth === 0 || sidebarWidth === 0) return null
 
   return (
     <Map

@@ -5,7 +5,6 @@ import {
   waitFor,
   within
 } from '@testing-library/react'
-import ResizeObserver from 'resize-observer-polyfill'
 
 import AccessMethod from '../AccessMethod'
 import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
@@ -15,18 +14,9 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import EchoForm from '../EchoForm'
 import { echoForm, rawModel } from './mocks'
 
-beforeEach(() => {
-  global.ResizeObserver = ResizeObserver
-})
-
 jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn().mockImplementation(
   jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio
 ))
-
-afterEach(() => {
-  // Don't share global state between the tests
-  delete global.ResizeObserver
-})
 
 // Mock the Swodlr max value so the mock objects don't get so large in the tests
 jest.mock('../../../constants/swodlrConstants', () => ({

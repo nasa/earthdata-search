@@ -221,7 +221,6 @@
     "redux-thunk": "^2.4.1",
     "regenerator-runtime": "^0.13.9",
     "reselect": "^4.1.5",
-    "resize-observer-polyfill": "^1.5.1",
     "sanitize-html": "^2.7.0",
     "sass": "^1.83.4",
     "scatter-swap": "^0.1.0",

@@ -16,19 +16,6 @@ import routerHelper from '../../router/router'
 
 import './Panels.scss'
 
-// Returns the width of the sidebar
-const getSidebarWidth = () => {
-  const sidebar = document.querySelector('.sidebar')
-
-  if (sidebar) {
-    const width = sidebar.offsetWidth
-
-    return width
-  }
-
-  return 0
-}
-
 export class Panels extends PureComponent {
   constructor(props) {
     super(props)
@@ -99,8 +86,7 @@ export class Panels extends PureComponent {
     const { ui } = zustandState
     const { panels } = ui
     const { setPanelsWidth } = panels
-    const width = this.width + getSidebarWidth()
-    setPanelsWidth(width)
+    setPanelsWidth(this.width)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -159,8 +145,7 @@ export class Panels extends PureComponent {
     const { ui } = zustandState
     const { panels } = ui
     const { setPanelsWidth } = panels
-    const width = this.width + getSidebarWidth()
-    setPanelsWidth(width)
+    setPanelsWidth(this.width)
   }
 
   componentWillUnmount() {
@@ -213,7 +198,7 @@ export class Panels extends PureComponent {
       const { ui } = zustandState
       const { panels } = ui
       const { setPanelsWidth } = panels
-      setPanelsWidth(getSidebarWidth() + panelWidth)
+      setPanelsWidth(panelWidth)
     }
 
     triggerKeyboardShortcut({
@@ -284,7 +269,7 @@ export class Panels extends PureComponent {
       const currentWidth = this.width
       const panelWidth = show ? 0 : currentWidth
 
-      setPanelsWidth(getSidebarWidth() + panelWidth)
+      setPanelsWidth(panelWidth)
     } else {
       this.setState({
         handleToolipVisible: false
@@ -458,7 +443,7 @@ export class Panels extends PureComponent {
       // This ensures the panel width is correct if they overdrag the panel but don't collapse it, or overdrag
       // the panel past their browser to the right.
       const finalPanelWidth = Math.min(Math.max(minWidth, newWidth), maxWidth)
-      setPanelsWidth(getSidebarWidth() + (panelShouldClose ? 0 : finalPanelWidth))
+      setPanelsWidth(panelShouldClose ? 0 : finalPanelWidth)
 
       if (panelShouldClose) {
         this.setState({

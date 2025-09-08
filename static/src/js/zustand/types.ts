@@ -1016,6 +1016,10 @@ export type UiSlice = {
       panelsWidth: number
       /** Function to set the panelsWidth value */
       setPanelsWidth: (panelsWidth: number) => void
+      /** The width of the sidebar */
+      sidebarWidth: number
+      /** Function to set the sidebarWidth value */
+      setSidebarWidth: (sidebarWidth: number) => void
     }
     tour: {
       /** Flag to show the tour */

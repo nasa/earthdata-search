@@ -8,6 +8,12 @@ const createUiSlice: ImmerStateCreator<UiSlice> = (set) => ({
         set((state) => {
           state.ui.panels.panelsWidth = panelsWidth
         })
+      },
+      sidebarWidth: 0,
+      setSidebarWidth: (sidebarWidth) => {
+        set((state) => {
+          state.ui.panels.sidebarWidth = sidebarWidth
+        })
       }
     },
     tour: {
