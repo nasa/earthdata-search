@@ -199,4 +199,13 @@ describe('Home', () => {
     expect(screen.getByTestId('spatial-selection-dropdown')).toBeInTheDocument()
     expect(screen.getByTestId('temporal-selection-dropdown')).toBeInTheDocument()
   })
+
+  test('navigates to /search when form is submitted with empty keyword', async () => {
+    const { props, user } = setup()
+
+    await user.click(screen.getByRole('button', { name: /search/i }))
+
+    expect(props.onChangePath).toHaveBeenCalledWith('/search')
+    expect(useHistory().push).toHaveBeenCalledWith('/search')
+  })
 })
