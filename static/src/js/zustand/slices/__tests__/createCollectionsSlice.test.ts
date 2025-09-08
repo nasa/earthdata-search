@@ -45,8 +45,6 @@ describe('createCollectionsSlice', () => {
       },
       getCollections: expect.any(Function),
       getNlpCollections: expect.any(Function),
-      setCollectionsErrored: expect.any(Function),
-      setCollectionsLoaded: expect.any(Function),
       setCollectionsLoading: expect.any(Function)
     })
   })
@@ -263,61 +261,6 @@ describe('createCollectionsSlice', () => {
       expect(secondUpdate.collections.isLoading).toBe(true)
       expect(secondUpdate.collections.items).toEqual([])
     })
-
-    test('setCollectionsLoaded updates state correctly', () => {
-      const mockItems1 = [{
-        conceptId: 'C1000000001-EDSC',
-        id: '1',
-        title: 'Collection 1'
-      }]
-      const mockItems2 = [{
-        conceptId: 'C1000000002-EDSC',
-        id: '2',
-        title: 'Collection 2'
-      }]
-
-      useEdscStore.setState((state) => {
-        state.collections.collections.isLoaded = false
-        state.collections.collections.isLoading = true
-        state.collections.collections.count = 0
-        state.collections.collections.items = []
-      })
-
-      const { collections } = useEdscStore.getState()
-      const { setCollectionsLoaded } = collections
-
-      setCollectionsLoaded(mockItems1, 5, 1)
-
-      const { collections: firstUpdate } = useEdscStore.getState()
-      expect(firstUpdate.collections.isLoaded).toBe(true)
-      expect(firstUpdate.collections.isLoading).toBe(false)
-      expect(firstUpdate.collections.count).toBe(5)
-      expect(firstUpdate.collections.items).toEqual(mockItems1)
-
-      setCollectionsLoaded(mockItems2, 10, 2)
-
-      const { collections: secondUpdate } = useEdscStore.getState()
-      expect(secondUpdate.collections.isLoaded).toBe(true)
-      expect(secondUpdate.collections.isLoading).toBe(false)
-      expect(secondUpdate.collections.count).toBe(10)
-      expect(secondUpdate.collections.items).toEqual([...mockItems1, ...mockItems2])
-    })
-
-    test('setCollectionsErrored sets error state', () => {
-      useEdscStore.setState((state) => {
-        state.collections.collections.isLoaded = true
-        state.collections.collections.isLoading = true
-      })
-
-      const { collections } = useEdscStore.getState()
-      const { setCollectionsErrored } = collections
-
-      setCollectionsErrored()
-
-      const { collections: updatedCollections } = useEdscStore.getState()
-      expect(updatedCollections.collections.isLoading).toBe(false)
-      expect(updatedCollections.collections.isLoaded).toBe(false)
-    })
   })
 
   describe('getNlpCollections', () => {
@@ -464,11 +407,9 @@ describe('createCollectionsSlice', () => {
       })
 
       const mockSetNlpSearchCompleted = jest.fn()
-      const mockSetCollectionsErrored = jest.fn()
 
       useEdscStore.setState((state) => {
         state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
-        state.collections.setCollectionsErrored = mockSetCollectionsErrored
         state.query.nlpCollection = { query: 'error query' }
       })
 
@@ -478,7 +419,6 @@ describe('createCollectionsSlice', () => {
       await getNlpCollections()
 
       expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
-      expect(mockSetCollectionsErrored).toHaveBeenCalledWith()
       expect(actions.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
           action: 'getNlpCollections',
@@ -510,12 +450,10 @@ describe('createCollectionsSlice', () => {
 
       const mockSetNlpCollection = jest.fn()
       const mockSetNlpSearchCompleted = jest.fn()
-      const mockSetCollectionsLoaded = jest.fn()
 
       useEdscStore.setState((state) => {
         state.query.setNlpCollection = mockSetNlpCollection
         state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
-        state.collections.setCollectionsLoaded = mockSetCollectionsLoaded
         state.query.nlpCollection = { query: 'empty query' }
       })
 
@@ -525,7 +463,6 @@ describe('createCollectionsSlice', () => {
       await getNlpCollections()
 
       expect(mockSetNlpCollection).not.toHaveBeenCalled()
-      expect(mockSetCollectionsLoaded).toHaveBeenCalledWith([], 0, 1)
       expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })
   })

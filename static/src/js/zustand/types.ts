@@ -59,10 +59,6 @@ export type CollectionsSlice = {
     getCollections: () => void
     /** Function to set collections loading state */
     setCollectionsLoading: (pageNum: number) => void
-    /** Function to set collections loaded state with data */
-    setCollectionsLoaded: (items: CollectionMetadata[], count: number, pageNum: number) => void
-    /** Function to set collections error state */
-    setCollectionsErrored: () => void
     /** Function to perform NLP search and process results */
     getNlpCollections: () => Promise<void>
   }

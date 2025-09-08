@@ -1,6 +1,5 @@
 import { CancelTokenSource, isCancel } from 'axios'
 import { CollectionsSlice, ImmerStateCreator } from '../types'
-import { CollectionMetadata } from '../../types/sharedTypes'
 
 // @ts-expect-error There are no types for this file
 import configureStore from '../../store/configureStore'
@@ -133,26 +132,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       })
     },
 
-    setCollectionsLoaded: (items: CollectionMetadata[], count: number, pageNum: number) => {
-      set((state) => {
-        state.collections.collections.isLoaded = true
-        state.collections.collections.isLoading = false
-        state.collections.collections.count = count
-        if (pageNum === 1) {
-          state.collections.collections.items = items
-        } else {
-          state.collections.collections.items = state.collections.collections.items.concat(items)
-        }
-      })
-    },
-
-    setCollectionsErrored: () => {
-      set((state) => {
-        state.collections.collections.isLoading = false
-        state.collections.collections.isLoaded = false
-      })
-    },
-
     getNlpCollections: async () => {
       const {
         dispatch: reduxDispatch,
@@ -182,14 +161,23 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         const { feed = {} } = metadata
         const { entry: collections = [] } = feed
 
-        const currentState = get()
-        currentState.collections.setCollectionsLoaded(collections, collections.length, 1)
+        set((state) => {
+          state.collections.collections.isLoaded = true
+          state.collections.collections.isLoading = false
+          state.collections.collections.count = collections.length
+          state.collections.collections.items = collections
+        })
 
+        const currentState = get()
         currentState.query.setNlpSearchCompleted(true)
       } catch (error) {
+        set((state) => {
+          state.collections.collections.isLoading = false
+          state.collections.collections.isLoaded = false
+        })
+
         const errorState = get()
         errorState.query.setNlpSearchCompleted(true)
-        errorState.collections.setCollectionsErrored()
 
         reduxDispatch(actions.handleError({
           error,

@@ -1192,9 +1192,7 @@ describe('changePath', () => {
           nlpSearchCompleted: false
         },
         collections: {
-          getNlpCollections: jest.fn().mockResolvedValue(),
-          setCollectionsLoaded: jest.fn(),
-          setCollectionsErrored: jest.fn()
+          getNlpCollections: jest.fn().mockResolvedValue()
         },
         timeline: {
           getTimeline: jest.fn()
