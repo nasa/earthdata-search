@@ -370,13 +370,11 @@ describe('createCollectionsSlice', () => {
       const mockSetNlpCollection = jest.fn()
       const mockChangeQuery = jest.fn()
       const mockSetNlpSearchCompleted = jest.fn()
-      const mockUpdateShapefile = jest.fn()
 
       useEdscStore.setState((state) => {
         state.query.setNlpCollection = mockSetNlpCollection
         state.query.changeQuery = mockChangeQuery
         state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
-        state.shapefile.updateShapefile = mockUpdateShapefile
       })
 
       const { collections } = useEdscStore.getState()
@@ -398,9 +396,9 @@ describe('createCollectionsSlice', () => {
 
       expect(mockChangeQuery).toHaveBeenCalledWith({
         collection: {
-          spatial: expect.objectContaining({
-            type: 'Polygon'
-          })
+          spatial: {
+            polygon: ['0,0,1,0,1,1,0,1,0,0']
+          }
         }
       })
 
@@ -413,23 +411,6 @@ describe('createCollectionsSlice', () => {
         }
       })
 
-      expect(mockUpdateShapefile).toHaveBeenCalledWith({
-        file: expect.objectContaining({
-          type: 'FeatureCollection',
-          name: 'Test Area',
-          features: [expect.objectContaining({
-            type: 'Feature',
-            properties: expect.objectContaining({
-              source: 'nlp',
-              query: 'test query'
-            }),
-            geometry: expect.objectContaining({
-              type: 'Polygon'
-            })
-          })]
-        }),
-        shapefileName: 'Test Area'
-      })
 
       expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })
@@ -465,13 +446,11 @@ describe('createCollectionsSlice', () => {
       const mockSetNlpCollection = jest.fn()
       const mockChangeQuery = jest.fn()
       const mockSetNlpSearchCompleted = jest.fn()
-      const mockUpdateShapefile = jest.fn()
 
       useEdscStore.setState((state) => {
         state.query.setNlpCollection = mockSetNlpCollection
         state.query.changeQuery = mockChangeQuery
         state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
-        state.shapefile.updateShapefile = mockUpdateShapefile
       })
 
       const { collections } = useEdscStore.getState()
@@ -490,29 +469,12 @@ describe('createCollectionsSlice', () => {
 
       expect(mockChangeQuery).toHaveBeenCalledWith({
         collection: {
-          spatial: expect.objectContaining({
-            type: 'Point'
-          })
+          spatial: {
+            point: ['0,0']
+          }
         }
       })
 
-      expect(mockUpdateShapefile).toHaveBeenCalledWith({
-        file: expect.objectContaining({
-          type: 'FeatureCollection',
-          name: 'Point Location',
-          features: [expect.objectContaining({
-            type: 'Feature',
-            properties: expect.objectContaining({
-              source: 'nlp',
-              query: 'spatial query'
-            }),
-            geometry: expect.objectContaining({
-              type: 'Point'
-            })
-          })]
-        }),
-        shapefileName: 'Point Location'
-      })
 
       expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })

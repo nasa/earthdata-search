@@ -43,10 +43,12 @@ const SpatialDisplay = ({
 }) => {
   const {
     changeQuery,
-    removeSpatialFilter
+    removeSpatialFilter,
+    nlpCollection
   } = useEdscStore((state) => ({
     changeQuery: state.query.changeQuery,
-    removeSpatialFilter: state.query.removeSpatialFilter
+    removeSpatialFilter: state.query.removeSpatialFilter,
+    nlpCollection: state.query.nlpCollection
   }))
   const spatialQuery = useEdscStore(getCollectionsQuerySpatial)
   const {
@@ -453,7 +455,6 @@ const SpatialDisplay = ({
       spatialError = message
     }
 
-    // Determine title based on source - NLP spatial data vs uploaded shapefile
     const isNlpSpatial = shapefile.file?.features?.[0]?.properties?.source === 'nlp'
     const spatialTitle = isNlpSpatial ? 'Search Area' : 'Shape File'
     secondaryTitle = spatialTitle
@@ -676,6 +677,11 @@ const SpatialDisplay = ({
     const pointArray = currentPolygonSearch.length ? currentPolygonSearch[0].split(',') : []
     const pointCount = (pointArray.length / 2) - 1
 
+    const isNlpPolygon = nlpCollection && nlpCollection.spatial && nlpCollection.geoLocation
+    const polygonDisplayText = isNlpPolygon
+      ? nlpCollection.geoLocation
+      : `${pointCount} ${pluralize('Point', pointCount)}`
+
     entry = (
       <SpatialDisplayEntry>
         {
@@ -685,7 +691,7 @@ const SpatialDisplay = ({
                 className="spatial-display__text-primary"
                 data-testid="spatial-display_polygon"
               >
-                {`${pointCount} ${pluralize('Point', pointCount)}`}
+                {polygonDisplayText}
               </span>
             </Row>
           )

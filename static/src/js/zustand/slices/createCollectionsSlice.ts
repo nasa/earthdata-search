@@ -173,30 +173,21 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           zustandState.query.setNlpCollection(nlpData)
 
           if (nlpData.spatial) {
-            zustandState.query.changeQuery({
-              collection: {
-                spatial: nlpData.spatial
-              }
-            })
+            let spatialQuery = {}
 
-            const spatialName = nlpData.geoLocation || 'NLP Spatial Area'
-            const spatialFeatureCollection = {
-              type: 'FeatureCollection' as const,
-              name: spatialName,
-              features: [{
-                type: 'Feature' as const,
-                properties: {
-                  source: 'nlp',
-                  query: searchQuery,
-                  edscId: '0'
-                },
-                geometry: nlpData.spatial
-              }]
+            if (nlpData.spatial.type === 'Polygon') {
+              const coordinates = nlpData.spatial.coordinates[0]
+              const polygonString = coordinates.map((coord: [number, number]) => `${coord[0]},${coord[1]}`).join(',')
+              spatialQuery = { polygon: [polygonString] }
+            } else if (nlpData.spatial.type === 'Point') {
+              const [lon, lat] = nlpData.spatial.coordinates
+              spatialQuery = { point: [`${lat},${lon}`] }
             }
 
-            zustandState.shapefile.updateShapefile({
-              file: spatialFeatureCollection,
-              shapefileName: spatialName
+            zustandState.query.changeQuery({
+              collection: {
+                spatial: spatialQuery
+              }
             })
           }
 

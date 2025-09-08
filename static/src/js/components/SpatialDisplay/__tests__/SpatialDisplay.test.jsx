@@ -171,6 +171,43 @@ describe('SpatialDisplay component', () => {
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')).toHaveLength(1)
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')[0]).toBeVisible()
     })
+
+    test('should display NLP geoLocation name instead of point count for NLP polygons', () => {
+      const newPolygon = '-77.04444122314453,38.99228142151045,'
+        + '-77.01992797851562,38.79166886339155,'
+        + '-76.89415168762207,38.902629947921575,'
+        + '-77.04444122314453,38.99228142151045'
+
+      setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                polygon: [newPolygon]
+              }
+            },
+            nlpCollection: {
+              spatial: {
+                type: 'Polygon',
+                coordinates: [
+                  [
+                    [-77.04444122314, 38.99228142151],
+                    [-77.01992797851, 38.79166886339],
+                    [-76.89415168762, 38.90262994792],
+                    [-77.04444122314, 38.99228142151]
+                  ]
+                ]
+              },
+              geoLocation: 'Texas'
+            }
+          }
+        }
+      })
+
+      expect(screen.queryAllByText('Texas')).toHaveLength(1)
+      expect(screen.queryAllByText('Texas')[0]).toBeVisible()
+      expect(screen.getAllByTestId('spatial-display_polygon')[0].innerHTML).toEqual('Texas')
+    })
   })
 
   describe('with polygonSearch and displaySpatialPolygonWarning', () => {
