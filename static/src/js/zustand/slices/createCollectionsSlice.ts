@@ -34,14 +34,10 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
     collections: initialState,
 
     getCollections: async () => {
-      const config = getApplicationConfig()
-      if (config.nlpSearch === 'true') {
-        const zustandState = get()
-        if (zustandState.query.nlpCollection?.query) {
-          await zustandState.collections.getNlpCollections()
-
-          return
-        }
+      const zustandState = get()
+      if (zustandState.query.nlpCollection) {
+        await zustandState.collections.getNlpCollections()
+        return
       }
 
       const {
