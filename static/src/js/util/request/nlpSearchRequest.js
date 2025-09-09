@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { pick } from 'lodash-es'
-import { booleanClockwise, simplify } from '@turf/turf'
+import simplifyGeoJsonGeometry from '../geometry/simplifyGeoJson'
 
 import CmrRequest from './cmrRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
-import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 
 /**
  * Simplifies NLP geometry if it has too many points using Turf.js
@@ -12,64 +11,10 @@ import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
  * @returns {Object | null} Simplified geometry or null if simplification failed
  */
 const simplifyNlpGeometry = (geometry) => {
-  if (!geometry || !geometry.type) {
-    return null
-  }
+  if (!geometry || !geometry.type) return null
+  if (geometry.type === 'Point') return geometry
 
-  if (geometry.type === 'Point') {
-    return geometry
-  }
-
-  const coords = geometry.coordinates
-
-  if (!coords) return geometry
-
-  const coordsToCheck = geometry.type === 'Polygon' ? coords[0] : coords
-  const coordinateCount = Array.isArray(coordsToCheck) ? coordsToCheck.length : 0
-
-  if (coordinateCount > MAX_POLYGON_SIZE) {
-    let simplified = geometry
-    let tolerance = 0.001
-
-    for (let attempts = 0; attempts < 10; attempts += 1) {
-      try {
-        simplified = simplify(geometry, {
-          tolerance,
-          highQuality: false
-        })
-
-        const simplifiedCoords = simplified.type === 'Polygon'
-          ? simplified.coordinates[0]
-          : simplified.coordinates
-        const simplifiedCount = Array.isArray(simplifiedCoords) ? simplifiedCoords.length : 0
-
-        if (simplifiedCount <= MAX_POLYGON_SIZE) {
-          // Ensure clockwise winding for polygons
-          if (simplified.type === 'Polygon') {
-            const isClockwise = booleanClockwise(simplified.coordinates[0])
-
-            if (!isClockwise) {
-              simplified.coordinates[0] = simplified.coordinates[0].reverse()
-            }
-          }
-
-          return simplified
-        }
-
-        tolerance *= 2
-      } catch (error) {
-        console.warn('Error simplifying geometry:', error)
-
-        return geometry
-      }
-    }
-
-    console.warn('Could not simplify geometry below max polygon size')
-
-    return geometry
-  }
-
-  return geometry
+  return simplifyGeoJsonGeometry(geometry)
 }
 
 /**
@@ -97,7 +42,7 @@ export default class NlpSearchRequest extends CmrRequest {
   }
 
   /**
-   * Override get method to make completely simple request (no CORS preflight)
+   * Override get method to make a simple request
    * @param {String} url - URL to request
    * @param {Object} params - Query parameters
    */
@@ -134,7 +79,7 @@ export default class NlpSearchRequest extends CmrRequest {
 
   /**
    * Defines the default keys that our API endpoints allow.
-   * NLP API expects camelCase parameters, unlike traditional CMR endpoints
+   * NLP API expects camelCase parameters, unlike standard CMR endpoints
    * @return {Array} Array of permitted CMR keys for NLP search
    */
   permittedCmrKeys() {
