@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { pick } from 'lodash-es'
-import simplifyGeoJsonGeometry from '../geometry/simplifyGeoJson'
+import simplifySpatialGeometry from '../geometry/simplifySpatial'
 
 import CmrRequest from './cmrRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
@@ -14,7 +14,7 @@ const simplifyNlpGeometry = (geometry) => {
   if (!geometry || !geometry.type) return null
   if (geometry.type === 'Point') return geometry
 
-  return simplifyGeoJsonGeometry(geometry)
+  return simplifySpatialGeometry(geometry)
 }
 
 /**
