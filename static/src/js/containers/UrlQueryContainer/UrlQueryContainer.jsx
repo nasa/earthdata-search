@@ -1,8 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useLocation } from 'react-router-dom'
@@ -43,7 +39,6 @@ export const UrlQueryContainer = (props) => {
   } = location
 
   const [currentPath, setCurrentPath] = useState('')
-  const previousSearch = useRef(search)
 
   const zustandValues = useEdscStore((state) => ({
     collectionsMetadata: getCollectionsMetadata(state),
@@ -109,40 +104,28 @@ export const UrlQueryContainer = (props) => {
     temporalSearch
   }
 
+  // When the page loads, call onChangePath to load the values from the URL
   useEffect(() => {
     onChangePath([pathname, search].filter(Boolean).join(''))
   }, [])
 
-  // This useEffect gets triggered twice. The first time is when a zustand value changes,
-  // meaning the URL should be encoded and updated. The second time is when the search
-  // value changes, which happens after the URL has been updated.
-  // If I take the check for search out of the dependency array, do I even need to do it?
+  // When the Zustand state changes, encode the values and call onChangeUrl to update the URL
   useEffect(() => {
-    // The only time the search prop changes is after the URL has been updated
-    // So we only need to worry about encoding the query and updating the URL
-    // if the previous search and next search are the same
-    if (
-      previousSearch.current === search
-    ) {
-      const nextPath = encodeUrlQuery({
-        ...combinedZustandValues,
-        pathname
-      })
+    const nextPath = encodeUrlQuery({
+      ...combinedZustandValues,
+      pathname
+    })
 
-      if (currentPath !== nextPath) {
-        setCurrentPath(nextPath)
+    if (currentPath !== nextPath) {
+      setCurrentPath(nextPath)
 
-        if (nextPath !== '') {
-          onChangeUrl(nextPath)
-        }
+      if (nextPath !== '') {
+        onChangeUrl(nextPath)
       }
     }
-
-    previousSearch.current = search
   }, [
-    pathname,
-    search,
-    combinedZustandValues
+    combinedZustandValues,
+    pathname
   ])
 
   return children

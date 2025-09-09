@@ -25,7 +25,8 @@ const Sidebar = ({
     // Use ResizeObserver to detect changes in the size of the observedElementRef (the sidebar)
     const observer = new ResizeObserver((entries) => {
       entries.forEach((entry) => {
-        setSidebarWidth(entry.contentRect.width)
+        const { target } = entry
+        setSidebarWidth(target.getBoundingClientRect().width)
       })
     })
 

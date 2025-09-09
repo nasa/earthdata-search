@@ -37,6 +37,22 @@ const setup = setupTest({
 })
 
 describe('GranuleResultsFocusedMeta component', () => {
+  describe('when there is no focused granule', () => {
+    test('should not render', () => {
+      setup({
+        overrideZustandState: {
+          granule: {
+            granuleId: null
+          }
+        }
+      })
+
+      const focusedMeta = screen.queryByTestId('granule-results-focused-meta-overlay-wrapper')
+
+      expect(focusedMeta).not.toBeInTheDocument()
+    })
+  })
+
   describe('when no links are provided', () => {
     test('should not render', () => {
       setup()

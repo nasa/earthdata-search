@@ -53,6 +53,8 @@ const GranuleResultsFocusedMeta = ({
   const [showModalImageSelectionPopover, setShowModalImageSelectionPopover] = useState(false)
   const [hideTitleTooltip, setHideTitleTooltip] = useState(false)
 
+  if (!focusedGranuleId) return null
+
   // Filter the links on the granule to find all browse links with an http/https protocol. This filters
   // any S3 browse links which cause protocol issues.
   const browseThumbnails = links.filter((link) => isLinkBrowse(link))
@@ -261,9 +263,7 @@ const GranuleResultsFocusedMeta = ({
       >
         <div data-testid="granule-results-focused-meta-overlay-wrapper">
           {
-            // Focused granule id is used here to prevent a bug that surfaced with loading new focused granules.
-            // The value in the store is becoming unset momentarily when focusing new granules.
-            (focusedGranuleId && !!browseThumbnails.length && browseFlag) && (
+            (!!browseThumbnails.length && browseFlag) && (
               <div className="granule-results-focused-meta" data-testid="granule-results-focused-meta">
                 <div className="granule-results-focused-meta__secondary-actions">
                   <Button
