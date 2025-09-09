@@ -1016,15 +1016,19 @@ const Map: React.FC<MapProps> = ({
 
   // When the spatial search changes, draw the spatial search
   useEffect(() => {
+    if (nlpCollection?.spatial?.geoJson) {
+      return
+    }
+
     drawSpatialSearch({
       projectionCode,
       spatialSearch,
       vectorSource: spatialDrawingSource
     })
-  }, [spatialSearch])
+  }, [spatialSearch, nlpCollection])
 
   useEffect(() => {
-    if (nlpCollection && nlpCollection.spatial && nlpCollection.spatial.geoJson) {
+    if (nlpCollection?.spatial?.geoJson) {
       const { geoJson, geoLocation } = nlpCollection.spatial
 
       const featureCollection = {
