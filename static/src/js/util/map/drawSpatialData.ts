@@ -181,4 +181,116 @@ const drawSpatialData = ({
   }
 }
 
+/**
+ * Draws NLP spatial data on the map with simplified functionality
+ * @param {Object} params - Drawing parameters
+ */
+export const drawNlpSpatialData = ({
+  spatialData,
+  spatialDataAdded,
+  projectionCode,
+  vectorSource,
+  onChangeProjection
+}: {
+  /** The NLP spatial data to draw */
+  spatialData: ShapefileFile
+  /** If the spatial data was just added */
+  spatialDataAdded: boolean
+  /** The current map projection */
+  projectionCode: keyof typeof crsProjections
+  /** The source to draw the spatial data on */
+  vectorSource: VectorSource
+  /** Optional callback to update the map projection */
+  onChangeProjection?: (newProjectionCode: ProjectionCode) => void
+}) => {
+  vectorSource.clear()
+
+  const features = new GeoJSON().readFeatures(spatialData)
+  if (!features.length) return
+
+  features.forEach((feature) => {
+    feature.set('isSpatialData', true)
+    feature.set('projectionCode', projectionCodes.geographic)
+
+    const geometry: SimpleGeometry = feature.getGeometry() as SimpleGeometry
+    const geometryType = geometry?.getType()
+    const radius = feature.get('radius')
+
+    feature.set('geographicCoordinates', (geometry as Polygon).getCoordinates(true))
+
+    let geometryInProjection = geometry.clone()
+
+    if (projectionCode !== projectionCodes.geographic) {
+      geometryInProjection = geometryInProjection.transform(
+        crsProjections[projectionCodes.geographic],
+        crsProjections[projectionCode]
+      )
+    }
+
+    feature.setGeometry(geometryInProjection)
+
+    // If the feature is a point with a radius, create a circle from the point
+    if (geometryType === spatialTypes.POINT && radius) {
+      const circle = circular((geometryInProjection as Point).getCoordinates(), radius, 64)
+
+      feature.set('circleGeometry', [geometry.getCoordinates(), radius])
+      feature.set('geometryType', spatialTypes.CIRCLE)
+
+      feature.setGeometry(circle)
+    } else {
+      feature.set('geometryType', geometryType)
+    }
+
+    if (geometryType === spatialTypes.POINT && !radius) {
+      feature.setStyle(spatialSearchMarkerStyle)
+    } else {
+      feature.setStyle(spatialSearchStyle)
+    }
+  })
+
+  vectorSource.addFeatures(features)
+
+  if (spatialDataAdded && onChangeProjection) {
+    const sourceExtent = vectorSource.getExtent()
+
+    let geographicExtent = sourceExtent
+    if (projectionCode !== projectionCodes.geographic) {
+      const swPoint = transform(
+        [sourceExtent[0], sourceExtent[1]],
+        crsProjections[projectionCode],
+        crsProjections[projectionCodes.geographic]
+      )
+      const nePoint = transform(
+        [sourceExtent[2], sourceExtent[3]],
+        crsProjections[projectionCode],
+        crsProjections[projectionCodes.geographic]
+      )
+
+      geographicExtent = [swPoint[0], swPoint[1], nePoint[0], nePoint[1]]
+    }
+
+    const latitudes = geographicExtent.filter((value, index) => index % 2 === 1)
+
+    const allLatitudesInArctic = latitudes.every((latitude) => latitude > 66.5)
+    const allLatitudesInAntarctic = latitudes.every((latitude) => latitude < -66.5)
+
+    let newProjection
+    if (allLatitudesInArctic) newProjection = projectionCodes.arctic
+    if (allLatitudesInAntarctic) newProjection = projectionCodes.antarctic
+
+    if (newProjection) {
+      onChangeProjection(newProjection)
+    }
+  }
+
+  if (spatialDataAdded) {
+    // SetTimeout is needed because the map needs to render before it can be moved
+    setTimeout(() => {
+      eventEmitter.emit(mapEventTypes.MOVEMAP, {
+        source: vectorSource
+      })
+    }, 0)
+  }
+}
+
 export default drawSpatialData

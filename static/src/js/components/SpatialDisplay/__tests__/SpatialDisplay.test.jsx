@@ -188,17 +188,19 @@ describe('SpatialDisplay component', () => {
             },
             nlpCollection: {
               spatial: {
-                type: 'Polygon',
-                coordinates: [
-                  [
-                    [-77.04444122314, 38.99228142151],
-                    [-77.01992797851, 38.79166886339],
-                    [-76.89415168762, 38.90262994792],
-                    [-77.04444122314, 38.99228142151]
+                geoJson: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [-77.04444122314, 38.99228142151],
+                      [-77.01992797851, 38.79166886339],
+                      [-76.89415168762, 38.90262994792],
+                      [-77.04444122314, 38.99228142151]
+                    ]
                   ]
-                ]
-              },
-              geoLocation: 'Texas'
+                },
+                geoLocation: 'Texas'
+              }
             }
           }
         }
@@ -406,10 +408,12 @@ describe('SpatialDisplay component', () => {
                 },
                 nlpCollection: {
                   spatial: {
-                    type: 'Polygon',
-                    coordinates: [[[-77.04444122314453, 38.99228142151045]]]
-                  },
-                  geoLocation: 'California'
+                    geoJson: {
+                      type: 'Polygon',
+                      coordinates: [[[-77.04444122314453, 38.99228142151045]]]
+                    },
+                    geoLocation: 'California'
+                  }
                 }
               },
               shapefile: {

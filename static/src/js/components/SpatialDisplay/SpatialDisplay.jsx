@@ -384,7 +384,7 @@ const SpatialDisplay = ({
   let secondaryTitle = ''
   let spatialError = error
 
-  if (nlpCollection && nlpCollection.spatial && nlpCollection.geoLocation) {
+  if (nlpCollection && nlpCollection.spatial && nlpCollection.spatial.geoLocation) {
     entry = (
       <SpatialDisplayEntry>
         <Row className="spatial-display__form-row">
@@ -392,13 +392,13 @@ const SpatialDisplay = ({
             className="spatial-display__text-primary"
             data-testid="spatial-display_nlp-location"
           >
-            {nlpCollection.geoLocation}
+            {nlpCollection.spatial.geoLocation}
           </span>
         </Row>
       </SpatialDisplayEntry>
     )
 
-    secondaryTitle = nlpCollection.spatial.type
+    secondaryTitle = nlpCollection.spatial.geoJson.type
 
     contents.push((
       <FilterStackContents
@@ -698,7 +698,7 @@ const SpatialDisplay = ({
       (currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer
     )
     || drawingNewLayer === spatialTypes.POLYGON)
-    && !(nlpCollection && nlpCollection.spatial && nlpCollection.geoLocation) // Don't show polygon section when NLP data is present
+    && !(nlpCollection && nlpCollection.spatial && nlpCollection.spatial.geoLocation) // Don't show polygon section when NLP data is present
   ) {
     const pointArray = currentPolygonSearch.length ? currentPolygonSearch[0].split(',') : []
     const pointCount = (pointArray.length / 2) - 1

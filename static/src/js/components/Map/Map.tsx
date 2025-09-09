@@ -72,7 +72,7 @@ import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
-import drawSpatialData from '../../util/map/drawSpatialData'
+import { drawNlpSpatialData } from '../../util/map/drawSpatialData'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
@@ -283,6 +283,13 @@ interface MapProps {
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
   isProjectPage: boolean
+  /** The NLP collection data */
+  nlpCollection: {
+    spatial?: {
+      geoJson: import('geojson').Geometry
+      geoLocation: string
+    } | null
+  } | null
   /** Function to call when the map is updated */
   onChangeMap: (mapView: Partial<MapView>) => void
   /** Function to call when the projection is changed */
@@ -369,6 +376,7 @@ const Map: React.FC<MapProps> = ({
   granulesKey,
   isFocusedCollectionPage,
   isProjectPage,
+  nlpCollection,
   onChangeMap,
   onChangeProjection,
   onChangeQuery,
@@ -1015,55 +1023,69 @@ const Map: React.FC<MapProps> = ({
     })
   }, [spatialSearch])
 
+  useEffect(() => {
+    if (nlpCollection && nlpCollection.spatial) {
+      const { geoJson, geoLocation } = nlpCollection.spatial
+
+      const featureCollection = {
+        type: 'FeatureCollection' as const,
+        features: [{
+          type: 'Feature' as const,
+          geometry: geoJson,
+          properties: {
+            edscId: '0',
+            isNlpSpatial: true
+          }
+        }],
+        nlpSpatialId: Date.now().toString(),
+        name: geoLocation || 'Search Area'
+      }
+
+      // Check if this is newly added NLP data
+      const currentNlpSpatialId = featureCollection.nlpSpatialId
+      const isNewlyAdded = Boolean(
+        currentNlpSpatialId && prevNlpSpatialIdRef.current !== currentNlpSpatialId
+      )
+      prevNlpSpatialIdRef.current = currentNlpSpatialId
+
+      drawNlpSpatialData({
+        spatialData: featureCollection,
+        spatialDataAdded: isNewlyAdded,
+        projectionCode,
+        vectorSource: spatialDrawingSource,
+        onChangeProjection
+      })
+    } else {
+      prevNlpSpatialIdRef.current = undefined
+    }
+  }, [nlpCollection, projectionCode])
+
   // When the shapefile changes, draw the shapefile
   useEffect(() => {
     if (shapefile && shapefile.file) {
       const { file, selectedFeatures, shapefileName } = shapefile
-
       const { showMbr, drawingNewLayer } = spatialSearch
 
-      const isNlpSpatialData = file?.features?.[0]?.properties?.isNlpSpatial === true
+      const isNlpShapefile = file?.features?.[0]?.properties?.isNlpSpatial === true
+      if (isNlpShapefile) return
 
-      // For NLP spatial data, check if this is a new spatial dataset by comparing unique IDs
-      let isNewlyAdded = false
-      if (isNlpSpatialData) {
-        // @ts-expect-error nlpSpatialId is a custom property we add to NLP feature collections
-        const currentNlpSpatialId = file.nlpSpatialId
-        isNewlyAdded = currentNlpSpatialId && prevNlpSpatialIdRef.current !== currentNlpSpatialId
-        prevNlpSpatialIdRef.current = currentNlpSpatialId
-      } else {
-        // For regular shapefiles, use the previous logic
-        isNewlyAdded = prevShapefileNameRef.current !== shapefileName
-      }
-
+      const isNewlyAdded = prevShapefileNameRef.current !== shapefileName
       prevShapefileNameRef.current = shapefileName
 
-      const commonDrawParams = {
+      drawShapefile({
         drawingNewLayer,
         selectedFeatures,
         onChangeQuery,
         onChangeProjection,
         onMetricsMap,
+        onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
+        shapefile: file,
+        shapefileAdded: isNewlyAdded,
+        showMbr,
         vectorSource: spatialDrawingSource
-      }
-
-      if (isNlpSpatialData) {
-        drawSpatialData({
-          ...commonDrawParams,
-          spatialData: file,
-          spatialDataAdded: isNewlyAdded
-        })
-      } else {
-        drawShapefile({
-          ...commonDrawParams,
-          shapefile: file,
-          shapefileAdded: isNewlyAdded,
-          onToggleTooManyPointsModal,
-          showMbr
-        })
-      }
+      })
     }
   }, [
     shapefile,

@@ -24,8 +24,6 @@ import { projectionConfigs } from '../../util/map/crs'
 // @ts-expect-error The file does not have types
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
-// @ts-expect-error The file does not have types
-import { convertNlpSpatialToFeatureCollection } from '../../util/nlpSpatialDataUtils'
 
 // @ts-expect-error The file does not have types
 import { getValueForTag } from '../../../../../sharedUtils/tags'
@@ -247,25 +245,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     }
   }, [shapefile])
 
-  useEffect(() => {
-    if (nlpCollection && nlpCollection.spatial) {
-      const { spatial: nlpSpatial, geoLocation } = nlpCollection
-
-      const featureCollection = convertNlpSpatialToFeatureCollection(nlpSpatial, geoLocation)
-
-      if (featureCollection) {
-        onUpdateShapefile({
-          file: featureCollection,
-          shapefileName: featureCollection.name
-        })
-      }
-    } else if (!nlpCollection || !nlpCollection.spatial) {
-      const isNlpShapefile = shapefile?.file?.features?.[0]?.properties?.isNlpSpatial
-      if (isNlpShapefile) {
-        onClearShapefile()
-      }
-    }
-  }, [nlpCollection, onUpdateShapefile, onClearShapefile, shapefile?.shapefileName])
 
   const nonExcludedGranules: { [key: string]: { collectionId: string; index: number } } = {}
   // If the focusedGranuleId is set, add it to the nonExcludedGranules first.
@@ -571,6 +550,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       granulesKey={granulesKey}
       isFocusedCollectionPage={isFocusedCollectionPage}
       isProjectPage={isProjectPage}
+      nlpCollection={nlpCollection}
       onChangeMap={onChangeMap}
       onChangeProjection={handleProjectionSwitching}
       onChangeQuery={onChangeQuery}

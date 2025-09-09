@@ -1,4 +1,5 @@
 import { StateCreator } from 'zustand'
+import type { Geometry } from 'geojson'
 
 import {
   CollectionMetadata,
@@ -843,14 +844,17 @@ type NlpCollectionQuery = {
   /** The original search query string */
   query: string
   /** The spatial data extracted from NLP */
-  spatial?: ShapefileFile | null
+  spatial?: {
+    /** The GeoJSON spatial data */
+    geoJson: Geometry
+    /** The location name from NLP */
+    geoLocation: string
+  } | null
   /** The temporal data extracted from NLP */
   temporal?: {
     startDate: string
     endDate: string
   } | null
-  /** The location name from NLP */
-  geoLocation?: string | null
 }
 
 /** Parameters for changing the query */

@@ -817,16 +817,11 @@ describe('createQuerySlice', () => {
       const mockNlpData = {
         query: 'test query',
         spatial: {
-          type: 'FeatureCollection' as const,
-          name: 'NLP Spatial Area',
-          features: [{
-            type: 'Feature' as const,
-            geometry: {
-              type: 'Polygon' as const,
-              coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
-            },
-            properties: {}
-          }]
+          geoJson: {
+            type: 'Polygon' as const,
+            coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+          },
+          geoLocation: 'Florida'
         },
         temporal: {
           startDate: '2023-01-01T00:00:00.000Z',
@@ -851,16 +846,11 @@ describe('createQuerySlice', () => {
       const mockNlpData = {
         query: 'spatial query',
         spatial: {
-          type: 'FeatureCollection' as const,
-          name: 'NLP Spatial Area',
-          features: [{
-            type: 'Feature' as const,
-            geometry: {
-              type: 'Point' as const,
-              coordinates: [0, 0]
-            },
-            properties: {}
-          }]
+          geoJson: {
+            type: 'Point' as const,
+            coordinates: [0, 0]
+          },
+          geoLocation: 'Florida'
         },
         temporal: null
       }
@@ -911,9 +901,11 @@ describe('createQuerySlice', () => {
       const mockNlpData = {
         query: 'test query',
         spatial: {
-          type: 'FeatureCollection' as const,
-          name: 'NLP Spatial Area',
-          features: []
+          geoJson: {
+            type: 'Polygon' as const,
+            coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+          },
+          geoLocation: 'Florida'
         },
         temporal: {
           startDate: '2023-01-01T00:00:00.000Z',
