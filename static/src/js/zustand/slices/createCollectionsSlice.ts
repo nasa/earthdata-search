@@ -5,9 +5,6 @@ import { CollectionsSlice, ImmerStateCreator } from '../types'
 import configureStore from '../../store/configureStore'
 
 // @ts-expect-error There are no types for this file
-import { getApplicationConfig } from '../../../../../sharedUtils/config'
-
-// @ts-expect-error There are no types for this file
 import actions from '../../actions'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
@@ -37,6 +34,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       const zustandState = get()
       if (zustandState.query.nlpCollection) {
         await zustandState.collections.getNlpCollections()
+
         return
       }
 
@@ -159,11 +157,21 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         const { feed = {} } = metadata
         const { entry: collections = [] } = feed
 
+        const collectionRequest = new CollectionRequest(
+          reduxState.authToken,
+          earthdataEnvironment
+        )
+        type TransformedFeed = { feed: { entry: import('../../types/sharedTypes').CollectionMetadata[] } }
+        const transformed: TransformedFeed = collectionRequest.transformResponse({
+          feed: { entry: collections }
+        }) as TransformedFeed
+        const transformedCollections = transformed.feed.entry || []
+
         set((state) => {
           state.collections.collections.isLoaded = true
           state.collections.collections.isLoading = false
           state.collections.collections.count = collections.length
-          state.collections.collections.items = collections
+          state.collections.collections.items = transformedCollections
         })
       } catch (error) {
         set((state) => {
