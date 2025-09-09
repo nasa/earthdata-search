@@ -170,13 +170,6 @@ export const changePath = (path = '') => async (dispatch) => {
       }))
     }
   } else {
-    const queryParams = parse(queryString)
-
-    if (queryParams.nlp) {
-      const nlpQuery = decodeURIComponent(queryParams.nlp)
-      useEdscStore.getState().query.setNlpCollection({ query: nlpQuery })
-    }
-
     decodedParams = decodeUrlParams(queryString)
 
     await dispatch(actions.updateStore(decodedParams, pathname))

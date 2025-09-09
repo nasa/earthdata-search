@@ -384,6 +384,31 @@ const SpatialDisplay = ({
   let secondaryTitle = ''
   let spatialError = error
 
+  if (nlpCollection && nlpCollection.spatial && nlpCollection.geoLocation) {
+    entry = (
+      <SpatialDisplayEntry>
+        <Row className="spatial-display__form-row">
+          <span
+            className="spatial-display__text-primary"
+            data-testid="spatial-display_nlp-location"
+          >
+            {nlpCollection.geoLocation}
+          </span>
+        </Row>
+      </SpatialDisplayEntry>
+    )
+
+    secondaryTitle = nlpCollection.spatial.type
+
+    contents.push((
+      <FilterStackContents
+        key="filter__nlp-spatial"
+        body={entry}
+        title=" "
+      />
+    ))
+  }
+
   const {
     isErrored: shapefileError,
     isLoading: shapefileLoading,
@@ -396,9 +421,12 @@ const SpatialDisplay = ({
 
   let hint = ''
 
-  if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
+  const isNlpShapefile = shapefile?.file?.features?.[0]?.properties?.isNlpSpatial
+
+  if ((((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
     && !drawingNewLayer)
-    || drawingNewLayer === 'shapefile') {
+    || drawingNewLayer === 'shapefile')
+    && !isNlpShapefile) {
     // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
     // render the shapefile display
     entry = (
@@ -455,16 +483,13 @@ const SpatialDisplay = ({
       spatialError = message
     }
 
-    const isNlpSpatial = shapefile.file?.features?.[0]?.properties?.source === 'nlp'
-    const spatialTitle = isNlpSpatial ? 'Search Area' : 'Shape File'
-    secondaryTitle = spatialTitle
-
     contents.push((
       <FilterStackContents
         key="filter__shapefile"
         body={entry}
-        title={spatialTitle}
+        title="Shape File"
         hint={hint}
+        showLabel
       />
     ))
   } else if (
@@ -669,18 +694,14 @@ const SpatialDisplay = ({
       />
     ))
   } else if (
-    (
+    ((
       (currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer
     )
-    || drawingNewLayer === spatialTypes.POLYGON
+    || drawingNewLayer === spatialTypes.POLYGON)
+    && !(nlpCollection && nlpCollection.spatial && nlpCollection.geoLocation) // Don't show polygon section when NLP data is present
   ) {
     const pointArray = currentPolygonSearch.length ? currentPolygonSearch[0].split(',') : []
     const pointCount = (pointArray.length / 2) - 1
-
-    const isNlpPolygon = nlpCollection && nlpCollection.spatial && nlpCollection.geoLocation
-    const polygonDisplayText = isNlpPolygon
-      ? nlpCollection.geoLocation
-      : `${pointCount} ${pluralize('Point', pointCount)}`
 
     entry = (
       <SpatialDisplayEntry>
@@ -691,7 +712,7 @@ const SpatialDisplay = ({
                 className="spatial-display__text-primary"
                 data-testid="spatial-display_polygon"
               >
-                {polygonDisplayText}
+                {`${pointCount} ${pluralize('Point', pointCount)}`}
               </span>
             </Row>
           )

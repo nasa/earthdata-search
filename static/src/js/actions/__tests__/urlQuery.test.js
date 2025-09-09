@@ -1146,24 +1146,12 @@ describe('changePath', () => {
   })
 
   describe('when NLP search is requested', () => {
-    test('calls collections getNlpCollections action with query parameter', async () => {
-      const changeQueryMock = jest.fn()
-      const setNlpSearchCompletedMock = jest.fn()
-      const setNlpCollectionMock = jest.fn()
-
-      // Mock console.error to prevent test environment from throwing on error logs
-      const consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {})
+    test('passes nlpCollection to updateStore from decodeUrlParams', async () => {
+      const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
 
       useEdscStore.setState({
-        query: {
-          changeQuery: changeQueryMock,
-          setNlpSearchCompleted: setNlpSearchCompletedMock,
-          setNlpCollection: setNlpCollectionMock,
-          nlpSearchCompleted: false
-        },
         collections: {
-          getCollections: jest.fn().mockResolvedValue(),
-          getNlpCollections: jest.fn().mockResolvedValue()
+          getCollections: jest.fn()
         },
         timeline: {
           getTimeline: jest.fn()
@@ -1182,24 +1170,24 @@ describe('changePath', () => {
 
       await store.dispatch(urlQuery.changePath(newPath))
 
-      expect(setNlpCollectionMock).toHaveBeenCalledWith({ query: 'climate data' })
+      expect(updateStoreMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          query: expect.objectContaining({
+            nlpCollection: { query: 'climate data' }
+          })
+        }),
+        '/search'
+      )
 
-      consoleErrorSpy.mockRestore()
+      updateStoreMock.mockRestore()
     })
 
-    test('calls getNlpCollections with correct query', async () => {
-      const changeQueryMock = jest.fn()
-      const getNlpCollectionsMock = jest.fn().mockResolvedValue()
-      const setNlpCollectionMock = jest.fn()
+    test('handles URL encoded nlp parameter', async () => {
+      const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
 
       useEdscStore.setState({
-        query: {
-          changeQuery: changeQueryMock,
-          setNlpCollection: setNlpCollectionMock,
-          nlpSearchCompleted: false
-        },
         collections: {
-          getNlpCollections: getNlpCollectionsMock
+          getCollections: jest.fn()
         },
         timeline: {
           getTimeline: jest.fn()
@@ -1207,39 +1195,35 @@ describe('changePath', () => {
       })
 
       const store = mockStore({
-        authToken: '',
-        earthdataEnvironment: 'prod',
         router: {
           location: {
             pathname: '/search'
           }
-        },
-        metadata: {
-          collections: {
-            allIds: [],
-            byId: {}
-          }
         }
       })
 
-      const newPath = '/?nlp=test+spatial+query'
+      const newPath = '/?nlp=test%20spatial%20query'
 
       await store.dispatch(urlQuery.changePath(newPath))
 
-      expect(setNlpCollectionMock).toHaveBeenCalledWith({ query: 'test spatial query' })
+      expect(updateStoreMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          query: expect.objectContaining({
+            nlpCollection: { query: 'test spatial query' }
+          })
+        }),
+        '/'
+      )
+
+      updateStoreMock.mockRestore()
     })
 
-    test('does not call getNlpCollections when nlp parameter is not present', async () => {
-      const changeQueryMock = jest.fn()
-      const getNlpCollectionsMock = jest.fn().mockResolvedValue()
+    test('does not include nlpCollection when nlp parameter is not present', async () => {
+      const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
 
       useEdscStore.setState({
-        query: {
-          changeQuery: changeQueryMock,
-          nlpSearchCompleted: false
-        },
         collections: {
-          getNlpCollections: getNlpCollectionsMock
+          getCollections: jest.fn()
         },
         timeline: {
           getTimeline: jest.fn()
@@ -1247,65 +1231,27 @@ describe('changePath', () => {
       })
 
       const store = mockStore({
-        authToken: '',
-        earthdataEnvironment: 'prod',
         router: {
           location: {
             pathname: '/search'
           }
-        },
-        metadata: {
-          collections: {
-            allIds: [],
-            byId: {}
-          }
         }
       })
 
-      const newPath = '/?query=test+query'
+      const newPath = '/?q=test+query'
 
       await store.dispatch(urlQuery.changePath(newPath))
 
-      expect(getNlpCollectionsMock).not.toHaveBeenCalled()
-    })
+      expect(updateStoreMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          query: expect.objectContaining({
+            nlpCollection: undefined
+          })
+        }),
+        '/'
+      )
 
-    test('does not call getNlpCollections when no nlp parameter provided', async () => {
-      const getNlpCollectionsMock = jest.fn().mockResolvedValue()
-
-      useEdscStore.setState({
-        query: {
-          changeQuery: jest.fn(),
-          nlpSearchCompleted: false
-        },
-        collections: {
-          getNlpCollections: getNlpCollectionsMock
-        },
-        timeline: {
-          getTimeline: jest.fn()
-        }
-      })
-
-      const store = mockStore({
-        authToken: '',
-        earthdataEnvironment: 'prod',
-        router: {
-          location: {
-            pathname: '/search'
-          }
-        },
-        metadata: {
-          collections: {
-            allIds: [],
-            byId: {}
-          }
-        }
-      })
-
-      const newPath = '/?nlpSearch=true'
-
-      await store.dispatch(urlQuery.changePath(newPath))
-
-      expect(getNlpCollectionsMock).not.toHaveBeenCalled()
+      updateStoreMock.mockRestore()
     })
   })
 })

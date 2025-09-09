@@ -401,8 +401,9 @@ const Map: React.FC<MapProps> = ({
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
-  // Track previous spatial data name to detect newly added NLP spatial data
+  // Track previous spatial data name, id, to detect newly added NLP spatial data
   const prevShapefileNameRef = useRef<string | undefined>(undefined)
+  const prevNlpSpatialIdRef = useRef<string | undefined>(undefined)
 
   useEffect(() => {
     const map = new OlMap({
@@ -1021,8 +1022,19 @@ const Map: React.FC<MapProps> = ({
 
       const { showMbr, drawingNewLayer } = spatialSearch
 
-      const isNlpSpatialData = shapefileName === 'NLP Spatial Area'
-      const isNewlyAdded = isNlpSpatialData && prevShapefileNameRef.current !== shapefileName
+      const isNlpSpatialData = file?.features?.[0]?.properties?.isNlpSpatial === true
+
+      // For NLP spatial data, check if this is a new spatial dataset by comparing unique IDs
+      let isNewlyAdded = false
+      if (isNlpSpatialData) {
+        // @ts-expect-error nlpSpatialId is a custom property we add to NLP feature collections
+        const currentNlpSpatialId = file.nlpSpatialId
+        isNewlyAdded = currentNlpSpatialId && prevNlpSpatialIdRef.current !== currentNlpSpatialId
+        prevNlpSpatialIdRef.current = currentNlpSpatialId
+      } else {
+        // For regular shapefiles, use the previous logic
+        isNewlyAdded = prevShapefileNameRef.current !== shapefileName
+      }
 
       prevShapefileNameRef.current = shapefileName
 

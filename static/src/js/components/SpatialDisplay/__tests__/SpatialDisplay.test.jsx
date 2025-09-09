@@ -172,7 +172,7 @@ describe('SpatialDisplay component', () => {
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')[0]).toBeVisible()
     })
 
-    test('should display NLP geoLocation name instead of point count for NLP polygons', () => {
+    test('should display NLP geoLocation name in dedicated section when NLP data exists', () => {
       const newPolygon = '-77.04444122314453,38.99228142151045,'
         + '-77.01992797851562,38.79166886339155,'
         + '-76.89415168762207,38.902629947921575,'
@@ -205,8 +205,9 @@ describe('SpatialDisplay component', () => {
       })
 
       expect(screen.queryAllByText('Texas')).toHaveLength(1)
-      expect(screen.queryAllByText('Texas')[0]).toBeVisible()
-      expect(screen.getAllByTestId('spatial-display_polygon')[0].innerHTML).toEqual('Texas')
+      expect(screen.queryAllByText('Polygon')).toHaveLength(1)
+      expect(screen.getAllByTestId('spatial-display_nlp-location')[0].innerHTML).toEqual('Texas')
+      expect(screen.queryByText('3 Points')).toBeNull()
     })
   })
 
@@ -291,8 +292,8 @@ describe('SpatialDisplay component', () => {
         expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
         expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-        expect(screen.queryAllByText('Shape File')).toHaveLength(1)
-        expect(screen.queryAllByText('Shape File')[0]).toBeVisible()
+        expect(screen.queryAllByText('Shape File:')).toHaveLength(1)
+        expect(screen.queryAllByText('Shape File:')[0]).toBeVisible()
 
         expect(screen.getAllByTestId('spatial-display__loading')).toHaveLength(1)
         expect(screen.getAllByTestId('spatial-display__loading')[0]).toBeVisible()
@@ -333,8 +334,8 @@ describe('SpatialDisplay component', () => {
         expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
         expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-        expect(screen.queryAllByText('Shape File')).toHaveLength(1)
-        expect(screen.queryAllByText('Shape File')[0]).toBeVisible()
+        expect(screen.queryAllByText('Shape File:')).toHaveLength(1)
+        expect(screen.queryAllByText('Shape File:')[0]).toBeVisible()
 
         expect(screen.queryAllByTestId('spatial-display__loading')).toHaveLength(0)
 
@@ -402,10 +403,17 @@ describe('SpatialDisplay component', () => {
                   spatial: {
                     polygon: [newPolygon]
                   }
+                },
+                nlpCollection: {
+                  spatial: {
+                    type: 'Polygon',
+                    coordinates: [[[-77.04444122314453, 38.99228142151045]]]
+                  },
+                  geoLocation: 'California'
                 }
               },
               shapefile: {
-                shapefileName: 'NLP Spatial Area',
+                shapefileName: 'California',
                 isLoaded: true,
                 isLoading: false,
                 file: {
@@ -413,9 +421,8 @@ describe('SpatialDisplay component', () => {
                   features: [{
                     type: 'Feature',
                     properties: {
-                      source: 'nlp',
-                      query: 'flood data in california',
-                      edscId: '0'
+                      edscId: '0',
+                      isNlpSpatial: true
                     },
                     geometry: {
                       type: 'Polygon',
@@ -427,10 +434,9 @@ describe('SpatialDisplay component', () => {
             }
           })
 
-          expect(screen.queryAllByText('Search Area')).toHaveLength(1)
-          expect(screen.queryAllByText('Search Area')[0]).toBeVisible()
+          expect(screen.queryAllByText('California')).toHaveLength(1)
+          expect(screen.queryAllByText('Polygon')).toHaveLength(1)
           expect(screen.queryAllByText('Shape File')).toHaveLength(0)
-          expect(screen.queryAllByText('NLP Spatial Area')).toHaveLength(1)
         })
       })
     })
