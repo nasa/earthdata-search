@@ -145,9 +145,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
       const earthdataEnvironment = getEarthdataEnvironment(get())
       const zustandState = get()
-      const searchQuery = zustandState.query.nlpCollection?.query
-
-      if (!searchQuery) return
+      const searchQuery = zustandState.query.nlpCollection!.query
 
       try {
         const nlpRequest = new NlpSearchRequest(reduxState.authToken, earthdataEnvironment)

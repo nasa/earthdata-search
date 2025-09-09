@@ -37,37 +37,53 @@ import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../../u
 import { convertNlpSpatialToQueryFormat } from '../../util/nlpSpatialDataUtils'
 
 /**
- * Retrieve current collection query information, merging NLP data when present
+ * Retrieve current collection query information for collection searches
  */
-export const getCollectionsQuery = (state: EdscStore) => {
-  const baseQuery = state.query?.collection || {}
-  const nlpCollection = state.query?.nlpCollection
+export const getCollectionsQuery = (state: EdscStore) => state.query?.collection || {}
 
-  if (!nlpCollection) return baseQuery
+/**
+ * Retrieve NLP collection data
+ */
+export const getNlpCollection = (state: EdscStore) => state.query?.nlpCollection || null
 
-  const mergedQuery = { ...baseQuery }
-  if (nlpCollection.spatial) {
-    const nlpSpatial = convertNlpSpatialToQueryFormat(nlpCollection.spatial)
-    mergedQuery.spatial = {
-      ...baseQuery.spatial,
-      ...nlpSpatial
-    }
-  }
+/**
+ * Retrieve NLP spatial data
+ */
+export const getNlpSpatialData = (state: EdscStore) => {
+  const nlpCollection = getNlpCollection(state)
 
-  if (nlpCollection.temporal) {
-    mergedQuery.temporal = {
-      ...baseQuery.temporal,
-      ...nlpCollection.temporal
-    }
-  }
+  return nlpCollection?.spatial || null
+}
 
-  return mergedQuery
+/**
+ * Retrieve NLP temporal data
+ */
+export const getNlpTemporalData = (state: EdscStore) => {
+  const nlpCollection = getNlpCollection(state)
+
+  return nlpCollection?.temporal || null
 }
 
 /**
  * Retrieve current collection spatial information
+ * Returns NLP spatial data if NLP search is active, otherwise regular spatial data
  */
 export const getCollectionsQuerySpatial = (state: EdscStore) => {
+  const nlpSpatialData = getNlpSpatialData(state)
+
+  if (nlpSpatialData) {
+    const convertedSpatial = convertNlpSpatialToQueryFormat(nlpSpatialData.geoJson)
+
+    return {
+      boundingBox: [],
+      circle: [],
+      line: [],
+      point: [],
+      polygon: [],
+      ...convertedSpatial
+    }
+  }
+
   const { spatial } = getCollectionsQuery(state)
 
   // Default the spatial values to empty arrays. This ensures code that is looking for
@@ -89,8 +105,16 @@ export const getSelectedRegionQuery = (state: EdscStore) => state.query.selected
 
 /**
  * Retrieve current collection temporal information
+ * Returns NLP temporal data if NLP search is active, otherwise regular temporal data
  */
 export const getCollectionsQueryTemporal = (state: EdscStore) => {
+  const nlpTemporalData = getNlpTemporalData(state)
+
+  if (nlpTemporalData) {
+    return nlpTemporalData
+  }
+
+  // For regular searches, return the regular temporal query
   const { temporal } = getCollectionsQuery(state)
 
   return temporal

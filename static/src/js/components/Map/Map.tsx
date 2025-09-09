@@ -1024,7 +1024,7 @@ const Map: React.FC<MapProps> = ({
   }, [spatialSearch])
 
   useEffect(() => {
-    if (nlpCollection && nlpCollection.spatial) {
+    if (nlpCollection && nlpCollection.spatial && nlpCollection.spatial.geoJson) {
       const { geoJson, geoLocation } = nlpCollection.spatial
 
       const featureCollection = {
@@ -1037,7 +1037,7 @@ const Map: React.FC<MapProps> = ({
             isNlpSpatial: true
           }
         }],
-        nlpSpatialId: Date.now().toString(),
+        nlpSpatialId: `nlp-${nlpCollection.query}-${JSON.stringify(geoJson)}`.replace(/[^a-zA-Z0-9-]/g, '-'),
         name: geoLocation || 'Search Area'
       }
 
@@ -1058,7 +1058,7 @@ const Map: React.FC<MapProps> = ({
     } else {
       prevNlpSpatialIdRef.current = undefined
     }
-  }, [nlpCollection, projectionCode])
+  }, [nlpCollection, projectionCode, onChangeProjection, spatialDrawingSource])
 
   // When the shapefile changes, draw the shapefile
   useEffect(() => {

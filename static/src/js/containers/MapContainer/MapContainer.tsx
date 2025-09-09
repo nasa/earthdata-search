@@ -187,6 +187,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     showMbr: state.map.showMbr,
     startDrawing: state.home.startDrawing
   }))
+
   const selectedRegion = useEdscStore(getSelectedRegionQuery)
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)
@@ -244,7 +245,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       if (shapefileId && !isLoaded && !isLoading) onFetchShapefile(shapefileId)
     }
   }, [shapefile])
-
 
   const nonExcludedGranules: { [key: string]: { collectionId: string; index: number } } = {}
   // If the focusedGranuleId is set, add it to the nonExcludedGranules first.
