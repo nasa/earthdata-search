@@ -4,6 +4,7 @@ import classNames from 'classnames'
 import { kebabCase } from 'lodash-es'
 import Badge from 'react-bootstrap/Badge'
 import ProgressBar from 'react-bootstrap/ProgressBar'
+import { FaExternalLinkAlt } from 'react-icons/fa'
 
 import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 
@@ -22,10 +23,17 @@ export const OrderProgressItem = ({
   let numGranulesProccessed
   let totalGranulesInOrder
   let totalPercentProcessed
+  let edscId
+  let jobInformationHref
 
   if (type === 'Harmony') {
     const { progress = 0 } = orderInformation
     totalPercentProcessed = progress
+
+    const { labels } = orderInformation
+    const [edscIdFromLabels] = labels
+    edscId = edscIdFromLabels
+    jobInformationHref = `https://harmony.earthdata.nasa.gov/workflow-ui?tableFilter=[{%22value%22:%22label:%20${edscId}%22}]`
   }
 
   if (type === 'ESI') {
@@ -93,6 +101,15 @@ export const OrderProgressItem = ({
           </span>
         </div>
       </header>
+      {
+        type === 'Harmony' && (
+          <span>
+            <a href={jobInformationHref} target="_blank" rel="noreferrer">View Harmony Job Information</a>
+            <FaExternalLinkAlt className="ms-2 small" style={{ opacity: 0.625 }} />
+          </span>
+
+        )
+      }
       <ProgressBar
         className="order-progress-item__bar"
         now={totalPercentProcessed}
