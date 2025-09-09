@@ -1037,7 +1037,7 @@ const Map: React.FC<MapProps> = ({
             isNlpSpatial: true
           }
         }],
-        nlpSpatialId: `nlp-${nlpCollection.query}-${JSON.stringify(geoJson)}`.replace(/[^a-zA-Z0-9-]/g, '-'),
+        nlpSpatialId: `nlp-spatial-${JSON.stringify(geoJson)}`.replace(/[^a-zA-Z0-9-]/g, '-'),
         name: geoLocation || 'Search Area'
       }
 

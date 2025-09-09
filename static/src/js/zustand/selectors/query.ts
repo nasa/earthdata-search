@@ -33,8 +33,6 @@ import {
 } from '../../util/granules'
 // @ts-expect-error The file does not have types
 import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../../util/subscriptions'
-// @ts-expect-error The file does not have types
-import { convertNlpSpatialToQueryFormat } from '../../util/nlpSpatialDataUtils'
 
 /**
  * Retrieve current collection query information for collection searches
@@ -66,21 +64,18 @@ export const getNlpTemporalData = (state: EdscStore) => {
 
 /**
  * Retrieve current collection spatial information
- * Returns NLP spatial data if NLP search is active, otherwise regular spatial data
+ * Returns empty spatial arrays for NLP search (NLP doesn't use CMR spatial parameters), otherwise regular spatial data
  */
 export const getCollectionsQuerySpatial = (state: EdscStore) => {
   const nlpSpatialData = getNlpSpatialData(state)
 
   if (nlpSpatialData) {
-    const convertedSpatial = convertNlpSpatialToQueryFormat(nlpSpatialData.geoJson)
-
     return {
       boundingBox: [],
       circle: [],
       line: [],
       point: [],
-      polygon: [],
-      ...convertedSpatial
+      polygon: []
     }
   }
 
