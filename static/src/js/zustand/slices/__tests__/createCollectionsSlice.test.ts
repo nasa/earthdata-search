@@ -44,8 +44,7 @@ describe('createCollectionsSlice', () => {
         items: []
       },
       getCollections: expect.any(Function),
-      getNlpCollections: expect.any(Function),
-      setCollectionsLoading: expect.any(Function)
+      getNlpCollections: expect.any(Function)
     })
   })
 
@@ -235,34 +234,6 @@ describe('createCollectionsSlice', () => {
     })
   })
 
-  describe('slice methods', () => {
-    test('setCollectionsLoading sets loading state and clears items for page 1', () => {
-      useEdscStore.setState((state) => {
-        state.collections.collections.items = [{
-          conceptId: 'C1000000000-EDSC',
-          mockData: 'existing'
-        }]
-
-        state.collections.collections.isLoading = false
-      })
-
-      const { collections } = useEdscStore.getState()
-      const { setCollectionsLoading } = collections
-
-      setCollectionsLoading(1)
-
-      const { collections: updatedCollections } = useEdscStore.getState()
-      expect(updatedCollections.collections.isLoading).toBe(true)
-      expect(updatedCollections.collections.items).toEqual([])
-
-      setCollectionsLoading(2)
-
-      const { collections: secondUpdate } = useEdscStore.getState()
-      expect(secondUpdate.collections.isLoading).toBe(true)
-      expect(secondUpdate.collections.items).toEqual([])
-    })
-  })
-
   describe('getNlpCollections', () => {
     beforeEach(() => {
       jest.clearAllMocks()
@@ -312,12 +283,10 @@ describe('createCollectionsSlice', () => {
 
       const mockSetNlpCollection = jest.fn()
       const mockChangeQuery = jest.fn()
-      const mockSetNlpSearchCompleted = jest.fn()
 
       useEdscStore.setState((state) => {
         state.query.setNlpCollection = mockSetNlpCollection
         state.query.changeQuery = mockChangeQuery
-        state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
         state.query.nlpCollection = { query: 'test query' }
       })
 
@@ -337,8 +306,6 @@ describe('createCollectionsSlice', () => {
           endDate: '2023-12-31T23:59:59.999Z'
         }
       })
-
-      expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })
 
     test('handles NLP search with only spatial data', async () => {
@@ -371,12 +338,10 @@ describe('createCollectionsSlice', () => {
 
       const mockSetNlpCollection = jest.fn()
       const mockChangeQuery = jest.fn()
-      const mockSetNlpSearchCompleted = jest.fn()
 
       useEdscStore.setState((state) => {
         state.query.setNlpCollection = mockSetNlpCollection
         state.query.changeQuery = mockChangeQuery
-        state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
         state.query.nlpCollection = { query: 'spatial query' }
       })
 
@@ -393,8 +358,6 @@ describe('createCollectionsSlice', () => {
         geoLocation: 'Point Location',
         temporal: null
       })
-
-      expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })
 
     test('handles NLP search errors', async () => {
@@ -406,10 +369,7 @@ describe('createCollectionsSlice', () => {
         authToken: 'test-token'
       })
 
-      const mockSetNlpSearchCompleted = jest.fn()
-
       useEdscStore.setState((state) => {
-        state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
         state.query.nlpCollection = { query: 'error query' }
       })
 
@@ -418,7 +378,6 @@ describe('createCollectionsSlice', () => {
 
       await getNlpCollections()
 
-      expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
       expect(actions.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
           action: 'getNlpCollections',
@@ -449,11 +408,9 @@ describe('createCollectionsSlice', () => {
       })
 
       const mockSetNlpCollection = jest.fn()
-      const mockSetNlpSearchCompleted = jest.fn()
 
       useEdscStore.setState((state) => {
         state.query.setNlpCollection = mockSetNlpCollection
-        state.query.setNlpSearchCompleted = mockSetNlpSearchCompleted
         state.query.nlpCollection = { query: 'empty query' }
       })
 
@@ -463,7 +420,6 @@ describe('createCollectionsSlice', () => {
       await getNlpCollections()
 
       expect(mockSetNlpCollection).not.toHaveBeenCalled()
-      expect(mockSetNlpSearchCompleted).toHaveBeenCalledWith(true)
     })
   })
 })

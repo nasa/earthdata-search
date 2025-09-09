@@ -136,15 +136,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       }
     },
 
-    setCollectionsLoading: (pageNum: number) => {
-      set((state) => {
-        state.collections.collections.isLoading = true
-        if (pageNum === 1) {
-          state.collections.collections.items = []
-        }
-      })
-    },
-
     getNlpCollections: async () => {
       const {
         dispatch: reduxDispatch,
@@ -180,17 +171,11 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           state.collections.collections.count = collections.length
           state.collections.collections.items = collections
         })
-
-        const currentState = get()
-        currentState.query.setNlpSearchCompleted(true)
       } catch (error) {
         set((state) => {
           state.collections.collections.isLoading = false
           state.collections.collections.isLoaded = false
         })
-
-        const errorState = get()
-        errorState.query.setNlpSearchCompleted(true)
 
         reduxDispatch(actions.handleError({
           error,
