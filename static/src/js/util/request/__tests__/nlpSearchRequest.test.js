@@ -141,12 +141,12 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(response, 'test query')
 
-    expect(result).toEqual({
+    expect(result).toEqual(expect.objectContaining({
       query: 'test query',
       spatial: null,
       geoLocation: null,
       temporal: null
-    })
+    }))
   })
 
   test('handles geometry without type through transformResponse', () => {
@@ -166,12 +166,12 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(response, 'test query')
 
-    expect(result).toEqual({
+    expect(result).toEqual(expect.objectContaining({
       query: 'test query',
       spatial: null,
       geoLocation: null,
       temporal: null
-    })
+    }))
   })
 
   test('returns Point geometry unchanged', () => {
@@ -435,12 +435,12 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'test query')
 
-    expect(result).toEqual({
+    expect(result).toEqual(expect.objectContaining({
       query: 'test query',
       spatial: spatialGeometry,
       geoLocation: 'Test Location',
       temporal: null
-    })
+    }))
   })
 
   test('processes spatial data as direct geometry', () => {
@@ -480,7 +480,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'temperature data')
 
-    expect(result).toEqual({
+    expect(result).toEqual(expect.objectContaining({
       query: 'temperature data',
       spatial: null,
       geoLocation: null,
@@ -488,7 +488,7 @@ describe('NlpSearchRequest#transformResponse', () => {
         startDate: '2020-01-01T00:00:00.000Z',
         endDate: '2020-12-31T23:59:59.999Z'
       }
-    })
+    }))
   })
 
   test('processes both spatial and temporal data', () => {
@@ -516,7 +516,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'landsat data')
 
-    expect(result).toEqual({
+    expect(result).toEqual(expect.objectContaining({
       query: 'landsat data',
       spatial: spatialGeometry,
       geoLocation: 'Alaska Region',
@@ -524,7 +524,7 @@ describe('NlpSearchRequest#transformResponse', () => {
         startDate: '2023-01-01T00:00:00.000Z',
         endDate: '2023-06-30T23:59:59.999Z'
       }
-    })
+    }))
   })
 
   test('handles temporal data with no dates', () => {

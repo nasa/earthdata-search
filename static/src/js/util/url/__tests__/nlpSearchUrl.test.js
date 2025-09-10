@@ -30,6 +30,7 @@ describe('url#encodeUrlQuery', () => {
   test('encodes nlpSearch correctly', () => {
     const props = {
       pathname: '/path/here',
+      hasGranulesOrCwic: true,
       nlpSearch: 'climate data'
     }
 
