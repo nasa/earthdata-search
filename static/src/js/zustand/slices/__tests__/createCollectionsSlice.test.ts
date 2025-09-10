@@ -354,8 +354,7 @@ describe('createCollectionsSlice', () => {
         spatial: expect.objectContaining({
           geoJson: expect.objectContaining({ type: 'Point' }),
           geoLocation: 'Point Location'
-        }),
-        temporal: null
+        })
       })
 
       expect(updatedCollections.collections.count).toBe(0)

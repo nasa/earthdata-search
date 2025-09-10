@@ -459,10 +459,10 @@ export type NlpCollectionQuery = {
     geoJson: Geometry
     /** The location name from NLP */
     geoLocation: string
-  } | null
+  }
   /** The temporal data extracted from NLP */
   temporal?: {
     startDate: string
     endDate: string
-  } | null
+  }
 }
