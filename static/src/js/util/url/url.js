@@ -319,7 +319,7 @@ export const decodeUrlParams = (paramString) => {
     query: {
       ...query,
       collection: collectionQuery,
-      nlpCollection: nlpQuery ? { query: nlpQuery } : undefined
+      nlpCollection: nlpQuery ? { query: nlpQuery } : null
     },
     selectedRegion,
     shapefile,

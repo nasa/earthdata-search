@@ -31,7 +31,7 @@ import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
+import { getCollectionsQuerySpatial, getNlpCollection } from '../../zustand/selectors/query'
 
 import './SpatialDisplay.scss'
 
@@ -43,13 +43,12 @@ const SpatialDisplay = ({
 }) => {
   const {
     changeQuery,
-    removeSpatialFilter,
-    nlpCollection
+    removeSpatialFilter
   } = useEdscStore((state) => ({
     changeQuery: state.query.changeQuery,
-    removeSpatialFilter: state.query.removeSpatialFilter,
-    nlpCollection: state.query.nlpCollection
+    removeSpatialFilter: state.query.removeSpatialFilter
   }))
+  const nlpCollection = useEdscStore(getNlpCollection)
   const spatialQuery = useEdscStore(getCollectionsQuerySpatial)
   const {
     boundingBox: boundingBoxSearch,

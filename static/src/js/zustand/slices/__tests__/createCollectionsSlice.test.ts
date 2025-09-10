@@ -286,7 +286,7 @@ describe('createCollectionsSlice', () => {
       await getNlpCollections()
 
       const updatedState = useEdscStore.getState()
-      const { query: updatedQuery } = updatedState
+      const { query: updatedQuery, collections: updatedCollections } = updatedState
       expect(updatedQuery.nlpCollection).toEqual({
         query: 'test query',
         spatial: expect.objectContaining({
@@ -298,6 +298,15 @@ describe('createCollectionsSlice', () => {
           endDate: '2023-12-31T23:59:59.999Z'
         }
       })
+
+      expect(updatedCollections.collections.count).toBe(2)
+      expect(updatedCollections.collections.isLoaded).toBe(true)
+      expect(updatedCollections.collections.isLoading).toBe(false)
+      expect(updatedCollections.collections.items).toEqual(expect.arrayContaining([
+        expect.objectContaining({ conceptId: 'C1000000000-EDSC' }),
+        expect.objectContaining({ conceptId: 'C1000000001-EDSC' })
+      ]))
+      expect(updatedCollections.collections.loadTime).toEqual(expect.any(Number))
     })
 
     test('handles NLP search with only spatial data', async () => {
@@ -338,7 +347,7 @@ describe('createCollectionsSlice', () => {
       await getNlpCollections()
 
       const updatedState = useEdscStore.getState()
-      const { query: updatedQuery } = updatedState
+      const { query: updatedQuery, collections: updatedCollections } = updatedState
       expect(updatedQuery.nlpCollection).toEqual({
         query: 'spatial query',
         spatial: expect.objectContaining({
@@ -347,6 +356,12 @@ describe('createCollectionsSlice', () => {
         }),
         temporal: null
       })
+
+      expect(updatedCollections.collections.count).toBe(0)
+      expect(updatedCollections.collections.isLoaded).toBe(true)
+      expect(updatedCollections.collections.isLoading).toBe(false)
+      expect(updatedCollections.collections.items).toEqual([])
+      expect(updatedCollections.collections.loadTime).toEqual(expect.any(Number))
     })
 
     test('handles NLP search errors', async () => {
@@ -367,6 +382,7 @@ describe('createCollectionsSlice', () => {
 
       await getNlpCollections()
 
+      expect(actions.handleError).toHaveBeenCalledTimes(1)
       expect(actions.handleError).toHaveBeenCalledWith(
         expect.objectContaining({
           action: 'getNlpCollections',
@@ -374,6 +390,10 @@ describe('createCollectionsSlice', () => {
           error: expect.any(Error)
         })
       )
+
+      const { collections: updatedCollectionsAfterError } = useEdscStore.getState()
+      expect(updatedCollectionsAfterError.collections.isLoaded).toBe(false)
+      expect(updatedCollectionsAfterError.collections.isLoading).toBe(false)
     })
 
     test('handles empty NLP response', async () => {
@@ -406,8 +426,13 @@ describe('createCollectionsSlice', () => {
       await getNlpCollections()
 
       const updatedState = useEdscStore.getState()
-      const { query: updatedQuery } = updatedState
+      const { query: updatedQuery, collections: updatedCollectionsEmpty } = updatedState
       expect(updatedQuery.nlpCollection).toEqual({ query: 'empty query' })
+      expect(updatedCollectionsEmpty.collections.count).toBe(0)
+      expect(updatedCollectionsEmpty.collections.isLoaded).toBe(true)
+      expect(updatedCollectionsEmpty.collections.isLoading).toBe(false)
+      expect(updatedCollectionsEmpty.collections.items).toEqual([])
+      expect(updatedCollectionsEmpty.collections.loadTime).toEqual(expect.any(Number))
     })
   })
 })

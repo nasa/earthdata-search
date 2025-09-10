@@ -9,6 +9,7 @@ import configureStore from '../../store/configureStore'
 import actions from '../../actions'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getNlpCollection } from '../selectors/query'
 import type { CollectionMetadata } from '../../types/sharedTypes'
 
 // @ts-expect-error There are no types for this file
@@ -34,7 +35,8 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
     getCollections: async () => {
       const zustandState = get()
-      if (zustandState.query.nlpCollection) {
+      const existingNlp = getNlpCollection(zustandState)
+      if (existingNlp) {
         await zustandState.collections.getNlpCollections()
 
         return
@@ -141,7 +143,8 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
       const earthdataEnvironment = getEarthdataEnvironment(get())
       const zustandState = get()
-      const searchQuery = zustandState.query.nlpCollection!.query
+      const nlpFromState = getNlpCollection(zustandState)
+      const searchQuery = nlpFromState!.query
 
       let nlpRequest: NlpSearchRequest
 

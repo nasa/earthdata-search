@@ -64,25 +64,10 @@ export const getNlpTemporalData = (state: EdscStore) => {
 
 /**
  * Retrieve current collection spatial information
- * Returns empty spatial arrays for NLP search (NLP doesn't use CMR spatial parameters), otherwise regular spatial data
  */
 export const getCollectionsQuerySpatial = (state: EdscStore) => {
-  const nlpSpatialData = getNlpSpatialData(state)
-
-  if (nlpSpatialData) {
-    return {
-      boundingBox: [],
-      circle: [],
-      line: [],
-      point: [],
-      polygon: []
-    }
-  }
-
   const { spatial } = getCollectionsQuery(state)
 
-  // Default the spatial values to empty arrays. This ensures code that is looking for
-  // arrays will not break (SpatialDisplay.jsx)
   return {
     boundingBox: [],
     circle: [],
@@ -100,16 +85,8 @@ export const getSelectedRegionQuery = (state: EdscStore) => state.query.selected
 
 /**
  * Retrieve current collection temporal information
- * Returns NLP temporal data if NLP search is active, otherwise regular temporal data
  */
 export const getCollectionsQueryTemporal = (state: EdscStore) => {
-  const nlpTemporalData = getNlpTemporalData(state)
-
-  if (nlpTemporalData) {
-    return nlpTemporalData
-  }
-
-  // For regular searches, return the regular temporal query
   const { temporal } = getCollectionsQuery(state)
 
   return temporal
