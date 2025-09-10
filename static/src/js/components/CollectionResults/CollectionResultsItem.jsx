@@ -126,7 +126,9 @@ export const CollectionResultsItem = forwardRef(({
   // Fetch the base64 string from the Lambda function
   // Explicity call the GET request for the lambda
   useEffect(() => {
-    parseScaleImageResponse()
+    parseScaleImageResponse().catch(() => {
+      onThumbnailLoaded()
+    })
   }, [])
 
   const getConsortiumTooltipText = (consortium) => {

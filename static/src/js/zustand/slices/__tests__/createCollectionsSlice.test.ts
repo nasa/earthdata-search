@@ -235,11 +235,6 @@ describe('createCollectionsSlice', () => {
   })
 
   describe('getNlpCollections', () => {
-    beforeEach(() => {
-      jest.clearAllMocks()
-      nock.cleanAll()
-    })
-
     test('successfully performs NLP search and processes response', async () => {
       const mockNlpResponse = {
         data: {
@@ -281,12 +276,7 @@ describe('createCollectionsSlice', () => {
         authToken: 'test-token'
       })
 
-      const mockSetNlpCollection = jest.fn()
-      const mockChangeQuery = jest.fn()
-
       useEdscStore.setState((state) => {
-        state.query.setNlpCollection = mockSetNlpCollection
-        state.query.changeQuery = mockChangeQuery
         state.query.nlpCollection = { query: 'test query' }
       })
 
@@ -295,12 +285,14 @@ describe('createCollectionsSlice', () => {
 
       await getNlpCollections()
 
-      expect(mockSetNlpCollection).toHaveBeenCalledWith({
+      const updatedState = useEdscStore.getState()
+      const { query: updatedQuery } = updatedState
+      expect(updatedQuery.nlpCollection).toEqual({
         query: 'test query',
         spatial: expect.objectContaining({
-          type: 'Polygon'
+          geoJson: expect.objectContaining({ type: 'Polygon' }),
+          geoLocation: 'Test Area'
         }),
-        geoLocation: 'Test Area',
         temporal: {
           startDate: '2023-01-01T00:00:00.000Z',
           endDate: '2023-12-31T23:59:59.999Z'
@@ -336,12 +328,7 @@ describe('createCollectionsSlice', () => {
         authToken: 'test-token'
       })
 
-      const mockSetNlpCollection = jest.fn()
-      const mockChangeQuery = jest.fn()
-
       useEdscStore.setState((state) => {
-        state.query.setNlpCollection = mockSetNlpCollection
-        state.query.changeQuery = mockChangeQuery
         state.query.nlpCollection = { query: 'spatial query' }
       })
 
@@ -350,12 +337,14 @@ describe('createCollectionsSlice', () => {
 
       await getNlpCollections()
 
-      expect(mockSetNlpCollection).toHaveBeenCalledWith({
+      const updatedState = useEdscStore.getState()
+      const { query: updatedQuery } = updatedState
+      expect(updatedQuery.nlpCollection).toEqual({
         query: 'spatial query',
         spatial: expect.objectContaining({
-          type: 'Point'
+          geoJson: expect.objectContaining({ type: 'Point' }),
+          geoLocation: 'Point Location'
         }),
-        geoLocation: 'Point Location',
         temporal: null
       })
     })
@@ -407,10 +396,7 @@ describe('createCollectionsSlice', () => {
         authToken: 'test-token'
       })
 
-      const mockSetNlpCollection = jest.fn()
-
       useEdscStore.setState((state) => {
-        state.query.setNlpCollection = mockSetNlpCollection
         state.query.nlpCollection = { query: 'empty query' }
       })
 
@@ -419,7 +405,9 @@ describe('createCollectionsSlice', () => {
 
       await getNlpCollections()
 
-      expect(mockSetNlpCollection).not.toHaveBeenCalled()
+      const updatedState = useEdscStore.getState()
+      const { query: updatedQuery } = updatedState
+      expect(updatedQuery.nlpCollection).toEqual({ query: 'empty query' })
     })
   })
 })

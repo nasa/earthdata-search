@@ -152,30 +152,30 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         )
 
         const response = await nlpRequest.search({ q: searchQuery })
-
-        type NlpSearchResult = {
+        const nlpData = nlpRequest.transformResponse(response, searchQuery) as {
           query: string
-          spatial?: { geoJson: Geometry; geoLocation: string } | null
-          temporal?: { startDate: string; endDate: string } | null
-          metadata?: { feed?: { entry?: unknown[] } } | null
+          spatial: Geometry | null
+          geoLocation: string | null
+          temporal: { startDate: string; endDate: string } | null
         }
-
-        const { data } = response as { data: NlpSearchResult }
-        const nlpData = data
 
         if (nlpData.spatial || nlpData.temporal) {
           set((state) => {
             state.query.nlpCollection = {
-              query: nlpData.query,
-              spatial: nlpData.spatial ?? null,
+              query: searchQuery,
+              spatial: nlpData.spatial
+                ? {
+                  geoJson: nlpData.spatial,
+                  geoLocation: nlpData.geoLocation || ''
+                }
+                : null,
               temporal: nlpData.temporal ?? null
             }
           })
         }
 
-        const metadata = (nlpData.metadata ?? {}) as {
-          feed?: { entry?: unknown[] }
-        }
+        const { data } = response as { data: { metadata?: { feed?: { entry?: unknown[] } } } }
+        const metadata = (data.metadata ?? {}) as { feed?: { entry?: unknown[] } }
         const feed = metadata.feed ?? {}
         const collections = feed.entry ?? []
         const plainEntries = (collections as unknown[]).map(

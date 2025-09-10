@@ -1,19 +1,68 @@
+import axios from 'axios'
 import { pick } from 'lodash-es'
-import simplifySpatialGeometry from '../geometry/simplifySpatial'
+import { simplify, booleanClockwise } from '@turf/turf'
 
 import CmrRequest from './cmrRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
- * Simplifies NLP geometry if it has too many points using Turf.js
+ * Simplifies NLP geometry if it has too many points
  * @param {Object | null} geometry - GeoJSON geometry object to simplify
  * @returns {Object | null} Simplified geometry or null if simplification failed
  */
 const simplifyNlpGeometry = (geometry) => {
-  if (!geometry || !geometry.type) return null
-  if (geometry.type === 'Point') return geometry
+  if (!geometry || !geometry.type) {
+    return null
+  }
 
-  return simplifySpatialGeometry(geometry)
+  if (geometry.type === 'Point') {
+    return geometry
+  }
+
+  const coords = geometry.coordinates
+  if (!coords) return geometry
+
+  const coordsToCheck = geometry.type === 'Polygon' ? coords[0] : coords
+  const coordinateCount = Array.isArray(coordsToCheck) ? coordsToCheck.length : 0
+
+  const MAX_POLYGON_SIZE = 50
+  if (coordinateCount > MAX_POLYGON_SIZE) {
+    let simplified = geometry
+    let tolerance = 0.001
+
+    for (let attempts = 0; attempts < 10; attempts += 1) {
+      try {
+        simplified = simplify(geometry, {
+          tolerance,
+          highQuality: false
+        })
+
+        const simplifiedCoords = simplified.type === 'Polygon'
+          ? simplified.coordinates[0]
+          : simplified.coordinates
+        const simplifiedCount = Array.isArray(simplifiedCoords) ? simplifiedCoords.length : 0
+
+        if (simplifiedCount <= MAX_POLYGON_SIZE) {
+          if (simplified.type === 'Polygon') {
+            const isClockwise = booleanClockwise(simplified.coordinates[0])
+            if (!isClockwise) {
+              simplified.coordinates[0] = simplified.coordinates[0].reverse()
+            }
+          }
+
+          return simplified
+        }
+
+        tolerance *= 2
+      } catch {
+        return geometry
+      }
+    }
+
+    return geometry
+  }
+
+  return geometry
 }
 
 /**
@@ -41,9 +90,23 @@ export default class NlpSearchRequest extends CmrRequest {
   }
 
   /**
-   * Override search method for NLP calls
-   * @param {Object} searchParams - Search parameters
+   * Override get method to bypass Request transform hooks and preflight
    */
+  get(url, params) {
+    this.startTimer()
+    this.setFullUrl(url)
+
+    const requestOptions = {
+      method: 'get',
+      baseURL: this.baseUrl,
+      url,
+      params,
+      cancelToken: this.cancelToken.token
+    }
+
+    return axios(requestOptions)
+  }
+
   search(searchParams) {
     return this.get(this.searchPath, searchParams)
   }
@@ -71,19 +134,19 @@ export default class NlpSearchRequest extends CmrRequest {
 
   /**
    * Transforms the NLP search response to extract and format spatial/temporal data
-   * @param {Object} body - Parsed NLP API response ({ queryInfo, metadata })
-   * @returns {Object} { query, spatial, temporal, metadata }
+   * @param {Object} response - The raw NLP API response
+   * @param {String} query - The original search query string
    */
-  transformResponse(body) {
-    const actualData = body?.data || body
+  transformResponse(response, query) {
+    const { data } = response
+    const actualData = data?.data || data
 
     if (!actualData || !actualData.queryInfo) {
       return {
-        query: '',
+        query,
         spatial: null,
         geoLocation: null,
-        temporal: null,
-        metadata: body?.metadata || null
+        temporal: null
       }
     }
 
@@ -114,13 +177,10 @@ export default class NlpSearchRequest extends CmrRequest {
     }
 
     return {
-      query: actualData.queryInfo.query || '',
-      spatial: spatialData ? {
-        geoJson: spatialData,
-        geoLocation
-      } : null,
-      temporal: temporalData,
-      metadata: body?.metadata || null
+      query,
+      spatial: spatialData,
+      geoLocation,
+      temporal: temporalData
     }
   }
 }

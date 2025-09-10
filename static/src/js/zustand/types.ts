@@ -916,8 +916,6 @@ export type QuerySlice = {
     removeSpatialFilter: () => void
     /** Function to undo the last excluded granule */
     undoExcludeGranule: (collectionId: string) => void
-    /** Function to set NLP collection data */
-    setNlpCollection: (data: NlpCollectionQuery) => void
   }
 }
 
