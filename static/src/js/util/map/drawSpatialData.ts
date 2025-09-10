@@ -1,8 +1,18 @@
 import { transform } from 'ol/proj'
 import GeoJSON from 'ol/format/GeoJSON'
-import { Point, SimpleGeometry } from 'ol/geom'
+import { Feature } from 'ol'
+import {
+  Geometry as OlGeometry,
+  Point,
+  SimpleGeometry
+} from 'ol/geom'
 import Polygon, { circular } from 'ol/geom/Polygon'
 import VectorSource from 'ol/source/Vector'
+import type {
+  Geometry as GeoJsonGeometry,
+  MultiPolygon as GeoJsonMultiPolygon,
+  Polygon as GeoJsonPolygon
+} from 'geojson'
 
 import { spatialSearchMarkerStyle, spatialSearchStyle } from './styles'
 import getQueryFromShapefileFeature from './getQueryFromShapefileFeature'
@@ -72,7 +82,7 @@ const drawSpatialData = ({
     feature.set('selected', false)
     feature.set('projectionCode', projectionCodes.geographic)
 
-    const geometry: SimpleGeometry = feature.getGeometry() as SimpleGeometry
+    const geometry = feature.getGeometry() as unknown as SimpleGeometry
     const geometryType = geometry?.getType()
     const radius = feature.get('radius')
 
@@ -186,16 +196,16 @@ const drawSpatialData = ({
  * @param {Object} params - Drawing parameters
  */
 export const drawNlpSpatialData = ({
-  spatialData,
-  spatialDataAdded,
+  geometry,
+  label,
   projectionCode,
   vectorSource,
   onChangeProjection
 }: {
-  /** The NLP spatial data to draw */
-  spatialData: ShapefileFile
-  /** If the spatial data was just added */
-  spatialDataAdded: boolean
+  /** The NLP geometry to draw */
+  geometry: GeoJsonGeometry
+  /** Optional label for this geometry */
+  label?: string
   /** The current map projection */
   projectionCode: keyof typeof crsProjections
   /** The source to draw the spatial data on */
@@ -205,52 +215,92 @@ export const drawNlpSpatialData = ({
 }) => {
   vectorSource.clear()
 
-  const features = new GeoJSON().readFeatures(spatialData)
-  if (!features.length) return
+  let normalizedGeometry: GeoJsonGeometry = geometry
+  if (geometry?.type === 'Polygon' && Array.isArray((geometry as GeoJsonPolygon).coordinates)) {
+    const rings = (geometry as GeoJsonPolygon).coordinates
+    normalizedGeometry = {
+      ...geometry,
+      coordinates: rings.map((ring) => {
+        if (!ring?.length) return ring
+        const first = ring[0]
+        const last = ring[ring.length - 1]
+        if (first && last && (first[0] !== last[0] || first[1] !== last[1])) {
+          return ring.concat([first])
+        }
 
-  features.forEach((feature) => {
-    feature.set('isSpatialData', true)
-    feature.set('projectionCode', projectionCodes.geographic)
+        return ring
+      })
+    } as GeoJsonPolygon
+  }
 
-    const geometry: SimpleGeometry = feature.getGeometry() as SimpleGeometry
-    const geometryType = geometry?.getType()
-    const radius = feature.get('radius')
+  if (geometry?.type === 'MultiPolygon' && Array.isArray((geometry as GeoJsonMultiPolygon).coordinates)) {
+    const polys = (geometry as GeoJsonMultiPolygon).coordinates
+    normalizedGeometry = {
+      ...geometry,
+      coordinates: polys.map((poly) => (
+        (poly || []).map((ring) => {
+          if (!ring?.length) return ring
+          const first = ring[0]
+          const last = ring[ring.length - 1]
+          if (first && last && (first[0] !== last[0] || first[1] !== last[1])) {
+            return ring.concat([first])
+          }
 
-    feature.set('geographicCoordinates', (geometry as Polygon).getCoordinates(true))
+          return ring
+        })
+      ))
+    } as GeoJsonMultiPolygon
+  }
 
-    let geometryInProjection = geometry.clone()
+  const olGeometry = new GeoJSON().readGeometry(normalizedGeometry)
+  if (!olGeometry) return
 
-    if (projectionCode !== projectionCodes.geographic) {
-      geometryInProjection = geometryInProjection.transform(
-        crsProjections[projectionCodes.geographic],
-        crsProjections[projectionCode]
-      )
-    }
+  const feature = new Feature({ geometry: olGeometry })
+  feature.set('isSpatialData', true)
+  feature.set('projectionCode', projectionCodes.geographic)
+  if (label) feature.set('name', label)
 
-    feature.setGeometry(geometryInProjection)
+  const geomGeographic = feature.getGeometry() as unknown as SimpleGeometry
+  const geometryType = geomGeographic?.getType()
+  const radius = feature.get('radius')
 
-    // If the feature is a point with a radius, create a circle from the point
-    if (geometryType === spatialTypes.POINT && radius) {
-      const circle = circular((geometryInProjection as Point).getCoordinates(), radius, 64)
+  feature.set(
+    'geographicCoordinates',
+    (geomGeographic as Polygon).getCoordinates(true)
+  )
 
-      feature.set('circleGeometry', [geometry.getCoordinates(), radius])
-      feature.set('geometryType', spatialTypes.CIRCLE)
+  const geoShapeForMove: OlGeometry = geomGeographic.clone()
 
-      feature.setGeometry(circle)
-    } else {
-      feature.set('geometryType', geometryType)
-    }
+  let geometryInProjection = geomGeographic.clone()
+  if (projectionCode !== projectionCodes.geographic) {
+    geometryInProjection = geometryInProjection.transform(
+      crsProjections[projectionCodes.geographic],
+      crsProjections[projectionCode]
+    )
+  }
 
-    if (geometryType === spatialTypes.POINT && !radius) {
-      feature.setStyle(spatialSearchMarkerStyle)
-    } else {
-      feature.setStyle(spatialSearchStyle)
-    }
-  })
+  feature.setGeometry(geometryInProjection)
 
-  vectorSource.addFeatures(features)
+  // If the feature is a point with a radius, create a circle from the point
+  if (geometryType === spatialTypes.POINT && radius) {
+    const center = (geometryInProjection as Point).getCoordinates()
+    const circle = circular(center, radius, 64)
+    feature.set('circleGeometry', [geomGeographic.getCoordinates(), radius])
+    feature.set('geometryType', spatialTypes.CIRCLE)
+    feature.setGeometry(circle)
+  } else {
+    feature.set('geometryType', geometryType)
+  }
 
-  if (spatialDataAdded && onChangeProjection) {
+  if (geometryType === spatialTypes.POINT && !radius) {
+    feature.setStyle(spatialSearchMarkerStyle)
+  } else {
+    feature.setStyle(spatialSearchStyle)
+  }
+
+  vectorSource.addFeature(feature)
+
+  if (onChangeProjection) {
     const sourceExtent = vectorSource.getExtent()
 
     let geographicExtent = sourceExtent
@@ -283,14 +333,12 @@ export const drawNlpSpatialData = ({
     }
   }
 
-  if (spatialDataAdded) {
-    // SetTimeout is needed because the map needs to render before it can be moved
-    setTimeout(() => {
-      eventEmitter.emit(mapEventTypes.MOVEMAP, {
-        source: vectorSource
-      })
-    }, 0)
-  }
+  // Attempt to move map to this source when valid
+  setTimeout(() => {
+    eventEmitter.emit(mapEventTypes.MOVEMAP, {
+      shape: geoShapeForMove
+    })
+  }, 0)
 }
 
 export default drawSpatialData

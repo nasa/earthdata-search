@@ -163,6 +163,17 @@ const spatialDrawingLayer = new VectorLayer({
   zIndex: 4
 })
 
+// Layer for NLP spatial drawing
+// This is separate from spatialDrawingLayer to avoid interference with spatialSearch clears
+const nlpSpatialSource = new VectorSource({
+  wrapX: false
+})
+const nlpSpatialLayer = new VectorLayer({
+  source: nlpSpatialSource,
+  className: 'map__nlp-spatial-layer',
+  zIndex: 4
+})
+
 // Layer group for imagery layers
 const granuleImageryLayerGroup = new LayerGroup()
 
@@ -409,9 +420,8 @@ const Map: React.FC<MapProps> = ({
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
-  // Track previous spatial data name, id, to detect newly added NLP spatial data
+  // Track previous shapefile name to detect newly added shapefile
   const prevShapefileNameRef = useRef<string | undefined>(undefined)
-  const prevNlpSpatialIdRef = useRef<string | undefined>(undefined)
 
   useEffect(() => {
     const map = new OlMap({
@@ -431,7 +441,8 @@ const Map: React.FC<MapProps> = ({
         granuleHighlightsLayer,
         focusedGranuleLayer,
         granuleImageryLayerGroup,
-        spatialDrawingLayer
+        spatialDrawingLayer,
+        nlpSpatialLayer
       ],
       target: mapElRef.current as HTMLDivElement,
       view: createView({
@@ -608,7 +619,7 @@ const Map: React.FC<MapProps> = ({
       /** The source to move the map to */
       source?: VectorSource
     }) => {
-      let extent
+      let extent: import('ol/extent').Extent | undefined
 
       // If a shape was passed, use the extent of that shape
       if (shape) {
@@ -623,8 +634,19 @@ const Map: React.FC<MapProps> = ({
         extent = source.getExtent()
       }
 
+      if (!extent) return
+
+      const isFiniteNumber = (n: number) => Number.isFinite(n)
+      const isValidExtent = (
+        Array.isArray(extent)
+        && extent.length === 4
+        && extent.every(isFiniteNumber)
+        && extent[0] < extent[2]
+        && extent[1] < extent[3]
+      )
+
       // Fit the map to the extent
-      if (extent) {
+      if (isValidExtent) {
         map.getView().fit(extent, {
           duration: mapDuration,
           padding: [100, 125, 100, 100]
@@ -1016,50 +1038,30 @@ const Map: React.FC<MapProps> = ({
 
   // When the spatial search changes, draw the spatial search
   useEffect(() => {
-    if (nlpCollection?.spatial?.geoJson) {
-      return
-    }
-
     drawSpatialSearch({
       projectionCode,
       spatialSearch,
       vectorSource: spatialDrawingSource
     })
-  }, [spatialSearch, nlpCollection])
+  }, [spatialSearch])
 
   useEffect(() => {
-    if (nlpCollection?.spatial?.geoJson) {
-      const { geoJson, geoLocation } = nlpCollection.spatial
+    if (!nlpCollection?.spatial?.geoJson) {
+      nlpSpatialSource.clear()
 
-      const featureCollection = {
-        type: 'FeatureCollection' as const,
-        features: [{
-          type: 'Feature' as const,
-          geometry: geoJson,
-          properties: { edscId: '0' }
-        }],
-        nlpSpatialId: `nlp-spatial-${JSON.stringify(geoJson)}`.replace(/[^a-zA-Z0-9-]/g, '-'),
-        name: geoLocation || 'Search Area'
-      }
-
-      // Check if this is newly added NLP data
-      const currentNlpSpatialId = featureCollection.nlpSpatialId
-      const isNewlyAdded = Boolean(
-        currentNlpSpatialId && prevNlpSpatialIdRef.current !== currentNlpSpatialId
-      )
-      prevNlpSpatialIdRef.current = currentNlpSpatialId
-
-      drawNlpSpatialData({
-        spatialData: featureCollection,
-        spatialDataAdded: isNewlyAdded,
-        projectionCode,
-        vectorSource: spatialDrawingSource,
-        onChangeProjection
-      })
-    } else {
-      prevNlpSpatialIdRef.current = undefined
+      return
     }
-  }, [nlpCollection, projectionCode, onChangeProjection, spatialDrawingSource])
+
+    const { geoJson, geoLocation } = nlpCollection.spatial
+
+    drawNlpSpatialData({
+      geometry: geoJson,
+      label: geoLocation,
+      projectionCode,
+      vectorSource: nlpSpatialSource,
+      onChangeProjection
+    })
+  }, [nlpCollection, projectionCode, onChangeProjection])
 
   // When the shapefile changes, draw the shapefile
   useEffect(() => {
