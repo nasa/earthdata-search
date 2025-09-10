@@ -4,9 +4,10 @@ import classNames from 'classnames'
 import { kebabCase } from 'lodash-es'
 import Badge from 'react-bootstrap/Badge'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import { FaExternalLinkAlt } from 'react-icons/fa'
 
 import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
+
+import ExternalLink from '../ExternalLink/ExternalLink'
 
 import './OrderProgressItem.scss'
 
@@ -23,17 +24,14 @@ export const OrderProgressItem = ({
   let numGranulesProccessed
   let totalGranulesInOrder
   let totalPercentProcessed
-  let edscId
   let jobInformationHref
 
   if (type === 'Harmony') {
-    const { progress = 0 } = orderInformation
+    const { progress = 0, request = '' } = orderInformation
     totalPercentProcessed = progress
 
-    const { labels } = orderInformation
-    const [edscIdFromLabels] = labels
-    edscId = edscIdFromLabels
-    jobInformationHref = `https://harmony.earthdata.nasa.gov/workflow-ui?tableFilter=[{%22value%22:%22label:%20${edscId}%22}]`
+    const domainName = request.match(/^(https?:\/\/[^/]+\.gov)/)?.[0]
+    jobInformationHref = domainName ? `${domainName}/workflow-ui/${orderId}` : null
   }
 
   if (type === 'ESI') {
@@ -102,12 +100,10 @@ export const OrderProgressItem = ({
         </div>
       </header>
       {
-        type === 'Harmony' && (
-          <span>
-            <a href={jobInformationHref} target="_blank" rel="noreferrer">View Harmony Job Information</a>
-            <FaExternalLinkAlt className="ms-2 small" style={{ opacity: 0.625 }} />
-          </span>
-
+        type === 'Harmony' && jobInformationHref && (
+          <ExternalLink href={jobInformationHref}>
+            View Harmony Job Information
+          </ExternalLink>
         )
       }
       <ProgressBar

@@ -6,9 +6,10 @@ import { OrderProgressItem } from '../OrderProgressItem'
 
 import {
   retrievalStatusPropsEsi,
-  retrievalStatusPropsSwodlrOrder,
   retrievalStatusPropsHarmonyOrder,
-  retrievalStatusPropsHarmonyOrderInProgress
+  retrievalStatusPropsHarmonyOrderInProgress,
+  retrievalStatusPropsSwodlrOrder,
+  retrievalStatusPropsUponRequestOrder
 } from './mocks'
 
 beforeEach(() => {
@@ -72,6 +73,25 @@ describe('OrderProgressItem component', () => {
   })
 
   describe('Harmony Order in progress', () => {
+    test('shows the correct order metadata upon initial request of order', () => {
+      setup({
+        order: retrievalStatusPropsUponRequestOrder
+      })
+
+      expect(screen.getByRole('heading', {
+        level: 5,
+        name: 'Order ID: Not provided'
+      })).toBeInTheDocument()
+
+      expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0')
+      expect(screen.queryAllByRole('status')[0]).toHaveTextContent('Running')
+      expect(screen.queryAllByRole('status')[1]).toHaveTextContent('(0%)')
+
+      // Check that the Harmony Job Information link is not present
+      const harmonyLink = screen.queryByText('View Harmony Job Information')
+      expect(harmonyLink).not.toBeInTheDocument()
+    })
+
     test('shows the correct order metadata and Harmony workflows link', () => {
       setup({
         order: retrievalStatusPropsHarmonyOrderInProgress
@@ -88,7 +108,7 @@ describe('OrderProgressItem component', () => {
 
       const harmonyLink = screen.getByText('View Harmony Job Information')
       expect(harmonyLink).toBeInTheDocument()
-      expect(harmonyLink).toHaveAttribute('href', 'https://harmony.earthdata.nasa.gov/workflow-ui?tableFilter=[{%22value%22:%22label:%20edsc-id:5678901%22}]')
+      expect(harmonyLink).toHaveAttribute('href', 'https://harmony.earthdata.nasa.gov/workflow-ui/1a2b3c4d-5e6f-7g8h-9i0j-1k2l3m4n5o6p')
     })
   })
 

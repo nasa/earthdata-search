@@ -102,11 +102,19 @@ export const retrievalStatusPropsHarmonyOrderInProgress = {
     labels: ['edsc-id:5678901'],
     message: 'The job is in progress',
     numInputGranules: 10,
+    progress: 0,
     request: 'https://harmony.earthdata.nasa.gov/C1595422627-ASF/ogc-api-coverages/1.0.0/collections/all/coverage/rangeset?forceAsync=true&granuleId=G2736530662-ASF%2CG2736533197-ASF%2CG2736534372-ASF&skipPreview=true&label=eed-edsc-dev%2Cedsc-id%3D4140933204',
     status: 'running',
     updatedAt: '2024-11-21T18:54:54.177Z',
     username: 'testuser'
   },
+  state: 'running',
+  error: null
+}
+export const retrievalStatusPropsUponRequestOrder = {
+  id: 1,
+  type: 'Harmony',
+  order_number: '',
   state: 'running',
   error: null
 }
