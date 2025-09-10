@@ -1042,7 +1042,7 @@ const Map: React.FC<MapProps> = ({
       vectorSource: nlpSpatialSource,
       onChangeProjection
     })
-  }, [nlpCollection, projectionCode, onChangeProjection])
+  }, [nlpCollection, projectionCode])
 
   // When the shapefile changes, draw the shapefile
   useEffect(() => {

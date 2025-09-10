@@ -68,6 +68,8 @@ export const getNlpTemporalData = (state: EdscStore) => {
 export const getCollectionsQuerySpatial = (state: EdscStore) => {
   const { spatial } = getCollectionsQuery(state)
 
+  // Default the spatial values to empty arrays. This ensures code that is looking for
+  // arrays will not break (SpatialDisplay.jsx)
   return {
     boundingBox: [],
     circle: [],

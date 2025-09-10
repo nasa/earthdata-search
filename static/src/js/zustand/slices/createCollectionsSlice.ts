@@ -160,6 +160,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           spatial: Geometry | null
           geoLocation: string | null
           temporal: { startDate: string; endDate: string } | null
+          collections?: CollectionMetadata[]
         }
         type NlpSearchResponseData = { transformed: NlpTransformed, raw: unknown }
         const { data } = response as { data: NlpSearchResponseData }
@@ -180,37 +181,12 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           })
         }
 
-        type NlpMetadata = { feed?: { entry?: unknown[] } }
-        type NlpResponseTop = { metadata?: NlpMetadata; data?: NlpResponseTop }
-
-        const resp = raw as NlpResponseTop
-        const top: NlpResponseTop = resp ?? {}
-        const rootData: NlpResponseTop = top?.metadata ? top : (top?.data ?? {})
-        const metadata = (rootData?.metadata ?? {}) as NlpMetadata
-        const feed = metadata.feed ?? {}
-        const collections = feed.entry ?? []
-        const plainEntries = (collections as unknown[]).map((c) => {
-          const obj = { ...(c as Record<string, unknown>) }
-
-          if (!obj.id && obj.conceptId) obj.id = obj.conceptId
-
-          return obj
-        })
-
-        const collectionRequest = new CollectionRequest(
-          reduxState.authToken,
-          earthdataEnvironment
-        )
-        type TransformedFeed = { feed: { entry: CollectionMetadata[] } }
-        const transformed = collectionRequest.transformResponse({
-          feed: { entry: plainEntries }
-        }) as TransformedFeed
-        const transformedCollections = transformed.feed.entry || []
+        const transformedCollections = nlpData.collections || []
 
         set((state) => {
           state.collections.collections.isLoaded = true
           state.collections.collections.isLoading = false
-          state.collections.collections.count = collections.length
+          state.collections.collections.count = transformedCollections.length
           state.collections.collections.items = transformedCollections
         })
       } catch (error) {

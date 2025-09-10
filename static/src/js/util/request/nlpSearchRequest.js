@@ -3,6 +3,8 @@ import { pick } from 'lodash-es'
 import { simplify, booleanClockwise } from '@turf/turf'
 
 import CmrRequest from './cmrRequest'
+// @ts-expect-error This file does not have types
+import CollectionRequest from './collectionRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 
 /**
@@ -159,6 +161,7 @@ export default class NlpSearchRequest extends CmrRequest {
     let spatialData = null
     let geoLocation = null
     let temporalData = null
+    let collectionsData = []
 
     if (actualData.queryInfo.spatial) {
       const rawSpatialData = actualData.queryInfo.spatial
@@ -182,11 +185,21 @@ export default class NlpSearchRequest extends CmrRequest {
       }
     }
 
+    // Transform metadata entries into collection items
+    const meta = data?.metadata || data?.data?.metadata
+    const entries = meta?.feed?.entry || []
+    if (Array.isArray(entries) && entries.length) {
+      const cr = new CollectionRequest('', this.earthdataEnvironment)
+      const transformed = cr.transformResponse({ feed: { entry: entries } })
+      collectionsData = transformed?.feed?.entry || []
+    }
+
     return {
       query,
       spatial: spatialData,
       geoLocation,
-      temporal: temporalData
+      temporal: temporalData,
+      collections: collectionsData
     }
   }
 }

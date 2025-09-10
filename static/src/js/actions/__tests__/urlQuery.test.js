@@ -504,7 +504,7 @@ describe('updateStore', () => {
       })
     })
 
-    describe('when loadFromUrl is false and no newPathname', () => {
+    describe('when only portalId is provided on the root path', () => {
       test('only loads portal config', async () => {
         const params = {
           cmrFacets: {},
