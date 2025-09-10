@@ -72,7 +72,7 @@ import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
-import { drawNlpSpatialData } from '../../util/map/drawSpatialData'
+import { drawNlpSpatialData } from '../../util/map/drawNlpSpatialData'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
@@ -1033,14 +1033,12 @@ const Map: React.FC<MapProps> = ({
       return
     }
 
-    const { geoJson, geoLocation } = nlpCollection.spatial
+    const { geoJson } = nlpCollection.spatial
 
     drawNlpSpatialData({
       geometry: geoJson,
-      label: geoLocation,
       projectionCode,
-      vectorSource: nlpSpatialSource,
-      onChangeProjection
+      vectorSource: nlpSpatialSource
     })
   }, [nlpCollection, projectionCode])
 

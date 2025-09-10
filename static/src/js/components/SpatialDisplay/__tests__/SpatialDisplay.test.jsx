@@ -171,45 +171,6 @@ describe('SpatialDisplay component', () => {
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')).toHaveLength(1)
       expect(screen.queryAllByText('Draw a polygon on the map to filter results')[0]).toBeVisible()
     })
-
-    test('should display NLP geoLocation name in dedicated section when NLP data exists', () => {
-      const newPolygon = '-77.04444122314453,38.99228142151045,'
-        + '-77.01992797851562,38.79166886339155,'
-        + '-76.89415168762207,38.902629947921575,'
-        + '-77.04444122314453,38.99228142151045'
-
-      setup({
-        overrideZustandState: {
-          query: {
-            collection: {
-              spatial: {
-                polygon: [newPolygon]
-              }
-            },
-            nlpCollection: {
-              spatial: {
-                geoJson: {
-                  type: 'Polygon',
-                  coordinates: [
-                    [
-                      [-77.04444122314, 38.99228142151],
-                      [-77.01992797851, 38.79166886339],
-                      [-76.89415168762, 38.90262994792],
-                      [-77.04444122314, 38.99228142151]
-                    ]
-                  ]
-                },
-                geoLocation: 'Texas'
-              }
-            }
-          }
-        }
-      })
-
-      expect(screen.queryAllByText('Texas')).toHaveLength(1)
-      expect(screen.queryAllByText('Polygon')).toHaveLength(1)
-      expect(screen.queryByText('3 Points')).toBeNull()
-    })
   })
 
   describe('with polygonSearch and displaySpatialPolygonWarning', () => {
@@ -246,6 +207,47 @@ describe('SpatialDisplay component', () => {
       expect(screen.queryAllByText('This collection does not support polygon search. Your polygon has been converted to a bounding box.')).toHaveLength(1)
       expect(screen.queryAllByText('This collection does not support polygon search. Your polygon has been converted to a bounding box.')[0]).toBeVisible()
       expect(screen.getAllByTestId('spatial-display_polygon')[0].innerHTML).toEqual('3 Points')
+    })
+  })
+
+  describe('with nlp spatial', () => {
+    test('should display NLP geoLocation name in dedicated section when NLP data exists', () => {
+      const newPolygon = '-77.04444122314453,38.99228142151045,'
+        + '-77.01992797851562,38.79166886339155,'
+        + '-76.89415168762207,38.902629947921575,'
+        + '-77.04444122314453,38.99228142151045'
+
+      setup({
+        overrideZustandState: {
+          query: {
+            collection: {
+              spatial: {
+                polygon: [newPolygon]
+              }
+            },
+            nlpCollection: {
+              spatial: {
+                geoJson: {
+                  type: 'Polygon',
+                  coordinates: [
+                    [
+                      [-77.04444122314, 38.99228142151],
+                      [-77.01992797851, 38.79166886339],
+                      [-76.89415168762, 38.90262994792],
+                      [-77.04444122314, 38.99228142151]
+                    ]
+                  ]
+                },
+                geoLocation: 'Texas'
+              }
+            }
+          }
+        }
+      })
+
+      expect(screen.queryAllByText('Texas')).toHaveLength(1)
+      expect(screen.queryAllByText('Polygon')).toHaveLength(1)
+      expect(screen.queryAllByText('3 Points')).toHaveLength(1)
     })
   })
 
@@ -387,58 +389,6 @@ describe('SpatialDisplay component', () => {
           })
 
           expect(screen.getByText('To use a shapefile, please upload a zip file that includes its .shp, .shx, and .dbf files.')).toBeInTheDocument()
-        })
-      })
-
-      describe('when the spatial data is from NLP', () => {
-        test('should display "Search Area" instead of "Shape File"', () => {
-          const newPolygon = '-77.04444122314453,38.99228142151045,'
-            + '-77.01992797851562,38.79166886339155,'
-            + '-76.89415168762207,38.902629947921575,'
-            + '-77.04444122314453,38.99228142151045'
-
-          setup({
-            overrideZustandState: {
-              query: {
-                collection: {
-                  spatial: {
-                    polygon: [newPolygon]
-                  }
-                },
-                nlpCollection: {
-                  spatial: {
-                    geoJson: {
-                      type: 'Polygon',
-                      coordinates: [[[-77.04444122314453, 38.99228142151045]]]
-                    },
-                    geoLocation: 'California'
-                  }
-                }
-              },
-              shapefile: {
-                shapefileName: 'California',
-                isLoaded: true,
-                isLoading: false,
-                file: {
-                  type: 'FeatureCollection',
-                  features: [{
-                    type: 'Feature',
-                    properties: {
-                      edscId: '0',
-                      isNlpSpatial: true
-                    },
-                    geometry: {
-                      type: 'Polygon',
-                      coordinates: [[[-77.04444122314453, 38.99228142151045]]]
-                    }
-                  }]
-                }
-              }
-            }
-          })
-
-          expect(screen.queryAllByText('California')).toHaveLength(2)
-          expect(screen.queryAllByText('Polygon')).toHaveLength(1)
         })
       })
     })

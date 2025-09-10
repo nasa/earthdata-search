@@ -267,16 +267,18 @@ const SearchAutocomplete = ({
       // eslint-disable-next-line react/jsx-props-no-spreading
       <div {...containerProps} className="search-autocomplete__suggestions-container">
         {
-          (isLoading && !isLoaded) && (
-            <div className="search-autocomplete__loading-suggestions">
-              <Spinner className="search-autocomplete__spinner" type="dots" size="tiny" inline />
-              <span className="visually-hidden">Loading suggestions...</span>
-            </div>
-          )
-        }
-        {
           query && query.length > 2 && (
             <>
+              {
+                (isLoading && !isLoaded) && (
+                  <div className="search-autocomplete__loading-suggestions">
+                    <Spinner className="search-autocomplete__spinner" type="dots" size="tiny" inline />
+                    <span className="visually-hidden">
+                      Loading suggestions...
+                    </span>
+                  </div>
+                )
+              }
               { children }
               {
                 (isLoading || (children && Object.keys(children).length)) && (

@@ -71,6 +71,7 @@ const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
 )
 
 const { nlpSearch } = getApplicationConfig()
+const isNlpEnabled = nlpSearch === 'true'
 
 let preloaded = false
 
@@ -168,7 +169,7 @@ export const Home: React.FC<HomeProps> = ({
   const [showAllPortals, setShowAllPortals] = useState(false)
 
   // Check if NLP search is enabled to conditionally show spatial/temporal buttons
-  const showSearchButtons = nlpSearch !== 'true'
+  const showSearchButtons = !isNlpEnabled
 
   useEffect(() => {
     // Focus the search input when the component mounts
@@ -236,19 +237,14 @@ export const Home: React.FC<HomeProps> = ({
                   (e) => {
                     e.preventDefault()
 
-                    if (keyword.trim()) {
-                      const encodedKeyword = encodeURIComponent(keyword.trim())
-                      const isNlpEnabled = nlpSearch === 'true'
-                      const searchUrl = isNlpEnabled
-                        ? `/search?nlp=${encodedKeyword}`
-                        : `/search?q=${encodedKeyword}`
+                    const trimmedKeyword = keyword.trim()
+                    const queryParam = isNlpEnabled ? 'nlp' : 'q'
+                    const url = trimmedKeyword
+                      ? `/search?${queryParam}=${encodeURIComponent(trimmedKeyword)}`
+                      : '/search'
 
-                      onChangePath(searchUrl)
-                      history.push(searchUrl)
-                    } else {
-                      onChangePath('/search')
-                      history.push('/search')
-                    }
+                    onChangePath(url)
+                    history.push(url)
                   }
                 }
               >
