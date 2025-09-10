@@ -476,13 +476,15 @@ const SpatialDisplay = ({
       spatialError = message
     }
 
+    secondaryTitle = 'Shape File'
+
     contents.push((
       <FilterStackContents
         key="filter__shapefile"
         body={entry}
-        title="Shape File"
+        title=" "
+        showLabel={false}
         hint={hint}
-        showLabel
       />
     ))
   } else if (

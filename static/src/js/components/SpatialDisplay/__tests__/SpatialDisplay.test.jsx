@@ -295,8 +295,7 @@ describe('SpatialDisplay component', () => {
         expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
         expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-        expect(screen.queryAllByText('Shape File:')).toHaveLength(1)
-        expect(screen.queryAllByText('Shape File:')[0]).toBeVisible()
+        expect(screen.getByText('Shape File')).toBeVisible()
 
         expect(screen.getAllByTestId('spatial-display__loading')).toHaveLength(1)
         expect(screen.getAllByTestId('spatial-display__loading')[0]).toBeVisible()
@@ -337,8 +336,7 @@ describe('SpatialDisplay component', () => {
         expect(screen.getAllByTestId('edsc-icon')).toHaveLength(2)
         expect(screen.getAllByTestId('edsc-icon')[0]).toBeVisible()
 
-        expect(screen.queryAllByText('Shape File:')).toHaveLength(1)
-        expect(screen.queryAllByText('Shape File:')[0]).toBeVisible()
+        expect(screen.getByText('Shape File')).toBeVisible()
 
         expect(screen.queryAllByTestId('spatial-display__loading')).toHaveLength(0)
 
