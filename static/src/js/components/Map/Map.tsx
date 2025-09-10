@@ -1036,10 +1036,7 @@ const Map: React.FC<MapProps> = ({
         features: [{
           type: 'Feature' as const,
           geometry: geoJson,
-          properties: {
-            edscId: '0',
-            isNlpSpatial: true
-          }
+          properties: { edscId: '0' }
         }],
         nlpSpatialId: `nlp-spatial-${JSON.stringify(geoJson)}`.replace(/[^a-zA-Z0-9-]/g, '-'),
         name: geoLocation || 'Search Area'
@@ -1069,9 +1066,6 @@ const Map: React.FC<MapProps> = ({
     if (shapefile && shapefile.file) {
       const { file, selectedFeatures, shapefileName } = shapefile
       const { showMbr, drawingNewLayer } = spatialSearch
-
-      const isNlpShapefile = file?.features?.[0]?.properties?.isNlpSpatial === true
-      if (isNlpShapefile) return
 
       const isNewlyAdded = prevShapefileNameRef.current !== shapefileName
       prevShapefileNameRef.current = shapefileName

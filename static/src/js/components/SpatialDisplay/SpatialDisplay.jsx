@@ -387,10 +387,7 @@ const SpatialDisplay = ({
     entry = (
       <SpatialDisplayEntry>
         <Row className="spatial-display__form-row">
-          <span
-            className="spatial-display__text-primary"
-            data-testid="spatial-display_nlp-location"
-          >
+          <span className="spatial-display__text-primary">
             {nlpCollection.spatial.geoLocation}
           </span>
         </Row>
@@ -420,12 +417,10 @@ const SpatialDisplay = ({
 
   let hint = ''
 
-  const isNlpShapefile = shapefile?.file?.features?.[0]?.properties?.isNlpSpatial
-
   if ((((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
     && !drawingNewLayer)
     || drawingNewLayer === 'shapefile')
-    && !isNlpShapefile) {
+  ) {
     // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
     // render the shapefile display
     entry = (
@@ -693,11 +688,11 @@ const SpatialDisplay = ({
       />
     ))
   } else if (
-    ((
-      (currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer
+    (
+      ((currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer)
+      || drawingNewLayer === spatialTypes.POLYGON
     )
-    || drawingNewLayer === spatialTypes.POLYGON)
-    && !(nlpCollection && nlpCollection.spatial && nlpCollection.spatial.geoLocation) // Don't show polygon section when NLP data is present
+    && !nlpCollection?.spatial?.geoLocation
   ) {
     const pointArray = currentPolygonSearch.length ? currentPolygonSearch[0].split(',') : []
     const pointCount = (pointArray.length / 2) - 1

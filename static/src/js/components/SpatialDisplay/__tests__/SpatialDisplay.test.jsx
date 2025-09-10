@@ -208,7 +208,6 @@ describe('SpatialDisplay component', () => {
 
       expect(screen.queryAllByText('Texas')).toHaveLength(1)
       expect(screen.queryAllByText('Polygon')).toHaveLength(1)
-      expect(screen.getAllByTestId('spatial-display_nlp-location')[0].innerHTML).toEqual('Texas')
       expect(screen.queryByText('3 Points')).toBeNull()
     })
   })
@@ -438,9 +437,8 @@ describe('SpatialDisplay component', () => {
             }
           })
 
-          expect(screen.queryAllByText('California')).toHaveLength(1)
+          expect(screen.queryAllByText('California')).toHaveLength(2)
           expect(screen.queryAllByText('Polygon')).toHaveLength(1)
-          expect(screen.queryAllByText('Shape File')).toHaveLength(0)
         })
       })
     })
