@@ -30,9 +30,14 @@ export const OrderProgressItem = ({
     const { progress = 0, request = '' } = orderInformation
     totalPercentProcessed = progress
 
-    const requestUrl = new URL(request)
-    const { origin: domainName } = requestUrl
-    jobInformationHref = domainName ? `${domainName}/workflow-ui/${orderId}` : null
+    let domainName = ''
+
+    if (request) {
+      const requestUrl = new URL(request)
+      domainName = requestUrl.origin
+    }
+
+    jobInformationHref = domainName && orderId ? `${domainName}/workflow-ui/${orderId}` : null
   }
 
   if (type === 'ESI') {
