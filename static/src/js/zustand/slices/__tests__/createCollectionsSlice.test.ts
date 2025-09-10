@@ -306,6 +306,7 @@ describe('createCollectionsSlice', () => {
         expect.objectContaining({ conceptId: 'C1000000000-EDSC' }),
         expect.objectContaining({ conceptId: 'C1000000001-EDSC' })
       ]))
+
       expect(updatedCollections.collections.loadTime).toEqual(expect.any(Number))
     })
 

@@ -19,6 +19,7 @@ describe('url#decodeUrlParams', () => {
         ...emptyDecodedResult,
         focusedCollection: 'collectionId',
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
@@ -41,6 +42,7 @@ describe('url#decodeUrlParams', () => {
         ...emptyDecodedResult,
         focusedCollection: 'collectionId',
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
@@ -70,12 +72,14 @@ describe('url#decodeUrlParams', () => {
             byId: {
               collectionId: {
                 granules: {},
-                isVisible: true
+                isVisible: true,
+                selectedAccessMethod: undefined
               }
             }
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
@@ -104,12 +108,14 @@ describe('url#decodeUrlParams', () => {
             byId: {
               collectionId: {
                 granules: {},
-                isVisible: true
+                isVisible: true,
+                selectedAccessMethod: undefined
               }
             }
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {

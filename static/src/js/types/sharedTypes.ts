@@ -3,7 +3,11 @@ import {
   AxiosResponseHeaders,
   HttpStatusCode
 } from 'axios'
-import { FeatureCollection, GeoJsonObject, Geometry } from 'geojson'
+import {
+  FeatureCollection,
+  GeoJsonObject,
+  Geometry
+} from 'geojson'
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
 import { PreferencesData } from '../zustand/types'

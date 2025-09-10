@@ -26,19 +26,19 @@ describe('url#decodeUrlParams', () => {
                 granules: {
                   removedGranuleIds: ['G12345-MOCK', 'G56789-MOCK']
                 },
-                isVisible: true
+                isVisible: true,
+                selectedAccessMethod: undefined
               }
             }
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
               collectionId: {
-                granules: {
-                  pageNum: 1
-                }
+                granules: { pageNum: 1 }
               }
             }
           }
@@ -60,19 +60,19 @@ describe('url#decodeUrlParams', () => {
                 granules: {
                   removedGranuleIds: ['12345', '56789']
                 },
-                isVisible: true
+                isVisible: true,
+                selectedAccessMethod: undefined
               }
             }
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
               collectionId: {
-                granules: {
-                  pageNum: 1
-                }
+                granules: { pageNum: 1 }
               }
             }
           }

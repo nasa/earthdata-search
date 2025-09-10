@@ -18,6 +18,7 @@ describe('url#decodeUrlParams', () => {
       ...emptyDecodedResult,
       focusedCollection: 'collectionId',
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {

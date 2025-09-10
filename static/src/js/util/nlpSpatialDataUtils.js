@@ -1,4 +1,3 @@
-
 /**
  * Converts NLP spatial data to FeatureCollection format for map rendering
  * @param {Object} nlpSpatial - NLP spatial data in GeoJSON format

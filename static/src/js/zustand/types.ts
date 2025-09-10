@@ -1,5 +1,4 @@
 import { StateCreator } from 'zustand'
-import type { Geometry } from 'geojson'
 
 import {
   CollectionMetadata,
@@ -837,7 +836,6 @@ type SelectedRegion = {
   /** The type of the selected region */
   type?: 'huc' | 'reach'
 }
-
 
 /** Parameters for changing the query */
 type ChangeQueryParams = {

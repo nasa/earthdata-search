@@ -24,13 +24,7 @@ describe('decodes base correctly', () => {
           worldImagery: false,
           trueColor: true,
           landWaterMap: false
-        },
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
+        }
       }
     }
     expect(decodeUrlParams('?base=trueColor')).toEqual(expectedResult)
@@ -44,13 +38,7 @@ describe('decodes base correctly', () => {
           worldImagery: true,
           trueColor: false,
           landWaterMap: false
-        },
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
+        }
       }
     }
     expect(decodeUrlParams('?base=somethingElse')).toEqual(expectedResult)
@@ -62,13 +50,7 @@ describe('decodes latitude correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       mapView: {
-        base: undefined,
-        latitude: 1,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
+        latitude: 1
       }
     }
     expect(decodeUrlParams('?lat=1')).toEqual(expectedResult)
@@ -77,15 +59,7 @@ describe('decodes latitude correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
-      }
+      mapView: {}
     }
     expect(decodeUrlParams('?lat=test')).toEqual(expectedResult)
   })
@@ -96,13 +70,7 @@ describe('decodes longitude correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: 1,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
+        longitude: 1
       }
     }
     expect(decodeUrlParams('?long=1')).toEqual(expectedResult)
@@ -111,15 +79,7 @@ describe('decodes longitude correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
-      }
+      mapView: {}
     }
     expect(decodeUrlParams('?long=test')).toEqual(expectedResult)
   })
@@ -130,17 +90,11 @@ describe('decodes overlays correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
         overlays: {
           coastlines: true,
           bordersRoads: true,
           placeLabels: false
-        },
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
+        }
       }
     }
     expect(decodeUrlParams('?overlays=bordersRoads%2Ccoastlines')).toEqual(expectedResult)
@@ -150,17 +104,11 @@ describe('decodes overlays correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
         overlays: {
           coastlines: false,
           bordersRoads: false,
           placeLabels: false
-        },
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
+        }
       }
     }
     expect(decodeUrlParams('?overlays=test')).toEqual(expectedResult)
@@ -172,13 +120,7 @@ describe('decodes projection correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: 'epsg3031',
-        rotation: undefined,
-        zoom: undefined
+        projection: 'epsg3031'
       }
     }
     expect(decodeUrlParams('?projection=EPSG%3A3031')).toEqual(expectedResult)
@@ -187,15 +129,7 @@ describe('decodes projection correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
-      }
+      mapView: {}
     }
     expect(decodeUrlParams('?projection=test')).toEqual(expectedResult)
   })
@@ -206,13 +140,7 @@ describe('decodes rotation correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: 1,
-        zoom: undefined
+        rotation: 1
       }
     }
     expect(decodeUrlParams('?rotation=1')).toEqual(expectedResult)
@@ -221,15 +149,7 @@ describe('decodes rotation correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
-      }
+      mapView: {}
     }
     expect(decodeUrlParams('?rotation=test')).toEqual(expectedResult)
   })
@@ -240,12 +160,6 @@ describe('decodes zoom correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
       mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
         zoom: 1
       }
     }
@@ -255,15 +169,7 @@ describe('decodes zoom correctly', () => {
   test('when the result is invalid', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      mapView: {
-        base: undefined,
-        latitude: undefined,
-        longitude: undefined,
-        overlays: undefined,
-        projection: undefined,
-        rotation: undefined,
-        zoom: undefined
-      }
+      mapView: {}
     }
     expect(decodeUrlParams('?zoom=test')).toEqual(expectedResult)
   })

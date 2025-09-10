@@ -177,13 +177,23 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           })
         }
 
-        const { data } = response as { data: { metadata?: { feed?: { entry?: unknown[] } } } }
-        const metadata = (data.metadata ?? {}) as { feed?: { entry?: unknown[] } }
+        type NlpMetadata = { feed?: { entry?: unknown[] } }
+        type NlpResponseTop = { metadata?: NlpMetadata; data?: NlpResponseTop }
+        type NlpHttpResponse = { data?: NlpResponseTop }
+
+        const resp = response as NlpHttpResponse
+        const top: NlpResponseTop = resp?.data ?? {}
+        const rootData: NlpResponseTop = top?.metadata ? top : (top?.data ?? {})
+        const metadata = (rootData?.metadata ?? {}) as NlpMetadata
         const feed = metadata.feed ?? {}
         const collections = feed.entry ?? []
-        const plainEntries = (collections as unknown[]).map(
-          (c) => ({ ...(c as Record<string, unknown>) })
-        )
+        const plainEntries = (collections as unknown[]).map((c) => {
+          const obj = { ...(c as Record<string, unknown>) }
+
+          if (!obj.id && obj.conceptId) obj.id = obj.conceptId
+
+          return obj
+        })
 
         const collectionRequest = new CollectionRequest(
           reduxState.authToken,

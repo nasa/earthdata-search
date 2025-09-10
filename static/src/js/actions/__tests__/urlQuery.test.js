@@ -681,7 +681,8 @@ describe('changePath', () => {
               byId: {
                 'C00001-EDSC': {
                   granules: {},
-                  isVisible: true
+                  isVisible: true,
+                  selectedAccessMethod: undefined
                 }
               }
             }
@@ -700,7 +701,8 @@ describe('changePath', () => {
               pageNum: 1,
               spatial: initialQueryState.collection.spatial,
               temporal: {}
-            }
+            },
+            nlpCollection: null
           },
           shapefile: {
             shapefileId: ''
@@ -776,7 +778,8 @@ describe('changePath', () => {
           pageNum: 1,
           spatial: initialQueryState.collection.spatial,
           temporal: {}
-        }
+        },
+        nlpCollection: null
       },
       shapefile: {
         shapefileId: ''
@@ -1245,7 +1248,7 @@ describe('changePath', () => {
       expect(updateStoreMock).toHaveBeenCalledWith(
         expect.objectContaining({
           query: expect.objectContaining({
-            nlpCollection: undefined
+            nlpCollection: null
           })
         }),
         '/'
