@@ -118,7 +118,7 @@ describe('Home', () => {
     expect(searchInput).toHaveValue('test keyword')
   })
 
-  test('calls onChangePath and history.push when the search form is submitted', async () => {
+  test('calls onChangePath and navigate when the search form is submitted', async () => {
     const { props, user } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
@@ -133,7 +133,7 @@ describe('Home', () => {
     expect(mockUseNavigate).toHaveBeenCalledWith('/search?q=test')
   })
 
-  test('calls onChangePath and history.push when the enter key is pressed', async () => {
+  test('calls onChangePath and navigate when the enter key is pressed', async () => {
     const { props, user } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')

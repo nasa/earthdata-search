@@ -1,11 +1,17 @@
 export type Router = {
+  /** Function to navigate to a new path */
   navigate: (path: string) => void
+  /** Current state of the router */
   state: {
+    /** Current page location */
     location: {
+      /** A URL pathname, beginning with a /. */
       pathname: string
+      /** A URL query string, beginning with a ?. */
       search: string
     }
   },
+  /** Subscribe to router.state updates */
   subscribe: (callback: (location: Location) => void) => () => void
 }
 

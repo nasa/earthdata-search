@@ -1,15 +1,15 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import LoggerRequest from '../util/request/loggerRequest'
+import routerHelper from '../router/router'
 
 export const handleAlert = ({
   message,
   action,
   resource,
   requestObject
-}) => (dispatch, getState) => {
-  const { router = {} } = getState()
-  const { location } = router
+}) => () => {
+  const { location } = routerHelper.router
 
   let requestId = uuidv4()
   if (requestObject) {

@@ -19,6 +19,8 @@ import { pruneFilters } from '../../util/pruneFilters'
 
 import { eventEmitter } from '../../events/events'
 
+import routerHelper, { type Router } from '../../router/router'
+
 const { collectionSearchResultsSortKey } = getApplicationConfig()
 
 export const initialState = {
@@ -174,18 +176,12 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       }))
 
-      const {
-        getState: reduxGetState
-      } = configureStore()
-
       get().collections.getCollections()
 
       get().project.getProjectCollections()
 
       // Don't request granules unless we are viewing granules
-      const reduxState = reduxGetState()
-      const { router } = reduxState
-      const { location } = router
+      const { location } = routerHelper.router?.state || {} as Router['state']
       const { pathname } = location
 
       if (isPath(pathname, ['/search/granules'])) {

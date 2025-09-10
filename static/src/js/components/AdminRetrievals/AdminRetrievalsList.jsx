@@ -27,7 +27,7 @@ import Spinner from '../Spinner/Spinner'
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsList.scss'
 
-export const AdminRetrievalsList = () => {
+const AdminRetrievalsList = () => {
   const navigate = useNavigate()
 
   const [currentPage, setCurrentPage] = useState(1)

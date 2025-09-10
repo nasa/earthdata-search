@@ -12,6 +12,7 @@ import actions from '../../../actions'
 import * as getClientId from '../../../../../../sharedUtils/getClientId'
 // @ts-expect-error This file does not have types
 import * as getEarthdataConfig from '../../../../../../sharedUtils/config'
+import routerHelper from '../../../router/router'
 
 jest.mock('../../../actions', () => ({
   changeUrl: jest.fn(),
@@ -237,14 +238,19 @@ describe('createGranuleSlice', () => {
             state.granule.granuleId = 'granuleId'
           })
 
-          mockGetState.mockReturnValue({
-            authToken: '',
-            router: {
+          routerHelper.router = {
+            navigate: jest.fn(),
+            state: {
               location: {
                 search: '?some=testparams',
                 pathname: '/search/granules'
               }
-            }
+            },
+            subscribe: jest.fn()
+          }
+
+          mockGetState.mockReturnValue({
+            authToken: ''
           })
 
           const { granule } = useEdscStore.getState()

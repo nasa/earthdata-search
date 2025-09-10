@@ -4,11 +4,9 @@ import { screen } from '@testing-library/react'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import AdminRetrieval from '../AdminRetrieval'
-import { AdminRetrievalDetails } from '../../AdminRetrievalDetails/AdminRetrievalDetails'
+import AdminRetrievalDetails from '../../AdminRetrievalDetails/AdminRetrievalDetails'
 
-jest.mock('../../AdminRetrievalDetails/AdminRetrievalDetails', () => ({
-  AdminRetrievalDetails: jest.fn(() => <div />)
-}))
+jest.mock('../../AdminRetrievalDetails/AdminRetrievalDetails', () => jest.fn(() => <div />))
 
 const onRequeueOrderMock = jest.fn()
 

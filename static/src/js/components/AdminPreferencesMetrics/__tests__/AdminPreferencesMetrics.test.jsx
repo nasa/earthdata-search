@@ -3,12 +3,10 @@ import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { AdminPreferencesMetrics } from '../AdminPreferencesMetrics'
-import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
+import AdminPreferencesMetrics from '../AdminPreferencesMetrics'
+import AdminPreferencesMetricsList from '../AdminPreferencesMetricsList'
 
-jest.mock('../AdminPreferencesMetricsList', () => ({
-  AdminPreferencesMetricsList: jest.fn(() => <div />)
-}))
+jest.mock('../AdminPreferencesMetricsList', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: AdminPreferencesMetrics,

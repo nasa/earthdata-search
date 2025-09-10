@@ -16,12 +16,6 @@ const WrappingComponent = (props) => (
         Test Button
       </span>
     </button>
-    <button
-      type="button"
-      onClick={() => window.history.push('/new-path')}
-    >
-      Navigate
-    </button>
   </>
 )
 

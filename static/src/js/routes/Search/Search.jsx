@@ -4,7 +4,6 @@ import React, {
   Suspense,
   useEffect
 } from 'react'
-import { connect } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 
@@ -28,7 +27,6 @@ import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
 import Spinner from '../../components/Spinner/Spinner'
 
-import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -39,18 +37,12 @@ const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers
 const GranuleResultsHighlights = lazy(() => import('../../components/GranuleResultsHighlights/GranuleResultsHighlights'))
 const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFiltersContainer/GranuleFiltersContainer'))
 
-export const mapDispatchToProps = (dispatch) => ({
-  onTogglePortalBrowserModal:
-    (data) => dispatch(actions.togglePortalBrowserModal(data))
-})
-
 /**
  * Search route components
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionQuery - Collection query state
  * @param {Object} props.match - Router match state
  * @param {Function} props.onChangeQuery - Callback to change the query
- * @param {Function} props.onTogglePortalBrowserModal - Callback to update the portal browser modal state
  * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
  */
 export const Search = () => {
@@ -243,4 +235,4 @@ export const Search = () => {
   )
 }
 
-export default connect(null, mapDispatchToProps)(Search)
+export default Search

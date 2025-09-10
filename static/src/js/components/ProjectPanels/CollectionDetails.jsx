@@ -3,11 +3,11 @@ import PropTypes from 'prop-types'
 import { difference } from 'lodash-es'
 import classNames from 'classnames'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { useLocation } from 'react-router-dom'
 
 import { Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { eventEmitter } from '../../events/events'
-import { locationPropType } from '../../util/propTypes/location'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
@@ -25,9 +25,10 @@ import './CollectionDetails.scss'
  */
 export const CollectionDetails = ({
   collectionId,
-  location,
   projectCollection
 }) => {
+  const location = useLocation()
+
   const focusedGranuleId = useEdscStore(getGranuleId)
   const {
     setGranuleId,
@@ -192,7 +193,6 @@ export const CollectionDetails = ({
 
 CollectionDetails.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  location: locationPropType.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})
   }).isRequired

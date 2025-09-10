@@ -643,7 +643,6 @@ class ProjectPanels extends PureComponent {
           <PanelItem scrollable={false}>
             <CollectionDetails
               collectionId={collectionId}
-              location={location}
               projectCollection={projectCollection}
             />
           </PanelItem>

@@ -2,10 +2,10 @@ import React from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import { AdminPage } from '../AdminPage/AdminPage'
-import { AdminRetrievalsList } from './AdminRetrievalsList'
+import AdminPage from '../AdminPage/AdminPage'
+import AdminRetrievalsList from './AdminRetrievalsList'
 
-export const AdminRetrievals = () => (
+const AdminRetrievals = () => (
   <AdminPage
     pageTitle="Retrievals"
     breadcrumbs={

@@ -47,3 +47,17 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   unobserve: jest.fn(),
   disconnect: jest.fn()
 }))
+
+jest.mock('../static/src/js/router/router', () => ({
+  ...jest.requireActual('../static/src/js/router/router'),
+  router: {
+    navigate: jest.fn(),
+    state: {
+      location: {
+        pathname: '',
+        search: ''
+      }
+    },
+    subscribe: jest.fn()
+  }
+}))

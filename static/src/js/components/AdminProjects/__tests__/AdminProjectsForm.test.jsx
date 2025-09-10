@@ -3,7 +3,7 @@ import Enzyme, { shallow } from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 import Form from 'react-bootstrap/Form'
 
-import { AdminProjectsForm } from '../AdminProjectsForm'
+import AdminProjectsForm from '../AdminProjectsForm'
 
 Enzyme.configure({ adapter: new Adapter() })
 

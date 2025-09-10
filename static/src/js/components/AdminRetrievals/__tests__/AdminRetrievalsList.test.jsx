@@ -5,7 +5,7 @@ import {
   within
 } from '@testing-library/react'
 
-import { AdminRetrievalsList } from '../AdminRetrievalsList'
+import AdminRetrievalsList from '../AdminRetrievalsList'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_RETRIEVALS from '../../../operations/queries/adminRetrievals'
 

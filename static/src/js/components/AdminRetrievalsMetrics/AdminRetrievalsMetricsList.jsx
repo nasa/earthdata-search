@@ -4,7 +4,7 @@ import Table from 'react-bootstrap/Table'
 
 import './AdminRetrievalsMetricsList.scss'
 
-export const AdminRetrievalsMetricsList = ({
+const AdminRetrievalsMetricsList = ({
   retrievalsMetrics
 }) => {
   const {

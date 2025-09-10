@@ -432,10 +432,7 @@ class SecondaryToolbar extends Component {
     const showStartTourButton = location.pathname === '/search'
 
     return (
-      <nav
-        className={secondaryToolbarClassnames}
-        data-testid="secondary-toolbar"
-      >
+      <nav className={secondaryToolbarClassnames}>
         {isPath(location.pathname, ['/projects']) && backToSearchLink}
         {isDownloadPathWithId(location.pathname) && backToProjectLink}
         <PortalFeatureContainer authentication>

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import { AdminPage } from '../AdminPage/AdminPage'
-import { AdminRetrievalsMetricsList } from './AdminRetrievalsMetricsList'
+import AdminPage from '../AdminPage/AdminPage'
+import AdminRetrievalsMetricsList from './AdminRetrievalsMetricsList'
 import TemporalSelectionDropdown from '../TemporalDisplay/TemporalSelectionDropdown'
 import setTemporalFilters from './setTemporalFilters'
 
-export const AdminRetrievalsMetrics = ({
+const AdminRetrievalsMetrics = ({
   onFetchAdminRetrievalsMetrics,
   onUpdateAdminRetrievalsMetricsStartDate,
   onUpdateAdminRetrievalsMetricsEndDate,

@@ -1,11 +1,11 @@
 import React from 'react'
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import { AdminRetrievals } from '../AdminRetrievals'
-import { AdminRetrievalsList } from '../AdminRetrievalsList'
 
-jest.mock('../AdminRetrievalsList', () => ({
-  AdminRetrievalsList: jest.fn(() => <div />)
-}))
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
+import AdminRetrievals from '../AdminRetrievals'
+import AdminRetrievalsList from '../AdminRetrievalsList'
+
+jest.mock('../AdminRetrievalsList', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: AdminRetrievals,

@@ -2,10 +2,10 @@ import React from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import { AdminPage } from '../AdminPage/AdminPage'
-import { AdminPreferencesMetricsList } from './AdminPreferencesMetricsList'
+import AdminPage from '../AdminPage/AdminPage'
+import AdminPreferencesMetricsList from './AdminPreferencesMetricsList'
 
-export const AdminPreferencesMetrics = () => (
+const AdminPreferencesMetrics = () => (
   <AdminPage
     pageTitle="Preferences Metrics"
     breadcrumbs={
