@@ -1,4 +1,5 @@
 import { CancelTokenSource, isCancel } from 'axios'
+import type { Geometry } from 'geojson'
 import { CollectionsSlice, ImmerStateCreator } from '../types'
 
 // @ts-expect-error There are no types for this file
@@ -8,6 +9,7 @@ import configureStore from '../../store/configureStore'
 import actions from '../../actions'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import type { CollectionMetadata } from '../../types/sharedTypes'
 
 // @ts-expect-error There are no types for this file
 import CollectionRequest from '../../util/request/collectionRequest'
@@ -141,29 +143,51 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
       const zustandState = get()
       const searchQuery = zustandState.query.nlpCollection!.query
 
+      let nlpRequest: NlpSearchRequest
+
       try {
-        const nlpRequest = new NlpSearchRequest(reduxState.authToken, earthdataEnvironment)
+        nlpRequest = new NlpSearchRequest(
+          reduxState.authToken,
+          earthdataEnvironment
+        )
+
         const response = await nlpRequest.search({ q: searchQuery })
 
-        const nlpData = nlpRequest.transformResponse(response, searchQuery)
+        type NlpSearchResult = {
+          query: string
+          spatial?: { geoJson: Geometry; geoLocation: string } | null
+          temporal?: { startDate: string; endDate: string } | null
+          metadata?: { feed?: { entry?: unknown[] } } | null
+        }
+
+        const { data } = response as { data: NlpSearchResult }
+        const nlpData = data
 
         if (nlpData.spatial || nlpData.temporal) {
           const currentState = get()
-          currentState.query.setNlpCollection(nlpData)
+          currentState.query.setNlpCollection({
+            query: nlpData.query,
+            spatial: nlpData.spatial ?? null,
+            temporal: nlpData.temporal ?? null
+          })
         }
 
-        const { data } = response
-        const { metadata = {} } = data
-        const { feed = {} } = metadata
-        const { entry: collections = [] } = feed
+        const metadata = (nlpData.metadata ?? {}) as {
+          feed?: { entry?: unknown[] }
+        }
+        const feed = metadata.feed ?? {}
+        const collections = feed.entry ?? []
+        const plainEntries = (collections as unknown[]).map(
+          (c) => ({ ...(c as Record<string, unknown>) })
+        )
 
         const collectionRequest = new CollectionRequest(
           reduxState.authToken,
           earthdataEnvironment
         )
-        type TransformedFeed = { feed: { entry: import('../../types/sharedTypes').CollectionMetadata[] } }
-        const transformed: TransformedFeed = collectionRequest.transformResponse({
-          feed: { entry: collections }
+        type TransformedFeed = { feed: { entry: CollectionMetadata[] } }
+        const transformed = collectionRequest.transformResponse({
+          feed: { entry: plainEntries }
         }) as TransformedFeed
         const transformedCollections = transformed.feed.entry || []
 
@@ -183,7 +207,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           error,
           action: 'getNlpCollections',
           resource: 'nlpSearch',
-          requestObject: new NlpSearchRequest(reduxState.authToken, earthdataEnvironment)
+          requestObject: nlpRequest
         }))
       }
     }

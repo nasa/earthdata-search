@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { pick } from 'lodash-es'
 import simplifySpatialGeometry from '../geometry/simplifySpatial'
 
@@ -42,26 +41,6 @@ export default class NlpSearchRequest extends CmrRequest {
   }
 
   /**
-   * Override get method to make a simple request
-   * @param {String} url - URL to request
-   * @param {Object} params - Query parameters
-   */
-  get(url, params) {
-    this.startTimer()
-    this.setFullUrl(url)
-
-    const requestOptions = {
-      method: 'get',
-      baseURL: this.baseUrl,
-      url,
-      params,
-      cancelToken: this.cancelToken.token
-    }
-
-    return axios(requestOptions)
-  }
-
-  /**
    * Override search method for NLP calls
    * @param {Object} searchParams - Search parameters
    */
@@ -92,20 +71,19 @@ export default class NlpSearchRequest extends CmrRequest {
 
   /**
    * Transforms the NLP search response to extract and format spatial/temporal data
-   * @param {Object} response - The raw NLP API response
-   * @param {String} query - The original search query string
-   * @returns {Object} Transformed data with query, spatial, and temporal properties
+   * @param {Object} body - Parsed NLP API response ({ queryInfo, metadata })
+   * @returns {Object} { query, spatial, temporal, metadata }
    */
-  transformResponse(response, query) {
-    const { data } = response
-    const actualData = data?.data || data
+  transformResponse(body) {
+    const actualData = body?.data || body
 
     if (!actualData || !actualData.queryInfo) {
       return {
-        query,
+        query: '',
         spatial: null,
         geoLocation: null,
-        temporal: null
+        temporal: null,
+        metadata: body?.metadata || null
       }
     }
 
@@ -136,12 +114,13 @@ export default class NlpSearchRequest extends CmrRequest {
     }
 
     return {
-      query,
+      query: actualData.queryInfo.query || '',
       spatial: spatialData ? {
         geoJson: spatialData,
         geoLocation
       } : null,
-      temporal: temporalData
+      temporal: temporalData,
+      metadata: body?.metadata || null
     }
   }
 }
