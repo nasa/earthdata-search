@@ -70,9 +70,6 @@ const { preloadSrcSet, preloadSizes } = getHeroImageSrcSet(
   [...heroImgSourcesSmall, ...heroImgSources]
 )
 
-const { nlpSearch } = getApplicationConfig()
-const isNlpEnabled = nlpSearch === 'true'
-
 let preloaded = false
 
 const preloadRoutes = () => {
@@ -169,6 +166,8 @@ export const Home: React.FC<HomeProps> = ({
   const [showAllPortals, setShowAllPortals] = useState(false)
 
   // Check if NLP search is enabled to conditionally show spatial/temporal buttons
+  const { nlpSearch } = getApplicationConfig()
+  const isNlpEnabled = nlpSearch === 'true'
   const showSearchButtons = !isNlpEnabled
 
   useEffect(() => {

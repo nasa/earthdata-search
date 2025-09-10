@@ -7,6 +7,8 @@ import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
 
 import { Home } from '../Home'
+// @ts-expect-error: No types for sharedUtils/config in tests
+import * as sharedConfig from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('react-router-dom', () => ({
@@ -207,5 +209,23 @@ describe('Home', () => {
 
     expect(props.onChangePath).toHaveBeenCalledWith('/search')
     expect(useHistory().push).toHaveBeenCalledWith('/search')
+  })
+
+  test('uses nlp param and hides dropdowns when nlpSearch is enabled', async () => {
+    (sharedConfig.getApplicationConfig as unknown as jest.Mock).mockReturnValue({ nlpSearch: 'true' })
+
+    const { props, user } = setup()
+
+    const searchInput = screen.getByPlaceholderText('Type to search for data')
+
+    await user.type(searchInput, 'test')
+    await user.click(screen.getByRole('button', { name: /search/i }))
+
+    expect(props.onChangePath).toHaveBeenCalledWith('/search?nlp=test')
+    expect(useHistory().push).toHaveBeenCalledWith('/search?nlp=test')
+
+    expect(screen.queryByTestId('spatial-selection-dropdown')).toBeNull()
+    expect(screen.queryByTestId('temporal-selection-dropdown')).toBeNull();
+    (sharedConfig.getApplicationConfig as unknown as jest.Mock).mockReturnValue({ nlpSearch: 'false' })
   })
 })
