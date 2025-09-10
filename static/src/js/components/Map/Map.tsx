@@ -92,6 +92,7 @@ import './Map.scss'
 import {
   GranuleMetadata,
   MapGranule,
+  NlpCollectionQuery,
   ProjectionCode,
   Query,
   ShapefileFile,
@@ -295,12 +296,7 @@ interface MapProps {
   /** Flag to show if this is a project page */
   isProjectPage: boolean
   /** The NLP collection data */
-  nlpCollection: {
-    spatial?: {
-      geoJson: import('geojson').Geometry
-      geoLocation: string
-    } | null
-  } | null
+  nlpCollection: NlpCollectionQuery | null
   /** Function to call when the map is updated */
   onChangeMap: (mapView: Partial<MapView>) => void
   /** Function to call when the projection is changed */

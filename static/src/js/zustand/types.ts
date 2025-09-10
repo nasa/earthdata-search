@@ -8,6 +8,7 @@ import {
   GranulesMetadata,
   PortalConfig,
   ProjectionCode,
+  NlpCollectionQuery,
   ScienceKeyword,
   ShapefileFile,
   Spatial,
@@ -837,23 +838,6 @@ type SelectedRegion = {
   type?: 'huc' | 'reach'
 }
 
-/** NLP Collection Query Parameters */
-type NlpCollectionQuery = {
-  /** The original search query string */
-  query: string
-  /** The spatial data extracted from NLP */
-  spatial?: {
-    /** The GeoJSON spatial data */
-    geoJson: Geometry
-    /** The location name from NLP */
-    geoLocation: string
-  } | null
-  /** The temporal data extracted from NLP */
-  temporal?: {
-    startDate: string
-    endDate: string
-  } | null
-}
 
 /** Parameters for changing the query */
 type ChangeQueryParams = {

@@ -3,7 +3,7 @@ import {
   AxiosResponseHeaders,
   HttpStatusCode
 } from 'axios'
-import { FeatureCollection, GeoJsonObject } from 'geojson'
+import { FeatureCollection, GeoJsonObject, Geometry } from 'geojson'
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
 import { PreferencesData } from '../zustand/types'
@@ -443,4 +443,22 @@ export type SubscriptionResponse = {
   count: number
   /** The list of subscriptions */
   items: Subscription[]
+}
+
+/** NLP Collection Query Parameters */
+export type NlpCollectionQuery = {
+  /** The original search query string */
+  query: string
+  /** The spatial data extracted from NLP */
+  spatial?: {
+    /** The GeoJSON spatial data */
+    geoJson: Geometry
+    /** The location name from NLP */
+    geoLocation: string
+  } | null
+  /** The temporal data extracted from NLP */
+  temporal?: {
+    startDate: string
+    endDate: string
+  } | null
 }
