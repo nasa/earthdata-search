@@ -30,7 +30,8 @@ export const OrderProgressItem = ({
     const { progress = 0, request = '' } = orderInformation
     totalPercentProcessed = progress
 
-    const domainName = request.match(/^(https?:\/\/[^/]+\.gov)/)?.[0]
+    const requestUrl = new URL(request)
+    const { origin: domainName } = requestUrl
     jobInformationHref = domainName ? `${domainName}/workflow-ui/${orderId}` : null
   }
 
