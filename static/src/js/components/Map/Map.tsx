@@ -630,19 +630,7 @@ const Map: React.FC<MapProps> = ({
         extent = source.getExtent()
       }
 
-      if (!extent) return
-
-      const isFiniteNumber = (n: number) => Number.isFinite(n)
-      const isValidExtent = (
-        Array.isArray(extent)
-        && extent.length === 4
-        && extent.every(isFiniteNumber)
-        && extent[0] < extent[2]
-        && extent[1] < extent[3]
-      )
-
-      // Fit the map to the extent
-      if (isValidExtent) {
+      if (extent) {
         map.getView().fit(extent, {
           duration: mapDuration,
           padding: [100, 125, 100, 100]
