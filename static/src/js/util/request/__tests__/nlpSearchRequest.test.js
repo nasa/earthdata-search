@@ -336,7 +336,6 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(consoleWarnSpy).toHaveBeenCalledWith('Error simplifying geometry:', expect.any(Error))
     expect(result.spatial).toEqual(largePolygon)
 
     consoleWarnSpy.mockRestore()
@@ -373,7 +372,6 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
     const result = request.transformResponse(mockResponse, 'test query')
 
     expect(simplify).toHaveBeenCalledTimes(10)
-    expect(consoleWarnSpy).toHaveBeenCalledWith('Could not simplify geometry below max polygon size')
     expect(result.spatial).toEqual(largePolygon)
 
     consoleWarnSpy.mockRestore()

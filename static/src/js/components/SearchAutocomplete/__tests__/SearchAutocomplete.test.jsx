@@ -177,12 +177,14 @@ describe('SearchAutocomplete', () => {
         }))
 
       const input = screen.getByRole('textbox')
-      await user.clear(input)
-      await user.type(input, 'test')
-
-      // Submit form while request is in flight
       const searchButton = screen.getByText('Search')
-      await user.click(searchButton)
+
+      await act(async () => {
+        await user.clear(input)
+        await user.type(input, 'test')
+        // Submit form while request is in flight
+        await user.click(searchButton)
+      })
 
       // Loading should be cleared
       expect(screen.queryByText('Loading suggestions...')).not.toBeInTheDocument()
