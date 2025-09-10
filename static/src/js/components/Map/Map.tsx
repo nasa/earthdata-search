@@ -416,9 +416,6 @@ const Map: React.FC<MapProps> = ({
 
   const [isLayerSwitcherOpen, setIsLayerSwitcherOpen] = useState(false)
 
-  // Track previous shapefile name to detect newly added shapefile
-  const prevShapefileNameRef = useRef<string | undefined>(undefined)
-
   useEffect(() => {
     const map = new OlMap({
       controls: [
@@ -1050,11 +1047,8 @@ const Map: React.FC<MapProps> = ({
   // When the shapefile changes, draw the shapefile
   useEffect(() => {
     if (shapefile && shapefile.file) {
-      const { file, selectedFeatures, shapefileName } = shapefile
+      const { file, selectedFeatures } = shapefile
       const { showMbr, drawingNewLayer } = spatialSearch
-
-      const isNewlyAdded = prevShapefileNameRef.current !== shapefileName
-      prevShapefileNameRef.current = shapefileName
 
       drawShapefile({
         drawingNewLayer,
@@ -1066,7 +1060,7 @@ const Map: React.FC<MapProps> = ({
         onUpdateShapefile,
         projectionCode,
         shapefile: file,
-        shapefileAdded: isNewlyAdded,
+        shapefileAdded: false,
         showMbr,
         vectorSource: spatialDrawingSource
       })

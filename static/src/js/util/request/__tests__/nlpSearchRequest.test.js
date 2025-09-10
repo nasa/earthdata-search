@@ -79,13 +79,14 @@ describe('NlpSearchRequest#get', () => {
 
     expect(startTimerSpy).toHaveBeenCalledTimes(1)
     expect(setFullUrlSpy).toHaveBeenCalledWith(url)
-    expect(axios).toHaveBeenCalledWith({
+    expect(axios).toHaveBeenCalledWith(expect.objectContaining({
       method: 'get',
       baseURL: mockConfig.cmrHost,
       url,
       params,
-      cancelToken: mockCancelToken.token
-    })
+      cancelToken: mockCancelToken.token,
+      transformResponse: expect.any(Array)
+    }))
 
     expect(result).toBe(mockResponse)
   })

@@ -101,6 +101,12 @@ export default class NlpSearchRequest extends CmrRequest {
       baseURL: this.baseUrl,
       url,
       params,
+      transformResponse: axios.defaults.transformResponse.concat(
+        (data) => ({
+          raw: data,
+          transformed: this.transformResponse({ data }, params && params.q)
+        })
+      ),
       cancelToken: this.cancelToken.token
     }
 

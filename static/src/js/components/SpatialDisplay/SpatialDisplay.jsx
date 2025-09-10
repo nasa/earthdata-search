@@ -411,13 +411,12 @@ const SpatialDisplay = ({
     isLoaded: shapefileLoaded,
     selectedFeatures = [],
     shapefileName,
-    shapefileId,
     shapefileSize
   } = shapefile
 
   let hint = ''
 
-  if ((((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
+  if ((((shapefileError || shapefileLoading || shapefileLoaded)
     && !drawingNewLayer)
     || drawingNewLayer === 'shapefile')
   ) {
@@ -692,7 +691,6 @@ const SpatialDisplay = ({
       ((currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer)
       || drawingNewLayer === spatialTypes.POLYGON
     )
-    && !nlpCollection?.spatial?.geoLocation
   ) {
     const pointArray = currentPolygonSearch.length ? currentPolygonSearch[0].split(',') : []
     const pointCount = (pointArray.length / 2) - 1
