@@ -255,12 +255,6 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
       })
 
       get().granules.getGranules()
-    },
-
-    setNlpCollection: (data) => {
-      set((state) => {
-        state.query.nlpCollection = data
-      })
     }
 
   }

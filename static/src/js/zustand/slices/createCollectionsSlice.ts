@@ -164,11 +164,12 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         const nlpData = data
 
         if (nlpData.spatial || nlpData.temporal) {
-          const currentState = get()
-          currentState.query.setNlpCollection({
-            query: nlpData.query,
-            spatial: nlpData.spatial ?? null,
-            temporal: nlpData.temporal ?? null
+          set((state) => {
+            state.query.nlpCollection = {
+              query: nlpData.query,
+              spatial: nlpData.spatial ?? null,
+              temporal: nlpData.temporal ?? null
+            }
           })
         }
 

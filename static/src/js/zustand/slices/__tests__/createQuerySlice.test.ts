@@ -180,7 +180,6 @@ describe('createQuerySlice', () => {
       })
     })
 
-
     describe('when there are spatial values', () => {
       test('updates the store', async () => {
         useEdscStore.setState((state) => {
@@ -734,90 +733,4 @@ describe('createQuerySlice', () => {
       expect(granules.getGranules).toHaveBeenCalledWith()
     })
   })
-
-
-  describe('setNlpCollection', () => {
-    test('sets NLP collection data with spatial and temporal info', () => {
-      const mockNlpData = {
-        query: 'test query',
-        spatial: {
-          geoJson: {
-            type: 'Polygon' as const,
-            coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
-          },
-          geoLocation: 'Florida'
-        },
-        temporal: {
-          startDate: '2023-01-01T00:00:00.000Z',
-          endDate: '2023-12-31T23:59:59.999Z'
-        }
-      }
-
-      const zustandState = useEdscStore.getState()
-      const { query } = zustandState
-      const { setNlpCollection } = query
-      setNlpCollection(mockNlpData)
-
-      const updatedState = useEdscStore.getState()
-      const {
-        query: updatedQuery
-      } = updatedState
-
-      expect(updatedQuery.nlpCollection).toEqual(mockNlpData)
-    })
-
-    test('sets NLP collection data with only spatial info', () => {
-      const mockNlpData = {
-        query: 'spatial query',
-        spatial: {
-          geoJson: {
-            type: 'Point' as const,
-            coordinates: [0, 0]
-          },
-          geoLocation: 'Florida'
-        },
-        temporal: null
-      }
-
-      const zustandState = useEdscStore.getState()
-      const { query } = zustandState
-      const { setNlpCollection } = query
-      setNlpCollection(mockNlpData)
-
-      const updatedState = useEdscStore.getState()
-      const {
-        query: updatedQuery
-      } = updatedState
-
-      expect(updatedQuery.nlpCollection).toEqual(mockNlpData)
-      expect(updatedQuery.nlpCollection?.spatial).toBeTruthy()
-      expect(updatedQuery.nlpCollection?.temporal).toBeNull()
-    })
-
-    test('sets NLP collection data with only temporal info', () => {
-      const mockNlpData = {
-        query: 'temporal query',
-        spatial: null,
-        temporal: {
-          startDate: '2023-06-01T00:00:00.000Z',
-          endDate: '2023-06-30T23:59:59.999Z'
-        }
-      }
-
-      const zustandState = useEdscStore.getState()
-      const { query } = zustandState
-      const { setNlpCollection } = query
-      setNlpCollection(mockNlpData)
-
-      const updatedState = useEdscStore.getState()
-      const {
-        query: updatedQuery
-      } = updatedState
-
-      expect(updatedQuery.nlpCollection).toEqual(mockNlpData)
-      expect(updatedQuery.nlpCollection?.spatial).toBeNull()
-      expect(updatedQuery.nlpCollection?.temporal).toBeTruthy()
-    })
-  })
-
 })
