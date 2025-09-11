@@ -50,14 +50,14 @@ describe('transformCollectionEntries', () => {
 
     expect(Array.isArray(result)).toBe(true)
     expect(result).toHaveLength(1)
-    
+
     // Check that conceptId is set
     expect(result[0]).toHaveProperty('conceptId', 'collection-1')
-    
+
     // Check that thumbnail is set for collections with browse_flag
     expect(result[0]).toHaveProperty('thumbnail')
     expect(result[0].thumbnail).toContain('collection-1')
-    
+
     // Check that near real time flag is set
     expect(result[0]).toHaveProperty('isNrt', true)
   })
