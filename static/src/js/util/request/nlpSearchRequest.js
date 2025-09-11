@@ -180,8 +180,10 @@ export default class NlpSearchRequest extends CmrRequest {
 
     return {
       query,
-      spatial: spatialData,
-      geoLocation,
+      spatial: spatialData ? {
+        geoJson: spatialData,
+        geoLocation: geoLocation || ''
+      } : null,
       temporal: temporalData,
       collections: collectionsData
     }

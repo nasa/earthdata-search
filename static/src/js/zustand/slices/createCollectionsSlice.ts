@@ -168,26 +168,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
 
         if (nlpData.spatial || nlpData.temporal) {
           set((state) => {
-            const next = {
-              query: searchQuery
-            } as {
-              query: string
-              spatial?: { geoJson: Geometry; geoLocation: string }
-              temporal?: { startDate: string; endDate: string }
-            }
-
-            if (nlpData.spatial) {
-              next.spatial = {
-                geoJson: nlpData.spatial,
-                geoLocation: nlpData.geoLocation || ''
-              }
-            }
-
-            if (nlpData.temporal) {
-              next.temporal = nlpData.temporal
-            }
-
-            state.query.nlpCollection = next
+            state.query.nlpCollection = nlpData
           })
         }
 
