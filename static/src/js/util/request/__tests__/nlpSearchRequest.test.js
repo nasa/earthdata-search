@@ -156,7 +156,10 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(result.spatial).toEqual({ geoJson: pointGeometry, geoLocation: '' })
+    expect(result.spatial).toEqual({
+      geoJson: pointGeometry,
+      geoLocation: ''
+    })
   })
 
   test('returns small polygon unchanged when under MAX_POLYGON_SIZE', () => {
