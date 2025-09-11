@@ -411,15 +411,15 @@ const SpatialDisplay = ({
     isLoaded: shapefileLoaded,
     selectedFeatures = [],
     shapefileName,
+    shapefileId,
     shapefileSize
   } = shapefile
 
   let hint = ''
 
-  if ((((shapefileError || shapefileLoading || shapefileLoaded)
+  if (((shapefileError || shapefileLoading || shapefileLoaded || shapefileId)
     && !drawingNewLayer)
-    || drawingNewLayer === 'shapefile')
-  ) {
+    || drawingNewLayer === 'shapefile') {
     // If (shapefile data or error exists and not currently drawing a new layer) or (the drawingNewLayer === 'shapefile')
     // render the shapefile display
     entry = (
@@ -690,9 +690,9 @@ const SpatialDisplay = ({
     ))
   } else if (
     (
-      ((currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer)
-      || drawingNewLayer === spatialTypes.POLYGON
+      (currentPolygonSearch && currentPolygonSearch.length) && !drawingNewLayer
     )
+    || drawingNewLayer === spatialTypes.POLYGON
   ) {
     const pointArray = currentPolygonSearch.length ? currentPolygonSearch[0].split(',') : []
     const pointCount = (pointArray.length / 2) - 1

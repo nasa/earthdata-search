@@ -211,21 +211,26 @@ describe('Home', () => {
     expect(useHistory().push).toHaveBeenCalledWith('/search')
   })
 
-  test('uses nlp param and hides dropdowns when nlpSearch is enabled', async () => {
-    (sharedConfig.getApplicationConfig as unknown as jest.Mock).mockReturnValue({ nlpSearch: 'true' })
+  describe('when nlpSearch is enabled', () => {
+    beforeEach(() => {
+      sharedConfig.getApplicationConfig.mockReturnValue({ nlpSearch: 'true' })
+    })
 
-    const { props, user } = setup()
+    afterEach(() => {
+      sharedConfig.getApplicationConfig.mockReturnValue({ nlpSearch: 'false' })
+    })
 
-    const searchInput = screen.getByPlaceholderText('Type to search for data')
+    test('uses nlp param and hides dropdowns', async () => {
+      const { props, user } = setup()
+      const searchInput = screen.getByPlaceholderText('Type to search for data')
 
-    await user.type(searchInput, 'test')
-    await user.click(screen.getByRole('button', { name: /search/i }))
+      await user.type(searchInput, 'test')
+      await user.click(screen.getByRole('button', { name: /search/i }))
 
-    expect(props.onChangePath).toHaveBeenCalledWith('/search?nlp=test')
-    expect(useHistory().push).toHaveBeenCalledWith('/search?nlp=test')
-
-    expect(screen.queryByTestId('spatial-selection-dropdown')).toBeNull()
-    expect(screen.queryByTestId('temporal-selection-dropdown')).toBeNull();
-    (sharedConfig.getApplicationConfig as unknown as jest.Mock).mockReturnValue({ nlpSearch: 'false' })
+      expect(props.onChangePath).toHaveBeenCalledWith('/search?nlp=test')
+      expect(useHistory().push).toHaveBeenCalledWith('/search?nlp=test')
+      expect(screen.queryByTestId('spatial-selection-dropdown')).toBeNull()
+      expect(screen.queryByTestId('temporal-selection-dropdown')).toBeNull()
+    })
   })
 })
