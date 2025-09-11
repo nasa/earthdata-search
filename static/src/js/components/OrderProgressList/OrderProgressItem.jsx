@@ -7,6 +7,8 @@ import ProgressBar from 'react-bootstrap/ProgressBar'
 
 import { getStateFromOrderStatus, formatOrderStatus } from '../../../../../sharedUtils/orderStatus'
 
+import ExternalLink from '../ExternalLink/ExternalLink'
+
 import './OrderProgressItem.scss'
 
 export const OrderProgressItem = ({
@@ -22,10 +24,20 @@ export const OrderProgressItem = ({
   let numGranulesProccessed
   let totalGranulesInOrder
   let totalPercentProcessed
+  let jobInformationHref
 
   if (type === 'Harmony') {
-    const { progress = 0 } = orderInformation
+    const { progress = 0, request = '' } = orderInformation
     totalPercentProcessed = progress
+
+    let domainName = ''
+
+    if (request) {
+      const requestUrl = new URL(request)
+      domainName = requestUrl.origin
+    }
+
+    jobInformationHref = domainName && orderId ? `${domainName}/workflow-ui/${orderId}` : null
   }
 
   if (type === 'ESI') {
@@ -93,6 +105,13 @@ export const OrderProgressItem = ({
           </span>
         </div>
       </header>
+      {
+        type === 'Harmony' && jobInformationHref && (
+          <ExternalLink href={jobInformationHref}>
+            View Harmony Job Information
+          </ExternalLink>
+        )
+      }
       <ProgressBar
         className="order-progress-item__bar"
         now={totalPercentProcessed}
