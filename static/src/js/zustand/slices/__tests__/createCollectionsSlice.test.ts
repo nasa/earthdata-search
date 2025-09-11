@@ -255,11 +255,11 @@ describe('createCollectionsSlice', () => {
             feed: {
               entry: [
                 {
-                  conceptId: 'C1000000000-EDSC',
+                  id: 'C1000000000-EDSC',
                   title: 'Test Collection'
                 },
                 {
-                  conceptId: 'C1000000001-EDSC',
+                  id: 'C1000000001-EDSC',
                   title: 'Another Collection'
                 }
               ]

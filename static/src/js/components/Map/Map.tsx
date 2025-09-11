@@ -627,6 +627,7 @@ const Map: React.FC<MapProps> = ({
         extent = source.getExtent()
       }
 
+      // Fit the map to the extent
       if (extent) {
         map.getView().fit(extent, {
           duration: mapDuration,
@@ -1026,7 +1027,9 @@ const Map: React.FC<MapProps> = ({
     })
   }, [spatialSearch])
 
+  // Draw NLP spatial features when NLP collection data changes
   useEffect(() => {
+    // Clear any existing NLP spatial features when no geoJson data exists
     if (!nlpCollection?.spatial?.geoJson) {
       nlpSpatialSource.clear()
 
@@ -1035,6 +1038,7 @@ const Map: React.FC<MapProps> = ({
 
     const { geoJson } = nlpCollection.spatial
 
+    // Draw the NLP-generated spatial boundary on the map
     drawNlpSpatialData({
       geometry: geoJson,
       projectionCode,

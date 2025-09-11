@@ -212,19 +212,9 @@ describe('SpatialDisplay component', () => {
 
   describe('with nlp spatial', () => {
     test('should display NLP geoLocation name in dedicated section when NLP data exists', () => {
-      const newPolygon = '-77.04444122314453,38.99228142151045,'
-        + '-77.01992797851562,38.79166886339155,'
-        + '-76.89415168762207,38.902629947921575,'
-        + '-77.04444122314453,38.99228142151045'
-
       setup({
         overrideZustandState: {
           query: {
-            collection: {
-              spatial: {
-                polygon: [newPolygon]
-              }
-            },
             nlpCollection: {
               spatial: {
                 geoJson: {
@@ -247,7 +237,7 @@ describe('SpatialDisplay component', () => {
 
       expect(screen.queryAllByText('Texas')).toHaveLength(1)
       expect(screen.queryAllByText('Polygon')).toHaveLength(1)
-      expect(screen.queryAllByText('3 Points')).toHaveLength(1)
+      expect(screen.queryAllByText('4 Points')).toHaveLength(1)
     })
   })
 

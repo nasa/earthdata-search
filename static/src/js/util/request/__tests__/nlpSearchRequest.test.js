@@ -28,40 +28,6 @@ describe('NlpSearchRequest#constructor', () => {
   })
 })
 
-describe('NlpSearchRequest#filterData', () => {
-  test('returns picked data when data is provided', () => {
-    const request = new NlpSearchRequest('', 'sit')
-    const testData = {
-      q: 'test',
-      pageNum: 1,
-      invalidKey: 'invalid'
-    }
-
-    const result = request.filterData(testData)
-
-    expect(result).toEqual({
-      q: 'test',
-      pageNum: 1
-    })
-  })
-
-  test('returns data as-is when data is null', () => {
-    const request = new NlpSearchRequest('', 'sit')
-
-    const result = request.filterData(null)
-
-    expect(result).toBeNull()
-  })
-
-  test('returns data as-is when data is undefined', () => {
-    const request = new NlpSearchRequest('', 'sit')
-
-    const result = request.filterData(undefined)
-
-    expect(result).toBeUndefined()
-  })
-})
-
 describe('NlpSearchRequest#get', () => {
   test('calls axios with correct options', async () => {
     const request = new NlpSearchRequest('test-token', 'sit')
@@ -119,7 +85,7 @@ describe('NlpSearchRequest#permittedCmrKeys', () => {
   test('returns the correct array of permitted keys', () => {
     const request = new NlpSearchRequest('', 'sit')
 
-    expect(request.permittedCmrKeys()).toEqual(['q', 'pageNum', 'pageSize'])
+    expect(request.permittedCmrKeys()).toEqual(['q'])
   })
 })
 

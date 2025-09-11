@@ -1,11 +1,9 @@
 import axios from 'axios'
-import { pick } from 'lodash-es'
 import { simplify, booleanClockwise } from '@turf/turf'
 
 import CmrRequest from './cmrRequest'
-// @ts-expect-error This file does not have types
-import CollectionRequest from './collectionRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
+import { transformCollectionEntries } from '../collections/transformCollectionEntries'
 
 /**
  * Simplifies NLP geometry if it has too many points
@@ -81,19 +79,6 @@ export default class NlpSearchRequest extends CmrRequest {
   }
 
   /**
-   * Override filterData to skip snake_case conversion for NLP API
-   * NLP API expects camelCase parameters, unlike traditional CMR endpoints
-   * @param {Object} data - An object representing an HTTP request payload
-   */
-  filterData(data) {
-    if (data) {
-      return pick(data, this.permittedCmrKeys())
-    }
-
-    return data
-  }
-
-  /**
    * Override get method to bypass Request transform hooks and preflight
    */
   get(url, params) {
@@ -131,14 +116,11 @@ export default class NlpSearchRequest extends CmrRequest {
 
   /**
    * Defines the default keys that our API endpoints allow.
-   * NLP API expects camelCase parameters, unlike standard CMR endpoints
    * @return {Array} Array of permitted CMR keys for NLP search
    */
   permittedCmrKeys() {
     return [
-      'q',
-      'pageNum',
-      'pageSize'
+      'q'
     ]
   }
 
@@ -193,9 +175,7 @@ export default class NlpSearchRequest extends CmrRequest {
     const entries = meta?.feed?.entry || []
 
     if (Array.isArray(entries) && entries.length) {
-      const cr = new CollectionRequest('', this.earthdataEnvironment)
-      const transformed = cr.transformResponse({ feed: { entry: entries } })
-      collectionsData = transformed?.feed?.entry || []
+      collectionsData = transformCollectionEntries(entries, this.earthdataEnvironment)
     }
 
     return {
