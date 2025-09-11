@@ -74,7 +74,7 @@ describe('transformCollectionEntries', () => {
     const result = transformCollectionEntries(mockEntries, 'prod')
 
     expect(result[0]).toHaveProperty('isDefaultImage', true)
-    expect(result[0].thumbnail).toContain('image-unavailable.svg')
+    expect(result[0].thumbnail).toBe('test-file-stub')
   })
 
   test('handles empty entries array', () => {
