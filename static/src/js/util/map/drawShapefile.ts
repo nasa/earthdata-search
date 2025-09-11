@@ -5,7 +5,7 @@ import Polygon, { circular } from 'ol/geom/Polygon'
 import { Point, SimpleGeometry } from 'ol/geom'
 import VectorSource from 'ol/source/Vector'
 import type { Geometry as GeoJsonGeometry } from 'geojson'
-import simplifySpatialGeometry from '../geometry/simplifySpatial'
+import simplifySpatial from '../geometry/simplifySpatial'
 
 import {
   mbrStyle,
@@ -52,7 +52,7 @@ const simplifyShape = ({
   }
 
   const turfGeometry = new GeoJSON().writeGeometryObject(geometry) as GeoJsonGeometry
-  const simplified: GeoJsonGeometry = simplifySpatialGeometry(turfGeometry)
+  const simplified: GeoJsonGeometry = simplifySpatial(turfGeometry)
 
   return new GeoJSON().readGeometry(simplified) as SimpleGeometry
 }

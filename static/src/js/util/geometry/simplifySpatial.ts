@@ -1,4 +1,4 @@
-import { simplify as turfSimplify } from '@turf/turf'
+import { simplify as turfSimplify, booleanClockwise } from '@turf/turf'
 import type { Geometry, Position } from 'geojson'
 
 import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
@@ -31,23 +31,43 @@ export const getCoordinateCount = (geometry: Geometry | null | undefined): numbe
 /**
  * Simplify spatial geometry if it exceeds size limits
  */
-export const simplifySpatialGeometry = (geometry: Geometry): Geometry => {
+export const simplifySpatial = (geometry: Geometry): Geometry => {
   if (!geometry || !geometry.type) return geometry
   if (geometry.type === 'Point' || geometry.type === 'MultiPoint') return geometry
 
-  const inputCount = getCoordinateCount(geometry)
-  if (inputCount <= MAX_POLYGON_SIZE) return geometry
+  let working: Geometry = geometry
+  let count = getCoordinateCount(working)
+  if (count <= MAX_POLYGON_SIZE) return working
 
-  try {
-    const simplified = turfSimplify(geometry, {
-      tolerance: 0.01,
-      highQuality: true
-    }) as Geometry
+  let tolerance = 0.001
+  let previousCount = count
 
-    return simplified || geometry
-  } catch {
-    return geometry
+  // Iteratively increase tolerance until we get under threshold or no more reduction
+  for (let i = 0; i < 25 && count > MAX_POLYGON_SIZE; i += 1) {
+    try {
+      const simplified = turfSimplify(working, {
+        tolerance: tolerance += 0.002,
+        highQuality: true
+      }) as Geometry
+
+      if (simplified && simplified.type === 'Polygon') {
+        const poly = simplified as unknown as { coordinates: number[][][] }
+        if (poly.coordinates && poly.coordinates[0] && booleanClockwise(poly.coordinates[0])) {
+          poly.coordinates[0] = poly.coordinates[0].reverse()
+        }
+      }
+
+      if (simplified) working = simplified
+
+      count = getCoordinateCount(working)
+      if (count === previousCount) break
+      previousCount = count
+    } catch {
+      break
+    }
   }
+
+  return working
 }
 
-export default simplifySpatialGeometry
+export default simplifySpatial

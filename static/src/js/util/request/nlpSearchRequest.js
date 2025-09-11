@@ -91,10 +91,7 @@ export default class NlpSearchRequest extends CmrRequest {
       url,
       params,
       transformResponse: axios.defaults.transformResponse.concat(
-        (data) => ({
-          raw: data,
-          transformed: this.transformResponse({ data }, params && params.q)
-        })
+        (data) => this.transformResponse({ data }, params && params.q)
       ),
       cancelToken: this.cancelToken.token
     }
@@ -135,9 +132,12 @@ export default class NlpSearchRequest extends CmrRequest {
 
     if (!actualData || !actualData.queryInfo) {
       return {
-        query,
-        spatial: null,
-        temporal: null
+        queryInfo: {
+          query,
+          spatial: null,
+          temporal: null
+        },
+        collections: []
       }
     }
 
@@ -171,19 +171,18 @@ export default class NlpSearchRequest extends CmrRequest {
 
     // Transform metadata entries into collection items
     const meta = data?.metadata || data?.data?.metadata
-    const entries = meta?.feed?.entry || []
-
-    if (Array.isArray(entries) && entries.length) {
-      collectionsData = transformCollectionEntries(entries, this.earthdataEnvironment)
-    }
+    const entries = meta?.feed?.entry
+    collectionsData = transformCollectionEntries(entries, this.earthdataEnvironment)
 
     return {
-      query,
-      spatial: spatialData ? {
-        geoJson: spatialData,
-        geoLocation: geoLocation || ''
-      } : null,
-      temporal: temporalData,
+      queryInfo: {
+        query,
+        spatial: spatialData ? {
+          geoJson: spatialData,
+          geoLocation: geoLocation || ''
+        } : null,
+        temporal: temporalData
+      },
       collections: collectionsData
     }
   }

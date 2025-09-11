@@ -108,9 +108,12 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
     const result = request.transformResponse(response, 'test query')
 
     expect(result).toEqual(expect.objectContaining({
-      query: 'test query',
-      spatial: null,
-      temporal: null
+      queryInfo: {
+        query: 'test query',
+        spatial: null,
+        temporal: null
+      },
+      collections: []
     }))
   })
 
@@ -132,9 +135,12 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
     const result = request.transformResponse(response, 'test query')
 
     expect(result).toEqual(expect.objectContaining({
-      query: 'test query',
-      spatial: null,
-      temporal: null
+      queryInfo: {
+        query: 'test query',
+        spatial: null,
+        temporal: null
+      },
+      collections: []
     }))
   })
 
@@ -156,7 +162,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(result.spatial).toEqual({
+    expect(result.queryInfo.spatial).toEqual({
       geoJson: pointGeometry,
       geoLocation: ''
     })
@@ -180,7 +186,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(result.spatial.geoJson).toEqual(smallPolygon)
+    expect(result.queryInfo.spatial.geoJson).toEqual(smallPolygon)
   })
 
   test('simplifies large polygon when over MAX_POLYGON_SIZE', () => {
@@ -223,7 +229,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
       ...simplifiedPolygon,
       coordinates: [simplifiedPolygon.coordinates[0].reverse()]
     }
-    expect(result.spatial.geoJson).toEqual(expectedGeometry)
+    expect(result.queryInfo.spatial.geoJson).toEqual(expectedGeometry)
   })
 
   test('handles simplification with multiple attempts when still too large', () => {
@@ -274,7 +280,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
       highQuality: false
     })
 
-    expect(result.spatial.geoJson).toEqual(goodPolygon)
+    expect(result.queryInfo.spatial.geoJson).toEqual(goodPolygon)
   })
 
   test('handles simplification error and returns original geometry', () => {
@@ -304,7 +310,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(result.spatial.geoJson).toEqual(largePolygon)
+    expect(result.queryInfo.spatial.geoJson).toEqual(largePolygon)
 
     consoleWarnSpy.mockRestore()
   })
@@ -340,7 +346,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
     const result = request.transformResponse(mockResponse, 'test query')
 
     expect(simplify).toHaveBeenCalledTimes(10)
-    expect(result.spatial.geoJson).toEqual(largePolygon)
+    expect(result.queryInfo.spatial.geoJson).toEqual(largePolygon)
 
     consoleWarnSpy.mockRestore()
   })
@@ -360,9 +366,12 @@ describe('NlpSearchRequest#transformResponse', () => {
     const result = request.transformResponse(response, query)
 
     expect(result).toEqual({
-      query: 'test query',
-      spatial: null,
-      temporal: null
+      queryInfo: {
+        query: 'test query',
+        spatial: null,
+        temporal: null
+      },
+      collections: []
     })
   })
 
@@ -375,9 +384,12 @@ describe('NlpSearchRequest#transformResponse', () => {
     const result = request.transformResponse(response, query)
 
     expect(result).toEqual({
-      query: 'climate data',
-      spatial: null,
-      temporal: null
+      queryInfo: {
+        query: 'climate data',
+        spatial: null,
+        temporal: null
+      },
+      collections: []
     })
   })
 
@@ -401,12 +413,14 @@ describe('NlpSearchRequest#transformResponse', () => {
     const result = request.transformResponse(response, 'test query')
 
     expect(result).toEqual(expect.objectContaining({
-      query: 'test query',
-      spatial: {
-        geoJson: spatialGeometry,
-        geoLocation: 'Test Location'
-      },
-      temporal: null
+      queryInfo: {
+        query: 'test query',
+        spatial: {
+          geoJson: spatialGeometry,
+          geoLocation: 'Test Location'
+        },
+        temporal: null
+      }
     }))
   })
 
@@ -426,9 +440,9 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'ocean data')
 
-    expect(result.spatial.geoJson).toEqual(spatialGeometry)
+    expect(result.queryInfo.spatial.geoJson).toEqual(spatialGeometry)
 
-    expect(result.temporal).toBeNull()
+    expect(result.queryInfo.temporal).toBeNull()
   })
 
   test('processes temporal data', () => {
@@ -448,11 +462,13 @@ describe('NlpSearchRequest#transformResponse', () => {
     const result = request.transformResponse(response, 'temperature data')
 
     expect(result).toEqual(expect.objectContaining({
-      query: 'temperature data',
-      spatial: null,
-      temporal: {
-        startDate: '2020-01-01T00:00:00.000Z',
-        endDate: '2020-12-31T23:59:59.999Z'
+      queryInfo: {
+        query: 'temperature data',
+        spatial: null,
+        temporal: {
+          startDate: '2020-01-01T00:00:00.000Z',
+          endDate: '2020-12-31T23:59:59.999Z'
+        }
       }
     }))
   })
@@ -483,14 +499,16 @@ describe('NlpSearchRequest#transformResponse', () => {
     const result = request.transformResponse(response, 'landsat data')
 
     expect(result).toEqual(expect.objectContaining({
-      query: 'landsat data',
-      spatial: {
-        geoJson: spatialGeometry,
-        geoLocation: 'Alaska Region'
-      },
-      temporal: {
-        startDate: '2023-01-01T00:00:00.000Z',
-        endDate: '2023-06-30T23:59:59.999Z'
+      queryInfo: {
+        query: 'landsat data',
+        spatial: {
+          geoJson: spatialGeometry,
+          geoLocation: 'Alaska Region'
+        },
+        temporal: {
+          startDate: '2023-01-01T00:00:00.000Z',
+          endDate: '2023-06-30T23:59:59.999Z'
+        }
       }
     }))
   })
@@ -508,7 +526,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'test query')
 
-    expect(result.temporal).toBeNull()
+    expect(result.queryInfo.temporal).toBeNull()
   })
 
   test('handles simplified geometry returning null', () => {
@@ -533,9 +551,12 @@ describe('NlpSearchRequest#transformResponse', () => {
 
       if (!data || !data.queryInfo) {
         return {
-          query: mockQuery,
-          spatial: null,
-          temporal: null
+          queryInfo: {
+            query: mockQuery,
+            spatial: null,
+            temporal: null
+          },
+          collections: []
         }
       }
 
@@ -562,18 +583,24 @@ describe('NlpSearchRequest#transformResponse', () => {
       }
 
       return {
-        query: mockQuery,
-        spatial: spatialData,
-        temporal: null
+        queryInfo: {
+          query: mockQuery,
+          spatial: spatialData,
+          temporal: null
+        },
+        collections: []
       }
     }
 
     const result = request.transformResponse(response, 'test query')
 
     expect(result).toEqual({
-      query: 'test query',
-      spatial: null,
-      temporal: null
+      queryInfo: {
+        query: 'test query',
+        spatial: null,
+        temporal: null
+      },
+      collections: []
     })
 
     request.transformResponse = originalTransformResponse
@@ -597,7 +624,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'flight path')
 
-    expect(result.spatial.geoJson).toEqual(lineGeometry)
+    expect(result.queryInfo.spatial.geoJson).toEqual(lineGeometry)
   })
 
   test('handles geometry with missing coordinates', () => {
@@ -617,7 +644,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'test query')
 
-    expect(result.spatial.geoJson).toEqual(badGeometry)
+    expect(result.queryInfo.spatial.geoJson).toEqual(badGeometry)
   })
 
   test('handles polygon winding correction when already clockwise', () => {
@@ -650,7 +677,7 @@ describe('NlpSearchRequest#transformResponse', () => {
     const result = request.transformResponse(mockResponse, 'test query')
 
     expect(booleanClockwise).toHaveBeenCalledWith(simplifiedPolygon.coordinates[0])
-    expect(result.spatial.geoJson).toEqual(simplifiedPolygon)
+    expect(result.queryInfo.spatial.geoJson).toEqual(simplifiedPolygon)
   })
 
   test('handles temporal data with missing startDate', () => {
@@ -668,7 +695,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'partial temporal data')
 
-    expect(result.temporal).toEqual({
+    expect(result.queryInfo.temporal).toEqual({
       startDate: '',
       endDate: '2020-12-31T23:59:59.999Z'
     })
@@ -689,7 +716,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'partial temporal data')
 
-    expect(result.temporal).toEqual({
+    expect(result.queryInfo.temporal).toEqual({
       startDate: '2020-01-01T00:00:00.000Z',
       endDate: ''
     })

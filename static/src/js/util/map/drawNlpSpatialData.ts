@@ -2,11 +2,7 @@ import GeoJSON from 'ol/format/GeoJSON'
 import { Feature } from 'ol'
 import { SimpleGeometry } from 'ol/geom'
 import VectorSource from 'ol/source/Vector'
-import type {
-  Geometry as GeoJsonGeometry,
-  MultiPolygon as GeoJsonMultiPolygon,
-  Polygon as GeoJsonPolygon
-} from 'geojson'
+import type { Geometry as GeoJsonGeometry } from 'geojson'
 
 import { spatialSearchMarkerStyle, spatialSearchStyle } from './styles'
 import projectionCodes from '../../constants/projectionCodes'
@@ -31,50 +27,7 @@ export const drawNlpSpatialData = ({
 }) => {
   vectorSource.clear()
 
-  // Normalize geometry to ensure polygon rings are properly closed for OpenLayers compatibility
-  let normalizedGeometry: GeoJsonGeometry = geometry
-  if (geometry?.type === 'Polygon' && Array.isArray((geometry as GeoJsonPolygon).coordinates)) {
-    const rings = (geometry as GeoJsonPolygon).coordinates
-    normalizedGeometry = {
-      ...geometry,
-      coordinates: rings.map((ring) => {
-        if (!ring?.length) return ring
-        const first = ring[0]
-        const last = ring[ring.length - 1]
-        // Close ring if first and last coordinates don't match (GeoJSON spec requirement)
-        if (first && last && (first[0] !== last[0] || first[1] !== last[1])) {
-          return ring.concat([first])
-        }
-
-        return ring
-      })
-    } as GeoJsonPolygon
-  }
-
-  // Handle MultiPolygon geometries with the same ring closure normalization
-  if (geometry?.type === 'MultiPolygon' && Array.isArray((geometry as GeoJsonMultiPolygon).coordinates)) {
-    const polys = (geometry as GeoJsonMultiPolygon).coordinates
-    normalizedGeometry = {
-      ...geometry,
-      coordinates: polys.map((poly) => (
-        (poly || []).map((ring) => {
-          if (!ring?.length) return ring
-
-          const first = ring[0]
-          const last = ring[ring.length - 1]
-
-          // Close ring if first and last coordinates don't match (GeoJSON spec requirement)
-          if (first && last && (first[0] !== last[0] || first[1] !== last[1])) {
-            return ring.concat([first])
-          }
-
-          return ring
-        })
-      ))
-    } as GeoJsonMultiPolygon
-  }
-
-  const olGeometry = new GeoJSON().readGeometry(normalizedGeometry)
+  const olGeometry = new GeoJSON().readGeometry(geometry)
 
   if (!olGeometry) return
 

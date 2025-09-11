@@ -141,8 +141,8 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
-      const earthdataEnvironment = getEarthdataEnvironment(get())
       const zustandState = get()
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
       const nlpFromState = getNlpCollection(zustandState)
       const searchQuery = nlpFromState!.query
 
@@ -155,35 +155,29 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         )
 
         const response = await nlpRequest.search({ q: searchQuery })
-        type NlpTransformed = {
+        type QueryInfo = {
           query: string
           spatial: { geoJson: Geometry; geoLocation: string } | null
           temporal: { startDate: string; endDate: string } | null
-          collections?: CollectionMetadata[]
         }
-        type NlpSearchResponseData = { transformed: NlpTransformed, raw: unknown }
-        const { data } = response as { data: NlpSearchResponseData }
-        const { transformed: nlpData } = data
+        type NlpFinal = { queryInfo: QueryInfo; collections?: CollectionMetadata[] }
+        const { data } = response as { data: NlpFinal }
+        const { queryInfo, collections: transformedCollections = [] } = data
 
-        if (nlpData.spatial || nlpData.temporal) {
+        if (queryInfo.spatial || queryInfo.temporal) {
           const nlpCollection: {
             query: string;
             spatial?: { geoJson: Geometry; geoLocation: string };
-            temporal?: {
-              startDate: string;
-              endDate: string
-            }
-          } = { query: searchQuery as string }
+            temporal?: { startDate: string; endDate: string };
+          } = { query: queryInfo.query as string }
 
-          if (nlpData.spatial) nlpCollection.spatial = nlpData.spatial
-          if (nlpData.temporal) nlpCollection.temporal = nlpData.temporal
+          if (queryInfo.spatial) nlpCollection.spatial = queryInfo.spatial
+          if (queryInfo.temporal) nlpCollection.temporal = queryInfo.temporal
 
           set((state) => {
             state.query.nlpCollection = nlpCollection
           })
         }
-
-        const transformedCollections = nlpData.collections || []
 
         set((state) => {
           state.collections.collections.isLoaded = true
