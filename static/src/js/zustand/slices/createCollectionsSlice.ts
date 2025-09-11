@@ -1,5 +1,6 @@
 import { CancelTokenSource, isCancel } from 'axios'
 import type { Geometry } from 'geojson'
+
 import { CollectionsSlice, ImmerStateCreator } from '../types'
 
 // @ts-expect-error There are no types for this file
@@ -36,6 +37,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
     getCollections: async () => {
       const zustandState = get()
       const existingNlp = getNlpCollection(zustandState)
+
       if (existingNlp) {
         await zustandState.collections.getNlpCollections()
 
@@ -47,7 +49,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
-
       const earthdataEnvironment = getEarthdataEnvironment(get())
 
       // If cancel token is set, cancel the previous request(s)
@@ -140,7 +141,6 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
-
       const earthdataEnvironment = getEarthdataEnvironment(get())
       const zustandState = get()
       const nlpFromState = getNlpCollection(zustandState)

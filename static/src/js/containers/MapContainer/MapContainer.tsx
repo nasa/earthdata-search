@@ -188,7 +188,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   }))
 
   const nlpCollection = useEdscStore(getNlpCollection)
-
   const selectedRegion = useEdscStore(getSelectedRegionQuery)
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)

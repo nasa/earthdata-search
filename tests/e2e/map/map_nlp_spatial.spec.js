@@ -60,6 +60,7 @@ test.describe('Map: NLP spatial rendering', () => {
 
   test('draws NLP geometry and moves the map @screenshot', async ({ page }) => {
     const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/\d+/)
+
     await page.goto('/search?nlp=texas')
 
     await initialMapPromise

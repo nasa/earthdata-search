@@ -287,6 +287,7 @@ describe('createCollectionsSlice', () => {
 
       const updatedState = useEdscStore.getState()
       const { query: updatedQuery, collections: updatedCollections } = updatedState
+
       expect(updatedQuery.nlpCollection).toEqual({
         query: 'test query',
         spatial: expect.objectContaining({
@@ -349,6 +350,7 @@ describe('createCollectionsSlice', () => {
 
       const updatedState = useEdscStore.getState()
       const { query: updatedQuery, collections: updatedCollections } = updatedState
+
       expect(updatedQuery.nlpCollection).toEqual({
         query: 'spatial query',
         spatial: expect.objectContaining({
@@ -392,6 +394,7 @@ describe('createCollectionsSlice', () => {
       )
 
       const { collections: updatedCollectionsAfterError } = useEdscStore.getState()
+
       expect(updatedCollectionsAfterError.collections.isLoaded).toBe(false)
       expect(updatedCollectionsAfterError.collections.isLoading).toBe(false)
     })
@@ -427,6 +430,7 @@ describe('createCollectionsSlice', () => {
 
       const updatedState = useEdscStore.getState()
       const { query: updatedQuery, collections: updatedCollectionsEmpty } = updatedState
+
       expect(updatedQuery.nlpCollection).toEqual({ query: 'empty query' })
       expect(updatedCollectionsEmpty.collections.count).toBe(0)
       expect(updatedCollectionsEmpty.collections.isLoaded).toBe(true)

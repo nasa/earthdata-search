@@ -7,6 +7,7 @@ import type {
   LineString as GJLineString,
   MultiLineString as GJMultiLineString
 } from 'geojson'
+
 import { MAX_POLYGON_SIZE } from '../../constants/spatialConstants'
 
 export const getCoordinateCount = (geometry: Geometry | null | undefined): number => {
@@ -21,6 +22,7 @@ export const getCoordinateCount = (geometry: Geometry | null | undefined): numbe
 
     case 'MultiPolygon': {
       const polys = (geometry as GJMultiPolygon).coordinates
+
       if (!Array.isArray(polys)) return 0
 
       return polys.reduce((sum, poly) => {
@@ -38,6 +40,7 @@ export const getCoordinateCount = (geometry: Geometry | null | undefined): numbe
 
     case 'MultiLineString': {
       const lines = (geometry as GJMultiLineString).coordinates
+
       if (!Array.isArray(lines)) return 0
 
       return lines.reduce((sum, line) => sum + (Array.isArray(line) ? line.length : 0), 0)
@@ -60,11 +63,13 @@ const normalizePolygonWinding = (geometry: Geometry): Geometry => {
       (desired === 'ccw' && isClockwise)
       || (desired === 'cw' && !isClockwise)
     )
+
     if (shouldReverse) oriented = ring.slice().reverse()
 
     const first = oriented[0]
     const last = oriented[oriented.length - 1]
     const isClosed = first && last && first[0] === last[0] && first[1] === last[1]
+
     if (!isClosed) return oriented.concat([first])
 
     return oriented

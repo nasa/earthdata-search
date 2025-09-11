@@ -84,11 +84,8 @@ export default class CollectionRequest extends CmrRequest {
     // Iterate over the collections
     entry.map((collection) => {
       const transformedCollection = collection
-      if (!transformedCollection.id && transformedCollection.conceptId) {
-        transformedCollection.id = transformedCollection.conceptId
-      }
 
-      transformedCollection.conceptId = transformedCollection.id
+      transformedCollection.conceptId = collection.id
 
       if (collection && (collection.tags || collection.links)) {
         transformedCollection.isOpenSearch = !!getOpenSearchOsddLink(collection)
@@ -112,9 +109,9 @@ export default class CollectionRequest extends CmrRequest {
       const w = getApplicationConfig().thumbnailSize.width
 
       // Retrieve collection thumbnail if it exists
-      if (transformedCollection.id) {
+      if (collection.id) {
         if (collection.browse_flag) {
-          transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${transformedCollection.id}?h=${h}&w=${w}&ee=${earthdataEnvironment}`
+          transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}&ee=${earthdataEnvironment}`
         } else {
           transformedCollection.thumbnail = unavailableImg
           transformedCollection.isDefaultImage = true

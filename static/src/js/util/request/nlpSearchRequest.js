@@ -22,6 +22,7 @@ const simplifyNlpGeometry = (geometry) => {
   }
 
   const coords = geometry.coordinates
+
   if (!coords) return geometry
 
   const coordsToCheck = geometry.type === 'Polygon' ? coords[0] : coords
@@ -47,6 +48,7 @@ const simplifyNlpGeometry = (geometry) => {
         if (simplifiedCount <= MAX_POLYGON_SIZE) {
           if (simplified.type === 'Polygon') {
             const isClockwise = booleanClockwise(simplified.coordinates[0])
+
             if (!isClockwise) {
               simplified.coordinates[0] = simplified.coordinates[0].reverse()
             }
@@ -177,6 +179,7 @@ export default class NlpSearchRequest extends CmrRequest {
 
     if (actualData.queryInfo.temporal) {
       const { startDate, endDate } = actualData.queryInfo.temporal
+
       if (startDate || endDate) {
         temporalData = {
           startDate: startDate ? new Date(startDate).toISOString() : '',
@@ -188,6 +191,7 @@ export default class NlpSearchRequest extends CmrRequest {
     // Transform metadata entries into collection items
     const meta = data?.metadata || data?.data?.metadata
     const entries = meta?.feed?.entry || []
+
     if (Array.isArray(entries) && entries.length) {
       const cr = new CollectionRequest('', this.earthdataEnvironment)
       const transformed = cr.transformResponse({ feed: { entry: entries } })

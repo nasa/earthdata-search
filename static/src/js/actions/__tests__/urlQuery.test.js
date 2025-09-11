@@ -551,6 +551,7 @@ describe('updateStore', () => {
         await store.dispatch(urlQuery.updateStore(params))
 
         const storeActions = store.getActions()
+
         expect(storeActions.length).toBe(0)
 
         // Expect only portal config to be loaded in zustand store
