@@ -1,71 +1,9 @@
 import axios from 'axios'
-import { simplify, booleanClockwise } from '@turf/turf'
 
 import CmrRequest from './cmrRequest'
 import { getEarthdataConfig } from '../../../../../sharedUtils/config'
 import { transformCollectionEntries } from '../collections/transformCollectionEntries'
-
-/**
- * Simplifies NLP geometry if it has too many points
- * @param {Object | null} geometry - GeoJSON geometry object to simplify
- * @returns {Object | null} Simplified geometry or null if simplification failed
- */
-const simplifyNlpGeometry = (geometry) => {
-  if (!geometry || !geometry.type) {
-    return null
-  }
-
-  if (geometry.type === 'Point') {
-    return geometry
-  }
-
-  const coords = geometry.coordinates
-
-  if (!coords) return geometry
-
-  const coordsToCheck = geometry.type === 'Polygon' ? coords[0] : coords
-  const coordinateCount = Array.isArray(coordsToCheck) ? coordsToCheck.length : 0
-
-  const MAX_POLYGON_SIZE = 50
-  if (coordinateCount > MAX_POLYGON_SIZE) {
-    let simplified = geometry
-    let tolerance = 0.001
-
-    for (let attempts = 0; attempts < 10; attempts += 1) {
-      try {
-        simplified = simplify(geometry, {
-          tolerance,
-          highQuality: false
-        })
-
-        const simplifiedCoords = simplified.type === 'Polygon'
-          ? simplified.coordinates[0]
-          : simplified.coordinates
-        const simplifiedCount = Array.isArray(simplifiedCoords) ? simplifiedCoords.length : 0
-
-        if (simplifiedCount <= MAX_POLYGON_SIZE) {
-          if (simplified.type === 'Polygon') {
-            const isClockwise = booleanClockwise(simplified.coordinates[0])
-
-            if (!isClockwise) {
-              simplified.coordinates[0] = simplified.coordinates[0].reverse()
-            }
-          }
-
-          return simplified
-        }
-
-        tolerance *= 2
-      } catch {
-        return geometry
-      }
-    }
-
-    return geometry
-  }
-
-  return geometry
-}
+import simplifySpatial from '../geometry/simplifySpatial'
 
 /**
  * Request object for NLP search requests to CMR
@@ -149,7 +87,9 @@ export default class NlpSearchRequest extends CmrRequest {
     if (actualData.queryInfo.spatial) {
       const rawSpatialData = actualData.queryInfo.spatial
       const actualGeometry = rawSpatialData.geoJson || rawSpatialData
-      const simplifiedGeometry = simplifyNlpGeometry(actualGeometry)
+      const simplifiedGeometry = (actualGeometry && actualGeometry.type)
+        ? simplifySpatial(actualGeometry)
+        : null
 
       if (simplifiedGeometry) {
         spatialData = simplifiedGeometry

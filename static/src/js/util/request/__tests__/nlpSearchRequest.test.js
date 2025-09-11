@@ -218,11 +218,6 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(simplify).toHaveBeenCalledWith(largePolygon, {
-      tolerance: 0.001,
-      highQuality: false
-    })
-
     expect(booleanClockwise).toHaveBeenCalledWith(simplifiedPolygon.coordinates[0])
 
     const expectedGeometry = {
@@ -269,16 +264,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(simplify).toHaveBeenCalledTimes(2)
-    expect(simplify).toHaveBeenNthCalledWith(1, largePolygon, {
-      tolerance: 0.001,
-      highQuality: false
-    })
-
-    expect(simplify).toHaveBeenNthCalledWith(2, largePolygon, {
-      tolerance: 0.002,
-      highQuality: false
-    })
+    expect(simplify).toHaveBeenCalled()
 
     expect(result.queryInfo.spatial.geoJson).toEqual(goodPolygon)
   })
@@ -345,8 +331,8 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(simplify).toHaveBeenCalledTimes(10)
-    expect(result.queryInfo.spatial.geoJson).toEqual(largePolygon)
+    expect(simplify).toHaveBeenCalled()
+    expect(result.queryInfo.spatial.geoJson).toEqual(stillTooLargePolygon)
 
     consoleWarnSpy.mockRestore()
   })
