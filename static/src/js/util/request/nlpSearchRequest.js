@@ -137,7 +137,6 @@ export default class NlpSearchRequest extends CmrRequest {
       return {
         query,
         spatial: null,
-        geoLocation: null,
         temporal: null
       }
     }

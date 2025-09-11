@@ -156,7 +156,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(result.spatial).toEqual(pointGeometry)
+    expect(result.spatial).toEqual({ geoJson: pointGeometry, geoLocation: '' })
   })
 
   test('returns small polygon unchanged when under MAX_POLYGON_SIZE', () => {
@@ -177,7 +177,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(result.spatial).toEqual(smallPolygon)
+    expect(result.spatial.geoJson).toEqual(smallPolygon)
   })
 
   test('simplifies large polygon when over MAX_POLYGON_SIZE', () => {
@@ -220,7 +220,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
       ...simplifiedPolygon,
       coordinates: [simplifiedPolygon.coordinates[0].reverse()]
     }
-    expect(result.spatial).toEqual(expectedGeometry)
+    expect(result.spatial.geoJson).toEqual(expectedGeometry)
   })
 
   test('handles simplification with multiple attempts when still too large', () => {
@@ -271,7 +271,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
       highQuality: false
     })
 
-    expect(result.spatial).toEqual(goodPolygon)
+    expect(result.spatial.geoJson).toEqual(goodPolygon)
   })
 
   test('handles simplification error and returns original geometry', () => {
@@ -301,7 +301,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
 
     const result = request.transformResponse(mockResponse, 'test query')
 
-    expect(result.spatial).toEqual(largePolygon)
+    expect(result.spatial.geoJson).toEqual(largePolygon)
 
     consoleWarnSpy.mockRestore()
   })
@@ -337,7 +337,7 @@ describe('NlpSearchRequest#simplifyNlpGeometry', () => {
     const result = request.transformResponse(mockResponse, 'test query')
 
     expect(simplify).toHaveBeenCalledTimes(10)
-    expect(result.spatial).toEqual(largePolygon)
+    expect(result.spatial.geoJson).toEqual(largePolygon)
 
     consoleWarnSpy.mockRestore()
   })
@@ -423,7 +423,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'ocean data')
 
-    expect(result.spatial).toEqual(spatialGeometry)
+    expect(result.spatial.geoJson).toEqual(spatialGeometry)
 
     expect(result.temporal).toBeNull()
   })
@@ -594,7 +594,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'flight path')
 
-    expect(result.spatial).toEqual(lineGeometry)
+    expect(result.spatial.geoJson).toEqual(lineGeometry)
   })
 
   test('handles geometry with missing coordinates', () => {
@@ -614,7 +614,7 @@ describe('NlpSearchRequest#transformResponse', () => {
 
     const result = request.transformResponse(response, 'test query')
 
-    expect(result.spatial).toEqual(badGeometry)
+    expect(result.spatial.geoJson).toEqual(badGeometry)
   })
 
   test('handles polygon winding correction when already clockwise', () => {
@@ -647,7 +647,7 @@ describe('NlpSearchRequest#transformResponse', () => {
     const result = request.transformResponse(mockResponse, 'test query')
 
     expect(booleanClockwise).toHaveBeenCalledWith(simplifiedPolygon.coordinates[0])
-    expect(result.spatial).toEqual(simplifiedPolygon)
+    expect(result.spatial.geoJson).toEqual(simplifiedPolygon)
   })
 
   test('handles temporal data with missing startDate', () => {
