@@ -53,8 +53,6 @@ const GranuleResultsFocusedMeta = ({
   const [showModalImageSelectionPopover, setShowModalImageSelectionPopover] = useState(false)
   const [hideTitleTooltip, setHideTitleTooltip] = useState(false)
 
-  if (!focusedGranuleId) return null
-
   // Filter the links on the granule to find all browse links with an http/https protocol. This filters
   // any S3 browse links which cause protocol issues.
   const browseThumbnails = links.filter((link) => isLinkBrowse(link))

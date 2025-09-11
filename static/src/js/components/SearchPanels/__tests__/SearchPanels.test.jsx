@@ -22,6 +22,7 @@ import GranuleResultsBodyContainer from '../../../containers/GranuleResultsBodyC
 import CollectionDetailsBodyContainer from '../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer'
 import GranuleDetailsBodyContainer from '../../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer'
 import SubscriptionsBodyContainer from '../../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer'
+import GranuleResultsFocusedMetaContainer from '../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer'
 
 jest.mock('tiny-cookie', () => ({
   get: jest.fn().mockReturnValue('')
@@ -32,6 +33,7 @@ jest.mock('../../../containers/GranuleResultsBodyContainer/GranuleResultsBodyCon
 jest.mock('../../../containers/CollectionDetailsBodyContainer/CollectionDetailsBodyContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/GranuleDetailsBodyContainer/GranuleDetailsBodyContainer', () => jest.fn(() => <div />))
 jest.mock('../../../containers/SubscriptionsBodyContainer/SubscriptionsBodyContainer', () => jest.fn(() => <div />))
+jest.mock('../../../containers/GranuleResultsFocusedMetaContainer/GranuleResultsFocusedMetaContainer', () => jest.fn(() => <div />))
 
 jest.mock('../../../../../../sharedUtils/config', () => ({
   getEnvironmentConfig: jest.fn().mockReturnValue({
@@ -838,6 +840,46 @@ describe('SearchPanels component', () => {
           expect(props.onToggleAboutCSDAModal).toHaveBeenCalledTimes(1)
           expect(props.onToggleAboutCSDAModal).toHaveBeenCalledWith(true)
         })
+      })
+    })
+
+    describe('when there is a focused granule', () => {
+      test('renders the GranuleResultsFocusedMetaContainer component', () => {
+        useLocation.mockReturnValue({
+          pathname: '/search/granules',
+          search: '?p=C1000-EDSC'
+        })
+
+        setup({
+          overrideRouterEntries: ['/search/granules'],
+          overrideZustandState: {
+            granule: {
+              granuleId: 'G-1234-TEST',
+              granuleMetadata: {
+                id: 'G-1234-TEST'
+              }
+            }
+          }
+        })
+
+        // This is being rendered 2 times due to it being rendered through Panels
+        expect(GranuleResultsFocusedMetaContainer).toHaveBeenCalledTimes(2)
+        expect(GranuleResultsFocusedMetaContainer).toHaveBeenCalledWith({}, {})
+      })
+    })
+
+    describe('when there is not a focused granule', () => {
+      test('renders the GranuleResultsFocusedMetaContainer component', () => {
+        useLocation.mockReturnValue({
+          pathname: '/search/granules',
+          search: '?p=C1000-EDSC'
+        })
+
+        setup({
+          overrideRouterEntries: ['/search/granules']
+        })
+
+        expect(GranuleResultsFocusedMetaContainer).toHaveBeenCalledTimes(0)
       })
     })
   })

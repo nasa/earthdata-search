@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { useLocation, useParams } from 'react-router-dom'
 import Badge from 'react-bootstrap/Badge'
@@ -52,7 +52,7 @@ import {
   getFocusedCollectionGranuleQuery
 } from '../../zustand/selectors/query'
 import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
-import { getFocusedGranule } from '../../zustand/selectors/granule'
+import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getGranules } from '../../zustand/selectors/granules'
 import { getPreferences } from '../../zustand/selectors/preferences'
 
@@ -86,18 +86,23 @@ const SearchPanels = ({
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const collections = useEdscStore(getCollections)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const granuleMetadata = useEdscStore(getFocusedGranule)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const granules = useEdscStore(getGranules)
   const preferences = useEdscStore(getPreferences)
   const {
-    setCollectionId,
+    changeGranuleQuery,
     changeQuery,
-    changeGranuleQuery
+    mapView,
+    setCollectionId,
+    startDrawing
   } = useEdscStore((state) => ({
-    setCollectionId: state.collection.setCollectionId,
+    changeGranuleQuery: state.query.changeGranuleQuery,
     changeQuery: state.query.changeQuery,
-    changeGranuleQuery: state.query.changeGranuleQuery
+    mapView: state.map.mapView,
+    setCollectionId: state.collection.setCollectionId,
+    startDrawing: state.home.startDrawing
   }))
 
   const location = useLocation()
@@ -114,16 +119,6 @@ const SearchPanels = ({
   const [granulePanelView, setGranulePanelView] = useState(
     defaultPanelStateFromProps(granuleListView)
   )
-
-  useEffect(() => {
-    setCollectionPanelView(defaultPanelStateFromProps(collectionListView))
-    setGranulePanelView(defaultPanelStateFromProps(granuleListView))
-  }, [collectionListView, granuleListView])
-
-  const zustandState = useEdscStore.getState()
-  const { home, map } = zustandState
-  const { startDrawing } = home
-  const { mapView } = map
 
   const loggedIn = isLoggedIn(authToken)
 
@@ -768,7 +763,7 @@ const SearchPanels = ({
         draggable
         panelState={panelState}
         focusedMeta={
-          (
+          focusedGranuleId && (
             <div className="search-panels__focused-meta">
               <GranuleResultsFocusedMetaContainer />
             </div>
