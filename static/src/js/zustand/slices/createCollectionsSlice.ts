@@ -1,5 +1,4 @@
 import { CancelTokenSource, isCancel } from 'axios'
-import type { Geometry } from 'geojson'
 
 import { CollectionsSlice, ImmerStateCreator } from '../types'
 
@@ -11,7 +10,6 @@ import actions from '../../actions'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getNlpCollection } from '../selectors/query'
-import type { CollectionMetadata } from '../../types/sharedTypes'
 
 // @ts-expect-error There are no types for this file
 import CollectionRequest from '../../util/request/collectionRequest'
@@ -155,31 +153,11 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
         )
 
         const response = await nlpRequest.search({ q: searchQuery })
-        type QueryInfo = {
-          query: string
-          spatial: { geoJson: Geometry; geoLocation: string } | null
-          temporal: { startDate: string; endDate: string } | null
-        }
-        type NlpFinal = { queryInfo: QueryInfo; collections?: CollectionMetadata[] }
-        const { data } = response as { data: NlpFinal }
+        const { data } = response
         const { queryInfo, collections: transformedCollections = [] } = data
 
-        if (queryInfo.spatial || queryInfo.temporal) {
-          const nlpCollection: {
-            query: string;
-            spatial?: { geoJson: Geometry; geoLocation: string };
-            temporal?: { startDate: string; endDate: string };
-          } = { query: queryInfo.query as string }
-
-          if (queryInfo.spatial) nlpCollection.spatial = queryInfo.spatial
-          if (queryInfo.temporal) nlpCollection.temporal = queryInfo.temporal
-
-          set((state) => {
-            state.query.nlpCollection = nlpCollection
-          })
-        }
-
         set((state) => {
+          state.query.nlpCollection = queryInfo
           state.collections.collections.isLoaded = true
           state.collections.collections.isLoading = false
           state.collections.collections.count = transformedCollections.length

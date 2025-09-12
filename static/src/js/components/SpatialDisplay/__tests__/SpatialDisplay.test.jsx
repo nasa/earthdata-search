@@ -236,7 +236,6 @@ describe('SpatialDisplay component', () => {
       })
 
       expect(screen.queryAllByText('Texas')).toHaveLength(1)
-      expect(screen.queryAllByText('Polygon')).toHaveLength(1)
     })
   })
 

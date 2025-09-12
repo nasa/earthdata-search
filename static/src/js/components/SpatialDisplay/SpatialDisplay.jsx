@@ -400,7 +400,7 @@ const SpatialDisplay = ({
       <FilterStackContents
         key="filter__nlp-spatial"
         body={entry}
-        title=" "
+        title={nlpCollection.spatial.geoLocation}
       />
     ))
   }
@@ -482,8 +482,7 @@ const SpatialDisplay = ({
       <FilterStackContents
         key="filter__shapefile"
         body={entry}
-        title=" "
-        showLabel={false}
+        title="Shape File"
         hint={hint}
       />
     ))

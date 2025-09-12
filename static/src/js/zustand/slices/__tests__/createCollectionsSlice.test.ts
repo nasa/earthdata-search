@@ -356,7 +356,8 @@ describe('createCollectionsSlice', () => {
         spatial: expect.objectContaining({
           geoJson: expect.objectContaining({ type: 'Point' }),
           geoLocation: 'Point Location'
-        })
+        }),
+        temporal: null
       })
 
       expect(updatedCollections.collections.count).toBe(0)
@@ -431,7 +432,11 @@ describe('createCollectionsSlice', () => {
       const updatedState = useEdscStore.getState()
       const { query: updatedQuery, collections: updatedCollectionsEmpty } = updatedState
 
-      expect(updatedQuery.nlpCollection).toEqual({ query: 'empty query' })
+      expect(updatedQuery.nlpCollection).toEqual({
+        query: 'empty query',
+        spatial: null,
+        temporal: null
+      })
       expect(updatedCollectionsEmpty.collections.count).toBe(0)
       expect(updatedCollectionsEmpty.collections.isLoaded).toBe(true)
       expect(updatedCollectionsEmpty.collections.isLoading).toBe(false)
