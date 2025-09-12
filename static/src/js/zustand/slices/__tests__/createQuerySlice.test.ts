@@ -513,14 +513,6 @@ describe('createQuerySlice', () => {
   describe('clearFilters', () => {
     describe('when not on the granules page', () => {
       test('updates the region query and calls getRegions', async () => {
-        mockGetState.mockReturnValue({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
-
         useEdscStore.setState((state) => {
           state.collections.getCollections = jest.fn()
           state.granules.getGranules = jest.fn()

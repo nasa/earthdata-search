@@ -30,20 +30,15 @@ import {
 } from '../../../constants/actionTypes'
 import routerHelper from '../../../router/router'
 
-jest.mock('../../../router/router', () => ({
-  ...jest.requireActual('../../../router/router'),
-  router: {
-    navigate: jest.fn(),
-    state: {
-      location: {
-        pathname: '/admin'
-      }
-    },
-    subscribe: jest.fn()
-  }
-}))
-
 const mockStore = configureMockStore([thunk])
+
+beforeEach(() => {
+  routerHelper.router.state = {
+    location: {
+      pathname: '/admin'
+    }
+  }
+})
 
 describe('setAdminProject', () => {
   test('should create an action to set the admin project data', () => {

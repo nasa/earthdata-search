@@ -7,19 +7,6 @@ import {
 } from '../timeline'
 import routerHelper from '../../router/router'
 
-jest.mock('../../router/router', () => ({
-  ...jest.requireActual('../../router/router'),
-  router: {
-    navigate: jest.fn(),
-    state: {
-      location: {
-        pathname: '/search'
-      }
-    },
-    subscribe: jest.fn()
-  }
-}))
-
 describe('zoomLevelDifference', () => {
   beforeEach(() => {
     MockDate.set(new Date(2023, 0, 1))

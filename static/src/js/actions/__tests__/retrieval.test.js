@@ -11,19 +11,6 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 import routerHelper from '../../router/router'
 
-jest.mock('../../router/router', () => ({
-  ...jest.requireActual('../../router/router'),
-  router: {
-    navigate: jest.fn(),
-    state: {
-      location: {
-        search: '?some=testparams'
-      }
-    },
-    subscribe: jest.fn()
-  }
-}))
-
 const mockStore = configureMockStore([thunk])
 
 describe('submitRetrieval', () => {

@@ -56,19 +56,6 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-jest.mock('../../../router/router', () => ({
-  ...jest.requireActual('../../../router/router'),
-  router: {
-    navigate: jest.fn(),
-    state: {
-      location: {
-        pathname: '/search'
-      }
-    },
-    subscribe: jest.fn()
-  }
-}))
-
 const PAGE_ROUTE = '/search/:activePanel1?/:activePanel2?/*'
 
 const setup = setupTest({

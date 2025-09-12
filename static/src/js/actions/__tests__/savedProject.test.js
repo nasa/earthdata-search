@@ -6,19 +6,6 @@ import { UPDATE_SAVED_PROJECT } from '../../constants/actionTypes'
 import { updateSavedProject, updateProjectName } from '../savedProject'
 import routerHelper from '../../router/router'
 
-jest.mock('../../router/router', () => ({
-  ...jest.requireActual('../../router/router'),
-  router: {
-    navigate: jest.fn(),
-    state: {
-      location: {
-        search: '?some=testparams'
-      }
-    },
-    subscribe: jest.fn()
-  }
-}))
-
 const mockStore = configureMockStore([thunk])
 
 describe('updateSavedProject', () => {

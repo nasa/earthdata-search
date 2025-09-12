@@ -1,20 +1,17 @@
+import routerHelper from '../../router/router'
 import configureStore from '../../store/configureStore'
 import useEdscStore from '../../zustand/useEdscStore'
 import { prepareRetrievalParams } from '../retrievals'
 
-jest.mock('../../router/router', () => ({
-  ...jest.requireActual('../../router/router'),
-  router: {
-    navigate: jest.fn(),
-    state: {
-      location: {
-        search: '?p=C100000-EDSC'
-      }
+jest.mock('../../store/configureStore', () => jest.fn())
+
+beforeEach(() => {
+  routerHelper.router.state = {
+    location: {
+      search: '?p=C100000-EDSC'
     }
   }
-}))
-
-jest.mock('../../store/configureStore', () => jest.fn())
+})
 
 describe('retrievals', () => {
   test('prepareRetrievalParams', () => {

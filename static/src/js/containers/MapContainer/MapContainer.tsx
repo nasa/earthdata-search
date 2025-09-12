@@ -87,8 +87,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 export const mapStateToProps = (state) => ({
   colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
-  drawingNewLayer: state.ui.map.drawingNewLayer,
-  router: state.router
+  drawingNewLayer: state.ui.map.drawingNewLayer
 })
 
 type ColormapMetadata = {
