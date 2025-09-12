@@ -128,6 +128,23 @@ export const retrievalStatusProps = {
   }
 }
 
+export const initalizedRetrievalStatusProps = {
+  authToken: 'testToken',
+  granuleDownload: {},
+  onFetchRetrieval: jest.fn(),
+  onFetchRetrievalCollection: jest.fn(),
+  onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+  onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
+  onMetricsRelatedCollection: jest.fn(),
+  onToggleAboutCSDAModal: jest.fn(),
+  retrieval: {
+    collections: {},
+    id: null,
+    isLoaded: false,
+    isLoading: false
+  }
+}
+
 export const retrievalStatusPropsTwo = {
   authToken: 'testToken2',
   retrieval: {

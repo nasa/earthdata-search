@@ -3,12 +3,14 @@ import {
   waitFor,
   within
 } from '@testing-library/react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { retrievalStatusProps } from './mocks'
+import { initalizedRetrievalStatusProps, retrievalStatusProps } from './mocks'
 import { OrderStatus } from '../OrderStatus'
+import Skeleton from '../../Skeleton/Skeleton'
 import * as config from '../../../../../../sharedUtils/config'
 
 jest.mock('react-router-dom', () => ({
@@ -17,6 +19,8 @@ jest.mock('react-router-dom', () => ({
     id: '7'
   })
 }))
+
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: OrderStatus,
@@ -30,7 +34,46 @@ beforeEach(() => {
 })
 
 describe('OrderStatus component', () => {
-  test('renders itself correctly', () => {
+  test('renders itself correclty upon page load', () => {
+    setup({
+      overrideProps: initalizedRetrievalStatusProps
+    })
+
+    expect(screen.getByText('https://search.earthdata.nasa.gov/downloads/7')).toBeInTheDocument()
+    expect(Skeleton).toHaveBeenCalledTimes(1)
+    expect(Skeleton).toHaveBeenCalledWith({
+      className: 'order-status__item-skeleton',
+      containerStyle: {
+        display: 'inline-block',
+        height: '175px',
+        width: '100%'
+      },
+      shapes: [{
+        height: 18,
+        left: 0,
+        radius: 2,
+        shape: 'rectangle',
+        top: 2,
+        width: 200
+      }, {
+        height: 14,
+        left: 0,
+        radius: 2,
+        shape: 'rectangle',
+        top: 31,
+        width: '80%'
+      }, {
+        height: 96,
+        left: 0,
+        radius: 2,
+        shape: 'rectangle',
+        top: 60,
+        width: '100%'
+      }]
+    }, {})
+  })
+
+  test('renders itself correctly after initial page load', () => {
     setup()
 
     expect(screen.getByText('Download Status')).toBeInTheDocument()
