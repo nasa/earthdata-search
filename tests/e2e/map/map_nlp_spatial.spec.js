@@ -66,7 +66,7 @@ test.describe('Map: NLP spatial rendering', () => {
     await initialMapPromise
 
     // NLP label is shown in the Spatial section
-    await expect(page.getByText('Texas')).toBeVisible()
+    await expect(page.getByText('Texas', { exact: true })).toBeVisible()
 
     // Allow time for MOVEMAP and render
     await page.waitForTimeout(250)
