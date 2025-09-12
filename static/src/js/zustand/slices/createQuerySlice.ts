@@ -38,7 +38,8 @@ export const initialState = {
   region: {
     exact: false
   },
-  selectedRegion: {}
+  selectedRegion: {},
+  nlpCollection: null
 }
 
 export const initialGranuleState = {
@@ -255,6 +256,7 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
 
       get().granules.getGranules()
     }
+
   }
 })
 

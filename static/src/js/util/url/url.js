@@ -62,6 +62,11 @@ const urlDefs = {
     encode: encodeString,
     decode: decodeString
   },
+  nlpSearch: {
+    shortKey: 'nlp',
+    encode: encodeString,
+    decode: decodeString
+  },
   pointSearch: {
     shortKey: 'sp',
     encode: encodeArray,
@@ -298,6 +303,7 @@ export const decodeUrlParams = (paramString) => {
 
   const earthdataEnvironment = decodeHelp(params, 'earthdataEnvironment')
   const portalId = decodePortal(params)
+  const nlpQuery = decodeHelp(params, 'nlpSearch')
 
   return {
     earthdataEnvironment,
@@ -312,7 +318,8 @@ export const decodeUrlParams = (paramString) => {
     project,
     query: {
       ...query,
-      collection: collectionQuery
+      collection: collectionQuery,
+      nlpCollection: nlpQuery ? { query: nlpQuery } : null
     },
     selectedRegion,
     shapefile,

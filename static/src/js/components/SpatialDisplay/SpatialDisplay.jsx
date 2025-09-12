@@ -31,7 +31,7 @@ import spatialTypes from '../../constants/spatialTypes'
 import { mapEventTypes, shapefileEventTypes } from '../../constants/eventTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
+import { getCollectionsQuerySpatial, getNlpCollection } from '../../zustand/selectors/query'
 
 import './SpatialDisplay.scss'
 
@@ -48,6 +48,7 @@ const SpatialDisplay = ({
     changeQuery: state.query.changeQuery,
     removeSpatialFilter: state.query.removeSpatialFilter
   }))
+  const nlpCollection = useEdscStore(getNlpCollection)
   const spatialQuery = useEdscStore(getCollectionsQuerySpatial)
   const {
     boundingBox: boundingBoxSearch,
@@ -381,6 +382,28 @@ const SpatialDisplay = ({
   let entry
   let secondaryTitle = ''
   let spatialError = error
+
+  if (nlpCollection && nlpCollection.spatial && nlpCollection.spatial.geoLocation) {
+    entry = (
+      <SpatialDisplayEntry>
+        <Row className="spatial-display__form-row">
+          <span className="spatial-display__text-primary">
+            {nlpCollection.spatial.geoLocation}
+          </span>
+        </Row>
+      </SpatialDisplayEntry>
+    )
+
+    secondaryTitle = nlpCollection.spatial.geoJson.type
+
+    contents.push((
+      <FilterStackContents
+        key="filter__nlp-spatial"
+        body={entry}
+        title={nlpCollection.spatial.geoLocation}
+      />
+    ))
+  }
 
   const {
     isErrored: shapefileError,

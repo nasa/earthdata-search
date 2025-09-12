@@ -13,36 +13,27 @@ beforeEach(() => {
 })
 
 describe('url#decodeUrlParams', () => {
-  test('decodes focusedCollection correctly', () => {
+  test('decodes nlpSearch correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      focusedCollection: 'collectionId',
       query: {
         ...emptyDecodedResult.query,
-        collection: {
-          ...emptyDecodedResult.query.collection,
-          byId: {
-            collectionId: {
-              granules: {
-                pageNum: 1,
-                sortKey: '-start_date'
-              }
-            }
-          }
-        }
+        nlpCollection: { query: 'climate data' }
       }
     }
-    expect(decodeUrlParams('?p=collectionId')).toEqual(expectedResult)
+
+    expect(decodeUrlParams('?nlp=climate%20data')).toEqual(expectedResult)
   })
 })
 
 describe('url#encodeUrlQuery', () => {
-  test('encodes focusedCollection correctly', () => {
+  test('encodes nlpSearch correctly', () => {
     const props = {
-      hasGranulesOrCwic: true,
       pathname: '/path/here',
-      focusedCollection: 'collectionId'
+      hasGranulesOrCwic: true,
+      nlpSearch: 'climate data'
     }
-    expect(encodeUrlQuery(props)).toEqual('/path/here?p=collectionId')
+
+    expect(encodeUrlQuery(props)).toEqual('/path/here?nlp=climate%20data')
   })
 })

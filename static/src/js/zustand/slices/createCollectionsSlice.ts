@@ -9,9 +9,12 @@ import configureStore from '../../store/configureStore'
 import actions from '../../actions'
 
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getNlpCollection } from '../selectors/query'
 
 // @ts-expect-error There are no types for this file
 import CollectionRequest from '../../util/request/collectionRequest'
+// @ts-expect-error There are no types for this file
+import NlpSearchRequest from '../../util/request/nlpSearchRequest'
 // @ts-expect-error There are no types for this file
 import { buildCollectionSearchParams, prepareCollectionParams } from '../../util/collections'
 
@@ -30,12 +33,20 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
     collections: initialState,
 
     getCollections: async () => {
+      const zustandState = get()
+      const existingNlp = getNlpCollection(zustandState)
+
+      if (existingNlp) {
+        await zustandState.collections.getNlpCollections()
+
+        return
+      }
+
       const {
         dispatch: reduxDispatch,
         getState: reduxGetState
       } = configureStore()
       const reduxState = reduxGetState()
-
       const earthdataEnvironment = getEarthdataEnvironment(get())
 
       // If cancel token is set, cancel the previous request(s)
@@ -118,6 +129,51 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           action: 'getCollections',
           resource: 'collections',
           requestObject
+        }))
+      }
+    },
+
+    getNlpCollections: async () => {
+      const {
+        dispatch: reduxDispatch,
+        getState: reduxGetState
+      } = configureStore()
+      const reduxState = reduxGetState()
+      const zustandState = get()
+      const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+      const nlpFromState = getNlpCollection(zustandState)
+      const searchQuery = nlpFromState!.query
+
+      let nlpRequest: NlpSearchRequest
+
+      try {
+        nlpRequest = new NlpSearchRequest(
+          reduxState.authToken,
+          earthdataEnvironment
+        )
+
+        const response = await nlpRequest.search({ q: searchQuery })
+        const { data } = response
+        const { queryInfo, collections: transformedCollections = [] } = data
+
+        set((state) => {
+          state.query.nlpCollection = queryInfo
+          state.collections.collections.isLoaded = true
+          state.collections.collections.isLoading = false
+          state.collections.collections.count = transformedCollections.length
+          state.collections.collections.items = transformedCollections
+        })
+      } catch (error) {
+        set((state) => {
+          state.collections.collections.isLoading = false
+          state.collections.collections.isLoaded = false
+        })
+
+        reduxDispatch(actions.handleError({
+          error,
+          action: 'getNlpCollections',
+          resource: 'nlpSearch',
+          requestObject: nlpRequest
         }))
       }
     }

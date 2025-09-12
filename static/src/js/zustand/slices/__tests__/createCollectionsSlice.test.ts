@@ -43,7 +43,8 @@ describe('createCollectionsSlice', () => {
         loadTime: 0,
         items: []
       },
-      getCollections: expect.any(Function)
+      getCollections: expect.any(Function),
+      getNlpCollections: expect.any(Function)
     })
   })
 
@@ -230,6 +231,218 @@ describe('createCollectionsSlice', () => {
           resource: 'collections'
         })
       )
+    })
+  })
+
+  describe('getNlpCollections', () => {
+    test('successfully performs NLP search and processes response', async () => {
+      const mockNlpResponse = {
+        data: {
+          queryInfo: {
+            spatial: {
+              geoJson: {
+                type: 'Polygon',
+                coordinates: [[[0, 0], [1, 0], [1, 1], [0, 1], [0, 0]]]
+              },
+              geoLocation: 'Test Area'
+            },
+            temporal: {
+              startDate: '2023-01-01T00:00:00.000Z',
+              endDate: '2023-12-31T23:59:59.999Z'
+            }
+          },
+          metadata: {
+            feed: {
+              entry: [
+                {
+                  id: 'C1000000000-EDSC',
+                  title: 'Test Collection'
+                },
+                {
+                  id: 'C1000000001-EDSC',
+                  title: 'Another Collection'
+                }
+              ]
+            }
+          }
+        }
+      }
+
+      nock(/cmr/)
+        .get(/search\/nlp\/query\.json/)
+        .reply(200, mockNlpResponse)
+
+      mockGetState.mockReturnValue({
+        authToken: 'test-token'
+      })
+
+      useEdscStore.setState((state) => {
+        state.query.nlpCollection = { query: 'test query' }
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { getNlpCollections } = collections
+
+      await getNlpCollections()
+
+      const updatedState = useEdscStore.getState()
+      const { query: updatedQuery, collections: updatedCollections } = updatedState
+
+      expect(updatedQuery.nlpCollection).toEqual({
+        query: 'test query',
+        spatial: expect.objectContaining({
+          geoJson: expect.objectContaining({ type: 'Polygon' }),
+          geoLocation: 'Test Area'
+        }),
+        temporal: {
+          startDate: '2023-01-01T00:00:00.000Z',
+          endDate: '2023-12-31T23:59:59.999Z'
+        }
+      })
+
+      expect(updatedCollections.collections.count).toBe(2)
+      expect(updatedCollections.collections.isLoaded).toBe(true)
+      expect(updatedCollections.collections.isLoading).toBe(false)
+      expect(updatedCollections.collections.items).toEqual(expect.arrayContaining([
+        expect.objectContaining({ conceptId: 'C1000000000-EDSC' }),
+        expect.objectContaining({ conceptId: 'C1000000001-EDSC' })
+      ]))
+
+      expect(updatedCollections.collections.loadTime).toEqual(expect.any(Number))
+    })
+
+    test('handles NLP search with only spatial data', async () => {
+      const mockNlpResponse = {
+        data: {
+          queryInfo: {
+            spatial: {
+              geoJson: {
+                type: 'Point',
+                coordinates: [0, 0]
+              },
+              geoLocation: 'Point Location'
+            }
+          },
+          metadata: {
+            feed: {
+              entry: []
+            }
+          }
+        }
+      }
+
+      nock(/cmr/)
+        .get(/search\/nlp\/query\.json/)
+        .reply(200, mockNlpResponse)
+
+      mockGetState.mockReturnValue({
+        authToken: 'test-token'
+      })
+
+      useEdscStore.setState((state) => {
+        state.query.nlpCollection = { query: 'spatial query' }
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { getNlpCollections } = collections
+
+      await getNlpCollections()
+
+      const updatedState = useEdscStore.getState()
+      const { query: updatedQuery, collections: updatedCollections } = updatedState
+
+      expect(updatedQuery.nlpCollection).toEqual({
+        query: 'spatial query',
+        spatial: expect.objectContaining({
+          geoJson: expect.objectContaining({ type: 'Point' }),
+          geoLocation: 'Point Location'
+        }),
+        temporal: null
+      })
+
+      expect(updatedCollections.collections.count).toBe(0)
+      expect(updatedCollections.collections.isLoaded).toBe(true)
+      expect(updatedCollections.collections.isLoading).toBe(false)
+      expect(updatedCollections.collections.items).toEqual([])
+      expect(updatedCollections.collections.loadTime).toEqual(expect.any(Number))
+    })
+
+    test('handles NLP search errors', async () => {
+      nock(/cmr/)
+        .get(/search\/nlp\/query\.json/)
+        .reply(500, { error: 'Server error' })
+
+      mockGetState.mockReturnValue({
+        authToken: 'test-token'
+      })
+
+      useEdscStore.setState((state) => {
+        state.query.nlpCollection = { query: 'error query' }
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { getNlpCollections } = collections
+
+      await getNlpCollections()
+
+      expect(actions.handleError).toHaveBeenCalledTimes(1)
+      expect(actions.handleError).toHaveBeenCalledWith(
+        expect.objectContaining({
+          action: 'getNlpCollections',
+          resource: 'nlpSearch',
+          error: expect.any(Error)
+        })
+      )
+
+      const { collections: updatedCollectionsAfterError } = useEdscStore.getState()
+
+      expect(updatedCollectionsAfterError.collections.isLoaded).toBe(false)
+      expect(updatedCollectionsAfterError.collections.isLoading).toBe(false)
+    })
+
+    test('handles empty NLP response', async () => {
+      const mockNlpResponse = {
+        data: {
+          queryInfo: {},
+          metadata: {
+            feed: {
+              entry: []
+            }
+          }
+        }
+      }
+
+      nock(/cmr/)
+        .get(/search\/nlp\/query\.json/)
+        .reply(200, mockNlpResponse)
+
+      mockGetState.mockReturnValue({
+        authToken: 'test-token'
+      })
+
+      useEdscStore.setState((state) => {
+        state.query.nlpCollection = { query: 'empty query' }
+      })
+
+      const { collections } = useEdscStore.getState()
+      const { getNlpCollections } = collections
+
+      await getNlpCollections()
+
+      const updatedState = useEdscStore.getState()
+      const { query: updatedQuery, collections: updatedCollectionsEmpty } = updatedState
+
+      expect(updatedQuery.nlpCollection).toEqual({
+        query: 'empty query',
+        spatial: null,
+        temporal: null
+      })
+
+      expect(updatedCollectionsEmpty.collections.count).toBe(0)
+      expect(updatedCollectionsEmpty.collections.isLoaded).toBe(true)
+      expect(updatedCollectionsEmpty.collections.isLoading).toBe(false)
+      expect(updatedCollectionsEmpty.collections.items).toEqual([])
+      expect(updatedCollectionsEmpty.collections.loadTime).toEqual(expect.any(Number))
     })
   })
 })

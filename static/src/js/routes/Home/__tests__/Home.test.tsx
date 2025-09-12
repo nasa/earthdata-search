@@ -7,6 +7,8 @@ import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
 
 import { Home } from '../Home'
+// @ts-expect-error: No types for sharedUtils/config in tests
+import * as sharedConfig from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('react-router-dom', () => ({
@@ -56,10 +58,23 @@ jest.mock('../../../actions', () => ({
   ...jest.requireActual('../../../actions'),
   changePath: jest.fn(() => (dispatch: Dispatch) => {
     dispatch({ type: 'CHANGE_PATH' })
+  }),
+  getCollections: jest.fn(() => (dispatch: Dispatch) => {
+    dispatch({ type: 'GET_COLLECTIONS' })
+  }),
+  removeSubscriptionDisabledFields: jest.fn(() => (dispatch: Dispatch) => {
+    dispatch({ type: 'REMOVE_SUBSCRIPTION_DISABLED_FIELDS' })
   })
 }))
 
 jest.mock('../../../containers/MapContainer/MapContainer', () => jest.fn(() => <div />))
+
+jest.mock('../../../../../../sharedUtils/config', () => ({
+  ...jest.requireActual('../../../../../../sharedUtils/config'),
+  getApplicationConfig: jest.fn(() => ({
+    nlpSearch: 'false'
+  }))
+}))
 
 const setup = setupTest({
   Component: Home,
@@ -185,5 +200,37 @@ describe('Home', () => {
 
     expect(screen.getByTestId('spatial-selection-dropdown')).toBeInTheDocument()
     expect(screen.getByTestId('temporal-selection-dropdown')).toBeInTheDocument()
+  })
+
+  test('navigates to /search when form is submitted with empty keyword', async () => {
+    const { props, user } = setup()
+
+    await user.click(screen.getByRole('button', { name: /search/i }))
+
+    expect(props.onChangePath).toHaveBeenCalledWith('/search')
+    expect(useHistory().push).toHaveBeenCalledWith('/search')
+  })
+
+  describe('when nlpSearch is enabled', () => {
+    beforeEach(() => {
+      sharedConfig.getApplicationConfig.mockReturnValue({ nlpSearch: 'true' })
+    })
+
+    afterEach(() => {
+      sharedConfig.getApplicationConfig.mockReturnValue({ nlpSearch: 'false' })
+    })
+
+    test('uses nlp param and hides dropdowns', async () => {
+      const { props, user } = setup()
+      const searchInput = screen.getByPlaceholderText('Type to search for data')
+
+      await user.type(searchInput, 'test')
+      await user.click(screen.getByRole('button', { name: /search/i }))
+
+      expect(props.onChangePath).toHaveBeenCalledWith('/search?nlp=test')
+      expect(useHistory().push).toHaveBeenCalledWith('/search?nlp=test')
+      expect(screen.queryByTestId('spatial-selection-dropdown')).toBeNull()
+      expect(screen.queryByTestId('temporal-selection-dropdown')).toBeNull()
+    })
   })
 })

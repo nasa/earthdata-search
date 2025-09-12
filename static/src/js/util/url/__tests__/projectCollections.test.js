@@ -23,11 +23,13 @@ describe('url#decodeUrlParams', () => {
           byId: {
             collectionId1: {
               granules: {},
-              isVisible: true
+              isVisible: true,
+              selectedAccessMethod: undefined
             },
             collectionId2: {
               granules: {},
-              isVisible: true
+              isVisible: true,
+              selectedAccessMethod: undefined
             }
           }
         }
@@ -77,6 +79,7 @@ describe('url#decodeUrlParams', () => {
         }
       },
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {
@@ -110,25 +113,24 @@ describe('url#decodeUrlParams', () => {
           byId: {
             collectionId1: {
               granules: {},
-              isVisible: true
+              isVisible: true,
+              selectedAccessMethod: undefined
             },
             collectionId2: {
               granules: {},
-              isVisible: true
+              isVisible: true,
+              selectedAccessMethod: undefined
             }
           }
         }
       },
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
+            collectionId1: { granules: {} },
+            collectionId2: { granules: {} }
           }
         }
       }
@@ -150,6 +152,9 @@ describe('url#decodeUrlParams', () => {
               isVisible: true,
               accessMethods: {
                 opendap: {
+                  enableConcatenateDownload: undefined,
+                  enableSpatialSubsetting: undefined,
+                  enableTemporalSubsetting: undefined,
                   selectedOutputFormat: undefined,
                   selectedOutputProjection: undefined,
                   selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
@@ -166,15 +171,12 @@ describe('url#decodeUrlParams', () => {
         }
       },
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
+            collectionId1: { granules: {} },
+            collectionId2: { granules: {} }
           }
         }
       }
@@ -216,15 +218,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -265,15 +264,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -314,15 +310,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -365,15 +358,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -414,15 +404,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -464,15 +451,12 @@ describe('url#decodeUrlParams', () => {
         }
       },
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
+            collectionId1: { granules: {} },
+            collectionId2: { granules: {} }
           }
         }
       }
@@ -514,15 +498,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -563,15 +544,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -625,15 +603,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -664,15 +639,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }

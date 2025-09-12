@@ -7,6 +7,7 @@ import {
   GranulesMetadata,
   PortalConfig,
   ProjectionCode,
+  NlpCollectionQuery,
   ScienceKeyword,
   ShapefileFile,
   Spatial,
@@ -57,6 +58,8 @@ export type CollectionsSlice = {
     }
     /** Function to fetch the collections from CMR */
     getCollections: () => void
+    /** Function to perform NLP search and process results */
+    getNlpCollections: () => Promise<void>
   }
 }
 
@@ -853,6 +856,8 @@ export type QuerySlice = {
     region: RegionQuery
     /** The selected region (to use as a spatial query to CMR) */
     selectedRegion: SelectedRegion
+    /** The NLP collection query data */
+    nlpCollection: NlpCollectionQuery | null
     /** Function to change the query */
     changeQuery: (query: ChangeQueryParams) => void
     /** Function to change the granule query */

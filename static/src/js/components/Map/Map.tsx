@@ -72,6 +72,7 @@ import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
+import { drawNlpSpatialData } from '../../util/map/drawNlpSpatialData'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
@@ -91,6 +92,7 @@ import './Map.scss'
 import {
   GranuleMetadata,
   MapGranule,
+  NlpCollectionQuery,
   ProjectionCode,
   Query,
   ShapefileFile,
@@ -159,6 +161,17 @@ const spatialDrawingSource = new VectorSource({
 const spatialDrawingLayer = new VectorLayer({
   source: spatialDrawingSource,
   className: 'map__spatial-drawing-layer',
+  zIndex: 4
+})
+
+// Layer for NLP spatial drawing
+// This is separate from spatialDrawingLayer to avoid interference with spatialSearch clears
+const nlpSpatialSource = new VectorSource({
+  wrapX: false
+})
+const nlpSpatialLayer = new VectorLayer({
+  source: nlpSpatialSource,
+  className: 'map__nlp-spatial-layer',
   zIndex: 4
 })
 
@@ -282,6 +295,8 @@ interface MapProps {
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
   isProjectPage: boolean
+  /** The NLP collection data */
+  nlpCollection: NlpCollectionQuery | null
   /** Function to call when the map is updated */
   onChangeMap: (mapView: Partial<MapView>) => void
   /** Function to call when the projection is changed */
@@ -368,6 +383,7 @@ const Map: React.FC<MapProps> = ({
   granulesKey,
   isFocusedCollectionPage,
   isProjectPage,
+  nlpCollection,
   onChangeMap,
   onChangeProjection,
   onChangeQuery,
@@ -418,7 +434,8 @@ const Map: React.FC<MapProps> = ({
         granuleHighlightsLayer,
         focusedGranuleLayer,
         granuleImageryLayerGroup,
-        spatialDrawingLayer
+        spatialDrawingLayer,
+        nlpSpatialLayer
       ],
       target: mapElRef.current as HTMLDivElement,
       view: createView({
@@ -595,7 +612,7 @@ const Map: React.FC<MapProps> = ({
       /** The source to move the map to */
       source?: VectorSource
     }) => {
-      let extent
+      let extent: import('ol/extent').Extent | undefined
 
       // If a shape was passed, use the extent of that shape
       if (shape) {
@@ -1010,21 +1027,40 @@ const Map: React.FC<MapProps> = ({
     })
   }, [spatialSearch])
 
+  // Draw NLP spatial features when NLP collection data changes
+  useEffect(() => {
+    // Clear any existing NLP spatial features when no geoJson data exists
+    if (!nlpCollection?.spatial?.geoJson) {
+      nlpSpatialSource.clear()
+
+      return
+    }
+
+    const { geoJson } = nlpCollection.spatial
+
+    // Draw the NLP-generated spatial boundary on the map
+    drawNlpSpatialData({
+      geometry: geoJson,
+      projectionCode,
+      vectorSource: nlpSpatialSource
+    })
+  }, [nlpCollection, projectionCode])
+
   // When the shapefile changes, draw the shapefile
   useEffect(() => {
     if (shapefile && shapefile.file) {
       const { file, selectedFeatures } = shapefile
-
       const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({
         drawingNewLayer,
+        selectedFeatures,
         onChangeQuery,
+        onChangeProjection,
         onMetricsMap,
         onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
-        selectedFeatures,
         shapefile: file,
         shapefileAdded: false,
         showMbr,

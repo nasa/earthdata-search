@@ -503,6 +503,109 @@ describe('updateStore', () => {
         getTimeline: expect.any(Function)
       })
     })
+
+    describe('when only portalId is provided on the root path', () => {
+      test('only loads portal config', async () => {
+        const params = {
+          cmrFacets: {},
+          earthdataEnvironment: 'prod',
+          featureFacets: {
+            availableInEarthdataCloud: false,
+            customizable: false,
+            mapImagery: false
+          },
+          focusedCollection: 'C00001-EDSC',
+          focusedGranule: 'G00001-EDSC',
+          mapView: {},
+          portalId: 'testPortal',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          query: {
+            collection: {
+              overrideTemporal: {},
+              pageNum: 1,
+              spatial: {},
+              temporal: {}
+            }
+          },
+          timeline: {
+            query: {
+              center: 1676443651000,
+              interval: 'month'
+            }
+          }
+        }
+
+        const store = mockStore({
+          router: {
+            location: {
+              pathname: '/'
+            }
+          }
+        })
+
+        await store.dispatch(urlQuery.updateStore(params))
+
+        const storeActions = store.getActions()
+
+        expect(storeActions.length).toBe(0)
+
+        // Expect only portal config to be loaded in zustand store
+        const { portal } = useEdscStore.getState()
+
+        expect(portal).toEqual({
+          features: {
+            advancedSearch: true,
+            authentication: true,
+            featureFacets: {
+              showAvailableInEarthdataCloud: true,
+              showCustomizable: true,
+              showMapImagery: true
+            }
+          },
+          footer: {
+            attributionText: 'NASA Official: Test Official',
+            displayVersion: true,
+            primaryLinks: [{
+              href: 'http://www.nasa.gov/FOIA/index.html',
+              title: 'FOIA'
+            }, {
+              href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+              title: 'NASA Privacy Policy'
+            }, {
+              href: 'http://www.usa.gov',
+              title: 'USA.gov'
+            }],
+            secondaryLinks: [{
+              href: 'https://access.earthdata.nasa.gov/',
+              title: 'Earthdata Access: A Section 508 accessible alternative'
+            }]
+          },
+          moreInfoUrl: 'https://test.gov',
+          pageTitle: 'TEST',
+          parentConfig: 'edsc',
+          portalBrowser: true,
+          portalId: 'testPortal',
+          query: {
+            hasGranulesOrCwic: null,
+            project: 'testProject'
+          },
+          title: {
+            primary: 'test',
+            secondary: 'test secondary title'
+          },
+          ui: {
+            showNonEosdisCheckbox: false,
+            showOnlyGranulesCheckbox: false,
+            showTophat: true
+          }
+        })
+      })
+    })
   })
 })
 
@@ -579,7 +682,8 @@ describe('changePath', () => {
               byId: {
                 'C00001-EDSC': {
                   granules: {},
-                  isVisible: true
+                  isVisible: true,
+                  selectedAccessMethod: undefined
                 }
               }
             }
@@ -598,7 +702,8 @@ describe('changePath', () => {
               pageNum: 1,
               spatial: initialQueryState.collection.spatial,
               temporal: {}
-            }
+            },
+            nlpCollection: null
           },
           shapefile: {
             shapefileId: ''
@@ -674,7 +779,8 @@ describe('changePath', () => {
           pageNum: 1,
           spatial: initialQueryState.collection.spatial,
           temporal: {}
-        }
+        },
+        nlpCollection: null
       },
       shapefile: {
         shapefileId: ''
