@@ -1,27 +1,22 @@
 import React from 'react'
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import { AdminRetrievals } from '../AdminRetrievals'
-import { AdminRetrievalsList } from '../AdminRetrievalsList'
 
-jest.mock('../AdminRetrievalsList', () => ({
-  AdminRetrievalsList: jest.fn(() => <div />)
-}))
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
+import AdminRetrievals from '../AdminRetrievals'
+import AdminRetrievalsList from '../AdminRetrievalsList'
+
+jest.mock('../AdminRetrievalsList', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: AdminRetrievals,
-  withRouter: true,
-  defaultProps: {
-    historyPush: jest.fn()
-  }
+  withRouter: true
 })
 
 describe('when AdminRetrievals is rendered', () => {
   test('renders child components with correct props', () => {
-    const { props } = setup()
+    setup()
 
     expect(AdminRetrievalsList).toHaveBeenCalledTimes(1)
-    expect(AdminRetrievalsList).toHaveBeenCalledWith({
-      historyPush: props.historyPush
-    }, {})
+    expect(AdminRetrievalsList).toHaveBeenCalledWith({}, {})
   })
 })

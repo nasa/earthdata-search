@@ -390,7 +390,7 @@ export const urlPathsWithoutUrlParams = [
 
 /**
  * Is the given location the Saved Projects page
- * @param {Object} location Redux store location
+ * @param {Object} location Page location
  */
 export const isSavedProjectsPage = (location) => {
   const { pathname, search } = location

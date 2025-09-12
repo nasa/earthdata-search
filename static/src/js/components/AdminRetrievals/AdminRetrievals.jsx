@@ -1,14 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import { AdminPage } from '../AdminPage/AdminPage'
-import { AdminRetrievalsList } from './AdminRetrievalsList'
+import AdminPage from '../AdminPage/AdminPage'
+import AdminRetrievalsList from './AdminRetrievalsList'
 
-export const AdminRetrievals = ({
-  historyPush
-}) => (
+const AdminRetrievals = () => (
   <AdminPage
     pageTitle="Retrievals"
     breadcrumbs={
@@ -26,16 +23,10 @@ export const AdminRetrievals = ({
   >
     <Row>
       <Col>
-        <AdminRetrievalsList
-          historyPush={historyPush}
-        />
+        <AdminRetrievalsList />
       </Col>
     </Row>
   </AdminPage>
 )
-
-AdminRetrievals.propTypes = {
-  historyPush: PropTypes.func.isRequired
-}
 
 export default AdminRetrievals

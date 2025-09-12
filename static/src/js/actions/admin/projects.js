@@ -91,7 +91,7 @@ export const fetchAdminProjects = () => (dispatch, getState) => {
   const state = getState()
 
   // Retrieve data from Redux using selectors
-  const earthdataEnvironment = getEarthdataEnvironment(state)
+  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
 
   const { admin, authToken } = state
 

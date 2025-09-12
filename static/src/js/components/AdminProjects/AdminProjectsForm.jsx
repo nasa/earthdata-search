@@ -5,7 +5,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 
 import Button from '../Button/Button'
 
-export class AdminProjectsForm extends Component {
+class AdminProjectsForm extends Component {
   constructor(props) {
     super(props)
 
@@ -72,3 +72,5 @@ export class AdminProjectsForm extends Component {
 AdminProjectsForm.propTypes = {
   onAdminViewProject: PropTypes.func.isRequired
 }
+
+export default AdminProjectsForm

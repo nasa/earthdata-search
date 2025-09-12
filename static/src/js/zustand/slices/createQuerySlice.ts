@@ -10,9 +10,6 @@ import configureStore from '../../store/configureStore'
 // @ts-expect-error This file does not have types
 import actions from '../../actions'
 
-// @ts-expect-error This file does not have types
-import { CLEAR_FILTERS } from '../../constants/actionTypes'
-
 import { getCollectionId } from '../selectors/collection'
 import { getProjectCollectionsIds } from '../selectors/project'
 
@@ -22,6 +19,8 @@ import { pruneFilters } from '../../util/pruneFilters'
 
 import { eventEmitter } from '../../events/events'
 
+import routerHelper, { type Router } from '../../router/router'
+
 const { collectionSearchResultsSortKey } = getApplicationConfig()
 
 export const initialState = {
@@ -29,10 +28,12 @@ export const initialState = {
     byId: {},
     hasGranulesOrCwic: true,
     keyword: '',
+    onlyEosdisCollections: false,
     overrideTemporal: {},
     pageNum: 1,
     sortKey: collectionSearchResultsSortKey,
     spatial: {},
+    tagKey: '',
     temporal: {}
   },
   region: {
@@ -175,22 +176,12 @@ const createQuerySlice: ImmerStateCreator<QuerySlice> = (set, get) => ({
         }
       }))
 
-      const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
-      } = configureStore()
-
-      // TODO EDSC-4510, update when advanced search is in Zustand
-      reduxDispatch({ type: CLEAR_FILTERS })
-
       get().collections.getCollections()
 
       get().project.getProjectCollections()
 
       // Don't request granules unless we are viewing granules
-      const reduxState = reduxGetState()
-      const { router } = reduxState
-      const { location } = router
+      const { location } = routerHelper.router?.state || {} as Router['state']
       const { pathname } = location
 
       if (isPath(pathname, ['/search/granules'])) {

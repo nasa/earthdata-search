@@ -408,7 +408,13 @@ const Map: React.FC<MapProps> = ({
   // on the map view when the panels are resized.
   // We adjust the padding so that centering the map on a point will center the point in the
   // viewable area of the map and not behind a panel.
-  const panelsWidth = useEdscStore((state) => state.ui.panels.panelsWidth)
+  const {
+    panelsWidth,
+    sidebarWidth
+  } = useEdscStore((state) => ({
+    panelsWidth: state.ui.panels.panelsWidth,
+    sidebarWidth: state.ui.panels.sidebarWidth
+  }))
 
   // Create a ref for the map and the map dome element
   const mapRef = useRef<OlMap>(undefined)
@@ -440,7 +446,7 @@ const Map: React.FC<MapProps> = ({
       target: mapElRef.current as HTMLDivElement,
       view: createView({
         center,
-        padding: [0, 0, 0, panelsWidth],
+        padding: [0, 0, 0, panelsWidth + sidebarWidth],
         projectionCode,
         rotation,
         zoom
@@ -933,7 +939,6 @@ const Map: React.FC<MapProps> = ({
     }
   }, [focusedCollectionId])
 
-  // Update the map view when the panelsWidth changes
   useEffect(() => {
     // When colorMap or isFocusedCollectionPage changes, remove the existing legend control
     // and add a new one if necessary.
@@ -958,6 +963,7 @@ const Map: React.FC<MapProps> = ({
     }
   }, [isFocusedCollectionPage, colorMap])
 
+  // Update the map view when the panelsWidth changes
   useEffect(() => {
     // When the panelsWidth changes, update the padding on the map view.
     // This will ensure when we want to center something on the map it is
@@ -967,8 +973,8 @@ const Map: React.FC<MapProps> = ({
     const view = map.getView()
 
     // Set the new padding value with the new panelsWidth
-    view.padding = [0, 0, 0, panelsWidth]
-  }, [panelsWidth])
+    view.padding = [0, 0, 0, panelsWidth + sidebarWidth]
+  }, [panelsWidth, sidebarWidth])
 
   // When the granules change, draw the granule backgrounds
   useEffect(() => {

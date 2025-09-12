@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 
@@ -49,6 +48,4 @@ SubscriptionsListContainer.propTypes = {
   onFetchSubscriptions: PropTypes.func.isRequired
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(SubscriptionsListContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionsListContainer)

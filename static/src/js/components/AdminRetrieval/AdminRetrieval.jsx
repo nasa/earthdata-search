@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { AdminRetrievalDetails } from '../AdminRetrievalDetails/AdminRetrievalDetails'
-import { AdminPage } from '../AdminPage/AdminPage'
+import AdminRetrievalDetails from '../AdminRetrievalDetails/AdminRetrievalDetails'
+import AdminPage from '../AdminPage/AdminPage'
 
-export const AdminRetrieval = ({
+const AdminRetrieval = ({
   obfuscatedId,
   onRequeueOrder
 }) => (

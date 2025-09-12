@@ -67,6 +67,7 @@ const setup = setupTest({
       removeProjectCollection: jest.fn()
     }
   },
+  withRouter: true,
   withRedux: true
 })
 

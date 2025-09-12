@@ -5,16 +5,12 @@ import {
   within
 } from '@testing-library/react'
 
-import { AdminRetrievalsList } from '../AdminRetrievalsList'
+import AdminRetrievalsList from '../AdminRetrievalsList'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_RETRIEVALS from '../../../operations/queries/adminRetrievals'
 
 const setup = setupTest({
   Component: AdminRetrievalsList,
-  defaultProps: {
-    obfuscatedId: '1',
-    historyPush: jest.fn()
-  },
   defaultApolloClientMocks: [
     {
       request: {
@@ -55,6 +51,7 @@ const setup = setupTest({
       }
     }
   ],
+  withRouter: true,
   withApolloClient: true
 })
 

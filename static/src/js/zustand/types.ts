@@ -814,6 +814,8 @@ type CollectionQuery = {
   hasGranulesOrCwic: boolean
   /** The keyword to search for */
   keyword: string
+  /** Flag to indicate if only EOSDIS collections should be included */
+  onlyEosdisCollections: boolean
   /** The temporal override */
   overrideTemporal: Temporal
   /** The page number */
@@ -822,6 +824,8 @@ type CollectionQuery = {
   sortKey: string
   /** The spatial filter */
   spatial: Spatial
+  /** The tag key */
+  tagKey: string
   /** The temporal filter */
   temporal: Temporal
 }
@@ -1012,6 +1016,10 @@ export type UiSlice = {
       panelsWidth: number
       /** Function to set the panelsWidth value */
       setPanelsWidth: (panelsWidth: number) => void
+      /** The width of the sidebar */
+      sidebarWidth: number
+      /** Function to set the sidebarWidth value */
+      setSidebarWidth: (sidebarWidth: number) => void
     }
     tour: {
       /** Flag to show the tour */

@@ -5,7 +5,7 @@ import {
 } from '@testing-library/react'
 import { gql } from '@apollo/client'
 
-import { AdminPreferencesMetricsList } from '../AdminPreferencesMetricsList'
+import AdminPreferencesMetricsList from '../AdminPreferencesMetricsList'
 import ADMIN_PREFERENCES_METRICS from '../../../operations/queries/adminPreferencesMetrics'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'

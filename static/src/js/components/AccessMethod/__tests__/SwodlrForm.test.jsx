@@ -3,15 +3,7 @@ import React from 'react'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import ResizeObserver from 'resize-observer-polyfill'
-
 import SwodlrForm from '../SwodlrForm'
-
-global.ResizeObserver = ResizeObserver
-
-beforeEach(() => {
-  jest.clearAllMocks()
-})
 
 const setup = (overrideProps) => {
   const setGranuleList = jest.fn()

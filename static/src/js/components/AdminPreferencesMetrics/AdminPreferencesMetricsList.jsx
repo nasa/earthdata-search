@@ -74,7 +74,7 @@ const createPreferencesTable = (preferences) => {
   )
 }
 
-export const AdminPreferencesMetricsList = () => {
+const AdminPreferencesMetricsList = () => {
   const { data, error, loading } = useQuery(gql(ADMIN_PREFERENCES_METRICS))
 
   return (

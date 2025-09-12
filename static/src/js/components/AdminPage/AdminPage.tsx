@@ -21,7 +21,7 @@ interface AdminPageProps {
   breadcrumbs?: Breadcrumb[]
 }
 
-export const AdminPage: React.FC<AdminPageProps> = ({
+const AdminPage: React.FC<AdminPageProps> = ({
   children = null,
   pageTitle,
   breadcrumbs = []

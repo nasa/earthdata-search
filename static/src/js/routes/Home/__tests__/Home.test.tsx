@@ -1,7 +1,6 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 import { type Dispatch } from 'redux'
-import { useHistory } from 'react-router-dom'
 
 import HomeTopicCard from '../HomeTopicCard'
 import HomePortalCard from '../HomePortalCard'
@@ -11,30 +10,18 @@ import { Home } from '../Home'
 import * as sharedConfig from '../../../../../../sharedUtils/config'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn().mockReturnValue({
-    push: jest.fn()
-  })
-}))
+// @ts-expect-error This file does not have types
+import SpatialSelectionDropdownContainer from '../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer'
+// @ts-expect-error This file does not have types
+import TemporalSelectionDropdownContainer from '../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer'
 
-jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => {
-  const MockSpatialSelectionDropdown = () => <div data-testid="spatial-selection-dropdown">Spatial Selection Dropdown</div>
-  MockSpatialSelectionDropdown.displayName = 'MockSpatialSelectionDropdown'
+jest.mock('../../../containers/SpatialSelectionDropdownContainer/SpatialSelectionDropdownContainer', () => jest.fn(() => <div />))
 
-  return MockSpatialSelectionDropdown
-})
-
-jest.mock('../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer', () => {
-  const MockTemporalSelectionDropdown = () => <div data-testid="temporal-selection-dropdown">Temporal Selection Dropdown</div>
-  MockTemporalSelectionDropdown.displayName = 'MockTemporalSelectionDropdown'
-
-  return MockTemporalSelectionDropdown
-})
+jest.mock('../../../containers/TemporalSelectionDropdownContainer/TemporalSelectionDropdownContainer', () => jest.fn(() => <div />))
 
 jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   const mockPortalLinkContainer = jest.fn(({ children }) => (
-    <div data-testid="mockPortalLinkContainer">
+    <div>
       {children}
     </div>
   ))
@@ -74,6 +61,13 @@ jest.mock('../../../../../../sharedUtils/config', () => ({
   getApplicationConfig: jest.fn(() => ({
     nlpSearch: 'false'
   }))
+}))
+
+const mockUseNavigate = jest.fn()
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useNavigate: () => mockUseNavigate
 }))
 
 const setup = setupTest({
@@ -119,7 +113,7 @@ describe('Home', () => {
     expect(searchInput).toHaveValue('test keyword')
   })
 
-  test('calls onChangePath and history.push when the search form is submitted', async () => {
+  test('calls onChangePath and navigate when the search form is submitted', async () => {
     const { props, user } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
@@ -130,11 +124,11 @@ describe('Home', () => {
     expect(props.onChangePath).toHaveBeenCalledTimes(1)
     expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
 
-    expect(useHistory().push).toHaveBeenCalledTimes(1)
-    expect(useHistory().push).toHaveBeenCalledWith('/search?q=test')
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search?q=test')
   })
 
-  test('calls onChangePath and history.push when the enter key is pressed', async () => {
+  test('calls onChangePath and navigate when the enter key is pressed', async () => {
     const { props, user } = setup()
 
     const searchInput = screen.getByPlaceholderText('Type to search for data')
@@ -145,8 +139,8 @@ describe('Home', () => {
     expect(props.onChangePath).toHaveBeenCalledTimes(1)
     expect(props.onChangePath).toHaveBeenCalledWith('/search?q=test')
 
-    expect(useHistory().push).toHaveBeenCalledTimes(1)
-    expect(useHistory().push).toHaveBeenCalledWith('/search?q=test')
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search?q=test')
   })
 
   test('renders the topic cards', () => {
@@ -198,8 +192,19 @@ describe('Home', () => {
   test('renders the spatial and temporal dropdowns', () => {
     setup()
 
-    expect(screen.getByTestId('spatial-selection-dropdown')).toBeInTheDocument()
-    expect(screen.getByTestId('temporal-selection-dropdown')).toBeInTheDocument()
+    expect(SpatialSelectionDropdownContainer).toHaveBeenCalledTimes(1)
+    expect(SpatialSelectionDropdownContainer).toHaveBeenCalledWith({
+      searchParams: {
+        q: ''
+      }
+    }, {})
+
+    expect(TemporalSelectionDropdownContainer).toHaveBeenCalledTimes(1)
+    expect(TemporalSelectionDropdownContainer).toHaveBeenCalledWith({
+      searchParams: {
+        q: ''
+      }
+    }, {})
   })
 
   test('navigates to /search when form is submitted with empty keyword', async () => {
@@ -207,8 +212,11 @@ describe('Home', () => {
 
     await user.click(screen.getByRole('button', { name: /search/i }))
 
+    expect(props.onChangePath).toHaveBeenCalledTimes(1)
     expect(props.onChangePath).toHaveBeenCalledWith('/search')
-    expect(useHistory().push).toHaveBeenCalledWith('/search')
+
+    expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+    expect(mockUseNavigate).toHaveBeenCalledWith('/search')
   })
 
   describe('when nlpSearch is enabled', () => {
@@ -227,10 +235,14 @@ describe('Home', () => {
       await user.type(searchInput, 'test')
       await user.click(screen.getByRole('button', { name: /search/i }))
 
+      expect(props.onChangePath).toHaveBeenCalledTimes(1)
       expect(props.onChangePath).toHaveBeenCalledWith('/search?nlp=test')
-      expect(useHistory().push).toHaveBeenCalledWith('/search?nlp=test')
-      expect(screen.queryByTestId('spatial-selection-dropdown')).toBeNull()
-      expect(screen.queryByTestId('temporal-selection-dropdown')).toBeNull()
+
+      expect(mockUseNavigate).toHaveBeenCalledTimes(1)
+      expect(mockUseNavigate).toHaveBeenCalledWith('/search?nlp=test')
+
+      expect(SpatialSelectionDropdownContainer).toHaveBeenCalledTimes(0)
+      expect(TemporalSelectionDropdownContainer).toHaveBeenCalledTimes(0)
     })
   })
 })

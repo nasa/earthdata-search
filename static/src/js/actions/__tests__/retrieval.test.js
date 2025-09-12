@@ -9,6 +9,8 @@ import { submitRetrieval, fetchRetrieval } from '../retrieval'
 import * as getApplicationConfig from '../../../../../sharedUtils/config'
 import useEdscStore from '../../zustand/useEdscStore'
 
+import routerHelper from '../../router/router'
+
 const mockStore = configureMockStore([thunk])
 
 describe('submitRetrieval', () => {
@@ -28,33 +30,7 @@ describe('submitRetrieval', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'mockToken',
-      metadata: {
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              granules: {},
-              metadata: {}
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          pageNum: 1,
-          keyword: 'search keyword'
-        },
-        granule: {
-          pageNum: 1
-        }
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
-      shapefile: {}
+      authToken: 'mockToken'
     })
 
     useEdscStore.setState((state) => ({
@@ -83,7 +59,7 @@ describe('submitRetrieval', () => {
 
     // Call the dispatch
     await store.dispatch(submitRetrieval()).then(() => {
-      expect(store.getActions().length).toEqual(2)
+      expect(store.getActions().length).toEqual(1)
 
       expect(store.getActions()[0]).toEqual({
         payload: {
@@ -97,13 +73,8 @@ describe('submitRetrieval', () => {
         type: 'METRICS_DATA_ACCESS'
       })
 
-      expect(store.getActions()[1]).toEqual({
-        payload: {
-          args: ['/downloads/7'],
-          method: 'push'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith('/downloads/7')
 
       const { project } = useEdscStore.getState()
       const { submittedProject, submittingProject } = project
@@ -130,33 +101,7 @@ describe('submitRetrieval', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'mockToken',
-      metadata: {
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              granules: {},
-              metadata: {}
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          pageNum: 1,
-          keyword: 'search keyword'
-        },
-        granule: {
-          pageNum: 1
-        }
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
-      shapefile: {}
+      authToken: 'mockToken'
     })
 
     useEdscStore.setState((state) => ({
@@ -184,15 +129,10 @@ describe('submitRetrieval', () => {
     }))
 
     // Call the dispatch
-    await store.dispatch(submitRetrieval()).then(() => {
-      expect(store.getActions()[1]).toEqual({
-        payload: {
-          args: ['/downloads/7?ee=prod'],
-          method: 'push'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
-    })
+    await store.dispatch(submitRetrieval())
+
+    expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+    expect(routerHelper.router.navigate).toHaveBeenCalledWith('/downloads/7?ee=prod')
   })
 
   test('does not call updateCollectionResults on error', async () => {
@@ -207,25 +147,7 @@ describe('submitRetrieval', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'mockToken',
-      metadata: {
-        collections: {
-          collectionId: {}
-        },
-        granules: {}
-      },
-      query: {
-        collection: {
-          pageNum: 1,
-          keyword: 'search keyword'
-        }
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      },
-      shapefile: {}
+      authToken: 'mockToken'
     })
 
     useEdscStore.setState((state) => ({
@@ -254,13 +176,13 @@ describe('submitRetrieval', () => {
 
     const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
 
-    await store.dispatch(submitRetrieval()).then(() => {
-      expect(consoleMock).toHaveBeenCalledTimes(1)
-    })
+    await store.dispatch(submitRetrieval())
+
+    expect(consoleMock).toHaveBeenCalledTimes(1)
   })
 
   describe('metricsDataAccess', () => {
-    test('saves metrics for download retrievals', () => {
+    test('saves metrics for download retrievals', async () => {
       nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
@@ -269,33 +191,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken',
-        metadata: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {},
-                metadata: {}
-              }
-            }
-          }
-        },
-        query: {
-          collection: {
-            pageNum: 1,
-            keyword: 'search keyword'
-          },
-          granule: {
-            pageNum: 1
-          }
-        },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
+        authToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -323,24 +219,27 @@ describe('submitRetrieval', () => {
       }))
 
       // Call the dispatch
-      store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(2)
+      await store.dispatch(submitRetrieval())
 
-        expect(store.getActions()[0]).toEqual({
-          payload: {
-            type: 'data_access_completion',
-            collections: [{
-              collectionId: 'collectionId',
-              service: 'Download',
-              type: 'download'
-            }]
-          },
-          type: 'METRICS_DATA_ACCESS'
-        })
+      expect(store.getActions().length).toEqual(1)
+
+      expect(store.getActions()[0]).toEqual({
+        payload: {
+          type: 'data_access_completion',
+          collections: [{
+            collectionId: 'collectionId',
+            service: 'Download',
+            type: 'download'
+          }]
+        },
+        type: 'METRICS_DATA_ACCESS'
       })
+
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith('/downloads/7')
     })
 
-    test('saves metrics for echo orders retrievals', () => {
+    test('saves metrics for echo orders retrievals', async () => {
       nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
@@ -349,33 +248,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken',
-        metadata: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {},
-                metadata: {}
-              }
-            }
-          }
-        },
-        query: {
-          collection: {
-            pageNum: 1,
-            keyword: 'search keyword'
-          },
-          granule: {
-            pageNum: 1
-          }
-        },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
+        authToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -406,24 +279,27 @@ describe('submitRetrieval', () => {
       }))
 
       // Call the dispatch
-      store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(2)
+      await store.dispatch(submitRetrieval())
 
-        expect(store.getActions()[0]).toEqual({
-          payload: {
-            type: 'data_access_completion',
-            collections: [{
-              collectionId: 'collectionId',
-              service: 'Mock Order',
-              type: 'order'
-            }]
-          },
-          type: 'METRICS_DATA_ACCESS'
-        })
+      expect(store.getActions().length).toEqual(1)
+
+      expect(store.getActions()[0]).toEqual({
+        payload: {
+          type: 'data_access_completion',
+          collections: [{
+            collectionId: 'collectionId',
+            service: 'Mock Order',
+            type: 'order'
+          }]
+        },
+        type: 'METRICS_DATA_ACCESS'
       })
+
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith('/downloads/7')
     })
 
-    test('saves metrics for esi retrievals', () => {
+    test('saves metrics for esi retrievals', async () => {
       nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
@@ -432,33 +308,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken',
-        metadata: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {},
-                metadata: {}
-              }
-            }
-          }
-        },
-        query: {
-          collection: {
-            pageNum: 1,
-            keyword: 'search keyword'
-          },
-          granule: {
-            pageNum: 1
-          }
-        },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
+        authToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -489,24 +339,24 @@ describe('submitRetrieval', () => {
       }))
 
       // Call the dispatch
-      store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(2)
+      await store.dispatch(submitRetrieval())
 
-        expect(store.getActions()[0]).toEqual({
-          payload: {
-            type: 'data_access_completion',
-            collections: [{
-              collectionId: 'collectionId',
-              service: 'Mock Order',
-              type: 'esi'
-            }]
-          },
-          type: 'METRICS_DATA_ACCESS'
-        })
+      expect(store.getActions().length).toEqual(1)
+
+      expect(store.getActions()[0]).toEqual({
+        payload: {
+          type: 'data_access_completion',
+          collections: [{
+            collectionId: 'collectionId',
+            service: 'Mock Order',
+            type: 'esi'
+          }]
+        },
+        type: 'METRICS_DATA_ACCESS'
       })
     })
 
-    test('saves metrics for opendap retrievals', () => {
+    test('saves metrics for opendap retrievals', async () => {
       nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
@@ -515,33 +365,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken',
-        metadata: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {},
-                metadata: {}
-              }
-            }
-          }
-        },
-        query: {
-          collection: {
-            pageNum: 1,
-            keyword: 'search keyword'
-          },
-          granule: {
-            pageNum: 1
-          }
-        },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
+        authToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -569,24 +393,24 @@ describe('submitRetrieval', () => {
       }))
 
       // Call the dispatch
-      store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(2)
+      await store.dispatch(submitRetrieval())
 
-        expect(store.getActions()[0]).toEqual({
-          payload: {
-            type: 'data_access_completion',
-            collections: [{
-              collectionId: 'collectionId',
-              service: 'OPeNDAP',
-              type: 'opendap'
-            }]
-          },
-          type: 'METRICS_DATA_ACCESS'
-        })
+      expect(store.getActions().length).toEqual(1)
+
+      expect(store.getActions()[0]).toEqual({
+        payload: {
+          type: 'data_access_completion',
+          collections: [{
+            collectionId: 'collectionId',
+            service: 'OPeNDAP',
+            type: 'opendap'
+          }]
+        },
+        type: 'METRICS_DATA_ACCESS'
       })
     })
 
-    test('saves metrics for harmony retrievals', () => {
+    test('saves metrics for harmony retrievals', async () => {
       nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
@@ -595,33 +419,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken',
-        metadata: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {},
-                metadata: {}
-              }
-            }
-          }
-        },
-        query: {
-          collection: {
-            pageNum: 1,
-            keyword: 'search keyword'
-          },
-          granule: {
-            pageNum: 1
-          }
-        },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
+        authToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -650,24 +448,24 @@ describe('submitRetrieval', () => {
       }))
 
       // Call the dispatch
-      store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(2)
+      await store.dispatch(submitRetrieval())
 
-        expect(store.getActions()[0]).toEqual({
-          payload: {
-            type: 'data_access_completion',
-            collections: [{
-              collectionId: 'collectionId',
-              service: 'mock-harmony-service',
-              type: 'harmony'
-            }]
-          },
-          type: 'METRICS_DATA_ACCESS'
-        })
+      expect(store.getActions().length).toEqual(1)
+
+      expect(store.getActions()[0]).toEqual({
+        payload: {
+          type: 'data_access_completion',
+          collections: [{
+            collectionId: 'collectionId',
+            service: 'mock-harmony-service',
+            type: 'harmony'
+          }]
+        },
+        type: 'METRICS_DATA_ACCESS'
       })
     })
 
-    test('saves metrics for swodlr retrievals', () => {
+    test('saves metrics for swodlr retrievals', async () => {
       nock(/localhost/)
         .post(/retrievals/)
         .reply(200, {
@@ -676,33 +474,7 @@ describe('submitRetrieval', () => {
 
       // MockStore with initialState
       const store = mockStore({
-        authToken: 'mockToken',
-        metadata: {
-          collections: {
-            allIds: ['collectionId'],
-            byId: {
-              collectionId: {
-                granules: {},
-                metadata: {}
-              }
-            }
-          }
-        },
-        query: {
-          collection: {
-            pageNum: 1,
-            keyword: 'search keyword'
-          },
-          granule: {
-            pageNum: 1
-          }
-        },
-        router: {
-          location: {
-            search: '?some=testparams'
-          }
-        },
-        shapefile: {}
+        authToken: 'mockToken'
       })
 
       useEdscStore.setState((state) => ({
@@ -731,20 +503,20 @@ describe('submitRetrieval', () => {
       }))
 
       // Call the dispatch
-      store.dispatch(submitRetrieval()).then(() => {
-        expect(store.getActions().length).toEqual(2)
+      await store.dispatch(submitRetrieval())
 
-        expect(store.getActions()[0]).toEqual({
-          payload: {
-            type: 'data_access_completion',
-            collections: [{
-              collectionId: 'collectionId',
-              service: 'SWODLR',
-              type: 'swodlr'
-            }]
-          },
-          type: 'METRICS_DATA_ACCESS'
-        })
+      expect(store.getActions().length).toEqual(1)
+
+      expect(store.getActions()[0]).toEqual({
+        payload: {
+          type: 'data_access_completion',
+          collections: [{
+            collectionId: 'collectionId',
+            service: 'SWODLR',
+            type: 'swodlr'
+          }]
+        },
+        type: 'METRICS_DATA_ACCESS'
       })
     })
   })
@@ -830,32 +602,7 @@ describe('fetchRetrieval', () => {
 
     // MockStore with initialState
     const store = mockStore({
-      authToken: 'mockToken',
-      metadata: {
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              granules: {},
-              metadata: {}
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          pageNum: 1,
-          keyword: 'search keyword'
-        },
-        granule: {
-          pageNum: 1
-        }
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      }
+      authToken: 'mockToken'
     })
 
     useEdscStore.setState((state) => ({
@@ -980,32 +727,7 @@ describe('fetchRetrieval', () => {
       .reply(200)
 
     const store = mockStore({
-      authToken: 'mockToken',
-      metadata: {
-        collections: {
-          allIds: ['collectionId'],
-          byId: {
-            collectionId: {
-              granules: {},
-              metadata: {}
-            }
-          }
-        }
-      },
-      query: {
-        collection: {
-          pageNum: 1,
-          keyword: 'search keyword'
-        },
-        granule: {
-          pageNum: 1
-        }
-      },
-      router: {
-        location: {
-          search: '?some=testparams'
-        }
-      }
+      authToken: 'mockToken'
     })
 
     useEdscStore.setState((state) => ({

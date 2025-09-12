@@ -17,6 +17,8 @@ import { getFocusedGranule, getGranuleId } from '../selectors/granule'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
 import { getFocusedCollectionMetadata } from '../selectors/collection'
 
+import routerHelper, { type Router } from '../../router/router'
+
 const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
   granule: {
     granuleId: null,
@@ -30,8 +32,7 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
       const reduxState = reduxGetState()
 
       const {
-        authToken,
-        router
+        authToken
       } = reduxState
 
       const currentState = get()
@@ -121,7 +122,7 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
             state.granule.granuleId = null
           })
 
-          const { location } = router
+          const { location } = routerHelper.router?.state || {} as Router['state']
           const { search } = location
 
           reduxDispatch(actions.changeUrl({

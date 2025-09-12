@@ -7,6 +7,7 @@ import { displayNotificationType } from '../constants/enums'
 import { parseError } from '../../../../sharedUtils/parseError'
 
 import LoggerRequest from '../util/request/loggerRequest'
+import routerHelper from '../router/router'
 
 export const addError = (payload) => (dispatch) => {
   // Default the notificationType to none
@@ -42,9 +43,8 @@ export const handleError = ({
   notificationType = displayNotificationType.banner,
   requestObject,
   errorAction
-}) => (dispatch, getState) => {
-  const { router = {} } = getState()
-  const { location } = router
+}) => (dispatch) => {
+  const { location } = routerHelper.router.state
 
   let requestId = uuidv4()
   if (requestObject) {

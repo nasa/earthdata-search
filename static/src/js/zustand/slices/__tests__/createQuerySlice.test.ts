@@ -8,6 +8,7 @@ import configureStore from '../../../store/configureStore'
 import actions from '../../../actions'
 
 import * as EventEmitter from '../../../events/events'
+import routerHelper from '../../../router/router'
 
 jest.mock('../../../actions', () => ({
   getCollections: jest.fn(),
@@ -512,14 +513,6 @@ describe('createQuerySlice', () => {
   describe('clearFilters', () => {
     describe('when not on the granules page', () => {
       test('updates the region query and calls getRegions', async () => {
-        mockGetState.mockReturnValue({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
-
         useEdscStore.setState((state) => {
           state.collections.getCollections = jest.fn()
           state.granules.getGranules = jest.fn()
@@ -561,13 +554,16 @@ describe('createQuerySlice', () => {
 
     describe('when on the granules page', () => {
       test('updates the region query and calls getRegions', async () => {
-        mockGetState.mockReturnValue({
-          router: {
+        routerHelper.router = {
+          navigate: jest.fn(),
+          state: {
             location: {
-              pathname: '/search/granules'
+              pathname: '/search/granules',
+              search: ''
             }
-          }
-        })
+          },
+          subscribe: jest.fn()
+        }
 
         useEdscStore.setState((state) => {
           state.collections.getCollections = jest.fn()

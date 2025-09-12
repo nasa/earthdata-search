@@ -56,7 +56,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      router: {},
       ui: {
         map: {
           drawingNewLayer: false
@@ -70,8 +69,7 @@ describe('mapStateToProps', () => {
     const expectedState = {
       colormapsMetadata: {},
       displaySpatialPolygonWarning: false,
-      drawingNewLayer: false,
-      router: {}
+      drawingNewLayer: false
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

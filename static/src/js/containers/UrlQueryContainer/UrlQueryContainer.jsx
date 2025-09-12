@@ -1,15 +1,11 @@
-import {
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
 import { encodeUrlQuery } from '../../util/url/url'
-import { locationPropType } from '../../util/propTypes/location'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import {
@@ -29,25 +25,20 @@ export const mapDispatchToProps = (dispatch) => ({
     (query) => dispatch(actions.changeUrl(query))
 })
 
-export const mapStateToProps = (state) => ({
-  location: state.router.location,
-  pathname: state.router.location.pathname
-})
-
 export const UrlQueryContainer = (props) => {
   const {
     children,
-    location,
     onChangePath,
     onChangeUrl
   } = props
+
+  const location = useLocation()
   const {
     pathname,
     search
   } = location
 
   const [currentPath, setCurrentPath] = useState('')
-  const previousSearch = useRef(search)
 
   const zustandValues = useEdscStore((state) => ({
     collectionsMetadata: getCollectionsMetadata(state),
@@ -113,42 +104,37 @@ export const UrlQueryContainer = (props) => {
     temporalSearch
   }
 
+  // When the page loads, call onChangePath to load the values from the URL
   useEffect(() => {
     onChangePath([pathname, search].filter(Boolean).join(''))
   }, [])
 
+  // When the Zustand state changes, encode the values and call onChangeUrl to update the URL
   useEffect(() => {
-    // The only time the search prop changes is after the URL has been updated
-    // So we only need to worry about encoding the query and updating the URL
-    // if the previous search and next search are the same
-    if (
-      previousSearch.current === search
-    ) {
-      const nextPath = encodeUrlQuery({
-        ...props,
-        ...combinedZustandValues
-      })
+    const nextPath = encodeUrlQuery({
+      ...combinedZustandValues,
+      pathname
+    })
 
-      if (currentPath !== nextPath) {
-        setCurrentPath(nextPath)
+    if (currentPath !== nextPath) {
+      setCurrentPath(nextPath)
 
-        if (nextPath !== '') {
-          onChangeUrl(nextPath)
-        }
+      if (nextPath !== '') {
+        onChangeUrl(nextPath)
       }
     }
-
-    previousSearch.current = search
-  }, [props, search, zustandValues])
+  }, [
+    combinedZustandValues,
+    pathname
+  ])
 
   return children
 }
 
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UrlQueryContainer)
+export default connect(null, mapDispatchToProps)(UrlQueryContainer)

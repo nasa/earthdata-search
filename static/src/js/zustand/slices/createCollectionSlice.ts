@@ -4,6 +4,8 @@ import type {
   ImmerStateCreator
 } from '../types'
 
+import routerHelper, { type Router } from '../../router/router'
+
 // @ts-expect-error There are no types for this file
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
@@ -49,11 +51,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       const reduxState = reduxGetState()
 
       const {
-        authToken,
-        router
+        authToken
       } = reduxState
 
-      const { location } = router
+      const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
       const zustandState = get()
@@ -269,17 +270,14 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
 
     setCollectionId: async (collectionId) => {
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
-      const reduxState = reduxGetState()
 
       set((state) => {
         state.collection.collectionId = collectionId
       })
 
-      const { router } = reduxState
-      const { location } = router
+      const { location } = routerHelper.router?.state || {} as Router['state']
       const { pathname, search } = location
 
       const isProjectPage = pathname.includes('/project')
@@ -337,13 +335,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       get().collection.setCollectionId(collectionId)
 
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
 
-      const reduxState = reduxGetState()
-      const { router } = reduxState
-      const { location } = router
+      const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
       reduxDispatch(actions.changeUrl({
@@ -356,13 +351,10 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
       get().collection.setCollectionId(collectionId)
 
       const {
-        dispatch: reduxDispatch,
-        getState: reduxGetState
+        dispatch: reduxDispatch
       } = configureStore()
 
-      const reduxState = reduxGetState()
-      const { router } = reduxState
-      const { location } = router
+      const { location } = routerHelper.router?.state || {} as Router['state']
       const { search } = location
 
       reduxDispatch(actions.changeUrl({

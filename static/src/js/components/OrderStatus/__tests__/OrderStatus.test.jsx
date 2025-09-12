@@ -11,6 +11,13 @@ import { retrievalStatusProps } from './mocks'
 import { OrderStatus } from '../OrderStatus'
 import * as config from '../../../../../../sharedUtils/config'
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useParams: jest.fn().mockReturnValue({
+    id: '7'
+  })
+}))
+
 const setup = setupTest({
   Component: OrderStatus,
   defaultProps: retrievalStatusProps,

@@ -1,8 +1,6 @@
-import React from 'react'
+import { screen } from '@testing-library/react'
 
-import { render, screen } from '@testing-library/react'
-import { Router } from 'react-router'
-import { createMemoryHistory } from 'history'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import actions from '../../../actions'
 import * as metricsSpatialSelection from '../../../middleware/metrics/actions'
@@ -12,26 +10,16 @@ import {
   SpatialSelectionDropdownContainer
 } from '../SpatialSelectionDropdownContainer'
 
-const onChangePath = jest.fn()
-const onChangeUrl = jest.fn()
-const onToggleShapefileUploadModal = jest.fn()
-const onMetricsSpatialSelection = jest.fn()
-const history = createMemoryHistory()
-
-const setup = () => {
-  const props = {
-    onChangeUrl,
-    onChangePath,
-    onToggleShapefileUploadModal,
-    onMetricsSpatialSelection
-  }
-
-  render(
-    <Router history={history} location={props.location}>
-      <SpatialSelectionDropdownContainer {...props} />
-    </Router>
-  )
-}
+const setup = setupTest({
+  Component: SpatialSelectionDropdownContainer,
+  defaultProps: {
+    onChangeUrl: jest.fn(),
+    onChangePath: jest.fn(),
+    onToggleShapefileUploadModal: jest.fn(),
+    onMetricsSpatialSelection: jest.fn()
+  },
+  withRouter: true
+})
 
 describe('mapDispatchToProps', () => {
   test('onToggleShapefileUploadModal calls actions.toggleShapefileUploadModal', () => {
@@ -40,8 +28,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onToggleShapefileUploadModal(false)
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith(false)
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith(false)
   })
 
   test('onMetricsSpatialSelection calls metricsSpatialSelection', () => {
@@ -50,8 +38,8 @@ describe('mapDispatchToProps', () => {
 
     mapDispatchToProps(dispatch).onMetricsSpatialSelection({ item: 'value' })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({ item: 'value' })
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({ item: 'value' })
   })
 })
 

@@ -11,6 +11,8 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import { initialState as initialQueryState } from '../../zustand/slices/createQuerySlice'
 
+import routerHelper from '../../router/router'
+
 const mockStore = configureMockStore([thunk])
 
 describe('updateStore', () => {
@@ -50,13 +52,7 @@ describe('updateStore', () => {
       }
     }
 
-    const store = mockStore({
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
+    const store = mockStore()
 
     await store.dispatch(urlQuery.updateStore(params))
 
@@ -133,10 +129,12 @@ describe('updateStore', () => {
       collection: {
         byId: {},
         keyword: '',
+        onlyEosdisCollections: false,
         overrideTemporal: {},
         pageNum: 1,
         sortKey: collectionSortKeys.scoreDescending,
         spatial: initialState.query.collection.spatial,
+        tagKey: '',
         temporal: {}
       },
       selectedRegion: {}
@@ -203,13 +201,7 @@ describe('updateStore', () => {
         }
       })
 
-      const store = mockStore({
-        router: {
-          location: {
-            pathname: '/projects'
-          }
-        }
-      })
+      const store = mockStore()
       await store.dispatch(urlQuery.updateStore(params, '/projects'))
 
       const storeActions = store.getActions()
@@ -286,10 +278,12 @@ describe('updateStore', () => {
         collection: {
           byId: {},
           keyword: '',
+          onlyEosdisCollections: false,
           overrideTemporal: {},
           pageNum: 1,
           sortKey: collectionSortKeys.scoreDescending,
           spatial: initialState.query.collection.spatial,
+          tagKey: '',
           temporal: {}
         },
         selectedRegion: {}
@@ -357,13 +351,7 @@ describe('updateStore', () => {
         }
       })
 
-      const store = mockStore({
-        router: {
-          location: {
-            pathname: '/projects'
-          }
-        }
-      })
+      const store = mockStore()
       await store.dispatch(urlQuery.updateStore(params, '/projects'))
 
       const storeActions = store.getActions()
@@ -484,10 +472,12 @@ describe('updateStore', () => {
         collection: {
           byId: {},
           keyword: '',
+          onlyEosdisCollections: false,
           overrideTemporal: {},
           pageNum: 1,
           sortKey: collectionSortKeys.scoreDescending,
           spatial: initialState.query.collection.spatial,
+          tagKey: '',
           temporal: {}
         },
         selectedRegion: {}
@@ -540,13 +530,14 @@ describe('updateStore', () => {
           }
         }
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/'
-            }
+        routerHelper.router.state = {
+          location: {
+            pathname: '/',
+            search: ''
           }
-        })
+        }
+
+        const store = mockStore()
 
         await store.dispatch(urlQuery.updateStore(params))
 
@@ -638,22 +629,7 @@ describe('changePath', () => {
 
     const newPath = '/search?projectId=1'
 
-    const store = mockStore({
-      metadata: {
-        collections: {
-          'C00001-EDSC': {
-            services: [],
-            variables: []
-          }
-        },
-        granules: {}
-      },
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
+    const store = mockStore()
 
     await store.dispatch(urlQuery.changePath(newPath)).then(() => {
       const storeActions = store.getActions()
@@ -746,13 +722,7 @@ describe('changePath', () => {
 
     const newPath = '/search?p=C00001-EDSC'
 
-    const store = mockStore({
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
+    const store = mockStore()
 
     await store.dispatch(urlQuery.changePath(newPath))
 
@@ -818,22 +788,7 @@ describe('changePath', () => {
 
     const newPath = '/search?projectId=1'
 
-    const store = mockStore({
-      metadata: {
-        collections: {
-          'C00001-EDSC': {
-            services: [],
-            variables: []
-          }
-        },
-        granules: {}
-      },
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
+    const store = mockStore()
 
     await store.dispatch(urlQuery.changePath(newPath)).then(() => {
       const storeActions = store.getActions()
@@ -866,13 +821,7 @@ describe('changePath', () => {
       test('calls getCollectionMetadata action', async () => {
         const newPath = '/search/granules?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
         useEdscStore.setState({
           collection: {
@@ -899,13 +848,7 @@ describe('changePath', () => {
       test('calls getCollectionMetadata action', async () => {
         const newPath = '/search/granules/collection-details?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
         useEdscStore.setState({
           collection: {
@@ -932,13 +875,7 @@ describe('changePath', () => {
       test('calls getCollectionMetadata action', async () => {
         const newPath = '/search/granules/subscriptions?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
         useEdscStore.setState({
           collection: {
@@ -965,13 +902,7 @@ describe('changePath', () => {
       test('calls getCollectionMetadata and getGranuleMetadata', async () => {
         const newPath = '/search/granules/granule-details?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
         useEdscStore.setState({
           collection: {
@@ -1010,13 +941,7 @@ describe('changePath', () => {
       test('calls getCollectionMetadata action', async () => {
         const newPath = '/portal/fakeportal/search/granules?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
         useEdscStore.setState({
           collection: {
@@ -1043,13 +968,7 @@ describe('changePath', () => {
       test('calls getCollectionMetadata action', async () => {
         const newPath = '/portal/fakeportal/search/granules/collection-details?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
         useEdscStore.setState({
           collection: {
@@ -1076,13 +995,7 @@ describe('changePath', () => {
       test('calls getCollectionMetadata action', async () => {
         const newPath = '/portal/fakeportal/search/granules/subscriptions?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
         useEdscStore.setState({
           collection: {
@@ -1109,13 +1022,7 @@ describe('changePath', () => {
       test('calls getCollectionMetadata and getGranuleMetadata', async () => {
         const newPath = '/portal/fakeportal/search/granules/granule-details?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
         useEdscStore.setState({
           collection: {
@@ -1153,60 +1060,52 @@ describe('changePath', () => {
 describe('changeUrl', () => {
   describe('when called with a string', () => {
     describe('when called without a projectId', () => {
+      beforeEach(() => {
+        routerHelper.router.state = {
+          location: {
+            pathname: '/search',
+            search: '?p=C00001-EDSC'
+          }
+        }
+      })
+
       test('calls replace when the pathname has not changed', () => {
         const newPath = '/search?p=C00001-EDSC'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          },
           savedProject: {}
         })
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
-        const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          payload: {
-            args: [
-              newPath
-            ],
-            method: 'replace'
-          },
-          type: '@@router/CALL_HISTORY_METHOD'
-        })
+        expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+        expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath, { replace: true })
       })
 
       test('calls push when the pathname has changed', () => {
         const newPath = '/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          },
           savedProject: {}
         })
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
-        const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          payload: {
-            args: [
-              newPath
-            ],
-            method: 'push'
-          },
-          type: '@@router/CALL_HISTORY_METHOD'
-        })
+        expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+        expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath)
       })
     })
 
     describe('when called with a projectId', () => {
+      beforeEach(() => {
+        routerHelper.router.state = {
+          location: {
+            pathname: '/search',
+            search: '?projectId=1'
+          }
+        }
+      })
+
       test('updates the stored path', async () => {
         nock(/localhost/)
           .post(/projects/)
@@ -1218,11 +1117,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1252,11 +1146,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1264,18 +1153,12 @@ describe('changeUrl', () => {
         })
 
         await store.dispatch(urlQuery.changeUrl(newPath)).then(() => {
-          const storeActions = store.getActions()
-          expect(storeActions[0]).toEqual({
-            payload: {
-              args: [
-                '/search?projectId=2'
-              ],
-              method: 'replace'
-            },
-            type: '@@router/CALL_HISTORY_METHOD'
-          })
+          expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+          expect(routerHelper.router.navigate).toHaveBeenCalledWith('/search?projectId=2', { replace: true })
 
-          expect(storeActions[1]).toEqual({
+          const storeActions = store.getActions()
+
+          expect(storeActions[0]).toEqual({
             payload: {
               projectId: 2,
               path: '/search?p=C00001-EDSC'
@@ -1289,11 +1172,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1316,11 +1194,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1350,26 +1223,19 @@ describe('changeUrl', () => {
         search: '?p=C00001-EDSC'
       }
 
-      const store = mockStore({
-        router: {
-          location: {
-            pathname: '/search'
-          }
+      routerHelper.router.state = {
+        location: {
+          pathname: '/search',
+          search: ''
         }
-      })
+      }
+
+      const store = mockStore()
 
       store.dispatch(urlQuery.changeUrl(newPath))
 
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          args: [
-            newPath
-          ],
-          method: 'replace'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath, { replace: true })
     })
 
     test('calls push when the pathname has changed', () => {
@@ -1378,26 +1244,19 @@ describe('changeUrl', () => {
         search: '?p=C00001-EDSC'
       }
 
-      const store = mockStore({
-        router: {
-          location: {
-            pathname: '/search'
-          }
+      routerHelper.router.state = {
+        location: {
+          pathname: '/search',
+          search: ''
         }
-      })
+      }
+
+      const store = mockStore()
 
       store.dispatch(urlQuery.changeUrl(newPath))
 
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          args: [
-            newPath
-          ],
-          method: 'push'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath)
     })
   })
 })

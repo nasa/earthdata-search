@@ -373,7 +373,7 @@ describe('SecondaryToolbar component', () => {
         }
       })
 
-      const secondaryToolbar = screen.getByTestId('secondary-toolbar')
+      const secondaryToolbar = screen.getByRole('navigation')
       const portalFeatureContainer = within(secondaryToolbar).getByTestId('mockPortalFeatureContainer')
 
       expect(portalFeatureContainer).toBeInTheDocument()
@@ -386,8 +386,8 @@ describe('SecondaryToolbar component', () => {
         }
       })
 
-      const toolbar = screen.getByTestId('secondary-toolbar')
-      expect(toolbar).toHaveClass('secondary-toolbar', 'secondary-toolbar--map-overlay')
+      const secondaryToolbar = screen.getByRole('navigation')
+      expect(secondaryToolbar).toHaveClass('secondary-toolbar', 'secondary-toolbar--map-overlay')
     })
   })
 

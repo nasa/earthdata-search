@@ -5,7 +5,7 @@ import {
 } from '@testing-library/react'
 import { gql } from '@apollo/client'
 
-import { AdminRetrievalDetails } from '../AdminRetrievalDetails'
+import AdminRetrievalDetails from '../AdminRetrievalDetails'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_RETRIEVAL from '../../../operations/queries/adminRetrieval'
 

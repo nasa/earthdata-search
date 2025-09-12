@@ -3,6 +3,7 @@ import React, {
   useRef,
   useState
 } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { sortBy } from 'lodash-es'
 import Col from 'react-bootstrap/Col'
 import Collapse from 'react-bootstrap/Collapse'
@@ -17,7 +18,6 @@ import {
   // @ts-expect-error: Types do not exist for this file
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { connect, MapDispatchToProps } from 'react-redux'
-import { useHistory, type RouteComponentProps } from 'react-router-dom'
 import { type Dispatch } from 'redux'
 
 import Button from '../../components/Button/Button'
@@ -156,12 +156,10 @@ interface HomeDispatchProps {
   onChangePath: (path: string) => void
 }
 
-type HomeProps = HomeDispatchProps & RouteComponentProps
+type HomeProps = HomeDispatchProps
 
-export const Home: React.FC<HomeProps> = ({
-  onChangePath
-}) => {
-  const history = useHistory()
+export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
+  const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
   const [showAllPortals, setShowAllPortals] = useState(false)
 
@@ -243,7 +241,7 @@ export const Home: React.FC<HomeProps> = ({
                       : '/search'
 
                     onChangePath(url)
-                    history.push(url)
+                    navigate(url)
                   }
                 }
               >

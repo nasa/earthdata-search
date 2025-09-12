@@ -4,6 +4,7 @@ import thunk from 'redux-thunk'
 
 import { UPDATE_SAVED_PROJECT } from '../../constants/actionTypes'
 import { updateSavedProject, updateProjectName } from '../savedProject'
+import routerHelper from '../../router/router'
 
 const mockStore = configureMockStore([thunk])
 
@@ -25,6 +26,13 @@ describe('updateSavedProject', () => {
 
 describe('updateProjectName', () => {
   test('updates the project name then calls updateSavedProject', async () => {
+    routerHelper.router.state = {
+      location: {
+        pathname: '/projectId=1',
+        search: ''
+      }
+    }
+
     const name = 'test name'
 
     nock(/localhost/)
@@ -36,12 +44,6 @@ describe('updateProjectName', () => {
       })
 
     const store = mockStore({
-      router: {
-        location: {
-          pathname: '/projectId=1',
-          search: ''
-        }
-      },
       savedProject: {
         projectId: 1,
         path: '/search?p=C00001-EDSC'
@@ -62,6 +64,13 @@ describe('updateProjectName', () => {
   })
 
   test('when the project doesn\'t have a path yet, saves the path from the URL', async () => {
+    routerHelper.router.state = {
+      location: {
+        pathname: '/search',
+        search: '?p=C00001-EDSC'
+      }
+    }
+
     const name = 'test name'
 
     nock(/localhost/)
@@ -73,12 +82,6 @@ describe('updateProjectName', () => {
       })
 
     const store = mockStore({
-      router: {
-        location: {
-          pathname: '/search',
-          search: '?p=C00001-EDSC'
-        }
-      },
       savedProject: {}
     })
 
@@ -96,6 +99,13 @@ describe('updateProjectName', () => {
   })
 
   test('does not call updateSavedProject on error', async () => {
+    routerHelper.router.state = {
+      location: {
+        pathname: '/projectId=1',
+        search: ''
+      }
+    }
+
     const name = 'test name'
 
     nock(/localhost/)
@@ -109,12 +119,6 @@ describe('updateProjectName', () => {
       .reply(200)
 
     const store = mockStore({
-      router: {
-        location: {
-          pathname: '/projectId=1',
-          search: ''
-        }
-      },
       savedProject: {
         projectId: 1,
         path: '/search?p=C00001-EDSC'

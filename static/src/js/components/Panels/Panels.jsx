@@ -7,25 +7,14 @@ import Tooltip from 'react-bootstrap/Tooltip'
 import { PanelSection } from './PanelSection'
 import { PanelGroup } from './PanelGroup'
 
-import history from '../../util/history'
 import { getPanelSizeMap } from '../../util/getPanelSizeMap'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
-import './Panels.scss'
 import useEdscStore from '../../zustand/useEdscStore'
 
-// Returns the width of the sidebar
-const getSidebarWidth = () => {
-  const sidebar = document.querySelector('.sidebar')
+import routerHelper from '../../router/router'
 
-  if (sidebar) {
-    const width = sidebar.offsetWidth
-
-    return width
-  }
-
-  return 0
-}
+import './Panels.scss'
 
 export class Panels extends PureComponent {
   constructor(props) {
@@ -82,7 +71,7 @@ export class Panels extends PureComponent {
   componentDidMount() {
     window.addEventListener('resize', this.onWindowResize, { capture: true })
     window.addEventListener('keyup', this.onWindowKeyUp, { capture: true })
-    this.browserHistoryUnlisten = history.listen(this.onWindowResize)
+    this.browserHistoryUnlisten = routerHelper.router.subscribe(this.onWindowResize)
 
     const maxWidth = this.calculateMaxWidth()
 
@@ -97,7 +86,7 @@ export class Panels extends PureComponent {
     const { ui } = zustandState
     const { panels } = ui
     const { setPanelsWidth } = panels
-    setPanelsWidth(this.width + getSidebarWidth())
+    setPanelsWidth(this.width)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -150,6 +139,13 @@ export class Panels extends PureComponent {
         document.body.classList.remove('is-panels-dragging')
       }
     }
+
+    // When the component updates call setPanelsWidth to set the initial width
+    const zustandState = useEdscStore.getState()
+    const { ui } = zustandState
+    const { panels } = ui
+    const { setPanelsWidth } = panels
+    setPanelsWidth(this.width)
   }
 
   componentWillUnmount() {
@@ -202,7 +198,7 @@ export class Panels extends PureComponent {
       const { ui } = zustandState
       const { panels } = ui
       const { setPanelsWidth } = panels
-      setPanelsWidth(getSidebarWidth() + panelWidth)
+      setPanelsWidth(panelWidth)
     }
 
     triggerKeyboardShortcut({
@@ -273,7 +269,7 @@ export class Panels extends PureComponent {
       const currentWidth = this.width
       const panelWidth = show ? 0 : currentWidth
 
-      setPanelsWidth(getSidebarWidth() + panelWidth)
+      setPanelsWidth(panelWidth)
     } else {
       this.setState({
         handleToolipVisible: false
@@ -447,7 +443,7 @@ export class Panels extends PureComponent {
       // This ensures the panel width is correct if they overdrag the panel but don't collapse it, or overdrag
       // the panel past their browser to the right.
       const finalPanelWidth = Math.min(Math.max(minWidth, newWidth), maxWidth)
-      setPanelsWidth(getSidebarWidth() + (panelShouldClose ? 0 : finalPanelWidth))
+      setPanelsWidth(panelShouldClose ? 0 : finalPanelWidth)
 
       if (panelShouldClose) {
         this.setState({

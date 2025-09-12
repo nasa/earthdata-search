@@ -3,7 +3,7 @@ import React, {
   useEffect,
   useState
 } from 'react'
-import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom'
 import Pagination from 'rc-pagination'
 import localeInfo from 'rc-pagination/lib/locale/en_US'
 import Table from 'react-bootstrap/Table'
@@ -27,9 +27,9 @@ import Spinner from '../Spinner/Spinner'
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsList.scss'
 
-export const AdminRetrievalsList = ({
-  historyPush
-}) => {
+const AdminRetrievalsList = () => {
+  const navigate = useNavigate()
+
   const [currentPage, setCurrentPage] = useState(1)
   const [searchType, setSearchType] = useState('urs_id')
   const [searchValue, setSearchValue] = useState('')
@@ -220,7 +220,7 @@ export const AdminRetrievalsList = ({
                         key={obfuscatedId}
                         onClick={
                           () => {
-                            historyPush(`/admin/retrievals/${obfuscatedId}`)
+                            navigate(`/admin/retrievals/${obfuscatedId}`)
                           }
                         }
                         role="button"
@@ -255,10 +255,6 @@ export const AdminRetrievalsList = ({
 
     </>
   )
-}
-
-AdminRetrievalsList.propTypes = {
-  historyPush: PropTypes.func.isRequired
 }
 
 export default AdminRetrievalsList

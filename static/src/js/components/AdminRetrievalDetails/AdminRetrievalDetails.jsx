@@ -14,7 +14,7 @@ import Button from '../Button/Button'
 
 import './AdminRetrievalDetails.scss'
 
-export const AdminRetrievalDetails = ({
+const AdminRetrievalDetails = ({
   obfuscatedId,
   onRequeueOrder
 }) => {

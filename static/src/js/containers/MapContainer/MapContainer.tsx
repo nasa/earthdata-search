@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { difference, isEmpty } from 'lodash-es'
 import { Geometry } from 'ol/geom'
+import { useLocation } from 'react-router-dom'
 
 // @ts-expect-error The file does not have types
 import actions from '../../actions'
@@ -86,8 +87,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 export const mapStateToProps = (state) => ({
   colormapsMetadata: getColormapsMetadata(state),
   displaySpatialPolygonWarning: state.ui.spatialPolygonWarning.isDisplayed,
-  drawingNewLayer: state.ui.map.drawingNewLayer,
-  router: state.router
+  drawingNewLayer: state.ui.map.drawingNewLayer
 })
 
 type ColormapMetadata = {
@@ -119,14 +119,6 @@ interface MapContainerProps {
   onToggleShapefileUploadModal: (state: boolean) => void
   /** Function to toggle the too many points modal */
   onToggleTooManyPointsModal: (state: boolean) => void
-  /** The router values */
-  router: {
-    /** The router location */
-    location: {
-      /** The pathname of the router */
-      pathname: string
-    }
-  }
 }
 
 export const MapContainer: React.FC<MapContainerProps> = (props) => {
@@ -137,11 +129,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onMetricsMap,
     onToggleDrawingNewLayer,
     onToggleShapefileUploadModal,
-    onToggleTooManyPointsModal,
-    router
+    onToggleTooManyPointsModal
   } = props
 
-  const { location } = router
+  const location = useLocation()
   const { pathname } = location
   const isProjectPage = isPath(pathname, ['/projects'])
   const isFocusedCollectionPage = isPath(pathname, [
@@ -158,6 +149,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     polygon: polygonSearch
   } = spatialQuery
   const {
+    panelsWidth,
+    sidebarWidth,
     map: mapProps,
     onChangeMap,
     onChangeQuery,
@@ -172,6 +165,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     showMbr,
     startDrawing
   } = useEdscStore((state) => ({
+    panelsWidth: state.ui.panels.panelsWidth,
+    sidebarWidth: state.ui.panels.sidebarWidth,
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
     onChangeQuery: state.query.changeQuery,
@@ -428,15 +423,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     allRemovedGranuleIds.push(...removedGranuleIds)
   }
 
-  // Generate a key based on the nonExcludedGranules, addedGranuleIds, gibsTagProduct, and removedGranuleIds,
-  // and gibs tags. `granulesKey` is used to prevent unnecessary rerenders in the Map component.
-  const granulesKey = Buffer.from(JSON.stringify({
-    gibsTagProduct: gibsTag?.product || '',
-    nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
-    addedGranuleIds: allAddedGranuleIds,
-    removedGranuleIds: allRemovedGranuleIds
-  })).toString('base64')
-
   // Generate the granulesToDraw based on the nonExcludedGranules and the addedGranuleIds and removedGranuleIds
   const granulesToDraw: MapGranule[] = []
   const granuleIds = Object.keys(nonExcludedGranules)
@@ -537,6 +523,16 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   ])
 
   const memoizedShapefile = useMemo(() => shapefile, [shapefile])
+
+  // If the panels or sidebar are not visible, don't render the map
+  if (panelsWidth === 0 || sidebarWidth === 0) return null
+
+  // Generate a key based on the granules that need to be drawn on the map, and the gibsTagProduct.
+  // `granulesKey` is used to prevent unnecessary rerenders in the Map component.
+  const granulesKey = Buffer.from(JSON.stringify({
+    gibsTagProduct: gibsTag?.product || '',
+    granulesToDraw: granulesToDraw.map((granule) => granule.granuleId)
+  })).toString('base64')
 
   return (
     <Map

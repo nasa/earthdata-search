@@ -6,16 +6,19 @@ import { handleAlert } from '../alerts'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('handleAlert', () => {
   test('calls lambda to log alert', async () => {
     const consoleMock = jest.spyOn(console, 'log').mockImplementation(() => jest.fn())
 
     nock(/localhost/)
-      .post(/alert_logger/)
+      .post(/alert_logger/, (body) => {
+        const { alert } = body.params
+
+        return alert.action === 'mockAction'
+          && alert.guid === 'mockRequestId'
+          && alert.message === 'Mock message'
+          && alert.resource === 'mockResource'
+      })
       .reply(200)
 
     // MockStore with initialState
@@ -23,7 +26,7 @@ describe('handleAlert', () => {
 
     await store.dispatch(handleAlert({
       action: 'mockAction',
-      message: 'Mock messge',
+      message: 'Mock message',
       resource: 'mockResource',
       requestObject: {
         requestId: 'mockRequestId'
@@ -31,6 +34,6 @@ describe('handleAlert', () => {
     }))
 
     expect(consoleMock).toHaveBeenCalledTimes(1)
-    expect(consoleMock).toHaveBeenCalledWith('Action [mockAction] alert: Mock messge')
+    expect(consoleMock).toHaveBeenCalledWith('Action [mockAction] alert: Mock message')
   })
 })

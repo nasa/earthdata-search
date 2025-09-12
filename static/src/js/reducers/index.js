@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux'
-import { connectRouter } from 'connected-react-router'
 
 import adminIsAuthorizedReducer from './admin/isAuthorized'
 import adminProjectsReducer from './admin/projects'
@@ -18,7 +17,7 @@ import uiReducer from './ui'
 import userReducer from './user'
 import viewAllFacetsRequestReducer from './viewAllFacets'
 
-export default (history) => combineReducers({
+export default () => combineReducers({
   admin: combineReducers({
     isAuthorized: adminIsAuthorizedReducer,
     projects: adminProjectsReducer,
@@ -32,7 +31,6 @@ export default (history) => combineReducers({
     colormaps: colorMapsReducer
   }),
   retrieval: retrievalReducer,
-  router: connectRouter(history),
   savedProject: savedProjectReducer,
   searchResults: combineReducers({
     facets: facetsReducer,

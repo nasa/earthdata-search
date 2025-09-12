@@ -32,9 +32,9 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 import './SecondaryToolbar.scss'
-import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 class SecondaryToolbar extends Component {
   constructor(props) {
@@ -121,7 +121,6 @@ class SecondaryToolbar extends Component {
       projectCollectionIds,
       location,
       retrieval = {},
-      secondaryToolbarEnabled,
       ursProfile
     } = this.props
 
@@ -433,29 +432,21 @@ class SecondaryToolbar extends Component {
     const showStartTourButton = location.pathname === '/search'
 
     return (
-      secondaryToolbarEnabled
-      && (
-        <nav
-          className={secondaryToolbarClassnames}
-          data-testid="secondary-toolbar"
-        >
-          {isPath(location.pathname, ['/projects']) && backToSearchLink}
-          {isDownloadPathWithId(location.pathname) && backToProjectLink}
-          <PortalFeatureContainer authentication>
-            <>
-              {showViewProjectLink && projectLink}
-              {showSaveProjectDropdown && saveProjectDropdown}
-              {showStartTourButton && startTourButton}
-              {!loggedIn ? loginLink : loggedInDropdown}
-            </>
-          </PortalFeatureContainer>
-        </nav>
-      )
+      <nav className={secondaryToolbarClassnames}>
+        {isPath(location.pathname, ['/projects']) && backToSearchLink}
+        {isDownloadPathWithId(location.pathname) && backToProjectLink}
+        <PortalFeatureContainer authentication>
+          <>
+            {showViewProjectLink && projectLink}
+            {showSaveProjectDropdown && saveProjectDropdown}
+            {showStartTourButton && startTourButton}
+            {!loggedIn ? loginLink : loggedInDropdown}
+          </>
+        </PortalFeatureContainer>
+      </nav>
     )
   }
 }
-
-SecondaryToolbar.defaultProps = { secondaryToolbarEnabled: true }
 
 SecondaryToolbar.propTypes = {
   authToken: PropTypes.string.isRequired,
@@ -469,8 +460,7 @@ SecondaryToolbar.propTypes = {
   }).isRequired,
   ursProfile: PropTypes.shape({
     first_name: PropTypes.string
-  }).isRequired,
-  secondaryToolbarEnabled: PropTypes.bool
+  }).isRequired
 }
 
 export default SecondaryToolbar
