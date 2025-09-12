@@ -1,11 +1,8 @@
 import React from 'react'
-import {
-  render,
-  screen,
-  within
-} from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 
-import { MemoryRouter } from 'react-router'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import { AdminProject } from '../AdminProject'
 
 // @ts-expect-error: This file does not have types
@@ -13,28 +10,17 @@ import AdminProjectDetails from '../../AdminProjectDetails/AdminProjectDetails'
 
 jest.mock('../../AdminProjectDetails/AdminProjectDetails', () => jest.fn(() => <div />))
 
-const setup = (overrideProps = {}) => {
-  const props = {
+const setup = setupTest({
+  Component: AdminProject,
+  defaultProps: {
     project: {
       id: 1
-    },
-    ...overrideProps
-  }
-
-  render(
-    <MemoryRouter initialEntries={['/admin/projects/1']}>
-      <AdminProject {...props} />
-    </MemoryRouter>
-  )
-
-  return { props }
-}
+    }
+  },
+  withRouter: true
+})
 
 describe('AdminProject component', () => {
-  beforeEach(() => {
-    jest.clearAllMocks()
-  })
-
   test('renders itself correctly', () => {
     setup()
 

@@ -2,7 +2,7 @@ import React from 'react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { granuleResultsBodyProps } from './mocks'
+import { granuleMetadata } from './mocks'
 
 import GranuleDetailsBody from '../GranuleDetailsBody'
 import GranuleDetailsInfo from '../GranuleDetailsInfo'
@@ -13,7 +13,17 @@ jest.mock('../GranuleDetailsMetadata', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: GranuleDetailsBody,
-  defaultProps: granuleResultsBodyProps
+  defaultProps: {
+    authToken: ''
+  },
+  defaultZustandState: {
+    granule: {
+      granuleId: 'G1422858365-ORNL_DAAC',
+      granuleMetadata: {
+        'G1422858365-ORNL_DAAC': granuleMetadata
+      }
+    }
+  }
 })
 
 describe('GranuleDetailsBody component', () => {
@@ -22,13 +32,13 @@ describe('GranuleDetailsBody component', () => {
 
     expect(GranuleDetailsInfo).toHaveBeenCalledTimes(1)
     expect(GranuleDetailsInfo).toHaveBeenCalledWith({
-      granuleMetadata: granuleResultsBodyProps.granuleMetadata
+      granuleMetadata
     }, {})
 
     expect(GranuleDetailsMetadata).toHaveBeenCalledTimes(1)
     expect(GranuleDetailsMetadata).toHaveBeenCalledWith({
-      authToken: granuleResultsBodyProps.authToken,
-      metadataUrls: granuleResultsBodyProps.granuleMetadata.metadataUrls
+      authToken: '',
+      metadataUrls: granuleMetadata.metadataUrls
     }, {})
   })
 })

@@ -3,40 +3,39 @@ import PropTypes from 'prop-types'
 import { difference } from 'lodash-es'
 import classNames from 'classnames'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
+import { useLocation } from 'react-router-dom'
 
 import { Minus } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { eventEmitter } from '../../events/events'
-import { locationPropType } from '../../util/propTypes/location'
 
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 import Button from '../Button/Button'
 
 import useEdscStore from '../../zustand/useEdscStore'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './CollectionDetails.scss'
 
 /**
  * Renders CollectionDetails.
  * @param {String} collectionId - The current collection ID.
- * @param {String} focusedGranuleId - The focused granule ID.
- * @param {Object} granulesMetadata - The metadata in the store for granules.
  * @param {Object} location - The location from the store.
- * @param {Function} onFocusedGranuleChange - The callback to change the focused granule.
  * @param {Object} projectCollection - The project collection.
  */
 export const CollectionDetails = ({
   collectionId,
-  focusedGranuleId,
-  granulesMetadata,
-  location,
-  onFocusedGranuleChange,
   projectCollection
 }) => {
+  const location = useLocation()
+
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const {
+    setGranuleId,
     removeGranuleFromProjectCollection,
     updateProjectGranuleParams
   } = useEdscStore((state) => ({
+    setGranuleId: state.granule.setGranuleId,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection,
     updateProjectGranuleParams: state.project.updateProjectGranuleParams
   }))
@@ -48,7 +47,8 @@ export const CollectionDetails = ({
   const {
     addedGranuleIds = [],
     allIds: granulesAllIds = [],
-    hits: granuleCount,
+    byId: granulesById = {},
+    count: granuleCount,
     removedGranuleIds = []
   } = projectCollectionGranules
 
@@ -71,7 +71,7 @@ export const CollectionDetails = ({
         <ul className="collection-details__list">
           {
             granulesToDisplay.map((id) => {
-              const { [id]: granuleMetadata = {} } = granulesMetadata
+              const { [id]: granuleMetadata = {} } = granulesById
 
               const { title } = granuleMetadata
 
@@ -104,13 +104,13 @@ export const CollectionDetails = ({
                           ? { granule: null }
                           : { granule: granuleMetadata }
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, newGranule)
-                        onFocusedGranuleChange(id)
+                        setGranuleId(id)
                       }
                     }
                     onKeyDown={
                       () => {
                         eventEmitter.emit(`map.layer.${collectionId}.focusGranule`, { granule: granuleMetadata })
-                        onFocusedGranuleChange(granuleMetadata.id)
+                        setGranuleId(granuleMetadata.id)
                       }
                     }
                   >
@@ -124,7 +124,7 @@ export const CollectionDetails = ({
                         bootstrapSize="sm"
                         onClick={
                           (event) => {
-                            onFocusedGranuleChange(id)
+                            setGranuleId(id)
                             event.stopPropagation()
                           }
                         }
@@ -193,10 +193,6 @@ export const CollectionDetails = ({
 
 CollectionDetails.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  focusedGranuleId: PropTypes.string.isRequired,
-  granulesMetadata: PropTypes.shape({}).isRequired,
-  location: locationPropType.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   projectCollection: PropTypes.shape({
     granules: PropTypes.shape({})
   }).isRequired

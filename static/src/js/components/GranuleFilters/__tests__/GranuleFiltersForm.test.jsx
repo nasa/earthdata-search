@@ -20,7 +20,6 @@ const setup = setupTest({
   Component: GranuleFiltersForm,
   defaultProps: {
     cmrFacetParams: {},
-    collectionMetadata: {},
     errors: {},
     handleBlur: jest.fn(),
     handleChange: jest.fn(),
@@ -38,8 +37,11 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
-    focusedCollection: {
-      focusedCollection: 'collectionId'
+    collection: {
+      collectionId: 'collectionId',
+      collectionMetadata: {
+        collectionId: {}
+      }
     }
   },
   withRedux: true
@@ -146,12 +148,14 @@ describe('GranuleFiltersForm component', () => {
       describe('when clicking the undo button', () => {
         test('displays the undo button', async () => {
           const { user, zustandState } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                id: 'COLL_ID'
-              }
-            },
             overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    id: 'collectionId'
+                  }
+                }
+              },
               query: {
                 collection: {
                   byId: {
@@ -171,7 +175,7 @@ describe('GranuleFiltersForm component', () => {
           await user.click(undoButton)
 
           expect(zustandState.query.undoExcludeGranule).toHaveBeenCalledTimes(1)
-          expect(zustandState.query.undoExcludeGranule).toHaveBeenCalledWith('COLL_ID')
+          expect(zustandState.query.undoExcludeGranule).toHaveBeenCalledWith('collectionId')
         })
       })
     })
@@ -544,12 +548,16 @@ describe('GranuleFiltersForm component', () => {
     describe('Day/Night section', () => {
       test('defaults to an empty value', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { day_night_flag: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { day_night_flag: true }
+                    }
+                  }
                 }
               }
             }
@@ -562,15 +570,21 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays selected item', async () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { day_night_flag: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { day_night_flag: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               dayNightFlag: 'NIGHT'
             }
@@ -583,15 +597,21 @@ describe('GranuleFiltersForm component', () => {
 
       test('calls handleChange on change', async () => {
         const { props, user } = setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { day_night_flag: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { day_night_flag: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               dayNightFlag: 'NIGHT'
             }
@@ -704,12 +724,16 @@ describe('GranuleFiltersForm component', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
           setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { cloud_cover: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { cloud_cover: true }
+                      }
+                    }
                   }
                 }
               }
@@ -726,12 +750,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { cloud_cover: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { cloud_cover: true }
+                      }
+                    }
                   }
                 }
               }
@@ -753,12 +781,16 @@ describe('GranuleFiltersForm component', () => {
       describe('Max', () => {
         test('defaults to an empty value', async () => {
           const { props } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { cloud_cover: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { cloud_cover: true }
+                      }
+                    }
                   }
                 }
               }
@@ -774,12 +806,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { cloud_cover: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { cloud_cover: true }
+                      }
+                    }
                   }
                 }
               }
@@ -804,12 +840,16 @@ describe('GranuleFiltersForm component', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
           setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -822,12 +862,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -847,12 +891,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls onBlur when the filter is submitted', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -888,12 +936,16 @@ describe('GranuleFiltersForm component', () => {
       describe('Max', () => {
         test('defaults to an empty value', () => {
           setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -906,12 +958,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -931,12 +987,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls onBlur when the filter is submitted', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -974,12 +1034,16 @@ describe('GranuleFiltersForm component', () => {
       describe('Min', () => {
         test('defaults to an empty value', () => {
           const { props } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -994,12 +1058,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -1020,12 +1088,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls onBlur when the filter is submitted ', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -1061,12 +1133,16 @@ describe('GranuleFiltersForm component', () => {
       describe('Max', () => {
         test('defaults to an empty value', () => {
           const { props } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -1081,12 +1157,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls handleChange on change', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -1109,12 +1189,16 @@ describe('GranuleFiltersForm component', () => {
 
         test('calls onBlur when the filter is submitted ', async () => {
           const { props, user } = setup({
-            overrideProps: {
-              collectionMetadata: {
-                isOpenSearch: false,
-                tags: {
-                  'edsc.extra.serverless.collection_capabilities': {
-                    data: { orbit_calculated_spatial_domains: true }
+            overrideZustandState: {
+              collection: {
+                collectionMetadata: {
+                  collectionId: {
+                    isOpenSearch: false,
+                    tags: {
+                      'edsc.extra.serverless.collection_capabilities': {
+                        data: { orbit_calculated_spatial_domains: true }
+                      }
+                    }
                   }
                 }
               }
@@ -1153,15 +1237,21 @@ describe('GranuleFiltersForm component', () => {
     describe('displays equator crossing date', () => {
       test('displays correctly when only start date is set', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 startDate: '2019-08-14T00:00:00:000Z'
@@ -1179,15 +1269,21 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays correctly when only end date is set', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 endDate: '2019-08-14T00:00:00:000Z'
@@ -1205,15 +1301,21 @@ describe('GranuleFiltersForm component', () => {
 
       test('displays correctly when both dates are set', () => {
         setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 startDate: '2019-08-13T00:00:00:000Z',
@@ -1234,15 +1336,21 @@ describe('GranuleFiltersForm component', () => {
         MockDate.set('2019-08-13')
 
         const { props, user } = setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 startDate: '',
@@ -1275,15 +1383,21 @@ describe('GranuleFiltersForm component', () => {
 
       test('calls the correct callbacks on startDate submit with an empty value', async () => {
         const { props, user } = setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 startDate: '',
@@ -1315,15 +1429,21 @@ describe('GranuleFiltersForm component', () => {
 
       test('does not call handleSubmit if shouldSubmit is false on startDate submit', async () => {
         const { props, user } = setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 startDate: '',
@@ -1353,15 +1473,21 @@ describe('GranuleFiltersForm component', () => {
         MockDate.set('2019-08-14')
 
         const { props, user } = setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 startDate: '2019-08-13T00:00:00:000Z',
@@ -1396,15 +1522,21 @@ describe('GranuleFiltersForm component', () => {
         MockDate.set('2019-08-14')
 
         const { props, user } = setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 startDate: '2019-08-13T00:00:00:000Z',
@@ -1438,15 +1570,21 @@ describe('GranuleFiltersForm component', () => {
 
       test('does not call handleSubmit if shouldSubmit is false on endDate submit', async () => {
         const { props, user } = setup({
-          overrideProps: {
-            collectionMetadata: {
-              isOpenSearch: false,
-              tags: {
-                'edsc.extra.serverless.collection_capabilities': {
-                  data: { orbit_calculated_spatial_domains: true }
+          overrideZustandState: {
+            collection: {
+              collectionMetadata: {
+                collectionId: {
+                  isOpenSearch: false,
+                  tags: {
+                    'edsc.extra.serverless.collection_capabilities': {
+                      data: { orbit_calculated_spatial_domains: true }
+                    }
+                  }
                 }
               }
-            },
+            }
+          },
+          overrideProps: {
             values: {
               equatorCrossingDate: {
                 startDate: '2019-08-13T00:00:00:000Z',
@@ -1484,21 +1622,25 @@ describe('GranuleFiltersForm component', () => {
 
     test('defaults to an empty value', () => {
       setup({
-        overrideProps: {
-          collectionMetadata: {
-            tilingIdentificationSystems: [
-              {
-                tilingIdentificationSystemName: 'MISR',
-                coordinate1: {
-                  minimumValue: 1,
-                  maximumValue: 233
-                },
-                coordinate2: {
-                  minimumValue: 1,
-                  maximumValue: 180
-                }
+        overrideZustandState: {
+          collection: {
+            collectionMetadata: {
+              collectionId: {
+                tilingIdentificationSystems: [
+                  {
+                    tilingIdentificationSystemName: 'MISR',
+                    coordinate1: {
+                      minimumValue: 1,
+                      maximumValue: 233
+                    },
+                    coordinate2: {
+                      minimumValue: 1,
+                      maximumValue: 180
+                    }
+                  }
+                ]
               }
-            ]
+            }
           }
         }
       })
@@ -1510,21 +1652,25 @@ describe('GranuleFiltersForm component', () => {
 
     test('calls handleChange on change', async () => {
       const { props, user } = setup({
-        overrideProps: {
-          collectionMetadata: {
-            tilingIdentificationSystems: [
-              {
-                tilingIdentificationSystemName: 'MISR',
-                coordinate1: {
-                  minimumValue: 1,
-                  maximumValue: 233
-                },
-                coordinate2: {
-                  minimumValue: 1,
-                  maximumValue: 180
-                }
+        overrideZustandState: {
+          collection: {
+            collectionMetadata: {
+              collectionId: {
+                tilingIdentificationSystems: [
+                  {
+                    tilingIdentificationSystemName: 'MISR',
+                    coordinate1: {
+                      minimumValue: 1,
+                      maximumValue: 233
+                    },
+                    coordinate2: {
+                      minimumValue: 1,
+                      maximumValue: 180
+                    }
+                  }
+                ]
               }
-            ]
+            }
           }
         }
       })
@@ -1551,22 +1697,28 @@ describe('GranuleFiltersForm component', () => {
 
     test('tiling system onchange displays grid coordinates', async () => {
       const { user } = setup({
-        overrideProps: {
-          collectionMetadata: {
-            tilingIdentificationSystems: [
-              {
-                tilingIdentificationSystemName: 'MISR',
-                coordinate1: {
-                  minimumValue: 1,
-                  maximumValue: 233
-                },
-                coordinate2: {
-                  minimumValue: 1,
-                  maximumValue: 183
-                }
+        overrideZustandState: {
+          collection: {
+            collectionMetadata: {
+              collectionId: {
+                tilingIdentificationSystems: [
+                  {
+                    tilingIdentificationSystemName: 'MISR',
+                    coordinate1: {
+                      minimumValue: 1,
+                      maximumValue: 233
+                    },
+                    coordinate2: {
+                      minimumValue: 1,
+                      maximumValue: 183
+                    }
+                  }
+                ]
               }
-            ]
-          },
+            }
+          }
+        },
+        overrideProps: {
           values: {
             tilingSystem: 'MISR'
           }

@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { isGetFocusedCollectionsQuery } from '../../../../../support/isGetFocusedCollectionsQuery'
+import { isGetCollectionQuery } from '../../../../../support/isGetCollectionQuery'
 import { setupTests } from '../../../../../support/setupTests'
 
 import collectionsBody from './__mocks__/collections.body.json'
@@ -10,6 +10,7 @@ import getGranuleGraphQlBody from './__mocks__/getGranule.graphql.body.json'
 import granulesBody from './__mocks__/granules.body.json'
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import formattedGranuleMetadata from './__mocks__/formattedGranuleMetadata.json'
+import { isGetGranuleQuery } from '../../../../../support/isGetGranuleQuery'
 
 test.describe('Path /search/granules/granule-details', () => {
   test.beforeEach(async ({ page, context }) => {
@@ -26,15 +27,12 @@ test.describe('Path /search/granules/granule-details', () => {
     const granuleHits = 1074221
 
     await page.route(/graphql.*\/api/, (route) => {
-      // If these requests change and are failing tests, console.log req.body to see the actual request being called
-      const postData = route.request().postData()
-
-      if (isGetFocusedCollectionsQuery(route, collectionId)) {
+      if (isGetCollectionQuery(route, collectionId)) {
         route.fulfill({
           json: getCollectionGraphQlBody,
           headers: graphQlHeaders
         })
-      } else if (postData === `{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"${granuleId}"}}}`) {
+      } else if (isGetGranuleQuery(route, granuleId)) {
         route.fulfill({
           json: getGranuleGraphQlBody,
           headers: graphQlHeaders
@@ -74,7 +72,9 @@ test.describe('Path /search/granules/granule-details', () => {
     await expect(page.getByTestId('panel-group_granule-details').getByTestId('panel-group-header__heading-primary')).toContainText('S1A_S3_SLC__1SDH_20140615T034444_20140615T034512_001055_00107C_16F1')
 
     // Displays the metadata in the Information tab
-    await expect(page.getByTestId('granule-details-info__content')).toHaveText(JSON.stringify(formattedGranuleMetadata, null, 2))
+    await expect(page.getByText('collectionConceptId')).toHaveText(
+      JSON.stringify(formattedGranuleMetadata, null, 2)
+    )
 
     // Displays the metadata links in the Metadata Tab
     await page.getByTestId('granule-details-body').getByText('Metadata').first().click()

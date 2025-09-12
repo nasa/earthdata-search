@@ -24,8 +24,10 @@ import SplitBadge from '../SplitBadge/SplitBadge'
 
 import { collectionDetailsSkeleton } from './skeleton'
 import ExternalLink from '../ExternalLink/ExternalLink'
-import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
 import { pluralize } from '../../util/pluralize'
+
+import useEdscStore from '../../zustand/useEdscStore'
+import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 
 import './CollectionDetailsBody.scss'
 
@@ -130,12 +132,11 @@ const buildForDeveloperLink = (linkData, token) => {
  * @param {Function} props.onToggleRelatedUrlsModal - Toggles the state of the Related URLs modal
  */
 export const CollectionDetailsBody = ({
-  collectionMetadata,
   isActive,
-  location,
   onMetricsRelatedCollection,
   onToggleRelatedUrlsModal
 }) => {
+  const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const {
     abstract,
     associatedDois,
@@ -161,7 +162,7 @@ export const CollectionDetailsBody = ({
     return (
       <div className="collection-details-body">
         <div className="collection-details-body__content">
-          <div data-testid="collection-details-body__skeleton">
+          <div>
             <Skeleton
               shapes={collectionDetailsSkeleton}
               containerStyle={
@@ -556,7 +557,6 @@ export const CollectionDetailsBody = ({
                               <RelatedCollection
                                 key={`related-collection-${id}`}
                                 className="collection-details-body__related-collection-link"
-                                location={location}
                                 onMetricsRelatedCollection={onMetricsRelatedCollection}
                                 relatedCollection={relatedCollection}
                               />
@@ -602,11 +602,7 @@ export const CollectionDetailsBody = ({
 }
 
 CollectionDetailsBody.propTypes = {
-  collectionMetadata: collectionMetadataPropType.isRequired,
   isActive: PropTypes.bool.isRequired,
-  location: PropTypes.shape({
-    search: PropTypes.string
-  }).isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleRelatedUrlsModal: PropTypes.func.isRequired
 }

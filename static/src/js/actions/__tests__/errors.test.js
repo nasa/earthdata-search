@@ -7,10 +7,6 @@ import * as addToast from '../../util/addToast'
 
 const mockStore = configureMockStore([thunk])
 
-beforeEach(() => {
-  jest.clearAllMocks()
-})
-
 describe('addError', () => {
   test('should call addToast with correct params', async () => {
     const addToastMock = jest.spyOn(addToast, 'addToast')

@@ -1,16 +1,10 @@
 import React, { useEffect } from 'react'
 import { set } from 'tiny-cookie'
-import { connect } from 'react-redux'
 import { parse } from 'qs'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
-import { locationPropType } from '../../util/propTypes/location'
-import history from '../../util/history'
 import useEdscStore from '../../zustand/useEdscStore'
-
-export const mapStateToProps = (state) => ({
-  location: state.router.location
-})
 
 /**
  * This class handles the authenticated redirect from our edlCallback lambda function.
@@ -18,9 +12,9 @@ export const mapStateToProps = (state) => ({
  * the user to the correct location based on where they were trying to get before logging
  * in.
  */
-export const AuthCallbackContainer = ({
-  location
-}) => {
+export const AuthCallbackContainer = () => {
+  const location = useLocation()
+  const navigate = useNavigate()
   const { edscHost } = getEnvironmentConfig()
 
   const setRedirectUrl = useEdscStore((state) => state.earthdataDownloadRedirect.setRedirectUrl)
@@ -57,7 +51,7 @@ export const AuthCallbackContainer = ({
           // There is a bug in this redirect because UrlQueryContainer is triggering updates from both Redux and Zustand (for now). For some reason that is causing the URL to stay on /auth_callback instead of redirecting to /earthdata-download-callback.
 
           // This setTimeout should only be temporary, it should be removed once UrlQueryContainer is removed.
-          history.push('/earthdata-download-callback')
+          navigate('/earthdata-download-callback')
         }, 0)
 
         return
@@ -90,8 +84,4 @@ export const AuthCallbackContainer = ({
   )
 }
 
-AuthCallbackContainer.propTypes = {
-  location: locationPropType.isRequired
-}
-
-export default connect(mapStateToProps)(AuthCallbackContainer)
+export default AuthCallbackContainer

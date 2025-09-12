@@ -4,11 +4,15 @@ import userEvent from '@testing-library/user-event'
 import {
   MemoryRouter,
   Route,
-  Switch
-} from 'react-router'
+  Routes
+} from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
-import { cloneDeep, merge } from 'lodash-es'
+import {
+  cloneDeep,
+  merge,
+  mergeWith
+} from 'lodash-es'
 
 import useEdscStore from '../static/src/js/zustand/useEdscStore'
 // @ts-expect-error: This file does not have types
@@ -125,7 +129,13 @@ const setupTest = ({
 
   // Merge the Zustand state with the override Zustand state if available
   if (overrideZustandState) {
-    zustandState = merge(zustandState, overrideZustandState)
+    // eslint-disable-next-line consistent-return
+    zustandState = mergeWith(zustandState, overrideZustandState, (objValue, srcValue) => {
+      // If the value is an array, only take the override array
+      if (Array.isArray(objValue)) {
+        return srcValue
+      }
+    })
   }
 
   // Set the Zustand state
@@ -141,7 +151,7 @@ const setupTest = ({
     if (ComponentsByRoute) {
       RenderedComponent = (
         <MemoryRouter initialEntries={initialEntries}>
-          <Switch>
+          <Routes>
             {
               Object.keys(ComponentsByRoute).map((route) => {
                 const ComponentByRoute = ComponentsByRoute[route] as React.FC
@@ -155,18 +165,15 @@ const setupTest = ({
                 }
 
                 return (
-                  <Route exact path={route} key={route}>
-                    {typeof ComponentByRoute !== 'function' && ComponentByRoute}
-                    {
-                      typeof ComponentByRoute === 'function' && (
-                        <ComponentByRoute {...props} />
-                      )
-                    }
-                  </Route>
+                  <Route
+                    key={route}
+                    path={route}
+                    element={typeof ComponentByRoute === 'function' ? <ComponentByRoute {...props} /> : ComponentByRoute}
+                  />
                 )
               })
             }
-          </Switch>
+          </Routes>
         </MemoryRouter>
       )
     }

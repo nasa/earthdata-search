@@ -1,13 +1,10 @@
 // @ts-expect-error The file does not have types
 import snakecaseKeys from 'snakecase-keys'
 
-import { EdscStore } from '../types'
+import { EdscStore, GranuleQuery } from '../types'
 
 // @ts-expect-error The file does not have types
 import configureStore from '../../store/configureStore'
-
-// @ts-expect-error The file does not have types
-import { getFocusedCollectionMetadata } from '../../selectors/collectionMetadata'
 
 import {
   getCollectionSubscriptionDisabledFields,
@@ -15,7 +12,7 @@ import {
 // @ts-expect-error The file does not have types
 } from '../../selectors/subscriptions'
 
-import { getFocusedCollectionId } from './focusedCollection'
+import { getCollectionId, getFocusedCollectionMetadata } from './collection'
 
 // @ts-expect-error The file does not have types
 import { prepKeysForCmr } from '../../../../../sharedUtils/prepKeysForCmr'
@@ -38,9 +35,32 @@ import {
 import { prepareSubscriptionQuery, removeDisabledFieldsFromQuery } from '../../util/subscriptions'
 
 /**
- * Retrieve current collection query information
+ * Retrieve current collection query information for collection searches
  */
 export const getCollectionsQuery = (state: EdscStore) => state.query?.collection || {}
+
+/**
+ * Retrieve NLP collection data
+ */
+export const getNlpCollection = (state: EdscStore) => state.query?.nlpCollection || null
+
+/**
+ * Retrieve NLP spatial data
+ */
+export const getNlpSpatialData = (state: EdscStore) => {
+  const nlpCollection = getNlpCollection(state)
+
+  return nlpCollection?.spatial || null
+}
+
+/**
+ * Retrieve NLP temporal data
+ */
+export const getNlpTemporalData = (state: EdscStore) => {
+  const nlpCollection = getNlpCollection(state)
+
+  return nlpCollection?.temporal || null
+}
 
 /**
  * Retrieve current collection spatial information
@@ -61,6 +81,11 @@ export const getCollectionsQuerySpatial = (state: EdscStore) => {
 }
 
 /**
+ * Retrieve the selected region query object
+ */
+export const getSelectedRegionQuery = (state: EdscStore) => state.query.selectedRegion
+
+/**
  * Retrieve current collection temporal information
  */
 export const getCollectionsQueryTemporal = (state: EdscStore) => {
@@ -72,10 +97,10 @@ export const getCollectionsQueryTemporal = (state: EdscStore) => {
 /**
  * Retrieve query information pertaining to the focused collection id
  */
-export const getFocusedCollectionGranuleQuery = (state: EdscStore) => {
-  const focusedCollectionId = getFocusedCollectionId(state)
+export const getFocusedCollectionGranuleQuery = (state: EdscStore): GranuleQuery => {
+  const focusedCollectionId = getCollectionId(state)
 
-  if (!focusedCollectionId) return {}
+  if (!focusedCollectionId) return {} as GranuleQuery
 
   const { byId: collectionsQueryById = {} } = getCollectionsQuery(state)
 
@@ -87,14 +112,11 @@ export const getFocusedCollectionGranuleQuery = (state: EdscStore) => {
 /**
  * Retrieve the granule subscription query object
  */
-export const getGranuleSubscriptionQueryObj = () => {
-  const { getState: reduxGetState } = configureStore()
-  const reduxState = reduxGetState()
-  const collectionMetadata = getFocusedCollectionMetadata(reduxState)
+export const getGranuleSubscriptionQueryObj = (state: EdscStore) => {
+  const collectionMetadata = getFocusedCollectionMetadata(state)
   const { id: collectionId } = collectionMetadata
 
-  // Extract granule search parameters from redux specific to the focused collection
-  const extractedGranuleParams = extractGranuleSearchParams(reduxState, collectionId)
+  const extractedGranuleParams = extractGranuleSearchParams(collectionId)
 
   const granuleParams = prepareGranuleParams(
     collectionMetadata,
@@ -110,11 +132,11 @@ export const getGranuleSubscriptionQueryObj = () => {
 /**
  * Retrieve the granule subscription query string
  */
-export const getGranuleSubscriptionQueryString = () => {
+export const getGranuleSubscriptionQueryString = (state: EdscStore) => {
   const { getState: reduxGetState } = configureStore()
   const disabledFields = getGranuleSubscriptionDisabledFields(reduxGetState())
 
-  const queryObj = getGranuleSubscriptionQueryObj()
+  const queryObj = getGranuleSubscriptionQueryObj(state)
 
   const queryWithDisabledRemoved = removeDisabledFieldsFromQuery(queryObj, disabledFields)
 

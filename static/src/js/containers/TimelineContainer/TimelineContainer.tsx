@@ -1,15 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
+import { useLocation } from 'react-router-dom'
 
 // @ts-expect-error The file does not have types
 import actions from '../../actions/index'
 
 // @ts-expect-error The file does not have types
 import { metricsTimeline } from '../../middleware/metrics/actions'
-
-// @ts-expect-error The file does not have types
-import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
 
 import { isPath } from '../../util/isPath'
 
@@ -19,7 +17,7 @@ import Timeline from '../../components/Timeline/Timeline'
 import type { CollectionMetadata, CollectionsMetadata } from '../../types/sharedTypes'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
+import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors/collection'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 
 export const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -33,15 +31,10 @@ export const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 // @ts-expect-error Don't want to define types for all of Redux
 export const mapStateToProps = (state) => ({
-  collectionsMetadata: getCollectionsMetadata(state),
-  isOpen: state.ui.timeline.isOpen,
-  pathname: state.router.location.pathname,
-  search: state.router.location.search
+  isOpen: state.ui.timeline.isOpen
 })
 
 interface TimelineContainerProps {
-  /** Collections Metadata */
-  collectionsMetadata: CollectionsMetadata
   /** Whether the timeline is open */
   isOpen: boolean
   /** Function to handle metrics timeline */
@@ -50,24 +43,24 @@ interface TimelineContainerProps {
   onToggleOverrideTemporalModal: (open: boolean) => void
   /** Function to toggle the timeline */
   onToggleTimeline: (open: boolean) => void
-  /** The pathname of the current location */
-  pathname: string
-  /** The search string from the location */
-  search: string
 }
 
 export const TimelineContainer: React.FC<TimelineContainerProps> = (props) => {
+  const location = useLocation()
   const {
-    collectionsMetadata,
+    pathname = '',
+    search: searchLocation = ''
+  } = location
+
+  const {
     isOpen,
     onMetricsTimeline,
     onToggleOverrideTemporalModal,
-    onToggleTimeline,
-    pathname,
-    search: searchLocation
+    onToggleTimeline
   } = props
 
-  const focusedCollectionId = useEdscStore(getFocusedCollectionId)
+  const collectionsMetadata = useEdscStore(getCollectionsMetadata)
+  const focusedCollectionId = useEdscStore(getCollectionId)
   const projectCollectionsIds = useEdscStore(getProjectCollectionsIds)
 
   // Determine the collectionMetadata the timeline should be displaying

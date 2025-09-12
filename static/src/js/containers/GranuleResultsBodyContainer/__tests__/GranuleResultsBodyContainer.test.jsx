@@ -16,27 +16,20 @@ jest.mock('../../../components/GranuleResults/GranuleResultsBody', () => jest.fn
 const setup = setupTest({
   Component: GranuleResultsBodyContainer,
   defaultProps: {
-    collectionMetadata: {},
-    collectionTags: {},
-    focusedGranuleId: '',
     generateNotebook: {},
-    granuleSearchResults: {},
-    granulesMetadata: {},
-    location: { search: 'value' },
-    onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
     panelView: 'list'
   },
   defaultZustandState: {
-    focusedCollection: {
-      focusedCollection: 'focusedCollection'
+    collection: {
+      collectionId: 'collectionId'
     },
     query: {
       collection: {
         byId: {
-          focusedCollection: {}
+          collectionId: {}
         }
       },
       changeGranuleQuery: jest.fn(),
@@ -46,16 +39,6 @@ const setup = setupTest({
 })
 
 describe('mapDispatchToProps', () => {
-  test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedGranule')
-
-    mapDispatchToProps(dispatch).onFocusedGranuleChange('granuleId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('granuleId')
-  })
-
   test('onGenerateNotebook calls actions.generateNotebook', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(actions, 'generateNotebook')
@@ -90,22 +73,13 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      metadata: {
-        collections: {}
-      },
-      focusedGranule: 'granuleId',
       ui: {
         generateNotebook: {}
       }
     }
 
     const expectedState = {
-      collectionMetadata: {},
-      collectionTags: {},
-      focusedGranuleId: 'granuleId',
-      generateNotebook: {},
-      granuleSearchResults: {},
-      granulesMetadata: {}
+      generateNotebook: {}
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)
@@ -118,17 +92,11 @@ describe('GranuleResultsBodyContainer component', () => {
 
     expect(GranuleResultsBody).toHaveBeenCalledTimes(1)
     expect(GranuleResultsBody).toHaveBeenCalledWith({
-      collectionId: 'focusedCollection',
-      collectionTags: {},
+      collectionId: 'collectionId',
       directDistributionInformation: {},
-      focusedGranuleId: '',
       generateNotebook: {},
-      granuleSearchResults: {},
-      granulesMetadata: {},
       isOpenSearch: false,
       loadNextPage: expect.any(Function),
-      location: { search: 'value' },
-      onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),
@@ -143,7 +111,7 @@ describe('GranuleResultsBodyContainer component', () => {
 
     expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledWith({
-      collectionId: 'focusedCollection',
+      collectionId: 'collectionId',
       query: {
         pageNum: 2
       }

@@ -1,9 +1,8 @@
 import React from 'react'
 import { screen } from '@testing-library/react'
 
-import { Search, mapDispatchToProps } from '../Search'
+import { Search } from '../Search'
 
-import actions from '../../../actions'
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
 const mockClassListAdd = jest.fn()
@@ -51,10 +50,10 @@ jest.mock('../../../containers/CollectionDetailsHighlightsContainer/CollectionDe
   return CollectionDetailsHighlightsContainer
 })
 
-jest.mock('../../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer', () => {
-  const GranuleResultsHighlightsContainer = () => <div data-testid="mock-GranuleResultsHighlightsContainer" />
+jest.mock('../../../components/GranuleResultsHighlights/GranuleResultsHighlights', () => {
+  const GranuleResultsHighlights = () => <div data-testid="mock-GranuleResultsHighlights" />
 
-  return GranuleResultsHighlightsContainer
+  return GranuleResultsHighlights
 })
 
 jest.mock('../../../containers/GranuleFiltersContainer/GranuleFiltersContainer', () => {
@@ -81,9 +80,7 @@ const setup = setupTest({
   },
   defaultPropsByRoute: {
     '/search': {
-      collectionQuery: {},
-      match: { path: '/search' },
-      onUpdateAdvancedSearch: jest.fn()
+      match: { path: '/search' }
     }
   },
   withRedux: true,
@@ -121,28 +118,6 @@ afterEach(() => {
   if (rootDiv) {
     document.body.removeChild(rootDiv)
   }
-})
-
-describe('mapDispatchToProps', () => {
-  test('onTogglePortalBrowserModal calls actions.togglePortalBrowserModal', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'togglePortalBrowserModal')
-
-    mapDispatchToProps(dispatch).onTogglePortalBrowserModal({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
-
-  test('onUpdateAdvancedSearch calls actions.updateAdvancedSearch', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'updateAdvancedSearch')
-
-    mapDispatchToProps(dispatch).onUpdateAdvancedSearch({ mock: 'data' })
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith({ mock: 'data' })
-  })
 })
 
 describe('Search component', () => {

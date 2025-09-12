@@ -3,7 +3,11 @@ import {
   AxiosResponseHeaders,
   HttpStatusCode
 } from 'axios'
-import { FeatureCollection, GeoJsonObject } from 'geojson'
+import {
+  FeatureCollection,
+  GeoJsonObject,
+  Geometry
+} from 'geojson'
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
 import { PreferencesData } from '../zustand/types'
@@ -48,17 +52,12 @@ export interface Spatial {
 
 /** The spatial object */
 export interface SpatialSearch {
-  advancedSearch?: {
-    /** The region search object */
-    regionSearch?: {
-      /** The selected region object */
-      selectedRegion?: {
-        /** The spatial coordinates */
-        spatial?: string
-        /** The spatial type */
-        type?: 'reach' | 'huc'
-      }
-    }
+  /** The selected region object */
+  selectedRegion?: {
+    /** The spatial coordinates */
+    spatial?: string
+    /** The spatial type */
+    type?: 'reach' | 'huc'
   }
   /** The bounding box coordinates, if applied */
   boundingBoxSearch?: BoundingBoxString[]
@@ -426,4 +425,44 @@ export type VariableMetadata = {
   nativeId: string
   /** The variable science keywords */
   scienceKeywords: ScienceKeyword[]
+}
+
+export type Subscription = {
+  /** The subscription ID */
+  conceptId: string
+  /** The subscription nativeId */
+  nativeId: string
+  /** The subscription name */
+  name: string
+  /** The subscription type */
+  type: 'granule' | 'collection'
+  /** The collection concept ID */
+  collectionConceptId?: string
+  /** The query parameters for the subscription */
+  query: string
+}
+
+export type SubscriptionResponse = {
+  /** The total number of subscriptions */
+  count: number
+  /** The list of subscriptions */
+  items: Subscription[]
+}
+
+/** NLP Collection Query Parameters */
+export type NlpCollectionQuery = {
+  /** The original search query string */
+  query: string
+  /** The spatial data extracted from NLP */
+  spatial?: {
+    /** The GeoJSON spatial data */
+    geoJson: Geometry
+    /** The location name from NLP */
+    geoLocation: string
+  }
+  /** The temporal data extracted from NLP */
+  temporal?: {
+    startDate: string
+    endDate: string
+  }
 }

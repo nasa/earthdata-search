@@ -21,8 +21,8 @@ const setup = setupTest({
     earthdataEnvironment: {
       currentEnvironment: 'prod'
     },
-    focusedCollection: {
-      changeFocusedCollection: jest.fn()
+    collection: {
+      setCollectionId: jest.fn()
     }
   }
 })
@@ -78,7 +78,7 @@ describe('SearchAutocomplete', () => {
         await user.type(input, 'test')
       })
 
-      expect(screen.getByText('Loading suggestions...')).toBeInTheDocument()
+      expect(await screen.findByText('Loading suggestions...')).toBeInTheDocument()
 
       // Clean up the nock that has a delay
       nock.cleanAll()
@@ -112,7 +112,7 @@ describe('SearchAutocomplete', () => {
   })
 
   describe('when submitting the form', () => {
-    test('calls changeQuery and changeFocusedCollection when keyword has changed', async () => {
+    test('calls changeQuery and setCollectionId when keyword has changed', async () => {
       const { user, zustandState } = setup({
         overrideZustandState: {
           query: {
@@ -146,8 +146,8 @@ describe('SearchAutocomplete', () => {
       const searchButton = screen.getByText('Search')
       await user.click(searchButton)
 
-      expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledTimes(1)
-      expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledWith('')
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledTimes(1)
+      expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith(null)
 
       expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
       expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
@@ -177,12 +177,14 @@ describe('SearchAutocomplete', () => {
         }))
 
       const input = screen.getByRole('textbox')
-      await user.clear(input)
-      await user.type(input, 'test')
-
-      // Submit form while request is in flight
       const searchButton = screen.getByText('Search')
-      await user.click(searchButton)
+
+      await act(async () => {
+        await user.clear(input)
+        await user.type(input, 'test')
+        // Submit form while request is in flight
+        await user.click(searchButton)
+      })
 
       // Loading should be cleared
       expect(screen.queryByText('Loading suggestions...')).not.toBeInTheDocument()

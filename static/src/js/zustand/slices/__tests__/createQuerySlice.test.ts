@@ -8,6 +8,7 @@ import configureStore from '../../../store/configureStore'
 import actions from '../../../actions'
 
 import * as EventEmitter from '../../../events/events'
+import routerHelper from '../../../router/router'
 
 jest.mock('../../../actions', () => ({
   getCollections: jest.fn(),
@@ -48,6 +49,7 @@ describe('createQuerySlice', () => {
     describe('when there is no focused collection', () => {
       test('updates the collection query and calls getCollections', async () => {
         useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
           state.project.getProjectGranules = jest.fn()
         })
 
@@ -62,6 +64,8 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
+          granules,
           project,
           query: updatedQuery
         } = updatedState
@@ -69,8 +73,10 @@ describe('createQuerySlice', () => {
         expect(updatedQuery.collection.pageNum).toEqual(1)
         expect(updatedQuery.collection.keyword).toEqual('test')
 
-        expect(actions.getCollections).toHaveBeenCalledTimes(1)
-        expect(actions.getCollections).toHaveBeenCalledWith()
+        expect(granules.granules.collectionConceptId).toEqual(null)
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
 
@@ -82,7 +88,10 @@ describe('createQuerySlice', () => {
     describe('when there is a focused collection', () => {
       test('updates the collection query and calls getCollections and getSearchGranules', async () => {
         useEdscStore.setState((state) => {
-          state.focusedCollection.focusedCollection = 'collectionId'
+          state.collection.collectionId = 'collectionId'
+          state.collections.getCollections = jest.fn()
+          state.granules.granules.collectionConceptId = 'collectionId'
+          state.granules.getGranules = jest.fn()
           state.project.getProjectGranules = jest.fn()
           state.query.collection.byId.collectionId = {
             granules: {
@@ -103,6 +112,8 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
+          granules,
           project,
           query: updatedQuery
         } = updatedState
@@ -110,11 +121,13 @@ describe('createQuerySlice', () => {
         expect(updatedQuery.collection.pageNum).toEqual(1)
         expect(updatedQuery.collection.keyword).toEqual('test')
 
-        expect(actions.getCollections).toHaveBeenCalledTimes(1)
-        expect(actions.getCollections).toHaveBeenCalledWith()
+        expect(granules.granules.collectionConceptId).toEqual(null)
 
-        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
-        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
+
+        expect(granules.getGranules).toHaveBeenCalledTimes(1)
+        expect(granules.getGranules).toHaveBeenCalledWith()
 
         expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
 
@@ -126,6 +139,8 @@ describe('createQuerySlice', () => {
     describe('when there is a project collection', () => {
       test('updates the collection query and calls getCollections and getProjectGranules', async () => {
         useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.granules.getGranules = jest.fn()
           state.project.collections.allIds = ['collectionId']
           state.project.getProjectGranules = jest.fn()
         })
@@ -141,6 +156,8 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
+          granules,
           project,
           query: updatedQuery
         } = updatedState
@@ -148,10 +165,12 @@ describe('createQuerySlice', () => {
         expect(updatedQuery.collection.pageNum).toEqual(1)
         expect(updatedQuery.collection.keyword).toEqual('test')
 
-        expect(actions.getCollections).toHaveBeenCalledTimes(1)
-        expect(actions.getCollections).toHaveBeenCalledWith()
+        expect(granules.granules.collectionConceptId).toEqual(null)
 
-        expect(actions.getSearchGranules).toHaveBeenCalledTimes(0)
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
+
+        expect(granules.getGranules).toHaveBeenCalledTimes(0)
 
         expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
         expect(project.getProjectGranules).toHaveBeenCalledWith()
@@ -164,6 +183,7 @@ describe('createQuerySlice', () => {
     describe('when there are spatial values', () => {
       test('updates the store', async () => {
         useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
           state.project.getProjectGranules = jest.fn()
         })
 
@@ -180,16 +200,21 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           query: updatedQuery
         } = updatedState
 
         expect(updatedQuery.collection.spatial).toEqual({
           point: ['0,0']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
       })
 
       test('it changes the spatial values to a new value', async () => {
         useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
           state.query.collection.spatial = {
             point: ['1,1']
           }
@@ -208,16 +233,21 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           query: updatedQuery
         } = updatedState
 
         expect(updatedQuery.collection.spatial).toEqual({
           polygon: ['-77,38,-77,38,-76,38,-77,38']
         })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
       })
 
       test('it removes spatial values', async () => {
         useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
           state.query.collection.spatial = {
             point: ['1,1']
           }
@@ -234,10 +264,51 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
           query: updatedQuery
         } = updatedState
 
         expect(updatedQuery.collection.spatial).toEqual(initialState.collection.spatial)
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
+      })
+    })
+
+    describe('when there is a selectedRegion value', () => {
+      test('updates the store', async () => {
+        useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.project.getProjectGranules = jest.fn()
+        })
+
+        const zustandState = useEdscStore.getState()
+        const { query } = zustandState
+        const { changeQuery } = query
+        await changeQuery({
+          selectedRegion: {
+            id: '1234',
+            name: 'Mock Hub',
+            spatial: '-77,38,-77,38,-76,38,-77,38',
+            type: 'huc'
+          }
+        })
+
+        const updatedState = useEdscStore.getState()
+        const {
+          collections,
+          query: updatedQuery
+        } = updatedState
+
+        expect(updatedQuery.selectedRegion).toEqual({
+          id: '1234',
+          name: 'Mock Hub',
+          spatial: '-77,38,-77,38,-76,38,-77,38',
+          type: 'huc'
+        })
+
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
       })
     })
   })
@@ -246,6 +317,7 @@ describe('createQuerySlice', () => {
     describe('when the collection does not have a query yet', () => {
       test('updates the granule query and calls actions', async () => {
         useEdscStore.setState((state) => {
+          state.granules.getGranules = jest.fn()
           state.project.getProjectGranules = jest.fn()
         })
 
@@ -259,6 +331,7 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          granules,
           project,
           query: updatedQuery
         } = updatedState
@@ -268,10 +341,12 @@ describe('createQuerySlice', () => {
           pageNum: 3
         })
 
+        expect(granules.granules.collectionConceptId).toEqual(null)
+
         expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
 
-        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
-        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+        expect(granules.getGranules).toHaveBeenCalledTimes(1)
+        expect(granules.getGranules).toHaveBeenCalledWith()
 
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
@@ -281,6 +356,7 @@ describe('createQuerySlice', () => {
     describe('when the query is empty', () => {
       test('updates the granule query and calls actions', async () => {
         useEdscStore.setState((state) => {
+          state.granules.getGranules = jest.fn()
           state.project.getProjectGranules = jest.fn()
           state.query.collection.byId.collectionId = {
             granules: {
@@ -300,16 +376,19 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          granules,
           project,
           query: updatedQuery
         } = updatedState
 
         expect(updatedQuery.collection.byId.collectionId.granules).toEqual(initialGranuleState)
 
+        expect(granules.granules.collectionConceptId).toEqual(null)
+
         expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
 
-        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
-        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+        expect(granules.getGranules).toHaveBeenCalledTimes(1)
+        expect(granules.getGranules).toHaveBeenCalledWith()
 
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
@@ -319,6 +398,8 @@ describe('createQuerySlice', () => {
     describe('when there are new query values', () => {
       test('updates the granule query and calls actions', async () => {
         useEdscStore.setState((state) => {
+          state.granules.granules.collectionConceptId = 'collectionId'
+          state.granules.getGranules = jest.fn()
           state.project.getProjectGranules = jest.fn()
           state.query.collection.byId.collectionId = {
             granules: {
@@ -338,6 +419,7 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          granules,
           project,
           query: updatedQuery
         } = updatedState
@@ -347,10 +429,12 @@ describe('createQuerySlice', () => {
           pageNum: 3
         })
 
+        expect(granules.granules.collectionConceptId).toEqual(null)
+
         expect(project.getProjectGranules).toHaveBeenCalledTimes(0)
 
-        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
-        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+        expect(granules.getGranules).toHaveBeenCalledTimes(1)
+        expect(granules.getGranules).toHaveBeenCalledWith()
 
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
@@ -360,7 +444,9 @@ describe('createQuerySlice', () => {
     describe('when the collectionId is focused and in the projectCollectionIds', () => {
       test('calls getProjectGranules', async () => {
         useEdscStore.setState((state) => {
-          state.focusedCollection.focusedCollection = 'collectionId'
+          state.collection.collectionId = 'collectionId'
+          state.granules.granules.collectionConceptId = 'collectionId'
+          state.granules.getGranules = jest.fn()
           state.project.getProjectGranules = jest.fn()
           state.project.collections.allIds = ['collectionId']
           state.query.collection.byId.collectionId = {
@@ -381,6 +467,7 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          granules,
           project,
           query: updatedQuery
         } = updatedState
@@ -390,11 +477,13 @@ describe('createQuerySlice', () => {
           pageNum: 3
         })
 
+        expect(granules.granules.collectionConceptId).toEqual(null)
+
         expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
         expect(project.getProjectGranules).toHaveBeenCalledWith()
 
-        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
-        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+        expect(granules.getGranules).toHaveBeenCalledTimes(1)
+        expect(granules.getGranules).toHaveBeenCalledWith()
 
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledTimes(1)
         expect(actions.removeSubscriptionDisabledFields).toHaveBeenCalledWith()
@@ -424,15 +513,9 @@ describe('createQuerySlice', () => {
   describe('clearFilters', () => {
     describe('when not on the granules page', () => {
       test('updates the region query and calls getRegions', async () => {
-        mockGetState.mockReturnValue({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
-
         useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.granules.getGranules = jest.fn()
           state.project.getProjectCollections = jest.fn()
           state.shapefile.clearShapefile = jest.fn()
           state.timeline.getTimeline = jest.fn()
@@ -445,6 +528,8 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
+          granules,
           project,
           query: updatedQuery,
           shapefile,
@@ -453,13 +538,13 @@ describe('createQuerySlice', () => {
 
         expect(updatedQuery.collection).toEqual(initialState.collection)
 
-        expect(actions.getCollections).toHaveBeenCalledTimes(1)
-        expect(actions.getCollections).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(project.getProjectCollections).toHaveBeenCalledTimes(1)
         expect(project.getProjectCollections).toHaveBeenCalledWith()
 
-        expect(actions.getSearchGranules).toHaveBeenCalledTimes(0)
+        expect(granules.getGranules).toHaveBeenCalledTimes(0)
         expect(timeline.getTimeline).toHaveBeenCalledTimes(0)
 
         expect(shapefile.clearShapefile).toHaveBeenCalledTimes(1)
@@ -469,15 +554,20 @@ describe('createQuerySlice', () => {
 
     describe('when on the granules page', () => {
       test('updates the region query and calls getRegions', async () => {
-        mockGetState.mockReturnValue({
-          router: {
+        routerHelper.router = {
+          navigate: jest.fn(),
+          state: {
             location: {
-              pathname: '/search/granules'
+              pathname: '/search/granules',
+              search: ''
             }
-          }
-        })
+          },
+          subscribe: jest.fn()
+        }
 
         useEdscStore.setState((state) => {
+          state.collections.getCollections = jest.fn()
+          state.granules.getGranules = jest.fn()
           state.project.getProjectCollections = jest.fn()
           state.timeline.getTimeline = jest.fn()
         })
@@ -489,6 +579,8 @@ describe('createQuerySlice', () => {
 
         const updatedState = useEdscStore.getState()
         const {
+          collections,
+          granules,
           project,
           query: updatedQuery,
           timeline
@@ -496,14 +588,14 @@ describe('createQuerySlice', () => {
 
         expect(updatedQuery.collection).toEqual(initialState.collection)
 
-        expect(actions.getCollections).toHaveBeenCalledTimes(1)
-        expect(actions.getCollections).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
         expect(project.getProjectCollections).toHaveBeenCalledTimes(1)
         expect(project.getProjectCollections).toHaveBeenCalledWith()
 
-        expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
-        expect(actions.getSearchGranules).toHaveBeenCalledWith()
+        expect(granules.getGranules).toHaveBeenCalledTimes(1)
+        expect(granules.getGranules).toHaveBeenCalledWith()
 
         expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
         expect(timeline.getTimeline).toHaveBeenCalledWith()
@@ -516,6 +608,7 @@ describe('createQuerySlice', () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
 
       useEdscStore.setState((state) => {
+        state.granules.getGranules = jest.fn()
         state.query.collection.byId.collectionId = {
           granules: initialGranuleState
         }
@@ -531,6 +624,7 @@ describe('createQuerySlice', () => {
 
       const updatedState = useEdscStore.getState()
       const {
+        granules,
         query: updatedQuery
       } = updatedState
 
@@ -541,8 +635,8 @@ describe('createQuerySlice', () => {
         granule: null
       })
 
-      expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
-      expect(actions.getSearchGranules).toHaveBeenCalledWith()
+      expect(granules.getGranules).toHaveBeenCalledTimes(1)
+      expect(granules.getGranules).toHaveBeenCalledWith()
     })
   })
 
@@ -576,6 +670,7 @@ describe('createQuerySlice', () => {
   describe('removeSpatialFilter', () => {
     test('removes the spatial filter', async () => {
       useEdscStore.setState((state) => {
+        state.collections.getCollections = jest.fn()
         state.query.collection.byId.collectionId = {
           granules: initialGranuleState
         }
@@ -607,6 +702,7 @@ describe('createQuerySlice', () => {
   describe('undoExcludeGranule', () => {
     test('removes a granule from the excluded list', async () => {
       useEdscStore.setState((state) => {
+        state.granules.getGranules = jest.fn()
         state.query.collection.byId.collectionId = {
           granules: {
             ...initialGranuleState,
@@ -622,13 +718,14 @@ describe('createQuerySlice', () => {
 
       const updatedState = useEdscStore.getState()
       const {
+        granules,
         query: updatedQuery
       } = updatedState
 
       expect(updatedQuery.collection.byId.collectionId.granules.excludedGranuleIds).not.toContain('granuleId2')
 
-      expect(actions.getSearchGranules).toHaveBeenCalledTimes(1)
-      expect(actions.getSearchGranules).toHaveBeenCalledWith()
+      expect(granules.getGranules).toHaveBeenCalledTimes(1)
+      expect(granules.getGranules).toHaveBeenCalledWith()
     })
   })
 })

@@ -13,41 +13,38 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
+import { getCollections } from '../../zustand/selectors/collections'
 
 import './CollectionResultsBody.scss'
 
 /**
  * Renders CollectionResultsBody.
  * @param {Object} props - The props passed into the component.
- * @param {Array} props.collections - Collections passed from redux store.
  * @param {Function} props.loadNextPage - Callback to load the next page of results.
  * @param {Function} props.onMetricsAddCollectionProject - Metrics callback for adding a collection to project event.
  * @param {String} props.panelView - The current active view.
  */
 const CollectionResultsBody = ({
-  collectionsMetadata,
-  collectionsSearch,
   loadNextPage,
   onMetricsAddCollectionProject,
   panelView
 }) => {
+  const collectionsMetadata = useEdscStore(getCollections)
   const {
-    allIds: collectionIds,
-    hits: collectionHits,
+    count: collectionHits,
     isLoading,
-    isLoaded
-  } = collectionsSearch
+    isLoaded,
+    items
+  } = collectionsMetadata
 
   const projectCollectionIds = useEdscStore(getProjectCollectionsIds)
 
   const collectionList = useMemo(() => formatCollectionList(
-    collectionsSearch,
-    collectionsMetadata,
+    items,
     projectCollectionIds
   ), [
     isLoading,
-    collectionsMetadata,
-    collectionIds,
+    items,
     projectCollectionIds
   ])
 
@@ -85,7 +82,7 @@ const CollectionResultsBody = ({
 
   const {
     portalId,
-    title = portalId
+    title = {}
   } = portal
 
   const { primary: primaryPortalTitle = portalId } = title
@@ -155,13 +152,6 @@ const CollectionResultsBody = ({
 }
 
 CollectionResultsBody.propTypes = {
-  collectionsMetadata: PropTypes.shape({}).isRequired,
-  collectionsSearch: PropTypes.shape({
-    allIds: PropTypes.arrayOf(PropTypes.string),
-    hits: PropTypes.number,
-    isLoading: PropTypes.bool,
-    isLoaded: PropTypes.bool
-  }).isRequired,
   loadNextPage: PropTypes.func.isRequired,
   onMetricsAddCollectionProject: PropTypes.func.isRequired,
   panelView: PropTypes.string.isRequired

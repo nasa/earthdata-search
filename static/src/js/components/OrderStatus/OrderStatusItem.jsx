@@ -46,7 +46,6 @@ let intervalId = null
  * @param {String} params.earthdataEnvironment - The earthdata environment.
  * @param {Object} params.granuleDownload - granuleDownload state.
  * @param {Object} params.collection - The collection state.
- * @param {Object} params.match - match parameter from React Router.
  * @param {Function} params.onChangePath - Callback function to change the current path.
  * @param {Function} params.onFetchRetrievalCollection - Callback function to fetch a retrieval.
  * @param {Function} params.onFetchRetrievalCollectionGranuleBrowseLinks - Callback function to fetch browse links for a retrieval collection.
@@ -606,7 +605,6 @@ OrderStatusItem.propTypes = {
   defaultOpen: PropTypes.bool,
   earthdataEnvironment: PropTypes.string.isRequired,
   granuleDownload: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
   onChangePath: PropTypes.func.isRequired,
   onFetchRetrievalCollection: PropTypes.func.isRequired,
   onFetchRetrievalCollectionGranuleLinks: PropTypes.func.isRequired,

@@ -15,6 +15,7 @@ import {
   getProjectCollections,
   getProjectCollectionsMetadata
 } from '../zustand/selectors/project'
+import routerHelper from '../router/router'
 
 // Limit the fields we send with the retrieval to save space in the payload
 const permittedCollectionMetadataFields = [
@@ -59,8 +60,7 @@ const permittedAccessMethodFields = [
  */
 export const prepareRetrievalParams = (state) => {
   const {
-    authToken,
-    router
+    authToken
   } = state
 
   const { shapefile } = useEdscStore.getState()
@@ -83,7 +83,7 @@ export const prepareRetrievalParams = (state) => {
     } = projectCollection
 
     const {
-      hits: granuleCount,
+      count: granuleCount,
       allIds: allGranuleIds = [],
       byId: byGranuleId = {}
     } = granules
@@ -107,7 +107,7 @@ export const prepareRetrievalParams = (state) => {
     returnValue.granule_link_count = totalGranuleLinks
     returnValue.collection_metadata = pick(collectionMetadata, permittedCollectionMetadataFields)
 
-    const extractedGranuleParams = extractProjectCollectionGranuleParams(state, collectionId)
+    const extractedGranuleParams = extractProjectCollectionGranuleParams(collectionId)
 
     const preparedParams = prepareGranuleParams(
       collectionsMetadata,
@@ -177,7 +177,8 @@ export const prepareRetrievalParams = (state) => {
     retrievalCollections.push(returnValue)
   })
 
-  const { search } = router.location
+  const { location } = routerHelper.router.state
+  const { search } = location
   const { shapefileId, selectedFeatures } = shapefile
 
   const { portalId } = useEdscStore.getState().portal

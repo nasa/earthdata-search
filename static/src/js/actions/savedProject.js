@@ -1,5 +1,3 @@
-import { replace } from 'connected-react-router'
-
 import { UPDATE_SAVED_PROJECT } from '../constants/actionTypes'
 
 import ProjectRequest from '../util/request/projectRequest'
@@ -8,6 +6,8 @@ import { handleError } from './errors'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
+
+import routerHelper from '../router/router'
 
 export const updateSavedProject = (payload) => ({
   type: UPDATE_SAVED_PROJECT,
@@ -25,7 +25,6 @@ export const updateProjectName = (name) => (dispatch, getState) => {
 
   const {
     authToken,
-    router,
     savedProject
   } = state
 
@@ -34,7 +33,7 @@ export const updateProjectName = (name) => (dispatch, getState) => {
     projectId: savedProjectId
   } = savedProject
 
-  const { location } = router
+  const { location } = routerHelper.router.state
   const { pathname, search } = location
 
   // If there isn't a path saved yet, get it from the URL
@@ -63,7 +62,9 @@ export const updateProjectName = (name) => (dispatch, getState) => {
       }))
 
       // If the URL didn't contain a projectId before, change the URL to a project URL
-      if (search.indexOf('?projectId=') === -1) dispatch(replace(`${pathname}?projectId=${projectId}`))
+      if (search.indexOf('?projectId=') === -1) {
+        routerHelper.router.navigate(`${pathname}?projectId=${projectId}`, { replace: true })
+      }
     })
     .catch((error) => {
       dispatch(handleError({

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 
 // @ts-expect-error The file does not have types
 import actions from '../../../actions'
@@ -17,34 +18,44 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 jest.mock('../../../components/Timeline/Timeline', () => jest.fn(() => <div />))
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search',
+    search: '?p=C123456-EDSC',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
+
 const setup = setupTest({
   Component: TimelineContainer,
   defaultProps: {
-    collectionsMetadata: {
-      focusedCollectionId: {
-        title: 'focused'
-      },
-      projectCollectionId: {
-        title: 'project'
-      }
-    },
     isOpen: true,
     onMetricsTimeline: jest.fn(),
     onToggleOverrideTemporalModal: jest.fn(),
-    onToggleTimeline: jest.fn(),
-    pathname: '/search',
-    search: '?p=C123456-EDSC'
+    onToggleTimeline: jest.fn()
   },
   defaultZustandState: {
-    focusedCollection: {
-      focusedCollection: 'focusedCollectionId'
+    collection: {
+      collectionId: 'collectionId',
+      collectionMetadata: {
+        collectionId: {
+          title: 'focused'
+        },
+        projectCollectionId: {
+          title: 'project'
+        }
+      }
     },
     project: {
       collections: {
         allIds: ['projectCollectionId']
       }
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('mapDispatchToProps', () => {
@@ -82,14 +93,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      metadata: {
-        collections: {}
-      },
-      router: {
-        location: {
-          pathname: ''
-        }
-      },
       ui: {
         timeline: {
           isOpen: false
@@ -98,8 +101,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      collectionsMetadata: {},
-      pathname: '',
       isOpen: false
     }
 
@@ -115,17 +116,17 @@ describe('TimelineContainer component', () => {
   })
 
   test('passes its props and renders a single Timeline component on the search page', () => {
-    setup({
-      overrideProps: {
-        pathname: '/search/granules'
-      }
+    (useLocation as jest.Mock).mockReturnValue({
+      pathname: '/search/granules'
     })
+
+    setup()
 
     expect(Timeline).toHaveBeenCalledTimes(1)
     expect(Timeline).toHaveBeenCalledWith(
       {
         collectionMetadata: {
-          focusedCollectionId: {
+          collectionId: {
             title: 'focused'
           }
         },
@@ -142,11 +143,12 @@ describe('TimelineContainer component', () => {
   })
 
   test('passes its props and renders a single Timeline component on the project page', () => {
-    setup({
-      overrideProps: {
-        pathname: '/projects'
-      }
+    (useLocation as jest.Mock).mockReturnValue({
+      pathname: '/projects',
+      search: '?p=projectCollectionId'
     })
+
+    setup()
 
     expect(Timeline).toHaveBeenCalledTimes(1)
     expect(Timeline).toHaveBeenCalledWith(
@@ -169,12 +171,12 @@ describe('TimelineContainer component', () => {
   })
 
   test('Does not show the timeline if it is on the saved projects page', () => {
-    setup({
-      overrideProps: {
-        pathname: '/projects',
-        search: ''
-      }
+    (useLocation as jest.Mock).mockReturnValue({
+      pathname: '/projects',
+      search: ''
     })
+
+    setup()
 
     expect(Timeline).toHaveBeenCalledTimes(0)
   })

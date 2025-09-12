@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react'
 import { PropTypes } from 'prop-types'
 import classNames from 'classnames'
-
+import { useLocation } from 'react-router-dom'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import Highlighter from 'react-highlight-words'
@@ -18,7 +18,6 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 import { getSearchWords } from '../../util/getSearchWords'
 
 import murmurhash3 from '../../util/murmurhash3'
-import { locationPropType } from '../../util/propTypes/location'
 
 import Button from '../Button/Button'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -44,10 +43,8 @@ import './GranuleResultsItem.scss'
  * @param {Object} props.granule - Granule passed from redux store.
  * @param {Boolean} props.isCollectionInProject - Flag designating if the collection is in the project.
  * @param {Function} props.isGranuleInProject - Function designating if the granule is in the project.
- * @param {Object} props.location - Location passed from react router.
  * @param {Function} props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
  * @param {Function} props.onExcludeGranule - Callback to exclude a granule.
- * @param {Function} props.onFocusedGranuleChange - Callback to focus a granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsDataAccess - Callback to capture data access metrics.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
@@ -63,19 +60,21 @@ const GranuleResultsItem = forwardRef(({
   granule,
   isCollectionInProject,
   isGranuleInProject,
-  location,
   onExcludeGranule,
-  onFocusedGranuleChange,
   onMetricsDataAccess,
   onMetricsAddGranuleProject,
   onGenerateNotebook,
   readableGranuleName
 }, ref) => {
+  const location = useLocation()
+
   const {
     addGranuleToProjectCollection,
+    setGranuleId,
     removeGranuleFromProjectCollection
   } = useEdscStore((state) => ({
     addGranuleToProjectCollection: state.project.addGranuleToProjectCollection,
+    setGranuleId: state.granule.setGranuleId,
     removeGranuleFromProjectCollection: state.project.removeGranuleFromProjectCollection
   }))
   const generateNotebookTag = getValueForTag('notebook_generation', collectionTags)
@@ -99,7 +98,7 @@ const GranuleResultsItem = forwardRef(({
   }
 
   const handleClickGranuleDetails = (granuleId) => {
-    onFocusedGranuleChange(granuleId)
+    setGranuleId(granuleId)
   }
 
   const {
@@ -375,9 +374,7 @@ GranuleResultsItem.propTypes = {
   }).isRequired,
   isCollectionInProject: PropTypes.bool.isRequired,
   isGranuleInProject: PropTypes.func.isRequired,
-  location: locationPropType.isRequired,
   onExcludeGranule: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,

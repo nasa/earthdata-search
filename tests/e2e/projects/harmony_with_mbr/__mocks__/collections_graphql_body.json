@@ -274,6 +274,8 @@
               ]
             }
           ],
+          "timeStart": "2023-08-01T00:00:00Z",
+          "timeEnd": null,
           "tilingIdentificationSystems": null,
           "title": "TEMPO NO2 tropospheric and stratospheric columns V03 (BETA)",
           "versionId": "V03",

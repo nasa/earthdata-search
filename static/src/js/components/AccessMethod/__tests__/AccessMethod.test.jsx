@@ -5,7 +5,6 @@ import {
   waitFor,
   within
 } from '@testing-library/react'
-import ResizeObserver from 'resize-observer-polyfill'
 
 import AccessMethod from '../AccessMethod'
 import AccessMethodRadio from '../../FormFields/AccessMethodRadio/AccessMethodRadio'
@@ -15,18 +14,9 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import EchoForm from '../EchoForm'
 import { echoForm, rawModel } from './mocks'
 
-beforeEach(() => {
-  global.ResizeObserver = ResizeObserver
-})
-
 jest.mock('../../FormFields/AccessMethodRadio/AccessMethodRadio', () => jest.fn().mockImplementation(
   jest.requireActual('../../FormFields/AccessMethodRadio/AccessMethodRadio').AccessMethodRadio
 ))
-
-afterEach(() => {
-  // Don't share global state between the tests
-  delete global.ResizeObserver
-})
 
 // Mock the Swodlr max value so the mock objects don't get so large in the tests
 jest.mock('../../../constants/swodlrConstants', () => ({
@@ -89,9 +79,6 @@ describe('AccessMethod component', () => {
           metadata: {
             conceptId: collectionId,
             granule_count: 10000
-          },
-          granuleMetadata: {
-            hits: 3800
           }
         }
       })
@@ -116,9 +103,6 @@ describe('AccessMethod component', () => {
             metadata: {
               conceptId: collectionId,
               granule_count: 10000
-            },
-            granuleMetadata: {
-              hits: 3800
             }
           }
         })
@@ -141,9 +125,6 @@ describe('AccessMethod component', () => {
           metadata: {
             conceptId: collectionId,
             granule_count: 10000
-          },
-          granuleMetadata: {
-            hits: 3800
           }
         }
       })
@@ -1818,13 +1799,17 @@ describe('AccessMethod component', () => {
                 ],
                 byId: {}
               }
-            },
-            granuleMetadata: {
-              'G10000000000-EDSC': {
-                id: 'G10000000000-EDSC'
-              },
-              'G1000000001-EDSC': {
-                id: 'G1000000001-EDSC'
+            }
+          },
+          overrideZustandState: {
+            granule: {
+              granuleMetadata: {
+                'G10000000000-EDSC': {
+                  id: 'G10000000000-EDSC'
+                },
+                'G1000000001-EDSC': {
+                  id: 'G1000000001-EDSC'
+                }
               }
             }
           }
@@ -1859,9 +1844,6 @@ describe('AccessMethod component', () => {
                   ],
                   byId: {}
                 }
-              },
-              granuleMetadata: {
-                undefined
               }
             }
           })
@@ -1901,16 +1883,20 @@ describe('AccessMethod component', () => {
                 ],
                 byId: {}
               }
-            },
-            granuleMetadata: {
-              'G1000000000-EDSC': {
-                id: 'G1000000000-EDSC'
-              },
-              'G1000000001-EDSC': {
-                id: 'G1000000001-EDSC'
-              },
-              'G1000000002-EDSC': {
-                id: 'G1000000002-EDSC'
+            }
+          },
+          overrideZustandState: {
+            granule: {
+              granuleMetadata: {
+                'G1000000000-EDSC': {
+                  id: 'G1000000000-EDSC'
+                },
+                'G1000000001-EDSC': {
+                  id: 'G1000000001-EDSC'
+                },
+                'G1000000002-EDSC': {
+                  id: 'G1000000002-EDSC'
+                }
               }
             }
           }

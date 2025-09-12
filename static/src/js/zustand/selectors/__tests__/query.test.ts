@@ -6,7 +6,11 @@ import {
   getCollectionSubscriptionQueryString,
   getFocusedCollectionGranuleQuery,
   getGranuleSubscriptionQueryObj,
-  getGranuleSubscriptionQueryString
+  getGranuleSubscriptionQueryString,
+  getNlpCollection,
+  getNlpSpatialData,
+  getNlpTemporalData,
+  getSelectedRegionQuery
 } from '../query'
 
 import useEdscStore from '../../useEdscStore'
@@ -39,6 +43,13 @@ describe('query selectors', () => {
     })
   })
 
+  describe('getSelectedRegionQuery', () => {
+    test('returns the selected region query', () => {
+      const selectedRegionQuery = getSelectedRegionQuery(useEdscStore.getState())
+      expect(selectedRegionQuery).toEqual(initialState.selectedRegion)
+    })
+  })
+
   describe('getCollectionsQueryTemporal', () => {
     test('returns the collection temporal query', () => {
       const temporalQuery = getCollectionsQueryTemporal(useEdscStore.getState())
@@ -49,8 +60,8 @@ describe('query selectors', () => {
   describe('getFocusedCollectionGranuleQuery', () => {
     test('returns the focused collection granule query', () => {
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -76,20 +87,17 @@ describe('query selectors', () => {
   describe('getGranuleSubscriptionQueryObj', () => {
     test('returns the granule subscription query object', () => {
       configureStore.mockReturnValue({
-        getState: () => ({
-          metadata: {
-            collections: {
-              collectionId: {
-                id: 'collectionId'
-              }
-            }
-          }
-        })
+        getState: () => ({})
       })
 
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId',
+          collectionMetadata: {
+            collectionId: {
+              id: 'collectionId'
+            }
+          }
         },
         query: {
           collection: {
@@ -110,7 +118,7 @@ describe('query selectors', () => {
         }
       }))
 
-      const granuleSubscriptionQuery = getGranuleSubscriptionQueryObj()
+      const granuleSubscriptionQuery = getGranuleSubscriptionQueryObj(useEdscStore.getState())
       expect(granuleSubscriptionQuery).toEqual({
         browseOnly: true,
         point: '0,0'
@@ -122,13 +130,6 @@ describe('query selectors', () => {
     test('returns the granule subscription query string', () => {
       configureStore.mockReturnValue({
         getState: () => ({
-          metadata: {
-            collections: {
-              collectionId: {
-                id: 'collectionId'
-              }
-            }
-          },
           subscriptions: {
             disabledFields: {
               granule: {}
@@ -138,8 +139,13 @@ describe('query selectors', () => {
       })
 
       useEdscStore.setState(() => ({
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId',
+          collectionMetadata: {
+            collectionId: {
+              id: 'collectionId'
+            }
+          }
         },
         query: {
           collection: {
@@ -160,7 +166,7 @@ describe('query selectors', () => {
         }
       }))
 
-      const granuleSubscriptionQuery = getGranuleSubscriptionQueryString()
+      const granuleSubscriptionQuery = getGranuleSubscriptionQueryString(useEdscStore.getState())
       expect(granuleSubscriptionQuery).toEqual('browse_only=true&point=0,0')
     })
   })
@@ -192,8 +198,8 @@ describe('query selectors', () => {
             ]
           }
         },
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -254,8 +260,8 @@ describe('query selectors', () => {
             ]
           }
         },
-        focusedCollection: {
-          focusedCollection: 'collectionId'
+        collection: {
+          collectionId: 'collectionId'
         },
         query: {
           collection: {
@@ -270,6 +276,135 @@ describe('query selectors', () => {
 
       const collectionSubscriptionQuery = getCollectionSubscriptionQueryString()
       expect(collectionSubscriptionQuery).toEqual('cloud_hosted=true&has_granules_or_cwic=true&data_center_h[]=National Snow and Ice Data Center (NSIDC)&point=0,0')
+    })
+  })
+
+  describe('getNlpCollection', () => {
+    test('returns the nlp collection when it exists', () => {
+      useEdscStore.setState(() => ({
+        query: {
+          nlpCollection: {
+            query: 'Texas',
+            spatial: {
+              geoJson: { type: 'Polygon' },
+              geoLocation: 'Texas'
+            }
+          }
+        }
+      }))
+
+      const nlpCollection = getNlpCollection(useEdscStore.getState())
+      expect(nlpCollection).toEqual({
+        query: 'Texas',
+        spatial: {
+          geoJson: { type: 'Polygon' },
+          geoLocation: 'Texas'
+        }
+      })
+    })
+
+    test('returns null when nlp collection does not exist', () => {
+      useEdscStore.setState(() => ({
+        query: {}
+      }))
+
+      const nlpCollection = getNlpCollection(useEdscStore.getState())
+      expect(nlpCollection).toBeNull()
+    })
+
+    test('returns null when query is undefined', () => {
+      useEdscStore.setState(() => ({}))
+
+      const nlpCollection = getNlpCollection(useEdscStore.getState())
+      expect(nlpCollection).toBeNull()
+    })
+  })
+
+  describe('getNlpSpatialData', () => {
+    test('returns spatial data when nlp collection has spatial data', () => {
+      useEdscStore.setState(() => ({
+        query: {
+          nlpCollection: {
+            query: 'Texas',
+            spatial: {
+              geoJson: { type: 'Polygon' },
+              geoLocation: 'Texas'
+            }
+          }
+        }
+      }))
+
+      const spatialData = getNlpSpatialData(useEdscStore.getState())
+      expect(spatialData).toEqual({
+        geoJson: { type: 'Polygon' },
+        geoLocation: 'Texas'
+      })
+    })
+
+    test('returns null when nlp collection exists but has no spatial data', () => {
+      useEdscStore.setState(() => ({
+        query: {
+          nlpCollection: {
+            query: 'Texas'
+          }
+        }
+      }))
+
+      const spatialData = getNlpSpatialData(useEdscStore.getState())
+      expect(spatialData).toBeNull()
+    })
+
+    test('returns null when nlp collection does not exist', () => {
+      useEdscStore.setState(() => ({
+        query: {}
+      }))
+
+      const spatialData = getNlpSpatialData(useEdscStore.getState())
+      expect(spatialData).toBeNull()
+    })
+  })
+
+  describe('getNlpTemporalData', () => {
+    test('returns temporal data when nlp collection has temporal data', () => {
+      useEdscStore.setState(() => ({
+        query: {
+          nlpCollection: {
+            query: 'data from 2023',
+            temporal: {
+              startDate: '2023-01-01',
+              endDate: '2023-12-31'
+            }
+          }
+        }
+      }))
+
+      const temporalData = getNlpTemporalData(useEdscStore.getState())
+      expect(temporalData).toEqual({
+        startDate: '2023-01-01',
+        endDate: '2023-12-31'
+      })
+    })
+
+    test('returns null when nlp collection exists but has no temporal data', () => {
+      useEdscStore.setState(() => ({
+        query: {
+          nlpCollection: {
+            query: 'some data'
+          }
+        }
+      }))
+
+      const temporalData = getNlpTemporalData(useEdscStore.getState())
+      expect(temporalData).toBeNull()
+    })
+
+    test('returns null when nlp collection does not exist', () => {
+      useEdscStore.setState(() => ({
+        query: {}
+      }))
+
+      const temporalData = getNlpTemporalData(useEdscStore.getState())
+      expect(temporalData).toBeNull()
     })
   })
 })

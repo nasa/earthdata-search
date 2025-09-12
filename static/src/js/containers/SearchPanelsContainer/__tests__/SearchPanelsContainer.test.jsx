@@ -12,7 +12,6 @@ import {
   SearchPanelsContainer
 } from '../SearchPanelsContainer'
 import setupTest from '../../../../../../jestConfigs/setupTest'
-import { initialState } from '../../../zustand/slices/createQuerySlice'
 
 jest.mock('../../../components/SearchPanels/SearchPanels', () => jest.fn(() => <div>Search Panels</div>))
 
@@ -20,16 +19,11 @@ const setup = setupTest({
   Component: SearchPanelsContainer,
   defaultProps: {
     authToken: '',
-    collectionMetadata: {},
-    collectionsSearch: {},
     collectionSubscriptions: [],
-    granuleMetadata: {},
-    granuleSearchResults: {},
     isExportRunning: {
       csv: false,
       json: false
     },
-    location: {},
     match: {
       url: '/search'
     },
@@ -62,7 +56,8 @@ const setup = setupTest({
         }
       }
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('mapDispatchToProps', () => {
@@ -121,13 +116,6 @@ describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
       authToken: 'mock-token',
-      metadata: {
-        collections: {}
-      },
-      panels: {},
-      searchResults: {
-        collections: {}
-      },
       ui: {
         export: {
           isExportRunning: {
@@ -140,11 +128,7 @@ describe('mapStateToProps', () => {
 
     const expectedState = {
       authToken: 'mock-token',
-      collectionMetadata: {},
-      collectionsSearch: {},
       collectionSubscriptions: [],
-      granuleMetadata: {},
-      granuleSearchResults: {},
       isExportRunning: {
         csv: false,
         json: false
@@ -157,7 +141,7 @@ describe('mapStateToProps', () => {
 
 describe('SearchPanelsContainer component', () => {
   test('passes its props and renders a single SearchPanels component', async () => {
-    const { props, zustandState } = setup()
+    const { props } = setup()
 
     const panels = await screen.findByText('Search Panels')
 
@@ -166,43 +150,16 @@ describe('SearchPanelsContainer component', () => {
     expect(SearchPanels).toHaveBeenCalledWith(
       {
         authToken: '',
-        changeFocusedCollection: zustandState.focusedCollection.changeFocusedCollection,
-        collectionMetadata: {},
-        collectionQuery: initialState.collection,
         collectionSubscriptions: [],
-        collectionsSearch: {},
-        granuleMetadata: {},
-        granuleQuery: {},
-        granuleSearchResults: {},
         isExportRunning: {
           csv: false,
           json: false
         },
-        location: {},
-        match: { url: '/search' },
-        onApplyGranuleFilters: zustandState.query.changeGranuleQuery,
         onChangePath: props.onChangePath,
-        onChangeQuery: zustandState.query.changeQuery,
         onExport: props.onExport,
         onMetricsCollectionSortChange: props.onMetricsCollectionSortChange,
         onToggleAboutCSDAModal: props.onToggleAboutCSDAModal,
-        onToggleAboutCwicModal: props.onToggleAboutCwicModal,
-        preferences: {
-          panelState: 'default',
-          collectionListView: 'default',
-          granuleListView: 'default',
-          collectionSort: 'default',
-          granuleSort: 'default',
-          mapView: {
-            zoom: 3,
-            latitude: 0,
-            longitude: 0,
-            projection: 'epsg4326',
-            baseLayer: 'worldImagery',
-            overlayLayers: ['bordersRoads', 'placeLabels'],
-            rotation: 0
-          }
-        }
+        onToggleAboutCwicModal: props.onToggleAboutCwicModal
       },
       {}
     )

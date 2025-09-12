@@ -1,13 +1,7 @@
 /* eslint-disable import/no-cycle */
 import { adminIsAuthorized } from './admin/isAuthorized'
-import {
-  adminViewRetrieval,
-  fetchAdminRetrievals,
-  fetchAdminRetrieval,
-  requeueOrder,
-  updateAdminRetrievalsSortKey,
-  updateAdminRetrievalsPageNum
-} from './admin/retrievals'
+
+import { requeueOrder } from './admin/retrievals'
 
 import {
   fetchAdminRetrievalsMetrics,
@@ -19,11 +13,15 @@ import {
   adminViewProject,
   fetchAdminProjects,
   fetchAdminProject,
-  updateAdminProjectsSortKey,
-  updateAdminProjectsPageNum
+  updateAdminProjectsPageNum,
+  updateAdminProjectsSortKey
 } from './admin/projects'
-import { updateAdvancedSearch } from './advancedSearch'
-import { getCollections, updateCollectionMetadata } from './collections'
+import {
+  updateFacets,
+  onFacetsLoading,
+  onFacetsLoaded,
+  onFacetsErrored
+} from './facets'
 import {
   getColorMap,
   setColorMapsErrored,
@@ -31,13 +29,8 @@ import {
   setColorMapsLoading
 } from './colorMaps'
 import {
-  addGranuleMetadata,
   fetchRetrievalCollectionGranuleBrowseLinks,
-  fetchRetrievalCollectionGranuleLinks,
-  getSearchGranules,
-  initializeCollectionGranulesResults,
-  updateGranuleMetadata,
-  updateGranuleResults
+  fetchRetrievalCollectionGranuleLinks
 } from './granules'
 import { logout, updateAuthToken } from './authToken'
 import {
@@ -65,11 +58,6 @@ import {
   toggleTimeline
 } from './ui'
 import { getViewAllFacets } from './viewAllFacets'
-import {
-  changeFocusedGranule,
-  getFocusedGranule,
-  updateFocusedGranule
-} from './focusedGranule'
 import { getRegions } from './regions'
 import { fetchRetrieval, submitRetrieval } from './retrieval'
 import { fetchRetrievalCollection } from './retrievalCollection'
@@ -89,7 +77,6 @@ import {
   getGranuleSubscriptions,
   getSubscriptions,
   removeSubscriptionDisabledFields,
-  updateGranuleSubscription,
   updateSubscription,
   updateSubscriptionDisabledFields
 } from './subscriptions'
@@ -98,11 +85,8 @@ import { exportSearch } from './exportSearch'
 import { generateNotebook } from './generateNotebook'
 
 const actions = {
-  addGranuleMetadata,
   adminIsAuthorized,
   adminViewProject,
-  adminViewRetrieval,
-  changeFocusedGranule,
   changePath,
   changeUrl,
   collectionRelevancyMetrics,
@@ -110,28 +94,26 @@ const actions = {
   deleteCollectionSubscription,
   deleteSubscription,
   exportSearch,
-  fetchAdminRetrieval,
-  fetchAdminRetrievals,
   fetchContactInfo,
   fetchAdminProject,
   fetchAdminProjects,
+  fetchAdminRetrievalsMetrics,
   fetchRetrieval,
   fetchRetrievalCollection,
   fetchRetrievalCollectionGranuleBrowseLinks,
   fetchRetrievalCollectionGranuleLinks,
   generateNotebook,
-  getCollections,
   getColorMap,
-  getFocusedGranule,
   getGranuleSubscriptions,
   getRegions,
-  getSearchGranules,
   getSubscriptions,
   getViewAllFacets,
   handleAlert,
   handleError,
-  initializeCollectionGranulesResults,
   logout,
+  onFacetsErrored,
+  onFacetsLoaded,
+  onFacetsLoading,
   removeError,
   removeSubscriptionDisabledFields,
   requeueOrder,
@@ -158,18 +140,10 @@ const actions = {
   toggleSpatialPolygonWarning,
   toggleTimeline,
   toggleTooManyPointsModal,
-  updateAdminRetrievalsPageNum,
-  updateAdminRetrievalsSortKey,
-  fetchAdminRetrievalsMetrics,
   updateAdminRetrievalsMetricsStartDate,
   updateAdminRetrievalsMetricsEndDate,
-  updateAdvancedSearch,
   updateAuthToken,
-  updateCollectionMetadata,
-  updateFocusedGranule,
-  updateGranuleMetadata,
-  updateGranuleResults,
-  updateGranuleSubscription,
+  updateFacets,
   updateNotificationLevel,
   updateProjectName,
   updateAdminProjectsPageNum,

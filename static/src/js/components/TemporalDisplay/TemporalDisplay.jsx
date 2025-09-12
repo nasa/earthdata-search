@@ -7,7 +7,7 @@ import FilterStackItem from '../FilterStack/FilterStackItem'
 import FilterStackContents from '../FilterStack/FilterStackContents'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionsQueryTemporal } from '../../zustand/selectors/query'
+import { getCollectionsQueryTemporal, getNlpTemporalData } from '../../zustand/selectors/query'
 
 import './TemporalDisplay.scss'
 
@@ -17,6 +17,7 @@ import './TemporalDisplay.scss'
  */
 export const TemporalDisplay = () => {
   const temporalSearch = useEdscStore(getCollectionsQueryTemporal)
+  const nlpTemporal = useEdscStore(getNlpTemporalData)
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
   const [endDate, setEndDate] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -31,16 +32,20 @@ export const TemporalDisplay = () => {
   })
 
   useEffect(() => {
+    const hasCollectionTemporal = temporalSearch
+      && (temporalSearch.startDate || temporalSearch.endDate)
+    const source = hasCollectionTemporal ? temporalSearch : (nlpTemporal || {})
+
     const {
-      endDate: newEndDate,
-      startDate: newStartDate,
-      isRecurring: newIsRecurring
-    } = temporalSearch
+      endDate: newEndDate = '',
+      startDate: newStartDate = '',
+      isRecurring: newIsRecurring = false
+    } = source
 
     setEndDate(newEndDate)
     setStartDate(newStartDate)
     setIsRecurring(newIsRecurring)
-  }, [temporalSearch])
+  }, [temporalSearch, nlpTemporal])
 
   if (!startDate && !endDate) {
     return null

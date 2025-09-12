@@ -14,7 +14,7 @@ describe('isAccessMethodValid', () => {
         }
       },
       granules: {
-        hits: 150
+        count: 150
       },
       selectedAccessMethod: 'download'
     }
@@ -34,7 +34,7 @@ describe('isAccessMethodValid', () => {
         }
       },
       granules: {
-        hits: 150
+        count: 150
       },
       selectedAccessMethod: 'download'
     }
@@ -53,7 +53,7 @@ describe('isAccessMethodValid', () => {
         }
       },
       granules: {
-        hits: 150
+        count: 150
       },
       selectedAccessMethod: 'download'
     }
@@ -73,7 +73,7 @@ describe('isAccessMethodValid', () => {
         }
       },
       granules: {
-        hits: 150
+        count: 150
       }
     }
 
@@ -101,7 +101,7 @@ describe('isAccessMethodValid', () => {
         }
       },
       granules: {
-        hits: 1
+        count: 1
       },
       selectedAccessMethod: 'download'
     }
@@ -131,7 +131,7 @@ describe('isAccessMethodValid', () => {
         }
       },
       granules: {
-        hits: 150
+        count: 150
       },
       selectedAccessMethod: 'download'
     }
@@ -151,7 +151,7 @@ describe('isAccessMethodValid', () => {
         }
       },
       granules: {
-        hits: 150
+        count: 150
       },
       selectedAccessMethod: 'download'
     }
@@ -182,7 +182,7 @@ describe('isAccessMethodValid', () => {
         }
       },
       granules: {
-        hits: 0
+        count: 0
       },
       selectedAccessMethod: 'download'
     }
@@ -215,7 +215,7 @@ describe('isAccessMethodValid', () => {
           }
         },
         granules: {
-          hits: 1
+          count: 1
         },
         selectedAccessMethod: 'download'
       }
@@ -243,7 +243,7 @@ describe('isAccessMethodValid', () => {
           }
         },
         granules: {
-          hits: 150
+          count: 150
         },
         selectedAccessMethod: 'download'
       }
@@ -277,7 +277,7 @@ describe('isAccessMethodValid', () => {
           }
         },
         granules: {
-          hits: 140
+          count: 140
         },
         selectedAccessMethod: 'download'
       }
@@ -305,7 +305,7 @@ describe('isAccessMethodValid', () => {
           }
         },
         granules: {
-          hits: 153
+          count: 153
         },
         selectedAccessMethod: 'download'
       }
@@ -340,7 +340,7 @@ describe('isAccessMethodValid', () => {
             }
           },
           granules: {
-            hits: 150
+            count: 150
           },
           selectedAccessMethod: 'swodlr'
         }
@@ -361,7 +361,7 @@ describe('isAccessMethodValid', () => {
             }
           },
           granules: {
-            hits: 5
+            count: 5
           },
           selectedAccessMethod: 'swodlr'
         }
@@ -385,7 +385,7 @@ describe('isAccessMethodValid', () => {
             }
           },
           granules: {
-            hits: 5
+            count: 5
           },
           selectedAccessMethod: 'esi0'
         }
@@ -410,7 +410,7 @@ describe('isAccessMethodValid', () => {
             }
           },
           granules: {
-            hits: 5
+            count: 5
           },
           selectedAccessMethod: 'esi0'
         }

@@ -128,7 +128,7 @@ describe('Project component', () => {
               byId: {
                 collection1: {
                   granules: {
-                    hits: 3000
+                    count: 3000
                   },
                   selectedAccessMethod: 'esi0'
                 }

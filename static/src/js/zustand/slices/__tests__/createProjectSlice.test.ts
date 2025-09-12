@@ -29,11 +29,9 @@ jest.mock('../../../../../../sharedUtils/getClientId', () => ({
 jest.mock('../../../store/configureStore', () => jest.fn())
 
 jest.mock('../../../actions', () => ({
-  addGranuleMetadata: jest.fn(),
   handleAlert: jest.fn(),
   handleError: jest.fn(),
-  toggleSpatialPolygonWarning: jest.fn(),
-  updateCollectionMetadata: jest.fn()
+  toggleSpatialPolygonWarning: jest.fn()
 }))
 
 beforeEach(() => {
@@ -249,8 +247,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: '',
-            earthdataEnvironment: 'prod'
+            authToken: ''
           })
         })
 
@@ -279,8 +276,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -361,8 +357,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -376,7 +371,10 @@ describe('createProjectSlice', () => {
         await project.getProjectCollections()
 
         const updatedState = useEdscStore.getState()
-        const { project: updatedProject } = updatedState
+        const {
+          collection,
+          project: updatedProject
+        } = updatedState
         const { collections } = updatedProject
         const { byId } = collections
         const collection1 = byId.collectionId1
@@ -401,150 +399,154 @@ describe('createProjectSlice', () => {
         const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
         expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
-        expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(2)
-        expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([{
-          abstract: undefined,
-          archiveAndDistributionInformation: undefined,
-          associatedDois: undefined,
-          boxes: undefined,
-          cloudHosted: undefined,
-          coordinateSystem: undefined,
-          dataCenter: undefined,
-          dataCenters: undefined,
-          dataQualitySummaries: { items: [] },
-          directDistributionInformation: {},
-          doi: undefined,
-          duplicateCollections: [],
-          gibsLayers: 'None',
-          granules: {
-            items: [{
-              id: 'granuleId1',
-              onlineAccessFlag: true
-            }]
+        expect(collection.collectionMetadata).toEqual({
+          collectionId1: {
+            abstract: undefined,
+            archiveAndDistributionInformation: undefined,
+            associatedDois: undefined,
+            boxes: undefined,
+            cloudHosted: undefined,
+            conceptId: 'collectionId1',
+            coordinateSystem: undefined,
+            dataCenter: undefined,
+            dataCenters: undefined,
+            dataQualitySummaries: { items: [] },
+            directDistributionInformation: {},
+            doi: undefined,
+            duplicateCollections: [],
+            gibsLayers: 'None',
+            granules: {
+              items: [{
+                id: 'granuleId1',
+                onlineAccessFlag: true
+              }]
+            },
+            hasAllMetadata: true,
+            hasGranules: undefined,
+            id: 'collectionId1',
+            isCSDA: false,
+            isOpenSearch: false,
+            relatedCollections: undefined,
+            relatedUrls: [],
+            scienceKeywords: [],
+            services: { items: [] },
+            shortName: undefined,
+            spatial: undefined,
+            subscriptions: undefined,
+            tags: undefined,
+            temporal: ['Not available'],
+            tilingIdentificationSystems: undefined,
+            timeEnd: undefined,
+            timeStart: undefined,
+            title: undefined,
+            tools: { items: [{ name: 'SOTO' }] },
+            urls: {
+              atom: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.atom&token=mockAuthToken',
+                title: 'ATOM'
+              },
+              dif: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.dif&token=mockAuthToken',
+                title: 'DIF'
+              },
+              echo10: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.echo10&token=mockAuthToken',
+                title: 'ECHO10'
+              },
+              html: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.html&token=mockAuthToken',
+                title: 'HTML'
+              },
+              iso19115: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.iso19115&token=mockAuthToken',
+                title: 'ISO19115'
+              },
+              native: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.native&token=mockAuthToken',
+                title: 'Native'
+              },
+              osdd: {
+                href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=mock-client-id&shortName=undefined&versionId=undefined&dataCenter=collectionId1',
+                title: 'OSDD'
+              }
+            },
+            variables: undefined,
+            versionId: undefined
           },
-          hasAllMetadata: true,
-          hasGranules: undefined,
-          id: 'collectionId1',
-          isCSDA: false,
-          isOpenSearch: false,
-          relatedCollections: undefined,
-          relatedUrls: [],
-          scienceKeywords: [],
-          services: { items: [] },
-          shortName: undefined,
-          spatial: undefined,
-          subscriptions: undefined,
-          tags: undefined,
-          temporal: ['Not available'],
-          tilingIdentificationSystems: undefined,
-          timeEnd: undefined,
-          timeStart: undefined,
-          title: undefined,
-          tools: { items: [{ name: 'SOTO' }] },
-          urls: {
-            atom: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.atom&token=mockAuthToken',
-              title: 'ATOM'
+          collectionId2: {
+            abstract: undefined,
+            archiveAndDistributionInformation: undefined,
+            associatedDois: undefined,
+            boxes: undefined,
+            cloudHosted: undefined,
+            conceptId: 'collectionId2',
+            coordinateSystem: undefined,
+            dataCenter: undefined,
+            dataCenters: undefined,
+            dataQualitySummaries: { items: [] },
+            directDistributionInformation: {},
+            doi: undefined,
+            duplicateCollections: [],
+            gibsLayers: 'None',
+            granules: {
+              items: [{
+                id: 'granuleId2',
+                onlineAccessFlag: true
+              }]
             },
-            dif: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.dif&token=mockAuthToken',
-              title: 'DIF'
+            hasAllMetadata: true,
+            hasGranules: undefined,
+            id: 'collectionId2',
+            isCSDA: false,
+            isOpenSearch: false,
+            relatedCollections: undefined,
+            relatedUrls: [],
+            scienceKeywords: [],
+            services: { items: [] },
+            shortName: undefined,
+            spatial: undefined,
+            subscriptions: undefined,
+            tags: undefined,
+            temporal: ['Not available'],
+            tilingIdentificationSystems: undefined,
+            timeEnd: undefined,
+            timeStart: undefined,
+            title: undefined,
+            tools: { items: [] },
+            urls: {
+              atom: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.atom&token=mockAuthToken',
+                title: 'ATOM'
+              },
+              dif: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.dif&token=mockAuthToken',
+                title: 'DIF'
+              },
+              echo10: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.echo10&token=mockAuthToken',
+                title: 'ECHO10'
+              },
+              html: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.html&token=mockAuthToken',
+                title: 'HTML'
+              },
+              iso19115: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.iso19115&token=mockAuthToken',
+                title: 'ISO19115'
+              },
+              native: {
+                href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.native&token=mockAuthToken',
+                title: 'Native'
+              },
+              osdd: {
+                href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=mock-client-id&shortName=undefined&versionId=undefined&dataCenter=collectionId2',
+                title: 'OSDD'
+              }
             },
-            echo10: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.echo10&token=mockAuthToken',
-              title: 'ECHO10'
-            },
-            html: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.html&token=mockAuthToken',
-              title: 'HTML'
-            },
-            iso19115: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.iso19115&token=mockAuthToken',
-              title: 'ISO19115'
-            },
-            native: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId1.native&token=mockAuthToken',
-              title: 'Native'
-            },
-            osdd: {
-              href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=mock-client-id&shortName=undefined&versionId=undefined&dataCenter=collectionId1',
-              title: 'OSDD'
-            }
-          },
-          variables: undefined,
-          versionId: undefined
-        }, {
-          abstract: undefined,
-          archiveAndDistributionInformation: undefined,
-          associatedDois: undefined,
-          boxes: undefined,
-          cloudHosted: undefined,
-          coordinateSystem: undefined,
-          dataCenter: undefined,
-          dataCenters: undefined,
-          dataQualitySummaries: { items: [] },
-          directDistributionInformation: {},
-          doi: undefined,
-          duplicateCollections: [],
-          gibsLayers: 'None',
-          granules: {
-            items: [{
-              id: 'granuleId2',
-              onlineAccessFlag: true
-            }]
-          },
-          hasAllMetadata: true,
-          hasGranules: undefined,
-          id: 'collectionId2',
-          isCSDA: false,
-          isOpenSearch: false,
-          relatedCollections: undefined,
-          relatedUrls: [],
-          scienceKeywords: [],
-          services: { items: [] },
-          shortName: undefined,
-          spatial: undefined,
-          subscriptions: undefined,
-          tags: undefined,
-          temporal: ['Not available'],
-          tilingIdentificationSystems: undefined,
-          timeEnd: undefined,
-          timeStart: undefined,
-          title: undefined,
-          tools: { items: [] },
-          urls: {
-            atom: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.atom&token=mockAuthToken',
-              title: 'ATOM'
-            },
-            dif: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.dif&token=mockAuthToken',
-              title: 'DIF'
-            },
-            echo10: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.echo10&token=mockAuthToken',
-              title: 'ECHO10'
-            },
-            html: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.html&token=mockAuthToken',
-              title: 'HTML'
-            },
-            iso19115: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.iso19115&token=mockAuthToken',
-              title: 'ISO19115'
-            },
-            native: {
-              href: 'http://localhost:3000/concepts/metadata?ee=prod&url=https%3A%2F%2Fcmr.earthdata.nasa.gov%2Fsearch%2Fconcepts%2FcollectionId2.native&token=mockAuthToken',
-              title: 'Native'
-            },
-            osdd: {
-              href: 'https://cmr.earthdata.nasa.gov/opensearch/granules/descriptor_document.xml?clientId=mock-client-id&shortName=undefined&versionId=undefined&dataCenter=collectionId2',
-              title: 'OSDD'
-            }
-          },
-          variables: undefined,
-          versionId: undefined
-        }])
+            variables: undefined,
+            versionId: undefined
+          }
+        })
       })
     })
 
@@ -553,8 +555,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -705,8 +706,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -795,9 +795,10 @@ describe('createProjectSlice', () => {
 
         await project.getProjectCollections()
 
-        expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([
-          expect.objectContaining({
+        const { collection } = useEdscStore.getState()
+
+        expect(collection.collectionMetadata).toEqual({
+          'C10000000000-EDSC': expect.objectContaining({
             variables: {
               count: 3,
               items: [
@@ -807,7 +808,7 @@ describe('createProjectSlice', () => {
               ]
             }
           })
-        ])
+        })
       })
     })
 
@@ -816,8 +817,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -875,7 +875,10 @@ describe('createProjectSlice', () => {
         await project.getProjectCollections()
 
         const updatedState = useEdscStore.getState()
-        const { project: updatedProject } = updatedState
+        const {
+          collection,
+          project: updatedProject
+        } = updatedState
         const { collections } = updatedProject
         const { byId } = collections
         const collection1 = byId.collectionId1
@@ -891,12 +894,11 @@ describe('createProjectSlice', () => {
         const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
         expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
-        expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
-        expect(actions.updateCollectionMetadata).toHaveBeenCalledWith([
-          expect.objectContaining({
+        expect(collection.collectionMetadata).toEqual({
+          collectionId1: expect.objectContaining({
             isCSDA: true
           })
-        ])
+        })
       })
     })
 
@@ -905,8 +907,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -919,7 +920,10 @@ describe('createProjectSlice', () => {
         await project.getProjectCollections()
 
         const updatedState = useEdscStore.getState()
-        const { project: updatedProject } = updatedState
+        const {
+          collection,
+          project: updatedProject
+        } = updatedState
         const { collections } = updatedProject
         const { byId } = collections
 
@@ -927,7 +931,8 @@ describe('createProjectSlice', () => {
 
         const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
         expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
-        expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(0)
+
+        expect(collection.collectionMetadata).toEqual({})
       })
     })
 
@@ -980,8 +985,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -995,7 +999,10 @@ describe('createProjectSlice', () => {
         await project.getProjectCollections()
 
         const updatedState = useEdscStore.getState()
-        const { project: updatedProject } = updatedState
+        const {
+          collection,
+          project: updatedProject
+        } = updatedState
         const { collections } = updatedProject
         const { byId } = collections
         const collection1 = byId.collectionId1
@@ -1008,10 +1015,15 @@ describe('createProjectSlice', () => {
           }
         })
 
+        expect(collection.collectionMetadata).toEqual({
+          collectionId1: expect.objectContaining({
+            id: 'collectionId1'
+          })
+        })
+
         const { setDataQualitySummaries } = useEdscStore.getState().dataQualitySummaries
         expect(setDataQualitySummaries).toHaveBeenCalledTimes(0)
 
-        expect(actions.updateCollectionMetadata).toHaveBeenCalledTimes(1)
         expect(actions.handleError).toHaveBeenCalledTimes(1)
         expect(actions.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',
@@ -1042,8 +1054,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -1070,8 +1081,7 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: 'mockAuthToken',
-            earthdataEnvironment: 'prod'
+            authToken: 'mockAuthToken'
           })
         })
 
@@ -1166,22 +1176,19 @@ describe('createProjectSlice', () => {
       configureStore.mockReturnValue({
         dispatch: jest.fn(),
         getState: () => ({
-          authToken: '',
-          earthdataEnvironment: 'prod',
-          metadata: {
-            collections: {
-              collection1: {
-                mock: 'data'
-              },
-              collection2: {
-                mock: 'data'
-              }
-            }
-          }
+          authToken: ''
         })
       })
 
       useEdscStore.setState((state) => {
+        state.collection.collectionMetadata.collection1 = {
+          conceptId: 'collection1'
+        }
+
+        state.collection.collectionMetadata.collection2 = {
+          conceptId: 'collection2'
+        }
+
         state.project.collections.allIds.push('collection1')
         state.project.collections.byId.collection1 = {
           granules: initialGranuleState,
@@ -1197,35 +1204,17 @@ describe('createProjectSlice', () => {
 
       const zustandState = useEdscStore.getState()
       const { project } = zustandState
+
       await project.getProjectGranules()
 
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(2)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
       expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, false)
 
-      expect(actions.addGranuleMetadata).toHaveBeenCalledTimes(2)
-      expect(actions.addGranuleMetadata).toHaveBeenNthCalledWith(
-        1,
-        [{
-          id: 'granule1',
-          isOpenSearch: false,
-          spatial: null,
-          thumbnail: 'http://localhost:3000/scale/granules/granule1?h=85&w=85&ee=prod'
-        }]
-      )
-
-      expect(actions.addGranuleMetadata).toHaveBeenNthCalledWith(
-        2,
-        [{
-          id: 'granule2',
-          isOpenSearch: false,
-          spatial: null,
-          thumbnail: 'http://localhost:3000/scale/granules/granule2?h=85&w=85&ee=prod'
-        }]
-      )
-
       const updatedState = useEdscStore.getState()
-      const { project: updatedProject } = updatedState
+      const {
+        project: updatedProject
+      } = updatedState
 
       const { collection1 } = updatedProject.collections.byId
       const { collection2 } = updatedProject.collections.byId
@@ -1239,33 +1228,30 @@ describe('createProjectSlice', () => {
       expect(collection2.granules.isErrored).toEqual(false)
     })
 
-    describe('when the collection is open search', () => {
+    describe('when the collection is opensearch', () => {
       test('retrieves project granules', async () => {
         nock(/localhost/)
           .post(/opensearch\/granules/)
-          .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><title>CWIC Granule</title></entry></feed>')
+          .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><id>granuleId</id><title>CWIC Granule</title></entry></feed>')
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: '',
-            earthdataEnvironment: 'prod',
-            metadata: {
-              collections: {
-                collection1: {
-                  links: [{
-                    length: '0.0KB',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
-                    hreflang: 'en-US',
-                    href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-prod'
-                  }]
-                }
-              }
-            }
+            authToken: ''
           })
         })
 
         useEdscStore.setState((state) => {
+          state.collection.collectionMetadata.collection1 = {
+            conceptId: 'collection1',
+            links: [{
+              length: '0.0KB',
+              rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
+              hreflang: 'en-US',
+              href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-prod'
+            }]
+          }
+
           state.project.collections.allIds.push('collection1')
           state.project.collections.byId.collection1 = {
             granules: initialGranuleState,
@@ -1280,20 +1266,10 @@ describe('createProjectSlice', () => {
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenCalledTimes(1)
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
 
-        expect(actions.addGranuleMetadata).toHaveBeenCalledTimes(1)
-        expect(actions.addGranuleMetadata).toHaveBeenNthCalledWith(
-          1,
-          [{
-            browse_flag: false,
-            collectionConceptId: 'collection1',
-            isOpenSearch: true,
-            spatial: null,
-            title: 'CWIC Granule'
-          }]
-        )
-
         const updatedState = useEdscStore.getState()
-        const { project: updatedProject } = updatedState
+        const {
+          project: updatedProject
+        } = updatedState
 
         const { collection1 } = updatedProject.collections.byId
 
@@ -1319,29 +1295,26 @@ describe('createProjectSlice', () => {
             },
             requestId: 'mock-request-id'
           }))
-          .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><title>CWIC Granule</title></entry></feed>')
+          .reply(200, '<feed><opensearch:totalResults>1</opensearch:totalResults><entry><id>granuleId</id><title>CWIC Granule</title></entry></feed>')
 
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: '',
-            earthdataEnvironment: 'prod',
-            metadata: {
-              collections: {
-                collection1: {
-                  links: [{
-                    length: '0.0KB',
-                    rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
-                    hreflang: 'en-US',
-                    href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-prod'
-                  }]
-                }
-              }
-            }
+            authToken: ''
           })
         })
 
         useEdscStore.setState((state) => {
+          state.collection.collectionMetadata.collection1 = {
+            conceptId: 'collection1',
+            links: [{
+              length: '0.0KB',
+              rel: 'http://esipfed.org/ns/fedsearch/1.1/search#',
+              hreflang: 'en-US',
+              href: 'https://cwic.wgiss.ceos.org/opensearch/datasets/C1597928934-NOAA_NCEI/osdd.xml?clientId=eed-edsc-prod'
+            }]
+          }
+
           state.project.collections.allIds.push('collection1')
           state.project.collections.byId.collection1 = {
             granules: initialGranuleState,
@@ -1361,17 +1334,10 @@ describe('createProjectSlice', () => {
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(1, false)
         expect(actions.toggleSpatialPolygonWarning).toHaveBeenNthCalledWith(2, true)
 
-        expect(actions.addGranuleMetadata).toHaveBeenCalledTimes(1)
-        expect(actions.addGranuleMetadata).toHaveBeenCalledWith([{
-          browse_flag: false,
-          collectionConceptId: 'collection1',
-          isOpenSearch: true,
-          spatial: null,
-          title: 'CWIC Granule'
-        }])
-
         const updatedState = useEdscStore.getState()
-        const { project: updatedProject } = updatedState
+        const {
+          project: updatedProject
+        } = updatedState
 
         const { collection1 } = updatedProject.collections.byId
 
@@ -1395,19 +1361,15 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: '',
-            earthdataEnvironment: 'prod',
-            metadata: {
-              collections: {
-                collection1: {
-                  mock: 'data'
-                }
-              }
-            }
+            authToken: ''
           })
         })
 
         useEdscStore.setState((state) => {
+          state.collection.collectionMetadata.collection1 = {
+            conceptId: 'collection1'
+          }
+
           state.project.collections.allIds.push('collection1')
           state.project.collections.byId.collection1 = {
             granules: initialGranuleState,
@@ -1468,19 +1430,15 @@ describe('createProjectSlice', () => {
         configureStore.mockReturnValue({
           dispatch: jest.fn(),
           getState: () => ({
-            authToken: '',
-            earthdataEnvironment: 'prod',
-            metadata: {
-              collections: {
-                collection1: {
-                  mock: 'data'
-                }
-              }
-            }
+            authToken: ''
           })
         })
 
         useEdscStore.setState((state) => {
+          state.collection.collectionMetadata.collection1 = {
+            conceptId: 'collection1'
+          }
+
           state.project.collections.allIds.push('collection1')
           state.project.collections.byId.collection1 = {
             granules: {
@@ -1504,19 +1462,10 @@ describe('createProjectSlice', () => {
           requestObject: expect.any(GranuleRequest)
         })
 
-        expect(actions.addGranuleMetadata).toHaveBeenCalledTimes(1)
-        expect(actions.addGranuleMetadata).toHaveBeenNthCalledWith(
-          1,
-          [{
-            id: 'granule1',
-            isOpenSearch: false,
-            spatial: null,
-            thumbnail: 'http://localhost:3000/scale/granules/granule1?h=85&w=85&ee=prod'
-          }]
-        )
-
         const updatedState = useEdscStore.getState()
-        const { project: updatedProject } = updatedState
+        const {
+          project: updatedProject
+        } = updatedState
 
         const { collection1 } = updatedProject.collections.byId
 
@@ -2034,7 +1983,7 @@ describe('createProjectSlice', () => {
 
       const data = {
         collectionId,
-        hits: 1,
+        count: 1,
         isOpenSearch: false,
         pageNum: 1,
         results: [{
@@ -2064,7 +2013,7 @@ describe('createProjectSlice', () => {
           }
         },
         isOpenSearch: false,
-        hits: 1,
+        count: 1,
         totalSize: {
           size: '42',
           units: 'MB'
@@ -2092,7 +2041,7 @@ describe('createProjectSlice', () => {
 
         const data = {
           collectionId,
-          hits: 1,
+          count: 1,
           isOpenSearch: false,
           pageNum: 2,
           results: [{
@@ -2121,7 +2070,7 @@ describe('createProjectSlice', () => {
             granuleId: { id: 'granuleId' }
           },
           isOpenSearch: false,
-          hits: 1,
+          count: 1,
           totalSize: {
             size: '42',
             units: 'MB'
@@ -2135,7 +2084,7 @@ describe('createProjectSlice', () => {
       test('does not update any granule results', () => {
         const data = {
           collectionId: 'nonExistentCollection',
-          hits: 1,
+          count: 1,
           isOpenSearch: false,
           pageNum: 1,
           results: [{

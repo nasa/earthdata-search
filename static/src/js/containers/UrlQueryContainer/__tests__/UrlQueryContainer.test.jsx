@@ -2,16 +2,23 @@ import React from 'react'
 import { act, waitFor } from '@testing-library/react'
 
 import actions from '../../../actions'
-import {
-  UrlQueryContainer,
-  mapDispatchToProps,
-  mapStateToProps
-} from '../UrlQueryContainer'
+import { UrlQueryContainer, mapDispatchToProps } from '../UrlQueryContainer'
 import * as encodeUrlQuery from '../../../util/url/url'
 import { collectionSortKeys } from '../../../constants/collectionSortKeys'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
 import useEdscStore from '../../../zustand/useEdscStore'
 import setupTest from '../../../../../../jestConfigs/setupTest'
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'), // Preserve other exports
+  useLocation: jest.fn().mockReturnValue({
+    pathname: '/search/granules',
+    search: '?p=C00001-EDSC',
+    hash: '',
+    state: null,
+    key: 'testKey'
+  })
+}))
 
 jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
   env: 'sit',
@@ -22,22 +29,6 @@ const setup = setupTest({
   Component: UrlQueryContainer,
   defaultProps: {
     children: 'stuff',
-    boundingBoxSearch: '',
-    collectionsMetadata: {},
-    gridCoords: '',
-    focusedGranule: '',
-    keywordSearch: '',
-    mapPreferences: {},
-    overrideTemporalSearch: {},
-    pathname: '',
-    pointSearch: '',
-    polygonSearch: '',
-    project: {},
-    projectFacets: {},
-    location: {
-      search: '?p=C00001-EDSC'
-    },
-    temporalSearch: {},
     onChangePath: jest.fn(),
     onChangeUrl: jest.fn()
   },
@@ -78,41 +69,6 @@ describe('mapDispatchToProps', () => {
   })
 })
 
-describe('mapStateToProps', () => {
-  beforeEach(() => {
-    jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-      collectionSearchResultsSortKey: collectionSortKeys.usageDescending
-    }))
-  })
-
-  test('returns the correct state', () => {
-    const store = {
-      advancedSearch: {},
-      focusedGranule: 'granuleIdId',
-      metadata: {
-        collections: {}
-      },
-      router: {
-        location: {
-          pathname: ''
-        }
-      }
-    }
-
-    const expectedState = {
-      advancedSearch: {},
-      collectionsMetadata: {},
-      focusedGranule: 'granuleIdId',
-      location: {
-        pathname: ''
-      },
-      pathname: ''
-    }
-
-    expect(mapStateToProps(store)).toEqual(expectedState)
-  })
-})
-
 describe('UrlQueryContainer', () => {
   describe('when the component mounts', () => {
     test('calls onChangePath', async () => {
@@ -124,7 +80,7 @@ describe('UrlQueryContainer', () => {
         expect(props.onChangePath).toHaveBeenCalledTimes(1)
       })
 
-      expect(props.onChangePath).toHaveBeenCalledWith('?p=C00001-EDSC')
+      expect(props.onChangePath).toHaveBeenCalledWith('/search/granules?p=C00001-EDSC')
     })
   })
 

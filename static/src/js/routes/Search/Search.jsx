@@ -4,13 +4,7 @@ import React, {
   Suspense,
   useEffect
 } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import {
-  Route,
-  Switch,
-  withRouter
-} from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 
 import { FaFilter, FaMap } from 'react-icons/fa'
@@ -25,15 +19,14 @@ import PortalFeatureContainer from '../../containers/PortalFeatureContainer/Port
 import RelatedUrlsModalContainer
   from '../../containers/RelatedUrlsModalContainer/RelatedUrlsModalContainer'
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
+import SearchSidebarHeader from '../../components/SearchSidebar/SearchSidebarHeader'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
 
-import SearchSidebarHeader from '../../components/SearchSidebar/SearchSidebarHeader'
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
 import SidebarFiltersList from '../../components/Sidebar/SidebarFiltersList'
 import Spinner from '../../components/Spinner/Spinner'
 
-import actions from '../../actions'
 import advancedSearchFields from '../../data/advancedSearchFields'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -41,15 +34,8 @@ import { getCollectionsQuery } from '../../zustand/selectors/query'
 
 const EdscMapContainer = lazy(() => import('../../containers/MapContainer/MapContainer'))
 const CollectionDetailsHighlightsContainer = lazy(() => import('../../containers/CollectionDetailsHighlightsContainer/CollectionDetailsHighlightsContainer'))
-const GranuleResultsHighlightsContainer = lazy(() => import('../../containers/GranuleResultsHighlightsContainer/GranuleResultsHighlightsContainer'))
+const GranuleResultsHighlights = lazy(() => import('../../components/GranuleResultsHighlights/GranuleResultsHighlights'))
 const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFiltersContainer/GranuleFiltersContainer'))
-
-export const mapDispatchToProps = (dispatch) => ({
-  onUpdateAdvancedSearch:
-    (values) => dispatch(actions.updateAdvancedSearch(values)),
-  onTogglePortalBrowserModal:
-    (data) => dispatch(actions.togglePortalBrowserModal(data))
-})
 
 /**
  * Search route components
@@ -57,14 +43,9 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.collectionQuery - Collection query state
  * @param {Object} props.match - Router match state
  * @param {Function} props.onChangeQuery - Callback to change the query
- * @param {Function} props.onTogglePortalBrowserModal - Callback to update the portal browser modal state
  * @param {Function} props.onUpdateAdvancedSearch - Callback to update the advanced search state
  */
-export const Search = ({
-  match,
-  onUpdateAdvancedSearch
-}) => {
-  const { path } = match
+export const Search = () => {
   const [granuleFiltersNeedsReset, setGranuleFiltersNeedReset] = useState(false)
 
   const {
@@ -145,79 +126,96 @@ export const Search = ({
           )}
           panels={<SearchPanelsContainer />}
         >
-          <Switch>
-            <Route exact path={`${path}/granules/collection-details`}>
-              <SidebarSection
-                sectionTitle="Granules"
-                titleIcon={FaMap}
-              >
-                <Suspense fallback={<div />}>
-                  <GranuleResultsHighlightsContainer />
-                </Suspense>
-              </SidebarSection>
-            </Route>
-            <Route exact path={`${path}/granules`}>
-              {granuleFiltersSidebar}
-            </Route>
-            <Route exact path={`${path}/granules/granule-details`}>
-              <SidebarSection
-                sectionTitle="Collection Details"
-                titleIcon={AlertInformation}
-              >
-                <Suspense fallback={<div />}>
-                  <CollectionDetailsHighlightsContainer />
-                </Suspense>
-              </SidebarSection>
-            </Route>
-            <Route exact path={`${path}/granules/subscriptions`}>
-              {granuleFiltersSidebar}
-            </Route>
-            <Route path={path}>
-              <div className="sidebar-section-body">
-                <SidebarSection
-                  sectionTitle="Filter Collections"
-                  titleIcon={FaFilter}
-                >
-                  <SidebarFiltersList>
-                    <SidebarFiltersItem
-                      hasPadding={false}
+          <Routes>
+            <Route
+              path="/granules/collection-details"
+              element={
+                (
+                  <SidebarSection
+                    sectionTitle="Granules"
+                    titleIcon={FaMap}
+                  >
+                    <Suspense fallback={<div />}>
+                      <GranuleResultsHighlights />
+                    </Suspense>
+                  </SidebarSection>
+                )
+              }
+            />
+            <Route
+              path="/granules"
+              element={granuleFiltersSidebar}
+            />
+            <Route
+              path="/granules/granule-details"
+              element={
+                (
+                  <SidebarSection
+                    sectionTitle="Collection Details"
+                    titleIcon={AlertInformation}
+                  >
+                    <Suspense fallback={<div />}>
+                      <CollectionDetailsHighlightsContainer />
+                    </Suspense>
+                  </SidebarSection>
+                )
+              }
+            />
+            <Route
+              path="/granules/subscriptions"
+              element={granuleFiltersSidebar}
+            />
+            <Route
+              index
+              element={
+                (
+                  <div className="sidebar-section-body">
+                    <SidebarSection
+                      sectionTitle="Filter Collections"
+                      titleIcon={FaFilter}
                     >
-                      <FacetsContainer />
-                    </SidebarFiltersItem>
-                    <PortalFeatureContainer
-                      onlyGranulesCheckbox
-                      nonEosdisCheckbox
-                    >
-                      <SidebarFiltersItem
-                        heading="Additional Filters"
-                      >
-                        <Form.Group controlId="collection-filters__has-no-granules">
-                          <PortalFeatureContainer onlyGranulesCheckbox>
-                            <Form.Check
-                              checked={isHasNoGranulesChecked}
-                              id="input__only-granules"
-                              data-testid="input_only-granules"
-                              label="Include collections without granules"
-                              onChange={(event) => handleCheckboxCheck(event)}
-                            />
-                          </PortalFeatureContainer>
-                          <PortalFeatureContainer nonEosdisCheckbox>
-                            <Form.Check
-                              checked={isEosdisChecked}
-                              id="input__non-eosdis"
-                              data-testid="input_non-eosdis"
-                              label="Include only EOSDIS collections"
-                              onChange={(event) => handleCheckboxCheck(event)}
-                            />
-                          </PortalFeatureContainer>
-                        </Form.Group>
-                      </SidebarFiltersItem>
-                    </PortalFeatureContainer>
-                  </SidebarFiltersList>
-                </SidebarSection>
-              </div>
-            </Route>
-          </Switch>
+                      <SidebarFiltersList>
+                        <SidebarFiltersItem
+                          hasPadding={false}
+                        >
+                          <FacetsContainer />
+                        </SidebarFiltersItem>
+                        <PortalFeatureContainer
+                          onlyGranulesCheckbox
+                          nonEosdisCheckbox
+                        >
+                          <SidebarFiltersItem
+                            heading="Additional Filters"
+                          >
+                            <Form.Group controlId="collection-filters__has-no-granules">
+                              <PortalFeatureContainer onlyGranulesCheckbox>
+                                <Form.Check
+                                  checked={isHasNoGranulesChecked}
+                                  id="input__only-granules"
+                                  data-testid="input_only-granules"
+                                  label="Include collections without granules"
+                                  onChange={(event) => handleCheckboxCheck(event)}
+                                />
+                              </PortalFeatureContainer>
+                              <PortalFeatureContainer nonEosdisCheckbox>
+                                <Form.Check
+                                  checked={isEosdisChecked}
+                                  id="input__non-eosdis"
+                                  data-testid="input_non-eosdis"
+                                  label="Include only EOSDIS collections"
+                                  onChange={(event) => handleCheckboxCheck(event)}
+                                />
+                              </PortalFeatureContainer>
+                            </Form.Group>
+                          </SidebarFiltersItem>
+                        </PortalFeatureContainer>
+                      </SidebarFiltersList>
+                    </SidebarSection>
+                  </div>
+                )
+              }
+            />
+          </Routes>
         </SidebarContainer>
         <div className="route-wrapper__content route-wrapper__content--dark">
           <RelatedUrlsModalContainer />
@@ -225,7 +223,6 @@ export const Search = ({
           <PortalFeatureContainer advancedSearch>
             <AdvancedSearchModalContainer
               fields={advancedSearchFields}
-              onUpdateAdvancedSearch={onUpdateAdvancedSearch}
             />
           </PortalFeatureContainer>
         </div>
@@ -238,13 +235,4 @@ export const Search = ({
   )
 }
 
-Search.propTypes = {
-  match: PropTypes.shape({
-    path: PropTypes.string
-  }).isRequired,
-  onUpdateAdvancedSearch: PropTypes.func.isRequired
-}
-
-export default withRouter(
-  connect(null, mapDispatchToProps)(Search)
-)
+export default Search

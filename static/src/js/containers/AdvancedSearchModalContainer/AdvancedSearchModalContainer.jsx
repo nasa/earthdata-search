@@ -13,9 +13,9 @@ import AdvancedSearchModal from '../../components/AdvancedSearchModal/AdvancedSe
 import { eventEmitter } from '../../events/events'
 import { mapEventTypes } from '../../constants/eventTypes'
 import useEdscStore from '../../zustand/useEdscStore'
+import { getSelectedRegionQuery } from '../../zustand/selectors/query'
 
 export const mapStateToProps = (state) => ({
-  advancedSearch: state.advancedSearch,
   isOpen: state.ui.advancedSearchModal.isOpen,
   regionSearchResults: state.searchResults.regions
 })
@@ -45,7 +45,6 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {Object} props.values - Form values provided by Formik.
  */
 export const AdvancedSearchModalContainer = ({
-  advancedSearch,
   isOpen,
   fields,
   errors,
@@ -63,7 +62,6 @@ export const AdvancedSearchModalContainer = ({
   validateForm
 }) => (
   <AdvancedSearchModal
-    advancedSearch={advancedSearch}
     isOpen={isOpen}
     fields={fields}
     onToggleAdvancedSearchModal={onToggleAdvancedSearchModal}
@@ -91,16 +89,12 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
   },
   mapPropsToValues: (props) => {
     const {
-      advancedSearch
+      selectedRegion
     } = props
 
-    return advancedSearch
+    return selectedRegion
   },
-  handleSubmit: (values, { props }) => {
-    const {
-      onUpdateAdvancedSearch
-    } = props
-
+  handleSubmit: (values) => {
     // Move the map to the extent of the new search
     const { regionSearch = {} } = values
     const { selectedRegion = {} } = regionSearch
@@ -142,21 +136,14 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
       coordinates = shape.getFlatCoordinates().join(',')
     }
 
-    onUpdateAdvancedSearch({
-      ...values,
-      regionSearch: {
-        ...values.regionSearch,
-        selectedRegion: {
-          ...values.regionSearch.selectedRegion,
-          spatial: coordinates
-        }
-      }
-    })
-
     const { changeQuery } = useEdscStore.getState().query
     changeQuery({
       collection: {
         spatial: {}
+      },
+      selectedRegion: {
+        ...values.regionSearch.selectedRegion,
+        spatial: coordinates
       }
     })
 
@@ -165,8 +152,22 @@ const EnhancedAdvancedSearchModalContainer = withFormik({
   }
 })(AdvancedSearchModalContainer)
 
+// `withFormik` uses props passed in to it in order to populate data in `handleFormSubmit`.
+// `handleFormSubmit` needs access to selectedRegion from Zustand, which is not available
+// in props after removing it from `mapStateToProps`. This wrapper component uses the `useEdscStore`
+// hook to fetch the collection metadata, then pass it into the `EnhancedAdvancedSearchModalContainer`.
+const AdvancedSearchModalContainerWrapper = (props) => {
+  const selectedRegion = useEdscStore(getSelectedRegionQuery)
+
+  return (
+    <EnhancedAdvancedSearchModalContainer
+      {...props}
+      selectedRegion={selectedRegion}
+    />
+  )
+}
+
 AdvancedSearchModalContainer.propTypes = {
-  advancedSearch: PropTypes.shape({}).isRequired,
   isOpen: PropTypes.bool.isRequired,
   fields: PropTypes.arrayOf(
     PropTypes.shape({})
@@ -186,4 +187,4 @@ AdvancedSearchModalContainer.propTypes = {
   onToggleAdvancedSearchModal: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(EnhancedAdvancedSearchModalContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(AdvancedSearchModalContainerWrapper)

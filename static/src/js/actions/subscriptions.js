@@ -10,19 +10,12 @@ import {
   REMOVE_SUBSCRIPTION_DISABLED_FIELDS,
   STARTED_SUBSCRIPTIONS_TIMER,
   UPDATE_COLLECTION_SUBSCRIPTION,
-  UPDATE_GRANULE_SUBSCRIPTION,
-  UPDATE_GRANULE_SUBSCRIPTIONS,
   UPDATE_SUBSCRIPTION_DISABLED_FIELDS,
   UPDATE_SUBSCRIPTION_RESULTS
 } from '../constants/actionTypes'
 
 import { displayNotificationType } from '../constants/enums'
-import { getCollectionsMetadata } from '../selectors/collectionMetadata'
 import { getUsername } from '../selectors/user'
-import {
-  getCollectionSubscriptionQueryString,
-  getGranuleSubscriptionQueryString
-} from '../zustand/selectors/query'
 
 import { addToast } from '../util/addToast'
 import { parseGraphQLError } from '../../../../sharedUtils/parseGraphQLError'
@@ -30,7 +23,11 @@ import GraphQlRequest from '../util/request/graphQlRequest'
 
 import useEdscStore from '../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../zustand/selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../zustand/selectors/focusedCollection'
+import { getCollectionId, getCollectionsMetadata } from '../zustand/selectors/collection'
+import {
+  getCollectionSubscriptionQueryString,
+  getGranuleSubscriptionQueryString
+} from '../zustand/selectors/query'
 
 export const updateSubscriptionResults = (payload) => ({
   type: UPDATE_SUBSCRIPTION_RESULTS,
@@ -61,11 +58,6 @@ export const finishSubscriptionsTimer = () => ({
 
 export const removeSubscription = (payload) => ({
   type: REMOVE_SUBSCRIPTION,
-  payload
-})
-
-export const updateGranuleSubscription = (payload) => ({
-  type: UPDATE_GRANULE_SUBSCRIPTION,
   payload
 })
 
@@ -126,9 +118,9 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
     subscriptionQuery = getCollectionSubscriptionQueryString()
   } else {
     // If granule type, pull out the granule specific params
-    subscriptionQuery = getGranuleSubscriptionQueryString()
+    subscriptionQuery = getGranuleSubscriptionQueryString(zustandState)
 
-    const collectionId = getFocusedCollectionId(zustandState)
+    const collectionId = getCollectionId(zustandState)
     params.collectionConceptId = collectionId
   }
 
@@ -271,7 +263,7 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
   const zustandState = useEdscStore.getState()
   const earthdataEnvironment = getEarthdataEnvironment(zustandState)
   if (collectionId == null) {
-    collectionConceptId = getFocusedCollectionId(zustandState)
+    collectionConceptId = getCollectionId(zustandState)
   }
 
   const username = getUsername(state)
@@ -310,13 +302,9 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
 
     const { subscriptions } = responseData
 
-    dispatch({
-      type: UPDATE_GRANULE_SUBSCRIPTIONS,
-      payload: {
-        collectionId: collectionConceptId,
-        subscriptions
-      }
-    })
+    const { collection } = useEdscStore.getState()
+    const { updateGranuleSubscriptions } = collection
+    updateGranuleSubscriptions(collectionConceptId, subscriptions)
 
     return response
   } catch (error) {
@@ -346,8 +334,9 @@ export const deleteSubscription = (
   } = state
 
   // Retrieve data from Redux using selectors
-  const collectionsMetadata = getCollectionsMetadata(state)
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const zustandState = useEdscStore.getState()
+  const collectionsMetadata = getCollectionsMetadata(zustandState)
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 
@@ -407,6 +396,8 @@ export const updateSubscription = ({
 }) => async (dispatch, getState) => {
   const state = getState()
 
+  const zustandState = useEdscStore.getState()
+
   const username = getUsername(state)
 
   const {
@@ -430,9 +421,9 @@ export const updateSubscription = ({
   // If shouldUpdateQuery is true, update the query with new values pulled from redux
   if (shouldUpdateQuery) {
     if (subscriptionType === 'collection') {
-      subscriptionQuery = getCollectionSubscriptionQueryString(state)
+      subscriptionQuery = getCollectionSubscriptionQueryString(zustandState)
     } else {
-      subscriptionQuery = getGranuleSubscriptionQueryString(state)
+      subscriptionQuery = getGranuleSubscriptionQueryString(zustandState)
 
       params.collectionConceptId = collectionConceptId
     }
@@ -444,7 +435,7 @@ export const updateSubscription = ({
     authToken
   } = state
 
-  const earthdataEnvironment = getEarthdataEnvironment(useEdscStore.getState())
+  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const graphQlRequestObject = new GraphQlRequest(authToken, earthdataEnvironment)
 

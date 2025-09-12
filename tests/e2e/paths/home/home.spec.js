@@ -15,6 +15,7 @@ import portalCollections from './__mocks__/portal-collections.body.json'
 import whatIsThisImageCollections from './__mocks__/what-is-this-image-collections.body.json'
 import whatIsThisImageGranules from './__mocks__/what-is-this-image-granules.body.json'
 import whatIsThisImageGranulesHeaders from './__mocks__/what-is-this-image-granules.headers.json'
+import whatIsThisImageGraphQlBody from './__mocks__/what-is-this-image-collections.graphql.body.json'
 
 test.describe('Home Page', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
@@ -221,13 +222,29 @@ test.describe('Home Page', () => {
         })
       })
 
+      await page.route(/graphql.*\/api/, async (route) => {
+        await route.fulfill({
+          json: whatIsThisImageGraphQlBody,
+          headers: {
+            'content-type': 'application/json'
+          }
+        })
+      })
+
       await page.goto('/')
     })
 
     test('should navigate to the correct collection', async ({ page }) => {
       await page.getByRole('button', { name: 'What is this image?' }).click()
 
+      const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/5/)
       await page.getByRole('button', { name: 'Explore this data on the map' }).click()
+
+      // Wait for the map to load
+      await initialMapPromise
+
+      // Wait for the timeline to be visible
+      await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
       await expect(page).toHaveURL(/search\/granules\?p=C1378579425-LAADS&pg\[0\]\[v\]=f&pg\[0\]\[gsk\]=-start_date&q=MOD02QKM&sb\[0\]=-29\.95172%2C11\.43036%2C-16\.57503%2C19\.31775&qt=2025-03-12T00%3A00%3A00\.000Z%2C2025-03-12T23%3A59%3A59\.999Z&tl=\d+\.\d+!5!!&lat=15\.\d+&long=-22\.\d+&zoom=6/)
     })

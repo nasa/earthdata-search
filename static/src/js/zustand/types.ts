@@ -1,15 +1,67 @@
 import { StateCreator } from 'zustand'
 
 import {
+  CollectionMetadata,
+  CollectionsMetadata,
+  GranuleMetadata,
+  GranulesMetadata,
   PortalConfig,
   ProjectionCode,
+  NlpCollectionQuery,
   ScienceKeyword,
   ShapefileFile,
   Spatial,
+  SubscriptionResponse,
   Temporal,
   TimelineIntervals,
   VariableMetadata
 } from '../types/sharedTypes'
+
+export type CollectionSlice = {
+  /**
+   * The Collection Slice of the store. This saves the focused collection ID and
+   * collection metadata for any focused collection
+   */
+  collection: {
+    /** The currently focused collection */
+    collectionId: string | null
+    /** The metadata of any fetched collections */
+    collectionMetadata: CollectionsMetadata
+    /** Function to get the focused collection metadata */
+    getCollectionMetadata: () => void
+    /** Function to set or remove the focused collection */
+    setCollectionId: (collectionId: string | null) => void
+    /** Function to update the granule subscriptions within the collectionMetadata store */
+    updateGranuleSubscriptions: (collectionId: string, subscriptions: SubscriptionResponse) => void
+    /** Function to set or remove the focused collection and navigate to the collection details page */
+    viewCollectionDetails: (collectionId: string | null) => void
+    /** Function to set or remove the focused collection and navigate to the collection granules page */
+    viewCollectionGranules: (collectionId: string | null) => void
+  }
+}
+
+export type CollectionsSlice = {
+  /** The Collections Slice of the store. This stores the metadata for collection searches */
+  collections: {
+    /** The metadata for the collection searches */
+    collections: {
+      /** The total number of collections found */
+      count: number | null
+      /** Flag indicating if the collections are loaded */
+      isLoaded: boolean
+      /** Flag indicating if the collections are currently loading */
+      isLoading: boolean
+      /** The time taken to load the collections */
+      loadTime: number | null
+      /** The list of collection metadata */
+      items: CollectionMetadata[]
+    }
+    /** Function to fetch the collections from CMR */
+    getCollections: () => void
+    /** Function to perform NLP search and process results */
+    getNlpCollections: () => Promise<void>
+  }
+}
 
 /** Data Quality Summary item structure */
 type DataQualitySummaryItem = {
@@ -127,21 +179,43 @@ export type FacetParamsSlice = {
   }
 }
 
-export type FocusedCollectionSlice = {
-  /** The Focused Concept Slice of the store */
-  focusedCollection: {
-    /** The currently focused collection */
-    focusedCollection: string | null
-    /** Function to set or remove the focused collection and fetch data */
-    changeFocusedCollection: (collectionId: string | null) => void
-    /** Function to get the focused collection metadata */
-    getFocusedCollection: () => void
-    /** Function to set or remove the focused collection */
-    setFocusedCollection: (collectionId: string | null) => void
-    /** Function to set or remove the focused collection and navigate to the collection details page */
-    viewCollectionDetails: (collectionId: string | null) => void
-    /** Function to set or remove the focused collection and navigate to the collection granules page */
-    viewCollectionGranules: (collectionId: string | null) => void
+export type GranuleSlice = {
+  /**
+   * The Granule Slice of the store. This saves the focused granule ID and granule metadata
+   * of any focused granules
+   */
+  granule: {
+    /** The currently focused granule */
+    granuleId: string | null
+    /** The metadata of any fetched granules */
+    granuleMetadata: GranulesMetadata
+    /** Function to get the focused granule metadata */
+    getGranuleMetadata: () => void
+    /** Function to set or remove the focused granule */
+    setGranuleId: (granuleId: string | null) => void
+  }
+}
+
+export type GranulesSlice = {
+  /** The Granules Slice of the store. This saves the metadata for granule searches */
+  granules: {
+    /** The metadata for the granule searches */
+    granules: {
+      /** The collection concept ID of the granules */
+      collectionConceptId: string | null
+      /** The total number of granules found */
+      count: number | null
+      /** Flag indicating if the granules are loaded */
+      isLoaded: boolean
+      /** Flag indicating if the granules are currently loading */
+      isLoading: boolean
+      /** The time taken to load the granules */
+      loadTime: number | null
+      /** The list of granule metadata */
+      items: GranuleMetadata[]
+    }
+    /** Function to fetch the granules from CMR */
+    getGranules: () => void
   }
 }
 
@@ -315,7 +389,7 @@ export type ProjectGranules = {
     }
   }
   /** The number of granules in the project */
-  hits: number
+  count: number
   /** Flag to indicate if the granules are errored */
   isErrored: boolean
   /** Flag to indicate if the granules are loaded */
@@ -594,7 +668,7 @@ export type ProjectGranuleResults = {
   /** The collection ID */
   collectionId: string
   /** The number of granule results */
-  hits: number
+  count: number
   /** Flag to indicate if the granules are OpenSearch */
   isOpenSearch: boolean
   /** The page number of the results */
@@ -740,6 +814,8 @@ type CollectionQuery = {
   hasGranulesOrCwic: boolean
   /** The keyword to search for */
   keyword: string
+  /** Flag to indicate if only EOSDIS collections should be included */
+  onlyEosdisCollections: boolean
   /** The temporal override */
   overrideTemporal: Temporal
   /** The page number */
@@ -748,8 +824,21 @@ type CollectionQuery = {
   sortKey: string
   /** The spatial filter */
   spatial: Spatial
+  /** The tag key */
+  tagKey: string
   /** The temporal filter */
   temporal: Temporal
+}
+
+type SelectedRegion = {
+  /** The ID of the selected region */
+  id?: string
+  /** The name of the selected region */
+  name?: string
+  /** The spatial representation of the selected region */
+  spatial?: string
+  /** The type of the selected region */
+  type?: 'huc' | 'reach'
 }
 
 /** Parameters for changing the query */
@@ -758,6 +847,8 @@ type ChangeQueryParams = {
   collection?: Partial<CollectionQuery>
   /** The region query */
   region?: Partial<RegionQuery>
+  /** The selected region query */
+  selectedRegion?: Partial<SelectedRegion>
 }
 
 export type QuerySlice = {
@@ -765,8 +856,12 @@ export type QuerySlice = {
   query: {
     /** The collection query */
     collection: CollectionQuery
-    /** The region query */
+    /** The region query (for searching regions) */
     region: RegionQuery
+    /** The selected region (to use as a spatial query to CMR) */
+    selectedRegion: SelectedRegion
+    /** The NLP collection query data */
+    nlpCollection: NlpCollectionQuery | null
     /** Function to change the query */
     changeQuery: (query: ChangeQueryParams) => void
     /** Function to change the granule query */
@@ -921,6 +1016,10 @@ export type UiSlice = {
       panelsWidth: number
       /** Function to set the panelsWidth value */
       setPanelsWidth: (panelsWidth: number) => void
+      /** The width of the sidebar */
+      sidebarWidth: number
+      /** Function to set the sidebarWidth value */
+      setSidebarWidth: (sidebarWidth: number) => void
     }
     tour: {
       /** Flag to show the tour */
@@ -934,11 +1033,14 @@ export type UiSlice = {
 }
 
 export type EdscStore =
-  DataQualitySummariesSlice
+  CollectionSlice
+  & CollectionsSlice
+  & DataQualitySummariesSlice
   & EarthdataDownloadRedirectSlice
   & EarthdataEnvironmentSlice
   & FacetParamsSlice
-  & FocusedCollectionSlice
+  & GranuleSlice
+  & GranulesSlice
   & HomeSlice
   & MapSlice
   & PanelsSlice

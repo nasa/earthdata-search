@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { AdminRetrievalDetails } from '../AdminRetrievalDetails/AdminRetrievalDetails'
-import { AdminPage } from '../AdminPage/AdminPage'
+import AdminRetrievalDetails from '../AdminRetrievalDetails/AdminRetrievalDetails'
+import AdminPage from '../AdminPage/AdminPage'
 
-export const AdminRetrieval = ({
-  retrieval,
+const AdminRetrieval = ({
+  obfuscatedId,
   onRequeueOrder
 }) => (
   <AdminPage
@@ -28,18 +28,14 @@ export const AdminRetrieval = ({
     }
   >
     <AdminRetrievalDetails
-      retrieval={retrieval}
+      obfuscatedId={obfuscatedId}
       onRequeueOrder={onRequeueOrder}
     />
   </AdminPage>
 )
 
-AdminRetrieval.defaultProps = {
-  retrieval: {}
-}
-
 AdminRetrieval.propTypes = {
-  retrieval: PropTypes.shape({}),
+  obfuscatedId: PropTypes.string.isRequired,
   onRequeueOrder: PropTypes.func.isRequired
 }
 

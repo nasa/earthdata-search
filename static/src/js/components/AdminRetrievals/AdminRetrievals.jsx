@@ -1,20 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
-import { AdminPage } from '../AdminPage/AdminPage'
-import { AdminRetrievalsList } from './AdminRetrievalsList'
-import { AdminRetrievalsForm } from './AdminRetrievalsForm'
+import AdminPage from '../AdminPage/AdminPage'
+import AdminRetrievalsList from './AdminRetrievalsList'
 
-export const AdminRetrievals = ({
-  historyPush,
-  onAdminViewRetrieval,
-  onUpdateAdminRetrievalsSortKey,
-  onUpdateAdminRetrievalsPageNum,
-  retrievals,
-  onFetchAdminRetrievals
-}) => (
+const AdminRetrievals = () => (
   <AdminPage
     pageTitle="Retrievals"
     breadcrumbs={
@@ -30,38 +21,12 @@ export const AdminRetrievals = ({
       ]
     }
   >
-    <Row className="justify-content-end mb-2">
-      <Col sm="auto">
-        <AdminRetrievalsForm
-          onAdminViewRetrieval={onAdminViewRetrieval}
-          onFetchAdminRetrievals={onFetchAdminRetrievals}
-        />
-      </Col>
-    </Row>
     <Row>
       <Col>
-        <AdminRetrievalsList
-          historyPush={historyPush}
-          onUpdateAdminRetrievalsSortKey={onUpdateAdminRetrievalsSortKey}
-          onUpdateAdminRetrievalsPageNum={onUpdateAdminRetrievalsPageNum}
-          retrievals={retrievals}
-        />
+        <AdminRetrievalsList />
       </Col>
     </Row>
   </AdminPage>
 )
-
-AdminRetrievals.defaultProps = {
-  retrievals: {}
-}
-
-AdminRetrievals.propTypes = {
-  historyPush: PropTypes.func.isRequired,
-  onAdminViewRetrieval: PropTypes.func.isRequired,
-  onFetchAdminRetrievals: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsSortKey: PropTypes.func.isRequired,
-  onUpdateAdminRetrievalsPageNum: PropTypes.func.isRequired,
-  retrievals: PropTypes.shape({})
-}
 
 export default AdminRetrievals

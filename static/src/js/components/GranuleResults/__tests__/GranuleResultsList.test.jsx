@@ -17,10 +17,8 @@ const setup = setupTest({
   Component: GranuleResultsList,
   defaultProps: {
     collectionId: 'collectionId',
-    collectionTags: {},
     directDistributionInformation: {},
     excludedGranuleIds: [],
-    focusedGranuleId: '',
     generateNotebook: {},
     granules: [
       {
@@ -34,8 +32,6 @@ const setup = setupTest({
     isCollectionInProject: true,
     isGranuleInProject: jest.fn(),
     isProjectGranulesLoading: false,
-    location: { search: 'value' },
-    onFocusedGranuleChange: jest.fn(),
     onGenerateNotebook: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
@@ -55,10 +51,8 @@ describe('GranuleResultsList component', () => {
     expect(GranuleResultsListBody).toHaveBeenCalledTimes(1)
     expect(GranuleResultsListBody).toHaveBeenCalledWith({
       collectionId: 'collectionId',
-      collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      focusedGranuleId: '',
       generateNotebook: {},
       granules: [{ title: '123' }, { title: '456' }],
       height: 600,
@@ -68,8 +62,6 @@ describe('GranuleResultsList component', () => {
       isOpenSearch: false,
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      location: { search: 'value' },
-      onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),

@@ -22,19 +22,17 @@ const setup = setupTest({
   Component: CollectionDetails,
   defaultProps: {
     collectionId: 'COLL-1',
-    focusedGranuleId: '',
-    granulesMetadata: {
-      'GRAN-1-PROV': granules[0],
-      'GRAN-2-PROV': granules[1]
-    },
     location: {
       search: '?=test_search=test'
     },
-    onFocusedGranuleChange: jest.fn(),
     projectCollection: {
       granules: {
         allIds: ['GRAN-1-PROV', 'GRAN-2-PROV'],
-        hits: 2,
+        byId: {
+          'GRAN-1-PROV': granules[0],
+          'GRAN-2-PROV': granules[1]
+        },
+        count: 2,
         params: {
           pageNum: 1
         }
@@ -42,6 +40,9 @@ const setup = setupTest({
     }
   },
   defaultZustandState: {
+    granule: {
+      setGranuleId: jest.fn()
+    },
     project: {
       removeGranuleFromProjectCollection: jest.fn(),
       updateProjectGranuleParams: jest.fn()
@@ -167,15 +168,15 @@ describe('CollectionDetails component', () => {
 
   describe('View granule details button', () => {
     test('focuses the granule', async () => {
-      const { props, user } = setup()
+      const { user, zustandState } = setup()
 
       const item = screen.getByRole('button', { name: 'GRAN-1.hdf' })
       const infoButton = within(item).getByRole('button', { name: 'View granule details' })
 
       await user.click(infoButton)
 
-      expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
-      expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('GRAN-1-PROV')
+      expect(zustandState.granule.setGranuleId).toHaveBeenCalledTimes(1)
+      expect(zustandState.granule.setGranuleId).toHaveBeenCalledWith('GRAN-1-PROV')
     })
   })
 
@@ -186,7 +187,10 @@ describe('CollectionDetails component', () => {
           projectCollection: {
             granules: {
               allIds: ['GRAN-1-PROV'],
-              hits: 1,
+              byId: {
+                'GRAN-1-PROV': granules[0]
+              },
+              count: 1,
               addedGranuleIds: ['GRAN-1-PROV']
             }
           }
@@ -204,7 +208,11 @@ describe('CollectionDetails component', () => {
           projectCollection: {
             granules: {
               allIds: ['GRAN-2-PROV'],
-              hits: 1,
+              byId: {
+                'GRAN-1-PROV': granules[0],
+                'GRAN-2-PROV': granules[1]
+              },
+              count: 1,
               removedGranuleIds: ['GRAN-1-PROV']
             }
           }
@@ -220,13 +228,13 @@ describe('CollectionDetails component', () => {
     test('renders the load more granules button', () => {
       setup({
         overrideProps: {
-          granulesMetadata: {
-            'GRAN-1-PROV': granules[0]
-          },
           projectCollection: {
             granules: {
               allIds: ['GRAN-1-PROV'],
-              hits: 2,
+              byId: {
+                'GRAN-1-PROV': granules[0]
+              },
+              count: 2,
               params: {
                 pageNum: 1
               }
@@ -243,13 +251,13 @@ describe('CollectionDetails component', () => {
     test('renders the load more granules button', async () => {
       const { user, zustandState } = setup({
         overrideProps: {
-          granulesMetadata: {
-            'GRAN-1-PROV': granules[0]
-          },
           projectCollection: {
             granules: {
               allIds: ['GRAN-1-PROV'],
-              hits: 2,
+              byId: {
+                'GRAN-1-PROV': granules[0]
+              },
+              count: 2,
               params: {
                 pageNum: 1
               }

@@ -11,6 +11,8 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { collectionSortKeys } from '../../constants/collectionSortKeys'
 import { initialState as initialQueryState } from '../../zustand/slices/createQuerySlice'
 
+import routerHelper from '../../router/router'
+
 const mockStore = configureMockStore([thunk])
 
 describe('updateStore', () => {
@@ -24,6 +26,7 @@ describe('updateStore', () => {
         mapImagery: false
       },
       focusedCollection: 'C00001-EDSC',
+      focusedGranule: 'G00001-EDSC',
       mapView: {},
       portal: {},
       project: {
@@ -40,6 +43,7 @@ describe('updateStore', () => {
           temporal: {}
         }
       },
+      selectedRegion: {},
       timeline: {
         query: {
           center: 1676443651000,
@@ -48,13 +52,7 @@ describe('updateStore', () => {
       }
     }
 
-    const store = mockStore({
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
+    const store = mockStore()
 
     await store.dispatch(urlQuery.updateStore(params))
 
@@ -66,10 +64,12 @@ describe('updateStore', () => {
         earthdataEnvironment: undefined,
         featureFacets: undefined,
         focusedCollection: undefined,
+        focusedGranule: undefined,
         mapView: undefined,
         portal: undefined,
         project: undefined,
         query: undefined,
+        selectedRegion: undefined,
         timeline: undefined
       },
       type: RESTORE_FROM_URL
@@ -80,7 +80,8 @@ describe('updateStore', () => {
     const {
       earthdataEnvironment,
       facetParams,
-      focusedCollection,
+      collection,
+      granule,
       map,
       portal,
       project,
@@ -102,9 +103,14 @@ describe('updateStore', () => {
       }
     })
 
-    expect(focusedCollection).toEqual({
-      ...initialState.focusedCollection,
-      focusedCollection: 'C00001-EDSC'
+    expect(collection).toEqual({
+      ...initialState.collection,
+      collectionId: 'C00001-EDSC'
+    })
+
+    expect(granule).toEqual({
+      ...initialState.granule,
+      granuleId: 'G00001-EDSC'
     })
 
     expect(map).toEqual(initialState.map)
@@ -123,12 +129,15 @@ describe('updateStore', () => {
       collection: {
         byId: {},
         keyword: '',
+        onlyEosdisCollections: false,
         overrideTemporal: {},
         pageNum: 1,
         sortKey: collectionSortKeys.scoreDescending,
         spatial: initialState.query.collection.spatial,
+        tagKey: '',
         temporal: {}
-      }
+      },
+      selectedRegion: {}
     })
 
     expect(timeline).toEqual({
@@ -153,6 +162,7 @@ describe('updateStore', () => {
           mapImagery: false
         },
         focusedCollection: 'C00001-EDSC',
+        focusedGranule: 'G00001-EDSC',
         mapView: {},
         portal: {},
         project: {
@@ -169,6 +179,7 @@ describe('updateStore', () => {
             temporal: {}
           }
         },
+        selectedRegion: {},
         timeline: {
           query: {
             center: 1676443651000,
@@ -190,13 +201,7 @@ describe('updateStore', () => {
         }
       })
 
-      const store = mockStore({
-        router: {
-          location: {
-            pathname: '/projects'
-          }
-        }
-      })
+      const store = mockStore()
       await store.dispatch(urlQuery.updateStore(params, '/projects'))
 
       const storeActions = store.getActions()
@@ -207,10 +212,12 @@ describe('updateStore', () => {
           earthdataEnvironment: undefined,
           featureFacets: undefined,
           focusedCollection: undefined,
+          focusedGranule: undefined,
           mapView: undefined,
           portal: undefined,
           project: undefined,
           query: undefined,
+          selectedRegion: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -222,7 +229,8 @@ describe('updateStore', () => {
       const {
         earthdataEnvironment,
         facetParams,
-        focusedCollection,
+        collection,
+        granule,
         map,
         portal,
         project,
@@ -244,9 +252,14 @@ describe('updateStore', () => {
         }
       })
 
-      expect(focusedCollection).toEqual({
-        ...initialState.focusedCollection,
-        focusedCollection: 'C00001-EDSC'
+      expect(collection).toEqual({
+        ...initialState.collection,
+        collectionId: 'C00001-EDSC'
+      })
+
+      expect(granule).toEqual({
+        ...initialState.granule,
+        granuleId: 'G00001-EDSC'
       })
 
       expect(map).toEqual(initialState.map)
@@ -265,12 +278,15 @@ describe('updateStore', () => {
         collection: {
           byId: {},
           keyword: '',
+          onlyEosdisCollections: false,
           overrideTemporal: {},
           pageNum: 1,
           sortKey: collectionSortKeys.scoreDescending,
           spatial: initialState.query.collection.spatial,
+          tagKey: '',
           temporal: {}
-        }
+        },
+        selectedRegion: {}
       })
 
       expect(timeline).toEqual({
@@ -300,7 +316,8 @@ describe('updateStore', () => {
           customizable: false,
           mapImagery: false
         },
-        focusedCollection: '',
+        focusedCollection: null,
+        focusedGranule: '',
         mapView: {},
         portalId: 'testPortal',
         project: {},
@@ -312,6 +329,7 @@ describe('updateStore', () => {
             temporal: {}
           }
         },
+        selectedRegion: {},
         timeline: {
           query: {
             center: 1676443651000,
@@ -333,13 +351,7 @@ describe('updateStore', () => {
         }
       })
 
-      const store = mockStore({
-        router: {
-          location: {
-            pathname: '/projects'
-          }
-        }
-      })
+      const store = mockStore()
       await store.dispatch(urlQuery.updateStore(params, '/projects'))
 
       const storeActions = store.getActions()
@@ -350,11 +362,13 @@ describe('updateStore', () => {
           earthdataEnvironment: undefined,
           featureFacets: undefined,
           focusedCollection: undefined,
+          focusedGranule: undefined,
           mapView: undefined,
           portalId: undefined,
           portal: undefined,
           project: undefined,
           query: undefined,
+          selectedRegion: undefined,
           timeline: undefined
         },
         type: RESTORE_FROM_URL
@@ -366,7 +380,8 @@ describe('updateStore', () => {
       const {
         earthdataEnvironment,
         facetParams,
-        focusedCollection,
+        collection,
+        granule,
         map,
         portal,
         project,
@@ -388,9 +403,14 @@ describe('updateStore', () => {
         }
       })
 
-      expect(focusedCollection).toEqual({
-        ...initialState.focusedCollection,
-        focusedCollection: ''
+      expect(collection).toEqual({
+        ...initialState.collection,
+        collectionId: null
+      })
+
+      expect(granule).toEqual({
+        ...initialState.granule,
+        granuleId: ''
       })
 
       expect(map).toEqual(initialState.map)
@@ -452,12 +472,15 @@ describe('updateStore', () => {
         collection: {
           byId: {},
           keyword: '',
+          onlyEosdisCollections: false,
           overrideTemporal: {},
           pageNum: 1,
           sortKey: collectionSortKeys.scoreDescending,
           spatial: initialState.query.collection.spatial,
+          tagKey: '',
           temporal: {}
-        }
+        },
+        selectedRegion: {}
       })
 
       expect(timeline).toEqual({
@@ -468,6 +491,110 @@ describe('updateStore', () => {
         },
         setQuery: expect.any(Function),
         getTimeline: expect.any(Function)
+      })
+    })
+
+    describe('when only portalId is provided on the root path', () => {
+      test('only loads portal config', async () => {
+        const params = {
+          cmrFacets: {},
+          earthdataEnvironment: 'prod',
+          featureFacets: {
+            availableInEarthdataCloud: false,
+            customizable: false,
+            mapImagery: false
+          },
+          focusedCollection: 'C00001-EDSC',
+          focusedGranule: 'G00001-EDSC',
+          mapView: {},
+          portalId: 'testPortal',
+          project: {
+            collections: {
+              allIds: [],
+              byId: {}
+            }
+          },
+          query: {
+            collection: {
+              overrideTemporal: {},
+              pageNum: 1,
+              spatial: {},
+              temporal: {}
+            }
+          },
+          timeline: {
+            query: {
+              center: 1676443651000,
+              interval: 'month'
+            }
+          }
+        }
+
+        routerHelper.router.state = {
+          location: {
+            pathname: '/',
+            search: ''
+          }
+        }
+
+        const store = mockStore()
+
+        await store.dispatch(urlQuery.updateStore(params))
+
+        const storeActions = store.getActions()
+
+        expect(storeActions.length).toBe(0)
+
+        // Expect only portal config to be loaded in zustand store
+        const { portal } = useEdscStore.getState()
+
+        expect(portal).toEqual({
+          features: {
+            advancedSearch: true,
+            authentication: true,
+            featureFacets: {
+              showAvailableInEarthdataCloud: true,
+              showCustomizable: true,
+              showMapImagery: true
+            }
+          },
+          footer: {
+            attributionText: 'NASA Official: Test Official',
+            displayVersion: true,
+            primaryLinks: [{
+              href: 'http://www.nasa.gov/FOIA/index.html',
+              title: 'FOIA'
+            }, {
+              href: 'http://www.nasa.gov/about/highlights/HP_Privacy.html',
+              title: 'NASA Privacy Policy'
+            }, {
+              href: 'http://www.usa.gov',
+              title: 'USA.gov'
+            }],
+            secondaryLinks: [{
+              href: 'https://access.earthdata.nasa.gov/',
+              title: 'Earthdata Access: A Section 508 accessible alternative'
+            }]
+          },
+          moreInfoUrl: 'https://test.gov',
+          pageTitle: 'TEST',
+          parentConfig: 'edsc',
+          portalBrowser: true,
+          portalId: 'testPortal',
+          query: {
+            hasGranulesOrCwic: null,
+            project: 'testProject'
+          },
+          title: {
+            primary: 'test',
+            secondary: 'test secondary title'
+          },
+          ui: {
+            showNonEosdisCheckbox: false,
+            showOnlyGranulesCheckbox: false,
+            showTophat: true
+          }
+        })
       })
     })
   })
@@ -483,10 +610,11 @@ describe('changePath', () => {
       })
 
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
 
-    const getTimelineMock = jest.fn()
     useEdscStore.setState({
+      collections: {
+        getCollections: jest.fn()
+      },
       project: {
         collections: {
           allIds: ['C00001-EDSC']
@@ -495,28 +623,13 @@ describe('changePath', () => {
         getProjectGranules: jest.fn()
       },
       timeline: {
-        getTimeline: getTimelineMock
+        getTimeline: jest.fn()
       }
     })
 
     const newPath = '/search?projectId=1'
 
-    const store = mockStore({
-      metadata: {
-        collections: {
-          'C00001-EDSC': {
-            services: [],
-            variables: []
-          }
-        },
-        granules: {}
-      },
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
+    const store = mockStore()
 
     await store.dispatch(urlQuery.changePath(newPath)).then(() => {
       const storeActions = store.getActions()
@@ -545,7 +658,8 @@ describe('changePath', () => {
               byId: {
                 'C00001-EDSC': {
                   granules: {},
-                  isVisible: true
+                  isVisible: true,
+                  selectedAccessMethod: undefined
                 }
               }
             }
@@ -564,7 +678,8 @@ describe('changePath', () => {
               pageNum: 1,
               spatial: initialQueryState.collection.spatial,
               temporal: {}
-            }
+            },
+            nlpCollection: null
           },
           shapefile: {
             shapefileId: ''
@@ -572,44 +687,42 @@ describe('changePath', () => {
         })
       )
 
-      expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-      expect(getCollectionsMock).toHaveBeenCalledWith()
-
       const zustandState = useEdscStore.getState()
-      const { project } = zustandState
-      const { getProjectCollections, getProjectGranules } = project
+      const {
+        collections,
+        project,
+        timeline
+      } = zustandState
 
-      expect(getProjectCollections).toHaveBeenCalledTimes(1)
-      expect(getProjectCollections).toHaveBeenCalledWith()
+      expect(collections.getCollections).toHaveBeenCalledTimes(1)
+      expect(collections.getCollections).toHaveBeenCalledWith()
 
-      expect(getProjectGranules).toHaveBeenCalledTimes(1)
-      expect(getProjectGranules).toHaveBeenCalledWith()
+      expect(project.getProjectCollections).toHaveBeenCalledTimes(1)
+      expect(project.getProjectCollections).toHaveBeenCalledWith()
 
-      expect(getTimelineMock).toHaveBeenCalledTimes(1)
-      expect(getTimelineMock).toHaveBeenCalledWith()
+      expect(project.getProjectGranules).toHaveBeenCalledTimes(1)
+      expect(project.getProjectGranules).toHaveBeenCalledWith()
+
+      expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+      expect(timeline.getTimeline).toHaveBeenCalledWith()
     })
   })
 
   test('updates the store if there is not a projectId', async () => {
     const updateStoreMock = jest.spyOn(actions, 'updateStore').mockImplementation(() => jest.fn())
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
 
-    const getTimelineMock = jest.fn()
     useEdscStore.setState({
+      collections: {
+        getCollections: jest.fn()
+      },
       timeline: {
-        getTimeline: getTimelineMock
+        getTimeline: jest.fn()
       }
     })
 
     const newPath = '/search?p=C00001-EDSC'
 
-    const store = mockStore({
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
+    const store = mockStore()
 
     await store.dispatch(urlQuery.changePath(newPath))
 
@@ -636,15 +749,25 @@ describe('changePath', () => {
           pageNum: 1,
           spatial: initialQueryState.collection.spatial,
           temporal: {}
-        }
+        },
+        nlpCollection: null
       },
       shapefile: {
         shapefileId: ''
       }
     }), '/search')
 
-    expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-    expect(getTimelineMock).toHaveBeenCalledTimes(1)
+    const zustandState = useEdscStore.getState()
+    const {
+      collections,
+      timeline
+    } = zustandState
+
+    expect(collections.getCollections).toHaveBeenCalledTimes(1)
+    expect(collections.getCollections).toHaveBeenCalledWith()
+
+    expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+    expect(timeline.getTimeline).toHaveBeenCalledWith()
   })
 
   test('handles an error fetching the project', async () => {
@@ -652,40 +775,36 @@ describe('changePath', () => {
       .get(/projects/)
       .reply(500, { mock: 'error' })
 
-    const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
     const handleErrorMock = jest.spyOn(actions, 'handleError').mockImplementation(() => jest.fn())
-    const getTimelineMock = jest.fn()
+
     useEdscStore.setState({
+      collections: {
+        getCollections: jest.fn()
+      },
       timeline: {
-        getTimeline: getTimelineMock
+        getTimeline: jest.fn()
       }
     })
 
     const newPath = '/search?projectId=1'
 
-    const store = mockStore({
-      metadata: {
-        collections: {
-          'C00001-EDSC': {
-            services: [],
-            variables: []
-          }
-        },
-        granules: {}
-      },
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      }
-    })
+    const store = mockStore()
 
     await store.dispatch(urlQuery.changePath(newPath)).then(() => {
       const storeActions = store.getActions()
       expect(storeActions.length).toEqual(0)
 
-      expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-      expect(getTimelineMock).toHaveBeenCalledTimes(1)
+      const zustandState = useEdscStore.getState()
+      const {
+        collections,
+        timeline
+      } = zustandState
+
+      expect(collections.getCollections).toHaveBeenCalledTimes(1)
+      expect(collections.getCollections).toHaveBeenCalledWith()
+
+      expect(timeline.getTimeline).toHaveBeenCalledTimes(1)
+      expect(timeline.getTimeline).toHaveBeenCalledWith()
 
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
@@ -699,270 +818,240 @@ describe('changePath', () => {
 
   describe('when a path is provided', () => {
     describe('when the path matches granule search', () => {
-      test('calls getFocusedCollection action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
+      test('calls getCollectionMetadata action', async () => {
         const newPath = '/search/granules?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.focusedCollection.getFocusedCollection = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches collection details', () => {
-      test('calls getFocusedCollection action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
+      test('calls getCollectionMetadata action', async () => {
         const newPath = '/search/granules/collection-details?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.focusedCollection.getFocusedCollection = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches subscription list', () => {
-      test('calls getFocusedCollection action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
+      test('calls getCollectionMetadata action', async () => {
         const newPath = '/search/granules/subscriptions?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.focusedCollection.getFocusedCollection = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches granule details', () => {
-      test('calls getFocusedCollection action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule').mockImplementation(() => jest.fn())
-
+      test('calls getCollectionMetadata and getGranuleMetadata', async () => {
         const newPath = '/search/granules/granule-details?p=C00001-EDSC'
 
-        const store = mockStore({
-          focusedGranule: 'G00001-EDSC',
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.focusedCollection.getFocusedCollection = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          },
+          granule: {
+            getGranuleMetadata: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
 
-        expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedGranuleMock).toHaveBeenCalledWith()
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
   })
 
   describe('when a portal path is provided', () => {
     describe('when the path matches granule search', () => {
-      test('calls getFocusedCollection action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
+      test('calls getCollectionMetadata action', async () => {
         const newPath = '/portal/fakeportal/search/granules?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.focusedCollection.getFocusedCollection = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches collection details', () => {
-      test('calls getFocusedCollection action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
+      test('calls getCollectionMetadata action', async () => {
         const newPath = '/portal/fakeportal/search/granules/collection-details?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.focusedCollection.getFocusedCollection = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches subscription list', () => {
-      test('calls getFocusedCollection action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-
+      test('calls getCollectionMetadata action', async () => {
         const newPath = '/portal/fakeportal/search/granules/subscriptions?p=C00001-EDSC'
 
-        const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.focusedCollection.getFocusedCollection = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const { collection, collections } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
       })
     })
 
     describe('when the path matches granule details', () => {
-      test('calls getFocusedCollection action', async () => {
-        const getCollectionsMock = jest.spyOn(actions, 'getCollections').mockImplementation(() => jest.fn())
-        const getFocusedGranuleMock = jest.spyOn(actions, 'getFocusedGranule').mockImplementation(() => jest.fn())
-
+      test('calls getCollectionMetadata and getGranuleMetadata', async () => {
         const newPath = '/portal/fakeportal/search/granules/granule-details?p=C00001-EDSC'
 
-        const store = mockStore({
-          focusedGranule: 'G00001-EDSC',
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          }
-        })
+        const store = mockStore()
 
-        useEdscStore.setState((state) => {
-          // eslint-disable-next-line no-param-reassign
-          state.focusedCollection.getFocusedCollection = jest.fn()
+        useEdscStore.setState({
+          collection: {
+            getCollectionMetadata: jest.fn()
+          },
+          collections: {
+            getCollections: jest.fn()
+          },
+          granule: {
+            getGranuleMetadata: jest.fn()
+          }
         })
 
         await store.dispatch(urlQuery.changePath(newPath))
 
-        const { focusedCollection } = useEdscStore.getState()
-        const { getFocusedCollection } = focusedCollection
+        const {
+          collection,
+          collections,
+          granule
+        } = useEdscStore.getState()
 
-        expect(getCollectionsMock).toHaveBeenCalledTimes(1)
-        expect(getCollectionsMock).toHaveBeenCalledWith()
+        expect(collections.getCollections).toHaveBeenCalledTimes(1)
+        expect(collections.getCollections).toHaveBeenCalledWith()
 
-        expect(getFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(getFocusedCollection).toHaveBeenCalledWith()
+        expect(collection.getCollectionMetadata).toHaveBeenCalledTimes(1)
+        expect(collection.getCollectionMetadata).toHaveBeenCalledWith()
 
-        expect(getFocusedGranuleMock).toHaveBeenCalledTimes(1)
-        expect(getFocusedGranuleMock).toHaveBeenCalledWith()
+        expect(granule.getGranuleMetadata).toHaveBeenCalledTimes(1)
+        expect(granule.getGranuleMetadata).toHaveBeenCalledWith()
       })
     })
   })
@@ -971,60 +1060,52 @@ describe('changePath', () => {
 describe('changeUrl', () => {
   describe('when called with a string', () => {
     describe('when called without a projectId', () => {
+      beforeEach(() => {
+        routerHelper.router.state = {
+          location: {
+            pathname: '/search',
+            search: '?p=C00001-EDSC'
+          }
+        }
+      })
+
       test('calls replace when the pathname has not changed', () => {
         const newPath = '/search?p=C00001-EDSC'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          },
           savedProject: {}
         })
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
-        const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          payload: {
-            args: [
-              newPath
-            ],
-            method: 'replace'
-          },
-          type: '@@router/CALL_HISTORY_METHOD'
-        })
+        expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+        expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath, { replace: true })
       })
 
       test('calls push when the pathname has changed', () => {
         const newPath = '/search/granules?p=C00001-EDSC'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/search'
-            }
-          },
           savedProject: {}
         })
 
         store.dispatch(urlQuery.changeUrl(newPath))
 
-        const storeActions = store.getActions()
-        expect(storeActions[0]).toEqual({
-          payload: {
-            args: [
-              newPath
-            ],
-            method: 'push'
-          },
-          type: '@@router/CALL_HISTORY_METHOD'
-        })
+        expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+        expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath)
       })
     })
 
     describe('when called with a projectId', () => {
+      beforeEach(() => {
+        routerHelper.router.state = {
+          location: {
+            pathname: '/search',
+            search: '?projectId=1'
+          }
+        }
+      })
+
       test('updates the stored path', async () => {
         nock(/localhost/)
           .post(/projects/)
@@ -1036,11 +1117,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1070,11 +1146,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1082,18 +1153,12 @@ describe('changeUrl', () => {
         })
 
         await store.dispatch(urlQuery.changeUrl(newPath)).then(() => {
-          const storeActions = store.getActions()
-          expect(storeActions[0]).toEqual({
-            payload: {
-              args: [
-                '/search?projectId=2'
-              ],
-              method: 'replace'
-            },
-            type: '@@router/CALL_HISTORY_METHOD'
-          })
+          expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+          expect(routerHelper.router.navigate).toHaveBeenCalledWith('/search?projectId=2', { replace: true })
 
-          expect(storeActions[1]).toEqual({
+          const storeActions = store.getActions()
+
+          expect(storeActions[0]).toEqual({
             payload: {
               projectId: 2,
               path: '/search?p=C00001-EDSC'
@@ -1107,11 +1172,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1134,11 +1194,6 @@ describe('changeUrl', () => {
         const newPath = '/search?p=C00001-EDSC&ff=Map%20Imagery'
 
         const store = mockStore({
-          router: {
-            location: {
-              pathname: '/projectId=1'
-            }
-          },
           savedProject: {
             projectId: 1,
             path: '/search?p=C00001-EDSC'
@@ -1168,26 +1223,19 @@ describe('changeUrl', () => {
         search: '?p=C00001-EDSC'
       }
 
-      const store = mockStore({
-        router: {
-          location: {
-            pathname: '/search'
-          }
+      routerHelper.router.state = {
+        location: {
+          pathname: '/search',
+          search: ''
         }
-      })
+      }
+
+      const store = mockStore()
 
       store.dispatch(urlQuery.changeUrl(newPath))
 
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          args: [
-            newPath
-          ],
-          method: 'replace'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath, { replace: true })
     })
 
     test('calls push when the pathname has changed', () => {
@@ -1196,26 +1244,19 @@ describe('changeUrl', () => {
         search: '?p=C00001-EDSC'
       }
 
-      const store = mockStore({
-        router: {
-          location: {
-            pathname: '/search'
-          }
+      routerHelper.router.state = {
+        location: {
+          pathname: '/search',
+          search: ''
         }
-      })
+      }
+
+      const store = mockStore()
 
       store.dispatch(urlQuery.changeUrl(newPath))
 
-      const storeActions = store.getActions()
-      expect(storeActions[0]).toEqual({
-        payload: {
-          args: [
-            newPath
-          ],
-          method: 'push'
-        },
-        type: '@@router/CALL_HISTORY_METHOD'
-      })
+      expect(routerHelper.router.navigate).toHaveBeenCalledTimes(1)
+      expect(routerHelper.router.navigate).toHaveBeenCalledWith(newPath)
     })
   })
 })

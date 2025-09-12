@@ -15,14 +15,7 @@ jest.mock('../../../components/ProjectPanels/ProjectPanels', () => jest.fn(() =>
 const setup = setupTest({
   Component: ProjectPanelsContainer,
   defaultProps: {
-    focusedGranuleId: '',
-    granulesMetadata: {},
     onToggleAboutCSDAModal: jest.fn(),
-    onFocusedGranuleChange: jest.fn(),
-    onViewCollectionGranules: jest.fn(),
-    location: {
-      search: ''
-    },
     onChangePath: jest.fn(),
     ursProfile: {}
   },
@@ -31,9 +24,9 @@ const setup = setupTest({
       byCollectionId: {},
       setDataQualitySummaries: jest.fn()
     },
-    focusedCollection: {
-      focusedCollection: 'collectionId',
-      setFocusedCollection: jest.fn()
+    collection: {
+      collectionId: 'collectionId',
+      setCollectionId: jest.fn()
     },
     project: {
       addGranuleToProjectCollection: jest.fn(),
@@ -66,7 +59,8 @@ const setup = setupTest({
       setIsOpen: jest.fn(),
       setPanelGroup: jest.fn()
     }
-  }
+  },
+  withRouter: true
 })
 
 describe('mapDispatchToProps', () => {
@@ -78,16 +72,6 @@ describe('mapDispatchToProps', () => {
 
     expect(spy).toHaveBeenCalledTimes(1)
     expect(spy).toHaveBeenCalledWith('path')
-  })
-
-  test('onFocusedGranuleChange calls actions.changeFocusedGranule', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedGranule')
-
-    mapDispatchToProps(dispatch).onFocusedGranuleChange('granuleId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('granuleId')
   })
 
   test('onToggleAboutCSDAModal calls actions.toggleAboutCSDAModal', () => {
@@ -107,15 +91,6 @@ describe('mapStateToProps', () => {
       contactInfo: {
         ursProfile: {}
       },
-      metadata: {
-        collections: {},
-        granules: {}
-      },
-      focusedGranule: 'granuleId',
-      map: {},
-      router: {
-        location: {}
-      },
       ui: {
         map: {
           drawingNewLayer: false
@@ -124,9 +99,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      focusedGranuleId: 'granuleId',
-      granulesMetadata: {},
-      location: {},
       ursProfile: {}
     }
 
@@ -141,14 +113,17 @@ describe('ProjectPanelsContainer component', () => {
     expect(ProjectPanels).toHaveBeenCalledTimes(1)
     expect(ProjectPanels).toHaveBeenCalledWith({
       dataQualitySummaries: {},
-      focusedCollectionId: 'collectionId',
-      focusedGranuleId: props.focusedGranuleId,
-      granulesMetadata: props.granulesMetadata,
+      collectionId: 'collectionId',
       granulesQueries: {},
-      location: props.location,
+      location: {
+        hash: '',
+        key: 'default',
+        pathname: '/',
+        search: '',
+        state: null
+      },
       onAddGranuleToProjectCollection: zustandState.project.addGranuleToProjectCollection,
       onChangePath: props.onChangePath,
-      onFocusedGranuleChange: props.onFocusedGranuleChange,
       onRemoveGranuleFromProjectCollection: zustandState.project.removeGranuleFromProjectCollection,
       onSelectAccessMethod: zustandState.project.selectAccessMethod,
       onSetActivePanel: expect.any(Function),
@@ -166,7 +141,7 @@ describe('ProjectPanelsContainer component', () => {
         byId: {}
       },
       projectCollectionsMetadata: {},
-      setFocusedCollection: zustandState.focusedCollection.setFocusedCollection,
+      setCollectionId: zustandState.collection.setCollectionId,
       spatial: {},
       temporal: {},
       ursProfile: {}

@@ -1,5 +1,4 @@
 import React from 'react'
-import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
@@ -29,4 +28,4 @@ export const Subscriptions = () => {
 
 Subscriptions.propTypes = {}
 
-export default withRouter(Subscriptions)
+export default Subscriptions

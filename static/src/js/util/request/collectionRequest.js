@@ -1,20 +1,12 @@
 import CmrRequest from './cmrRequest'
-import {
-  getApplicationConfig,
-  getEarthdataConfig,
-  getEnvironmentConfig
-} from '../../../../../sharedUtils/config'
+import { getEarthdataConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { collectionRequestPermittedCmrKeys } from '../../../../../sharedConstants/permittedCmrKeys'
 import {
   collectionRequestNonIndexedCmrKeys
 } from '../../../../../sharedConstants/nonIndexedCmrKeys'
 
-import { hasTag } from '../../../../../sharedUtils/tags'
-import { isCSDACollection } from '../isCSDACollection'
-import { getOpenSearchOsddLink } from '../../../../../sharedUtils/getOpenSearchOsddLink'
-
-import unavailableImg from '../../../assets/images/image-unavailable.svg'
+import { transformCollectionEntries } from '../collections/transformCollectionEntries'
 
 /**
  * Base Request object for collection specific requests
@@ -79,44 +71,23 @@ export default class CollectionRequest extends CmrRequest {
       ({ entry = [] } = feed)
     }
 
-    // Iterate over the collections
-    entry.map((collection) => {
-      const transformedCollection = collection
+    // Transform the collection entries
+    const transformedEntries = transformCollectionEntries(entry, earthdataEnvironment)
 
-      if (collection && (collection.tags || collection.links)) {
-        transformedCollection.isOpenSearch = !!getOpenSearchOsddLink(collection)
-
-        transformedCollection.has_map_imagery = hasTag(collection, 'gibs')
+    // Create a new data object with transformed entries
+    if (data.items) {
+      return {
+        ...data,
+        items: transformedEntries
       }
+    }
 
-      if (collection && collection.collection_data_type) {
-        transformedCollection.is_nrt = [
-          'NEAR_REAL_TIME',
-          'LOW_LATENCY',
-          'EXPEDITED'
-        ].includes(collection.collection_data_type)
+    return {
+      ...data,
+      feed: {
+        ...data.feed,
+        entry: transformedEntries
       }
-
-      if (collection && collection.organizations) {
-        transformedCollection.isCSDA = isCSDACollection(collection.organizations)
-      }
-
-      const h = getApplicationConfig().thumbnailSize.height
-      const w = getApplicationConfig().thumbnailSize.width
-
-      // Retrieve collection thumbnail if it exists
-      if (collection.id) {
-        if (collection.browse_flag) {
-          transformedCollection.thumbnail = `${getEnvironmentConfig().apiHost}/scale/collections/${collection.id}?h=${h}&w=${w}&ee=${earthdataEnvironment}`
-        } else {
-          transformedCollection.thumbnail = unavailableImg
-          transformedCollection.isDefaultImage = true
-        }
-      }
-
-      return transformedCollection
-    })
-
-    return data
+    }
   }
 }

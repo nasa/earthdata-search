@@ -49,7 +49,6 @@ const defaultProps = {
   location: { search: 'location' },
   onAddGranuleToProjectCollection: jest.fn(),
   onExcludeGranule: jest.fn(),
-  onFocusedGranuleChange: jest.fn(),
   onGenerateNotebook: jest.fn(),
   onMetricsDataAccess: jest.fn(),
   onMetricsAddGranuleProject: jest.fn(),
@@ -326,6 +325,9 @@ const setup = setupTest({
   Component: GranuleResultsItem,
   defaultProps,
   defaultZustandState: {
+    granule: {
+      setGranuleId: jest.fn()
+    },
     project: {
       addGranuleToProjectCollection: jest.fn(),
       removeGranuleFromProjectCollection: jest.fn()
@@ -799,7 +801,7 @@ describe('GranuleResultsItem component', () => {
 
   describe('granule info button', () => {
     test('calls handleClickGranuleDetails on click', async () => {
-      const { props, user } = setup({
+      const { user, zustandState } = setup({
         overrideProps: cmrProps
       })
 
@@ -814,8 +816,8 @@ describe('GranuleResultsItem component', () => {
         await user.click(screen.getByRole('button', { name: 'View details' }), { pointerEventsCheck: 0 })
       })
 
-      expect(props.onFocusedGranuleChange).toHaveBeenCalledTimes(1)
-      expect(props.onFocusedGranuleChange).toHaveBeenCalledWith('granuleId')
+      expect(zustandState.granule.setGranuleId).toHaveBeenCalledTimes(1)
+      expect(zustandState.granule.setGranuleId).toHaveBeenCalledWith('granuleId')
     })
   })
 

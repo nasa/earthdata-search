@@ -1,24 +1,22 @@
-import {
-  useEffect,
-  useRef,
-  useState
-} from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { useLocation } from 'react-router-dom'
 
 import actions from '../../actions/index'
 
 import { encodeUrlQuery } from '../../util/url/url'
-import { locationPropType } from '../../util/propTypes/location'
-
-import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
-import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
-import { getFocusedCollectionId } from '../../zustand/selectors/focusedCollection'
-import { getFocusedGranuleId } from '../../selectors/focusedGranule'
-import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getCollectionsQuery } from '../../zustand/selectors/query'
+import {
+  getCollectionsQuery,
+  getSelectedRegionQuery,
+  getNlpCollection
+} from '../../zustand/selectors/query'
+import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
+import { getCollectionId, getCollectionsMetadata } from '../../zustand/selectors/collection'
+import { getGranuleId } from '../../zustand/selectors/granule'
+import { getMapPreferences, getCollectionSortPreference } from '../../zustand/selectors/preferences'
 
 export const mapDispatchToProps = (dispatch) => ({
   onChangePath:
@@ -27,34 +25,28 @@ export const mapDispatchToProps = (dispatch) => ({
     (query) => dispatch(actions.changeUrl(query))
 })
 
-export const mapStateToProps = (state) => ({
-  advancedSearch: state.advancedSearch,
-  collectionsMetadata: getCollectionsMetadata(state),
-  focusedGranule: getFocusedGranuleId(state),
-  location: state.router.location,
-  pathname: state.router.location.pathname
-})
-
 export const UrlQueryContainer = (props) => {
   const {
     children,
-    location,
     onChangePath,
     onChangeUrl
   } = props
+
+  const location = useLocation()
   const {
     pathname,
     search
   } = location
 
   const [currentPath, setCurrentPath] = useState('')
-  const previousSearch = useRef(search)
 
   const zustandValues = useEdscStore((state) => ({
+    collectionsMetadata: getCollectionsMetadata(state),
     collectionSortPreference: getCollectionSortPreference(state),
     earthdataEnvironment: getEarthdataEnvironment(state),
     featureFacets: state.facetParams.featureFacets,
-    focusedCollection: getFocusedCollectionId(state),
+    focusedCollection: getCollectionId(state),
+    focusedGranule: getGranuleId(state),
     granuleDataFormatFacets: state.facetParams.cmrFacets.granule_data_format_h,
     horizontalDataResolutionRangeFacets:
       state.facetParams.cmrFacets.horizontal_data_resolution_range,
@@ -68,8 +60,10 @@ export const UrlQueryContainer = (props) => {
     processingLevelFacets: state.facetParams.cmrFacets.processing_level_id_h,
     projectCollections: state.project.collections,
     projectFacets: state.facetParams.cmrFacets.project_h,
+    nlpSearch: getNlpCollection(state)?.query,
     scienceKeywordFacets: state.facetParams.cmrFacets.science_keywords_h,
     selectedFeatures: state.shapefile.selectedFeatures,
+    selectedRegion: getSelectedRegionQuery(state),
     shapefileId: state.shapefile.shapefileId,
     timelineQuery: state.timeline.query,
     twoDCoordinateSystemNameFacets: state.facetParams.cmrFacets.two_d_coordinate_system_name
@@ -110,42 +104,37 @@ export const UrlQueryContainer = (props) => {
     temporalSearch
   }
 
+  // When the page loads, call onChangePath to load the values from the URL
   useEffect(() => {
     onChangePath([pathname, search].filter(Boolean).join(''))
   }, [])
 
+  // When the Zustand state changes, encode the values and call onChangeUrl to update the URL
   useEffect(() => {
-    // The only time the search prop changes is after the URL has been updated
-    // So we only need to worry about encoding the query and updating the URL
-    // if the previous search and next search are the same
-    if (
-      previousSearch.current === search
-    ) {
-      const nextPath = encodeUrlQuery({
-        ...props,
-        ...combinedZustandValues
-      })
+    const nextPath = encodeUrlQuery({
+      ...combinedZustandValues,
+      pathname
+    })
 
-      if (currentPath !== nextPath) {
-        setCurrentPath(nextPath)
+    if (currentPath !== nextPath) {
+      setCurrentPath(nextPath)
 
-        if (nextPath !== '') {
-          onChangeUrl(nextPath)
-        }
+      if (nextPath !== '') {
+        onChangeUrl(nextPath)
       }
     }
-
-    previousSearch.current = search
-  }, [props, search, zustandValues])
+  }, [
+    combinedZustandValues,
+    pathname
+  ])
 
   return children
 }
 
 UrlQueryContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
   onChangeUrl: PropTypes.func.isRequired
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UrlQueryContainer)
+export default connect(null, mapDispatchToProps)(UrlQueryContainer)

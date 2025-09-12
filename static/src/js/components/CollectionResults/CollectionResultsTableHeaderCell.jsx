@@ -20,8 +20,8 @@ const CollectionResultsTableHeaderCell = (props) => {
   } = useEdscStore((state) => ({
     addProjectCollection: state.project.addProjectCollection,
     removeProjectCollection: state.project.removeProjectCollection,
-    viewCollectionDetails: state.focusedCollection.viewCollectionDetails,
-    viewCollectionGranules: state.focusedCollection.viewCollectionGranules
+    viewCollectionDetails: state.collection.viewCollectionDetails,
+    viewCollectionGranules: state.collection.viewCollectionGranules
   }))
 
   const { column, cell, row } = props

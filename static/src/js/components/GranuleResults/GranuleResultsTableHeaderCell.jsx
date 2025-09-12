@@ -19,7 +19,11 @@ import MoreActionsDropdownItem from '../MoreActionsDropdown/MoreActionsDropdownI
 import PortalFeatureContainer from '../../containers/PortalFeatureContainer/PortalFeatureContainer'
 import GranuleResultsDownloadNotebookButton from './GranuleResultsDownloadNotebookButton'
 
+import useEdscStore from '../../zustand/useEdscStore'
+
 const GranuleResultsTableHeaderCell = (props) => {
+  const setGranuleId = useEdscStore((state) => state.granule.setGranuleId)
+
   const { column, cell, row } = props
   const { customProps } = column
   const { original: rowProps } = row
@@ -41,7 +45,6 @@ const GranuleResultsTableHeaderCell = (props) => {
     isGranuleInProject,
     location,
     onExcludeGranule,
-    onFocusedGranuleChange,
     onGenerateNotebook,
     onMetricsAddGranuleProject,
     onMetricsDataAccess,
@@ -160,7 +163,7 @@ const GranuleResultsTableHeaderCell = (props) => {
           <LinkContainer
             onClick={
               () => {
-                onFocusedGranuleChange(id)
+                setGranuleId(id)
               }
             }
             to={
@@ -208,7 +211,6 @@ GranuleResultsTableHeaderCell.propTypes = {
         search: PropTypes.string
       }),
       onExcludeGranule: PropTypes.func,
-      onFocusedGranuleChange: PropTypes.func,
       onGenerateNotebook: PropTypes.func.isRequired,
       onMetricsAddGranuleProject: PropTypes.func,
       onMetricsDataAccess: PropTypes.func,

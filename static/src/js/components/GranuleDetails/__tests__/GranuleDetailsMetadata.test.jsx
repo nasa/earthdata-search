@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { granuleResultsBodyProps } from './mocks'
+import { granuleMetadata } from './mocks'
 
 import Spinner from '../../Spinner/Spinner'
 import GranuleDetailsMetadata from '../GranuleDetailsMetadata'
@@ -36,7 +36,7 @@ describe('GranuleDetailsMetadata component', () => {
     test('renders itself correctly', () => {
       setup({
         overrideProps: {
-          metadataUrls: granuleResultsBodyProps.granuleMetadata.metadataUrls
+          metadataUrls: granuleMetadata.metadataUrls
         }
       })
 
@@ -47,7 +47,7 @@ describe('GranuleDetailsMetadata component', () => {
       test('renders the unauthenticated links correctly', () => {
         setup({
           overrideProps: {
-            metadataUrls: granuleResultsBodyProps.granuleMetadata.metadataUrls
+            metadataUrls: granuleMetadata.metadataUrls
           }
         })
 
@@ -63,7 +63,7 @@ describe('GranuleDetailsMetadata component', () => {
         setup({
           overrideProps: {
             authToken: 'token',
-            metadataUrls: granuleResultsBodyProps.granuleMetadata.metadataUrls
+            metadataUrls: granuleMetadata.metadataUrls
           }
         })
 

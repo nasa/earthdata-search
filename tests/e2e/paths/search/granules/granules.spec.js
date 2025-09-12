@@ -5,7 +5,8 @@ import { graphQlGetSubscriptionsQuery } from '../../../../support/graphQlGetSubs
 import {
   interceptUnauthenticatedCollections
 } from '../../../../support/interceptUnauthenticatedCollections'
-import { isGetFocusedCollectionsQuery } from '../../../../support/isGetFocusedCollectionsQuery'
+import { isGetCollectionQuery } from '../../../../support/isGetCollectionQuery'
+import { isGetGranuleQuery } from '../../../../support/isGetGranuleQuery'
 import { login } from '../../../../support/login'
 import { setupTests } from '../../../../support/setupTests'
 
@@ -167,7 +168,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(noParamsGraphQlBody),
@@ -221,7 +222,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(readableGranuleNameGraphQlBody),
@@ -276,7 +277,7 @@ test.describe('Path /search/granules', () => {
         })
 
         await page.route('**/api', (route) => {
-          expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+          expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
           route.fulfill({
             body: JSON.stringify(temporalGraphQlBody),
@@ -334,7 +335,7 @@ test.describe('Path /search/granules', () => {
         })
 
         await page.route('**/api', (route) => {
-          expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+          expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
           route.fulfill({
             body: JSON.stringify(temporalGraphQlBody),
@@ -395,7 +396,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(browseOnlyGraphQlBody),
@@ -450,7 +451,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(onlineOnlyGraphQlBody),
@@ -505,7 +506,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(orbitNumberGraphQlBody),
@@ -560,7 +561,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(equatorialCrossingLongitudeGraphQlBody),
@@ -615,7 +616,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(equatorialCrossingDateGraphQlBody),
@@ -670,7 +671,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(sortKeyGraphQlBody),
@@ -725,7 +726,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(cloudCoverGraphQlBody),
@@ -780,7 +781,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(dayNightGraphQlBody),
@@ -834,7 +835,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(gridCoordsGraphQlBody),
@@ -903,7 +904,7 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         route.fulfill({
           body: JSON.stringify(timelineGraphQlBody),
@@ -962,14 +963,12 @@ test.describe('Path /search/granules', () => {
       })
 
       await page.route('**/api', (route) => {
-        const body = JSON.stringify(route.request().postData())
-
-        if (isGetFocusedCollectionsQuery(route, conceptId)) {
+        if (isGetCollectionQuery(route, conceptId)) {
           route.fulfill({
             body: JSON.stringify(focusedGranuleCollectionGraphQlBody),
             headers: focusedGranuleGraphQlHeaders
           })
-        } else if (body === '{"query":"\\n    query GetGranule(\\n      $params: GranuleInput\\n    ) {\\n      granule(\\n        params: $params\\n      ) {\\n        granuleUr\\n        granuleSize\\n        title\\n        onlineAccessFlag\\n        dayNightFlag\\n        timeStart\\n        timeEnd\\n        dataCenter\\n        originalFormat\\n        conceptId\\n        collectionConceptId\\n        spatialExtent\\n        temporalExtent\\n        relatedUrls\\n        dataGranule\\n        measuredParameters\\n        providerDates\\n      }\\n    }","variables":{"params":{"conceptId":"G2058417402-LPDAAC_ECS"}}}') {
+        } else if (isGetGranuleQuery(route, 'G2058417402-LPDAAC_ECS')) {
           route.fulfill({
             body: JSON.stringify(focusedGranuleGranuleGraphQlBody),
             headers: focusedGranuleGraphQlHeaders
@@ -1053,7 +1052,7 @@ test.describe('Path /search/granules', () => {
         const body = JSON.stringify(request.postData())
         const requestBody = JSON.parse(body)
 
-        if (isGetFocusedCollectionsQuery(route, conceptId)) {
+        if (isGetCollectionQuery(route, conceptId)) {
           await route.fulfill({
             body: JSON.stringify(projectGranuleCollectionGraphQlBody),
             headers: projectGranuleGraphQlHeaders
@@ -1235,7 +1234,7 @@ test.describe('Path /search/granules', () => {
             }),
             headers: subscriptionGraphQlHeaders
           })
-        } else if (isGetFocusedCollectionsQuery(route, conceptId)) {
+        } else if (isGetCollectionQuery(route, conceptId)) {
           await route.fulfill({
             body: JSON.stringify(subscriptionGraphQlBody),
             headers: graphQlHeaders

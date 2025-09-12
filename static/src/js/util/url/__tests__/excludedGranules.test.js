@@ -19,6 +19,7 @@ describe('url#decodeUrlParams', () => {
         ...emptyDecodedResult,
         focusedCollection: 'collectionId',
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
@@ -41,6 +42,7 @@ describe('url#decodeUrlParams', () => {
         ...emptyDecodedResult,
         focusedCollection: 'collectionId',
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
@@ -63,19 +65,21 @@ describe('url#decodeUrlParams', () => {
     test('decodes excludeGranules correctly', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId'],
             byId: {
               collectionId: {
                 granules: {},
-                isVisible: true
+                isVisible: true,
+                selectedAccessMethod: undefined
               }
             }
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
@@ -104,12 +108,14 @@ describe('url#decodeUrlParams', () => {
             byId: {
               collectionId: {
                 granules: {},
-                isVisible: true
+                isVisible: true,
+                selectedAccessMethod: undefined
               }
             }
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
@@ -144,7 +150,7 @@ describe('url#encodeUrlQuery', () => {
     const props = {
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      focusedCollection: ''
+      focusedCollection: null
     }
 
     expect(encodeUrlQuery(props)).toEqual('/path/here')
@@ -245,7 +251,7 @@ describe('url#encodeUrlQuery', () => {
         },
         hasGranulesOrCwic: true,
         pathname: '/path/here',
-        focusedCollection: '',
+        focusedCollection: null,
         projectCollections: {
           allIds: ['collectionId']
         },

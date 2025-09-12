@@ -11,7 +11,7 @@ import { decodeScienceKeywords, encodeScienceKeywords } from './scienceKeywordEn
 import { decodeString, encodeString } from './stringEncoders'
 import { decodeTemporal, encodeTemporal } from './temporalEncoders'
 import { decodeTimeline, encodeTimeline } from './timelineEncoders'
-import { encodeAdvancedSearch, decodeAdvancedSearch } from './advancedSearchEncoders'
+import { decodeselectedRegion, encodeselectedRegion } from './selectedRegionEncoders'
 import { encodeArray, decodeArray } from './arrayEncoders'
 import { encodeEarthdataEnvironment, decodeEarthdataEnvironment } from './environmentEncoders'
 import { decodeBoolean, encodeBoolean } from './booleanEncoders'
@@ -59,6 +59,11 @@ const urlDefs = {
   },
   keywordSearch: {
     shortKey: 'q',
+    encode: encodeString,
+    decode: decodeString
+  },
+  nlpSearch: {
+    shortKey: 'nlp',
     encode: encodeString,
     decode: decodeString
   },
@@ -294,13 +299,13 @@ export const decodeUrlParams = (paramString) => {
     selectedFeatures: decodeHelp(params, 'selectedFeatures')
   }
 
-  const advancedSearch = decodeAdvancedSearch(params)
+  const selectedRegion = decodeselectedRegion(params)
 
   const earthdataEnvironment = decodeHelp(params, 'earthdataEnvironment')
   const portalId = decodePortal(params)
+  const nlpQuery = decodeHelp(params, 'nlpSearch')
 
   return {
-    advancedSearch,
     earthdataEnvironment,
     cmrFacets,
     metadata,
@@ -313,8 +318,10 @@ export const decodeUrlParams = (paramString) => {
     project,
     query: {
       ...query,
-      collection: collectionQuery
+      collection: collectionQuery,
+      nlpCollection: nlpQuery ? { query: nlpQuery } : null
     },
+    selectedRegion,
     shapefile,
     timeline
   }
@@ -340,7 +347,7 @@ export const encodeUrlQuery = (props) => {
   const platformQuery = encodePlatforms(props.platformFacets)
   const collectionsQuery = encodeCollections(props)
   const timelineQuery = encodeTimeline(props.timelineQuery, props.pathname)
-  const advancedQuery = encodeAdvancedSearch(props.advancedSearch)
+  const selectedRegion = encodeselectedRegion(props.selectedRegion)
   const portalQuery = encodePortal(props.portalId)
   const collectionSortKey = encodeCollectionSortKey(
     props.collectionSortKey,
@@ -354,7 +361,7 @@ export const encodeUrlQuery = (props) => {
     ...timelineQuery,
     ...scienceKeywordQuery,
     ...platformQuery,
-    ...advancedQuery,
+    ...selectedRegion,
     ...mapParams,
     ...collectionSortKey
   }
@@ -383,7 +390,7 @@ export const urlPathsWithoutUrlParams = [
 
 /**
  * Is the given location the Saved Projects page
- * @param {Object} location Redux store location
+ * @param {Object} location Page location
  */
 export const isSavedProjectsPage = (location) => {
   const { pathname, search } = location

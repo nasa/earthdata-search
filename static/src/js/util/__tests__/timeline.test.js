@@ -5,6 +5,7 @@ import {
   timelineIntervalZooms,
   zoomLevelDifference
 } from '../timeline'
+import routerHelper from '../../router/router'
 
 describe('zoomLevelDifference', () => {
   beforeEach(() => {
@@ -176,11 +177,6 @@ describe('prepareTimelineParams', () => {
       projectCollections: {
         allIds: []
       },
-      router: {
-        location: {
-          pathname: '/search'
-        }
-      },
       timelineQuery: {
         startDate: '2022-01-01T00:00:00Z',
         endDate: '2023-01-01T00:00:00Z',
@@ -213,15 +209,16 @@ describe('prepareTimelineParams', () => {
   })
 
   test('should use project collection IDs when on project page', () => {
+    routerHelper.router.state = {
+      location: {
+        pathname: '/project/collections'
+      }
+    }
+
     const state = setup({
       focusedCollection: 'C100003-EDSC',
       projectCollections: {
         allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
-      },
-      router: {
-        location: {
-          pathname: '/project/collections'
-        }
       }
     })
 
@@ -237,15 +234,16 @@ describe('prepareTimelineParams', () => {
   })
 
   test('should use focused collection when not on project page', () => {
+    routerHelper.router.state = {
+      location: {
+        pathname: '/search/granules'
+      }
+    }
+
     const state = setup({
       focusedCollection: 'C100000-EDSC',
       projectCollections: {
         allIds: ['C100000-EDSC', 'C100001-EDSC', 'C100002-EDSC']
-      },
-      router: {
-        location: {
-          pathname: '/search/granules'
-        }
       }
     })
 
@@ -261,6 +259,12 @@ describe('prepareTimelineParams', () => {
   })
 
   test('should include spatial parameters when provided', () => {
+    routerHelper.router.state = {
+      location: {
+        pathname: '/search/granules'
+      }
+    }
+
     const state = setup({
       collectionQuery: {
         spatial: {
@@ -269,12 +273,7 @@ describe('prepareTimelineParams', () => {
           polygon: ['10,10,20,20,30,30,10,10']
         }
       },
-      focusedCollection: 'C100000-EDSC',
-      router: {
-        location: {
-          pathname: '/search/granules'
-        }
-      }
+      focusedCollection: 'C100000-EDSC'
     })
 
     const result = prepareTimelineParams(state)

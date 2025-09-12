@@ -67,8 +67,8 @@ const overlayContent = ({
  * @param {String} params.granuleId The granule ID of the focused granule
  * @param {Boolean} params.isProjectPage If the focused granule is on the project page
  * @param {Object} params.map The OL map
- * @param {Function} params.onChangeFocusedGranule Callback to change the focused granule
  * @param {Function} params.onExcludeGranule Callback to exclude the granule
+ * @param {Function} params.setGranuleId Callback to change the focused granule
  * @param {Boolean} params.shouldMoveMap If the map should move to fit the focused granule
  * @param {String} params.timesIconSvg The SVG for the times icon
  */
@@ -79,8 +79,8 @@ const drawFocusedGranule = ({
   granuleId,
   isProjectPage,
   map,
-  onChangeFocusedGranule,
   onExcludeGranule,
+  setGranuleId,
   shouldMoveMap = true,
   timesIconSvg
 }: {
@@ -98,7 +98,7 @@ const drawFocusedGranule = ({
   map: Map
   /** Callback to change the focused granule */
   // eslint-disable-next-line no-shadow
-  onChangeFocusedGranule: (granuleId: string) => void
+  setGranuleId: (granuleId: string | null) => void
   /** Callback to exclude the granule */
   onExcludeGranule: (params: { collectionId: string; granuleId: string }) => void
   /** If the map should move to fit the focused granule */
@@ -194,7 +194,7 @@ const drawFocusedGranule = ({
       focusedGranuleSource.clear()
 
       // Clear the focusedGranuleId
-      onChangeFocusedGranule('')
+      setGranuleId(null)
 
       // Call the onExcludeGranule function
       onExcludeGranule({

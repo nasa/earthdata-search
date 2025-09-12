@@ -15,10 +15,7 @@ jest.mock('../../../components/SearchForm/SearchForm', () => jest.fn(() => <div 
 const setup = setupTest({
   Component: SearchFormContainer,
   defaultProps: {
-    advancedSearch: {},
     authToken: '',
-    keywordSearch: 'Test value',
-    temporalSearch: {},
     handleError: jest.fn(),
     onToggleAdvancedSearchModal: jest.fn()
   }
@@ -49,9 +46,7 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      advancedSearch: {},
       authToken: '',
-      focusedCollection: 'collectionId',
       ui: {
         map: {
           drawingNewLayer: false
@@ -60,7 +55,6 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      advancedSearch: {},
       authToken: ''
     }
 
@@ -74,12 +68,11 @@ describe('SearchFormContainer component', () => {
 
     expect(SearchForm).toHaveBeenCalledTimes(1)
     expect(SearchForm).toHaveBeenCalledWith({
-      advancedSearch: props.advancedSearch,
       authToken: props.authToken,
       handleError: props.handleError,
-      onChangeFocusedCollection: props.onChangeFocusedCollection,
       onClearFilters: expect.any(Function),
-      onToggleAdvancedSearchModal: props.onToggleAdvancedSearchModal
+      onToggleAdvancedSearchModal: props.onToggleAdvancedSearchModal,
+      selectedRegion: {}
     }, {})
   })
 })

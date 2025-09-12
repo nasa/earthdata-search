@@ -22,8 +22,8 @@ const setup = setupTest({
     onDeleteSubscription: jest.fn()
   },
   defaultZustandState: {
-    focusedCollection: {
-      changeFocusedCollection: jest.fn()
+    collection: {
+      setCollectionId: jest.fn()
     }
   },
   withRedux: true
@@ -144,7 +144,7 @@ describe('SubscriptionsListTable component', () => {
     })
 
     describe('when clicking the edit button while the subscription type is granule', () => {
-      test('calls changeFocusedCollection', async () => {
+      test('calls setCollectionId', async () => {
         const { user, zustandState } = setup({
           overrideProps: {
             subscriptionsMetadata: [{
@@ -165,8 +165,8 @@ describe('SubscriptionsListTable component', () => {
         const button = screen.getByLabelText('Edit Subscription')
         await user.click(button)
 
-        expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledTimes(1)
-        expect(zustandState.focusedCollection.changeFocusedCollection).toHaveBeenCalledWith('C100000-EDSC')
+        expect(zustandState.collection.setCollectionId).toHaveBeenCalledTimes(1)
+        expect(zustandState.collection.setCollectionId).toHaveBeenCalledWith('C100000-EDSC')
       })
     })
   })

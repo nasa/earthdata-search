@@ -1,5 +1,3 @@
-import { LOCATION_CHANGE } from 'connected-react-router'
-
 import * as helpers from '../helpers'
 import {
   virtualPageview,
@@ -36,10 +34,6 @@ import {
 const dataLayerMock = global.dataLayer.push
 
 describe('events', () => {
-  afterEach(() => {
-    jest.clearAllMocks()
-  })
-
   describe('virtualPageview', () => {
     describe('on a PUSH event', () => {
       test('pushes to the dataLayer', () => {
@@ -52,18 +46,7 @@ describe('events', () => {
         helpers.computeFacets = jest.fn(() => 'Facets')
         /* eslint-enable */
 
-        const action = {
-          type: LOCATION_CHANGE,
-          payload: {
-            action: 'PUSH'
-          }
-        }
-
-        const state = {
-          test: 'test'
-        }
-
-        virtualPageview(action, state)
+        virtualPageview('PUSH')
 
         expect(dataLayerMock).toHaveBeenCalledTimes(1)
         expect(dataLayerMock).toHaveBeenCalledWith({
@@ -89,18 +72,7 @@ describe('events', () => {
         helpers.computeFacets = jest.fn(() => 'Facets')
         /* eslint-enable */
 
-        const action = {
-          type: LOCATION_CHANGE,
-          payload: {
-            action: 'POP'
-          }
-        }
-
-        const state = {
-          test: 'test'
-        }
-
-        virtualPageview(action, state)
+        virtualPageview('POP')
 
         expect(dataLayerMock).toHaveBeenCalledTimes(0)
       })

@@ -1,40 +1,44 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
 
-import { AdminProjects } from '../AdminProjects'
-import { AdminPage } from '../../AdminPage/AdminPage'
-import { AdminProjectsList } from '../AdminProjectsList'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
-Enzyme.configure({ adapter: new Adapter() })
+import AdminProjects from '../AdminProjects'
+import AdminProjectsList from '../AdminProjectsList'
+import AdminProjectsForm from '../AdminProjectsForm'
 
-function setup() {
-  const props = {
-    historyPush: jest.fn(),
+jest.mock('../AdminProjectsList', () => jest.fn(() => <div />))
+jest.mock('../AdminProjectsForm', () => jest.fn(() => <div />))
+
+const setup = setupTest({
+  Component: AdminProjects,
+  defaultProps: {
     onAdminViewProject: jest.fn(),
     onUpdateAdminProjectsSortKey: jest.fn(),
     onUpdateAdminProjectsPageNum: jest.fn(),
-    retrievals: {
+    projects: {
       allIds: [],
       byId: {},
       pagination: {},
       sortKey: ''
     }
-  }
-
-  const enzymeWrapper = shallow(<AdminProjects {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+  },
+  withRouter: true
+})
 
 describe('AdminProjects component', () => {
   test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+    const { props } = setup()
 
-    expect(enzymeWrapper.find(AdminPage).length).toBe(1)
-    expect(enzymeWrapper.find(AdminProjectsList).length).toBe(1)
+    expect(AdminProjectsForm).toHaveBeenCalledTimes(1)
+    expect(AdminProjectsForm).toHaveBeenCalledWith({
+      onAdminViewProject: props.onAdminViewProject
+    }, {})
+
+    expect(AdminProjectsList).toHaveBeenCalledTimes(1)
+    expect(AdminProjectsList).toHaveBeenCalledWith({
+      onUpdateAdminProjectsSortKey: props.onUpdateAdminProjectsSortKey,
+      onUpdateAdminProjectsPageNum: props.onUpdateAdminProjectsPageNum,
+      projects: props.projects
+    }, {})
   })
 })

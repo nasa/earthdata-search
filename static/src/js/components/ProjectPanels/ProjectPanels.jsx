@@ -32,8 +32,7 @@ import './ProjectPanels.scss'
 /**
  * Renders ProjectPanels.
  * @param {Object} dataQualitySummaries = The dataQualitySummaries from the store.
- * @param {String} focusedCollectionId - The focused collection ID.
- * @param {String} focusedGranuleId - The focused granule ID.
+ * @param {String} collectionId - The focused collection ID.
  * @param {Object} collection - The current collection.
  * @param {String} collectionId - The current collection ID.
  * @param {Object} location - The location from the store.
@@ -42,7 +41,6 @@ import './ProjectPanels.scss'
  * @param {Object} spatial - The spatial from the store.
  * @param {Object} projectCollection - The project collection.
  * @param {Function} onChangePath - Callback to change the path.
- * @param {Function} onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} onSelectAccessMethod - Selects an access method.
  * @param {Function} onSetActivePanel - Switches the currently active panel.
  * @param {Function} onSetActivePanelGroup - Callback to set the active panel group.
@@ -50,7 +48,7 @@ import './ProjectPanels.scss'
  * @param {Function} onToggleAboutCSDAModal - Toggles the CSDA modal.
  * @param {Function} onTogglePanels - Toggles the panels opened or closed.
  * @param {Function} onUpdateAccessMethod - Callback to update the access method.
- * @param {Function} setFocusedCollection - Callback to update the focused collection.
+ * @param {Function} setCollectionId - Callback to update the focused collection.
  */
 class ProjectPanels extends PureComponent {
   constructor(props) {
@@ -75,7 +73,7 @@ class ProjectPanels extends PureComponent {
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     const {
-      focusedCollectionId,
+      collectionId: focusedCollectionId,
       onSetActivePanelGroup,
       onTogglePanels,
       panels
@@ -83,7 +81,7 @@ class ProjectPanels extends PureComponent {
 
     const {
       projectCollections: nextProjectCollections,
-      focusedCollectionId: nextFocusedCollection
+      collectionId: nextFocusedCollection
     } = nextProps
 
     const { byId, allIds } = nextProjectCollections
@@ -134,8 +132,8 @@ class ProjectPanels extends PureComponent {
   }
 
   onPanelClose() {
-    const { onTogglePanels, setFocusedCollection } = this.props
-    setFocusedCollection('')
+    const { onTogglePanels, setCollectionId } = this.props
+    setCollectionId(null)
     onTogglePanels(false)
   }
 
@@ -143,7 +141,7 @@ class ProjectPanels extends PureComponent {
     const {
       onSetActivePanel,
       onTogglePanels,
-      setFocusedCollection,
+      setCollectionId,
       projectCollections
     } = this.props
 
@@ -152,7 +150,7 @@ class ProjectPanels extends PureComponent {
     const newFocusedCollectionIndex = activePanel.split('.')[1]
     const newFocusedCollectionId = allIds[newFocusedCollectionIndex]
 
-    setFocusedCollection(newFocusedCollectionId)
+    setCollectionId(newFocusedCollectionId)
     onSetActivePanel(activePanel)
     onTogglePanels(true)
   }
@@ -265,12 +263,9 @@ class ProjectPanels extends PureComponent {
   render() {
     const {
       dataQualitySummaries,
-      focusedGranuleId,
-      granulesMetadata,
       granulesQueries,
       location,
       onChangePath,
-      onFocusedGranuleChange,
       onSelectAccessMethod,
       onSetActivePanel,
       onToggleAboutCSDAModal,
@@ -315,7 +310,7 @@ class ProjectPanels extends PureComponent {
 
       const {
         allIds: granulesAllIds = [],
-        hits: granuleCount
+        count: granuleCount
       } = projectCollectionGranules
 
       const { [collectionId]: collectionMetadata = {} } = projectCollectionsMetadata
@@ -571,7 +566,6 @@ class ProjectPanels extends PureComponent {
           >
             <AccessMethod
               accessMethods={accessMethods}
-              granuleMetadata={granulesMetadata}
               index={index}
               metadata={collectionMetadata}
               onSelectAccessMethod={onSelectAccessMethod}
@@ -649,10 +643,6 @@ class ProjectPanels extends PureComponent {
           <PanelItem scrollable={false}>
             <CollectionDetails
               collectionId={collectionId}
-              focusedGranuleId={focusedGranuleId}
-              granulesMetadata={granulesMetadata}
-              location={location}
-              onFocusedGranuleChange={onFocusedGranuleChange}
               projectCollection={projectCollection}
             />
           </PanelItem>
@@ -685,20 +675,17 @@ class ProjectPanels extends PureComponent {
 
 ProjectPanels.propTypes = {
   dataQualitySummaries: PropTypes.shape({}).isRequired,
-  focusedCollectionId: PropTypes.string.isRequired,
-  focusedGranuleId: PropTypes.string.isRequired,
-  granulesMetadata: PropTypes.shape({}).isRequired,
+  collectionId: PropTypes.string.isRequired,
   granulesQueries: PropTypes.shape({}).isRequired,
   location: locationPropType.isRequired,
   onChangePath: PropTypes.func.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   onSelectAccessMethod: PropTypes.func.isRequired,
   onSetActivePanel: PropTypes.func.isRequired,
   onSetActivePanelGroup: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
   onTogglePanels: PropTypes.func.isRequired,
   onUpdateAccessMethod: PropTypes.func.isRequired,
-  setFocusedCollection: PropTypes.func.isRequired,
+  setCollectionId: PropTypes.func.isRequired,
   overrideTemporal: PropTypes.shape({}).isRequired,
   panels: PropTypes.shape({
     activePanel: PropTypes.string,

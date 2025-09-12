@@ -1,5 +1,6 @@
 import spatialTypes from '../../constants/spatialTypes'
 import { pruneSpatial } from '../../util/pruneSpatial'
+import { getCollectionId } from '../../zustand/selectors/collection'
 import { getProjectCollectionsIds } from '../../zustand/selectors/project'
 import {
   getCollectionsQuery,
@@ -46,7 +47,6 @@ export const computeSpatialType = () => {
 
 /**
 * Get the current temporal type from the state.
-* @param {Object} state - The current Redux state.
 * @returns {String} The current temporal type.
 */
 export const computeTemporalType = () => {
@@ -63,11 +63,10 @@ export const computeTemporalType = () => {
 
 /**
 * Get the current focused collection from the state.
-* @param {Object} state - The current Redux state.
 * @returns {String} The current focused collection id.
 */
-export const computeCollectionsViewed = (state) => {
-  const { focusedCollection } = state
+export const computeCollectionsViewed = () => {
+  const focusedCollection = getCollectionId(useEdscStore.getState())
 
   if (focusedCollection) return focusedCollection
 

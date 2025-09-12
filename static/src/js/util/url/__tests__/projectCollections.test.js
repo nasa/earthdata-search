@@ -16,18 +16,20 @@ describe('url#decodeUrlParams', () => {
   test('decodes project collections correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      focusedCollection: '',
+      focusedCollection: null,
       project: {
         collections: {
           allIds: ['collectionId1', 'collectionId2'],
           byId: {
             collectionId1: {
               granules: {},
-              isVisible: true
+              isVisible: true,
+              selectedAccessMethod: undefined
             },
             collectionId2: {
               granules: {},
-              isVisible: true
+              isVisible: true,
+              selectedAccessMethod: undefined
             }
           }
         }
@@ -77,6 +79,7 @@ describe('url#decodeUrlParams', () => {
         }
       },
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {
@@ -103,32 +106,31 @@ describe('url#decodeUrlParams', () => {
   test('decodes project collections visibility correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      focusedCollection: '',
+      focusedCollection: null,
       project: {
         collections: {
           allIds: ['collectionId1', 'collectionId2'],
           byId: {
             collectionId1: {
               granules: {},
-              isVisible: true
+              isVisible: true,
+              selectedAccessMethod: undefined
             },
             collectionId2: {
               granules: {},
-              isVisible: true
+              isVisible: true,
+              selectedAccessMethod: undefined
             }
           }
         }
       },
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
+            collectionId1: { granules: {} },
+            collectionId2: { granules: {} }
           }
         }
       }
@@ -140,7 +142,7 @@ describe('url#decodeUrlParams', () => {
   test('decodes selected variables correctly', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      focusedCollection: '',
+      focusedCollection: null,
       project: {
         collections: {
           allIds: ['collectionId1', 'collectionId2'],
@@ -150,6 +152,9 @@ describe('url#decodeUrlParams', () => {
               isVisible: true,
               accessMethods: {
                 opendap: {
+                  enableConcatenateDownload: undefined,
+                  enableSpatialSubsetting: undefined,
+                  enableTemporalSubsetting: undefined,
                   selectedOutputFormat: undefined,
                   selectedOutputProjection: undefined,
                   selectedVariables: ['V123456-EDSC', 'V987654-EDSC']
@@ -166,15 +171,12 @@ describe('url#decodeUrlParams', () => {
         }
       },
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
+            collectionId1: { granules: {} },
+            collectionId2: { granules: {} }
           }
         }
       }
@@ -187,7 +189,7 @@ describe('url#decodeUrlParams', () => {
     test('decodes enable temporal subsetting correctly when false', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -216,15 +218,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -236,7 +235,7 @@ describe('url#decodeUrlParams', () => {
     test('decodes enable temporal subsetting correctly when true', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -265,15 +264,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -285,7 +281,7 @@ describe('url#decodeUrlParams', () => {
     test('decodes enable temporal subsetting correctly when not encoded', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -314,15 +310,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -336,7 +329,7 @@ describe('url#decodeUrlParams', () => {
     test('decodes enable spatial subsetting correctly when false', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -365,15 +358,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -385,7 +375,7 @@ describe('url#decodeUrlParams', () => {
     test('decodes enable spatial subsetting correctly when true', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -414,15 +404,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -435,7 +422,7 @@ describe('url#decodeUrlParams', () => {
   test('decodes enable spatial subsetting correctly when not encoded', () => {
     const expectedResult = {
       ...emptyDecodedResult,
-      focusedCollection: '',
+      focusedCollection: null,
       project: {
         collections: {
           allIds: ['collectionId1', 'collectionId2'],
@@ -464,15 +451,12 @@ describe('url#decodeUrlParams', () => {
         }
       },
       query: {
+        ...emptyDecodedResult.query,
         collection: {
           ...emptyDecodedResult.query.collection,
           byId: {
-            collectionId1: {
-              granules: {}
-            },
-            collectionId2: {
-              granules: {}
-            }
+            collectionId1: { granules: {} },
+            collectionId2: { granules: {} }
           }
         }
       }
@@ -485,7 +469,7 @@ describe('url#decodeUrlParams', () => {
     test('decodes enable concatenate download correctly when false', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -514,15 +498,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -534,7 +515,7 @@ describe('url#decodeUrlParams', () => {
     test('decodes enable concatenate download correctly when true', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -563,15 +544,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -585,7 +563,7 @@ describe('url#decodeUrlParams', () => {
     test('correctly decodes swodlr access method', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -625,15 +603,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -645,7 +620,7 @@ describe('url#decodeUrlParams', () => {
     test('returns undefined when swodlrData is null', () => {
       const expectedResult = {
         ...emptyDecodedResult,
-        focusedCollection: '',
+        focusedCollection: null,
         project: {
           collections: {
             allIds: ['collectionId1', 'collectionId2'],
@@ -664,15 +639,12 @@ describe('url#decodeUrlParams', () => {
           }
         },
         query: {
+          ...emptyDecodedResult.query,
           collection: {
             ...emptyDecodedResult.query.collection,
             byId: {
-              collectionId1: {
-                granules: {}
-              },
-              collectionId2: {
-                granules: {}
-              }
+              collectionId1: { granules: {} },
+              collectionId2: { granules: {} }
             }
           }
         }
@@ -692,7 +664,7 @@ describe('url#encodeUrlQuery', () => {
         allIds: [],
         byId: {}
       },
-      focusedCollection: '',
+      focusedCollection: null,
       projectCollections: {
         allIds: [],
         byId: {}
@@ -710,7 +682,7 @@ describe('url#encodeUrlQuery', () => {
         allIds: ['collectionId1', 'collectionId2'],
         byId: {}
       },
-      focusedCollection: '',
+      focusedCollection: null,
       projectCollections: {
         allIds: ['collectionId1', 'collectionId2'],
         byId: {}
@@ -742,7 +714,7 @@ describe('url#encodeUrlQuery', () => {
       },
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      focusedCollection: '',
+      focusedCollection: null,
       projectCollections: {
         allIds: ['collectionId1', 'collectionId2'],
         byId: {
@@ -767,7 +739,7 @@ describe('url#encodeUrlQuery', () => {
       },
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      focusedCollection: '',
+      focusedCollection: null,
       projectCollections: {
         allIds: ['collectionId1', 'collectionId2'],
         byId: {
@@ -795,7 +767,7 @@ describe('url#encodeUrlQuery', () => {
       },
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      focusedCollection: '',
+      focusedCollection: null,
       projectCollections: {
         allIds: ['collectionId1', 'collectionId2'],
         byId: {
@@ -823,7 +795,7 @@ describe('url#encodeUrlQuery', () => {
       },
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      focusedCollection: '',
+      focusedCollection: null,
       projectCollections: {
         allIds: ['collectionId1', 'collectionId2'],
         byId: {
@@ -853,7 +825,7 @@ describe('url#encodeUrlQuery', () => {
       },
       hasGranulesOrCwic: true,
       pathname: '/path/here',
-      focusedCollection: '',
+      focusedCollection: null,
       projectCollections: {
         allIds: ['collectionId1', 'collectionId2'],
         byId: {

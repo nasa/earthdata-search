@@ -1,5 +1,4 @@
 import { merge } from 'lodash-es'
-import { replace, push } from 'connected-react-router'
 import { parse, stringify } from 'qs'
 
 import actions from './index'
@@ -20,6 +19,7 @@ import { buildConfig } from '../util/portals'
 // eslint-disable-next-line import/no-unresolved
 import availablePortals from '../../../../portals/availablePortals.json'
 import useEdscStore from '../zustand/useEdscStore'
+import routerHelper from '../router/router'
 
 const restoreFromUrl = (payload) => ({
   type: RESTORE_FROM_URL,
@@ -27,7 +27,6 @@ const restoreFromUrl = (payload) => ({
 })
 
 export const updateStore = ({
-  advancedSearch,
   cmrFacets,
   collections,
   earthdataEnvironment,
@@ -40,11 +39,10 @@ export const updateStore = ({
   project,
   query,
   shapefile,
+  selectedRegion,
   timeline
-}, newPathname) => async (dispatch, getState) => {
-  const state = getState()
-  const { router } = state
-  const { location } = router
+}, newPathname) => async (dispatch) => {
+  const { location } = routerHelper.router.state
   const { pathname } = location
 
   // Prevent loading from the urls that don't use URL params.
@@ -59,9 +57,7 @@ export const updateStore = ({
   // If the newPathname is not equal to the current pathname, restore the data from the url
   if (loadFromUrl || (newPathname && newPathname !== pathname)) {
     await dispatch(restoreFromUrl({
-      advancedSearch,
       collections,
-      focusedGranule,
       deprecatedUrlParams
     }))
 
@@ -79,9 +75,13 @@ export const updateStore = ({
           featureFacets,
           cmrFacets
         },
-        focusedCollection: {
-          ...zustandState.focusedCollection,
-          focusedCollection
+        collection: {
+          ...zustandState.collection,
+          collectionId: focusedCollection
+        },
+        granule: {
+          ...zustandState.granule,
+          granuleId: focusedGranule
         },
         map: merge({}, zustandState.map, {
           mapView: merge({}, zustandState.map.mapView, mapView)
@@ -95,6 +95,10 @@ export const updateStore = ({
             // If `hasGranulesOrCwic` is `undefined` from the decoded values it needs to stay `undefined` in the
             // store, not fallback to the initial state
             hasGranulesOrCwic: query.collection.hasGranulesOrCwic
+          },
+          selectedRegion: {
+            ...mergedQuery.selectedRegion,
+            ...selectedRegion
           }
         },
         shapefile: merge({}, zustandState.shapefile, shapefile),
@@ -169,8 +173,14 @@ export const changePath = (path = '') => async (dispatch) => {
     await dispatch(actions.updateStore(decodedParams, pathname))
   }
 
-  const { focusedCollection } = zustandState
-  const { getFocusedCollection } = focusedCollection
+  const {
+    collection,
+    collections,
+    granule
+  } = zustandState
+  const { getCollectionMetadata } = collection
+  const { getCollections } = collections
+  const { getGranuleMetadata } = granule
 
   // If we are moving to a /search path, fetch collection results, this saves an extra request on the non-search pages.
   // Setting requestAddedGranules forces all page types other than search to request only the added granules if they exist, in all
@@ -180,14 +190,15 @@ export const changePath = (path = '') => async (dispatch) => {
     // Matches /portal/<id>, which we redirect to /portal/<id>/search but needs to trigger these actions
     || pathname.match(/\/portal\/\w*/)
   ) {
-    dispatch(actions.getCollections())
+    getCollections()
 
     // Granules Search
     if (
       pathname === '/search/granules'
       || pathname.match(/\/portal\/\w*\/search\/granules$/)
     ) {
-      await getFocusedCollection()
+      getCollectionMetadata()
+      getGranuleMetadata()
     }
 
     // Collection Details
@@ -195,7 +206,8 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/collection-details'
       || pathname.match(/\/portal\/\w*\/search\/granules\/collection-details$/)
     ) {
-      await getFocusedCollection()
+      getCollectionMetadata()
+      getGranuleMetadata()
     }
 
     // Subscription Details
@@ -203,7 +215,7 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/subscriptions'
       || pathname.match(/\/portal\/\w*\/search\/granules\/subscriptions$/)
     ) {
-      await getFocusedCollection()
+      getCollectionMetadata()
     }
 
     // Granule Details
@@ -211,9 +223,9 @@ export const changePath = (path = '') => async (dispatch) => {
       pathname === '/search/granules/granule-details'
       || pathname.match(/\/portal\/\w*\/search\/granules\/granule-details$/)
     ) {
-      await getFocusedCollection()
+      getCollectionMetadata()
 
-      dispatch(actions.getFocusedGranule())
+      getGranuleMetadata()
     }
   }
 
@@ -231,7 +243,7 @@ export const changePath = (path = '') => async (dispatch) => {
     // Project collection metadata needs to exist before calling retrieving access methods
     await zustandProject.getProjectCollections()
 
-    await zustandProject.getProjectGranules()
+    zustandProject.getProjectGranules()
   }
 
   const { getTimeline } = timeline
@@ -240,13 +252,13 @@ export const changePath = (path = '') => async (dispatch) => {
   return null
 }
 
-const updateUrl = ({ options, oldPathname, newPathname }) => (dispatch) => {
+const updateUrl = ({ options, oldPathname, newPathname }) => () => {
   // Only replace if the pathname stays the same as the current pathname.
   // Push if the pathname is different
   if (oldPathname === newPathname) {
-    dispatch(replace(options))
+    routerHelper.router.navigate(options, { replace: true })
   } else {
-    dispatch(push(options))
+    routerHelper.router.navigate(options)
   }
 }
 
@@ -270,12 +282,11 @@ export const changeUrl = (options) => (dispatch, getState) => {
 
   const {
     authToken,
-    router,
     savedProject
   } = state
 
   let newOptions = options
-  const { location } = router
+  const { location } = routerHelper.router.state
   const { pathname: oldPathname } = location
 
   let newPathname
@@ -284,7 +295,8 @@ export const changeUrl = (options) => (dispatch, getState) => {
 
     const { projectId, name, path } = savedProject
     if (projectId || options.length > 2000) {
-      if (path !== newOptions) {
+      // Make sure the path has changed, and is not a path where we don't use params
+      if (path !== newOptions && !isPath(newOptions, urlPathsWithoutUrlParams)) {
         const requestObject = new ProjectRequest(authToken, earthdataEnvironment)
 
         const projectResponse = requestObject.save({
@@ -303,7 +315,7 @@ export const changeUrl = (options) => (dispatch, getState) => {
             newOptions = `${projectPath.split('?')[0]}?projectId=${newProjectId}`
 
             if (projectId !== newProjectId) {
-              dispatch(replace(newOptions))
+              routerHelper.router.navigate(newOptions, { replace: true })
             }
 
             dispatch(actions.updateSavedProject({

@@ -22,21 +22,29 @@ import Button from '../Button/Button'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
 import EDSCImage from '../EDSCImage/EDSCImage'
 
+import useEdscStore from '../../zustand/useEdscStore'
+import { getGranuleId } from '../../zustand/selectors/granule'
+import { getGranulesById } from '../../zustand/selectors/granules'
+
 import './GranuleResultsFocusedMeta.scss'
 
 /**
  * Renders GranuleResultsFocusedMeta.
  * @param {Object} props - The props passed into the component.
- * @param {String} props.focusedGranuleMetadata - The metadata for any currently focused granule.
- * @param {String} props.focusedGranuleId - The id for the focused granule.
  * @param {String} props.onMetricsBrowseGranuleImage - Callback function passed from actions to track metrics.
  */
 const GranuleResultsFocusedMeta = ({
-  focusedGranuleMetadata,
-  focusedGranuleId,
   onMetricsBrowseGranuleImage
 }) => {
-  const { title, links = [], browseFlag } = focusedGranuleMetadata
+  const focusedGranuleId = useEdscStore(getGranuleId)
+  const granulesById = useEdscStore(getGranulesById)
+  const focusedGranuleMetadata = granulesById[focusedGranuleId] || {}
+
+  const {
+    title,
+    links = [],
+    browseFlag
+  } = focusedGranuleMetadata
   const [activeBrowseImageIndex, setActiveBrowseImageIndex] = useState(0)
   const [activeModalBrowseImageIndex, setActiveModalBrowseImageIndex] = useState(0)
   const [browseImageModalIsActive, setBrowseImageModalIsActive] = useState(false)
@@ -253,9 +261,7 @@ const GranuleResultsFocusedMeta = ({
       >
         <div data-testid="granule-results-focused-meta-overlay-wrapper">
           {
-            // Focused granule id is used here to prevent a bug that surfaced with loading new focused granules.
-            // The value in the store is becoming unset momentarily when focusing new granules.
-            (focusedGranuleId && !!browseThumbnails.length && browseFlag) && (
+            (!!browseThumbnails.length && browseFlag) && (
               <div className="granule-results-focused-meta" data-testid="granule-results-focused-meta">
                 <div className="granule-results-focused-meta__secondary-actions">
                   <Button
@@ -479,19 +485,6 @@ const GranuleResultsFocusedMeta = ({
 }
 
 GranuleResultsFocusedMeta.propTypes = {
-  focusedGranuleId: PropTypes.string.isRequired,
-  focusedGranuleMetadata: PropTypes.shape({
-    browseFlag: PropTypes.bool,
-    conceptId: PropTypes.string,
-    links: PropTypes.arrayOf(
-      PropTypes.shape({
-        href: PropTypes.string.isRequired,
-        inherited: PropTypes.bool,
-        rel: PropTypes.string.isRequired
-      })
-    ),
-    title: PropTypes.string
-  }).isRequired,
   onMetricsBrowseGranuleImage: PropTypes.func.isRequired
 }
 

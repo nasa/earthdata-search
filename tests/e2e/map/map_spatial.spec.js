@@ -1,6 +1,6 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { isGetFocusedCollectionsQuery } from '../../support/isGetFocusedCollectionsQuery'
+import { isGetCollectionQuery } from '../../support/isGetCollectionQuery'
 import {
   interceptUnauthenticatedCollections
 } from '../../support/interceptUnauthenticatedCollections'
@@ -1780,7 +1780,7 @@ test.describe('Map: Spatial interactions', () => {
             ...commonHeaders,
             'cmr-hits': '1'
           },
-          paramCheck: (parsedQuery) => parsedQuery?.keyword === conceptId && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
+          paramCheck: (parsedQuery) => parsedQuery?.keyword.includes(conceptId) && parsedQuery?.polygon?.[0] === '42.1875,-2.40647,42.1875,-9.43582,49.21875,-9.43582,42.1875,-2.40647'
         }],
         includeDefault: false
       })
@@ -1819,7 +1819,7 @@ test.describe('Map: Spatial interactions', () => {
       })
 
       await page.route(/api$/, async (route) => {
-        expect(isGetFocusedCollectionsQuery(route, conceptId)).toEqual(true)
+        expect(isGetCollectionQuery(route, conceptId)).toEqual(true)
 
         await route.fulfill({
           json: opensearchGranulesCollectionGraphQlBody,

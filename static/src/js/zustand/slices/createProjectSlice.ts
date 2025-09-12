@@ -11,8 +11,6 @@ import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import configureStore from '../../store/configureStore'
 
 // @ts-expect-error This file does not have types
-import { getCollectionsMetadata } from '../../selectors/collectionMetadata'
-// @ts-expect-error This file does not have types
 import { getUsername } from '../../selectors/user'
 
 // @ts-expect-error This file does not have types
@@ -69,10 +67,13 @@ import type {
 import type {
   CollectionMetadata,
   GranuleResponseData,
+  GranulesMetadata,
   Response,
   SavedAccessConfigs
 } from '../../types/sharedTypes'
 import { getEarthdataEnvironment } from '../selectors/earthdataEnvironment'
+import { getProjectCollectionsIds } from '../selectors/project'
+import { getCollectionsMetadata } from '../selectors/collection'
 
 const processResults = (results: ProjectGranuleResults['results']) => {
   const allIds: ProjectGranules['allIds'] = []
@@ -104,7 +105,7 @@ export const initialGranuleState = {
   addedGranuleIds: [],
   allIds: [],
   byId: {},
-  hits: 0,
+  count: 0,
   isErrored: false,
   isLoaded: false,
   isLoading: false,
@@ -205,14 +206,13 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const {
         authToken
       } = reduxState
-      const earthdataEnvironment = getEarthdataEnvironment(get())
-
       // If the user isn't logged in, return null
       if (!authToken) return null
-
-      // Retrieve data from Redux using selectors
-      const collectionsMetadata = getCollectionsMetadata(reduxState)
       const username = getUsername(reduxState)
+
+      const currentState = get()
+      const earthdataEnvironment = getEarthdataEnvironment(currentState)
+      const collectionsMetadata = getCollectionsMetadata(currentState)
 
       const {
         defaultCmrSearchTags,
@@ -303,8 +303,6 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           }
         })
 
-        const payload = [] as CollectionMetadata[]
-
         const {
           data: responseData
         } = response
@@ -370,12 +368,13 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
           const isOpenSearch = !!getOpenSearchOsddLink(metadata)
 
-          payload.push({
+          const collectionMetadata = {
             abstract,
             archiveAndDistributionInformation,
             associatedDois,
             boxes,
             cloudHosted,
+            conceptId,
             coordinateSystem,
             dataQualitySummaries,
             dataCenter,
@@ -399,7 +398,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             variables,
             versionId,
             ...focusedMetadata
-          })
+          }
 
           const { [conceptId]: savedAccessConfig } = savedAccessConfigs
 
@@ -453,7 +452,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           }
 
           // Update metadata in the store
-          await reduxDispatch(actions.updateCollectionMetadata(payload))
+          set((state) => {
+            state.collection.collectionMetadata[conceptId] = collectionMetadata
+          })
 
           return response
         }))
@@ -480,20 +481,15 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
       const {
         authToken
       } = reduxState
-      const earthdataEnvironment = getEarthdataEnvironment(get())
 
-      // Get a redux selector to fetch collection metadata from the store
-      const collectionsMetadata = getCollectionsMetadata(reduxState)
+      const currentState = get()
+      const earthdataEnvironment = getEarthdataEnvironment(currentState)
+      const collectionsMetadata = getCollectionsMetadata(currentState)
+      const projectCollectionIds = getProjectCollectionsIds(currentState)
 
-      const { collections } = get().project
-      const { allIds } = collections
-
-      await Promise.all(allIds.map((collectionId) => {
+      await Promise.all(projectCollectionIds.map((collectionId) => {
         // Extract granule search parameters from redux specific to this project collection
-        const extractedGranuleParams = extractProjectCollectionGranuleParams(
-          reduxState,
-          collectionId
-        )
+        const extractedGranuleParams = extractProjectCollectionGranuleParams(collectionId)
 
         // Fetch the collection metadata for this project collection
         const collectionMetadata = getCollectionMetadata(collectionId, collectionsMetadata)
@@ -581,7 +577,11 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             const { feed } = data as GranuleResponseData
             const { entry } = feed
 
-            reduxDispatch(actions.addGranuleMetadata(entry))
+            const granules = {} as GranulesMetadata
+
+            entry.forEach((granule) => {
+              granules[granule.id] = granule
+            })
 
             get().project.updateProjectGranuleResults({
               ...payload,
@@ -613,7 +613,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
       const {
         addedGranuleIds = [],
-        hits: granuleCount,
+        count: granuleCount,
         removedGranuleIds = []
       } = projectCollectionGranules
 
@@ -767,7 +767,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
 
     updateProjectGranuleResults: ({
       collectionId,
-      hits,
+      count,
       isOpenSearch,
       pageNum = 1,
       results,
@@ -816,7 +816,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
             ...previousById,
             ...byId
           },
-          hits,
+          count,
           isOpenSearch,
           totalSize,
           singleGranuleSize

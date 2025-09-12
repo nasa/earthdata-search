@@ -17,67 +17,65 @@ const setup = setupTest({
   Component: GranuleResultsBody,
   defaultProps: {
     collectionId: 'collectionId',
-    collectionTags: {},
     directDistributionInformation: {},
-    focusedGranuleId: '',
     generateNotebook: {},
-    granulesMetadata: {
-      one: {
-        id: 'two',
-        browseFlag: true,
-        onlineAccessFlag: true,
-        dayNightFlag: 'DAY',
-        formattedTemporal: [
-          '2019-04-28 00:00:00',
-          '2019-04-29 23:59:59'
-        ],
-        thumbnail: '/fake/path/image.jpg',
-        title: 'Granule title one',
-        links: [
-          {
-            rel: 'http://linkrel/data#',
-            title: 'linktitle',
-            href: 'http://linkhref'
-          }
-        ]
-      },
-      two: {
-        id: 'two',
-        browseFlag: true,
-        onlineAccessFlag: true,
-        dayNightFlag: 'DAY',
-        formattedTemporal: [
-          '2019-04-28 00:00:00',
-          '2019-04-29 23:59:59'
-        ],
-        thumbnail: '/fake/path/image.jpg',
-        title: 'Granule title two',
-        links: [
-          {
-            rel: 'http://linkrel/data#',
-            title: 'linktitle',
-            href: 'http://linkhref'
-          }
-        ]
-      }
-    },
-    granuleSearchResults: {
-      allIds: ['one', 'two'],
-      hits: 2,
-      isLoaded: true,
-      isLoading: false,
-      loadTime: 1123,
-      timerStart: null
-    },
     isOpenSearch: false,
     loadNextPage: jest.fn(),
     location: { search: 'value' },
     onGenerateNotebook: jest.fn(),
-    onFocusedGranuleChange: jest.fn(),
     onMetricsDataAccess: jest.fn(),
     onMetricsAddGranuleProject: jest.fn(),
-    panelView: 'list',
-    project: {}
+    panelView: 'list'
+  },
+  defaultZustandState: {
+    granules: {
+      granules: {
+        count: 2,
+        isLoaded: true,
+        isLoading: false,
+        loadTime: 1123,
+        items: [
+          {
+            id: 'two',
+            browseFlag: true,
+            onlineAccessFlag: true,
+            dayNightFlag: 'DAY',
+            formattedTemporal: [
+              '2019-04-28 00:00:00',
+              '2019-04-29 23:59:59'
+            ],
+            thumbnail: '/fake/path/image.jpg',
+            title: 'Granule title one',
+            links: [
+              {
+                rel: 'http://linkrel/data#',
+                title: 'linktitle',
+                href: 'http://linkhref'
+              }
+            ]
+          },
+          {
+            id: 'two',
+            browseFlag: true,
+            onlineAccessFlag: true,
+            dayNightFlag: 'DAY',
+            formattedTemporal: [
+              '2019-04-28 00:00:00',
+              '2019-04-29 23:59:59'
+            ],
+            thumbnail: '/fake/path/image.jpg',
+            title: 'Granule title two',
+            links: [
+              {
+                rel: 'http://linkrel/data#',
+                title: 'linktitle',
+                href: 'http://linkhref'
+              }
+            ]
+          }
+        ]
+      }
+    }
   }
 })
 
@@ -88,10 +86,8 @@ describe('GranuleResultsBody component', () => {
     expect(GranuleResultsList).toHaveBeenCalledTimes(1)
     expect(GranuleResultsList).toHaveBeenCalledWith({
       collectionId: 'collectionId',
-      collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      focusedGranuleId: '',
       generateNotebook: {},
       granules: [{
         browseFlag: true,
@@ -192,8 +188,6 @@ describe('GranuleResultsBody component', () => {
       isOpenSearch: false,
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      location: { search: 'value' },
-      onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),
@@ -213,10 +207,8 @@ describe('GranuleResultsBody component', () => {
     expect(GranuleResultsTable).toHaveBeenCalledTimes(1)
     expect(GranuleResultsTable).toHaveBeenCalledWith({
       collectionId: 'collectionId',
-      collectionTags: {},
       directDistributionInformation: {},
       excludedGranuleIds: [],
-      focusedGranuleId: '',
       generateNotebook: {},
       granules: [{
         browseFlag: true,
@@ -317,8 +309,6 @@ describe('GranuleResultsBody component', () => {
       isOpenSearch: false,
       itemCount: 2,
       loadMoreItems: expect.any(Function),
-      location: { search: 'value' },
-      onFocusedGranuleChange: expect.any(Function),
       onGenerateNotebook: expect.any(Function),
       onMetricsAddGranuleProject: expect.any(Function),
       onMetricsDataAccess: expect.any(Function),
@@ -330,10 +320,13 @@ describe('GranuleResultsBody component', () => {
   describe('when the first granules are loading', () => {
     test('adds a dummy item to the list', () => {
       setup({
-        overrideProps: {
-          granuleSearchResults: {
-            allIds: [],
-            isLoading: true
+        overrideZustandState: {
+          granules: {
+            granules: {
+              isLoading: true,
+              isLoaded: false,
+              items: []
+            }
           }
         }
       })
@@ -349,10 +342,11 @@ describe('GranuleResultsBody component', () => {
   describe('when there are more pages to be loaded', () => {
     test('adds a dummy item to the list', () => {
       setup({
-        overrideProps: {
-          granuleSearchResults: {
-            allIds: ['one', 'two'],
-            granuleHits: 10
+        overrideZustandState: {
+          granules: {
+            granules: {
+              count: 10
+            }
           }
         }
       })
@@ -366,44 +360,11 @@ describe('GranuleResultsBody component', () => {
 
   describe('when all collections are loaded', () => {
     test('does not add a dummy item ', () => {
-      setup({
-        overrideProps: {
-          granulesMetadata: {
-            one: {
-              id: 'two',
-              browseFlag: true,
-              onlineAccessFlag: true,
-              dayNightFlag: 'DAY',
-              formattedTemporal: [
-                '2019-04-28 00:00:00',
-                '2019-04-29 23:59:59'
-              ],
-              thumbnail: '/fake/path/image.jpg',
-              title: 'Granule title one',
-              links: [
-                {
-                  rel: 'http://linkrel/data#',
-                  title: 'linktitle',
-                  href: 'http://linkhref'
-                }
-              ]
-            }
-          },
-          granuleQuery: {},
-          granuleSearchResults: {
-            allIds: ['one'],
-            hits: 1,
-            isLoaded: true,
-            isLoading: false,
-            loadTime: 1123,
-            timerStart: null
-          }
-        }
-      })
+      setup()
 
       expect(GranuleResultsList).toHaveBeenCalledTimes(1)
       expect(GranuleResultsList).toHaveBeenCalledWith(expect.objectContaining({
-        itemCount: 1
+        itemCount: 2
       }), {})
     })
   })
@@ -417,28 +378,13 @@ describe('GranuleResultsBody component', () => {
 
     test('renders a spinner when the page is loading', () => {
       setup({
-        overrideProps: {
-          granuleSearchResults: {
-            loadTime: undefined,
-            isLoading: true,
-            isLoaded: false
+        overrideZustandState: {
+          granules: {
+            granules: {
+              isLoading: true,
+              isLoaded: false
+            }
           }
-        }
-      })
-
-      expect(Spinner).toHaveBeenCalledTimes(1)
-      expect(Spinner).toHaveBeenCalledWith({
-        type: 'dots',
-        size: 'x-tiny'
-      }, {})
-
-      expect(screen.getByText('Search Time:')).toBeInTheDocument()
-    })
-
-    test('renders a spinner before the page has started loading', () => {
-      setup({
-        overrideProps: {
-          granuleSearchResults: {}
         }
       })
 
@@ -455,39 +401,7 @@ describe('GranuleResultsBody component', () => {
   describe('isItemLoaded', () => {
     describe('when there is no next page', () => {
       test('returns true', () => {
-        setup({
-          overrideProps: {
-            granulesMetadata: {
-              one: {
-                id: 'one',
-                browseFlag: true,
-                onlineAccessFlag: true,
-                dayNightFlag: 'DAY',
-                formattedTemporal: [
-                  '2019-04-28 00:00:00',
-                  '2019-04-29 23:59:59'
-                ],
-                thumbnail: '/fake/path/image.jpg',
-                title: 'Granule title one',
-                links: [
-                  {
-                    rel: 'http://linkrel/data#',
-                    title: 'linktitle',
-                    href: 'http://linkhref'
-                  }
-                ]
-              }
-            },
-            granuleSearchResults: {
-              allIds: ['one'],
-              hits: 1,
-              isLoading: false,
-              isLoaded: true,
-              loadTime: 1150,
-              timerStart: null
-            }
-          }
-        })
+        setup()
 
         const result = GranuleResultsList.mock.calls[0][0].isItemLoaded(1)
         expect(result).toEqual(true)
@@ -497,35 +411,11 @@ describe('GranuleResultsBody component', () => {
     describe('when there is a next page and the item is not loaded', () => {
       test('returns false', () => {
         setup({
-          overrideProps: {
-            granulesMetadata: {
-              one: {
-                id: 'one',
-                browseFlag: true,
-                onlineAccessFlag: true,
-                dayNightFlag: 'DAY',
-                formattedTemporal: [
-                  '2019-04-28 00:00:00',
-                  '2019-04-29 23:59:59'
-                ],
-                thumbnail: '/fake/path/image.jpg',
-                title: 'Granule title one',
-                links: [
-                  {
-                    rel: 'http://linkrel/data#',
-                    title: 'linktitle',
-                    href: 'http://linkhref'
-                  }
-                ]
+          overrideZustandState: {
+            granules: {
+              granules: {
+                count: 5
               }
-            },
-            granuleSearchResults: {
-              allIds: ['one'],
-              hits: 2,
-              isLoading: false,
-              isLoaded: true,
-              loadTime: 1150,
-              timerStart: null
             }
           }
         })

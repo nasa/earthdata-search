@@ -9,16 +9,18 @@ import { PropTypes } from 'prop-types'
 import { VariableSizeGrid as Grid } from 'react-window'
 import InfiniteLoader from 'react-window-infinite-loader'
 import { isEmpty } from 'lodash-es'
+import { useLocation } from 'react-router-dom'
 
 import { getActivePanelSize } from '../../util/getActivePanelSize'
 import { itemToRowColumnIndicies } from '../../util/itemToRowColumnIndicies'
 import { useRemsToPixels } from '../../hooks/useRemsToPixels'
-import { locationPropType } from '../../util/propTypes/location'
 
 import GranuleResultsListItem from './GranuleResultsListItem'
 
 import useEdscStore from '../../zustand/useEdscStore'
 import { getCollectionsQuerySpatial } from '../../zustand/selectors/query'
+import { getFocusedCollectionTags } from '../../zustand/selectors/collection'
+import { getGranuleId } from '../../zustand/selectors/granule'
 
 import './GranuleResultsList.scss'
 
@@ -60,7 +62,6 @@ innerElementType.propTypes = {
  * Renders GranuleResultsListBody.
  * @param {Object} props - The props passed into the component.
  * @param {String} props.collectionId - The collection ID.
- * @param {Object} props.collectionTags - The tags for the focused collection
  * @param {Object} props.directDistributionInformation - The direct distribution information.
  * @param {Array} props.excludedGranuleIds - List of excluded granule IDs.
  * @param {Object} props.generateNotebook - The generateNotebook state from the redux store.
@@ -72,9 +73,7 @@ innerElementType.propTypes = {
  * @param {Function} props.isItemLoaded - Callback to determine if a granule has been loaded.
  * @param {Number} props.itemCount - Number of total granule list items.
  * @param {Function} props.loadMoreItems - Callback to load more granules.
- * @param {Object} props.location - Location passed from react router.
  * @param { Function } props.onAddGranuleToProjectCollection - Callback to add a granule to the project.
- * @param {Function} props.onFocusedGranuleChange - Callback to change the focused granule.
  * @param {Function} props.onGenerateNotebook - Callback to generate a notebook.
  * @param {Function} props.onMetricsAddGranuleProject - Metrics callback for adding granule to project event.
  * @param {Function} props.onMetricsDataAccess - Callback to record data access metrics.
@@ -86,10 +85,8 @@ innerElementType.propTypes = {
  */
 export const GranuleResultsListBody = ({
   collectionId,
-  collectionTags,
   directDistributionInformation,
   excludedGranuleIds,
-  focusedGranuleId,
   generateNotebook,
   granules,
   height,
@@ -99,8 +96,6 @@ export const GranuleResultsListBody = ({
   isItemLoaded,
   itemCount,
   loadMoreItems,
-  location,
-  onFocusedGranuleChange,
   onGenerateNotebook,
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
@@ -109,6 +104,9 @@ export const GranuleResultsListBody = ({
   visibleMiddleIndex,
   width
 }) => {
+  const location = useLocation()
+  const collectionTags = useEdscStore(getFocusedCollectionTags)
+  const focusedGranuleId = useEdscStore(getGranuleId)
   const excludeGranule = useEdscStore((state) => state.query.excludeGranule)
   const collectionQuerySpatial = useEdscStore(getCollectionsQuerySpatial)
 
@@ -250,7 +248,6 @@ export const GranuleResultsListBody = ({
                 location,
                 numColumns,
                 onExcludeGranule: excludeGranule,
-                onFocusedGranuleChange,
                 onGenerateNotebook,
                 onMetricsAddGranuleProject,
                 onMetricsDataAccess,
@@ -296,10 +293,8 @@ GranuleResultsListBody.defaultProps = {
 
 GranuleResultsListBody.propTypes = {
   collectionId: PropTypes.string.isRequired,
-  collectionTags: PropTypes.shape({}).isRequired,
   directDistributionInformation: PropTypes.shape({}).isRequired,
   excludedGranuleIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  focusedGranuleId: PropTypes.string.isRequired,
   generateNotebook: PropTypes.shape({}).isRequired,
   granules: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   height: PropTypes.number.isRequired,
@@ -309,8 +304,6 @@ GranuleResultsListBody.propTypes = {
   isItemLoaded: PropTypes.func.isRequired,
   itemCount: PropTypes.number.isRequired,
   loadMoreItems: PropTypes.func.isRequired,
-  location: locationPropType.isRequired,
-  onFocusedGranuleChange: PropTypes.func.isRequired,
   onGenerateNotebook: PropTypes.func.isRequired,
   onMetricsAddGranuleProject: PropTypes.func.isRequired,
   onMetricsDataAccess: PropTypes.func.isRequired,

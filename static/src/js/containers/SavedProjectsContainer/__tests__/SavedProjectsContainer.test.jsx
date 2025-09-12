@@ -30,7 +30,6 @@ const setup = setupTest({
   Component: SavedProjectsContainer,
   defaultProps: {
     authToken: 'TEST_TOKEN_DEFAULT',
-    earthdataEnvironment: 'uat',
     onChangePath: jest.fn(),
     dispatchHandleError: jest.fn()
   }

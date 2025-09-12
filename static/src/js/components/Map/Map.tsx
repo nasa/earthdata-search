@@ -72,6 +72,7 @@ import drawFocusedGranule from '../../util/map/drawFocusedGranule'
 import drawGranuleBackgroundsAndImagery from '../../util/map/drawGranuleBackgroundsAndImagery'
 import drawGranuleOutlines from '../../util/map/drawGranuleOutlines'
 import drawShapefile from '../../util/map/drawShapefile'
+import { drawNlpSpatialData } from '../../util/map/drawNlpSpatialData'
 import drawSpatialSearch from '../../util/map/drawSpatialSearch'
 import handleDrawEnd from '../../util/map/interactions/handleDrawEnd'
 import labelsLayer from '../../util/map/layers/placeLabels'
@@ -91,6 +92,7 @@ import './Map.scss'
 import {
   GranuleMetadata,
   MapGranule,
+  NlpCollectionQuery,
   ProjectionCode,
   Query,
   ShapefileFile,
@@ -159,6 +161,17 @@ const spatialDrawingSource = new VectorSource({
 const spatialDrawingLayer = new VectorLayer({
   source: spatialDrawingSource,
   className: 'map__spatial-drawing-layer',
+  zIndex: 4
+})
+
+// Layer for NLP spatial drawing
+// This is separate from spatialDrawingLayer to avoid interference with spatialSearch clears
+const nlpSpatialSource = new VectorSource({
+  wrapX: false
+})
+const nlpSpatialLayer = new VectorLayer({
+  source: nlpSpatialSource,
+  className: 'map__nlp-spatial-layer',
   zIndex: 4
 })
 
@@ -282,8 +295,8 @@ interface MapProps {
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
   isProjectPage: boolean
-  /** Function to call when the focused granule is changed */
-  onChangeFocusedGranule: (granuleId: string) => void
+  /** The NLP collection data */
+  nlpCollection: NlpCollectionQuery | null
   /** Function to call when the map is updated */
   onChangeMap: (mapView: Partial<MapView>) => void
   /** Function to call when the projection is changed */
@@ -323,6 +336,8 @@ interface MapProps {
   projectionCode: ProjectionCode
   /** The rotation of the map */
   rotation: number
+  /** Function to call when the focused granule is changed */
+  setGranuleId: (granuleId: string | null) => void
   /** The shapefile to render on the map */
   shapefile: ShapefileSlice['shapefile']
   /** The spatial search object */
@@ -340,7 +355,6 @@ interface MapProps {
  * @param {String} params.granulesKey Key to determine if the granules have changed
  * @param {String} params.focusedCollectionId Collection ID of the focused collection
  * @param {String} params.focusedGranuleId Granule ID of the focused granule
- * @param {Function} params.onChangeFocusedGranule Function to call when the focused granule is changed
  * @param {Function} params.onChangeMap Function to call when the map is updated
  * @param {Function} params.onChangeProjection Function to call when the projection is changed
  * @param {Function} params.onChangeQuery Function to call when the query is changed
@@ -354,6 +368,7 @@ interface MapProps {
  * @param {Function} params.onUpdateShapefile Function to call when the shapefile is updated
  * @param {String} params.projectionCode Projection code of the map
  * @param {Number} params.rotation Rotation of the map
+ * @param {Function} params.setGranuleId Function to call when the focused granule is changed
  * @param {Object} params.shapefile Shapefile to render on the map
  * @param {Object} params.spatialSearch Spatial search object
  * @param {Number} params.zoom Zoom level of the map
@@ -368,7 +383,7 @@ const Map: React.FC<MapProps> = ({
   granulesKey,
   isFocusedCollectionPage,
   isProjectPage,
-  onChangeFocusedGranule,
+  nlpCollection,
   onChangeMap,
   onChangeProjection,
   onChangeQuery,
@@ -384,6 +399,7 @@ const Map: React.FC<MapProps> = ({
   overlays,
   projectionCode,
   rotation,
+  setGranuleId,
   shapefile,
   spatialSearch,
   zoom
@@ -392,7 +408,13 @@ const Map: React.FC<MapProps> = ({
   // on the map view when the panels are resized.
   // We adjust the padding so that centering the map on a point will center the point in the
   // viewable area of the map and not behind a panel.
-  const panelsWidth = useEdscStore((state) => state.ui.panels.panelsWidth)
+  const {
+    panelsWidth,
+    sidebarWidth
+  } = useEdscStore((state) => ({
+    panelsWidth: state.ui.panels.panelsWidth,
+    sidebarWidth: state.ui.panels.sidebarWidth
+  }))
 
   // Create a ref for the map and the map dome element
   const mapRef = useRef<OlMap>(undefined)
@@ -418,12 +440,13 @@ const Map: React.FC<MapProps> = ({
         granuleHighlightsLayer,
         focusedGranuleLayer,
         granuleImageryLayerGroup,
-        spatialDrawingLayer
+        spatialDrawingLayer,
+        nlpSpatialLayer
       ],
       target: mapElRef.current as HTMLDivElement,
       view: createView({
         center,
-        padding: [0, 0, 0, panelsWidth],
+        padding: [0, 0, 0, panelsWidth + sidebarWidth],
         projectionCode,
         rotation,
         zoom
@@ -595,7 +618,7 @@ const Map: React.FC<MapProps> = ({
       /** The source to move the map to */
       source?: VectorSource
     }) => {
-      let extent
+      let extent: import('ol/extent').Extent | undefined
 
       // If a shape was passed, use the extent of that shape
       if (shape) {
@@ -828,9 +851,9 @@ const Map: React.FC<MapProps> = ({
       granuleBackgroundsSource,
       isProjectPage,
       map,
-      onChangeFocusedGranule,
       onExcludeGranule,
       onMetricsMap,
+      setGranuleId,
       timesIconSvg
     })
 
@@ -895,9 +918,9 @@ const Map: React.FC<MapProps> = ({
       granuleBackgroundsSource,
       granuleId: granule ? granule.id : null,
       isProjectPage,
-      map: mapRef.current as OlMap,
-      onChangeFocusedGranule,
+      map: (mapRef.current as OlMap),
       onExcludeGranule,
+      setGranuleId,
       timesIconSvg
     })
   }
@@ -916,7 +939,6 @@ const Map: React.FC<MapProps> = ({
     }
   }, [focusedCollectionId])
 
-  // Update the map view when the panelsWidth changes
   useEffect(() => {
     // When colorMap or isFocusedCollectionPage changes, remove the existing legend control
     // and add a new one if necessary.
@@ -941,6 +963,7 @@ const Map: React.FC<MapProps> = ({
     }
   }, [isFocusedCollectionPage, colorMap])
 
+  // Update the map view when the panelsWidth changes
   useEffect(() => {
     // When the panelsWidth changes, update the padding on the map view.
     // This will ensure when we want to center something on the map it is
@@ -950,12 +973,13 @@ const Map: React.FC<MapProps> = ({
     const view = map.getView()
 
     // Set the new padding value with the new panelsWidth
-    view.padding = [0, 0, 0, panelsWidth]
-  }, [panelsWidth])
+    view.padding = [0, 0, 0, panelsWidth + sidebarWidth]
+  }, [panelsWidth, sidebarWidth])
 
   // When the granules change, draw the granule backgrounds
   useEffect(() => {
     // If the granules haven't changed and the projection hasn't changed, don't redraw the granule backgrounds
+    // Redraw the granule backgrounds if the product layer from the gibs tag has changed
     if (granulesKey === previousGranulesKey && projectionCode === previousProjectionCode) return
 
     // Update the previous values
@@ -991,9 +1015,9 @@ const Map: React.FC<MapProps> = ({
         granuleBackgroundsSource,
         granuleId: focusedGranuleId,
         isProjectPage,
-        map: mapRef.current as OlMap,
-        onChangeFocusedGranule,
+        map: (mapRef.current as OlMap),
         onExcludeGranule,
+        setGranuleId,
         shouldMoveMap: false,
         timesIconSvg
       })
@@ -1009,21 +1033,40 @@ const Map: React.FC<MapProps> = ({
     })
   }, [spatialSearch])
 
+  // Draw NLP spatial features when NLP collection data changes
+  useEffect(() => {
+    // Clear any existing NLP spatial features when no geoJson data exists
+    if (!nlpCollection?.spatial?.geoJson) {
+      nlpSpatialSource.clear()
+
+      return
+    }
+
+    const { geoJson } = nlpCollection.spatial
+
+    // Draw the NLP-generated spatial boundary on the map
+    drawNlpSpatialData({
+      geometry: geoJson,
+      projectionCode,
+      vectorSource: nlpSpatialSource
+    })
+  }, [nlpCollection, projectionCode])
+
   // When the shapefile changes, draw the shapefile
   useEffect(() => {
     if (shapefile && shapefile.file) {
       const { file, selectedFeatures } = shapefile
-
       const { showMbr, drawingNewLayer } = spatialSearch
 
       drawShapefile({
         drawingNewLayer,
+        selectedFeatures,
         onChangeQuery,
+        onChangeProjection,
         onMetricsMap,
         onToggleTooManyPointsModal,
         onUpdateShapefile,
         projectionCode,
-        selectedFeatures,
         shapefile: file,
         shapefileAdded: false,
         showMbr,

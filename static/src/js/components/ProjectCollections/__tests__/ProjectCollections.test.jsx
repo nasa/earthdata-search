@@ -23,9 +23,9 @@ const setup = setupTest({
     onMetricsDataAccess: jest.fn(),
     onUpdateProjectName: jest.fn()
   },
-  defaultReduxState: {
-    metadata: {
-      collections: {
+  defaultZustandState: {
+    collection: {
+      collectionMetadata: {
         collectionId1: {
           mock: 'data 1'
         },
@@ -33,9 +33,7 @@ const setup = setupTest({
           mock: 'data 2'
         }
       }
-    }
-  },
-  defaultZustandState: {
+    },
     project: {
       collections: {
         allIds: ['collectionId1', 'collectionId2'],

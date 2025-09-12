@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { screen, render } from '@testing-library/react'
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import * as actions from '../../../middleware/metrics/actions'
 import GranuleResultsFocusedMeta from '../../../components/GranuleResults/GranuleResultsFocusedMeta'
@@ -9,21 +9,14 @@ import {
   mapDispatchToProps
 } from '../GranuleResultsFocusedMetaContainer'
 
-jest.mock('../../../components/GranuleResults/GranuleResultsFocusedMeta', () => jest.fn(() => <div data-testid="granule-results-focused-meta-overlay-wrapper" />))
+jest.mock('../../../components/GranuleResults/GranuleResultsFocusedMeta', () => jest.fn(() => <div />))
 
-const setup = (overrideProps) => {
-  const onMetricsBrowseGranuleImage = jest.fn()
-  const props = {
-    focusedGranuleMetadata: { test: 'test' },
-    focusedGranuleId: '1234-TEST',
-    onMetricsBrowseGranuleImage,
-    ...overrideProps
+const setup = setupTest({
+  Component: GranuleResultsFocusedMetaContainer,
+  defaultProps: {
+    onMetricsBrowseGranuleImage: jest.fn()
   }
-
-  render(<GranuleResultsFocusedMetaContainer {...props} />)
-
-  return { onMetricsBrowseGranuleImage }
-}
+})
 
 describe('mapDispatchToProps', () => {
   test('onMetricsBrowseGranuleImage calls metrics actions.metricsBrowseGranuleImage', () => {
@@ -36,8 +29,8 @@ describe('mapDispatchToProps', () => {
       value: 'Test'
     })
 
-    expect(spy).toBeCalledTimes(1)
-    expect(spy).toBeCalledWith({
+    expect(spy).toHaveBeenCalledTimes(1)
+    expect(spy).toHaveBeenCalledWith({
       modalOpen: true,
       granuleId: 'G-1234-TEST',
       value: 'Test'
@@ -47,16 +40,11 @@ describe('mapDispatchToProps', () => {
 
 describe('GranuleResultsFocusedMetaContainer component', () => {
   test('passes its props and renders a single GranuleResultsFocusedMeta component', () => {
-    const { onMetricsBrowseGranuleImage } = setup()
+    const { props } = setup()
 
-    expect(screen.getByTestId('granule-results-focused-meta-overlay-wrapper')).toBeInTheDocument()
     expect(GranuleResultsFocusedMeta).toHaveBeenCalledTimes(1)
-
-    // Using the `toHaveBeenCalledWith` assertion also have the deprecated react context object in it making it less readable
-    expect(GranuleResultsFocusedMeta.mock.calls[0][0]).toEqual({
-      focusedGranuleMetadata: { test: 'test' },
-      focusedGranuleId: '1234-TEST',
-      onMetricsBrowseGranuleImage
-    })
+    expect(GranuleResultsFocusedMeta).toHaveBeenCalledWith({
+      onMetricsBrowseGranuleImage: props.onMetricsBrowseGranuleImage
+    }, {})
   })
 })

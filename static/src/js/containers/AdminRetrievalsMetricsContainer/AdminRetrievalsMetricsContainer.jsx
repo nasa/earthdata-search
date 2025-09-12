@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import actions from '../../actions'
 import AdminRetrievalsMetrics from '../../components/AdminRetrievalsMetrics/AdminRetrievalsMetrics'
@@ -50,6 +49,4 @@ AdminRetrievalsMetricsContainer.propTypes = {
   retrievalsMetrics: PropTypes.shape({})
 }
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(AdminRetrievalsMetricsContainer)
-)
+export default connect(mapStateToProps, mapDispatchToProps)(AdminRetrievalsMetricsContainer)

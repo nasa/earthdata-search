@@ -12,16 +12,6 @@ import * as metricsMap from '../../../middleware/metrics/actions'
 jest.mock('../../../components/Map/Map', () => <div />)
 
 describe('mapDispatchToProps', () => {
-  test('onChangeFocusedGranule calls actions.changeFocusedGranule', () => {
-    const dispatch = jest.fn()
-    const spy = jest.spyOn(actions, 'changeFocusedGranule')
-
-    mapDispatchToProps(dispatch).onChangeFocusedGranule('granuleId')
-
-    expect(spy).toHaveBeenCalledTimes(1)
-    expect(spy).toHaveBeenCalledWith('granuleId')
-  })
-
   test('onMetricsMap calls metricsMap', () => {
     const dispatch = jest.fn()
     const spy = jest.spyOn(metricsMap, 'metricsMap')
@@ -66,13 +56,6 @@ describe('mapDispatchToProps', () => {
 describe('mapStateToProps', () => {
   test('returns the correct state', () => {
     const store = {
-      advancedSearch: {},
-      metadata: {
-        collections: {},
-        colormaps: {}
-      },
-      focusedGranule: 'granuleId',
-      router: {},
       ui: {
         map: {
           drawingNewLayer: false
@@ -84,15 +67,9 @@ describe('mapStateToProps', () => {
     }
 
     const expectedState = {
-      advancedSearch: {},
-      collectionsMetadata: {},
       colormapsMetadata: {},
       displaySpatialPolygonWarning: false,
-      drawingNewLayer: false,
-      focusedGranuleId: 'granuleId',
-      granuleSearchResults: {},
-      granulesMetadata: {},
-      router: {}
+      drawingNewLayer: false
     }
 
     expect(mapStateToProps(store)).toEqual(expectedState)

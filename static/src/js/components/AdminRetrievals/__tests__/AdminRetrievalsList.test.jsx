@@ -1,79 +1,79 @@
-import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import { gql } from '@apollo/client'
+import {
+  screen,
+  waitFor,
+  within
+} from '@testing-library/react'
 
-import { AdminRetrievalsList } from '../AdminRetrievalsList'
+import AdminRetrievalsList from '../AdminRetrievalsList'
+import setupTest from '../../../../../../jestConfigs/setupTest'
+import ADMIN_RETRIEVALS from '../../../operations/queries/adminRetrievals'
 
-Enzyme.configure({ adapter: new Adapter() })
-
-function setup(overrideProps) {
-  const props = {
-    historyPush: jest.fn(),
-    onAdminViewRetrieval: jest.fn(),
-    onUpdateAdminRetrievalsSortKey: jest.fn(),
-    onUpdateAdminRetrievalsPageNum: jest.fn(),
-    retrievals: {
-      allIds: [],
-      byId: {},
-      pagination: {
-        pageNum: 1,
-        pageSize: 20,
-        totalResults: 70
+const setup = setupTest({
+  Component: AdminRetrievalsList,
+  defaultApolloClientMocks: [
+    {
+      request: {
+        query: gql(ADMIN_RETRIEVALS),
+        variables: {
+          params: {
+            limit: 20,
+            offset: 0
+          }
+        }
       },
-      sortKey: ''
-    },
-    ...overrideProps
-  }
-
-  const enzymeWrapper = shallow(<AdminRetrievalsList {...props} />)
-
-  return {
-    enzymeWrapper,
-    props
-  }
-}
+      result: {
+        data: {
+          adminRetrievals: {
+            adminRetrievals: [
+              {
+                id: 1,
+                obfuscatedId: '1',
+                jsondata: {},
+                environment: 'prod',
+                createdAt: '2019-08-25T11:59:14.390Z',
+                updatedAt: '2019-08-25T11:59:14.390Z',
+                user: {
+                  id: 1,
+                  ursId: 'test-ursid'
+                }
+              }
+            ],
+            count: 1,
+            pageInfo: {
+              currentPage: 1,
+              hasNextPage: false,
+              hasPreviousPage: false,
+              pageCount: 1
+            }
+          }
+        }
+      }
+    }
+  ],
+  withRouter: true,
+  withApolloClient: true
+})
 
 describe('AdminRetrievalsList component', () => {
-  test('renders itself correctly', () => {
-    const { enzymeWrapper } = setup()
+  test('renders itself correctly', async () => {
+    setup()
 
-    expect(enzymeWrapper.find('.admin-retrievals-list__table').length).toBe(1)
-    expect(enzymeWrapper.find('.admin-retrievals-list__pagination-wrapper').length).toBe(1)
-  })
-
-  test('renders the collections table when collections are provided', () => {
-    const { enzymeWrapper } = setup({
-      retrievals: {
-        allIds: ['1109324645'],
-        byId: {
-          1109324645: {
-            id: 64,
-            jsondata: {},
-            environment: 'prod',
-            created_at: '2019-08-25T11:59:14.390Z',
-            user_id: 1,
-            username: 'edsc-test',
-            total: 40,
-            obfuscated_id: '1109324645'
-          }
-        },
-        pagination: {
-          pageNum: 1,
-          pageSize: 20,
-          totalResults: 1
-        },
-        sortKey: ''
-      }
-
+    await waitFor(() => {
+      expect(screen.getByRole('table')).toBeInTheDocument()
     })
 
-    expect(enzymeWrapper.find('.admin-retrievals-list__table').length).toBe(1)
-    expect(enzymeWrapper.find('.admin-retrievals-list__pagination-wrapper').length).toBe(1)
+    const table = screen.getByRole('table')
 
-    expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr').length).toBe(1)
-    expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr td').at(0).text()).toEqual('64')
-    expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr td').at(1).text()).toEqual('1109324645')
-    expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr td').at(2).text()).toEqual('edsc-test')
-    expect(enzymeWrapper.find('.admin-retrievals-list__table tbody tr td').at(3).text()).toEqual('2019-08-25T11:59:14.390Z')
+    expect(within(table).getAllByRole('columnheader')).toHaveLength(2)
+    expect(within(table).getAllByRole('cell')).toHaveLength(4)
+    expect(within(table).getAllByRole('columnheader')[0]).toHaveTextContent('ID')
+    expect(within(table).getAllByRole('cell')[0]).toHaveTextContent('1')
+    expect(within(table).getAllByRole('columnheader')[1]).toHaveTextContent('Obfuscated ID')
+    expect(within(table).getAllByRole('cell')[1]).toHaveTextContent('1')
+    expect(within(table).getAllByRole('button')[0]).toHaveTextContent('URS ID')
+    expect(within(table).getAllByRole('cell')[2]).toHaveTextContent('test-ursid')
+    expect(within(table).getAllByRole('button')[1]).toHaveTextContent('Created')
+    expect(within(table).getAllByRole('cell')[3]).toHaveTextContent('2019-08-25T11:59:14.390Z')
   })
 })
