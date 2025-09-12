@@ -48,6 +48,7 @@ export const OrderStatus = ({
   retrieval = {}
 }) => {
   const params = useParams()
+  const { id: paramsId } = params
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   useEffect(() => {
@@ -143,8 +144,8 @@ export const OrderStatus = ({
   const introduction = (
     <p>
       {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-      <a href={`${edscHost}/downloads/${id}${eeLink}`}>
-        {`${edscHost}/downloads/${id}${eeLink}`}
+      <a href={`${edscHost}/downloads/${paramsId}${eeLink}`}>
+        {`${edscHost}/downloads/${paramsId}${eeLink}`}
       </a>
       {' or the '}
       <PortalLinkContainer
@@ -184,7 +185,7 @@ export const OrderStatus = ({
             <Well.Heading>Download Status</Well.Heading>
             <Well.Introduction>{introduction}</Well.Introduction>
             {
-              (isLoading && !isLoaded) && (
+              (!id && !isLoaded) && (
                 <Skeleton
                   className="order-status__item-skeleton"
                   containerStyle={
