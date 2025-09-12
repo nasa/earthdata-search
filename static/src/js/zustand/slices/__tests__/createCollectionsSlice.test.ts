@@ -437,6 +437,7 @@ describe('createCollectionsSlice', () => {
         spatial: null,
         temporal: null
       })
+
       expect(updatedCollectionsEmpty.collections.count).toBe(0)
       expect(updatedCollectionsEmpty.collections.isLoaded).toBe(true)
       expect(updatedCollectionsEmpty.collections.isLoading).toBe(false)
