@@ -468,7 +468,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   // Generate a key based on the nonExcludedGranules, addedGranuleIds, gibsTagProduct, and removedGranuleIds,
   // and gibs tags. `granulesKey` is used to prevent unnecessary rerenders in the Map component.
   const granulesKey = Buffer.from(JSON.stringify({
-    gibsTagProduct: gibsTag?.product || '',
+    gibsTagProduct: mapLayers.map((layer) => layer.product),
     nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
     addedGranuleIds: allAddedGranuleIds,
     removedGranuleIds: allRemovedGranuleIds
@@ -586,10 +586,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   // Generate a key based on the granules that need to be drawn on the map, and the gibsTagProduct.
   // `granulesKey` is used to prevent unnecessary rerenders in the Map component.
-  const granulesKey = Buffer.from(JSON.stringify({
-    gibsTagProduct: gibsTag?.product || '',
-    granulesToDraw: granulesToDraw.map((granule) => granule.granuleId)
-  })).toString('base64')
+  // const granulesKey = Buffer.from(JSON.stringify({
+  //   gibsTagProduct: mapLayers.map((layer) => layer.product),
+  //   nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
+  //   addedGranuleIds: allAddedGranuleIds,
+  //   removedGranuleIds: allRemovedGranuleIds
+  // })).toString('base64')
 
   return (
     <Map
