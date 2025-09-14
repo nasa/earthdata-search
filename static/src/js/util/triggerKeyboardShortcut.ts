@@ -1,21 +1,25 @@
 /**
  * Triggers a callback function if a specific key is pressed, preventing the shortcut in specific cases.
- * @param {Object} event The event object.
- * @param {String} shortcutKey The key that should trigger the keyboard shortcut.
- * @param {Function} shortcutCallback The callback to call when the key is pressed.
+ * @param event The event object.
+ * @param shortcutKey The key that should trigger the keyboard shortcut.
+ * @param shortcutCallback The callback to call when the key is pressed.
  */
 export const triggerKeyboardShortcut = ({
-  event = {},
+  event = {} as KeyboardEvent,
   shortcutKey = '',
   shortcutCallback
+}: {
+  event?: KeyboardEvent
+  shortcutKey?: string
+  shortcutCallback?: () => void
 }) => {
   const {
-    target: eventTarget = {},
+    target: eventTarget = {} as HTMLElement,
     key: eventKey = '',
     type: eventType = ''
   } = event
 
-  let { tagName = '' } = eventTarget
+  let { tagName = '' } = eventTarget as HTMLElement
   if (tagName) tagName = tagName.toLowerCase()
 
   // If an input is triggering the keydown, return
