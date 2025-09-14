@@ -51,6 +51,7 @@ export class KeyboardShortcutsModal extends Component {
       g: 'Toggle granule filters panel',
       a: 'Toggle advanced search modal',
       '/': 'Focus on search input field',
+      l: 'Toggle layers panel',
       t: 'Toggle timeline',
       '?': 'Display all keyboard shortcuts',
       Alt: 'Hold to rotate the map when in a polar projection'
