@@ -32,7 +32,6 @@ export const Legend: React.FC<LegendProps> = ({
       granuleImageryLayerGroup && (
         <LayerPicker
           collectionId={collectionId}
-          granuleImageryLayerGroup={granuleImageryLayerGroup}
           colorMap={colorMap}
         />
       )
