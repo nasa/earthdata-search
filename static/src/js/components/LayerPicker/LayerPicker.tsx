@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import LayerGroup from 'ol/layer/Group'
 import {
   DndContext,
@@ -26,6 +26,7 @@ import {
 } from '../../util/map/layers/adjustGibsLayerProperties'
 import './LayerPicker.scss'
 import Button from '../Button/Button'
+import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
 
 interface LayerPickerProps {
   /** The collection ID to manage layers for */
@@ -61,6 +62,28 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
     setMapLayersOrder,
     updateLayerOpacity
   } = useEdscStore((state) => state.map)
+
+  /**
+   * Handles keyup events for keyboard shortcuts
+   */
+  const onWindowKeyup = (event: KeyboardEvent) => {
+    const toggleLayers = () => setLayersHidden(!layersHidden)
+
+    triggerKeyboardShortcut({
+      event,
+      shortcutKey: 'l',
+      shortcutCallback: toggleLayers
+    })
+  }
+
+  // Sets up event listener for keyup event
+  useEffect(() => {
+    window.addEventListener('keyup', onWindowKeyup)
+
+    return () => {
+      window.removeEventListener('keyup', onWindowKeyup)
+    }
+  }, [layersHidden])
 
   /**
    * Toggles the visibility of a layer using the Zustand store

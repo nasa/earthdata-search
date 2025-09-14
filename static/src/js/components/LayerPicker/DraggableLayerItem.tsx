@@ -8,10 +8,9 @@ import {
 import { Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import { useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
+import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-import { isEmpty } from 'lodash-es'
 import classNames from 'classnames'
 import {
   FormGroup,
