@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import { difference, isEmpty } from 'lodash-es'
 import { Geometry } from 'ol/geom'
+import { useLocation } from 'react-router-dom'
 
 // @ts-expect-error The file does not have types
 import actions from '../../actions'
@@ -465,15 +466,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     allRemovedGranuleIds.push(...removedGranuleIds)
   }
 
-  // Generate a key based on the nonExcludedGranules, addedGranuleIds, gibsTagProduct, and removedGranuleIds,
-  // and gibs tags. `granulesKey` is used to prevent unnecessary rerenders in the Map component.
-  const granulesKey = Buffer.from(JSON.stringify({
-    gibsTagProduct: mapLayers.map((layer) => layer.product),
-    nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
-    addedGranuleIds: allAddedGranuleIds,
-    removedGranuleIds: allRemovedGranuleIds
-  })).toString('base64')
-
   // Generate the granulesToDraw based on the nonExcludedGranules and the addedGranuleIds and removedGranuleIds
   const granulesToDraw: MapGranule[] = []
   const granuleIds = Object.keys(nonExcludedGranules)
@@ -586,12 +578,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   // Generate a key based on the granules that need to be drawn on the map, and the gibsTagProduct.
   // `granulesKey` is used to prevent unnecessary rerenders in the Map component.
-  // const granulesKey = Buffer.from(JSON.stringify({
-  //   gibsTagProduct: mapLayers.map((layer) => layer.product),
-  //   nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
-  //   addedGranuleIds: allAddedGranuleIds,
-  //   removedGranuleIds: allRemovedGranuleIds
-  // })).toString('base64')
+  const granulesKey = Buffer.from(JSON.stringify({
+    gibsTagProduct: mapLayers.map((layer) => layer.product),
+    nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
+    addedGranuleIds: allAddedGranuleIds,
+    removedGranuleIds: allRemovedGranuleIds
+  })).toString('base64')
 
   return (
     <Map

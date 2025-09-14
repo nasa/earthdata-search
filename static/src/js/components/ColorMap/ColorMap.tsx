@@ -193,6 +193,11 @@ export const ColorMap: React.FC<ColorMapProps> = ({
             ? (
               <div className="colormap__focus">
                 <span
+                  className="colormap__focus-label-color"
+                  data-testid="legend-label-color"
+                  style={{ backgroundColor: focusColor || '' }}
+                />
+                <span
                   className="colormap__focus-label"
                   data-testid="legend-label"
                 >
