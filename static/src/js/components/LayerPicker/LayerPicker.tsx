@@ -16,6 +16,7 @@ import {
 } from '@dnd-kit/sortable'
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
 
+import { FaCompressAlt, FaExpandAlt } from 'react-icons/fa'
 import { Colormap } from '../ColorMap/ColorMap'
 import useEdscStore from '../../zustand/useEdscStore'
 import DraggableLayerItem from './DraggableLayerItem'
@@ -25,8 +26,6 @@ import {
 } from '../../util/map/layers/adjustGibsLayerProperties'
 import './LayerPicker.scss'
 import Button from '../Button/Button'
-import { FaCompressAlt, FaLayerGroup } from 'react-icons/fa'
-import { min } from 'moment'
 
 interface LayerPickerProps {
   /** The collection ID to manage layers for */
@@ -126,11 +125,13 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
       <Button
         className="map-button"
         variant="naked"
-        onClick={() => {
-          console.log('Show Layers');
-          setLayersHidden(false);
-        }}
-        icon={FaLayerGroup}
+        onClick={
+          () => {
+            console.log('Show Layers')
+            setLayersHidden(false)
+          }
+        }
+        icon={FaExpandAlt}
         iconOnly
         ariaLabel="Show layers"
         tooltipId="minimize-layers-tooltip"
@@ -145,10 +146,12 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
         <h2 className="h6 mb-0">Layers</h2>
         <Button
           variant="naked"
-          onClick={() => {
-            console.log('Minimize Layers');
-            setLayersHidden(true)
-          }}
+          onClick={
+            () => {
+              console.log('Minimize Layers')
+              setLayersHidden(true)
+            }
+          }
           icon={FaCompressAlt}
           iconOnly
           ariaLabel="Hide layers"
