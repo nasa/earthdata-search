@@ -98,7 +98,8 @@ describe('LayerPicker', () => {
 
       // Should show drag handles for both layers when there are 2+ layers
       const dragHandles = screen.getAllByRole('button', { name: 'Drag to reorder layer' })
-      expect(dragHandles).toHaveLength(2)
+      // There are 2 drag handles and 2 tooltips
+      expect(dragHandles).toHaveLength(4)
     })
 
     test('hides drag handles when there is only one layer', async () => {
