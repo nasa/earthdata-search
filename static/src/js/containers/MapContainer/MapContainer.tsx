@@ -380,7 +380,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   }, [focusedCollectionId, tags, setMapLayers])
 
   // Helper function to get GIBS tags available for the current projection
-  const getGibsTagsForProjection = useCallback(() => {
+  const getLayersForProjection = useCallback(() => {
     if (!mapLayers) return []
 
     return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
@@ -391,13 +391,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     const colorMapData: Record<string, Colormap> = {}
 
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
-    const gibsTagsForProjection = getGibsTagsForProjection()
+    const layersForProjection = getLayersForProjection()
 
-    // TODO we'll need to do this more carefully
-    if (gibsTagsForProjection.length > 0) {
+    if (layersForProjection.length > 0) {
       // Get colormap data for all available GIBS tags
-      gibsTagsForProjection.forEach((gibsTag) => {
-        const { product } = gibsTag
+      layersForProjection.forEach((layer) => {
+        const { product } = layer
         const productColormap = colormapsMetadata[product]
 
         if (productColormap && productColormap.colorMapData) {
@@ -408,14 +407,14 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     }
 
     return colorMapData
-  }, [mapLayers, colormapsMetadata, projection, getGibsTagsForProjection])
+  }, [mapLayers, colormapsMetadata, projection, getLayersForProjection])
 
   // Extract the actual colormap data from the state
   // Get GIBS data to pass to the map within each granule
-  const gibsTagsForProjection = getGibsTagsForProjection()
-  const gibsDataArray: Partial<GibsData>[] = []
+  const layersForProjection = getLayersForProjection()
+  const layerDataArray: Partial<GibsData>[] = []
 
-  gibsTagsForProjection.forEach((gibsTag) => {
+  layersForProjection.forEach((layer) => {
     const {
       antarctic_resolution: antarcticResolution,
       arctic_resolution: arcticResolution,
@@ -423,9 +422,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       geographic_resolution: geographicResolution,
       layerPeriod,
       product,
-      title
-    } = gibsTag
-
+      title,
+      isVisible,
+      opacity: layerOpacity
+    } = layer
     let resolution
     if (projection === projectionCodes.antarctic) {
       resolution = antarcticResolution
@@ -435,12 +435,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       resolution = geographicResolution
     }
 
-    // Get the visibility state for this layer from Zustand
-    const layerFromStore = mapLayers.find((layer) => layer.product === product)
-    const isVisible = layerFromStore?.isVisible ?? false
-    const layerOpacity = layerFromStore?.opacity ?? 1.0
-
-    gibsDataArray.push({
+    layerDataArray.push({
       format,
       layerPeriod,
       product,
@@ -518,17 +513,17 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
       const granuleGibsData: Partial<GibsData>[] = []
 
-      if (mapLayers.length > 0 && gibsDataArray.length > 0) {
+      if (mapLayers.length > 0 && layerDataArray.length > 0) {
         // Create GIBS data for each available GIBS layer
-        gibsDataArray.forEach((gibsDataItem) => {
+        layerDataArray.forEach((layerDataItem) => {
           // If the GIBS layer is "subdaily", use the full timeStart (date and time).
           // Otherwise, use only the date part of timeStart.
-          const gibsTime = gibsDataItem.layerPeriod?.toLowerCase() === 'subdaily'
+          const gibsTime = layerDataItem.layerPeriod?.toLowerCase() === 'subdaily'
             ? timeStart
             : timeStart.substring(0, 10)
 
           granuleGibsData.push({
-            ...gibsDataItem,
+            ...layerDataItem,
             time: gibsTime,
             url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
           })
@@ -576,10 +571,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   // If the panels or sidebar are not visible, don't render the map
   if (panelsWidth === 0 || sidebarWidth === 0) return null
 
+  const mapLayersKey = Buffer.from(JSON.stringify(mapLayers)).toString('base64')
   // Generate a key based on the granules that need to be drawn on the map, and the gibsTagProduct.
   // `granulesKey` is used to prevent unnecessary rerenders in the Map component.
+  // Append map layers string to the granulesKey to ensure rerenders when the map layers change (Opacity, Visibility)
   const granulesKey = Buffer.from(JSON.stringify({
-    gibsTagProduct: mapLayers.map((layer) => layer.product),
+    mapLayersKey,
     nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
     addedGranuleIds: allAddedGranuleIds,
     removedGranuleIds: allRemovedGranuleIds

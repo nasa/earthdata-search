@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import LayerGroup from 'ol/layer/Group'
 import {
   DndContext,
   closestCenter,
@@ -20,10 +19,6 @@ import { FaCompressAlt, FaExpandAlt } from 'react-icons/fa'
 import { Colormap } from '../ColorMap/ColorMap'
 import useEdscStore from '../../zustand/useEdscStore'
 import DraggableLayerItem from './DraggableLayerItem'
-import {
-  updateOpenLayersLayerLayerVisibility,
-  updateOpenLayersLayerOpacity
-} from '../../util/map/layers/adjustGibsLayerProperties'
 import './LayerPicker.scss'
 import Button from '../Button/Button'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
@@ -32,7 +27,6 @@ interface LayerPickerProps {
   /** The collection ID to manage layers for */
   collectionId: string
   /** The OpenLayers Layer Group containing granule imagery layers */
-  granuleImageryLayerGroup?: LayerGroup
   /** The colormap information for each layer */
   colorMap?: Record<string, Colormap>
 }
@@ -42,8 +36,7 @@ interface LayerPickerProps {
  */
 export const LayerPicker: React.FC<LayerPickerProps> = ({
   collectionId,
-  colorMap,
-  granuleImageryLayerGroup
+  colorMap
 }) => {
   const [layersHidden, setLayersHidden] = useState(false)
 
@@ -91,16 +84,6 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   const handleToggleLayerVisibility = (productName: string) => {
     // Update the Zustand store
     toggleLayerVisibility(collectionId, productName)
-
-    // Update the actual OpenLayers layer visibility
-    const updatedLayer = mapLayers.find((l) => l.product === productName)
-    if (updatedLayer) {
-      updateOpenLayersLayerLayerVisibility(
-        granuleImageryLayerGroup,
-        productName,
-        !updatedLayer.isVisible
-      )
-    }
   }
 
   /**
@@ -138,9 +121,6 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   ) => {
     // Updates the Zustand store
     updateLayerOpacity(collectionConceptId, productName, opacity)
-
-    // Update the actual OpenLayers layer opacity
-    updateOpenLayersLayerOpacity(granuleImageryLayerGroup, productName, opacity)
   }
 
   if (layersHidden) {
@@ -150,7 +130,6 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
         variant="naked"
         onClick={
           () => {
-            console.log('Show Layers')
             setLayersHidden(false)
           }
         }
@@ -171,7 +150,6 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
           variant="naked"
           onClick={
             () => {
-              console.log('Minimize Layers')
               setLayersHidden(true)
             }
           }
