@@ -13,11 +13,11 @@ import { CSS } from '@dnd-kit/utilities'
 
 import classNames from 'classnames'
 import {
+  Form,
   FormGroup,
   FormLabel,
   Tooltip
 } from 'react-bootstrap'
-import FormRange from 'react-bootstrap/esm/FormRange'
 import useEdscStore from '../../zustand/useEdscStore'
 import ColorMap, { Colormap } from '../ColorMap/ColorMap'
 import Button from '../Button/Button'
@@ -140,7 +140,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
                     <Popover.Body>
                       <FormGroup>
                         <FormLabel>Opacity</FormLabel>
-                        <FormRange
+                        <Form.Range
                           id={`opacity-${layer.product}`}
                           min="0"
                           max="1"
