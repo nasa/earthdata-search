@@ -15,7 +15,7 @@ import {
 } from '@dnd-kit/sortable'
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
 
-import { FaCompressAlt, FaExpandAlt } from 'react-icons/fa'
+import { FaCompressAlt, FaLayerGroup } from 'react-icons/fa'
 import { Colormap } from '../ColorMap/ColorMap'
 import useEdscStore from '../../zustand/useEdscStore'
 import DraggableLayerItem from './DraggableLayerItem'
@@ -133,7 +133,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
             setLayersHidden(false)
           }
         }
-        icon={FaExpandAlt}
+        icon={FaLayerGroup}
         iconOnly
         iconSize="14px"
         ariaLabel="Show layers"
