@@ -5,7 +5,6 @@ import Polygon, { circular } from 'ol/geom/Polygon'
 import { Point, SimpleGeometry } from 'ol/geom'
 import VectorSource from 'ol/source/Vector'
 import type { Geometry as GeoJsonGeometry } from 'geojson'
-import simplifySpatial from '../geometry/simplifySpatial'
 
 import {
   mbrStyle,
@@ -17,6 +16,7 @@ import {
 import { crsProjections } from './crs'
 import getQueryFromShapefileFeature from './getQueryFromShapefileFeature'
 import projectionCodes from '../../constants/projectionCodes'
+import simplifySpatial from '../geometry/simplifySpatial'
 
 import { eventEmitter } from '../../events/events'
 
