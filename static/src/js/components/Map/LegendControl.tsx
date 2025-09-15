@@ -28,6 +28,12 @@ export type LegendControlOptions = {
  * @param {HTMLElement|string} [options.target] - The DOM element or element ID where this control should be rendered instead of the default map controls container
  */
 class LegendControl extends Control {
+  collectionId: string
+
+  colorMap: Record<string, Colormap>
+
+  granuleImageryLayerGroup?: LayerGroup
+
   constructor(options: LegendControlOptions) {
     const element = document.createElement('div')
     element.className = 'legend-control'
@@ -37,15 +43,49 @@ class LegendControl extends Control {
       target: options.target
     })
 
+    this.collectionId = options.collectionId
+    this.colorMap = options.colorMap
+    this.granuleImageryLayerGroup = options.granuleImageryLayerGroup
+
+    this.render()
+  }
+
+  // TODO this should probably be private
+  public render() {
+    const isEmpty = this.granuleImageryLayerGroup?.getLayers().getLength() === 0
+    if (isEmpty) {
+      // Don't render the legend if the granule imagery layer group is empty
+      console.log('granule imagery layer group is empty')
+
+      return
+    }
+
     // @ts-expect-error We are still on React 17
     ReactDOM.render(
       <Legend
-        collectionId={options.collectionId}
-        colorMap={options.colorMap}
-        granuleImageryLayerGroup={options.granuleImageryLayerGroup}
+        collectionId={this.collectionId}
+        colorMap={this.colorMap}
+        granuleImageryLayerGroup={this.granuleImageryLayerGroup}
       />,
       this.element
     )
+  }
+
+  update(options: Partial<LegendControlOptions>) {
+    console.log('running update in legend control')
+    if (options.collectionId !== undefined) {
+      this.collectionId = options.collectionId
+    }
+
+    if (options.colorMap !== undefined) {
+      this.colorMap = options.colorMap
+    }
+
+    if (options.granuleImageryLayerGroup !== undefined) {
+      this.granuleImageryLayerGroup = options.granuleImageryLayerGroup
+    }
+
+    this.render()
   }
 }
 
