@@ -942,21 +942,21 @@ const Map: React.FC<MapProps> = ({
   }, [focusedCollectionId])
 
   useEffect(() => {
-    // When colorMap or isFocusedCollectionPage changes, remove the existing legend control
-    // and add a new one if necessary.
     const map = mapRef.current as OlMap
     const controls = map.getControls()
     const legendControl = controls.getArray().find(
       (control) => control instanceof LegendControl
-    )
+    ) as LegendControl | undefined
 
-    // Always remove existing legend control if present
     if (legendControl) {
-      controls.remove(legendControl)
-    }
-
-    // Add new legend control only if on focused collection page and colorMap exists
-    if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
+      // Update existing control
+      legendControl.update({
+        collectionId: focusedCollectionId,
+        colorMap,
+        granuleImageryLayerGroup
+      })
+    } else {
+      // Create new control if none exists
       controls.push(
         new LegendControl({
           collectionId: focusedCollectionId,
@@ -965,7 +965,12 @@ const Map: React.FC<MapProps> = ({
         })
       )
     }
-  }, [isFocusedCollectionPage, colorMap])
+
+    if (!isFocusedCollectionPage && legendControl) {
+      // Remove the legend control if not on the collection focused page
+      controls.remove(legendControl)
+    }
+  }, [isFocusedCollectionPage, granuleImageryLayerGroup, colorMap])
 
   // Update the map view when the panelsWidth changes
   useEffect(() => {
