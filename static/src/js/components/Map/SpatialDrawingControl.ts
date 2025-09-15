@@ -66,7 +66,7 @@ class SpatialDrawingControl extends Control {
     // Create the polygon button
     const polygonButton = mapButton({
       className: `${this.className}__button ${this.className}__button--polygon edsc-icon-poly edsc-icon-fw`,
-      title: 'Search by spatial polygon'
+      title: 'Search by polygon'
     })
 
     // Set the click event for the button
@@ -82,7 +82,7 @@ class SpatialDrawingControl extends Control {
     // Create the bounding box button
     const boundingBoxButton = mapButton({
       className: `${this.className}__button ${this.className}__button--rectangle edsc-icon-rect edsc-icon-fw`,
-      title: 'Search by spatial rectangle'
+      title: 'Search by rectangle'
     })
 
     // Set the click event for the button
@@ -98,7 +98,7 @@ class SpatialDrawingControl extends Control {
     // Create the circle button
     const circleButton = mapButton({
       className: `${this.className}__button ${this.className}__button--circle`,
-      title: 'Search by spatial circle'
+      title: 'Search by circle'
     })
 
     // Set the click event for the button
@@ -121,7 +121,7 @@ class SpatialDrawingControl extends Control {
     // Create the point button
     const pointButton = mapButton({
       className: `${this.className}__button ${this.className}__button--point`,
-      title: 'Search by spatial coordinate'
+      title: 'Search by point'
     })
 
     // Set the click event for the button
