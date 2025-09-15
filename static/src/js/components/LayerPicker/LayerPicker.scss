@@ -24,8 +24,10 @@
   }
 
   &__layer-content {
+    transition: opacity 0.2s ease-in-out;
+
     .layer-picker__layer-item--hidden & {
-      opacity: 0.5;
+      opacity: 0.625;
     }
   }
 

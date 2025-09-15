@@ -135,9 +135,11 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
         }
         icon={FaExpandAlt}
         iconOnly
+        iconSize="14px"
         ariaLabel="Show layers"
         tooltipId="minimize-layers-tooltip"
-        tooltip="Show layers"
+        tooltip="Show visualization layers"
+        tooltipPlacement="left"
       />
     )
   }
@@ -145,7 +147,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   return (
     <div>
       <header className="d-flex gap-2 align-items-center justify-content-between p-2 border-0 border-bottom border-muted">
-        <h2 className="h6 mb-0">Layers</h2>
+        <h2 className="h6 mb-0">Visualization Layers</h2>
         <Button
           variant="naked"
           onClick={
@@ -156,8 +158,9 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
           icon={FaCompressAlt}
           iconOnly
           ariaLabel="Hide layers"
-          tooltipId="minimize-layers-tooltip"
-          tooltip="Hide layers"
+          tooltipId="hide-layers-tooltip"
+          tooltip="Hide visualization layers"
+          tooltipPlacement="left"
         />
       </header>
       <div className="layer-picker__layers overflow-auto">

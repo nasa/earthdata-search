@@ -61,42 +61,51 @@ class LayerSwitcherControl extends Control {
     this.onChangeLayer = onChangeLayer
     this.setIsLayerSwitcherOpen = setIsLayerSwitcherOpen
 
-    const toggleButton = mapButton({
-      className: `${this.className}__button`,
-      title: 'Layer Options',
-      tooltip: false
+    const showButton = mapButton({
+      className: `${this.className}__button ${this.className}__button--show`,
+      title: 'Show map options'
+    })
+
+    const hideButton = mapButton({
+      className: `${this.className}__button ${this.className}__button--hide`,
+      title: 'Hide map options'
     })
 
     if (LayersIcon) {
       // @ts-expect-error We are still on React 17
       ReactDOM.render(
         LayersIcon,
-        toggleButton
+        showButton
+      )
+
+      // @ts-expect-error We are still on React 17
+      ReactDOM.render(
+        LayersIcon,
+        hideButton
       )
     }
 
-    element.appendChild(toggleButton)
+    element.appendChild(showButton)
+    element.appendChild(hideButton)
 
     const panel = document.createElement('div')
     panel.className = `${this.className}__panel bg-white`
 
-    if (isLayerSwitcherOpen) panel.className += ` ${this.className}__panel--visible`
+    if (isLayerSwitcherOpen) {
+      element.classList.add(`${this.className}--visible`)
+    } else {
+      element.classList.remove(`${this.className}--visible`)
+    }
 
     this.addLayerOptions(panel)
     element.appendChild(panel)
 
-    element.addEventListener('mouseenter', () => {
+    showButton.addEventListener('click', () => {
       this.setIsLayerSwitcherOpen(true)
     })
 
-    element.addEventListener('mouseleave', () => {
+    hideButton.addEventListener('click', () => {
       this.setIsLayerSwitcherOpen(false)
-    })
-
-    // When hovering over the panel, prevent the hover event from firing on the map
-    panel.addEventListener('hover', (event) => {
-      event.stopPropagation()
-      event.preventDefault()
     })
   }
 
