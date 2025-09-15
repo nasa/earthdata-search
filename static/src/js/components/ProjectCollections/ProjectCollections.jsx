@@ -107,7 +107,7 @@ const ProjectCollections = ({
               }
               {
                 isValid && (
-                  `Click ${String.fromCharCode(8220)}Edit Options${String.fromCharCode(8221)} above to customize the output for each project.`
+                  `Click ${String.fromCharCode(8220)}Edit Options${String.fromCharCode(8221)} to select options for each collection in your project.`
                 )
               }
               {
