@@ -70,12 +70,13 @@ describe('SearchAutocomplete', () => {
       nock(/localhost/)
         .post(/autocomplete$/)
         .reply(() => new Promise((resolve) => {
-          setTimeout(() => resolve([200, { feed: { entry: [] } }]), 100)
+          // Use setTimeout on this to simulate a delayed response, to give time to assert loading state
+          setTimeout(() => resolve([200, { feed: { entry: [] } }]), 10000)
         }))
 
       const input = screen.getByRole('textbox')
       await act(async () => {
-        await user.type(input, 'test')
+        await user.type(input, 'tes')
       })
 
       expect(await screen.findByText('Loading suggestions...')).toBeInTheDocument()
