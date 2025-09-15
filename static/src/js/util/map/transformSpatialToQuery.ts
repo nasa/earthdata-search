@@ -30,7 +30,7 @@ const transformPolygonToString = (polygon: Polygon): string => polygon[0].flat()
 const transformSpatialToQuery = (
   geometryType: string,
   spatial: SpatialCoordinates,
-  circleGeometry: Circle
+  circleGeometry: Circle | [] = []
 ) => {
   switch (geometryType) {
     case spatialTypes.CIRCLE: {
