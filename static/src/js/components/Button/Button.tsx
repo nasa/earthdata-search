@@ -262,6 +262,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
     return (
       <OverlayTrigger
         placement={tooltipPlacement || 'top'}
+        delay={{ show: 250, hide: 0 }}
         overlay={(
           <Tooltip id={tooltipId} className={overlayClass}>{tooltip}</Tooltip>
         )}

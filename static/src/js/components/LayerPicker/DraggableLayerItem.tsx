@@ -124,7 +124,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
         </div>
         <div className="flex-grow-1 p-2">
           <div className="d-flex flex-grow-1 flex-row justify-content-between align-items-center mb-1 gap-2">
-            <h3 className="h6 mb-0 d-inline flex-grow-1 text-truncate">
+            <h3 className="fs-6 fw-normal mb-0 d-inline flex-grow-1 text-truncate">
               {layer.title || layer.product}
             </h3>
             <OverlayTrigger

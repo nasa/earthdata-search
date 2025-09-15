@@ -36,7 +36,7 @@ import {
   FaCircle,
   FaFile,
   FaHome,
-  FaLayerGroup
+  FaMap
 } from 'react-icons/fa'
 import {
   Close,
@@ -807,22 +807,22 @@ const Map: React.FC<MapProps> = ({
 
     const mapControls = new MapControls({
       base,
-      CircleIcon: (<EDSCIcon size="12" icon={FaCircle} />),
-      HomeIcon: (<EDSCIcon size="12" icon={FaHome} />),
+      CircleIcon: (<EDSCIcon size="14" icon={FaCircle} />),
+      HomeIcon: (<EDSCIcon size="14" icon={FaHome} />),
       isLayerSwitcherOpen,
-      LayersIcon: (<EDSCIcon size="12" icon={FaLayerGroup} />),
+      LayersIcon: (<EDSCIcon size="14" icon={FaMap} />),
       map: mapRef.current,
       mapLayers,
-      MinusIcon: (<EDSCIcon size="12" icon={Minus} />),
+      MinusIcon: (<EDSCIcon size="13" icon={Minus} />),
       onChangeLayer: handleLayerChange,
       onChangeProjection,
       onToggleShapefileUploadModal,
       overlays,
-      PlusIcon: (<EDSCIcon size="12" icon={Plus} />),
-      PointIcon: (<EDSCIcon size="12" icon={MapIcon} />),
+      PlusIcon: (<EDSCIcon size="13" icon={Plus} />),
+      PointIcon: (<EDSCIcon size="14" icon={MapIcon} />),
       projectionCode,
       setIsLayerSwitcherOpen,
-      ShapefileIcon: (<EDSCIcon size="12" icon={FaFile} />),
+      ShapefileIcon: (<EDSCIcon size="14" icon={FaFile} />),
       showDrawingControls: !isProjectPage
     })
 
