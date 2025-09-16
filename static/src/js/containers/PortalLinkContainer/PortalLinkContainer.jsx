@@ -17,19 +17,32 @@ export const mapDispatchToProps = (dispatch) => ({
     (path) => dispatch(actions.changePath(path))
 })
 
-export const PortalLinkContainer = (props) => {
-  const {
+export const PortalLinkContainer = ({
+  children = null,
+  className = '',
+  dataTestId = null,
+  newPortal = null,
+  onChangePath,
+  onClick = null,
+  target = '',
+  to = '',
+  type = '',
+  updatePath = false,
+  ...otherProps
+}) => {
+  const allProps = {
     children,
     className,
     dataTestId,
-    onClick,
     newPortal,
+    onChangePath,
+    onClick,
+    target,
     to,
     type,
-    target,
     updatePath,
-    onChangePath
-  } = props
+    ...otherProps
+  }
 
   const navigate = useNavigate()
 
@@ -106,7 +119,7 @@ export const PortalLinkContainer = (props) => {
     return (
       <Button
         type="button"
-        {...props}
+        {...allProps}
         onClick={
           (event) => {
             onClickWithChangePath(event)
@@ -129,19 +142,6 @@ export const PortalLinkContainer = (props) => {
       {children}
     </Link>
   )
-}
-
-PortalLinkContainer.defaultProps = {
-  children: null,
-  className: '',
-  dataTestId: null,
-  onClick: null,
-  newPortal: null,
-  staticContext: null,
-  type: '',
-  target: '',
-  to: '',
-  updatePath: false
 }
 
 PortalLinkContainer.propTypes = {

@@ -19,11 +19,12 @@ import './MoreActionsDropdown.scss'
  * @param {Array} props.handoffLinks - An array of objects to create the handoff links
  */
 export const MoreActionsDropdown = ({
-  alignRight,
-  className,
-  children,
-  dark,
-  handoffLinks
+  // TODO: Should default this to false, but need to update styles with respect to the carrot
+  alignRight = true,
+  className = null,
+  children = null,
+  dark = false,
+  handoffLinks = []
 }) => {
   // Don't render the dropdown if there are no elements to render
   if (children == null && handoffLinks.length === 0) return null
@@ -89,15 +90,6 @@ export const MoreActionsDropdown = ({
       </Dropdown>
     </div>
   )
-}
-
-MoreActionsDropdown.defaultProps = {
-  // TODO: Should default this to false, but need to update styles with respect to the carrot
-  alignRight: true,
-  children: null,
-  className: null,
-  dark: false,
-  handoffLinks: []
 }
 
 MoreActionsDropdown.propTypes = {

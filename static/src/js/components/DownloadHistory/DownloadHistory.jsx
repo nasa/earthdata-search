@@ -43,7 +43,7 @@ const retrievalDescription = (collections) => {
 
 export const DownloadHistory = ({
   earthdataEnvironment,
-  retrievalHistory,
+  retrievalHistory = [],
   retrievalHistoryLoading,
   retrievalHistoryLoaded,
   onDeleteRetrieval
@@ -139,10 +139,6 @@ export const DownloadHistory = ({
       }
     </>
   )
-}
-
-DownloadHistory.defaultProps = {
-  retrievalHistory: []
 }
 
 DownloadHistory.propTypes = {

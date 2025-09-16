@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 export const RadioList = ({
-  defaultValue,
-  onChange,
+  defaultValue = null,
+  onChange = null,
   radioList,
   renderRadio
 }) => {
@@ -27,11 +27,6 @@ export const RadioList = ({
       {radioList.map((radio) => renderRadio(radio, onPropsChange, selected))}
     </div>
   )
-}
-
-RadioList.defaultProps = {
-  defaultValue: null,
-  onChange: null
 }
 
 RadioList.propTypes = {

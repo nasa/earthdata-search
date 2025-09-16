@@ -17,7 +17,7 @@ import './GranuleDetailsBody.scss'
  * @param {String} props.authToken - The authToken for the logged in user
  */
 const GranuleDetailsBody = ({
-  authToken
+  authToken = null
 }) => {
   const granuleMetadata = useEdscStore(getFocusedGranule)
   const { metadataUrls } = granuleMetadata
@@ -40,10 +40,6 @@ const GranuleDetailsBody = ({
       </Tabs>
     </div>
   )
-}
-
-GranuleDetailsBody.defaultProps = {
-  authToken: null
 }
 
 GranuleDetailsBody.propTypes = {

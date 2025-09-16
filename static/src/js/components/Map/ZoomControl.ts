@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 
 import { Map } from 'ol'
 import Zoom, { Options as ZoomOptions } from 'ol/control/Zoom'
@@ -74,11 +74,8 @@ class ZoomControl extends Zoom {
     })
 
     // Create the icon to show on the button
-    // @ts-expect-error We are still on React 17
-    ReactDOM.render(
-      HomeIcon,
-      homeElement
-    )
+    const homeRoot = ReactDOM.createRoot(homeElement)
+    homeRoot.render(HomeIcon)
 
     // Add the click event to the home button
     homeElement.addEventListener(
@@ -107,18 +104,12 @@ class ZoomControl extends Zoom {
     })
 
     // Replace the plus character with an icon
-    // @ts-expect-error We are still on React 17
-    ReactDOM.render(
-      PlusIcon,
-      zoomInElement
-    )
+    const plusRoot = ReactDOM.createRoot(zoomInElement as Element)
+    plusRoot.render(PlusIcon)
 
     // Replace the minus character with an icon
-    // @ts-expect-error We are still on React 17
-    ReactDOM.render(
-      MinusIcon,
-      zoomOutElement
-    )
+    const minusRoot = ReactDOM.createRoot(zoomOutElement as Element)
+    minusRoot.render(MinusIcon)
 
     // Add the home button to the control bewteen the plus and minus buttons
     element.insertBefore(homeElement, zoomOutElement)

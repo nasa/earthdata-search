@@ -1,13 +1,11 @@
 import PropTypes from 'prop-types'
 import { getTemporalDateFormat } from '../../../../../sharedUtils/edscDate'
 
-const TemporalDisplayEntry = (props) => {
-  const {
-    startDate,
-    endDate,
-    isRecurring
-  } = props
-
+const TemporalDisplayEntry = ({
+  startDate = {},
+  endDate = {},
+  isRecurring = false
+}) => {
   // For recurring dates we don't show the year, it's displayed on the slider
   const temporalDateFormat = getTemporalDateFormat(isRecurring)
 
@@ -25,12 +23,6 @@ const TemporalDisplayEntry = (props) => {
   }
 
   return valueToDisplay
-}
-
-TemporalDisplayEntry.defaultProps = {
-  startDate: {},
-  endDate: {},
-  isRecurring: false
 }
 
 TemporalDisplayEntry.propTypes = {

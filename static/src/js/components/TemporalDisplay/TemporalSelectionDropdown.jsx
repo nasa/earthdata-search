@@ -24,10 +24,10 @@ import './TemporalSelectionDropdown.scss'
  * Component representing the temporal selection dropdown
  */
 const TemporalSelectionDropdown = ({
-  allowRecurring,
+  allowRecurring = true,
   onChangeQuery,
-  onMetricsTemporalFilter,
-  searchParams
+  onMetricsTemporalFilter = null,
+  searchParams = {}
 }) => {
   const temporalSearch = useEdscStore(getCollectionsQueryTemporal)
   const {
@@ -386,12 +386,6 @@ const TemporalSelectionDropdown = ({
       }
     </Dropdown>
   )
-}
-
-TemporalSelectionDropdown.defaultProps = {
-  allowRecurring: true,
-  onMetricsTemporalFilter: null,
-  searchParams: {}
 }
 
 TemporalSelectionDropdown.propTypes = {

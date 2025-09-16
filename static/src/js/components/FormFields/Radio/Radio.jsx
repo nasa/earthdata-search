@@ -5,14 +5,14 @@ import classNames from 'classnames'
 import './Radio.scss'
 
 export const Radio = ({
-  id,
-  dataTestId,
-  name,
-  value,
+  checked = null,
   children,
-  checked,
-  onChange,
-  onClick
+  dataTestId = null,
+  id,
+  name,
+  onChange = null,
+  onClick = null,
+  value
 }) => {
   const labelClassName = classNames([
     'radio',
@@ -40,13 +40,6 @@ export const Radio = ({
       <span className="radio__content">{children}</span>
     </label>
   )
-}
-
-Radio.defaultProps = {
-  dataTestId: null,
-  checked: null,
-  onChange: null,
-  onClick: null
 }
 
 Radio.propTypes = {

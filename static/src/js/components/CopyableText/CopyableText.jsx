@@ -78,13 +78,13 @@ const copyStringToClipBoard = async ({
  * @param {String|Function} arg0.textToCopy - Overrides the text that is copied. If provided a function, the return value will be displayed.
  */
 export const CopyableText = ({
-  className,
-  failureMessage,
-  label,
-  onClick,
-  successMessage,
+  className = '',
+  failureMessage = '',
+  label = 'Copy text to clipboard',
+  onClick = null,
+  successMessage = '',
   text,
-  textToCopy
+  textToCopy = ''
 }) => {
   const classes = classNames([
     'copyable-text',
@@ -116,15 +116,6 @@ export const CopyableText = ({
       {text}
     </Button>
   )
-}
-
-CopyableText.defaultProps = {
-  className: '',
-  label: 'Copy text to clipboard',
-  onClick: null,
-  successMessage: '',
-  failureMessage: '',
-  textToCopy: ''
 }
 
 CopyableText.propTypes = {

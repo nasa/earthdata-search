@@ -11,7 +11,7 @@ import './SubscriptionsList.scss'
  * Renders the logged in users' subscription list
  */
 const SubscriptionsList = ({
-  subscriptions = {},
+  subscriptions,
   onDeleteSubscription
 }) => {
   const {
@@ -66,7 +66,11 @@ const SubscriptionsList = ({
 }
 
 SubscriptionsList.propTypes = {
-  subscriptions: PropTypes.shape({}).isRequired,
+  subscriptions: PropTypes.shape({
+    byId: PropTypes.objectOf(PropTypes.shape({})).isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    isLoaded: PropTypes.bool.isRequired
+  }).isRequired,
   onDeleteSubscription: PropTypes.func.isRequired
 }
 

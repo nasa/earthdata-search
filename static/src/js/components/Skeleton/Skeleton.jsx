@@ -24,11 +24,11 @@ const normalizeSizeValues = (obj) => mapValues(obj, (value) => {
  * @param {array} props.shapes - An array of objects defining the individual skeleton shapes.
  */
 export const Skeleton = ({
-  className,
-  dataTestId,
+  className = '',
+  dataTestId = undefined,
   containerStyle,
   shapes,
-  variant
+  variant = null
 }) => {
   const shapeElements = shapes.map((shape, i) => {
     let item = null
@@ -83,12 +83,6 @@ export const Skeleton = ({
       </div>
     </div>
   )
-}
-
-Skeleton.defaultProps = {
-  className: '',
-  dataTestId: undefined,
-  variant: null
 }
 
 Skeleton.propTypes = {

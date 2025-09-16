@@ -8,19 +8,17 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './FilterStackItem.scss'
 
-const FilterStackItem = (props) => {
-  const {
-    dataTestId,
-    children,
-    error,
-    hint,
-    icon,
-    onRemove,
-    title,
-    secondaryTitle,
-    variant
-  } = props
-
+const FilterStackItem = ({
+  children,
+  dataTestId = null,
+  error = null,
+  hint = null,
+  icon = null,
+  onRemove = null,
+  secondaryTitle = null,
+  title,
+  variant = 'icon'
+}) => {
   if (!children) return null
 
   let iconClass = ''
@@ -103,16 +101,6 @@ const FilterStackItem = (props) => {
       </div>
     </li>
   )
-}
-
-FilterStackItem.defaultProps = {
-  dataTestId: null,
-  error: null,
-  hint: null,
-  icon: null,
-  onRemove: null,
-  secondaryTitle: null,
-  variant: 'icon'
 }
 
 FilterStackItem.propTypes = {

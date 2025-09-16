@@ -42,8 +42,8 @@ export const GranuleResultsList = ({
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   readableGranuleName,
-  setVisibleMiddleIndex,
-  visibleMiddleIndex
+  setVisibleMiddleIndex = null,
+  visibleMiddleIndex = null
 }) => (
   <div className="granule-results-list">
     <AutoSizer style={
@@ -82,11 +82,6 @@ export const GranuleResultsList = ({
     </AutoSizer>
   </div>
 )
-
-GranuleResultsList.defaultProps = {
-  setVisibleMiddleIndex: null,
-  visibleMiddleIndex: null
-}
 
 GranuleResultsList.propTypes = {
   collectionId: PropTypes.string.isRequired,
