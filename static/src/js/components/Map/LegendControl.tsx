@@ -30,7 +30,7 @@ export type LegendControlOptions = {
 class LegendControl extends Control {
   collectionId: string
 
-  colorMap: Record<string, Colormap>
+  imageryLayers: any
 
   granuleImageryLayerGroup?: LayerGroup
 
@@ -44,7 +44,7 @@ class LegendControl extends Control {
     })
 
     this.collectionId = options.collectionId
-    this.colorMap = options.colorMap
+    this.imageryLayers = options.imageryLayers
     this.granuleImageryLayerGroup = options.granuleImageryLayerGroup
 
     this.render()
@@ -61,10 +61,11 @@ class LegendControl extends Control {
     }
 
     // @ts-expect-error We are still on React 17
+    console.log('🚀 ~ file: LegendControl.tsx:68 ~ LegendControl ~ imageryLayers:', this.imageryLayers)
     ReactDOM.render(
       <Legend
         collectionId={this.collectionId}
-        colorMap={this.colorMap}
+        imageryLayers={this.imageryLayers}
         granuleImageryLayerGroup={this.granuleImageryLayerGroup}
       />,
       this.element
