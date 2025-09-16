@@ -51,7 +51,7 @@ import {
   getCollectionsQuery,
   getFocusedCollectionGranuleQuery
 } from '../../zustand/selectors/query'
-import { getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
+import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getGranules } from '../../zustand/selectors/granules'
 import { getPreferences } from '../../zustand/selectors/preferences'
@@ -86,6 +86,7 @@ const SearchPanels = ({
   const collectionMetadata = useEdscStore(getFocusedCollectionMetadata)
   const collectionQuery = useEdscStore(getCollectionsQuery)
   const collections = useEdscStore(getCollections)
+  const collectionId = useEdscStore(getCollectionId)
   const focusedGranuleId = useEdscStore(getGranuleId)
   const granuleMetadata = useEdscStore(getFocusedGranule)
   const granuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
@@ -189,22 +190,42 @@ const SearchPanels = ({
     {
       label: 'Start Date, Newest First',
       isActive: activeGranulesSortKey === granuleSortKeys.startDateDescending,
-      onClick: () => changeGranuleQuery({ sortKey: granuleSortKeys.startDateDescending })
+      onClick: () => changeGranuleQuery({
+        collectionId,
+        query: {
+          sortKey: granuleSortKeys.startDateDescending
+        }
+      })
     },
     {
       label: 'Start Date, Oldest First',
       isActive: activeGranulesSortKey === granuleSortKeys.startDateAscending,
-      onClick: () => changeGranuleQuery({ sortKey: granuleSortKeys.startDateAscending })
+      onClick: () => changeGranuleQuery({
+        collectionId,
+        query: {
+          sortKey: granuleSortKeys.startDateAscending
+        }
+      })
     },
     {
       label: 'End Date, Newest First',
       isActive: activeGranulesSortKey === granuleSortKeys.endDateDescending,
-      onClick: () => changeGranuleQuery({ sortKey: granuleSortKeys.endDateDescending })
+      onClick: () => changeGranuleQuery({
+        collectionId,
+        query: {
+          sortKey: granuleSortKeys.endDateDescending
+        }
+      })
     },
     {
       label: 'End Date, Oldest First',
       isActive: activeGranulesSortKey === granuleSortKeys.endDateAscending,
-      onClick: () => changeGranuleQuery({ sortKey: granuleSortKeys.endDateAscending })
+      onClick: () => changeGranuleQuery({
+        collectionId,
+        query: {
+          sortKey: granuleSortKeys.endDateAscending
+        }
+      })
     }
   ]
 

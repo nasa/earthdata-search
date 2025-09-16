@@ -524,7 +524,10 @@ describe('SearchPanels component', () => {
 
           expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledTimes(1)
           expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledWith({
-            sortKey: granuleSortKeys.startDateDescending
+            collectionId: 'C1000-EDSC',
+            query: {
+              sortKey: granuleSortKeys.startDateDescending
+            }
           })
         })
       })
@@ -563,7 +566,10 @@ describe('SearchPanels component', () => {
 
           expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledTimes(1)
           expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledWith({
-            sortKey: granuleSortKeys.startDateAscending
+            collectionId: 'C1000-EDSC',
+            query: {
+              sortKey: granuleSortKeys.startDateAscending
+            }
           })
         })
       })
@@ -602,7 +608,10 @@ describe('SearchPanels component', () => {
 
           expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledTimes(1)
           expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledWith({
-            sortKey: granuleSortKeys.endDateDescending
+            collectionId: 'C1000-EDSC',
+            query: {
+              sortKey: granuleSortKeys.endDateDescending
+            }
           })
         })
       })
@@ -641,7 +650,10 @@ describe('SearchPanels component', () => {
 
           expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledTimes(1)
           expect(zustandState.query.changeGranuleQuery).toHaveBeenCalledWith({
-            sortKey: granuleSortKeys.endDateAscending
+            collectionId: 'C1000-EDSC',
+            query: {
+              sortKey: granuleSortKeys.endDateAscending
+            }
           })
         })
       })
