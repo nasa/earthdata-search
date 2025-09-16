@@ -20,7 +20,7 @@ export const retrievalStatusProps = {
     portalId: 'edsc'
   },
   retrieval: {
-    id: 7,
+    id: '7',
     isLoading: false,
     isLoaded: true,
     collections: {
@@ -148,7 +148,7 @@ export const initalizedRetrievalStatusProps = {
 export const retrievalStatusPropsTwo = {
   authToken: 'testToken2',
   retrieval: {
-    id: 7,
+    id: '7',
     collections: {
       byId: {
         1: {
@@ -182,7 +182,7 @@ export const retrievalStatusPropsTwo = {
 export const retrievalStatusPropsEsi = {
   authToken: 'testToken2',
   retrieval: {
-    id: 7,
+    id: '7',
     collections: {
       byId: {
         1: {
@@ -264,7 +264,7 @@ export const retrievalStatusPropsEsi = {
 export const retrievalStatusPropsEchoOrder = {
   authToken: 'testToken2',
   retrieval: {
-    id: 7,
+    id: '7',
     collections: {
       byId: {
         1: {

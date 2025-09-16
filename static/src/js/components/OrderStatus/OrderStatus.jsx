@@ -61,7 +61,7 @@ export const OrderStatus = ({
 
   const {
     collections,
-    id,
+    id: loadedId,
     isLoaded,
     isLoading,
     jsondata = {},
@@ -141,6 +141,8 @@ export const OrderStatus = ({
 
   const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
 
+  const shouldShowLoading = paramsId !== loadedId || (isLoading && !isLoaded)
+
   const introduction = (
     <p>
       {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
@@ -185,7 +187,7 @@ export const OrderStatus = ({
             <Well.Heading>Download Status</Well.Heading>
             <Well.Introduction>{introduction}</Well.Introduction>
             {
-              (!id && !isLoaded) && (
+              shouldShowLoading && (
                 <Skeleton
                   className="order-status__item-skeleton"
                   containerStyle={
@@ -219,7 +221,7 @@ export const OrderStatus = ({
             <Well.Heading>Additional Resources and Documentation</Well.Heading>
             <Well.Section>
               {
-                isLoading && (
+                shouldShowLoading && (
                   <Skeleton
                     className="order-status__item-skeleton"
                     containerStyle={
