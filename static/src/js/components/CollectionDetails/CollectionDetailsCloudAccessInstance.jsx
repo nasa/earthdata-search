@@ -6,8 +6,12 @@ import ExternalLink from '../ExternalLink/ExternalLink'
 import './CollectionDetailsCloudAccessInstance.scss'
 
 export const CollectionDetailsCloudAccessInstance = ({
-  type,
-  instanceInformation
+  type = null,
+  instanceInformation = {
+    url: '',
+    format: '',
+    description: ''
+  }
 }) => {
   if (type === 'variable') {
     const {
@@ -127,15 +131,6 @@ export const CollectionDetailsCloudAccessInstance = ({
       </dl>
     </div>
   )
-}
-
-CollectionDetailsCloudAccessInstance.defaultProps = {
-  type: null,
-  instanceInformation: {
-    url: '',
-    format: '',
-    description: ''
-  }
 }
 
 CollectionDetailsCloudAccessInstance.propTypes = {

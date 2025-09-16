@@ -9,10 +9,10 @@ import Spinner from '../Spinner/Spinner'
 import './MoreActionsDropdownItem.scss'
 
 export const MoreActionsDropdownItem = ({
-  className,
-  icon,
-  onClick,
-  inProgress,
+  className = null,
+  icon = null,
+  onClick = () => {},
+  inProgress = false,
   title
 }) => {
   const moreActionItemClasses = classNames(
@@ -46,13 +46,6 @@ export const MoreActionsDropdownItem = ({
       <span className="more-actions-dropdown-item__title">{title}</span>
     </Dropdown.Item>
   )
-}
-
-MoreActionsDropdownItem.defaultProps = {
-  className: null,
-  icon: null,
-  onClick: () => {},
-  inProgress: false
 }
 
 MoreActionsDropdownItem.propTypes = {

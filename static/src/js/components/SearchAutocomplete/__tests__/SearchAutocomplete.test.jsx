@@ -1,8 +1,4 @@
-import {
-  act,
-  screen,
-  waitFor
-} from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 
 import SearchAutocomplete from '../SearchAutocomplete'
@@ -57,9 +53,7 @@ describe('SearchAutocomplete', () => {
       const { user } = setup()
 
       const input = screen.getByRole('textbox')
-      await act(async () => {
-        await user.type(input, 'te')
-      })
+      await user.type(input, 'te')
 
       expect(screen.queryByText('Loading suggestions...')).not.toBeInTheDocument()
     })
@@ -75,9 +69,7 @@ describe('SearchAutocomplete', () => {
         }))
 
       const input = screen.getByRole('textbox')
-      await act(async () => {
-        await user.type(input, 'tes')
-      })
+      await user.type(input, 'tes')
 
       expect(await screen.findByText('Loading suggestions...')).toBeInTheDocument()
 
@@ -98,11 +90,12 @@ describe('SearchAutocomplete', () => {
 
       const input = screen.getByRole('textbox')
       // So only one request is made
-      await act(async () => {
-        await user.type(input, 'tes')
+      await user.type(input, 'tes')
+
+      await waitFor(() => {
+        expect(props.handleError).toHaveBeenCalledTimes(1)
       })
 
-      expect(props.handleError).toHaveBeenCalledTimes(1)
       expect(props.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchAutocomplete',
         resource: 'suggestions'
@@ -139,10 +132,8 @@ describe('SearchAutocomplete', () => {
 
       const input = screen.getByRole('textbox')
 
-      await act(async () => {
-        await user.clear(input)
-        await user.type(input, 'MODIS')
-      })
+      await user.clear(input)
+      await user.type(input, 'MODIS')
 
       const searchButton = screen.getByText('Search')
       await user.click(searchButton)
@@ -180,12 +171,10 @@ describe('SearchAutocomplete', () => {
       const input = screen.getByRole('textbox')
       const searchButton = screen.getByText('Search')
 
-      await act(async () => {
-        await user.clear(input)
-        await user.type(input, 'test')
-        // Submit form while request is in flight
-        await user.click(searchButton)
-      })
+      await user.clear(input)
+      await user.type(input, 'test')
+      // Submit form while request is in flight
+      await user.click(searchButton)
 
       // Loading should be cleared
       expect(screen.queryByText('Loading suggestions...')).not.toBeInTheDocument()
@@ -219,9 +208,7 @@ describe('SearchAutocomplete', () => {
 
       const input = screen.getByRole('textbox')
 
-      await act(async () => {
-        await user.type(input, 'MOD')
-      })
+      await user.type(input, 'MOD')
 
       await screen.findByText('MODIS')
 
@@ -261,9 +248,7 @@ describe('SearchAutocomplete', () => {
         })
 
       const input = screen.getByRole('textbox')
-      await act(async () => {
-        await user.type(input, 'MOD')
-      })
+      await user.type(input, 'MOD')
 
       await screen.findByText('MODIS')
 
@@ -301,9 +286,7 @@ describe('SearchAutocomplete', () => {
 
       const input = screen.getByRole('textbox')
 
-      await act(async () => {
-        await user.type(input, 'las')
-      })
+      await user.type(input, 'las')
 
       await screen.findByText('Laser Reflectance')
 
@@ -352,9 +335,7 @@ describe('SearchAutocomplete', () => {
 
       const input = screen.getByRole('textbox')
 
-      await act(async () => {
-        await user.type(input, 'lan')
-      })
+      await user.type(input, 'lan')
 
       await screen.findByText('LANDSAT-8')
 
@@ -403,9 +384,7 @@ describe('SearchAutocomplete', () => {
 
       const input = screen.getByRole('textbox')
 
-      await act(async () => {
-        await user.type(input, 'lan')
-      })
+      await user.type(input, 'lan')
 
       await screen.findByText('Landsat')
 
@@ -438,9 +417,7 @@ describe('SearchAutocomplete', () => {
         }))
 
       const input = screen.getByRole('textbox')
-      await act(async () => {
-        await user.type(input, 'test')
-      })
+      await user.type(input, 'test')
 
       // Unmount while request is pending
       unmount()

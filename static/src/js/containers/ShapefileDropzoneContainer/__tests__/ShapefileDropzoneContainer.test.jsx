@@ -83,7 +83,7 @@ describe('ShapefileDropzoneContainer component', () => {
   // We don't like to manually trigger them in unit tests, but we do have Playwright tests
   // that upload files and trigger these callbacks through Dropzone.
   describe('when onSending is triggered', () => {
-    test('calls removeSpatialFilter and onShapefileLoading', () => {
+    test('calls removeSpatialFilter and onShapefileLoading', async () => {
       const onShapefileLoadingMock = jest.fn()
       const { zustandState } = setup({
         overrideZustandState: {
@@ -100,7 +100,7 @@ describe('ShapefileDropzoneContainer component', () => {
       const componentProps = ShapefileDropzone.mock.calls[0][0]
       const { onSending } = componentProps
 
-      act(() => {
+      await act(() => {
         onSending(mockFile)
       })
 
@@ -113,7 +113,7 @@ describe('ShapefileDropzoneContainer component', () => {
   })
 
   describe('when onSuccess is triggered', () => {
-    test('calls onToggleShapefileUploadModal and onSaveShapefile', () => {
+    test('calls onToggleShapefileUploadModal and onSaveShapefile', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
       eventEmitterEmitMock.mockImplementation(() => jest.fn())
       const filesizeMock = jest.fn(() => '200KB')
@@ -160,7 +160,7 @@ describe('ShapefileDropzoneContainer component', () => {
       const componentProps = ShapefileDropzone.mock.calls[0][0]
       const { onSuccess } = componentProps
 
-      act(() => {
+      await act(() => {
         onSuccess(mockFile, mockResponse, mockDropzoneEl)
       })
 
@@ -243,7 +243,7 @@ describe('ShapefileDropzoneContainer component', () => {
         'dbf',
         'shx'
       ])('when given a %s file', (fileType) => {
-        test('calls onShapefileErrored with the correct message', () => {
+        test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
           const { props } = setup({
             overrideZustandState: {
@@ -260,7 +260,7 @@ describe('ShapefileDropzoneContainer component', () => {
           const componentProps = ShapefileDropzone.mock.calls[0][0]
           const { onError } = componentProps
 
-          act(() => {
+          await act(() => {
             onError(mockFile)
           })
 
@@ -275,7 +275,7 @@ describe('ShapefileDropzoneContainer component', () => {
       })
 
       describe('when zip/shp/dbf/shx is in the filename but not the extension', () => {
-        test('calls onShapefileErrored with the correct message', () => {
+        test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
           const { props } = setup({
             overrideZustandState: {
@@ -292,7 +292,7 @@ describe('ShapefileDropzoneContainer component', () => {
           const componentProps = ShapefileDropzone.mock.calls[0][0]
           const { onError } = componentProps
 
-          act(() => {
+          await act(() => {
             onError(mockFile)
           })
 
@@ -312,7 +312,7 @@ describe('ShapefileDropzoneContainer component', () => {
         'kml',
         'kmz'
       ])('when given a %s file', (fileType) => {
-        test('calls onShapefileErrored with the correct message', () => {
+        test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
           const { props } = setup({
             overrideZustandState: {
@@ -329,7 +329,7 @@ describe('ShapefileDropzoneContainer component', () => {
           const componentProps = ShapefileDropzone.mock.calls[0][0]
           const { onError } = componentProps
 
-          act(() => {
+          await act(() => {
             onError(mockFile)
           })
 
@@ -344,7 +344,7 @@ describe('ShapefileDropzoneContainer component', () => {
       })
 
       describe('when kml/kmz is in the filename but not the extension', () => {
-        test('calls onShapefileErrored with the correct message', () => {
+        test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
           const { props } = setup({
             overrideZustandState: {
@@ -361,7 +361,7 @@ describe('ShapefileDropzoneContainer component', () => {
           const componentProps = ShapefileDropzone.mock.calls[0][0]
           const { onError } = componentProps
 
-          act(() => {
+          await act(() => {
             onError(mockFile)
           })
 
@@ -381,7 +381,7 @@ describe('ShapefileDropzoneContainer component', () => {
         'json',
         'geojson'
       ])('when given a %s file', (fileType) => {
-        test('calls onShapefileErrored with the correct message', () => {
+        test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
           const { props } = setup({
             overrideZustandState: {
@@ -398,7 +398,7 @@ describe('ShapefileDropzoneContainer component', () => {
           const componentProps = ShapefileDropzone.mock.calls[0][0]
           const { onError } = componentProps
 
-          act(() => {
+          await act(() => {
             onError(mockFile)
           })
 
@@ -413,7 +413,7 @@ describe('ShapefileDropzoneContainer component', () => {
       })
 
       describe('when json/geojson is in the filename but not the extension', () => {
-        test('calls onShapefileErrored with the correct message', () => {
+        test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
           const { props } = setup({
             overrideZustandState: {
@@ -430,7 +430,7 @@ describe('ShapefileDropzoneContainer component', () => {
           const componentProps = ShapefileDropzone.mock.calls[0][0]
           const { onError } = componentProps
 
-          act(() => {
+          await act(() => {
             onError(mockFile)
           })
 
@@ -451,7 +451,7 @@ describe('ShapefileDropzoneContainer component', () => {
         'georss',
         'xml'
       ])('when given a %s file', (fileType) => {
-        test('calls onShapefileErrored with the correct message', () => {
+        test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
           const { props } = setup({
             overrideZustandState: {
@@ -468,7 +468,7 @@ describe('ShapefileDropzoneContainer component', () => {
           const componentProps = ShapefileDropzone.mock.calls[0][0]
           const { onError } = componentProps
 
-          act(() => {
+          await act(() => {
             onError(mockFile)
           })
 
@@ -483,7 +483,7 @@ describe('ShapefileDropzoneContainer component', () => {
       })
 
       describe('when rss/georss/xml is in the filename but not the extension', () => {
-        test('calls onShapefileErrored with the correct message', () => {
+        test('calls onShapefileErrored with the correct message', async () => {
           const onShapefileErroredMock = jest.fn()
           const { props } = setup({
             overrideZustandState: {
@@ -500,7 +500,7 @@ describe('ShapefileDropzoneContainer component', () => {
           const componentProps = ShapefileDropzone.mock.calls[0][0]
           const { onError } = componentProps
 
-          act(() => {
+          await act(() => {
             onError(mockFile)
           })
 
@@ -516,7 +516,7 @@ describe('ShapefileDropzoneContainer component', () => {
     })
 
     describe('when given a unrecognized file type', () => {
-      test('calls onShapefileErrored with the correct message', () => {
+      test('calls onShapefileErrored with the correct message', async () => {
         const onShapefileErroredMock = jest.fn()
         const { props } = setup({
           overrideZustandState: {
@@ -533,7 +533,7 @@ describe('ShapefileDropzoneContainer component', () => {
         const componentProps = ShapefileDropzone.mock.calls[0][0]
         const { onError } = componentProps
 
-        act(() => {
+        await act(() => {
           onError(mockFile)
         })
 
@@ -549,7 +549,7 @@ describe('ShapefileDropzoneContainer component', () => {
   })
 
   describe('when onRemovedFile is triggered', () => {
-    test('calls eventEmitter', () => {
+    test('calls eventEmitter', async () => {
       const eventEmitterEmitMock = jest.spyOn(EventEmitter.eventEmitter, 'emit')
       eventEmitterEmitMock.mockImplementation(() => jest.fn())
 
@@ -582,7 +582,7 @@ describe('ShapefileDropzoneContainer component', () => {
       const componentProps = ShapefileDropzone.mock.calls[0][0]
       const { onRemovedFile } = componentProps
 
-      act(() => {
+      await act(() => {
         onRemovedFile(mockFile, mockResponse)
       })
 

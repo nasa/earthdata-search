@@ -19,11 +19,11 @@ import './RadioSettingDropdownItem.scss'
  * @param {String} props.title - A string to use as the title
  */
 export const RadioSettingDropdownItem = ({
-  className,
-  icon,
-  isActive,
-  inProgress,
-  onClick,
+  className = null,
+  icon = null,
+  isActive = false,
+  inProgress = false,
+  onClick = () => {},
   title
 }) => {
   const radioSettingItemClasses = classNames(
@@ -64,14 +64,6 @@ export const RadioSettingDropdownItem = ({
       <span className="radio-setting-dropdown-item__title">{title}</span>
     </Dropdown.Item>
   )
-}
-
-RadioSettingDropdownItem.defaultProps = {
-  className: null,
-  icon: null,
-  isActive: false,
-  inProgress: false,
-  onClick: () => {}
 }
 
 RadioSettingDropdownItem.propTypes = {

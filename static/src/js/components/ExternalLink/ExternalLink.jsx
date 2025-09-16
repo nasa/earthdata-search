@@ -8,10 +8,10 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import './ExternalLink.scss'
 
 export const ExternalLink = ({
-  children,
-  className,
-  variant,
-  innerLink,
+  children = null,
+  className = null,
+  variant = null,
+  innerLink = false,
   ...rest
 }) => {
   const wrapperClasses = classNames([
@@ -57,13 +57,6 @@ export const ExternalLink = ({
       </a>
     </span>
   )
-}
-
-ExternalLink.defaultProps = {
-  children: null,
-  className: null,
-  variant: null,
-  innerLink: false
 }
 
 ExternalLink.propTypes = {

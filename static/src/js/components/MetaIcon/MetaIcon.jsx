@@ -22,16 +22,16 @@ import './MetaIcon.scss'
  * @param {String|Element} props.tooltipContent - Text or element to be displayed in the tooltip.
  */
 export const MetaIcon = ({
-  className,
+  className = '',
   icon,
-  iconProps,
+  iconProps = {},
   id,
   label,
-  metadata,
-  notAvailable,
-  placement,
-  tooltipClassName,
-  tooltipContent
+  metadata = '',
+  notAvailable = false,
+  placement = 'top',
+  tooltipClassName = '',
+  tooltipContent = null
 }) => {
   const component = (
     <span className={`meta-icon ${className}`}>
@@ -88,16 +88,6 @@ export const MetaIcon = ({
 
   // Return the component without a tooltip
   return component
-}
-
-MetaIcon.defaultProps = {
-  className: '',
-  iconProps: {},
-  metadata: '',
-  notAvailable: false,
-  placement: 'top',
-  tooltipClassName: '',
-  tooltipContent: null
 }
 
 MetaIcon.propTypes = {

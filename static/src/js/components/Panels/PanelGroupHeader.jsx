@@ -43,21 +43,21 @@ import './PanelGroupHeader.scss'
  * @param {Array} props.viewsArray - The text to be used as the secondary heading
 */
 export const PanelGroupHeader = ({
-  activeSort,
-  activeView,
-  breadcrumbs,
-  handoffLinks,
-  headerMessage,
-  headerMetaPrimaryLoading,
-  headerMetaPrimaryText,
-  panelGroupId,
-  primaryHeading,
-  headerLoading,
-  moreActionsDropdownItems,
-  exportsArray,
-  secondaryHeading,
-  sortsArray,
-  viewsArray
+  activeSort = '',
+  activeView = '',
+  breadcrumbs = [],
+  exportsArray = [],
+  handoffLinks = [],
+  headerLoading = false,
+  headerMessage = null,
+  headerMetaPrimaryLoading = false,
+  headerMetaPrimaryText = null,
+  moreActionsDropdownItems = [],
+  panelGroupId = null,
+  primaryHeading = null,
+  secondaryHeading = null,
+  sortsArray = [],
+  viewsArray = []
 }) => {
   const sortLabel = `Sort: ${humanizeSortKey(activeSort, sortsArray)}`
   const viewLabel = `View: ${upperFirst(activeView)}`
@@ -345,25 +345,6 @@ export const PanelGroupHeader = ({
       }
     </header>
   )
-}
-
-PanelGroupHeader.defaultProps = {
-  activeView: '',
-  activeSort: '',
-  breadcrumbs: [],
-  handoffLinks: [],
-  headingLink: null,
-  headerMessage: null,
-  headerMetaPrimaryLoading: false,
-  headerMetaPrimaryText: null,
-  moreActionsDropdownItems: [],
-  panelGroupId: null,
-  primaryHeading: null,
-  headerLoading: false,
-  exportsArray: [],
-  viewsArray: [],
-  secondaryHeading: null,
-  sortsArray: []
 }
 
 PanelGroupHeader.propTypes = {

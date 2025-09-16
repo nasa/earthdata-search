@@ -20,6 +20,8 @@ const drawGranuleOutlines = ({
   // Remove existing drawings on the canvas
   ctx.reset()
 
+  if (!map) return
+
   // Get the device pixel ratio for use in scaling the drawing
   const dpr = window.devicePixelRatio || 1
 

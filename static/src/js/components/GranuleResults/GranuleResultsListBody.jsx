@@ -100,8 +100,8 @@ export const GranuleResultsListBody = ({
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   readableGranuleName,
-  setVisibleMiddleIndex,
-  visibleMiddleIndex,
+  setVisibleMiddleIndex = null,
+  visibleMiddleIndex = null,
   width
 }) => {
   const location = useLocation()
@@ -146,7 +146,7 @@ export const GranuleResultsListBody = ({
       } = itemToRowColumnIndicies(scrollToItem, numColumns)
 
       listRef.current.scrollToItem({
-        rowIndex,
+        rowIndex: rowIndex === 0 ? 0 : rowIndex + 1,
         columnIndex
       }, 'center')
     }
@@ -284,11 +284,6 @@ export const GranuleResultsListBody = ({
       }
     </InfiniteLoader>
   )
-}
-
-GranuleResultsListBody.defaultProps = {
-  setVisibleMiddleIndex: null,
-  visibleMiddleIndex: null
 }
 
 GranuleResultsListBody.propTypes = {

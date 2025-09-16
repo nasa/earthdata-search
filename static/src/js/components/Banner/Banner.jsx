@@ -9,7 +9,7 @@ import Button from '../Button/Button'
 import './Banner.scss'
 
 export const Banner = ({
-  message,
+  message = null,
   title,
   type,
   onClose
@@ -45,10 +45,6 @@ export const Banner = ({
       />
     </div>
   )
-}
-
-Banner.defaultProps = {
-  message: null
 }
 
 Banner.propTypes = {

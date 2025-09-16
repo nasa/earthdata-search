@@ -126,12 +126,12 @@ describe('UrlQueryContainer', () => {
   })
 
   describe('when the zustand values change', () => {
-    test('calls onChangeUrl if the search params are the same', () => {
+    test('calls onChangeUrl if the search params are the same', async () => {
       const encodeUrlQuerySpy = jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC&q=test&tl=1571306772.712!5!!')
 
       const { props } = setup()
 
-      act(() => {
+      await act(() => {
         useEdscStore.setState({
           timeline: {
             query: {

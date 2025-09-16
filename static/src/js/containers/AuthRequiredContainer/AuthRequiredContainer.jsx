@@ -8,7 +8,7 @@ import useEdscStore from '../../zustand/useEdscStore'
 import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnvironment'
 
 export const AuthRequiredContainer = ({
-  noRedirect,
+  noRedirect = false,
   children
 }) => {
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
@@ -47,10 +47,6 @@ export const AuthRequiredContainer = ({
   return (
     <div data-testid="auth-required" className="route-wrapper" />
   )
-}
-
-AuthRequiredContainer.defaultProps = {
-  noRedirect: false
 }
 
 AuthRequiredContainer.propTypes = {

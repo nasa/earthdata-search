@@ -16,9 +16,9 @@ import './EmptyListItem.scss'
  * @param {Node} icon - Overrides the default icon with an icon passed to EDSC Icon.
  */
 export const EmptyListItem = ({
-  className,
+  className = '',
   children,
-  icon
+  icon = null
 }) => {
   const listItemClasses = classNames(
     'empty-list-item',
@@ -39,11 +39,6 @@ export const EmptyListItem = ({
       </p>
     </li>
   )
-}
-
-EmptyListItem.defaultProps = {
-  className: '',
-  icon: null
 }
 
 EmptyListItem.propTypes = {

@@ -1,7 +1,6 @@
 import React from 'react'
 
 import {
-  act,
   render,
   screen,
   waitFor
@@ -118,9 +117,7 @@ describe('Datepicker component', () => {
 
       expect(datePickerInput).toHaveValue('')
 
-      await act(async () => {
-        await user.type(datePickerInput, '1')
-      })
+      await user.type(datePickerInput, '1')
 
       expect(requestAnimationFrameSpy).toHaveBeenCalledTimes(2)
       expect(requestAnimationFrameSpy).toHaveBeenCalledWith(expect.any(Function))
@@ -152,9 +149,7 @@ describe('Datepicker component', () => {
 
       const buttonClear = screen.getByRole('button', { name: 'Clear' })
 
-      await act(async () => {
-        await user.click(buttonClear)
-      })
+      await user.click(buttonClear)
 
       expect(props.onClearClick).toHaveBeenCalledTimes(1)
       expect(props.onClearClick).toHaveBeenCalledWith(expect.any(Object))

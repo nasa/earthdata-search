@@ -1,7 +1,5 @@
 import React from 'react'
-
 import {
-  act,
   screen,
   waitFor,
   within
@@ -118,10 +116,7 @@ describe('GranuleResultsFocusedMeta component', () => {
         })
 
         const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
-
-        await act(async () => {
-          await user.click(expandButton)
-        })
+        await user.click(expandButton)
 
         const modal = await screen.findByTestId('granule-results-focused-meta-modal')
 
@@ -154,10 +149,7 @@ describe('GranuleResultsFocusedMeta component', () => {
         })
 
         const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
-
-        await act(async () => {
-          await user.click(expandButton)
-        })
+        await user.click(expandButton)
 
         const modal = await screen.findByTestId('granule-results-focused-meta-modal')
         const modalPrev = within(modal).queryByLabelText('Previous browse image')
@@ -239,10 +231,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           })
 
           const popoverListButton = screen.getByLabelText('View available browse imagery')
-
-          await act(async () => {
-            await user.click(popoverListButton)
-          })
+          await user.click(popoverListButton)
 
           const popoverList = await screen.findAllByTestId('granule-results-focused-meta-list')
           const popoverListItems = screen.getAllByText('.jpg', { exact: false })
@@ -290,9 +279,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           })
 
           // Click to disappear tool-tip
-          await act(async () => {
-            await user.click(popoverListButton)
-          })
+          await user.click(popoverListButton)
 
           // Use `queryBy` since the element is expected to be gone
           await waitFor(() => {
@@ -331,10 +318,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           })
 
           const nextButton = screen.getByRole('button', { name: 'Next browse image thumbnail' })
-
-          await act(async () => {
-            await user.click(nextButton)
-          })
+          await user.click(nextButton)
 
           const images = await screen.findAllByTestId('mock-edsc-image')
           const pagination = screen.queryByText('2/3')
@@ -383,10 +367,8 @@ describe('GranuleResultsFocusedMeta component', () => {
           const nextButton = screen.getByLabelText('Next browse image thumbnail')
           const prevButton = screen.getByLabelText('Previous browse image thumbnail')
 
-          await act(async () => {
-            await user.click(nextButton)
-            await user.click(prevButton)
-          })
+          await user.click(nextButton)
+          await user.click(prevButton)
 
           const images = screen.queryAllByTestId('mock-edsc-image')
           const pagination = screen.queryByText('1/3')
@@ -433,18 +415,12 @@ describe('GranuleResultsFocusedMeta component', () => {
           })
 
           const popoverListButton = screen.getByLabelText('View available browse imagery')
-
-          await act(async () => {
-            await user.click(popoverListButton)
-          })
+          await user.click(popoverListButton)
 
           const popoverList = await screen.findByTestId('granule-results-focused-meta-list')
 
           const popoverListItem = within(popoverList).queryByText('test-3.jpg')
-
-          await act(async () => {
-            await user.click(popoverListItem)
-          })
+          await user.click(popoverListItem)
 
           const pagination = screen.queryByText('3/3')
           const images = screen.queryAllByTestId('mock-edsc-image')
@@ -487,11 +463,8 @@ describe('GranuleResultsFocusedMeta component', () => {
           })
 
           const nextButton = screen.getByLabelText('Next browse image thumbnail')
-
-          await act(async () => {
-            await user.click(nextButton)
-            await user.click(nextButton)
-          })
+          await user.click(nextButton)
+          await user.click(nextButton)
 
           const images = screen.queryAllByTestId('mock-edsc-image')
           const pagination = screen.queryByText('1/2')
@@ -527,10 +500,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           })
 
           const prevButton = screen.getByLabelText('Previous browse image thumbnail')
-
-          await act(async () => {
-            await user.click(prevButton)
-          })
+          await user.click(prevButton)
 
           const images = screen.queryAllByTestId('mock-edsc-image')
           const pagination = screen.queryByText('2/2')
@@ -570,10 +540,7 @@ describe('GranuleResultsFocusedMeta component', () => {
           })
 
           const expandButton = screen.getByLabelText('Expand browse image')
-
-          await act(async () => {
-            await user.click(expandButton)
-          })
+          await user.click(expandButton)
 
           const modal = await screen.findByTestId('granule-results-focused-meta-modal')
           const modalPrev = within(modal).queryByLabelText('Previous browse image')
@@ -610,9 +577,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
           EDSCImage.mockClear()
 
-          await act(async () => {
-            await user.click(expandButton)
-          })
+          await user.click(expandButton)
 
           const modal = await screen.findByTestId('granule-results-focused-meta-modal')
           const image = within(modal).getByTestId('mock-edsc-image')
@@ -652,17 +617,11 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const expandButton = screen.getByLabelText('Expand browse image')
-
-            await act(async () => {
-              await user.click(expandButton)
-            })
+            await user.click(expandButton)
 
             const modal = await screen.findByTestId('granule-results-focused-meta-modal')
             const modalCloseButton = within(modal).getByRole('button', { name: 'Close' })
-
-            await act(async () => {
-              await user.click(modalCloseButton)
-            })
+            await user.click(modalCloseButton)
 
             // Must use `queryBy` since the element is no longer on the DOM
             const modalUpdated = screen.queryByTestId('granule-results-focused-meta-modal')
@@ -700,10 +659,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const expandButton = screen.getByLabelText('Expand browse image')
-
-            await act(async () => {
-              await user.click(expandButton)
-            })
+            await user.click(expandButton)
 
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
             const modalNext = within(modal).queryByLabelText('Next browse image')
@@ -756,10 +712,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const expandButton = screen.getByLabelText('Expand browse image')
-
-            await act(async () => {
-              await user.click(expandButton)
-            })
+            await user.click(expandButton)
 
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
             const modalNext = within(modal).queryByLabelText('Next browse image')
@@ -814,25 +767,16 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const expandButton = screen.getByLabelText('Expand browse image')
-
-            await act(async () => {
-              await user.click(expandButton)
-            })
+            await user.click(expandButton)
 
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
 
             const popoverListButton = within(modal).queryByLabelText('View available browse imagery')
-
-            await act(async () => {
-              await user.click(popoverListButton)
-            })
+            await user.click(popoverListButton)
 
             const popoverList = screen.queryByTestId('granule-results-focused-meta-modal-popover-list')
             const popoverListItem = within(popoverList).queryByText('test-3.jpg')
-
-            await act(async () => {
-              await user.click(popoverListItem)
-            })
+            await user.click(popoverListItem)
 
             const pagination = within(modal).queryByText('3/3')
             const images = within(modal).queryAllByTestId('mock-edsc-image')
@@ -875,10 +819,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const expandButton = screen.getByLabelText('Expand browse image')
-
-            await act(async () => {
-              await user.click(expandButton)
-            })
+            await user.click(expandButton)
 
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
             const modalNext = within(modal).queryByLabelText('Next browse image')
@@ -922,9 +863,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const expandButton = screen.getByLabelText('Expand browse image')
-            await act(async () => {
-              await user.click(expandButton)
-            })
+            await user.click(expandButton)
 
             const downloadButton = screen.getByRole('button', { name: 'Download browse image' })
 
@@ -966,9 +905,7 @@ describe('GranuleResultsFocusedMeta component', () => {
             })
 
             const expandButton = screen.getByRole('button', { name: 'Expand browse image' })
-            await act(async () => {
-              await user.click(expandButton)
-            })
+            await user.click(expandButton)
 
             const granuleResultsFocusedMeta = await screen.findByTestId('granule-results-focused-meta-modal')
 
@@ -976,10 +913,7 @@ describe('GranuleResultsFocusedMeta component', () => {
 
             const modal = screen.getByTestId('granule-results-focused-meta-modal')
             const modalPrev = within(modal).getByRole('button', { name: 'Previous browse image' })
-
-            await act(async () => {
-              await user.click(modalPrev)
-            })
+            await user.click(modalPrev)
 
             const images = within(modal).queryAllByTestId('mock-edsc-image')
             await waitFor(() => {

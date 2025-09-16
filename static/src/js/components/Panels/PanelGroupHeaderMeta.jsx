@@ -7,16 +7,12 @@ import PropTypes from 'prop-types'
  * @param {String} props.children - Children components.
  */
 export const PanelGroupHeaderMeta = ({
-  children
+  children = null
 }) => (
   <div className="panel-group-header-meta">
     {children}
   </div>
 )
-
-PanelGroupHeaderMeta.defaultProps = {
-  children: null
-}
 
 PanelGroupHeaderMeta.propTypes = {
   children: PropTypes.node

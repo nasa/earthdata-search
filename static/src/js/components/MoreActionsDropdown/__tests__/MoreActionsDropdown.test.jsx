@@ -1,32 +1,19 @@
 import React from 'react'
-import {
-  act,
-  render,
-  screen
-} from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { screen } from '@testing-library/react'
 import Dropdown from 'react-bootstrap/Dropdown'
+
+import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import { MoreActionsDropdown } from '../MoreActionsDropdown'
 
-const setup = (overrideProps) => {
-  const user = userEvent.setup()
-  const props = {
+const setup = setupTest({
+  Component: MoreActionsDropdown,
+  defaultProps: {
     children: null,
     className: null,
-    handoffLinks: [],
-    ...overrideProps
+    handoffLinks: []
   }
-
-  render(
-    <MoreActionsDropdown {...props} />
-  )
-
-  return {
-    props,
-    user
-  }
-}
+})
 
 describe('MoreActionsDropdown component', () => {
   test('renders nothing when no data is provided', () => {
@@ -36,15 +23,15 @@ describe('MoreActionsDropdown component', () => {
 
   test('renders correctly when handoff links are provided', async () => {
     const { user } = setup({
-      handoffLinks: [{
-        title: 'Giovanni',
-        href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp'
-      }]
+      overrideProps: {
+        handoffLinks: [{
+          title: 'Giovanni',
+          href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp'
+        }]
+      }
     })
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'More actions' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'More actions' }))
 
     expect(screen.getByRole('button', { name: 'More actions' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Open collection in:' })).toBeInTheDocument()
@@ -58,28 +45,28 @@ describe('MoreActionsDropdown component', () => {
 
   test('renders correctly when children are provided', async () => {
     const { user } = setup({
-      children: <Dropdown.Item>Toggle Visibility</Dropdown.Item>
+      overrideProps: {
+        children: <Dropdown.Item>Toggle Visibility</Dropdown.Item>
+      }
     })
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'More actions' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'More actions' }))
 
     expect(screen.getByRole('button', { name: 'Toggle Visibility' })).toBeInTheDocument()
   })
 
   test('renders correctly when children and handoff links are provided', async () => {
     const { user } = setup({
-      children: <Dropdown.Item>Toggle Visibility</Dropdown.Item>,
-      handoffLinks: [{
-        title: 'Giovanni',
-        href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp'
-      }]
+      overrideProps: {
+        children: <Dropdown.Item>Toggle Visibility</Dropdown.Item>,
+        handoffLinks: [{
+          title: 'Giovanni',
+          href: 'https://giovanni.gsfc.nasa.gov/giovanni/#service=TmAvMp'
+        }]
+      }
     })
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'More actions' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'More actions' }))
 
     expect(screen.getByRole('button', { name: 'Toggle Visibility' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Giovanni' })).toBeInTheDocument()

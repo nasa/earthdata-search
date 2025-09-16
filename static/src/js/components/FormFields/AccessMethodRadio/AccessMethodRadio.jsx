@@ -15,20 +15,20 @@ import MetaIcon from '../../MetaIcon/MetaIcon'
 import './AccessMethodRadio.scss'
 
 export const AccessMethodRadio = ({
-  id,
+  checked = null,
+  customizationOptions = null,
   description,
-  details,
-  value,
-  checked,
-  onChange,
-  onClick,
+  details = null,
+  disabled = false,
+  errorMessage = null,
+  externalLink = null,
+  id,
+  isHarmony = false,
+  onChange = null,
+  onClick = null,
+  subtitle = null,
   title,
-  subtitle,
-  customizationOptions,
-  isHarmony,
-  disabled,
-  errorMessage,
-  externalLink
+  value
 }) => {
   const labelClasses = [
     'access-method-radio',
@@ -177,19 +177,6 @@ export const AccessMethodRadio = ({
       </div>
     </label>
   )
-}
-
-AccessMethodRadio.defaultProps = {
-  checked: null,
-  details: null,
-  onChange: null,
-  onClick: null,
-  subtitle: null,
-  customizationOptions: null,
-  isHarmony: false,
-  disabled: false,
-  errorMessage: null,
-  externalLink: null
 }
 
 AccessMethodRadio.propTypes = {

@@ -9,9 +9,9 @@ import './Sidebar.scss'
 
 const Sidebar = ({
   children,
-  panels,
+  panels = null,
   visible,
-  headerChildren
+  headerChildren = null
 }) => {
   const setSidebarWidth = useEdscStore((state) => state.ui.panels.setSidebarWidth)
   const className = classNames({
@@ -58,11 +58,6 @@ const Sidebar = ({
       {panels && panels}
     </section>
   )
-}
-
-Sidebar.defaultProps = {
-  panels: null,
-  headerChildren: null
 }
 
 Sidebar.propTypes = {

@@ -25,9 +25,9 @@ export const BrowseLinksPanel = ({
   browseUrls,
   granuleCount,
   granuleLinksIsLoading,
-  percentDoneDownloadLinks,
+  percentDoneDownloadLinks = null,
   retrievalId,
-  showTextWindowActions
+  showTextWindowActions = true
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}-browse-imagery.txt`
 
@@ -80,11 +80,6 @@ export const BrowseLinksPanel = ({
         The browse imagery links will become available once the order has finished processing.
       </div>
     )
-}
-
-BrowseLinksPanel.defaultProps = {
-  percentDoneDownloadLinks: null,
-  showTextWindowActions: true
 }
 
 BrowseLinksPanel.propTypes = {

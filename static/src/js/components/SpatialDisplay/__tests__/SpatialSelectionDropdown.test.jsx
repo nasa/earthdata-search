@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import { useLocation } from 'react-router-dom'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -47,10 +47,7 @@ describe('SpatialSelectionDropdown component', () => {
     const { user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
-
-    await act(async () => {
-      await user.click(dropdownSelectionButton)
-    })
+    await user.click(dropdownSelectionButton)
 
     expect(screen.getByRole('button', { name: 'Polygon' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Rectangle' })).toBeInTheDocument()
@@ -65,10 +62,7 @@ describe('SpatialSelectionDropdown component', () => {
     const { props, user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
-
-    await act(async () => {
-      await user.click(dropdownSelectionButton)
-    })
+    await user.click(dropdownSelectionButton)
 
     await user.click(screen.getByRole('button', { name: 'Polygon' }))
 
@@ -85,10 +79,7 @@ describe('SpatialSelectionDropdown component', () => {
     const { props, user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
-
-    await act(async () => {
-      await user.click(dropdownSelectionButton)
-    })
+    await user.click(dropdownSelectionButton)
 
     await user.click(screen.getByRole('button', { name: 'Rectangle' }))
 
@@ -108,10 +99,7 @@ describe('SpatialSelectionDropdown component', () => {
     const { props, user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
-
-    await act(async () => {
-      await user.click(dropdownSelectionButton)
-    })
+    await user.click(dropdownSelectionButton)
 
     await user.click(screen.getByRole('button', { name: 'Point' }))
 
@@ -128,10 +116,7 @@ describe('SpatialSelectionDropdown component', () => {
     const { props, user } = setup()
 
     const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
-
-    await act(async () => {
-      await user.click(dropdownSelectionButton)
-    })
+    await user.click(dropdownSelectionButton)
 
     await user.click(screen.getByRole('button', { name: 'Circle' }))
 
@@ -144,11 +129,9 @@ describe('SpatialSelectionDropdown component', () => {
 
   test('clicking the shapefile dropdown calls onToggleShapefileUploadModal', async () => {
     const { props, user } = setup()
-    const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
 
-    await act(async () => {
-      await user.click(dropdownSelectionButton)
-    })
+    const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
+    await user.click(dropdownSelectionButton)
 
     await user.click(screen.getByRole('button', { name: 'File (KML, KMZ, ESRI, …)' }))
 
@@ -168,10 +151,7 @@ describe('SpatialSelectionDropdown component', () => {
       const { props, user } = setup()
 
       const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
-
-      await act(async () => {
-        await user.click(dropdownSelectionButton)
-      })
+      await user.click(dropdownSelectionButton)
 
       const shapeFileSelectionButton = screen.getByRole('button', { name: 'File (KML, KMZ, ESRI, …)' })
       await user.click(shapeFileSelectionButton)
@@ -189,17 +169,11 @@ describe('SpatialSelectionDropdown component', () => {
       const { user } = setup()
 
       const dropdownSelectionButton = screen.getByRole('button', { name: 'spatial-selection-dropdown' })
-
-      await act(async () => {
-        await user.click(dropdownSelectionButton)
-      })
+      await user.click(dropdownSelectionButton)
 
       // Note that the overlay trigger is not on the actual button but, on the span inside the button
       const shapeFileExtensions = screen.getByText('(KML, KMZ, ESRI, …)')
-
-      await act(async () => {
-        await user.hover(shapeFileExtensions)
-      })
+      await user.hover(shapeFileExtensions)
 
       expect(screen.getByText('Shapefile subsetting is currently disabled')).toBeInTheDocument()
     })

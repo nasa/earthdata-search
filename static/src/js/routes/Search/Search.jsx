@@ -60,10 +60,10 @@ export const Search = () => {
   useEffect(() => {
     onSearchLoaded()
 
-    document.querySelector('.root__app').classList.add('root__app--fixed-footer')
+    document.querySelector('.root').classList.add('root__app--fixed-footer')
 
     return () => {
-      document.querySelector('.root__app').classList.remove('root__app--fixed-footer')
+      document.querySelector('.root').classList.remove('root__app--fixed-footer')
     }
   }, [])
 

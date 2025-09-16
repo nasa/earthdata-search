@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -105,10 +105,7 @@ describe('TemporalDisplay component', () => {
     })
 
     const remove = screen.getByRole('button', { name: /remove temporal filter/i })
-
-    await act(async () => {
-      await user.click(remove)
-    })
+    await user.click(remove)
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({
