@@ -166,7 +166,7 @@ export const Search = () => {
               element={granuleFiltersSidebar}
             />
             <Route
-              index
+              path="/*"
               element={
                 (
                   <div className="sidebar-section-body">
