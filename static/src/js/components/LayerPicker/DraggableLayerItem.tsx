@@ -37,11 +37,11 @@ interface DraggableLayerItemProps {
 export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
   layer,
   collectionId,
-  colorMap,
   updateMapLayerOpacity,
   handleToggleLayerVisibility,
   showDragHandle = true
 }) => {
+  console.log('🚀 ~ file: DraggableLayerItem.tsx:44 ~ layer:', layer)
   const {
     attributes,
     listeners,
@@ -57,13 +57,21 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
     transition
   }
 
+  const {
+    colormap,
+    opacity: layerOpacity,
+    isVisible
+  } = layer
+  console.log('🚀 ~ file: DraggableLayerItem.tsx:65 ~ layer:', layer)
+  console.log('🚀 ~ file: DraggableLayerItem.tsx:65 ~ colorMap:', colormap)
+
   // Get map layers from Zustand store
-  const mapLayers = useEdscStore((state) => state.map.mapLayers[collectionId] || [])
+  // const mapLayers = useEdscStore((state) => state.map.mapLayers[collectionId] || [])
 
   // Find the corresponding layer in the Zustand store to get visibility state
-  const storeLayer = mapLayers.find((l) => l.product === layer.product)
-  const isVisible = storeLayer?.isVisible ?? false
-  const layerOpacity = storeLayer?.opacity ?? 1.0
+  // const storeLayer = mapLayers.find((l) => l.product === layer.product)
+  // const isVisible = storeLayer?.isVisible ?? false
+  // const layerOpacity = storeLayer?.opacity ?? 1.0
 
   const [tempOpacity, setTempOpacity] = useState(layerOpacity)
 
@@ -179,14 +187,14 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
                 icon={Settings}
                 ariaLabel={`Adjust settings for ${layer.title}`}
                 tooltipId={`layer-settings-tooltip-${layer.product}`}
-                // Tooltip="Adjust layer settings"
+                tooltip="Adjust layer settings"
               />
             </OverlayTrigger>
           </div>
           {/* Render colormap for this layer if available */}
           {
-            colorMap && colorMap[layer.product] && (
-              <ColorMap colorMap={colorMap[layer.product]} />
+            colormap && (
+              <ColorMap colorMap={colormap} />
             )
           }
         </div>

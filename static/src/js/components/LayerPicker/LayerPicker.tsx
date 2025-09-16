@@ -27,8 +27,6 @@ interface LayerPickerProps {
   /** The collection ID to manage layers for */
   collectionId: string
   /** The OpenLayers Layer Group containing granule imagery layers */
-  /** The colormap information for each layer */
-  colorMap?: Record<string, Colormap>
 }
 
 /**
@@ -36,8 +34,9 @@ interface LayerPickerProps {
  */
 export const LayerPicker: React.FC<LayerPickerProps> = ({
   collectionId,
-  colorMap
+  imageryLayers
 }) => {
+  console.log('🚀 ~ file: LayerPicker.tsx:39 ~ imageryLayers:', imageryLayers)
   const [layersHidden, setLayersHidden] = useState(false)
 
   // Configure sensors for drag and drop
@@ -49,12 +48,15 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   )
 
   // Get map layers and functions from Zustand store
-  const mapLayers = useEdscStore((state) => state.map.mapLayers[collectionId] || [])
-  const {
-    toggleLayerVisibility,
-    setMapLayersOrder,
-    updateLayerOpacity
-  } = useEdscStore((state) => state.map)
+  // const mapLayers = useEdscStore((state) => state.map.mapLayers[collectionId] || [])
+  // const {
+  //   toggleLayerVisibility,
+  //   setMapLayersOrder,
+  //   updateLayerOpacity
+  // } = useEdscStore((state) => state.map)
+
+  console.log('🚀 ~ file: LayerPicker.tsx:59 ~ imageryLayers:', imageryLayers)
+  const { layerData, toggleLayerVisibility, setMapLayersOrder, updateLayerOpacity } = imageryLayers
 
   /**
    * Handles keyup events for keyboard shortcuts
@@ -94,7 +96,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
 
     if (over && active.id !== over.id) {
       // Get the current layers
-      const currentLayers = [...mapLayers]
+      const currentLayers = [...layerData]
 
       // Find the indices
       const oldIndex = currentLayers.findIndex((layer) => layer.product === active.id)
@@ -171,20 +173,19 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
           modifiers={[restrictToParentElement, restrictToVerticalAxis]}
         >
           <SortableContext
-            items={mapLayers.map((layer) => layer.product)}
+            items={imageryLayers.layerData.map((layer) => layer.product)}
             strategy={verticalListSortingStrategy}
           >
             <div className="layer-picker__layers overflow-auto">
               {
-                mapLayers.map((layer) => (
+                layerData.map((layer) => (
                   <DraggableLayerItem
                     key={layer.product}
                     layer={layer}
                     collectionId={collectionId}
-                    colorMap={colorMap}
                     updateMapLayerOpacity={updateMapLayerOpacity}
                     handleToggleLayerVisibility={handleToggleLayerVisibility}
-                    showDragHandle={mapLayers.length > 1}
+                    showDragHandle={layerData.length > 1}
                   />
                 ))
               }
