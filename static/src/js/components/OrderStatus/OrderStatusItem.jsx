@@ -54,7 +54,7 @@ let intervalId = null
 export const OrderStatusItem = ({
   authToken,
   collection,
-  defaultOpen,
+  defaultOpen = false,
   earthdataEnvironment,
   granuleDownload,
   onFetchRetrievalCollection,
@@ -573,10 +573,6 @@ export const OrderStatusItem = ({
       }
     </li>
   )
-}
-
-OrderStatusItem.defaultProps = {
-  defaultOpen: false
 }
 
 OrderStatusItem.propTypes = {

@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -147,9 +147,7 @@ describe('EditSubscriptionModal component', () => {
       })
 
       const submitButton = screen.getByRole('button', { name: 'Save' })
-      await act(async () => {
-        await user.click(submitButton)
-      })
+      await user.click(submitButton)
 
       expect(props.onUpdateSubscription).toHaveBeenCalledTimes(1)
       expect(props.onUpdateSubscription).toHaveBeenCalledWith({

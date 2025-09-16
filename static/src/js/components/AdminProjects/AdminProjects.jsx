@@ -11,7 +11,7 @@ const AdminProjects = ({
   onAdminViewProject,
   onUpdateAdminProjectsSortKey,
   onUpdateAdminProjectsPageNum,
-  projects
+  projects = {}
 }) => (
   <AdminPage
     pageTitle="Projects"
@@ -46,10 +46,6 @@ const AdminProjects = ({
     </Row>
   </AdminPage>
 )
-
-AdminProjects.defaultProps = {
-  projects: {}
-}
 
 AdminProjects.propTypes = {
   onAdminViewProject: PropTypes.func.isRequired,

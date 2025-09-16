@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  screen,
-  within,
-  act
-} from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 
 import SecondaryToolbar from '../SecondaryToolbar'
 import * as getApplicationConfig from '../../../../../../sharedUtils/config'
@@ -65,10 +61,7 @@ describe('SecondaryToolbar component', () => {
       const { user } = setup()
 
       const loginButton = screen.getByRole('button', { name: 'Log In' })
-
-      await act(async () => {
-        await user.hover(loginButton)
-      })
+      await user.hover(loginButton)
 
       expect(await screen.findByText('Log In with Earthdata Login')).toBeVisible()
     })
@@ -126,13 +119,9 @@ describe('SecondaryToolbar component', () => {
       })
 
       const usermenuButton = screen.getByRole('button', { name: 'First Name' })
-
-      await act(async () => {
-        await user.click(usermenuButton)
-      })
+      await user.click(usermenuButton)
 
       const logoutButton = screen.getByRole('button', { name: 'Logout' })
-
       await user.click(logoutButton)
 
       expect(props.onLogout).toHaveBeenCalledTimes(1)
@@ -153,10 +142,7 @@ describe('SecondaryToolbar component', () => {
         })
 
         const usermenuButton = screen.queryByRole('button', { name: 'First Name' })
-
-        await act(async () => {
-          await user.click(usermenuButton)
-        })
+        await user.click(usermenuButton)
 
         const downloadStatusButton = screen.getByRole('link', { name: 'Download Status & History' })
         expect(downloadStatusButton.href).toMatch('downloads?ee=uat')
@@ -170,10 +156,7 @@ describe('SecondaryToolbar component', () => {
         })
 
         const usermenuButton = screen.getByRole('button', { name: 'First Name' })
-
-        await act(async () => {
-          await user.click(usermenuButton)
-        })
+        await user.click(usermenuButton)
 
         const downloadStatusButton = screen.getByRole('link', { name: 'Download Status & History' })
         expect(downloadStatusButton.href).toMatch('downloads')
@@ -189,24 +172,18 @@ describe('SecondaryToolbar component', () => {
         }
       })
 
-      const myProjectButton = screen.getByRole('button', { name: 'Save Project' })
-      await act(async () => {
-        await user.click(myProjectButton)
-      })
+      const myProjectButton = await screen.findByRole('button', { name: 'Save Project' })
+      await user.click(myProjectButton)
 
-      const projectNameField = screen.getByPlaceholderText('Untitled Project')
+      const projectNameField = await screen.findByPlaceholderText('Untitled Project')
       expect(projectNameField).toBeInTheDocument()
 
-      await act(async () => {
-        await user.type(projectNameField, 'test project name')
-      })
+      await user.type(projectNameField, 'test project name')
 
       const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
       const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
 
-      await act(async () => {
-        await user.type(projectNameField, '{Enter}')
-      })
+      await user.type(projectNameField, '{Enter}')
 
       expect(preventDefaultSpy).toHaveBeenCalledTimes(1)
       expect(preventDefaultSpy).toHaveBeenCalledWith()
@@ -223,23 +200,17 @@ describe('SecondaryToolbar component', () => {
       })
 
       const myProjectButton = screen.getByRole('button', { name: 'Save Project' })
-      await act(async () => {
-        await user.click(myProjectButton)
-      })
+      await user.click(myProjectButton)
 
       const projectNameField = screen.getByPlaceholderText('Untitled Project')
       expect(projectNameField).toBeInTheDocument()
 
-      await act(async () => {
-        await user.type(projectNameField, 'test project name')
-      })
+      await user.type(projectNameField, 'test project name')
 
       const preventDefaultSpy = jest.spyOn(Event.prototype, 'preventDefault')
       const stopPropagationSpy = jest.spyOn(Event.prototype, 'stopPropagation')
 
-      await act(async () => {
-        await user.type(projectNameField, '{space}')
-      })
+      await user.type(projectNameField, '{space}')
 
       expect(preventDefaultSpy).toHaveBeenCalledTimes(0)
       expect(stopPropagationSpy).toHaveBeenCalledTimes(0)
@@ -274,9 +245,7 @@ describe('SecondaryToolbar component', () => {
         }
       })
 
-      await act(async () => {
-        await user.hover(screen.getByRole('button', { name: 'My Project' }))
-      })
+      await user.hover(screen.getByRole('button', { name: 'My Project' }))
 
       expect(await screen.findByText('View your project')).toBeVisible()
     })
@@ -304,9 +273,7 @@ describe('SecondaryToolbar component', () => {
       })
 
       const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
-      await act(async () => {
-        await user.click(saveProjectButton)
-      })
+      await user.click(saveProjectButton)
 
       const projectNameField = screen.getByPlaceholderText('Untitled Project')
       expect(projectNameField).toBeInTheDocument()
@@ -318,11 +285,9 @@ describe('SecondaryToolbar component', () => {
           authToken: 'fakeauthkey'
         }
       })
-      const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
 
-      await act(async () => {
-        await user.hover(saveProjectButton)
-      })
+      const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
+      await user.hover(saveProjectButton)
 
       expect(await screen.findByText('Create a project with your current search')).toBeVisible()
     })
@@ -335,21 +300,15 @@ describe('SecondaryToolbar component', () => {
       })
 
       const saveProjectButton = screen.getByRole('button', { name: 'Save Project' })
-      await act(async () => {
-        await user.click(saveProjectButton)
-      })
+      await user.click(saveProjectButton)
 
       const projectNameField = screen.getByPlaceholderText('Untitled Project')
       expect(projectNameField).toBeInTheDocument()
 
-      await act(async () => {
-        await user.type(projectNameField, 'test project name')
-      })
+      await user.type(projectNameField, 'test project name')
 
       const saveProjectNameButton = screen.getByRole('button', { name: 'Save project name' })
-      await act(async () => {
-        await user.click(saveProjectNameButton)
-      })
+      await user.click(saveProjectNameButton)
 
       expect(props.onUpdateProjectName).toHaveBeenCalledTimes(1)
       expect(props.onUpdateProjectName).toHaveBeenCalledWith('test project name')
@@ -421,10 +380,7 @@ describe('SecondaryToolbar component', () => {
       const { user } = setup()
 
       const tourButton = screen.getByRole('button', { name: 'Start tour' })
-
-      await act(async () => {
-        await user.hover(tourButton)
-      })
+      await user.hover(tourButton)
 
       expect(await screen.findByText('Take a tour to learn how to use Earthdata Search')).toBeVisible()
     })

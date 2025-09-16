@@ -1,5 +1,4 @@
 import React from 'react'
-import { act } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -53,9 +52,7 @@ describe('CollectionResultsBodyContainer component', () => {
   test('loadNextPage calls changeQuery', async () => {
     const { zustandState } = setup()
 
-    await act(async () => {
-      CollectionResultsBody.mock.calls[0][0].loadNextPage()
-    })
+    CollectionResultsBody.mock.calls[0][0].loadNextPage()
 
     expect(zustandState.query.changeQuery).toHaveBeenCalledTimes(1)
     expect(zustandState.query.changeQuery).toHaveBeenCalledWith({

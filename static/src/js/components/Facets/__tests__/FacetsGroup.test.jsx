@@ -125,7 +125,7 @@ describe('FacetsGroup component', () => {
       const { home } = zustandState
       const { setOpenFacetGroup } = home
 
-      act(() => {
+      await act(() => {
         setOpenFacetGroup('project')
       })
 

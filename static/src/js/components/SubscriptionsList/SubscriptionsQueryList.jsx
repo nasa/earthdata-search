@@ -151,12 +151,12 @@ const buildHumanizedQueryDisplay = (key, value) => {
  * @param {String} params.subscriptionType Subscription type, collection or granule
  */
 export const SubscriptionsQueryList = ({
-  displayEmptyMessage,
-  disabledFields,
-  showCheckboxes,
+  displayEmptyMessage = true,
+  disabledFields = null,
+  showCheckboxes = false,
   query,
   subscriptionType,
-  onUpdateSubscriptionDisabledFields
+  onUpdateSubscriptionDisabledFields = null
 }) => {
   const humanReadableQueryList = queryToHumanizedList(query, subscriptionType)
 
@@ -237,13 +237,6 @@ export const SubscriptionsQueryList = ({
       }
     </ul>
   )
-}
-
-SubscriptionsQueryList.defaultProps = {
-  displayEmptyMessage: true,
-  showCheckboxes: false,
-  disabledFields: null,
-  onUpdateSubscriptionDisabledFields: null
 }
 
 SubscriptionsQueryList.propTypes = {

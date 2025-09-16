@@ -11,8 +11,8 @@ import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import 'rc-pagination/assets/index.css'
 import './AdminProjectsList.scss'
 
-const AdminProjectsList = ({
-  projects,
+export const AdminProjectsList = ({
+  projects = {},
   onUpdateAdminProjectsSortKey,
   onUpdateAdminProjectsPageNum
 }) => {
@@ -158,10 +158,6 @@ const AdminProjectsList = ({
       </div>
     </>
   )
-}
-
-AdminProjectsList.defaultProps = {
-  projects: {}
 }
 
 AdminProjectsList.propTypes = {

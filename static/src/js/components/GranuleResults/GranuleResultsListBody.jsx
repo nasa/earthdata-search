@@ -100,8 +100,8 @@ export const GranuleResultsListBody = ({
   onMetricsAddGranuleProject,
   onMetricsDataAccess,
   readableGranuleName,
-  setVisibleMiddleIndex,
-  visibleMiddleIndex,
+  setVisibleMiddleIndex = null,
+  visibleMiddleIndex = null,
   width
 }) => {
   const location = useLocation()
@@ -150,7 +150,7 @@ export const GranuleResultsListBody = ({
         columnIndex
       }, 'center')
     }
-  }, [listRef.current])
+  }, [])
 
   const scrollToFocusedGranule = (granuleId) => {
     const granuleIndex = granules.findIndex((granule) => {
@@ -284,11 +284,6 @@ export const GranuleResultsListBody = ({
       }
     </InfiniteLoader>
   )
-}
-
-GranuleResultsListBody.defaultProps = {
-  setVisibleMiddleIndex: null,
-  visibleMiddleIndex: null
 }
 
 GranuleResultsListBody.propTypes = {

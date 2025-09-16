@@ -1,5 +1,5 @@
 import React from 'react'
-import { screen, act } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import SearchForm from '../SearchForm'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -56,10 +56,7 @@ describe('SearchForm component', () => {
     const { user, props } = setup()
 
     const clearButton = screen.getByRole('button', { name: /clear all search filters/i })
-
-    await act(async () => {
-      await user.click(clearButton)
-    })
+    await user.click(clearButton)
 
     expect(props.onClearFilters).toHaveBeenCalledTimes(1)
     expect(props.onClearFilters).toHaveBeenCalledWith()
@@ -72,9 +69,7 @@ describe('SearchForm component', () => {
       const advancedSearchButton = screen.getByRole('button', { name: /show advanced search options/i })
       expect(advancedSearchButton).toBeInTheDocument()
 
-      await act(async () => {
-        await user.click(advancedSearchButton)
-      })
+      await user.click(advancedSearchButton)
 
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledTimes(1)
       expect(props.onToggleAdvancedSearchModal).toHaveBeenCalledWith(true)

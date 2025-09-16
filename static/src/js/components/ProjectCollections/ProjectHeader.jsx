@@ -6,7 +6,6 @@ import React, {
 } from 'react'
 import { PropTypes } from 'prop-types'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 import abbreviate from 'number-abbreviate'
 import classNames from 'classnames'
 import { FaEdit } from 'react-icons/fa'
@@ -16,6 +15,8 @@ import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { commafy } from '../../util/commafy'
 import { convertSizeToMB, convertSize } from '../../util/project'
 import { pluralize } from '../../util/pluralize'
+import renderTooltip from '../../util/renderTooltip'
+
 import { projectHeader } from './skeleton'
 
 import Skeleton from '../Skeleton/Skeleton'
@@ -235,16 +236,11 @@ export const ProjectHeader = memo(({
               <OverlayTrigger
                 placement="right"
                 overlay={
-                  (
-                    <Tooltip
-                      className="tooltip--large tooltip--ta-left tooltip--wide"
-                    >
-                      This is the estimated overall size of your project. If no size
-                      information exists in a granule&apos;s metadata, it will not be
-                      included in this number. The size is estimated based upon the
-                      first 20 granules added to your project from each collection.
-                    </Tooltip>
-                  )
+                  (tooltipProps) => renderTooltip({
+                    children: 'This is the estimated overall size of your project. If no size information exists in a granule&apos;s metadata, it will not be included in this number. The size is estimated based upon the first 20 granules added to your project from each collection.',
+                    className: 'tooltip--large tooltip--ta-left tooltip--wide',
+                    ...tooltipProps
+                  })
                 }
               >
                 <EDSCIcon icon={AlertInformation} className="project-header__stats-icon" />

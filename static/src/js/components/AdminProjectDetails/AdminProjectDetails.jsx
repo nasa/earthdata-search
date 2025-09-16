@@ -7,7 +7,9 @@ import Row from 'react-bootstrap/Row'
 
 import './AdminProjectDetails.scss'
 
-export const AdminProjectDetails = ({ project }) => {
+export const AdminProjectDetails = ({
+  project = {}
+}) => {
   const {
     name,
     obfuscated_id: obfuscatedId,
@@ -61,10 +63,6 @@ export const AdminProjectDetails = ({ project }) => {
       </Row>
     </div>
   )
-}
-
-AdminProjectDetails.defaultProps = {
-  project: {}
 }
 
 AdminProjectDetails.propTypes = {

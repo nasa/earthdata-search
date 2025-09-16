@@ -65,7 +65,7 @@ CustomDataLinksToggle.displayName = 'CustomDataLinksToggle'
  */
 export const GranuleResultsDataLinksButton = ({
   collectionId,
-  buttonVariant,
+  buttonVariant = '',
   dataLinks,
   directDistributionInformation,
   id,
@@ -327,10 +327,6 @@ export const GranuleResultsDataLinksButton = ({
 }
 
 GranuleResultsDataLinksButton.displayName = 'GranuleResultsDataLinksButton'
-
-GranuleResultsDataLinksButton.defaultProps = {
-  buttonVariant: ''
-}
 
 GranuleResultsDataLinksButton.propTypes = {
   id: PropTypes.string.isRequired,

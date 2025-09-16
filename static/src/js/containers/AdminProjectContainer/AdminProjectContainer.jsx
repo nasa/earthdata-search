@@ -15,7 +15,7 @@ export const mapDispatchToProps = (dispatch) => ({
 })
 
 export const AdminProjectContainer = ({
-  projects,
+  projects = {},
   onFetchAdminProject
 }) => {
   const params = useParams()
@@ -32,10 +32,6 @@ export const AdminProjectContainer = ({
       project={selectedProject}
     />
   )
-}
-
-AdminProjectContainer.defaultProps = {
-  projects: {}
 }
 
 AdminProjectContainer.propTypes = {

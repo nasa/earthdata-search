@@ -28,7 +28,7 @@ export const AdminRetrievalsMetricsContainer = ({
   onFetchAdminRetrievalsMetrics,
   onUpdateAdminRetrievalsMetricsStartDate,
   onUpdateAdminRetrievalsMetricsEndDate,
-  retrievalsMetrics
+  retrievalsMetrics = {}
 }) => (
   <AdminRetrievalsMetrics
     onFetchAdminRetrievalsMetrics={onFetchAdminRetrievalsMetrics}
@@ -37,10 +37,6 @@ export const AdminRetrievalsMetricsContainer = ({
     retrievalsMetrics={retrievalsMetrics}
   />
 )
-
-AdminRetrievalsMetricsContainer.defaultProps = {
-  retrievalsMetrics: {}
-}
 
 AdminRetrievalsMetricsContainer.propTypes = {
   onFetchAdminRetrievalsMetrics: PropTypes.func.isRequired,

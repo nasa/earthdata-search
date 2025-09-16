@@ -18,20 +18,8 @@ class ErrorBoundary extends Component {
     }
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     const guid = uuidv4()
-    const { message, stack } = error
-    const { location } = window
-
-    const requestObject = new LoggerRequest()
-    requestObject.log({
-      error: {
-        guid,
-        location,
-        message,
-        stack
-      }
-    })
 
     return {
       errorGuid: guid,
@@ -46,6 +34,22 @@ class ErrorBoundary extends Component {
     if (prevHasError !== hasError) {
       eventEmitter.emit('error.global', hasError)
     }
+  }
+
+  componentDidCatch(error) {
+    const { errorGuid } = this.state
+    const { message, stack } = error
+    const { location } = window
+
+    const requestObject = new LoggerRequest()
+    requestObject.log({
+      error: {
+        guid: errorGuid,
+        location,
+        message,
+        stack
+      }
+    })
   }
 
   render() {

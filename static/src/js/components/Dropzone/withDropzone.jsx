@@ -1,4 +1,8 @@
-import React, { Component } from 'react'
+import React, {
+  useRef,
+  useEffect,
+  useState
+} from 'react'
 import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import Dz from 'dropzone'
@@ -7,160 +11,120 @@ import classNames from 'classnames'
 import { eventEmitter } from '../../events/events'
 
 export const withDropzone = (WrappedComponent) => {
-  class WithDropzone extends Component {
-    constructor(props) {
-      super(props)
-      this.state = {
-        open: false
-      }
+  const WithDropzone = (props) => {
+    const {
+      className,
+      eventScope,
+      onSuccess,
+      onError,
+      onRemovedFile,
+      onDragEnter,
+      onDragLeave,
+      onDrop,
+      onSending,
+      dropzoneOptions
+    } = props
 
-      this.childRef = React.createRef()
-      this.onSuccess = this.onSuccess.bind(this)
-      this.onError = this.onError.bind(this)
-      this.onRemovedFile = this.onRemovedFile.bind(this)
-      this.onDragEnter = this.onDragEnter.bind(this)
-      this.onDragLeave = this.onDragLeave.bind(this)
-      this.onDrop = this.onDrop.bind(this)
-      this.onSending = this.onSending.bind(this)
-      this.onDropzoneOpen = this.onDropzoneOpen.bind(this)
-    }
+    const childRef = useRef(null)
+    const dropzoneRef = useRef(null)
+    const [open, setOpen] = useState(false)
 
-    componentDidMount() {
-      const {
-        dropzoneOptions,
-        eventScope,
-        onError,
-        onRemovedFile
-      } = this.props
-
-      const { current } = this.childRef
-
-      // eslint-disable-next-line react/no-find-dom-node
-      const dzEl = ReactDOM.findDOMNode(current)
-
-      window.addEventListener('dragenter', this.onDragEnter)
-
-      Dz.autoDiscover = false
-      this.dropzone = new Dz(dzEl, dropzoneOptions)
-      this.dropzone.on('dragleave', this.onDragLeave)
-      this.dropzone.on('drop', this.onDrop)
-      this.dropzone.on('sending', this.onSending)
-      this.dropzone.on('success', (file, response) => {
-        this.onSuccess(file, response, this.dropzone)
-      })
-
-      if (onRemovedFile) this.dropzone.on('removedfile', this.onRemovedFile)
-      if (onError) {
-        this.dropzone.on('error', (file) => {
-          this.onError(file)
-        })
-      }
-
-      eventEmitter.on(`${eventScope}.dropzoneOpen`, this.onDropzoneOpen)
-    }
-
-    componentWillUnmount() {
-      const {
-        onError,
-        onRemovedFile
-      } = this.props
-
-      window.removeEventListener('dragenter', this.onDragEnter)
-
-      this.dropzone.off('dragleave', this.onDragLeave)
-      this.dropzone.off('drop', this.onDrop)
-      this.dropzone.off('sending', this.onSending)
-      this.dropzone.off('success', this.onSuccess)
-      if (onRemovedFile) this.dropzone.off('removedfile', this.onRemovedFile)
-      if (onError) this.dropzone.off('error', this.onError)
-    }
-
-    onDropzoneOpen() {
-      this.dropzone.hiddenFileInput.click()
-    }
-
-    onDragEnter() {
-      const { onDragEnter } = this.props
+    // Drag event handlers
+    const handleDragEnter = () => {
       document.querySelector('body').classList.add('is-dragging')
-
-      this.setState({
-        open: true
-      })
-
+      setOpen(true)
       if (onDragEnter) onDragEnter()
     }
 
-    onDragLeave() {
-      const { onDragLeave } = this.props
+    const handleDragLeave = () => {
       document.querySelector('body').classList.remove('is-dragging')
-
-      this.setState({
-        open: false
-      })
-
+      setOpen(false)
       if (onDragLeave) onDragLeave()
     }
 
-    onDrop() {
-      const { onDrop } = this.props
+    const handleDrop = () => {
       document.querySelector('body').classList.remove('is-dragging')
-
-      this.setState({
-        open: false
-      })
-
+      setOpen(false)
       if (onDrop) onDrop()
     }
 
-    onSending(file, response, dropzone) {
-      const { onSending } = this.props
-      onSending(file, response, dropzone)
+    const handleSending = (file, response, dropzone) => {
+      if (onSending) onSending(file, response, dropzone)
     }
 
-    onSuccess(file, response, dropzone) {
-      const { onSuccess } = this.props
-      onSuccess(file, response, dropzone)
+    const handleSuccess = (file, response, dropzone) => {
+      if (onSuccess) onSuccess(file, response, dropzone)
     }
 
-    onError(file) {
-      const { onError } = this.props
+    const handleError = (file) => {
       if (onError) onError(file)
     }
 
-    onRemovedFile() {
-      const { onRemovedFile } = this.props
+    const handleRemovedFile = () => {
       if (onRemovedFile) onRemovedFile()
     }
 
-    render() {
-      const { className } = this.props
-      const { open } = this.state
-      const classes = classNames([
-        'dropzone',
-        {
-          'dropzone--is-active': open
-        },
-        className
-      ])
-
-      return ReactDOM.createPortal(
-        <WrappedComponent
-          ref={this.childRef}
-          className={classes}
-        />,
-        document.querySelector('body')
-      )
+    const handleDropzoneOpen = () => {
+      if (dropzoneRef.current && dropzoneRef.current.hiddenFileInput) {
+        dropzoneRef.current.hiddenFileInput.click()
+      }
     }
-  }
 
-  WithDropzone.defaultProps = {
-    className: null,
-    onError: null,
-    onRemovedFile: null,
-    onDrop: null,
-    onDragEnter: null,
-    onDragLeave: null,
-    onSending: null
+    useEffect(() => {
+      // If the child component is mounted, setup Dropzone
+      if (childRef.current) {
+        const dropzoneElement = childRef.current.ref.current
+
+        window.addEventListener('dragenter', handleDragEnter)
+
+        // Create the Dropzone instance
+        Dz.autoDiscover = false
+        dropzoneRef.current = new Dz(dropzoneElement, dropzoneOptions)
+
+        // Register event listeners
+        dropzoneRef.current.on('dragleave', handleDragLeave)
+        dropzoneRef.current.on('drop', handleDrop)
+        dropzoneRef.current.on('sending', handleSending)
+        dropzoneRef.current.on('success', (file, response) => {
+          handleSuccess(file, response, dropzoneRef.current)
+        })
+
+        if (onRemovedFile) dropzoneRef.current.on('removedfile', handleRemovedFile)
+        if (onError) dropzoneRef.current.on('error', handleError)
+
+        eventEmitter.on(`${eventScope}.dropzoneOpen`, handleDropzoneOpen)
+      }
+
+      // Cleanup the event listeners
+      return () => {
+        window.removeEventListener('dragenter', handleDragEnter)
+
+        dropzoneRef.current.off('dragleave', handleDragLeave)
+        dropzoneRef.current.off('drop', handleDrop)
+        dropzoneRef.current.off('sending', handleSending)
+        dropzoneRef.current.off('success', handleSuccess)
+
+        if (onRemovedFile) dropzoneRef.current.off('removedfile', handleRemovedFile)
+        if (onError) dropzoneRef.current.off('error', handleError)
+      }
+    }, [])
+
+    const classes = classNames([
+      'dropzone',
+      {
+        'dropzone--is-active': open
+      },
+      className
+    ])
+
+    return ReactDOM.createPortal(
+      <WrappedComponent
+        ref={childRef}
+        className={classes}
+        {...props}
+      />,
+      document.querySelector('body')
+    )
   }
 
   WithDropzone.propTypes = {

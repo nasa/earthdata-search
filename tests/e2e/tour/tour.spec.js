@@ -142,6 +142,9 @@ test.describe('When logged in', () => {
     // Start the tour
     await page.getByRole('button', { name: 'Start Tour' }).click()
 
+    // Wait a short time to ensure the tour animation shows the start of the tour
+    await page.waitForTimeout(500)
+
     // Welcome screen
     await expect(page.getByRole('heading', { name: 'Welcome to Earthdata Search!' })).toBeVisible()
     await page.getByRole('button', { name: 'Take the tour' }).click()
@@ -207,7 +210,10 @@ test.describe('When not logged in', () => {
 
   test('should navigate through the Joyride tour highlighting the correct parts of the page', async ({ page }) => {
     // Start the tour by clicking the "Start Tour" button
-    await page.getByRole('button', { name: 'Start tour' }).click()
+    await page.getByRole('button', { name: 'Start Tour' }).click()
+
+    // Wait a short time to ensure the tour animation shows the start of the tour
+    await page.waitForTimeout(500)
 
     // Start Tour View: Welcome to Earthdata Search
     await expect(page.getByRole('heading', { name: 'Welcome to Earthdata Search!' })).toBeVisible()

@@ -29,7 +29,7 @@ export const S3LinksPanel = ({
   retrievalId,
   granuleCount,
   granuleLinksIsLoading,
-  showTextWindowActions
+  showTextWindowActions = true
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}-s3.txt`
 
@@ -141,10 +141,6 @@ export const S3LinksPanel = ({
         The AWS S3 objects will become available once the order has finished processing.
       </div>
     )
-}
-
-S3LinksPanel.defaultProps = {
-  showTextWindowActions: true
 }
 
 S3LinksPanel.propTypes = {

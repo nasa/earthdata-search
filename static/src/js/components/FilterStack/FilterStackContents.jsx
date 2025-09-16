@@ -3,13 +3,11 @@ import PropTypes from 'prop-types'
 
 import './FilterStackContents.scss'
 
-const FilterStackContents = (props) => {
-  const {
-    body,
-    title,
-    showLabel
-  } = props
-
+const FilterStackContents = ({
+  body = null,
+  showLabel = false,
+  title = null
+}) => {
   if (!title || !body) return null
 
   const filterStackContentsClass = `filter-stack-contents ${showLabel ? 'filter-stack-contents--label-visible' : ''}`
@@ -25,12 +23,6 @@ const FilterStackContents = (props) => {
       { body && <div className="filter-stack-contents__body">{body}</div>}
     </div>
   )
-}
-
-FilterStackContents.defaultProps = {
-  body: null,
-  showLabel: false,
-  title: null
 }
 
 FilterStackContents.propTypes = {

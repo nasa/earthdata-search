@@ -146,6 +146,7 @@ test.describe('When clicking on a granule on the map', () => {
   test.describe('When clicking on a map granule while in the granule table view', () => {
     test.beforeEach(async ({ page }) => {
       // Click on the view button and select table
+
       // "View: List" button
       await page.getByTestId('panel-group-header-dropdown__view__1').hover()
 
@@ -184,7 +185,7 @@ test.describe('When clicking on a granule on the map', () => {
     test.describe('when switching from the table view to the list view', () => {
       test('the granule remains highlighted and visible', async ({ page }) => {
         // Switch to the table view
-        // await page.locator('.panel-group--is-active').getByRole('button', { name: 'View: Table' }).click()
+
         // "View: Table" button
         await page.getByTestId('panel-group-header-dropdown__view__1').hover()
 

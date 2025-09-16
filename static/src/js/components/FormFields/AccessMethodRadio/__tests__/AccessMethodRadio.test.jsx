@@ -1,10 +1,6 @@
 import React from 'react'
 
-import {
-  act,
-  render,
-  screen
-} from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import AccessMethodRadio from '../AccessMethodRadio'
@@ -92,9 +88,7 @@ describe('AccessMethodRadio component', () => {
       const { user } = setup()
       const icon = screen.getByTestId('edsc-icon')
 
-      await act(async () => {
-        await user.hover(icon)
-      })
+      await user.hover(icon)
 
       const tooltip = await screen.findByRole('tooltip')
 
@@ -112,15 +106,11 @@ describe('AccessMethodRadio component', () => {
 
       const icon = screen.getByTestId('edsc-icon')
 
-      await act(async () => {
-        await user.hover(icon)
-      })
+      await user.hover(icon)
 
       const tooltip = await screen.findByRole('tooltip')
 
-      await act(async () => {
-        await user.hover(tooltip)
-      })
+      await user.hover(tooltip)
 
       expect(tooltip).toBeInTheDocument()
       expect(screen.getByText('test details')).toBeInTheDocument()
@@ -136,20 +126,14 @@ describe('AccessMethodRadio component', () => {
 
       const icon = screen.getByTestId('edsc-icon')
 
-      await act(async () => {
-        await user.hover(icon)
-      })
+      await user.hover(icon)
 
       const tooltip = await screen.findByRole('tooltip')
 
-      await act(async () => {
-        await user.hover(tooltip)
-      })
+      await user.hover(tooltip)
 
       // Hover away from the tool-tip
-      await act(async () => {
-        await user.hover(screen.getByText('test title'))
-      })
+      await user.hover(screen.getByText('test title'))
 
       expect(screen.queryByRole('tooltip')).not.toBeInTheDocument()
     })
@@ -164,9 +148,7 @@ describe('AccessMethodRadio component', () => {
 
       const icon = screen.getByTestId('edsc-icon')
 
-      await act(async () => {
-        await user.click(icon)
-      })
+      await user.click(icon)
 
       const tooltip = await screen.findByRole('tooltip')
 

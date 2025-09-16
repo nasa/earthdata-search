@@ -12,8 +12,8 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 import './GranuleDetailsMetadata.scss'
 
 export const GranuleDetailsMetadata = ({
-  authToken,
-  metadataUrls
+  authToken = '',
+  metadataUrls = null
 }) => {
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
@@ -78,11 +78,6 @@ export const GranuleDetailsMetadata = ({
       </div>
     </div>
   )
-}
-
-GranuleDetailsMetadata.defaultProps = {
-  authToken: PropTypes.string,
-  metadataUrls: null
 }
 
 GranuleDetailsMetadata.propTypes = {

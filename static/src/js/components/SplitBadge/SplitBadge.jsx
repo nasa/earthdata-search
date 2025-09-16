@@ -6,10 +6,10 @@ import Badge from 'react-bootstrap/Badge'
 import './SplitBadge.scss'
 
 const SplitBadge = ({
-  className,
+  className = null,
   primary,
-  secondary,
-  variant
+  secondary = null,
+  variant = 'primary'
 }) => {
   const classes = classNames(
     'split-badge',
@@ -36,12 +36,6 @@ const SplitBadge = ({
       }
     </Badge>
   )
-}
-
-SplitBadge.defaultProps = {
-  className: null,
-  secondary: null,
-  variant: 'primary'
 }
 
 SplitBadge.propTypes = {

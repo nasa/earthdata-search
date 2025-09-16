@@ -1,5 +1,5 @@
 import React from 'react'
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import { AlertMediumPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -203,9 +203,7 @@ describe('ProjectCollectionItem component', () => {
       const { props, user, zustandState } = setup()
 
       const moreActionsButton = screen.getByRole('button', { name: 'More actions' })
-      await act(async () => {
-        await user.click(moreActionsButton)
-      })
+      await user.click(moreActionsButton)
 
       const button = screen.getByRole('button', { name: 'Remove' })
       await user.click(button)
@@ -226,9 +224,7 @@ describe('ProjectCollectionItem component', () => {
         })
 
         const moreActionsButton = screen.getByRole('button', { name: 'More actions' })
-        await act(async () => {
-          await user.click(moreActionsButton)
-        })
+        await user.click(moreActionsButton)
 
         const button = screen.getByRole('button', { name: 'Remove' })
         await user.click(button)
@@ -251,9 +247,7 @@ describe('ProjectCollectionItem component', () => {
           })
 
           const moreActionsButton = screen.getByRole('button', { name: 'More actions' })
-          await act(async () => {
-            await user.click(moreActionsButton)
-          })
+          await user.click(moreActionsButton)
 
           const button = screen.getByRole('button', { name: 'Remove' })
           await user.click(button)
@@ -276,9 +270,7 @@ describe('ProjectCollectionItem component', () => {
           })
 
           const moreActionsButton = screen.getByRole('button', { name: 'More actions' })
-          await act(async () => {
-            await user.click(moreActionsButton)
-          })
+          await user.click(moreActionsButton)
 
           const button = screen.getByRole('button', { name: 'Remove' })
           await user.click(button)
@@ -298,9 +290,7 @@ describe('ProjectCollectionItem component', () => {
       const { user, zustandState } = setup()
 
       const moreActionsButton = screen.getByRole('button', { name: 'More actions' })
-      await act(async () => {
-        await user.click(moreActionsButton)
-      })
+      await user.click(moreActionsButton)
 
       const button = screen.getByRole('button', { name: 'Toggle Visibility' })
       await user.click(button)
@@ -315,9 +305,7 @@ describe('ProjectCollectionItem component', () => {
       const { user, zustandState } = setup()
 
       const moreActionsButton = screen.getByRole('button', { name: 'More actions' })
-      await act(async () => {
-        await user.click(moreActionsButton)
-      })
+      await user.click(moreActionsButton)
 
       const button = screen.getByRole('button', { name: 'Collection Details' })
       await user.click(button)
@@ -332,9 +320,7 @@ describe('ProjectCollectionItem component', () => {
       const { user, zustandState } = setup()
 
       const moreActionsButton = screen.getByRole('button', { name: 'More actions' })
-      await act(async () => {
-        await user.click(moreActionsButton)
-      })
+      await user.click(moreActionsButton)
 
       const button = screen.getByRole('button', { name: 'View Granules' })
       await user.click(button)

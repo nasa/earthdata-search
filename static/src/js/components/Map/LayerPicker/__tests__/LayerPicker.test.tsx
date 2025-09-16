@@ -1,4 +1,4 @@
-import { screen, act } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import setupTest from '../../../../../../../jestConfigs/setupTest'
 import LayerPicker, { LayerPickerProps } from '../LayerPicker'
@@ -89,9 +89,7 @@ describe('LayerPicker', () => {
       const { user, props } = setup()
       const toggleButton = screen.getByRole('button', { name: 'Show Precipitation Rate' })
 
-      await act(async () => {
-        await user.click(toggleButton)
-      })
+      await user.click(toggleButton)
 
       const { imageryLayers } = props as unknown as LayerPickerProps
       const { toggleLayerVisibility } = imageryLayers
@@ -106,9 +104,7 @@ describe('LayerPicker', () => {
       const { user, props } = setup()
       const settingsButton = screen.getByRole('button', { name: 'Adjust settings for Precipitation Rate' })
 
-      await act(async () => {
-        await user.click(settingsButton)
-      })
+      await user.click(settingsButton)
 
       const opacitySlider = screen.getByRole('slider')
       await user.click(opacitySlider)
@@ -131,18 +127,16 @@ describe('LayerPicker', () => {
       const secondLayerText = screen.getByText('Precipitation Rate (30-min)')
 
       // Simulate drag and drop from first layer to second layer
-      await act(async () => {
-        await user.pointer([
-          {
-            target: firstLayerText,
-            keys: '[MouseLeft>]'
-          },
-          {
-            target: secondLayerText,
-            keys: '[MouseLeft]'
-          }
-        ])
-      })
+      await user.pointer([
+        {
+          target: firstLayerText,
+          keys: '[MouseLeft>]'
+        },
+        {
+          target: secondLayerText,
+          keys: '[MouseLeft]'
+        }
+      ])
 
       // Verify setMapLayersOrder was called with the reordered layers
       // After dragging first layer to second position send request with updated order

@@ -1,12 +1,8 @@
 import PropTypes from 'prop-types'
 
 const AdvancedSearchDisplayEntry = ({
-  children
+  children = null
 }) => children
-
-AdvancedSearchDisplayEntry.defaultProps = {
-  children: null
-}
 
 AdvancedSearchDisplayEntry.propTypes = {
   children: PropTypes.node

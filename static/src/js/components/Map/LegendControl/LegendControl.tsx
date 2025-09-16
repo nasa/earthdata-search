@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import Control from 'ol/control/Control'
 
 import Legend from '../Legend/Legend'
@@ -28,6 +28,8 @@ class LegendControl extends Control {
 
   imageryLayers: ImageryLayers
 
+  layerPickerRoot: ReactDOM.Root
+
   constructor(options: LegendControlOptions) {
     const element = document.createElement('div')
     element.className = 'legend-control'
@@ -40,6 +42,8 @@ class LegendControl extends Control {
     this.collectionId = options.collectionId
     this.imageryLayers = options.imageryLayers
 
+    this.layerPickerRoot = ReactDOM.createRoot(this.element)
+
     this.render()
   }
 
@@ -49,13 +53,11 @@ class LegendControl extends Control {
       return
     }
 
-    // @ts-expect-error We are still on React 17
-    ReactDOM.render(
+    this.layerPickerRoot.render(
       <Legend
         collectionId={this.collectionId}
         imageryLayers={this.imageryLayers}
-      />,
-      this.element
+      />
     )
   }
 
