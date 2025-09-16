@@ -10,9 +10,7 @@ interface LegendProps {
   /** The collection ID to manage layers for */
   collectionId: string
   /** The colormap information */
-  colorMap: Record<string, Colormap>
-  /** The OpenLayers Layer Group containing granule imagery layers */
-  granuleImageryLayerGroup?: LayerGroup
+  imageryLayers: any
 }
 
 /**
@@ -24,19 +22,23 @@ interface LegendProps {
  */
 export const Legend: React.FC<LegendProps> = ({
   collectionId,
-  colorMap,
-  granuleImageryLayerGroup
-}) => (
-  <div className="legend" data-testid="legend">
-    {
-      granuleImageryLayerGroup && (
-        <LayerPicker
-          collectionId={collectionId}
-          colorMap={colorMap}
-        />
-      )
-    }
-  </div>
-)
+  imageryLayers
+}) => {
+  console.log('🚀 ~ file: Legend.tsx:28 ~ imageryLayers:', imageryLayers)
+
+  return (
+
+    <div className="legend" data-testid="legend">
+      {
+        imageryLayers.layerData.length > 0 && (
+          <LayerPicker
+            collectionId={collectionId}
+            imageryLayers={imageryLayers}
+          />
+        )
+      }
+    </div>
+  )
+}
 
 export default Legend

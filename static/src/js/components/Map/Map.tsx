@@ -98,7 +98,6 @@ import {
   ShapefileFile,
   SpatialSearch
 } from '../../types/sharedTypes'
-import { Colormap } from '../ColorMap/ColorMap'
 import { MapView, ShapefileSlice } from '../../zustand/types'
 
 let previousGranulesKey: string
@@ -282,7 +281,6 @@ interface MapProps {
     longitude: number
   }
   /** The color map for the focused collection */
-  colorMap: Record<string, Colormap>
   /** The ID of the focused collection */
   focusedCollectionId: string
   /** The ID of the focused granule */
@@ -376,7 +374,7 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({
   base,
   center,
-  colorMap,
+  imageryLayers,
   focusedCollectionId = '',
   focusedGranuleId = '',
   granules = [],
@@ -427,8 +425,7 @@ const Map: React.FC<MapProps> = ({
       controls: [
         new LegendControl({
           collectionId: focusedCollectionId,
-          colorMap: colorMap as Record<string, Colormap>,
-          granuleImageryLayerGroup
+          imageryLayers
         })
       ],
       interactions: defaultInteractions().extend([
@@ -949,28 +946,34 @@ const Map: React.FC<MapProps> = ({
     ) as LegendControl | undefined
 
     if (legendControl) {
-      // Update existing control
-      legendControl.update({
-        collectionId: focusedCollectionId,
-        colorMap,
-        granuleImageryLayerGroup
-      })
-    } else {
-      // Create new control if none exists
+      controls.remove(legendControl)
+    }
+
+    //   If (legendControl) {
+    //     // Update existing control
+    //     legendControl.update({
+    //       collectionId: focusedCollectionId,
+    //       imageryLayers
+    //     })
+    //   } else {
+    //     // Create new control if none exists
+    //   )
+    // }
+    console.log('🚀 ~ file: Map.tsx:965 ~ imageryLayers:', imageryLayers)
+    imageryLayers.layerData.forEach((layer) => {
+      console.log('🚀 ~ file: Map.tsx:966 ~ layer:', layer)
+      console.log('foobar', layer.colorMap)
+    })
+
+    if (isFocusedCollectionPage && imageryLayers && imageryLayers.layerData.length > 0) {
       controls.push(
         new LegendControl({
           collectionId: focusedCollectionId,
-          colorMap,
-          granuleImageryLayerGroup
+          imageryLayers
         })
       )
     }
-
-    if (!isFocusedCollectionPage && legendControl) {
-      // Remove the legend control if not on the collection focused page
-      controls.remove(legendControl)
-    }
-  }, [isFocusedCollectionPage, granuleImageryLayerGroup, colorMap])
+  }, [isFocusedCollectionPage, imageryLayers])
 
   // Update the map view when the panelsWidth changes
   useEffect(() => {

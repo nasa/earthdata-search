@@ -200,6 +200,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     (state) => (focusedCollectionId ? state.map.mapLayers[focusedCollectionId] || [] : [])
   )
 
+  const {
+    toggleLayerVisibility,
+    setMapLayersOrder,
+    updateLayerOpacity
+  } = useEdscStore((state) => state.map)
+
   // Default the granuleMetadata to the granulesById. These are the granules we want to show
   // on the search page
   let granuleMetadata = {
@@ -386,12 +392,18 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
   }, [mapLayers, projection])
 
-  // Get the colormap data for the currently focused collection
-  const colorMapState: Record<string, Colormap> = useMemo(() => {
-    const colorMapData: Record<string, Colormap> = {}
-
+  const imageryLayers: Record<string, Colormap> = useMemo(() => {
+    const layersObject = {
+      layerData: [],
+      toggleLayerVisibility,
+      setMapLayersOrder,
+      updateLayerOpacity
+    }
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
+    console.log('🚀 ~ file: MapContainer.tsx:412 ~ mapLayers:', mapLayers)
+
     const layersForProjection = getLayersForProjection()
+    console.log('🚀 ~ file: MapContainer.tsx:406 ~ layersForProjection:', layersForProjection)
 
     if (layersForProjection.length > 0) {
       // Get colormap data for all available GIBS tags
@@ -401,12 +413,18 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
         if (productColormap && productColormap.colorMapData) {
           // Store colormap data by product name
-          colorMapData[product] = productColormap.colorMapData
+          // colorMapData[product] = productColormap.colorMapData
+          console.log('Found colormap data for product:', product)
+          layersObject.layerData.push({
+            ...layer,
+            colormap: productColormap.colorMapData
+          })
         }
       })
     }
 
-    return colorMapData
+    console.log('🚀 ~ file: MapContainer.tsx:428 ~ layersObject:', layersObject)
+    return layersObject
   }, [mapLayers, colormapsMetadata, projection, getLayersForProjection])
 
   // Extract the actual colormap data from the state
@@ -587,7 +605,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       base={base}
       center={center}
       setGranuleId={setGranuleId}
-      colorMap={colorMapState}
+      imageryLayers={imageryLayers}
       focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}
       granules={granulesToDraw}
