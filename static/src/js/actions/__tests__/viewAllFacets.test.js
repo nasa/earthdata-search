@@ -18,6 +18,8 @@ import {
   TOGGLE_VIEW_ALL_FACETS_MODAL
 } from '../../constants/actionTypes'
 
+import * as collectionUtils from '../../util/collections'
+
 const mockStore = configureMockStore([thunk])
 
 describe('updateViewAllFacets', () => {
@@ -142,24 +144,28 @@ describe('getViewAllFacets', () => {
       .post(/collections/)
       .reply(200, stubResponse, { 'cmr-hits': 1 })
 
+    const prepareCollectionParamsSpy = jest.spyOn(collectionUtils, 'prepareCollectionParams')
+
     // MockStore with initialState
     const store = mockStore({
       authToken: '',
       searchResults: {
-        collections: {},
         facets: {},
-        granules: {},
         viewAllFacets: {}
-      },
-      query: {
-        collection: {
-          keyword: 'search keyword'
-        }
       }
     })
 
     // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
+      expect(prepareCollectionParamsSpy).toHaveBeenCalledTimes(1)
+      expect(prepareCollectionParamsSpy).toHaveBeenCalledWith({
+        authToken: '',
+        searchResults: {
+          facets: {},
+          viewAllFacets: { selectedCategory: 'Instruments' }
+        }
+      })
+
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: LOADING_VIEW_ALL_FACETS,
@@ -195,24 +201,28 @@ describe('getViewAllFacets', () => {
         'jwt-token': 'token'
       })
 
+    const prepareCollectionParamsSpy = jest.spyOn(collectionUtils, 'prepareCollectionParams')
+
     // MockStore with initialState
     const store = mockStore({
       authToken: 'token',
       searchResults: {
-        collections: {},
         facets: {},
-        granules: {},
         viewAllFacets: {}
-      },
-      query: {
-        collection: {
-          keyword: 'search keyword'
-        }
       }
     })
 
     // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
+      expect(prepareCollectionParamsSpy).toHaveBeenCalledTimes(1)
+      expect(prepareCollectionParamsSpy).toHaveBeenCalledWith({
+        authToken: 'token',
+        searchResults: {
+          facets: {},
+          viewAllFacets: { selectedCategory: 'Instruments' }
+        }
+      })
+
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: LOADING_VIEW_ALL_FACETS,
@@ -251,24 +261,28 @@ describe('getViewAllFacets', () => {
       .post(/error_logger/)
       .reply(200)
 
+    const prepareCollectionParamsSpy = jest.spyOn(collectionUtils, 'prepareCollectionParams')
+
     // MockStore with initialState
     const store = mockStore({
       authToken: '',
       searchResults: {
-        collections: {},
         facets: {},
-        granules: {},
         viewAllFacets: {}
-      },
-      query: {
-        collection: {
-          keyword: 'search keyword'
-        }
       }
     })
 
     // Call the dispatch
     await store.dispatch(getViewAllFacets('Instruments')).then(() => {
+      expect(prepareCollectionParamsSpy).toHaveBeenCalledTimes(1)
+      expect(prepareCollectionParamsSpy).toHaveBeenCalledWith({
+        authToken: '',
+        searchResults: {
+          facets: {},
+          viewAllFacets: { selectedCategory: 'Instruments' }
+        }
+      })
+
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
         type: LOADING_VIEW_ALL_FACETS,
