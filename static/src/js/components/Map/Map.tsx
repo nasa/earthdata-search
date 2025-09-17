@@ -946,27 +946,11 @@ const Map: React.FC<MapProps> = ({
     const controls = map.getControls()
     const legendControl = controls.getArray().find(
       (control) => control instanceof LegendControl
-    ) as LegendControl | undefined
+    )
 
     if (legendControl) {
       controls.remove(legendControl)
     }
-
-    //   If (legendControl) {
-    //     // Update existing control
-    //     legendControl.update({
-    //       collectionId: focusedCollectionId,
-    //       imageryLayers
-    //     })
-    //   } else {
-    //     // Create new control if none exists
-    //   )
-    // }
-    console.log('🚀 ~ file: Map.tsx:965 ~ imageryLayers:', imageryLayers)
-    imageryLayers.layerData.forEach((layer) => {
-      console.log('🚀 ~ file: Map.tsx:966 ~ layer:', layer)
-      console.log('foobar', layer.colorMap)
-    })
 
     if (isFocusedCollectionPage && imageryLayers && imageryLayers.layerData.length > 0) {
       controls.push(
