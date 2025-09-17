@@ -122,7 +122,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the point spatial type
-          await page.getByRole('button', { name: 'Search by spatial coordinate' }).click()
+          await page.getByRole('button', { name: 'Search by point' }).click()
 
           // Add the point to the map
           await page.mouse.click(1000, 500)
@@ -341,7 +341,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the circle spatial type
-          await page.getByRole('button', { name: 'Search by spatial circle' }).click()
+          await page.getByRole('button', { name: 'Search by circle' }).click()
 
           // Add the circle to the map
           await page.mouse.click(1000, 500)
@@ -570,7 +570,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the bounding box spatial type
-          await page.getByRole('button', { name: 'Search by spatial rectangle' }).click()
+          await page.getByRole('button', { name: 'Search by rectangle' }).click()
 
           // Add the bounding box to the map
           await page.mouse.click(1000, 500)
@@ -807,7 +807,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.goto('/search')
 
           // Select the polygon spatial type
-          await page.getByRole('button', { name: 'Search by spatial polygon' }).click()
+          await page.getByRole('button', { name: 'Search by polygon' }).click()
 
           // Add the polygon to the map
           await page.mouse.click(1000, 500)
@@ -1130,7 +1130,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the point spatial type
-          await page.getByRole('button', { name: 'Search by spatial coordinate' }).click()
+          await page.getByRole('button', { name: 'Search by point' }).click()
 
           // Add the point to the map
           await page.mouse.click(1000, 525)
@@ -1279,7 +1279,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the circle spatial type
-          await page.getByRole('button', { name: 'Search by spatial circle' }).click()
+          await page.getByRole('button', { name: 'Search by circle' }).click()
 
           // Add the circle to the map
           await page.mouse.click(1000, 525)
@@ -1435,7 +1435,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the bounding box spatial type
-          await page.getByRole('button', { name: 'Search by spatial rectangle' }).click()
+          await page.getByRole('button', { name: 'Search by rectangle' }).click()
 
           // Add the bounding box to the map
           await page.mouse.click(1000, 525)
@@ -1598,7 +1598,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.goto('/search?lat=90&projection=EPSG%3A3413&zoom=2')
 
           // Select the polygon spatial type
-          await page.getByRole('button', { name: 'Search by spatial polygon' }).click()
+          await page.getByRole('button', { name: 'Search by polygon' }).click()
 
           // Add the polygon to the map
           await page.mouse.click(1000, 525)
