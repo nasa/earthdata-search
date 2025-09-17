@@ -62,6 +62,8 @@ import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 
 import type {
+  ImageryLayers,
+  ImageryLayerItem,
   GibsData,
   MapGranule,
   ProjectionCode,
@@ -90,23 +92,21 @@ export const mapStateToProps = (state) => ({
   drawingNewLayer: state.ui.map.drawingNewLayer
 })
 
-type ColormapMetadata = {
-  /** The colormap metadata by GIBS product name */
-  [key: string]: {
-    /** The colormap data */
-    colorMapData?: Colormap
-    /** Is the colormap errored */
-    isErrored?: boolean
-    /** Is the colormap loading */
-    isLoading?: boolean
-    /** Is the colormap loaded */
-    isLoaded?: boolean
-  }
-}
-
 interface MapContainerProps {
   /** The colormaps metadata */
-  colormapsMetadata: ColormapMetadata
+  colormapsMetadata: {
+    /** The colormap metadata by GIBS product name */
+    [key: string]: {
+      /** The colormap data */
+      colorMapData?: Colormap
+      /** Is the colormap errored */
+      isErrored?: boolean
+      /** Is the colormap loading */
+      isLoading?: boolean
+      /** Is the colormap loaded */
+      isLoaded?: boolean
+    }
+  }
   /** The display spatial polygon warning flag */
   displaySpatialPolygonWarning: boolean
   /** The drawing new layer flag */
@@ -392,19 +392,15 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
   }, [mapLayers, projection])
 
-  const imageryLayers: Record<string, Colormap> = useMemo(() => {
-    const layersObject = {
+  const imageryLayers: ImageryLayers = useMemo(() => {
+    const layersObject: ImageryLayers = {
       layerData: [],
       toggleLayerVisibility,
       setMapLayersOrder,
       updateLayerOpacity
     }
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
-    console.log('🚀 ~ file: MapContainer.tsx:412 ~ mapLayers:', mapLayers)
-
     const layersForProjection = getLayersForProjection()
-    console.log('🚀 ~ file: MapContainer.tsx:406 ~ layersForProjection:', layersForProjection)
-
     if (layersForProjection.length > 0) {
       // Get colormap data for all available GIBS tags
       layersForProjection.forEach((layer) => {
@@ -413,17 +409,14 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
         if (productColormap && productColormap.colorMapData) {
           // Store colormap data by product name
-          // colorMapData[product] = productColormap.colorMapData
-          console.log('Found colormap data for product:', product)
           layersObject.layerData.push({
             ...layer,
             colormap: productColormap.colorMapData
-          })
+          } as ImageryLayerItem)
         }
       })
     }
 
-    console.log('🚀 ~ file: MapContainer.tsx:428 ~ layersObject:', layersObject)
     return layersObject
   }, [mapLayers, colormapsMetadata, projection, getLayersForProjection])
 

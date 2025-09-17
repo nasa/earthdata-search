@@ -1,51 +1,54 @@
-import React from 'react'
-import { screen, act } from '@testing-library/react'
+import {
+  screen,
+  act,
+  within
+} from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 import LayerPicker from '../LayerPicker'
 import useEdscStore from '../../../zustand/useEdscStore'
 
-jest.mock('../../../components/Map/Map', () => <div />)
-jest.mock('ol/layer/Group')
-jest.mock('ol/layer/Tile')
-
-const mockLayer = {
-  get: jest.fn((key) => {
-    if (key === 'product') return 'IMERG_Precipitation_Rate'
-
-    return undefined
-  })
-}
-
-const mockLayerGroup = {
-  getLayers: jest.fn(() => ({
-    getArray: jest.fn(() => [mockLayer]),
-    forEach: jest.fn((callback) => {
-      [mockLayer].forEach(callback)
-    })
-  }))
-}
-
 describe('LayerPicker', () => {
   const mockCollectionId = 'C123451234-EDSC'
 
-  const mockColorMap = {
-    IMERG_Precipitation_Rate: {},
-    IMERG_Precipitation_Rate_30min: {}
+  // Create shared mock functions
+  const mockToggleLayerVisibility = jest.fn()
+  const mockSetMapLayersOrder = jest.fn()
+  const mockUpdateLayerOpacity = jest.fn()
+
+  const mockImageryLayers = {
+    layerData: [
+      {
+        product: 'IMERG_Precipitation_Rate',
+        title: 'Precipitation Rate',
+        colormap: {},
+        isVisible: false,
+        opacity: 1
+      },
+      {
+        product: 'IMERG_Precipitation_Rate_30min',
+        title: 'Precipitation Rate (30-min)',
+        colormap: {},
+        isVisible: true,
+        opacity: 0.5
+      }
+    ],
+    toggleLayerVisibility: mockToggleLayerVisibility,
+    updateLayerOpacity: mockUpdateLayerOpacity,
+    setMapLayersOrder: mockSetMapLayersOrder
   }
 
   const setup = setupTest({
     Component: LayerPicker,
     defaultProps: {
       collectionId: mockCollectionId,
-      colorMap: mockColorMap,
-      granuleImageryLayerGroup: mockLayerGroup
+      imageryLayers: mockImageryLayers
     },
     defaultZustandState: {
       map: {
-        toggleLayerVisibility: jest.fn(),
-        setMapLayersOrder: jest.fn(),
-        updateLayerOpacity: jest.fn(),
+        toggleLayerVisibility: mockToggleLayerVisibility,
+        setMapLayersOrder: mockSetMapLayersOrder,
+        updateLayerOpacity: mockUpdateLayerOpacity,
         mapLayers: {
           [mockCollectionId]: [
             {
@@ -72,25 +75,6 @@ describe('LayerPicker', () => {
 
       await screen.findByText('Precipitation Rate')
       await screen.findByText('Precipitation Rate (30-min)')
-    })
-
-    test('handles missing collection in mapLayers gracefully', () => {
-      setup({
-        overrideProps: {
-          collectionId: 'non-existent-collection',
-          colorMap: mockColorMap
-        },
-        overrideZustandState: {
-          map: {
-            toggleLayerVisibility: jest.fn(),
-            setMapLayersOrder: jest.fn(),
-            updateLayerOpacity: jest.fn(),
-            mapLayers: {}
-          }
-        }
-      })
-
-      expect(screen.queryByText('Precipitation Rate')).not.toBeInTheDocument()
     })
 
     test('shows drag handles when there are multiple layers', async () => {
@@ -134,7 +118,6 @@ describe('LayerPicker', () => {
   describe('Layer Visibility Toggling', () => {
     test('calls toggleLayerVisibility when visibility button is clicked', async () => {
       const { user } = setup()
-      // TODO reallt this should be on in the store and then we can disable
       const toggleButton = screen.getByRole('button', { name: 'Show Precipitation Rate' })
 
       await act(async () => {
@@ -164,6 +147,59 @@ describe('LayerPicker', () => {
       const { map } = zustandState
       const { updateLayerOpacity } = map
       expect(updateLayerOpacity).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate', 1)
+    })
+  })
+
+  // These have to be pointer events: https://github.com/clauderic/dnd-kit/issues/261
+  describe('Layer Reordering', () => {
+    test('calls setMapLayersOrder when layers are dragged and reordered', async () => {
+      const { user } = setup()
+
+      // Get the first layer container by finding the layer with specific text
+      const firstLayerText = screen.getByText('Precipitation Rate')
+      // eslint-disable-next-line testing-library/no-node-access
+      const firstLayerContainer = firstLayerText.closest('[aria-label="Drag to reorder layer"]') as HTMLElement
+
+      const secondLayerText = screen.getByText('Precipitation Rate (30-min)')
+      // eslint-disable-next-line testing-library/no-node-access
+      const secondLayerContainer = secondLayerText.closest('[aria-label="Drag to reorder layer"]') as HTMLElement
+
+      // Get the drag handles within each container
+      const firstDragHandle = within(firstLayerContainer).getByLabelText('Drag to reorder layer')
+      const secondDragHandle = within(secondLayerContainer).getByLabelText('Drag to reorder layer')
+
+      // Simulate drag and drop from first layer to second layer
+      await act(async () => {
+        await user.pointer([
+          {
+            target: firstDragHandle,
+            keys: '[MouseLeft>]'
+          },
+          {
+            target: secondDragHandle,
+            keys: '[MouseLeft]'
+          }
+        ])
+      })
+
+      // Verify setMapLayersOrder was called with the reordered layers
+      // After dragging first layer to second position send request with updated order
+      expect(mockSetMapLayersOrder).toHaveBeenCalledWith(
+        mockCollectionId,
+        [{
+          colormap: {},
+          isVisible: true,
+          opacity: 0.5,
+          product: 'IMERG_Precipitation_Rate_30min',
+          title: 'Precipitation Rate (30-min)'
+        }, {
+          colormap: {},
+          isVisible: false,
+          opacity: 1,
+          product: 'IMERG_Precipitation_Rate',
+          title: 'Precipitation Rate'
+        }]
+      )
     })
   })
 })
