@@ -3,12 +3,14 @@ import {
   waitFor,
   within
 } from '@testing-library/react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
-import { retrievalStatusProps } from './mocks'
+import { initalizedRetrievalStatusProps, retrievalStatusProps } from './mocks'
 import { OrderStatus } from '../OrderStatus'
+import Skeleton from '../../Skeleton/Skeleton'
 import * as config from '../../../../../../sharedUtils/config'
 
 jest.mock('react-router-dom', () => ({
@@ -17,6 +19,8 @@ jest.mock('react-router-dom', () => ({
     id: '7'
   })
 }))
+
+jest.mock('../../Skeleton/Skeleton', () => jest.fn(() => <div />))
 
 const setup = setupTest({
   Component: OrderStatus,
@@ -30,16 +34,89 @@ beforeEach(() => {
 })
 
 describe('OrderStatus component', () => {
-  test('renders itself correctly', () => {
+  test('renders itself correclty upon page load', () => {
+    setup({
+      overrideProps: initalizedRetrievalStatusProps
+    })
+
+    expect(screen.getByText('https://search.earthdata.nasa.gov/downloads/7')).toBeInTheDocument()
+    expect(Skeleton).toHaveBeenCalledTimes(2)
+    expect(Skeleton).toHaveBeenNthCalledWith(1, {
+      className: 'order-status__item-skeleton',
+      containerStyle: {
+        display: 'inline-block',
+        height: '175px',
+        width: '100%'
+      },
+      shapes: [{
+        height: 18,
+        left: 0,
+        radius: 2,
+        shape: 'rectangle',
+        top: 2,
+        width: 200
+      }, {
+        height: 14,
+        left: 0,
+        radius: 2,
+        shape: 'rectangle',
+        top: 31,
+        width: '80%'
+      }, {
+        height: 96,
+        left: 0,
+        radius: 2,
+        shape: 'rectangle',
+        top: 60,
+        width: '100%'
+      }]
+    }, {})
+
+    expect(Skeleton).toHaveBeenNthCalledWith(2, {
+      className: 'order-status__item-skeleton',
+      containerStyle: {
+        display: 'inline-block',
+        height: '175px',
+        width: '100%'
+      },
+      shapes: [{
+        height: 16,
+        left: 0,
+        radius: 2,
+        shape: 'rectangle',
+        top: 2,
+        width: '60%'
+      }, {
+        height: 14,
+        left: 20,
+        radius: 2,
+        shape: 'rectangle',
+        top: 31,
+        width: '50%'
+      }, {
+        height: 14,
+        left: 20,
+        radius: 2,
+        shape: 'rectangle',
+        top: 55,
+        width: '57%'
+      }]
+    }, {})
+  })
+
+  test('renders itself correctly after initial page load', () => {
     setup()
 
     expect(screen.getByText('Download Status')).toBeInTheDocument()
+    expect(Skeleton).toHaveBeenCalledTimes(0)
   })
 
   test('renders the correct Helmet meta information', async () => {
     setup()
 
     await waitFor(() => expect(document.title).toEqual('Download Status'))
+
+    expect(Skeleton).toHaveBeenCalledTimes(0)
 
     const helmet = Helmet.peek()
 
@@ -88,6 +165,7 @@ describe('OrderStatus component', () => {
 
       const link = screen.getByRole('link', { name: 'http://localhost/downloads/7' })
       expect(link).toBeInTheDocument()
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
 
     test('download status link has correct href when earthdataEnvironment is different than the deployed environment', () => {
@@ -100,6 +178,7 @@ describe('OrderStatus component', () => {
 
       const link = screen.getByRole('link', { name: 'http://localhost/downloads/7?ee=prod' })
       expect(link).toBeInTheDocument()
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
 
     test('status link has correct href', () => {
@@ -107,6 +186,7 @@ describe('OrderStatus component', () => {
 
       const link = screen.getByRole('link', { name: 'Download Status and History' })
       expect(link.href).toEqual('http://localhost/downloads')
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
 
     test('status link has correct href when earthdataEnvironment is different than the deployed environment', () => {
@@ -119,6 +199,7 @@ describe('OrderStatus component', () => {
 
       const link = screen.getByRole('link', { name: 'Download Status and History' })
       expect(link.href).toEqual('http://localhost/downloads?ee=prod')
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -127,6 +208,7 @@ describe('OrderStatus component', () => {
       setup()
 
       expect(screen.getByRole('link', { name: 'http://linkurl.com/test' })).toBeInTheDocument()
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -145,6 +227,7 @@ describe('OrderStatus component', () => {
       expect(within(relatedCollections[0]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_3_111' })).toBeInTheDocument()
       expect(within(relatedCollections[1]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_2_111' })).toBeInTheDocument()
       expect(within(relatedCollections[2]).getByRole('link', { key: 'related-collection-TEST_COLLECTION_1_111' })).toBeInTheDocument()
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
   })
 
@@ -160,6 +243,7 @@ describe('OrderStatus component', () => {
       })
 
       expect(props.onChangePath).toHaveBeenCalledWith('/search?test=source_link')
+      expect(Skeleton).toHaveBeenCalledTimes(0)
     })
   })
 })

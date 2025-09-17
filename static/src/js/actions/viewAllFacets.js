@@ -55,7 +55,18 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
 
   // `onViewAllFacetsLoading` changes the state, use getState() again here to ensure the
   // collection request has the updated state
-  const collectionParams = prepareCollectionParams(state)
+  // EDSC-4567: Temporary fix to get the View All facet modal working correctly. Once
+  // this moves to Zustand in EDSC-4561, this won't be necessary.
+  const collectionParams = prepareCollectionParams({
+    ...state,
+    searchResults: {
+      ...state.searchResults,
+      viewAllFacets: {
+        ...state.searchResults.viewAllFacets,
+        selectedCategory: category
+      }
+    }
+  })
 
   const requestObject = new CollectionRequest(authToken, earthdataEnvironment)
 

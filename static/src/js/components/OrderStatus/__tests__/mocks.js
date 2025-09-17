@@ -20,7 +20,7 @@ export const retrievalStatusProps = {
     portalId: 'edsc'
   },
   retrieval: {
-    id: 7,
+    id: '7',
     isLoading: false,
     isLoaded: true,
     collections: {
@@ -128,10 +128,27 @@ export const retrievalStatusProps = {
   }
 }
 
+export const initalizedRetrievalStatusProps = {
+  authToken: 'testToken',
+  granuleDownload: {},
+  onFetchRetrieval: jest.fn(),
+  onFetchRetrievalCollection: jest.fn(),
+  onFetchRetrievalCollectionGranuleLinks: jest.fn(),
+  onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
+  onMetricsRelatedCollection: jest.fn(),
+  onToggleAboutCSDAModal: jest.fn(),
+  retrieval: {
+    collections: {},
+    id: null,
+    isLoaded: false,
+    isLoading: false
+  }
+}
+
 export const retrievalStatusPropsTwo = {
   authToken: 'testToken2',
   retrieval: {
-    id: 7,
+    id: '7',
     collections: {
       byId: {
         1: {
@@ -165,7 +182,7 @@ export const retrievalStatusPropsTwo = {
 export const retrievalStatusPropsEsi = {
   authToken: 'testToken2',
   retrieval: {
-    id: 7,
+    id: '7',
     collections: {
       byId: {
         1: {
@@ -247,7 +264,7 @@ export const retrievalStatusPropsEsi = {
 export const retrievalStatusPropsEchoOrder = {
   authToken: 'testToken2',
   retrieval: {
-    id: 7,
+    id: '7',
     collections: {
       byId: {
         1: {
