@@ -16,17 +16,17 @@ import {
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
 
 import { FaCompressAlt, FaLayerGroup } from 'react-icons/fa'
-import { Colormap } from '../ColorMap/ColorMap'
-import useEdscStore from '../../zustand/useEdscStore'
 import DraggableLayerItem from './DraggableLayerItem'
 import './LayerPicker.scss'
 import Button from '../Button/Button'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+import { ImageryLayers } from '../../types/sharedTypes'
 
 interface LayerPickerProps {
   /** The collection ID to manage layers for */
   collectionId: string
-  /** The OpenLayers Layer Group containing granule imagery layers */
+  /** The imagery layers */
+  imageryLayers: ImageryLayers
 }
 
 /**
@@ -36,7 +36,6 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   collectionId,
   imageryLayers
 }) => {
-  console.log('🚀 ~ file: LayerPicker.tsx:39 ~ imageryLayers:', imageryLayers)
   const [layersHidden, setLayersHidden] = useState(false)
 
   // Configure sensors for drag and drop
@@ -46,17 +45,9 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
       coordinateGetter: sortableKeyboardCoordinates
     })
   )
-
-  // Get map layers and functions from Zustand store
-  // const mapLayers = useEdscStore((state) => state.map.mapLayers[collectionId] || [])
-  // const {
-  //   toggleLayerVisibility,
-  //   setMapLayersOrder,
-  //   updateLayerOpacity
-  // } = useEdscStore((state) => state.map)
-
-  console.log('🚀 ~ file: LayerPicker.tsx:59 ~ imageryLayers:', imageryLayers)
-  const { layerData, toggleLayerVisibility, setMapLayersOrder, updateLayerOpacity } = imageryLayers
+  const {
+    layerData, toggleLayerVisibility, setMapLayersOrder, updateLayerOpacity
+  } = imageryLayers
 
   /**
    * Handles keyup events for keyboard shortcuts

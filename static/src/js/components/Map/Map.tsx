@@ -91,6 +91,7 @@ import 'ol/ol.css'
 import './Map.scss'
 import {
   GranuleMetadata,
+  ImageryLayers,
   MapGranule,
   NlpCollectionQuery,
   ProjectionCode,
@@ -289,6 +290,8 @@ interface MapProps {
   granules: MapGranule[]
   /** The key to determine if the granules have changed */
   granulesKey: string
+  /** The imagery layers */
+  imageryLayers: ImageryLayers
   /** Flag to show if this is a focused collection page */
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
@@ -374,11 +377,11 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({
   base,
   center,
-  imageryLayers,
   focusedCollectionId = '',
   focusedGranuleId = '',
   granules = [],
   granulesKey,
+  imageryLayers,
   isFocusedCollectionPage,
   isProjectPage,
   nlpCollection,

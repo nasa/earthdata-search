@@ -1,44 +1,37 @@
 import React from 'react'
 
-import LayerGroup from 'ol/layer/Group'
-import { Colormap } from '../ColorMap/ColorMap'
 import LayerPicker from '../LayerPicker/LayerPicker'
+import { ImageryLayers } from '../../types/sharedTypes'
+
 import './Legend.scss'
 
-// TODO feels like we should maybe just get rid of the component its essentially a container now
 interface LegendProps {
   /** The collection ID to manage layers for */
   collectionId: string
-  /** The colormap information */
-  imageryLayers: any
+  /** The imagery layers */
+  imageryLayers: ImageryLayers
 }
 
 /**
- * Renders a legend on the map when a colormap is present
+ * Renders a legend on the map when imagery layers are present
  * @param {Object} props - The props passed into the component.
  * @param {string} props.collectionId - The collection ID to manage layers for.
- * @param {Object} props.colorMap - The colormap information.
- * @param {Object} props.granuleImageryLayerGroup - The OL Layer Group containing granule imagery layers.
+ * @param {Object} props.imageryLayers - The imagery layers.
  */
 export const Legend: React.FC<LegendProps> = ({
   collectionId,
   imageryLayers
-}) => {
-  console.log('🚀 ~ file: Legend.tsx:28 ~ imageryLayers:', imageryLayers)
-
-  return (
-
-    <div className="legend" data-testid="legend">
-      {
-        imageryLayers.layerData.length > 0 && (
-          <LayerPicker
-            collectionId={collectionId}
-            imageryLayers={imageryLayers}
-          />
-        )
-      }
-    </div>
-  )
-}
+}) => (
+  <div className="legend" data-testid="legend">
+    {
+      imageryLayers.layerData.length > 0 && (
+        <LayerPicker
+          collectionId={collectionId}
+          imageryLayers={imageryLayers}
+        />
+      )
+    }
+  </div>
+)
 
 export default Legend
