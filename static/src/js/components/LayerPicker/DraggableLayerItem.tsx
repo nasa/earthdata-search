@@ -86,7 +86,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
       className={itemClassNames}
     >
       <div className="layer-picker__layer-content d-flex justify-content-center align-items-stretch flex-grow-1">
-        <div className="d-flex justify-content-center align-items-center border-muted border-0 border-end">
+        <div className="d-flex justify-content-center flex-shrink-0 align-items-center border-muted border-0 border-end">
           {
             showDragHandle && (
               <OverlayTrigger
@@ -125,8 +125,8 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
           />
         </div>
         <div className="flex-grow-1 p-2">
-          <div className="d-flex flex-grow-1 flex-row justify-content-between align-items-center mb-1 gap-2">
-            <h3 className="fs-6 fw-normal mb-0 d-inline flex-grow-1 text-truncate">
+          <div className="d-flex flex-grow-1 flex-row  justify-content-between align-items-start mb-1 gap-2 pt-1">
+            <h3 className="fs-7 fw-normal d-inline mb-0 flex-grow-1">
               {layer.title || layer.product}
             </h3>
             <OverlayTrigger
