@@ -48,6 +48,7 @@ export const OrderStatus = ({
   retrieval = {}
 }) => {
   const params = useParams()
+  const { id: paramsId } = params
   const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   useEffect(() => {
@@ -60,7 +61,7 @@ export const OrderStatus = ({
 
   const {
     collections,
-    id,
+    id: loadedId,
     isLoaded,
     isLoading,
     jsondata = {},
@@ -140,11 +141,13 @@ export const OrderStatus = ({
 
   const eeLink = earthdataEnvironment === deployedEnvironment() ? '' : `?ee=${earthdataEnvironment}`
 
+  const shouldShowLoading = paramsId !== loadedId || (isLoading && !isLoaded)
+
   const introduction = (
     <p>
       {'This page will automatically update as your orders are processed. The Download Status page can be accessed later by visiting '}
-      <a href={`${edscHost}/downloads/${id}${eeLink}`}>
-        {`${edscHost}/downloads/${id}${eeLink}`}
+      <a href={`${edscHost}/downloads/${paramsId}${eeLink}`}>
+        {`${edscHost}/downloads/${paramsId}${eeLink}`}
       </a>
       {' or the '}
       <PortalLinkContainer
@@ -184,7 +187,7 @@ export const OrderStatus = ({
             <Well.Heading>Download Status</Well.Heading>
             <Well.Introduction>{introduction}</Well.Introduction>
             {
-              (isLoading && !isLoaded) && (
+              shouldShowLoading && (
                 <Skeleton
                   className="order-status__item-skeleton"
                   containerStyle={
@@ -218,7 +221,7 @@ export const OrderStatus = ({
             <Well.Heading>Additional Resources and Documentation</Well.Heading>
             <Well.Section>
               {
-                isLoading && (
+                shouldShowLoading && (
                   <Skeleton
                     className="order-status__item-skeleton"
                     containerStyle={
