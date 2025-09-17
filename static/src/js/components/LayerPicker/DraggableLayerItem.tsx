@@ -18,14 +18,19 @@ import {
   FormLabel,
   Tooltip
 } from 'react-bootstrap'
-import useEdscStore from '../../zustand/useEdscStore'
 import ColorMap, { Colormap } from '../ColorMap/ColorMap'
 import Button from '../Button/Button'
 
 interface DraggableLayerItemProps {
-  layer: { product: string; title?: string }
+  layer: {
+    product: string
+    title?: string
+    colormap: Colormap
+    opacity: number
+    isVisible: boolean
+  }
   collectionId: string
-  colorMap?: Record<string, Colormap>
+  colorMap?: Colormap
   updateMapLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
   handleToggleLayerVisibility: (productName: string) => void
   showDragHandle?: boolean
@@ -41,7 +46,6 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
   handleToggleLayerVisibility,
   showDragHandle = true
 }) => {
-  console.log('🚀 ~ file: DraggableLayerItem.tsx:44 ~ layer:', layer)
   const {
     attributes,
     listeners,
@@ -62,16 +66,6 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
     opacity: layerOpacity,
     isVisible
   } = layer
-  console.log('🚀 ~ file: DraggableLayerItem.tsx:65 ~ layer:', layer)
-  console.log('🚀 ~ file: DraggableLayerItem.tsx:65 ~ colorMap:', colormap)
-
-  // Get map layers from Zustand store
-  // const mapLayers = useEdscStore((state) => state.map.mapLayers[collectionId] || [])
-
-  // Find the corresponding layer in the Zustand store to get visibility state
-  // const storeLayer = mapLayers.find((l) => l.product === layer.product)
-  // const isVisible = storeLayer?.isVisible ?? false
-  // const layerOpacity = storeLayer?.opacity ?? 1.0
 
   const [tempOpacity, setTempOpacity] = useState(layerOpacity)
 
