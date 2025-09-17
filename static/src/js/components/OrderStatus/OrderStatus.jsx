@@ -394,12 +394,12 @@ OrderStatus.propTypes = {
   retrieval: PropTypes.shape({
     collections: PropTypes.shape({
       byId: PropTypes.shape({}),
-      download: PropTypes.arrayOf(PropTypes.shape({})),
-      opendap: PropTypes.arrayOf(PropTypes.shape({})),
-      echo_orders: PropTypes.arrayOf(PropTypes.shape({})),
-      esi: PropTypes.arrayOf(PropTypes.shape({})),
-      harmony: PropTypes.arrayOf(PropTypes.shape({})),
-      swodlr: PropTypes.arrayOf(PropTypes.shape({}))
+      download: PropTypes.arrayOf(PropTypes.number),
+      opendap: PropTypes.arrayOf(PropTypes.number),
+      echo_orders: PropTypes.arrayOf(PropTypes.number),
+      esi: PropTypes.arrayOf(PropTypes.number),
+      harmony: PropTypes.arrayOf(PropTypes.number),
+      swodlr: PropTypes.arrayOf(PropTypes.number)
     }),
     id: PropTypes.string,
     isLoaded: PropTypes.bool,
