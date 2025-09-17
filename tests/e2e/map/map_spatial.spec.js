@@ -77,7 +77,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Point' }).click()
+          await page.getByRole('button', { name: 'Point' }).first().click()
 
           // Add the point to the map
           await page.mouse.click(1000, 500)
@@ -89,7 +89,7 @@ test.describe('Map: Spatial interactions', () => {
           await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-28\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
-          // was fulfilled correctly with the succesfull paramCheck
+          // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
           // Draws the spatial on the map
@@ -122,7 +122,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the point spatial type
-          await page.getByRole('button', { name: 'Search by point' }).click()
+          await page.getByRole('button', { name: 'Search by point' }).first().click()
 
           // Add the point to the map
           await page.mouse.click(1000, 500)
@@ -134,7 +134,7 @@ test.describe('Map: Spatial interactions', () => {
           await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-9\.\d+,-28\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
-          // was fulfilled correctly with the succesfull paramCheck
+          // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
           // Draws the spatial on the map
@@ -168,7 +168,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Point' }).click()
+          await page.getByRole('button', { name: 'Point' }).first().click()
 
           // Enter the spatial point
           await page.getByTestId('spatial-display_point').focus()
@@ -182,7 +182,7 @@ test.describe('Map: Spatial interactions', () => {
           await expect(page.getByTestId('spatial-display_point')).toHaveValue('4.5297,42.1875')
 
           // Checking that the right number of results are loaded ensures that the route
-          // was fulfilled correctly with the succesfull paramCheck
+          // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
           // Wait for the map to update
@@ -238,7 +238,7 @@ test.describe('Map: Spatial interactions', () => {
           await expect(page.getByTestId('spatial-display_point')).toHaveValue(/-7\.\d+,42\.\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
-          // was fulfilled correctly with the succesfull paramCheck
+          // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
           // Edit the point
@@ -294,7 +294,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.getByRole('button', {
             name: 'Circle',
             exact: true
-          }).click()
+          }).first().click()
 
           // Add the circle to the map
           await page.mouse.click(1000, 500)
@@ -341,7 +341,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the circle spatial type
-          await page.getByRole('button', { name: 'Search by circle' }).click()
+          await page.getByRole('button', { name: 'Search by circle' }).first().click()
 
           // Add the circle to the map
           await page.mouse.click(1000, 500)
@@ -392,7 +392,7 @@ test.describe('Map: Spatial interactions', () => {
           await page.getByRole('button', {
             name: 'Circle',
             exact: true
-          }).click()
+          }).first().click()
 
           // Enter the circle values
           await page.getByTestId('spatial-display_circle-center').focus()
@@ -409,7 +409,7 @@ test.describe('Map: Spatial interactions', () => {
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue('156444')
 
           // Checking that the right number of results are loaded ensures that the route
-          // was fulfilled correctly with the succesfull paramCheck
+          // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
           // Wait for map animation to complete
@@ -1085,7 +1085,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Point' }).click()
+          await page.getByRole('button', { name: 'Point' }).first().click()
 
           // Add the point to the map
           await page.mouse.click(1000, 525)

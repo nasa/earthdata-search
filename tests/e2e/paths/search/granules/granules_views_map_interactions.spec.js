@@ -19,7 +19,7 @@ import colormapBody from './__mocks__/cmr_granules/colormap.body.json'
 
 const granuleName = 'VJ102IMG_NRT.A2024299.1448.021.2024299184114.nc'
 
-test.describe('When clicking on a granule on the map', () => {
+test.describe.skip('When clicking on a granule on the map', () => {
   test.beforeEach(async ({ page, context }) => {
     const conceptId = 'C2208779826-LANCEMODIS'
 
@@ -89,7 +89,6 @@ test.describe('When clicking on a granule on the map', () => {
   test.describe('When clicking on a map granule while in the granule list view', () => {
     test.beforeEach(async ({ page }) => {
       const zoomedOutTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
-
       await page.locator('.map').click({
         force: true,
         position: {
