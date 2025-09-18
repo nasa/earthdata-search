@@ -14,9 +14,13 @@ export const HistoryContainer = ({ onChangePath }) => {
   const { router } = routerHelper
 
   useEffect(() => {
-    const unsubscribe = router.subscribe((location) => {
+    const unsubscribe = router.subscribe((event) => {
       const {
         historyAction,
+        location
+      } = event
+
+      const {
         pathname,
         search
       } = location
