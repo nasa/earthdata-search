@@ -14,11 +14,12 @@ import {
 } from 'react-icons/fa'
 import { gql, useQuery } from '@apollo/client'
 
-import {
-  Button,
-  Form,
-  InputGroup
-} from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
+import Row from 'react-bootstrap/Row'
+
 import ADMIN_PROJECTS from '../../operations/queries/adminProjects'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -102,7 +103,6 @@ const AdminProjectsList = () => {
       }
     }
   })
-
 
   // Clear the search value
   const onClearSearchValueClick = useCallback(() => {
@@ -193,11 +193,15 @@ const AdminProjectsList = () => {
       </Form>
       {
         loading && (
-          <Spinner
-            dataTestId="admin-projects-list-spinner"
-            className="position-absolute admin-projects-list__spinner"
-            type="dots"
-          />
+          <Row>
+            <Col xs="auto" className="mx-auto m-5">
+              <Spinner
+                dataTestId="admin-preferences-metric-list-spinner"
+                className="position-absolute admin-preferences-metrics-list__spinner"
+                type="dots"
+              />
+            </Col>
+          </Row>
         )
       }
       {

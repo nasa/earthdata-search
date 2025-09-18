@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom'
 import { gql, useQuery } from '@apollo/client'
 import { isEmpty } from 'lodash-es'
 import { parse } from 'qs'
+
+import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 
 import ADMIN_PROJECT from '../../operations/queries/adminProject'
@@ -60,7 +62,19 @@ export const AdminProjectDetails = ({}: AdminProjectDetailsProps) => {
     }
   })
 
-  if (loading || !data) return <Spinner type="dots" />
+  if (loading || !data) {
+    return (
+      <Row>
+        <Col xs="auto" className="mx-auto m-5">
+          <Spinner
+            dataTestId="admin-preferences-metric-list-spinner"
+            className="position-absolute admin-preferences-metrics-list__spinner"
+            type="dots"
+          />
+        </Col>
+      </Row>
+    )
+  }
 
   const { adminProject } = data
   const {

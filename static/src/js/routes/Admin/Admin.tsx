@@ -1,42 +1,58 @@
-// @ts-expect-error This file does not have types
+import React from 'react'
+import { Col, Row, Stack } from 'react-bootstrap'
+import AdminPage from '../../components/AdminPage/AdminPage'
+// @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
-/**
- * The Admin route component
-*/
 const Admin = () => {
   return (
-    <>
-      <h2>Admin</h2>
-      <PortalLinkContainer
-        to="/admin/retrievals"
-      >
-        View Retrievals
-      </PortalLinkContainer>
-      {' '}
-      |
-      {' '}
-      <PortalLinkContainer
-        to="/admin/projects"
-      >
-        View Projects
-      </PortalLinkContainer>
-      |
-      {' '}
-      <PortalLinkContainer
-        to="/admin/retrievals-metrics"
-      >
-        View Retrieval Metrics
-      </PortalLinkContainer>
-      |
-      {' '}
-      <PortalLinkContainer
-        to="/admin/preferences-metrics"
-      >
-        View Preferences Metrics
-      </PortalLinkContainer>
-    </>
+    <AdminPage
+      pageTitle="Admin"
+      breadcrumbs={[
+        {
+            name: 'Admin',
+            active: true
+          }
+      ]}
+    >
+      <Row>
+        <Col>
+          <Stack direction="horizontal" gap={3}>
+            <PortalLinkContainer
+              type="button"
+              bootstrapVariant="primary"
+              to="/admin/retrievals"
+            >
+              Retrievals
+            </PortalLinkContainer>
+            <PortalLinkContainer
+              type="button"
+              bootstrapVariant="primary"
+              to="/admin/projects"
+            >
+              Projects
+            </PortalLinkContainer>
+            <PortalLinkContainer
+              type="button"
+              bootstrapVariant="primary"
+              to="/admin/retrievals-metrics"
+            >
+              Retrieval Metrics
+            </PortalLinkContainer>
+            <PortalLinkContainer
+              type="button"
+              bootstrapVariant="primary"
+              to="/admin/preferences-metrics"
+            >
+              Preferences Metrics
+            </PortalLinkContainer>
+          </Stack>
+        </Col>
+      </Row>
+    </AdminPage>
   )
 }
 
 export default Admin
+
+
