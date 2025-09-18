@@ -176,6 +176,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
+        // TODO add the colormap mocks to these tests
         await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
           await route.fulfill({
             json: {}
@@ -245,7 +246,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await page.locator('body').click()
       })
 
-      test.skip('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
+      test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
         // Await page.getByTestId('legend').waitFor()
         // await dragPanelToX(page, -1500)
 
@@ -254,30 +255,37 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         // const firstLayerProductName = await layerItems.first().locator('.layer-picker__layer-name').textContent()
         // expect(firstLayerProductName).toContain('Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)')
 
-        // Find and click the visibility toggle button for the first layer
-        // const layer1VisibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
-        // await layer1VisibilityButton.click()
+        // find and click the visibility toggle button for the first layer
+        const layer1VisibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
+        await layer1VisibilityButton.click()
+        await page.waitForTimeout(500)
 
         const layer2VisibilityButton = page.getByRole('button', { name: 'Show Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)' }).first()
         await layer2VisibilityButton.click()
+        await page.waitForTimeout(1000)
 
-        // Find the second layer's drag handle
-        const secondLayerDragHandle = page.getByRole('button', { name: 'Drag to reorder layer' }).nth(1)
+        // Take a screenshot to verify the layer is no longer visible
+        await expect(page).toHaveScreenshot('gibs-second-layer-visible.png', {
+          clip: screenshotClip
+        })
 
-        // Get the bounding box of the first layer to know where to drop
-        const firstLayer = page.locator('.layer-picker__layer-content').first()
-        const firstLayerBox = await firstLayer.boundingBox()
-        console.log('🚀 ~ file: map_granules_imagery.spec.js:270 ~ firstLayerBox:', firstLayerBox)
+        // // Find the second layer's drag handle
+        // const secondLayerDragHandle = page.getByRole('button', { name: 'Drag to reorder layer' }).nth(1)
 
-        // Drag the second layer to the top (above the first layer)
-        await secondLayerDragHandle.hover()
-        await page.mouse.down()
-        // Move up to position above the first layer
-        await page.mouse.move(firstLayerBox.x + firstLayerBox.width / 2, firstLayerBox.y - 100)
-        await page.mouse.up()
+        // // Get the bounding box of the first layer to know where to drop
+        // const firstLayer = page.locator('.layer-picker__layer-content').first()
+        // const firstLayerBox = await firstLayer.boundingBox()
+        // console.log('🚀 ~ file: map_granules_imagery.spec.js:270 ~ firstLayerBox:', firstLayerBox)
 
-        // Wait a moment for the drag operation to complete
-        await page.waitForTimeout(500)
+        // // Drag the second layer to the top (above the first layer)
+        // await secondLayerDragHandle.hover()
+        // await page.mouse.down()
+        // // Move up to position above the first layer
+        // await page.mouse.move(firstLayerBox.x + firstLayerBox.width / 2, firstLayerBox.y - 100)
+        // await page.mouse.up()
+
+        // // Wait a moment for the drag operation to complete
+        // await page.waitForTimeout(1000)
 
         // Verify the second layer is now at the top
         // const layerItemsUpdated = page.locator('.layer-picker__layer-item')
