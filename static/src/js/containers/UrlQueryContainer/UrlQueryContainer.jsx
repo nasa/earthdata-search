@@ -65,7 +65,7 @@ export const UrlQueryContainer = (props) => {
     selectedFeatures: state.shapefile.selectedFeatures,
     selectedRegion: getSelectedRegionQuery(state),
     shapefileId: state.shapefile.shapefileId,
-    // Testing without this for now
+    // TODO Add this back during EDSC-4569
     // timelineQuery: state.timeline.query,
     twoDCoordinateSystemNameFacets: state.facetParams.cmrFacets.two_d_coordinate_system_name
   }))
