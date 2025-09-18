@@ -141,14 +141,6 @@ export interface UrsProfile {
   email_address: EmailAddressString
 }
 
-/** The tag data */
-export type Tag = {
-  /** The tag data */
-  data: {
-    [key: string]: string | boolean | null
-  }
-}
-
 /** The Collection Metadata */
 export interface CollectionMetadata {
   // Will flush out Collection types in the future

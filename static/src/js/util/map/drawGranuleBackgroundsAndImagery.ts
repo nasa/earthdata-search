@@ -156,7 +156,6 @@ const drawGranuleBackgroundsAndImagery = ({
       const geometry = backgroundFeature.getGeometry() as Geometry
 
       // We are only expecting MultiPolygon geometries for granules. Return if the geometry is not a MultiPolygon
-      // TODO is that just something we expect for granules that have imagery to be multi-polygon?
       if (geometry.getType() !== 'MultiPolygon') return
 
       const turfMultiPolygon = multiPolygon((geometry as OlMultiPolygon).getCoordinates())
