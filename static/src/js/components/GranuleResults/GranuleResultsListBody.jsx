@@ -146,11 +146,11 @@ export const GranuleResultsListBody = ({
       } = itemToRowColumnIndicies(scrollToItem, numColumns)
 
       listRef.current.scrollToItem({
-        rowIndex: rowIndex === 0 ? 0 : rowIndex + 1,
+        rowIndex,
         columnIndex
       }, 'center')
     }
-  }, [listRef.current])
+  }, [])
 
   const scrollToFocusedGranule = (granuleId) => {
     const granuleIndex = granules.findIndex((granule) => {
