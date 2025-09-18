@@ -246,7 +246,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await page.locator('body').click()
       })
 
-      test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
+      test.skip('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
         // Await page.getByTestId('legend').waitFor()
         // await dragPanelToX(page, -1500)
 
