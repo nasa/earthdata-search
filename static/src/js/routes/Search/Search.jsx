@@ -21,6 +21,7 @@ import RelatedUrlsModalContainer
 import SearchPanelsContainer from '../../containers/SearchPanelsContainer/SearchPanelsContainer'
 import SearchSidebarHeader from '../../components/SearchSidebar/SearchSidebarHeader'
 import SidebarContainer from '../../containers/SidebarContainer/SidebarContainer'
+import PortalTitle from '../../components/PortalTitle/PortalTitle'
 
 import SidebarSection from '../../components/Sidebar/SidebarSection'
 import SidebarFiltersItem from '../../components/Sidebar/SidebarFiltersItem'
@@ -119,6 +120,7 @@ export const Search = () => {
 
   return (
     <>
+      <PortalTitle />
       <div className="route-wrapper route-wrapper--search search">
         <SidebarContainer
           headerChildren={(
