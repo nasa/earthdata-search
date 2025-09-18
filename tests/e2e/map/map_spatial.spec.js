@@ -1176,7 +1176,7 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Point' }).click()
+          await page.getByRole('button', { name: 'Point' }).first().click()
 
           // Enter the spatial point
           await page.getByTestId('spatial-display_point').focus()
