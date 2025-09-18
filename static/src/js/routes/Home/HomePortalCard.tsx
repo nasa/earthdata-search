@@ -14,6 +14,9 @@ import { type PortalConfig } from '../../types/sharedTypes'
 
 import './HomePortalCard.scss'
 
+/**
+ * The HomePortalCard component
+*/
 const HomePortalCard: React.FC<PortalConfig> = (portal) => {
   const {
     portalId,

@@ -5,6 +5,9 @@ import PreferencesForm from '../../components/Preferences/PreferencesForm'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
+/**
+ * The Preferences route component
+*/
 export const Preferences = () => {
   const { edscHost } = getEnvironmentConfig()
 

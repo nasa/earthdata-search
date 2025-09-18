@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet'
 import { waitFor } from '@testing-library/react'
 
 import App from '../App'
+import GraphQlProvider from '../providers/GraphQlProvider'
 
 import setupTest from '../../../../jestConfigs/setupTest'
 
@@ -23,6 +24,10 @@ jest.mock('react-router-dom', () => ({
 }))
 
 jest.mock('../routes/Home/Home', () => jest.fn(() => <div />))
+
+jest.mock('../providers/GraphQlProvider', () => jest.fn(({ children }) => (
+  <div>{children}</div>
+)))
 
 const setup = setupTest({
   Component: App
@@ -84,11 +89,16 @@ describe('App component', () => {
                 path: '/admin',
                 children: [
                   expect.objectContaining({
+                    path: '',
+                    index: true,
+                    lazy: expect.any(Function)
+                  }),
+                  expect.objectContaining({
                     path: '/admin/retrievals',
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/admin/retrievals/:id',
+                    path: '/admin/retrievals/:obfuscatedId',
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
@@ -96,7 +106,7 @@ describe('App component', () => {
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
-                    path: '/admin/projects/:id',
+                    path: '/admin/projects/:obfuscatedId',
                     lazy: expect.any(Function)
                   }),
                   expect.objectContaining({
@@ -185,5 +195,10 @@ describe('App component', () => {
     const canonical = helmet.linkTags.find((tag) => tag.rel === 'canonical')
     expect(canonical).toBeDefined()
     expect(canonical.href).toBe('https://search.earthdata.nasa.gov/search')
+  })
+
+  test('renders the GraphQlProvider component', async () => {
+    setup()
+    expect(GraphQlProvider).toHaveBeenCalledTimes(1)
   })
 })

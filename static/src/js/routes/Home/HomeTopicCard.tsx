@@ -9,6 +9,9 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 import './HomeTopicCard.scss'
 
+/**
+ * The HomeTopicCard component
+*/
 const HomeTopicCard: React.FC<HomeTopic> = ({
   image,
   url,

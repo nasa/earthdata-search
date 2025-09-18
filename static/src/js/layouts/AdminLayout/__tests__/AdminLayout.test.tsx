@@ -46,27 +46,6 @@ describe('AdminLayout', () => {
   it('renders the admin layout when authorized', () => {
     setup()
 
-    expect(PortalLinkContainer).toHaveBeenCalledTimes(4)
-    expect(PortalLinkContainer).toHaveBeenNthCalledWith(1, {
-      to: '/admin/retrievals',
-      children: 'View Retrievals'
-    }, {})
-
-    expect(PortalLinkContainer).toHaveBeenNthCalledWith(2, {
-      to: '/admin/projects',
-      children: 'View Projects'
-    }, {})
-
-    expect(PortalLinkContainer).toHaveBeenNthCalledWith(3, {
-      to: '/admin/retrievals-metrics',
-      children: 'View Retrieval Metrics'
-    }, {})
-
-    expect(PortalLinkContainer).toHaveBeenNthCalledWith(4, {
-      to: '/admin/preferences-metrics',
-      children: 'View Preferences Metrics'
-    }, {})
-
     expect(Outlet).toHaveBeenCalledTimes(1)
     expect(Outlet).toHaveBeenCalledWith({}, {})
   })

@@ -10,7 +10,7 @@ import DefinitionListItem, {
  */
 export interface DefinitionListProps {
   /** The items to display in the definition list. Nested arrays of items will be displayed in separate rows. */
-  items: DefinitionListItemProps[] | DefinitionListItemProps[][]
+  items: (Omit<DefinitionListItemProps, 'index'>)[] | (Omit<DefinitionListItemProps, 'index'>)[][]
 }
 
 /**
@@ -19,13 +19,17 @@ export interface DefinitionListProps {
 const DefinitionList = ({ items }: DefinitionListProps) => (
   <dl>
     {
-      items.map((item) => {
+      items.map((item, itemIndex) => {
         if (Array.isArray(item)) {
           return (
             <Row key={item.map((subItem) => subItem.label).join('-')} className="mb-4">
               {
-                item.map((subItem) => (
-                  <DefinitionListItem key={subItem.label} {...subItem} />
+                item.map((subItem, subItemIndex) => (
+                  <DefinitionListItem
+                    {...subItem}
+                    key={subItem.label}
+                    index={`${itemIndex}-${subItemIndex}`}
+                  />
                 ))
               }
             </Row>
@@ -34,7 +38,10 @@ const DefinitionList = ({ items }: DefinitionListProps) => (
 
         return (
           <Row key={item.label} className="mb-4">
-            <DefinitionListItem {...item} />
+            <DefinitionListItem
+              {...item}
+              index={`${itemIndex}`}
+            />
           </Row>
         )
       })
