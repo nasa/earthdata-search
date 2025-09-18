@@ -38,7 +38,7 @@ const GranuleResultsHighlights = lazy(() => import('../../components/GranuleResu
 const GranuleFiltersContainer = lazy(() => import('../../containers/GranuleFiltersContainer/GranuleFiltersContainer'))
 
 /**
- * Search route components
+ * The Search route component
  * @param {Object} props - The props passed into the component.
  * @param {Object} props.collectionQuery - Collection query state
  * @param {Object} props.match - Router match state

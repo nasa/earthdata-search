@@ -28,7 +28,8 @@ import AuthRequiredContainer from './containers/AuthRequiredContainer/AuthRequir
 import PortalContainer from './containers/PortalContainer/PortalContainer'
 
 import AppLayout from './layouts/AppLayout/AppLayout'
-import ConnectedGraphQlProvider from './providers/GraphQlProvider'
+
+import GraphQlProvider from './providers/GraphQlProvider'
 
 // Required for toast notification system
 window.reactToastProvider = React.createRef()
@@ -200,10 +201,10 @@ const browserRouter = createBrowserRouter([
             path: '',
             index: true,
             async lazy() {
-              const AdminIndex = await import('./routes/Admin/AdminIndex')
+              const Admin = await import('./routes/Admin/Admin')
 
               return {
-                Component: AdminIndex.default
+                Component: Admin.default
               }
             }
           },
@@ -296,7 +297,7 @@ const App = () => {
   return (
     <ErrorBoundary>
       <Provider store={store}>
-        <ConnectedGraphQlProvider>
+        <GraphQlProvider>
           <ToastProvider ref={window.reactToastProvider}>
             <Helmet
               defaultTitle="Earthdata Search"
@@ -313,7 +314,7 @@ const App = () => {
             </Helmet>
             <RouterProvider router={browserRouter} />
           </ToastProvider>
-        </ConnectedGraphQlProvider>
+        </GraphQlProvider>
       </Provider>
     </ErrorBoundary>
   )

@@ -15,6 +15,9 @@ import renderTooltip from '../../util/renderTooltip'
 
 import './HomePortalCard.scss'
 
+/**
+ * The HomePortalCard component
+*/
 const HomePortalCard: React.FC<PortalConfig> = (portal) => {
   const {
     portalId,

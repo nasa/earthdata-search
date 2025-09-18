@@ -5,9 +5,7 @@ import { FaGlobe } from 'react-icons/fa'
 
 import Button from '../Button'
 
-// @ts-expect-error: types do not exist for this file
 import Spinner from '../../Spinner/Spinner'
-// @ts-expect-error: types do not exist for this file
 import EDSCIcon from '../../EDSCIcon/EDSCIcon'
 
 Enzyme.configure({ adapter: new Adapter() })

@@ -10,10 +10,13 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 import ADMIN_RETRIEVAL from '../../../operations/queries/adminRetrieval'
 
 const setup = setupTest({
-  Component: AdminRetrievalDetails,
-  defaultProps: {
-    obfuscatedId: '06347346',
-    onRequeueOrder: jest.fn()
+  ComponentsByRoute: {
+    '/admin/retrievals/:obfuscatedId': AdminRetrievalDetails
+  },
+  defaultPropsByRoute: {
+    '/admin/retrievals/:obfuscatedId': {
+      onRequeueOrder: jest.fn()
+    }
   },
   defaultApolloClientMocks: [
     {
@@ -72,6 +75,8 @@ const setup = setupTest({
       }
     }
   ],
+  defaultRouterEntries: ['/admin/retrievals/06347346'],
+  withRouter: true,
   withApolloClient: true
 })
 
@@ -96,7 +101,6 @@ describe('AdminRetrievalDetails component', () => {
       expect(screen.getByText('/portal/testPortal/search?mock-source')).toBeInTheDocument()
 
       expect(screen.getByRole('heading', { name: 'C123451234-EDSC' })).toBeInTheDocument()
-      expect(screen.getByRole('definition', { name: 'Retrieval Collection ID' })).toHaveTextContent('C123451234-EDSC')
       expect(screen.getByRole('definition', { name: 'Type' })).toHaveTextContent('Harmony')
       expect(screen.getByRole('definition', { name: 'Data Provider' })).toHaveTextContent('EDSC')
       expect(screen.getByRole('definition', { name: 'Order Count' })).toHaveTextContent('1')

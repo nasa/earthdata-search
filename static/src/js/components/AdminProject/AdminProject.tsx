@@ -1,15 +1,13 @@
 import React from 'react'
 
 import AdminPage from '../AdminPage/AdminPage'
-// @ts-expect-error: This file does not have types
 import AdminProjectDetails from '../AdminProjectDetails/AdminProjectDetails'
 
-interface AdminProjectProps {
-  /** The project details to display. */
-  project?: Record<string, unknown>
-}
+/** An interface for the AdminProject component props */
+interface AdminProjectProps {}
 
-export const AdminProject: React.FC<AdminProjectProps> = ({ project = {} }) => (
+/** A component that displays a admin project */
+export const AdminProject: React.FC<AdminProjectProps> = () => (
   <AdminPage
     pageTitle="Project Details"
     breadcrumbs={
@@ -29,7 +27,7 @@ export const AdminProject: React.FC<AdminProjectProps> = ({ project = {} }) => (
       ]
     }
   >
-    <AdminProjectDetails project={project} />
+    <AdminProjectDetails />
   </AdminPage>
 )
 
