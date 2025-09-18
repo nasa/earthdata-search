@@ -23,6 +23,12 @@
 
 import { MatcherFunction, screen } from '@testing-library/react'
 
+interface ConcatenateStringsArgs {
+  strings: string[]
+}
+
+const concatenateStrings = ({ strings }: ConcatenateStringsArgs) => strings.join('')
+
 type Query = (f: MatcherFunction) => HTMLElement
 
 const withMarkup = (query: Query) => (text: string): HTMLElement => query(

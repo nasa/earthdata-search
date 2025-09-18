@@ -41,7 +41,17 @@ export default class DatabaseClient {
       const db = await this.getDbConnection()
 
       const result = await db('retrieval_collections')
-        .select('retrieval_collections.*')
+        .select(
+          'retrieval_collections.id',
+          'retrieval_collections.retrieval_id',
+          'retrieval_collections.access_method',
+          'retrieval_collections.collection_id',
+          'retrieval_collections.collection_metadata',
+          'retrieval_collections.granule_count',
+          'retrieval_collections.created_at',
+          'retrieval_collections.updated_at',
+          'retrieval_collections.granule_link_count'
+        )
         .whereIn('retrieval_collections.retrieval_id', retrievalIds)
 
       return result
@@ -62,7 +72,14 @@ export default class DatabaseClient {
       const db = await this.getDbConnection()
 
       const result = await db('retrieval_orders')
-        .select('retrieval_orders.*')
+        .select(
+          'retrieval_orders.id',
+          'retrieval_orders.retrieval_collection_id',
+          'retrieval_orders.type',
+          'retrieval_orders.state',
+          'retrieval_orders.order_information',
+          'retrieval_orders.order_number'
+        )
         .whereIn('retrieval_orders.retrieval_collection_id', retrievalCollectionIds)
 
       return result
@@ -196,7 +213,12 @@ export default class DatabaseClient {
 
       return await db('retrievals')
         .select(
-          'retrievals.*'
+          'retrievals.id',
+          'retrievals.user_id',
+          'retrievals.jsondata',
+          'retrievals.environment',
+          'retrievals.created_at',
+          'retrievals.updated_at'
         )
         .where({
           'retrievals.id': deobfuscateId(parseInt(obfuscatedId, 10))
@@ -234,7 +256,11 @@ export default class DatabaseClient {
 
       let query = db('retrievals')
         .select(
-          'retrievals.*',
+          'retrievals.id',
+          'retrievals.jsondata',
+          'retrievals.environment',
+          'retrievals.created_at',
+          'retrievals.updated_at',
           'users.id as user_id',
           'users.urs_id as urs_id'
         )
@@ -287,7 +313,10 @@ export default class DatabaseClient {
       const db = await this.getDbConnection()
 
       return await db('users')
-        .select('users.*')
+        .select(
+          'users.id',
+          'users.urs_id'
+        )
         .where({ 'users.id': userId })
         .first()
     } catch {
@@ -307,7 +336,10 @@ export default class DatabaseClient {
       const db = await this.getDbConnection()
 
       return await db('users')
-        .select('users.*')
+        .select(
+          'users.id',
+          'users.urs_id'
+        )
         .whereIn('users.id', userIds)
     } catch {
       const errorMessage = 'Failed to retrieve users by ID'
