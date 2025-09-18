@@ -10,10 +10,18 @@ import isAdminUser from './rules/isAdminUser'
 const buildPermissions = () => shield(
   {
     Query: {
-      // This wildcard will catch any mutations we do not explicily allow since we are not
+      // This wildcard will catch any mutations we do not explicitly allow since we are not
       // using the `fallbackRule`
       '*': deny,
       adminPreferencesMetrics: and(
+        isValidUser,
+        isAdminUser
+      ),
+      adminProject: and(
+        isValidUser,
+        isAdminUser
+      ),
+      adminProjects: and(
         isValidUser,
         isAdminUser
       ),

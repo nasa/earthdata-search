@@ -1,3 +1,6 @@
+@use '../../vendor/bootstrap/configuration' as bootstrap;
+@use '../../utils';
+
 @mixin hds-display-xl {
   @include font-size(240px);
   @include rfs(240px, line-height);
@@ -294,4 +297,18 @@ body {
       font-weight: $font-weight-normal;
     }
   }
+}
+
+//  Definition Lists
+dt {
+  margin-bottom: 0.25*bootstrap.$spacer;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  font-family: bootstrap.$font-family-monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.15rem;
+}
+
+dd {
+  color: utils.$color__carbon--70;
 }
