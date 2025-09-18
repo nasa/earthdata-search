@@ -92,6 +92,100 @@ export default class DatabaseClient {
   }
 
   /**
+   * Retrieves a project by its obfuscated ID
+   * @param {number} obfuscatedId The ID of the project to retrieve
+   * @returns {Promise<Object>} A promise that resolves to the project object
+   */
+  async getProjectByObfuscatedId(obfuscatedId) {
+    try {
+      const db = await this.getDbConnection()
+
+      return await db('projects')
+        .select(
+          'projects.id',
+          'projects.name',
+          'projects.path',
+          'projects.user_id',
+          'projects.created_at',
+          'projects.updated_at'
+        )
+        .where({
+          'projects.id': deobfuscateId(parseInt(obfuscatedId, 10))
+        })
+        .first()
+    } catch {
+      const errorMessage = 'Failed to retrieve project by ID'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
+   * Retrieves projects based on the provided filters
+   * @param {Object} params The filters to apply
+   * @returns {Promise<Array>} A promise that resolves to an array of project objects
+   */
+  async getProjects({
+    limit,
+    obfuscatedId,
+    offset,
+    sortKey,
+    ursId
+  }) {
+    const sortKeyParams = {
+      '-created_at': ['projects.created_at', 'desc'],
+      '+created_at': ['projects.created_at', 'asc'],
+      '-urs_id': ['users.urs_id', 'desc'],
+      '+urs_id': ['users.urs_id', 'asc']
+    }
+
+    try {
+      const db = await this.getDbConnection()
+
+      let query = db('projects')
+        .select(
+          'projects.id',
+          'projects.name',
+          'projects.path',
+          'projects.created_at',
+          'projects.updated_at',
+          'users.id as user_id',
+          'users.urs_id as urs_id'
+        )
+        .select(db.raw('count(*) OVER() as total'))
+        .join('users', { 'projects.user_id': 'users.id' })
+
+      if (sortKey) {
+        query = query.orderBy(...sortKeyParams[sortKey])
+      } else {
+        query = query.orderBy('id', 'desc')
+      }
+
+      if (ursId) {
+        query = query.where({ 'users.urs_id': ursId })
+      }
+
+      if (obfuscatedId) {
+        query = query.where('projects.id', '=', deobfuscateId(parseInt(obfuscatedId, 10)))
+      }
+
+      if (limit) {
+        query = query.limit(limit)
+      }
+
+      if (offset) {
+        query = query.offset(offset)
+      }
+
+      return await query
+    } catch {
+      const errorMessage = 'Failed to retrieve user projects'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
    * Retrieves a retrieval by its obfuscated ID
    * @param {number} obfuscatedId The ID of the retrieval to retrieve
    * @returns {Promise<Object>} A promise that resolves to the retrieval object
@@ -143,7 +237,6 @@ export default class DatabaseClient {
           'retrievals.*',
           'users.id as user_id',
           'users.urs_id as urs_id'
-
         )
         .select(db.raw('count(*) OVER() as total'))
         .join('users', { 'retrievals.user_id': 'users.id' })

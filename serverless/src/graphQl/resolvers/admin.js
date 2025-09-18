@@ -12,6 +12,66 @@ export default {
 
       return formatAdminPreferencesMetrics(await databaseClient.getSitePreferences())
     },
+    adminProject: async (source, args, context) => {
+      const { databaseClient } = context
+      const { params = {} } = args
+      const { obfuscatedId } = params
+
+      const data = await databaseClient.getProjectByObfuscatedId(obfuscatedId)
+
+      return camelcaseKeys(data, { deep: true })
+    },
+    adminProjects: async (source, args, context) => {
+      const { databaseClient } = context
+      const { params = {} } = args
+      const {
+        limit = 20,
+        offset = 0,
+        sortKey,
+        ursId,
+        obfuscatedId
+      } = params
+
+      const data = await databaseClient.getProjects({
+        ursId,
+        obfuscatedId,
+        limit,
+        offset,
+        sortKey
+      })
+
+      let currentPage = null
+
+      const projectCount = data.length
+        ? data[0].total
+        : 0
+
+      const pageCount = data.length
+        ? Math.ceil(projectCount / limit)
+        : 0
+
+      if (pageCount > 0) {
+        if (offset) {
+          currentPage = Math.floor(offset / limit) + 1
+        } else {
+          currentPage = 1
+        }
+      }
+
+      const hasNextPage = currentPage < pageCount
+      const hasPreviousPage = currentPage > 1
+
+      return {
+        adminProjects: camelcaseKeys(data, { deep: true }),
+        pageInfo: {
+          pageCount,
+          hasNextPage,
+          hasPreviousPage,
+          currentPage
+        },
+        count: projectCount
+      }
+    },
     adminRetrieval: async (source, args, context) => {
       const { databaseClient } = context
       const { params = {} } = args
@@ -73,6 +133,22 @@ export default {
         },
         count: retrievalCount
       }
+    }
+  },
+  AdminProject: {
+    user: async (parent, args, context) => {
+      const { loaders } = context
+
+      // Use the users dataloader to fetch the user for the project using the userId
+      // from the parent AdminProject
+      const loaderData = await loaders.users.load(parent.userId)
+
+      return camelcaseKeys(loaderData, { deep: true })
+    },
+    obfuscatedId: async (parent) => {
+      const { id } = parent
+
+      return obfuscateId(id)
     }
   },
   AdminRetrieval: {
