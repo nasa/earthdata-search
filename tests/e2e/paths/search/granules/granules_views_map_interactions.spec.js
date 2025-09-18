@@ -190,7 +190,7 @@ test.describe('When clicking on a granule on the map', () => {
         }).click({ force: true })
 
         // Wait a little bit for the item to scroll into view
-        await page.waitForTimeout(200)
+        await page.waitForTimeout(100)
 
         const highlightedCard = await page.getByRole('button', {
           name: granuleName
