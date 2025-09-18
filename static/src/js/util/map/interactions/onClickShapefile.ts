@@ -67,7 +67,7 @@ const onClickShapefile = ({
 
   // Set the style of the feature
   let style
-  if (geometryType === spatialTypes.POINT) {
+  if (geometryType === spatialTypes.POINT || geometryType === spatialTypes.MULTI_POINT) {
     style = newSelected ? spatialSearchMarkerStyle : unselectedShapefileMarkerStyle
   } else {
     style = newSelected ? spatialSearchStyle : unselectedShapefileStyle
@@ -94,15 +94,16 @@ const onClickShapefile = ({
 
   const newQuery = getQueryFromShapefileFeature(feature)
   const [queryType] = Object.keys(newQuery) as SpatialQueryType[]
-  const [queryValue] = newQuery[queryType]
+  const queryValues = newQuery[queryType] || []
 
   // If newSelected is true, add the spatial, else remove it
   if (newSelected) {
-    // Add the queryValue to the existing spatial query
+    // Add all queryValues to the existing spatial query (for multi-geometries)
     const currentQueryValue = currentQuery[queryType]
+
     const updatedQueryValue = currentQueryValue
-      ? currentQueryValue.concat(queryValue)
-      : [queryValue]
+      ? currentQueryValue.concat(queryValues)
+      : queryValues
 
     query = {
       ...currentQuery,
@@ -112,14 +113,20 @@ const onClickShapefile = ({
     // Add the feature to the selectedFeatures
     selectedFeatures = updatedSelectedFeatures.concat(edscId)
   } else {
-    // Remove the feature from the existing spatial query
-    const queryByType = [...currentQuery[queryType] || []]
-    const queryIndex = queryByType.indexOf(queryValue)
-    queryByType.splice(queryIndex!, 1)
+    // Remove all queryValues from the existing spatial query (for multi-geometries)
+    const currentQueryValue = [...currentQuery[queryType] || []]
+
+    queryValues.forEach((queryValue) => {
+      const queryIndex = currentQueryValue.indexOf(queryValue)
+
+      if (queryIndex > -1) {
+        currentQueryValue.splice(queryIndex, 1)
+      }
+    })
 
     query = {
       ...currentQuery,
-      [queryType]: queryByType
+      [queryType]: currentQueryValue
     }
 
     // Remove the feature from the selectedFeatures

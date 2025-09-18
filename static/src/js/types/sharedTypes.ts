@@ -50,6 +50,42 @@ export interface Spatial {
   polygon?: PolygonString[]
 }
 
+/** The latitude of a coordinate */
+export type Latitude = number
+/** The longitude of a coordinate */
+export type Longitude = number
+/** The altitude of a coordinate */
+export type Altitude = number
+/** The radius of a circle */
+export type CircleRadius = number
+
+/** A GeoJSON coordinate with optional altitude */
+export type GeoJsonCoordinate = [Longitude, Latitude, Altitude?]
+
+/** A GeoJSON Point */
+export type Point = GeoJsonCoordinate
+/** A GeoJSON MultiPoint */
+export type MultiPoint = GeoJsonCoordinate[]
+/** A GeoJSON LineString */
+export type Line = GeoJsonCoordinate[]
+/** A GeoJSON MultiLineString */
+export type MultiLine = GeoJsonCoordinate[][]
+/** A GeoJSON Polygon */
+export type Polygon = GeoJsonCoordinate[][]
+/** A GeoJSON MultiPolygon */
+export type MultiPolygon = GeoJsonCoordinate[][][]
+/** A GeoJSON Circle */
+export type Circle = [Point, CircleRadius]
+
+/** Spatial coordinates including all GeoJSON types and Circle */
+export type SpatialCoordinates = Point
+  | MultiPoint
+  | Line
+  | MultiLine
+  | Polygon
+  | MultiPolygon
+  | Circle
+
 /** The spatial object */
 export interface SpatialSearch {
   /** The selected region object */
