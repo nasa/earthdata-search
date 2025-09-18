@@ -28,3 +28,5 @@ portals/availablePortals.json
 elasticmq.conf
 
 *storybook.log
+
+.continue
