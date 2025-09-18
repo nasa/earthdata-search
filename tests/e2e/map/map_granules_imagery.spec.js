@@ -23,14 +23,6 @@ const screenshotClip = {
 
 const temporalLabelClass = '.map__focused-granule-overlay__granule-label-temporal'
 
-const dragPanelToX = async (page, x) => {
-  const handle = page.locator('[data-testid="panels__handle"]')
-  await handle.hover()
-  await handle.dispatchEvent('mousedown', { button: 0 })
-  await handle.dispatchEvent('mousemove', { clientX: x })
-  await handle.dispatchEvent('mouseup', { button: 0 })
-}
-
 test.describe('Map: imagery and layer-picker interactions', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
@@ -176,7 +168,6 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
-        // TODO add the colormap mocks to these tests
         await page.route(/colormaps\/TEMPO_L3_Cloud_Cloud_Fraction_Total/, async (route) => {
           await route.fulfill({
             json: {}
@@ -194,13 +185,12 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
         // Wait for the map to load
         await initialMapPromise
+
+        // Close the panel to work with the map easier
+        await page.keyboard.press(']')
       })
 
       test('toggles layer visibility when clicking the visibility button @screenshot', async ({ page }) => {
-        await page.getByTestId('legend').waitFor()
-
-        await dragPanelToX(page, -1500)
-
         // Find and click the visibility toggle button for the first layer
         const visibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
         await visibilityButton.click()
@@ -212,9 +202,6 @@ test.describe('Map: imagery and layer-picker interactions', () => {
       })
 
       test('updates layer opacity when adjusting the opacity slider @screenshot', async ({ page }) => {
-        await page.getByTestId('legend').waitFor()
-        await dragPanelToX(page, -1500)
-
         // Find and click the settings button for the first layer to open the opacity popover
         const settingsButton = page.getByRole('button', { name: 'Adjust settings for Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' })
         await settingsButton.click()
@@ -246,53 +233,38 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await page.locator('body').click()
       })
 
-      test.skip('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
-        // Await page.getByTestId('legend').waitFor()
-        // await dragPanelToX(page, -1500)
-
-        // Verify the the first layer product name
-        // const layerItems = page.locator('.layer-picker__layer-item')
-        // const firstLayerProductName = await layerItems.first().locator('.layer-picker__layer-name').textContent()
-        // expect(firstLayerProductName).toContain('Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)')
-
-        // find and click the visibility toggle button for the first layer
-        const layer1VisibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
-        await layer1VisibilityButton.click()
-        await page.waitForTimeout(500)
-
+      test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
         const layer2VisibilityButton = page.getByRole('button', { name: 'Show Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)' }).first()
         await layer2VisibilityButton.click()
-        await page.waitForTimeout(1000)
 
-        // Take a screenshot to verify the layer is no longer visible
+        // Zoom in to make the layers more visible
+        await page.getByRole('button', { name: 'Zoom In' }).click()
+        await page.waitForTimeout(500)
+
+        // Take a screenshot to verify the layer is visible
         await expect(page).toHaveScreenshot('gibs-second-layer-visible.png', {
           clip: screenshotClip
         })
 
-        // // Find the second layer's drag handle
-        // const secondLayerDragHandle = page.getByRole('button', { name: 'Drag to reorder layer' }).nth(1)
+        // Find the layer items and drag handles
+        const firstLayerItem = page.locator('.layer-picker__layer-item').nth(0)
+        // Grab the drag handle for the second layer
+        const secondLayerDragHandle = page.getByRole('button', { name: 'Drag to reorder layer' }).nth(3)
 
-        // // Get the bounding box of the first layer to know where to drop
-        // const firstLayer = page.locator('.layer-picker__layer-content').first()
-        // const firstLayerBox = await firstLayer.boundingBox()
-        // console.log('🚀 ~ file: map_granules_imagery.spec.js:270 ~ firstLayerBox:', firstLayerBox)
+        // Drag the second layer to the top (above the first layer)
+        await secondLayerDragHandle.dragTo(firstLayerItem)
 
-        // // Drag the second layer to the top (above the first layer)
-        // await secondLayerDragHandle.hover()
-        // await page.mouse.down()
-        // // Move up to position above the first layer
-        // await page.mouse.move(firstLayerBox.x + firstLayerBox.width / 2, firstLayerBox.y - 100)
-        // await page.mouse.up()
+        // Verify the layers have been reordered by checking the layer titles
+        const layerItems = page.locator('.layer-picker__layer-item')
+        const firstLayerTitle = await layerItems.first().locator('h3').textContent()
 
-        // // Wait a moment for the drag operation to complete
-        // await page.waitForTimeout(1000)
+        // The second layer (Cloud Pressure Total) should now be first in the list
+        expect(firstLayerTitle).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
 
-        // Verify the second layer is now at the top
-        // const layerItemsUpdated = page.locator('.layer-picker__layer-item')
-        // const updatedFirstLayerProductName = await layerItemsUpdated.first().locator('.layer-picker__layer-name').textContent()
-
-        // The second layer should now be first in the list "Cloud Pressure Total"
-        // expect(updatedFirstLayerProductName).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
+        // Take a screenshot to verify the reordering
+        await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {
+          clip: screenshotClip
+        })
       })
     })
   })
