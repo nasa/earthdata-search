@@ -26,14 +26,14 @@ const setup = setupTest({
 })
 
 describe('AdminLayout', () => {
-  it('calls onAdminIsAuthorized on mount', () => {
+  test('calls onAdminIsAuthorized on mount', () => {
     const { props } = setup()
 
     expect(props.onAdminIsAuthorized).toHaveBeenCalledTimes(1)
     expect(props.onAdminIsAuthorized).toHaveBeenCalledWith()
   })
 
-  it('does not render anything when not authorized', () => {
+  test('does not render anything when not authorized', () => {
     setup({
       overrideProps: {
         isAuthorized: false
@@ -43,7 +43,7 @@ describe('AdminLayout', () => {
     expect(PortalLinkContainer).toHaveBeenCalledTimes(0)
   })
 
-  it('renders the admin layout when authorized', () => {
+  test('renders the admin layout when authorized', () => {
     setup()
 
     expect(Outlet).toHaveBeenCalledTimes(1)

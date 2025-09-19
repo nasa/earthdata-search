@@ -3,11 +3,8 @@ import React from 'react'
 import AdminPage from '../AdminPage/AdminPage'
 import AdminProjectDetails from '../AdminProjectDetails/AdminProjectDetails'
 
-/** An interface for the AdminProject component props */
-interface AdminProjectProps {}
-
 /** A component that displays a admin project */
-export const AdminProject: React.FC<AdminProjectProps> = () => (
+export const AdminProject: React.FC = () => (
   <AdminPage
     pageTitle="Project Details"
     breadcrumbs={

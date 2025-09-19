@@ -32,8 +32,14 @@ describe('DefinitionList component', () => {
 
   test('renders multiple items as separate rows', () => {
     const items = [
-      { label: 'Label 1', value: 'Value 1' },
-      { label: 'Label 2', value: 'Value 2' }
+      {
+        label: 'Label 1',
+        value: 'Value 1'
+      },
+      {
+        label: 'Label 2',
+        value: 'Value 2'
+      }
     ]
     setup({
       overrideProps: { items }
@@ -48,11 +54,20 @@ describe('DefinitionList component', () => {
   test('renders nested arrays of items in separate rows', () => {
     const items = [
       [
-        { label: 'Row 1 Label 1', value: 'Row 1 Value 1' },
-        { label: 'Row 1 Label 2', value: 'Row 1 Value 2' }
+        {
+          label: 'Row 1 Label 1',
+          value: 'Row 1 Value 1'
+        },
+        {
+          label: 'Row 1 Label 2',
+          value: 'Row 1 Value 2'
+        }
       ],
       [
-        { label: 'Row 2 Label 1', value: 'Row 2 Value 1' }
+        {
+          label: 'Row 2 Label 1',
+          value: 'Row 2 Value 1'
+        }
       ]
     ]
     setup({

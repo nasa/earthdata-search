@@ -15,7 +15,7 @@ const setup = setupTest({
 })
 
 describe('DownloadsLayout', () => {
-  it('renders the app layout', () => {
+  test('renders the app layout', () => {
     setup()
 
     expect(Outlet).toHaveBeenCalledTimes(1)

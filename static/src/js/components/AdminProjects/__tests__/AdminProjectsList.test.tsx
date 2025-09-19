@@ -1,5 +1,9 @@
 import { gql } from '@apollo/client'
-import { screen, waitFor, within } from '@testing-library/react'
+import {
+  screen,
+  waitFor,
+  within
+} from '@testing-library/react'
 
 import AdminProjectsList from '../AdminProjectsList'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -155,7 +159,7 @@ describe('AdminProjectsList component', () => {
 
     await waitFor(() => {
       expect(screen.getByRole('table')).toBeInTheDocument()
-  })
+    })
 
     expect(screen.getByRole('listitem', { name: 'Next Page' })).toBeInTheDocument()
   })

@@ -13,7 +13,7 @@ jest.mock('../../../../../sharedUtils/config', () => ({
 }))
 
 describe('getContext', () => {
-  it('should return the correct context', async () => {
+  test('should return the correct context', async () => {
     const getUserByIdSpy = jest.spyOn(DatabaseClient.prototype, 'getUserById')
     getUserByIdSpy.mockResolvedValue({
       id: 1,
@@ -40,7 +40,7 @@ describe('getContext', () => {
   })
 
   describe('when the user does not exist in the database', () => {
-    it('should return the correct context with an undefined user', async () => {
+    test('should return the correct context with an undefined user', async () => {
       const getUserByIdSpy = jest.spyOn(DatabaseClient.prototype, 'getUserById')
       getUserByIdSpy.mockResolvedValue(undefined)
 

@@ -9,6 +9,7 @@ jest.mock('../../../containers/PortalLinkContainer/PortalLinkContainer', () => {
   const MockPortalLinkContainer = jest.fn(({ to, children }) => (
     <a href={to}>{children}</a>
   ))
+
   return MockPortalLinkContainer
 })
 
@@ -22,7 +23,10 @@ const setup = setupTest({
 describe('Admin', () => {
   test('renders Admin header text', () => {
     setup()
-    expect(screen.getByRole('heading', { level: 2, name: /Admin/ })).toBeInTheDocument()
+    expect(screen.getByRole('heading', {
+      level: 2,
+      name: /Admin/
+    })).toBeInTheDocument()
   })
 
   test('renders all admin portal links', () => {
