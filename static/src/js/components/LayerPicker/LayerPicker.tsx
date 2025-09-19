@@ -8,19 +8,24 @@ import {
   useSensors,
   DragEndEvent
 } from '@dnd-kit/core'
+
 import {
   SortableContext,
   sortableKeyboardCoordinates,
   verticalListSortingStrategy
 } from '@dnd-kit/sortable'
+
+// Restricts the drag and drop to the parent element and moving on the vertical axis`
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
 
 import { FaCompressAlt, FaLayerGroup } from 'react-icons/fa'
-import DraggableLayerItem from './DraggableLayerItem'
-import './LayerPicker.scss'
-import Button from '../Button/Button'
 import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+
+import DraggableLayerItem from './DraggableLayerItem'
+import Button from '../Button/Button'
 import { ImageryLayers } from '../../types/sharedTypes'
+
+import './LayerPicker.scss'
 
 interface LayerPickerProps {
   /** The collection ID to manage layers for */
@@ -36,9 +41,13 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
   collectionId,
   imageryLayers
 }) => {
+  // State for whether the layer-picker is open or hidden
   const [layersHidden, setLayersHidden] = useState(false)
 
   // Configure sensors for drag and drop
+  // Pointer is for the mouse
+  // Keyboard dragging can be used with `Enter` key first and then the arrow keys to move the item up and down and hit
+  // `Enter` to confirm the move
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -46,7 +55,10 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
     })
   )
   const {
-    layerData, toggleLayerVisibility, setMapLayersOrder, updateLayerOpacity
+    layerData,
+    setMapLayersOrder,
+    toggleLayerVisibility,
+    updateLayerOpacity
   } = imageryLayers
 
   /**
@@ -75,7 +87,6 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
    * Toggles the visibility of a layer using the Zustand store
    */
   const handleToggleLayerVisibility = (productName: string) => {
-    // Update the Zustand store
     toggleLayerVisibility(collectionId, productName)
   }
 

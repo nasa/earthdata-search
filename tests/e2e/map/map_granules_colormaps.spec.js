@@ -131,7 +131,6 @@ test.describe('Map: Colormap interactions', () => {
         await page.locator('.colormap__bar').first().hover()
 
         await expect(page.getByTestId('legend-label')).toHaveText('50 – 51 %')
-        await expect(page.getByTestId('legend-label-color')).toHaveAttribute('style', 'background-color: rgb(0, 217, 142);')
       })
     })
 

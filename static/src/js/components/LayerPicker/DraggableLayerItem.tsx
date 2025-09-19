@@ -1,25 +1,27 @@
 import React, { useState } from 'react'
+import classNames from 'classnames'
+
+import { useSortable } from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+
 import {
   FaEye,
   FaEyeSlash,
   FaGripVertical
 } from 'react-icons/fa'
-// @ts-expect-error: This file does not have types
-import { Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import { useSortable } from '@dnd-kit/sortable'
-import { CSS } from '@dnd-kit/utilities'
+import Form from 'react-bootstrap/Form'
+import FormGroup from 'react-bootstrap/FormGroup'
+import FormLabel from 'react-bootstrap/FormLabel'
+import Tooltip from 'react-bootstrap/Tooltip'
 
-import classNames from 'classnames'
-import {
-  Form,
-  FormGroup,
-  FormLabel,
-  Tooltip
-} from 'react-bootstrap'
-import ColorMap, { Colormap } from '../ColorMap/ColorMap'
+// @ts-expect-error: This file does not have types
+import { Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
+
 import Button from '../Button/Button'
+import ColorMap, { Colormap } from '../ColorMap/ColorMap'
 
 interface DraggableLayerItemProps {
   layer: {

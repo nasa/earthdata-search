@@ -107,6 +107,12 @@ class LayerSwitcherControl extends Control {
     hideButton.addEventListener('click', () => {
       this.setIsLayerSwitcherOpen(false)
     })
+
+    // When hovering over the panel, prevent the hover event from firing on the map
+    panel.addEventListener('hover', (event) => {
+      event.stopPropagation()
+      event.preventDefault()
+    })
   }
 
   /**
