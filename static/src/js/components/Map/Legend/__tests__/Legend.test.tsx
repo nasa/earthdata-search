@@ -3,8 +3,8 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import Legend from '../Legend'
-import setupTest from '../../../../../../jestConfigs/setupTest'
-import { ImageryLayers } from '../../../types/sharedTypes'
+import setupTest from '../../../../../../../jestConfigs/setupTest'
+import { ImageryLayers } from '../../../../types/sharedTypes'
 
 // Mock the LayerPicker component
 jest.mock('../../LayerPicker/LayerPicker', () => jest.fn(() => <div data-testid="layer-picker" />))

@@ -4,9 +4,9 @@ import {
   within
 } from '@testing-library/react'
 
-import setupTest from '../../../../../../jestConfigs/setupTest'
+import setupTest from '../../../../../../../jestConfigs/setupTest'
 import LayerPicker from '../LayerPicker'
-import useEdscStore from '../../../zustand/useEdscStore'
+import useEdscStore from '../../../../zustand/useEdscStore'
 
 describe('LayerPicker', () => {
   const mockCollectionId = 'C123451234-EDSC'
