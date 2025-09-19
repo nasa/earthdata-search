@@ -14,7 +14,7 @@ describe('LayerPicker', () => {
   // Create shared mock functions
   const mockToggleLayerVisibility = jest.fn()
   const mockSetMapLayersOrder = jest.fn()
-  const mockUpdateLayerOpacity = jest.fn()
+  const mocksetLayerOpacity = jest.fn()
 
   const mockImageryLayers = {
     layerData: [
@@ -34,7 +34,7 @@ describe('LayerPicker', () => {
       }
     ],
     toggleLayerVisibility: mockToggleLayerVisibility,
-    updateLayerOpacity: mockUpdateLayerOpacity,
+    setLayerOpacity: mocksetLayerOpacity,
     setMapLayersOrder: mockSetMapLayersOrder
   }
 
@@ -48,7 +48,7 @@ describe('LayerPicker', () => {
       map: {
         toggleLayerVisibility: mockToggleLayerVisibility,
         setMapLayersOrder: mockSetMapLayersOrder,
-        updateLayerOpacity: mockUpdateLayerOpacity,
+        setLayerOpacity: mocksetLayerOpacity,
         mapLayers: {
           [mockCollectionId]: [
             {
@@ -92,7 +92,7 @@ describe('LayerPicker', () => {
           map: {
             toggleLayerVisibility: jest.fn(),
             setMapLayersOrder: jest.fn(),
-            updateLayerOpacity: jest.fn(),
+            setLayerOpacity: jest.fn(),
             mapLayers: {
               [mockCollectionId]: [
                 {
@@ -132,7 +132,7 @@ describe('LayerPicker', () => {
   })
 
   describe('Layer Opacity Updates', () => {
-    test('calls updateLayerOpacity when opacity slider is released', async () => {
+    test('calls setLayerOpacity when opacity slider is released', async () => {
       const { user } = setup()
       const settingsButton = screen.getByRole('button', { name: 'Adjust settings for Precipitation Rate' })
 
@@ -145,8 +145,8 @@ describe('LayerPicker', () => {
 
       const zustandState = useEdscStore.getState()
       const { map } = zustandState
-      const { updateLayerOpacity } = map
-      expect(updateLayerOpacity).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate', 1)
+      const { setLayerOpacity } = map
+      expect(setLayerOpacity).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate', 1)
     })
   })
 

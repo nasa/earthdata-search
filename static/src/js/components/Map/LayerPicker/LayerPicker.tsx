@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+// https://docs.dndkit.com/api-documentation/context-provider/collision-detection-algorithms
+// Closest center collision detection algorithm is used to determine if the item is being dragged over another item
 import {
   DndContext,
   closestCenter,
@@ -58,7 +60,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
     layerData,
     setMapLayersOrder,
     toggleLayerVisibility,
-    updateLayerOpacity
+    setLayerOpacity
   } = imageryLayers
 
   /**
@@ -124,7 +126,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
     opacity: number
   ) => {
     // Updates the Zustand store
-    updateLayerOpacity(collectionConceptId, productName, opacity)
+    setLayerOpacity(collectionConceptId, productName, opacity)
   }
 
   if (layersHidden) {

@@ -323,7 +323,7 @@ export type MapSlice = {
       opacity?: number
     }>) => void
     /** Function to update the opacity of a specific layer */
-    updateLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
+    setLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
   }
 }
 
