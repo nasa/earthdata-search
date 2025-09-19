@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux'
 
 import adminIsAuthorizedReducer from './admin/isAuthorized'
-import adminProjectsReducer from './admin/projects'
 import adminRetrievalsMetricsReducer from './admin/retrievalsMetrics'
 import authTokenReducer from './authToken'
 import colorMapsReducer from './colorMaps'
@@ -20,7 +19,6 @@ import viewAllFacetsRequestReducer from './viewAllFacets'
 export default () => combineReducers({
   admin: combineReducers({
     isAuthorized: adminIsAuthorizedReducer,
-    projects: adminProjectsReducer,
     retrievalsMetrics: adminRetrievalsMetricsReducer
   }),
   authToken: authTokenReducer,

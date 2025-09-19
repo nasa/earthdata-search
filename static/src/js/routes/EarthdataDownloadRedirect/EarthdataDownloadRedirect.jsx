@@ -5,6 +5,10 @@ import EarthdataDownloadRedirectComponent from '../../components/EarthdataDownlo
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
+/**
+ * The EarthdataDownloadRedirect route component. This component is used to redirect the user to
+ * the Earthdata Download component.
+*/
 export const EarthdataDownloadRedirect = () => {
   const { edscHost } = getEnvironmentConfig()
 

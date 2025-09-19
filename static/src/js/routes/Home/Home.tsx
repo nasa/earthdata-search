@@ -21,7 +21,6 @@ import { connect, MapDispatchToProps } from 'react-redux'
 import { type Dispatch } from 'redux'
 
 import Button from '../../components/Button/Button'
-// @ts-expect-error: Types do not exist for this file
 import EDSCIcon from '../../components/EDSCIcon/EDSCIcon'
 
 import SpatialSelectionDropdownContainer
@@ -158,6 +157,9 @@ interface HomeDispatchProps {
 
 type HomeProps = HomeDispatchProps
 
+/**
+ * The Home route component
+*/
 export const Home: React.FC<HomeProps> = ({ onChangePath }) => {
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)

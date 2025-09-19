@@ -18,7 +18,6 @@ import { eventEmitter } from '../../events/events'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 
 import Button from '../Button/Button'
-// @ts-expect-error: This file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import spatialTypes from '../../constants/spatialTypes'

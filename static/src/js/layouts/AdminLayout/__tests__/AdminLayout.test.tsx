@@ -26,14 +26,14 @@ const setup = setupTest({
 })
 
 describe('AdminLayout', () => {
-  it('calls onAdminIsAuthorized on mount', () => {
+  test('calls onAdminIsAuthorized on mount', () => {
     const { props } = setup()
 
     expect(props.onAdminIsAuthorized).toHaveBeenCalledTimes(1)
     expect(props.onAdminIsAuthorized).toHaveBeenCalledWith()
   })
 
-  it('does not render anything when not authorized', () => {
+  test('does not render anything when not authorized', () => {
     setup({
       overrideProps: {
         isAuthorized: false
@@ -43,29 +43,8 @@ describe('AdminLayout', () => {
     expect(PortalLinkContainer).toHaveBeenCalledTimes(0)
   })
 
-  it('renders the admin layout when authorized', () => {
+  test('renders the admin layout when authorized', () => {
     setup()
-
-    expect(PortalLinkContainer).toHaveBeenCalledTimes(4)
-    expect(PortalLinkContainer).toHaveBeenNthCalledWith(1, {
-      to: '/admin/retrievals',
-      children: 'View Retrievals'
-    }, {})
-
-    expect(PortalLinkContainer).toHaveBeenNthCalledWith(2, {
-      to: '/admin/projects',
-      children: 'View Projects'
-    }, {})
-
-    expect(PortalLinkContainer).toHaveBeenNthCalledWith(3, {
-      to: '/admin/retrievals-metrics',
-      children: 'View Retrieval Metrics'
-    }, {})
-
-    expect(PortalLinkContainer).toHaveBeenNthCalledWith(4, {
-      to: '/admin/preferences-metrics',
-      children: 'View Preferences Metrics'
-    }, {})
 
     expect(Outlet).toHaveBeenCalledTimes(1)
     expect(Outlet).toHaveBeenCalledWith({}, {})

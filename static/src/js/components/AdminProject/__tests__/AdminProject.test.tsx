@@ -5,7 +5,6 @@ import setupTest from '../../../../../../jestConfigs/setupTest'
 
 import { AdminProject } from '../AdminProject'
 
-// @ts-expect-error: This file does not have types
 import AdminProjectDetails from '../../AdminProjectDetails/AdminProjectDetails'
 
 jest.mock('../../AdminProjectDetails/AdminProjectDetails', () => jest.fn(() => <div />))
@@ -42,15 +41,10 @@ describe('AdminProject component', () => {
     expect(within(breadcrumbs).getByRole('listitem', { current: 'page' })).toHaveTextContent('Project Details')
   })
 
-  test('passes the correct props to AdminProjectDetails', () => {
-    const { props } = setup()
+  test('renders AdminProjectDetails', () => {
+    setup()
 
     expect(AdminProjectDetails).toHaveBeenCalledTimes(1)
-    expect(AdminProjectDetails).toHaveBeenCalledWith(
-      expect.objectContaining({
-        project: props.project
-      }),
-      {}
-    )
+    expect(AdminProjectDetails).toHaveBeenCalledWith({}, {})
   })
 })
