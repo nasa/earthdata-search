@@ -36,17 +36,18 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 
 import './SecondaryToolbar.scss'
 
-const SecondaryToolbar = (props) => {
-  const {
-    authToken,
-    location,
-    onLogout,
-    onUpdateProjectName,
-    projectCollectionIds,
-    retrieval = {},
-    savedProject,
-    ursProfile
-  } = props
+const SecondaryToolbar = ({
+  authToken,
+  location,
+  onLogout,
+  onUpdateProjectName,
+  projectCollectionIds,
+  retrieval,
+  savedProject,
+  ursProfile
+}) => {
+  const setRunTour = useEdscStore((state) => state.ui.tour.setRunTour)
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
   const { name = '' } = savedProject
 
@@ -98,13 +99,6 @@ const SecondaryToolbar = (props) => {
   const onToggleProjectDropdown = () => {
     setProjectDropdownOpen(!projectDropdownOpen)
   }
-
-  const zustandState = useEdscStore.getState()
-  const { ui } = zustandState
-  const { tour } = ui
-  const { setRunTour } = tour
-
-  const earthdataEnvironment = getEarthdataEnvironment(zustandState)
 
   const { first_name: firstName = '' } = ursProfile
 
@@ -427,7 +421,11 @@ SecondaryToolbar.propTypes = {
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  retrieval: PropTypes.shape({}).isRequired,
+  retrieval: PropTypes.shape({
+    jsondata: PropTypes.shape({
+      source: PropTypes.string
+    })
+  }).isRequired,
   savedProject: PropTypes.shape({
     name: PropTypes.string
   }).isRequired,
