@@ -76,7 +76,7 @@ export const PortalContainer = ({
   const { primary: primaryTitle } = title
 
   let portalTitle = ''
-  if (!isDefaultPortal(portalId)) portalTitle = ` :: ${primaryTitle || startCase(portalId)} Portal`
+  if (!isDefaultPortal(portalId)) portalTitle = ` - ${primaryTitle || startCase(portalId)} Portal`
 
   const { [defaultPortalId]: defaultPortal } = availablePortals
 

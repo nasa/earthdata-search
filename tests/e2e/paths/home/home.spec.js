@@ -4,6 +4,7 @@ import { setupTests } from '../../../support/setupTests'
 import {
   interceptUnauthenticatedCollections
 } from '../../../support/interceptUnauthenticatedCollections'
+import { expectTitle } from '../../../support/expectTitle'
 
 import commonBody from './__mocks__/common.body.json'
 import commonHeaders from './__mocks__/common.headers.json'
@@ -30,6 +31,12 @@ test.describe('Home Page', () => {
         body: JSON.stringify([])
       })
     })
+  })
+
+  test('sets the home page title', async ({ page }) => {
+    await page.goto('/')
+
+    await expectTitle(page, 'Earthdata Search - Earthdata Search')
   })
 
   test.describe('when performing a keyword search', () => {

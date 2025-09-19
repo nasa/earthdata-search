@@ -4,6 +4,7 @@ import { commafy } from '../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../static/src/js/util/pluralize'
 
 import { setupTests } from '../../../support/setupTests'
+import { expectTitle } from '../../../support/expectTitle'
 
 import awsCloudBody from './__mocks__/aws_cloud.body.json'
 import commonBody from './__mocks__/common.body.json'
@@ -95,6 +96,23 @@ test.describe('Path /search', () => {
     })
   })
 
+  test('sets the browser title when loading a portal search', async ({ page }) => {
+    await page.route('**/search/collections.json', (route, request) => {
+      if (request.method() === 'POST') {
+        route.fulfill({
+          body: JSON.stringify(commonBody),
+          headers: commonHeaders
+        })
+      } else {
+        route.continue()
+      }
+    })
+
+    await page.goto('/search?portal=amd')
+
+    await expectTitle(page, 'Earthdata Search - AMD Portal - Earthdata Search')
+  })
+
   test.describe('When the path is loaded without any url params', () => {
     test('loads correctly', async ({ page }) => {
       const cmrHits = 8098
@@ -115,6 +133,8 @@ test.describe('Path /search', () => {
       })
 
       await page.goto('/search')
+
+      await expectTitle(page, 'Earthdata Search - Earthdata Search')
 
       // Ensure the correct number of results were loaded
       await testResultsSize(page, cmrHits)

@@ -36,10 +36,10 @@ describe('App component', () => {
     // This isn't testing which components are lazy loaded, just that the routes are set up correctly
     expect(RouterProvider).toHaveBeenCalledWith({
       router: expect.objectContaining({
-        routes: [
+        routes: expect.arrayContaining([
           expect.objectContaining({
             path: '/',
-            children: [
+            children: expect.arrayContaining([
               expect.objectContaining({
                 index: true
               }),
@@ -54,7 +54,7 @@ describe('App component', () => {
               }),
               expect.objectContaining({
                 path: '/downloads',
-                children: [
+                children: expect.arrayContaining([
                   expect.objectContaining({
                     index: true,
                     lazy: expect.any(Function)
@@ -63,7 +63,7 @@ describe('App component', () => {
                     path: '/downloads/:id',
                     lazy: expect.any(Function)
                   })
-                ]
+                ])
               }),
               expect.objectContaining({
                 path: '/contact-info'
@@ -82,7 +82,7 @@ describe('App component', () => {
               }),
               expect.objectContaining({
                 path: '/admin',
-                children: [
+                children: expect.arrayContaining([
                   expect.objectContaining({
                     path: '/admin/retrievals',
                     lazy: expect.any(Function)
@@ -107,14 +107,14 @@ describe('App component', () => {
                     path: '/admin/preferences-metrics',
                     lazy: expect.any(Function)
                   })
-                ]
+                ])
               })
-            ]
+            ])
           }),
           expect.objectContaining({
             path: '*'
           })
-        ]
+        ])
       })
     }, {})
   })

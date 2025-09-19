@@ -89,7 +89,7 @@ describe('PortalContainer component', () => {
       }
     })
 
-    await waitFor(() => expect(document.title).toEqual('Earthdata Search :: example Portal'))
+    await waitFor(() => expect(document.title).toEqual('Earthdata Search - example Portal'))
   })
 
   test('updates the url if the url is using a portal path', async () => {
