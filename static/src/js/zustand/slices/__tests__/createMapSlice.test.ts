@@ -29,7 +29,7 @@ describe('createMapSlice', () => {
       setMapLayers: expect.any(Function),
       toggleLayerVisibility: expect.any(Function),
       setMapLayersOrder: expect.any(Function),
-      updateLayerOpacity: expect.any(Function),
+      setLayerOpacity: expect.any(Function),
       showMbr: false,
       setShowMbr: expect.any(Function)
     })
@@ -137,11 +137,11 @@ describe('createMapSlice', () => {
     })
   })
 
-  describe('updateLayerOpacity', () => {
+  describe('setLayerOpacity', () => {
     test('updates layer opacity', () => {
       const zustandState = useEdscStore.getState()
       const { map } = zustandState
-      const { setMapLayers, updateLayerOpacity } = map
+      const { setMapLayers, setLayerOpacity } = map
 
       // First set up some layers
       const layers = [
@@ -153,7 +153,7 @@ describe('createMapSlice', () => {
       setMapLayers('collection-1', layers)
 
       // Update opacity
-      updateLayerOpacity('collection-1', 'AIRS_Prata_SO2_Index_Day', 0.5)
+      setLayerOpacity('collection-1', 'AIRS_Prata_SO2_Index_Day', 0.5)
 
       const updatedState = useEdscStore.getState()
       const { map: updatedMap } = updatedState

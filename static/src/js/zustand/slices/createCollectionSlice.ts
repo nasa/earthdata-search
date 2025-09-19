@@ -74,7 +74,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         return
       }
 
-      // Send the relevency metric event
+      // Send the relevancy metric event
       reduxDispatch(actions.collectionRelevancyMetrics())
 
       // Use the `hasAllMetadata` flag to determine if we've requested previously

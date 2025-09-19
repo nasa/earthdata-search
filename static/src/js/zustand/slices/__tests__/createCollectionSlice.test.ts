@@ -70,7 +70,7 @@ describe('createCollectionSlice', () => {
       }
     })
 
-    describe('when metdata has already been retrieved from graphql', () => {
+    describe('when metadata has already been retrieved from graphql', () => {
       test('should update the collection and call getGranules', async () => {
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'C10000000000-EDSC'

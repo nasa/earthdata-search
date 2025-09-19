@@ -948,10 +948,14 @@ const Map: React.FC<MapProps> = ({
       (control) => control instanceof LegendControl
     )
 
+    // Always remove existing legend control if present
+    // This is to ensure legend control is only added when it is needed
+    // such as when we switch to a projection without layers
     if (legendControl) {
       controls.remove(legendControl)
     }
 
+    // Add new legend control only if on focused collection page and it has layers
     if (isFocusedCollectionPage && imageryLayers && imageryLayers.layerData.length > 0) {
       controls.push(
         new LegendControl({

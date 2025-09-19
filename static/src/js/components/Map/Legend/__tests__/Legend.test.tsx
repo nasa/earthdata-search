@@ -14,7 +14,7 @@ const mockCollectionId = 'test-collection'
 // Create mock functions
 const mockToggleLayerVisibility = jest.fn()
 const mockSetMapLayersOrder = jest.fn()
-const mockUpdateLayerOpacity = jest.fn()
+const mocksetLayerOpacity = jest.fn()
 
 const mockImageryLayersWithLayers: ImageryLayers = {
   layerData: [
@@ -45,14 +45,14 @@ const mockImageryLayersWithLayers: ImageryLayers = {
   ],
   toggleLayerVisibility: mockToggleLayerVisibility,
   setMapLayersOrder: mockSetMapLayersOrder,
-  updateLayerOpacity: mockUpdateLayerOpacity
+  setLayerOpacity: mocksetLayerOpacity
 }
 
 const mockImageryLayersEmpty: ImageryLayers = {
   layerData: [],
   toggleLayerVisibility: mockToggleLayerVisibility,
   setMapLayersOrder: mockSetMapLayersOrder,
-  updateLayerOpacity: mockUpdateLayerOpacity
+  setLayerOpacity: mocksetLayerOpacity
 }
 
 const setup = setupTest({

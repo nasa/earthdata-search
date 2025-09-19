@@ -32,7 +32,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
     },
     // Store layers for each collection
     mapLayers: {},
-    setMapLayers: (collectionId: string, layers: Array<{
+    setMapLayers: (collectionId, layers: Array<{
       product: string
       title?: string
       format?: string
@@ -54,7 +54,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
         state.map.mapLayers[collectionId] = layersWithVisibility
       })
     },
-    toggleLayerVisibility: (collectionId: string, productName: string) => {
+    toggleLayerVisibility: (collectionId, productName) => {
       set((state) => {
         const collectionLayers = state.map.mapLayers[collectionId]
         if (collectionLayers) {
@@ -69,7 +69,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
     /**
      * Reorder layers when they are dragged and dropped
      */
-    setMapLayersOrder: (collectionId: string, newOrder: Array<{
+    setMapLayersOrder: (collectionId, newOrder: Array<{
       product: string
       title?: string
       format?: string
@@ -91,7 +91,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
     /**
      * Update the opacity of a specific layer
      */
-    updateLayerOpacity: (collectionId: string, productName: string, opacity: number) => {
+    setLayerOpacity: (collectionId, productName, opacity) => {
       set((state) => {
         const collectionLayers = state.map.mapLayers[collectionId]
         if (collectionLayers) {
