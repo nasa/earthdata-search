@@ -588,6 +588,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   // Append map layers string to the granulesKey to ensure rerenders when the map layers change (Opacity, Visibility)
   const granulesKey = Buffer.from(JSON.stringify({
     mapLayersKey,
+    granulesToDraw: granulesToDraw.map((granule) => granule.granuleId),
     nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
     addedGranuleIds: allAddedGranuleIds,
     removedGranuleIds: allRemovedGranuleIds
