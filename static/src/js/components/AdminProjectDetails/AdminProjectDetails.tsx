@@ -50,11 +50,9 @@ interface AdminProjectQueryData {
   adminProject: AdminProject
 }
 
-interface AdminProjectDetailsProps {}
-
-export const AdminProjectDetails = ({}: AdminProjectDetailsProps) => {
+export const AdminProjectDetails = () => {
   const { obfuscatedId } = useParams<{ obfuscatedId: string }>()
-  const { data, error, loading } = useQuery<AdminProjectQueryData>(gql(ADMIN_PROJECT), {
+  const { data, loading } = useQuery<AdminProjectQueryData>(gql(ADMIN_PROJECT), {
     variables: {
       params: {
         obfuscatedId
@@ -88,6 +86,7 @@ export const AdminProjectDetails = ({}: AdminProjectDetailsProps) => {
   // Parse the query parameters from the path
   const [, queryParams] = path.split('?')
   const parsedPath = parse(queryParams)
+
   return (
     <div className="admin-project-details">
       <Row>

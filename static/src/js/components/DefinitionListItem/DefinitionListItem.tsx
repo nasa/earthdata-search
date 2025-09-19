@@ -1,6 +1,6 @@
 import { kebabCase } from 'lodash-es'
 import React from 'react'
-import { Col } from 'react-bootstrap'
+import Col from 'react-bootstrap/Col'
 
 /**
  * Props for a definition list item component
@@ -19,15 +19,17 @@ export interface DefinitionListItemProps {
 /**
  * A definition list item to display definition list groups with a label and value
  */
-const DefinitionListItem = ({ index, label, value, colProps }: DefinitionListItemProps) => {
+const DefinitionListItem = ({
+  index, label, value, colProps
+}: DefinitionListItemProps) => {
   const id = `definition-list-item_${kebabCase(label)}-${index}`
 
   return (
-  <Col {...colProps}>
-    <dt id={id}>{label}</dt>
-    <dd aria-labelledby={id}>{value}</dd>
-  </Col>
-)
+    <Col {...colProps}>
+      <dt id={id}>{label}</dt>
+      <dd aria-labelledby={id}>{value}</dd>
+    </Col>
+  )
 }
 
 export default DefinitionListItem

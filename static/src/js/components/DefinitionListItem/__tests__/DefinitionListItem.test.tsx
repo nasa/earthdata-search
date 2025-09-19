@@ -1,7 +1,12 @@
+import React from 'react'
 import { screen } from '@testing-library/react'
+import Col from 'react-bootstrap/Col'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
+
 import DefinitionListItem from '../DefinitionListItem'
+
+jest.mock('react-bootstrap/Col', () => jest.fn(({ children }) => <div>{children}</div>))
 
 describe('DefinitionListItem component', () => {
   const setup = setupTest({
@@ -20,15 +25,23 @@ describe('DefinitionListItem component', () => {
 
   test('renders string value type', () => {
     setup({
-      overrideProps: { label: 'My Label', value: 'My Value' }
+      overrideProps: {
+        label: 'My Label',
+        value: 'My Value'
+      }
     })
+
     expect(screen.getByText('My Value')).toBeInTheDocument()
   })
 
   test('renders number value type', () => {
     setup({
-      overrideProps: { label: 'Number Label', value: 42 }
+      overrideProps: {
+        label: 'Number Label',
+        value: 42
+      }
     })
+
     expect(screen.getByText('42')).toBeInTheDocument()
   })
 
@@ -52,6 +65,7 @@ describe('DefinitionListItem component', () => {
       }
     })
 
-    expect(screen.getByText('With ColProps').closest('.col-md-6')).not.toBeNull()
+    expect(Col).toHaveBeenCalledTimes(1)
+    expect(Col).toHaveBeenCalledWith(expect.objectContaining({ md: 6 }), {})
   })
 })

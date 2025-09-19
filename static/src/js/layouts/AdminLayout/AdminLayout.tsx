@@ -4,9 +4,6 @@ import { type Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
 // @ts-expect-error The file does not have types
-import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
-
-// @ts-expect-error The file does not have types
 import actions from '../../actions'
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

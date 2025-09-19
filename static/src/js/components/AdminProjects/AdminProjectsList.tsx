@@ -145,8 +145,8 @@ const AdminProjectsList = () => {
 
   // Handle changes to the search type dropdown
   const onSearchTypeChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
-      setSearchType(event.target.value)
-    }, [])
+    setSearchType(event.target.value)
+  }, [])
 
   // Handle changes to the search filter input
   const onSearchFilterValueChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
@@ -251,7 +251,9 @@ const AdminProjectsList = () => {
               <tbody>
                 {
                   adminProjects.map((project: AdminProject) => {
-                    const { id, obfuscatedId, createdAt, user } = project
+                    const {
+                      id, obfuscatedId, createdAt, user
+                    } = project
                     const { ursId } = user
 
                     return (
@@ -298,4 +300,3 @@ const AdminProjectsList = () => {
 }
 
 export default AdminProjectsList
-

@@ -61,7 +61,7 @@ interface AdminRetrieval {
 /**
  * Admin Retrievals GraphQL query result type
  */
-interface AdminRetrievalsQueryData {
+interface AdminRetrievalsData {
   adminRetrievals: {
     /** Array of admin retrievals returned from the API */
     adminRetrievals: AdminRetrieval[]
@@ -99,7 +99,7 @@ const AdminRetrievalsList = () => {
 
   const pageSize = 20
 
-  const { data, error, loading } = useQuery<AdminRetrievalsQueryData>(gql(ADMIN_RETRIEVALS), {
+  const { data, error, loading } = useQuery<AdminRetrievalsData>(gql(ADMIN_RETRIEVALS), {
     variables: {
       params: {
         limit: pageSize,
@@ -264,7 +264,7 @@ const AdminRetrievalsList = () => {
                     obfuscatedId,
                     createdAt,
                     user
-                  }: AdminRetrieval) => {
+                  }) => {
                     const { ursId } = user
 
                     return (
@@ -315,4 +315,3 @@ const AdminRetrievalsList = () => {
 }
 
 export default AdminRetrievalsList
-

@@ -1,6 +1,7 @@
 import camelcaseKeys from 'camelcase-keys'
 import { obfuscateId } from '../../util/obfuscation/obfuscateId'
 import formatAdminPreferencesMetrics from '../utils/formatAdminPreferencesMetrics'
+import buildPaginatedResult from '../utils/buildPaginatedResult'
 
 /**
  * GraphQL resolver for admin preferences metrics
@@ -24,52 +25,19 @@ export default {
     adminProjects: async (source, args, context) => {
       const { databaseClient } = context
       const { params = {} } = args
-      const {
-        limit = 20,
-        offset = 0,
-        sortKey,
-        ursId,
-        obfuscatedId
-      } = params
+      const { limit = 20, offset = 0 } = params
 
-      const data = await databaseClient.getProjects({
-        ursId,
-        obfuscatedId,
+      const data = await databaseClient.getProjects(params)
+      const result = buildPaginatedResult({
+        data,
         limit,
-        offset,
-        sortKey
+        offset
       })
 
-      let currentPage = null
-
-      const projectCount = data.length
-        ? data[0].total
-        : 0
-
-      const pageCount = data.length
-        ? Math.ceil(projectCount / limit)
-        : 0
-
-      if (pageCount > 0) {
-        if (offset) {
-          currentPage = Math.floor(offset / limit) + 1
-        } else {
-          currentPage = 1
-        }
-      }
-
-      const hasNextPage = currentPage < pageCount
-      const hasPreviousPage = currentPage > 1
-
       return {
-        adminProjects: camelcaseKeys(data, { deep: true }),
-        pageInfo: {
-          pageCount,
-          hasNextPage,
-          hasPreviousPage,
-          currentPage
-        },
-        count: projectCount
+        adminProjects: camelcaseKeys(result.data, { deep: true }),
+        pageInfo: result.pageInfo,
+        count: result.count
       }
     },
     adminRetrieval: async (source, args, context) => {
@@ -84,54 +52,19 @@ export default {
     adminRetrievals: async (source, args, context) => {
       const { databaseClient } = context
       const { params = {} } = args
-      const {
-        limit = 20,
-        offset = 0,
-        sortKey,
-        ursId,
-        obfuscatedId,
-        retrievalCollectionId
-      } = params
+      const { limit = 20, offset = 0 } = params
 
-      const data = await databaseClient.getRetrievals({
-        ursId,
-        retrievalCollectionId,
-        obfuscatedId,
+      const data = await databaseClient.getRetrievals(params)
+      const result = buildPaginatedResult({
+        data,
         limit,
-        offset,
-        sortKey
+        offset
       })
 
-      let currentPage = null
-
-      const retrievalCount = data.length
-        ? data[0].total
-        : 0
-
-      const pageCount = data.length
-        ? Math.ceil(retrievalCount / limit)
-        : 0
-
-      if (pageCount > 0) {
-        if (offset) {
-          currentPage = Math.floor(offset / limit) + 1
-        } else {
-          currentPage = 1
-        }
-      }
-
-      const hasNextPage = currentPage < pageCount
-      const hasPreviousPage = currentPage > 1
-
       return {
-        adminRetrievals: camelcaseKeys(data, { deep: true }),
-        pageInfo: {
-          pageCount,
-          hasNextPage,
-          hasPreviousPage,
-          currentPage
-        },
-        count: retrievalCount
+        adminRetrievals: camelcaseKeys(result.data, { deep: true }),
+        pageInfo: result.pageInfo,
+        count: result.count
       }
     }
   },

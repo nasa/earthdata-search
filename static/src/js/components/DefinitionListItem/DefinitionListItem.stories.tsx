@@ -1,3 +1,4 @@
+import React from 'react'
 import DefinitionListItem from './DefinitionListItem'
 
 export default {

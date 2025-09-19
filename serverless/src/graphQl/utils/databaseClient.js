@@ -32,6 +32,34 @@ export default class DatabaseClient {
   }
 
   /**
+   * Generic method to add pagination to any query and return paginated results
+   * @param {Object} params - Parameters object
+   * @param {Object} params.query - Knex query object
+   * @param {number} [params.limit] - Items per page (optional)
+   * @param {number} [params.offset] - Current offset (optional)
+   * @returns {Promise<Object>} Paginated result with data and pagination info
+   */
+  async executePaginatedQuery({ query, limit, offset }) {
+    const queryToPaginate = query
+
+    try {
+      if (limit) {
+        queryToPaginate.limit(limit)
+      }
+
+      if (offset) {
+        queryToPaginate.offset(offset)
+      }
+
+      return queryToPaginate
+    } catch {
+      const errorMessage = 'Failed to execute paginated query'
+      console.log(errorMessage)
+      throw new Error(errorMessage)
+    }
+  }
+
+  /**
    * Retrieves retrieval collections by their IDs
    * @param {number[]} retrievalIds The IDs of the retrieval collections to retrieve
    * @returns {Promise<Object>} A promise that resolves to the array of retrieval collection objects
@@ -140,14 +168,14 @@ export default class DatabaseClient {
   /**
    * Retrieves projects based on the provided filters
    * @param {Object} params The filters to apply
-   * @returns {Promise<Array>} A promise that resolves to an array of project objects
+   * @returns {Promise<Array>} A promise that resolves to an array of project results
    */
   async getProjects({
-    limit,
-    obfuscatedId,
-    offset,
+    limit = 20,
+    offset = 0,
     sortKey,
-    ursId
+    ursId,
+    obfuscatedId
   }) {
     const sortKeyParams = {
       '-created_at': ['projects.created_at', 'desc'],
@@ -159,7 +187,7 @@ export default class DatabaseClient {
     try {
       const db = await this.getDbConnection()
 
-      let query = db('projects')
+      let projectQuery = db('projects')
         .select(
           'projects.id',
           'projects.name',
@@ -173,28 +201,24 @@ export default class DatabaseClient {
         .join('users', { 'projects.user_id': 'users.id' })
 
       if (sortKey) {
-        query = query.orderBy(...sortKeyParams[sortKey])
+        projectQuery = projectQuery.orderBy(...sortKeyParams[sortKey])
       } else {
-        query = query.orderBy('id', 'desc')
+        projectQuery = projectQuery.orderBy('id', 'desc')
       }
 
       if (ursId) {
-        query = query.where({ 'users.urs_id': ursId })
+        projectQuery = projectQuery.where({ 'users.urs_id': ursId })
       }
 
       if (obfuscatedId) {
-        query = query.where('projects.id', '=', deobfuscateId(parseInt(obfuscatedId, 10)))
+        projectQuery = projectQuery.where('projects.id', '=', deobfuscateId(parseInt(obfuscatedId, 10)))
       }
 
-      if (limit) {
-        query = query.limit(limit)
-      }
-
-      if (offset) {
-        query = query.offset(offset)
-      }
-
-      return await query
+      return await this.executePaginatedQuery({
+        query: projectQuery,
+        limit,
+        offset
+      })
     } catch {
       const errorMessage = 'Failed to retrieve user projects'
       console.log(errorMessage)
@@ -234,15 +258,15 @@ export default class DatabaseClient {
   /**
    * Retrieves retrievals based on the provided filters
    * @param {Object} params The filters to apply
-   * @returns {Promise<Array>} A promise that resolves to an array of retrieval objects
+   * @returns {Promise<Array>} A promise that resolves to an array of retrieval results
    */
   async getRetrievals({
     limit,
-    obfuscatedId,
     offset,
-    retrievalCollectionId,
     sortKey,
-    ursId
+    ursId,
+    obfuscatedId,
+    retrievalCollectionId
   }) {
     const sortKeyParams = {
       '-created_at': ['retrievals.created_at', 'desc'],
@@ -250,13 +274,13 @@ export default class DatabaseClient {
       '-urs_id': ['users.urs_id', 'desc'],
       '+urs_id': ['users.urs_id', 'asc']
     }
-
     try {
       const db = await this.getDbConnection()
 
-      let query = db('retrievals')
+      let retrievalQuery = db('retrievals')
         .select(
           'retrievals.id',
+          'retrievals.user_id',
           'retrievals.jsondata',
           'retrievals.environment',
           'retrievals.created_at',
@@ -268,34 +292,30 @@ export default class DatabaseClient {
         .join('users', { 'retrievals.user_id': 'users.id' })
 
       if (sortKey) {
-        query = query.orderBy(...sortKeyParams[sortKey])
+        retrievalQuery = retrievalQuery.orderBy(...sortKeyParams[sortKey])
       } else {
-        query = query.orderBy('id', 'desc')
+        retrievalQuery = retrievalQuery.orderBy('id', 'desc')
       }
 
       if (ursId) {
-        query = query.where({ 'users.urs_id': ursId })
+        retrievalQuery = retrievalQuery.where({ 'users.urs_id': ursId })
       }
 
       if (retrievalCollectionId) {
-        query = query
+        retrievalQuery = retrievalQuery
           .leftJoin('retrieval_collections', { 'retrievals.id': 'retrieval_collections.retrieval_id' })
           .where({ 'retrieval_collections.id': retrievalCollectionId })
       }
 
       if (obfuscatedId) {
-        query = query.where('retrievals.id', '=', deobfuscateId(parseInt(obfuscatedId, 10)))
+        retrievalQuery = retrievalQuery.where('retrievals.id', '=', deobfuscateId(parseInt(obfuscatedId, 10)))
       }
 
-      if (limit) {
-        query = query.limit(limit)
-      }
-
-      if (offset) {
-        query = query.offset(offset)
-      }
-
-      return await query
+      return await this.executePaginatedQuery({
+        query: retrievalQuery,
+        limit,
+        offset
+      })
     } catch {
       const errorMessage = 'Failed to retrieve user retrievals'
       console.log(errorMessage)

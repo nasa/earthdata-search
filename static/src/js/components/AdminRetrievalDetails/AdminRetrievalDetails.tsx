@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { gql, useQuery } from '@apollo/client'
 import { useParams } from 'react-router-dom'
 
@@ -23,14 +22,14 @@ import './AdminRetrievalDetails.scss'
 interface RetrievalOrder {
   /** Unique identifier for the retrieval order */
   id: string
-    /** Additional order configuration and parameters */
-    orderInformation: any
-    /** Human-readable order number from the data provider */
-    orderNumber: string
-    /** Current processing state of the order */
-    state: string
-    /** Type of retrieval order */
-    type: string
+  /** Additional order configuration and parameters */
+  orderInformation: object
+  /** Human-readable order number from the data provider */
+  orderNumber: string
+  /** Current processing state of the order */
+  state: string
+  /** Type of retrieval order */
+  type: string
 }
 
 /**
@@ -62,15 +61,25 @@ interface RetrievalCollection {
   retrievalOrders: RetrievalOrder[]
 }
 
-/** An interface for the AdminRetrieval query response */
+/**
+ * Interface defining the structure of the AdminRetrieval GraphQL query response
+ * Contains all data needed to display administrative details for a specific retrieval
+ */
 interface AdminRetrievalData {
+  /** Root object containing all administrative retrieval information */
   adminRetrieval: {
+    /** Array of collections associated with this retrieval request */
     retrievalCollections: RetrievalCollection[]
+    /** JSON metadata associated with the retrieval request */
     jsondata: {
+      /** Optional portal identifier if the retrieval was initiated from a specific portal */
       portal_id?: string
+      /** Source URL path or identifier indicating where the retrieval request originated */
       source: string
     }
+    /** Information about the user who initiated the retrieval */
     user: {
+      /** Earthdata Login URS id */
       ursId: string
     }
   }
@@ -161,16 +170,15 @@ const AdminRetrievalDetails = ({
                       <section className="mt-2">
                         {
                           retrievalCollections.map(({
-                              id,
-                              collectionId,
-                              collectionMetadata,
-                              granuleCount,
-                              accessMethod,
-                              createdAt,
-                              updatedAt,
-                              retrievalOrders
-                            }: RetrievalCollection) => {
-
+                            id,
+                            collectionId,
+                            collectionMetadata,
+                            granuleCount,
+                            accessMethod,
+                            createdAt,
+                            updatedAt,
+                            retrievalOrders
+                          }) => {
                             const { dataCenter } = collectionMetadata
 
                             return (
@@ -227,12 +235,12 @@ const AdminRetrievalDetails = ({
                                       <Table className="admin-retrieval-details__orders-table mb-0" striped variant="light">
                                         <thead>
                                           <tr>
-                                            <th style={{ width: "10%" }}>Actions</th>
-                                            <th style={{ width: "7%" }}>ID</th>
-                                            <th style={{ width: "20%" }}>Order Number</th>
-                                            <th style={{ width: "20%" }}>Type</th>
-                                            <th style={{ width: "10%" }}>State</th>
-                                            <th style={{ width: "33%" }}>Details</th>
+                                            <th style={{ width: '10%' }}>Actions</th>
+                                            <th style={{ width: '7%' }}>ID</th>
+                                            <th style={{ width: '20%' }}>Order Number</th>
+                                            <th style={{ width: '20%' }}>Type</th>
+                                            <th style={{ width: '10%' }}>State</th>
+                                            <th style={{ width: '33%' }}>Details</th>
                                           </tr>
                                         </thead>
                                         <tbody>
@@ -300,9 +308,4 @@ const AdminRetrievalDetails = ({
   )
 }
 
-AdminRetrievalDetails.propTypes = {
-  onRequeueOrder: PropTypes.func.isRequired
-}
-
 export default AdminRetrievalDetails
-
