@@ -22,6 +22,14 @@ const colormapScreenshotClip = {
   width: 384,
   height: 276
 }
+
+const colormap2ScreenshotClip = {
+  x: 1004,
+  y: 94,
+  width: 384,
+  height: 228
+}
+
 // Update the clip to the new coordinates
 // Const legendElement = page.getByTestId('legend')
 // const boundingBox = await legendElement.boundingBox()
@@ -153,7 +161,7 @@ test.describe('Map: Colormap interactions', () => {
           await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
-            clip: colormapScreenshotClip
+            clip: colormap2ScreenshotClip
           })
 
           await expect(page.getByTestId('legend-label-min').first()).toHaveText('0.00 – 0.12 DU')

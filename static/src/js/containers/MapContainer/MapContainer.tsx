@@ -203,7 +203,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const {
     toggleLayerVisibility,
     setMapLayersOrder,
-    updateLayerOpacity
+    setLayerOpacity
   } = useEdscStore((state) => state.map)
 
   // Default the granuleMetadata to the granulesById. These are the granules we want to show
@@ -397,7 +397,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       layerData: [],
       toggleLayerVisibility,
       setMapLayersOrder,
-      updateLayerOpacity
+      setLayerOpacity
     }
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
     const layersForProjection = getLayersForProjection()

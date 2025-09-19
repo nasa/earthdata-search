@@ -507,7 +507,7 @@ export type ImageryLayers = {
   /** Function to set map layers order */
   setMapLayersOrder: (collectionId: string, layers: ImageryLayerItem[]) => void
   /** Function to update layer opacity */
-  updateLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
+  setLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
 }
 
 export type SubscriptionResponse = {
