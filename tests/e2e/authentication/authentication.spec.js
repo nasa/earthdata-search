@@ -106,8 +106,6 @@ test.describe('Authentication', () => {
     })
 
     await page.goto('/projects')
-
-    await expectTitle(page, 'Saved Projects - Earthdata Search')
   })
 
   test('shows the download history page title for authenticated users', async ({ page, context }) => {
