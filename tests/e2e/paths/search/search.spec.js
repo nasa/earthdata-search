@@ -31,6 +31,12 @@ import temporalBody from './__mocks__/temporal.body.json'
 import temporalRecurringBody from './__mocks__/temporal_recurring.body.json'
 import tilingSystemBody from './__mocks__/tiling_system.body.json'
 
+const expectTitle = async (page, title) => {
+  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+  await expect(page).toHaveTitle(new RegExp(`(?:\\[[A-Z]+\\] )?${escaped}$`))
+}
+
 const screenshotClip = {
   x: 950,
   y: 90,
@@ -95,6 +101,23 @@ test.describe('Path /search', () => {
     })
   })
 
+  test('sets the browser title when loading a portal search', async ({ page }) => {
+    await page.route('**/search/collections.json', (route, request) => {
+      if (request.method() === 'POST') {
+        route.fulfill({
+          body: JSON.stringify(commonBody),
+          headers: commonHeaders
+        })
+      } else {
+        route.continue()
+      }
+    })
+
+    await page.goto('/search?portal=amd')
+
+    await expectTitle(page, 'Earthdata Search - AMD Portal - Earthdata Search')
+  })
+
   test.describe('When the path is loaded without any url params', () => {
     test('loads correctly', async ({ page }) => {
       const cmrHits = 8098
@@ -115,6 +138,8 @@ test.describe('Path /search', () => {
       })
 
       await page.goto('/search')
+
+      await expectTitle(page, 'Earthdata Search - Earthdata Search')
 
       // Ensure the correct number of results were loaded
       await testResultsSize(page, cmrHits)

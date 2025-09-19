@@ -10,6 +10,12 @@ import { setupTests } from '../../support/setupTests'
 import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
 
+const expectTitle = async (page, title) => {
+  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+  await expect(page).toHaveTitle(new RegExp(`(?:\\[[A-Z]+\\] )?${escaped}$`))
+}
+
 test.describe('Download spec', () => {
   test('get to the download page', async ({ page, context }) => {
     await setupTests({
@@ -122,6 +128,9 @@ test.describe('Download spec', () => {
 
     // Click the Download Data button
     await page.getByTestId('project-download-data').click()
+
+    await page.waitForURL(/\/downloads\/\d+(\?.*)?$/)
+    await expectTitle(page, 'Download Status - Earthdata Search')
 
     // Make sure all links that are in the download list are visible on the page
     await Promise.all(downloadLinks.map(async (link) => {

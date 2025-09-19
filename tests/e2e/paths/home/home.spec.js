@@ -17,6 +17,12 @@ import whatIsThisImageGranules from './__mocks__/what-is-this-image-granules.bod
 import whatIsThisImageGranulesHeaders from './__mocks__/what-is-this-image-granules.headers.json'
 import whatIsThisImageGraphQlBody from './__mocks__/what-is-this-image-collections.graphql.body.json'
 
+const expectTitle = async (page, title) => {
+  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+  await expect(page).toHaveTitle(new RegExp(`(?:\\[[A-Z]+\\] )?${escaped}$`))
+}
+
 test.describe('Home Page', () => {
   test.beforeEach(async ({ page, context, browserName }) => {
     await setupTests({
@@ -30,6 +36,12 @@ test.describe('Home Page', () => {
         body: JSON.stringify([])
       })
     })
+  })
+
+  test('sets the home page title', async ({ page }) => {
+    await page.goto('/')
+
+    await expectTitle(page, 'Earthdata Search - Earthdata Search')
   })
 
   test.describe('when performing a keyword search', () => {

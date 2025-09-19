@@ -8,6 +8,12 @@ import graphQlHeaders from './__mocks__/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
 import collectionFixture from './__mocks__/authenticated_collections.json'
 
+const expectTitle = async (page, title) => {
+  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+  await expect(page).toHaveTitle(new RegExp(`(?:\\[[A-Z]+\\] )?${escaped}$`))
+}
+
 // At the default size, react-window will render 6 items
 const expectedCollectionCount = 6
 
@@ -53,6 +59,8 @@ test.describe('Authentication', () => {
     await expect(
       (await page.getByTestId('collection-results-item').all()).length
     ).toEqual(expectedCollectionCount)
+
+    await expectTitle(page, 'Earthdata Search - Earthdata Search')
   })
 
   test('sets auth cookie', async ({ page, context }) => {
@@ -74,5 +82,72 @@ test.describe('Authentication', () => {
     await expect(
       (await page.getByTestId('collection-results-item').all()).length
     ).toEqual(expectedCollectionCount)
+
+    await expectTitle(page, 'Earthdata Search - Earthdata Search')
+  })
+
+  test('shows the preferences page title for authenticated users', async ({ page, context }) => {
+    await login(context)
+
+    await page.goto('/preferences')
+
+    await expectTitle(page, 'Preferences - Earthdata Search')
+  })
+
+  test('shows the saved projects page title for authenticated users', async ({ page, context }) => {
+    await login(context)
+
+    await page.route('**/projects', (route) => {
+      if (route.request().method() === 'GET') {
+        route.fulfill({ json: [] })
+      } else {
+        route.fulfill({ json: {} })
+      }
+    })
+
+    await page.goto('/projects')
+
+    await expectTitle(page, 'Saved Projects - Earthdata Search')
+  })
+
+  test('shows the download history page title for authenticated users', async ({ page, context }) => {
+    await login(context)
+
+    await page.route('**/retrievals', (route) => {
+      if (route.request().method() === 'GET') {
+        route.fulfill({ json: [] })
+      } else {
+        route.fulfill({ json: {} })
+      }
+    })
+
+    await page.goto('/downloads')
+
+    await expectTitle(page, 'Download Status & History - Earthdata Search')
+  })
+
+  test('shows the contact information page title for authenticated users', async ({ page, context }) => {
+    await login(context)
+
+    await page.route('**/contact_info', (route) => {
+      route.fulfill({
+        json: {
+          cmr_preferences: {},
+          urs_profile: {}
+        }
+      })
+    })
+
+    await page.goto('/contact-info')
+
+    await expectTitle(page, 'Contact Information - Earthdata Search')
+  })
+
+  test('shows the subscriptions page title for authenticated users', async ({ page, context }) => {
+    await login(context)
+
+    await page.goto('/subscriptions')
+
+    await expectTitle(page, 'Subscriptions - Earthdata Search')
   })
 })
