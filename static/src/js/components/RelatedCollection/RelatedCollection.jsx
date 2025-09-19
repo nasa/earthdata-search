@@ -10,7 +10,7 @@ import { stringify } from '../../util/url/url'
 import useEdscStore from '../../zustand/useEdscStore'
 
 export const RelatedCollection = ({
-  className,
+  className = '',
   onMetricsRelatedCollection,
   relatedCollection
 }) => {
@@ -58,10 +58,6 @@ export const RelatedCollection = ({
       {title}
     </PortalLinkContainer>
   )
-}
-
-RelatedCollection.defaultProps = {
-  className: ''
 }
 
 RelatedCollection.propTypes = {

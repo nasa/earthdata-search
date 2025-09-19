@@ -20,16 +20,14 @@ import './SidebarSection.scss'
  * @param {String} props.sectionTitle - A string to use as the section title
  * @param {String} props.titleIcon - The icon to be used in the title
  */
-const SidebarSection = (props) => {
-  const {
-    children,
-    headerAction,
-    moreActionsDropdownItems,
-    padded,
-    sectionTitle,
-    titleIcon
-  } = props
-
+const SidebarSection = ({
+  children,
+  headerAction = {},
+  moreActionsDropdownItems = [],
+  padded = false,
+  sectionTitle = null,
+  titleIcon = null
+}) => {
   const classes = classNames([
     'sidebar-section',
     {
@@ -127,15 +125,6 @@ const SidebarSection = (props) => {
       {children}
     </section>
   )
-}
-
-SidebarSection.defaultProps = {
-  footerButtonProps: {},
-  headerAction: {},
-  moreActionsDropdownItems: [],
-  sectionTitle: null,
-  titleIcon: null,
-  padded: false
 }
 
 SidebarSection.propTypes = {

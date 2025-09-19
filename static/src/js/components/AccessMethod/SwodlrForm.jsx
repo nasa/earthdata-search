@@ -35,7 +35,7 @@ import './SwodlrForm.scss'
 */
 const SwodlrForm = ({
   granuleList,
-  collectionId,
+  collectionId = {},
   onUpdateAccessMethod,
   selectedAccessMethod,
   setGranuleList
@@ -435,10 +435,6 @@ SwodlrForm.propTypes = {
     utmZoneAdjust: PropTypes.number,
     mgrsBandAdjust: PropTypes.number
   })).isRequired
-}
-
-SwodlrForm.defaultProps = {
-  collectionId: {}
 }
 
 export default SwodlrForm

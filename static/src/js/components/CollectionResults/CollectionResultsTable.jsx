@@ -35,8 +35,8 @@ export const CollectionResultsTable = ({
   itemCount,
   loadMoreItems,
   onMetricsAddCollectionProject,
-  setVisibleMiddleIndex,
-  visibleMiddleIndex
+  setVisibleMiddleIndex = null,
+  visibleMiddleIndex = null
 }) => {
   const columns = useMemo(() => [
     {
@@ -313,11 +313,6 @@ export const CollectionResultsTable = ({
       />
     </div>
   )
-}
-
-CollectionResultsTable.defaultProps = {
-  setVisibleMiddleIndex: null,
-  visibleMiddleIndex: null
 }
 
 CollectionResultsTable.propTypes = {

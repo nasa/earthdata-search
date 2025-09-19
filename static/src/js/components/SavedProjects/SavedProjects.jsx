@@ -17,15 +17,13 @@ import Spinner from '../Spinner/Spinner'
 
 import './SavedProjects.scss'
 
-export const SavedProjects = (props) => {
-  const {
-    onChangePath,
-    projects,
-    isLoading,
-    isLoaded,
-    onDeleteProject
-  } = props
-
+export const SavedProjects = ({
+  onChangePath,
+  projects = [],
+  isLoading,
+  isLoaded,
+  onDeleteProject
+}) => {
   const { edscHost } = getEnvironmentConfig()
 
   /**
@@ -200,10 +198,6 @@ SavedProjects.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   onDeleteProject: PropTypes.func.isRequired
-}
-
-SavedProjects.defaultProps = {
-  projects: []
 }
 
 export default SavedProjects

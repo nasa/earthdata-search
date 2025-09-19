@@ -157,25 +157,25 @@ innerElementType.displayName = 'EDSCTableInnerElement'
 const EDSCTable = ({
   columns,
   data,
-  focusedItem,
+  focusedItem = '',
   id,
-  isItemLoaded,
-  itemCount,
-  loadMoreItems,
-  rowTestId,
-  setVisibleMiddleIndex,
-  striped,
-  visibleMiddleIndex,
-  initialRowStateAccessor,
-  initialTableState,
-  rowClassNamesFromRowState,
-  rowLabelFromRowState,
-  onRowClick,
-  onRowMouseEnter,
-  onRowMouseLeave,
-  onRowMouseUp,
-  onRowFocus,
-  onRowBlur
+  initialRowStateAccessor = null,
+  initialTableState = {},
+  isItemLoaded = null,
+  itemCount = null,
+  loadMoreItems = null,
+  onRowBlur = null,
+  onRowClick = null,
+  onRowFocus = null,
+  onRowMouseEnter = null,
+  onRowMouseLeave = null,
+  onRowMouseUp = null,
+  rowClassNamesFromRowState = null,
+  rowLabelFromRowState = null,
+  rowTestId = null,
+  setVisibleMiddleIndex = null,
+  striped = false,
+  visibleMiddleIndex = null
 }) => {
   const tableClassName = classNames([
     'edsc-table',
@@ -519,28 +519,6 @@ const EDSCTable = ({
       </AutoSizer>
     </div>
   )
-}
-
-EDSCTable.defaultProps = {
-  focusedItem: '',
-  initialRowStateAccessor: null,
-  initialTableState: {},
-  isItemLoaded: null,
-  isLoading: null,
-  itemCount: null,
-  loadMoreItems: null,
-  onRowBlur: null,
-  onRowClick: null,
-  onRowFocus: null,
-  onRowMouseEnter: null,
-  onRowMouseLeave: null,
-  onRowMouseUp: null,
-  rowClassNamesFromRowState: null,
-  rowLabelFromRowState: null,
-  rowTestId: null,
-  setVisibleMiddleIndex: null,
-  striped: false,
-  visibleMiddleIndex: null
 }
 
 EDSCTable.propTypes = {

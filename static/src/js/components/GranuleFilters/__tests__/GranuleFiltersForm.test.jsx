@@ -365,6 +365,7 @@ describe('GranuleFiltersForm component', () => {
           })
 
           const startDateTextField = screen.getByRole('textbox', { name: 'Start Date' })
+
           await user.type(startDateTextField, '2019')
 
           expect(props.setFieldTouched).toHaveBeenCalledTimes(4)
@@ -465,6 +466,7 @@ describe('GranuleFiltersForm component', () => {
           })
 
           const endDateTextField = screen.getByRole('textbox', { name: 'End Date' })
+
           await user.type(endDateTextField, '2020')
 
           expect(props.setFieldTouched).toHaveBeenCalledTimes(4)
@@ -1174,6 +1176,7 @@ describe('GranuleFiltersForm component', () => {
           })
 
           const maxEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-max')
+
           await user.type(maxEquatorCrossingLongitude, '1')
           await user.tab()
 
@@ -1206,6 +1209,7 @@ describe('GranuleFiltersForm component', () => {
           })
 
           const maxEquatorCrossingLongitude = screen.getByTestId('granule-filters__equatorial-crossing-longitude-max')
+
           await user.type(maxEquatorCrossingLongitude, '1')
           await user.tab()
 
@@ -1454,6 +1458,7 @@ describe('GranuleFiltersForm component', () => {
         })
 
         const endDateTextField = screen.getAllByRole('textbox', { name: 'Start Date' })[1]
+
         await user.type(endDateTextField, '2019')
 
         expect(props.setFieldTouched).toHaveBeenCalledTimes(4)
@@ -1595,6 +1600,7 @@ describe('GranuleFiltersForm component', () => {
         })
 
         const endDateTextField = screen.getAllByRole('textbox', { name: 'End Date' })[1]
+
         await user.type(endDateTextField, '2020')
 
         expect(props.setFieldTouched).toHaveBeenCalledTimes(4)

@@ -26,7 +26,7 @@ const matchingCollectionsSkeleton = [
 ]
 
 const FacetsModal = ({
-  collectionHits,
+  collectionHits = null,
   isOpen,
   onToggleFacetsModal,
   viewAllFacets
@@ -124,10 +124,6 @@ const FacetsModal = ({
       title={`Filter collections by ${selectedCategory}`}
     />
   )
-}
-
-FacetsModal.defaultProps = {
-  collectionHits: null
 }
 
 FacetsModal.propTypes = {

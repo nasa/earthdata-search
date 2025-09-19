@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Col from 'react-bootstrap/Col'
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -36,416 +36,383 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 
 import './SecondaryToolbar.scss'
 
-class SecondaryToolbar extends Component {
-  constructor(props) {
-    super(props)
+const SecondaryToolbar = ({
+  authToken,
+  location,
+  onLogout,
+  onUpdateProjectName,
+  projectCollectionIds,
+  retrieval,
+  savedProject,
+  ursProfile
+}) => {
+  const setRunTour = useEdscStore((state) => state.ui.tour.setRunTour)
+  const earthdataEnvironment = useEdscStore(getEarthdataEnvironment)
 
-    const { savedProject } = props
-    const { name = '' } = savedProject
+  const { name = '' } = savedProject
 
-    this.state = {
-      projectDropdownOpen: false,
-      projectName: name,
-      newProjectName: ''
+  const [projectDropdownOpen, setProjectDropdownOpen] = useState(false)
+  const [projectName, setProjectName] = useState(name)
+  const [newProjectName, setNewProjectName] = useState('')
+
+  // Update project name when savedProject.name changes
+  useEffect(() => {
+    setProjectName(savedProject.name || '')
+
+    return () => {
+      setTimeout(() => {}, 0)
     }
-
-    this.handleLogout = this.handleLogout.bind(this)
-    this.onToggleProjectDropdown = this.onToggleProjectDropdown.bind(this)
-    this.onInputChange = this.onInputChange.bind(this)
-    this.handleNameSubmit = this.handleNameSubmit.bind(this)
-    this.handleKeypress = this.handleKeypress.bind(this)
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { savedProject } = this.props
-    const { name } = savedProject
-
-    const { savedProject: nextSavedProject } = nextProps
-    const { name: nextName } = nextSavedProject
-
-    if (name !== nextName) this.setState({ projectName: nextName })
-  }
+  }, [savedProject.name])
 
   /**
    * Log the user out by calling the onLogout action
    */
-  handleLogout() {
-    const { onLogout } = this.props
+  const handleLogout = () => {
     onLogout()
   }
 
-  handleNameSubmit() {
-    const { onUpdateProjectName } = this.props
-    const { newProjectName } = this.state
-
+  const handleNameSubmit = () => {
     const newName = newProjectName || 'Untitled Project'
 
-    this.setState({
-      projectDropdownOpen: false,
-      projectName: newName
-    })
+    setTimeout(() => {
+      setProjectDropdownOpen(false)
+    }, 0)
+
+    setProjectName(newName)
 
     onUpdateProjectName(newProjectName)
   }
 
   // Needed for Save Project so when the url updates with a project-id we don't refresh the page
-  handleKeypress(event) {
+  const handleKeypress = (event) => {
     if (event.key === 'Enter') {
-      this.handleNameSubmit()
+      handleNameSubmit()
       event.stopPropagation()
       event.preventDefault()
     }
   }
 
-  onInputChange(event) {
-    this.setState({ newProjectName: event.target.value })
+  const onInputChange = (event) => {
+    setNewProjectName(event.target.value)
   }
 
-  onToggleProjectDropdown() {
-    const { projectDropdownOpen } = this.state
-
-    this.setState({
-      projectDropdownOpen: !projectDropdownOpen
-    })
+  const onToggleProjectDropdown = () => {
+    setProjectDropdownOpen(!projectDropdownOpen)
   }
 
-  render() {
-    const {
-      projectDropdownOpen,
-      projectName,
-      newProjectName
-    } = this.state
+  const { first_name: firstName = '' } = ursProfile
 
-    const {
-      authToken,
-      projectCollectionIds,
-      location,
-      retrieval = {},
-      ursProfile
-    } = this.props
+  const loggedIn = authToken !== ''
+  const returnPath = window.location.href
+  const { pathname, search } = location
+  let isMapOverlay = false
+  let needsOverlayPaths = ['/', '/search']
 
-    const zustandState = useEdscStore.getState()
-    const { ui } = zustandState
-    const { tour } = ui
-    const { setRunTour } = tour
+  // Currently saved projects and a project page share a route as such we must determine if we are on the saved projects page
+  // If we are on the project page i.e. a specific project we will have the map included in the DOM and need to adjust the classname
+  if (pathname === '/projects' && search) {
+    needsOverlayPaths = [...needsOverlayPaths, '/projects']
+  }
 
-    const earthdataEnvironment = getEarthdataEnvironment(zustandState)
+  // Determine if the current page is a route that displays the map so the correct className can be set
+  if (pathStartsWith(pathname, needsOverlayPaths)) {
+    isMapOverlay = true
+  }
 
-    const { first_name: firstName = '' } = ursProfile
+  const mapButtonClass = isMapOverlay ? 'secondary-toolbar__map-page' : ''
+  const secondaryToolbarClassnames = classNames(['secondary-toolbar', { 'secondary-toolbar--map-overlay': isMapOverlay }])
 
-    const loggedIn = authToken !== ''
-    const returnPath = window.location.href
-    const { pathname, search } = location
-    let isMapOverlay = false
-    let needsOverlayPaths = ['/', '/search']
+  const { apiHost } = getEnvironmentConfig()
 
-    // Currently saved projects and a project page share a route as such we must determine if we are on the saved projects page
-    // If we are on the project page i.e. a specific project we will have the map included in the DOM and need to adjust the classname
-    if (pathname === '/projects' && search) {
-      needsOverlayPaths = [...needsOverlayPaths, '/projects']
-    }
+  // Remove focused collection from back button params
+  const params = parse(search, {
+    parseArrays: false,
+    ignoreQueryPrefix: true
+  })
+  let { p = '' } = params
+  p = p.replace(/^[^!]*/, '')
 
-    // Determine if the current page is a route that displays the map so the correct className can be set
-    if (pathStartsWith(pathname, needsOverlayPaths)) {
-      isMapOverlay = true
-    }
-
-    const mapButtonClass = isMapOverlay ? 'secondary-toolbar__map-page' : ''
-    const secondaryToolbarClassnames = classNames(['secondary-toolbar', { 'secondary-toolbar--map-overlay': isMapOverlay }])
-
-    const { apiHost } = getEnvironmentConfig()
-
-    // Remove focused collection from back button params
-    const params = parse(search, {
-      parseArrays: false,
-      ignoreQueryPrefix: true
-    })
-    let { p = '' } = params
-    p = p.replace(/^[^!]*/, '')
-
-    const newSearch = stringify({
-      ...params,
-      p
-    })
-    const backToSearchLink = (
-      <PortalLinkContainer
-        type="button"
-        className="secondary-toolbar__back"
-        bootstrapVariant="light"
-        icon={FaArrowCircleLeft}
-        label="Back to Search"
-        dataTestId="back-to-search-button"
-        to={
-          {
-            pathname: '/search',
-            search: newSearch
-          }
+  const newSearch = stringify({
+    ...params,
+    p
+  })
+  const backToSearchLink = (
+    <PortalLinkContainer
+      type="button"
+      className="secondary-toolbar__back"
+      bootstrapVariant="light"
+      icon={FaArrowCircleLeft}
+      label="Back to Search"
+      to={
+        {
+          pathname: '/search',
+          search: newSearch
         }
-        updatePath
-      >
-        Back to Search
-      </PortalLinkContainer>
-    )
-
-    const { jsondata = {} } = retrieval
-    const { source } = jsondata
-    const backToProjectLink = (
-      <PortalLinkContainer
-        type="button"
-        className={classNames(['secondary-toolbar__back', { 'focus-light': isMapOverlay }])}
-        bootstrapVariant="light"
-        icon={FaArrowCircleLeft}
-        label="Back to Project"
-        to={
-          {
-            pathname: '/projects',
-            search: source
-          }
-        }
-        updatePath
-      >
-        Back to Project
-      </PortalLinkContainer>
-    )
-
-    const buildProjectLink = (isLoggedIn) => {
-      if (!isLoggedIn) {
-        const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
-
-        return (
-          <Button
-            className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
-            bootstrapVariant="light"
-            href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
-            tooltip="View your project"
-            tooltipId="view-project-tooltip"
-            tooltipPlacement="left"
-            icon={FaFolder}
-          >
-            My Project
-          </Button>
-        )
       }
+      updatePath
+    >
+      Back to Search
+    </PortalLinkContainer>
+  )
+
+  const { jsondata = {} } = retrieval
+  const { source } = jsondata
+  const backToProjectLink = (
+    <PortalLinkContainer
+      type="button"
+      className={classNames(['secondary-toolbar__back', { 'focus-light': isMapOverlay }])}
+      bootstrapVariant="light"
+      icon={FaArrowCircleLeft}
+      label="Back to Project"
+      to={
+        {
+          pathname: '/projects',
+          search: source
+        }
+      }
+      updatePath
+    >
+      Back to Project
+    </PortalLinkContainer>
+  )
+
+  const buildProjectLink = (isLoggedIn) => {
+    if (!isLoggedIn) {
+      const projectPath = `${window.location.protocol}//${window.location.host}/projects${window.location.search}`
 
       return (
-        <PortalLinkContainer
-          type="button"
-          to={
-            {
-              pathname: '/projects',
-              search: location.search
-            }
-          }
+        <Button
           className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
           bootstrapVariant="light"
-          icon={FaFolder}
-          iconPosition="left"
+          href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(projectPath)}`}
           tooltip="View your project"
           tooltipId="view-project-tooltip"
           tooltipPlacement="left"
-          updatePath
+          icon={FaFolder}
         >
           My Project
-        </PortalLinkContainer>
+        </Button>
       )
     }
 
-    const projectLink = buildProjectLink(loggedIn)
-
-    const loginLink = (
-      <Button
-        className={
-          classNames(
-            'secondary-toolbar__login-button',
-            { 'focus-light': isMapOverlay }
-          )
-        }
-        bootstrapVariant="light"
-        href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
-        tooltip="Log In with Earthdata Login"
-        tooltipId="login-tooltip"
-        tooltipPlacement="left"
-        icon={FaSignInAlt}
-      >
-        Log In
-      </Button>
-    )
-    const loggedInDropdown = (
-      <Dropdown>
-        <Dropdown.Toggle
-          className={classNames([`secondary-toolbar__user-dropdown-toggle ${mapButtonClass}`, { 'focus-light': isMapOverlay }])}
-          bootstrapVariant="light"
-          as={Button}
-          icon={FaUser}
-        >
-          {
-            firstName && (
-              <span className="secondary-toolbar__username">
-                {firstName}
-              </span>
-            )
-          }
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <LinkContainer
-            to="/preferences"
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__preferences"
-              active={false}
-            >
-              Preferences
-            </Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer
-            to="/contact-info"
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__contact-info"
-              active={false}
-            >
-              Contact Information
-            </Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer
-            to={
-              {
-                pathname: '/downloads',
-                search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
-              }
-            }
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__downloads"
-              active={false}
-            >
-              Download Status &amp; History
-            </Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer
-            to="/projects"
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__saved-projects"
-              active={false}
-            >
-              Saved Projects
-            </Dropdown.Item>
-          </LinkContainer>
-          <LinkContainer
-            to="/subscriptions"
-          >
-            <Dropdown.Item
-              className="secondary-toolbar__saved-subscriptions"
-              active={false}
-            >
-              Subscriptions
-            </Dropdown.Item>
-          </LinkContainer>
-          <Dropdown.Item
-            className="secondary-toolbar__logout"
-            onClick={this.handleLogout}
-          >
-            Logout
-          </Dropdown.Item>
-        </Dropdown.Menu>
-      </Dropdown>
-    )
-
-    const saveProjectDropdown = (
-      <Dropdown
-        show={projectDropdownOpen}
-        className={classNames(['secondary-toolbar__project-name-dropdown', { 'focus-light': isMapOverlay }])}
-        onToggle={this.onToggleProjectDropdown}
-        align="end"
-      >
-        <Dropdown.Toggle
-          className="secondary-toolbar__project-dropdown-toggle focus-light"
-          as={Button}
-          onClick={this.onToggleProjectDropdown}
-          icon={FaSave}
-          iconSize="14"
-          bootstrapVariant="light"
-          tooltip="Create a project with your current search"
-          tooltipId="create-project-tooltip"
-          tooltipPlacement="left"
-        >
-          <span className="secondary-toolbar__dropdown-text sr-only">
-            Save Project
-          </span>
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          <Form className="flex-nowrap secondary-toolbar__project-name-form">
-            <Row>
-              <Col>
-                <InputGroup>
-                  <FormControl
-                    className="secondary-toolbar__project-name-input"
-                    name="projectName"
-                    value={newProjectName}
-                    placeholder="Untitled Project"
-                    onChange={this.onInputChange}
-                    onKeyPress={this.handleKeypress}
-                  />
-                  <Button
-                    className="secondary-toolbar__button secondary-toolbar__button--submit"
-                    bootstrapVariant="primary"
-                    label="Save project name"
-                    onClick={this.handleNameSubmit}
-                  >
-                    Save
-                  </Button>
-                </InputGroup>
-              </Col>
-            </Row>
-          </Form>
-        </Dropdown.Menu>
-      </Dropdown>
-    )
-
-    const startTourButton = (
-      <Dropdown
-        show={projectDropdownOpen}
-        className="secondary-toolbar__start-tour-name-dropdown focus-light"
-        onToggle={this.onToggleProjectDropdown}
-        align="end"
-      >
-        <Dropdown.Toggle
-          className={classNames(['secondary-toolbar__start-tour-button', { 'focus-light': isMapOverlay }])}
-          as={Button}
-          aria-label="Start Search Tour"
-          icon={FaQuestion}
-          iconSize="14"
-          // Passing `true` because we don't need the whole event object
-          onClick={() => setRunTour(true)}
-          bootstrapVariant="light"
-          tooltip="Take a tour to learn how to use Earthdata Search"
-          tooltipId="start-tour-tooltip"
-          tooltipPlacement="left"
-          label="Start tour"
-        />
-      </Dropdown>
-    )
-
-    const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
-    const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
-    const showStartTourButton = location.pathname === '/search'
-
     return (
-      <nav className={secondaryToolbarClassnames}>
-        {isPath(location.pathname, ['/projects']) && backToSearchLink}
-        {isDownloadPathWithId(location.pathname) && backToProjectLink}
-        <PortalFeatureContainer authentication>
-          <>
-            {showViewProjectLink && projectLink}
-            {showSaveProjectDropdown && saveProjectDropdown}
-            {showStartTourButton && startTourButton}
-            {!loggedIn ? loginLink : loggedInDropdown}
-          </>
-        </PortalFeatureContainer>
-      </nav>
+      <PortalLinkContainer
+        type="button"
+        to={
+          {
+            pathname: '/projects',
+            search: location.search
+          }
+        }
+        className={classNames(['secondary-toolbar__project', { 'focus-light': isMapOverlay }])}
+        bootstrapVariant="light"
+        icon={FaFolder}
+        iconPosition="left"
+        tooltip="View your project"
+        tooltipId="view-project-tooltip"
+        tooltipPlacement="left"
+        updatePath
+      >
+        My Project
+      </PortalLinkContainer>
     )
   }
+
+  const projectLink = buildProjectLink(loggedIn)
+
+  const loginLink = (
+    <Button
+      className={
+        classNames(
+          'secondary-toolbar__login-button',
+          { 'focus-light': isMapOverlay }
+        )
+      }
+      bootstrapVariant="light"
+      href={`${apiHost}/login?ee=${earthdataEnvironment}&state=${encodeURIComponent(returnPath)}`}
+      tooltip="Log In with Earthdata Login"
+      tooltipId="login-tooltip"
+      tooltipPlacement="left"
+      icon={FaSignInAlt}
+    >
+      Log In
+    </Button>
+  )
+  const loggedInDropdown = (
+    <Dropdown>
+      <Dropdown.Toggle
+        className={classNames([`secondary-toolbar__user-dropdown-toggle ${mapButtonClass}`, { 'focus-light': isMapOverlay }])}
+        bootstrapVariant="light"
+        as={Button}
+        icon={FaUser}
+      >
+        {
+          firstName && (
+            <span className="secondary-toolbar__username">
+              {firstName}
+            </span>
+          )
+        }
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <LinkContainer
+          to="/preferences"
+        >
+          <Dropdown.Item
+            className="secondary-toolbar__preferences"
+            active={false}
+          >
+            Preferences
+          </Dropdown.Item>
+        </LinkContainer>
+        <LinkContainer
+          to="/contact-info"
+        >
+          <Dropdown.Item
+            className="secondary-toolbar__contact-info"
+            active={false}
+          >
+            Contact Information
+          </Dropdown.Item>
+        </LinkContainer>
+        <LinkContainer
+          to={
+            {
+              pathname: '/downloads',
+              search: stringify({ ee: earthdataEnvironment === deployedEnvironment() ? '' : earthdataEnvironment })
+            }
+          }
+        >
+          <Dropdown.Item
+            className="secondary-toolbar__downloads"
+            active={false}
+          >
+            Download Status &amp; History
+          </Dropdown.Item>
+        </LinkContainer>
+        <LinkContainer
+          to="/projects"
+        >
+          <Dropdown.Item
+            className="secondary-toolbar__saved-projects"
+            active={false}
+          >
+            Saved Projects
+          </Dropdown.Item>
+        </LinkContainer>
+        <LinkContainer
+          to="/subscriptions"
+        >
+          <Dropdown.Item
+            className="secondary-toolbar__saved-subscriptions"
+            active={false}
+          >
+            Subscriptions
+          </Dropdown.Item>
+        </LinkContainer>
+        <Dropdown.Item
+          className="secondary-toolbar__logout"
+          onClick={handleLogout}
+        >
+          Logout
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  )
+
+  const saveProjectDropdown = (
+    <Dropdown
+      show={projectDropdownOpen}
+      className={classNames(['secondary-toolbar__project-name-dropdown', { 'focus-light': isMapOverlay }])}
+      onToggle={onToggleProjectDropdown}
+      align="end"
+    >
+      <Dropdown.Toggle
+        className="secondary-toolbar__project-dropdown-toggle focus-light"
+        as={Button}
+        onClick={onToggleProjectDropdown}
+        icon={FaSave}
+        iconSize="14"
+        bootstrapVariant="light"
+        tooltip="Create a project with your current search"
+        tooltipId="create-project-tooltip"
+        tooltipPlacement="left"
+      >
+        <span className="secondary-toolbar__dropdown-text sr-only">
+          Save Project
+        </span>
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Form className="flex-nowrap secondary-toolbar__project-name-form">
+          <Row>
+            <Col>
+              <InputGroup>
+                <FormControl
+                  className="secondary-toolbar__project-name-input"
+                  name="projectName"
+                  value={newProjectName}
+                  placeholder="Untitled Project"
+                  onChange={onInputChange}
+                  onKeyPress={handleKeypress}
+                />
+                <Button
+                  className="secondary-toolbar__button secondary-toolbar__button--submit"
+                  bootstrapVariant="primary"
+                  label="Save project name"
+                  onClick={handleNameSubmit}
+                >
+                  Save
+                </Button>
+              </InputGroup>
+            </Col>
+          </Row>
+        </Form>
+      </Dropdown.Menu>
+    </Dropdown>
+  )
+
+  const startTourButton = (
+    <Dropdown
+      show={projectDropdownOpen}
+      className="secondary-toolbar__start-tour-name-dropdown focus-light"
+      onToggle={onToggleProjectDropdown}
+      align="end"
+    >
+      <Dropdown.Toggle
+        className={classNames(['secondary-toolbar__start-tour-button', { 'focus-light': isMapOverlay }])}
+        as={Button}
+        aria-label="Start Search Tour"
+        icon={FaQuestion}
+        iconSize="14"
+        // Passing `true` because we don't need the whole event object
+        onClick={() => setRunTour(true)}
+        bootstrapVariant="light"
+        tooltip="Take a tour to learn how to use Earthdata Search"
+        tooltipId="start-tour-tooltip"
+        tooltipPlacement="left"
+        label="Start tour"
+      />
+    </Dropdown>
+  )
+
+  const showSaveProjectDropdown = pathStartsWith(location.pathname, ['/search']) && loggedIn
+  const showViewProjectLink = (!pathStartsWith(location.pathname, ['/projects', '/downloads']) && (projectCollectionIds.length > 0 || projectName))
+  const showStartTourButton = location.pathname === '/search'
+
+  return (
+    <nav className={secondaryToolbarClassnames}>
+      {isPath(location.pathname, ['/projects']) && backToSearchLink}
+      {isDownloadPathWithId(location.pathname) && backToProjectLink}
+      <PortalFeatureContainer authentication>
+        <>
+          {showViewProjectLink && projectLink}
+          {showSaveProjectDropdown && saveProjectDropdown}
+          {showStartTourButton && startTourButton}
+          {!loggedIn ? loginLink : loggedInDropdown}
+        </>
+      </PortalFeatureContainer>
+    </nav>
+  )
 }
 
 SecondaryToolbar.propTypes = {
@@ -454,7 +421,11 @@ SecondaryToolbar.propTypes = {
   onLogout: PropTypes.func.isRequired,
   onUpdateProjectName: PropTypes.func.isRequired,
   projectCollectionIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  retrieval: PropTypes.shape({}).isRequired,
+  retrieval: PropTypes.shape({
+    jsondata: PropTypes.shape({
+      source: PropTypes.string
+    })
+  }).isRequired,
   savedProject: PropTypes.shape({
     name: PropTypes.string
   }).isRequired,

@@ -16,31 +16,22 @@ export const mapDispatchToProps = (dispatch) => ({
 
 /**
  * Component representing the spatial selection dropdown
- * @param {function} onChangeQuery - A redux action to update the temporal state
  */
-export const SpatialSelectionDropdownContainer = (props) => {
-  const {
-    searchParams,
-    onChangeUrl,
-    onChangePath,
-    onMetricsSpatialSelection,
-    onToggleShapefileUploadModal
-  } = props
-
-  return (
-    <SpatialSelectionDropdown
-      searchParams={searchParams}
-      onChangeUrl={onChangeUrl}
-      onChangePath={onChangePath}
-      onToggleShapefileUploadModal={onToggleShapefileUploadModal}
-      onMetricsSpatialSelection={onMetricsSpatialSelection}
-    />
-  )
-}
-
-SpatialSelectionDropdownContainer.defaultProps = {
-  searchParams: {}
-}
+export const SpatialSelectionDropdownContainer = ({
+  searchParams = {},
+  onChangeUrl,
+  onChangePath,
+  onMetricsSpatialSelection,
+  onToggleShapefileUploadModal
+}) => (
+  <SpatialSelectionDropdown
+    searchParams={searchParams}
+    onChangeUrl={onChangeUrl}
+    onChangePath={onChangePath}
+    onToggleShapefileUploadModal={onToggleShapefileUploadModal}
+    onMetricsSpatialSelection={onMetricsSpatialSelection}
+  />
+)
 
 SpatialSelectionDropdownContainer.propTypes = {
   searchParams: PropTypes.shape(),

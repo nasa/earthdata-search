@@ -1,6 +1,6 @@
 import React from 'react'
 import Enzyme, { mount } from 'enzyme'
-import Adapter from '@wojtekmaj/enzyme-adapter-react-17'
+import Adapter from '@cfaester/enzyme-adapter-react-18'
 
 import Modal from 'react-bootstrap/Modal'
 

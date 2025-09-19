@@ -24,7 +24,7 @@ import './SubscriptionsListTable.scss'
  * Renders the logged in users' subscription list
  */
 const SubscriptionsListTable = ({
-  subscriptionsMetadata = {},
+  subscriptionsMetadata,
   subscriptionType,
   onDeleteSubscription
 }) => {

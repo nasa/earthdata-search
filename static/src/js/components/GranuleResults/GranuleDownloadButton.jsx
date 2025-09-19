@@ -21,11 +21,11 @@ import { getEarthdataEnvironment } from '../../zustand/selectors/earthdataEnviro
 
 export const GranuleDownloadButton = ({
   authToken,
-  badge,
+  badge = null,
   buttonText,
   focusedCollectionId,
-  granuleCount,
-  granuleLimit,
+  granuleCount = 0,
+  granuleLimit = undefined,
   initialLoading,
   isCollectionInProject,
   onChangePath,
@@ -165,12 +165,6 @@ export const GranuleDownloadButton = ({
       {buttonText}
     </PortalLinkContainer>
   )
-}
-
-GranuleDownloadButton.defaultProps = {
-  badge: null,
-  granuleCount: 0,
-  granuleLimit: undefined
 }
 
 GranuleDownloadButton.propTypes = {

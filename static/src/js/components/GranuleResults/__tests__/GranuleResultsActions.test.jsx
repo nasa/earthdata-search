@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  act,
-  screen,
-  within
-} from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
 
@@ -169,9 +165,7 @@ describe('GranuleResultsActions component', () => {
 
       // Open the dropdown
       const dropdown = screen.getByRole('button', { name: 'Explore' })
-      await act(async () => {
-        await user.click(dropdown)
-      })
+      await user.click(dropdown)
 
       const handoffLinks = screen.getAllByRole('link')
       expect(handoffLinks).toHaveLength(2)

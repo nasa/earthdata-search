@@ -31,7 +31,7 @@ export const AdminProjectsContainer = ({
   onFetchAdminProjects,
   onUpdateAdminProjectsSortKey,
   onUpdateAdminProjectsPageNum,
-  projects
+  projects = {}
 }) => {
   useEffect(() => {
     onFetchAdminProjects()
@@ -46,10 +46,6 @@ export const AdminProjectsContainer = ({
       projects={projects}
     />
   )
-}
-
-AdminProjectsContainer.defaultProps = {
-  projects: {}
 }
 
 AdminProjectsContainer.propTypes = {

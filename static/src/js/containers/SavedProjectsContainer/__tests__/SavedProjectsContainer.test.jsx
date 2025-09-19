@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  screen,
-  waitFor,
-  act
-} from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 
 import actions from '../../../actions'
@@ -132,11 +128,8 @@ describe('SavedProjectsContainer', () => {
 
       const { user } = setup()
 
-      const removeBtn = await screen.findByRole('button', { name: /remove project/i })
-
-      await act(async () => {
-        await user.click(removeBtn)
-      })
+      const removeButton = await screen.findByRole('button', { name: /remove project/i })
+      await user.click(removeButton)
 
       expect(addToast).toHaveBeenCalledTimes(1)
       await waitFor(() => {
@@ -169,11 +162,8 @@ describe('SavedProjectsContainer', () => {
 
       const { user, props } = setup()
 
-      const removeBtn = await screen.findByRole('button', { name: /remove project/i })
-
-      await act(async () => {
-        await user.click(removeBtn)
-      })
+      const removeButton = await screen.findByRole('button', { name: /remove project/i })
+      await user.click(removeButton)
 
       await waitFor(() => {
         expect(props.dispatchHandleError).toHaveBeenCalledWith(

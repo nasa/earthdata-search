@@ -1,8 +1,4 @@
-import {
-  act,
-  screen,
-  within
-} from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 import { kebabCase } from 'lodash-es'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -252,9 +248,7 @@ describe('Facets Features Map Imagery component', () => {
 
     const tooltipTrigger = screen.getByTestId('facet_item-customizable-info')
 
-    await act(async () => {
-      await user.hover(tooltipTrigger)
-    })
+    await user.hover(tooltipTrigger)
 
     const tooltip = screen.getByRole('tooltip')
     expect(tooltip).toBeInTheDocument()

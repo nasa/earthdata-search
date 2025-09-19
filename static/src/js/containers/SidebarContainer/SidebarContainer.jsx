@@ -8,8 +8,8 @@ import Sidebar from '../../components/Sidebar/Sidebar'
 
 export const SidebarContainer = ({
   children,
-  panels,
-  headerChildren
+  panels = null,
+  headerChildren = null
 }) => {
   const location = useLocation()
   const { pathname } = location
@@ -33,11 +33,6 @@ export const SidebarContainer = ({
       {children}
     </Sidebar>
   )
-}
-
-SidebarContainer.defaultProps = {
-  panels: null,
-  headerChildren: null
 }
 
 SidebarContainer.propTypes = {

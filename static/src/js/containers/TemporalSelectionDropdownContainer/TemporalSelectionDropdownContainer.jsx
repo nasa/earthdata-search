@@ -16,12 +16,10 @@ export const mapDispatchToProps = (dispatch) => ({
  * @param {object} temporalSearch - The temporal state from the redux store
  * @param {function} onChangeQuery - A redux action to update the temporal state
  */
-export const TemporalSelectionDropdownContainer = (props) => {
-  const {
-    searchParams,
-    onMetricsTemporalFilter
-  } = props
-
+export const TemporalSelectionDropdownContainer = ({
+  searchParams = {},
+  onMetricsTemporalFilter
+}) => {
   const changeQuery = useEdscStore((state) => state.query.changeQuery)
 
   return (
@@ -31,10 +29,6 @@ export const TemporalSelectionDropdownContainer = (props) => {
       onMetricsTemporalFilter={onMetricsTemporalFilter}
     />
   )
-}
-
-TemporalSelectionDropdownContainer.defaultProps = {
-  searchParams: {}
 }
 
 TemporalSelectionDropdownContainer.propTypes = {

@@ -1,9 +1,5 @@
 import React from 'react'
-import {
-  screen,
-  waitFor,
-  act
-} from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import nock from 'nock'
 
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -103,7 +99,7 @@ describe('DownloadHistoryContainer component', () => {
     expect(screen.getByRole('heading', { name: 'Download Status & History' })).toBeInTheDocument()
 
     await waitFor(() => {
-      expect(DownloadHistory).toHaveBeenCalledTimes(4)
+      expect(DownloadHistory).toHaveBeenCalledTimes(3)
     })
 
     expect(DownloadHistory).toHaveBeenNthCalledWith(1, {
@@ -123,19 +119,6 @@ describe('DownloadHistoryContainer component', () => {
     }, {})
 
     expect(DownloadHistory).toHaveBeenNthCalledWith(3, {
-      earthdataEnvironment: 'prod',
-      onDeleteRetrieval: expect.any(Function),
-      retrievalHistoryLoaded: false,
-      retrievalHistoryLoading: true,
-      retrievalHistory: [{
-        id: '8069076',
-        jsondata: {},
-        created_at: '2019-08-25T11:58:14.390Z',
-        collections: [{}]
-      }]
-    }, {})
-
-    expect(DownloadHistory).toHaveBeenNthCalledWith(4, {
       earthdataEnvironment: 'prod',
       onDeleteRetrieval: expect.any(Function),
       retrievalHistoryLoaded: true,
@@ -183,9 +166,7 @@ describe('DownloadHistoryContainer component', () => {
       expect(screen.getByRole('link', { name: '8069076' })).toBeInTheDocument()
     })
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
 
     await waitFor(() => {
       expect(addToast).toHaveBeenCalledWith('Retrieval removed', {
@@ -210,9 +191,7 @@ describe('DownloadHistoryContainer component', () => {
       expect(screen.getByRole('link', { name: '8069076' })).toBeInTheDocument()
     })
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Delete Download 8069076' }))
 
     await waitFor(() => {
       expect(props.dispatchHandleError).toHaveBeenCalledWith(

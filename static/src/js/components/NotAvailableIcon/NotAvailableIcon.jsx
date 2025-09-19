@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const NotAvailableIcon = ({ size }) => (
+const NotAvailableIcon = ({
+  size = '1rem'
+}) => (
   <svg
     width={size}
     height={size}
@@ -16,10 +18,6 @@ const NotAvailableIcon = ({ size }) => (
     <path id="background" fillRule="evenodd" clipRule="evenodd" d="M19.3584 18.7901L1.20992 0.641646L1.85156 0L20.0001 18.1485L19.3584 18.7901Z" fill="white" />
   </svg>
 )
-
-NotAvailableIcon.defaultProps = {
-  size: '1rem'
-}
 
 NotAvailableIcon.propTypes = {
   size: PropTypes.string

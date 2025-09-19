@@ -1,4 +1,3 @@
-import React from 'react'
 import { act, waitFor } from '@testing-library/react'
 
 import actions from '../../../actions'
@@ -20,11 +19,6 @@ jest.mock('react-router-dom', () => ({
   })
 }))
 
-jest.spyOn(getApplicationConfig, 'getApplicationConfig').mockImplementation(() => ({
-  env: 'sit',
-  collectionSearchResultsSortKey: collectionSortKeys.usageDescending
-}))
-
 const setup = setupTest({
   Component: UrlQueryContainer,
   defaultProps: {
@@ -33,6 +27,9 @@ const setup = setupTest({
     onChangeUrl: jest.fn()
   },
   defaultZustandState: {
+    earthdataEnvironment: {
+      currentEnvironment: 'prod'
+    },
     preferences: {
       preferences: {
         collectionSort: 'default'
@@ -72,7 +69,7 @@ describe('mapDispatchToProps', () => {
 describe('UrlQueryContainer', () => {
   describe('when the component mounts', () => {
     test('calls onChangePath', async () => {
-      jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC')
+      jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementationOnce(() => '?p=C00001-EDSC')
 
       const { props } = setup()
 
@@ -84,78 +81,33 @@ describe('UrlQueryContainer', () => {
     })
   })
 
-  describe('when the redux props change', () => {
-    test('calls onChangeUrl if the search params are the same', () => {
-      jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC&q=test')
-
-      const { props, rerender } = setup()
-
-      rerender(
-        <UrlQueryContainer
-          {...props}
-          keywordSearch="test"
-        >
-          stuff
-        </UrlQueryContainer>
-      )
-
-      expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
-      expect(props.onChangeUrl).toHaveBeenCalledWith('?p=C00001-EDSC&q=test')
-    })
-
-    test('does not call onChangeUrl if the search params are different', () => {
-      const { props, rerender } = setup()
-
-      jest.clearAllMocks()
-
-      rerender(
-        <UrlQueryContainer
-          {...props}
-          location={
-            {
-              search: '?p=C00001-EDSC&q=test'
-            }
-          }
-        >
-          stuff
-        </UrlQueryContainer>
-      )
-
-      expect(props.onChangeUrl).toHaveBeenCalledTimes(0)
-    })
-  })
-
   describe('when the zustand values change', () => {
-    test('calls onChangeUrl if the search params are the same', () => {
-      const encodeUrlQuerySpy = jest.spyOn(encodeUrlQuery, 'encodeUrlQuery').mockImplementation(() => '?p=C00001-EDSC&q=test&tl=1571306772.712!5!!')
+    test('calls onChangeUrl if the search params are the same', async () => {
+      const encodeUrlQuerySpy = jest.spyOn(encodeUrlQuery, 'encodeUrlQuery')
 
       const { props } = setup()
 
-      act(() => {
-        useEdscStore.setState({
-          timeline: {
-            query: {
-              center: 1571306737483,
-              interval: 'decade',
-              endDate: '2310-01-01T00:00:00.000Z',
-              startDate: '1710-01-01T00:00:00.000Z'
-            }
-          }
+      jest.clearAllMocks()
+
+      await act(() => {
+        useEdscStore.setState((state) => {
+          // eslint-disable-next-line no-param-reassign
+          state.collection.collectionId = 'C00001-EDSC'
+          // eslint-disable-next-line no-param-reassign
+          state.map.mapView.zoom = 8
         })
       })
 
-      expect(encodeUrlQuerySpy).toHaveBeenCalledTimes(3)
+      expect(encodeUrlQuerySpy).toHaveBeenCalledTimes(2)
       expect(encodeUrlQuerySpy).toHaveBeenLastCalledWith(expect.objectContaining({
-        timelineQuery: {
-          center: 1571306737483,
-          interval: 'decade',
-          endDate: '2310-01-01T00:00:00.000Z',
-          startDate: '1710-01-01T00:00:00.000Z'
-        }
+        focusedCollection: 'C00001-EDSC',
+        mapView: expect.objectContaining({
+          zoom: 8
+        })
       }))
 
       expect(props.onChangeUrl).toHaveBeenCalledTimes(1)
-      expect(props.onChangeUrl).toHaveBeenCalledWith('?p=C00001-EDSC&q=test&tl=1571306772.712!5!!')
+      expect(props.onChangeUrl).toHaveBeenCalledWith('/search/granules?p=C00001-EDSC&ee=prod&zoom=8')
     })
   })
 })

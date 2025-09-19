@@ -10,17 +10,15 @@ import FacetsSectionHeading from './FacetsSectionHeading'
 
 import './FacetsList.scss'
 
-const FacetsList = (props) => {
-  const {
-    autocompleteType,
-    facets,
-    facetCategory,
-    liftSelectedFacets,
-    changeHandler,
-    sortBy,
-    variation
-  } = props
-
+const FacetsList = ({
+  autocompleteType = null,
+  facets = [],
+  facetCategory,
+  liftSelectedFacets = false,
+  changeHandler,
+  sortBy = null,
+  variation = ''
+}) => {
   // Return a list of facet components to be displayed
   const buildFacetList = (facetsArray, limit = null) => facetsArray.map((child, index) => {
     if (index < limit || limit === null) {
@@ -100,14 +98,6 @@ const FacetsList = (props) => {
       {list}
     </ul>
   )
-}
-
-FacetsList.defaultProps = {
-  autocompleteType: null,
-  facets: [],
-  liftSelectedFacets: false,
-  sortBy: null,
-  variation: ''
 }
 
 FacetsList.propTypes = {

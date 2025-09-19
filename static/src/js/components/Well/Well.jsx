@@ -11,11 +11,11 @@ import WellSection from './WellSection'
 import './Well.scss'
 
 export const Well = ({
-  className,
-  children,
-  heading,
-  introduction,
-  variant
+  className = null,
+  children = null,
+  heading = null,
+  introduction = null,
+  variant = null
 }) => {
   const classes = classNames([
     'well',
@@ -34,14 +34,6 @@ export const Well = ({
       </div>
     </section>
   )
-}
-
-Well.defaultProps = {
-  children: null,
-  className: null,
-  heading: null,
-  introduction: null,
-  variant: null
 }
 
 Well.propTypes = {

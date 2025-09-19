@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 import Control from 'ol/control/Control'
 
 import Legend, { Colormap } from '../Legend/Legend'
@@ -31,11 +31,8 @@ class LegendControl extends Control {
 
     if (Object.keys(options.colorMap).length === 0) return
 
-    // @ts-expect-error We are still on React 17
-    ReactDOM.render(
-      <Legend colorMap={options.colorMap} />,
-      this.element
-    )
+    const legendRoot = ReactDOM.createRoot(this.element)
+    legendRoot.render(<Legend colorMap={options.colorMap} />)
   }
 }
 

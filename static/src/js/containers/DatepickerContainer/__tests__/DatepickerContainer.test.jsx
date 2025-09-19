@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
-import { render, screen } from '@testing-library/react'
+import {
+  act,
+  render,
+  screen
+} from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import MockDate from 'mockdate'
 import moment from 'moment'
@@ -91,9 +95,11 @@ describe('DatepickerContainer component', () => {
 
         const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-        await input.focus()
-        await user.type(input, '2006-04-01 00:00:00')
-        await input.blur()
+        await act(async () => {
+          await input.focus()
+          await user.type(input, '2006-04-01 00:00:00')
+          await input.blur()
+        })
 
         expect(props.onSubmit).toHaveBeenCalledTimes(39)
         expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:00:00', props.format), true, 'Typed')
@@ -110,9 +116,11 @@ describe('DatepickerContainer component', () => {
 
         const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-        await input.focus()
-        await user.type(input, '2006-04-01 00:40:00')
-        await input.blur()
+        await act(async () => {
+          await input.focus()
+          await user.type(input, '2006-04-01 00:40:00')
+          await input.blur()
+        })
 
         expect(props.onSubmit).toHaveBeenCalledTimes(39)
         expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:40:00', props.format), true, 'Typed')
@@ -132,8 +140,10 @@ describe('DatepickerContainer component', () => {
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      await input.focus()
-      await input.blur()
+      await act(async () => {
+        await input.focus()
+        await input.blur()
+      })
 
       expect(props.onSubmit).toHaveBeenCalledTimes(0)
     })
@@ -151,9 +161,11 @@ describe('DatepickerContainer component', () => {
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      await input.focus()
-      await user.type(input, '2006-04-01 00:00:00')
-      await input.blur()
+      await act(async () => {
+        await input.focus()
+        await user.type(input, '2006-04-01 00:00:00')
+        await input.blur()
+      })
 
       expect(props.onSubmit).toHaveBeenCalledTimes(39)
       expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:00:00', props.format).endOf('day'), true, 'Typed')
@@ -170,9 +182,11 @@ describe('DatepickerContainer component', () => {
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      await input.focus()
-      await user.type(input, '2006-04-01 00:40:00')
-      await input.blur()
+      await act(async () => {
+        await input.focus()
+        await user.type(input, '2006-04-01 00:40:00')
+        await input.blur()
+      })
 
       expect(props.onSubmit).toHaveBeenCalledTimes(39)
       expect(props.onSubmit).toHaveBeenCalledWith(moment.utc('2006-04-01 00:40:00', props.format), true, 'Typed')
@@ -189,9 +203,11 @@ describe('DatepickerContainer component', () => {
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      await input.focus()
-      await user.type(input, '2020')
-      await input.blur()
+      await act(async () => {
+        await input.focus()
+        await user.type(input, '2020')
+        await input.blur()
+      })
 
       // OnSubmit is called each time the user types a character, as well as when blur is called
       expect(props.onSubmit).toHaveBeenCalledTimes(9)
@@ -209,9 +225,11 @@ describe('DatepickerContainer component', () => {
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      await input.focus()
-      await user.type(input, '2020-06')
-      await input.blur()
+      await act(async () => {
+        await input.focus()
+        await user.type(input, '2020-06')
+        await input.blur()
+      })
 
       // OnSubmit is called each time the user types a character, as well as when blur is called
       expect(props.onSubmit).toHaveBeenCalledTimes(15)
@@ -229,9 +247,11 @@ describe('DatepickerContainer component', () => {
 
       const input = screen.getByRole('textbox', { name: 'Test Datepicker' })
 
-      await input.focus()
-      await user.type(input, '2020-06-15')
-      await input.blur()
+      await act(async () => {
+        await input.focus()
+        await user.type(input, '2020-06-15')
+        await input.blur()
+      })
 
       // OnSubmit is called each time the user types a character, as well as when blur is called
       expect(props.onSubmit).toHaveBeenCalledTimes(21)
