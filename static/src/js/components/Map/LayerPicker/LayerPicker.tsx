@@ -19,11 +19,11 @@ import {
 import { restrictToParentElement, restrictToVerticalAxis } from '@dnd-kit/modifiers'
 
 import { FaCompressAlt, FaLayerGroup } from 'react-icons/fa'
-import { triggerKeyboardShortcut } from '../../util/triggerKeyboardShortcut'
+import { triggerKeyboardShortcut } from '../../../util/triggerKeyboardShortcut'
 
-import DraggableLayerItem from './DraggableLayerItem'
-import Button from '../Button/Button'
-import { ImageryLayers } from '../../types/sharedTypes'
+import LayerPickerItem from './LayerPickerItem'
+import Button from '../../Button/Button'
+import { ImageryLayers } from '../../../types/sharedTypes'
 
 import './LayerPicker.scss'
 
@@ -181,7 +181,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
             <div className="layer-picker__layers overflow-auto">
               {
                 layerData.map((layer) => (
-                  <DraggableLayerItem
+                  <LayerPickerItem
                     key={layer.product}
                     layer={layer}
                     collectionId={collectionId}

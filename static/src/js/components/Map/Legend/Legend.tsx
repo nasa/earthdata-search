@@ -1,7 +1,7 @@
 import React from 'react'
 
 import LayerPicker from '../LayerPicker/LayerPicker'
-import { ImageryLayers } from '../../types/sharedTypes'
+import { ImageryLayers } from '../../../types/sharedTypes'
 
 import './Legend.scss'
 
