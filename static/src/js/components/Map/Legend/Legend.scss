@@ -1,0 +1,18 @@
+@use '../../../../css/utils';
+
+.legend {
+  position: relative;
+  margin-top: 0.5rem;
+  overflow: hidden;
+  background-color: utils.$color__spacesuit-white;
+  box-shadow: 0 0 10px rgba(utils.$color__carbon-black, 0.3);
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.2s ease;
+
+  .panels--hide-meta + .panels__focused-meta & {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+}

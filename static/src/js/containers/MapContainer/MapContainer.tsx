@@ -32,7 +32,7 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 import projectionCodes from '../../constants/projectionCodes'
 
 import Map from '../../components/Map/Map'
-import { Colormap } from '../../components/Legend/Legend'
+import { Colormap } from '../../components/ColorMap/ColorMap'
 
 import {
   backgroundGranulePointStyle,
@@ -62,6 +62,8 @@ import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 
 import type {
+  ImageryLayers,
+  ImageryLayerItem,
   GibsData,
   MapGranule,
   ProjectionCode,
@@ -90,23 +92,21 @@ export const mapStateToProps = (state) => ({
   drawingNewLayer: state.ui.map.drawingNewLayer
 })
 
-type ColormapMetadata = {
-  /** The colormap metadata by GIBS product name */
-  [key: string]: {
-    /** The colormap data */
-    colorMapData?: Colormap
-    /** Is the colormap errored */
-    isErrored?: boolean
-    /** Is the colormap loading */
-    isLoading?: boolean
-    /** Is the colormap loaded */
-    isLoaded?: boolean
-  }
-}
-
 interface MapContainerProps {
   /** The colormaps metadata */
-  colormapsMetadata: ColormapMetadata
+  colormapsMetadata: {
+    /** The colormap metadata by GIBS product name */
+    [key: string]: {
+      /** The colormap data */
+      colorMapData?: Colormap
+      /** Is the colormap errored */
+      isErrored?: boolean
+      /** Is the colormap loading */
+      isLoading?: boolean
+      /** Is the colormap loaded */
+      isLoaded?: boolean
+    }
+  }
   /** The display spatial polygon warning flag */
   displaySpatialPolygonWarning: boolean
   /** The drawing new layer flag */
@@ -163,7 +163,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     setStartDrawing,
     shapefile,
     showMbr,
-    startDrawing
+    startDrawing,
+    setMapLayers
   } = useEdscStore((state) => ({
     panelsWidth: state.ui.panels.panelsWidth,
     sidebarWidth: state.ui.panels.sidebarWidth,
@@ -179,7 +180,8 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     setStartDrawing: state.home.setStartDrawing,
     shapefile: state.shapefile,
     showMbr: state.map.showMbr,
-    startDrawing: state.home.startDrawing
+    startDrawing: state.home.startDrawing,
+    setMapLayers: state.map.setMapLayers
   }))
 
   const nlpCollection = useEdscStore(getNlpCollection)
@@ -192,6 +194,17 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
   const granules = useEdscStore(getGranules)
   const granulesById = useEdscStore(getGranulesById)
+
+  // Get the layers from the Zustand store
+  const mapLayers = useEdscStore(
+    (state) => (focusedCollectionId ? state.map.mapLayers[focusedCollectionId] || [] : [])
+  )
+
+  const {
+    toggleLayerVisibility,
+    setMapLayersOrder,
+    setLayerOpacity
+  } = useEdscStore((state) => state.map)
 
   // Default the granuleMetadata to the granulesById. These are the granules we want to show
   // on the search page
@@ -362,35 +375,68 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   }, [setStartDrawing])
 
   const { tags } = focusedCollectionMetadata
-  const [gibsTag] = getValueForTag('gibs', tags) || []
+  // Update the layers in the Zustand store when GIBS tags are available
+  useEffect(() => {
+    if (focusedCollectionId && tags) {
+      const gibsTagsFromMetadata = getValueForTag('gibs', tags) || []
+      if (gibsTagsFromMetadata.length > 0) {
+        setMapLayers(focusedCollectionId, gibsTagsFromMetadata)
+      }
+    }
+  }, [focusedCollectionId, tags, setMapLayers])
 
-  // Get the colormap data for the currently focused collection
-  const colorMapState: ColormapMetadata = useMemo(() => {
-    let colorMapData = {}
+  // Helper function to get GIBS tags available for the current projection
+  const getLayersForProjection = useCallback(() => {
+    if (!mapLayers) return []
 
+    return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
+  }, [mapLayers, projection])
+
+  const imageryLayers: ImageryLayers = useMemo(() => {
+    const layersObject: ImageryLayers = {
+      layerData: [],
+      toggleLayerVisibility,
+      setMapLayersOrder,
+      setLayerOpacity
+    }
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
-    if (gibsTag && hasGibsLayerForProjection(gibsTag, projection)) {
-      const { product } = gibsTag
-      colorMapData = colormapsMetadata[product] || {}
+    const layersForProjection = getLayersForProjection()
+    if (layersForProjection.length > 0) {
+      // Get colormap data for all available GIBS tags
+      layersForProjection.forEach((layer) => {
+        const { product } = layer
+        const productColormap = colormapsMetadata[product]
+
+        if (productColormap && productColormap.colorMapData) {
+          // Store colormap data by product name
+          layersObject.layerData.push({
+            ...layer,
+            colormap: productColormap.colorMapData
+          } as ImageryLayerItem)
+        }
+      })
     }
 
-    return colorMapData
-  }, [gibsTag, colormapsMetadata, projection])
+    return layersObject
+  }, [mapLayers, colormapsMetadata, projection, getLayersForProjection])
 
-  const { colorMapData: colorMap = {} } = colorMapState
-
+  // Extract the actual colormap data from the state
   // Get GIBS data to pass to the map within each granule
-  let gibsData: Partial<GibsData> = {}
-  if (gibsTag) {
+  const layersForProjection = getLayersForProjection()
+  const layerDataArray: Partial<GibsData>[] = []
+
+  layersForProjection.forEach((layer) => {
     const {
       antarctic_resolution: antarcticResolution,
       arctic_resolution: arcticResolution,
       format,
       geographic_resolution: geographicResolution,
       layerPeriod,
-      product
-    } = gibsTag
-
+      product,
+      title,
+      isVisible,
+      opacity: layerOpacity
+    } = layer
     let resolution
     if (projection === projectionCodes.antarctic) {
       resolution = antarcticResolution
@@ -400,13 +446,16 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       resolution = geographicResolution
     }
 
-    gibsData = {
+    layerDataArray.push({
       format,
       layerPeriod,
       product,
-      resolution
-    }
-  }
+      title,
+      resolution,
+      visible: isVisible,
+      opacity: layerOpacity
+    })
+  })
 
   // Added and removed granule ids for the focused collection are used to apply different
   // styles to the granules. Granules that are added are drawn with a regular style, while
@@ -473,24 +522,30 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
           : deemphisizedGranuleStyle(index)
       }
 
-      let granuleGibsData: Partial<GibsData> | undefined
+      const granuleGibsData: Partial<GibsData>[] = []
 
-      if (gibsTag) {
-        const gibsTime = gibsData.layerPeriod?.toLowerCase() === 'subdaily' ? timeStart : timeStart.substring(0, 10)
+      if (mapLayers.length > 0 && layerDataArray.length > 0) {
+        // Create GIBS data for each available GIBS layer
+        layerDataArray.forEach((layerDataItem) => {
+          // If the GIBS layer is "subdaily", use the full timeStart (date and time).
+          // Otherwise, use only the date part of timeStart.
+          const gibsTime = layerDataItem.layerPeriod?.toLowerCase() === 'subdaily'
+            ? timeStart
+            : timeStart.substring(0, 10)
 
-        granuleGibsData = {
-          ...gibsData,
-          opacity: shouldDrawRegularStyle ? 1 : 0.5,
-          time: gibsTime,
-          url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
-        }
+          granuleGibsData.push({
+            ...layerDataItem,
+            time: gibsTime,
+            url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
+          })
+        })
       }
 
       granulesToDraw.push({
         backgroundGranuleStyle: granule.backgroundGranuleStyle,
         collectionId,
         formattedTemporal,
-        gibsData: granuleGibsData as GibsData,
+        gibsData: granuleGibsData as GibsData[],
         granuleId,
         granuleStyle: granule.granuleStyle,
         highlightedStyle: granule.highlightedStyle,
@@ -527,11 +582,16 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   // If the panels or sidebar are not visible, don't render the map
   if (panelsWidth === 0 || sidebarWidth === 0) return null
 
+  const mapLayersKey = Buffer.from(JSON.stringify(mapLayers)).toString('base64')
   // Generate a key based on the granules that need to be drawn on the map, and the gibsTagProduct.
   // `granulesKey` is used to prevent unnecessary rerenders in the Map component.
+  // Append map layers string to the granulesKey to ensure rerenders when the map layers change (Opacity, Visibility)
   const granulesKey = Buffer.from(JSON.stringify({
-    gibsTagProduct: gibsTag?.product || '',
-    granulesToDraw: granulesToDraw.map((granule) => granule.granuleId)
+    mapLayersKey,
+    granulesToDraw: granulesToDraw.map((granule) => granule.granuleId),
+    nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
+    addedGranuleIds: allAddedGranuleIds,
+    removedGranuleIds: allRemovedGranuleIds
   })).toString('base64')
 
   return (
@@ -539,7 +599,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       base={base}
       center={center}
       setGranuleId={setGranuleId}
-      colorMap={colorMap as Colormap}
+      imageryLayers={imageryLayers}
       focusedCollectionId={focusedCollectionId!}
       focusedGranuleId={focusedGranuleId}
       granules={granulesToDraw}

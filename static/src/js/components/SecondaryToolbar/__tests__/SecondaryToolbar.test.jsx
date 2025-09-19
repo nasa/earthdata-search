@@ -70,7 +70,7 @@ describe('SecondaryToolbar component', () => {
         await user.hover(loginButton)
       })
 
-      expect(screen.getByText('Log In with Earthdata Login')).toBeVisible()
+      expect(await screen.findByText('Log In with Earthdata Login')).toBeVisible()
     })
 
     test('should not render the user dropdown', () => {
@@ -278,7 +278,7 @@ describe('SecondaryToolbar component', () => {
         await user.hover(screen.getByRole('button', { name: 'My Project' }))
       })
 
-      expect(screen.getByText('View your project')).toBeVisible()
+      expect(await screen.findByText('View your project')).toBeVisible()
     })
   })
 
@@ -324,7 +324,7 @@ describe('SecondaryToolbar component', () => {
         await user.hover(saveProjectButton)
       })
 
-      expect(screen.getByText('Create a project with your current search')).toBeVisible()
+      expect(await screen.findByText('Create a project with your current search')).toBeVisible()
     })
 
     test('clicking the save button sets the state and calls onUpdateProjectName', async () => {
@@ -426,7 +426,7 @@ describe('SecondaryToolbar component', () => {
         await user.hover(tourButton)
       })
 
-      expect(screen.getByText('Take a tour to learn how to use Earthdata Search')).toBeVisible()
+      expect(await screen.findByText('Take a tour to learn how to use Earthdata Search')).toBeVisible()
     })
   })
 })

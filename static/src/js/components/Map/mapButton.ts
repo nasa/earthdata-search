@@ -1,7 +1,7 @@
 import './mapButton.scss'
 
 /**
- * Creats a button element with the provided class name and title
+ * Creates a button element with the provided class name and title
  * and adds Bootstrap tooltip attributes to it.
  * @param {Object} params
  * @param {HTMLElement} params.button - The button element to use (optional)
@@ -33,7 +33,7 @@ const mapButton = ({
   }
 
   // Set the button attributes
-  buttonToReturn.className = `map-button d-block border-0 bg-white ${className}`
+  buttonToReturn.className = `map-button border-0 ${className}`
   buttonToReturn.ariaLabel = title
   buttonToReturn.title = title
 
@@ -42,6 +42,7 @@ const mapButton = ({
     buttonToReturn.setAttribute('data-bs-toggle', 'tooltip')
     buttonToReturn.setAttribute('data-bs-title', title)
     buttonToReturn.setAttribute('data-bs-placement', 'left')
+    buttonToReturn.setAttribute('data-bs-delay', '{"show":250,"hide":0}')
   }
 
   return buttonToReturn

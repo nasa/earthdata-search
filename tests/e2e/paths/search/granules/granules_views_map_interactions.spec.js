@@ -80,7 +80,7 @@ test.describe('When clicking on a granule on the map', () => {
 
     const baseTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
 
-    await page.goto(`search/granules?p=${conceptId}&pg[0][v]=f&q=${conceptId}&tl=1730131646!3!!&lat=35.35040540820201&long=150.140625&zoom=4`)
+    await page.goto(`/search/granules?p=${conceptId}&pg[0][v]=f&pg[0][gsk]=-start_date&q=${conceptId}&tl=1730131646!3!!&lat=35.35040540820201&long=150.140625&zoom=4`)
 
     // Wait for the map to load
     await baseTilePromise
@@ -89,6 +89,9 @@ test.describe('When clicking on a granule on the map', () => {
   test.describe('When clicking on a map granule while in the granule list view', () => {
     test.beforeEach(async ({ page }) => {
       const zoomedOutTilePromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
+
+      // Hide the layer picker
+      await page.keyboard.press('l')
 
       await page.locator('.map').click({
         force: true,
@@ -153,6 +156,9 @@ test.describe('When clicking on a granule on the map', () => {
 
       // Click on the granule on the map
       const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/0/)
+
+      // Hide the layer picker
+      await page.keyboard.press('l')
 
       await page.locator('.map').click({
         force: true,

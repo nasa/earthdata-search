@@ -30,6 +30,78 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
         }
       })
     },
+    // Store layers for each collection
+    mapLayers: {},
+    setMapLayers: (collectionId, layers: Array<{
+      product: string
+      title?: string
+      format?: string
+      layerPeriod?: string
+      antarctic_resolution?: string
+      arctic_resolution?: string
+      geographic_resolution?: string
+      antarctic?: boolean
+      arctic?: boolean
+      geographic?: boolean
+    }>) => {
+      set((state) => {
+        // Set default visibility: first layer visible, rest hidden
+        const layersWithVisibility = layers.map((layer, index) => ({
+          ...layer,
+          isVisible: index === 0,
+          opacity: 1.0
+        }))
+        state.map.mapLayers[collectionId] = layersWithVisibility
+      })
+    },
+    toggleLayerVisibility: (collectionId, productName) => {
+      set((state) => {
+        const collectionLayers = state.map.mapLayers[collectionId]
+        if (collectionLayers) {
+          const targetLayer = collectionLayers.find((layer) => layer.product === productName)
+          if (targetLayer) {
+            targetLayer.isVisible = !targetLayer.isVisible
+          }
+        }
+      })
+    },
+
+    /**
+     * Reorder layers when they are dragged and dropped
+     */
+    setMapLayersOrder: (collectionId, newOrder: Array<{
+      product: string
+      title?: string
+      format?: string
+      layerPeriod?: string
+      antarctic_resolution?: string
+      arctic_resolution?: string
+      geographic_resolution?: string
+      antarctic?: boolean
+      arctic?: boolean
+      geographic?: boolean
+      isVisible?: boolean
+      opacity?: number
+    }>) => {
+      set((state) => {
+        state.map.mapLayers[collectionId] = newOrder
+      })
+    },
+
+    /**
+     * Update the opacity of a specific layer
+     */
+    setLayerOpacity: (collectionId, productName, opacity) => {
+      set((state) => {
+        const collectionLayers = state.map.mapLayers[collectionId]
+        if (collectionLayers) {
+          const targetLayer = collectionLayers.find((layer) => layer.product === productName)
+          if (targetLayer) {
+            targetLayer.opacity = opacity
+          }
+        }
+      })
+    },
 
     showMbr: false,
     setShowMbr: (showMbr) => {
