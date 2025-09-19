@@ -91,7 +91,6 @@ export const ColorMap: React.FC<ColorMapProps> = ({
   const barRef = useRef<HTMLCanvasElement>(null)
 
   const [isFocused, setIsFocused] = useState(false)
-  const [focusColor, setFocusColor] = useState<string | null>(null)
   const [focusLabel, setFocusLabel] = useState<string | null>(null)
   const [colormapIsRendered, setColormapIsRendered] = useState(false)
 
@@ -122,7 +121,6 @@ export const ColorMap: React.FC<ColorMapProps> = ({
   }, [barRef.current, colorMap])
 
   const {
-    colors = [],
     labels = []
   } = colormapData
 
@@ -158,7 +156,6 @@ export const ColorMap: React.FC<ColorMapProps> = ({
 
     // Set the focus state visible as well as the label and color.
     setFocusLabel(labels[minMaxBoundedIndex])
-    setFocusColor(hexToRgba(colors[minMaxBoundedIndex]))
     setIsFocused(true)
   }
 
@@ -167,7 +164,6 @@ export const ColorMap: React.FC<ColorMapProps> = ({
    */
   const onMouseLeave = () => {
     // Reset the focus state values.
-    setFocusColor(null)
     setFocusLabel(null)
     setIsFocused(false)
   }
@@ -192,11 +188,6 @@ export const ColorMap: React.FC<ColorMapProps> = ({
           isFocused
             ? (
               <div className="colormap__focus">
-                <span
-                  className="colormap__focus-label-color"
-                  data-testid="legend-label-color"
-                  style={{ backgroundColor: focusColor || '' }}
-                />
                 <span
                   className="colormap__focus-label"
                   data-testid="legend-label"
