@@ -4,6 +4,7 @@ import { setupTests } from '../../../support/setupTests'
 import {
   interceptUnauthenticatedCollections
 } from '../../../support/interceptUnauthenticatedCollections'
+import { expectTitle } from '../../../support/expectTitle'
 
 import commonBody from './__mocks__/common.body.json'
 import commonHeaders from './__mocks__/common.headers.json'
@@ -16,12 +17,6 @@ import whatIsThisImageCollections from './__mocks__/what-is-this-image-collectio
 import whatIsThisImageGranules from './__mocks__/what-is-this-image-granules.body.json'
 import whatIsThisImageGranulesHeaders from './__mocks__/what-is-this-image-granules.headers.json'
 import whatIsThisImageGraphQlBody from './__mocks__/what-is-this-image-collections.graphql.body.json'
-
-const expectTitle = async (page, title) => {
-  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-  await expect(page).toHaveTitle(new RegExp(`(?:\\[[A-Z]+\\] )?${escaped}$`))
-}
 
 test.describe('Home Page', () => {
   test.beforeEach(async ({ page, context, browserName }) => {

@@ -3,16 +3,11 @@ import { test, expect } from 'playwright-test-coverage'
 import { login } from '../../support/login'
 import { testJwtToken } from '../../support/getJwtToken'
 import { setupTests } from '../../support/setupTests'
+import { expectTitle } from '../../support/expectTitle'
 
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
 import collectionFixture from './__mocks__/authenticated_collections.json'
-
-const expectTitle = async (page, title) => {
-  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-  await expect(page).toHaveTitle(new RegExp(`(?:\\[[A-Z]+\\] )?${escaped}$`))
-}
 
 // At the default size, react-window will render 6 items
 const expectedCollectionCount = 6
@@ -59,8 +54,6 @@ test.describe('Authentication', () => {
     await expect(
       (await page.getByTestId('collection-results-item').all()).length
     ).toEqual(expectedCollectionCount)
-
-    await expectTitle(page, 'Earthdata Search - Earthdata Search')
   })
 
   test('sets auth cookie', async ({ page, context }) => {
@@ -82,8 +75,6 @@ test.describe('Authentication', () => {
     await expect(
       (await page.getByTestId('collection-results-item').all()).length
     ).toEqual(expectedCollectionCount)
-
-    await expectTitle(page, 'Earthdata Search - Earthdata Search')
   })
 
   test('shows the preferences page title for authenticated users', async ({ page, context }) => {

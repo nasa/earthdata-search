@@ -9,12 +9,7 @@ import retrieval from './__mocks__/retrieval.json'
 import { setupTests } from '../../support/setupTests'
 import { login } from '../../support/login'
 import { getAuthHeaders } from '../../support/getAuthHeaders'
-
-const expectTitle = async (page, title) => {
-  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-  await expect(page).toHaveTitle(new RegExp(`(?:\\[[A-Z]+\\] )?${escaped}$`))
-}
+import { expectTitle } from '../../support/expectTitle'
 
 test.describe('Download spec', () => {
   test('get to the download page', async ({ page, context }) => {

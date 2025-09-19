@@ -4,6 +4,7 @@ import { commafy } from '../../../../static/src/js/util/commafy'
 import { pluralize } from '../../../../static/src/js/util/pluralize'
 
 import { setupTests } from '../../../support/setupTests'
+import { expectTitle } from '../../../support/expectTitle'
 
 import awsCloudBody from './__mocks__/aws_cloud.body.json'
 import commonBody from './__mocks__/common.body.json'
@@ -30,12 +31,6 @@ import spatialPolygonBody from './__mocks__/spatial_polygon.body.json'
 import temporalBody from './__mocks__/temporal.body.json'
 import temporalRecurringBody from './__mocks__/temporal_recurring.body.json'
 import tilingSystemBody from './__mocks__/tiling_system.body.json'
-
-const expectTitle = async (page, title) => {
-  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
-  await expect(page).toHaveTitle(new RegExp(`(?:\\[[A-Z]+\\] )?${escaped}$`))
-}
 
 const screenshotClip = {
   x: 950,
