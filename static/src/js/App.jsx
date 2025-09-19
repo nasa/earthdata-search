@@ -78,6 +78,10 @@ const browserRouter = createBrowserRouter([
         element: <PortalContainer />
       },
       {
+        path: '/portal/:portalId/*',
+        element: <PortalContainer />
+      },
+      {
         path: '/search/*',
         element: (
           <Suspense fallback={<Spinner type="dots" className="root__spinner spinner spinner--dots spinner--small" />}>

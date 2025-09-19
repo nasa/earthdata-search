@@ -12,6 +12,8 @@ import HistoryContainer from '../../containers/HistoryContainer/HistoryContainer
 // @ts-expect-error The file does not have types
 import MetricsContainer from '../../containers/MetricsContainer/MetricsContainer'
 // @ts-expect-error The file does not have types
+import PortalContainer from '../../containers/PortalContainer/PortalContainer'
+// @ts-expect-error The file does not have types
 import SecondaryToolbarContainer from '../../containers/SecondaryToolbarContainer/SecondaryToolbarContainer'
 // @ts-expect-error The file does not have types
 import UrlQueryContainer from '../../containers/UrlQueryContainer/UrlQueryContainer'
@@ -20,6 +22,7 @@ import WrappingContainer from '../../containers/WrappingContainer/WrappingContai
 
 const AppLayout = () => (
   <>
+    <PortalContainer />
     <HistoryContainer />
     <MetricsContainer />
     <ErrorBannerContainer />
