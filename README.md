@@ -172,7 +172,7 @@ To invoke lambdas locally we must create a stringified JSON file with the order 
 
 Run the application with optionals on then use
 
-npm run invoke-local generateColorMaps ./tmp generate_colormaps.json
+    npm run invoke-local generateColorMaps ./tmp/generate_colormaps.json
 
 with a JSON object of
 

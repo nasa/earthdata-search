@@ -25,7 +25,7 @@ import { projectionConfigs } from '../../util/map/crs'
 // @ts-expect-error The file does not have types
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
-
+import buildGibsData from '../../util/map/buildGibsData'
 // @ts-expect-error The file does not have types
 import { getValueForTag } from '../../../../../sharedUtils/tags'
 
@@ -393,7 +393,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   }, [mapLayers, projection])
 
   const imageryLayers: ImageryLayers = useMemo(() => {
-    const layersObject: ImageryLayers = {
+    const imageryLayersObject: ImageryLayers = {
       layerData: [],
       toggleLayerVisibility,
       setMapLayersOrder,
@@ -409,7 +409,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
         if (productColormap && productColormap.colorMapData) {
           // Store colormap data by product name
-          layersObject.layerData.push({
+          imageryLayersObject.layerData.push({
             ...layer,
             colormap: productColormap.colorMapData
           } as ImageryLayerItem)
@@ -417,45 +417,12 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       })
     }
 
-    return layersObject
+    return imageryLayersObject
   }, [mapLayers, colormapsMetadata, projection, getLayersForProjection])
 
   // Extract the actual colormap data from the state
   // Get GIBS data to pass to the map within each granule
   const layersForProjection = getLayersForProjection()
-  const layerDataArray: Partial<GibsData>[] = []
-
-  layersForProjection.forEach((layer) => {
-    const {
-      antarctic_resolution: antarcticResolution,
-      arctic_resolution: arcticResolution,
-      format,
-      geographic_resolution: geographicResolution,
-      layerPeriod,
-      product,
-      title,
-      isVisible,
-      opacity: layerOpacity
-    } = layer
-    let resolution
-    if (projection === projectionCodes.antarctic) {
-      resolution = antarcticResolution
-    } else if (projection === projectionCodes.arctic) {
-      resolution = arcticResolution
-    } else {
-      resolution = geographicResolution
-    }
-
-    layerDataArray.push({
-      format,
-      layerPeriod,
-      product,
-      title,
-      resolution,
-      visible: isVisible,
-      opacity: layerOpacity
-    })
-  })
 
   // Added and removed granule ids for the focused collection are used to apply different
   // styles to the granules. Granules that are added are drawn with a regular style, while
@@ -522,30 +489,14 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
           : deemphisizedGranuleStyle(index)
       }
 
-      const granuleGibsData: Partial<GibsData>[] = []
-
-      if (mapLayers.length > 0 && layerDataArray.length > 0) {
-        // Create GIBS data for each available GIBS layer
-        layerDataArray.forEach((layerDataItem) => {
-          // If the GIBS layer is "subdaily", use the full timeStart (date and time).
-          // Otherwise, use only the date part of timeStart.
-          const gibsTime = layerDataItem.layerPeriod?.toLowerCase() === 'subdaily'
-            ? timeStart
-            : timeStart.substring(0, 10)
-
-          granuleGibsData.push({
-            ...layerDataItem,
-            time: gibsTime,
-            url: `https://gibs-{a-c}.earthdata.nasa.gov/wmts/${projection}/best/wmts.cgi?TIME=${gibsTime}`
-          })
-        })
-      }
+      // Create GIBS data for each available GIBS layer using the new function
+      const granuleGibsData = buildGibsData(layersForProjection, projection, timeStart)
 
       granulesToDraw.push({
         backgroundGranuleStyle: granule.backgroundGranuleStyle,
         collectionId,
         formattedTemporal,
-        gibsData: granuleGibsData as GibsData[],
+        gibsData: granuleGibsData,
         granuleId,
         granuleStyle: granule.granuleStyle,
         highlightedStyle: granule.highlightedStyle,
@@ -588,10 +539,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   // Append map layers string to the granulesKey to ensure rerenders when the map layers change (Opacity, Visibility)
   const granulesKey = Buffer.from(JSON.stringify({
     mapLayersKey,
-    granulesToDraw: granulesToDraw.map((granule) => granule.granuleId),
-    nonExcludedGranuleIds: Object.keys(nonExcludedGranules),
-    addedGranuleIds: allAddedGranuleIds,
-    removedGranuleIds: allRemovedGranuleIds
+    granulesToDraw: granulesToDraw.map((granule) => granule.granuleId)
   })).toString('base64')
 
   return (
