@@ -14,10 +14,8 @@ const PortalTitle = () => {
   const portal = useEdscStore((state) => state.portal)
 
   if (pathname !== '/search') return null
-  if (!portal) return null
 
-  const { portalId, title = {} } = portal
-  if (!portalId || isDefaultPortal(portalId)) return null
+  const { portalId, title = {} } = portal || {}
 
   const { defaultPortal, env } = getApplicationConfig()
   const defaultPortalConfig = availablePortals[defaultPortal]
@@ -27,10 +25,16 @@ const PortalTitle = () => {
   const { title: defaultTitle = {} } = defaultConfig
   const { primary: defaultPrimaryTitle = 'Earthdata Search' } = defaultTitle
 
-  const { primary: portalPrimaryTitle } = title
-  const formattedPortalTitle = portalPrimaryTitle || startCase(portalId)
-  const envPrefix = env && env.toUpperCase() !== 'PROD' ? `[${env.toUpperCase()}] ` : ''
-  const pageTitle = `${envPrefix}${defaultPrimaryTitle} - ${formattedPortalTitle} Portal`
+  const envUpper = env ? env.toUpperCase() : ''
+  const envPrefix = envUpper && envUpper !== 'PROD' ? `[${envUpper}] ` : ''
+
+  let pageTitle = `${envPrefix}${defaultPrimaryTitle}`
+
+  if (portalId && !isDefaultPortal(portalId)) {
+    const { primary: portalPrimaryTitle } = title
+    const formattedPortalTitle = portalPrimaryTitle || startCase(portalId)
+    pageTitle = `${pageTitle} - ${formattedPortalTitle} Portal`
+  }
 
   return (
     <Helmet titleTemplate="%s">
