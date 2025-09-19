@@ -1,7 +1,7 @@
 import './mapButton.scss'
 
 /**
- * Creats a button element with the provided class name and title
+ * Creates a button element with the provided class name and title
  * and adds Bootstrap tooltip attributes to it.
  * @param {Object} params
  * @param {HTMLElement} params.button - The button element to use (optional)

@@ -49,7 +49,7 @@ import {
 // @ts-expect-error The file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
-import LegendControl from './LegendControl'
+import LegendControl from './LegendControl/LegendControl'
 import MapControls from './MapControls'
 
 import useEdscStore from '../../zustand/useEdscStore'

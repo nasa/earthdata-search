@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import Control from 'ol/control/Control'
 
 import Legend from '../Legend/Legend'
-import { ImageryLayers } from '../../types/sharedTypes'
+import { ImageryLayers } from '../../../types/sharedTypes'
 
 import './LegendControl.scss'
 
@@ -42,45 +42,6 @@ class LegendControl extends Control {
       this.element
     )
   }
-
-  // TODO this should probably be private
-  // public render() {
-  //   const isEmpty = this.granuleImageryLayerGroup?.getLayers().getLength() === 0
-  //   if (isEmpty) {
-  //     // Don't render the legend if the granule imagery layer group is empty
-  //     console.log('granule imagery layer group is empty')
-
-  //     return
-  //   }
-
-  //   // @ts-expect-error We are still on React 17
-  //   console.log('🚀 ~ file: LegendControl.tsx:68 ~ LegendControl ~ imageryLayers:', this.imageryLayers)
-  //   ReactDOM.render(
-  //     <Legend
-  //       collectionId={this.collectionId}
-  //       imageryLayers={this.imageryLayers}
-  //       granuleImageryLayerGroup={this.granuleImageryLayerGroup}
-  //     />,
-  //     this.element
-  //   )
-  // }
-
-  // update(options: Partial<LegendControlOptions>) {
-  //   console.log('running update in legend control')
-  //   if (options.collectionId !== undefined) {
-  //     this.collectionId = options.collectionId
-  //   }
-
-  //   if (options.colorMap !== undefined) {
-  //     this.colorMap = options.colorMap
-  //   }
-
-  //   if (options.granuleImageryLayerGroup !== undefined) {
-  //     this.granuleImageryLayerGroup = options.granuleImageryLayerGroup
-  //   }
-
-  //   this.render()
-  // }
 }
 
 export default LegendControl

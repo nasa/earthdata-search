@@ -20,8 +20,8 @@ import Tooltip from 'react-bootstrap/Tooltip'
 // @ts-expect-error: This file does not have types
 import { Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-import Button from '../Button/Button'
-import ColorMap, { Colormap } from '../ColorMap/ColorMap'
+import Button from '../../Button/Button'
+import ColorMap, { Colormap } from '../../ColorMap/ColorMap'
 
 interface DraggableLayerItemProps {
   layer: {
