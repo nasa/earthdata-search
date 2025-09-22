@@ -246,20 +246,19 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           clip: screenshotClip
         })
 
-        // Find the layer items and drag handles
-        const firstLayerItem = page.locator('.layer-picker__layer-item').nth(0)
-        // Grab the drag handle for the second layer
-        const secondLayerDragHandle = page.getByRole('button', { name: 'Drag to reorder layer' }).nth(3)
+        // Grab the layer items
+        const firstLayerTitle = page.getByText('Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)')
+        const secondLayerTitle = page.getByText('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
 
         // Drag the second layer to the top (above the first layer)
-        await secondLayerDragHandle.dragTo(firstLayerItem)
+        await secondLayerTitle.dragTo(firstLayerTitle)
 
         // Verify the layers have been reordered by checking the layer titles
-        const layerItems = page.locator('.layer-picker__layer-item')
-        const firstLayerTitle = await layerItems.first().locator('h3').textContent()
+        const layerItems = page.locator('.layer-picker__layers')
+        const firstLayerHeader = await layerItems.first().locator('h3').first().textContent()
 
         // The second layer (Cloud Pressure Total) should now be first in the list
-        expect(firstLayerTitle).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
+        expect(firstLayerHeader).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
 
         // Take a screenshot to verify the reordering
         await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {

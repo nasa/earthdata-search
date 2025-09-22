@@ -14,6 +14,7 @@
       }
     }
 
+    // These are used to override styles on openlayers
     &--hide {
       display: none !important;
 
@@ -26,7 +27,7 @@
   &__panel {
     position: absolute;
     bottom: 0;
-    right: 40px;
+    right: 2.5rem;
     opacity: 0;
     visibility: hidden;
     width: 18rem;

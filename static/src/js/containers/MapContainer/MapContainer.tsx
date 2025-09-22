@@ -64,7 +64,6 @@ import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
 import type {
   ImageryLayers,
   ImageryLayerItem,
-  GibsData,
   MapGranule,
   ProjectionCode,
   SpatialSearch

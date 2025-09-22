@@ -6,6 +6,7 @@ import React, {
 } from 'react'
 import hexToRgba from 'hex-to-rgba'
 import classNames from 'classnames'
+
 import './ColorMap.scss'
 
 /**
