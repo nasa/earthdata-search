@@ -2,7 +2,6 @@ import { screen, act } from '@testing-library/react'
 
 import setupTest from '../../../../../../../jestConfigs/setupTest'
 import LayerPicker from '../LayerPicker'
-import useEdscStore from '../../../../zustand/useEdscStore'
 
 const mockCollectionId = 'C123451234-EDSC'
 
@@ -76,23 +75,23 @@ describe('LayerPicker', () => {
 
   describe('Layer Visibility Toggling', () => {
     test('calls toggleLayerVisibility when visibility button is clicked', async () => {
-      const { user } = setup()
+      const { user, zustandState } = setup()
       const toggleButton = screen.getByRole('button', { name: 'Show Precipitation Rate' })
 
       await act(async () => {
         await user.click(toggleButton)
       })
 
-      const zustandState = useEdscStore.getState()
       const { map } = zustandState
       const { toggleLayerVisibility } = map
       expect(toggleLayerVisibility).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate')
+      expect(toggleLayerVisibility).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('Layer Opacity Updates', () => {
     test('calls setLayerOpacity when opacity slider is released', async () => {
-      const { user } = setup()
+      const { user, zustandState } = setup()
       const settingsButton = screen.getByRole('button', { name: 'Adjust settings for Precipitation Rate' })
 
       await act(async () => {
@@ -102,10 +101,10 @@ describe('LayerPicker', () => {
       const opacitySlider = screen.getByRole('slider')
       await user.click(opacitySlider)
 
-      const zustandState = useEdscStore.getState()
       const { map } = zustandState
       const { setLayerOpacity } = map
       expect(setLayerOpacity).toHaveBeenCalledWith(mockCollectionId, 'IMERG_Precipitation_Rate', 1)
+      expect(setLayerOpacity).toHaveBeenCalledTimes(1)
     })
   })
 
@@ -134,7 +133,9 @@ describe('LayerPicker', () => {
 
       // Verify setMapLayersOrder was called with the reordered layers
       // After dragging first layer to second position send request with updated order
-      expect(mockSetMapLayersOrder).toHaveBeenCalledWith(
+      const { map } = zustandState
+      const { setMapLayersOrder } = map
+      expect(setMapLayersOrder).toHaveBeenCalledWith(
         mockCollectionId,
         [{
           colormap: {},
@@ -150,6 +151,8 @@ describe('LayerPicker', () => {
           title: 'Precipitation Rate'
         }]
       )
+
+      expect(setMapLayersOrder).toHaveBeenCalledTimes(1)
     })
   })
 })

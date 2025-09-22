@@ -77,7 +77,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Point' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Point' }).click()
 
           // Add the point to the map
           await page.mouse.click(1000, 500)
@@ -168,7 +169,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Point' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Point' }).click()
 
           // Enter the spatial point
           await page.getByTestId('spatial-display_point').focus()
@@ -291,10 +293,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', {
-            name: 'Circle',
-            exact: true
-          }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Circle' }).click()
 
           // Add the circle to the map
           await page.mouse.click(1000, 500)
@@ -308,7 +308,7 @@ test.describe('Map: Spatial interactions', () => {
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/195\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
-          // was fulfilled correctly with the succesfull paramCheck
+          // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
           // Draws the spatial on the map
@@ -389,10 +389,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the circle spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', {
-            name: 'Circle',
-            exact: true
-          }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Circle' }).click()
 
           // Enter the circle values
           await page.getByTestId('spatial-display_circle-center').focus()
@@ -522,7 +520,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Rectangle' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Rectangle' }).click()
 
           // Add the bounding box to the map
           await page.mouse.click(1000, 500)
@@ -619,7 +618,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Rectangle' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Rectangle' }).click()
 
           // Enter the bounding box values
           await page.getByTestId('spatial-display_southwest-point').focus()
@@ -681,7 +681,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Rectangle' }).click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Rectangle' }).click()
 
           // Add the bounding box to the map
           await page.mouse.click(1000, 500)
@@ -750,7 +751,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Polygon' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Polygon' }).click()
 
           // Add the polygon to the map
           await page.mouse.click(1000, 500)
@@ -874,7 +876,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Polygon' }).click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Polygon' }).click()
 
           // Add the polygon to the map
           await page.mouse.click(1000, 500)
@@ -1085,7 +1088,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Point' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Point' }).click()
 
           // Add the point to the map
           await page.mouse.click(1000, 525)
@@ -1176,7 +1180,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the point spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Point' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Point' }).click()
 
           // Enter the spatial point
           await page.getByTestId('spatial-display_point').focus()
@@ -1387,7 +1392,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Rectangle' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Rectangle' }).click()
 
           // Add the bounding box to the map
           await page.mouse.click(1000, 525)
@@ -1484,7 +1490,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the bounding box spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Rectangle' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Rectangle' }).click()
 
           // Enter the bounding box values
           await page.getByTestId('spatial-display_southwest-point').focus()
@@ -1541,7 +1548,8 @@ test.describe('Map: Spatial interactions', () => {
 
           // Select the polygon spatial type
           await page.getByRole('button', { name: 'spatial-selection-dropdown' }).click()
-          await page.getByRole('button', { name: 'Polygon' }).first().click()
+          const spatialDropdownMenu = page.locator('.spatial-selection-dropdown__menu')
+          await spatialDropdownMenu.getByRole('button', { name: 'Polygon' }).click()
 
           // Add the polygon to the map
           await page.mouse.click(1000, 525)
