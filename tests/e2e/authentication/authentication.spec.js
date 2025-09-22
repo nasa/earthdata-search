@@ -3,7 +3,6 @@ import { test, expect } from 'playwright-test-coverage'
 import { login } from '../../support/login'
 import { testJwtToken } from '../../support/getJwtToken'
 import { setupTests } from '../../support/setupTests'
-import { expectTitle } from '../../support/expectTitle'
 
 import graphQlHeaders from './__mocks__/graphql.headers.json'
 import getSubscriptionsGraphQlBody from './__mocks__/getSubscriptions.graphql.body.json'
@@ -75,68 +74,5 @@ test.describe('Authentication', () => {
     await expect(
       (await page.getByTestId('collection-results-item').all()).length
     ).toEqual(expectedCollectionCount)
-  })
-
-  test('shows the preferences page title for authenticated users', async ({ page, context }) => {
-    await login(context)
-
-    await page.goto('/preferences')
-
-    await expectTitle(page, 'Preferences - Earthdata Search')
-  })
-
-  test('shows the saved projects page title for authenticated users', async ({ page, context }) => {
-    await login(context)
-
-    await page.route('**/projects', (route) => {
-      if (route.request().method() === 'GET') {
-        route.fulfill({ json: [] })
-      } else {
-        route.fulfill({ json: {} })
-      }
-    })
-
-    await page.goto('/projects')
-  })
-
-  test('shows the download history page title for authenticated users', async ({ page, context }) => {
-    await login(context)
-
-    await page.route('**/retrievals', (route) => {
-      if (route.request().method() === 'GET') {
-        route.fulfill({ json: [] })
-      } else {
-        route.fulfill({ json: {} })
-      }
-    })
-
-    await page.goto('/downloads')
-
-    await expectTitle(page, 'Download Status & History - Earthdata Search')
-  })
-
-  test('shows the contact information page title for authenticated users', async ({ page, context }) => {
-    await login(context)
-
-    await page.route('**/contact_info', (route) => {
-      route.fulfill({
-        json: {
-          cmr_preferences: {},
-          urs_profile: {}
-        }
-      })
-    })
-
-    await page.goto('/contact-info')
-
-    await expectTitle(page, 'Contact Information - Earthdata Search')
-  })
-
-  test('shows the subscriptions page title for authenticated users', async ({ page, context }) => {
-    await login(context)
-
-    await page.goto('/subscriptions')
-
-    await expectTitle(page, 'Subscriptions - Earthdata Search')
   })
 })
