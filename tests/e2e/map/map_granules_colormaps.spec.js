@@ -156,8 +156,7 @@ test.describe('Map: Colormap interactions', () => {
       test.describe('when visiting another collection with a colormap', () => {
         test('displays a new colormap @screenshot', async ({ page }) => {
           await page.getByTestId('collection-result-item_C1243477369-GES_DISC').click()
-
-          // Wait for the timeline to be visible
+          // Wait for the timeline to be visible as a proxy for the map being ready
           await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
@@ -176,6 +175,8 @@ test.describe('Map: Colormap interactions', () => {
       })
 
       test('does not show the colormap', async ({ page }) => {
+        // The legend should be removed if the imagery layers are empty
+        // and the legend control is not on the collection focused page
         await expect(page.getByTestId('legend')).not.toBeInViewport()
       })
 

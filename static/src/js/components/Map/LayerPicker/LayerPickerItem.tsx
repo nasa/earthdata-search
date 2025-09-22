@@ -194,13 +194,13 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
                 )
               }
             >
-              <span onPointerDown={
-                (event: React.PointerEvent) => {
-                  console.log('pointer down event is stopping propagation')
-                  event.stopPropagation()
-                  // Event.preventDefault()
+              <span
+                className="d-flex align-items-center"
+                onPointerDown={
+                  (event: React.PointerEvent) => {
+                    event.stopPropagation()
+                  }
                 }
-              }
               >
                 <Button
                   className="layer-picker-item__settings-button d-inline-flex p-0"
@@ -210,9 +210,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
                   tooltip="Adjust layer settings"
                   onPointerDown={
                     (event: React.PointerEvent) => {
-                      console.log('pointer down event is stopping propagation')
                       event.stopPropagation()
-                    // Event.preventDefault()
                     }
                   }
                 />

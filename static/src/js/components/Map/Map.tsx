@@ -948,15 +948,18 @@ const Map: React.FC<MapProps> = ({
       (control) => control instanceof LegendControl
     )
 
-    // Always remove existing legend control if present
-    // This is to ensure legend control is only added when it is needed
-    // such as when we switch to a projection without layers
-    if (legendControl) {
-      controls.remove(legendControl)
-    }
-
     // Add new legend control only if on focused collection page and it has layers
-    if (isFocusedCollectionPage && imageryLayers && imageryLayers.layerData.length > 0) {
+    // Update the legend control when the imagery layers change
+    // This helps ensure we have a reference to the legend control when we need to update it
+    // otherwise issues would occur where the scrollbar would go to the top of the layer picker
+    if (legendControl) {
+      console.log('update should be called')
+      legendControl.update({
+        collectionId: focusedCollectionId,
+        imageryLayers
+      })
+    } else if (isFocusedCollectionPage) {
+      // Add new legend control if it doesn't exist
       controls.push(
         new LegendControl({
           collectionId: focusedCollectionId,
@@ -964,7 +967,13 @@ const Map: React.FC<MapProps> = ({
         })
       )
     }
-  }, [isFocusedCollectionPage, imageryLayers])
+
+    if (!isFocusedCollectionPage && legendControl) {
+      // Remove the legend control if not on the collection focused page and it exists
+      console.log('removing legend control')
+      controls.remove(legendControl)
+    }
+  }, [isFocusedCollectionPage, imageryLayers, focusedCollectionId])
 
   // Update the map view when the panelsWidth changes
   useEffect(() => {
