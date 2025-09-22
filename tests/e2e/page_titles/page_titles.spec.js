@@ -3,10 +3,6 @@ import { test, expect } from 'playwright-test-coverage'
 import { setupTests } from '../../support/setupTests'
 import { login } from '../../support/login'
 
-const expectTitle = async (page, title) => {
-  await expect(page).toHaveTitle(title)
-}
-
 const collectionsResponse = {
   feed: {
     entry: []
@@ -29,6 +25,23 @@ const subscriptionsResponse = {
 
 const subscriptionsHeaders = {
   'content-type': 'application/json'
+}
+
+const emptyRetrievalResponse = {
+  id: 'mock-retrieval',
+  jsondata: {
+    source: ''
+  },
+  collections: {
+    byId: {},
+    download: [],
+    opendap: [],
+    echo_orders: [],
+    esi: [],
+    harmony: [],
+    swodlr: []
+  },
+  links: []
 }
 
 const respondWithEmptyTimeline = async (page) => {
@@ -54,7 +67,79 @@ const mockSearchCollections = async (page) => {
   await respondWithEmptyTimeline(page)
 }
 
-test.describe('Page titles', () => {
+const projectResponses = new Map()
+
+const mockProjectsIndex = async (page) => {
+  await page.route(/\/projects(?:\?.*)?$/, (route, request) => {
+    if (request.resourceType() === 'document') {
+      route.continue()
+
+      return
+    }
+
+    if (request.method() === 'GET') {
+      route.fulfill({ json: [] })
+
+      return
+    }
+
+    if (request.method() === 'POST') {
+      const postBody = request.postData() ? JSON.parse(request.postData()) : {}
+      const {
+        path,
+        projectId
+      } = postBody
+
+      let response = projectResponses.get(projectId)
+
+      response = response ?? {
+        project_id: projectId,
+        path
+      }
+
+      route.fulfill({ json: response })
+
+      return
+    }
+
+    route.fulfill({ json: {} })
+  })
+}
+
+const mockProject = async (page, { id, name, path }) => {
+  projectResponses.set(id, {
+    project_id: id,
+    path,
+    name
+  })
+
+  const projectRegex = new RegExp(`/projects/${id}(?:\\?.*)?$`)
+
+  await page.route(projectRegex, (route) => {
+    route.fulfill({
+      json: {
+        name,
+        path,
+        project_id: id
+      }
+    })
+  })
+}
+
+const mockRetrieval = async (page, { id }) => {
+  const retrievalRegex = new RegExp(`/retrievals/${id}$`)
+
+  await page.route(retrievalRegex, (route) => {
+    route.fulfill({
+      json: {
+        ...emptyRetrievalResponse,
+        id
+      }
+    })
+  })
+}
+
+test.describe('page titles', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
       context,
@@ -62,107 +147,157 @@ test.describe('Page titles', () => {
     })
   })
 
-  test('displays the default title on the home page', async ({ page }) => {
-    await respondWithEmptyTimeline(page)
+  test.describe('when visiting the home page', () => {
+    test('shows the default title', async ({ page }) => {
+      await respondWithEmptyTimeline(page)
 
-    await page.goto('/')
+      await page.goto('/')
 
-    await expectTitle(page, 'Earthdata Search - Earthdata Search')
-  })
-
-  test.describe('search', () => {
-    test('uses the default title when no portal is active', async ({ page }) => {
-      await mockSearchCollections(page)
-
-      await page.goto('/search')
-
-      await expectTitle(page, 'Earthdata Search - Earthdata Search')
-    })
-
-    test('includes the portal name when a portal is active', async ({ page }) => {
-      await mockSearchCollections(page)
-
-      await page.goto('/search?portal=amd')
-
-      await expectTitle(page, 'Earthdata Search - AMD Portal - Earthdata Search')
+      await expect(page).toHaveTitle('Earthdata Search - Earthdata Search')
     })
   })
 
-  test.describe('authenticated routes', () => {
+  test.describe('when viewing the search page', () => {
+    test.beforeEach(async ({ page }) => {
+      await mockSearchCollections(page)
+    })
+
+    test.describe('when no portal is active', () => {
+      test('shows the default search title', async ({ page }) => {
+        await page.goto('/search')
+
+        await expect(page).toHaveTitle('Earthdata Search - Earthdata Search')
+      })
+    })
+
+    test.describe('when a portal is active', () => {
+      test('includes the portal name in the title', async ({ page }) => {
+        await page.goto('/search?portal=amd')
+
+        await expect(page).toHaveTitle('Earthdata Search - AMD Portal - Earthdata Search')
+      })
+    })
+  })
+
+  test.describe('when signed in', () => {
     test.beforeEach(async ({ context }) => {
       await login(context)
     })
 
-    test('shows the preferences title', async ({ page }) => {
-      await page.goto('/preferences')
+    test.describe('when managing preferences', () => {
+      test('shows the preferences title', async ({ page }) => {
+        await page.goto('/preferences')
 
-      await expectTitle(page, 'Preferences - Earthdata Search')
+        await expect(page).toHaveTitle('Preferences - Earthdata Search')
+      })
     })
 
-    test('shows the saved projects title', async ({ page }) => {
-      await page.route('**/projects', (route, request) => {
-        if (request.resourceType() === 'document') {
-          route.continue()
+    test.describe('when viewing saved projects', () => {
+      test('shows the saved projects title', async ({ page }) => {
+        await mockProjectsIndex(page)
 
-          return
-        }
+        await page.goto('/projects')
 
-        if (request.method() === 'GET') {
-          route.fulfill({ json: [] })
+        await expect(page).toHaveTitle('Saved Projects - Earthdata Search')
+      })
+    })
 
-          return
-        }
-
-        route.fulfill({ json: {} })
+    test.describe('when reviewing a project', () => {
+      test.beforeEach(async ({ page }) => {
+        await mockProjectsIndex(page)
+        await mockSearchCollections(page)
       })
 
-      await page.goto('/projects')
+      test.describe('when renaming an unnamed project', () => {
+        test('shows the default title then updates to the saved name', async ({ page }) => {
+          await page.goto('/projects?p=!C123456-EDSC')
 
-      await expectTitle(page, 'Saved Projects - Earthdata Search')
-    })
+          await expect(page).toHaveTitle('Untitled Project - Earthdata Search')
 
-    test('shows the download history title', async ({ page }) => {
-      await page.route('**/retrievals', (route, request) => {
-        if (request.method() === 'GET') {
-          route.fulfill({ json: [] })
+          await page.getByTestId('edit_button').click()
 
-          return
-        }
+          const textField = page.getByRole('textbox', { value: 'Untitled Project' })
 
-        route.fulfill({ json: {} })
+          await textField.fill('Test Project')
+
+          await page.getByTestId('submit_button').click()
+
+          await expect(page).toHaveTitle('Test Project - Earthdata Search')
+        })
       })
-
-      await page.goto('/downloads')
-
-      await expectTitle(page, 'Download Status & History - Earthdata Search')
     })
 
-    test('shows the contact information title', async ({ page }) => {
-      await page.route('**/contact_info', (route) => {
-        route.fulfill({
-          json: {
-            cmr_preferences: {},
-            urs_profile: {}
+    test.describe('when viewing the download history', () => {
+      test('shows the download status and history title', async ({ page }) => {
+        await page.route('**/retrievals', (route, request) => {
+          if (request.method() === 'GET') {
+            route.fulfill({ json: [] })
+
+            return
           }
+
+          route.fulfill({ json: {} })
         })
+
+        await page.goto('/downloads')
+
+        await expect(page).toHaveTitle('Download Status & History - Earthdata Search')
       })
-
-      await page.goto('/contact-info')
-
-      await expectTitle(page, 'Contact Information - Earthdata Search')
     })
 
-    test('shows the subscriptions title', async ({ page }) => {
-      await page.route(/graphql.*\/api/, (route) => {
-        route.fulfill({
-          json: subscriptionsResponse,
-          headers: subscriptionsHeaders
-        })
+    test.describe('when viewing a download status', () => {
+      test('shows the download status title', async ({ page }) => {
+        await mockRetrieval(page, { id: '1234' })
+
+        await page.goto('/downloads/1234')
+
+        await expect(page).toHaveTitle('Download Status - Earthdata Search')
       })
+    })
 
-      await page.goto('/subscriptions')
+    test.describe('when updating contact information', () => {
+      test('shows the contact information title', async ({ page }) => {
+        await page.route('**/contact_info', (route) => {
+          route.fulfill({
+            json: {
+              cmr_preferences: {},
+              urs_profile: {}
+            }
+          })
+        })
 
-      await expectTitle(page, 'Subscriptions - Earthdata Search')
+        await page.goto('/contact-info')
+
+        await expect(page).toHaveTitle('Contact Information - Earthdata Search')
+      })
+    })
+
+    test.describe('when managing subscriptions', () => {
+      test('shows the subscriptions title', async ({ page }) => {
+        await page.route(/graphql.*\/api/, (route) => {
+          route.fulfill({
+            json: subscriptionsResponse,
+            headers: subscriptionsHeaders
+          })
+        })
+
+        await page.goto('/subscriptions')
+
+        await expect(page).toHaveTitle('Subscriptions - Earthdata Search')
+      })
+    })
+
+    test.describe('when opening the Earthdata Download redirect', () => {
+      // Still debugging this at the moment
+      test.skip('shows the Earthdata Download redirect title', async ({ page }) => {
+        await page.addInitScript(() => {
+          window.location.replace = () => {}
+        })
+
+        await page.goto('/earthdata-download-callback')
+
+        await expect(page).toHaveTitle('Earthdata Download Redirect - Earthdata Search')
+      })
     })
   })
 })
