@@ -1,15 +1,34 @@
 import { test, expect } from 'playwright-test-coverage'
 
-import { setupTests } from '../support/setupTests'
-import { login } from '../support/login'
-
-import commonBody from './paths/search/__mocks__/common.body.json'
-import commonHeaders from './paths/search/__mocks__/common.headers.json'
-import graphQlHeaders from './authentication/__mocks__/graphql.headers.json'
-import getSubscriptionsGraphQlBody from './authentication/__mocks__/getSubscriptions.graphql.body.json'
+import { setupTests } from '../../support/setupTests'
+import { login } from '../../support/login'
 
 const expectTitle = async (page, title) => {
   await expect(page).toHaveTitle(title)
+}
+
+const collectionsResponse = {
+  feed: {
+    entry: []
+  }
+}
+
+const collectionsHeaders = {
+  'access-control-expose-headers': 'cmr-hits',
+  'cmr-hits': '0',
+  'content-type': 'application/json'
+}
+
+const subscriptionsResponse = {
+  data: {
+    subscriptions: {
+      items: []
+    }
+  }
+}
+
+const subscriptionsHeaders = {
+  'content-type': 'application/json'
 }
 
 const respondWithEmptyTimeline = async (page) => {
@@ -22,8 +41,8 @@ const mockSearchCollections = async (page) => {
   await page.route('**/search/collections.json', (route, request) => {
     if (request.method() === 'POST') {
       route.fulfill({
-        body: JSON.stringify(commonBody),
-        headers: commonHeaders
+        body: JSON.stringify(collectionsResponse),
+        headers: collectionsHeaders
       })
 
       return
@@ -136,8 +155,8 @@ test.describe('Page titles', () => {
     test('shows the subscriptions title', async ({ page }) => {
       await page.route(/graphql.*\/api/, (route) => {
         route.fulfill({
-          json: getSubscriptionsGraphQlBody,
-          headers: graphQlHeaders
+          json: subscriptionsResponse,
+          headers: subscriptionsHeaders
         })
       })
 

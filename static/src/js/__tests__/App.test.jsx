@@ -30,12 +30,6 @@ const setup = setupTest({
 })
 
 describe('App component', () => {
-  // AfterEach(() => {
-  //   getApplicationConfig.mockReturnValue({
-  //     env: 'dev'
-  //   })
-  // })
-
   test('renders the router', () => {
     setup()
 
