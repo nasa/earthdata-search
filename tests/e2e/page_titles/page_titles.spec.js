@@ -106,26 +106,6 @@ const mockProjectsIndex = async (page) => {
   })
 }
 
-const mockProject = async (page, { id, name, path }) => {
-  projectResponses.set(id, {
-    project_id: id,
-    path,
-    name
-  })
-
-  const projectRegex = new RegExp(`/projects/${id}(?:\\?.*)?$`)
-
-  await page.route(projectRegex, (route) => {
-    route.fulfill({
-      json: {
-        name,
-        path,
-        project_id: id
-      }
-    })
-  })
-}
-
 const mockRetrieval = async (page, { id }) => {
   const retrievalRegex = new RegExp(`/retrievals/${id}$`)
 
@@ -288,13 +268,15 @@ test.describe('page titles', () => {
     })
 
     test.describe('when opening the Earthdata Download redirect', () => {
-      // Still debugging this at the moment
+      // Still working on this one
       test.skip('shows the Earthdata Download redirect title', async ({ page }) => {
         await page.addInitScript(() => {
           window.location.replace = () => {}
         })
 
-        await page.goto('/earthdata-download-callback')
+        await page.goto('/auth_callback?eddRedirect=earthdata-download://mock-redirect')
+
+        await page.waitForURL('**/earthdata-download-callback')
 
         await expect(page).toHaveTitle('Earthdata Download Redirect - Earthdata Search')
       })
