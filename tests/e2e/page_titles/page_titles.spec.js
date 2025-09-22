@@ -268,15 +268,14 @@ test.describe('page titles', () => {
     })
 
     test.describe('when opening the Earthdata Download redirect', () => {
-      // Still working on this one
-      test.skip('shows the Earthdata Download redirect title', async ({ page }) => {
+      test('shows the Earthdata Download redirect title', async ({ page }) => {
         await page.addInitScript(() => {
           window.location.replace = () => {}
         })
 
-        await page.goto('/auth_callback?eddRedirect=earthdata-download://mock-redirect')
+        const redirectParam = encodeURIComponent('earthdata-download://mock-redirect')
 
-        await page.waitForURL('**/earthdata-download-callback')
+        await page.goto(`/auth_callback?eddRedirect=${redirectParam}`, { waitUntil: 'commit' })
 
         await expect(page).toHaveTitle('Earthdata Download Redirect - Earthdata Search')
       })
