@@ -189,7 +189,6 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
                     collectionId={collectionId}
                     updateMapLayerOpacity={updateMapLayerOpacity}
                     handleToggleLayerVisibility={handleToggleLayerVisibility}
-                    showDragHandle={layerData.length > 1}
                   />
                 ))
               }

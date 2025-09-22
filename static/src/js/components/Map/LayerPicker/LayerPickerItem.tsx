@@ -4,24 +4,21 @@ import classNames from 'classnames'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-import {
-  FaEye,
-  FaEyeSlash,
-  FaGripVertical
-} from 'react-icons/fa'
+import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 import Popover from 'react-bootstrap/Popover'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Form from 'react-bootstrap/Form'
 import FormGroup from 'react-bootstrap/FormGroup'
 import FormLabel from 'react-bootstrap/FormLabel'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 // @ts-expect-error: This file does not have types
 import { Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../../Button/Button'
 import ColorMap, { Colormap } from '../../ColorMap/ColorMap'
+
+import './LayerPickerItem.scss'
 
 interface DraggableLayerItemProps {
   layer: {
@@ -35,7 +32,6 @@ interface DraggableLayerItemProps {
   colorMap?: Colormap
   updateMapLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
   handleToggleLayerVisibility: (productName: string) => void
-  showDragHandle?: boolean
 }
 
 /**
@@ -45,8 +41,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
   layer,
   collectionId,
   updateMapLayerOpacity,
-  handleToggleLayerVisibility,
-  showDragHandle = true
+  handleToggleLayerVisibility
 }) => {
   const {
     attributes,
@@ -72,63 +67,85 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
   const [tempOpacity, setTempOpacity] = useState(layerOpacity)
 
   const itemClassNames = classNames([
-    'layer-picker__layer-item',
+    'layer-picker-item',
     {
-      'layer-picker__layer-item--dragging': isDragging,
-      'layer-picker__layer-item--hidden': !isVisible
+      'layer-picker-item--dragging': isDragging,
+      'layer-picker-item--hidden': !isVisible
     }
   ])
 
+  // https://github.com/clauderic/dnd-kit/issues/827
+  // Since the parent is a button, we need to stop the propagation of the pointer down event on child containers
   return (
     <div
       ref={setNodeRef}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...attributes}
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...listeners}
       aria-label="Drag to reorder layer"
       role="button"
       style={style}
       className={itemClassNames}
     >
-      <div className="layer-picker__layer-content d-flex justify-content-center align-items-stretch flex-grow-1">
+      <div className="layer-picker-item__layer-content d-flex justify-content-center align-items-stretch flex-grow-1">
         <div className="d-flex justify-content-center flex-shrink-0 align-items-center border-muted border-0 border-end">
-          {
-            showDragHandle && (
-              <OverlayTrigger
-                placement="top"
-                overlay={
-                  (
-                    <Tooltip id={`drag-handle-tooltip-${layer.product}`}>
-                      Drag to reorder layer
-                    </Tooltip>
-                  )
+          <span
+            onPointerDown={
+              (event: React.PointerEvent) => {
+                console.log('pointer down event is stopping propagation')
+                event.stopPropagation()
+                // Event.preventDefault()
+              }
+            }
+          >
+            <Button
+              type="button"
+              className="p-2"
+              icon={isVisible ? FaEye : FaEyeSlash}
+              aria-pressed={isVisible}
+              ariaLabel={`${isVisible ? 'Hide' : 'Show'} ${layer.title}`}
+              onPointerDown={
+                (event: React.PointerEvent) => {
+                  console.log('pointer down event is stopping propagation')
+                  event.stopPropagation()
+                  event.preventDefault()
+                  handleToggleLayerVisibility(layer.product)
                 }
-              >
-                <div
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  {...attributes}
-                  // eslint-disable-next-line react/jsx-props-no-spreading
-                  {...listeners}
-                  className="d-flex p-1"
-                  aria-label="Drag to reorder layer"
-                  role="button"
-                >
-                  <FaGripVertical className="align-self-center" />
-                </div>
-              </OverlayTrigger>
-            )
-          }
-          <Button
-            type="button"
-            className="p-1 me-1"
-            icon={isVisible ? FaEye : FaEyeSlash}
-            aria-pressed={isVisible}
-            ariaLabel={`${isVisible ? 'Hide' : 'Show'} ${layer.title}`}
-            onClick={() => handleToggleLayerVisibility(layer.product)}
-            tooltipId={`layer-visibility-toggle-tooltip-${layer.product}`}
-            tooltip={`${isVisible ? 'Hide' : 'Show'} layer`}
-          />
+              }
+              onClick={
+                (event: React.MouseEvent) => {
+                  event.stopPropagation()
+                  event.preventDefault()
+                  handleToggleLayerVisibility(layer.product)
+                }
+              }
+              tooltipId={`layer-visibility-toggle-tooltip-${layer.product}`}
+              tooltip={`${isVisible ? 'Hide' : 'Show'} layer`}
+            />
+          </span>
         </div>
         <div className="flex-grow-1 p-2">
-          <div className="d-flex flex-grow-1 flex-row  justify-content-between align-items-start mb-1 gap-2 pt-1">
-            <h3 className="fs-7 fw-normal d-inline mb-0 flex-grow-1">
+          <div
+            className="d-flex flex-grow-1 flex-row justify-content-between align-items-start mb-1 gap-2 pt-1"
+            // OnPointerDown={
+            //   (event: React.PointerEvent) => {
+            //     console.log('pointer down event is stopping propagation')
+            //     event.stopPropagation()
+            //   // Event.preventDefault()
+            //   }
+            // }
+          >
+            <h3
+              className="fs-6 fw-normal d-inline mb-0 flex-grow-1"
+              // OnPointerDown={
+              //   (event: React.PointerEvent) => {
+              //     console.log('pointer down event is stopping propagation')
+              //     event.stopPropagation()
+              //     // Event.preventDefault()
+              //   }
+              // }
+            >
               {layer.title || layer.product}
             </h3>
             <OverlayTrigger
@@ -164,7 +181,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
                               )
                             }
                           }
-                          className="layer-picker__opacity-range"
+                          className="layer-picker-item__opacity-range"
                         />
                         <div className="d-flex justify-content-end mt-2">
                           <span>
@@ -177,14 +194,29 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
                 )
               }
             >
-              <Button
-                type="button"
-                className="draggable-layer-item__settings-button d-inline-flex p-1"
-                icon={Settings}
-                ariaLabel={`Adjust settings for ${layer.title}`}
-                tooltipId={`layer-settings-tooltip-${layer.product}`}
-                tooltip="Adjust layer settings"
-              />
+              <span onPointerDown={
+                (event: React.PointerEvent) => {
+                  console.log('pointer down event is stopping propagation')
+                  event.stopPropagation()
+                  // Event.preventDefault()
+                }
+              }
+              >
+                <Button
+                  className="layer-picker-item__settings-button d-inline-flex p-0"
+                  icon={Settings}
+                  ariaLabel={`Adjust settings for ${layer.title}`}
+                  tooltipId={`layer-settings-tooltip-${layer.product}`}
+                  tooltip="Adjust layer settings"
+                  onPointerDown={
+                    (event: React.PointerEvent) => {
+                      console.log('pointer down event is stopping propagation')
+                      event.stopPropagation()
+                    // Event.preventDefault()
+                    }
+                  }
+                />
+              </span>
             </OverlayTrigger>
           </div>
           {/* Render colormap for this layer if available */}
