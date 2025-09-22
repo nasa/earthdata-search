@@ -93,9 +93,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
           <span
             onPointerDown={
               (event: React.PointerEvent) => {
-                console.log('pointer down event is stopping propagation')
                 event.stopPropagation()
-                // Event.preventDefault()
               }
             }
           >
@@ -105,18 +103,8 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
               icon={isVisible ? FaEye : FaEyeSlash}
               aria-pressed={isVisible}
               ariaLabel={`${isVisible ? 'Hide' : 'Show'} ${layer.title}`}
-              onPointerDown={
-                (event: React.PointerEvent) => {
-                  console.log('pointer down event is stopping propagation')
-                  event.stopPropagation()
-                  event.preventDefault()
-                  handleToggleLayerVisibility(layer.product)
-                }
-              }
               onClick={
-                (event: React.MouseEvent) => {
-                  event.stopPropagation()
-                  event.preventDefault()
+                () => {
                   handleToggleLayerVisibility(layer.product)
                 }
               }
@@ -128,23 +116,9 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
         <div className="flex-grow-1 p-2">
           <div
             className="d-flex flex-grow-1 flex-row justify-content-between align-items-start mb-1 gap-2 pt-1"
-            // OnPointerDown={
-            //   (event: React.PointerEvent) => {
-            //     console.log('pointer down event is stopping propagation')
-            //     event.stopPropagation()
-            //   // Event.preventDefault()
-            //   }
-            // }
           >
             <h3
               className="fs-6 fw-normal d-inline mb-0 flex-grow-1"
-              // OnPointerDown={
-              //   (event: React.PointerEvent) => {
-              //     console.log('pointer down event is stopping propagation')
-              //     event.stopPropagation()
-              //     // Event.preventDefault()
-              //   }
-              // }
             >
               {layer.title || layer.product}
             </h3>
