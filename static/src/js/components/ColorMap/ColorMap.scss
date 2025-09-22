@@ -5,8 +5,11 @@
 
   &__bar,
   .ol-viewport & canvas.colormap__bar {
+    position: relative;
+    display: block;
     height: 0.825rem;
     width: 100%;
+    margin-top: 0.25rem;
     cursor: crosshair;
     opacity: 0;
     visibility: visible;
@@ -26,6 +29,7 @@
     visibility: visible;
     opacity: 1;
     width: 100%;
+    margin-top: 0.5rem;
   }
 
   &__label {
@@ -45,6 +49,7 @@
   }
 
   &__focus {
+    margin-top: 0.5rem;
     flex-grow: 1;
     display: flex;
     align-items: center;
