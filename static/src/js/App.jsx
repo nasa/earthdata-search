@@ -59,9 +59,6 @@ const TooManyPointsModalContainer = lazy(() => import('./containers/TooManyPoint
 const AdminLayout = lazy(() => import('./layouts/AdminLayout/AdminLayout'))
 const DownloadsLayout = lazy(() => import('./layouts/DownloadsLayout/DownloadsLayout'))
 
-const { edscHost } = getEnvironmentConfig()
-const { env } = getApplicationConfig()
-
 const store = configureStore()
 
 const browserRouter = createBrowserRouter([
@@ -268,6 +265,8 @@ routerHelper.router = browserRouter
 
 // Create the root App component
 const App = () => {
+  const { edscHost } = getEnvironmentConfig()
+  const { env } = getApplicationConfig()
   const title = 'Earthdata Search'
   const description = 'Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search'
   const url = `${edscHost}/search`
