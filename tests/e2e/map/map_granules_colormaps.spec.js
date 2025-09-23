@@ -150,7 +150,7 @@ test.describe('Map: Colormap interactions', () => {
       })
 
       test('does not show the colormap', async ({ page }) => {
-        await expect(page.getByTestId('legend')).not.toBeInViewport()
+        await expect(page.getByText('Visualization Layers')).not.toBeInViewport()
       })
 
       test.describe('when visiting another collection with a colormap', () => {
@@ -175,9 +175,9 @@ test.describe('Map: Colormap interactions', () => {
       })
 
       test('does not show the colormap', async ({ page }) => {
-        // The legend should be removed if the imagery layers are empty
+        // The legend/Layer Picker should be removed if the imagery layers are empty
         // and the legend control is not on the collection focused page
-        await expect(page.getByTestId('legend')).not.toBeInViewport()
+        await expect(page.getByText('Visualization Layers')).not.toBeInViewport()
       })
 
       test.describe('when switching back to the geographic projection', () => {

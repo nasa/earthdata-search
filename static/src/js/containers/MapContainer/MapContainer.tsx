@@ -32,7 +32,7 @@ import { getValueForTag } from '../../../../../sharedUtils/tags'
 import projectionCodes from '../../constants/projectionCodes'
 
 import Map from '../../components/Map/Map'
-import { Colormap } from '../../components/ColorMap/ColorMap'
+import { Colormap } from '../../types/sharedTypes'
 
 import {
   backgroundGranulePointStyle,
@@ -56,7 +56,11 @@ import {
   getSelectedRegionQuery,
   getNlpCollection
 } from '../../zustand/selectors/query'
-import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
+import {
+  getCollectionId,
+  getFocusedCollectionMetadata,
+  getFocusedCollectionTags
+} from '../../zustand/selectors/collection'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
@@ -163,7 +167,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     shapefile,
     showMbr,
     startDrawing,
-    setMapLayers
+    setMapLayers,
+    toggleLayerVisibility,
+    setMapLayersOrder,
+    setLayerOpacity
   } = useEdscStore((state) => ({
     panelsWidth: state.ui.panels.panelsWidth,
     sidebarWidth: state.ui.panels.sidebarWidth,
@@ -180,7 +187,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     shapefile: state.shapefile,
     showMbr: state.map.showMbr,
     startDrawing: state.home.startDrawing,
-    setMapLayers: state.map.setMapLayers
+    setMapLayers: state.map.setMapLayers,
+    toggleLayerVisibility: state.map.toggleLayerVisibility,
+    setMapLayersOrder: state.map.setMapLayersOrder,
+    setLayerOpacity: state.map.setLayerOpacity
   }))
 
   const nlpCollection = useEdscStore(getNlpCollection)
@@ -188,6 +198,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)
   const focusedCollectionMetadata = useEdscStore(getFocusedCollectionMetadata)
+  const focusedCollectionTags = useEdscStore(getFocusedCollectionTags)
   const focusedGranule = useEdscStore(getFocusedGranule)
   const focusedGranuleId = useEdscStore(getGranuleId)
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
@@ -198,12 +209,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const mapLayers = useEdscStore(
     (state) => (focusedCollectionId ? state.map.mapLayers[focusedCollectionId] || [] : [])
   )
-
-  const {
-    toggleLayerVisibility,
-    setMapLayersOrder,
-    setLayerOpacity
-  } = useEdscStore((state) => state.map)
 
   // Default the granuleMetadata to the granulesById. These are the granules we want to show
   // on the search page
@@ -373,16 +378,15 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     setStartDrawing(false)
   }, [setStartDrawing])
 
-  const { tags } = focusedCollectionMetadata
   // Update the layers in the Zustand store when GIBS tags are available
   useEffect(() => {
-    if (focusedCollectionId && tags) {
-      const gibsTagsFromMetadata = getValueForTag('gibs', tags) || []
+    if (focusedCollectionId && focusedCollectionTags) {
+      const gibsTagsFromMetadata = getValueForTag('gibs', focusedCollectionTags) || []
       if (gibsTagsFromMetadata.length > 0) {
         setMapLayers(focusedCollectionId, gibsTagsFromMetadata)
       }
     }
-  }, [focusedCollectionId, tags, setMapLayers])
+  }, [focusedCollectionId, focusedCollectionTags, setMapLayers])
 
   // Helper function to get GIBS tags available for the current projection
   const getLayersForProjection = useCallback(() => {

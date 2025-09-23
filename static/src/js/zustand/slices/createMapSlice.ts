@@ -30,7 +30,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
         }
       })
     },
-    // Store layers for each collection
+    /** Store layers for each collection */
     mapLayers: {},
     setMapLayers: (collectionId, layers: Array<{
       product: string
@@ -45,7 +45,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
       geographic?: boolean
     }>) => {
       set((state) => {
-        // Set default visibility: first layer visible, rest hidden
+        /** Set default visibility: first layer visible, rest hidden */
         const layersWithVisibility = layers.map((layer, index) => ({
           ...layer,
           isVisible: index === 0,

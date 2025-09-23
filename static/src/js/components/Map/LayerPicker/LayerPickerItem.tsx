@@ -6,17 +6,19 @@ import { CSS } from '@dnd-kit/utilities'
 
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
-import Popover from 'react-bootstrap/Popover'
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Form from 'react-bootstrap/Form'
 import FormGroup from 'react-bootstrap/FormGroup'
 import FormLabel from 'react-bootstrap/FormLabel'
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
+import Popover from 'react-bootstrap/Popover'
 
 // @ts-expect-error: This file does not have types
 import { Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import Button from '../../Button/Button'
-import ColorMap, { Colormap } from '../../ColorMap/ColorMap'
+import ColorMap from '../../ColorMap/ColorMap'
+
+import { Colormap } from '../../../types/sharedTypes'
 
 import './LayerPickerItem.scss'
 
