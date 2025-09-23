@@ -2,6 +2,10 @@ import { test, expect } from 'playwright-test-coverage'
 
 import { setupTests } from '../../support/setupTests'
 import { login } from '../../support/login'
+import { getAuthHeaders } from '../../support/getAuthHeaders'
+
+import collectionsGraphQlJson from './__mocks__/collections_graphql.json'
+import granules from './__mocks__/granules.json'
 
 /**
  * This test suite verifies that page titles are correct for each route.
@@ -33,23 +37,6 @@ const subscriptionsHeaders = {
   'content-type': 'application/json'
 }
 
-const emptyRetrievalResponse = {
-  id: 'mock-retrieval',
-  jsondata: {
-    source: ''
-  },
-  collections: {
-    byId: {},
-    download: [],
-    opendap: [],
-    echo_orders: [],
-    esi: [],
-    harmony: [],
-    swodlr: []
-  },
-  links: []
-}
-
 test.describe('page titles', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
@@ -72,17 +59,11 @@ test.describe('page titles', () => {
 
   test.describe('when viewing the search page', () => {
     test.beforeEach(async ({ page }) => {
-      await page.route('**/search/collections.json', (route, request) => {
-        if (request.postData()) {
-          route.fulfill({
-            headers: collectionsHeaders,
-            json: collectionsResponse
-          })
-
-          return
-        }
-
-        route.continue()
+      await page.route('**/search/collections.json', (route) => {
+        route.fulfill({
+          headers: collectionsHeaders,
+          json: collectionsResponse
+        })
       })
 
       await page.route('**/search/granules/timeline', (route) => {
@@ -129,12 +110,6 @@ test.describe('page titles', () => {
             return
           }
 
-          if (request.postData()) {
-            route.fulfill({ json: {} })
-
-            return
-          }
-
           route.fulfill({ json: [] })
         })
 
@@ -146,11 +121,7 @@ test.describe('page titles', () => {
 
     test.describe('when reviewing a project', () => {
       test.beforeEach(async ({ page }) => {
-        let savedProject = {
-          project_id: 'mock-project-id',
-          name: 'Untitled Project',
-          path: '/projects'
-        }
+        const authHeaders = getAuthHeaders()
 
         await page.route('**/projects', (route, request) => {
           if (request.resourceType() === 'document') {
@@ -159,55 +130,50 @@ test.describe('page titles', () => {
             return
           }
 
-          const postData = request.postData()
-
-          if (postData) {
-            const postBody = JSON.parse(postData)
-            const {
-              name,
-              path,
-              projectId
-            } = postBody
-
-            savedProject = {
-              project_id: projectId ?? 'mock-project-id',
-              name: name ?? savedProject.name,
-              path: path ?? savedProject.path
+          route.fulfill({
+            json: {
+              project_id: '1234',
+              name: 'Untitled Project',
+              path: '/projects'
             }
-
-            route.fulfill({ json: savedProject })
-
-            return
-          }
-
-          route.fulfill({ json: [] })
+          })
         })
 
-        await page.route('**/projects/mock-project-id*', (route) => {
-          route.fulfill({ json: savedProject })
+        await page.route(/saved_access_configs/, async (route) => {
+          await route.fulfill({
+            json: {}
+          })
         })
 
-        await page.route('**/search/collections.json', (route, request) => {
-          if (request.postData()) {
-            route.fulfill({
-              headers: collectionsHeaders,
-              json: collectionsResponse
-            })
-
-            return
-          }
-
-          route.continue()
+        await page.route(/cmr-graphql-proxy$/, async (route) => {
+          route.fulfill({
+            headers: authHeaders,
+            json: collectionsGraphQlJson.body
+          })
         })
 
-        await page.route('**/search/granules/timeline', (route) => {
-          route.fulfill({ json: [] })
+        await page.route(/granules$/, async (route) => {
+          await route.fulfill({
+            json: granules.body,
+            headers: {
+              ...authHeaders,
+              'access-control-expose-headers': 'cmr-hits',
+              'cmr-hits': '42'
+            }
+          })
+        })
+
+        await page.route(/timeline$/, (route) => {
+          route.fulfill({
+            json: [],
+            headers: authHeaders
+          })
         })
       })
 
       test.describe('when renaming an unnamed project', () => {
         test('shows the default title then updates to the saved name', async ({ page }) => {
-          await page.goto('/projects?p=!C123456-EDSC')
+          await page.goto('/projects?p=!C1443528505-LAADS')
 
           await expect(page).toHaveTitle('Untitled Project - Earthdata Search')
 
@@ -226,14 +192,8 @@ test.describe('page titles', () => {
 
     test.describe('when viewing the download history', () => {
       test('shows the download status and history title', async ({ page }) => {
-        await page.route('**/retrievals', (route, request) => {
-          if (request.method() === 'GET') {
-            route.fulfill({ json: [] })
-
-            return
-          }
-
-          route.fulfill({ json: {} })
+        await page.route('**/retrievals', (route) => {
+          route.fulfill({ json: [] })
         })
 
         await page.goto('/downloads')
@@ -247,8 +207,20 @@ test.describe('page titles', () => {
         await page.route(/\/retrievals\/1234$/, (route) => {
           route.fulfill({
             json: {
-              ...emptyRetrievalResponse,
-              id: '1234'
+              id: 1234,
+              jsondata: {
+                source: ''
+              },
+              collections: {
+                byId: {},
+                download: [],
+                opendap: [],
+                echo_orders: [],
+                esi: [],
+                harmony: [],
+                swodlr: []
+              },
+              links: []
             }
           })
         })
@@ -278,7 +250,7 @@ test.describe('page titles', () => {
 
     test.describe('when managing subscriptions', () => {
       test('shows the subscriptions title', async ({ page }) => {
-        await page.route(/graphql.*\/api/, (route) => {
+        await page.route(/graphql/, (route) => {
           route.fulfill({
             json: subscriptionsResponse,
             headers: subscriptionsHeaders
