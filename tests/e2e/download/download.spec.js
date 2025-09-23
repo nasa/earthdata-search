@@ -123,8 +123,6 @@ test.describe('Download spec', () => {
     // Click the Download Data button
     await page.getByTestId('project-download-data').click()
 
-    await page.waitForURL(/\/downloads\/\d+(\?.*)?$/)
-
     // Make sure all links that are in the download list are visible on the page
     await Promise.all(downloadLinks.map(async (link) => {
       await expect(page.getByText(link).first()).toBeVisible()

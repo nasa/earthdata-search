@@ -63,11 +63,7 @@ const mockSearchCollections = async (page) => {
         body: JSON.stringify(collectionsResponse),
         headers: collectionsHeaders
       })
-
-      return
     }
-
-    route.continue()
   })
 
   await respondWithEmptyTimeline(page)
@@ -78,8 +74,6 @@ const projectResponses = new Map()
 const mockProjectsIndex = async (page) => {
   await page.route(/\/projects(?:\?.*)?$/, (route, request) => {
     if (request.resourceType() === 'document') {
-      route.continue()
-
       return
     }
 
@@ -275,6 +269,8 @@ test.describe('page titles', () => {
 
     test.describe('when opening the Earthdata Download redirect', () => {
       test('shows the Earthdata Download redirect title', async ({ page }) => {
+        // This prevents the Earthdata Download redirect page from actually fulfilling the reroute
+        // so we can have time to validate the page title.
         await page.addInitScript(() => {
           window.location.replace = () => {}
         })
