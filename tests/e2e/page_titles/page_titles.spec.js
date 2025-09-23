@@ -3,6 +3,12 @@ import { test, expect } from 'playwright-test-coverage'
 import { setupTests } from '../../support/setupTests'
 import { login } from '../../support/login'
 
+/**
+ * This test suite verifies that page titles are correct for each route.
+ * Note: This suite will not pass unless you run the prod build with
+ * npm run build && npm run preview
+ */
+
 const collectionsResponse = {
   feed: {
     entry: []
