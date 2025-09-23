@@ -2,9 +2,10 @@ import React from 'react'
 import { RouterProvider } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import { waitFor } from '@testing-library/react'
+import { render, waitFor } from '@testing-library/react'
 
 import App from '../App'
+import { getApplicationConfig } from '../../../../sharedUtils/config'
 
 import setupTest from '../../../../jestConfigs/setupTest'
 
@@ -122,6 +123,38 @@ describe('App component', () => {
   test('sets the correct default title', async () => {
     setup()
     await waitFor(() => expect(document.title).toEqual('Earthdata Search'))
+  })
+
+  test('prefixes the title in SIT', async () => {
+    getApplicationConfig.mockReturnValueOnce({
+      env: 'sit'
+    })
+
+    setup()
+
+    render(
+      <Helmet>
+        <title>Earthdata Search</title>
+      </Helmet>
+    )
+
+    await waitFor(() => expect(document.title).toEqual('[SIT] Earthdata Search - Earthdata Search'))
+  })
+
+  test('prefixes the title in UAT', async () => {
+    getApplicationConfig.mockReturnValueOnce({
+      env: 'uat'
+    })
+
+    setup()
+
+    render(
+      <Helmet>
+        <title>Earthdata Search</title>
+      </Helmet>
+    )
+
+    await waitFor(() => expect(document.title).toEqual('[UAT] Earthdata Search - Earthdata Search'))
   })
 
   test('sets the correct meta description', async () => {
