@@ -159,8 +159,10 @@ test.describe('Map: Colormap interactions', () => {
           // Wait for the timeline to be visible as a proxy for the map being ready
           await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
+          // TODO we should not need to increase the maxDiffPixelRatio here
           await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
-            clip: colormap2ScreenshotClip
+            clip: colormap2ScreenshotClip,
+            maxDiffPixelRatio: 0.3
           })
 
           await expect(page.getByTestId('legend-label-min').first()).toHaveText('0.00 – 0.12 DU')

@@ -123,7 +123,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the point spatial type
-          await page.getByRole('button', { name: 'Search by point' }).first().click()
+          await page.getByRole('button', { name: 'Search by point' }).click()
 
           // Add the point to the map
           await page.mouse.click(1000, 500)
@@ -341,7 +341,7 @@ test.describe('Map: Spatial interactions', () => {
           await initialMapPromise
 
           // Select the circle spatial type
-          await page.getByRole('button', { name: 'Search by circle' }).first().click()
+          await page.getByRole('button', { name: 'Search by circle' }).click()
 
           // Add the circle to the map
           await page.mouse.click(1000, 500)
@@ -355,7 +355,7 @@ test.describe('Map: Spatial interactions', () => {
           await expect(page.getByTestId('spatial-display_circle-radius')).toHaveValue(/195\d+/)
 
           // Checking that the right number of results are loaded ensures that the route
-          // was fulfilled correctly with the succesfull paramCheck
+          // was fulfilled correctly with the successful paramCheck
           await expect(page.getByText('Showing 2 of 2 matching collections')).toBeVisible()
 
           // Draws the spatial on the map
