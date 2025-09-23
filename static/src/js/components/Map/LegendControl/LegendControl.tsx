@@ -62,6 +62,8 @@ class LegendControl extends Control {
     )
   }
 
+  // Update the legend control
+  // to persist a reference to it for the layer picker when we update the imagery layers using it
   update(options: Partial<LegendControlOptions>) {
     if (options.collectionId !== undefined) {
       this.collectionId = options.collectionId

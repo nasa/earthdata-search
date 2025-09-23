@@ -25,9 +25,9 @@ const colormapScreenshotClip = {
 
 const colormap2ScreenshotClip = {
   x: 1004,
-  y: 94,
+  y: 92,
   width: 384,
-  height: 228
+  height: 213
 }
 
 // Update the clip to the new coordinates
