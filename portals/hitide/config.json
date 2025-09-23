@@ -1,0 +1,18 @@
+{
+  "moreInfoUrl": "https://hitide.podaac.earthdatacloud.nasa.gov/",
+  "pageTitle": "PO.DAAC HiTIDE",
+  "parentConfig": "edsc",
+  "portalBrowser": true,
+  "query": {
+    "toolConceptId": ["TL2092786348-POCLOUD","TL1240538128-POCLOUD"],
+    "hasGranulesOrCwic": null
+  },
+  "title": {
+    "primary": "PO.DAAC HiTIDE",
+    "secondary": "PO.DAAC High-level Tool for Interactive Data Extraction"
+  },
+  "ui": {
+    "showNonEosdisCheckbox": false,
+    "showOnlyGranulesCheckbox": false
+  }
+}

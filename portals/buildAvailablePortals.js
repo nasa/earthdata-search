@@ -24,6 +24,7 @@ const portals = [
   'edsc',
   'example',
   'ghrc',
+  'hitide',
   'idn',
   'obdaac',
   'ornldaac',
