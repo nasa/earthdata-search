@@ -948,6 +948,12 @@ const Map: React.FC<MapProps> = ({
       (control) => control instanceof LegendControl
     )
 
+    if (!isFocusedCollectionPage && legendControl) {
+      // Remove the legend control if not on the collection focused page and it exists
+      console.log('removing legend control')
+      controls.remove(legendControl)
+    }
+
     // Add new legend control only if on focused collection page and it has layers
     // Update the legend control when the imagery layers change
     // This helps ensure we have a reference to the legend control when we need to update it
@@ -966,12 +972,6 @@ const Map: React.FC<MapProps> = ({
           imageryLayers
         })
       )
-    }
-
-    if (!isFocusedCollectionPage && legendControl) {
-      // Remove the legend control if not on the collection focused page and it exists
-      console.log('removing legend control')
-      controls.remove(legendControl)
     }
   }, [isFocusedCollectionPage, imageryLayers, focusedCollectionId])
 
