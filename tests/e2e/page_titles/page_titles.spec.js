@@ -50,75 +50,6 @@ const emptyRetrievalResponse = {
   links: []
 }
 
-const respondWithEmptyTimeline = async (page) => {
-  await page.route('**/search/granules/timeline', (route) => {
-    route.fulfill({ body: JSON.stringify([]) })
-  })
-}
-
-const mockSearchCollections = async (page) => {
-  await page.route('**/search/collections.json', (route, request) => {
-    if (request.method() === 'POST') {
-      route.fulfill({
-        body: JSON.stringify(collectionsResponse),
-        headers: collectionsHeaders
-      })
-    }
-  })
-
-  await respondWithEmptyTimeline(page)
-}
-
-const projectResponses = new Map()
-
-const mockProjectsIndex = async (page) => {
-  await page.route(/\/projects(?:\?.*)?$/, (route, request) => {
-    if (request.resourceType() === 'document') {
-      return
-    }
-
-    if (request.method() === 'GET') {
-      route.fulfill({ json: [] })
-
-      return
-    }
-
-    if (request.method() === 'POST') {
-      const postBody = request.postData() ? JSON.parse(request.postData()) : {}
-      const {
-        path,
-        projectId
-      } = postBody
-
-      let response = projectResponses.get(projectId)
-
-      response = response ?? {
-        project_id: projectId,
-        path
-      }
-
-      route.fulfill({ json: response })
-
-      return
-    }
-
-    route.fulfill({ json: {} })
-  })
-}
-
-const mockRetrieval = async (page, { id }) => {
-  const retrievalRegex = new RegExp(`/retrievals/${id}$`)
-
-  await page.route(retrievalRegex, (route) => {
-    route.fulfill({
-      json: {
-        ...emptyRetrievalResponse,
-        id
-      }
-    })
-  })
-}
-
 test.describe('page titles', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
@@ -129,7 +60,9 @@ test.describe('page titles', () => {
 
   test.describe('when visiting the home page', () => {
     test('shows the default title', async ({ page }) => {
-      await respondWithEmptyTimeline(page)
+      await page.route('**/search/granules/timeline', (route) => {
+        route.fulfill({ json: [] })
+      })
 
       await page.goto('/')
 
@@ -139,7 +72,22 @@ test.describe('page titles', () => {
 
   test.describe('when viewing the search page', () => {
     test.beforeEach(async ({ page }) => {
-      await mockSearchCollections(page)
+      await page.route('**/search/collections.json', (route, request) => {
+        if (request.postData()) {
+          route.fulfill({
+            headers: collectionsHeaders,
+            json: collectionsResponse
+          })
+
+          return
+        }
+
+        route.continue()
+      })
+
+      await page.route('**/search/granules/timeline', (route) => {
+        route.fulfill({ json: [] })
+      })
     })
 
     test.describe('when no portal is active', () => {
@@ -174,7 +122,21 @@ test.describe('page titles', () => {
 
     test.describe('when viewing saved projects', () => {
       test('shows the saved projects title', async ({ page }) => {
-        await mockProjectsIndex(page)
+        await page.route('**/projects', (route, request) => {
+          if (request.resourceType() === 'document') {
+            route.continue()
+
+            return
+          }
+
+          if (request.postData()) {
+            route.fulfill({ json: {} })
+
+            return
+          }
+
+          route.fulfill({ json: [] })
+        })
 
         await page.goto('/projects')
 
@@ -184,8 +146,63 @@ test.describe('page titles', () => {
 
     test.describe('when reviewing a project', () => {
       test.beforeEach(async ({ page }) => {
-        await mockProjectsIndex(page)
-        await mockSearchCollections(page)
+        let savedProject = {
+          project_id: 'mock-project-id',
+          name: 'Untitled Project',
+          path: '/projects'
+        }
+
+        await page.route('**/projects', (route, request) => {
+          if (request.resourceType() === 'document') {
+            route.continue()
+
+            return
+          }
+
+          const postData = request.postData()
+
+          if (postData) {
+            const postBody = JSON.parse(postData)
+            const {
+              name,
+              path,
+              projectId
+            } = postBody
+
+            savedProject = {
+              project_id: projectId ?? 'mock-project-id',
+              name: name ?? savedProject.name,
+              path: path ?? savedProject.path
+            }
+
+            route.fulfill({ json: savedProject })
+
+            return
+          }
+
+          route.fulfill({ json: [] })
+        })
+
+        await page.route('**/projects/mock-project-id*', (route) => {
+          route.fulfill({ json: savedProject })
+        })
+
+        await page.route('**/search/collections.json', (route, request) => {
+          if (request.postData()) {
+            route.fulfill({
+              headers: collectionsHeaders,
+              json: collectionsResponse
+            })
+
+            return
+          }
+
+          route.continue()
+        })
+
+        await page.route('**/search/granules/timeline', (route) => {
+          route.fulfill({ json: [] })
+        })
       })
 
       test.describe('when renaming an unnamed project', () => {
@@ -227,7 +244,14 @@ test.describe('page titles', () => {
 
     test.describe('when viewing a download status', () => {
       test('shows the download status title', async ({ page }) => {
-        await mockRetrieval(page, { id: '1234' })
+        await page.route(/\/retrievals\/1234$/, (route) => {
+          route.fulfill({
+            json: {
+              ...emptyRetrievalResponse,
+              id: '1234'
+            }
+          })
+        })
 
         await page.goto('/downloads/1234')
 
