@@ -190,79 +190,85 @@ test.describe('Map: imagery and layer-picker interactions', () => {
         await page.keyboard.press(']')
       })
 
-      test('toggles layer visibility when clicking the visibility button @screenshot', async ({ page }) => {
-        // Find and click the visibility toggle button for the first layer
-        const visibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
-        await visibilityButton.click()
+      test.describe('when updating the layer visibility', () => {
+        test('toggles layer visibility when clicking the visibility button @screenshot', async ({ page }) => {
+          // Find and click the visibility toggle button for the first layer
+          const visibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
+          await visibilityButton.click()
 
-        // Take a screenshot to verify the layer is no longer visible
-        await expect(page).toHaveScreenshot('gibs-layer-hidden.png', {
-          clip: screenshotClip
+          // Take a screenshot to verify the layer is no longer visible
+          await expect(page).toHaveScreenshot('gibs-layer-hidden.png', {
+            clip: screenshotClip
+          })
         })
       })
 
-      test('updates layer opacity when adjusting the opacity slider @screenshot', async ({ page }) => {
-        // Find and click the settings button for the first layer to open the opacity popover
-        const settingsButton = page.getByRole('button', { name: 'Adjust settings for Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' })
-        await settingsButton.click()
+      test.describe('when updating the layer opacity', () => {
+        test('updates the specified layer opacity on the map @screenshot', async ({ page }) => {
+          // Find and click the settings button for the first layer to open the opacity popover
+          const settingsButton = page.getByRole('button', { name: 'Adjust settings for Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' })
+          await settingsButton.click()
 
-        // Wait for the opacity popover to be visible
-        await page.getByRole('slider').waitFor()
+          // Wait for the opacity popover to be visible
+          await page.getByRole('slider').waitFor()
 
-        // Find the opacity slider and adjust it to 50%
-        const opacitySlider = page.getByRole('slider')
-        await opacitySlider.fill('0.5')
+          // Find the opacity slider and adjust it to 50%
+          const opacitySlider = page.getByRole('slider')
+          await opacitySlider.fill('0.5')
 
-        // Trigger the onMouseUp event to apply the opacity change
-        await opacitySlider.dispatchEvent('mouseup')
+          // Trigger the onMouseUp event to apply the opacity change
+          await opacitySlider.dispatchEvent('mouseup')
 
-        // Wait a moment for the opacity change to be applied
-        await page.waitForTimeout(500)
+          // Wait a moment for the opacity change to be applied
+          await page.waitForTimeout(500)
 
-        // Take a screenshot to verify the layer opacity has changed
-        await expect(page).toHaveScreenshot('gibs-layer-opacity-adjusted.png', {
-          clip: screenshotClip
+          // Take a screenshot to verify the layer opacity has changed
+          await expect(page).toHaveScreenshot('gibs-layer-opacity-adjusted.png', {
+            clip: screenshotClip
+          })
+
+          // Check the actual slider value (0.5 for 50%)
+          expect(await opacitySlider.getAttribute('value')).toBe('0.5')
+          // Check the displayed percentage
+          expect(page.locator('div:has-text("50 %")').first()).toBeVisible()
+
+          // Close the popover by clicking outside
+          await page.locator('body').click()
         })
-
-        // Check the actual slider value (0.5 for 50%)
-        expect(await opacitySlider.getAttribute('value')).toBe('0.5')
-        // Check the displayed percentage
-        expect(page.locator('div:has-text("50 %")').first()).toBeVisible()
-
-        // Close the popover by clicking outside
-        await page.locator('body').click()
       })
 
-      test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
-        const layer2VisibilityButton = page.getByRole('button', { name: 'Show Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)' }).first()
-        await layer2VisibilityButton.click()
+      test.describe('when reordering layers', () => {
+        test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
+          const layer2VisibilityButton = page.getByRole('button', { name: 'Show Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)' }).first()
+          await layer2VisibilityButton.click()
 
-        // Zoom in to make the layers more visible
-        await page.getByRole('button', { name: 'Zoom In' }).click()
-        await page.waitForTimeout(500)
+          // Zoom in to make the layers more visible
+          await page.getByRole('button', { name: 'Zoom In' }).click()
+          await page.waitForTimeout(500)
 
-        // Take a screenshot to verify the layer is visible
-        await expect(page).toHaveScreenshot('gibs-second-layer-visible.png', {
-          clip: screenshotClip
-        })
+          // Take a screenshot to verify the layer is visible
+          await expect(page).toHaveScreenshot('gibs-second-layer-visible.png', {
+            clip: screenshotClip
+          })
 
-        // Grab the layer items
-        const firstLayerTitle = page.getByText('Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)')
-        const secondLayerTitle = page.getByText('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
+          // Grab the layer items
+          const firstLayerTitle = page.getByText('Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)')
+          const secondLayerTitle = page.getByText('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
 
-        // Drag the second layer to the top (above the first layer)
-        await secondLayerTitle.dragTo(firstLayerTitle)
+          // Drag the second layer to the top (above the first layer)
+          await secondLayerTitle.dragTo(firstLayerTitle)
 
-        // Verify the layers have been reordered by checking the layer titles
-        const layerItems = page.locator('.layer-picker__layers')
-        const firstLayerHeader = await layerItems.first().locator('h3').first().textContent()
+          // Verify the layers have been reordered by checking the layer titles
+          const layerItems = page.locator('.layer-picker__layers')
+          const firstLayerHeader = await layerItems.first().locator('h3').first().textContent()
 
-        // The second layer (Cloud Pressure Total) should now be first in the list
-        expect(firstLayerHeader).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
+          // The second layer (Cloud Pressure Total) should now be first in the list
+          expect(firstLayerHeader).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
 
-        // Take a screenshot to verify the reordering
-        await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {
-          clip: screenshotClip
+          // Take a screenshot to verify the reordering
+          await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {
+            clip: screenshotClip
+          })
         })
       })
     })

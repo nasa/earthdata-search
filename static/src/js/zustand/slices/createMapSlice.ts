@@ -1,4 +1,8 @@
-import { ImmerStateCreator, MapSlice } from '../types'
+import {
+  ImmerStateCreator,
+  MapSlice,
+  MapLayer
+} from '../types'
 
 import projectionCodes from '../../constants/projectionCodes'
 import { projectionConfigs } from '../../util/map/crs'
@@ -32,18 +36,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
     },
     /** Store layers for each collection */
     mapLayers: {},
-    setMapLayers: (collectionId, layers: Array<{
-      product: string
-      title?: string
-      format?: string
-      layerPeriod?: string
-      antarctic_resolution?: string
-      arctic_resolution?: string
-      geographic_resolution?: string
-      antarctic?: boolean
-      arctic?: boolean
-      geographic?: boolean
-    }>) => {
+    setMapLayers: (collectionId, layers: MapLayer[]) => {
       set((state) => {
         /** Set default visibility: first layer visible, rest hidden */
         const layersWithVisibility = layers.map((layer, index) => ({
@@ -69,20 +62,7 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
     /**
      * Reorder layers when they are dragged and dropped
      */
-    setMapLayersOrder: (collectionId, newOrder: Array<{
-      product: string
-      title?: string
-      format?: string
-      layerPeriod?: string
-      antarctic_resolution?: string
-      arctic_resolution?: string
-      geographic_resolution?: string
-      antarctic?: boolean
-      arctic?: boolean
-      geographic?: boolean
-      isVisible?: boolean
-      opacity?: number
-    }>) => {
+    setMapLayersOrder: (collectionId, newOrder: MapLayer[]) => {
       set((state) => {
         state.map.mapLayers[collectionId] = newOrder
       })

@@ -559,3 +559,18 @@ export type NlpCollectionQuery = {
     endDate: string
   }
 }
+
+export type MapLayer = {
+  product: string
+  title?: string
+  format?: string
+  layerPeriod?: string
+  antarctic_resolution?: string
+  arctic_resolution?: string
+  geographic_resolution?: string
+  antarctic?: boolean
+  arctic?: boolean
+  geographic?: boolean
+  isVisible?: boolean
+  opacity?: number
+}

@@ -61,6 +61,7 @@ import {
   getFocusedCollectionMetadata,
   getFocusedCollectionTags
 } from '../../zustand/selectors/collection'
+import { getFocusedCollectionMapLayers } from '../../zustand/selectors/map'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
 import { getGranules, getGranulesById } from '../../zustand/selectors/granules'
@@ -193,8 +194,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     setLayerOpacity: state.map.setLayerOpacity
   }))
 
-  const nlpCollection = useEdscStore(getNlpCollection)
-  const selectedRegion = useEdscStore(getSelectedRegionQuery)
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)
   const focusedCollectionMetadata = useEdscStore(getFocusedCollectionMetadata)
@@ -204,11 +203,9 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
   const granules = useEdscStore(getGranules)
   const granulesById = useEdscStore(getGranulesById)
-
-  // Get the layers from the Zustand store
-  const mapLayers = useEdscStore(
-    (state) => (focusedCollectionId ? state.map.mapLayers[focusedCollectionId] || [] : [])
-  )
+  const mapLayers = useEdscStore(getFocusedCollectionMapLayers)
+  const nlpCollection = useEdscStore(getNlpCollection)
+  const selectedRegion = useEdscStore(getSelectedRegionQuery)
 
   // Default the granuleMetadata to the granulesById. These are the granules we want to show
   // on the search page
