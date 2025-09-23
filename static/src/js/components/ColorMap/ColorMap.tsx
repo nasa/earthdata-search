@@ -7,6 +7,8 @@ import React, {
 import hexToRgba from 'hex-to-rgba'
 import classNames from 'classnames'
 
+import { Colormap } from '../../types/sharedTypes'
+
 import './ColorMap.scss'
 
 /**
@@ -41,32 +43,6 @@ const replaceSupportedHtmlEntities = (input: string): React.ReactNode | string =
 
   return returnValue
 }
-
-type ColormapScale = {
-  /** The scale object contains colors and labels */
-  scale: {
-    /** The colors in the colormap */
-    colors: string[]
-    /** The labels in the colormap */
-    labels: string[]
-  },
-  /** The classes object is not used */
-  classes?: undefined
-}
-type ColormapClasses = {
-  /** The scale object is not used */
-  scale?: undefined
-  /** The classes object contains colors and labels */
-  classes: {
-    /** The colors in the colormap */
-    colors: string[]
-    /** The labels in the colormap */
-    labels: string[]
-  }
-}
-
-/** Colormap can have the scale or the classes object */
-export type Colormap = ColormapScale | ColormapClasses
 
 interface ColorMapProps {
   /** The colormap information */

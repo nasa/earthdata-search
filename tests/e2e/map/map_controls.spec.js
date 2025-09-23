@@ -349,7 +349,8 @@ test.describe('Map: Control interactions', () => {
         await page.getByRole('button', { name: 'Zoom In' }).click()
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Show map options"]').click({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
+
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control--visible')
         // Set up the response promise BEFORE interacting with the UI
@@ -384,7 +385,7 @@ test.describe('Map: Control interactions', () => {
         const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Show map options"]').click({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control--visible')
@@ -416,7 +417,7 @@ test.describe('Map: Control interactions', () => {
 
         // Change the base layer
 
-        await page.locator('button[aria-label="Show map options"]').click({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control--visible')
@@ -451,7 +452,7 @@ test.describe('Map: Control interactions', () => {
         await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Show map options"]').click({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control--visible')
@@ -485,7 +486,7 @@ test.describe('Map: Control interactions', () => {
         await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Show map options"]').click({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control--visible')
@@ -519,7 +520,7 @@ test.describe('Map: Control interactions', () => {
         await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Show map options"]').click({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
         await page.waitForSelector('.layer-switcher-control--visible')

@@ -11,7 +11,6 @@ import {
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
 import { PreferencesData } from '../zustand/types'
-import { Colormap } from '../components/ColorMap/ColorMap'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>
@@ -220,6 +219,59 @@ export type MapGranule = {
   highlightedStyle: Style
   /** The spatial value for the granule */
   spatial: GeoJsonObject
+}
+export type ColormapScale = {
+  /** The scale object contains colors and labels */
+  scale: {
+    /** The colors in the colormap */
+    colors: string[]
+    /** The labels in the colormap */
+    labels: string[]
+  },
+  /** The classes object is not used */
+  classes?: undefined
+}
+
+export type ColormapClasses = {
+  /** The scale object is not used */
+  scale?: undefined
+  /** The classes object contains colors and labels */
+  classes: {
+    /** The colors in the colormap */
+    colors: string[]
+    /** The labels in the colormap */
+    labels: string[]
+  }
+}
+
+/** Colormap can have the scale or the classes object */
+export type Colormap = ColormapScale | ColormapClasses
+
+export type ImageryLayerItem = {
+  /** The product name */
+  product: string
+  /** The layer title */
+  title?: string
+  /** The colormap data for this layer */
+  colormap: Colormap
+  /** The opacity of the layer */
+  opacity: number
+  /** Whether the layer is visible */
+  isVisible: boolean
+  /** Layer properties */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [key: string]: any
+}
+
+export type ImageryLayers = {
+  /** Array of layer data with colormap information */
+  layerData: ImageryLayerItem[]
+  /** Function to toggle layer visibility */
+  toggleLayerVisibility: (collectionId: string, productName: string) => void
+  /** Function to set map layers order */
+  setMapLayersOrder: (collectionId: string, layers: ImageryLayerItem[]) => void
+  /** Function to update layer opacity */
+  setLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
 }
 
 /** The query object */
@@ -481,33 +533,6 @@ export type Subscription = {
   collectionConceptId?: string
   /** The query parameters for the subscription */
   query: string
-}
-
-export type ImageryLayerItem = {
-  /** The product name */
-  product: string
-  /** The layer title */
-  title?: string
-  /** The colormap data for this layer */
-  colormap: Colormap
-  /** The opacity of the layer */
-  opacity: number
-  /** Whether the layer is visible */
-  isVisible: boolean
-  /** Layer properties */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
-}
-
-export type ImageryLayers = {
-  /** Array of layer data with colormap information */
-  layerData: ImageryLayerItem[]
-  /** Function to toggle layer visibility */
-  toggleLayerVisibility: (collectionId: string, productName: string) => void
-  /** Function to set map layers order */
-  setMapLayersOrder: (collectionId: string, layers: ImageryLayerItem[]) => void
-  /** Function to update layer opacity */
-  setLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
 }
 
 export type SubscriptionResponse = {
