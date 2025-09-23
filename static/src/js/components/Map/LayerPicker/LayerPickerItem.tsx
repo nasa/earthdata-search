@@ -184,11 +184,6 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
                   ariaLabel={`Adjust settings for ${layer.title}`}
                   tooltipId={`layer-settings-tooltip-${layer.product}`}
                   tooltip="Adjust layer settings"
-                  onPointerDown={
-                    (event: React.PointerEvent) => {
-                      event.stopPropagation()
-                    }
-                  }
                 />
               </span>
             </OverlayTrigger>
