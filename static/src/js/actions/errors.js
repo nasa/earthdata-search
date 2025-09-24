@@ -1,6 +1,8 @@
+import React from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 import { REMOVE_ERROR, ADD_ERROR } from '../constants/actionTypes'
+import FailedToLoadCollectionsMessage from '../components/FailedToLoadCollectionsMessage/FailedToLoadCollectionsMessage'
 
 import { addToast } from '../util/addToast'
 import { displayNotificationType } from '../constants/enums'
@@ -59,12 +61,37 @@ export const handleError = ({
   // defaulting to the `message` argument provided to this action
   const [defaultErrorMessage = message] = parsedError
 
-  dispatch(addError({
-    id: requestId,
-    title: `Error ${verb} ${resource}`,
-    message: defaultErrorMessage,
-    notificationType
-  }))
+  // Use a custom error banner when the fetchSubscriptions action throws the error
+  if (action === 'fetchSubscriptions') {
+    const handleAlertsClick = () => {
+      const openAlerts = () => {
+        const alertsButton = document.querySelector('.th-status-link')
+
+        if (alertsButton) {
+          alertsButton.click()
+        }
+      }
+
+      // 0ms timeout required for the alerts to open correctly
+      setTimeout(() => openAlerts(), 0)
+    }
+
+    dispatch(addError({
+      id: requestId,
+      title: 'Something went wrong fetching collection results',
+      message: React.createElement(FailedToLoadCollectionsMessage, {
+        onAlertsClick: handleAlertsClick
+      }),
+      notificationType
+    }))
+  } else {
+    dispatch(addError({
+      id: requestId,
+      title: `Error ${verb} ${resource}`,
+      message: defaultErrorMessage,
+      notificationType
+    }))
+  }
 
   if (errorAction) {
     dispatch(errorAction(defaultErrorMessage))
