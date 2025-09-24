@@ -561,11 +561,13 @@ describe('getSubscriptions', () => {
       expect(storeActions[4]).toEqual({
         type: ADD_ERROR,
         payload: expect.objectContaining({
-          message: 'Error: Token does not exist',
           notificationType: 'banner',
-          title: 'Error retrieving subscription'
+          title: 'Something went wrong fetching collection results'
         })
       })
+
+      expect(storeActions[4].payload.message).toBeDefined()
+      expect(storeActions[4].payload.message.type.name).toBe('FailedToLoadCollectionsMessage')
 
       expect(storeActions[5]).toEqual({
         type: ERRORED_SUBSCRIPTIONS,
