@@ -71,13 +71,17 @@ export const withDropzone = (WrappedComponent) => {
     }
 
     useEffect(() => {
+      // If the child component is mounted, setup Dropzone
       if (childRef.current) {
-        const dzEl = childRef.current.ref.current
+        const dropzoneElement = childRef.current.ref.current
 
         window.addEventListener('dragenter', handleDragEnter)
 
+        // Create the Dropzone instance
         Dz.autoDiscover = false
-        dropzoneRef.current = new Dz(dzEl, dropzoneOptions)
+        dropzoneRef.current = new Dz(dropzoneElement, dropzoneOptions)
+
+        // Register event listeners
         dropzoneRef.current.on('dragleave', handleDragLeave)
         dropzoneRef.current.on('drop', handleDrop)
         dropzoneRef.current.on('sending', handleSending)
@@ -86,14 +90,12 @@ export const withDropzone = (WrappedComponent) => {
         })
 
         if (onRemovedFile) dropzoneRef.current.on('removedfile', handleRemovedFile)
-
-        if (onError) {
-          dropzoneRef.current.on('error', handleError)
-        }
+        if (onError) dropzoneRef.current.on('error', handleError)
 
         eventEmitter.on(`${eventScope}.dropzoneOpen`, handleDropzoneOpen)
       }
 
+      // Cleanup the event listeners
       return () => {
         window.removeEventListener('dragenter', handleDragEnter)
 

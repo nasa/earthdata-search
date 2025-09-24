@@ -101,34 +101,27 @@ export const PortalLinkContainer = ({
   }
 
   if (type === 'button') {
-    // We need all the props passed in to PortalLinkContainer to be passed into the Button component.
-    // This is taking all the props we destructed and putting them into an object to spread on Button
-    const allProps = {
-      children,
-      className,
-      dataTestId,
-      newPortal,
-      onChangePath,
-      onClick,
-      target,
-      to,
-      type,
-      updatePath,
-      ...otherProps
-    }
-
     // https://stackoverflow.com/questions/42463263/wrapping-a-react-router-link-in-an-html-button#answer-49439893
     return (
       <Button
-        type="button"
-        {...allProps}
+        type={type || 'button'}
+        className={className}
+        dataTestId={dataTestId}
+        newPortal={newPortal}
+        onChangePath={onChangePath}
+        target={target}
+        to={to}
+        updatePath={updatePath}
+        {...otherProps}
         onClick={
           (event) => {
             onClickWithChangePath(event)
             navigate(newTo)
           }
         }
-      />
+      >
+        {children}
+      </Button>
     )
   }
 
