@@ -157,6 +157,11 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
                               )
                             }
                           }
+                          onPointerDown={
+                            (event: React.PointerEvent) => {
+                              event.stopPropagation()
+                            }
+                          }
                           className="layer-picker-item__opacity-range"
                         />
                         <div className="d-flex justify-content-end mt-2">

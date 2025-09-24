@@ -79,6 +79,8 @@ export interface ButtonProps {
   tooltipPlacement?: BSOverlayTriggerProps['placement'],
   /** Unique ID for the tooltip. */
   tooltipId?: string
+  /** Tooltip keyboard shortcut. */
+  tooltipKeyboardShortcut?: string
   /** The button type attribute. */
   type?: BSButtonProps['type']
   /** Custom variant for the button styling. */
@@ -117,6 +119,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   tooltip,
   tooltipPlacement,
   tooltipId,
+  tooltipKeyboardShortcut,
   type = 'button',
   variant
 }, ref) => {
@@ -136,6 +139,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   )
 
   let iconClasses
+  console.log('🚀 ~ file: Button.tsx:296 ~ overlayClass:', overlayClass)
 
   if (icon) {
     iconClasses = classNames(
@@ -268,9 +272,20 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
             hide: 0
           }
         }
-        overlay={(
-          <Tooltip id={tooltipId} className={overlayClass}>{tooltip}</Tooltip>
-        )}
+        overlay={
+          (
+            <Tooltip id={tooltipId} className={overlayClass}>
+              {tooltip}
+              {
+                tooltipKeyboardShortcut && (
+                  <span className="keyboard-shortcut ms-1">
+                    {tooltipKeyboardShortcut}
+                  </span>
+                )
+              }
+            </Tooltip>
+          )
+        }
       >
         {button}
       </OverlayTrigger>

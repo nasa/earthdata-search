@@ -12,8 +12,8 @@ export type LegendControlOptions = {
   collectionId: string
   /** The imagery layers */
   imageryLayers: ImageryLayers
-   /** The target element to render the control into */
-   target?: HTMLElement | string
+  /** The target element to render the control into */
+  target?: HTMLElement | string
 }
 
 /**
@@ -46,9 +46,6 @@ class LegendControl extends Control {
   public render() {
     const isEmpty = this.imageryLayers.layerData.length === 0
     if (isEmpty) {
-      // Don't render the legend if the granule imagery layer group is empty
-      console.log('imagery layers are empty')
-
       return
     }
 

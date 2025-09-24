@@ -96,6 +96,9 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
    * Handles the end of a drag operation
    */
   const handleDragEnd = (event: DragEndEvent) => {
+    // Active: This object represents the draggable item that was being dragged.
+    // over: This object represents the droppable item that the active item was dropped over.
+    // https://docs.dndkit.com/api-documentation/context-provider#ondragend
     const { active, over } = event
 
     if (over && active.id !== over.id) {
@@ -134,11 +137,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
       <Button
         className="map-button"
         variant="naked"
-        onClick={
-          () => {
-            setLayersHidden(false)
-          }
-        }
+        onClick={() => setLayersHidden(false)}
         icon={FaLayerGroup}
         iconOnly
         iconSize="14px"
@@ -146,6 +145,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
         tooltipId="minimize-layers-tooltip"
         tooltip="Show visualization layers"
         tooltipPlacement="left"
+        tooltipKeyboardShortcut="l"
       />
     )
   }
@@ -156,17 +156,14 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
         <h2 className="h6 mb-0">Visualization Layers</h2>
         <Button
           variant="naked"
-          onClick={
-            () => {
-              setLayersHidden(true)
-            }
-          }
+          onClick={() => setLayersHidden(true)}
           icon={FaCompressAlt}
           iconOnly
           ariaLabel="Hide layers"
           tooltipId="hide-layers-tooltip"
           tooltip="Hide visualization layers"
           tooltipPlacement="left"
+          tooltipKeyboardShortcut="l"
         />
       </header>
       <div className="layer-picker__layers overflow-auto">
