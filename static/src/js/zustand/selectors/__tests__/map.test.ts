@@ -97,7 +97,7 @@ describe('map selectors', () => {
     test('returns empty array when no collection is focused', () => {
       useEdscStore.setState(() => ({
         collection: {
-          collectionId: ''
+          collectionId: null
         },
         map: {
           mapLayers: {

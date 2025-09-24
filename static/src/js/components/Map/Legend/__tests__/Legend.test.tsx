@@ -3,18 +3,21 @@ import React from 'react'
 import { screen } from '@testing-library/react'
 
 import Legend from '../Legend'
+import LayerPicker from '../../LayerPicker/LayerPicker'
+
 import setupTest from '../../../../../../../jestConfigs/setupTest'
+
 import { ImageryLayers } from '../../../../types/sharedTypes'
 
 // Mock the LayerPicker component
-jest.mock('../../LayerPicker/LayerPicker', () => jest.fn(() => <div data-testid="layer-picker" />))
+jest.mock('../../LayerPicker/LayerPicker', () => jest.fn(() => <div />))
 
 const mockCollectionId = 'test-collection'
 
 // Create mock functions
 const mockToggleLayerVisibility = jest.fn()
 const mockSetMapLayersOrder = jest.fn()
-const mocksetLayerOpacity = jest.fn()
+const mockSetLayerOpacity = jest.fn()
 
 const mockImageryLayersWithLayers: ImageryLayers = {
   layerData: [
@@ -45,14 +48,14 @@ const mockImageryLayersWithLayers: ImageryLayers = {
   ],
   toggleLayerVisibility: mockToggleLayerVisibility,
   setMapLayersOrder: mockSetMapLayersOrder,
-  setLayerOpacity: mocksetLayerOpacity
+  setLayerOpacity: mockSetLayerOpacity
 }
 
 const mockImageryLayersEmpty: ImageryLayers = {
   layerData: [],
   toggleLayerVisibility: mockToggleLayerVisibility,
   setMapLayersOrder: mockSetMapLayersOrder,
-  setLayerOpacity: mocksetLayerOpacity
+  setLayerOpacity: mockSetLayerOpacity
 }
 
 const setup = setupTest({
@@ -80,20 +83,17 @@ describe('Legend', () => {
       }
     })
 
-    const legend = screen.getByTestId('legend')
-    expect(legend).toBeInTheDocument()
-
     // LayerPicker should be rendered with the layer data
-    expect(screen.getByTestId('layer-picker')).toBeInTheDocument()
+    expect(LayerPicker).toHaveBeenCalledWith({
+      collectionId: mockCollectionId,
+      imageryLayers: mockImageryLayersWithLayers
+    }, {})
+
+    expect(LayerPicker).toHaveBeenCalledTimes(1)
   })
 
   test('does not render LayerPicker when imageryLayers has no layers', () => {
     setup()
-
-    const legend = screen.getByTestId('legend')
-
-    expect(legend).toBeInTheDocument()
-    expect(legend).toBeEmptyDOMElement()
-    expect(screen.queryByTestId('layer-picker')).not.toBeInTheDocument()
+    expect(LayerPicker).toHaveBeenCalledTimes(0)
   })
 })

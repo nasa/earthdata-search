@@ -16,25 +16,6 @@ import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
 import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
 
-const colormapScreenshotClip = {
-  x: 1004,
-  y: 94,
-  width: 384,
-  height: 276
-}
-
-const colormap2ScreenshotClip = {
-  x: 1004,
-  y: 92,
-  width: 384,
-  height: 213
-}
-
-// Update the clip to the new coordinates
-// Const legendElement = page.getByTestId('legend')
-// const boundingBox = await legendElement.boundingBox()
-// console.log('coordinates - x:', boundingBox.x, 'y:', boundingBox.y, 'width:', boundingBox.width, 'height:', boundingBox.height)
-
 test.describe('Map: Colormap interactions', () => {
   test.beforeEach(async ({ page, context }) => {
     await setupTests({
@@ -123,11 +104,10 @@ test.describe('Map: Colormap interactions', () => {
     })
 
     test('displays the color map on the page @screenshot', async ({ page }) => {
-      await page.getByTestId('legend').scrollIntoViewIfNeeded()
+      const legend = page.getByTestId('legend')
+      await legend.scrollIntoViewIfNeeded()
 
-      await expect(page).toHaveScreenshot('colormap-screenshot.png', {
-        clip: colormapScreenshotClip
-      })
+      await expect(legend).toHaveScreenshot('colormap-screenshot.png')
 
       await expect(page.getByTestId('legend-label-min').first()).toHaveText('0 – 1 %')
       await expect(page.getByTestId('legend-label-max').first()).toHaveText('100 %')
@@ -159,11 +139,10 @@ test.describe('Map: Colormap interactions', () => {
           // Wait for the timeline to be visible as a proxy for the map being ready
           await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
-          // TODO we should not need to increase the maxDiffPixelRatio here
-          await expect(page).toHaveScreenshot('colormap-2-screenshot.png', {
-            clip: colormap2ScreenshotClip,
-            maxDiffPixelRatio: 0.3
-          })
+          const legend = page.getByTestId('legend')
+          await legend.scrollIntoViewIfNeeded()
+
+          await expect(legend).toHaveScreenshot('colormap-2-screenshot.png')
 
           await expect(page.getByTestId('legend-label-min').first()).toHaveText('0.00 – 0.12 DU')
           await expect(page.getByTestId('legend-label-max').first()).toHaveText('500.00 DU')

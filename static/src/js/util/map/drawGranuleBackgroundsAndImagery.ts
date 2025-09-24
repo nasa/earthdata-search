@@ -233,8 +233,10 @@ const drawGranuleBackgroundsAndImagery = ({
 
           // Remove the existing event listeners for the cached layer
           unByKey(prerenderKey)
-          // eslint-disable-next-line max-len
-          imageryLayer.un(RenderEventType.POSTRENDER as LayerRenderEventTypes, onTileLayerPostrender)
+          imageryLayer.un(
+            RenderEventType.POSTRENDER as LayerRenderEventTypes,
+            onTileLayerPostrender
+          )
         } else {
           imageryLayer = new TileLayer({
             className: `granule-imagery-${granuleId}`,
