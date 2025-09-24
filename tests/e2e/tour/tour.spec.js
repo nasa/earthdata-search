@@ -143,7 +143,7 @@ test.describe('When logged in', () => {
     await page.getByRole('button', { name: 'Start Tour' }).click()
 
     // Wait a short time to ensure the tour animation shows the start of the tour
-    await page.waitForTimeout(200)
+    await page.waitForTimeout(500)
 
     // Welcome screen
     await expect(page.getByRole('heading', { name: 'Welcome to Earthdata Search!' })).toBeVisible()
@@ -213,7 +213,7 @@ test.describe('When not logged in', () => {
     await page.getByRole('button', { name: 'Start Tour' }).click()
 
     // Wait a short time to ensure the tour animation shows the start of the tour
-    await page.waitForTimeout(200)
+    await page.waitForTimeout(500)
 
     // Start Tour View: Welcome to Earthdata Search
     await expect(page.getByRole('heading', { name: 'Welcome to Earthdata Search!' })).toBeVisible()

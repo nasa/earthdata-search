@@ -6,6 +6,6 @@ import './css/main.scss'
 
 import App from './js/App'
 
-const root = ReactDOM.createRoot(document.getElementById('root'))
+const root = ReactDOM.createRoot(document.getElementById('app'))
 
 root.render(<App />)

@@ -1,4 +1,8 @@
-import React, { lazy, Suspense } from 'react'
+import React, {
+  lazy,
+  Suspense,
+  useEffect
+} from 'react'
 import { Provider } from 'react-redux'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { ToastProvider } from 'react-toast-notifications'
@@ -271,6 +275,11 @@ const App = () => {
   const description = 'Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search'
   const url = `${edscHost}/search`
   const titleEnv = env.toUpperCase() === 'PROD' ? '' : `[${env.toUpperCase()}]`
+
+  useEffect(() => {
+    // Remove the loading class from the root element once the app has loaded
+    document.getElementById('root').classList.remove('root--loading')
+  }, [])
 
   return (
     <ErrorBoundary>
