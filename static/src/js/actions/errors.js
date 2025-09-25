@@ -61,8 +61,11 @@ export const handleError = ({
   // defaulting to the `message` argument provided to this action
   const [defaultErrorMessage = message] = parsedError
 
-  // Use a custom error banner when the fetchSubscriptions action throws the error
-  if (action === 'fetchSubscriptions') {
+  // Use a custom error banner when we fail to load collection data
+  const failedToLoadCollectionData = action === 'getCollections'
+    || action === 'fetchSubscriptions'
+    || action === 'getGranules'
+  if (failedToLoadCollectionData) {
     const handleAlertsClick = () => {
       const openAlerts = () => {
         const alertsButton = document.querySelector('.th-status-link')
