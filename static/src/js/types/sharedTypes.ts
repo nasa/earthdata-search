@@ -258,7 +258,7 @@ export type ImageryLayerItem = {
   opacity: number
   /** Whether the layer is visible */
   isVisible: boolean
-  /** Layer properties */
+  /** Layer properties/ Layer Data */
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }

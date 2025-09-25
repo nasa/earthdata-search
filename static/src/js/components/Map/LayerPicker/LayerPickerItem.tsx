@@ -18,21 +18,20 @@ import { Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/
 import Button from '../../Button/Button'
 import ColorMap from '../../ColorMap/ColorMap'
 
-import { Colormap } from '../../../types/sharedTypes'
+import { Colormap, ImageryLayerItem } from '../../../types/sharedTypes'
 
 import './LayerPickerItem.scss'
 
 interface DraggableLayerItemProps {
-  layer: {
-    product: string
-    title?: string
-    colormap: Colormap
-    opacity: number
-    isVisible: boolean
-  }
+  /** The layer data */
+  layer: ImageryLayerItem
+  /** The collection ID */
   collectionId: string
+  /** The color map for the layer */
   colorMap?: Colormap
+  /** Function to update the opacity of the layer */
   updateMapLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
+  /** Function to toggle the visibility of the layer */
   handleToggleLayerVisibility: (productName: string) => void
 }
 
