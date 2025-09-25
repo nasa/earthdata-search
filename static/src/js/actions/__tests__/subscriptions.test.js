@@ -567,7 +567,8 @@ describe('getSubscriptions', () => {
       })
 
       expect(storeActions[4].payload.message).toBeDefined()
-      expect(storeActions[4].payload.message.type.name).toBe('FailedToLoadCollectionsMessage')
+      expect(storeActions[4].payload.showAlertButton).toBe(true)
+      expect(storeActions[4].payload.title).toBe('Something went wrong fetching collection results')
 
       expect(storeActions[5]).toEqual({
         type: ERRORED_SUBSCRIPTIONS,
