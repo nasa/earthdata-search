@@ -10,7 +10,7 @@ import {
 } from 'geojson'
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
-import { PreferencesData } from '../zustand/types'
+import { PreferencesData, MapLayer } from '../zustand/types'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>
@@ -247,20 +247,10 @@ export type ColormapClasses = {
 /** Colormap can have the scale or the classes object */
 export type Colormap = ColormapScale | ColormapClasses
 
-export type ImageryLayerItem = {
-  /** The product name */
-  product: string
-  /** The layer title */
-  title?: string
+/** Imagery layer item with colormap data */
+export type ImageryLayerItem = MapLayer & {
   /** The colormap data for this layer */
-  colormap: Colormap
-  /** The opacity of the layer */
-  opacity: number
-  /** Whether the layer is visible */
-  isVisible: boolean
-  /** Layer properties/ Layer Data */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: any
+  colormap?: Colormap
 }
 
 export type ImageryLayers = {

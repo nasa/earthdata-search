@@ -230,10 +230,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           // Check the actual slider value (0.5 for 50%)
           expect(await opacitySlider.getAttribute('value')).toBe('0.5')
           // Check the displayed percentage
-          expect(page.locator('div:has-text("50 %")').first()).toBeVisible()
-
-          // Close the popover by clicking outside
-          await page.locator('body').click()
+          expect(page.getByRole('tooltip', { name: '50 %' })).toBeVisible()
         })
       })
 

@@ -72,8 +72,10 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
     setLayerOpacity: (collectionId, productName, opacity) => {
       set((state) => {
         const collectionLayers = state.map.mapLayers[collectionId]
+
         if (collectionLayers) {
           const targetLayer = collectionLayers.find((layer) => layer.product === productName)
+
           if (targetLayer) {
             targetLayer.opacity = opacity
           }
