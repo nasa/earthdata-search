@@ -26,8 +26,6 @@ import { projectionConfigs } from '../../util/map/crs'
 import murmurhash3 from '../../util/murmurhash3'
 import hasGibsLayerForProjection from '../../util/hasGibsLayerForProjection'
 import buildGibsData from '../../util/map/buildGibsData'
-// @ts-expect-error The file does not have types
-import { getValueForTag } from '../../../../../sharedUtils/tags'
 
 import projectionCodes from '../../constants/projectionCodes'
 
@@ -56,11 +54,7 @@ import {
   getSelectedRegionQuery,
   getNlpCollection
 } from '../../zustand/selectors/query'
-import {
-  getCollectionId,
-  getFocusedCollectionMetadata,
-  getFocusedCollectionTags
-} from '../../zustand/selectors/collection'
+import { getCollectionId, getFocusedCollectionMetadata } from '../../zustand/selectors/collection'
 import { getFocusedCollectionMapLayers } from '../../zustand/selectors/map'
 import { getFocusedGranule, getGranuleId } from '../../zustand/selectors/granule'
 import { getFocusedProjectCollection } from '../../zustand/selectors/project'
@@ -168,7 +162,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     shapefile,
     showMbr,
     startDrawing,
-    setMapLayers,
     toggleLayerVisibility,
     setMapLayersOrder,
     setLayerOpacity
@@ -197,7 +190,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
   const focusedCollectionId = useEdscStore(getCollectionId)
   const focusedCollectionMetadata = useEdscStore(getFocusedCollectionMetadata)
-  const focusedCollectionTags = useEdscStore(getFocusedCollectionTags)
   const focusedGranule = useEdscStore(getFocusedGranule)
   const focusedGranuleId = useEdscStore(getGranuleId)
   const focusedProjectCollection = useEdscStore(getFocusedProjectCollection)
