@@ -175,7 +175,9 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           error,
           action: 'getNlpCollections',
           resource: 'nlpSearch',
-          requestObject: nlpRequest
+          requestObject: nlpRequest,
+          showAlertButton: true,
+          title: 'Something went wrong with natural language search'
         }))
       }
     }

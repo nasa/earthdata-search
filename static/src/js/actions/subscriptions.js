@@ -149,7 +149,9 @@ export const createSubscription = (name, subscriptionType) => async (dispatch, g
       action: 'createSubscription',
       resource: 'subscription',
       requestObject: graphQlRequestObject,
-      notificationType: displayNotificationType.toast
+      notificationType: displayNotificationType.toast,
+      showAlertButton: true,
+      title: 'Something went wrong creating your subscription'
     }))
   }
 
@@ -314,7 +316,9 @@ export const getGranuleSubscriptions = (collectionId) => async (dispatch, getSta
       error,
       action: 'getGranuleSubscriptions',
       resource: 'subscription',
-      requestObject: graphQlRequestObject
+      requestObject: graphQlRequestObject,
+      showAlertButton: true,
+      title: 'Something went wrong fetching granule subscriptions'
     }))
 
     return null
@@ -382,7 +386,9 @@ export const deleteSubscription = (
       action: 'deleteSubscription',
       resource: 'subscription',
       verb: 'deleting',
-      graphQlRequestObject
+      graphQlRequestObject,
+      showAlertButton: true,
+      title: 'Something went wrong deleting your subscription'
     }))
   }
 
@@ -473,7 +479,9 @@ export const updateSubscription = ({
       action: 'updateSubscription',
       resource: 'subscription',
       verb: 'updating',
-      graphQlRequestObject
+      graphQlRequestObject,
+      showAlertButton: true,
+      title: 'Something went wrong updating your subscription'
     }))
   }
 
