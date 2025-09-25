@@ -39,25 +39,26 @@ export const GranuleDownloadButton = ({
   const { apiHost } = getEnvironmentConfig()
 
   if (tooManyGranules) {
+    const renderTooltip = (tooltipProps) => (
+      <Tooltip
+        id="tooltip__granule-results-actions__download-all-button"
+        className="tooltip--large tooltip--ta-left tooltip--wide"
+        {...tooltipProps}
+      >
+        Due to significant processing times, orders for this collection are limited to
+        {' '}
+        {commafy(granuleLimit)}
+        {' '}
+        granules. Please narrow your search before downloading.
+        Contact the data provider with questions.
+        You can find contact information by clicking on the information icon.
+      </Tooltip>
+    )
+
     return (
       <OverlayTrigger
         placement="top"
-        overlay={
-          (
-            <Tooltip
-              id="tooltip__granule-results-actions__download-all-button"
-              className="tooltip--large tooltip--ta-left tooltip--wide"
-            >
-              Due to significant processing times, orders for this collection are limited to
-              {' '}
-              {commafy(granuleLimit)}
-              {' '}
-              granules. Please narrow your search before downloading.
-              Contact the data provider with questions.
-              You can find contact information by clicking on the information icon.
-            </Tooltip>
-          )
-        }
+        overlay={renderTooltip}
       >
         <div>
           <Button

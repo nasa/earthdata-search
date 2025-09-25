@@ -25,6 +25,18 @@ import useEdscStore from '../../zustand/useEdscStore'
 
 import './ProjectHeader.scss'
 
+const renderEstimatedSizeTooltip = (tooltipProps) => (
+  <Tooltip
+    className="tooltip--large tooltip--ta-left tooltip--wide"
+    {...tooltipProps}
+  >
+    This is the estimated overall size of your project. If no size
+    information exists in a granule&apos;s metadata, it will not be
+    included in this number. The size is estimated based upon the
+    first 20 granules added to your project from each collection.
+  </Tooltip>
+)
+
 /**
  * Renders ProjectHeader.
  * @param {function} onUpdateProjectName - Function to updated the saved project name
@@ -234,18 +246,7 @@ export const ProjectHeader = memo(({
 
               <OverlayTrigger
                 placement="right"
-                overlay={
-                  (
-                    <Tooltip
-                      className="tooltip--large tooltip--ta-left tooltip--wide"
-                    >
-                      This is the estimated overall size of your project. If no size
-                      information exists in a granule&apos;s metadata, it will not be
-                      included in this number. The size is estimated based upon the
-                      first 20 granules added to your project from each collection.
-                    </Tooltip>
-                  )
-                }
+                overlay={renderEstimatedSizeTooltip}
               >
                 <EDSCIcon icon={AlertInformation} className="project-header__stats-icon" />
               </OverlayTrigger>

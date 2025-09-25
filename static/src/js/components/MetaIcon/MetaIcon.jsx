@@ -67,19 +67,20 @@ export const MetaIcon = ({
 
   // If tooltipContent is set, return the component wrapped in a tooltip
   if (tooltipContent) {
+    const renderTooltip = (tooltipProps) => (
+      <Tooltip
+        id={id}
+        className={`meta-icon__tooltip ${tooltipClassName}`}
+        {...tooltipProps}
+      >
+        {tooltipContent}
+      </Tooltip>
+    )
+
     return (
       <OverlayTrigger
         placement={placement}
-        overlay={
-          (
-            <Tooltip
-              id={id}
-              className={`meta-icon__tooltip ${tooltipClassName}`}
-            >
-              {tooltipContent}
-            </Tooltip>
-          )
-        }
+        overlay={renderTooltip}
       >
         {component}
       </OverlayTrigger>

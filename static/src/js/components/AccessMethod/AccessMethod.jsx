@@ -27,7 +27,6 @@ import SwodlrForm from './SwodlrForm'
 import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getGranuleMetadata } from '../../zustand/selectors/granule'
 
 import './AccessMethod.scss'
 
@@ -62,7 +61,6 @@ const AccessMethod = ({
   temporal,
   ursProfile
 }) => {
-  const granulesMetadata = useEdscStore(getGranuleMetadata)
   const {
     setShowMbr,
     setActivePanel
@@ -114,7 +112,8 @@ const AccessMethod = ({
 
   const {
     addedGranuleIds = [],
-    allIds: granulesAllIds = []
+    allIds: granulesAllIds = [],
+    byId: granulesMetadata
   } = projectCollectionGranules
 
   let granulesToDisplay = []

@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
+import Tooltip, { type TooltipProps } from 'react-bootstrap/Tooltip'
 
 // @ts-expect-error: Types do not exist for this file
 import { usePortalLogo } from '../../hooks/usePortalLogo'
@@ -27,6 +27,15 @@ const HomePortalCard: React.FC<PortalConfig> = (portal) => {
   const portalLogoSrc = usePortalLogo(portalId)
 
   const displayTitle = `${title}${subtitle && ` (${subtitle})`}`
+
+  const renderTooltip = (tooltipProps: TooltipProps) => (
+    <Tooltip
+      id="more-info-tooltip"
+      {...tooltipProps}
+    >
+      {`Find more information about ${title}`}
+    </Tooltip>
+  )
 
   return (
     <div className="d-flex position-relative">
@@ -62,7 +71,7 @@ const HomePortalCard: React.FC<PortalConfig> = (portal) => {
         moreInfoUrl && (
           <div className="position-absolute home-portal-card__footer">
             <OverlayTrigger
-              overlay={<Tooltip id="more-info-tooltip">{`Find more information about ${title}`}</Tooltip>}
+              overlay={renderTooltip}
             >
               <div>
                 <ExternalLink

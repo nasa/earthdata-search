@@ -125,6 +125,18 @@ const buildForDeveloperLink = (linkData, token) => {
   )
 }
 
+const renderReformattingTooltip = (tooltipProps) => (
+  <Tooltip
+    id="tooltip_supported-reformatting"
+    className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
+    {...tooltipProps}
+  >
+    In addition to their native format, some data products can be
+    reformatted to additional formats. If reformatting is desired,
+    reformatting options can be set prior to downloading the data.
+  </Tooltip>
+)
+
 /**
  * Renders CollectionDetailsBody.
  * @param {Object} props - The props passed into the component.
@@ -386,18 +398,7 @@ export const CollectionDetailsBody = ({
                       <span className="collection-details-body__heading-tooltip">
                         <OverlayTrigger
                           placement="right"
-                          overlay={
-                            (
-                              <Tooltip
-                                id="tooltip_supported-reformatting"
-                                className="collection-details-body__tooltip tooltip--large tooltip--ta-left"
-                              >
-                                In addition to their native format, some data products can be
-                                reformatted to additional formats. If reformatting is desired,
-                                reformatting options can be set prior to downloading the data.
-                              </Tooltip>
-                            )
-                          }
+                          overlay={renderReformattingTooltip}
                         >
                           <EDSCIcon icon={FaQuestionCircle} size="0.625rem" />
                         </OverlayTrigger>

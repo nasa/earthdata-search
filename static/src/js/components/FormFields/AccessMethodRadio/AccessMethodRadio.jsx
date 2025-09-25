@@ -80,6 +80,28 @@ export const AccessMethodRadio = ({
     />
   )
 
+  const renderTooltip = (tooltipProps) => (
+    <Tooltip
+      className="tooltip--ta-left"
+      onMouseEnter={() => externalLink && setShowTooltip(true)}
+      onMouseLeave={() => externalLink && setShowTooltip(false)}
+      {...tooltipProps}
+    >
+      <div className="access-method-radio__tooltip">
+        <p className="mb-0">
+          {details}
+        </p>
+        {
+          externalLink && (
+            <ExternalLink href={externalLink.link} className="d-inline-block mt-3 mb-1" variant="light">
+              {externalLink.message}
+            </ExternalLink>
+          )
+        }
+      </div>
+    </Tooltip>
+  )
+
   return (
     <label
       className={labelClassName}
@@ -147,28 +169,7 @@ export const AccessMethodRadio = ({
                   setShowTooltip(state)
                 }
               }
-              overlay={
-                (
-                  <Tooltip
-                    className="tooltip--ta-left"
-                    onMouseEnter={() => externalLink && setShowTooltip(true)}
-                    onMouseLeave={() => externalLink && setShowTooltip(false)}
-                  >
-                    <div className="access-method-radio__tooltip">
-                      <p className="mb-0">
-                        {details}
-                      </p>
-                      {
-                        externalLink && (
-                          <ExternalLink href={externalLink.link} className="d-inline-block mt-3 mb-1" variant="light">
-                            {externalLink.message}
-                          </ExternalLink>
-                        )
-                      }
-                    </div>
-                  </Tooltip>
-                )
-              }
+              overlay={renderTooltip}
             >
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
             </OverlayTrigger>

@@ -127,6 +127,51 @@ const SwodlrForm = ({
     handleSwoldrOptions()
   }, [granuleExtent, sampleGrid, rasterResolution])
 
+  const renderGranuleExtentTooltip = (tooltipProps) => (
+    <Tooltip
+      className="tooltip--ta-left tooltip--wide"
+      {...tooltipProps}
+    >
+      {swodlrToolTips.GranuleExtent}
+    </Tooltip>
+  )
+
+  const renderSamplingGridTooltip = (tooltipProps) => (
+    <Tooltip
+      className="tooltip--ta-left tooltip--wide"
+      {...tooltipProps}
+    >
+      {swodlrToolTips.SamplingGridResolution}
+    </Tooltip>
+  )
+
+  const renderRasterResolutionTooltip = (tooltipProps) => (
+    <Tooltip
+      className="tooltip--ta-left tooltip--wide"
+      {...tooltipProps}
+    >
+      {swodlrToolTips.RasterResolution}
+    </Tooltip>
+  )
+
+  const renderUTMTooltip = (tooltipProps) => (
+    <Tooltip
+      className="tooltip--ta-left tooltip--wide"
+      {...tooltipProps}
+    >
+      {swodlrToolTips.UTM}
+    </Tooltip>
+  )
+
+  const renderMGRSTooltip = (tooltipProps) => (
+    <Tooltip
+      className="tooltip--ta-left tooltip--wide"
+      {...tooltipProps}
+    >
+      {swodlrToolTips.MGRS}
+    </Tooltip>
+  )
+
   return (
     <ProjectPanelSection
       customHeadingTag="h4"
@@ -138,13 +183,7 @@ const SwodlrForm = ({
             Granule Extent
             <OverlayTrigger
               placement="top"
-              overlay={
-                (
-                  <Tooltip className="tooltip--ta-left tooltip--wide">
-                    {swodlrToolTips.GranuleExtent}
-                  </Tooltip>
-                )
-              }
+              overlay={renderGranuleExtentTooltip}
             >
               <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
@@ -183,13 +222,7 @@ const SwodlrForm = ({
             Sampling Grid Type
             <OverlayTrigger
               placement="top"
-              overlay={
-                (
-                  <Tooltip className="tooltip--ta-left tooltip--wide">
-                    {swodlrToolTips.SamplingGridResolution}
-                  </Tooltip>
-                )
-              }
+              overlay={renderSamplingGridTooltip}
             >
               <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
@@ -228,13 +261,7 @@ const SwodlrForm = ({
             Raster Resolution
             <OverlayTrigger
               placement="top"
-              overlay={
-                (
-                  <Tooltip className="tooltip--ta-left tooltip--wide">
-                    {swodlrToolTips.RasterResolution}
-                  </Tooltip>
-                )
-              }
+              overlay={renderRasterResolutionTooltip}
             >
               <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
@@ -283,13 +310,7 @@ const SwodlrForm = ({
                             UTM Zone Adjust
                             <OverlayTrigger
                               placement="top"
-                              overlay={
-                                (
-                                  <Tooltip className="tooltip--ta-left tooltip--wide">
-                                    {swodlrToolTips.UTM}
-                                  </Tooltip>
-                                )
-                              }
+                              overlay={renderUTMTooltip}
                             >
                               <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="12px" variant="more-info" />
                             </OverlayTrigger>
@@ -298,13 +319,7 @@ const SwodlrForm = ({
                             MGRS Band Adjust
                             <OverlayTrigger
                               placement="top"
-                              overlay={
-                                (
-                                  <Tooltip className="tooltip--ta-left tooltip--wide">
-                                    {swodlrToolTips.MGRS}
-                                  </Tooltip>
-                                )
-                              }
+                              overlay={renderMGRSTooltip}
                             >
                               <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="12px" variant="more-info" />
                             </OverlayTrigger>

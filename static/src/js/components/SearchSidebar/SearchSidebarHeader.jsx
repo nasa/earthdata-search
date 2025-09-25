@@ -94,19 +94,22 @@ export const SearchSidebarHeader = () => {
   }
 
   if (moreInfoUrl && portalLogoSrc) {
+    const renderTooltip = (tooltipProps) => (
+      <Tooltip
+        className="tooltip--auto"
+        {...tooltipProps}
+      >
+        Find more information about
+        {' '}
+        {displayTitle}
+        <EDSCIcon className="search-sidebar-header__portal-tooltip-icon edsc-icon-ext-link edsc-icon-fw" icon="edsc-icon-ext-link edsc-icon-fw" />
+      </Tooltip>
+    )
+
     logoEl = (
       <OverlayTrigger
         placement="top"
-        overlay={
-          (
-            <Tooltip className="tooltip--auto">
-              Find more information about
-              {' '}
-              {displayTitle}
-              <EDSCIcon className="search-sidebar-header__portal-tooltip-icon edsc-icon-ext-link edsc-icon-fw" icon="edsc-icon-ext-link edsc-icon-fw" />
-            </Tooltip>
-          )
-        }
+        overlay={renderTooltip}
       >
         <a
           target="_blank"

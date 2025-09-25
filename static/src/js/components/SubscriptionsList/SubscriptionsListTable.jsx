@@ -76,6 +76,22 @@ const SubscriptionsListTable = ({
                 title
               } = collection || {}
 
+              const renderTooltip = (tooltipProps) => (
+                <Tooltip
+                  id={`tooltip__subscription-info__${conceptId}`}
+                  className="subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left"
+                  {...tooltipProps}
+                >
+                  <>
+                    <h5 className="tooltip__tooltip-heading">Filters</h5>
+                    <SubscriptionsQueryList
+                      query={parsedQuery}
+                      subscriptionType={subscriptionType}
+                    />
+                  </>
+                </Tooltip>
+              )
+
               return (
                 <tr
                   key={conceptId}
@@ -100,22 +116,7 @@ const SubscriptionsListTable = ({
                     <div className="actions-container">
                       <OverlayTrigger
                         placement="top"
-                        overlay={
-                          (
-                            <Tooltip
-                              id={`tooltip__subscription-info__${conceptId}`}
-                              className="subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left"
-                            >
-                              <>
-                                <h5 className="tooltip__tooltip-heading">Filters</h5>
-                                <SubscriptionsQueryList
-                                  query={parsedQuery}
-                                  subscriptionType={subscriptionType}
-                                />
-                              </>
-                            </Tooltip>
-                          )
-                        }
+                        overlay={renderTooltip}
                       >
                         <EDSCIcon icon={AlertInformation} className="subscriptions-list__button align-middle" />
                       </OverlayTrigger>

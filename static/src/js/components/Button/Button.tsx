@@ -7,7 +7,8 @@ import classNames from 'classnames'
 import type {
   BadgeProps as BSBadgeProps,
   ButtonProps as BSButtonProps,
-  OverlayTriggerProps as BSOverlayTriggerProps
+  OverlayTriggerProps as BSOverlayTriggerProps,
+  TooltipProps
 } from 'react-bootstrap'
 import Btn from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
@@ -258,13 +259,22 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
       }
     </Btn>
   )
+
   if (tooltip && tooltipId) {
+    const renderTooltip = (tooltipProps: TooltipProps) => (
+      <Tooltip
+        id={tooltipId}
+        className={overlayClass}
+        {...tooltipProps}
+      >
+        {tooltip}
+      </Tooltip>
+    )
+
     return (
       <OverlayTrigger
         placement={tooltipPlacement || 'top'}
-        overlay={(
-          <Tooltip id={tooltipId} className={overlayClass}>{tooltip}</Tooltip>
-        )}
+        overlay={renderTooltip}
       >
         {button}
       </OverlayTrigger>

@@ -246,6 +246,52 @@ export const GranuleFiltersForm = (props) => {
     handleEventMetrics(event)
   }
 
+  const renderGranuleIdTooltip = (tooltipProps) => (
+    <Tooltip
+      id="granule-filters-form-id-filter-tooltip"
+      className="tooltip--ta-left tooltip--wide"
+      {...tooltipProps}
+    >
+      <p>
+        Filter granules by using a granule ID.
+        Enter an ID to find an exact match or use a wildcard
+        and/or delimiter to search using a more complex query.
+      </p>
+      <strong className="granule-filters-form__readable-granule-name-tooltip-title">
+        Search granules using wildcard characters
+      </strong>
+      <ul className="m-0 font-size granule-filters-form__readable-granule-name-tooltip-list">
+        <li>
+          Question marks
+          {' ('}
+          <strong className="font-weight-bold">?</strong>
+          {') '}
+          match a single character in that location
+        </li>
+        <li>
+          Asterisks
+          {' ('}
+          <strong className="font-weight-bold">*</strong>
+          {') '}
+          match any number of characters in that location
+        </li>
+      </ul>
+      <br />
+      <strong className="granule-filters-form__readable-granule-name-tooltip-title">
+        Search granules using multiple IDs
+      </strong>
+      <ul className="m-0 granule-filters-form__readable-granule-name-tooltip-list">
+        <li>
+          Commas
+          {' ('}
+          <strong className="font-weight-bold">,</strong>
+          {') '}
+          are used to separate multiple searches
+        </li>
+      </ul>
+    </Tooltip>
+  )
+
   return (
     <FormikForm className="granule-filters-form">
       <SidebarFiltersList>
@@ -287,49 +333,7 @@ export const GranuleFiltersForm = (props) => {
                   </Form.Label>
                   <OverlayTrigger
                     placement="top"
-                    overlay={
-                      (
-                        <Tooltip id="granule-filters-form-id-filter-tooltip" className="tooltip--ta-left tooltip--wide">
-                          <p>
-                            Filter granules by using a granule ID.
-                            Enter an ID to find an exact match or use a wildcard
-                            and/or delimiter to search using a more complex query.
-                          </p>
-                          <strong className="granule-filters-form__readable-granule-name-tooltip-title">
-                            Search granules using wildcard characters
-                          </strong>
-                          <ul className="m-0 font-size granule-filters-form__readable-granule-name-tooltip-list">
-                            <li>
-                              Question marks
-                              {' ('}
-                              <strong className="font-weight-bold">?</strong>
-                              {') '}
-                              match a single character in that location
-                            </li>
-                            <li>
-                              Asterisks
-                              {' ('}
-                              <strong className="font-weight-bold">*</strong>
-                              {') '}
-                              match any number of characters in that location
-                            </li>
-                          </ul>
-                          <br />
-                          <strong className="granule-filters-form__readable-granule-name-tooltip-title">
-                            Search granules using multiple IDs
-                          </strong>
-                          <ul className="m-0 granule-filters-form__readable-granule-name-tooltip-list">
-                            <li>
-                              Commas
-                              {' ('}
-                              <strong className="font-weight-bold">,</strong>
-                              {') '}
-                              are used to separate multiple searches
-                            </li>
-                          </ul>
-                        </Tooltip>
-                      )
-                    }
+                    overlay={renderGranuleIdTooltip}
                   >
                     <EDSCIcon
                       aria-label="A question mark in a circle"

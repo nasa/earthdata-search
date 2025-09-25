@@ -90,6 +90,12 @@ class FacetsItem extends Component {
 
     const { iconProps } = facet
 
+    const renderFacetDescriptionTooltip = (tooltipProps) => (
+      <Tooltip style={{ width: '20rem' }} {...tooltipProps}>
+        {facet.description}
+      </Tooltip>
+    )
+
     return (
       <li className={className}>
         <label
@@ -126,13 +132,7 @@ class FacetsItem extends Component {
               && (
                 <OverlayTrigger
                   placement="top"
-                  overlay={
-                    (
-                      <Tooltip style={{ width: '20rem' }}>
-                        {facet.description}
-                      </Tooltip>
-                    )
-                  }
+                  overlay={renderFacetDescriptionTooltip}
                 >
                   <EDSCIcon
                     icon={FaQuestionCircle}

@@ -209,6 +209,19 @@ export const CollectionResultsItem = forwardRef(({
     || hasTemporalSubsetting
     || hasCombine
 
+  const renderCSDATooltip = (tooltipProps) => (
+    <Tooltip
+      id="tooltip__csda-badge"
+      className="collection-results-item__tooltip collection-results-item__tooltip--csda"
+      {...tooltipProps}
+    >
+      Commercial Smallsat Data Acquisition Program
+      <span className="tooltip__secondary-text">
+        (Additional authentication required)
+      </span>
+    </Tooltip>
+  )
+
   const component = (
     <div
       className="collection-results-item"
@@ -385,19 +398,7 @@ export const CollectionResultsItem = forwardRef(({
                       <OverlayTrigger
                         className="collection-results-item__tooltip-container"
                         placement="top"
-                        overlay={
-                          (
-                            <Tooltip
-                              id="tooltip__csda-badge"
-                              className="collection-results-item__tooltip collection-results-item__tooltip--csda"
-                            >
-                              Commercial Smallsat Data Acquisition Program
-                              <span className="tooltip__secondary-text">
-                                (Additional authentication required)
-                              </span>
-                            </Tooltip>
-                          )
-                        }
+                        overlay={renderCSDATooltip}
                       >
                         <li className="collection-results-item__attribution-list-item">
                           <span className="collection-results-item__list-text collection-results-item__list-text--tooltip link">
@@ -418,19 +419,20 @@ export const CollectionResultsItem = forwardRef(({
                       const consortiumTooltip = getConsortiumTooltipText(consortium)
 
                       if (consortiumTooltip) {
+                        const renderConsortiumTooltip = (tooltipProps) => (
+                          <Tooltip
+                            className={`collection-results-item__tooltip collection-results-item__tooltip--${consortium}`}
+                            {...tooltipProps}
+                          >
+                            {consortiumTooltip}
+                          </Tooltip>
+                        )
+
                         consortiumDisplay = (
                           <OverlayTrigger
                             className="collection-results-item__tooltip-container"
                             placement="top"
-                            overlay={
-                              (
-                                <Tooltip
-                                  className={`collection-results-item__tooltip collection-results-item__tooltip--${consortium}`}
-                                >
-                                  {consortiumTooltip}
-                                </Tooltip>
-                              )
-                            }
+                            overlay={renderConsortiumTooltip}
                           >
                             <span className="collection-results-item__list-text collection-results-item__list-text--tooltip link">{consortiumDisplay}</span>
                           </OverlayTrigger>

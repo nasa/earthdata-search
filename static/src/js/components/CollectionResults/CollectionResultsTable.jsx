@@ -18,6 +18,36 @@ import EDSCTable from '../EDSCTable/EDSCTable'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollectionResultsTable.scss'
+
+const renderEarthdataCloudTooltip = (tooltipProps) => (
+  <Tooltip
+    id="collection-results-table-header-tooltip--earthdata-cloud"
+    {...tooltipProps}
+  >
+    Available in the Earthdata Cloud
+  </Tooltip>
+)
+
+const renderMapImageryTooltip = (tooltipProps) => (
+  <Tooltip
+    id="collection-results-table-header-tooltip--map-imagery"
+    {...tooltipProps}
+  >
+    Supports advanced map visualizations using the GIBS tile service
+  </Tooltip>
+)
+
+const renderNearRealTimeTooltip = (tooltipProps) => (
+  <Tooltip
+    id="collection-results-table-header-tooltip--near-real-time"
+    {...tooltipProps}
+  >
+    Data is available soon after being
+    {' '}
+    acquired by the instrument on the satellite
+  </Tooltip>
+)
+
 /**
  * Renders CollectionResultsTable.
  * @param {Object} props - The props passed into the component.
@@ -114,13 +144,7 @@ export const CollectionResultsTable = ({
         <OverlayTrigger
           id="collection-results-table-header--map-imagery"
           placement="top"
-          overlay={
-            (
-              <Tooltip id="collection-results-table-header-tooltip--earthdata-cloud">
-                Available in the Earthdata Cloud
-              </Tooltip>
-            )
-          }
+          overlay={renderEarthdataCloudTooltip}
         >
           <span>
             <span className="me-1">Earthdata Cloud</span>
@@ -144,13 +168,7 @@ export const CollectionResultsTable = ({
         <OverlayTrigger
           id="collection-results-table-header--map-imagery"
           placement="top"
-          overlay={
-            (
-              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
-                Supports advanced map visualizations using the GIBS tile service
-              </Tooltip>
-            )
-          }
+          overlay={renderMapImageryTooltip}
         >
           <span>
             <span className="me-1">Map Imagery</span>
@@ -174,15 +192,7 @@ export const CollectionResultsTable = ({
         <OverlayTrigger
           id="collection-results-table-header--map-imagery"
           placement="top"
-          overlay={
-            (
-              <Tooltip id="collection-results-table-header-tooltip--map-imagery">
-                Data is available soon after being
-                {' '}
-                acquired by the instrument on the satellite
-              </Tooltip>
-            )
-          }
+          overlay={renderNearRealTimeTooltip}
         >
           <span>
             <span className="me-1">Near Real Time</span>

@@ -1797,18 +1797,13 @@ describe('AccessMethod component', () => {
                   'G10000000000-EDSC',
                   'G1000000001-EDSC'
                 ],
-                byId: {}
-              }
-            }
-          },
-          overrideZustandState: {
-            granule: {
-              granuleMetadata: {
-                'G10000000000-EDSC': {
-                  id: 'G10000000000-EDSC'
-                },
-                'G1000000001-EDSC': {
-                  id: 'G1000000001-EDSC'
+                byId: {
+                  'G10000000000-EDSC': {
+                    id: 'G10000000000-EDSC'
+                  },
+                  'G1000000001-EDSC': {
+                    id: 'G1000000001-EDSC'
+                  }
                 }
               }
             }

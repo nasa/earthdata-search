@@ -240,6 +240,17 @@ const GranuleResultsFocusedMeta = ({
     activeTitle = description || href.split('/').pop()
   }
 
+  const renderTooltip = (tooltipProps) => (
+    <Tooltip
+      id="tooltip__granule-results-actions__download-all-button"
+      className="tooltip--nowrap"
+      data-testid="granule-results-focused-meta-tooltip"
+      {...tooltipProps}
+    >
+      {activeTitle}
+    </Tooltip>
+  )
+
   return (
     <>
       <OverlayTrigger
@@ -247,17 +258,7 @@ const GranuleResultsFocusedMeta = ({
         delay={300}
         show={!hideTitleTooltip && showTitleTooltip}
         onToggle={onTitleTooltipToggle}
-        overlay={
-          (
-            <Tooltip
-              id="tooltip__granule-results-actions__download-all-button"
-              className="tooltip--nowrap"
-              data-testid="granule-results-focused-meta-tooltip"
-            >
-              {activeTitle}
-            </Tooltip>
-          )
-        }
+        overlay={renderTooltip}
       >
         <div data-testid="granule-results-focused-meta-overlay-wrapper">
           {
