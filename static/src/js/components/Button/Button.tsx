@@ -139,7 +139,6 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   )
 
   let iconClasses
-  console.log('🚀 ~ file: Button.tsx:296 ~ overlayClass:', overlayClass)
 
   if (icon) {
     iconClasses = classNames(
@@ -275,14 +274,16 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
         overlay={
           (
             <Tooltip id={tooltipId} className={overlayClass}>
-              {tooltip}
-              {
-                tooltipKeyboardShortcut && (
-                  <span className="keyboard-shortcut ms-1">
-                    {tooltipKeyboardShortcut}
-                  </span>
-                )
-              }
+              <span className="text-nowrap">
+                {tooltip}
+                {
+                  tooltipKeyboardShortcut && (
+                    <span className="keyboard-shortcut ms-1">
+                      {tooltipKeyboardShortcut}
+                    </span>
+                  )
+                }
+              </span>
             </Tooltip>
           )
         }
