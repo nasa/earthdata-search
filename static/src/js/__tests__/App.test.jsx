@@ -42,6 +42,22 @@ const setupWithHelmet = setupTest({
   Component: HelmetWrapper
 })
 
+const removeMock = jest.fn()
+
+beforeEach(() => {
+  jest.spyOn(document, 'getElementById').mockImplementation((id) => {
+    if (id === 'root') {
+      return {
+        classList: {
+          remove: removeMock
+        }
+      }
+    }
+
+    return null
+  })
+})
+
 describe('App component', () => {
   test('renders the router', () => {
     setup()
@@ -165,64 +181,87 @@ describe('App component', () => {
 
   test('sets the correct meta description', async () => {
     setup()
+
     const helmet = Helmet.peek()
     const description = helmet.metaTags.find((tag) => tag.name === 'description')
+
     expect(description).toBeDefined()
     expect(description.content).toBe('Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
   })
 
   test('sets the correct meta og:type', async () => {
     setup()
+
     const helmet = Helmet.peek()
     const ogType = helmet.metaTags.find((tag) => tag.property === 'og:type')
+
     expect(ogType).toBeDefined()
     expect(ogType.content).toBe('website')
   })
 
   test('sets the correct meta og:title', async () => {
     setup()
+
     const helmet = Helmet.peek()
     const ogTitle = helmet.metaTags.find((tag) => tag.property === 'og:title')
+
     expect(ogTitle).toBeDefined()
     expect(ogTitle.content).toBe('Earthdata Search')
   })
 
   test('sets the correct meta og:description', async () => {
     setup()
+
     const helmet = Helmet.peek()
     const ogDescription = helmet.metaTags.find((tag) => tag.property === 'og:description')
+
     expect(ogDescription).toBeDefined()
     expect(ogDescription.content).toBe('Search, discover, visualize, refine, and access NASA Earth Observation data in your browser with Earthdata Search')
   })
 
   test('sets the correct meta og:url', async () => {
     setup()
+
     const helmet = Helmet.peek()
     const ogUrl = helmet.metaTags.find((tag) => tag.property === 'og:url')
+
     expect(ogUrl).toBeDefined()
     expect(ogUrl.content).toBe('https://search.earthdata.nasa.gov/search')
   })
 
   test('sets the correct meta og:image', async () => {
     setup()
+
     const helmet = Helmet.peek()
     const ogImage = helmet.metaTags.find((tag) => tag.property === 'og:image')
+
     expect(ogImage.content).toBe('test-file-stub')
   })
 
   test('sets the correct meta theme-color', async () => {
     setup()
+
     const helmet = Helmet.peek()
     const themeColor = helmet.metaTags.find((tag) => tag.name === 'theme-color')
+
     expect(themeColor).toBeDefined()
     expect(themeColor.content).toBe('#191a1b')
   })
 
   test('sets the correct meta canonical url', async () => {
     setup()
+
     const helmet = Helmet.peek()
     const canonical = helmet.linkTags.find((tag) => tag.rel === 'canonical')
+
     expect(canonical).toBeDefined()
     expect(canonical.href).toBe('https://search.earthdata.nasa.gov/search')
+  })
+
+  test('removes the loading class from the root element', () => {
+    setup()
+
+    expect(removeMock).toHaveBeenCalledTimes(1)
+    expect(removeMock).toHaveBeenCalledWith('root--loading')
   })
 })
