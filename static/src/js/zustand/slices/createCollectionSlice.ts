@@ -191,6 +191,8 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
           const gibsTags = tags ? getValueForTag('gibs', tags) : null
           if (gibsTags && gibsTags.length > 0) {
+            // Update the map layers with the gibs tags
+            get().map.setMapLayers(focusedCollectionId, gibsTags)
             gibsTags.forEach((gibsTag: { product: string }) => {
               const { product } = gibsTag
               reduxDispatch(actions.getColorMap({ product }))

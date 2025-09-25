@@ -12,8 +12,12 @@ import colormapCollectionTwoGraphQlBody from './__mocks__/colormaps/collection_g
 import colormapGranulesHeaders from './__mocks__/colormaps/granules.headers.json'
 import colormapGranulesOneBody from './__mocks__/colormaps/granules_1.body.json'
 import colormapGranulesTwoBody from './__mocks__/colormaps/granules_2.body.json'
-import colormapOneBody from './__mocks__/colormaps/colormap_1.body.json'
-import colormapTwoBody from './__mocks__/colormaps/colormap_2.body.json'
+import seaSurfaceTemperatureColormapBody from './__mocks__/colormaps/seaSurfaceTemperatureColormapBody.json'
+import seaSurfaceTemperatureAnomaliesColormapBody from './__mocks__/colormaps/seaSurfaceTemperatureAnomaliesColormapBody.json'
+import seaIceConcentrationColormapBody from './__mocks__/colormaps/seaIceConcentrationColormapBody.json'
+
+import airsPrataSo2IndexDayColormapBody from './__mocks__/colormaps/airsPrataS02IndexDay.body.json'
+import airsPrataSo2IndexNightColormapBody from './__mocks__/colormaps/airsPrataS02IndexNight.body.json'
 import commonHeaders from './__mocks__/common_collections.headers.json'
 
 test.describe('Map: Colormap interactions', () => {
@@ -83,13 +87,31 @@ test.describe('Map: Colormap interactions', () => {
 
       await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Ice_Concentration/, async (route) => {
         await route.fulfill({
-          json: colormapOneBody
+          json: seaIceConcentrationColormapBody
+        })
+      })
+
+      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature/, async (route) => {
+        await route.fulfill({
+          json: seaSurfaceTemperatureColormapBody
+        })
+      })
+
+      await page.route(/colormaps\/GHRSST_L4_MUR_Sea_Surface_Temperature_Anomalies/, async (route) => {
+        await route.fulfill({
+          json: seaSurfaceTemperatureAnomaliesColormapBody
         })
       })
 
       await page.route(/colormaps\/AIRS_Prata_SO2_Index_Day/, async (route) => {
         await route.fulfill({
-          json: colormapTwoBody
+          json: airsPrataSo2IndexDayColormapBody
+        })
+      })
+
+      await page.route(/colormaps\/AIRS_Prata_SO2_Index_Night/, async (route) => {
+        await route.fulfill({
+          json: airsPrataSo2IndexNightColormapBody
         })
       })
 

@@ -375,16 +375,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     setStartDrawing(false)
   }, [setStartDrawing])
 
-  // Update the layers in the Zustand store when GIBS tags are available
-  useEffect(() => {
-    if (focusedCollectionId && focusedCollectionTags) {
-      const gibsTagsFromMetadata = getValueForTag('gibs', focusedCollectionTags) || []
-      if (gibsTagsFromMetadata.length > 0) {
-        setMapLayers(focusedCollectionId, gibsTagsFromMetadata)
-      }
-    }
-  }, [focusedCollectionId, focusedCollectionTags, setMapLayers])
-
   // Helper function to get GIBS tags available for the current projection
   const getLayersForProjection = useCallback(() => {
     if (!mapLayers) return []
