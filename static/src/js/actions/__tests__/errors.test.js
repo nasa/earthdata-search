@@ -1,7 +1,12 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import nock from 'nock'
 import { ADD_ERROR, REMOVE_ERROR } from '../../constants/actionTypes'
-import { addError, removeError } from '../errors'
+import {
+  addError,
+  removeError,
+  handleError
+} from '../errors'
 
 import * as addToast from '../../util/addToast'
 
@@ -77,5 +82,51 @@ describe('removeError', () => {
     }
 
     expect(removeError(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('handleError', () => {
+  let consoleMock
+
+  beforeEach(() => {
+    consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+  })
+
+  afterEach(() => {
+    consoleMock.mockRestore()
+  })
+
+  test('should handle tophat alerts button click when onAlertsClick is triggered', async () => {
+    const mockClick = jest.fn()
+    const mockButton = { click: mockClick }
+    const mockQuerySelector = jest.spyOn(document, 'querySelector').mockReturnValue(mockButton)
+
+    jest.useFakeTimers()
+
+    const store = mockStore({})
+
+    await store.dispatch(handleError({
+      error: new Error('CMR error'),
+      action: 'fetchSubscriptions',
+      resource: 'collections'
+    }))
+
+    const storeActions = store.getActions()
+    const messageComponent = storeActions[0].payload.message
+    const { onAlertsClick } = messageComponent.props
+
+    onAlertsClick()
+
+    // Fast-forward timers to trigger the setTimeout
+    jest.runAllTimers()
+
+    expect(mockQuerySelector).toHaveBeenCalledWith('.th-status-link')
+    expect(mockClick).toHaveBeenCalledTimes(1)
+
+    jest.useRealTimers()
   })
 })
