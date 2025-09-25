@@ -240,7 +240,9 @@ export const getSubscriptions = (
       action: 'fetchSubscriptions',
       resource: 'subscription',
       requestObject: graphQlRequestObject,
-      errorAction: onSubscriptionsErrored
+      errorAction: onSubscriptionsErrored,
+      showAlertButton: true,
+      title: 'Something went wrong fetching collection results'
     }))
   }
 

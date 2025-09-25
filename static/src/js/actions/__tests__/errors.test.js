@@ -100,33 +100,26 @@ describe('handleError', () => {
     consoleMock.mockRestore()
   })
 
-  test('should handle tophat alerts button click when onAlertsClick is triggered', async () => {
-    const mockClick = jest.fn()
-    const mockButton = { click: mockClick }
-    const mockQuerySelector = jest.spyOn(document, 'querySelector').mockReturnValue(mockButton)
-
-    jest.useFakeTimers()
-
+  test('should dispatch error with showAlertButton when showAlertButton parameter is true', async () => {
     const store = mockStore({})
 
     await store.dispatch(handleError({
       error: new Error('CMR error'),
       action: 'fetchSubscriptions',
-      resource: 'collections'
+      resource: 'subscription',
+      showAlertButton: true,
+      title: 'Custom error title'
     }))
 
     const storeActions = store.getActions()
-    const messageComponent = storeActions[0].payload.message
-    const { onAlertsClick } = messageComponent.props
-
-    onAlertsClick()
-
-    // Fast-forward timers to trigger the setTimeout
-    jest.runAllTimers()
-
-    expect(mockQuerySelector).toHaveBeenCalledWith('.th-status-link')
-    expect(mockClick).toHaveBeenCalledTimes(1)
-
-    jest.useRealTimers()
+    expect(storeActions[0]).toEqual({
+      type: ADD_ERROR,
+      payload: expect.objectContaining({
+        title: 'Custom error title',
+        message: 'Error: CMR error',
+        showAlertButton: true,
+        notificationType: 'banner'
+      })
+    })
   })
 })

@@ -263,7 +263,9 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           error,
           action: 'getCollectionMetadata',
           resource: 'collection',
-          requestObject: graphQlRequestObject
+          requestObject: graphQlRequestObject,
+          showAlertButton: true,
+          title: 'Something went wrong fetching granule results'
         }))
       }
     },
