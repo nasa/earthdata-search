@@ -61,7 +61,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
 
   const {
     colormap,
-    opacity: layerOpacity,
+    opacity: layerOpacity = 1,
     isVisible
   } = layer
 
