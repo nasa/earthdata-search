@@ -243,10 +243,14 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           await layer2VisibilityButton.click()
 
           // Zoom in to make the layers more visible
+          const zoomedMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
           await page.getByRole('button', { name: 'Zoom In' }).click()
-          await page.waitForTimeout(500)
+
+          // Wait for the map to load
+          await zoomedMapPromise
 
           // Take a screenshot to verify the layer is visible
+          // In this one both are visible the bottom one is difficult to see
           await expect(page).toHaveScreenshot('gibs-second-layer-visible.png', {
             clip: screenshotClip
           })
@@ -266,8 +270,18 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           expect(firstLayerHeader).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
 
           // Take a screenshot to verify the reordering
+          // that will update the layer we see on top
           await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {
             clip: screenshotClip
+          })
+
+          // Make the first layer invisible so we can test the screenshot
+          const layer1VisibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
+          await layer1VisibilityButton.click()
+
+          await expect(page).toHaveScreenshot('gibs-layers-reordered-second-layer-hidden.png', {
+            clip: screenshotClip,
+            maxDiffPixelRatio: 0.01
           })
         })
       })
