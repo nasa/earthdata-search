@@ -617,14 +617,16 @@ describe('createCollectionSlice', () => {
           useEdscStore.setState((state) => {
             state.collection.collectionId = 'C10000000000-EDSC'
             state.granules.getGranules = jest.fn()
+            state.map.setMapLayers = jest.fn()
           })
 
           mockGetState.mockReturnValue({
             authToken: ''
           })
 
-          const { collection } = useEdscStore.getState()
+          const { collection, map } = useEdscStore.getState()
           const { getCollectionMetadata } = collection
+          const { setMapLayers } = map
 
           await getCollectionMetadata()
 
@@ -731,6 +733,15 @@ describe('createCollectionSlice', () => {
           expect(actions.getColorMap).toHaveBeenNthCalledWith(1, {
             product: 'AIRS_Prata_SO2_Index_Day'
           })
+
+          expect(setMapLayers).toHaveBeenCalledTimes(1)
+          expect(setMapLayers).toHaveBeenCalledWith(
+            'C10000000000-EDSC',
+            [{ product: 'AIRS_Prata_SO2_Index_Day' },
+              { product: 'MODIS_Terra_Aerosol' },
+              { product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor' }
+            ]
+          )
 
           expect(actions.getColorMap).toHaveBeenNthCalledWith(2, {
             product: 'MODIS_Terra_Aerosol'

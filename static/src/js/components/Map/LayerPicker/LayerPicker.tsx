@@ -29,7 +29,7 @@ import { ImageryLayers } from '../../../types/sharedTypes'
 
 import './LayerPicker.scss'
 
-interface LayerPickerProps {
+export interface LayerPickerProps {
   /** The collection ID to manage layers for */
   collectionId: string
   /** The imagery layers */

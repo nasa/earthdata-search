@@ -1,11 +1,11 @@
 import projectionCodes from '../../constants/projectionCodes'
 
 import type { GibsData, ProjectionCode } from '../../types/sharedTypes'
+import type { MapLayer } from '../../zustand/types'
 
 // Helper function to build GIBS data for a granule
 const buildGibsData = (
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  layersForProjection: any[],
+  layersForProjection: MapLayer[],
   projection: ProjectionCode,
   timeStart: string
 ): GibsData[] => layersForProjection.map((layer) => {
