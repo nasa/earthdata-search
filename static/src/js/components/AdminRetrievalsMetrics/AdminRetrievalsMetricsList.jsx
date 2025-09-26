@@ -4,8 +4,8 @@ import Table from 'react-bootstrap/Table'
 
 import './AdminRetrievalsMetricsList.scss'
 
-const AdminRetrievalsMetricsList = ({
-  retrievalsMetrics
+export const AdminRetrievalsMetricsList = ({
+  retrievalsMetrics = {}
 }) => {
   const {
     allAccessMethodTypes,
@@ -120,10 +120,6 @@ const AdminRetrievalsMetricsList = ({
       </Table>
     </>
   )
-}
-
-AdminRetrievalsMetricsList.defaultProps = {
-  retrievalsMetrics: {}
 }
 
 AdminRetrievalsMetricsList.propTypes = {

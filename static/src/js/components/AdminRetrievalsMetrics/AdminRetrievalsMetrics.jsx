@@ -12,7 +12,7 @@ const AdminRetrievalsMetrics = ({
   onFetchAdminRetrievalsMetrics,
   onUpdateAdminRetrievalsMetricsStartDate,
   onUpdateAdminRetrievalsMetricsEndDate,
-  retrievalsMetrics
+  retrievalsMetrics = {}
 }) => {
   const [temporalFilterEndDate, setTemporalFilterEndDate] = useState('')
   const [temporalFilterStartDate, setTemporalFilterStartDate] = useState('')
@@ -89,10 +89,6 @@ const AdminRetrievalsMetrics = ({
       </Row>
     </AdminPage>
   )
-}
-
-AdminRetrievalsMetrics.defaultProps = {
-  retrievalsMetrics: {}
 }
 
 AdminRetrievalsMetrics.propTypes = {

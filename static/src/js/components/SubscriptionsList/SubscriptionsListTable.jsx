@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Table from 'react-bootstrap/Table'
-import Tooltip from 'react-bootstrap/Tooltip'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaEdit } from 'react-icons/fa'
@@ -18,13 +17,15 @@ import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLink
 
 import useEdscStore from '../../zustand/useEdscStore'
 
+import renderTooltip from '../../util/renderTooltip'
+
 import './SubscriptionsListTable.scss'
 
 /**
  * Renders the logged in users' subscription list
  */
 const SubscriptionsListTable = ({
-  subscriptionsMetadata = {},
+  subscriptionsMetadata,
   subscriptionType,
   onDeleteSubscription
 }) => {
@@ -101,11 +102,8 @@ const SubscriptionsListTable = ({
                       <OverlayTrigger
                         placement="top"
                         overlay={
-                          (
-                            <Tooltip
-                              id={`tooltip__subscription-info__${conceptId}`}
-                              className="subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left"
-                            >
+                          (tooltipProps) => renderTooltip({
+                            children: (
                               <>
                                 <h5 className="tooltip__tooltip-heading">Filters</h5>
                                 <SubscriptionsQueryList
@@ -113,8 +111,11 @@ const SubscriptionsListTable = ({
                                   subscriptionType={subscriptionType}
                                 />
                               </>
-                            </Tooltip>
-                          )
+                            ),
+                            className: 'subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left',
+                            id: `tooltip__subscription-info__${conceptId}`,
+                            ...tooltipProps
+                          })
                         }
                       >
                         <EDSCIcon icon={AlertInformation} className="subscriptions-list__button align-middle" />

@@ -9,10 +9,10 @@ import './EDSCAlert.scss'
 
 export const EDSCAlert = ({
   bootstrapVariant,
-  children,
-  className,
-  icon,
-  variant
+  children = null,
+  className = '',
+  icon = null,
+  variant = false
 }) => {
   const alertClassName = classNames([
     'edsc-alert',
@@ -38,13 +38,6 @@ export const EDSCAlert = ({
       </div>
     </Alert>
   )
-}
-
-EDSCAlert.defaultProps = {
-  className: '',
-  children: null,
-  icon: null,
-  variant: false
 }
 
 EDSCAlert.propTypes = {

@@ -110,6 +110,7 @@ describe('Home', () => {
     expect(searchInput).toBeInTheDocument()
 
     await user.type(searchInput, 'test keyword')
+
     expect(searchInput).toHaveValue('test keyword')
   })
 

@@ -20,18 +20,17 @@ import './EDSCImage.scss'
  * @param {Boolean} props.useSpinner - If the spinner should be used for this Image while it is loading
  * @param {Integer} props.width - The width of the image.
  */
-export const EDSCImage = (props) => {
-  const {
-    alt,
-    className,
-    dataTestId,
-    height,
-    resizeImage,
-    src,
-    srcSet,
-    useSpinner,
-    width
-  } = props
+export const EDSCImage = ({
+  alt,
+  className = undefined,
+  dataTestId = undefined,
+  height,
+  resizeImage = false,
+  src,
+  srcSet = undefined,
+  useSpinner = true,
+  width
+}) => {
   const [isLoaded, setIsLoaded] = useState(false)
   const [isErrored, setIsErrored] = useState(false)
   const [base64Image, setBase64Image] = useState('')
@@ -116,14 +115,6 @@ export const EDSCImage = (props) => {
       }
     </div>
   )
-}
-
-EDSCImage.defaultProps = {
-  className: undefined,
-  dataTestId: undefined,
-  resizeImage: false,
-  srcSet: undefined,
-  useSpinner: true
 }
 
 EDSCImage.propTypes = {

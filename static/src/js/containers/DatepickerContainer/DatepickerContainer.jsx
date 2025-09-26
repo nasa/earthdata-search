@@ -24,17 +24,17 @@ import Datepicker from '../../components/Datepicker/Datepicker'
  */
 export const DatepickerContainer = ({
   filterType,
-  format,
+  format = 'YYYY-MM-DD HH:mm:ss',
   id,
-  label,
-  maxDate,
-  minDate,
+  label = '',
+  maxDate = '',
+  minDate = '',
   onSubmit,
-  shouldValidate,
-  size,
-  type,
-  value,
-  viewMode
+  shouldValidate = true,
+  size = '',
+  type = '',
+  value = '',
+  viewMode = 'years'
 }) => {
   const pickerRef = useRef()
   const [valueWhenFocused, setValueWhenFocused] = useState()
@@ -185,18 +185,6 @@ export const DatepickerContainer = ({
       viewMode={viewMode}
     />
   )
-}
-
-DatepickerContainer.defaultProps = {
-  format: 'YYYY-MM-DD HH:mm:ss',
-  label: '',
-  maxDate: '',
-  minDate: '',
-  shouldValidate: true,
-  size: '',
-  type: '',
-  value: '',
-  viewMode: 'years'
 }
 
 DatepickerContainer.propTypes = {

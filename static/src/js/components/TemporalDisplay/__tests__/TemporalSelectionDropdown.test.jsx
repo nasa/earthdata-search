@@ -1,10 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {
-  act,
-  screen,
-  waitFor
-} from '@testing-library/react'
+import { screen, waitFor } from '@testing-library/react'
 import MockDate from 'mockdate'
 import PropTypes from 'prop-types'
 import moment from 'moment'
@@ -140,9 +136,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     const startTestObj = '2012-01-01 12:00:00'
 
-    await act(async () => {
-      await user.type(startDateInput, startTestObj)
-    })
+    await user.type(startDateInput, startTestObj)
 
     expect(window.console.warn).toHaveBeenCalledTimes(19)
 
@@ -162,9 +156,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     const endTestObj = '2015-01-01 12:00:00'
 
-    await act(async () => {
-      await user.type(endDateInput, endTestObj)
-    })
+    await user.type(endDateInput, endTestObj)
 
     expect(window.console.warn).toHaveBeenCalledTimes(18)
 
@@ -186,19 +178,15 @@ describe('TemporalSelectionDropdown component', () => {
     const validStartDate = moment.utc('2012-01-01 12:00:00').format('YYYY-MM-DD HH:mm:ss')
     const validEndDate = moment.utc('2012-01-02 12:00:00').format('YYYY-MM-DD HH:mm:ss')
 
-    await act(async () => {
-      await user.type(startDateInput, invalidDate)
-    })
+    await user.type(startDateInput, invalidDate)
 
     expect(window.console.warn).toHaveBeenCalledTimes(21)
 
     expect(screen.getByText(/Invalid start date/i)).toBeInTheDocument()
 
-    await act(async () => {
-      await user.clear(startDateInput)
-      await user.type(startDateInput, validStartDate)
-      await user.type(endDateInput, validEndDate)
-    })
+    await user.clear(startDateInput)
+    await user.type(startDateInput, validStartDate)
+    await user.type(endDateInput, validEndDate)
 
     expect(startDateInput).toHaveValue(validStartDate)
     expect(endDateInput).toHaveValue(validEndDate)
@@ -263,19 +251,15 @@ describe('TemporalSelectionDropdown component', () => {
     const expectedStartDate = '2019-03-29T00:00:00.000Z'
     const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
-    await act(async () => {
-      await user.type(startDateInput, validStartDate)
-      await user.type(endDateInput, validEndDate)
+    await user.type(startDateInput, validStartDate)
+    await user.type(endDateInput, validEndDate)
 
-      await user.click(startDateInput)
-    })
+    await user.click(startDateInput)
 
     expect(window.console.warn).toHaveBeenCalledTimes(36)
 
@@ -307,9 +291,7 @@ describe('TemporalSelectionDropdown component', () => {
     const validStartDate = '2021-06-15 00:00:00'
     const validEndDate = '2024-06-15 23:59:59'
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const startField = await screen.findByRole('textbox', { name: 'Start Date' })
     const endField = await screen.findByRole('textbox', { name: 'End Date' })
@@ -355,17 +337,13 @@ describe('TemporalSelectionDropdown component', () => {
     const validStartDate = '2019-03-29 00:00:00'
     const validEndDate = '2019-03-30 00:00:00'
 
-    await act(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
-    await act(async () => {
-      await user.type(startDateInput, validStartDate)
-      await user.type(endDateInput, validEndDate)
-    })
+    await user.type(startDateInput, validStartDate)
+    await user.type(endDateInput, validEndDate)
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
@@ -544,9 +522,7 @@ describe('TemporalSelectionDropdown component', () => {
       })
 
       // Open dropdown and verify recurring state
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
       const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
       const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -558,9 +534,7 @@ describe('TemporalSelectionDropdown component', () => {
       expect(screen.getByText('2022 - 2024')).toBeInTheDocument()
 
       // Apply recurring state
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Apply' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Apply' }))
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
@@ -594,9 +568,7 @@ describe('TemporalSelectionDropdown component', () => {
       })
 
       // Open dropdown
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
       // Find the checkbox and ensure it's checked
       const recurringCheckbox = screen.getByRole('checkbox', { checked: true })
@@ -608,9 +580,7 @@ describe('TemporalSelectionDropdown component', () => {
       })
 
       // Apply non-recurring state
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Apply' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Apply' }))
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenLastCalledWith({
@@ -640,9 +610,7 @@ describe('TemporalSelectionDropdown component', () => {
       })
 
       // Open dropdown
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
       const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
       const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -666,9 +634,7 @@ describe('TemporalSelectionDropdown component', () => {
       expect(screen.getByText('1960 - 2024')).toBeInTheDocument()
 
       // Apply recurring state
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Apply' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Apply' }))
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
@@ -703,9 +669,7 @@ describe('TemporalSelectionDropdown component', () => {
         }
       })
 
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
       const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
       const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -725,9 +689,7 @@ describe('TemporalSelectionDropdown component', () => {
       expect(screen.getByText('Year Range:')).toBeInTheDocument()
       expect(screen.getByText('1960 - 2024')).toBeInTheDocument()
 
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Apply' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Apply' }))
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
@@ -762,9 +724,7 @@ describe('TemporalSelectionDropdown component', () => {
         }
       })
 
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
       const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
       const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -784,9 +744,7 @@ describe('TemporalSelectionDropdown component', () => {
       expect(screen.getByText('Year Range:')).toBeInTheDocument()
       expect(screen.getByText('1960 - 2024')).toBeInTheDocument()
 
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Apply' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Apply' }))
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
@@ -821,9 +779,7 @@ describe('TemporalSelectionDropdown component', () => {
         }
       })
 
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
       const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
       const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -843,9 +799,7 @@ describe('TemporalSelectionDropdown component', () => {
       expect(screen.getByText('Year Range:')).toBeInTheDocument()
       expect(screen.getByText('1960 - 2020')).toBeInTheDocument()
 
-      await act(async () => {
-        await user.click(screen.getByRole('button', { name: 'Apply' }))
-      })
+      await user.click(screen.getByRole('button', { name: 'Apply' }))
 
       expect(props.onChangeQuery).toHaveBeenCalledTimes(1)
       expect(props.onChangeQuery).toHaveBeenCalledWith({
@@ -883,19 +837,15 @@ describe('TemporalSelectionDropdown component', () => {
         const expectedStartDate = '2019-03-29T00:00:00.000Z'
         const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
-        await act(async () => {
-          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-        })
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
         const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
         const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
-        await act(async () => {
-          await user.type(startDateInput, validStartDate)
-          await user.type(endDateInput, validEndDate)
+        await user.type(startDateInput, validStartDate)
+        await user.type(endDateInput, validEndDate)
 
-          await user.click(startDateInput)
-        })
+        await user.click(startDateInput)
 
         expect(window.console.warn).toHaveBeenCalledTimes(36)
 
@@ -949,19 +899,15 @@ describe('TemporalSelectionDropdown component', () => {
         const expectedStartDate = '2019-03-29T00:00:00.000Z'
         const expectedEndDate = '2019-03-30T23:59:59.999Z'
 
-        await act(async () => {
-          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-        })
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
         const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
         const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
 
-        await act(async () => {
-          await user.type(startDateInput, validStartDate)
-          await user.type(endDateInput, validEndDate)
+        await user.type(startDateInput, validStartDate)
+        await user.type(endDateInput, validEndDate)
 
-          await user.click(startDateInput)
-        })
+        await user.click(startDateInput)
 
         expect(window.console.warn).toHaveBeenCalledTimes(36)
 

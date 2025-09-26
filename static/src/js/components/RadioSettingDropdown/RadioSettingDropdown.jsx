@@ -25,10 +25,10 @@ import './RadioSettingDropdown.scss'
  */
 export const RadioSettingDropdown = ({
   activeIcon,
-  className,
+  className = null,
   id,
   label,
-  settings
+  settings = []
 }) => {
   if (!settings.length) return null
 
@@ -183,11 +183,6 @@ export const RadioSettingDropdown = ({
       </Dropdown>
     </div>
   )
-}
-
-RadioSettingDropdown.defaultProps = {
-  className: null,
-  settings: []
 }
 
 RadioSettingDropdown.propTypes = {

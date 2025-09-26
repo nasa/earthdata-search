@@ -13,9 +13,9 @@ import './SidebarFiltersItem.scss'
  */
 export const SidebarFiltersItem = ({
   children,
-  description,
-  heading,
-  hasPadding
+  description = null,
+  heading = '',
+  hasPadding = true
 }) => {
   const className = classNames([
     'sidebar-filters-item',
@@ -43,12 +43,6 @@ export const SidebarFiltersItem = ({
       </div>
     </li>
   )
-}
-
-SidebarFiltersItem.defaultProps = {
-  description: null,
-  heading: '',
-  hasPadding: true
 }
 
 SidebarFiltersItem.propTypes = {

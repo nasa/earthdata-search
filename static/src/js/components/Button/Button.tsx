@@ -12,7 +12,6 @@ import type {
 import Btn from 'react-bootstrap/Button'
 import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 // @ts-expect-error: This file does not have types
 import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
@@ -20,6 +19,8 @@ import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-syste
 import Spinner from '../Spinner/Spinner'
 // @ts-expect-error: This file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
+
+import renderTooltip from '../../util/renderTooltip'
 
 import './Button.scss'
 
@@ -258,13 +259,19 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
       }
     </Btn>
   )
+
   if (tooltip && tooltipId) {
     return (
       <OverlayTrigger
         placement={tooltipPlacement || 'top'}
-        overlay={(
-          <Tooltip id={tooltipId} className={overlayClass}>{tooltip}</Tooltip>
-        )}
+        overlay={
+          (tooltipProps) => renderTooltip({
+            children: tooltip,
+            className: overlayClass,
+            id: tooltipId,
+            ...tooltipProps
+          })
+        }
       >
         {button}
       </OverlayTrigger>

@@ -74,6 +74,7 @@ test.describe('Timeline spec', () => {
         json: granules.body,
         headers: {
           ...authHeaders,
+          'access-control-expose-headers': 'cmr-hits',
           'cmr-hits': '42'
         }
       })
@@ -81,9 +82,12 @@ test.describe('Timeline spec', () => {
 
     await page.goto('/projects?p=!C1443528505-LAADS&sb=-77.15071%2C38.78817%2C-76.89801%2C38.99784&lat=37.64643&long=-77.40747&zoom=7&qt=2020-01-06T04%3A15%3A27.310Z%2C2020-01-13T07%3A32%3A50.962Z&ff=Map%20Imagery&tl=1563377338!4!!')
 
+    // Wait for the Download Data button to be enabled
+    await expect(page.getByRole('button', { name: 'Download project data' })).toBeEnabled()
+
     // Click the back to search button
     const tilesPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
-    await page.getByTestId('back-to-search-button').click()
+    await page.getByRole('button', { name: 'Back to Search' }).click()
     await tilesPromise
 
     await page.waitForSelector('[data-testid="collection-result-item_C1443528505-LAADS"]')
