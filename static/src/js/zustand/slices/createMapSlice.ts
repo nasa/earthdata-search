@@ -34,8 +34,15 @@ const createMapSlice: ImmerStateCreator<MapSlice> = (set) => ({
     mapLayers: {},
     setMapLayers: (collectionId, layers) => {
       set((state) => {
+        /** Filter layers to only include unique products, keeping the first occurrence
+         * Once UMM-Vis is incorporated we can just use concept-id
+        */
+        const uniqueLayers = layers.filter((layer, index, layerList) => layerList
+          .findIndex((l) => l.product === layer.product)
+         === index)
+
         /** Set default visibility: first layer visible, rest hidden */
-        const layersWithVisibility = layers.map((layer, index) => ({
+        const layersWithVisibility = uniqueLayers.map((layer, index) => ({
           ...layer,
           isVisible: index === 0,
           opacity: 1.0

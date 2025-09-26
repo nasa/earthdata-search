@@ -104,6 +104,49 @@ describe('createMapSlice', () => {
         }
       ])
     })
+
+    describe('when a layer is added that already exists', () => {
+      test('it should not add a duplicate layer', () => {
+        const zustandState = useEdscStore.getState()
+        const { map } = zustandState
+        const { setMapLayers } = map
+
+        // The middle layer is a duplicate
+        const layers = [
+          {
+            product: 'AIRS_Prata_SO2_Index_Day',
+            title: 'AIRS SO2'
+          },
+          {
+            product: 'AIRS_Prata_SO2_Index_Day',
+            title: 'AIRS SO2'
+          },
+          {
+            product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
+            title: 'VIIRS True Color'
+          }
+        ]
+        setMapLayers('collection-1', layers)
+
+        const updatedState = useEdscStore.getState()
+        const { map: updatedMap } = updatedState
+
+        expect(updatedMap.mapLayers['collection-1']).toEqual([
+          {
+            product: 'AIRS_Prata_SO2_Index_Day',
+            title: 'AIRS SO2',
+            isVisible: true,
+            opacity: 1.0
+          },
+          {
+            product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor',
+            title: 'VIIRS True Color',
+            isVisible: false,
+            opacity: 1.0
+          }
+        ])
+      })
+    })
   })
 
   describe('toggleLayerVisibility', () => {
