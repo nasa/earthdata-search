@@ -180,11 +180,13 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           })
         })
 
-        const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
-        await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
+        // These layers are somewhat similar so we are zooming in here to make the difference
+        // when comparing the orders easier to see
+        const zoomedInMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
+        await page.goto('/search/granules?p=C2930727817-LARC_CLOUD&pg[0][v]=f&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&tl=1724883938.647!4!!&lat=38.964887769762086&long=-114.57040117944547&zoom=7')
 
         // Wait for the map to load
-        await initialMapPromise
+        await zoomedInMapPromise
 
         // Close the panel to work with the map easier
         await page.keyboard.press(']')
@@ -193,8 +195,15 @@ test.describe('Map: imagery and layer-picker interactions', () => {
       test.describe('when updating the layer visibility', () => {
         test('toggles layer visibility when clicking the visibility button @screenshot', async ({ page }) => {
           // Find and click the visibility toggle button for the first layer
+          // Take a screenshot to verify the layer is no longer visible
+          await expect(page).toHaveScreenshot('gibs-layer-visible.png', {
+            clip: screenshotClip
+          })
+
           const visibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
           await visibilityButton.click()
+          // Wait a moment for the visibility change to be applied
+          await page.waitForTimeout(500)
 
           // Take a screenshot to verify the layer is no longer visible
           await expect(page).toHaveScreenshot('gibs-layer-hidden.png', {
@@ -224,8 +233,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
           // Take a screenshot to verify the layer opacity has changed
           await expect(page).toHaveScreenshot('gibs-layer-opacity-adjusted.png', {
-            clip: screenshotClip,
-            maxDiffPixelRatio: 0.1
+            clip: screenshotClip
           })
 
           // Check the actual slider value (0.5 for 50%)
@@ -240,17 +248,11 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           const layer2VisibilityButton = page.getByRole('button', { name: 'Show Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)' }).first()
           await layer2VisibilityButton.click()
 
-          // Zoom in to make the layers more visible
-          const zoomedMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
-          await page.getByRole('button', { name: 'Zoom In' }).click()
-
-          // Wait for the map to load
-          await zoomedMapPromise
-
           // Take a screenshot to verify the layer is visible
           // In this one both are visible the bottom one is difficult to see
           await expect(page).toHaveScreenshot('gibs-second-layer-visible.png', {
-            clip: screenshotClip
+            clip: screenshotClip,
+            maxDiffPixelRatio: 0.01
           })
 
           // Grab the layer items
@@ -271,16 +273,19 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           // that will update the layer we see on top
           await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {
             clip: screenshotClip,
-            maxDiffPixelRatio: 0.1
+            maxDiffPixelRatio: 0.01
           })
 
           // Make the first layer invisible so we can test the screenshot
           const layer1VisibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
           await layer1VisibilityButton.click()
 
+          // Close the layer picker to emphasize the map in the screenshot
+          await page.keyboard.press('l')
+
           await expect(page).toHaveScreenshot('gibs-layers-reordered-second-layer-hidden.png', {
             clip: screenshotClip,
-            maxDiffPixelRatio: 0.1
+            maxDiffPixelRatio: 0.01
           })
         })
       })
