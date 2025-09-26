@@ -132,6 +132,9 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
     setLayerOpacity(collectionConceptId, productName, opacity)
   }
 
+  // Don't add draggable styling if there is only one layer
+  const isDraggable = layerData.length > 1
+
   if (layersHidden) {
     return (
       <Button
@@ -186,6 +189,7 @@ export const LayerPicker: React.FC<LayerPickerProps> = ({
                     collectionId={collectionId}
                     updateMapLayerOpacity={updateMapLayerOpacity}
                     handleToggleLayerVisibility={handleToggleLayerVisibility}
+                    isDraggable={isDraggable}
                   />
                 ))
               }

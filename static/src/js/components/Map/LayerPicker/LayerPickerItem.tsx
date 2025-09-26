@@ -23,6 +23,8 @@ import { Colormap, ImageryLayerItem } from '../../../types/sharedTypes'
 import './LayerPickerItem.scss'
 
 interface DraggableLayerItemProps {
+  /** Whether the layer is draggable */
+  isDraggable: boolean
   /** The layer data */
   layer: ImageryLayerItem
   /** The collection ID */
@@ -39,6 +41,7 @@ interface DraggableLayerItemProps {
  * Draggable layer item component
  */
 export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
+  isDraggable,
   layer,
   collectionId,
   updateMapLayerOpacity,
@@ -70,6 +73,7 @@ export const DraggableLayerItem: React.FC<DraggableLayerItemProps> = ({
   const itemClassNames = classNames([
     'layer-picker-item',
     {
+      'layer-picker-item--draggable': isDraggable,
       'layer-picker-item--dragging': isDragging,
       'layer-picker-item--hidden': !isVisible
     }
