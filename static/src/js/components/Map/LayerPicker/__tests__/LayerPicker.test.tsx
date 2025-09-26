@@ -43,6 +43,47 @@ describe('LayerPicker', () => {
     })
   })
 
+  describe('Draggable Styling', () => {
+    test('applies isDraggable class when there are multiple layers', () => {
+      setup()
+
+      // The default setup has 2 layers, so isDraggable should be true
+      const layerItems = screen.getAllByRole('button', { name: 'Drag to reorder layer' })
+
+      expect(layerItems).toHaveLength(2)
+      layerItems.forEach((item) => {
+        expect(item).toHaveClass('layer-picker-item--draggable')
+      })
+    })
+
+    test('does not apply isDraggable class when there is only one layer', () => {
+      setup({
+        overrideProps: {
+          imageryLayers: {
+            layerData: [
+              {
+                product: 'IMERG_Precipitation_Rate',
+                title: 'Precipitation Rate',
+                colormap: undefined,
+                isVisible: false,
+                opacity: 1
+              }
+            ],
+            toggleLayerVisibility: jest.fn(),
+            setLayerOpacity: jest.fn(),
+            setMapLayersOrder: jest.fn()
+          }
+        }
+      })
+
+      // With only 1 layer, isDraggable should be false
+      const layerItems = screen.getAllByRole('button', { name: 'Drag to reorder layer' })
+
+      expect(layerItems).toHaveLength(1)
+      expect(layerItems[0]).not.toHaveClass('layer-picker-item--draggable')
+    })
+  })
+
   describe('Layer Visibility Toggling', () => {
     test('calls toggleLayerVisibility when visibility button is clicked', async () => {
       const { user, props } = setup()
