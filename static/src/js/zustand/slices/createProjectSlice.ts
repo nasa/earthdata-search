@@ -268,9 +268,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         reduxDispatch(actions.handleError({
           error,
           action: 'getProjectCollections',
-          resource: 'saved access configurations',
-          showAlertButton: true,
-          title: 'Something went wrong fetching project collections'
+          resource: 'saved access configurations'
         }))
 
         // If we know that the user is unauthorized and we need to redirect to EDL, stop here.
@@ -466,7 +464,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
           action: 'getProjectCollections',
           resource: 'project collections',
           showAlertButton: true,
-          title: 'Something went wrong fetching project collections'
+          title: 'Something went wrong fetching collection metadata'
         }))
       }
 
@@ -605,7 +603,7 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
               resource: 'granules',
               requestObject,
               showAlertButton: true,
-              title: 'Something went wrong fetching project granules'
+              title: 'Something went wrong fetching granule metadata'
             }))
           })
 

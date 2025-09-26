@@ -28,14 +28,18 @@ export const Banner = ({
       const alertsButton = document.querySelector('.th-status-link')
 
       if (alertsButton) {
+        // Simulate clicking the alerts dropdown in tophat
         alertsButton.click()
       }
     }
 
+    // 0ms timeout is required to open the alerts dropdown properly
     setTimeout(() => openAlerts(), 0)
   }
 
   let messageToDisplay = message
+
+  // If we are showing the 'Show Alert' button, we also want to override the error message
   if (showAlertButton) {
     messageToDisplay = 'Check alerts for outage information or refresh the page.'
   }

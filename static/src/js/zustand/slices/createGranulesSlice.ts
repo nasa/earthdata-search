@@ -185,7 +185,7 @@ const createGranulesSlice: ImmerStateCreator<GranulesSlice> = (set, get) => ({
           resource: 'granules',
           requestObject,
           showAlertButton: true,
-          title: 'Something went wrong fetching granule results'
+          title: 'Something went wrong fetching granule search results'
         }))
       }
     }

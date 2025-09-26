@@ -294,9 +294,7 @@ describe('createProjectSlice', () => {
         expect(actions.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',
           error: expect.any(Error),
-          resource: 'saved access configurations',
-          showAlertButton: true,
-          title: 'Something went wrong fetching project collections'
+          resource: 'saved access configurations'
         })
       })
     })
@@ -1030,9 +1028,7 @@ describe('createProjectSlice', () => {
         expect(actions.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',
           error: expect.any(Error),
-          resource: 'saved access configurations',
-          showAlertButton: true,
-          title: 'Something went wrong fetching project collections'
+          resource: 'saved access configurations'
         })
       })
     })
@@ -1077,7 +1073,7 @@ describe('createProjectSlice', () => {
           error: expect.any(Error),
           resource: 'project collections',
           showAlertButton: true,
-          title: 'Something went wrong fetching project collections'
+          title: 'Something went wrong fetching collection metadata'
         })
       })
     })
@@ -1395,7 +1391,7 @@ describe('createProjectSlice', () => {
           error: expect.any(Error),
           requestObject: expect.any(GranuleRequest),
           showAlertButton: true,
-          title: 'Something went wrong fetching project granules'
+          title: 'Something went wrong fetching granule metadata'
         })
 
         const updatedState = useEdscStore.getState()

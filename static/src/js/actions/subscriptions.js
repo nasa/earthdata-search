@@ -244,7 +244,7 @@ export const getSubscriptions = (
       requestObject: graphQlRequestObject,
       errorAction: onSubscriptionsErrored,
       showAlertButton: true,
-      title: 'Something went wrong fetching collection results'
+      title: 'Something went wrong fetching subscriptions'
     }))
   }
 

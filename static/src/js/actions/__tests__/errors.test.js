@@ -86,21 +86,13 @@ describe('removeError', () => {
 })
 
 describe('handleError', () => {
-  let consoleMock
-
-  beforeEach(() => {
-    consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+  test('should dispatch error with showAlertButton when showAlertButton parameter is true', async () => {
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
 
     nock(/localhost/)
       .post(/error_logger/)
       .reply(200)
-  })
 
-  afterEach(() => {
-    consoleMock.mockRestore()
-  })
-
-  test('should dispatch error with showAlertButton when showAlertButton parameter is true', async () => {
     const store = mockStore({})
 
     await store.dispatch(handleError({
@@ -121,5 +113,7 @@ describe('handleError', () => {
         notificationType: 'banner'
       })
     })
+
+    consoleMock.mockRestore()
   })
 })

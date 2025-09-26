@@ -130,7 +130,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           resource: 'collections',
           requestObject,
           showAlertButton: true,
-          title: 'Something went wrong fetching collection results'
+          title: 'Something went wrong fetching collection search results'
         }))
       }
     },
@@ -177,7 +177,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           resource: 'nlpSearch',
           requestObject: nlpRequest,
           showAlertButton: true,
-          title: 'Something went wrong with natural language search'
+          title: 'Something went wrong fetching collection search results'
         }))
       }
     }

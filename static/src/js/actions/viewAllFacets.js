@@ -96,7 +96,7 @@ export const getViewAllFacets = (category = '') => (dispatch, getState) => {
         resource: 'facets',
         requestObject,
         showAlertButton: true,
-        title: 'Something went wrong fetching filter options'
+        title: 'Something went wrong fetching all filter options'
       }))
     })
 

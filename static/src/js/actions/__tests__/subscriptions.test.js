@@ -380,7 +380,9 @@ describe('createSubscription', () => {
         expect(handleErrorMock).toHaveBeenCalledTimes(1)
         expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
           action: 'createSubscription',
-          resource: 'subscription'
+          resource: 'subscription',
+          showAlertButton: true,
+          title: 'Something went wrong creating your subscription'
         }))
 
         expect(consoleMock).toHaveBeenCalledTimes(1)
@@ -562,13 +564,13 @@ describe('getSubscriptions', () => {
         type: ADD_ERROR,
         payload: expect.objectContaining({
           notificationType: 'banner',
-          title: 'Something went wrong fetching collection results'
+          title: 'Something went wrong fetching subscriptions'
         })
       })
 
       expect(storeActions[4].payload.message).toBeDefined()
       expect(storeActions[4].payload.showAlertButton).toBe(true)
-      expect(storeActions[4].payload.title).toBe('Something went wrong fetching collection results')
+      expect(storeActions[4].payload.title).toBe('Something went wrong fetching subscriptions')
 
       expect(storeActions[5]).toEqual({
         type: ERRORED_SUBSCRIPTIONS,
@@ -699,7 +701,9 @@ describe('getGranuleSubscriptions', () => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
         action: 'getGranuleSubscriptions',
-        resource: 'subscription'
+        resource: 'subscription',
+        showAlertButton: true,
+        title: 'Something went wrong fetching granule subscriptions'
       }))
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
@@ -835,7 +839,9 @@ describe('deleteSubscription', () => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
         action: 'deleteSubscription',
-        resource: 'subscription'
+        resource: 'subscription',
+        showAlertButton: true,
+        title: 'Something went wrong deleting your subscription'
       }))
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
@@ -1050,7 +1056,9 @@ describe('updateSubscription', () => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toBeCalledWith(expect.objectContaining({
         action: 'updateSubscription',
-        resource: 'subscription'
+        resource: 'subscription',
+        showAlertButton: true,
+        title: 'Something went wrong updating your subscription'
       }))
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
