@@ -8,7 +8,6 @@ import Form from 'react-bootstrap/Form'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Row from 'react-bootstrap/Row'
 import Table from 'react-bootstrap/Table'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import { FaQuestionCircle } from 'react-icons/fa'
 
@@ -21,6 +20,8 @@ import {
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import CollapsePanel from '../CollapsePanel/CollapsePanel'
 import ProjectPanelSection from '../ProjectPanels/ProjectPanelSection'
+
+import renderTooltip from '../../util/renderTooltip'
 
 import './SwodlrForm.scss'
 
@@ -127,51 +128,6 @@ const SwodlrForm = ({
     handleSwoldrOptions()
   }, [granuleExtent, sampleGrid, rasterResolution])
 
-  const renderGranuleExtentTooltip = (tooltipProps) => (
-    <Tooltip
-      className="tooltip--ta-left tooltip--wide"
-      {...tooltipProps}
-    >
-      {swodlrToolTips.GranuleExtent}
-    </Tooltip>
-  )
-
-  const renderSamplingGridTooltip = (tooltipProps) => (
-    <Tooltip
-      className="tooltip--ta-left tooltip--wide"
-      {...tooltipProps}
-    >
-      {swodlrToolTips.SamplingGridResolution}
-    </Tooltip>
-  )
-
-  const renderRasterResolutionTooltip = (tooltipProps) => (
-    <Tooltip
-      className="tooltip--ta-left tooltip--wide"
-      {...tooltipProps}
-    >
-      {swodlrToolTips.RasterResolution}
-    </Tooltip>
-  )
-
-  const renderUTMTooltip = (tooltipProps) => (
-    <Tooltip
-      className="tooltip--ta-left tooltip--wide"
-      {...tooltipProps}
-    >
-      {swodlrToolTips.UTM}
-    </Tooltip>
-  )
-
-  const renderMGRSTooltip = (tooltipProps) => (
-    <Tooltip
-      className="tooltip--ta-left tooltip--wide"
-      {...tooltipProps}
-    >
-      {swodlrToolTips.MGRS}
-    </Tooltip>
-  )
-
   return (
     <ProjectPanelSection
       customHeadingTag="h4"
@@ -183,7 +139,13 @@ const SwodlrForm = ({
             Granule Extent
             <OverlayTrigger
               placement="top"
-              overlay={renderGranuleExtentTooltip}
+              overlay={
+                (tooltipProps) => renderTooltip({
+                  children: swodlrToolTips.GranuleExtent,
+                  className: 'tooltip--ta-left tooltip--wide',
+                  ...tooltipProps
+                })
+              }
             >
               <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
@@ -222,7 +184,13 @@ const SwodlrForm = ({
             Sampling Grid Type
             <OverlayTrigger
               placement="top"
-              overlay={renderSamplingGridTooltip}
+              overlay={
+                (tooltipProps) => renderTooltip({
+                  children: swodlrToolTips.SamplingGridResolution,
+                  className: 'tooltip--ta-left tooltip--wide',
+                  ...tooltipProps
+                })
+              }
             >
               <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
@@ -261,7 +229,13 @@ const SwodlrForm = ({
             Raster Resolution
             <OverlayTrigger
               placement="top"
-              overlay={renderRasterResolutionTooltip}
+              overlay={
+                (tooltipProps) => renderTooltip({
+                  children: swodlrToolTips.RasterResolution,
+                  className: 'tooltip--ta-left tooltip--wide',
+                  ...tooltipProps
+                })
+              }
             >
               <EDSCIcon icon={FaQuestionCircle} size="12px" variant="more-info" />
             </OverlayTrigger>
@@ -310,7 +284,13 @@ const SwodlrForm = ({
                             UTM Zone Adjust
                             <OverlayTrigger
                               placement="top"
-                              overlay={renderUTMTooltip}
+                              overlay={
+                                (tooltipProps) => renderTooltip({
+                                  children: swodlrToolTips.UTM,
+                                  className: 'tooltip--ta-left tooltip--wide',
+                                  ...tooltipProps
+                                })
+                              }
                             >
                               <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="12px" variant="more-info" />
                             </OverlayTrigger>
@@ -319,7 +299,13 @@ const SwodlrForm = ({
                             MGRS Band Adjust
                             <OverlayTrigger
                               placement="top"
-                              overlay={renderMGRSTooltip}
+                              overlay={
+                                (tooltipProps) => renderTooltip({
+                                  children: swodlrToolTips.MGRS,
+                                  className: 'tooltip--ta-left tooltip--wide',
+                                  ...tooltipProps
+                                })
+                              }
                             >
                               <EDSCIcon icon={FaQuestionCircle} className="swodlr-form__info-icon" size="12px" variant="more-info" />
                             </OverlayTrigger>

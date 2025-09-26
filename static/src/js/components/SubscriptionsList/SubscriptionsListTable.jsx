@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { parse } from 'qs'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Table from 'react-bootstrap/Table'
-import Tooltip from 'react-bootstrap/Tooltip'
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaEdit } from 'react-icons/fa'
@@ -17,6 +16,8 @@ import { SubscriptionsQueryList } from './SubscriptionsQueryList'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
 import useEdscStore from '../../zustand/useEdscStore'
+
+import renderTooltip from '../../util/renderTooltip'
 
 import './SubscriptionsListTable.scss'
 
@@ -76,22 +77,6 @@ const SubscriptionsListTable = ({
                 title
               } = collection || {}
 
-              const renderTooltip = (tooltipProps) => (
-                <Tooltip
-                  id={`tooltip__subscription-info__${conceptId}`}
-                  className="subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left"
-                  {...tooltipProps}
-                >
-                  <>
-                    <h5 className="tooltip__tooltip-heading">Filters</h5>
-                    <SubscriptionsQueryList
-                      query={parsedQuery}
-                      subscriptionType={subscriptionType}
-                    />
-                  </>
-                </Tooltip>
-              )
-
               return (
                 <tr
                   key={conceptId}
@@ -116,7 +101,22 @@ const SubscriptionsListTable = ({
                     <div className="actions-container">
                       <OverlayTrigger
                         placement="top"
-                        overlay={renderTooltip}
+                        overlay={
+                          (tooltipProps) => renderTooltip({
+                            children: (
+                              <>
+                                <h5 className="tooltip__tooltip-heading">Filters</h5>
+                                <SubscriptionsQueryList
+                                  query={parsedQuery}
+                                  subscriptionType={subscriptionType}
+                                />
+                              </>
+                            ),
+                            className: 'subscriptions-list-table__tooltip tooltip--wide tooltip--ta-left',
+                            id: `tooltip__subscription-info__${conceptId}`,
+                            ...tooltipProps
+                          })
+                        }
                       >
                         <EDSCIcon icon={AlertInformation} className="subscriptions-list__button align-middle" />
                       </OverlayTrigger>

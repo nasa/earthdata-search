@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 import { Check, Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
 
@@ -11,6 +10,8 @@ import ExternalLink from '../../ExternalLink/ExternalLink'
 import AvailableCustomizationsIcons from '../../AvailableCustomizationsIcons/AvailableCustomizationsIcons'
 import AvailableCustomizationsTooltipIcons from '../../AvailableCustomizationsIcons/AvailableCustomizationsTooltipIcons'
 import MetaIcon from '../../MetaIcon/MetaIcon'
+
+import renderTooltip from '../../../util/renderTooltip'
 
 import './AccessMethodRadio.scss'
 
@@ -80,28 +81,6 @@ export const AccessMethodRadio = ({
     />
   )
 
-  const renderTooltip = (tooltipProps) => (
-    <Tooltip
-      className="tooltip--ta-left"
-      onMouseEnter={() => externalLink && setShowTooltip(true)}
-      onMouseLeave={() => externalLink && setShowTooltip(false)}
-      {...tooltipProps}
-    >
-      <div className="access-method-radio__tooltip">
-        <p className="mb-0">
-          {details}
-        </p>
-        {
-          externalLink && (
-            <ExternalLink href={externalLink.link} className="d-inline-block mt-3 mb-1" variant="light">
-              {externalLink.message}
-            </ExternalLink>
-          )
-        }
-      </div>
-    </Tooltip>
-  )
-
   return (
     <label
       className={labelClassName}
@@ -169,7 +148,28 @@ export const AccessMethodRadio = ({
                   setShowTooltip(state)
                 }
               }
-              overlay={renderTooltip}
+              overlay={
+                (tooltipProps) => renderTooltip({
+                  children: (
+                    <div className="access-method-radio__tooltip">
+                      <p className="mb-0">
+                        {details}
+                      </p>
+                      {
+                        externalLink && (
+                          <ExternalLink href={externalLink.link} className="d-inline-block mt-3 mb-1" variant="light">
+                            {externalLink.message}
+                          </ExternalLink>
+                        )
+                      }
+                    </div>
+                  ),
+                  className: 'tooltip--ta-left',
+                  onMouseEnter: () => externalLink && setShowTooltip(true),
+                  onMouseLeave: () => externalLink && setShowTooltip(false),
+                  ...tooltipProps
+                })
+              }
             >
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
             </OverlayTrigger>

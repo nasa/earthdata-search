@@ -2,16 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Download } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { useLocation } from 'react-router-dom'
-
 import { parse } from 'qs'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import { getApplicationConfig, getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import { commafy } from '../../util/commafy'
 import { isLoggedIn } from '../../util/isLoggedIn'
 import { stringify } from '../../util/url/url'
+import renderTooltip from '../../util/renderTooltip'
 
 import Button from '../Button/Button'
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
@@ -39,26 +38,17 @@ export const GranuleDownloadButton = ({
   const { apiHost } = getEnvironmentConfig()
 
   if (tooManyGranules) {
-    const renderTooltip = (tooltipProps) => (
-      <Tooltip
-        id="tooltip__granule-results-actions__download-all-button"
-        className="tooltip--large tooltip--ta-left tooltip--wide"
-        {...tooltipProps}
-      >
-        Due to significant processing times, orders for this collection are limited to
-        {' '}
-        {commafy(granuleLimit)}
-        {' '}
-        granules. Please narrow your search before downloading.
-        Contact the data provider with questions.
-        You can find contact information by clicking on the information icon.
-      </Tooltip>
-    )
-
     return (
       <OverlayTrigger
         placement="top"
-        overlay={renderTooltip}
+        overlay={
+          (tooltipProps) => renderTooltip({
+            children: `Due to significant processing times, orders for this collection are limited to ${commafy(granuleLimit)} granules. Please narrow your search before downloading. Contact the data provider with questions. You can find contact information by clicking on the information icon.`,
+            className: 'granule-results-actions__download-all-tooltip',
+            id: 'tooltip__granule-results-actions__download-all-button',
+            ...tooltipProps
+          })
+        }
       >
         <div>
           <Button

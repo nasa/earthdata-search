@@ -13,10 +13,11 @@ import {
 import ListGroup from 'react-bootstrap/ListGroup'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 import Popover from 'react-bootstrap/Popover'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 import { isLinkBrowse } from '../../../../../sharedUtils/isLinkBrowse'
+
+import renderTooltip from '../../util/renderTooltip'
 
 import Button from '../Button/Button'
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
@@ -240,17 +241,6 @@ const GranuleResultsFocusedMeta = ({
     activeTitle = description || href.split('/').pop()
   }
 
-  const renderTooltip = (tooltipProps) => (
-    <Tooltip
-      id="tooltip__granule-results-actions__download-all-button"
-      className="tooltip--nowrap"
-      data-testid="granule-results-focused-meta-tooltip"
-      {...tooltipProps}
-    >
-      {activeTitle}
-    </Tooltip>
-  )
-
   return (
     <>
       <OverlayTrigger
@@ -258,7 +248,15 @@ const GranuleResultsFocusedMeta = ({
         delay={300}
         show={!hideTitleTooltip && showTitleTooltip}
         onToggle={onTitleTooltipToggle}
-        overlay={renderTooltip}
+        overlay={
+          (tooltipProps) => renderTooltip({
+            children: activeTitle,
+            className: 'tooltip--nowrap',
+            'data-testid': 'granule-results-focused-meta-tooltip',
+            id: 'tooltip__granule-results-actions__download-all-button',
+            ...tooltipProps
+          })
+        }
       >
         <div data-testid="granule-results-focused-meta-overlay-wrapper">
           {

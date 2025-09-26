@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import NotAvailableIcon from '../NotAvailableIcon/NotAvailableIcon'
+
+import renderTooltip from '../../util/renderTooltip'
 
 import './MetaIcon.scss'
 
@@ -67,20 +68,17 @@ export const MetaIcon = ({
 
   // If tooltipContent is set, return the component wrapped in a tooltip
   if (tooltipContent) {
-    const renderTooltip = (tooltipProps) => (
-      <Tooltip
-        id={id}
-        className={`meta-icon__tooltip ${tooltipClassName}`}
-        {...tooltipProps}
-      >
-        {tooltipContent}
-      </Tooltip>
-    )
-
     return (
       <OverlayTrigger
         placement={placement}
-        overlay={renderTooltip}
+        overlay={
+          (tooltipProps) => renderTooltip({
+            children: tooltipContent,
+            className: `meta-icon__tooltip ${tooltipClassName}`,
+            id,
+            ...tooltipProps
+          })
+        }
       >
         {component}
       </OverlayTrigger>

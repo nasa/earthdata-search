@@ -5,7 +5,6 @@ import React, {
 } from 'react'
 import PropTypes from 'prop-types'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import {
@@ -26,6 +25,7 @@ import { commafy } from '../../util/commafy'
 import { getApplicationConfig } from '../../../../../sharedUtils/config'
 import { pluralize } from '../../util/pluralize'
 import { retrieveThumbnail } from '../../util/retrieveThumbnail'
+import renderTooltip from '../../util/renderTooltip'
 
 import Button from '../Button/Button'
 import AvailableCustomizationsIcons from '../AvailableCustomizationsIcons/AvailableCustomizationsIcons'
@@ -209,19 +209,6 @@ export const CollectionResultsItem = forwardRef(({
     || hasTemporalSubsetting
     || hasCombine
 
-  const renderCSDATooltip = (tooltipProps) => (
-    <Tooltip
-      id="tooltip__csda-badge"
-      className="collection-results-item__tooltip collection-results-item__tooltip--csda"
-      {...tooltipProps}
-    >
-      Commercial Smallsat Data Acquisition Program
-      <span className="tooltip__secondary-text">
-        (Additional authentication required)
-      </span>
-    </Tooltip>
-  )
-
   const component = (
     <div
       className="collection-results-item"
@@ -398,7 +385,21 @@ export const CollectionResultsItem = forwardRef(({
                       <OverlayTrigger
                         className="collection-results-item__tooltip-container"
                         placement="top"
-                        overlay={renderCSDATooltip}
+                        overlay={
+                          (tooltipProps) => renderTooltip({
+                            children: (
+                              <>
+                                Commercial Smallsat Data Acquisition Program
+                                <span className="tooltip__secondary-text">
+                                  (Additional authentication required)
+                                </span>
+                              </>
+                            ),
+                            className: 'collection-results-item__tooltip collection-results-item__tooltip--csda',
+                            id: 'tooltip__csda-badge',
+                            ...tooltipProps
+                          })
+                        }
                       >
                         <li className="collection-results-item__attribution-list-item">
                           <span className="collection-results-item__list-text collection-results-item__list-text--tooltip link">
@@ -419,20 +420,17 @@ export const CollectionResultsItem = forwardRef(({
                       const consortiumTooltip = getConsortiumTooltipText(consortium)
 
                       if (consortiumTooltip) {
-                        const renderConsortiumTooltip = (tooltipProps) => (
-                          <Tooltip
-                            className={`collection-results-item__tooltip collection-results-item__tooltip--${consortium}`}
-                            {...tooltipProps}
-                          >
-                            {consortiumTooltip}
-                          </Tooltip>
-                        )
-
                         consortiumDisplay = (
                           <OverlayTrigger
                             className="collection-results-item__tooltip-container"
                             placement="top"
-                            overlay={renderConsortiumTooltip}
+                            overlay={
+                              (tooltipProps) => renderTooltip({
+                                children: consortiumTooltip,
+                                className: `collection-results-item__tooltip collection-results-item__tooltip--${consortium}`,
+                                ...tooltipProps
+                              })
+                            }
                           >
                             <span className="collection-results-item__list-text collection-results-item__list-text--tooltip link">{consortiumDisplay}</span>
                           </OverlayTrigger>

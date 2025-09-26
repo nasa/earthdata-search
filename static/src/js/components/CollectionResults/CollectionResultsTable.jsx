@@ -3,14 +3,13 @@ import PropTypes from 'prop-types'
 
 import Badge from 'react-bootstrap/Badge'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import { AlertInformation } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 import { Check } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
 import { commafy } from '../../util/commafy'
-
 import { collectionMetadataPropType } from '../../util/propTypes/collectionMetadata'
+import renderTooltip from '../../util/renderTooltip'
 
 import Cell from '../EDSCTable/EDSCTableCell'
 import CollectionResultsTableHeaderCell from './CollectionResultsTableHeaderCell'
@@ -18,35 +17,6 @@ import EDSCTable from '../EDSCTable/EDSCTable'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import './CollectionResultsTable.scss'
-
-const renderEarthdataCloudTooltip = (tooltipProps) => (
-  <Tooltip
-    id="collection-results-table-header-tooltip--earthdata-cloud"
-    {...tooltipProps}
-  >
-    Available in the Earthdata Cloud
-  </Tooltip>
-)
-
-const renderMapImageryTooltip = (tooltipProps) => (
-  <Tooltip
-    id="collection-results-table-header-tooltip--map-imagery"
-    {...tooltipProps}
-  >
-    Supports advanced map visualizations using the GIBS tile service
-  </Tooltip>
-)
-
-const renderNearRealTimeTooltip = (tooltipProps) => (
-  <Tooltip
-    id="collection-results-table-header-tooltip--near-real-time"
-    {...tooltipProps}
-  >
-    Data is available soon after being
-    {' '}
-    acquired by the instrument on the satellite
-  </Tooltip>
-)
 
 /**
  * Renders CollectionResultsTable.
@@ -144,7 +114,13 @@ export const CollectionResultsTable = ({
         <OverlayTrigger
           id="collection-results-table-header--map-imagery"
           placement="top"
-          overlay={renderEarthdataCloudTooltip}
+          overlay={
+            (tooltipProps) => renderTooltip({
+              children: 'Available in the Earthdata Cloud',
+              id: 'collection-results-table-header--earthdata-cloud',
+              ...tooltipProps
+            })
+          }
         >
           <span>
             <span className="me-1">Earthdata Cloud</span>
@@ -168,7 +144,13 @@ export const CollectionResultsTable = ({
         <OverlayTrigger
           id="collection-results-table-header--map-imagery"
           placement="top"
-          overlay={renderMapImageryTooltip}
+          overlay={
+            (tooltipProps) => renderTooltip({
+              children: 'Supports advanced map visualizations using the GIBS tile service',
+              id: 'collection-results-table-header--map-imagery',
+              ...tooltipProps
+            })
+          }
         >
           <span>
             <span className="me-1">Map Imagery</span>
@@ -190,9 +172,15 @@ export const CollectionResultsTable = ({
     {
       Header: () => (
         <OverlayTrigger
-          id="collection-results-table-header--map-imagery"
+          id="collection-results-table-header--near-real-time"
           placement="top"
-          overlay={renderNearRealTimeTooltip}
+          overlay={
+            (tooltipProps) => renderTooltip({
+              children: 'Data is available soon after being acquired by the instrument on the satellite',
+              id: 'collection-results-table-header--near-real-time',
+              ...tooltipProps
+            })
+          }
         >
           <span>
             <span className="me-1">Near Real Time</span>

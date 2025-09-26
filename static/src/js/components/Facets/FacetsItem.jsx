@@ -3,13 +3,13 @@ import PropTypes from 'prop-types'
 import { kebabCase, uniqueId } from 'lodash-es'
 import classNames from 'classnames'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 import { FaQuestionCircle } from 'react-icons/fa'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import { generateFacetArgs } from '../../util/facets'
 import { commafy } from '../../util/commafy'
+import renderTooltip from '../../util/renderTooltip'
 
 import './FacetsItem.scss'
 
@@ -90,12 +90,6 @@ class FacetsItem extends Component {
 
     const { iconProps } = facet
 
-    const renderFacetDescriptionTooltip = (tooltipProps) => (
-      <Tooltip style={{ width: '20rem' }} {...tooltipProps}>
-        {facet.description}
-      </Tooltip>
-    )
-
     return (
       <li className={className}>
         <label
@@ -132,7 +126,13 @@ class FacetsItem extends Component {
               && (
                 <OverlayTrigger
                   placement="top"
-                  overlay={renderFacetDescriptionTooltip}
+                  overlay={
+                    (tooltipProps) => renderTooltip({
+                      children: facet.description,
+                      style: { width: '20rem' },
+                      ...tooltipProps
+                    })
+                  }
                 >
                   <EDSCIcon
                     icon={FaQuestionCircle}
