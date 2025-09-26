@@ -245,7 +245,9 @@ describe('createGranulesSlice', () => {
       expect(actions.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'getGranules',
         error: expect.any(Error),
-        resource: 'granules'
+        resource: 'granules',
+        showAlertButton: true,
+        title: 'Something went wrong fetching granule search results'
       }))
     })
   })
