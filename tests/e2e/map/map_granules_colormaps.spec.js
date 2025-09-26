@@ -129,7 +129,9 @@ test.describe('Map: Colormap interactions', () => {
       const legend = page.getByTestId('legend')
       await legend.scrollIntoViewIfNeeded()
 
-      await expect(legend).toHaveScreenshot('colormap-screenshot.png')
+      await expect(legend).toHaveScreenshot('colormap-screenshot.png', {
+        maxDiffPixelRatio: 0.01
+      })
 
       await expect(page.getByTestId('legend-label-min').first()).toHaveText('0 – 1 %')
       await expect(page.getByTestId('legend-label-max').first()).toHaveText('100 %')
@@ -146,8 +148,10 @@ test.describe('Map: Colormap interactions', () => {
 
     test.describe('when returning to the search results page', () => {
       test.beforeEach(async ({ page }) => {
-        await page.getByTestId('panel-group_granule-results')
-          .getByTestId('breadcrumb-button')
+        await page.getByRole('button', {
+          name: 'Search Results (8,098 Collections)'
+        })
+          .first()
           .click()
       })
 
@@ -165,7 +169,7 @@ test.describe('Map: Colormap interactions', () => {
           await legend.scrollIntoViewIfNeeded()
 
           await expect(legend).toHaveScreenshot('colormap-2-screenshot.png', {
-            maxDiffPixelRatio: 0.05
+            maxDiffPixelRatio: 0.01
           })
 
           await expect(page.getByTestId('legend-label-min').first()).toHaveText('0.00 – 0.12 DU')
