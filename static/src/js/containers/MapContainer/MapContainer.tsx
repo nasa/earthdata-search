@@ -386,24 +386,22 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       setLayerOpacity
     }
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
-    if (layersForProjection.length > 0) {
-      // Get colormap data for all available GIBS tags
-      layersForProjection.forEach((layer) => {
-        const { product } = layer
-        const productColormap = colormapsMetadata[product]
+    // Get colormap data for all available GIBS tags
+    layersForProjection.forEach((layer) => {
+      const { product } = layer
+      const productColormap = colormapsMetadata[product]
 
-        if (productColormap && productColormap.colorMapData) {
-          // Store colormap data by product name
-          imageryLayersObject.layerData.push({
-            ...layer,
-            colormap: productColormap.colorMapData
-          } as ImageryLayerItem)
-        }
-      })
-    }
+      if (productColormap && productColormap.colorMapData) {
+        // Store colormap data by product name
+        imageryLayersObject.layerData.push({
+          ...layer,
+          colormap: productColormap.colorMapData
+        } as ImageryLayerItem)
+      }
+    })
 
     return imageryLayersObject
-  }, [mapLayers, colormapsMetadata, projection, getLayersForProjection])
+  }, [colormapsMetadata, layersForProjection])
 
   // Added and removed granule ids for the focused collection are used to apply different
   // styles to the granules. Granules that are added are drawn with a regular style, while
