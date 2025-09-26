@@ -147,7 +147,9 @@ const SearchAutocomplete = ({
         error,
         action: 'fetchAutocomplete',
         resource: 'suggestions',
-        requestObject
+        requestObject,
+        showAlertButton: true,
+        title: 'Something went wrong fetching search suggestions'
       })
     }
   }, [])

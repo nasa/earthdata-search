@@ -304,7 +304,9 @@ describe('createGranuleSlice', () => {
         expect(actions.handleError).toHaveBeenCalledWith(expect.objectContaining({
           action: 'getGranuleMetadata',
           error: expect.any(Error),
-          resource: 'granule'
+          resource: 'granule',
+          showAlertButton: true,
+          title: 'Something went wrong fetching granule metadata'
         }))
       })
     })

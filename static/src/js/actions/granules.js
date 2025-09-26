@@ -132,7 +132,9 @@ export const fetchGranuleLinks = (
       error,
       action: 'fetchGranuleLinks',
       resource: 'granule links',
-      requestObject
+      requestObject,
+      showAlertButton: true,
+      title: 'Something went wrong fetching granule links'
     }))
   }
 

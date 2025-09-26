@@ -10,6 +10,12 @@ import {
   updateViewAllFacets
 } from '../viewAllFacets'
 
+import { handleError } from '../errors'
+
+jest.mock('../errors', () => ({
+  handleError: jest.fn(() => jest.fn())
+}))
+
 import {
   ERRORED_VIEW_ALL_FACETS,
   LOADED_VIEW_ALL_FACETS,
@@ -251,8 +257,6 @@ describe('getViewAllFacets', () => {
   })
 
   test('does not call updateCollectionResults on error', async () => {
-    const consoleMock = jest.spyOn(console, 'error').mockImplementationOnce(() => jest.fn())
-
     nock(/cmr/)
       .post(/collections/)
       .reply(500, {}, { 'cmr-hits': 1 })
@@ -307,7 +311,13 @@ describe('getViewAllFacets', () => {
         }
       })
 
-      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(handleError).toHaveBeenCalledTimes(1)
+      expect(handleError).toHaveBeenCalledWith(expect.objectContaining({
+        action: 'getViewAllFacets',
+        resource: 'facets',
+        showAlertButton: true,
+        title: 'Something went wrong fetching all filter options'
+      }))
     })
   })
 })

@@ -462,7 +462,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
         reduxDispatch(actions.handleError({
           error,
           action: 'getProjectCollections',
-          resource: 'project collections'
+          resource: 'project collections',
+          showAlertButton: true,
+          title: 'Something went wrong fetching collection metadata'
         }))
       }
 
@@ -599,7 +601,9 @@ const createProjectSlice: ImmerStateCreator<ProjectSlice> = (set, get) => ({
               error,
               action: 'getProjectGranules',
               resource: 'granules',
-              requestObject
+              requestObject,
+              showAlertButton: true,
+              title: 'Something went wrong fetching granule metadata'
             }))
           })
 

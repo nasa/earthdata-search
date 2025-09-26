@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
+import { FaBell } from 'react-icons/fa'
 import { Close } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { AlertHighPriority } from '@edsc/earthdata-react-icons/horizon-design-system/earthdata/ui'
 
@@ -12,7 +13,8 @@ export const Banner = ({
   message,
   title,
   type,
-  onClose
+  onClose,
+  showAlertButton
 }) => {
   const bannerClassNames = classNames([
     'banner',
@@ -20,6 +22,27 @@ export const Banner = ({
       'banner--error': type === 'error'
     }
   ])
+
+  const handleAlertsClick = () => {
+    const openAlerts = () => {
+      const alertsButton = document.querySelector('.th-status-link')
+
+      if (alertsButton) {
+        // Simulate clicking the alerts dropdown in tophat
+        alertsButton.click()
+      }
+    }
+
+    // 0ms timeout is required to open the alerts dropdown properly
+    setTimeout(() => openAlerts(), 0)
+  }
+
+  let messageToDisplay = message
+
+  // If we are showing the 'Show Alert' button, we also want to override the error message
+  if (showAlertButton) {
+    messageToDisplay = 'Check alerts for outage information or refresh the page.'
+  }
 
   return (
     <div className={bannerClassNames} role="banner">
@@ -29,10 +52,30 @@ export const Banner = ({
           {title}
         </h2>
         {
-          message && (
+          messageToDisplay && (
             <>
               {' '}
-              <p className="banner__message">{message}</p>
+              <p className="banner__message">{messageToDisplay}</p>
+            </>
+          )
+        }
+        {
+          showAlertButton && (
+            <>
+              {' '}
+              <div className="banner__alert-content">
+                <div className="banner__see-alerts">
+                  <Button
+                    onClick={handleAlertsClick}
+                    icon={FaBell}
+                    iconPosition="right"
+                    bootstrapVariant="red"
+                    bootstrapSize="sm"
+                  >
+                    See Alerts
+                  </Button>
+                </div>
+              </div>
             </>
           )
         }
@@ -48,7 +91,8 @@ export const Banner = ({
 }
 
 Banner.defaultProps = {
-  message: null
+  message: null,
+  showAlertButton: false
 }
 
 Banner.propTypes = {
@@ -61,7 +105,8 @@ Banner.propTypes = {
     PropTypes.node
   ]).isRequired,
   type: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  showAlertButton: PropTypes.bool
 }
 
 export default Banner

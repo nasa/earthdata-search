@@ -1003,7 +1003,9 @@ describe('createCollectionSlice', () => {
         expect.objectContaining({
           action: 'getCollectionMetadata',
           error: expect.any(Error),
-          resource: 'collection'
+          resource: 'collection',
+          showAlertButton: true,
+          title: 'Something went wrong fetching the collection metadata'
         })
       )
 

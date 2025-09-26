@@ -69,4 +69,33 @@ describe('Banner component', () => {
       expect(container.querySelectorAll('p')[0]).not.toBeDefined()
     })
   })
+
+  describe('when showAlertButton is true', () => {
+    test('clicking See Alerts button triggers tophat alerts', async () => {
+      const mockClick = jest.fn()
+      const mockButton = { click: mockClick }
+      const mockQuerySelector = jest.spyOn(document, 'querySelector').mockReturnValue(mockButton)
+
+      // Use fake timers for setTimeout
+      jest.useFakeTimers()
+
+      // Render with showAlertButton
+      const user = userEvent.setup({ advanceTimers: jest.advanceTimersByTime })
+
+      setup({ showAlertButton: true })
+
+      const seeAlertsButton = screen.getByRole('button', { name: 'See Alerts' })
+
+      await user.click(seeAlertsButton)
+
+      // Advance timers to trigger setTimeout
+      jest.runAllTimers()
+
+      expect(mockQuerySelector).toHaveBeenCalledWith('.th-status-link')
+      expect(mockClick).toHaveBeenCalledTimes(1)
+
+      mockQuerySelector.mockRestore()
+      jest.useRealTimers()
+    })
+  })
 })

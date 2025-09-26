@@ -23,7 +23,8 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
   const {
     id,
     message,
-    title
+    title,
+    showAlertButton
   } = error
 
   const { disableDatabaseComponents } = getApplicationConfig()
@@ -48,6 +49,7 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
       onClose={onClose}
       title={title}
       type="error"
+      showAlertButton={showAlertButton}
     />
   )
 }

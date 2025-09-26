@@ -122,7 +122,9 @@ const createTimelineSlice: ImmerStateCreator<TimelineSlice> = (set, get) => ({
             error,
             action: 'getTimeline',
             resource: 'timeline',
-            requestObject
+            requestObject,
+            showAlertButton: true,
+            title: 'Something went wrong fetching timeline data'
           }))
         })
     }

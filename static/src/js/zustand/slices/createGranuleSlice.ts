@@ -139,7 +139,9 @@ const createGranuleSlice: ImmerStateCreator<GranuleSlice> = (set, get) => ({
           error,
           action: 'getGranuleMetadata',
           resource: 'granule',
-          requestObject: graphQlRequestObject
+          requestObject: graphQlRequestObject,
+          showAlertButton: true,
+          title: 'Something went wrong fetching granule metadata'
         }))
       }
     },

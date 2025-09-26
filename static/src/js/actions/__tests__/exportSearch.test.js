@@ -8,6 +8,12 @@ import {
   exportSearch
 } from '../exportSearch'
 
+import { handleError } from '../errors'
+
+jest.mock('../errors', () => ({
+  handleError: jest.fn(() => jest.fn())
+}))
+
 import { EXPORT_FINISHED, EXPORT_STARTED } from '../../constants/actionTypes'
 
 const mockStore = configureMockStore([thunk])
@@ -136,8 +142,6 @@ describe('exportSearch', () => {
       authToken: ''
     })
 
-    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
-
     await store.dispatch(exportSearch('json')).then(() => {
       const storeActions = store.getActions()
       expect(storeActions[0]).toEqual({
@@ -150,7 +154,13 @@ describe('exportSearch', () => {
         payload: 'json'
       })
 
-      expect(consoleMock).toHaveBeenCalledTimes(1)
+      expect(handleError).toHaveBeenCalledTimes(1)
+      expect(handleError).toHaveBeenCalledWith(expect.objectContaining({
+        action: 'exportSearch',
+        resource: 'collections',
+        showAlertButton: true,
+        title: 'Something went wrong exporting your search'
+      }))
     })
   })
 })
