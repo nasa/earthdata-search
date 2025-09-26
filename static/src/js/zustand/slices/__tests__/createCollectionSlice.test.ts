@@ -734,6 +734,14 @@ describe('createCollectionSlice', () => {
             product: 'AIRS_Prata_SO2_Index_Day'
           })
 
+          expect(actions.getColorMap).toHaveBeenNthCalledWith(2, {
+            product: 'MODIS_Terra_Aerosol'
+          })
+
+          expect(actions.getColorMap).toHaveBeenNthCalledWith(3, {
+            product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor'
+          })
+
           expect(setMapLayers).toHaveBeenCalledTimes(1)
           expect(setMapLayers).toHaveBeenCalledWith(
             'C10000000000-EDSC',
@@ -742,14 +750,6 @@ describe('createCollectionSlice', () => {
               { product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor' }
             ]
           )
-
-          expect(actions.getColorMap).toHaveBeenNthCalledWith(2, {
-            product: 'MODIS_Terra_Aerosol'
-          })
-
-          expect(actions.getColorMap).toHaveBeenNthCalledWith(3, {
-            product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor'
-          })
         })
       })
 
