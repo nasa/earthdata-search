@@ -6,14 +6,15 @@
   outline: 1px solid utils.$color__carbon--20;
   background-color: utils.$color__spacesuit-white;
   z-index: 0;
-  cursor: grab;
   transition: outline 0.1s ease-in-out, outline-offset 0.1s ease-in-out;
+  cursor: default;
 
   &--draggable {
     &:hover {
       outline: 3px solid utils.$color__carbon--30;
       outline-offset: -3px;
       z-index: 1;
+      cursor: grab;
     }
 
     &.layer-picker-item--dragging {
