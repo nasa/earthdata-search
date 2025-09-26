@@ -130,7 +130,7 @@ const createCollectionsSlice: ImmerStateCreator<CollectionsSlice> = (set, get) =
           resource: 'collections',
           requestObject,
           showAlertButton: true,
-          title: 'Something went wrong fetching collection results123'
+          title: 'Something went wrong fetching collection results'
         }))
       }
     },
