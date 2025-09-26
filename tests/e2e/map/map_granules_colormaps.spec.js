@@ -129,7 +129,19 @@ test.describe('Map: Colormap interactions', () => {
       const legend = page.getByTestId('legend')
       await legend.scrollIntoViewIfNeeded()
 
-      await expect(legend).toHaveScreenshot('colormap-screenshot.png', {
+      // Retrieve the colormaps for each layer and ensure they match the screenshot
+      const firstCanvas = legend.locator('canvas').nth(0)
+      await expect(firstCanvas).toHaveScreenshot('sea-ice-concentration-colormap.png', {
+        maxDiffPixelRatio: 0.01
+      })
+
+      const secondCanvas = legend.locator('canvas').nth(1)
+      await expect(secondCanvas).toHaveScreenshot('sea-surface-temperature-colormap.png', {
+        maxDiffPixelRatio: 0.01
+      })
+
+      const thirdCanvas = legend.locator('canvas').nth(2)
+      await expect(thirdCanvas).toHaveScreenshot('sea-surface-temperature-anomalies-colormap.png', {
         maxDiffPixelRatio: 0.01
       })
 
@@ -166,9 +178,14 @@ test.describe('Map: Colormap interactions', () => {
           await page.getByRole('button', { name: 'Hide Timeline' }).waitFor()
 
           const legend = page.getByTestId('legend')
-          await legend.scrollIntoViewIfNeeded()
 
-          await expect(legend).toHaveScreenshot('colormap-2-screenshot.png', {
+          const firstCanvas = legend.locator('canvas').nth(0)
+          await expect(firstCanvas).toHaveScreenshot('sulfur-dioxide-day-colormap.png', {
+            maxDiffPixelRatio: 0.01
+          })
+
+          const secondCanvas = legend.locator('canvas').nth(1)
+          await expect(secondCanvas).toHaveScreenshot('sulfur-dioxide-night-colormap.png', {
             maxDiffPixelRatio: 0.01
           })
 
