@@ -374,6 +374,10 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     return mapLayers.filter((tag) => hasGibsLayerForProjection(tag, projection))
   }, [mapLayers, projection])
 
+  // Extract the actual colormap data from the state
+  // Get GIBS data to pass to the map within each granule
+  const layersForProjection = getLayersForProjection()
+
   const imageryLayers: ImageryLayers = useMemo(() => {
     const imageryLayersObject: ImageryLayers = {
       layerData: [],
@@ -382,7 +386,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
       setLayerOpacity
     }
     // If the collection has a GIBS tag and the GIBS layer is available for the current projection, use the colormap data
-    const layersForProjection = getLayersForProjection()
     if (layersForProjection.length > 0) {
       // Get colormap data for all available GIBS tags
       layersForProjection.forEach((layer) => {
@@ -401,10 +404,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
     return imageryLayersObject
   }, [mapLayers, colormapsMetadata, projection, getLayersForProjection])
-
-  // Extract the actual colormap data from the state
-  // Get GIBS data to pass to the map within each granule
-  const layersForProjection = getLayersForProjection()
 
   // Added and removed granule ids for the focused collection are used to apply different
   // styles to the granules. Granules that are added are drawn with a regular style, while
