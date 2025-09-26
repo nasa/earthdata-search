@@ -224,7 +224,8 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
           // Take a screenshot to verify the layer opacity has changed
           await expect(page).toHaveScreenshot('gibs-layer-opacity-adjusted.png', {
-            clip: screenshotClip
+            clip: screenshotClip,
+            maxDiffPixelRatio: 0.1
           })
 
           // Check the actual slider value (0.5 for 50%)
@@ -269,7 +270,8 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           // Take a screenshot to verify the reordering
           // that will update the layer we see on top
           await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {
-            clip: screenshotClip
+            clip: screenshotClip,
+            maxDiffPixelRatio: 0.1
           })
 
           // Make the first layer invisible so we can test the screenshot

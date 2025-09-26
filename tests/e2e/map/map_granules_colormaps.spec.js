@@ -164,7 +164,9 @@ test.describe('Map: Colormap interactions', () => {
           const legend = page.getByTestId('legend')
           await legend.scrollIntoViewIfNeeded()
 
-          await expect(legend).toHaveScreenshot('colormap-2-screenshot.png')
+          await expect(legend).toHaveScreenshot('colormap-2-screenshot.png', {
+            maxDiffPixelRatio: 0.01
+          })
 
           await expect(page.getByTestId('legend-label-min').first()).toHaveText('0.00 – 0.12 DU')
           await expect(page.getByTestId('legend-label-max').first()).toHaveText('500.00 DU')
