@@ -274,16 +274,21 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
         overlay={
           (
             <Tooltip id={tooltipId} className={overlayClass}>
-              <span className="text-nowrap">
-                {tooltip}
-                {
-                  tooltipKeyboardShortcut && (
-                    <span className="keyboard-shortcut ms-1">
-                      {tooltipKeyboardShortcut}
-                    </span>
-                  )
-                }
-              </span>
+              {
+                tooltipKeyboardShortcut ? (
+                  <span className="text-nowrap">
+                    {tooltip}
+                    {
+                      tooltipKeyboardShortcut && (
+                        <span className="keyboard-shortcut ms-1">
+                          {tooltipKeyboardShortcut}
+                        </span>
+                      )
+                    }
+                  </span>
+                )
+                  : tooltip
+              }
             </Tooltip>
           )
         }
