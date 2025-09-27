@@ -10,7 +10,7 @@ import {
 } from 'geojson'
 import { Style } from 'ol/style'
 import { crsProjections } from '../util/map/crs'
-import { PreferencesData } from '../zustand/types'
+import { PreferencesData, MapLayer } from '../zustand/types'
 
 /** A type for an empty object */
 export type EmptyObject = Record<string, never>
@@ -196,6 +196,10 @@ export type GibsData = {
   time?: string
   /** The GIBS layer URL */
   url?: string
+  /** The GIBS layer title */
+  title?: string
+  /** Whether the layer is visible (from Zustand state) */
+  visible?: boolean
 }
 
 export type MapGranule = {
@@ -206,7 +210,7 @@ export type MapGranule = {
   /** The temporal value formatted for display */
   formattedTemporal: string
   /** The GIBS metadata */
-  gibsData: GibsData
+  gibsData: GibsData[]
   /** The granule id */
   granuleId: string
   /** The granule style */
@@ -215,6 +219,49 @@ export type MapGranule = {
   highlightedStyle: Style
   /** The spatial value for the granule */
   spatial: GeoJsonObject
+}
+export type ColormapScale = {
+  /** The scale object contains colors and labels */
+  scale: {
+    /** The colors in the colormap */
+    colors: string[]
+    /** The labels in the colormap */
+    labels: string[]
+  },
+  /** The classes object is not used */
+  classes?: undefined
+}
+
+export type ColormapClasses = {
+  /** The scale object is not used */
+  scale?: undefined
+  /** The classes object contains colors and labels */
+  classes: {
+    /** The colors in the colormap */
+    colors: string[]
+    /** The labels in the colormap */
+    labels: string[]
+  }
+}
+
+/** Colormap can have the scale or the classes object */
+export type Colormap = ColormapScale | ColormapClasses
+
+/** Imagery layer item with colormap data */
+export type ImageryLayerItem = MapLayer & {
+  /** The colormap data for this layer */
+  colormap?: Colormap
+}
+
+export type ImageryLayers = {
+  /** Array of layer data with colormap information */
+  layerData: ImageryLayerItem[]
+  /** Function to toggle layer visibility */
+  toggleLayerVisibility: (collectionId: string, productName: string) => void
+  /** Function to set map layers order */
+  setMapLayersOrder: (collectionId: string, layers: ImageryLayerItem[]) => void
+  /** Function to update layer opacity */
+  setLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
 }
 
 /** The query object */

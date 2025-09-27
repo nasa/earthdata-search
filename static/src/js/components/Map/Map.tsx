@@ -36,7 +36,7 @@ import {
   FaCircle,
   FaFile,
   FaHome,
-  FaLayerGroup
+  FaMap
 } from 'react-icons/fa'
 import {
   Close,
@@ -49,7 +49,7 @@ import {
 // @ts-expect-error The file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
-import LegendControl from './LegendControl'
+import LegendControl from './LegendControl/LegendControl'
 import MapControls from './MapControls'
 
 import useEdscStore from '../../zustand/useEdscStore'
@@ -91,6 +91,7 @@ import 'ol/ol.css'
 import './Map.scss'
 import {
   GranuleMetadata,
+  ImageryLayers,
   MapGranule,
   NlpCollectionQuery,
   ProjectionCode,
@@ -98,7 +99,6 @@ import {
   ShapefileFile,
   SpatialSearch
 } from '../../types/sharedTypes'
-import { Colormap } from '../Legend/Legend'
 import { MapView, ShapefileSlice } from '../../zustand/types'
 
 let previousGranulesKey: string
@@ -282,7 +282,6 @@ interface MapProps {
     longitude: number
   }
   /** The color map for the focused collection */
-  colorMap: Colormap
   /** The ID of the focused collection */
   focusedCollectionId: string
   /** The ID of the focused granule */
@@ -291,6 +290,8 @@ interface MapProps {
   granules: MapGranule[]
   /** The key to determine if the granules have changed */
   granulesKey: string
+  /** The imagery layers */
+  imageryLayers: ImageryLayers
   /** Flag to show if this is a focused collection page */
   isFocusedCollectionPage: boolean
   /** Flag to show if this is a project page */
@@ -376,11 +377,11 @@ interface MapProps {
 const Map: React.FC<MapProps> = ({
   base,
   center,
-  colorMap,
   focusedCollectionId = '',
   focusedGranuleId = '',
   granules = [],
   granulesKey,
+  imageryLayers,
   isFocusedCollectionPage,
   isProjectPage,
   nlpCollection,
@@ -426,7 +427,8 @@ const Map: React.FC<MapProps> = ({
     const map = new OlMap({
       controls: [
         new LegendControl({
-          colorMap
+          collectionId: focusedCollectionId,
+          imageryLayers
         })
       ],
       interactions: defaultInteractions().extend([
@@ -805,22 +807,22 @@ const Map: React.FC<MapProps> = ({
 
     const mapControls = new MapControls({
       base,
-      CircleIcon: (<EDSCIcon size="12" icon={FaCircle} />),
-      HomeIcon: (<EDSCIcon size="12" icon={FaHome} />),
+      CircleIcon: (<EDSCIcon size="14" icon={FaCircle} />),
+      HomeIcon: (<EDSCIcon size="14" icon={FaHome} />),
       isLayerSwitcherOpen,
-      LayersIcon: (<EDSCIcon size="12" icon={FaLayerGroup} />),
+      LayersIcon: (<EDSCIcon size="14" icon={FaMap} />),
       map: mapRef.current,
       mapLayers,
-      MinusIcon: (<EDSCIcon size="12" icon={Minus} />),
+      MinusIcon: (<EDSCIcon size="13" icon={Minus} />),
       onChangeLayer: handleLayerChange,
       onChangeProjection,
       onToggleShapefileUploadModal,
       overlays,
-      PlusIcon: (<EDSCIcon size="12" icon={Plus} />),
-      PointIcon: (<EDSCIcon size="12" icon={MapIcon} />),
+      PlusIcon: (<EDSCIcon size="13" icon={Plus} />),
+      PointIcon: (<EDSCIcon size="14" icon={MapIcon} />),
       projectionCode,
       setIsLayerSwitcherOpen,
-      ShapefileIcon: (<EDSCIcon size="12" icon={FaFile} />),
+      ShapefileIcon: (<EDSCIcon size="14" icon={FaFile} />),
       showDrawingControls: !isProjectPage
     })
 
@@ -940,28 +942,36 @@ const Map: React.FC<MapProps> = ({
   }, [focusedCollectionId])
 
   useEffect(() => {
-    // When colorMap or isFocusedCollectionPage changes, remove the existing legend control
-    // and add a new one if necessary.
     const map = mapRef.current as OlMap
     const controls = map.getControls()
     const legendControl = controls.getArray().find(
       (control) => control instanceof LegendControl
     )
 
-    // Always remove existing legend control if present
-    if (legendControl) {
+    // Remove the legend control if not on the collection focused page and it exists
+    if (!isFocusedCollectionPage && legendControl) {
       controls.remove(legendControl)
     }
 
-    // Add new legend control only if on focused collection page and colorMap exists
-    if (isFocusedCollectionPage && colorMap && Object.keys(colorMap).length > 0) {
+    // Add new legend control only if on focused collection page and it has layers
+    // Update the legend control when the imagery layers change
+    // This helps ensure we have a reference to the legend control when we need to update it
+    // otherwise issues would occur where the scrollbar would go to the top of the layer picker
+    if (legendControl) {
+      legendControl.update({
+        collectionId: focusedCollectionId,
+        imageryLayers
+      })
+    } else if (isFocusedCollectionPage) {
+      // Add new legend control if it doesn't exist
       controls.push(
         new LegendControl({
-          colorMap
+          collectionId: focusedCollectionId,
+          imageryLayers
         })
       )
     }
-  }, [isFocusedCollectionPage, colorMap])
+  }, [isFocusedCollectionPage, imageryLayers, focusedCollectionId])
 
   // Update the map view when the panelsWidth changes
   useEffect(() => {

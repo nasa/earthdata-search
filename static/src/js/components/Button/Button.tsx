@@ -79,6 +79,8 @@ export interface ButtonProps {
   tooltipPlacement?: BSOverlayTriggerProps['placement'],
   /** Unique ID for the tooltip. */
   tooltipId?: string
+  /** Tooltip keyboard shortcut. */
+  tooltipKeyboardShortcut?: string
   /** The button type attribute. */
   type?: BSButtonProps['type']
   /** Custom variant for the button styling. */
@@ -117,6 +119,7 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
   tooltip,
   tooltipPlacement,
   tooltipId,
+  tooltipKeyboardShortcut,
   type = 'button',
   variant
 }, ref) => {
@@ -262,9 +265,33 @@ export const Button = forwardRef<ButtonProps, BootstrapButtonProps>(({
     return (
       <OverlayTrigger
         placement={tooltipPlacement || 'top'}
-        overlay={(
-          <Tooltip id={tooltipId} className={overlayClass}>{tooltip}</Tooltip>
-        )}
+        delay={
+          {
+            show: 250,
+            hide: 0
+          }
+        }
+        overlay={
+          (
+            <Tooltip id={tooltipId} className={overlayClass}>
+              {
+                tooltipKeyboardShortcut ? (
+                  <span className="text-nowrap">
+                    {tooltip}
+                    {
+                      tooltipKeyboardShortcut && (
+                        <span className="keyboard-shortcut ms-1">
+                          {tooltipKeyboardShortcut}
+                        </span>
+                      )
+                    }
+                  </span>
+                )
+                  : tooltip
+              }
+            </Tooltip>
+          )
+        }
       >
         {button}
       </OverlayTrigger>

@@ -20,29 +20,3 @@
     border: none;
   }
 }
-
-.ol-viewport {
-  .legend {
-    &__bar {
-      margin: 0.125rem;
-      display: block;
-      height: 1rem;
-      width: 15rem;
-      border-radius: 0.125rem;
-      opacity: 0;
-      visibility: visible;
-      transition: opacity 0.2s ease;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-
-      &:hover {
-        cursor: crosshair;
-      }
-    }
-
-    &--is-colormap-rendered .legend__bar {
-      visibility: visible;
-      opacity: 1;
-    }
-  }
-}

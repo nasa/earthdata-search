@@ -264,6 +264,33 @@ export type MapView = {
   zoom: number
 }
 
+export type MapLayer = {
+  /** The product identifier for the map layer */
+  product: string
+  /** The display title for the map layer */
+  title?: string
+  /** The image format of the layer (e.g., 'image/png', 'image/jpeg') */
+  format?: string
+  /** The temporal period of the layer (e.g., 'daily', 'monthly') */
+  layerPeriod?: string
+  /** Resolution for Antarctic projection */
+  antarctic_resolution?: string
+  /** Resolution for Arctic projection */
+  arctic_resolution?: string
+  /** Resolution for geographic projection */
+  geographic_resolution?: string
+  /** Whether the layer is available for Antarctic projection */
+  antarctic?: boolean
+  /** Whether the layer is available for Arctic projection */
+  arctic?: boolean
+  /** Whether the layer is available for geographic projection */
+  geographic?: boolean
+  /** Whether the layer is currently visible on the map */
+  isVisible?: boolean
+  /** The opacity of the layer (0-1) */
+  opacity?: number
+}
+
 export type MapSlice = {
   /** The Map Slice of the store */
   map: {
@@ -275,6 +302,16 @@ export type MapSlice = {
     showMbr: boolean
     /** Function to set the showMbr value */
     setShowMbr: (showMbr: boolean) => void
+    /** Store layers for each collection */
+    mapLayers: Record<string, MapLayer[]>
+    /** Function to set layers for a collection */
+    setMapLayers: (collectionId: string, layers: MapLayer[]) => void
+    /** Function to toggle layer visibility for a collection */
+    toggleLayerVisibility: (collectionId: string, productName: string) => void
+    /** Function to set the order of layers when they are dragged and dropped */
+    setMapLayersOrder: (collectionId: string, newOrder: MapLayer[]) => void
+    /** Function to update the opacity of a specific layer */
+    setLayerOpacity: (collectionId: string, productName: string, opacity: number) => void
   }
 }
 

@@ -1,0 +1,16 @@
+@use '../../../../css/utils';
+
+.layer-picker {
+  &__layers {
+    max-height: 15rem; // Height for approximately 3 layers
+    width: 24rem;
+  }
+
+  &__layer-content {
+    transition: opacity 0.2s ease-in-out;
+
+    .layer-picker__layer-item--hidden & {
+      opacity: 0.625;
+    }
+  }
+}

@@ -74,7 +74,7 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
         return
       }
 
-      // Send the relevency metric event
+      // Send the relevancy metric event
       reduxDispatch(actions.collectionRelevancyMetrics())
 
       // Use the `hasAllMetadata` flag to determine if we've requested previously
@@ -191,8 +191,14 @@ const createCollectionSlice: ImmerStateCreator<CollectionSlice> = (set, get) => 
           // If they don't we call an action to pull the colorMaps and add them to the metadata.colormaps
           const gibsTags = tags ? getValueForTag('gibs', tags) : null
           if (gibsTags && gibsTags.length > 0) {
-            const { product } = gibsTags[0]
-            reduxDispatch(actions.getColorMap({ product }))
+            // Update the map layers with the gibs tags
+            get().map.setMapLayers(focusedCollectionId, gibsTags)
+
+            // Load each colormap
+            gibsTags.forEach((gibsTag: { product: string }) => {
+              const { product } = gibsTag
+              reduxDispatch(actions.getColorMap({ product }))
+            })
           }
 
           // Formats the metadata returned from graphql for use throughout the application
