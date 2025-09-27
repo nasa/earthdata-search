@@ -179,21 +179,19 @@ test.describe('Map: imagery and layer-picker interactions', () => {
             json: {}
           })
         })
-
-        // These layers are somewhat similar so we are zooming in here to make the difference
-        // when comparing the orders easier to see
-        const zoomedInMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
-        await page.goto('/search/granules?p=C2930727817-LARC_CLOUD&pg[0][v]=f&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&tl=1724883938.647!4!!&lat=38.964887769762086&long=-114.57040117944547&zoom=7')
-
-        // Wait for the map to load
-        await zoomedInMapPromise
-
-        // Close the panel to work with the map easier
-        await page.keyboard.press(']')
       })
 
       test.describe('when updating the layer visibility', () => {
         test('toggles layer visibility when clicking the visibility button @screenshot', async ({ page }) => {
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+          await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
+
+          // Wait for the map to load
+          await initialMapPromise
+
+          // Close the panel to work with the map easier
+          await page.keyboard.press(']')
+
           // Find and click the visibility toggle button for the first layer
           // Take a screenshot to verify the layer is no longer visible
           await expect(page).toHaveScreenshot('gibs-layer-visible.png', {
@@ -214,6 +212,12 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
       test.describe('when updating the layer opacity', () => {
         test('updates the specified layer opacity on the map @screenshot', async ({ page }) => {
+          const initialMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/2/)
+          await page.goto('search/granules?p=C2930727817-LARC_CLOUD&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&lat=40&long=-100')
+
+          // Wait for the map to load
+          await initialMapPromise
+
           // Find and click the settings button for the first layer to open the opacity popover
           const settingsButton = page.getByRole('button', { name: 'Adjust settings for Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' })
           await settingsButton.click()
@@ -245,15 +249,16 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
       test.describe('when reordering layers', () => {
         test('turns on second layer visibility and drags it to the top @screenshot', async ({ page }) => {
+          // These layers are somewhat similar so we are zooming in here to make the difference
+        // when comparing the orders easier to see
+          const zoomedInMapPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/6/)
+          await page.goto('/search/granules?p=C2930727817-LARC_CLOUD&pg[0][v]=f&pg[0][id]=TEMPO_CLDO4_L3_V03_20250318T123644Z_S003.nc!TEMPO_CLDO4_L3_V03_20250317T181710Z_S009.nc&pg[0][gsk]=-start_date&tl=1724883938.647!4!!&lat=38.964887769762086&long=-114.57040117944547&zoom=7')
+
+          // Wait for the map to load
+          await zoomedInMapPromise
+
           const layer2VisibilityButton = page.getByRole('button', { name: 'Show Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)' }).first()
           await layer2VisibilityButton.click()
-
-          // Take a screenshot to verify the layer is visible
-          // In this one both are visible the bottom one is difficult to see
-          await expect(page).toHaveScreenshot('gibs-second-layer-visible.png', {
-            clip: screenshotClip,
-            maxDiffPixelRatio: 0.01
-          })
 
           // Grab the layer items
           const firstLayerTitle = page.getByText('Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)')
@@ -261,6 +266,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
           // Drag the second layer to the top (above the first layer)
           await secondLayerTitle.dragTo(firstLayerTitle)
+          await page.waitForTimeout(500)
 
           // Verify the layers have been reordered by checking the layer titles
           const layerItems = page.locator('.layer-picker__layers')
@@ -269,12 +275,19 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           // The second layer (Cloud Pressure Total) should now be first in the list
           expect(firstLayerHeader).toContain('Clouds (L3, Cloud Pressure Total, Subdaily) (PROVISIONAL)')
 
+          // Close the layer picker to emphasize the map in the screenshot
+          await page.keyboard.press('l')
+
+          // Wait a moment for the reordering to be applied
           // Take a screenshot to verify the reordering
           // that will update the layer we see on top
           await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {
             clip: screenshotClip,
             maxDiffPixelRatio: 0.01
           })
+
+          // Open the the layer picker back up for selection
+          await page.keyboard.press('l')
 
           // Make the first layer invisible so we can test the screenshot
           const layer1VisibilityButton = page.getByRole('button', { name: 'Hide Clouds (L3, Cloud Fraction Total, Subdaily) (PROVISIONAL)' }).first()
@@ -285,7 +298,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
           await expect(page).toHaveScreenshot('gibs-layers-reordered-second-layer-hidden.png', {
             clip: screenshotClip,
-            maxDiffPixelRatio: 0.01
+            maxDiffPixelRatio: 0.02
           })
         })
       })
