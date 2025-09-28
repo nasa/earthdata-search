@@ -87,6 +87,8 @@ describe('removeError', () => {
 
 describe('handleError', () => {
   test('should dispatch error with showAlertButton when showAlertButton parameter is true', async () => {
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+
     nock(/localhost/)
       .post(/error_logger/)
       .reply(200)
@@ -111,5 +113,7 @@ describe('handleError', () => {
         notificationType: 'banner'
       })
     })
+
+    expect(consoleMock).toHaveBeenCalledTimes(1)
   })
 })
