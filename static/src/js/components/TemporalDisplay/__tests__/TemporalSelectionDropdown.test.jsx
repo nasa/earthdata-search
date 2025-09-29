@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { screen, waitFor } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 import MockDate from 'mockdate'
 import PropTypes from 'prop-types'
 import moment from 'moment'
@@ -115,9 +115,7 @@ describe('TemporalSelectionDropdown component', () => {
     const btn = screen.getByRole('button', { name: 'Open temporal filters' })
     expect(btn).toBeInTheDocument()
 
-    await waitFor(async () => {
-      await user.click(btn)
-    })
+    await user.click(btn)
 
     const startLabel = screen.getByText(/Start/i)
 
@@ -127,9 +125,7 @@ describe('TemporalSelectionDropdown component', () => {
   test('sets the start date correctly when an valid date is passed', async () => {
     const { user } = setup()
 
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -147,9 +143,7 @@ describe('TemporalSelectionDropdown component', () => {
   test('sets the end date correctly when an valid date is passed', async () => {
     const { user } = setup()
 
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -167,9 +161,7 @@ describe('TemporalSelectionDropdown component', () => {
   test('sets the state correctly with an invalid start date', async () => {
     const { user } = setup()
 
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -209,9 +201,7 @@ describe('TemporalSelectionDropdown component', () => {
       }
     })
 
-    await waitFor(async () => {
-      await user.click(screen.getAllByRole('button', { name: 'Open temporal filters' }).at(0))
-    })
+    await user.click(screen.getAllByRole('button', { name: 'Open temporal filters' }).at(0))
 
     const startDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const endDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -220,13 +210,9 @@ describe('TemporalSelectionDropdown component', () => {
     expect(endDateInput).toHaveValue('2019-03-30 00:00:00')
 
     const clearBtn = screen.getAllByRole('button', { name: 'Clear' }).at(2)
-    await waitFor(async () => {
-      await user.click(clearBtn)
-    })
+    await user.click(clearBtn)
 
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const updatedStartDateInput = screen.getByRole('textbox', { name: 'Start Date' })
     const updatedEndtDateInput = screen.getByRole('textbox', { name: 'End Date' })
@@ -268,9 +254,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
-    await waitFor(async () => {
-      await user.click(applyBtn)
-    })
+    await user.click(applyBtn)
 
     expect(props.onChangeQuery).toHaveBeenCalledWith({
       collection: {
@@ -347,9 +331,7 @@ describe('TemporalSelectionDropdown component', () => {
 
     const applyBtn = screen.getByRole('button', { name: 'Apply' })
 
-    await waitFor(async () => {
-      await user.click(applyBtn)
-    })
+    await user.click(applyBtn)
 
     expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
       type: 'Apply Temporal Filter',
@@ -360,14 +342,10 @@ describe('TemporalSelectionDropdown component', () => {
   test('onMetricsTemporalFilter is called on Clear', async () => {
     const { props, user } = setup()
 
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const clearBtn = screen.getAllByRole('button', { name: 'Clear' }).at(2)
-    await waitFor(async () => {
-      await user.click(clearBtn)
-    })
+    await user.click(clearBtn)
 
     expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
@@ -380,14 +358,10 @@ describe('TemporalSelectionDropdown component', () => {
     const onMetricsTemporalFilterSpy = jest.spyOn(metricsActions, 'metricsTemporalFilter')
     const { user } = setup({ onMetricsTemporalFilter: null })
 
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const clearBtn = screen.getAllByRole('button', { name: 'Clear' }).at(2)
-    await waitFor(async () => {
-      await user.click(clearBtn)
-    })
+    await user.click(clearBtn)
 
     expect(onMetricsTemporalFilterSpy).toHaveBeenCalledTimes(0)
   })
@@ -395,15 +369,10 @@ describe('TemporalSelectionDropdown component', () => {
   test('onMetricsTemporalFilter is called when toggling recurring', async () => {
     const { props, user } = setup()
 
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const recurringCheckbox = screen.getByLabelText('Use a recurring date range')
-
-    await waitFor(async () => {
-      await user.click(recurringCheckbox)
-    })
+    await user.click(recurringCheckbox)
 
     expect(props.onMetricsTemporalFilter).toHaveBeenCalledTimes(1)
     expect(props.onMetricsTemporalFilter).toHaveBeenCalledWith({
@@ -416,15 +385,11 @@ describe('TemporalSelectionDropdown component', () => {
     const onMetricsTemporalFilterSpy = jest.spyOn(metricsActions, 'metricsTemporalFilter')
     const { user } = setup({ onMetricsTemporalFilter: null })
 
-    await waitFor(async () => {
-      await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-    })
+    await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
     const recurringCheckbox = screen.getByLabelText('Use a recurring date range')
 
-    await waitFor(async () => {
-      await user.click(recurringCheckbox)
-    })
+    await user.click(recurringCheckbox)
 
     expect(onMetricsTemporalFilterSpy).toHaveBeenCalledTimes(0)
   })
@@ -438,9 +403,7 @@ describe('TemporalSelectionDropdown component', () => {
       test('calls onMetricsTemporalFilter', async () => {
         const { props, user } = setup()
 
-        await waitFor(async () => {
-          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-        })
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
         await user.click(screen.getByRole('button', { name: 'Set Start Date With Metrics' }))
 
@@ -456,9 +419,7 @@ describe('TemporalSelectionDropdown component', () => {
       test('does not call onMetricsTemporalFilter', async () => {
         const { props, user } = setup()
 
-        await waitFor(async () => {
-          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-        })
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
         await user.click(screen.getByRole('button', { name: 'Set Start Date Without Metrics' }))
 
@@ -476,9 +437,7 @@ describe('TemporalSelectionDropdown component', () => {
       test('calls onMetricsTemporalFilter', async () => {
         const { props, user } = setup()
 
-        await waitFor(async () => {
-          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-        })
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
         await user.click(screen.getByRole('button', { name: 'Set End Date With Metrics' }))
 
@@ -494,9 +453,7 @@ describe('TemporalSelectionDropdown component', () => {
       test('does not call onMetricsTemporalFilter', async () => {
         const { props, user } = setup()
 
-        await waitFor(async () => {
-          await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
-        })
+        await user.click(screen.getByRole('button', { name: 'Open temporal filters' }))
 
         await user.click(screen.getByRole('button', { name: 'Set End Date Without Metrics' }))
 
@@ -575,9 +532,8 @@ describe('TemporalSelectionDropdown component', () => {
 
       // Uncheck it
       await user.click(recurringCheckbox)
-      await waitFor(() => {
-        expect(recurringCheckbox).not.toBeChecked()
-      })
+
+      expect(recurringCheckbox).not.toBeChecked()
 
       // Apply non-recurring state
       await user.click(screen.getByRole('button', { name: 'Apply' }))
@@ -623,9 +579,8 @@ describe('TemporalSelectionDropdown component', () => {
       // Toggle recurring on
       const recurringCheckbox = screen.getByRole('checkbox', { checked: false })
       await user.click(recurringCheckbox)
-      await waitFor(() => {
-        expect(recurringCheckbox).toBeChecked()
-      })
+
+      expect(recurringCheckbox).toBeChecked()
 
       // In recurring mode, dates should show without year and use minimum year
       expect(startDateInput).toHaveValue('03-29 00:00:00')
@@ -680,9 +635,8 @@ describe('TemporalSelectionDropdown component', () => {
 
       const recurringCheckbox = screen.getByRole('checkbox', { name: 'Use a recurring date range' })
       await user.click(recurringCheckbox)
-      await waitFor(() => {
-        expect(recurringCheckbox).toBeChecked()
-      })
+
+      expect(recurringCheckbox).toBeChecked()
 
       expect(startDateInput).toHaveValue('01-01 00:00:00')
       expect(endDateInput).toHaveValue('')
@@ -735,9 +689,8 @@ describe('TemporalSelectionDropdown component', () => {
 
       const recurringCheckbox = screen.getByRole('checkbox', { checked: false })
       await user.click(recurringCheckbox)
-      await waitFor(() => {
-        expect(recurringCheckbox).toBeChecked()
-      })
+
+      expect(recurringCheckbox).toBeChecked()
 
       expect(startDateInput).toHaveValue('')
       expect(endDateInput).toHaveValue('')
@@ -790,9 +743,8 @@ describe('TemporalSelectionDropdown component', () => {
 
       const recurringCheckbox = screen.getByRole('checkbox', { checked: false })
       await user.click(recurringCheckbox)
-      await waitFor(() => {
-        expect(recurringCheckbox).toBeChecked()
-      })
+
+      expect(recurringCheckbox).toBeChecked()
 
       expect(startDateInput).toHaveValue('')
       expect(endDateInput).toHaveValue('01-25 00:00:00')
@@ -853,10 +805,7 @@ describe('TemporalSelectionDropdown component', () => {
         expect(endDateInput).toHaveValue(moment.utc(validEndDate).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
 
         const applyBtn = screen.getByRole('button', { name: 'Apply' })
-
-        await waitFor(async () => {
-          await user.click(applyBtn)
-        })
+        await user.click(applyBtn)
 
         expect(props.onChangeQuery).toHaveBeenCalledWith({
           collection: {
@@ -915,10 +864,7 @@ describe('TemporalSelectionDropdown component', () => {
         expect(endDateInput).toHaveValue(moment.utc(validEndDate).endOf('day').format('YYYY-MM-DD HH:mm:ss'))
 
         const applyBtn = screen.getByRole('button', { name: 'Apply' })
-
-        await waitFor(async () => {
-          await user.click(applyBtn)
-        })
+        await user.click(applyBtn)
 
         expect(props.onChangeQuery).toHaveBeenCalledWith({
           collection: {
