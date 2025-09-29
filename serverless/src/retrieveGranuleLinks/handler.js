@@ -48,7 +48,7 @@ const retrieveGranuleLinks = async (event, context) => {
     // Retrieve a connection to the database
     const dbConnection = await getDbConnection()
 
-    const [retrievalCollectionResponse] = await dbConnection('retrieval_collections')
+    const retrievalCollectionResponseRows = await dbConnection('retrieval_collections')
       .select(
         'retrieval_collections.access_method',
         'retrieval_collections.collection_id',
@@ -58,7 +58,7 @@ const retrieveGranuleLinks = async (event, context) => {
         'user_tokens.access_token'
       )
       .join('retrievals', { 'retrieval_collections.retrieval_id': 'retrievals.id' })
-      .leftOuterJoin('retrieval_orders', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
+      .leftJoin('retrieval_orders', { 'retrieval_orders.retrieval_collection_id': 'retrieval_collections.id' })
       .join('users', { 'retrievals.user_id': 'users.id' })
       .join('user_tokens', { 'user_tokens.user_id': 'users.id' })
       .where({
@@ -67,6 +67,8 @@ const retrieveGranuleLinks = async (event, context) => {
         'user_tokens.environment': earthdataEnvironment
       })
       .orderBy('user_tokens.updated_at', 'desc')
+
+    const [retrievalCollectionResponse] = retrievalCollectionResponseRows
 
     // Determine access method type
     const {
@@ -112,7 +114,35 @@ const retrieveGranuleLinks = async (event, context) => {
 
         break
       case 'harmony':
-        links = fetchHarmonyLinks(orderInformation)
+        // When the order has multiple Harmony jobs, we need to return the links from every job
+        if (retrievalCollectionResponseRows.length > 1) {
+          // Combine the `order_information` objects from each row into a single object keyed by the `jobID`
+          const combinedOrderInformation = retrievalCollectionResponseRows.reduce((acc, curr) => {
+            const { order_information: currentOrderInformation } = curr
+            const {
+              jobID: jobId
+            } = currentOrderInformation
+
+            // Initialize the accumulator for this jobID if it doesn't exist
+            if (!acc[jobId]) {
+              acc[jobId] = {
+                orderInformation: currentOrderInformation
+              }
+            }
+
+            return acc
+          }, {})
+
+          // Combine the `links` array from each object in `combinedOrderInformation`
+          const combinedOrderInformationLinks = Object.values(combinedOrderInformation).flatMap(
+            (info) => info.orderInformation.links
+          )
+
+          // Fetch the Harmony links using the combined links
+          links = fetchHarmonyLinks({ links: combinedOrderInformationLinks })
+        } else {
+          links = fetchHarmonyLinks(orderInformation)
+        }
 
         done = true
         break
