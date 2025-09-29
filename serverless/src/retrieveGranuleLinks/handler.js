@@ -33,7 +33,6 @@ const retrieveGranuleLinks = async (event, context) => {
       flattenLinks = false,
       requestId = uuidv4()
     } = queryStringParameters
-    console.log('🚀 ~ handler.js:36 ~ retrieveGranuleLinks ~ retrievalCollectionId:', retrievalCollectionId)
 
     let { ee: earthdataEnvironment } = queryStringParameters
     if (!earthdataEnvironment) earthdataEnvironment = determineEarthdataEnvironment(headers)
