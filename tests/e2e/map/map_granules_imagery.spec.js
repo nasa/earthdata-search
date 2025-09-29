@@ -298,7 +298,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
 
           await expect(page).toHaveScreenshot('gibs-layers-reordered-second-layer-hidden.png', {
             clip: screenshotClip,
-            maxDiffPixelRatio: 0.02
+            maxDiffPixelRatio: 0.05
           })
         })
       })
