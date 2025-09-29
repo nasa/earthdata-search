@@ -85,8 +85,9 @@ export class Panels extends PureComponent {
     const zustandState = useEdscStore.getState()
     const { ui } = zustandState
     const { panels } = ui
-    const { setPanelsWidth } = panels
+    const { setPanelsWidth, setPanelsLoaded } = panels
     setPanelsWidth(this.width)
+    setPanelsLoaded(true)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -139,13 +140,6 @@ export class Panels extends PureComponent {
         document.body.classList.remove('is-panels-dragging')
       }
     }
-
-    // When the component updates call setPanelsWidth to set the initial width
-    const zustandState = useEdscStore.getState()
-    const { ui } = zustandState
-    const { panels } = ui
-    const { setPanelsWidth } = panels
-    setPanelsWidth(this.width)
   }
 
   componentWillUnmount() {

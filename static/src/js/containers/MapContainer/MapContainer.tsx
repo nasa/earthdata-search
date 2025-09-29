@@ -154,7 +154,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onExcludeGranule,
     onFetchShapefile,
     onUpdateShapefile,
-    panelsWidth,
+    panelsLoaded,
     projectCollections,
     setGranuleId,
     setLayerOpacity,
@@ -173,7 +173,7 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onExcludeGranule: state.query.excludeGranule,
     onFetchShapefile: state.shapefile.fetchShapefile,
     onUpdateShapefile: state.shapefile.updateShapefile,
-    panelsWidth: state.ui.panels.panelsWidth,
+    panelsLoaded: state.ui.panels.panelsLoaded,
     projectCollections: state.project.collections,
     setGranuleId: state.granule.setGranuleId,
     setLayerOpacity: state.map.setLayerOpacity,
@@ -509,8 +509,9 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   const memoizedShapefile = useMemo(() => shapefile, [shapefile])
 
-  // If the panels and sidebar widths have not been calculated, don't render the map
-  if (panelsWidth === 0 && sidebarWidth === 0) return null
+  // If the panels or sidebar widths have not been calculated, don't render the map
+  // if (panelsWidth === 0 || sidebarWidth === 0) return null
+  if (!panelsLoaded || sidebarWidth === 0) return null
 
   const mapLayersKey = Buffer.from(JSON.stringify(mapLayers)).toString('base64')
   // Generate a key based on the granules that need to be drawn on the map, and the gibsTagProduct.

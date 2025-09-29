@@ -9,6 +9,12 @@ const createUiSlice: ImmerStateCreator<UiSlice> = (set) => ({
           state.ui.panels.panelsWidth = panelsWidth
         })
       },
+      panelsLoaded: false,
+      setPanelsLoaded: (panelsLoaded) => {
+        set((state) => {
+          state.ui.panels.panelsLoaded = panelsLoaded
+        })
+      },
       sidebarWidth: 0,
       setSidebarWidth: (sidebarWidth) => {
         set((state) => {
