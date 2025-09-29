@@ -115,5 +115,6 @@ describe('handleError', () => {
     })
 
     expect(consoleMock).toHaveBeenCalledTimes(1)
+    expect(consoleMock).toHaveBeenCalledWith('Action [fetchSubscriptions] failed: Error: CMR error')
   })
 })
