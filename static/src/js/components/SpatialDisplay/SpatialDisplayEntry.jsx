@@ -1,14 +1,8 @@
 import PropTypes from 'prop-types'
 
-const SpatialDisplayEntry = (props) => {
-  const { children } = props
-
-  return children
-}
-
-SpatialDisplayEntry.defaultProps = {
-  children: null
-}
+const SpatialDisplayEntry = ({
+  children = null
+}) => children
 
 SpatialDisplayEntry.propTypes = {
   children: PropTypes.node

@@ -38,17 +38,17 @@ import './TextWindowActions.scss'
  * @param {String} modalTitle - The title for the modal.
  */
 export const TextWindowActions = ({
-  children,
-  clipboardContents,
-  disableCopy,
-  disableEddInProgress,
-  disableSave,
-  eddLink,
-  fileContents,
-  fileName,
-  hideEdd,
-  id,
-  modalTitle
+  children = null,
+  clipboardContents = '',
+  disableCopy = false,
+  disableEddInProgress = false,
+  disableSave = false,
+  eddLink = null,
+  fileContents = null,
+  fileName = null,
+  hideEdd = false,
+  id = null,
+  modalTitle = null
 }) => {
   const { disableEddInProgressDownload: hideEddFromSettings } = getApplicationConfig()
 
@@ -297,20 +297,6 @@ export const TextWindowActions = ({
       />
     </div>
   )
-}
-
-TextWindowActions.defaultProps = {
-  children: null,
-  clipboardContents: '',
-  disableCopy: false,
-  disableEddInProgress: false,
-  disableSave: false,
-  eddLink: null,
-  fileContents: null,
-  fileName: null,
-  hideEdd: false,
-  id: null,
-  modalTitle: null
 }
 
 TextWindowActions.propTypes = {

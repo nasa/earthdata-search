@@ -147,8 +147,6 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     polygon: polygonSearch
   } = spatialQuery
   const {
-    panelsWidth,
-    sidebarWidth,
     map: mapProps,
     onChangeMap,
     onChangeQuery,
@@ -156,18 +154,18 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onExcludeGranule,
     onFetchShapefile,
     onUpdateShapefile,
+    panelsLoaded,
     projectCollections,
     setGranuleId,
+    setLayerOpacity,
+    setMapLayersOrder,
     setStartDrawing,
     shapefile,
     showMbr,
+    sidebarWidth,
     startDrawing,
-    toggleLayerVisibility,
-    setMapLayersOrder,
-    setLayerOpacity
+    toggleLayerVisibility
   } = useEdscStore((state) => ({
-    panelsWidth: state.ui.panels.panelsWidth,
-    sidebarWidth: state.ui.panels.sidebarWidth,
     map: state.map.mapView,
     onChangeMap: state.map.setMapView,
     onChangeQuery: state.query.changeQuery,
@@ -175,16 +173,18 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
     onExcludeGranule: state.query.excludeGranule,
     onFetchShapefile: state.shapefile.fetchShapefile,
     onUpdateShapefile: state.shapefile.updateShapefile,
+    panelsLoaded: state.ui.panels.panelsLoaded,
     projectCollections: state.project.collections,
     setGranuleId: state.granule.setGranuleId,
+    setLayerOpacity: state.map.setLayerOpacity,
+    setMapLayers: state.map.setMapLayers,
+    setMapLayersOrder: state.map.setMapLayersOrder,
     setStartDrawing: state.home.setStartDrawing,
     shapefile: state.shapefile,
     showMbr: state.map.showMbr,
+    sidebarWidth: state.ui.panels.sidebarWidth,
     startDrawing: state.home.startDrawing,
-    setMapLayers: state.map.setMapLayers,
-    toggleLayerVisibility: state.map.toggleLayerVisibility,
-    setMapLayersOrder: state.map.setMapLayersOrder,
-    setLayerOpacity: state.map.setLayerOpacity
+    toggleLayerVisibility: state.map.toggleLayerVisibility
   }))
 
   const focusedCollectionGranuleQuery = useEdscStore(getFocusedCollectionGranuleQuery)
@@ -509,8 +509,9 @@ export const MapContainer: React.FC<MapContainerProps> = (props) => {
 
   const memoizedShapefile = useMemo(() => shapefile, [shapefile])
 
-  // If the panels or sidebar are not visible, don't render the map
-  if (panelsWidth === 0 || sidebarWidth === 0) return null
+  // If the panels or sidebar widths have not been calculated, don't render the map
+  // if (panelsWidth === 0 || sidebarWidth === 0) return null
+  if (!panelsLoaded || sidebarWidth === 0) return null
 
   const mapLayersKey = Buffer.from(JSON.stringify(mapLayers)).toString('base64')
   // Generate a key based on the granules that need to be drawn on the map, and the gibsTagProduct.

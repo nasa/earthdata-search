@@ -7,18 +7,7 @@ export const retrievalStatusProps = {
   onFetchRetrievalCollectionGranuleBrowseLinks: jest.fn(),
   onMetricsRelatedCollection: jest.fn(),
   onToggleAboutCSDAModal: jest.fn(),
-  match: {
-    search: {
-      id: 7
-    },
-    params: {
-      id: '7'
-    }
-  },
   onChangePath: jest.fn(),
-  portal: {
-    portalId: 'edsc'
-  },
   retrieval: {
     id: '7',
     isLoading: false,
@@ -122,9 +111,6 @@ export const retrievalStatusProps = {
         ]
       }
     ]
-  },
-  location: {
-    search: ''
   }
 }
 
@@ -173,9 +159,6 @@ export const retrievalStatusPropsTwo = {
         ]
       }
     ]
-  },
-  location: {
-    search: ''
   }
 }
 
@@ -255,9 +238,6 @@ export const retrievalStatusPropsEsi = {
         ]
       }
     ]
-  },
-  location: {
-    search: ''
   }
 }
 
@@ -321,8 +301,5 @@ export const retrievalStatusPropsEchoOrder = {
         ]
       }
     ]
-  },
-  location: {
-    search: ''
   }
 }

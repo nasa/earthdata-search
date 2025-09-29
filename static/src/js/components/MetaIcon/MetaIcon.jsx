@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import NotAvailableIcon from '../NotAvailableIcon/NotAvailableIcon'
+
+import renderTooltip from '../../util/renderTooltip'
 
 import './MetaIcon.scss'
 
@@ -22,16 +23,16 @@ import './MetaIcon.scss'
  * @param {String|Element} props.tooltipContent - Text or element to be displayed in the tooltip.
  */
 export const MetaIcon = ({
-  className,
+  className = '',
   icon,
-  iconProps,
+  iconProps = {},
   id,
   label,
-  metadata,
-  notAvailable,
-  placement,
-  tooltipClassName,
-  tooltipContent
+  metadata = '',
+  notAvailable = false,
+  placement = 'top',
+  tooltipClassName = '',
+  tooltipContent = null
 }) => {
   const component = (
     <span className={`meta-icon ${className}`}>
@@ -71,14 +72,12 @@ export const MetaIcon = ({
       <OverlayTrigger
         placement={placement}
         overlay={
-          (
-            <Tooltip
-              id={id}
-              className={`meta-icon__tooltip ${tooltipClassName}`}
-            >
-              {tooltipContent}
-            </Tooltip>
-          )
+          (tooltipProps) => renderTooltip({
+            children: tooltipContent,
+            className: `meta-icon__tooltip ${tooltipClassName}`,
+            id,
+            ...tooltipProps
+          })
         }
       >
         {component}
@@ -88,16 +87,6 @@ export const MetaIcon = ({
 
   // Return the component without a tooltip
   return component
-}
-
-MetaIcon.defaultProps = {
-  className: '',
-  iconProps: {},
-  metadata: '',
-  notAvailable: false,
-  placement: 'top',
-  tooltipClassName: '',
-  tooltipContent: null
 }
 
 MetaIcon.propTypes = {

@@ -14,9 +14,9 @@ import './EDSCTabs.scss'
  */
 export const EDSCTabs = ({
   children,
-  className,
-  fill,
-  padding
+  className = '',
+  fill = false,
+  padding = true
 }) => {
   const tabsClassNames = classNames([
     'edsc-tabs',
@@ -36,12 +36,6 @@ export const EDSCTabs = ({
       </Tabs>
     </div>
   )
-}
-
-EDSCTabs.defaultProps = {
-  className: '',
-  fill: false,
-  padding: true
 }
 
 EDSCTabs.propTypes = {

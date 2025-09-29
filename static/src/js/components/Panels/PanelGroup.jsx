@@ -33,29 +33,29 @@ import './PanelGroup.scss'
  * @param {Array} props.viewsArray - The configuration for the views
 */
 export const PanelGroup = ({
-  activePanelId,
-  activeSort,
-  activeView,
-  breadcrumbs,
+  activePanelId = '0',
+  activeSort = '',
+  activeView = '',
+  breadcrumbs = [],
   children,
-  dataTestId,
-  exportsArray,
-  footer,
-  handoffLinks,
-  headerLoading,
-  headerMessage,
-  headerMetaPrimaryLoading,
-  headerMetaPrimaryText,
-  isActive,
-  isExportRunning,
-  isOpen,
-  moreActionsDropdownItems,
-  onChangePanel,
-  panelGroupId,
-  primaryHeading,
-  secondaryHeading,
-  sortsArray,
-  viewsArray
+  dataTestId = undefined,
+  exportsArray = [],
+  footer = null,
+  handoffLinks = [],
+  headerLoading = false,
+  headerMessage = null,
+  headerMetaPrimaryLoading = false,
+  headerMetaPrimaryText = null,
+  isActive = false,
+  isExportRunning = false,
+  isOpen = false,
+  moreActionsDropdownItems = [],
+  onChangePanel = null,
+  panelGroupId = '',
+  primaryHeading = null,
+  secondaryHeading = null,
+  sortsArray = [],
+  viewsArray = []
 }) => {
   const renderPanels = (child, index) => {
     if (!child) return null
@@ -111,32 +111,6 @@ export const PanelGroup = ({
       {panels}
     </div>
   )
-}
-
-PanelGroup.defaultProps = {
-  activeSort: '',
-  activeView: '',
-  activePanelId: '0',
-  breadcrumbs: [],
-  dataTestId: undefined,
-  exportsArray: [],
-  footer: null,
-  handoffLinks: [],
-  headerMessage: null,
-  headingLink: null,
-  headerMetaPrimaryLoading: false,
-  headerMetaPrimaryText: null,
-  isActive: false,
-  isExportRunning: false,
-  isOpen: false,
-  moreActionsDropdownItems: [],
-  onChangePanel: null,
-  panelGroupId: '',
-  primaryHeading: null,
-  headerLoading: false,
-  secondaryHeading: null,
-  sortsArray: [],
-  viewsArray: []
 }
 
 PanelGroup.propTypes = {

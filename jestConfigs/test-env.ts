@@ -27,6 +27,10 @@ const { error } = console
 const consoleError = function errorOverride(message: unknown) {
   // eslint-disable-next-line prefer-rest-params
   error.apply(console, arguments as any) // Keep default behaviour
+
+  // Suppress errors from libraries using findDOMNode
+  if (String(message).includes('findDOMNode is deprecated')) return
+
   throw (message instanceof Error ? message : new Error(String(message)))
 };
 

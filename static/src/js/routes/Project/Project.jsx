@@ -1,8 +1,4 @@
-import React, {
-  lazy,
-  Suspense,
-  useEffect
-} from 'react'
+import React, { lazy, Suspense } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { useLocation } from 'react-router-dom'
@@ -39,14 +35,6 @@ export const Project = (props) => {
   const location = useLocation()
 
   const projectCollectionsRequiringChunking = useEdscStore(getProjectCollectionsRequiringChunking)
-
-  useEffect(() => {
-    document.querySelector('.root__app').classList.add('root__app--fixed-footer')
-
-    return () => {
-      document.querySelector('.root__app').classList.remove('root__app--fixed-footer')
-    }
-  })
 
   const {
     onSubmitRetrieval,

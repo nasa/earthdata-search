@@ -1,4 +1,4 @@
-import { act, screen } from '@testing-library/react'
+import { screen } from '@testing-library/react'
 
 import * as EventEmitter from '../../../events/events'
 
@@ -400,10 +400,7 @@ describe('SpatialDisplay component', () => {
       const actionBtn = actionBtns[0]
       expect(actionBtns).toHaveLength(1)
 
-      // eslint-disable-next-line testing-library/no-unnecessary-act
-      await act(async () => {
-        await user.click(actionBtn)
-      })
+      await user.click(actionBtn)
 
       expect(zustandState.query.removeSpatialFilter).toHaveBeenCalledTimes(1)
       expect(zustandState.query.removeSpatialFilter).toHaveBeenCalledWith()

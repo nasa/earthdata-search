@@ -15,7 +15,10 @@ export const mapStateToProps = (state) => ({
   errors: state.errors
 })
 
-export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
+export const ErrorBannerContainer = ({
+  errors = [],
+  onRemoveError
+}) => {
   if (!errors || errors.length === 0) return null
 
   const [error] = errors
@@ -52,10 +55,6 @@ export const ErrorBannerContainer = ({ errors, onRemoveError }) => {
       showAlertButton={showAlertButton}
     />
   )
-}
-
-ErrorBannerContainer.defaultProps = {
-  errors: []
 }
 
 ErrorBannerContainer.propTypes = {

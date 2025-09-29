@@ -4,12 +4,10 @@ import classNames from 'classnames'
 
 import './FilterStack.scss'
 
-const FilterStack = (props) => {
-  const {
-    children,
-    isOpen
-  } = props
-
+const FilterStack = ({
+  children = null,
+  isOpen
+}) => {
   if (!children) return null
 
   const className = classNames({
@@ -23,10 +21,6 @@ const FilterStack = (props) => {
       {children}
     </ul>
   )
-}
-
-FilterStack.defaultProps = {
-  children: null
 }
 
 FilterStack.propTypes = {

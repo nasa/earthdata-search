@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classNames from 'classnames'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 import { Check, Settings } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 import { FaQuestionCircle } from 'react-icons/fa'
 
@@ -12,23 +11,25 @@ import AvailableCustomizationsIcons from '../../AvailableCustomizationsIcons/Ava
 import AvailableCustomizationsTooltipIcons from '../../AvailableCustomizationsIcons/AvailableCustomizationsTooltipIcons'
 import MetaIcon from '../../MetaIcon/MetaIcon'
 
+import renderTooltip from '../../../util/renderTooltip'
+
 import './AccessMethodRadio.scss'
 
 export const AccessMethodRadio = ({
-  id,
+  checked = null,
+  customizationOptions = null,
   description,
-  details,
-  value,
-  checked,
-  onChange,
-  onClick,
+  details = null,
+  disabled = false,
+  errorMessage = null,
+  externalLink = null,
+  id,
+  isHarmony = false,
+  onChange = null,
+  onClick = null,
+  subtitle = null,
   title,
-  subtitle,
-  customizationOptions,
-  isHarmony,
-  disabled,
-  errorMessage,
-  externalLink
+  value
 }) => {
   const labelClasses = [
     'access-method-radio',
@@ -148,12 +149,8 @@ export const AccessMethodRadio = ({
                 }
               }
               overlay={
-                (
-                  <Tooltip
-                    className="tooltip--ta-left"
-                    onMouseEnter={() => externalLink && setShowTooltip(true)}
-                    onMouseLeave={() => externalLink && setShowTooltip(false)}
-                  >
+                (tooltipProps) => renderTooltip({
+                  children: (
                     <div className="access-method-radio__tooltip">
                       <p className="mb-0">
                         {details}
@@ -166,8 +163,12 @@ export const AccessMethodRadio = ({
                         )
                       }
                     </div>
-                  </Tooltip>
-                )
+                  ),
+                  className: 'tooltip--ta-left',
+                  onMouseEnter: () => externalLink && setShowTooltip(true),
+                  onMouseLeave: () => externalLink && setShowTooltip(false),
+                  ...tooltipProps
+                })
               }
             >
               <EDSCIcon icon={FaQuestionCircle} size="16px" variant="more-info" />
@@ -177,19 +178,6 @@ export const AccessMethodRadio = ({
       </div>
     </label>
   )
-}
-
-AccessMethodRadio.defaultProps = {
-  checked: null,
-  details: null,
-  onChange: null,
-  onClick: null,
-  subtitle: null,
-  customizationOptions: null,
-  isHarmony: false,
-  disabled: false,
-  errorMessage: null,
-  externalLink: null
 }
 
 AccessMethodRadio.propTypes = {

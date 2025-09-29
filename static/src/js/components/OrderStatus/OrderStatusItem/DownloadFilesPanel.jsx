@@ -25,15 +25,15 @@ import './DownloadFilesPanel.scss'
 */
 export const DownloadFilesPanel = ({
   accessMethodType,
-  collectionIsCSDA,
-  disableEddInProgress,
+  collectionIsCSDA = false,
+  disableEddInProgress = false,
   downloadLinks,
-  eddLink,
+  eddLink = null,
   granuleCount,
   granuleLinksIsLoading,
-  percentDoneDownloadLinks,
+  percentDoneDownloadLinks = null,
   retrievalId,
-  showTextWindowActions
+  showTextWindowActions = true
 }) => {
   const downloadFileName = `${retrievalId}-${accessMethodType}.txt`
 
@@ -89,14 +89,6 @@ export const DownloadFilesPanel = ({
         The download files will become available once the order has finished processing.
       </div>
     )
-}
-
-DownloadFilesPanel.defaultProps = {
-  collectionIsCSDA: false,
-  disableEddInProgress: false,
-  eddLink: null,
-  percentDoneDownloadLinks: null,
-  showTextWindowActions: true
 }
 
 DownloadFilesPanel.propTypes = {

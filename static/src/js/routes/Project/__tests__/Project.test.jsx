@@ -168,29 +168,4 @@ describe('Project component', () => {
       expect(helmet.linkTags.find((tag) => tag.rel === 'canonical').href).toContain('https://search.earthdata.nasa.gov')
     })
   })
-
-  describe('when mounting the component', () => {
-    test('adds the root__app--fixed-footer class to the root', () => {
-      setup()
-
-      expect(mockClassListAdd).toHaveBeenCalledTimes(1)
-      expect(mockClassListAdd).toHaveBeenCalledWith('root__app--fixed-footer')
-
-      expect(mockClassListRemove).toHaveBeenCalledTimes(0)
-    })
-  })
-
-  describe('when unmounting the component', () => {
-    test('removes the root__app--fixed-footer class to the root', () => {
-      const { unmount } = setup()
-
-      expect(mockClassListAdd).toHaveBeenCalledTimes(1)
-      expect(mockClassListAdd).toHaveBeenCalledWith('root__app--fixed-footer')
-
-      unmount()
-
-      expect(mockClassListRemove).toHaveBeenCalledTimes(1)
-      expect(mockClassListRemove).toHaveBeenCalledWith('root__app--fixed-footer')
-    })
-  })
 })

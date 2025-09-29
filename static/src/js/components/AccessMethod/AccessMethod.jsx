@@ -27,7 +27,6 @@ import SwodlrForm from './SwodlrForm'
 import { maxSwodlrGranuleCount, swoldrMoreInfoPage } from '../../constants/swodlrConstants'
 
 import useEdscStore from '../../zustand/useEdscStore'
-import { getGranuleMetadata } from '../../zustand/selectors/granule'
 
 import './AccessMethod.scss'
 
@@ -48,19 +47,20 @@ const EchoForm = lazy(() => import('./EchoForm'))
  * @param {String} props.ursProfile - Response object from URS profile.
 */
 const AccessMethod = ({
-  accessMethods,
-  index,
-  isActive,
-  metadata,
+  accessMethods = {},
+  index = null,
+  isActive = false,
+  metadata = {},
   onSelectAccessMethod,
   onUpdateAccessMethod,
-  projectCollection,
-  selectedAccessMethod,
-  spatial,
+  projectCollection = {
+    granules: {}
+  },
+  selectedAccessMethod = null,
+  spatial = {},
   temporal,
   ursProfile
 }) => {
-  const granulesMetadata = useEdscStore(getGranuleMetadata)
   const {
     setShowMbr,
     setActivePanel
@@ -112,7 +112,8 @@ const AccessMethod = ({
 
   const {
     addedGranuleIds = [],
-    allIds: granulesAllIds = []
+    allIds: granulesAllIds = [],
+    byId: granulesMetadata
   } = projectCollectionGranules
 
   let granulesToDisplay = []
@@ -995,18 +996,6 @@ const AccessMethod = ({
       </ProjectPanelSection>
     </div>
   )
-}
-
-AccessMethod.defaultProps = {
-  accessMethods: {},
-  index: null,
-  isActive: false,
-  metadata: {},
-  selectedAccessMethod: null,
-  spatial: {},
-  projectCollection: {
-    granules: {}
-  }
 }
 
 AccessMethod.propTypes = {

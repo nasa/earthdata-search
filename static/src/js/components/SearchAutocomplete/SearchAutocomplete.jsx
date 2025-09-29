@@ -237,13 +237,17 @@ const SearchAutocomplete = ({
   /**
    * AutoSuggest method to render the input component
    */
-  const renderInputComponent = useCallback((inputProps) => (
-    <div className="position-relative">
-      <EDSCIcon className="search-autocomplete__search-icon position-absolute" icon={Search} />
-      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
-      <input {...inputProps} />
-    </div>
-  ), [])
+  const renderInputComponent = useCallback((inputProps) => {
+    const { key, ...otherProps } = inputProps
+
+    return (
+      <div className="position-relative">
+        <EDSCIcon className="search-autocomplete__search-icon position-absolute" icon={Search} />
+        {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+        <input key={key} {...otherProps} />
+      </div>
+    )
+  }, [])
 
   /**
    * AutoSuggest method to render each suggestion
@@ -264,10 +268,11 @@ const SearchAutocomplete = ({
       children,
       query
     } = opts
+    const { key, ...otherProps } = containerProps
 
     return (
       // eslint-disable-next-line react/jsx-props-no-spreading
-      <div {...containerProps} className="search-autocomplete__suggestions-container">
+      <div key={key} {...otherProps} className="search-autocomplete__suggestions-container">
         {
           query && query.length > 2 && (
             <>

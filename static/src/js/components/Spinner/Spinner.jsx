@@ -5,12 +5,12 @@ import classNames from 'classnames'
 import './Spinner.scss'
 
 export const Dots = ({
-  className,
-  color,
-  dataTestId,
-  inline,
-  size,
-  label
+  className = null,
+  color = '',
+  dataTestId = null,
+  inline = false,
+  size = '',
+  label = 'Loading...'
 }) => {
   const classes = classNames([
     'spinner',
@@ -37,15 +37,6 @@ export const Dots = ({
   )
 }
 
-Dots.defaultProps = {
-  className: null,
-  dataTestId: null,
-  color: '',
-  inline: false,
-  size: '',
-  label: 'Loading...'
-}
-
 Dots.propTypes = {
   className: PropTypes.string,
   dataTestId: PropTypes.string,
@@ -56,13 +47,13 @@ Dots.propTypes = {
 }
 
 export const Spinner = ({
-  className,
-  color,
-  dataTestId,
-  inline,
-  size,
+  className = null,
+  color = '',
+  dataTestId = null,
+  inline = false,
+  size = '',
   type,
-  label
+  label = 'Loading...'
 }) => {
   if (type === 'dots') {
     return (
@@ -78,15 +69,6 @@ export const Spinner = ({
   }
 
   return null
-}
-
-Spinner.defaultProps = {
-  className: null,
-  dataTestId: null,
-  color: '',
-  inline: false,
-  size: '',
-  label: 'Loading...'
 }
 
 Spinner.propTypes = {

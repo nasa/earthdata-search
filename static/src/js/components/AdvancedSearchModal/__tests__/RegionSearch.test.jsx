@@ -130,7 +130,7 @@ describe('RegionSearch component', () => {
         }
       })
 
-      act(() => {
+      await act(() => {
         RegionSearchForm.mock.calls[0][0].regionSearchForm.handleSubmit()
       })
 
@@ -163,7 +163,7 @@ describe('RegionSearch component', () => {
         }
       })
 
-      act(() => {
+      await act(() => {
         RegionSearchForm.mock.calls[0][0].onRemoveSelected()
       })
 

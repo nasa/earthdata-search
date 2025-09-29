@@ -2,16 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 export const WellSection = ({
-  children
+  children = null
 }) => (
   <div className="well__section">
     {children}
   </div>
 )
-
-WellSection.defaultProps = {
-  children: null
-}
 
 WellSection.propTypes = {
   children: PropTypes.node

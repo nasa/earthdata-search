@@ -14,7 +14,7 @@ import './FooterLink.scss'
 export const FooterLink = ({
   href,
   title,
-  secondary
+  secondary = false
 }) => {
   const spanClassName = classNames([
     'link',
@@ -41,10 +41,6 @@ export const FooterLink = ({
       </a>
     </span>
   )
-}
-
-FooterLink.defaultProps = {
-  secondary: false
 }
 
 FooterLink.propTypes = {

@@ -57,8 +57,8 @@ export const CollectionResultsList = ({
   itemCount,
   loadMoreItems,
   onMetricsAddCollectionProject,
-  setVisibleMiddleIndex,
-  visibleMiddleIndex
+  setVisibleMiddleIndex = null,
+  visibleMiddleIndex = null
 }) => {
   const infiniteLoaderRef = useRef(null)
   const listRef = useRef(null)
@@ -162,11 +162,6 @@ export const CollectionResultsList = ({
       </AutoSizer>
     </div>
   )
-}
-
-CollectionResultsList.defaultProps = {
-  setVisibleMiddleIndex: null,
-  visibleMiddleIndex: null
 }
 
 CollectionResultsList.propTypes = {

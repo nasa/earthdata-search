@@ -7,7 +7,7 @@ import './OrderStatusList.scss'
 
 export const OrderStatusList = ({
   authToken,
-  collections,
+  collections = [],
   earthdataEnvironment,
   granuleDownload,
   onChangePath,
@@ -48,10 +48,6 @@ export const OrderStatusList = ({
     </ul>
   </div>
 )
-
-OrderStatusList.defaultProps = {
-  collections: []
-}
 
 OrderStatusList.propTypes = {
   authToken: PropTypes.string.isRequired,

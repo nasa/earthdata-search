@@ -10,11 +10,11 @@ import Button from '../Button/Button'
 import './Banner.scss'
 
 export const Banner = ({
-  message,
-  title,
-  type,
+  message = null,
   onClose,
-  showAlertButton
+  showAlertButton = false,
+  title,
+  type
 }) => {
   const bannerClassNames = classNames([
     'banner',
@@ -88,11 +88,6 @@ export const Banner = ({
       />
     </div>
   )
-}
-
-Banner.defaultProps = {
-  message: null,
-  showAlertButton: false
 }
 
 Banner.propTypes = {

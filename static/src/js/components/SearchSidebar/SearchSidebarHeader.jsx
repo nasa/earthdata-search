@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react'
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
-import Tooltip from 'react-bootstrap/Tooltip'
 import { FaDoorOpen } from 'react-icons/fa'
 import classNames from 'classnames'
 import { useLocation } from 'react-router-dom'
@@ -14,6 +13,8 @@ import SearchFormContainer from '../../containers/SearchFormContainer/SearchForm
 import Spinner from '../Spinner/Spinner'
 
 import useEdscStore from '../../zustand/useEdscStore'
+
+import renderTooltip from '../../util/renderTooltip'
 
 import './SearchSidebarHeader.scss'
 
@@ -98,14 +99,18 @@ export const SearchSidebarHeader = () => {
       <OverlayTrigger
         placement="top"
         overlay={
-          (
-            <Tooltip className="tooltip--auto">
-              Find more information about
-              {' '}
-              {displayTitle}
-              <EDSCIcon className="search-sidebar-header__portal-tooltip-icon edsc-icon-ext-link edsc-icon-fw" icon="edsc-icon-ext-link edsc-icon-fw" />
-            </Tooltip>
-          )
+          (tooltipProps) => renderTooltip({
+            children: (
+              <>
+                Find more information about
+                {' '}
+                {displayTitle}
+                <EDSCIcon className="search-sidebar-header__portal-tooltip-icon edsc-icon-ext-link edsc-icon-fw" icon="edsc-icon-ext-link edsc-icon-fw" />
+              </>
+            ),
+            className: 'tooltip--auto',
+            ...tooltipProps
+          })
         }
       >
         <a

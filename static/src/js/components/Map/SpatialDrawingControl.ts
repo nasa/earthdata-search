@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
+import ReactDOM from 'react-dom/client'
 
 import EventType from 'ol/events/EventType'
 import Control from 'ol/control/Control'
@@ -109,11 +109,8 @@ class SpatialDrawingControl extends Control {
     )
 
     // Render the circle icon
-    // @ts-expect-error We are still on React 17
-    ReactDOM.render(
-      CircleIcon,
-      circleButton
-    )
+    const circleRoot = ReactDOM.createRoot(circleButton)
+    circleRoot.render(CircleIcon)
 
     // Add the button to the element
     buttonsElement.appendChild(circleButton)
@@ -132,11 +129,8 @@ class SpatialDrawingControl extends Control {
     )
 
     // Render the point icon
-    // @ts-expect-error We are still on React 17
-    ReactDOM.render(
-      PointIcon,
-      pointButton
-    )
+    const pointRoot = ReactDOM.createRoot(pointButton)
+    pointRoot.render(PointIcon)
 
     // Add the button to the element
     buttonsElement.appendChild(pointButton)
@@ -155,11 +149,8 @@ class SpatialDrawingControl extends Control {
     )
 
     // Render the shapefile icon
-    // @ts-expect-error We are still on React 17
-    ReactDOM.render(
-      ShapefileIcon,
-      shapefileButton
-    )
+    const shapefileRoot = ReactDOM.createRoot(shapefileButton)
+    shapefileRoot.render(ShapefileIcon)
 
     // Add the button to the element
     buttonsElement.appendChild(shapefileButton)

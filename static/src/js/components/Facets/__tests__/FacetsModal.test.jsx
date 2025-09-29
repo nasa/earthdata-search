@@ -335,7 +335,7 @@ describe('FacetsModal component', () => {
         }
       })
 
-      act(() => {
+      await act(() => {
         EDSCModalContainer.mock.calls[0][0].onPrimaryAction()
       })
 

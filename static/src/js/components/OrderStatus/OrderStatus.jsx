@@ -45,7 +45,7 @@ export const OrderStatus = ({
   onFetchRetrievalCollectionGranuleBrowseLinks,
   onMetricsRelatedCollection,
   onToggleAboutCSDAModal,
-  retrieval = {}
+  retrieval
 }) => {
   const params = useParams()
   const { id: paramsId } = params
@@ -391,7 +391,22 @@ OrderStatus.propTypes = {
   onFetchRetrievalCollectionGranuleBrowseLinks: PropTypes.func.isRequired,
   onMetricsRelatedCollection: PropTypes.func.isRequired,
   onToggleAboutCSDAModal: PropTypes.func.isRequired,
-  retrieval: PropTypes.shape({}).isRequired
+  retrieval: PropTypes.shape({
+    collections: PropTypes.shape({
+      byId: PropTypes.shape({}),
+      download: PropTypes.arrayOf(PropTypes.number),
+      opendap: PropTypes.arrayOf(PropTypes.number),
+      echo_orders: PropTypes.arrayOf(PropTypes.number),
+      esi: PropTypes.arrayOf(PropTypes.number),
+      harmony: PropTypes.arrayOf(PropTypes.number),
+      swodlr: PropTypes.arrayOf(PropTypes.number)
+    }),
+    id: PropTypes.string,
+    isLoaded: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    jsondata: PropTypes.shape({}),
+    links: PropTypes.arrayOf(PropTypes.shape({}))
+  }).isRequired
 }
 
 export default OrderStatus
