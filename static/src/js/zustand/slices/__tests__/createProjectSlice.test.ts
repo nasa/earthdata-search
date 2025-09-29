@@ -1071,7 +1071,9 @@ describe('createProjectSlice', () => {
         expect(actions.handleError).toHaveBeenCalledWith({
           action: 'getProjectCollections',
           error: expect.any(Error),
-          resource: 'project collections'
+          resource: 'project collections',
+          showAlertButton: true,
+          title: 'Something went wrong fetching collection metadata'
         })
       })
     })
@@ -1387,7 +1389,9 @@ describe('createProjectSlice', () => {
           action: 'getProjectGranules',
           resource: 'granules',
           error: expect.any(Error),
-          requestObject: expect.any(GranuleRequest)
+          requestObject: expect.any(GranuleRequest),
+          showAlertButton: true,
+          title: 'Something went wrong fetching granule metadata'
         })
 
         const updatedState = useEdscStore.getState()

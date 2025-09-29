@@ -1,7 +1,12 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
+import nock from 'nock'
 import { ADD_ERROR, REMOVE_ERROR } from '../../constants/actionTypes'
-import { addError, removeError } from '../errors'
+import {
+  addError,
+  removeError,
+  handleError
+} from '../errors'
 
 import * as addToast from '../../util/addToast'
 
@@ -77,5 +82,39 @@ describe('removeError', () => {
     }
 
     expect(removeError(payload)).toEqual(expectedAction)
+  })
+})
+
+describe('handleError', () => {
+  test('should dispatch error with showAlertButton when showAlertButton parameter is true', async () => {
+    const consoleMock = jest.spyOn(console, 'error').mockImplementation(() => jest.fn())
+
+    nock(/localhost/)
+      .post(/error_logger/)
+      .reply(200)
+
+    const store = mockStore({})
+
+    await store.dispatch(handleError({
+      error: new Error('CMR error'),
+      action: 'fetchSubscriptions',
+      resource: 'subscription',
+      showAlertButton: true,
+      title: 'Custom error title'
+    }))
+
+    const storeActions = store.getActions()
+    expect(storeActions[0]).toEqual({
+      type: ADD_ERROR,
+      payload: expect.objectContaining({
+        title: 'Custom error title',
+        message: 'Error: CMR error',
+        showAlertButton: true,
+        notificationType: 'banner'
+      })
+    })
+
+    expect(consoleMock).toHaveBeenCalledTimes(1)
+    expect(consoleMock).toHaveBeenCalledWith('Action [fetchSubscriptions] failed: Error: CMR error')
   })
 })

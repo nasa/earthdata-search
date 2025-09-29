@@ -228,7 +228,9 @@ describe('createCollectionsSlice', () => {
         expect.objectContaining({
           action: 'getCollections',
           error: expect.any(Error),
-          resource: 'collections'
+          resource: 'collections',
+          showAlertButton: true,
+          title: 'Something went wrong fetching collection search results'
         })
       )
     })
@@ -390,7 +392,9 @@ describe('createCollectionsSlice', () => {
         expect.objectContaining({
           action: 'getNlpCollections',
           resource: 'nlpSearch',
-          error: expect.any(Error)
+          error: expect.any(Error),
+          showAlertButton: true,
+          title: 'Something went wrong fetching collection search results'
         })
       )
 

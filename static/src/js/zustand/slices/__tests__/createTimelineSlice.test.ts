@@ -327,7 +327,9 @@ describe('createTimelineSlice', () => {
           error: expect.any(Error),
           action: 'getTimeline',
           resource: 'timeline',
-          requestObject: expect.any(TimelineRequest)
+          requestObject: expect.any(TimelineRequest),
+          showAlertButton: true,
+          title: 'Something went wrong fetching timeline data'
         })
 
         const updatedState = useEdscStore.getState()

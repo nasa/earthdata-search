@@ -42,7 +42,9 @@ export const handleError = ({
   verb = 'retrieving',
   notificationType = displayNotificationType.banner,
   requestObject,
-  errorAction
+  errorAction,
+  showAlertButton,
+  title
 }) => (dispatch) => {
   const { location } = routerHelper.router.state
 
@@ -61,9 +63,10 @@ export const handleError = ({
 
   dispatch(addError({
     id: requestId,
-    title: `Error ${verb} ${resource}`,
+    title: title || `Error ${verb} ${resource}`,
     message: defaultErrorMessage,
-    notificationType
+    notificationType,
+    showAlertButton
   }))
 
   if (errorAction) {

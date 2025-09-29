@@ -105,7 +105,9 @@ describe('SearchAutocomplete', () => {
       expect(props.handleError).toHaveBeenCalledTimes(1)
       expect(props.handleError).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchAutocomplete',
-        resource: 'suggestions'
+        resource: 'suggestions',
+        showAlertButton: true,
+        title: 'Something went wrong fetching search suggestions'
       }))
 
       expect(screen.queryByText('Loading suggestions...')).not.toBeInTheDocument()

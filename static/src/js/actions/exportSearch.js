@@ -105,7 +105,9 @@ export const exportSearch = (format) => (dispatch, getState) => {
         error,
         action: 'exportSearch',
         resource: 'collections',
-        graphQlRequestObject
+        graphQlRequestObject,
+        showAlertButton: true,
+        title: 'Something went wrong exporting your search'
       }))
     })
 

@@ -398,7 +398,9 @@ describe('fetchGranuleLinks', () => {
       expect(handleErrorMock).toHaveBeenCalledTimes(1)
       expect(handleErrorMock).toHaveBeenCalledWith(expect.objectContaining({
         action: 'fetchGranuleLinks',
-        resource: 'granule links'
+        resource: 'granule links',
+        showAlertButton: true,
+        title: 'Something went wrong fetching granule links'
       }))
 
       expect(consoleMock).toHaveBeenCalledTimes(1)
