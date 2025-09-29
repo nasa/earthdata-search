@@ -349,11 +349,10 @@ test.describe('Map: Control interactions', () => {
         await page.getByRole('button', { name: 'Zoom In' }).click()
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.layer-switcher-control__panel--visible')
-
+        await page.waitForSelector('.layer-switcher-control--visible')
         // Set up the response promise BEFORE interacting with the UI
         const worldImageryPromise = page.waitForResponse(/World_Imagery\/MapServer\/tile\/3/)
 
@@ -386,10 +385,10 @@ test.describe('Map: Control interactions', () => {
         const trueColorPromise = page.waitForResponse(/CorrectedReflectance_TrueColor/)
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.layer-switcher-control__panel--visible')
+        await page.waitForSelector('.layer-switcher-control--visible')
 
         // Click the Corrected Reflectance radio button by its label
         await page.getByLabel('Corrected Reflectance (True Color)').click()
@@ -417,13 +416,11 @@ test.describe('Map: Control interactions', () => {
         await worldImageryPromise
 
         // Change the base layer
-        await page.getByRole('button', {
-          name: 'Layer Options',
-          exact: true
-        }).hover({ force: true })
+
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.layer-switcher-control__panel--visible')
+        await page.waitForSelector('.layer-switcher-control--visible')
 
         // Land water uses the same vector files as worldImagery but, we apply a style
         const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
@@ -455,11 +452,10 @@ test.describe('Map: Control interactions', () => {
         await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.layer-switcher-control__panel--visible')
-
+        await page.waitForSelector('.layer-switcher-control--visible')
         // Wait for the correct layer to load
         const responsePromise = page.waitForResponse(/World_Basemap_GCS_v2/)
 
@@ -490,11 +486,10 @@ test.describe('Map: Control interactions', () => {
         await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.layer-switcher-control__panel--visible')
-
+        await page.waitForSelector('.layer-switcher-control--visible')
         // Wait for the correct layer to load
         const responsePromise = page.waitForResponse(/Reference_Features_15m/)
 
@@ -525,11 +520,10 @@ test.describe('Map: Control interactions', () => {
         await worldImageryPromise
 
         // Look for the layer switcher button by its aria-label
-        await page.locator('button[aria-label="Layer Options"]').hover({ force: true })
+        await page.getByRole('button', { name: 'Show map options' }).click({ force: true })
 
         // Wait for the panel to become visible
-        await page.waitForSelector('.layer-switcher-control__panel--visible')
-
+        await page.waitForSelector('.layer-switcher-control--visible')
         // Wait for the correct layer to load
         const responsePromise = page.waitForResponse(/Coastlines_15m/)
 

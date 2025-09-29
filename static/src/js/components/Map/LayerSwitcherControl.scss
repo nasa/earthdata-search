@@ -4,15 +4,30 @@
   position: relative;
   border-radius: 2px;
 
-  button {
+  &__button {
     width: 1.75rem;
     height: 1.75rem;
+
+    &--show {
+      .layer-switcher-control--visible & {
+        display: none;
+      }
+    }
+
+    // These are used to override styles on openlayers
+    &--hide {
+      display: none !important;
+
+      .layer-switcher-control--visible & {
+        display: flex !important;
+      }
+    }
   }
 
   &__panel {
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 2.5rem;
     opacity: 0;
     visibility: hidden;
     width: 18rem;
@@ -20,7 +35,7 @@
     font-weight: 500;
     z-index: 10;
 
-    &--visible {
+    .layer-switcher-control--visible & {
       opacity: 1;
       visibility: visible;
     }

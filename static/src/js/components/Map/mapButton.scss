@@ -1,9 +1,19 @@
 @use '../../../css/utils';
 
 button.map-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 1.75rem;
   height: 1.75rem;
+  background-color: utils.$color__spacesuit-white;
+  font-size: 14px;
 
   // Using this hex to match the projection switcher sprite
   color: #404040;
+
+  &:hover {
+    color: #404040 !important;
+    background-color: utils.$color__carbon--10 ;
+  }
 }

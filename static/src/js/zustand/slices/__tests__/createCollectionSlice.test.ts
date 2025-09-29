@@ -70,7 +70,7 @@ describe('createCollectionSlice', () => {
       }
     })
 
-    describe('when metdata has already been retrieved from graphql', () => {
+    describe('when metadata has already been retrieved from graphql', () => {
       test('should update the collection and call getGranules', async () => {
         useEdscStore.setState((state) => {
           state.collection.collectionId = 'C10000000000-EDSC'
@@ -570,7 +570,7 @@ describe('createCollectionSlice', () => {
       })
 
       describe('when the requested collection and we try and retrieve an existing gibs tag', () => {
-        test('Test that getColorMap works when a gibs tag is returned in the graphql call (call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS)', async () => {
+        test('Test that getColorMap works when multiple gibs tags are returned in the graphql call (call SET_COLOR_MAPS_LOADING and call ERRORED_COLOR_MAPS)', async () => {
           nock(/graph/)
             .post(/api/)
             .reply(200, {
@@ -583,7 +583,9 @@ describe('createCollectionSlice', () => {
                   tags: {
                     'edsc.extra.serverless.gibs': {
                       data: [
-                        { product: 'AIRS_Prata_SO2_Index_Day' }
+                        { product: 'AIRS_Prata_SO2_Index_Day' },
+                        { product: 'MODIS_Terra_Aerosol' },
+                        { product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor' }
                       ]
                     }
                   },
@@ -600,17 +602,31 @@ describe('createCollectionSlice', () => {
               scale: {}
             })
 
+          nock(/localhost/)
+            .get(/colormaps\/MODIS_Terra_Aerosol/)
+            .reply(200, {
+              scale: {}
+            })
+
+          nock(/localhost/)
+            .get(/colormaps\/VIIRS_SNPP_CorrectedReflectance_TrueColor/)
+            .reply(200, {
+              scale: {}
+            })
+
           useEdscStore.setState((state) => {
             state.collection.collectionId = 'C10000000000-EDSC'
             state.granules.getGranules = jest.fn()
+            state.map.setMapLayers = jest.fn()
           })
 
           mockGetState.mockReturnValue({
             authToken: ''
           })
 
-          const { collection } = useEdscStore.getState()
+          const { collection, map } = useEdscStore.getState()
           const { getCollectionMetadata } = collection
+          const { setMapLayers } = map
 
           await getCollectionMetadata()
 
@@ -655,7 +671,9 @@ describe('createCollectionSlice', () => {
               tags: {
                 'edsc.extra.serverless.gibs': {
                   data: [
-                    { product: 'AIRS_Prata_SO2_Index_Day' }
+                    { product: 'AIRS_Prata_SO2_Index_Day' },
+                    { product: 'MODIS_Terra_Aerosol' },
+                    { product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor' }
                   ]
                 }
               },
@@ -710,10 +728,28 @@ describe('createCollectionSlice', () => {
           expect(granules.getGranules).toHaveBeenNthCalledWith(1)
           expect(granules.getGranules).toHaveBeenNthCalledWith(2)
 
-          expect(actions.getColorMap).toHaveBeenCalledTimes(1)
-          expect(actions.getColorMap).toHaveBeenCalledWith({
+          // Verify getColorMap is called for each GIBS tag
+          expect(actions.getColorMap).toHaveBeenCalledTimes(3)
+          expect(actions.getColorMap).toHaveBeenNthCalledWith(1, {
             product: 'AIRS_Prata_SO2_Index_Day'
           })
+
+          expect(actions.getColorMap).toHaveBeenNthCalledWith(2, {
+            product: 'MODIS_Terra_Aerosol'
+          })
+
+          expect(actions.getColorMap).toHaveBeenNthCalledWith(3, {
+            product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor'
+          })
+
+          expect(setMapLayers).toHaveBeenCalledTimes(1)
+          expect(setMapLayers).toHaveBeenCalledWith(
+            'C10000000000-EDSC',
+            [{ product: 'AIRS_Prata_SO2_Index_Day' },
+              { product: 'MODIS_Terra_Aerosol' },
+              { product: 'VIIRS_SNPP_CorrectedReflectance_TrueColor' }
+            ]
+          )
         })
       })
 

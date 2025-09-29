@@ -12,6 +12,8 @@
   }
 
   &--naked {
+    --bs-btn-hover-color: #{utils.$color__carbon-black};
+
     padding: 0;
   }
 
