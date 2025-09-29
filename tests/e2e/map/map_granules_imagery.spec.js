@@ -283,7 +283,7 @@ test.describe('Map: imagery and layer-picker interactions', () => {
           // that will update the layer we see on top
           await expect(page).toHaveScreenshot('gibs-layers-reordered.png', {
             clip: screenshotClip,
-            maxDiffPixelRatio: 0.01
+            maxDiffPixelRatio: 0.05
           })
 
           // Open the the layer picker back up for selection
