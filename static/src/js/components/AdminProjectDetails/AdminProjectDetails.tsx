@@ -12,35 +12,7 @@ import ADMIN_PROJECT from '../../operations/queries/adminProject'
 import Spinner from '../Spinner/Spinner'
 import DefinitionList from '../DefinitionList/DefinitionList'
 
-/**
- * Interface defining the structure of a project user
- */
-interface ProjectUser {
-  /** Unique identifier for the user */
-  id: string
-  /** URS username of the user */
-  ursId: string
-}
-
-/**
- * Interface defining the structure of an admin project
- */
-interface AdminProject {
-  /** Unique identifier for the project */
-  id: string
-  /** Human-readable project name */
-  name: string
-  /** Obfuscated unique identifier for the project */
-  obfuscatedId: string
-  /** Source path or query string for the project */
-  path: string
-  /** User who owns the project */
-  user: ProjectUser
-  /** ISO timestamp when the project was updated */
-  updatedAt: string
-  /** ISO timestamp when the project was created */
-  createdAt: string
-}
+import { type AdminProject } from '../../types/sharedTypes'
 
 /**
  * Admin Project GraphQL query result type

@@ -14,62 +14,19 @@ import DefinitionList from '../DefinitionList/DefinitionList'
 import Button from '../Button/Button'
 import Spinner from '../Spinner/Spinner'
 
+import { type AdminRetrievalCollection } from '../../types/sharedTypes'
+
 import './AdminRetrievalDetails.scss'
-
-/**
- * Interface defining the structure of a retrieval order
- */
-interface RetrievalOrder {
-  /** Unique identifier for the retrieval order */
-  id: string
-  /** Additional order configuration and parameters */
-  orderInformation: object
-  /** Human-readable order number from the data provider */
-  orderNumber: string
-  /** Current processing state of the order */
-  state: string
-  /** Type of retrieval order */
-  type: string
-}
-
-/**
- * Interface defining the structure of a retrieval collection
- * Contains collection metadata, order information, and tracking details
- */
-interface RetrievalCollection {
-  /** Unique identifier for the retrieval collection */
-  id: string
-  /** NASA CMR collection identifier */
-  collectionId: string
-  /** Metadata information about the collection */
-  collectionMetadata: {
-    /** Data provider/center responsible for the collection */
-    dataCenter: string
-  }
-  /** Total number of granules in this collection */
-  granuleCount: number
-  /** Access method configuration for data retrieval */
-  accessMethod: {
-    /** Type of access method (e.g., 'download', 'opendap', 'esi') */
-    type: string
-  }
-  /** ISO timestamp when the retrieval collection was created */
-  createdAt: string
-  /** ISO timestamp when the retrieval collection was last updated */
-  updatedAt: string
-  /** Array of individual retrieval orders for this collection */
-  retrievalOrders: RetrievalOrder[]
-}
 
 /**
  * Interface defining the structure of the AdminRetrieval GraphQL query response
  * Contains all data needed to display administrative details for a specific retrieval
  */
-interface AdminRetrievalData {
+interface AdminRetrievalQueryData {
   /** Root object containing all administrative retrieval information */
   adminRetrieval: {
     /** Array of collections associated with this retrieval request */
-    retrievalCollections: RetrievalCollection[]
+    retrievalCollections: AdminRetrievalCollection[]
     /** JSON metadata associated with the retrieval request */
     jsondata: {
       /** Optional portal identifier if the retrieval was initiated from a specific portal */
@@ -96,7 +53,7 @@ const AdminRetrievalDetails = ({
 }: AdminRetrievalDetailsProps) => {
   const { obfuscatedId } = useParams<{ obfuscatedId: string }>()
 
-  const { data, error, loading } = useQuery<AdminRetrievalData>(gql(ADMIN_RETRIEVAL), {
+  const { data, error, loading } = useQuery<AdminRetrievalQueryData>(gql(ADMIN_RETRIEVAL), {
     variables: {
       params: {
         obfuscatedId
@@ -298,7 +255,6 @@ const AdminRetrievalDetails = ({
                     )
                   }]
                 ]
-
               }
             />
           </Row>

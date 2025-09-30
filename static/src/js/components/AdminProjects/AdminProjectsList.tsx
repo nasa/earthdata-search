@@ -28,38 +28,10 @@ import ADMIN_PROJECTS from '../../operations/queries/adminProjects'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Spinner from '../Spinner/Spinner'
 
+import { type AdminProject } from '../../types/sharedTypes'
+
 import 'rc-pagination/assets/index.css'
 import './AdminProjectsList.scss'
-
-/**
- * Interface defining the structure of a project user
- */
-interface ProjectUser {
-  /** Unique identifier for the user */
-  id: string
-  /** URS username of the user */
-  ursId: string
-}
-
-/**
- * Interface defining the structure of an admin project
- */
-interface AdminProject {
-  /** Unique identifier for the project */
-  id: string
-  /** Human-readable project name */
-  name: string
-  /** Obfuscated unique identifier for the project */
-  obfuscatedId: string
-  /** Source path or query string for the project */
-  path: string
-  /** User who owns the project */
-  user: ProjectUser
-  /** ISO timestamp when the project was updated */
-  updatedAt: string
-  /** ISO timestamp when the project was created */
-  createdAt: string
-}
 
 /**
  * Admin Projects GraphQL query result type

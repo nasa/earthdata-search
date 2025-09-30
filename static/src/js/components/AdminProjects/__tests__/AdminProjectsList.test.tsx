@@ -1,9 +1,5 @@
 import { gql } from '@apollo/client'
-import {
-  screen,
-  waitFor,
-  within
-} from '@testing-library/react'
+import { screen, within } from '@testing-library/react'
 
 import AdminProjectsList from '../AdminProjectsList'
 import setupTest from '../../../../../../jestConfigs/setupTest'
@@ -91,9 +87,7 @@ describe('AdminProjectsList component', () => {
   test('navigates to the project page when clicking the project row', async () => {
     const { user } = setup()
 
-    await waitFor(() => {
-      expect(screen.getByRole('table')).toBeInTheDocument()
-    })
+    expect(await screen.findByRole('table')).toBeInTheDocument()
 
     const projectRow = screen.getByRole('button', {
       name: /64 1109324645 edsc-test 2019-08-25T11:59:14.390Z/,
@@ -157,9 +151,7 @@ describe('AdminProjectsList component', () => {
       withRouter: true
     })()
 
-    await waitFor(() => {
-      expect(screen.getByRole('table')).toBeInTheDocument()
-    })
+    expect(await screen.findByRole('table')).toBeInTheDocument()
 
     expect(screen.getByRole('listitem', { name: 'Next Page' })).toBeInTheDocument()
   })

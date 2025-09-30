@@ -28,43 +28,15 @@ import ADMIN_RETRIEVALS from '../../operations/queries/adminRetrievals'
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Spinner from '../Spinner/Spinner'
 
+import { type AdminRetrieval } from '../../types/sharedTypes'
+
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsList.scss'
 
 /**
- * Interface defining the structure of a retrieval user
- */
-interface RetrievalUser {
-  /** Unique identifier for the user */
-  id: string
-  /** URS username of the user */
-  ursId: string
-}
-
-/**
- * Interface defining the structure of an admin retrieval
- */
-interface AdminRetrieval {
-  /** Unique identifier for the retrieval */
-  id: string
-  /** Obfuscated unique identifier for the retrieval */
-  obfuscatedId: string
-  /** Raw JSON data for the retrieval */
-  jsondata: Record<string, unknown>
-  /** Environment string for the retrieval (e.g., 'prod', 'uat') */
-  environment: string
-  /** ISO timestamp when the retrieval was updated */
-  updatedAt: string
-  /** ISO timestamp when the retrieval was created */
-  createdAt: string
-  /** User who owns the retrieval */
-  user: RetrievalUser
-}
-
-/**
  * Admin Retrievals GraphQL query result type
  */
-interface AdminRetrievalsData {
+interface AdminRetrievalsQueryData {
   adminRetrievals: {
     /** Array of admin retrievals returned from the API */
     adminRetrievals: AdminRetrieval[]
@@ -103,7 +75,7 @@ const AdminRetrievalsList = () => {
 
   const pageSize = 20
 
-  const { data, error, loading } = useQuery<AdminRetrievalsData>(gql(ADMIN_RETRIEVALS), {
+  const { data, error, loading } = useQuery<AdminRetrievalsQueryData>(gql(ADMIN_RETRIEVALS), {
     variables: {
       params: {
         limit: pageSize,
