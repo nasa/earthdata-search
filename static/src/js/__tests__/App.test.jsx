@@ -119,7 +119,6 @@ describe('App component', () => {
                 path: '/admin',
                 children: [
                   expect.objectContaining({
-                    path: '',
                     index: true,
                     lazy: expect.any(Function)
                   }),

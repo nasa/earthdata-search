@@ -73,9 +73,7 @@ describe('AdminProjectsList component', () => {
   test('renders itself correctly', async () => {
     setup()
 
-    await waitFor(() => {
-      expect(screen.getByRole('table')).toBeInTheDocument()
-    })
+    expect(await screen.findByRole('table')).toBeInTheDocument()
 
     const table = screen.getByRole('table')
     expect(within(table).getAllByRole('columnheader')).toHaveLength(2)
@@ -91,7 +89,7 @@ describe('AdminProjectsList component', () => {
   })
 
   test('navigates to the project page when clicking the project row', async () => {
-    setup()
+    const { user } = setup()
     await waitFor(() => {
       expect(screen.getByRole('table')).toBeInTheDocument()
     })
@@ -100,7 +98,8 @@ describe('AdminProjectsList component', () => {
       name: /64 1109324645 edsc-test 2019-08-25T11:59:14.390Z/,
       exact: false
     })
-    await projectRow.click()
+
+    await user.click(projectRow)
     expect(mockUseNavigate).toHaveBeenCalledTimes(1)
     expect(mockUseNavigate).toHaveBeenCalledWith('/admin/projects/1109324645')
   })

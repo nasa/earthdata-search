@@ -20,6 +20,9 @@ import Form from 'react-bootstrap/Form'
 import InputGroup from 'react-bootstrap/InputGroup'
 import Row from 'react-bootstrap/Row'
 
+import { adminSortKeys } from '../../constants/adminSortKeys'
+import requestDebounceDuration from '../../constants/requestDebounceDuration'
+
 import ADMIN_RETRIEVALS from '../../operations/queries/adminRetrievals'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
@@ -87,10 +90,11 @@ const AdminRetrievalsList = () => {
   const [sortKey, setSortKey] = useState<string | undefined>()
 
   // Debounce the search value to avoid rapid requests
+  // TODO: EDSC-4531 - This should be replaced with a util or hook
   useEffect(() => {
     const debounceHandler = setTimeout(() => {
       setDebouncedSearchValue(searchValue)
-    }, 300)
+    }, requestDebounceDuration)
 
     return () => {
       clearTimeout(debounceHandler)
@@ -121,15 +125,18 @@ const AdminRetrievalsList = () => {
   const onUrsIdSortClick = useCallback(() => {
     const sortKeyString = sortKey || ''
 
+    // If the current sort key is not a urs_id, set the sort key to -urs_id
     if (sortKeyString.indexOf('urs_id') < 0) {
-      setSortKey('-urs_id')
+      setSortKey(adminSortKeys.ursIdDescending)
     }
 
-    if (sortKeyString === '-urs_id') {
-      setSortKey('+urs_id')
+    // If the current sort key is -urs_id, set it to urs_id
+    if (sortKeyString === adminSortKeys.ursIdDescending) {
+      setSortKey(adminSortKeys.ursIdAscending)
     }
 
-    if (sortKeyString === '+urs_id') {
+    // If the current sort ky is -urs_id, return to default sort
+    if (sortKeyString === adminSortKeys.ursIdAscending) {
       setSortKey('')
     }
   }, [sortKey])
@@ -138,15 +145,18 @@ const AdminRetrievalsList = () => {
   const onCreatedAtSortClick = useCallback(() => {
     const sortKeyString = sortKey || ''
 
+    // If the current sort key is not a created_at, set the sort key to -created_at
     if (sortKeyString.indexOf('created_at') < 0) {
-      setSortKey('-created_at')
+      setSortKey(adminSortKeys.createdAtDescending)
     }
 
-    if (sortKeyString === '-created_at') {
-      setSortKey('+created_at')
+    // If the current sort key is -created_at, set it to created_at
+    if (sortKeyString === adminSortKeys.createdAtDescending) {
+      setSortKey(adminSortKeys.createdAtAscending)
     }
 
-    if (sortKeyString === '+created_at') {
+    // If the current sort ky is -created_at, return to default sort
+    if (sortKeyString === adminSortKeys.createdAtAscending) {
       setSortKey('')
     }
   }, [sortKey])
@@ -228,7 +238,7 @@ const AdminRetrievalsList = () => {
                   >
                     URS ID
                     {
-                      sortKey === '+urs_id' && (
+                      sortKey === 'urs_id' && (
                         <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
                       )
                     }
@@ -245,7 +255,7 @@ const AdminRetrievalsList = () => {
                   >
                     Created
                     {
-                      sortKey === '+created_at' && (
+                      sortKey === 'created_at' && (
                         <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
                       )
                     }

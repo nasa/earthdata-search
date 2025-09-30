@@ -96,7 +96,7 @@ export const AdminProjectDetails = () => {
               [
                 {
                   label: 'Name',
-                  value: name
+                  value: name || <span className="text-muted">Not provided</span>
                 },
                 {
                   label: 'Owner',

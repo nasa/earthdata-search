@@ -20,7 +20,10 @@ export interface DefinitionListItemProps {
  * A definition list item to display definition list groups with a label and value
  */
 const DefinitionListItem = ({
-  index, label, value, colProps
+  index,
+  label,
+  value,
+  colProps
 }: DefinitionListItemProps) => {
   const id = `definition-list-item_${kebabCase(label)}-${index}`
 

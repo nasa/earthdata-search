@@ -2,7 +2,7 @@ import React from 'react'
 import Row from 'react-bootstrap/Row'
 
 import DefinitionListItem, {
-  DefinitionListItemProps
+  type DefinitionListItemProps
 } from '../DefinitionListItem/DefinitionListItem'
 
 /**

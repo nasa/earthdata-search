@@ -198,10 +198,9 @@ const browserRouter = createBrowserRouter([
         ),
         children: [
           {
-            path: '',
             index: true,
             async lazy() {
-              const Admin = await import('./routes/Admin/Admin')
+              const Admin = await import('./components/AdminIndex/AdminIndex')
 
               return {
                 Component: Admin.default

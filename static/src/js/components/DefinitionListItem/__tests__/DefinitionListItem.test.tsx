@@ -8,15 +8,15 @@ import DefinitionListItem from '../DefinitionListItem'
 
 jest.mock('react-bootstrap/Col', () => jest.fn(({ children }) => <div>{children}</div>))
 
-describe('DefinitionListItem component', () => {
-  const setup = setupTest({
-    Component: DefinitionListItem,
-    defaultProps: {
-      label: 'Label',
-      value: 'Value'
-    }
-  })
+const setup = setupTest({
+  Component: DefinitionListItem,
+  defaultProps: {
+    label: 'Label',
+    value: 'Value'
+  }
+})
 
+describe('DefinitionListItem component', () => {
   test('renders label and value', () => {
     setup()
     expect(screen.getByText('Label')).toBeInTheDocument()

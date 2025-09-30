@@ -430,7 +430,7 @@ describe('DatabaseClient', () => {
         })
 
         const retrievals = await databaseClient.getRetrievals({
-          sortKey: '+created_at'
+          sortKey: 'created_at'
         })
 
         expect(retrievals).toBeDefined()

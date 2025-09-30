@@ -91,7 +91,6 @@ export class Functions extends Construct {
     })
     const {
       adminApiGatewayResource,
-      adminProjectsApiGatewayResource,
       collectionsApiGatewayResource,
       colormapsApiGatewayResource,
       conceptsApiGatewayResource,
@@ -106,48 +105,6 @@ export class Functions extends Construct {
       scaleConceptTypeApiGatewayResource,
       shapefilesApiGatewayResource
     } = sharedResources
-
-    /**
-     * Admin Get Projects
-     */
-    const adminGetProjectsNestedStack = new cdk.NestedStack(scope, 'AdminGetProjectsNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(adminGetProjectsNestedStack, 'AdminGetProjectsLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayResource: adminProjectsApiGatewayResource,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['GET'],
-        parentPath: 'admin',
-        path: 'projects'
-      },
-      entry: '../../serverless/src/adminGetProjects/handler.js',
-      functionName: 'adminGetProjects',
-      functionNamePrefix
-    })
-
-    /**
-     * Admin Get Project
-     */
-    const adminGetProjectNestedStack = new cdk.NestedStack(scope, 'AdminGetProjectNestedStack')
-    // eslint-disable-next-line no-new
-    new application.NodeJsFunction(adminGetProjectNestedStack, 'AdminGetProjectLambda', {
-      ...defaultLambdaConfig,
-      api: {
-        apiGatewayDeployment,
-        apiGatewayRestApi,
-        authorizer: authorizers.edlAdminAuthorizer,
-        methods: ['GET'],
-        parentId: adminProjectsApiGatewayResource?.ref,
-        parentPath: 'admin/projects',
-        path: '{id}'
-      },
-      entry: '../../serverless/src/adminGetProject/handler.js',
-      functionName: 'adminGetProject',
-      functionNamePrefix
-    })
 
     /**
      * Admin Get Retrievals Metrics

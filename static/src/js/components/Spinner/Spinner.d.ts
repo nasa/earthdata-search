@@ -1,12 +1,18 @@
-import * as React from 'react'
+import React from 'react'
 
 /** An interface for the Dots component */
 export interface DotsProps {
-  className?: string | null
+  /** A classname for the element */
+  className?: string
+  /** The color of the dots. Needs to match the one of the classes in Spinner.scss */
   color?: string
-  dataTestId?: string | null
+  /** A id for testing */
+  dataTestId?: string
+  /** Adds `inline-flex` so the Dots component can be displayed inline */
   inline?: boolean
+  /** The size of the dots. Needs to match the one of the classes in Spinner.scss */
   size?: string
+  /** An accessible label */
   label?: string
 }
 

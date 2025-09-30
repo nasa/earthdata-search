@@ -179,9 +179,9 @@ export default class DatabaseClient {
   }) {
     const sortKeyParams = {
       '-created_at': ['projects.created_at', 'desc'],
-      '+created_at': ['projects.created_at', 'asc'],
+      created_at: ['projects.created_at', 'asc'],
       '-urs_id': ['users.urs_id', 'desc'],
-      '+urs_id': ['users.urs_id', 'asc']
+      urs_id: ['users.urs_id', 'asc']
     }
 
     try {
@@ -262,17 +262,17 @@ export default class DatabaseClient {
    */
   async getRetrievals({
     limit,
-    offset,
-    sortKey,
-    ursId,
     obfuscatedId,
-    retrievalCollectionId
+    offset,
+    retrievalCollectionId,
+    sortKey,
+    ursId
   }) {
     const sortKeyParams = {
       '-created_at': ['retrievals.created_at', 'desc'],
-      '+created_at': ['retrievals.created_at', 'asc'],
+      created_at: ['retrievals.created_at', 'asc'],
       '-urs_id': ['users.urs_id', 'desc'],
-      '+urs_id': ['users.urs_id', 'asc']
+      urs_id: ['users.urs_id', 'asc']
     }
     try {
       const db = await this.getDbConnection()
