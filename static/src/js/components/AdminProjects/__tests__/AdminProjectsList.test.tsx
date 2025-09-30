@@ -90,11 +90,11 @@ describe('AdminProjectsList component', () => {
     expect(await screen.findByRole('table')).toBeInTheDocument()
 
     const projectRow = screen.getByRole('button', {
-      name: /64 1109324645 edsc-test 2019-08-25T11:59:14.390Z/,
-      exact: false
+      name: /64 1109324645 edsc-test 2019-08-25T11:59:14.390Z/
     })
 
     await user.click(projectRow)
+
     expect(mockUseNavigate).toHaveBeenCalledTimes(1)
     expect(mockUseNavigate).toHaveBeenCalledWith('/admin/projects/1109324645')
   })

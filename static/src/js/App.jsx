@@ -300,7 +300,7 @@ const App = () => {
           <ToastProvider ref={window.reactToastProvider}>
             <Helmet
               defaultTitle="Earthdata Search"
-              titleTemplate={`${titleEnv} %s | Earthdata Search`}
+              titleTemplate={`${titleEnv} %s - Earthdata Search`}
             >
               <meta name="description" content={description} />
               <meta property="og:type" content="website" />
