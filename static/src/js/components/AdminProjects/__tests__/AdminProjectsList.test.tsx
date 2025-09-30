@@ -90,6 +90,7 @@ describe('AdminProjectsList component', () => {
 
   test('navigates to the project page when clicking the project row', async () => {
     const { user } = setup()
+
     await waitFor(() => {
       expect(screen.getByRole('table')).toBeInTheDocument()
     })
