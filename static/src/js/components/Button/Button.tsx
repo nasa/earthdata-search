@@ -15,9 +15,7 @@ import OverlayTrigger from 'react-bootstrap/OverlayTrigger'
 // @ts-expect-error: This file does not have types
 import { ArrowLineRight } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-// @ts-expect-error: This file does not have types
 import Spinner from '../Spinner/Spinner'
-// @ts-expect-error: This file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import renderTooltip from '../../util/renderTooltip'

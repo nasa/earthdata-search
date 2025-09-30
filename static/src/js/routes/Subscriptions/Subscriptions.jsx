@@ -4,6 +4,9 @@ import { getEnvironmentConfig } from '../../../../../sharedUtils/config'
 
 import SubscriptionsListContainer from '../../containers/SubscriptionsListContainer/SubscriptionsListContainer'
 
+/**
+ * The Subscriptions route component
+*/
 export const Subscriptions = () => {
   const { edscHost } = getEnvironmentConfig()
 

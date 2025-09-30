@@ -3,7 +3,6 @@ import { FaRegFilePdf, FaRegFileWord } from 'react-icons/fa'
 
 // @ts-expect-error: This file does not have types
 import EDSCModalContainer from '../../containers/EDSCModalContainer/EDSCModalContainer'
-// @ts-expect-error: This file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 // @ts-expect-error: This file does not have types
 import ExternalLink from '../ExternalLink/ExternalLink'

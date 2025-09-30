@@ -14,33 +14,59 @@ import {
 } from 'react-icons/fa'
 import { gql, useQuery } from '@apollo/client'
 
-import {
-  Button,
-  Form,
-  InputGroup
-} from 'react-bootstrap'
+import Button from 'react-bootstrap/Button'
+import Col from 'react-bootstrap/Col'
+import Form from 'react-bootstrap/Form'
+import InputGroup from 'react-bootstrap/InputGroup'
+import Row from 'react-bootstrap/Row'
+
+import { adminSortKeys } from '../../constants/adminSortKeys'
+import requestDebounceDuration from '../../constants/requestDebounceDuration'
+
 import ADMIN_RETRIEVALS from '../../operations/queries/adminRetrievals'
 
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 import Spinner from '../Spinner/Spinner'
 
+import { type AdminRetrieval } from '../../types/sharedTypes'
+
 import 'rc-pagination/assets/index.css'
 import './AdminRetrievalsList.scss'
+
+/**
+ * Admin Retrievals GraphQL query result type
+ */
+interface AdminRetrievalsQueryData {
+  adminRetrievals: {
+    /** Array of admin retrievals returned from the API */
+    adminRetrievals: AdminRetrieval[]
+    /** Total count of retrievals matching the query */
+    count: number
+    /** Pagination info */
+    pageInfo: {
+      currentPage: number
+      hasNextPage: boolean
+      hasPreviousPage: boolean
+      pageCount: number
+    }
+  }
+}
 
 const AdminRetrievalsList = () => {
   const navigate = useNavigate()
 
-  const [currentPage, setCurrentPage] = useState(1)
-  const [searchType, setSearchType] = useState('urs_id')
-  const [searchValue, setSearchValue] = useState('')
-  const [debouncedSearchValue, setDebouncedSearchValue] = useState('')
-  const [sortKey, setSortKey] = useState()
+  const [currentPage, setCurrentPage] = useState<number>(1)
+  const [searchType, setSearchType] = useState<string>('obfuscatedId')
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [debouncedSearchValue, setDebouncedSearchValue] = useState<string>('')
+  const [sortKey, setSortKey] = useState<string | undefined>()
 
   // Debounce the search value to avoid rapid requests
+  // TODO: EDSC-4531 - This should be replaced with a util or hook
   useEffect(() => {
     const debounceHandler = setTimeout(() => {
       setDebouncedSearchValue(searchValue)
-    }, 300)
+    }, requestDebounceDuration)
 
     return () => {
       clearTimeout(debounceHandler)
@@ -49,7 +75,7 @@ const AdminRetrievalsList = () => {
 
   const pageSize = 20
 
-  const { data, error, loading } = useQuery(gql(ADMIN_RETRIEVALS), {
+  const { data, error, loading } = useQuery<AdminRetrievalsQueryData>(gql(ADMIN_RETRIEVALS), {
     variables: {
       params: {
         limit: pageSize,
@@ -62,9 +88,6 @@ const AdminRetrievalsList = () => {
     }
   })
 
-  const { adminRetrievals: adminRetrievalsList } = data || {}
-  const { adminRetrievals = [], count = 0 } = adminRetrievalsList || {}
-
   // Clear the search value
   const onClearSearchValueClick = useCallback(() => {
     setSearchValue('')
@@ -74,15 +97,18 @@ const AdminRetrievalsList = () => {
   const onUrsIdSortClick = useCallback(() => {
     const sortKeyString = sortKey || ''
 
+    // If the current sort key is not a urs_id, set the sort key to -urs_id
     if (sortKeyString.indexOf('urs_id') < 0) {
-      setSortKey('-urs_id')
+      setSortKey(adminSortKeys.ursIdDescending)
     }
 
-    if (sortKeyString === '-urs_id') {
-      setSortKey('+urs_id')
+    // If the current sort key is -urs_id, set it to urs_id
+    if (sortKeyString === adminSortKeys.ursIdDescending) {
+      setSortKey(adminSortKeys.ursIdAscending)
     }
 
-    if (sortKeyString === '+urs_id') {
+    // If the current sort ky is -urs_id, return to default sort
+    if (sortKeyString === adminSortKeys.ursIdAscending) {
       setSortKey('')
     }
   }, [sortKey])
@@ -91,28 +117,34 @@ const AdminRetrievalsList = () => {
   const onCreatedAtSortClick = useCallback(() => {
     const sortKeyString = sortKey || ''
 
+    // If the current sort key is not a created_at, set the sort key to -created_at
     if (sortKeyString.indexOf('created_at') < 0) {
-      setSortKey('-created_at')
+      setSortKey(adminSortKeys.createdAtDescending)
     }
 
-    if (sortKeyString === '-created_at') {
-      setSortKey('+created_at')
+    // If the current sort key is -created_at, set it to created_at
+    if (sortKeyString === adminSortKeys.createdAtDescending) {
+      setSortKey(adminSortKeys.createdAtAscending)
     }
 
-    if (sortKeyString === '+created_at') {
+    // If the current sort ky is -created_at, return to default sort
+    if (sortKeyString === adminSortKeys.createdAtAscending) {
       setSortKey('')
     }
   }, [sortKey])
 
   // Handle changes to the search type dropdown
-  const onSearchTypeChange = useCallback((event) => {
+  const onSearchTypeChange = useCallback((event: React.ChangeEvent<HTMLSelectElement>) => {
     setSearchType(event.target.value)
   }, [])
 
   // Handle changes to the search filter input
-  const onSearchFilterValueChange = useCallback((event) => {
+  const onSearchFilterValueChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value)
   }, [])
+
+  const { adminRetrievals: adminRetrievalsList } = data || {}
+  const { adminRetrievals = [], count = 0 } = adminRetrievalsList || {}
 
   return (
     <>
@@ -144,7 +176,6 @@ const AdminRetrievalsList = () => {
           />
           <Button
             variant="light"
-            label="Clear"
             onClick={() => onClearSearchValueClick()}
           >
             Clear
@@ -153,11 +184,15 @@ const AdminRetrievalsList = () => {
       </Form>
       {
         loading && (
-          <Spinner
-            dataTestId="admin-preferences-metric-list-spinner"
-            className="position-absolute admin-preferences-metrics-list__spinner"
-            type="dots"
-          />
+          <Row>
+            <Col xs="auto" className="mx-auto m-5">
+              <Spinner
+                dataTestId="admin-preferences-metric-list-spinner"
+                className="position-absolute admin-preferences-metrics-list__spinner"
+                type="dots"
+              />
+            </Col>
+          </Row>
         )
       }
       {
@@ -175,7 +210,7 @@ const AdminRetrievalsList = () => {
                   >
                     URS ID
                     {
-                      sortKey === '+urs_id' && (
+                      sortKey === 'urs_id' && (
                         <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
                       )
                     }
@@ -192,7 +227,7 @@ const AdminRetrievalsList = () => {
                   >
                     Created
                     {
-                      sortKey === '+created_at' && (
+                      sortKey === 'created_at' && (
                         <EDSCIcon icon={FaCaretUp} className="admin-retrievals-list__sortable-icon" />
                       )
                     }
@@ -239,16 +274,20 @@ const AdminRetrievalsList = () => {
                 }
               </tbody>
             </Table>
-            <div className="admin-retrievals-list__pagination-wrapper">
-              <Pagination
-                className="admin-retrievals-list__pagination"
-                current={currentPage}
-                total={count}
-                pageSize={pageSize}
-                onChange={setCurrentPage}
-                locale={localeInfo}
-              />
-            </div>
+            {
+              pageSize > 0 && (
+                <div className="admin-retrievals-list__pagination-wrapper">
+                  <Pagination
+                    className="admin-retrievals-list__pagination"
+                    current={currentPage}
+                    total={count}
+                    pageSize={pageSize}
+                    onChange={setCurrentPage}
+                    locale={localeInfo}
+                  />
+                </div>
+              )
+            }
           </>
         )
       }

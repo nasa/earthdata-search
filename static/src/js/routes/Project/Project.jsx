@@ -31,6 +31,9 @@ const mapStateToProps = (state) => ({
   name: state.savedProject.name
 })
 
+/**
+ * The Project route component
+*/
 export const Project = (props) => {
   const location = useLocation()
 

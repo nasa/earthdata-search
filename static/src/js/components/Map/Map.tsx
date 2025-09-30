@@ -46,7 +46,6 @@ import {
   // @ts-expect-error The file does not have types
 } from '@edsc/earthdata-react-icons/horizon-design-system/hds/ui'
 
-// @ts-expect-error The file does not have types
 import EDSCIcon from '../EDSCIcon/EDSCIcon'
 
 import LegendControl from './LegendControl/LegendControl'
