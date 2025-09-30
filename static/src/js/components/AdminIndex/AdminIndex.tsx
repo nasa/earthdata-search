@@ -2,7 +2,7 @@ import React from 'react'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
 import Stack from 'react-bootstrap/Stack'
-import AdminPage from '../../components/AdminPage/AdminPage'
+import AdminPage from '../AdminPage/AdminPage'
 // @ts-expect-error: Types do not exist for this file
 import PortalLinkContainer from '../../containers/PortalLinkContainer/PortalLinkContainer'
 
