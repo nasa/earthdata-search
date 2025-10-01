@@ -12,11 +12,23 @@ export const retrieveCMRGranules = async ({
   accessToken,
   granuleParams
 }) => {
-  const { concept_id: granuleIds } = granuleParams
+  const normalizedParams = { ...granuleParams }
+
+  // Filter out null/undefined concept_ids. If none remain, remove the key entirely,
+  // otherwise CMR will reject the query
+  if (normalizedParams.concept_id) {
+    const filteredConceptIds = normalizedParams.concept_id.filter((id) => id != null)
+
+    if (filteredConceptIds.length > 0) {
+      normalizedParams.concept_id = filteredConceptIds
+    } else {
+      delete normalizedParams.concept_id
+    }
+  }
 
   const granuleResponse = await axios({
     url: `${getEarthdataConfig(earthdataEnvironment).cmrHost}/search/granules.json`,
-    params: { concept_id: granuleIds },
+    params: normalizedParams,
     paramsSerializer: (params) => stringify(
       params,
       {

@@ -158,14 +158,15 @@ const submitSwodlrOrder = async (event, context) => {
           }
         })
 
-        const { data: responseData, errors } = response.data
+        const { data: responseData, errors } = response
 
         if (errors) {
           console.error(errors)
           throw new Error(JSON.stringify(errors))
         }
 
-        const { generateL2RasterProduct } = responseData
+        const { data } = responseData
+        const { generateL2RasterProduct } = data
 
         // Log out swodlr product response
         console.log('generateL2RasterProduct response from swodlr: ', generateL2RasterProduct)
